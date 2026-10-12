@@ -1,5 +1,7 @@
 # template-Ai 軟體功能清點與開發計畫
 
+> **2026-10-12 開發已授權**：使用者指示開始製作第一版；早期未授權敘述為歷史狀態。v0.1 首批實作與驗證見 [第一版狀態](FIRST_VERSION_STATUS.md)，未宣稱整體產品完成。
+
 分析日期：2026-10-12。分析範圍：givemedandanla-tool/template-Ai 的 main，固定提交 `436ca2d7db10fab3de3d9700538dee701cd81a97`。
 
 修訂：已納入使用者於本對話確認的「矩形區域抽象、Inkscape 視覺訓練路徑、印刷分析後移、效能參考機」四項新決策。詳見 [本輪需求修訂](decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md)。GitHub 原始快照保留不變；下列計畫以本輪較新授權優先，這些已核准修訂持久記錄於本倉庫的決策文件；技術方案和階段仍為建議。
@@ -159,4 +161,3 @@ P1～P3 是核心技術主路徑。P4／P6 可在共同資料模型穩定後安�
 - [跨文件對帳與未決事項](https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/audits/UI-067-GUI-CONVERGENCE-MATRIX.md)
 
 本文依 GitHub 原始文件及本輪使用者較新修訂分析；技術架構、階段和工作包為建議，不等於獨立驗收或程式開發已啟動。原始歷史決策保留，本輪較新核准修訂與持久化規則見決策文件及 CONTINUATION.md。
-

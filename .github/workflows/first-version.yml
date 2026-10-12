@@ -1,0 +1,35 @@
+name: First Version Windows Validation
+on:
+  push:
+    branches: ['dev/v0.1-first-version']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 35
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Inkscape for actual AI conversion acceptance
+        shell: pwsh
+        run: |
+          choco install inkscape --version=1.4.2 --yes --no-progress
+          if ($LASTEXITCODE -ne 0) { throw 'Inkscape installation failed' }
+          if (!(Test-Path 'C:\Program Files\Inkscape\bin\inkscape.exe')) { throw 'Inkscape executable missing' }
+      - name: Build and verify actual Windows executable
+        shell: pwsh
+        run: ./tools/build_windows.ps1
+      - name: Retain downloadable build and startup evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: TemplateAI-v0.1-Windows
+          path: artifacts/
+          if-no-files-found: error
+          retention-days: 14

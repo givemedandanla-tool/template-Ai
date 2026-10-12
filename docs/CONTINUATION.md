@@ -4,8 +4,14 @@
 - Repository: givemedandanla-tool/template-Ai
 - 主目標：Windows 矩形區域自動排版與模板 AI（名片／門禁卡為應用名稱）
 - 需求來源：52 題訪談，2026-10-12 收斂
-- 現階段：需求規格與技術研究；**沒有程式碼開發授權或完成證據**
+- 現階段：2026-10-12 使用者已授權製作第一版；v0.1 實作／驗證見 `FIRST_VERSION_STATUS.md`，不宣稱全產品完成。
 - Source of Truth：本倉庫中經核准的文件與實際 Git commit；聊天記憶僅供查詢，不取代 GitHub。
+
+## 最新程式開發授權與第一版
+
+- Human 原文：「開始照計畫製作第一版軟體」。此較新指令取代下方歷史的未授權開發狀態。
+- [授權與首版範圍](decisions/2026-10-12-FIRST-VERSION-AUTHORIZATION.md)、[第一版狀態](FIRST_VERSION_STATUS.md)、[操作說明](FIRST_VERSION.md)。
+- 第一版使用合成／匿名資料；固定字級、矩形抽象、視覺匯入、尺寸 Logo 及後期權限／印刷順序有效。
 
 ## 定案必須持久化到 GitHub（2026-10-12 使用者核准）
 
