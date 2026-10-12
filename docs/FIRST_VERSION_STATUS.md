@@ -20,6 +20,8 @@ Python 3.11＋PySide6 6.8.3 三模式 GUI；SQLite 來源／模板／標記／Lo
 
 ## Windows 打包
 
+首輪 run `38289684206` 的 Inkscape 安裝成功；Qt offscreen 沒有取得 Windows 系統字型，測試在建立示範模板時失敗。已改 Windows 原生 Qt 平台，補空字型診斷及測試資源清理，新增回歸案例；再次驗證結果以後續 run 為準。
+
 已加入 CI：Python 3.11、Inkscape 1.4.2、功能測試、PyInstaller onedir、實際封裝 EXE 啟動截圖、ZIP／SHA-256 與 artifact。**對應 run 實際成功前狀態為待驗證，不宣稱 EXE 已建置。** 安裝、工作流程權限或 artifact 配額失敗要如實記錄。
 
 ## 待完成與範圍

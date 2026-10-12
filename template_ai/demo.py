@@ -5,7 +5,12 @@ from .model import Rect, Slot, Template
 
 def default_font():
     families = QFontDatabase.families()
-    return next((f for f in ["Noto Sans CJK TC", "Microsoft JhengHei", "Microsoft YaHei", "Arial"] if f in families), families[0])
+    if not families:
+        raise ValueError("Qt 未取得任何字型；Windows 請使用原生 windows 平台，或載入合法字型後再量測")
+    for family in ["Noto Sans CJK TC", "Microsoft JhengHei", "Microsoft YaHei", "Arial"]:
+        if family in families:
+            return family
+    return families[0]
 
 
 def demo_template():

@@ -30,8 +30,10 @@ DATA = [{"name": "林小明", "title": "設計顧問", "phone": "0900-123-456", 
 class FirstVersionTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.library = Library(self.root / "data")
+        self.addCleanup(self.library.close)
         self.template = demo_template()
         self.template.state = "published"
 
@@ -41,6 +43,11 @@ class FirstVersionTests(unittest.TestCase):
 
     def candidate(self):
         return generate(self.template, DATA, [], {}, 7)
+
+    def test_empty_platform_font_database_has_clear_diagnostic(self):
+        with patch("template_ai.demo.QFontDatabase.families", return_value=[]):
+            with self.assertRaisesRegex(ValueError, "未取得任何字型"):
+                demo_template()
 
     def test_fixed_size_long_text_is_blocked_without_mutation(self):
         before = self.template.to_dict()
