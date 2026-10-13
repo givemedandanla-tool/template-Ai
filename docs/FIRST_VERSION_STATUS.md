@@ -1,3 +1,5 @@
+> 最新：v0.1.5，83 項測試全 PASS／0 SKIP，來源／字型同內容恢復；即時交接與證據見 docs/dev/HANDOFF.md、RUN-FONT-REPAIR-002。下方 v0.1.2 為歷史紀錄。
+
 # v0.1.2 實作與驗證狀態
 
 > 最新開發政策已改為 checkpoint／要求清單／證據優先，EXE 延後。此文件保留版本及歷史失敗證據；開工先讀 AGENTS.md 與 `docs/dev/STATE.json`，不沿用下方舊的 EXE 優先序。

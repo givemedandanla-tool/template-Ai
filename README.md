@@ -6,11 +6,11 @@
 
 **開發以零例行問答、checkpoint 與 GitHub 持久化為核心。EXE 已延後，不再自動打包或重試；先完成清單要求及其證據。**
 
-**v0.1.3 可操作研究版與開發框架已實作，最新版64項具名本地測試通過；EXE依指令延後。** 三模式桌面工作台：來源標記、模板與 Logo、排版與數位輸出。本版包含多作品標記與歷史恢復、固定學習來源版次、本機持久字型、發布交易及來源快取完整性。第一版學習為人工確認標記的幾何與語意規則內化；完整自動辨識／深度模型、客戶重訂、完整權限與實體印刷分析留後續計畫。
+**v0.1.5 可操作研究版與開發框架已實作，最新版83項具名本地測試通過；EXE依指令延後。** 三模式桌面工作台：來源標記、模板與 Logo、排版與數位輸出。本版包含多作品標記與歷史恢復、固定學習來源版次、本機持久字型、發布交易及來源快取完整性，新增同內容原稿重連與字型複本修復。第一版學習為人工確認標記的幾何與語意規則內化；完整自動辨識／深度模型、客戶重訂、完整權限與實體印刷分析留後續計畫。
 
 ## 開啟與快速試用
 
-Windows 成品由 [First Version Windows Validation](https://github.com/givemedandanla-tool/template-Ai/actions) 工作流程打包；只有成功且產生附件的執行才有可下載 EXE ZIP。完整解壓縮後開啟 `TemplateAI-v0.1.exe`。不能把待執行工作流程當成已完成 Windows 驗收。
+目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新可重現測試及附件見 [RUN-FONT-REPAIR-002](docs/evidence/runs/RUN-FONT-REPAIR-002/run.json)。
 
 原始碼：安裝 Python 3.11 後，Windows 雙擊 `START_WINDOWS.bat`；或安裝 `requirements-lock.txt`，執行 `python app.py`。
 

@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "id": "RUN-FONT-REPAIR-002",
+  "created_utc": "2026-10-13T13:45:12.422024+00:00",
+  "source_commit": "dc76b95fa5ff288d09d4474be2732191b3caa78c",
+  "source_manifest_sha256": "5bc46c3b4f4406b198b53781a92c583aa80bd2c33930f433c5303d9fd435f849",
+  "source_unchanged": true,
+  "status": "PASS",
+  "test_count": 83,
+  "passed": 83,
+  "capture_exit_code": 0,
+  "tests_sha256": "b6e34c67d3adc82c1b07458a6b9b61f35617e85de2042b24e6f4a50c314f7230",
+  "attachments": {
+    "synthetic-FINAL.pdf": {
+      "bytes": 9955,
+      "sha256": "b9aa4f51def286416921b684da9c9d8711b0b076243da0c8e80bbc7166f489e5",
+      "mime": "application/pdf"
+    },
+    "training-workspace.png": {
+      "bytes": 211427,
+      "sha256": "8e17accf682fb254151ad6082d86fd8d7f6e991e1c8f8ae8c908ede404e70f32",
+      "mime": "image/png"
+    },
+    "synthetic-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "bbe406834015e4e501b0058971b06f917b33b81d5a7700138b48de65a30dd003",
+      "mime": "image/png"
+    },
+    "decorated-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "742eb545ec519f462e339ad125f4448eba0f08a4b6533c14bf1b03614d284320",
+      "mime": "image/png"
+    },
+    "source-manifest.json": {
+      "bytes": 7077,
+      "sha256": "c335f49185c97e7bdac67e429af3bd14711f9861be395a5c307fa3f6526f7d2d",
+      "mime": "application/json"
+    },
+    "multiple-artworks-workspace.png": {
+      "bytes": 217088,
+      "sha256": "3d1a035b6b03e69e22a7578f5a6483e3e51e3eef1ff8453032e66e4c2b66b649",
+      "mime": "image/png"
+    },
+    "decorated-FINAL.jpg": {
+      "bytes": 10992,
+      "sha256": "fbb60e1d7659ec4b4c2a91276a2c881e91424b311e4c0f8c5f6b7f6fb8fe199b",
+      "mime": "image/jpeg"
+    },
+    "tests.json": {
+      "bytes": 14903,
+      "sha256": "b6e34c67d3adc82c1b07458a6b9b61f35617e85de2042b24e6f4a50c314f7230",
+      "mime": "application/json"
+    },
+    "decorated-FINAL.pdf": {
+      "bytes": 10130,
+      "sha256": "23d6feb5a92bd49f0cf21fa959fd9a76e3d757f5655d13c84f390d8ea91ae5e4",
+      "mime": "application/pdf"
+    },
+    "synthetic-FINAL.jpg": {
+      "bytes": 7908,
+      "sha256": "ec9d05d441ecbd43e0eabe3e989789c7e20b2238a3e6d82a0ef3702913b916ae",
+      "mime": "image/jpeg"
+    },
+    "capture.log": {
+      "bytes": 172,
+      "sha256": "412eea199f1cb8e8081ba70c8e221e5fbae55fabc6fae9b96d72da46dc5dcf2d",
+      "mime": "text/plain"
+    },
+    "template-workspace.png": {
+      "bytes": 194891,
+      "sha256": "f16cfc15093f70618d6b8d8d9cc714813e12c1890d1fd2ee82e4db3717fb3967",
+      "mime": "image/png"
+    },
+    "commit.json": {
+      "bytes": 1410,
+      "sha256": "45a9fc70f5b8d808d0de5da66fd12a7aaf621b5512d7a94789a84b1d53b2651b",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 68014,
+      "sha256": "1b027021145b41f85e8d8f7049e5b1e4c3846636495407f9a79bd10821bc8f12",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 13047,
+      "sha256": "e281cf8d9547e817164ebb12b3f03e9b88869a20b63c70ce896ff5af8ce5e023",
+      "mime": "text/plain"
+    },
+    "output-workspace.png": {
+      "bytes": 219699,
+      "sha256": "80710c887bf79bbeb34f83b563024408dc8153812c340b62b0a1b800cddeb009",
+      "mime": "image/png"
+    },
+    "junit.xml": {
+      "bytes": 14672,
+      "sha256": "96f56aa8b85d5ed7aefcde26231417427b5e42e597d3fce627875b7224c88d84",
+      "mime": "application/xml"
+    },
+    "claims.json": {
+      "bytes": 20362,
+      "sha256": "e857fed538cf6e381dede67c91ee32eb8ee10f1204065c2ba2eff38a8a365ceb",
+      "mime": "application/json"
+    },
+    "decorated-output-workspace.png": {
+      "bytes": 226396,
+      "sha256": "39a5d2de6861be0f5214136adfdad865c956439ef1130bf95bf7e056d1941520",
+      "mime": "image/png"
+    }
+  },
+  "environment": {
+    "python": "3.11.16",
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-FONT-REPAIR-002 --source-commit dc76b95fa5ff288d09d4474be2732191b3caa78c --commit-json <readback> --tree-json <readback>",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ]
+}
