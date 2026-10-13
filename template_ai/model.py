@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 import math
+import re
 import uuid
 
 KINDS = {"name": "姓名", "title": "職稱", "phone": "電話", "email": "Email",
@@ -42,6 +43,7 @@ class Slot:
     align: str = "left"
     required: bool = True
     id: str = field(default_factory=new_id)
+    color: str = "#111827"
 
 
 @dataclass
@@ -59,6 +61,7 @@ class Template:
     state: str = "draft"
     reasons: list[str] = field(default_factory=list)
     company_bindings: dict[str, str] = field(default_factory=dict)
+    background: dict | None = None
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -75,6 +78,8 @@ class Template:
 def template_errors(t: Template) -> list[str]:
     """發布與正式數位輸出使用同一套幾何和語意檢查。"""
     errors = []
+    from .background import background_errors
+    errors.extend(background_errors(t.background, t.width_mm, t.height_mm, verify_files=False))
     if not all(math.isfinite(v) and 0 < v <= 2000 for v in (t.width_mm, t.height_mm)):
         errors.append("矩形尺寸必須大於 0，且不超過本版 2000 mm 支援範圍")
     if not 1 <= t.capacity <= 20:
@@ -99,6 +104,10 @@ def template_errors(t: Template) -> list[str]:
         keys.add(key)
         if not 0.05 <= s.min_scale <= 1 or not math.isfinite(s.size_pt) or not 1 <= s.size_pt <= 200:
             errors.append(label + "：定案字級或模板字寬界限不合法")
+        if s.align not in ("left", "center", "right"):
+            errors.append(label + "：對齊設定不合法")
+        if not isinstance(s.color, str) or not re.fullmatch(r"#[0-9a-fA-F]{6}", s.color):
+            errors.append(label + "：文字色彩需為 #RRGGBB")
     for n in range(1, t.capacity + 1):
         if (f"p{n}", "name", 0) not in keys:
             errors.append(f"人物 {n} 缺少姓名欄位")

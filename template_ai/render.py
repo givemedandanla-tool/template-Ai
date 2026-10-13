@@ -11,9 +11,11 @@ from PySide6.QtGui import QColor, QFont, QFontMetricsF, QImage, QPageLayout, QPa
 from PySide6.QtSvg import QSvgRenderer
 
 from .layout import Candidate, MM_PER_POINT
+from .background import background_errors
+from .model import Template
 
 
-def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scale: float, align: str) -> None:
+def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scale: float, align: str, color: str = "#111827") -> None:
     font = QFont(family)
     font.setPixelSize(1000)
     metrics = QFontMetricsF(font)
@@ -30,7 +32,7 @@ def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scal
     p.translate(x, rect.y() + (rect.height() - text_h) / 2 + metrics.ascent() * factor)
     p.scale(factor * scale, factor)
     p.setFont(font)
-    p.setPen(QColor("#111827"))
+    p.setPen(QColor(color))
     p.drawText(0, 0, text)
     p.restore()
 
@@ -59,9 +61,38 @@ def draw_logo(p: QPainter, target: QRectF, asset: dict) -> None:
     p.restore()
 
 
+def paint_background(p: QPainter, t: Template) -> None:
+    p.fillRect(QRectF(0, 0, t.width_mm, t.height_mm), Qt.white)
+    errors = background_errors(t.background, t.width_mm, t.height_mm)
+    if errors:
+        raise ValueError("；".join(errors))
+    if t.background:
+        # 頁面映射一致，背景先畫；不以白色遮罩消除未知原稿資料。
+        asset = t.background if t.background["render_mode"] == "vector" else {**t.background, "svg": ""}
+        draw_logo(p, QRectF(0, 0, t.width_mm, t.height_mm), asset)
+
+
+def render_background(t: Template, dpi: int = 150) -> QImage:
+    if not 72 <= dpi <= 600:
+        raise ValueError("背景預覽 DPI 超出支援範圍")
+    w, h = max(1, round(t.width_mm * dpi / 25.4)), max(1, round(t.height_mm * dpi / 25.4))
+    if w * h > 24_000_000:
+        raise ValueError("背景預覽超過像素預算")
+    image = QImage(w, h, QImage.Format_ARGB32_Premultiplied)
+    image.fill(Qt.white)
+    p = QPainter(image)
+    p.setRenderHint(QPainter.Antialiasing)
+    p.scale(dpi / 25.4, dpi / 25.4)
+    try:
+        paint_background(p, t)
+    finally:
+        p.end()
+    return image
+
+
 def paint_candidate(p: QPainter, candidate: Candidate, preview: bool = False) -> None:
     t = candidate.template
-    p.fillRect(QRectF(0, 0, t.width_mm, t.height_mm), Qt.white)
+    paint_background(p, t)
     for item in candidate.items:
         s = item.slot
         rect = QRectF(s.rect.x, s.rect.y, s.rect.w, s.rect.h)
@@ -81,7 +112,7 @@ def paint_candidate(p: QPainter, candidate: Candidate, preview: bool = False) ->
                 p.drawText(QRectF(0, 0, rect.width() / factor, rect.height() / factor), Qt.AlignCenter, item.text or "Logo")
                 p.restore()
         elif item.text:
-            draw_text(p, rect, item.text, s.font, s.size_pt, item.scale, s.align)
+            draw_text(p, rect, item.text, s.font, s.size_pt, item.scale, s.align, s.color)
     if preview:
         # 附註位於矩形本體外，矩形內的幾何與比例不改動。
         note = QRectF(0, t.height_mm + 2, t.width_mm, 10)
@@ -112,6 +143,9 @@ def render_image(candidate: Candidate, dpi: int = 150, preview: bool = False) ->
 def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bool = False, expected_generation: int | None = None) -> Path:
     """同目錄暫存與排他建立；任何錯誤不留下冒充成功的半成品，也不覆寫既有檔。"""
     target = Path(target)
+    errors = background_errors(candidate.template.background, candidate.template.width_mm, candidate.template.height_mm)
+    if errors:
+        raise ValueError("；".join(errors))
     if expected_generation is not None and candidate.generation != expected_generation:
         raise ValueError("候選版本已過期，請重新排版")
     if not preview and not candidate.valid:

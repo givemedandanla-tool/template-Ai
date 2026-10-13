@@ -67,6 +67,8 @@ class Library:
 
     def publish(self, t: Template) -> None:
         errors = template_errors(t)
+        from .background import background_errors
+        errors.extend(background_errors(t.background, t.width_mm, t.height_mm))
         if errors:
             raise ValueError("\n".join(errors))
         t.state = "published"

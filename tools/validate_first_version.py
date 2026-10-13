@@ -13,6 +13,8 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PySide6 import __version__ as qt_version
 from PySide6.QtWidgets import QApplication
 from template_ai.demo import demo_template
+from template_ai import __version__ as app_version
+from template_ai.background import make_background
 from template_ai.gui import MainWindow
 from template_ai.importer import import_file, inkscape_path
 from template_ai.layout import generate
@@ -61,15 +63,39 @@ def main():
     window.train_canvas.fit()
     app.processEvents()
     window.grab().save(str(artifacts / "training-workspace.png"))
+    # 固定背景核准只使用合成樣本，不能代替真人的原稿視覺驗收。
+    window.tabs.setCurrentIndex(1)
+    window.new_version()
+    background = import_file(root / "examples/synthetic-background.svg", window.library.assets)
+    window.template.background = make_background(background, 90, 54, approved=True)
+    window.template.slots[0].color = "#173d75"
+    window.library.save_template(window.template)
+    window.library.publish(window.template)
+    decorated_id = window.template.id
+    window.refresh_templates(decorated_id)
+    window.edit_canvas.fit()
+    app.processEvents()
+    window.grab().save(str(artifacts / "template-workspace.png"))
+    window.tabs.setCurrentIndex(2)
+    window.generate()
+    decorated = next(c for c in window.candidates if c.template.id == decorated_id)
+    assert decorated.valid, decorated.issues
+    window.candidate_list.setCurrentRow(window.candidates.index(decorated))
+    app.processEvents()
+    window.grab().save(str(artifacts / "decorated-output-workspace.png"))
+    for extension in ["png", "pdf", "jpg"]:
+        target = artifacts / ("decorated-FINAL." + extension)
+        target.unlink(missing_ok=True)
+        export(decorated, target)
     window.close()
     files = {p.name: {"bytes": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
              for p in artifacts.iterdir() if p.is_file() and p.name != "VALIDATION.json"}
-    evidence = {"python": platform.python_version(), "platform": platform.platform(), "PySide6": qt_version,
+    evidence = {"app_version": app_version, "python": platform.python_version(), "platform": platform.platform(), "PySide6": qt_version,
                 "inkscape": inkscape_path(), "tests_exit_code": result.returncode, "files": files,
-                "scope": "合成／匿名來源、實際 Inkscape 轉換、Qt GUI 與數位輸出",
+                "scope": "合成／匿名來源、實際 Inkscape 多頁轉換、Qt GUI、固定背景與文字色彩、數位輸出；合成背景程式化核准並非真人視覺驗收",
                 "not_verified": ["真實 Illustrator 私有樣本全面視覺驗收", "VivoBook／RTX 5050 效能", "實體印刷", "獨立審查"]}
     (artifacts / "VALIDATION.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({"tests": "PASS", "captures": 2, "exports": 3, "validation": str(artifacts / "VALIDATION.json")}))
+    print(json.dumps({"tests": "PASS", "captures": 4, "exports": 6, "validation": str(artifacts / "VALIDATION.json")}))
 
 
 if __name__ == "__main__":

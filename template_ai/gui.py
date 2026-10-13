@@ -9,7 +9,7 @@ import sys
 from PySide6.QtCore import QObject, QPointF, QRectF, QRunnable, Qt, QThreadPool, Signal
 from PySide6.QtGui import QAction, QColor, QFont, QFontDatabase, QImage, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox, QFileDialog,
-    QFontComboBox, QFormLayout, QGraphicsItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView,
+    QDialog, QDialogButtonBox, QFontComboBox, QFormLayout, QGraphicsItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView,
     QGroupBox, QHBoxLayout, QHeaderView, QInputDialog, QLabel, QLineEdit, QListWidget,
     QMainWindow, QMessageBox, QPushButton, QSpinBox, QSplitter, QTabWidget, QTableWidget,
     QTableWidgetItem, QVBoxLayout, QWidget)
@@ -18,7 +18,8 @@ from . import __version__
 from .importer import import_file, inkscape_path
 from .layout import Candidate, match
 from .model import KINDS, Rect, Slot, Template, learn_from_labels, new_id, template_errors
-from .render import export, render_image
+from .render import export, render_image, render_background
+from .background import make_background
 from .storage import Library
 
 
@@ -313,6 +314,11 @@ class MainWindow(QMainWindow):
         self.button("全稿", lambda: self.edit_canvas.fit(), row)
         self.button("刪除欄位", self.delete_slot, row)
         layout.addLayout(row)
+        row = QHBoxLayout()
+        self.background_button = self.button("匯入乾淨固定背景", self.import_background, row)
+        self.clear_background_button = self.button("移除固定背景", self.clear_background, row)
+        row.addStretch(1)
+        layout.addLayout(row)
         self.template_info = QLabel("已發布版本唯讀，修改時建立新版本草稿；學習方式為人工標記幾何規則。")
         self.template_info.setWordWrap(True)
         layout.addWidget(self.template_info)
@@ -416,6 +422,9 @@ class MainWindow(QMainWindow):
         self.pt.setRange(1, 200)
         self.pt.setValue(10)
         self.pt.setSuffix(" pt（固定）")
+        self.text_color = QLineEdit("#111827")
+        self.text_color.setMaxLength(7)
+        self.text_color.setPlaceholderText("#RRGGBB")
         self.scale = QDoubleSpinBox()
         self.scale.setRange(5, 100)
         self.scale.setValue(85)
@@ -430,6 +439,7 @@ class MainWindow(QMainWindow):
         form.addRow("同類資料第幾筆", self.index)
         form.addRow("字型", self.font)
         form.addRow("定案字級", self.pt)
+        form.addRow("文字色彩", self.text_color)
         form.addRow("本模板字寬下限", self.scale)
         form.addRow("對齊", self.align)
         form.addRow(self.required)
@@ -571,7 +581,7 @@ class MainWindow(QMainWindow):
     def make_slot(self, rect):
         return Slot(self.kind.currentData(), self.owner.currentData(), rect, self.index.value()-1,
                     self.font.currentFont().family(), self.pt.value(), self.scale.value()/100,
-                    self.align.currentData(), self.required.isChecked())
+                    self.align.currentData(), self.required.isChecked(), color=self.text_color.text().strip())
 
     def current_slots(self):
         return self.slots if self.tabs.currentIndex() == 0 else self.template.slots if self.template else []
@@ -597,6 +607,7 @@ class MainWindow(QMainWindow):
             spin.setValue(value)
         self.font.setCurrentFont(QFont(s.font))
         self.pt.setValue(s.size_pt)
+        self.text_color.setText(s.color)
         self.scale.setValue(s.min_scale*100)
         self.align.setCurrentIndex(self.align.findData(s.align))
         self.required.setChecked(s.required)
@@ -648,6 +659,10 @@ class MainWindow(QMainWindow):
 
     def apply_properties(self):
         if not self.current_slot or not self.editable():
+            return
+        import re
+        if not re.fullmatch(r"#[0-9a-fA-F]{6}", self.text_color.text().strip()):
+            self.error("文字色彩請輸入 #RRGGBB，例如 #173d75")
             return
         self.checkpoint()
         s = self.make_slot(Rect(*(spin.value() for spin in self.coords)))
@@ -766,10 +781,97 @@ class MainWindow(QMainWindow):
             return
         t = self.template
         self.edit_canvas.readonly = t.state == "published"
-        self.edit_canvas.set_content(t.width_mm, t.height_mm, slots=t.slots)
-        self.edit_canvas.set_mode("edit" if t.state == "draft" else "pan")
+        self.background_button.setEnabled(t.state == "draft" and not self.busy)
+        self.clear_background_button.setEnabled(t.state == "draft" and t.background is not None and not self.busy)
         errors = template_errors(t)
+        background_image = None
+        if t.background:
+            try:
+                background_image = render_background(t)
+            except ValueError as e:
+                errors.append(str(e))
+        self.edit_canvas.set_content(t.width_mm, t.height_mm, image=background_image, slots=t.slots)
+        self.edit_canvas.set_mode("edit" if t.state == "draft" else "pan")
         self.template_info.setText(f"{t.name} v{t.version} · {'唯讀已發布' if t.state == 'published' else '可編輯草稿'}\n" + ("；".join(errors[:5]) if errors else "幾何與語意檢查未發現問題；正式輸出仍需實際資料量測") + "\n" + "；".join(t.reasons))
+
+    def import_background(self):
+        if not self.template or not self.editable() or self.busy:
+            return
+        path, _ = QFileDialog.getOpenFileName(self, "選擇已清除可變資料的同尺寸背景", "", "背景 (*.svg *.pdf *.ai *.png *.jpg *.jpeg)")
+        if not path:
+            return
+        template_id, version = self.template.id, self.template.version
+        width, height = self.template.width_mm, self.template.height_mm
+        def finished(result):
+            # 背景轉換期間仍可切換模式；完成時不把資產套進別的模板。
+            if not self.template or self.template.id != template_id or self.template.version != version or self.template.state != "draft":
+                self.inform("模板上下文已切換，本次背景尚未套用；請回到原草稿重新匯入")
+                return
+            asset = make_background(result, width, height)
+            dialog = QDialog(self)
+            dialog.setWindowTitle("核對固定背景")
+            layout = QVBoxLayout(dialog)
+            note = QLabel(f"請核對 {width:g}×{height:g} mm 背景。\n背景應只包含固定裝飾；姓名、電話等可變資料與待替換 Logo 必須先在設計工具清除。\n左側是匯入參考，右側是軟體實際呈現；請核對圖案、色彩與原稿一致。")
+            note.setWordWrap(True)
+            layout.addWidget(note)
+            images = QHBoxLayout()
+            for caption in ("匯入參考", "實際背景呈現"):
+                column = QVBoxLayout()
+                column.addWidget(QLabel(caption))
+                image = QLabel()
+                column.addWidget(image)
+                images.addLayout(column)
+                if caption == "匯入參考":
+                    image.setPixmap(QPixmap(asset["image"]).scaled(420, 300, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+                else:
+                    actual_image = image
+            layout.addLayout(images)
+            mode = QComboBox()
+            if asset["svg"]:
+                mode.addItem("保留向量（需核對實際呈現）", "vector")
+            mode.addItem("使用匯入圖像（以圖片保留視覺）", "raster")
+            layout.addWidget(mode)
+            buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+            buttons.button(QDialogButtonBox.Ok).setText("已核對，核准乾淨背景")
+            buttons.button(QDialogButtonBox.Cancel).setDefault(True)
+            buttons.accepted.connect(dialog.accept)
+            buttons.rejected.connect(dialog.reject)
+            layout.addWidget(buttons)
+            def refresh_actual():
+                asset["render_mode"] = mode.currentData()
+                review = copy.deepcopy(self.template)
+                review.background = {**asset, "approved": True}
+                try:
+                    actual = render_background(review)
+                    actual_image.setPixmap(QPixmap.fromImage(actual).scaled(420, 300, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+                    buttons.button(QDialogButtonBox.Ok).setEnabled(True)
+                except ValueError as e:
+                    actual_image.clear()
+                    actual_image.setText("無法呈現：" + str(e))
+                    buttons.button(QDialogButtonBox.Ok).setEnabled(False)
+            mode.currentIndexChanged.connect(refresh_actual)
+            refresh_actual()
+            if dialog.exec() != QDialog.Accepted:
+                return
+            asset["approved"] = True
+            self.template.background = asset
+            self.library.save_template(self.template)
+            self.refresh_templates(self.template.id)
+            self.invalidate()
+            self.statusBar().showMessage("已保存核准固定背景；預覽與數位輸出使用同一背景")
+        self.run_job("轉換固定背景", lambda: import_file(path, self.library.assets), finished)
+
+    def clear_background(self):
+        if not self.template or not self.editable() or self.busy:
+            return
+        if self.template.background is None:
+            return
+        if QMessageBox.question(self, "移除固定背景", "將此草稿改為空白背景？原始背景檔與已發布歷史版本會保留。") != QMessageBox.Yes:
+            return
+        self.template.background = None
+        self.library.save_template(self.template)
+        self.refresh_templates(self.template.id)
+        self.invalidate()
 
     def new_version(self):
         if not self.template:

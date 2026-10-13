@@ -24,9 +24,11 @@ def main():
     if args.capture:
         from PySide6.QtCore import QTimer
         def capture():
-            window.grab().save(args.capture)
+            saved = window.grab().save(args.capture)
+            if not saved:
+                print("真實 GUI 截圖寫入失敗：" + args.capture, file=sys.stderr)
             window.close()
-            app.quit()
+            app.exit(0 if saved else 1)
         QTimer.singleShot(700, capture)
     return app.exec()
 

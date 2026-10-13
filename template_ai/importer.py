@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import shutil
@@ -11,12 +12,22 @@ import tempfile
 import xml.etree.ElementTree as ET
 
 from PySide6.QtCore import QSize
-from PySide6.QtGui import QImage, QPainter
+from PySide6.QtGui import QImage, QImageReader, QPainter
 from PySide6.QtPdf import QPdfDocument
 from PySide6.QtSvg import QSvgRenderer
 
-IMPORT_VERSION = "visual-import-0.1"
+IMPORT_VERSION = "visual-import-0.1.1"
 MAX_PIXELS = 12_000_000
+
+
+def preview_height(width: float, height: float, width_px: int = 1600) -> int:
+    """先看幾何預算再建立畫面，防止極端長圖在轉換前耗盡低配記憶體。"""
+    if not all(math.isfinite(v) and v > 0 for v in (width, height)):
+        raise ValueError("來源畫布尺寸不合法")
+    pixels = width_px * height / width
+    if not math.isfinite(pixels) or pixels > MAX_PIXELS / width_px:
+        raise ValueError("來源比例超出本版預覽像素預算")
+    return max(1, round(pixels))
 
 
 def inkscape_path() -> str | None:
@@ -48,6 +59,7 @@ def svg_size(path: Path) -> tuple[float, float]:
         if len(box) != 4 or box[2] <= 0 or box[3] <= 0:
             raise ValueError("SVG 未提供可用畫布尺寸")
         w, h = box[2] * 25.4 / 96, box[3] * 25.4 / 96
+    preview_height(w, h)
     return w, h
 
 
@@ -56,9 +68,7 @@ def render_svg(path: Path, target: Path, width_px: int = 1600) -> None:
     if not renderer.isValid():
         raise ValueError("SVG 無法由 Qt 正確讀取")
     bounds = renderer.viewBoxF()
-    h = max(1, round(width_px * bounds.height() / bounds.width()))
-    if width_px * h > MAX_PIXELS:
-        raise ValueError("來源比例超出本版預覽像素預算")
+    h = preview_height(bounds.width(), bounds.height(), width_px)
     image = QImage(width_px, h, QImage.Format_ARGB32_Premultiplied)
     image.fill(0xFFFFFFFF)
     painter = QPainter(image)
@@ -71,6 +81,8 @@ def render_svg(path: Path, target: Path, width_px: int = 1600) -> None:
 def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
     """已知 PDF 相容 AI 可用 Qt PDF；其他 AI 優先嘗試 Inkscape，失敗不偽造結果。"""
     path, assets = Path(path).resolve(), Path(assets).resolve()
+    if type(page) is not int or not 1 <= page <= 999:
+        raise ValueError("頁碼必須是 1～999 的整數")
     if not path.is_file() or path.stat().st_size > 200_000_000:
         raise ValueError("檔案不存在或超過本版單檔 200 MB 支援範圍")
     digest = hashlib.sha256()
@@ -80,6 +92,20 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         for chunk in iter(lambda: f.read(1024 * 1024), b""):
             digest.update(chunk)
     sha = digest.hexdigest()
+    is_pdf = signature.startswith(b"%PDF-")
+    page_count = 1
+    if is_pdf:
+        document = QPdfDocument()
+        try:
+            if document.load(str(path)) != QPdfDocument.Error.None_:
+                raise ValueError("PDF 相容層無法讀取；請先輸出未加密的可信 PDF／SVG")
+            page_count = document.pageCount()
+            if not 1 <= page <= page_count:
+                raise ValueError(f"來源只有 {page_count} 頁，無法匯入第 {page} 頁")
+        finally:
+            document.close()
+    elif page != 1:
+        raise ValueError("此非 PDF 來源本版只支援第 1 頁，請另存目標畫板後匯入")
     folder = assets / f"{sha}-p{page}-{IMPORT_VERSION}"
     metadata = folder / "metadata.json"
     if metadata.exists():
@@ -89,10 +115,8 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
     folder.mkdir(parents=True, exist_ok=True)
     image_path, svg_path = folder / "preview.png", folder / "source.svg"
     converter = inkscape_path()
-    is_pdf = signature.startswith(b"%PDF-")
     suffix = path.suffix.lower()
     svg = ""
-    page_count = 1
     calibrated = True
     if suffix in (".ai", ".eps", ".svg", ".pdf") and converter:
         args = [str(path), "--export-text-to-path", "--export-plain-svg", "--export-type=svg", "--export-filename=" + str(svg_path)]
@@ -104,11 +128,6 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         width, height = svg_size(svg_path)
         _run(converter, [str(svg_path), "--export-type=png", "--export-width=1600", "--export-background=white", "--export-background-opacity=1", "--export-filename=" + str(image_path)], folder)
         svg, engine = str(svg_path), "Inkscape " + IMPORT_VERSION
-        if is_pdf:
-            document = QPdfDocument()
-            if document.load(str(path)) == QPdfDocument.Error.None_:
-                page_count = document.pageCount()
-            document.close()
     elif is_pdf:
         document = QPdfDocument()
         if document.load(str(path)) != QPdfDocument.Error.None_ or not 1 <= page <= document.pageCount():
@@ -116,9 +135,7 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         page_count = document.pageCount()
         size = document.pagePointSize(page - 1)
         width, height = size.width() * 25.4 / 72, size.height() * 25.4 / 72
-        target_size = QSize(1600, max(1, round(1600 * height / width)))
-        if target_size.width() * target_size.height() > MAX_PIXELS:
-            raise ValueError("頁面超出預覽像素預算")
+        target_size = QSize(1600, preview_height(width, height))
         image = document.render(page - 1, target_size)
         document.close()
         if not image.save(str(image_path), "PNG"):
@@ -130,9 +147,13 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         render_svg(svg_path, image_path)
         svg, engine = str(svg_path), "Qt SVG（待與可信原稿比對）"
     elif suffix in (".png", ".jpg", ".jpeg"):
-        image = QImage(str(path))
-        if image.isNull() or image.width() * image.height() > MAX_PIXELS:
+        reader = QImageReader(str(path))
+        size = reader.size()
+        if not size.isValid() or size.width() * size.height() > MAX_PIXELS:
             raise ValueError("圖片無法讀取或超出本版 1200 萬像素預算")
+        image = reader.read()
+        if image.isNull():
+            raise ValueError("圖片解碼失敗：" + reader.errorString())
         # 點陣圖片未標定毫米時，以比例顯示；使用者必須確認作品尺寸。
         width, height = 100.0, 100.0 * image.height() / image.width()
         calibrated = False

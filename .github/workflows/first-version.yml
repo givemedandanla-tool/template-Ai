@@ -27,6 +27,7 @@ jobs:
         shell: pwsh
         run: ./tools/build_windows.ps1
       - name: Retain downloadable build and startup evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: TemplateAI-v0.1-Windows

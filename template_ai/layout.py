@@ -52,6 +52,8 @@ def text_geometry(font_family: str, size_pt: float, text: str) -> tuple[float, f
 
 def generate(t: Template, people: list[dict], companies: list[dict], logos: dict[str, dict], generation: int = 0) -> Candidate:
     issues = template_errors(t)
+    from .background import background_errors
+    issues.extend(background_errors(t.background, t.width_mm, t.height_mm))
     if t.state != "published":
         issues.append("模板尚未發布")
     if len(people) != t.capacity:
