@@ -257,6 +257,9 @@ class FontManager:
                     pass  # PREPARED 保留，重開以实际 bytes 核對；不可冒稱完成。
             raise
         finally:
+            if prepared and not committed and self.library.db.in_transaction:
+                # 檔案回復本身失敗時也釋放鎖；意圖留待啟動實際核對。
+                self.library.db.rollback()
             if new_font_id >= 0:
                 QFontDatabase.removeApplicationFont(new_font_id)
             temporary.unlink(missing_ok=True)

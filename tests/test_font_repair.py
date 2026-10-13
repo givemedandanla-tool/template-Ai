@@ -114,6 +114,29 @@ class FontRepairTests(unittest.TestCase):
         self.assertFalse(self.target.exists())
         self.assertEqual(self.library.font_repairs()[0]["phase"], "PREPARED")
 
+    def test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy(self):
+        self.target.write_bytes(b"corrupt before repair")
+        with patch.object(self.library, "event", side_effect=sqlite3.OperationalError("audit failed")), \
+             patch("template_ai.fonts.shutil.copyfile", side_effect=PermissionError("rollback copy failed")):
+            with self.assertRaisesRegex(PermissionError, "rollback copy failed"):
+                self.manager.repair_font(self.asset["hash"], FONT, approved=True)
+        self.assertFalse(self.library.db.in_transaction)
+        other = Library(self.library.root)
+        try:
+            with other.db:
+                other.db.execute("INSERT INTO preferences VALUES('lock_probe','ok')")
+        finally:
+            other.close()
+        self.assertEqual(self.library.font_repairs()[0]["phase"], "PREPARED")
+        self.assertEqual(file_digest(self.target), self.asset["hash"])
+        self.manager.close()
+        reopened = FontManager(self.library)
+        try:
+            self.assertEqual(self.library.font_repairs()[0]["phase"], "COMPLETED")
+            self.assertIn(self.asset["hash"], reopened.loaded)
+        finally:
+            reopened.close()
+
     def test_prepared_repair_recovery_requires_actual_expected_bytes(self):
         self.library.prepare_font_repair({"id": "simulated-interruption", "hash": self.asset["hash"], "path": str(self.target), "approved": True})
         self.manager.close()
