@@ -2697,7 +2697,7 @@
       "parents": [
         "UI-032"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "Linux／環境既有字型與匿名模板；非完整字重版本或 Windows 安裝",
@@ -2711,10 +2711,22 @@
         {
           "id": "CORE-025-A1",
           "expected": "核准同 hash 才恢復字型複本；不改 catalog／發布模板 pin，損壞留隔離證據，例外回滾及中斷重開核對",
-          "tests": []
+          "tests": [
+            "test_font_repair.FontRepairTests.test_missing_copy_restored_and_reopened_without_changing_published_pin",
+            "test_font_repair.FontRepairTests.test_corrupted_copy_retained_in_quarantine_and_reference_unchanged",
+            "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes",
+            "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+            "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+            "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+            "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+            "test_font_repair.FontRepairTests.test_healthy_copy_repair_is_idempotent",
+            "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+            "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+            "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate"
+          ]
         }
       ],
-      "next_step": "先保存 BEGIN、具名測試與修復機制"
+      "next_step": "程式 checkpoint 讀回後重新產生全套來源匹配證據"
     }
   ]
 }

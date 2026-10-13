@@ -108,6 +108,6 @@
 | GOV-004 | 持久 AI 入口与零例行問答 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |
 | GOV-005 | EXE 延後且不自動打包 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |
 | CORE-024 | 單件來源內容驗證與安全重連 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成來源單件重連與歷史保留；非完整批次重連或來源內容替換 | 無有效新版證據 |
-| CORE-025 | 核准同內容字型複本修復與中斷核對 | IN_PROGRESS | 否 | Linux／環境既有字型與匿名模板；非完整字重版本或 Windows 安裝 | 無有效新版證據 |
+| CORE-025 | 核准同內容字型複本修復與中斷核對 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／環境既有字型與匿名模板；非完整字重版本或 Windows 安裝 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

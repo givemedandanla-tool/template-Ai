@@ -31,6 +31,7 @@ class Library:
         CREATE TABLE IF NOT EXISTS artwork_revisions(artwork_id TEXT NOT NULL REFERENCES artworks(id), revision INTEGER NOT NULL, payload TEXT NOT NULL, created REAL NOT NULL, PRIMARY KEY(artwork_id,revision));
         CREATE TABLE IF NOT EXISTS active_artworks(source_id TEXT PRIMARY KEY REFERENCES sources(id), artwork_id TEXT NOT NULL REFERENCES artworks(id));
         CREATE TABLE IF NOT EXISTS font_assets(hash TEXT PRIMARY KEY, payload TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS font_repairs(id TEXT PRIMARY KEY, hash TEXT NOT NULL REFERENCES font_assets(hash), phase TEXT NOT NULL, payload TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS preferences(key TEXT PRIMARY KEY, value TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS source_links(source_id TEXT PRIMARY KEY REFERENCES sources(id), current_path TEXT NOT NULL, revision INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS source_relinks(id TEXT PRIMARY KEY, source_id TEXT NOT NULL REFERENCES sources(id), revision INTEGER NOT NULL, previous_path TEXT NOT NULL, current_path TEXT NOT NULL, hash TEXT NOT NULL, timestamp REAL NOT NULL, UNIQUE(source_id,revision));
@@ -276,6 +277,36 @@ class Library:
         with self.db:
             self.db.execute("INSERT OR IGNORE INTO font_assets VALUES(?,?)", (asset["hash"], json.dumps(asset, ensure_ascii=False)))
             self.event(asset["hash"], "font_local_use_approved")
+
+    def prepare_font_repair(self, record: dict) -> None:
+        with self.db:
+            self.db.execute("INSERT INTO font_repairs VALUES(?,?,?,?)", (record["id"], record["hash"], "PREPARED", json.dumps(record, ensure_ascii=False)))
+
+    def finish_font_repair(self, repair_id: str, phase: str, action: str) -> None:
+        if phase not in ("COMPLETED", "FAILED"):
+            raise ValueError("修復狀態不合法")
+        owns_transaction = not self.db.in_transaction
+        if owns_transaction:
+            self.db.execute("BEGIN IMMEDIATE")
+        self.db.execute("SAVEPOINT font_repair_finish")
+        try:
+            row = self.db.execute("SELECT hash,phase FROM font_repairs WHERE id=?", (repair_id,)).fetchone()
+            if not row or row[1] != "PREPARED":
+                raise ValueError("修復意圖不存在或已結案")
+            self.db.execute("UPDATE font_repairs SET phase=? WHERE id=?", (phase, repair_id))
+            self.event(row[0], action)
+            self.db.execute("RELEASE font_repair_finish")
+            if owns_transaction:
+                self.db.commit()
+        except BaseException:
+            self.db.execute("ROLLBACK TO font_repair_finish")
+            self.db.execute("RELEASE font_repair_finish")
+            if owns_transaction:
+                self.db.rollback()
+            raise
+
+    def font_repairs(self) -> list[dict]:
+        return [{**json.loads(row[0]), "phase": row[1]} for row in self.db.execute("SELECT payload,phase FROM font_repairs ORDER BY rowid")]
 
     def backup(self, target: Path) -> None:
         """第一版提供數據庫一致性快照；完整資產加密備份留後期。"""

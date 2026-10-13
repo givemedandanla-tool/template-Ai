@@ -6,6 +6,8 @@ import re
 from pathlib import Path
 import shutil
 import tempfile
+import time
+import uuid
 
 from PySide6.QtGui import QFontDatabase
 
@@ -23,6 +25,8 @@ def font_errors(asset: dict | None, family: str) -> list[str]:
         if asset.get("approved") is not True or family not in asset["families"]:
             return ["本機字型資產尚未核准或字型家族不符"]
         path = Path(asset["path"])
+        if path.is_symlink():
+            return ["本機字型資產位置含符號連結，需修復為正常複本"]
         if not path.is_file():
             return ["本機字型資產失聯，需重新匯入"]
         if path.stat().st_size > 50_000_000:
@@ -53,6 +57,7 @@ class FontManager:
         self.library = library
         self.loaded = {}
         self.issues = []
+        self._recover_repairs()
         for asset in library.fonts():
             families = asset.get("families", []) if isinstance(asset, dict) else []
             family = families[0] if isinstance(families, list) and families else ""
@@ -81,7 +86,7 @@ class FontManager:
         if existing:
             errors = font_errors(existing, existing["families"][0])
             if errors:
-                raise ValueError("；".join(errors) + "；請恢復原核准的資產複本後再載入")
+                raise ValueError("；".join(errors) + "；請使用「修復既有本機字型」恢復同內容複本")
             if digest not in self.loaded:
                 font_id = QFontDatabase.addApplicationFont(existing["path"])
                 if font_id < 0:
@@ -124,6 +129,136 @@ class FontManager:
                 target.unlink(missing_ok=True)
             raise
         finally:
+            temporary.unlink(missing_ok=True)
+
+    def _owned_target(self, asset: dict) -> Path:
+        folder = self.library.assets / "fonts"
+        target = Path(asset["path"])
+        if (folder.resolve() != folder or target.parent != folder or target.suffix.lower() not in (".ttf", ".otf", ".ttc")
+                or target.stem != asset["hash"] or target.is_symlink()):
+            raise ValueError("字型修復位置不是程式擁有的正常複本，不修改此位置")
+        return target
+
+    def _recover_repairs(self) -> None:
+        assets = {asset["hash"]: asset for asset in self.library.fonts()}
+        for record in self.library.font_repairs():
+            if record["phase"] != "PREPARED":
+                continue
+            try:
+                asset = assets[record["hash"]]
+                self._owned_target(asset)
+                valid = not font_errors(asset, asset["families"][0])
+                if valid:
+                    self.library.finish_font_repair(record["id"], "COMPLETED", "font_repair_recovered_same_content")
+                else:
+                    self.library.finish_font_repair(record["id"], "FAILED", "font_repair_interrupted_not_restored")
+            except (KeyError, ValueError, OSError) as error:
+                self.issues.append("未完成字型修復需處理：" + str(error))
+            except Exception as error:
+                self.issues.append("修復紀錄尚未安全保存：" + str(error))
+
+    def repair_font(self, asset_hash: str, path: str | Path, approved: bool = False) -> dict:
+        """同內容才能恢復 pin；損壞複本保留隔離，正常例外回滾，中斷靠意圖核對。"""
+        if approved is not True:
+            raise ValueError("請先確認有權將此字型保存於本機並在程式使用")
+        asset = next((a for a in self.library.fonts() if a["hash"] == asset_hash), None)
+        if not asset or asset.get("approved") is not True or not asset.get("families"):
+            raise ValueError("沒有此既有核准字型資產，請先正常匯入")
+        target = self._owned_target(asset)
+        path = Path(path)
+        if path.suffix.lower() not in (".ttf", ".otf", ".ttc") or not path.is_file() or path.stat().st_size > 50_000_000:
+            raise ValueError("字型需為可讀 TTF／OTF／TTC，單檔不超過 50 MB")
+        if file_digest(path) != asset_hash:
+            raise ValueError("修復字型內容不符；同家族或檔名不能替換既有核准版本")
+        if not font_errors(asset, asset["families"][0]):
+            return self.import_font(path, approved=True)
+        folder = target.parent
+        folder.mkdir(exist_ok=True)
+        repair_id = uuid.uuid4().hex
+        quarantine = folder / "quarantine"
+        quarantine.mkdir(exist_ok=True)
+        if quarantine.is_symlink():
+            raise ValueError("字型隔離位置含符號連結，未修復")
+        backup = quarantine / (repair_id + target.suffix)
+        fd, name = tempfile.mkstemp(prefix=".repair-", suffix=target.suffix, dir=folder)
+        temporary = Path(name)
+        new_font_id = -1
+        replaced = False
+        prepared = False
+        committed = False
+        existed = target.exists()
+        try:
+            with os.fdopen(fd, "wb") as stream, path.open("rb") as source:
+                total = 0
+                for chunk in iter(lambda: source.read(1024 * 1024), b""):
+                    total += len(chunk)
+                    if total > 50_000_000:
+                        raise ValueError("字型複製期間超過 50 MB，未修復")
+                    stream.write(chunk)
+                stream.flush()
+                os.fsync(stream.fileno())
+            if file_digest(temporary) != asset_hash:
+                raise ValueError("字型複製期間變更，未修復")
+            new_font_id = QFontDatabase.addApplicationFont(str(temporary))
+            families = QFontDatabase.applicationFontFamilies(new_font_id) if new_font_id >= 0 else []
+            if set(families) != set(asset["families"]):
+                raise ValueError("修復字型無法由 Qt 解析或家族與原核准不符")
+            self._owned_target(asset)
+            original_hash = None
+            if existed:
+                if not target.is_file() or target.stat().st_size > 50_000_000:
+                    raise ValueError("損壞字型複本無法安全隔離，未修復")
+                original_hash = file_digest(target)
+                with target.open("rb") as source, backup.open("xb") as saved:
+                    shutil.copyfileobj(source, saved, length=1024 * 1024)
+                    saved.flush()
+                    os.fsync(saved.fileno())
+                if file_digest(backup) != original_hash or file_digest(target) != original_hash:
+                    raise ValueError("損壞複本在隔離期間變更，未修復")
+            record = {"id": repair_id, "hash": asset_hash, "path": str(target), "approved": True,
+                      "backup": str(backup) if existed else None, "previous_hash": original_hash,
+                      "created": time.time()}
+            self.library.prepare_font_repair(record)
+            prepared = True
+            # 意圖已持久化，再取得寫入鎖直到完成或檔案回滾，避免另一修復插入。
+            self.library.db.execute("BEGIN IMMEDIATE")
+            self._owned_target(asset)
+            if target.exists() != existed or (existed and file_digest(target) != original_hash):
+                raise ValueError("字型複本在修復前變更，未替換")
+            os.replace(temporary, target)
+            replaced = True
+            self.library.finish_font_repair(repair_id, "COMPLETED", "font_repaired_same_content_approved")
+            self.library.db.commit()
+            committed = True
+            old = self.loaded.pop(asset_hash, None)
+            if old:
+                QFontDatabase.removeApplicationFont(old[0])
+            self.loaded[asset_hash] = (new_font_id, asset)
+            new_font_id = -1
+            self.issues = []
+            for a in self.library.fonts():
+                families = a.get("families", []) if isinstance(a, dict) else []
+                self.issues.extend(font_errors(a, families[0] if isinstance(families, list) and families else ""))
+            return asset
+        except BaseException:
+            if replaced and not committed:
+                if existed:
+                    # 保留隔離檔案供覆核，另複製回暫存再原子回復。
+                    shutil.copyfile(backup, temporary)
+                    os.replace(temporary, target)
+                else:
+                    target.unlink(missing_ok=True)
+            if prepared and not committed:
+                try:
+                    self.library.finish_font_repair(repair_id, "FAILED", "font_repair_rolled_back")
+                    self.library.db.commit()
+                except Exception:
+                    self.library.db.rollback()
+                    pass  # PREPARED 保留，重開以实际 bytes 核對；不可冒稱完成。
+            raise
+        finally:
+            if new_font_id >= 0:
+                QFontDatabase.removeApplicationFont(new_font_id)
             temporary.unlink(missing_ok=True)
 
     def close(self):

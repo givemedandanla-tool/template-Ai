@@ -245,6 +245,7 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("復原目前標記／草稿", self.undo)
         self.menuBar().addAction("重做目前標記／草稿", self.redo)
         self.menuBar().addAction("匯入合法本機字型", self.import_font)
+        self.menuBar().addAction("修復既有本機字型", self.repair_font)
         self.menuBar().addAction("操作說明", self.help)
 
     def build_training(self):
@@ -1231,6 +1232,30 @@ class MainWindow(QMainWindow):
         self.current_slot = None
         self.property_button.setEnabled(False)
         self.undo_stack, self.redo_stack = [], []
+
+    def repair_font(self):
+        if self.busy:
+            return
+        assets = self.library.fonts()
+        if not assets:
+            self.inform("目前沒有已核准字型資產，請先匯入合法本機字型")
+            return
+        choices = [" / ".join(a["families"]) + " · " + a["original_name"] + " · " + a["hash"][:12] for a in assets]
+        selected, ok = QInputDialog.getItem(self, "修復字型資產", "選取要恢復的既有字型版本", choices, 0, False)
+        if not ok:
+            return
+        asset = assets[choices.index(selected)]
+        path, _ = QFileDialog.getOpenFileName(self, "選取同內容且已獲授權的字型複本", "", "字型 (*.ttf *.otf *.ttc)")
+        if not path:
+            return
+        if QMessageBox.question(self, "字型修復", "確認有權保存與使用此字型？\n僅恢復相同內容的本機複本，保留已發布模板與字型版本；損壞複本會保留於本機隔離區。") != QMessageBox.Yes:
+            return
+        try:
+            self.font_manager.repair_font(asset["hash"], path, approved=True)
+            self.invalidate()
+            self.inform("字型複本已恢復；請重新排版並核對結果。重開會載入原核准版本。")
+        except Exception as error:
+            self.error(str(error))
 
     def help(self):
         self.inform("第一版快速操作：\n1. 模板區加入示範模板，驗證並發布。\n2. 輸出區填入匿名示範，開始排版並輸出。\n3. 訓練區匯入來源，框選作品、標定毫米，新增欄位並設定歸屬。\n4. 核對原稿後確認視覺一致，保存標記、學習模板。\n5. 缺少 Logo 或內容排不下只可 PREVIEW，不會暗縮字級。\n\n本版只提供標記幾何規則學習；完整自動辨識、客戶重訂、深度模型、完整權限與印刷分析尚未完成。")

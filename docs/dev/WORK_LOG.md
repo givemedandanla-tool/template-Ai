@@ -6,7 +6,9 @@
 
 - CORE-024 永久證據 snapshot `956e9ecb7078e250682564e1d8cf6954230f5f8e` 161 檔確認；收據／STATE 在 `712448eeb24e373946cc112ba0f41307f7244327` 保存。
 - 字型修復只恢復同內容核准複本，隔離損壞副本，保留 pin；加入修復 PREPARED 意圖與啟動核對，避免把跨 SQLite／檔案操作冒稱單一原子交易。
-- 設計與商用／開源／演算法參考見 FONT_REPAIR_DESIGN.md。開始修改前保存 BEGIN；下一步具名驗收與修復，不打包 EXE。
+- BEGIN `37d1f2c19ed54215cec1e0258632dd2666e15a7d` 已讀回 164 檔。11 個具名字型修復測試通過，包括新 PDF 實際匯出、模板 pin、隔離 hash、正常例外回滾與 PREPARED 重開核對。
+- 檔案／SQLite 不冒稱跨存储原子交易；持久意圖及 SAVEPOINT 保留失敗回滾時的寫入鎖。Windows 鎖檔與斷電仍需真機驗收。
+- 下一步：v0.1.5 來源 checkpoint、全套證據与永久附件，不打包 EXE。
 
 ## 2026-10-13：CORE-024 完成
 
