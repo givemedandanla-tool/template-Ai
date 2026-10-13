@@ -1,0 +1,626 @@
+[
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_cross_source_selection_and_invalid_geometry_do_not_mutate",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.096236
+  },
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_gui_learning_saves_exact_current_mark_revision",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.293858
+  },
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_gui_new_crop_keeps_previous_work_and_reopens_latest",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.334262
+  },
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_gui_reopens_last_selected_source_not_latest_import",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.238821
+  },
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_gui_restore_history_preserves_published_template",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.209835
+  },
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_history_restore_adds_revision_and_stale_update_blocks",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.097909
+  },
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_learned_template_pins_work_revision_and_rejects_wrong_source",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.130739
+  },
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_old_labels_migrate_once_without_deleting_legacy",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.09804
+  },
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_publish_event_failure_rolls_back_database_and_memory",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.141271
+  },
+  {
+    "id": "test_artwork_recovery.ArtworkRecoveryTests.test_two_works_reopen_active_selection_and_marks",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.126648
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.283516
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceGuiTests.test_cancelled_scan_or_worker_error_never_enables_commit",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.244661
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceGuiTests.test_selected_batch_apply_and_gui_undo_preserve_work",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.23945
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.100408
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_candidate_changed_after_background_verify_does_not_partially_commit",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.071144
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_candidate_count_is_bounded_and_partial_not_all_found",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.078652
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_empty_duplicate_and_same_current_location_are_not_fake_updates",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.062813
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_final_batch_audit_failure_rolls_back_links_histories_and_reviews",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.066841
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_late_revision_conflict_and_event_failure_roll_back_entire_batch",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.10714
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_later_relink_revision_is_not_overwritten_by_old_batch_undo",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.084394
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_limits_cancel_unreadable_and_missing_fingerprint_are_explicit",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.075189
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_one_candidate_hashed_once_for_independent_same_content_registrations",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.0829
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_resolved_directory_outside_root_not_entered_even_without_symlink_flag",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.09998
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_search_does_not_follow_symlink_outside_selected_root",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.092204
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_size_prefilter_same_name_different_bytes_and_ambiguous_copies",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.099456
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_undo_missing_original_wrong_position_or_later_revision_rejected",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.108899
+  },
+  {
+    "id": "test_batch_source_relink.BatchSourceTests.test_undo_verifies_old_paths_creates_new_revisions_and_keeps_history",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.11428
+  },
+  {
+    "id": "test_dev_framework.DevFrameworkTests.test_automatic_exe_trigger_is_rejected",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.021536
+  },
+  {
+    "id": "test_dev_framework.DevFrameworkTests.test_changed_acceptance_cannot_reuse_old_pass",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.029118
+  },
+  {
+    "id": "test_dev_framework.DevFrameworkTests.test_changed_source_and_attachment_invalidate_evidence",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.034428
+  },
+  {
+    "id": "test_dev_framework.DevFrameworkTests.test_checkpoint_records_pending_and_clears_after_ack",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.013905
+  },
+  {
+    "id": "test_dev_framework.DevFrameworkTests.test_checkpoint_rejects_mismatched_remote_and_existing_id",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.035234
+  },
+  {
+    "id": "test_dev_framework.DevFrameworkTests.test_checkpoint_restore_and_remote_ack",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.016697
+  },
+  {
+    "id": "test_dev_framework.DevFrameworkTests.test_missing_entry_blocks_work",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.009856
+  },
+  {
+    "id": "test_dev_framework.DevFrameworkTests.test_skipped_or_missing_test_cannot_complete",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.013649
+  },
+  {
+    "id": "test_dev_progress.DevProgressTests.test_added_scope_and_status_changes_are_distinct",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.001395
+  },
+  {
+    "id": "test_dev_progress.DevProgressTests.test_groups_conserve_counts_without_parent_completion",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.000228
+  },
+  {
+    "id": "test_dev_progress.DevProgressTests.test_invalid_or_duplicate_status_cannot_hide_unfinished_work",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.001144
+  },
+  {
+    "id": "test_dev_progress.DevProgressTests.test_snapshots_immutable_and_current_report_detects_drift",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.003323
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_actual_inkscape_svg_and_pdf_compatible_ai",
+    "status": "PASS",
+    "details": [],
+    "seconds": 2.05126
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_atomic_publish_failure_preserves_existing_file_and_cleans_temp",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.035175
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_empty_platform_font_database_has_clear_diagnostic",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.003207
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_export_all_formats_real_pdf_dimensions_and_no_overwrite",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.059562
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.006827
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_geometric_overlap_and_outside_block_publication",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.002028
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.064756
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_missing_font_does_not_use_silent_fallback",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.003575
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_missing_logo_and_wrong_size_or_company_do_not_pass",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.052803
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_person_company_binding_is_not_inferred_from_strings",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.002592
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_pixel_comparison_reports_unknown_alignment",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.002398
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_published_templates_are_immutable_and_family_versions_safe",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.003062
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_source_dedupe_preserves_independent_registrations_and_reopen",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.01625
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_source_labels_to_learned_template_to_output",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.097185
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_stale_generation_and_unmarked_preview_block",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.005547
+  },
+  {
+    "id": "test_first_version.FirstVersionTests.test_unused_contact_and_wrong_capacity_block",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.004408
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.050243
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_corrupted_copy_retained_in_quarantine_and_reference_unchanged",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.030298
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.009891
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.040791
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.191454
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_healthy_copy_repair_is_idempotent",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.022567
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.027693
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_missing_copy_restored_and_reopened_without_changing_published_pin",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.058783
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.031933
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.027368
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.028709
+  },
+  {
+    "id": "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.021554
+  },
+  {
+    "id": "test_import_pages.ImportPageTests.test_actual_second_page_and_cache_stay_distinct",
+    "status": "PASS",
+    "details": [],
+    "seconds": 2.18989
+  },
+  {
+    "id": "test_import_pages.ImportPageTests.test_bad_pdf_page_is_rejected_before_converter_runs",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.016559
+  },
+  {
+    "id": "test_import_pages.ImportPageTests.test_extreme_svg_is_blocked_before_large_preview",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.002372
+  },
+  {
+    "id": "test_import_pages.ImportPageTests.test_non_pdf_page_is_explicitly_rejected",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.001656
+  },
+  {
+    "id": "test_import_pages.ImportPageTests.test_qt_fallback_really_selects_second_page",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.249786
+  },
+  {
+    "id": "test_import_pages.ImportPageTests.test_raster_budget_checks_header_before_decoding",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.004511
+  },
+  {
+    "id": "test_persistent_fonts.PersistentFontTests.test_catalog_failure_removes_only_new_asset",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.017019
+  },
+  {
+    "id": "test_persistent_fonts.PersistentFontTests.test_changed_or_missing_asset_blocks_even_if_system_font_exists",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.029092
+  },
+  {
+    "id": "test_persistent_fonts.PersistentFontTests.test_copy_reopen_and_original_removal_do_not_lose_font",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.048841
+  },
+  {
+    "id": "test_persistent_fonts.PersistentFontTests.test_gui_import_binds_file_and_reopens_without_dialog",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.425224
+  },
+  {
+    "id": "test_persistent_fonts.PersistentFontTests.test_new_python_process_loads_persisted_font",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.421677
+  },
+  {
+    "id": "test_persistent_fonts.PersistentFontTests.test_same_family_different_file_is_not_silently_replaced",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.101726
+  },
+  {
+    "id": "test_persistent_fonts.PersistentFontTests.test_unapproved_invalid_and_duplicate_font_protect_catalog",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.03328
+  },
+  {
+    "id": "test_source_cache.SourceCacheTests.test_changed_preview_regenerated_original_unchanged",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.038149
+  },
+  {
+    "id": "test_source_cache.SourceCacheTests.test_changed_vector_asset_regenerated",
+    "status": "PASS",
+    "details": [],
+    "seconds": 10.341229
+  },
+  {
+    "id": "test_source_cache.SourceCacheTests.test_failed_regeneration_does_not_restore_corrupt_cache_as_success",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.883241
+  },
+  {
+    "id": "test_source_cache.SourceCacheTests.test_invalid_metadata_and_foreign_paths_are_not_reused",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.052122
+  },
+  {
+    "id": "test_source_cache.SourceCacheTests.test_symlink_cache_does_not_overwrite_original",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.0166
+  },
+  {
+    "id": "test_source_cache.SourceCacheTests.test_valid_cache_reused_without_rewriting",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.023119
+  },
+  {
+    "id": "test_source_relink.SourceRelinkTests.test_event_failure_rolls_back_link_and_history",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.098474
+  },
+  {
+    "id": "test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.561935
+  },
+  {
+    "id": "test_source_relink.SourceRelinkTests.test_moved_source_reopens_with_original_identity_and_history",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.110608
+  },
+  {
+    "id": "test_source_relink.SourceRelinkTests.test_repeated_current_path_is_idempotent_and_wrong_source_proof_rejected",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.106923
+  },
+  {
+    "id": "test_source_relink.SourceRelinkTests.test_same_name_different_bytes_and_missing_candidate_rejected",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.153481
+  },
+  {
+    "id": "test_source_relink.SourceRelinkTests.test_stale_revision_and_candidate_changed_after_verification_rejected",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.176032
+  },
+  {
+    "id": "test_source_relink.SourceRelinkTests.test_status_distinguishes_missing_changed_unreadable_and_ok",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.090703
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_changed_background_after_candidate_blocks_and_cleans_export",
+    "status": "PASS",
+    "details": [],
+    "seconds": 2.577169
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_decoration_in_preview_and_all_actual_exports",
+    "status": "PASS",
+    "details": [],
+    "seconds": 2.495787
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_external_svg_resource_is_rejected_before_approval",
+    "status": "PASS",
+    "details": [],
+    "seconds": 1.042346
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+    "status": "PASS",
+    "details": [],
+    "seconds": 1.020062
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_missing_background_is_not_silently_rendered_white",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.733409
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_raster_background_requires_matching_ratio",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.837886
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_raster_choice_uses_approved_imported_pixels",
+    "status": "PASS",
+    "details": [],
+    "seconds": 1.08139
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_real_background_review_dialog_saves_chosen_mode",
+    "status": "PASS",
+    "details": [],
+    "seconds": 2.697273
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_reopen_version_and_old_schema_preserve_background",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.830326
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_text_color_is_real_rendered_and_invalid_color_blocks",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.739363
+  },
+  {
+    "id": "test_visual_background.VisualBackgroundTests.test_unapproved_and_wrong_size_background_block_publication",
+    "status": "PASS",
+    "details": [],
+    "seconds": 0.761138
+  }
+]

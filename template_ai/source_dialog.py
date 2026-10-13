@@ -56,6 +56,7 @@ class SourceRelinkDialog(QDialog):
         history.addWidget(self.undo_button)
         layout.addLayout(history)
         close = QDialogButtonBox(QDialogButtonBox.Close)
+        close.button(QDialogButtonBox.Close).setText("關閉")
         close.rejected.connect(self.reject)
         layout.addWidget(close)
         self.refresh_history()
@@ -127,14 +128,20 @@ class SourceRelinkDialog(QDialog):
             self.table.setItem(i, 2, QTableWidgetItem(source["current_path"] + "\n" + row["availability"]))
             combo = QComboBox()
             combo.addItem("請明確選取候選位置", None)
-            for proof in row["candidates"]: combo.addItem(proof.path, proof)
+            for proof in row["candidates"]:
+                combo.addItem(proof.path, proof)
+                combo.setItemData(combo.count() - 1, proof.path, Qt.ToolTipRole)
             self.table.setCellWidget(i, 3, combo)
             self.table.setItem(i, 4, QTableWidgetItem(source.get("impacts", {}).get("summary", "關聯未知")))
             note = f"{source['hash']}\n{source.get('byte_size', '未知')} bytes；同內容副本 {len(row['candidates'])}；同名異內容 {len(row['same_name_different'])}"
             if row.get("candidate_limit"): note += "；候選超額，請縮小範圍"
             self.table.setItem(i, 5, QTableWidgetItem(note))
+            for column in (1, 2, 4, 5):
+                item = self.table.item(i, column)
+                item.setToolTip(item.text())
         self.table.resizeColumnsToContents()
         for i in (1, 2, 3, 5): self.table.setColumnWidth(i, 230)
+        self.table.resizeRowsToContents()
         names = {"COMPLETE":"指定範圍搜尋完成", "PARTIAL":"僅完成部分搜尋，不能稱全部找齊", "CANCELLED":"已取消搜尋，未更新來源"}
         errors = "；".join(e["reason"] for e in report["errors"][:3])
         self.status.setText(f"{names[report['status']]}；已查看 {report['entries']} 項、核對 {report['hashed_files']} 檔；略過／錯誤 {len(report['errors'])}。" + errors)

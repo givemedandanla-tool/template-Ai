@@ -12,7 +12,8 @@
 - WIP `7a79ef609f11cc145732179024c6efd104caddce` 226 檔已確認；已加入 16 項批次具名驗收，含最終事件失敗全批回滾及後來版次不被舊批次復原覆蓋。新增真實批次候選預覽截图，勾选維持預設未核准。
 - 程式 snapshot `d550d9471da370703b9b31fb7ee820f1498c5fae` 已讀回 229 檔；RUN-BATCH-RELINK-001 103 PASS／0 SKIP、20 件附件。
 - 自我檢查補上未標為一般 symlink 的目錄接點實際位置限制，避免進入範圍外目錄；模擬測試不冒稱 Windows 真機驗收。新碼／驗收將重新全套驗證，保留第一輪紀錄。
-- 下一步：HARDENED 保存，RUN-BATCH-RELINK-002 與結束清單統計。
+- HARDENED `95f3d296151b01db6d17de859825f1ed7e0dcaf2` 252 檔已確認，RUN-BATCH-RELINK-002 104 PASS／0 SKIP、20 件附件。實際截圖發現表列高度使第二行來源識別／狀態／bytes 不易閱讀，補自適應列高及完整 tooltip，關閉鈕本地化；不把截圖只生成當作視覺驗收完成。
+- 下一步：UI 可讀性來源 checkpoint，RUN-BATCH-RELINK-003 及結束清單統計。
 
 ## 2026-10-13：v0.1.5／CORE-025 完成
 
