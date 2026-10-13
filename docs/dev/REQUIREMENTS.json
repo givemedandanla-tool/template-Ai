@@ -1,0 +1,2623 @@
+{
+  "schema_version": 1,
+  "registry_policy": "保留全部原題目；明列子範圍驗收，父需求不自動完成",
+  "requirements": [
+    {
+      "id": "UI-001",
+      "kind": "topic",
+      "title": "三模式主視窗",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "三模式入口、可收合面板與共用工具一致",
+      "phase": "P1、P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-001-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：三模式入口、可收合面板與共用工具一致",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-002",
+      "kind": "topic",
+      "title": "模式切換狀態",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "模式切換保留有效當次狀態，恢復擴充依 UI-058",
+      "phase": "P1、P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-002-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：模式切換保留有效當次狀態，恢復擴充依 UI-058",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-003",
+      "kind": "topic",
+      "title": "訓練區批次匯入與啟動",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "預檢確認一次啟動，三層去重不混淆",
+      "phase": "P2",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-003-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：預檢確認一次啟動，三層去重不混淆",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-004",
+      "kind": "topic",
+      "title": "訓練例外處理",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "單件例外隔離，其餘合法工作繼續",
+      "phase": "P2",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-004-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：單件例外隔離，其餘合法工作繼續",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-005",
+      "kind": "topic",
+      "title": "例外中心智慧待辦排序",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "待辦排序與影響數有來源，不能自動解除隔離",
+      "phase": "P2",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-005-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：待辦排序與影響數有來源，不能自動解除隔離",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-006",
+      "kind": "topic",
+      "title": "例外修正工作台",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "原稿／疊圖／前後對照，修正可撤銷且不改原檔",
+      "phase": "P2",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-006-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：原稿／疊圖／前後對照，修正可撤銷且不改原檔",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-007",
+      "kind": "topic",
+      "title": "修正套用與 AI 學習確認",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "確認作品事實不自動發布跨作品規則",
+      "phase": "P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-007-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：確認作品事實不自動發布跨作品規則",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-008",
+      "kind": "topic",
+      "title": "待審核規則中心",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "低風險批次、高風險逐條，啟用均有人為核准",
+      "phase": "P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-008-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：低風險批次、高風險逐條，啟用均有人為核准",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-009",
+      "kind": "topic",
+      "title": "模板庫瀏覽方式",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "按實體尺寸及 peopleCapacity 分類並保持搜尋選取",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-009-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：按實體尺寸及 peopleCapacity 分類並保持搜尋選取",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-010",
+      "kind": "topic",
+      "title": "模板版本編輯機制",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "正式版本唯讀，草稿持久，驗證及核准後發布",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-010-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：正式版本唯讀，草稿持久，驗證及核准後發布",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-011",
+      "kind": "topic",
+      "title": "模板編輯器物件操作",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "畫布／語意樹／屬性同一物件與歸屬",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-011-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：畫布／語意樹／屬性同一物件與歸屬",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-012",
+      "kind": "topic",
+      "title": "物件移動縮放與智慧對齊",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "毫米幾何、吸附及鎖定，草稿違規不可發布",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-012-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：毫米幾何、吸附及鎖定，草稿違規不可發布",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-013",
+      "kind": "topic",
+      "title": "文字框智慧編輯介面",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "字級定案不依字數改變，無合法解不截字",
+      "phase": "P3",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-013-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：字級定案不依字數改變，無合法解不截字",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-014",
+      "kind": "topic",
+      "title": "文字框無解診斷與輸入密度分級提醒",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "實測無解與證據不足分開，禁止暗縮字級",
+      "phase": "P3、P5",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-014-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：實測無解與證據不足分開，禁止暗縮字級",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-015",
+      "kind": "topic",
+      "title": "使用者資料輸入警告介面",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "欄位提醒、整體狀態與問題定位判定一致",
+      "phase": "P3、P5",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-015-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：欄位提醒、整體狀態與問題定位判定一致",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-016",
+      "kind": "topic",
+      "title": "新增人物、公司與多筆聯絡資料",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "多人多公司、多聯絡方式保持各自語意所有權",
+      "phase": "P3",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-016-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：多人多公司、多聯絡方式保持各自語意所有權",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-017",
+      "kind": "topic",
+      "title": "共享公司與聯絡資料編輯",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "實體共享、複本、解除關聯與刪除區別",
+      "phase": "P3",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-017-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：實體共享、複本、解除關聯與刪除區別",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-018",
+      "kind": "topic",
+      "title": "自動排版結果與候選模板呈現",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "先硬驗證後候選排序，未完成搜尋不稱全域最佳",
+      "phase": "P5",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-018-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：先硬驗證後候選排序，未完成搜尋不稱全域最佳",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-019",
+      "kind": "topic",
+      "title": "印刷預檢與高保真 Logo 預覽輸出",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "本輪修訂：數位視覺／輸出品質前期驗證；實體印刷分析移至軟體完善後 P10",
+      "phase": "P3、P5／P10",
+      "decision_status": "需求已核准／本輪修訂優先",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-019-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：本輪修訂：數位視覺／輸出品質前期驗證；實體印刷分析移至軟體完善後 P10",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-020",
+      "kind": "topic",
+      "title": "複合公司 Logo 與來源品質管理",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Logo 圖形加文字整體保護，OCR 不拆商標",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-020-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：Logo 圖形加文字整體保護，OCR 不拆商標",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-021",
+      "kind": "topic",
+      "title": "複合 Logo 訓練校正、Logo 資料庫與缺圖占位",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "候選核准入庫，缺圖同框位黑底白字只作占位",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-021-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：候選核准入庫，缺圖同框位黑底白字只作占位",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-022",
+      "kind": "topic",
+      "title": "Logo 資料庫管理與審核介面",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "同尺寸跨模式入口共用，候選未核准不入正式庫",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-022-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：同尺寸跨模式入口共用，候選未核准不入正式庫",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-023",
+      "kind": "topic",
+      "title": "同公司 Logo 版本選用與按尺寸獨立 Logo 庫",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "已知尺寸不跨庫，唯一新尺寸例外仍須目標核准",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-023-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：已知尺寸不跨庫，唯一新尺寸例外仍須目標核准",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-024",
+      "kind": "topic",
+      "title": "各尺寸 Logo 庫管理與新尺寸預測專區",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "新尺寸預測專區與正常尺寸庫隔離",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-024-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：新尺寸預測專區與正常尺寸庫隔離",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-025",
+      "kind": "topic",
+      "title": "Logo 框位等比適配與安全候選比較",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "等比完整放入，留白不自動失敗，不能裁切變形",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-025-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：等比完整放入，留白不自動失敗，不能裁切變形",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-026",
+      "kind": "topic",
+      "title": "公司 Logo 自動匹配、選擇與匯入介面",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "單一有效版可預覽，多版歧義人工選擇並綁版本",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-026-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：單一有效版可預覽，多版歧義人工選擇並綁版本",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-027",
+      "kind": "topic",
+      "title": "多尺寸驗證總覽、部分正式輸出與黑底白字預覽檔",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "各矩形尺寸獨立排版／數位驗證，部分正式輸出明確確認；印刷分析後移",
+      "phase": "P5／P10",
+      "decision_status": "需求已核准／本輪修訂優先",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-027-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：各矩形尺寸獨立排版／數位驗證，部分正式輸出明確確認；印刷分析後移",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-028",
+      "kind": "topic",
+      "title": "黑底白字占位預覽檔格式與非正式標示",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "PNG 預設與非正式標示保留；數位內容與比例驗證，實體印刷分析後移",
+      "phase": "P3、P5",
+      "decision_status": "需求已核准／本輪修訂優先",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-028-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：PNG 預設與非正式標示保留；數位內容與比例驗證，實體印刷分析後移",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-029",
+      "kind": "topic",
+      "title": "批次輸出清單、智慧命名與安全儲存",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "正式／預覽分流，預設不覆寫，逐檔真實狀態",
+      "phase": "P3、P5",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-029-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：正式／預覽分流，預設不覆寫，逐檔真實狀態",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-030",
+      "kind": "topic",
+      "title": "批次輸出失敗診斷與安全重試",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "只重試失敗項，保護成功檔，半成品不作正式成功",
+      "phase": "P3、P5",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-030-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：只重試失敗項，保護成功檔，半成品不作正式成功",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-031",
+      "kind": "topic",
+      "title": "字型缺失與 Illustrator 特殊文字效果處理",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "本輪修訂：Inkscape 等路徑視覺一致且可訓練可完成匯入；原生資訊缺失如實標記",
+      "phase": "P2、P3",
+      "decision_status": "需求已核准／本輪修訂優先",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-031-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：本輪修訂：Inkscape 等路徑視覺一致且可訓練可完成匯入；原生資訊缺失如實標記",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-032",
+      "kind": "topic",
+      "title": "Windows 字型庫、智慧匹配、匯入與受控安裝介面",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "程式載入與 Windows 安裝不同，系統安裝需明確同意",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-032-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：程式載入與 Windows 安裝不同，系統安裝需明確同意",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-033",
+      "kind": "topic",
+      "title": "字型替代影響範圍與風險分級批次審核",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "替代前逐欄影響，勾選低風險批次，高風險逐筆",
+      "phase": "P3、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-033-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：替代前逐欄影響，勾選低風險批次，高風險逐筆",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-034",
+      "kind": "topic",
+      "title": "畫布、物件清單與屬性面板同步安全編輯",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "三向多選同一集合，混合值不被默默覆蓋",
+      "phase": "P2、P3、P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-034-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：三向多選同一集合，混合值不被默默覆蓋",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-035",
+      "kind": "topic",
+      "title": "語意樹、Illustrator 圖層與搜尋／鎖定管理介面",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "已取得的原圖層或衍生物件結構分層呈現，不虛構原生結構；隱藏不減驗證範圍",
+      "phase": "P2、P3、P7",
+      "decision_status": "需求已核准／本輪修訂優先",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-035-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：已取得的原圖層或衍生物件結構分層呈現，不虛構原生結構；隱藏不減驗證範圍",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-036",
+      "kind": "topic",
+      "title": "多物件精確對齊、等距分布與群組位移",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "明確基準與差異預覽，對齊不改字級／Logo 比例",
+      "phase": "P2、P3、P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-036-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：明確基準與差異預覽，對齊不改字級／Logo 比例",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-037",
+      "kind": "topic",
+      "title": "畫布縮放、平移、快速定位與同步對照檢視",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "縮放平移只改視角，實際尺寸須校準才承諾",
+      "phase": "P2、P3、P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-037-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：縮放平移只改視角，實際尺寸須校準才承諾",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-038",
+      "kind": "topic",
+      "title": "多作品總覽、智慧辨識框與作品上直接標記／修正",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "矩形作品範圍與雙層標記；適用 Inkscape 衍生來源，視覺一致且有效可訓練",
+      "phase": "P2",
+      "decision_status": "需求已核准／本輪修訂優先",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-038-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：矩形作品範圍與雙層標記；適用 Inkscape 衍生來源，視覺一致且有效可訓練",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-039",
+      "kind": "topic",
+      "title": "AI 智慧資料辨識框的畫布快捷標記與人工校正",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "標記中介資料與真物件編輯區別，確認可追溯",
+      "phase": "P2、P3、P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-039-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：標記中介資料與真物件編輯區別，確認可追溯",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-040",
+      "kind": "topic",
+      "title": "智慧標記完整性衝突檢查與可重用雜訊剔除規則",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "核准雜訊條件後自動排除，不反覆問也不刪原稿",
+      "phase": "P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-040-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：核准雜訊條件後自動排除，不反覆問也不刪原稿",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-041",
+      "kind": "topic",
+      "title": "雜訊規則庫、命中追溯、例外白名單與安全回滾",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "命中追溯、單項恢復、白名單及規則回滾可核對",
+      "phase": "P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-041-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：命中追溯、單項恢復、白名單及規則回滾可核對",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-042",
+      "kind": "topic",
+      "title": "訓練可恢復進度、精確去重與客戶資料庫重訂關聯",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "異名同內容共用分析、保留來源客戶映射及斷點",
+      "phase": "P1、P6",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-042-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：異名同內容共用分析、保留來源客戶映射及斷點",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-043",
+      "kind": "topic",
+      "title": "智慧客戶建檔、版型關聯與正式資料結構方案",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "客戶關聯尺寸版型，不設購買分類，編號保留前導零",
+      "phase": "P6",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-043-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：客戶關聯尺寸版型，不設購買分類，編號保留前導零",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-044",
+      "kind": "topic",
+      "title": "舊客戶多條件搜尋、多尺寸版型比較與安全沿用重訂",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "搜尋核對身份，沿用確切版型開新稿並重驗",
+      "phase": "P6",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-044-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：搜尋核對身份，沿用確切版型開新稿並重驗",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-045",
+      "kind": "topic",
+      "title": "客戶主檔與當次製作逐欄差異、選擇性回寫與版本保護",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "只回寫明確勾選欄位，過期主檔版本阻擋",
+      "phase": "P6",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-045-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：只回寫明確勾選欄位，過期主檔版本阻擋",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-046",
+      "kind": "topic",
+      "title": "疑似重複客戶比對、受控合併與可追溯拆分恢復",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "合併須確認、別名可查，拆分不覆蓋後續新值",
+      "phase": "P6",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-046-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：合併須確認、別名可查，拆分不覆蓋後續新值",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-047",
+      "kind": "topic",
+      "title": "本機關聯資料智慧備份、加密驗證與安全還原移轉",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "加密完整性及隔離還原，缺資產不宣稱完整可用",
+      "phase": "P6",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-047-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：加密完整性及隔離還原，缺資產不宣稱完整可用",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-048",
+      "kind": "topic",
+      "title": "客戶個資存取權限、遮罩與稽核：最後完成功能",
+      "status": "DEFERRED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "核心功能完善後最後接入；正式真實個資使用前必須完成",
+      "phase": "P8",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-048-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：最後功能完成但正式真資料前必過資料層權限驗證",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-049",
+      "kind": "topic",
+      "title": "Illustrator 來源搬移失聯、內容驗證與受控批次重新連結",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "來源重連以內容驗證，不憑同名，原檔不修改",
+      "phase": "P6",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-049-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：來源重連以內容驗證，不憑同名，原檔不修改",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-050",
+      "kind": "topic",
+      "title": "AI 來源資料夾智慧監看、安全增量匯入與版本衝突審核",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "監看事件需重掃核實，寫入未穩定不分析",
+      "phase": "P6",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-050-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：監看事件需重掃核實，寫入未穩定不分析",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-051",
+      "kind": "topic",
+      "title": "低配置友善、公平審核佇列與安全續跑",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "參考 16 GB 整機 RAM＋RTX 5050 與待補規格 VivoBook；CPU 核心、限流及檢查點",
+      "phase": "P1、P7、P9",
+      "decision_status": "需求已核准／本輪修訂優先",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-051-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：參考 16 GB 整機 RAM＋RTX 5050 與待補規格 VivoBook；CPU 核心、限流及檢查點",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-052",
+      "kind": "topic",
+      "title": "全來源與作品審核覆蓋率、風險分級與安全批次結案",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "分母不漏來源，未審不可結案，重大错誤可重審歷史批次",
+      "phase": "P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-052-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：分母不漏來源，未審不可結案，重大错誤可重審歷史批次",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-053",
+      "kind": "topic",
+      "title": "獨立樣本品質驗收、分類誤判診斷、版本比較與品質阻擋",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "獨立資料分類品質保留；解析品質依視覺一致、訓練有效性及已取得證據判定",
+      "phase": "P7",
+      "decision_status": "需求已核准／本輪修訂優先",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-053-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：獨立資料分類品質保留；解析品質依視覺一致、訓練有效性及已取得證據判定",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-054",
+      "kind": "topic",
+      "title": "品質失敗根因分析、受控局部修復、獨立再驗收與安全回退",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "根因候選隔離、回歸及獨立再驗收，兩版有問題不假退回安全",
+      "phase": "P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-054-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：根因候選隔離、回歸及獨立再驗收，兩版有問題不假退回安全",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-055",
+      "kind": "topic",
+      "title": "人工修正可信訓練樣本池、標記版本與資料污染防護",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "樣本准入與訓練分離，污染可追查 exact 資料集與模型",
+      "phase": "P1、P4",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-055-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：樣本准入與訓練分離，污染可追查 exact 資料集與模型",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-056",
+      "kind": "topic",
+      "title": "訓練樣本類別覆蓋儀表板、缺口提醒與資料分布透明化",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "C 分布與缺口提醒；D 系統補樣不得提前做",
+      "phase": "P7",
+      "decision_status": "C 已核准／D 未來項",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-056-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：C 分布與缺口提醒；D 系統補樣不得提前做",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-057",
+      "kind": "topic",
+      "title": "AI 未涵蓋情境的分級風險提示、安全草稿與硬性無解阻擋",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "低把握、缺證據、已證實無解區別，忽略警告不能放行",
+      "phase": "P5",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-057-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：低把握、缺證據、已證實無解區別，忽略警告不能放行",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-058",
+      "kind": "topic",
+      "title": "當次自動排版的真實進度、低負載執行、安全取消與候選恢復",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "真實進度、短期恢復；按指定參考機實測 RAM、VRAM 與 CPU／GPU 路徑；既有標記歷史是 UI-038 子能力，不能充當當次排版候選恢復已完成",
+      "phase": "P5、P9",
+      "decision_status": "需求已核准／本輪修訂優先",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-058-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：真實進度、短期恢復；按指定參考機實測 RAM、VRAM 與 CPU／GPU 路徑",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-059",
+      "kind": "topic",
+      "title": "當次排版變更依賴局部重算、人工編輯保護與版本衝突防護",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "局部失效、人工位置保護，舊運算結果不可覆寫新版",
+      "phase": "P5",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-059-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：局部失效、人工位置保護，舊運算結果不可覆寫新版",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-060A",
+      "kind": "topic",
+      "title": "UI-060 補充決策 A｜排版完成後結果呈現、多方案比較與問題定位",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "推薦與候選對照、問題定位，未搜尋完整不稱最佳",
+      "phase": "P5",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-060A-RESULT-PRESENTATION.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-060A-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：推薦與候選對照、問題定位，未搜尋完整不稱最佳",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-061",
+      "kind": "topic",
+      "title": "UI-061｜多候選與多尺寸修改同步、套用範圍及局部回復（正式決策）",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "來源內容依 ID 同步，幾何分候選尺寸，跨目標先比對",
+      "phase": "P5",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-061-CROSS-CANDIDATE-SIZE-SYNC.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-061-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：來源內容依 ID 同步，幾何分候選尺寸，跨目標先比對",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-062",
+      "kind": "topic",
+      "title": "template-Ai｜UI-062 跨模式 GUI 操作導覽、工作狀態與安全返回（正式決策）",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "上下文返回有效位置，失效安全降級不丟人工內容",
+      "phase": "P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-062-CROSS-MODE-NAVIGATION-SAFE-RETURN.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-062-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：上下文返回有效位置，失效安全降級不丟人工內容",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-063",
+      "kind": "topic",
+      "title": "template-Ai｜UI-063 右側工作面板：智慧自適應、常用工具固定與問題提示（正式決策）",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "上下文工具可釘選，不適用對象不能錯用舊值",
+      "phase": "P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-063-RIGHT-PANEL-ADAPTIVE-TOOLS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-063-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：上下文工具可釘選，不適用對象不能錯用舊值",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-064",
+      "kind": "topic",
+      "title": "template-Ai｜UI-064 畫布快捷鍵、滑鼠手勢與誤觸衝突防護（正式決策）",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "焦點與中文輸入法優先，模式／Undo 作用域不混淆",
+      "phase": "P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-064-SHORTCUTS-GESTURES-SAFETY.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-064-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：焦點與中文輸入法優先，模式／Undo 作用域不混淆",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-065",
+      "kind": "topic",
+      "title": "template-Ai｜UI-065 多物件／多候選／多作品批次修正：風險分級、差異預覽與安全回復（正式決策）",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "精確範圍預覽、部分成功、冪等重試與安全回復",
+      "phase": "P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-065-BATCH-REPAIR-SAFETY.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-065-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：精確範圍預覽、部分成功、冪等重試與安全回復",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-066",
+      "kind": "topic",
+      "title": "template-Ai｜UI-066 去重決策 A：重用既有診斷 GUI，僅保留獨立報告格式與安全交接補充規格",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "既有診斷重用；獨立報告必要性格式交接尚 OPEN",
+      "phase": "P0／待決",
+      "decision_status": "去重核准／報告子題待決",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-066-DEDUP-REPORT-HANDOFF.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-066-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：既有診斷重用；獨立報告必要性格式交接尚 OPEN",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-067",
+      "kind": "topic",
+      "title": "template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策）",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "全面對帳只問真缺口，治理不算新產品功能",
+      "phase": "P0",
+      "decision_status": "治理核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-067-GUI-CONVERGENCE-GOVERNANCE.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-067-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：全面對帳只問真缺口，治理不算新產品功能",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-052-REVIEW",
+      "kind": "topic",
+      "title": "重大共通錯誤跨歷史批次重審追加核准",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "依賴追溯、暫停信任、逐項再審，保留歷史與原成品",
+      "phase": "P7",
+      "decision_status": "需求已核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-052-REVIEW-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：依賴追溯、暫停信任、逐項再審，保留歷史與原成品",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-056-D",
+      "kind": "topic",
+      "title": "進階分布失衡與系統化補樣",
+      "status": "DEFERRED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "正式版本完善後另行評估，不加入本期交付",
+      "phase": "本期之外",
+      "decision_status": "未來低優先／另行核准",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/UI_DECISIONS.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-056-D-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：正式版本完善後另行評估，不加入本期交付",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-066-R1",
+      "kind": "topic",
+      "title": "是否需要獨立報告及最小格式內容",
+      "status": "BLOCKED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "只處理真缺口，不重問診斷和預覽",
+      "phase": "待決",
+      "decision_status": "待使用者取捨",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-066-DEDUP-REPORT-HANDOFF.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-066-R1-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：只處理真缺口，不重問診斷和預覽",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "UI-066-R2",
+      "kind": "topic",
+      "title": "報告本機保存、去識別與人工交接",
+      "status": "BLOCKED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "只處理真缺口，不重問診斷和預覽",
+      "phase": "待決",
+      "decision_status": "待使用者取捨",
+      "sources": [
+        "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-066-DEDUP-REPORT-HANDOFF.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "UI-066-R2-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：只處理真缺口，不重問診斷和預覽",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "REV-01",
+      "kind": "topic",
+      "title": "矩形區域自動排版與模板 AI；X-04 結案",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "同一矩形模型，名稱不再待決；既有客戶人物公司與資產功能沿用",
+      "phase": "P0～P9",
+      "decision_status": "本輪使用者已核准",
+      "sources": [
+        "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "REV-01-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：同一矩形模型，名稱不再待決；既有客戶人物公司與資產功能沿用",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "REV-02",
+      "kind": "topic",
+      "title": "Inkscape 等視覺一致且可訓練的 AI 匯入",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "真實參考視覺無可辨識差異且有效可訓練；完整原生結構非共同必要條件",
+      "phase": "P0、P2",
+      "decision_status": "本輪使用者已核准",
+      "sources": [
+        "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "REV-02-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：真實參考視覺無可辨識差異且有效可訓練；完整原生結構非共同必要條件",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "REV-03",
+      "kind": "topic",
+      "title": "軟體完善後再做實體印刷分析",
+      "status": "DEFERRED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "前期數位輸出與幾何仍驗證，實體樣張／設備／材料條件後移",
+      "phase": "P10",
+      "decision_status": "本輪使用者已核准",
+      "sources": [
+        "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "REV-03-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：前期數位輸出與幾何仍驗證，實體樣張／設備／材料條件後移",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "REV-04",
+      "kind": "topic",
+      "title": "16 GB＋RTX 5050 至 ASUS VivoBook 效能範圍",
+      "status": "PARTIAL",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "VivoBook 型號待補；16 GB 整機非程序可占滿預算，實測 CPU／GPU 與峰值資源",
+      "phase": "P1、P7、P9",
+      "decision_status": "本輪使用者已核准",
+      "sources": [
+        "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md"
+      ],
+      "parents": [],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "REV-04-FULL",
+          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：VivoBook 型號待補；16 GB 整機非程序可占滿預算，實測 CPU／GPU 與峰值資源",
+          "tests": []
+        }
+      ],
+      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成"
+    },
+    {
+      "id": "CORE-001",
+      "kind": "core",
+      "title": "固定字級與長文字無解阻擋",
+      "parents": [
+        "UI-013",
+        "UI-014"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-001-A1",
+          "expected": "不改字級／不截斷長文字，無解時阻擋正式輸出",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-002",
+      "kind": "core",
+      "title": "資料完整映射與人物容量",
+      "parents": [
+        "UI-015",
+        "UI-016"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-002-A1",
+          "expected": "多筆聯絡或人物容量不符時明確阻擋，不默默略去",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_unused_contact_and_wrong_capacity_block"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-003",
+      "kind": "core",
+      "title": "缺字型與幾何檢查",
+      "parents": [
+        "UI-031",
+        "UI-012"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-003-A1",
+          "expected": "指定字型缺失、超界及重疊不能通過正式發布／輸出",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_missing_font_does_not_use_silent_fallback",
+            "test_first_version.FirstVersionTests.test_geometric_overlap_and_outside_block_publication"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-004",
+      "kind": "core",
+      "title": "人物公司與同尺寸 Logo 防混配",
+      "parents": [
+        "UI-017",
+        "UI-023",
+        "UI-025"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-004-A1",
+          "expected": "公司歸屬明確；缺 Logo 或不同公司／尺寸不得借用正式輸出",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_missing_logo_and_wrong_size_or_company_do_not_pass",
+            "test_first_version.FirstVersionTests.test_person_company_binding_is_not_inferred_from_strings"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-005",
+      "kind": "core",
+      "title": "數位三格式尺寸與安全寫檔",
+      "parents": [
+        "UI-019",
+        "UI-029",
+        "UI-030"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-005-A1",
+          "expected": "實際 PDF／PNG／JPG 可讀，PDF 毫米正確，既有檔及失敗清理保護",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_export_all_formats_real_pdf_dimensions_and_no_overwrite",
+            "test_first_version.FirstVersionTests.test_atomic_publish_failure_preserves_existing_file_and_cleans_temp"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-006",
+      "kind": "core",
+      "title": "候選過期與非正式預覽標示",
+      "parents": [
+        "UI-028",
+        "UI-059"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-006-A1",
+          "expected": "修改資料使舊候選失效；PREVIEW 有檔名及畫面附註",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_stale_generation_and_unmarked_preview_block",
+            "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-007",
+      "kind": "core",
+      "title": "模板發布歷史不可覆寫",
+      "parents": [
+        "UI-010"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-007-A1",
+          "expected": "已發布版本唯讀，新版本不占用已存在的 family/version",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_published_templates_are_immutable_and_family_versions_safe"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-008",
+      "kind": "core",
+      "title": "同內容快取與獨立來源登錄",
+      "parents": [
+        "UI-003",
+        "UI-042"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-008-A1",
+          "expected": "同內容共用解析，異名登錄及標記不混配，重開恢復",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_source_dedupe_preserves_independent_registrations_and_reopen"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-009",
+      "kind": "core",
+      "title": "人工標記規則模板閉環",
+      "parents": [
+        "UI-007",
+        "REV-01"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-009-A1",
+          "expected": "標記形成有來源規則模板，發布、同尺寸配對與數位輸出可完成",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_source_labels_to_learned_template_to_output"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-010",
+      "kind": "core",
+      "title": "Inkscape SVG 與 PDF 相容 AI",
+      "parents": [
+        "REV-02"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-010-A1",
+          "expected": "實際 SVG 轉換與合成 PDF 更名 AI 可匯入；不代表私人原生 AI 全面驗收",
+          "tests": [
+            "test_first_version.FirstVersionTests.test_actual_inkscape_svg_and_pdf_compatible_ai"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-011",
+      "kind": "core",
+      "title": "多頁 PDF 正確頁與備援",
+      "parents": [
+        "REV-02"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-011-A1",
+          "expected": "雙色頁實際取到指定頁、快取不混頁；非法頁碼在轉換前失敗",
+          "tests": [
+            "test_import_pages.ImportPageTests.test_actual_second_page_and_cache_stay_distinct",
+            "test_import_pages.ImportPageTests.test_bad_pdf_page_is_rejected_before_converter_runs",
+            "test_import_pages.ImportPageTests.test_qt_fallback_really_selects_second_page",
+            "test_import_pages.ImportPageTests.test_non_pdf_page_is_explicitly_rejected"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-012",
+      "kind": "core",
+      "title": "匯入前像素預算",
+      "parents": [
+        "UI-051"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-012-A1",
+          "expected": "極端比例／超大圖片先被阻擋，再配置畫面或解碼",
+          "tests": [
+            "test_import_pages.ImportPageTests.test_extreme_svg_is_blocked_before_large_preview",
+            "test_import_pages.ImportPageTests.test_raster_budget_checks_header_before_decoding"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-013",
+      "kind": "core",
+      "title": "固定背景實際向量與圖像輸出",
+      "parents": [
+        "UI-019",
+        "UI-034"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-013-A1",
+          "expected": "預覽及三格式讀回有裝飾，向量／圖像模式均生效",
+          "tests": [
+            "test_visual_background.VisualBackgroundTests.test_decoration_in_preview_and_all_actual_exports",
+            "test_visual_background.VisualBackgroundTests.test_raster_choice_uses_approved_imported_pixels"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-014",
+      "kind": "core",
+      "title": "背景核准、内容与失聯保護",
+      "parents": [
+        "UI-034"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-014-A1",
+          "expected": "未核准／錯尺寸／異動／失聯／外連資源不可冒稱有效背景",
+          "tests": [
+            "test_visual_background.VisualBackgroundTests.test_unapproved_and_wrong_size_background_block_publication",
+            "test_visual_background.VisualBackgroundTests.test_changed_background_after_candidate_blocks_and_cleans_export",
+            "test_visual_background.VisualBackgroundTests.test_missing_background_is_not_silently_rendered_white",
+            "test_visual_background.VisualBackgroundTests.test_external_svg_resource_is_rejected_before_approval"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-015",
+      "kind": "core",
+      "title": "背景 GUI 核對及版本保護",
+      "parents": [
+        "UI-010",
+        "UI-034"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-015-A1",
+          "expected": "真實核准對話框保存呈現方式，發布背景版本唯讀，舊格式相容",
+          "tests": [
+            "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+            "test_visual_background.VisualBackgroundTests.test_real_background_review_dialog_saves_chosen_mode",
+            "test_visual_background.VisualBackgroundTests.test_reopen_version_and_old_schema_preserve_background"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-016",
+      "kind": "core",
+      "title": "人工文字色彩",
+      "parents": [
+        "UI-034"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-016-A1",
+          "expected": "指定文字色彩確實渲染；非法色彩阻擋",
+          "tests": [
+            "test_visual_background.VisualBackgroundTests.test_text_color_is_real_rendered_and_invalid_color_blocks"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-017",
+      "kind": "core",
+      "title": "多作品與上次來源上下文",
+      "parents": [
+        "UI-038",
+        "UI-002"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-017-A1",
+          "expected": "多作品獨立保存，切換／重開回到確切來源與作品",
+          "tests": [
+            "test_artwork_recovery.ArtworkRecoveryTests.test_two_works_reopen_active_selection_and_marks",
+            "test_artwork_recovery.ArtworkRecoveryTests.test_gui_new_crop_keeps_previous_work_and_reopens_latest",
+            "test_artwork_recovery.ArtworkRecoveryTests.test_gui_reopens_last_selected_source_not_latest_import"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-018",
+      "kind": "core",
+      "title": "標記歷史、遷移與競爭寫入",
+      "parents": [
+        "UI-038",
+        "UI-042"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-018-A1",
+          "expected": "恢復加新版本、不改歷史，舊資料保留，過期及跨來源寫入阻擋",
+          "tests": [
+            "test_artwork_recovery.ArtworkRecoveryTests.test_history_restore_adds_revision_and_stale_update_blocks",
+            "test_artwork_recovery.ArtworkRecoveryTests.test_old_labels_migrate_once_without_deleting_legacy",
+            "test_artwork_recovery.ArtworkRecoveryTests.test_cross_source_selection_and_invalid_geometry_do_not_mutate",
+            "test_artwork_recovery.ArtworkRecoveryTests.test_gui_restore_history_preserves_published_template"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-019",
+      "kind": "core",
+      "title": "模板固定學習來源版次",
+      "parents": [
+        "UI-007",
+        "UI-055"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-019-A1",
+          "expected": "來源作品／版次固定，後改標記不改來源，不混配來源 ID",
+          "tests": [
+            "test_artwork_recovery.ArtworkRecoveryTests.test_learned_template_pins_work_revision_and_rejects_wrong_source",
+            "test_artwork_recovery.ArtworkRecoveryTests.test_gui_learning_saves_exact_current_mark_revision"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-020",
+      "kind": "core",
+      "title": "發布與審核同一交易",
+      "parents": [
+        "UI-010"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-020-A1",
+          "expected": "模擬審核寫入失敗，資料庫與畫面仍是草稿",
+          "tests": [
+            "test_artwork_recovery.ArtworkRecoveryTests.test_publish_event_failure_rolls_back_database_and_memory"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-021",
+      "kind": "core",
+      "title": "字型持久複本與新程序載入",
+      "parents": [
+        "UI-032"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-021-A1",
+          "expected": "本機複本可在新 Python 程序載入，欄位綁定資產持久保存",
+          "tests": [
+            "test_persistent_fonts.PersistentFontTests.test_copy_reopen_and_original_removal_do_not_lose_font",
+            "test_persistent_fonts.PersistentFontTests.test_new_python_process_loads_persisted_font",
+            "test_persistent_fonts.PersistentFontTests.test_gui_import_binds_file_and_reopens_without_dialog"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-022",
+      "kind": "core",
+      "title": "字型核准、異動與失敗保護",
+      "parents": [
+        "UI-032",
+        "UI-033"
+      ],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+      "phase": "P1～P3 子集",
+      "decision_status": "既有核准要求的驗收子集",
+      "sources": [
+        "docs/FIRST_VERSION_STATUS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-022-A1",
+          "expected": "未核准、損壞、異動、同名不同檔明確阻擋，登錄失敗不留假資產",
+          "tests": [
+            "test_persistent_fonts.PersistentFontTests.test_unapproved_invalid_and_duplicate_font_protect_catalog",
+            "test_persistent_fonts.PersistentFontTests.test_changed_or_missing_asset_blocks_even_if_system_font_exists",
+            "test_persistent_fonts.PersistentFontTests.test_same_family_different_file_is_not_silently_replaced",
+            "test_persistent_fonts.PersistentFontTests.test_catalog_failure_removes_only_new_asset"
+          ]
+        }
+      ],
+      "next_step": "執行具名驗收並提交結構化證據；不擴大平台或資料範圍"
+    },
+    {
+      "id": "CORE-023",
+      "kind": "core",
+      "title": "來源快取完整性與損壞恢復",
+      "parents": [
+        "UI-049",
+        "UI-042"
+      ],
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "本機衍生快取的內容驗證，非完整批次来源重連",
+      "phase": "P1、P2",
+      "decision_status": "既有核准要求子集",
+      "sources": [
+        "docs/DEVELOPMENT_PLAN.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-023-A1",
+          "expected": "同來源快取經 hash 核對；異動／損壞 metadata 不可當成功重用；保持原檔只讀並可重新轉換",
+          "tests": []
+        }
+      ],
+      "next_step": "框架 READY checkpoint 完成後，先補錯誤快取驗收，再修改 importer"
+    },
+    {
+      "id": "GOV-001",
+      "kind": "governance",
+      "title": "開發 checkpoint 與安全恢復",
+      "parents": [],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+      "phase": "先於後續產品功能",
+      "decision_status": "本輪使用者核准",
+      "sources": [
+        "docs/decisions/2026-10-13-CHECKPOINT-EVIDENCE-POLICY.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "GOV-001-A1",
+          "expected": "開發 checkpoint 與安全恢復的約定與有效性檢查通過",
+          "tests": [
+            "test_dev_framework.DevFrameworkTests.test_checkpoint_restore_and_remote_ack",
+            "test_dev_framework.DevFrameworkTests.test_checkpoint_rejects_mismatched_remote_and_existing_id"
+          ]
+        }
+      ],
+      "next_step": "本輪框架實際驗證後才能開下一產品工作包"
+    },
+    {
+      "id": "GOV-002",
+      "kind": "governance",
+      "title": "Human／GPT 開工交接與下一步",
+      "parents": [],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+      "phase": "先於後續產品功能",
+      "decision_status": "本輪使用者核准",
+      "sources": [
+        "docs/decisions/2026-10-13-CHECKPOINT-EVIDENCE-POLICY.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "GOV-002-A1",
+          "expected": "Human／GPT 開工交接與下一步的約定與有效性檢查通過",
+          "tests": [
+            "test_dev_framework.DevFrameworkTests.test_missing_entry_blocks_work"
+          ]
+        }
+      ],
+      "next_step": "本輪框架實際驗證後才能開下一產品工作包"
+    },
+    {
+      "id": "GOV-003",
+      "kind": "governance",
+      "title": "要求與個別證據完成 Gate",
+      "parents": [],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+      "phase": "先於後續產品功能",
+      "decision_status": "本輪使用者核准",
+      "sources": [
+        "docs/decisions/2026-10-13-CHECKPOINT-EVIDENCE-POLICY.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "GOV-003-A1",
+          "expected": "要求與個別證據完成 Gate的約定與有效性檢查通過",
+          "tests": [
+            "test_dev_framework.DevFrameworkTests.test_skipped_or_missing_test_cannot_complete",
+            "test_dev_framework.DevFrameworkTests.test_changed_source_and_attachment_invalidate_evidence",
+            "test_dev_framework.DevFrameworkTests.test_changed_acceptance_cannot_reuse_old_pass"
+          ]
+        }
+      ],
+      "next_step": "本輪框架實際驗證後才能開下一產品工作包"
+    },
+    {
+      "id": "GOV-004",
+      "kind": "governance",
+      "title": "持久 AI 入口与零例行問答",
+      "parents": [],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+      "phase": "先於後續產品功能",
+      "decision_status": "本輪使用者核准",
+      "sources": [
+        "docs/decisions/2026-10-13-CHECKPOINT-EVIDENCE-POLICY.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "GOV-004-A1",
+          "expected": "持久 AI 入口与零例行問答的約定與有效性檢查通過",
+          "tests": [
+            "test_dev_framework.DevFrameworkTests.test_missing_entry_blocks_work"
+          ]
+        }
+      ],
+      "next_step": "本輪框架實際驗證後才能開下一產品工作包"
+    },
+    {
+      "id": "GOV-005",
+      "kind": "governance",
+      "title": "EXE 延後且不自動打包",
+      "parents": [],
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+      "phase": "先於後續產品功能",
+      "decision_status": "本輪使用者核准",
+      "sources": [
+        "docs/decisions/2026-10-13-CHECKPOINT-EVIDENCE-POLICY.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "GOV-005-A1",
+          "expected": "EXE 延後且不自動打包的約定與有效性檢查通過",
+          "tests": [
+            "test_dev_framework.DevFrameworkTests.test_automatic_exe_trigger_is_rejected"
+          ]
+        }
+      ],
+      "next_step": "本輪框架實際驗證後才能開下一產品工作包"
+    }
+  ]
+}

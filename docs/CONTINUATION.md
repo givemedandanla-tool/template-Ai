@@ -1,5 +1,9 @@
 # 持久化開發交接與治理
 
+## 最新開工入口：checkpoint 與要求證據優先
+
+使用者已明確要求先建立五點框架再繼續功能，EXE 不再作開發目標。**每次續行先讀根 AGENTS.md、docs/dev/STATE.json、HANDOFF.md、REQUIREMENTS.json／FEATURES.md、WORK_LOG.md 與 DEVELOPMENT_PROTOCOL.md。** 這些檔案是即時入口，本文件其餘為歷史。新要求原文在 `decisions/2026-10-13-CHECKPOINT-EVIDENCE-POLICY.md`。不例行重問是否繼續或保存；不要沿用下面「先解 Windows EXE」的舊優先序。
+
 ## v0.1.2 最新進展（2026-10-13）
 
 多作品獨立標記、持久歷史恢復、上次來源／作品上下文、舊單作品資料遷移、模板固定學習來源版次、本機持久字型與發布交易保護已實作；本地 Linux 50 項測試通過。見 `decisions/2026-10-13-V012-RECOVERY-FONTS.md`。仍未完成 Windows EXE、真實 AI 全面視覺驗收、多視窗衝突合併與完整字型版本／替代管理。更舊進度為歷史，不覆蓋本段與最新狀態文件。

@@ -1,0 +1,33 @@
+# template-Ai 開發入口（Human 與 GPT 共用）
+
+**開始或恢復工作前，依序讀取**：
+1. `docs/dev/STATE.json`：目前 checkpoint、工作包、下一步及阻擋。
+2. `docs/dev/HANDOFF.md`：人類交接與實作上下文。
+3. `docs/dev/REQUIREMENTS.json` 與 `docs/dev/FEATURES.md`：要求、驗收條件及完成證據。
+4. `docs/dev/WORK_LOG.md` 最新紀錄；`STATE.json` 指向的 checkpoint 收據與證據 run。
+5. `docs/dev/DEVELOPMENT_PROTOCOL.md`：保存、GitHub 讀回及證據覆核規則。
+
+不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
+
+## 核心宗旨
+
+- 零例行問答、持久化優先。使用既有授權與要求自主推進，不反覆詢問是否繼續、是否保存、是否使用已定方案；必要未決資訊記為 BLOCKED，先做其他已授權工作。遵守較高優先指令要求的必要狀態訊息。
+- **每個可恢復工作包、每 10 分鐘、中斷前、環境／資料結構變更前後都建立 checkpoint**。本機 ZIP 只是 PREPARED；GitHub commit/tree 逐檔讀回後才是 REMOTE_VERIFIED，收據也要保存 GitHub。不得覆寫歷史 checkpoint。
+- 首先執行 `python tools/dev_governance.py check`；讀取下一個已核准且未完成的要求。框架或證據不完整先修治理，不把未測試功能標為完成。
+- 修改前寫要求 ID、验收條件、預計測試及 checkpoint；修改後保存程式、工作紀錄、狀態與證據，更新機器登錄並產生人類清單。最後再次執行 check。
+- 完成狀態只能由對應測試與證據判定。未執行／跳過／失敗、只測 Linux、只用合成樣本均如實標示；不可用整批 PASS 證明所有需求已完成。
+- **EXE 不屬目前工作目標**。不得重跑失敗打包、建立新 EXE CI 或把 EXE 當功能完成條件。既有流程只保留人工 dispatch；之後有新明確交付指令才處理。
+- 先完成核心軟體要求；印刷分析在軟體完善後，完整 UI-048 權限維持最後功能順序，UI-056-D 與待決報告需求不提前加入。
+- 重要變更用分支＋PR，不自行合併 main；自我驗證不是獨立覆核。不把真實個資、私人 AI 原稿、受限字型與密鑰上傳 GitHub。
+- 此文件不授權多代理。沒有使用者的明確要求，不啟動其他 agent。
+
+## 可重現命令
+
+```bash
+python tools/dev_governance.py check
+python tools/dev_checkpoint.py prepare --id CP-UNIQUE --base-commit <SHA> --summary '<內容>' --next '<下一步>' --requirements <ID>
+python tools/run_evidence.py --run-id RUN-UNIQUE --source-commit <SHA> --commit-json <GitHub讀回commit.json> --tree-json <GitHub讀回tree.json>
+python tools/dev_governance.py render
+```
+
+GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須實際讀回；沒有 Git HEAD 的工作區不得虛構 HEAD，使用已確認遠端 SHA 與快照。上傳中斷時保留本機快照與 pending 記錄，下次先恢復保存。

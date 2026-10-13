@@ -1,0 +1,42 @@
+name: Requirements and Development Evidence
+on:
+  push:
+    branches: ['dev/v0.1-first-version']
+    paths: ['template_ai/**', 'tests/**', 'tools/**', 'examples/**', 'app.py', 'requirements-lock.txt', '.github/workflows/development-verification.yml']
+  pull_request:
+    paths: ['template_ai/**', 'tests/**', 'tools/**', 'examples/**', 'app.py', 'requirements-lock.txt', '.github/workflows/development-verification.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      QT_QPA_PLATFORM: offscreen
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: sudo apt-get update && sudo apt-get install -y inkscape fonts-noto-cjk fonts-dejavu-core
+      - run: python -m pip install -r requirements-lock.txt
+      - run: python tools/dev_governance.py check
+      - name: Read exact source commit and tree
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p .checkpoints
+          gh api "repos/$GITHUB_REPOSITORY/git/commits/$GITHUB_SHA" > .checkpoints/commit.json
+          TREE_SHA=$(python -c "import json; print(json.load(open('.checkpoints/commit.json'))['tree']['sha'])")
+          gh api "repos/$GITHUB_REPOSITORY/git/trees/$TREE_SHA?recursive=1" > .checkpoints/tree.json
+      - name: Generate exact-version evidence without EXE
+        run: python tools/run_evidence.py --run-id "CI-${{ github.run_id }}-${{ github.run_attempt }}" --source-commit "$GITHUB_SHA" --commit-json .checkpoints/commit.json --tree-json .checkpoints/tree.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: development-evidence
+          path: docs/evidence/runs/CI-*/
+          retention-days: 14
+          if-no-files-found: warn
+# CI artifact 只是暫存；完成證據仍須在工作分支永久保存並讀回，不自動寫入或 merge。

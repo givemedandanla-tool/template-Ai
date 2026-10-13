@@ -19,7 +19,7 @@ def main():
     target.parent.mkdir(parents=True, exist_ok=True)
     if target.exists():
         raise FileExistsError("來源包已存在，請指定新檔名")
-    names = ["README.md", ".gitignore", "app.py", "START_WINDOWS.bat", "requirements.txt",
+    names = ["README.md", "AGENTS.md", ".gitignore", "app.py", "START_WINDOWS.bat", "requirements.txt",
              "requirements-lock.txt", "requirements-build.txt"]
     files = [(root / name, name) for name in names]
     for directory in (".github", "docs", "examples", "template_ai", "tests", "tools"):

@@ -1,5 +1,7 @@
 # v0.1.2 實作與驗證狀態
 
+> 最新開發政策已改為 checkpoint／要求清單／證據優先，EXE 延後。此文件保留版本及歷史失敗證據；開工先讀 AGENTS.md 與 `docs/dev/STATE.json`，不沿用下方舊的 EXE 優先序。
+
 更新日期：2026-10-13（UTC）。目前為可操作研究版，建立 P1～P3 的最小核心鏈及必要標記規則學習／資產能力，不宣稱整個 P0～P10 產品完成。程式與文件在 `dev/v0.1-first-version`、[PR #2](https://github.com/givemedandanla-tool/template-Ai/pull/2)，尚未合併 main。24 小時持續開發授權見 `decisions/2026-10-13-CONTINUED-DEVELOPMENT.md`；未建立無人值守常駐開發服務。
 
 ## 已實作
@@ -37,7 +39,7 @@ v0.1.2 程式提交 `130e5d8968a2e2f0955eca4482986149de34801b` 的 run `38365825
 
 ## 待完成與下一工作
 
-1. 取得 GitHub Actions 步驟前失敗的詳細原因，恢復 Windows 建置並驗證實際 EXE 啟動與下載包。
+1. 按最新 STATE／REQUIREMENTS 持續完成核心功能、checkpoint 及逐項證據；Windows EXE 交付延後，歷史失敗不例行重試。
 2. 使用真實匿名 AI 檔與可信參考驗證 Inkscape 視覺一致、SVG 效果／Logo／字型例外；未宣稱所有 AI 都可匯入。
 3. 更完整訓練樣本管理、來源快取完整性與來源重連、字型資產修復及完整版本／字重管理；多視窗衝突合併仍待續。本輪多作品恢復與基本持久字型已完成。
 4. 全自動作品切分／語意／OCR 智慧框、聚類歸納與深度模型尚未實作；本版仍是人工確認標記形成規則模板。

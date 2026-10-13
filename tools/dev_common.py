@@ -76,3 +76,8 @@ def manifest(root=ROOT, code_only=False):
 
 def manifest_digest(files):
     return digest(json.dumps(files, sort_keys=True, separators=(",", ":")).encode())
+
+
+def contract_digest(row):
+    return digest(json.dumps({key: row.get(key) for key in ("id", "kind", "scope", "parents", "acceptance")},
+                             sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode())

@@ -1,8 +1,6 @@
 name: First Version Windows Validation
 on:
-  push:
-    branches: ['dev/v0.1-first-version']
-  pull_request:
+  # 使用者已將 EXE 延後；只保留明確人工啟動，開發與 PR 不再觸發打包。
   workflow_dispatch:
 permissions:
   contents: read

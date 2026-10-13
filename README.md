@@ -1,5 +1,11 @@
 # Template AI｜矩形區域自動排版與模板 AI
 
+## Human／AI 從這裡開始
+
+開發或恢復先讀 [AGENTS.md](AGENTS.md) → [開發狀態](docs/dev/STATE.json) → [交接](docs/dev/HANDOFF.md) → [要求與功能清單](docs/dev/FEATURES.md)／[機器登錄](docs/dev/REQUIREMENTS.json) → [工作紀錄](docs/dev/WORK_LOG.md)。[checkpoint 流程](docs/dev/DEVELOPMENT_PROTOCOL.md)與[證據設計／成熟來源](docs/dev/EVIDENCE_DESIGN.md)供 Human 和 GPT 共用。不要只讀歷史第一版狀態。
+
+**開發以零例行問答、checkpoint 與 GitHub 持久化為核心。EXE 已延後，不再自動打包或重試；先完成清單要求及其證據。**
+
 **v0.1.2 可操作研究版已實作，本地 Linux 50 項測試通過；Windows EXE 建置仍受阻。** 三模式桌面工作台：來源標記、模板與 Logo、排版與數位輸出。本版增加多作品標記與歷史恢復、固定學習來源版次、本機持久字型與發布交易保護。第一版學習為人工確認標記的幾何與語意規則內化；完整自動辨識／深度模型、客戶重訂、完整權限與實體印刷分析留後續計畫。
 
 ## 開啟與快速試用

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "repository": "givemedandanla-tool/template-Ai",
+  "working_branch": "dev/v0.1-first-version",
+  "pull_request": 2,
+  "product_version": "0.1.2",
+  "framework_status": "IMPLEMENTED_AWAITING_EVIDENCE",
+  "active_task": "GOV-001..GOV-005",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261013-FRAMEWORK-START.receipt.json",
+  "last_confirmed_commit": "02af3a8d556830a0e699dd80e6dbb3535a984c28",
+  "latest_evidence_run": null,
+  "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
+  "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
+  "read_next": ["docs/dev/HANDOFF.md", "docs/dev/REQUIREMENTS.json", "docs/dev/FEATURES.md", "docs/dev/WORK_LOG.md"],
+  "next_tasks": [
+    {"id": "GOV-001..GOV-005", "action": "完成結構化框架證據、GitHub 讀回及 READY checkpoint", "status": "IN_PROGRESS"},
+    {"id": "CORE-023", "action": "框架 READY 後實作来源快取 hash／損壞 metadata／重新轉換驗收", "status": "PENDING"},
+    {"id": "UI-049", "action": "在快取完整性之後設計來源搬移重連，不凭檔名自動接受", "status": "PENDING"},
+    {"id": "UI-032", "action": "字型資產修復與完整版本／字重管理", "status": "PENDING"}
+  ],
+  "blocked": [
+    {"id": "REV-02", "reason": "全面真實 AI 視覺一致尚缺合法匿名來源及可信參考", "resume_when": "取得指定樣本與參考；先做不依賴樣本的核心"},
+    {"id": "REV-04", "reason": "VivoBook 型號及指定參考設備尚未實測", "resume_when": "有設備與規格"}
+  ],
+  "deferred": ["EXE 打包交付", "REV-03 印刷分析", "UI-048 最後權限接入", "UI-056-D 未來補樣"],
+  "pending_remote": []
+}
