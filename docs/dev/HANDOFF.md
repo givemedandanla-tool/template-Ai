@@ -2,7 +2,11 @@
 
 先讀 AGENTS.md → STATE.json → REQUIREMENTS.json／FEATURES.md → WORK_LOG 及 checkpoint 收據 → DEVELOPMENT_PROTOCOL.md。
 
-## 已確認現況
+## 本輪開發中
+
+2026-10-14：使用者要求每次開發回報清單差異與已開發／未開發數；定案已寫 AGENTS 和 PROGRESS-REPORTING。基準 75 父题：0 完整／42 部分／28 未實作／2 受阻／3 延後，另有 25 CORE／5 GOV。正在 CORE-026／027 受控批次定位與復原及 GOV-006 進度統計；修改前使舊當前證據失效，歷史不刪。
+
+## 上一個已確認版本
 
 目前 v0.1.5，測試來源 commit `dc76b95fa5ff288d09d4474be2732191b3caa78c`；RUN-FONT-REPAIR-002 有 83 PASS／0 SKIP、19 件實際附件及紀錄。105 筆要求含 75 父题、25 CORE、5 GOV。30 子範圍 SELF_VERIFIED，父题未全部完成，沒有獨立覆核。第一輪 82 PASS run 及重連 71 PASS run 保留歷史，不當最新版證據。
 
