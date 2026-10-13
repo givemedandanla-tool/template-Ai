@@ -2,6 +2,14 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-13：CORE-023 開始（先保存再改碼）
+
+- 五點框架 READY 與收據已永久保存；確認提交 `bc5448f2a4c44c1a503b5ad59d21caf61dad33e8`。
+- 下一要求 CORE-023：衍生快取內容、頁碼與 metadata 驗證；異動／損壞時不重用並重建，原始來源保持只讀。
+- 計畫新增正常重用、圖片／SVG異動、metadata損壞／外部路徑、原稿不變的具名測試。
+- 舊 run 保留可查，但新來源版本開發時先取消當前 completed，重新驗證前不沿用舊 PASS。FRAMEWORK READY 歷史收據仍有效，产品新版本完成另產證據。
+- 先做 SOURCE-CACHE-BEGIN checkpoint，完成修改／測試後再做可恢復 checkpoint 與RUN-SOURCE-CACHE-001。
+
 ## 2026-10-13：五點框架 READY，遠端快照已確認
 
 - GOV-001～005：框架已實作，源碼 commit `f5da9c41e432e0b7b3927ae9b51c5e94645406b3`；RUN-FRAMEWORK-001 的 58 項具名測試全部 PASS，19 個紀錄／匿名附件。
