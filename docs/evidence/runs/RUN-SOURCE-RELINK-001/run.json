@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "id": "RUN-SOURCE-RELINK-001",
+  "created_utc": "2026-10-13T13:30:56.335619+00:00",
+  "source_commit": "285a9e14cf063dc71b04ebc28d4af35efa499bb1",
+  "source_manifest_sha256": "59cd494266980be12cfc74a6f0cd5884225215b2a2e5e321f1c0f234fed93875",
+  "source_unchanged": true,
+  "status": "PASS",
+  "test_count": 71,
+  "passed": 71,
+  "capture_exit_code": 0,
+  "tests_sha256": "382a6ecee0a999f2ae7a213e1d875efa4e9210591a840737de40c0746efe3257",
+  "attachments": {
+    "synthetic-FINAL.pdf": {
+      "bytes": 9955,
+      "sha256": "1370183b126db1b634878aebb03ab773332e569829b2f9faf92c1dac02e3d181",
+      "mime": "application/pdf"
+    },
+    "training-workspace.png": {
+      "bytes": 210239,
+      "sha256": "d804a0d5b5c893fa793a51059b5bbfdf01938ddcb96c1b7c3a2c54575412b139",
+      "mime": "image/png"
+    },
+    "synthetic-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "bbe406834015e4e501b0058971b06f917b33b81d5a7700138b48de65a30dd003",
+      "mime": "image/png"
+    },
+    "decorated-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "742eb545ec519f462e339ad125f4448eba0f08a4b6533c14bf1b03614d284320",
+      "mime": "image/png"
+    },
+    "source-manifest.json": {
+      "bytes": 6872,
+      "sha256": "f89b47a35e8e5f1fa0cb34da7621b571d7ffd8d874e77f93f1688b2cdbe8d5c0",
+      "mime": "application/json"
+    },
+    "multiple-artworks-workspace.png": {
+      "bytes": 215895,
+      "sha256": "073eb6f4f657a3adaa4a180bd0c7675e0b27f833007504de29b18a808be9c68f",
+      "mime": "image/png"
+    },
+    "decorated-FINAL.jpg": {
+      "bytes": 10992,
+      "sha256": "fbb60e1d7659ec4b4c2a91276a2c881e91424b311e4c0f8c5f6b7f6fb8fe199b",
+      "mime": "image/jpeg"
+    },
+    "tests.json": {
+      "bytes": 12756,
+      "sha256": "382a6ecee0a999f2ae7a213e1d875efa4e9210591a840737de40c0746efe3257",
+      "mime": "application/json"
+    },
+    "decorated-FINAL.pdf": {
+      "bytes": 10130,
+      "sha256": "ed5e857f76d11d85acf5f9fbb4a7c1fa578505fe926e27776215415c349ace2e",
+      "mime": "application/pdf"
+    },
+    "synthetic-FINAL.jpg": {
+      "bytes": 7908,
+      "sha256": "ec9d05d441ecbd43e0eabe3e989789c7e20b2238a3e6d82a0ef3702913b916ae",
+      "mime": "image/jpeg"
+    },
+    "capture.log": {
+      "bytes": 174,
+      "sha256": "b392051001ad307d88ed029bb1237af7f6f7739f6b71b267d7d43862914f9abf",
+      "mime": "text/plain"
+    },
+    "template-workspace.png": {
+      "bytes": 193647,
+      "sha256": "b581926c24b6ae8c1b68cea89a9af6c5a0b1215ece4d879ff531524e9ad16f3d",
+      "mime": "image/png"
+    },
+    "commit.json": {
+      "bytes": 1438,
+      "sha256": "cb3b07d0662ab51bc17dbbd5bd3ec3eeb467e2cdb81161a039f0e81b6b762fa2",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 50541,
+      "sha256": "7f6f473a4a14298c78d160f4fc61a32b0453f6ab3edfb5f7edbceca4d567d0fc",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 11123,
+      "sha256": "1f905186416acf50b2f3183781f5de5f0aa544f0379eef4c0ab09666c518c59c",
+      "mime": "text/plain"
+    },
+    "output-workspace.png": {
+      "bytes": 218538,
+      "sha256": "3fbcaef73adb873d5db2630fb58857ee4ca99da345965daac57bc2fbc8f5a6b8",
+      "mime": "image/png"
+    },
+    "junit.xml": {
+      "bytes": 12609,
+      "sha256": "b2280e500a17f2e3a5785bcb44645a5e25c109f4a3403f84a2f752e557c1f2ad",
+      "mime": "application/xml"
+    },
+    "claims.json": {
+      "bytes": 18684,
+      "sha256": "2ce3fc3d154fc46d48d347921d98c7496853de328fe06507120d0236cb0f6793",
+      "mime": "application/json"
+    },
+    "decorated-output-workspace.png": {
+      "bytes": 225259,
+      "sha256": "6da2ad75772d30be1478f41815b022b392c5cbe8fd2fb98e46ff1c33a4b2d6ca",
+      "mime": "image/png"
+    }
+  },
+  "environment": {
+    "python": "3.11.16",
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-SOURCE-RELINK-001 --source-commit 285a9e14cf063dc71b04ebc28d4af35efa499bb1 --commit-json <readback> --tree-json <readback>",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ]
+}
