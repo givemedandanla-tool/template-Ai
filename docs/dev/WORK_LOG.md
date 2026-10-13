@@ -2,6 +2,15 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-13：五點框架 READY，待遠端收據提交
+
+- GOV-001～005：框架已實作，源碼 commit `f5da9c41e432e0b7b3927ae9b51c5e94645406b3`；RUN-FRAMEWORK-001 的 58 項具名測試全部 PASS，19 個紀錄／匿名附件。
+- 原有 22 CORE 與 5 GOV 以明列範圍 SELF_VERIFIED；75 父主題未被自動標完整完成，CORE-023 尚未實作。所有狀態見機器登錄。
+- 已停用 EXE 的 push／PR 觸發；只保留手動日後交付。本輪不等待或重跑 EXE。
+- 起始、框架實作、自動狀態共三個 checkpoint 已讀回；prepare 自動加入 pending，acknowledge 自動更新入口指針。
+- 首輪建置工具期間起始收據至實作收據約 26 分鐘，未達新訂的 10 分鐘節奏；已記錄此差距，後續以短工作包與自動 pending／入口更新控制保存，不宣稱歷史每次都已達標。
+- 現在保存匿名附件與 READY checkpoint；下一步為 CORE-023：來源快取 hash、損壞 metadata、只讀重新轉換及故障驗收。
+
 ## 2026-10-13：治理框架建置中
 
 - 來源：使用者的六點指令，原文見 `docs/decisions/2026-10-13-CHECKPOINT-EVIDENCE-POLICY.md`。
