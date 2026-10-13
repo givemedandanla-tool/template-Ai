@@ -132,3 +132,12 @@ class DevFrameworkTests(unittest.TestCase):
         write_json(self.root / "docs/dev/REQUIREMENTS.json", registry)
         with self.assertRaisesRegex(ValueError, "範圍已變更"):
             check(self.root)
+
+    def test_checkpoint_records_pending_and_clears_after_ack(self):
+        checkpoint = prepare(self.root, "CP-NEXT", "a" * 40, "下一工作包", "下一步", [])
+        self.assertEqual(read_json(self.root / "docs/dev/STATE.json")["pending_remote"], ["CP-NEXT"])
+        commit, tree = self.remote_context(checkpoint)
+        acknowledge(self.root, "CP-NEXT", commit, tree)
+        state = read_json(self.root / "docs/dev/STATE.json")
+        self.assertEqual(state["pending_remote"], [])
+        self.assertEqual(state["last_confirmed_checkpoint"], "docs/checkpoints/CP-NEXT.receipt.json")

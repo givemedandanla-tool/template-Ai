@@ -18,6 +18,11 @@ def prepare(root, checkpoint_id, source_commit, summary, next_step, requirement_
     local = root / ".checkpoints" / checkpoint_id
     if record.exists() or local.exists():
         raise FileExistsError("checkpoint ID 已存在；不可覆寫歷史")
+    state_path = root / "docs/dev/STATE.json"
+    if state_path.exists():
+        state = read_json(state_path)
+        state["pending_remote"] = list(dict.fromkeys([*state.get("pending_remote", []), checkpoint_id]))
+        write_json(state_path, state)
     files = manifest(root)
     local.mkdir(parents=True)
     archive = local / "source.zip"
@@ -64,6 +69,13 @@ def acknowledge(root, checkpoint_id, commit_path, tree_path):
     if path.exists():
         raise FileExistsError("遠端確認收據不可覆寫")
     write_json(path, receipt)
+    state_path = root / "docs/dev/STATE.json"
+    if state_path.exists():
+        state = read_json(state_path)
+        state["last_confirmed_checkpoint"] = str(path.relative_to(root)).replace("\\", "/")
+        state["last_confirmed_commit"] = commit["sha"]
+        state["pending_remote"] = [value for value in state.get("pending_remote", []) if value != checkpoint_id]
+        write_json(state_path, state)
     return receipt
 
 
