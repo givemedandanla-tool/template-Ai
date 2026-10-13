@@ -32,6 +32,8 @@ class Library:
         CREATE TABLE IF NOT EXISTS active_artworks(source_id TEXT PRIMARY KEY REFERENCES sources(id), artwork_id TEXT NOT NULL REFERENCES artworks(id));
         CREATE TABLE IF NOT EXISTS font_assets(hash TEXT PRIMARY KEY, payload TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS preferences(key TEXT PRIMARY KEY, value TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS source_links(source_id TEXT PRIMARY KEY REFERENCES sources(id), current_path TEXT NOT NULL, revision INTEGER NOT NULL);
+        CREATE TABLE IF NOT EXISTS source_relinks(id TEXT PRIMARY KEY, source_id TEXT NOT NULL REFERENCES sources(id), revision INTEGER NOT NULL, previous_path TEXT NOT NULL, current_path TEXT NOT NULL, hash TEXT NOT NULL, timestamp REAL NOT NULL, UNIQUE(source_id,revision));
         """)
         self.db.commit()
 
@@ -49,7 +51,41 @@ class Library:
         return data
 
     def list_sources(self) -> list[dict]:
-        return [json.loads(r[0]) for r in self.db.execute("SELECT payload FROM sources ORDER BY rowid DESC")]
+        return [{**json.loads(r[0]), "current_path": r[1], "link_revision": r[2]}
+                for r in self.db.execute("SELECT s.payload,COALESCE(l.current_path,s.original_path),COALESCE(l.revision,0) FROM sources s LEFT JOIN source_links l ON l.source_id=s.id ORDER BY s.rowid DESC")]
+
+    def source(self, source_id: str) -> dict:
+        source = next((s for s in self.list_sources() if s["id"] == source_id), None)
+        if source is None:
+            raise ValueError("來源不存在")
+        return source
+
+    def relink_source(self, source_id: str, proof, expected_revision: int) -> dict:
+        """背景驗證完成後於 SQLite 所屬執行緒提交；原來源與作品模板保持不變。"""
+        from .source_links import check_verified
+        if type(expected_revision) is not int or expected_revision < 0:
+            raise ValueError("來源位置版次不合法")
+        # 寫入鎖內檢查，兩個工作階段不能同時從 r0 建立重連。
+        self.db.execute("BEGIN IMMEDIATE")
+        try:
+            source = self.source(source_id)
+            if source["link_revision"] != expected_revision:
+                raise ValueError("來源已由另一工作階段重連，請重新載入")
+            check_verified(proof, source["hash"])
+            if source["current_path"] != proof.path:
+                revision = expected_revision + 1
+                self.db.execute("INSERT INTO source_links VALUES(?,?,?) ON CONFLICT(source_id) DO UPDATE SET current_path=excluded.current_path,revision=excluded.revision", (source_id, proof.path, revision))
+                self.db.execute("INSERT INTO source_relinks VALUES(?,?,?,?,?,?,?)", (new_id(), source_id, revision, source["current_path"], proof.path, source["hash"], time.time()))
+                self.event(source_id, "source_relinked_same_content")
+            self.db.commit()
+        except BaseException:
+            self.db.rollback()
+            raise
+        return self.source(source_id)
+
+    def source_link_history(self, source_id: str) -> list[dict]:
+        return [dict(revision=r[0], previous_path=r[1], current_path=r[2], hash=r[3], timestamp=r[4])
+                for r in self.db.execute("SELECT revision,previous_path,current_path,hash,timestamp FROM source_relinks WHERE source_id=? ORDER BY revision DESC", (source_id,))]
 
     def active_source_id(self) -> str | None:
         row = self.db.execute("SELECT value FROM preferences WHERE key='active_source'").fetchone()

@@ -2662,7 +2662,7 @@
       "parents": [
         "UI-049"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "Linux／合成來源單件重連與歷史保留；非完整批次重連或來源內容替換",
@@ -2676,10 +2676,18 @@
         {
           "id": "CORE-024-A1",
           "expected": "只接受同SHA-256來源，保留原登錄與作品模板，重開仍保留新位置；拒絕異動和過期寫入，交易失敗無半完成",
-          "tests": []
+          "tests": [
+            "test_source_relink.SourceRelinkTests.test_moved_source_reopens_with_original_identity_and_history",
+            "test_source_relink.SourceRelinkTests.test_same_name_different_bytes_and_missing_candidate_rejected",
+            "test_source_relink.SourceRelinkTests.test_stale_revision_and_candidate_changed_after_verification_rejected",
+            "test_source_relink.SourceRelinkTests.test_event_failure_rolls_back_link_and_history",
+            "test_source_relink.SourceRelinkTests.test_status_distinguishes_missing_changed_unreadable_and_ok",
+            "test_source_relink.SourceRelinkTests.test_repeated_current_path_is_idempotent_and_wrong_source_proof_rejected",
+            "test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens"
+          ]
         }
       ],
-      "next_step": "先保存 BEGIN，建立具名驗收並實作"
+      "next_step": "程式 checkpoint 讀回後跑整套永久證據；字型修復為下一包"
     }
   ]
 }

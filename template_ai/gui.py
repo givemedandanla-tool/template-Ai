@@ -265,6 +265,11 @@ class MainWindow(QMainWindow):
         self.source_combo = QComboBox()
         self.source_combo.currentIndexChanged.connect(self.choose_source)
         layout.addWidget(self.source_combo)
+        links_row = QHBoxLayout()
+        self.button("檢查原稿連結", self.check_source_link, links_row)
+        self.button("重新連結同內容原稿", self.relink_source, links_row)
+        links_row.addStretch()
+        layout.addLayout(links_row)
         works_row = QHBoxLayout()
         works_row.addWidget(QLabel("目前作品"))
         self.work_combo = QComboBox()
@@ -511,12 +516,37 @@ class MainWindow(QMainWindow):
         self.refresh_sources(source["id"])
         self.statusBar().showMessage("來源已保存；" + ("重用同內容解析，保留本次來源登錄" if result.get("reused") else "視覺一致性仍待原稿核對"))
 
+    def check_source_link(self):
+        if not self.source or self.busy:
+            return
+        from .source_links import source_status
+        source = dict(self.source)
+        self.run_job("唯讀檢查原稿內容", lambda: source_status(source),
+                     lambda result: self.inform(result["message"] + "\n目前位置：" + result["path"]))
+
+    def relink_source(self):
+        if not self.source or self.busy:
+            return
+        source = dict(self.source)
+        path, _ = QFileDialog.getOpenFileName(self, "選取同內容原稿（不替換內容）", "", "設計來源 (*.ai *.pdf *.svg *.eps *.png *.jpg *.jpeg);;所有檔案 (*)")
+        if not path:
+            return
+        from .source_links import verify_source
+        def finished(proof):
+            self.library.relink_source(source["id"], proof, source.get("link_revision", 0))
+            selected = self.source["id"] if self.source else source["id"]
+            self.refresh_sources(selected)
+            self.statusBar().showMessage("原稿已重新連結；內容一致，原登錄、作品與模板版次保留")
+        self.run_job("核對原稿內容後重連", lambda: verify_source(path, source["hash"]), finished)
+
     def refresh_sources(self, select=None):
         self.sources = self.library.list_sources()
         self.source_combo.blockSignals(True)
         self.source_combo.clear()
         for s in self.sources:
-            self.source_combo.addItem(f"{Path(s['original_path']).name} · 第 {s['page']} 頁 · {s['engine']}", s["id"])
+            self.source_combo.addItem(f"{Path(s['current_path']).name} · 第 {s['page']} 頁 · {s['engine']}", s["id"])
+            self.source_combo.setItemData(self.source_combo.count() - 1,
+                f"原始登錄：{s['original_path']}\n目前位置：{s['current_path']}\n位置版次：r{s['link_revision']}", Qt.ToolTipRole)
         select = select or self.library.active_source_id()
         if select:
             self.source_combo.setCurrentIndex(next((i for i, s in enumerate(self.sources) if s["id"] == select), 0))
