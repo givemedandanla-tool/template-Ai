@@ -28,7 +28,7 @@ def main():
                 files.append((source, source.relative_to(root).as_posix()))
     # 只含驗證工具生成的合成成品；SQLite、assets 及使用者原檔全部排除。
     evidence = ["TEST_RESULTS.txt", "VALIDATION.json", "output-workspace.png", "training-workspace.png",
-                "template-workspace.png", "decorated-output-workspace.png"]
+                "template-workspace.png", "decorated-output-workspace.png", "multiple-artworks-workspace.png"]
     evidence += [f"{prefix}-FINAL.{suffix}" for prefix in ("synthetic", "decorated") for suffix in ("pdf", "png", "jpg")]
     files += [(root / "artifacts" / name, "validation/" + name) for name in evidence if (root / "artifacts" / name).is_file()]
     folder = f"TemplateAI-v{__version__}-Source"

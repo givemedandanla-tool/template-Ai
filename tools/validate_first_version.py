@@ -6,6 +6,7 @@ from pathlib import Path
 import platform
 import subprocess
 import sys
+from dataclasses import asdict
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -19,6 +20,7 @@ from template_ai.gui import MainWindow
 from template_ai.importer import import_file, inkscape_path
 from template_ai.layout import generate
 from template_ai.render import export
+from template_ai.model import Rect
 
 
 def main():
@@ -41,7 +43,7 @@ def main():
         # 僅清理本工具的合成產物，應用程式不使用這個覆寫方式。
         target.unlink(missing_ok=True)
         export(c, target)
-    window = MainWindow(artifacts / "anonymous-smoke-data")
+    window = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     window.add_demo()
     window.library.publish(window.template)
     window.refresh_templates(window.template.id)
@@ -87,15 +89,31 @@ def main():
         target = artifacts / ("decorated-FINAL." + extension)
         target.unlink(missing_ok=True)
         export(decorated, target)
+    window.tabs.setCurrentIndex(0)
+    multi_path = root / "examples/synthetic-two-artworks.svg"
+    multi_source = window.library.add_source(multi_path, import_file(multi_path, window.library.assets))
+    marked = {"crop": asdict(Rect(0, 0, 90, 54)), "work_width": 90, "work_height": 54,
+              "slots": [asdict(slot) for slot in demo_template().slots], "visual_confirmed": False}
+    first = window.library.create_artwork(multi_source["id"], "左側合成作品", marked)
+    marked["crop"] = asdict(Rect(90, 0, 90, 54))
+    second = window.library.create_artwork(multi_source["id"], "右側合成作品", marked)
+    window.refresh_sources(multi_source["id"])
+    app.processEvents()
+    window.grab().save(str(artifacts / "multiple-artworks-workspace.png"))
     window.close()
+    reopened = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
+    assert reopened.work["id"] == second["id"]
+    reopened.work_combo.setCurrentIndex(reopened.work_combo.findData(first["id"]))
+    assert len(reopened.slots) == 4
+    reopened.close()
     files = {p.name: {"bytes": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
              for p in artifacts.iterdir() if p.is_file() and p.name != "VALIDATION.json"}
     evidence = {"app_version": app_version, "python": platform.python_version(), "platform": platform.platform(), "PySide6": qt_version,
                 "inkscape": inkscape_path(), "tests_exit_code": result.returncode, "files": files,
-                "scope": "合成／匿名來源、實際 Inkscape 多頁轉換、Qt GUI、固定背景與文字色彩、數位輸出；合成背景程式化核准並非真人視覺驗收",
+                "scope": "合成／匿名來源、實際 Inkscape 多頁轉換、Qt GUI、固定背景／文字色彩、多作品標記恢復、本機持久字型與新 Python 程序載入、數位輸出；程式化核准並非真人視覺驗收",
                 "not_verified": ["真實 Illustrator 私有樣本全面視覺驗收", "VivoBook／RTX 5050 效能", "實體印刷", "獨立審查"]}
     (artifacts / "VALIDATION.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({"tests": "PASS", "captures": 4, "exports": 6, "validation": str(artifacts / "VALIDATION.json")}))
+    print(json.dumps({"tests": "PASS", "captures": 5, "exports": 6, "validation": str(artifacts / "VALIDATION.json")}))
 
 
 if __name__ == "__main__":

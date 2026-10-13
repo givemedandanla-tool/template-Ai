@@ -21,6 +21,7 @@ from .model import KINDS, Rect, Slot, Template, learn_from_labels, new_id, templ
 from .render import export, render_image, render_background
 from .background import make_background
 from .storage import Library
+from .fonts import FontManager
 
 
 class Signals(QObject):
@@ -180,10 +181,13 @@ class MainWindow(QMainWindow):
     def __init__(self, data_root):
         super().__init__()
         self.library = Library(data_root)
+        self.font_manager = FontManager(self.library)
         self.pool = QThreadPool(self)
         self.pool.setMaxThreadCount(1)
         self.source = None
         self.crop = None
+        self.work = None
+        self.works = []
         self.slots = []
         self.template = None
         self.current_slot = None
@@ -200,6 +204,8 @@ class MainWindow(QMainWindow):
         self.refresh_templates()
         self.refresh_logos()
         self.statusBar().showMessage("本機研究版 · 請使用匿名／合成資料 · 實體印刷分析尚未執行")
+        if self.font_manager.issues:
+            self.statusBar().showMessage("字型資產需處理：" + "；".join(self.font_manager.issues))
 
     def button(self, text, action, layout):
         button = QPushButton(text)
@@ -259,6 +265,14 @@ class MainWindow(QMainWindow):
         self.source_combo = QComboBox()
         self.source_combo.currentIndexChanged.connect(self.choose_source)
         layout.addWidget(self.source_combo)
+        works_row = QHBoxLayout()
+        works_row.addWidget(QLabel("目前作品"))
+        self.work_combo = QComboBox()
+        self.work_combo.currentIndexChanged.connect(self.choose_work)
+        works_row.addWidget(self.work_combo, 1)
+        self.button("重新命名作品", self.rename_work, works_row)
+        self.button("標記歷史／恢復", self.restore_work, works_row)
+        layout.addLayout(works_row)
         self.source_info = QLabel("選取一份來源；一個檔案可以逐作品框選、保存標記並學習不同模板。")
         self.source_info.setWordWrap(True)
         layout.addWidget(self.source_info)
@@ -503,6 +517,7 @@ class MainWindow(QMainWindow):
         self.source_combo.clear()
         for s in self.sources:
             self.source_combo.addItem(f"{Path(s['original_path']).name} · 第 {s['page']} 頁 · {s['engine']}", s["id"])
+        select = select or self.library.active_source_id()
         if select:
             self.source_combo.setCurrentIndex(next((i for i, s in enumerate(self.sources) if s["id"] == select), 0))
         self.source_combo.blockSignals(False)
@@ -512,19 +527,91 @@ class MainWindow(QMainWindow):
     def choose_source(self, index):
         if not 0 <= index < len(self.sources):
             return
-        if self.source:
-            self.save_labels(silent=True)
-        self.source = self.sources[index]
-        saved = self.library.get_labels(self.source["id"])
-        self.crop = Rect(**saved["crop"]) if saved else Rect(0, 0, self.source["width_mm"], self.source["height_mm"])
-        self.slots = [Slot(**{**s, "rect": Rect(**s["rect"])}) for s in saved["slots"]] if saved else []
-        self.work_width, self.work_height = (saved["work_width"], saved["work_height"]) if saved else (self.crop.w, self.crop.h)
+        try:
+            if self.source:
+                self.save_labels(silent=True)
+            source = self.sources[index]
+            width, height = min(2000, source["width_mm"]), min(2000, source["height_mm"])
+            from dataclasses import asdict
+            work = self.library.initialize_artwork(source["id"], {"crop": asdict(Rect(0, 0, width, height)),
+                "work_width": width, "work_height": height, "slots": [], "visual_confirmed": False})
+            self.source = source
+            self.load_work(work)
+            self.library.select_source(source["id"])
+        except Exception as e:
+            self.error(str(e))
+            self.source_combo.blockSignals(True)
+            if self.source:
+                self.source_combo.setCurrentIndex(self.source_combo.findData(self.source["id"]))
+            self.source_combo.blockSignals(False)
+
+    def refresh_works(self):
+        self.works = self.library.artworks(self.source["id"]) if self.source else []
+        self.work_combo.blockSignals(True)
+        self.work_combo.clear()
+        for work in self.works:
+            self.work_combo.addItem(f"{work['name']} · r{work['revision']}", work["id"])
+        if self.work:
+            self.work_combo.setCurrentIndex(self.work_combo.findData(self.work["id"]))
+        self.work_combo.blockSignals(False)
+
+    def load_work(self, work):
+        self.work = work
+        saved = work["payload"]
+        self.crop = Rect(**saved["crop"])
+        self.slots = [Slot(**{**s, "rect": Rect(**s["rect"])}) for s in saved["slots"]]
+        self.work_width, self.work_height = saved["work_width"], saved["work_height"]
         self.visual.blockSignals(True)
-        self.visual.setChecked(bool(saved and saved.get("visual_confirmed")))
+        self.visual.setChecked(bool(saved.get("visual_confirmed")))
         self.visual.blockSignals(False)
+        self.current_slot = None
+        self.property_button.setEnabled(False)
         self.undo_stack, self.redo_stack = [], []
+        self.refresh_works()
         self.refresh_training()
         self.train_canvas.fit()
+
+    def choose_work(self, index):
+        if not self.source or not 0 <= index < len(self.works):
+            return
+        work_id = self.works[index]["id"]
+        try:
+            self.save_labels(silent=True)
+            self.load_work(self.library.select_artwork(self.source["id"], work_id))
+        except Exception as e:
+            self.refresh_works()
+            self.error(str(e))
+
+    def rename_work(self):
+        if not self.work:
+            return
+        name, ok = QInputDialog.getText(self, "作品名稱", "作品名稱（最多 120 字）", text=self.work["name"])
+        if ok:
+            try:
+                self.library.rename_artwork(self.work["id"], name)
+                self.work["name"] = name.strip()
+                self.refresh_works()
+            except Exception as e:
+                self.error(str(e))
+
+    def restore_work(self):
+        if not self.work:
+            return
+        from datetime import datetime
+        try:
+            self.save_labels(silent=True)
+            history = self.library.artwork_history(self.work["id"])
+            choices = [f"r{item['revision']} · {datetime.fromtimestamp(item['created']).strftime('%Y-%m-%d %H:%M:%S')}" for item in history]
+            choice, ok = QInputDialog.getItem(self, "恢復標記歷史", "選擇版次；會保存為新版本，不刪除後續歷史", choices, 0, False)
+            if not ok:
+                return
+            revision = history[choices.index(choice)]["revision"]
+            if QMessageBox.question(self, "恢復作品標記", f"恢復至 r{revision} 的框位、毫米及視覺確認狀態？\n已發布模板不會跟著改動。") != QMessageBox.Yes:
+                return
+            self.load_work(self.library.restore_artwork(self.work["id"], revision, self.work["revision"]))
+            self.statusBar().showMessage("歷史標記已恢復並保存，後續版本仍保留")
+        except Exception as e:
+            self.error(str(e))
 
     def refresh_training(self):
         if not self.source:
@@ -553,17 +640,21 @@ class MainWindow(QMainWindow):
                 self.error("框位必須位於來源矩形內")
                 return
             if self.train_canvas.mode == "crop":
-                if self.slots and QMessageBox.question(self, "更換作品範圍", "更換作品範圍會清除當前標記；已保存／已學習模板保留。繼續？") != QMessageBox.Yes:
-                    return
                 w, ok = QInputDialog.getDouble(self, "標定作品", "作品實體寬度（mm）", rect.w, 0.1, 2000, 3)
                 if not ok:
                     return
                 h, ok = QInputDialog.getDouble(self, "標定作品", "作品實體高度（mm）", rect.h, 0.1, 2000, 3)
                 if not ok:
                     return
-                self.crop, self.work_width, self.work_height, self.slots = rect, w, h, []
-                self.visual.setChecked(False)
-                self.undo_stack, self.redo_stack = [], []
+                try:
+                    self.save_labels(silent=True)
+                    from dataclasses import asdict
+                    work = self.library.create_artwork(self.source["id"], f"作品 {len(self.works)+1}",
+                        {"crop": asdict(rect), "work_width": w, "work_height": h, "slots": [], "visual_confirmed": False})
+                    self.load_work(work)
+                except Exception as e:
+                    self.error(str(e))
+                    return
             else:
                 if not (rect.x >= self.crop.x and rect.y >= self.crop.y and rect.x + rect.w <= self.crop.x + self.crop.w and rect.y + rect.h <= self.crop.y + self.crop.h):
                     self.error("資料框必須在目前橘色作品框內")
@@ -572,6 +663,7 @@ class MainWindow(QMainWindow):
                 mapped = Rect((rect.x - self.crop.x) * self.work_width / self.crop.w, (rect.y - self.crop.y) * self.work_height / self.crop.h,
                               rect.w * self.work_width / self.crop.w, rect.h * self.work_height / self.crop.h)
                 self.slots.append(self.make_slot(mapped))
+                self.save_labels(silent=True)
             self.refresh_training()
         elif self.tabs.currentIndex() == 1 and self.editable():
             self.checkpoint()
@@ -581,7 +673,8 @@ class MainWindow(QMainWindow):
     def make_slot(self, rect):
         return Slot(self.kind.currentData(), self.owner.currentData(), rect, self.index.value()-1,
                     self.font.currentFont().family(), self.pt.value(), self.scale.value()/100,
-                    self.align.currentData(), self.required.isChecked(), color=self.text_color.text().strip())
+                    self.align.currentData(), self.required.isChecked(), color=self.text_color.text().strip(),
+                    font_asset=self.font_manager.asset_for_family(self.font.currentFont().family()))
 
     def current_slots(self):
         return self.slots if self.tabs.currentIndex() == 0 else self.template.slots if self.template else []
@@ -688,14 +781,24 @@ class MainWindow(QMainWindow):
 
     def labels_changed(self):
         if self.source:
-            self.save_labels(silent=True)
+            try:
+                self.save_labels(silent=True)
+            except Exception as e:
+                self.error(str(e))
 
     def save_labels(self, silent=False):
-        if not self.source:
+        if not self.source or not self.work:
             return
         from dataclasses import asdict
-        self.library.save_labels(self.source["id"], {"crop": asdict(self.crop), "work_width": self.work_width,
-            "work_height": self.work_height, "slots": [asdict(s) for s in self.slots], "visual_confirmed": self.visual.isChecked()})
+        try:
+            self.work = self.library.save_artwork(self.work["id"], {"crop": asdict(self.crop), "work_width": self.work_width,
+                "work_height": self.work_height, "slots": [asdict(s) for s in self.slots], "visual_confirmed": self.visual.isChecked()}, self.work["revision"])
+        except Exception as e:
+            if silent:
+                raise
+            self.error(str(e))
+            return
+        self.refresh_works()
         if not silent:
             self.statusBar().showMessage("標記與作品尺寸已保存，重開程式可恢復；原檔未修改")
 
@@ -724,7 +827,9 @@ class MainWindow(QMainWindow):
             bindings = self.ask_bindings(self.slots)
             if bindings is None:
                 return
-            t = learn_from_labels(name, self.work_width, self.work_height, self.slots, self.source["id"], self.crop, bindings)
+            self.save_labels(silent=True)
+            t = learn_from_labels(name, self.work_width, self.work_height, self.slots, self.source["id"], self.crop, bindings,
+                                  source_work_id=self.work["id"], source_work_revision=self.work["revision"])
             self.library.save_template(t)
             self.save_labels(silent=True)
             self.refresh_templates(t.id)
@@ -1082,14 +1187,15 @@ class MainWindow(QMainWindow):
         path, _ = QFileDialog.getOpenFileName(self, "選取已獲授權的本機字型（不安裝 Windows）", "", "字型 (*.ttf *.otf *.ttc)")
         if not path:
             return
-        if QMessageBox.question(self, "字型使用", "確認有權在本機使用此字型？\n這次僅載入本程式，不修改 Windows 字型系統；嵌入與印刷授權仍需核對。") != QMessageBox.Yes:
+        if QMessageBox.question(self, "字型使用", "確認有權將此字型複本保存於本機並使用？\n只載入本程式，重開時自動載入，不修改 Windows 字型系統；嵌入與印刷授權仍需核對。") != QMessageBox.Yes:
             return
-        font_id = QFontDatabase.addApplicationFont(path)
-        if font_id < 0:
-            self.error("字型無法解析")
-        else:
-            self.inform("已載入本程式：" + "、".join(QFontDatabase.applicationFontFamilies(font_id)) + "\n重開程式後需重新載入；持久字型資產管理留後續版本。")
+        try:
+            asset = self.font_manager.import_font(path, approved=True)
+            self.font.setCurrentFont(QFont(asset["families"][0]))
+            self.inform("已保存並載入本程式：" + "、".join(asset["families"]) + "\n重開時會核對內容後自動載入；字型不會隨原始碼包上傳。")
             self.invalidate()
+        except Exception as e:
+            self.error(str(e))
 
     def mode_changed(self):
         self.current_slot = None
@@ -1113,5 +1219,6 @@ class MainWindow(QMainWindow):
             self.error("保存失敗，尚未安全關閉：" + str(e))
             event.ignore()
             return
+        self.font_manager.close()
         self.library.close()
         event.accept()

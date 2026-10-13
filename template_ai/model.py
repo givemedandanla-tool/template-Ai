@@ -44,6 +44,7 @@ class Slot:
     required: bool = True
     id: str = field(default_factory=new_id)
     color: str = "#111827"
+    font_asset: dict | None = None
 
 
 @dataclass
@@ -62,6 +63,8 @@ class Template:
     reasons: list[str] = field(default_factory=list)
     company_bindings: dict[str, str] = field(default_factory=dict)
     background: dict | None = None
+    source_work_id: str = ""
+    source_work_revision: int = 0
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -80,6 +83,8 @@ def template_errors(t: Template) -> list[str]:
     errors = []
     from .background import background_errors
     errors.extend(background_errors(t.background, t.width_mm, t.height_mm, verify_files=False))
+    from .fonts import font_asset_errors
+    errors.extend(font_asset_errors(t.slots))
     if not all(math.isfinite(v) and 0 < v <= 2000 for v in (t.width_mm, t.height_mm)):
         errors.append("矩形尺寸必須大於 0，且不超過本版 2000 mm 支援範圍")
     if not 1 <= t.capacity <= 20:
@@ -126,12 +131,13 @@ def template_errors(t: Template) -> list[str]:
     return errors
 
 
-def learn_from_labels(name: str, width: float, height: float, slots: list[Slot], source_id: str, artwork: Rect, bindings: dict[str, str] | None = None) -> Template:
+def learn_from_labels(name: str, width: float, height: float, slots: list[Slot], source_id: str, artwork: Rect, bindings: dict[str, str] | None = None, source_work_id: str = "", source_work_revision: int = 0) -> Template:
     """從已確認標記內化框位及對齊，建立有來源的規則模板；不假稱神經模型已訓練。"""
     import copy
     capacity = max([int(s.owner[1:]) for s in slots if s.kind == "name" and s.owner.startswith("p")] or [1])
     t = Template(name, width, height, copy.deepcopy(slots), capacity, source_id, artwork)
     t.company_bindings = bindings or {}
+    t.source_work_id, t.source_work_revision = source_work_id, source_work_revision
     t.reasons = ["框位來自人工確認作品標記", "保留人物／公司歸屬及固定欄位字級",
                  "依實體矩形尺寸分類；不直接跨尺寸套用", "本版學習方法：標記幾何與明確對齊規則內化"]
     errors = template_errors(t)

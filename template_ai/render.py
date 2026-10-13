@@ -92,6 +92,10 @@ def render_background(t: Template, dpi: int = 150) -> QImage:
 
 def paint_candidate(p: QPainter, candidate: Candidate, preview: bool = False) -> None:
     t = candidate.template
+    from .fonts import font_asset_errors
+    font_issues = font_asset_errors(item.slot for item in candidate.items)
+    if font_issues:
+        raise ValueError("；".join(font_issues))
     paint_background(p, t)
     for item in candidate.items:
         s = item.slot
@@ -143,6 +147,10 @@ def render_image(candidate: Candidate, dpi: int = 150, preview: bool = False) ->
 def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bool = False, expected_generation: int | None = None) -> Path:
     """同目錄暫存與排他建立；任何錯誤不留下冒充成功的半成品，也不覆寫既有檔。"""
     target = Path(target)
+    from .fonts import font_asset_errors
+    font_issues = font_asset_errors(item.slot for item in candidate.items)
+    if font_issues:
+        raise ValueError("；".join(font_issues))
     errors = background_errors(candidate.template.background, candidate.template.width_mm, candidate.template.height_mm)
     if errors:
         raise ValueError("；".join(errors))
