@@ -2,6 +2,12 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-13：CORE-025 開始
+
+- CORE-024 永久證據 snapshot `956e9ecb7078e250682564e1d8cf6954230f5f8e` 161 檔確認；收據／STATE 在 `712448eeb24e373946cc112ba0f41307f7244327` 保存。
+- 字型修復只恢復同內容核准複本，隔離損壞副本，保留 pin；加入修復 PREPARED 意圖與啟動核對，避免把跨 SQLite／檔案操作冒稱單一原子交易。
+- 設計與商用／開源／演算法參考見 FONT_REPAIR_DESIGN.md。開始修改前保存 BEGIN；下一步具名驗收與修復，不打包 EXE。
+
 ## 2026-10-13：CORE-024 完成
 
 - v0.1.4 測試來源 `285a9e14cf063dc71b04ebc28d4af35efa499bb1`；RUN-SOURCE-RELINK-001 71 PASS／0 SKIP，19 件實際匿名附件／文字紀錄，來源未改變。

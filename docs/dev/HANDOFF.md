@@ -2,7 +2,9 @@
 
 先讀 AGENTS.md → STATE.json → REQUIREMENTS.json／FEATURES.md → WORK_LOG 及 checkpoint 收據 → DEVELOPMENT_PROTOCOL.md。
 
-目前 v0.1.4，CORE-024 已實作單件來源重連：背景唯讀 SHA-256、原登錄不變、位置及历史交易保存、過期 revision 與正常檔案異動拒絕、GUI 入口與重開。測試來源 commit `285a9e14cf063dc71b04ebc28d4af35efa499bb1`，RUN-SOURCE-RELINK-001 有 71 PASS／0 SKIP、19 件附件。24 CORE／5 GOV 只按明列範圍自我驗證；75 父题未全部完成。
+CORE-025 正在開發，先取消舊當前證據判定；歷史 RUN-SOURCE-RELINK-001 保留。先完成字型修復具名驗收及重新驗證，再恢復完成標記。
+
+上一個已驗證版本 v0.1.4，CORE-024 已實作單件來源重連：背景唯讀 SHA-256、原登錄不變、位置及历史交易保存、過期 revision 與正常檔案異動拒絕、GUI 入口與重開。測試來源 commit `285a9e14cf063dc71b04ebc28d4af35efa499bb1`，RUN-SOURCE-RELINK-001 有 71 PASS／0 SKIP、19 件附件。24 CORE／5 GOV 只按明列範圍自我驗證；75 父题未全部完成。
 
 下一工作包：UI-032 的字型資產修復，從相同內容且已授權字型恢复本機複本，保留已發布模板 pin；完整字重／版本管理另包。UI-049 批次掃描仍待處理，來源修改不得用重連替換舊內容。
 
