@@ -7,7 +7,7 @@ import sqlite3
 import tempfile
 import threading
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PySide6.QtGui import QImage
@@ -100,6 +100,26 @@ class BatchSourceTests(unittest.TestCase):
         report = discover_sources(self.sources, self.search)
         self.assertEqual(report["status"], "PARTIAL")
         self.assertTrue(all(len(r["candidates"]) == 32 and r["candidate_limit"] for r in report["rows"]))
+
+    @unittest.skipIf(os.name == "nt", "模擬目錄接點用 symlink 建立測試映射；Windows 真實接點另驗收")
+    def test_resolved_directory_outside_root_not_entered_even_without_symlink_flag(self):
+        outside = self.root / "outside"; outside.mkdir()
+        shutil.copyfile(self.candidate, outside / "other.png")
+        junction = self.search / "junction"; junction.symlink_to(outside, target_is_directory=True)
+        entry = Mock(path=str(junction))
+        entry.is_symlink.return_value = False
+        entry.stat.return_value = junction.stat()
+        entry.is_dir.return_value = True
+        class Entries:
+            def __init__(self): self.items = iter([entry])
+            def __next__(self): return next(self.items)
+            def close(self): pass
+        with patch("template_ai.source_discovery.os.scandir", return_value=Entries()) as listing:
+            report = discover_sources(self.sources, self.search)
+        self.assertEqual(listing.call_count, 1)
+        self.assertEqual(report["hashed_files"], 0)
+        self.assertEqual(report["status"], "PARTIAL")
+        self.assertIn("範圍之外", report["errors"][0]["reason"])
 
     def test_batch_requires_approval_and_preserves_source_payload_and_ids(self):
         payloads = self.library.db.execute("SELECT id,payload FROM sources ORDER BY id").fetchall()

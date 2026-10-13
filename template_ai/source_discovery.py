@@ -63,6 +63,8 @@ def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256
                 value = entry.stat(follow_symlinks=False)
                 if value.st_dev != root_device:
                     report["errors"].append({"path": str(path), "reason": "跨檔案系統未搜尋"}); continue
+                if not path.resolve().is_relative_to(root):
+                    report["errors"].append({"path": str(path), "reason": "實際位置在指定搜尋範圍之外，未進入"}); continue
                 if entry.is_dir(follow_symlinks=False):
                     if len(stack) >= 32:
                         report["errors"].append({"path": str(path), "reason": "目錄深度超過 32，請縮小範圍"}); continue
