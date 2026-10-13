@@ -6,7 +6,8 @@
 
 - 五點框架 READY 與收據已永久保存；確認提交 `bc5448f2a4c44c1a503b5ad59d21caf61dad33e8`。
 - 下一要求 CORE-023：衍生快取內容、頁碼與 metadata 驗證；異動／損壞時不重用並重建，原始來源保持只讀。
-- 計畫新增正常重用、圖片／SVG異動、metadata損壞／外部路徑、原稿不變的具名測試。
+- 故障測試先重現 3 個FAIL與1個ERROR；修正後6個快取測試通過，包括符號連結不改原檔，原始紅／綠紀錄保存於docs/evidence/regressions/CORE-023。
+- 發現框架的副檔名白名單漏了.log，初始遠端快照沒有全部文字日誌；本包補.log並增加require-evidence的遠端附件包含檢查，避免只在本機看得到卻宣稱已保存。
 - 舊 run 保留可查，但新來源版本開發時先取消當前 completed，重新驗證前不沿用舊 PASS。FRAMEWORK READY 歷史收據仍有效，产品新版本完成另產證據。
 - 先做 SOURCE-CACHE-BEGIN checkpoint，完成修改／測試後再做可恢復 checkpoint 與RUN-SOURCE-CACHE-001。
 

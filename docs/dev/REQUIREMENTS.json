@@ -2489,10 +2489,10 @@
         "UI-049",
         "UI-042"
       ],
-      "status": "NOT_IMPLEMENTED",
+      "status": "IMPLEMENTED_UNVERIFIED",
       "completed": false,
       "review_level": "NOT_REVIEWED",
-      "scope": "本機衍生快取的內容驗證，非完整批次来源重連",
+      "scope": "Linux／合成來源衍生快取完整性，非完整批次來源重連；checksum非安全簽章",
       "phase": "P1、P2",
       "decision_status": "既有核准要求子集",
       "sources": [
@@ -2503,7 +2503,14 @@
         {
           "id": "CORE-023-A1",
           "expected": "同來源快取經 hash 核對；異動／損壞 metadata 不可當成功重用；保持原檔只讀並可重新轉換",
-          "tests": []
+          "tests": [
+            "test_source_cache.SourceCacheTests.test_valid_cache_reused_without_rewriting",
+            "test_source_cache.SourceCacheTests.test_changed_preview_regenerated_original_unchanged",
+            "test_source_cache.SourceCacheTests.test_invalid_metadata_and_foreign_paths_are_not_reused",
+            "test_source_cache.SourceCacheTests.test_changed_vector_asset_regenerated",
+            "test_source_cache.SourceCacheTests.test_failed_regeneration_does_not_restore_corrupt_cache_as_success",
+            "test_source_cache.SourceCacheTests.test_symlink_cache_does_not_overwrite_original"
+          ]
         }
       ],
       "next_step": "框架 READY checkpoint 完成後，先補錯誤快取驗收，再修改 importer"

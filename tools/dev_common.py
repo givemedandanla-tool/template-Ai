@@ -52,7 +52,7 @@ def source_files(root=ROOT, code_only=False):
     root = Path(root)
     directories = ("template_ai", "tests", "examples", "tools") if code_only else ("template_ai", "tests", "examples", "tools", "docs", ".github")
     root_names = ("app.py", "requirements.txt", "requirements-lock.txt") if code_only else ("app.py", "requirements.txt", "requirements-lock.txt", "requirements-build.txt", "README.md", "AGENTS.md", "START_WINDOWS.bat", ".gitignore")
-    allowed = {".py", ".md", ".json", ".csv", ".txt", ".svg", ".xml", ".yml", ".yaml", ".ps1", ".bat"}
+    allowed = {".py", ".md", ".json", ".csv", ".txt", ".log", ".svg", ".xml", ".yml", ".yaml", ".ps1", ".bat"}
     files = [root / name for name in root_names if (root / name).is_file()]
     for directory in directories:
         for path in (root / directory).rglob("*"):

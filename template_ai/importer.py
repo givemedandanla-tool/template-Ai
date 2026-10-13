@@ -15,9 +15,40 @@ from PySide6.QtCore import QSize
 from PySide6.QtGui import QImage, QImageReader, QPainter
 from PySide6.QtPdf import QPdfDocument
 from PySide6.QtSvg import QSvgRenderer
+from .background import file_digest
 
-IMPORT_VERSION = "visual-import-0.1.1"
+IMPORT_VERSION = "visual-import-0.1.3"
 MAX_PIXELS = 12_000_000
+
+
+def metadata_checksum(payload: dict) -> str:
+    values = {key: value for key, value in payload.items() if key != "metadata_sha256"}
+    return hashlib.sha256(json.dumps(values, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
+
+
+def cache_matches(payload: dict, folder: Path, source_hash: str, page: int) -> bool:
+    """只重用完整同來源／同頁快取；JSON 和檔案不可信時重建，不把存在當完成。"""
+    try:
+        if not isinstance(payload, dict) or payload.get("cache_version") != IMPORT_VERSION:
+            return False
+        if payload.get("hash") != source_hash or payload.get("page") != page or payload.get("metadata_sha256") != metadata_checksum(payload):
+            return False
+        if type(payload["page_count"]) is not int or not page <= payload["page_count"]:
+            return False
+        preview_height(payload["width_mm"], payload["height_mm"])
+        names = {"image": "preview.png"}
+        if payload.get("svg"):
+            names["svg"] = "source.svg"
+        hashes = payload["file_hashes"]
+        if set(hashes) != set(names):
+            return False
+        for key, name in names.items():
+            path = Path(payload[key])
+            if path.resolve() != (folder / name).resolve() or path.is_symlink() or not path.is_file() or file_digest(path) != hashes[key]:
+                return False
+        return True
+    except (KeyError, TypeError, ValueError, OSError, OverflowError):
+        return False
 
 
 def preview_height(width: float, height: float, width_px: int = 1600) -> int:
@@ -108,9 +139,14 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         raise ValueError("此非 PDF 來源本版只支援第 1 頁，請另存目標畫板後匯入")
     folder = assets / f"{sha}-p{page}-{IMPORT_VERSION}"
     metadata = folder / "metadata.json"
+    if folder.is_symlink() or any((folder / name).is_symlink() for name in ("metadata.json", "preview.png", "source.svg")):
+        raise ValueError("快取位置含符號連結，無法安全重建；請改用正常本機資產目錄")
     if metadata.exists():
-        cached = json.loads(metadata.read_text(encoding="utf-8"))
-        if Path(cached["image"]).is_file() and (not cached["svg"] or Path(cached["svg"]).is_file()):
+        try:
+            cached = json.loads(metadata.read_text(encoding="utf-8"))
+        except (ValueError, OSError, UnicodeError):
+            cached = None
+        if cache_matches(cached, folder, sha, page):
             return {**cached, "reused": True}
     folder.mkdir(parents=True, exist_ok=True)
     image_path, svg_path = folder / "preview.png", folder / "source.svg"
@@ -168,6 +204,11 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
     payload = {"hash": sha, "image": str(image_path), "svg": svg, "width_mm": width,
                "height_mm": height, "page": page, "page_count": page_count, "engine": engine,
                "calibrated": calibrated, "visual_confirmed": False, "reused": False}
+    payload["cache_version"] = IMPORT_VERSION
+    payload["file_hashes"] = {"image": file_digest(image_path)}
+    if svg:
+        payload["file_hashes"]["svg"] = file_digest(svg_path)
+    payload["metadata_sha256"] = metadata_checksum(payload)
     temporary = folder / "metadata.tmp"
     temporary.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
     os.replace(temporary, metadata)

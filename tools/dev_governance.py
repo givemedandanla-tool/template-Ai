@@ -104,7 +104,12 @@ def check(root=ROOT, require_evidence=False):
     if require_evidence and not state.get("latest_evidence_run"):
         raise ValueError("框架尚未有最新實際證據")
     if state.get("latest_evidence_run"):
-        verify_run(root, state["latest_evidence_run"])
+        latest, _ = verify_run(root, state["latest_evidence_run"])
+        if require_evidence:
+            folder = str(Path(state["latest_evidence_run"]).parent).replace("\\", "/")
+            required = [state["latest_evidence_run"], *[folder + "/" + name for name in latest["attachments"]]]
+            if any(path not in checkpoint["source_files"] for path in required):
+                raise ValueError("證據還未全部納入已確認的遠端 checkpoint，不能當作永久保存完成")
     return {"status": "PASS", "requirements": len(rows), "completed_scoped": sum(row["completed"] for row in rows),
             "parent_topics": sum(row["kind"] == "topic" for row in rows), "tests_known": len(tests)}
 

@@ -101,7 +101,7 @@
 | CORE-020 | 發布與審核同一交易 | IMPLEMENTED_UNVERIFIED | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
 | CORE-021 | 字型持久複本與新程序載入 | IMPLEMENTED_UNVERIFIED | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
 | CORE-022 | 字型核准、異動與失敗保護 | IMPLEMENTED_UNVERIFIED | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-023 | 來源快取完整性與損壞恢復 | NOT_IMPLEMENTED | 否 | 本機衍生快取的內容驗證，非完整批次来源重連 | 無有效新版證據 |
+| CORE-023 | 來源快取完整性與損壞恢復 | IMPLEMENTED_UNVERIFIED | 否 | Linux／合成來源衍生快取完整性，非完整批次來源重連；checksum非安全簽章 | 無有效新版證據 |
 | GOV-001 | 開發 checkpoint 與安全恢復 | IMPLEMENTED_UNVERIFIED | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |
 | GOV-002 | Human／GPT 開工交接與下一步 | IMPLEMENTED_UNVERIFIED | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |
 | GOV-003 | 要求與個別證據完成 Gate | IMPLEMENTED_UNVERIFIED | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |

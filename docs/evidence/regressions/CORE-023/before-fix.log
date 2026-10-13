@@ -1,0 +1,55 @@
+test_changed_preview_regenerated_original_unchanged (test_source_cache.SourceCacheTests.test_changed_preview_regenerated_original_unchanged) ... FAIL
+test_changed_vector_asset_regenerated (test_source_cache.SourceCacheTests.test_changed_vector_asset_regenerated) ... FAIL
+test_failed_regeneration_does_not_restore_corrupt_cache_as_success (test_source_cache.SourceCacheTests.test_failed_regeneration_does_not_restore_corrupt_cache_as_success) ... FAIL
+test_invalid_metadata_and_foreign_paths_are_not_reused (test_source_cache.SourceCacheTests.test_invalid_metadata_and_foreign_paths_are_not_reused) ... ERROR
+test_valid_cache_reused_without_rewriting (test_source_cache.SourceCacheTests.test_valid_cache_reused_without_rewriting) ... ok
+
+======================================================================
+ERROR: test_invalid_metadata_and_foreign_paths_are_not_reused (test_source_cache.SourceCacheTests.test_invalid_metadata_and_foreign_paths_are_not_reused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_cache.py", line 56, in test_invalid_metadata_and_foreign_paths_are_not_reused
+    recovered = import_file(self.original, self.assets)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/importer.py", line 112, in import_file
+    cached = json.loads(metadata.read_text(encoding="utf-8"))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/bcoe-python/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/bcoe-python/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/bcoe-python/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 3 (char 2)
+
+======================================================================
+FAIL: test_changed_preview_regenerated_original_unchanged (test_source_cache.SourceCacheTests.test_changed_preview_regenerated_original_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_cache.py", line 47, in test_changed_preview_regenerated_original_unchanged
+    self.assertFalse(second["reused"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_changed_vector_asset_regenerated (test_source_cache.SourceCacheTests.test_changed_vector_asset_regenerated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_cache.py", line 77, in test_changed_vector_asset_regenerated
+    self.assertFalse(second["reused"])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_failed_regeneration_does_not_restore_corrupt_cache_as_success (test_source_cache.SourceCacheTests.test_failed_regeneration_does_not_restore_corrupt_cache_as_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_cache.py", line 86, in test_failed_regeneration_does_not_restore_corrupt_cache_as_success
+    with self.assertRaisesRegex(ValueError, "轉換器失敗"):
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.765s
+
+FAILED (failures=3, errors=1)
