@@ -2737,7 +2737,7 @@
       "parents": [
         "UI-049"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "Linux／合成來源；單根受限掃描與人工勾選，不代表完整跨設備資產管理",
@@ -2751,10 +2751,18 @@
         {
           "id": "CORE-026-A1",
           "expected": "受控範圍背景來源定位與候選影響預覽；詳見明列設計與具名測試",
-          "tests": []
+          "tests": [
+            "test_batch_source_relink.BatchSourceTests.test_one_candidate_hashed_once_for_independent_same_content_registrations",
+            "test_batch_source_relink.BatchSourceTests.test_size_prefilter_same_name_different_bytes_and_ambiguous_copies",
+            "test_batch_source_relink.BatchSourceTests.test_limits_cancel_unreadable_and_missing_fingerprint_are_explicit",
+            "test_batch_source_relink.BatchSourceTests.test_search_does_not_follow_symlink_outside_selected_root",
+            "test_batch_source_relink.BatchSourceTests.test_candidate_count_is_bounded_and_partial_not_all_found",
+            "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
+            "test_batch_source_relink.BatchSourceGuiTests.test_cancelled_scan_or_worker_error_never_enables_commit"
+          ]
         }
       ],
-      "next_step": "先保存 PLAN，再實作具名測試及新版證據"
+      "next_step": "確切來源全套證據及永久附件；父 UI-049 仍部分"
     },
     {
       "id": "CORE-027",
@@ -2763,7 +2771,7 @@
       "parents": [
         "UI-049"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "Linux／合成來源批次位置交易與當前內容驗證，不更改客戶映射或源檔",
@@ -2777,10 +2785,20 @@
         {
           "id": "CORE-027-A1",
           "expected": "批次來源重連交易、歷史與安全復原；詳見明列設計與具名測試",
-          "tests": []
+          "tests": [
+            "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids",
+            "test_batch_source_relink.BatchSourceTests.test_late_revision_conflict_and_event_failure_roll_back_entire_batch",
+            "test_batch_source_relink.BatchSourceTests.test_candidate_changed_after_background_verify_does_not_partially_commit",
+            "test_batch_source_relink.BatchSourceTests.test_undo_verifies_old_paths_creates_new_revisions_and_keeps_history",
+            "test_batch_source_relink.BatchSourceTests.test_undo_missing_original_wrong_position_or_later_revision_rejected",
+            "test_batch_source_relink.BatchSourceTests.test_empty_duplicate_and_same_current_location_are_not_fake_updates",
+            "test_batch_source_relink.BatchSourceTests.test_later_relink_revision_is_not_overwritten_by_old_batch_undo",
+            "test_batch_source_relink.BatchSourceTests.test_final_batch_audit_failure_rolls_back_links_histories_and_reviews",
+            "test_batch_source_relink.BatchSourceGuiTests.test_selected_batch_apply_and_gui_undo_preserve_work"
+          ]
         }
       ],
-      "next_step": "先保存 PLAN，再實作具名測試及新版證據"
+      "next_step": "確切來源全套證據及永久附件；父 UI-049 仍部分"
     },
     {
       "id": "GOV-006",

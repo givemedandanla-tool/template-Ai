@@ -7,6 +7,7 @@ import platform
 import subprocess
 import sys
 import argparse
+import shutil
 from dataclasses import asdict
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -107,6 +108,23 @@ def main():
     window.refresh_sources(multi_source["id"])
     app.processEvents()
     window.grab().save(str(artifacts / "multiple-artworks-workspace.png"))
+    from template_ai.source_dialog import SourceRelinkDialog
+    from template_ai.source_discovery import discover_sources
+    search_root = window.library.root / "anonymous-candidate-sources"
+    search_root.mkdir(exist_ok=True)
+    shutil.copyfile(source_path, search_root / "renamed-synthetic.svg")
+    sources = window.library.list_sources()
+    for item in sources: item["impacts"] = window.library.source_impacts(item["id"])
+    dialog = SourceRelinkDialog(window)
+    dialog.resize(1500, 600)
+    dialog.show_report(discover_sources(sources, search_root))
+    dialog.show()
+    app.processEvents()
+    assert dialog.table.rowCount() == len(sources)
+    assert all(not dialog.table.cellWidget(i, 0).isChecked() for i in range(len(sources)))
+    if not dialog.grab().save(str(artifacts / "batch-source-preview.png")):
+        raise ValueError("批次來源預覽截圖保存失敗")
+    dialog.close()
     window.close()
     reopened = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     assert reopened.work["id"] == second["id"]
