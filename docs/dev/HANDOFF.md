@@ -1,23 +1,32 @@
 # Human／GPT 開發交接
 
-先讀 AGENTS 與 STATE。即時要求／完成證據在 REQUIREMENTS.json，FEATURES.md 是人類視圖；不要把歷史訪談、舊版 CSV 或測試總數當作全產品完成。
+先讀根AGENTS.md與STATE.json，再讀REQUIREMENTS.json／FEATURES.md、最新WORK_LOG及checkpoint收據。這些是即時入口；舊訪談、CSV與FIRST_VERSION_STATUS是歷史來源，不能當完整產品完成度。
 
-## 目前背景
+## 已確認現況
 
-v0.1.2 已做矩形匯入、人工標記規則學習、模板與版本、固定字級數位排版、Logo／背景／字型資產、作品歷史及安全輸出。原有 50 項本地測試曾通過，但尚未使用本次結構化證據格式，新版 run 已建立；CORE 明列範圍完成狀態以登錄與逐項證據為準。完整 75 筆來源主題均保留，不把部分能力提升為父題目完整完成。
+五點框架完成後，已繼續CORE-023。產品目前v0.1.3，確切測試來源commit為`6a392639ef7ca8e35ff74ced9e203b7847dff664`；RUN-SOURCE-CACHE-001有64項單獨測試全數PASS、零SKIP及19件紀錄／匿名實際附件。23個CORE子範圍與5個GOV為SELF_VERIFIED，75筆父題並未因此全數完成。所有依據在要求登錄，沒有獨立覆核。
 
-本輪使用者要求先建立五點框架。起始快照已在 GitHub commit `02af3a8d556830a0e699dd80e6dbb3535a984c28` 確認 62 檔；收據指向該快照。框架具名證據 RUN-FRAMEWORK-001 已在確切 commit f5da9c41e432e0b7b3927ae9b51c5e94645406b3 執行，58 項測試全數通過。新證據對應 22 個 CORE 子範圍與 5 個治理要求；FRAMEWORK-READY 收據確認後，下一步為 CORE-023。
+最終快照`CP-20261013-SOURCE-CACHE-VERIFIED`已讀回132檔，snapshot commit `19b300cec125149b2adc0e32987d376d2638ab75`。收據及入口指針另行保存，避免自參照commit循環。來源checksum是完整性檢查而非安全簽章。全部文字日誌與匿名二進位附件已納入快照，不只存在本機。
 
-## 最近完成與下一個產品工作包
+## 下一個工作包
 
-CORE-023 已完成：快取hash、metadata checksum、固定路徑與只讀重建，六個故障驗收與全體64項測試通過，來源commit 6a392639ef7ca8e35ff74ced9e203b7847dff664。最新來源／結果在RUN-SOURCE-CACHE-001。
+UI-049的受控來源重連子包：核對內容hash，不憑檔名接受；保留原來源登錄、作品及模板版次。原稿變更需記新內容版本並重新審核，不能把舊模板來源偷偷替換。先寫明列驗收／具名測試，建立WIP checkpoint再改碼。其次為字型資產修復；完整批次重連及字重版本仍分包處理。
 
-下一步 UI-049 的受控來源重連子包：比對內容hash，不凭檔名接受；保留原登錄及版本，來源已變更需記新版本并重新審核。再處理字型資產修復。此輪不等於完整批次重連，不延伸到未決診斷報告或EXE。
+## 工作規則與限制
 
-## 已知限制與順序
+零例行問答，使用已有授權自主推進；真缺資料記BLOCKED並轉做其他已核准要求。每個工作包及10分鐘目標保存checkpoint，長包中途先做WIP；本轮26分鐘／14分鐘兩個超時窗口如實記錄，不能宣稱嚴格全程達標或最後未保存操作零風險。
 
-本輪不再要求／重試 EXE；歷史 runner 步驟前失敗只保留紀錄，不作主工作。真實 AI 視覺驗收與硬體仍待指定樣本／设备，已有可獨立完成的要求先做。印刷分析延後；UI-048 仍最後接入，但保存、最小資料與資產完整性不必延後。當次排版結果恢復 UI-058 仍未完成，不能拿已做作品標記歷史替代。沒有部署 24 小時常駐編碼服務。
+EXE不再自動觸發、不重試，也不是目前完成Gate。印刷分析延後；UI-048仍最後功能，正式真實個資使用前必須完成。UI-058的當次排版候選恢復仍未完成，不能拿作品標記歷史替代。真實AI全面視覺驗收、VivoBook／RTX5050仍待資料與設備。沒有部署24小時常駐編碼服務。
 
-## 中斷恢復
+## 中斷恢復與重新驗證
 
-讀最新 REMOTE_VERIFIED 收據與其不可變 commit，檢查 STATE.pending_remote；本機 ZIP 可在新目錄 restore-copy，雲端丟失則從確認 commit 取得來源。先補上次未保存的紀錄／證據，再挑下一條要求。所有對話定案與操作結果在當輪寫 GitHub；不例行再問是否繼續。
+讀STATE.last_confirmed_checkpoint的不可變snapshot commit，檢查pending_remote；本機ZIP可以restore-copy到新目錄，工作區丟失從GitHub確認commit取回。先補未保存的紀錄／證據，再做下一條要求。新源碼或驗收條件改動會讓舊證據失效，不沿用舊PASS。
+
+重現目前測試：在同一來源版本、同一文件字節（Git checkout避免自動換行轉換）執行：
+
+```bash
+python tools/run_evidence.py --run-id RUN-NEW-UNIQUE --source-commit 6a392639ef7ca8e35ff74ced9e203b7847dff664 --commit-json docs/evidence/runs/RUN-SOURCE-CACHE-001/commit.json --tree-json docs/evidence/runs/RUN-SOURCE-CACHE-001/tree.json
+python tools/dev_governance.py check --require-evidence
+```
+
+新的run仍需保存全部附件並做GitHub讀回後才能當永久證據，run ID不可重用。根AGENTS提供完整命令與流程。
