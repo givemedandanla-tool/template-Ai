@@ -15,6 +15,7 @@
 - **每個可恢復工作包、每 10 分鐘、中斷前、環境／資料結構變更前後都建立 checkpoint**。本機 ZIP 只是 PREPARED；GitHub commit/tree 逐檔讀回後才是 REMOTE_VERIFIED，收據也要保存 GitHub。不得覆寫歷史 checkpoint。
 - 首先執行 `python tools/dev_governance.py check`；讀取下一個已核准且未完成的要求。框架或證據不完整先修治理，不把未測試功能標為完成。
 - 修改前寫要求 ID、验收條件、預計測試及 checkpoint；修改後保存程式、工作紀錄、狀態與證據，更新機器登錄並產生人類清單。最後再次執行 check。
+- 每次開發保留功能清單基準／結束快照，從 REQUIREMENTS.json 生成 CURRENT_PROGRESS.json／PROGRESS.md；最終回報原始需求各狀態、已驗證 CORE 功能子項、GOV 治理及本輪新增／修訂／完成差異。部分實作不得當整項完成，新增拆分不冒充完成率提高。計數改變同步保存 GitHub；新定案見 docs/decisions/2026-10-14-PROGRESS-REPORTING.md。
 - 完成狀態只能由對應測試與證據判定。未執行／跳過／失敗、只測 Linux、只用合成樣本均如實標示；不可用整批 PASS 證明所有需求已完成。
 - **EXE 不屬目前工作目標**。不得重跑失敗打包、建立新 EXE CI 或把 EXE 當功能完成條件。既有流程只保留人工 dispatch；之後有新明確交付指令才處理。
 - 先完成核心軟體要求；印刷分析在軟體完善後，完整 UI-048 權限維持最後功能順序，UI-056-D 與待決報告需求不提前加入。

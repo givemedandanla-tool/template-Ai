@@ -16,6 +16,8 @@
 
 ## 證據與功能狀態
 
+每輪修改前保存要求登錄基準，結束以 dev_progress 產生不可變進度快照與差異；dev_governance render 同時生成 CURRENT_PROGRESS.json／PROGRESS.md。分開父需求、CORE 功能及 GOV，依實作／驗證狀態分桶，新增／刪除／範圍修訂與完成差異均回報並持久化。每次最終回應告訴使用者已實作與尚待完成的明確數字，不以部分題或治理數冒充完整軟體功能。
+
 REQUIREMENTS.json 是狀態來源；FEATURES.md 是自動生成的人類視圖。75 筆原需求／修訂完整保留，不將大量條件的 UI 主題誤算成單一已完成能力。CORE 子功能的 completed 只表示其明列的本地／合成驗收範圍；父 UI 仍保留 PARTIAL。未來、待決、最後權限與印刷需求帶明確 defer 條件，不能從清單消失。
 
 `run_evidence.py` 在實際測試上收集個別結果、JUnit、環境、命令、測試 commit/tree 與逐檔來源 hash；另產生真實 GUI／數位檔附件。run ID 唯一，不覆寫。測試開始與結束來源不一致時無法完成驗收。跳過、失敗、預期失敗均不能滿足「必須 PASS」。GUI 截圖只補充實际畫面，不能證明語意正確或所有 AI 檔一致。
