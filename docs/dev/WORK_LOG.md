@@ -2,6 +2,15 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-13：v0.1.3／CORE-023 完成具名範圍
+
+- 程式來源 commit `6a392639ef7ca8e35ff74ced9e203b7847dff664`。RUN-SOURCE-CACHE-001：64 tests全數PASS、零SKIP，19件紀錄／匿名實際附件。
+- 23 CORE加5 GOV按各自的明列範圍SELF_VERIFIED；75原題仍不是全數完成。來源快取完整性不等於完整批次來源重連，metadata checksum不是安全簽章。
+- 版本化快取加入圖片／SVG內容hash、metadata checksum、同來源／同頁及固定路徑檢查，損壞時重新轉換；拒絕符號連結，轉換失敗不回退為成功，原檔保持只讀。
+- 產品工作包BEGIN到IMPLEMENTED收據約14分鐘，也超過10分鐘目標；已保留實際時刻，不將保存頻率冒稱嚴格達標。下一輪應在長工作包中途先做WIP checkpoint。
+- 全部.log及二進位合成附件纳入最終checkpoint並逐檔讀回；新增遠端附件完整Gate。
+- 下一步：UI-049的受控來源重連子包（內容hash驗證、變更拒絕、原登錄保留），其次字型資產修復。EXE／印刷／指定設備與未決產品報告不提前做。
+
 ## 2026-10-13：CORE-023 開始（先保存再改碼）
 
 - 五點框架 READY 與收據已永久保存；確認提交 `bc5448f2a4c44c1a503b5ad59d21caf61dad33e8`。
