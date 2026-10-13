@@ -1,29 +1,25 @@
 # Human／GPT 開發交接
 
-先讀 AGENTS.md → STATE.json → REQUIREMENTS.json／FEATURES.md → WORK_LOG 及 checkpoint 收據 → DEVELOPMENT_PROTOCOL.md。
+依序讀 AGENTS.md、STATE.json、REQUIREMENTS.json／FEATURES.md、PROGRESS.md／CURRENT_PROGRESS.json、最新 WORK_LOG 與 checkpoint 收據、DEVELOPMENT_PROTOCOL.md。每次開發前保存新要求基準，結束保存差異快照與同數字使用者回報。
 
-## 本輪開發中
+## 已確認現況
 
-2026-10-14：使用者要求每次開發回報清單差異與已開發／未開發數；定案已寫 AGENTS 和 PROGRESS-REPORTING。基準 75 父题：0 完整／42 部分／28 未實作／2 受阻／3 延後，另有 25 CORE／5 GOV。正在 CORE-026／027 受控批次定位與復原及 GOV-006 進度統計；修改前使舊當前證據失效，歷史不刪。
+v0.1.6，測試來源 `8e8d2bab1789966636b1ac6d7b9a160aaab05cfc`；RUN-BATCH-RELINK-003：104 PASS／0 SKIP、20 件紀錄／實際匿名附件，含可閱讀的批次候選預覽。歷史 103／104 PASS 的前兩個 run 保留，不當最新版碼的證據。
 
-## 上一個已確認版本
+目前 108 列＝75 原始父題＋27 CORE＋6 GOV。原始父題：完整0、部分42、未實作28、受阻2、延後3，75 項均有未完成條件；已驗證功能子項27（本輪25→27），治理6（5→6）。本輪新增 CORE-026／CORE-027／GOV-006 三列，無刪除、無原驗收範圍修訂；不以拆分數增加冒充原始需求完成率。對帳見 PROGRESS-20261014-BEGIN／END.json。
 
-目前 v0.1.5，測試來源 commit `dc76b95fa5ff288d09d4474be2732191b3caa78c`；RUN-FONT-REPAIR-002 有 83 PASS／0 SKIP、19 件實際附件及紀錄。105 筆要求含 75 父题、25 CORE、5 GOV。30 子範圍 SELF_VERIFIED，父题未全部完成，沒有獨立覆核。第一輪 82 PASS run 及重連 71 PASS run 保留歷史，不當最新版證據。
+CORE-026：使用者單根受限背景唯讀掃描、大小預篩及 SHA-256＋bytes、來源身份獨立、多候選預設不選／不勾選、影響預覽、取消／部分／不可讀／同名異內容分開。每來源最多32候選、5000目錄項、深度32、256MiB讀取預算與2000來源上限；根外接點不進入。CORE-027：選取集合再背景驗證、BEGIN IMMEDIATE 全批 revision／stat／長度核對、來源位置與批次歷史／審核同交易；末段事件失敗全批回滾，復原重新驗舊位置／內容且產生新revision。原登錄與作品／發布模板不改，客戶映射未知不猜。
 
-CORE-024 單件來源重連：背景唯讀 SHA-256、原登錄不變、位置及历史交易、過期 revision 與正常檔案異動拒絕、GUI 入口與重開。CORE-025 字型同內容修復：核准 hash、Qt 解析、損壞隔離、模板 pin 不變、正常例外檔案回滾、PREPARED 意圖及啟動核對。回復檔案亦失敗時釋放 SQLite 鎖，重開驗實際內容，不能冒稱跨儲存原子交易或 Windows 鎖檔已驗證。字型及 SQLite 只留本機。
+GOV-006 已落實使用者每次開發回報要求：render 自動產生統計，check 擋過期機器報告；immutable 前後快照對 stable ID、狀態、scope／acceptance 及分組計數。部分實作和未實作分桶，GOV 不算產品功能，不能把27 CORE當75父題的完整驗收。
 
-最終快照 CP-20261013-FONT-REPAIR-VERIFIED 已讀回 211 檔，snapshot commit `b11b054a85b626288a99a3a6016cc274f6655e55`；收據及 STATE 另行保存。總計 14 個 REMOTE_VERIFIED checkpoint，本輪新增 7 個。
+## 下一工作包
 
-## 下一個工作包
+UI-032 共用本機字型管理中心子包：先讀 UI_DECISIONS.md 的474行及 fonts.py。展示 Windows／本程式字型來源、可核對的家族／樣式、hash身份、可用／失聯／異動、實際模板引用與影響；未知原稿字型不假稱已識別。來源輸出字型管理不等於安裝Windows，仍不得自動安裝、接受授權條款或公開字体。完整不同版本同家族／TTC／字重選用需在 per-file 字形／Qt家族解析歧義實際驗收後處理，不能直接取消現有防混用 gate。先拆 CORE-028，保存新的進度基準／BEGIN／具名測試再改码。
 
-UI-049 受控批次定位子包，先讀 UI_DECISIONS.md 的 UI-049 全文（780 行開始），拆 CORE-026 验收：使用者指定範圍與有限資源掃描；依內容長度預篩、候選 SHA-256 分組，時間 O(候選總 bytes)、每個內容只算一次；同名不同內容、候選歧義、無權讀取、掃描未完成分別報告，不能稱全盤找齊。建立「原來源→候選→影響作品／模板」預覽，使用者明列勾選；CAS 批次交易及可復原新位置歷史，原登錄與舊模板不替換。未知客戶編號顯示未知，不猜測。先寫具名測試、保存 BEGIN 再改碼。批次掃描不能阻塞 GUI，不自動遍歷整部磁碟。
+UI-049 仍部分：多搜尋根、可恢復掃描狀態、跨設備字型／完整外部依賴、真實客戶映射與Windows真機驗收尚未做。字型中心後回到功能清單按核准優先順序推進；不以父題部分成果結案。
 
-其次處理完整字型字重／版本：目前不同檔同家族會拒絕，不能簡單取消此防護。需要 style 身份、同家族載入歧義及模板 pin 的明確驗收。未完成來源内容替換／跨設備字型搬移不要冒稱 UI-049／UI-032 全滿足。
+## 保存與限制
 
-## 工作規則
+每個工作包、10分鐘及中斷前checkpoint。BEGIN、PLAN、WIP、IMPLEMENTED、HARDENED、UI與VERIFIED分包，收據／STATE再保存避免自參照。恢復先檢查pending_remote，補保存後再編碼。修改程式／驗收使當前舊證據失效，歷史保留；新run的全部實際附件需遠端快照核對。
 
-使用已授權必要操作，零例行問答；沒有 24 小時常駐服務。只在 PR #2 工作，不合併 main；EXE、實體印刷延後。UI-048 為最後軟體功能，真實個資使用前完成。真實 AI 視覺／指定硬體仍 BLOCKED，先做不依賴樣本的核心。
-
-每個包及每 10 分鐘保存 checkpoint；本輪 BEGIN→IMPLEMENTED 約 4／7 分鐘，另保存故障防護 checkpoint；歷史超時窗口仍保留原紀錄。GitHub commit/tree 逐檔讀回才 REMOTE_VERIFIED，收據及 STATE 再提交避免循環。恢復先檢查 pending_remote，補保存後再編碼；修改程式或驗收使舊當前證據失效，不沿用舊 PASS。
-
-重現目前證據，以同一來源檔案執行 tools/run_evidence.py，指定 source-commit dc76b95fa5ff288d09d4474be2732191b3caa78c 及本 run 的 commit.json／tree.json，使用新的 run ID；執行 dev_governance.py check --require-evidence。新附件也需 checkpoint 永久保存。
+本輪使用者再次授予訊息後24小時GitHub文件／分支修改權限，原文見2026-10-14-GITHUB-AUTHORIZATION.md；不例行要求再次确认。目前PR #2未合併main，沒有24小時常駐服務。EXE及實體印刷延後，UI-048仍最後功能／真實個資使用前完成；測試為Linux／合成資料，Windows、真實AI視覺、指定硬體與獨立覆核仍未完成。

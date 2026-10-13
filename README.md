@@ -2,15 +2,15 @@
 
 ## Human／AI 從這裡開始
 
-開發或恢復先讀 [AGENTS.md](AGENTS.md) → [開發狀態](docs/dev/STATE.json) → [交接](docs/dev/HANDOFF.md) → [要求與功能清單](docs/dev/FEATURES.md)／[機器登錄](docs/dev/REQUIREMENTS.json) → [工作紀錄](docs/dev/WORK_LOG.md)。[checkpoint 流程](docs/dev/DEVELOPMENT_PROTOCOL.md)與[證據設計／成熟來源](docs/dev/EVIDENCE_DESIGN.md)供 Human 和 GPT 共用。不要只讀歷史第一版狀態。
+開發或恢復先讀 [AGENTS.md](AGENTS.md) → [開發狀態](docs/dev/STATE.json) → [交接](docs/dev/HANDOFF.md) → [要求與功能清單](docs/dev/FEATURES.md)／[機器登錄](docs/dev/REQUIREMENTS.json) → [工作紀錄](docs/dev/WORK_LOG.md)。[checkpoint 流程](docs/dev/DEVELOPMENT_PROTOCOL.md)與[證據設計／成熟來源](docs/dev/EVIDENCE_DESIGN.md)供 Human 和 GPT 共用。不要只讀歷史第一版狀態。每輪開發的計數見 [進度統計](docs/dev/PROGRESS.md)，前後差異見 docs/dev/progress/。
 
 **開發以零例行問答、checkpoint 與 GitHub 持久化為核心。EXE 已延後，不再自動打包或重試；先完成清單要求及其證據。**
 
-**v0.1.5 可操作研究版與開發框架已實作，最新版83項具名本地測試通過；EXE依指令延後。** 三模式桌面工作台：來源標記、模板與 Logo、排版與數位輸出。本版包含多作品標記與歷史恢復、固定學習來源版次、本機持久字型、發布交易及來源快取完整性，新增同內容原稿重連與字型複本修復。第一版學習為人工確認標記的幾何與語意規則內化；完整自動辨識／深度模型、客戶重訂、完整權限與實體印刷分析留後續計畫。
+**v0.1.6 可操作研究版與開發框架已實作，最新版104項具名本地測試通過；EXE依指令延後。** 三模式桌面工作台：來源標記、模板與 Logo、排版與數位輸出。本版包含多作品標記與歷史恢復、固定學習來源版次、本機持久字型、發布交易及來源快取完整性，新增同內容原稿重連與字型複本修復，受控批次來源定位／全批交易／內容驗證復原。第一版學習為人工確認標記的幾何與語意規則內化；完整自動辨識／深度模型、客戶重訂、完整權限與實體印刷分析留後續計畫。
 
 ## 開啟與快速試用
 
-目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新可重現測試及附件見 [RUN-FONT-REPAIR-002](docs/evidence/runs/RUN-FONT-REPAIR-002/run.json)。
+目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新可重現測試及附件見 [RUN-BATCH-RELINK-003](docs/evidence/runs/RUN-BATCH-RELINK-003/run.json)。
 
 原始碼：安裝 Python 3.11 後，Windows 雙擊 `START_WINDOWS.bat`；或安裝 `requirements-lock.txt`，執行 `python app.py`。
 

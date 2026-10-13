@@ -1,4 +1,4 @@
-> 最新：v0.1.5，83 項測試全 PASS／0 SKIP，來源／字型同內容恢復；即時交接與證據見 docs/dev/HANDOFF.md、RUN-FONT-REPAIR-002。下方 v0.1.2 為歷史紀錄。
+> 最新：v0.1.6，104 項測試全 PASS／0 SKIP，來源／字型同內容恢復、受限批次定位／交易／復原；即時交接與證據見 docs/dev/HANDOFF.md、RUN-BATCH-RELINK-003。下方 v0.1.2 為歷史紀錄。
 
 # v0.1.2 實作與驗證狀態
 

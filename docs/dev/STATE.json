@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.1.6",
   "framework_status": "READY",
-  "active_task": "CORE-026/CORE-027/GOV-006",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-BATCH-RELINK-HARDENED.receipt.json",
-  "last_confirmed_commit": "95f3d296151b01db6d17de859825f1ed7e0dcaf2",
-  "latest_evidence_run": null,
+  "active_task": "UI-032",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-BATCH-RELINK-UI.receipt.json",
+  "last_confirmed_commit": "8e8d2bab1789966636b1ac6d7b9a160aaab05cfc",
+  "latest_evidence_run": "docs/evidence/runs/RUN-BATCH-RELINK-003/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -39,13 +39,23 @@
       "status": "COMPLETED"
     },
     {
+      "id": "GOV-006",
+      "status": "COMPLETED",
+      "action": "每輪功能统计与要求差異生成、持久化及對使用者回報"
+    },
+    {
+      "id": "UI-032-FONT-CENTER",
+      "status": "PENDING",
+      "action": "共用本機字型管理中心：可解析家族／樣式、來源與內容身份、健康狀態／影響查詢；不移除不同版本同家族防混用 Gate"
+    },
+    {
       "id": "UI-049-BATCH",
-      "action": "以核准來源索引及指定搜尋範圍建候選，大小預篩＋SHA-256＋版本核對；逐件預覽／勾選後批次交易與復原",
-      "status": "PENDING"
+      "action": "CORE-026 受限候選／CORE-027 全批交易與復原已完成明列範圍",
+      "status": "COMPLETED_SCOPED"
     },
     {
       "id": "UI-049",
-      "action": "CORE-024 單件重連完成，完整批次重連仍待分包",
+      "action": "單件／受限批次重連完成；完整跨設備來源依賴仍待",
       "status": "PARTIAL"
     },
     {
@@ -73,8 +83,10 @@
     "UI-056-D 未來補樣"
   ],
   "pending_remote": [
-    "CP-20261014-BATCH-RELINK-UI"
+    "CP-20261014-BATCH-RELINK-VERIFIED"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FONT-REPAIR-002/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-BEGIN.json"
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-BEGIN.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-END.json",
+  "progress_report": "docs/dev/PROGRESS.md"
 }

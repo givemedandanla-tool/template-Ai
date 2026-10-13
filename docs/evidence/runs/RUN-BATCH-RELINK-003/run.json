@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "id": "RUN-BATCH-RELINK-003",
+  "created_utc": "2026-10-13T17:11:15.313483+00:00",
+  "source_commit": "8e8d2bab1789966636b1ac6d7b9a160aaab05cfc",
+  "source_manifest_sha256": "9489b13797999116fdfae5417ceaf4f69bd422659b60b0fb4a4f8df830f3c11d",
+  "source_unchanged": true,
+  "status": "PASS",
+  "test_count": 104,
+  "passed": 104,
+  "capture_exit_code": 0,
+  "tests_sha256": "00dcf546341084cf3636e22224994addfb0f3c36cb6a069a04295a68404bf42c",
+  "attachments": {
+    "synthetic-FINAL.pdf": {
+      "bytes": 9955,
+      "sha256": "40f289ea3c8fcdd9f1e98d4bca985f45e12876fbc4de3659a2ee94defdef621a",
+      "mime": "application/pdf"
+    },
+    "training-workspace.png": {
+      "bytes": 214314,
+      "sha256": "944e400ab24e93bd15298b6d70843d2f7160f61a9bf54c19bb8ea34a985a721d",
+      "mime": "image/png"
+    },
+    "synthetic-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "bbe406834015e4e501b0058971b06f917b33b81d5a7700138b48de65a30dd003",
+      "mime": "image/png"
+    },
+    "decorated-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "742eb545ec519f462e339ad125f4448eba0f08a4b6533c14bf1b03614d284320",
+      "mime": "image/png"
+    },
+    "source-manifest.json": {
+      "bytes": 8108,
+      "sha256": "9330d9fdab7201306a4166d27d40de71f57603b0010a4e8268127715e878ec2e",
+      "mime": "application/json"
+    },
+    "multiple-artworks-workspace.png": {
+      "bytes": 220048,
+      "sha256": "6f338b77605bdb2c332c0e23202ba8d265a243a3a29fe8c666abff77ffec1946",
+      "mime": "image/png"
+    },
+    "decorated-FINAL.jpg": {
+      "bytes": 10992,
+      "sha256": "fbb60e1d7659ec4b4c2a91276a2c881e91424b311e4c0f8c5f6b7f6fb8fe199b",
+      "mime": "image/jpeg"
+    },
+    "tests.json": {
+      "bytes": 18949,
+      "sha256": "00dcf546341084cf3636e22224994addfb0f3c36cb6a069a04295a68404bf42c",
+      "mime": "application/json"
+    },
+    "batch-source-preview.png": {
+      "bytes": 117992,
+      "sha256": "73ed4424961958838aed9f0b61fd6479861191153d45ec0566407d20d58ac64d",
+      "mime": "image/png"
+    },
+    "decorated-FINAL.pdf": {
+      "bytes": 10130,
+      "sha256": "e945655df8b6645e3d3944ac30c4d716b220f9f7c47d1e98e3937371be79365f",
+      "mime": "application/pdf"
+    },
+    "synthetic-FINAL.jpg": {
+      "bytes": 7908,
+      "sha256": "ec9d05d441ecbd43e0eabe3e989789c7e20b2238a3e6d82a0ef3702913b916ae",
+      "mime": "image/jpeg"
+    },
+    "capture.log": {
+      "bytes": 223,
+      "sha256": "3161b3361bacd6707edd8aba5825804ff39f1d42db71717056ce13b0b951e4df",
+      "mime": "text/plain"
+    },
+    "template-workspace.png": {
+      "bytes": 194891,
+      "sha256": "f16cfc15093f70618d6b8d8d9cc714813e12c1890d1fd2ee82e4db3717fb3967",
+      "mime": "image/png"
+    },
+    "commit.json": {
+      "bytes": 1423,
+      "sha256": "10e18dd3aac5bad365954688d610f3a3003b7b4cb0607e5fb10405ecb7796770",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 98054,
+      "sha256": "8607b8fc84a9c80a87ea0f119aaa51a3436b946c075902d9008adf94a54f3754",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 16812,
+      "sha256": "f96e2432ed83e6afbfb1ec45eacbd43309a70a2f0691f57f29630166efb6adf3",
+      "mime": "text/plain"
+    },
+    "output-workspace.png": {
+      "bytes": 219699,
+      "sha256": "80710c887bf79bbeb34f83b563024408dc8153812c340b62b0a1b800cddeb009",
+      "mime": "image/png"
+    },
+    "junit.xml": {
+      "bytes": 18712,
+      "sha256": "44cfbec86ff8a369eb0575f5d2c3c0ac59a733fb2027b52d4ae25d857d594702",
+      "mime": "application/xml"
+    },
+    "claims.json": {
+      "bytes": 24019,
+      "sha256": "03184610beac9adcf5b5d1763ca699430eeea04328a06e6294ebb393a02ef5ee",
+      "mime": "application/json"
+    },
+    "decorated-output-workspace.png": {
+      "bytes": 226396,
+      "sha256": "39a5d2de6861be0f5214136adfdad865c956439ef1130bf95bf7e056d1941520",
+      "mime": "image/png"
+    }
+  },
+  "environment": {
+    "python": "3.11.16",
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-BATCH-RELINK-003 --source-commit 8e8d2bab1789966636b1ac6d7b9a160aaab05cfc --commit-json <readback> --tree-json <readback>",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ]
+}
