@@ -25,9 +25,23 @@ def verify_source(path: str | Path, expected_hash: str) -> VerifiedSource:
     """1 MiB 緩衝；拒絕不同內容、超額或讀取期間異動。不修改原檔。"""
     if not isinstance(expected_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
         raise ValueError("來源內容識別不完整，請重新匯入並審核")
+    proof = hash_source(path)
+    if proof.hash != expected_hash:
+        raise ValueError("來源內容已變更；同名不代表同內容，請另外匯入並重新審核")
+    return proof
+
+
+class ScanCancelled(Exception):
+    pass
+
+
+def hash_source(path: str | Path, cancel=None, byte_limit=MAX_SOURCE_BYTES) -> VerifiedSource:
+    """共用同一 SHA-256 串流；搜尋按檔案讀一次，再依 hash＋長度分組。"""
+    if cancel and cancel.is_set():
+        raise ScanCancelled()
     path = Path(path).resolve(strict=True)
     before = path.stat()
-    if not stat.S_ISREG(before.st_mode) or before.st_size > MAX_SOURCE_BYTES:
+    if not stat.S_ISREG(before.st_mode) or before.st_size > min(MAX_SOURCE_BYTES, byte_limit):
         raise ValueError("來源需為一般檔案，單檔不超過 200 MB")
     digest = hashlib.sha256()
     total = 0
@@ -36,18 +50,18 @@ def verify_source(path: str | Path, expected_hash: str) -> VerifiedSource:
         opened = os.fstat(stream.fileno())
         if fingerprint(opened) != fingerprint(before):
             raise ValueError("來源在驗證期間變更，請重新選取")
-        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+        for chunk in iter(lambda: stream.read(min(1024 * 1024, min(MAX_SOURCE_BYTES, byte_limit) - total + 1)), b""):
+            if cancel and cancel.is_set():
+                raise ScanCancelled()
             total += len(chunk)
-            if total > MAX_SOURCE_BYTES:
+            if total > min(MAX_SOURCE_BYTES, byte_limit):
                 raise ValueError("來源在驗證期間超過 200 MB")
             digest.update(chunk)
         after_open = os.fstat(stream.fileno())
     after = path.stat()
     if fingerprint(before) != fingerprint(after_open) or fingerprint(before) != fingerprint(after) or total != before.st_size:
         raise ValueError("來源在驗證期間變更，請重新選取")
-    if digest.hexdigest() != expected_hash:
-        raise ValueError("來源內容已變更；同名不代表同內容，請另外匯入並重新審核")
-    return VerifiedSource(str(path), expected_hash, fingerprint(after))
+    return VerifiedSource(str(path), digest.hexdigest(), fingerprint(after))
 
 
 def check_verified(proof: VerifiedSource, expected_hash: str) -> None:

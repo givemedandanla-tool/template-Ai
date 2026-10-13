@@ -2787,7 +2787,7 @@
       "kind": "governance",
       "title": "每輪功能清單統計、基準與需求差異回報",
       "parents": [],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "Human／GPT 開發治理報告，非 UI-066 產品報告",
@@ -2801,7 +2801,12 @@
         {
           "id": "GOV-006-A1",
           "expected": "每輪功能清單統計、基準與需求差異回報；詳見明列設計與具名測試",
-          "tests": []
+          "tests": [
+            "test_dev_progress.DevProgressTests.test_groups_conserve_counts_without_parent_completion",
+            "test_dev_progress.DevProgressTests.test_added_scope_and_status_changes_are_distinct",
+            "test_dev_progress.DevProgressTests.test_snapshots_immutable_and_current_report_detects_drift",
+            "test_dev_progress.DevProgressTests.test_invalid_or_duplicate_status_cannot_hide_unfinished_work"
+          ]
         }
       ],
       "next_step": "先保存 PLAN，再實作具名測試及新版證據"

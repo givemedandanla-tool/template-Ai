@@ -35,6 +35,7 @@ class Library:
         CREATE TABLE IF NOT EXISTS preferences(key TEXT PRIMARY KEY, value TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS source_links(source_id TEXT PRIMARY KEY REFERENCES sources(id), current_path TEXT NOT NULL, revision INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS source_relinks(id TEXT PRIMARY KEY, source_id TEXT NOT NULL REFERENCES sources(id), revision INTEGER NOT NULL, previous_path TEXT NOT NULL, current_path TEXT NOT NULL, hash TEXT NOT NULL, timestamp REAL NOT NULL, UNIQUE(source_id,revision));
+        CREATE TABLE IF NOT EXISTS relink_batches(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
         """)
         self.db.commit()
 
@@ -52,14 +53,14 @@ class Library:
         return data
 
     def list_sources(self) -> list[dict]:
-        return [{**json.loads(r[0]), "current_path": r[1], "link_revision": r[2]}
-                for r in self.db.execute("SELECT s.payload,COALESCE(l.current_path,s.original_path),COALESCE(l.revision,0) FROM sources s LEFT JOIN source_links l ON l.source_id=s.id ORDER BY s.rowid DESC")]
+        return [{**json.loads(r[0]), "current_path": r[1], "link_revision": r[2], "byte_size": r[3]}
+                for r in self.db.execute("SELECT s.payload,COALESCE(l.current_path,s.original_path),COALESCE(l.revision,0),c.bytes FROM sources s JOIN contents c ON c.hash=s.hash LEFT JOIN source_links l ON l.source_id=s.id ORDER BY s.rowid DESC")]
 
     def source(self, source_id: str) -> dict:
-        source = next((s for s in self.list_sources() if s["id"] == source_id), None)
-        if source is None:
+        r = self.db.execute("SELECT s.payload,COALESCE(l.current_path,s.original_path),COALESCE(l.revision,0),c.bytes FROM sources s JOIN contents c ON c.hash=s.hash LEFT JOIN source_links l ON l.source_id=s.id WHERE s.id=?", (source_id,)).fetchone()
+        if r is None:
             raise ValueError("來源不存在")
-        return source
+        return {**json.loads(r[0]), "current_path": r[1], "link_revision": r[2], "byte_size": r[3]}
 
     def relink_source(self, source_id: str, proof, expected_revision: int) -> dict:
         """背景驗證完成後於 SQLite 所屬執行緒提交；原來源與作品模板保持不變。"""
@@ -69,20 +70,76 @@ class Library:
         # 寫入鎖內檢查，兩個工作階段不能同時從 r0 建立重連。
         self.db.execute("BEGIN IMMEDIATE")
         try:
-            source = self.source(source_id)
-            if source["link_revision"] != expected_revision:
-                raise ValueError("來源已由另一工作階段重連，請重新載入")
-            check_verified(proof, source["hash"])
-            if source["current_path"] != proof.path:
-                revision = expected_revision + 1
-                self.db.execute("INSERT INTO source_links VALUES(?,?,?) ON CONFLICT(source_id) DO UPDATE SET current_path=excluded.current_path,revision=excluded.revision", (source_id, proof.path, revision))
-                self.db.execute("INSERT INTO source_relinks VALUES(?,?,?,?,?,?,?)", (new_id(), source_id, revision, source["current_path"], proof.path, source["hash"], time.time()))
-                self.event(source_id, "source_relinked_same_content")
+            self._write_source_link(source_id, proof, expected_revision)
             self.db.commit()
         except BaseException:
             self.db.rollback()
             raise
         return self.source(source_id)
+
+    def _write_source_link(self, source_id, proof, expected_revision):
+        from .source_links import check_verified
+        source = self.source(source_id)
+        if type(expected_revision) is not int or expected_revision < 0 or source["link_revision"] != expected_revision:
+            raise ValueError("來源已由另一工作階段重連，請重新載入")
+        check_verified(proof, source["hash"])
+        if proof.stat[2] != source["byte_size"]:
+            raise ValueError("來源長度不符，不重新連結")
+        if source["current_path"] == proof.path:
+            return None
+        revision = expected_revision + 1
+        self.db.execute("INSERT INTO source_links VALUES(?,?,?) ON CONFLICT(source_id) DO UPDATE SET current_path=excluded.current_path,revision=excluded.revision", (source_id, proof.path, revision))
+        self.db.execute("INSERT INTO source_relinks VALUES(?,?,?,?,?,?,?)", (new_id(), source_id, revision, source["current_path"], proof.path, source["hash"], time.time()))
+        self.event(source_id, "source_relinked_same_content")
+        return {"source_id": source_id, "hash": source["hash"], "previous_path": source["current_path"], "current_path": proof.path,
+                "before_revision": expected_revision, "after_revision": revision}
+
+    def relink_sources(self, requests, approved=False, undo_of=None):
+        if approved is not True or not requests:
+            raise ValueError("請明列勾選並確認來源身份與重連影響")
+        ids = [r["source_id"] for r in requests]
+        if len(ids) != len(set(ids)) or len(ids) > 2000:
+            raise ValueError("批次來源重複或超過支援數量")
+        self.db.execute("BEGIN IMMEDIATE")
+        try:
+            if undo_of:
+                prior = self.relink_batch(undo_of)
+                expected = {r["source_id"]: r for r in prior["items"]}
+                if set(ids) != set(expected):
+                    raise ValueError("復原必須對應原批次全體來源")
+                for request in requests:
+                    item = expected[request["source_id"]]
+                    if request["expected_revision"] != item["after_revision"] or request["proof"].path != item["previous_path"]:
+                        raise ValueError("復原位置或版次與原批次不符")
+            changes = [item for r in requests if (item := self._write_source_link(r["source_id"], r["proof"], r["expected_revision"]))]
+            if not changes:
+                self.db.commit()
+                return {"id": None, "kind": "NO_CHANGE", "items": []}
+            record = {"id": new_id(), "kind": "UNDO" if undo_of else "APPLY", "undo_of": undo_of, "items": changes,
+                      "approved": True, "timestamp": time.time()}
+            self.db.execute("INSERT INTO relink_batches VALUES(?,?)", (record["id"], json.dumps(record, ensure_ascii=False)))
+            self.event(record["id"], "source_batch_undo_approved" if undo_of else "source_batch_relink_approved")
+            self.db.commit()
+            return record
+        except BaseException:
+            self.db.rollback()
+            raise
+
+    def relink_batch(self, batch_id):
+        row = self.db.execute("SELECT payload FROM relink_batches WHERE id=?", (batch_id,)).fetchone()
+        if not row:
+            raise ValueError("重連批次不存在")
+        return json.loads(row[0])
+
+    def relink_batches(self):
+        return [json.loads(r[0]) for r in self.db.execute("SELECT payload FROM relink_batches ORDER BY rowid DESC")]
+
+    def source_impacts(self, source_id):
+        works = self.artworks(source_id)
+        templates = [t for t in self.templates() if t.source_id == source_id]
+        logos = [l for l in self.logos() if l.get("source_id") == source_id]
+        return {"work_ids": [w["id"] for w in works], "template_ids": [t.id for t in templates], "logo_ids": [l["id"] for l in logos],
+                "summary": f"作品 {len(works)}／模板 {len(templates)}／Logo {len(logos)}；客戶關聯未知"}
 
     def source_link_history(self, source_id: str) -> list[dict]:
         return [dict(revision=r[0], previous_path=r[1], current_path=r[2], hash=r[3], timestamp=r[4])

@@ -269,6 +269,7 @@ class MainWindow(QMainWindow):
         links_row = QHBoxLayout()
         self.button("檢查原稿連結", self.check_source_link, links_row)
         self.button("重新連結同內容原稿", self.relink_source, links_row)
+        self.button("批次來源定位／復原", self.batch_source_links, links_row)
         links_row.addStretch()
         layout.addLayout(links_row)
         works_row = QHBoxLayout()
@@ -524,6 +525,12 @@ class MainWindow(QMainWindow):
         source = dict(self.source)
         self.run_job("唯讀檢查原稿內容", lambda: source_status(source),
                      lambda result: self.inform(result["message"] + "\n目前位置：" + result["path"]))
+
+    def batch_source_links(self):
+        if self.busy:
+            return
+        from .source_dialog import SourceRelinkDialog
+        SourceRelinkDialog(self).exec()
 
     def relink_source(self):
         if not self.source or self.busy:

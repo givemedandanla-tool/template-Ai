@@ -92,6 +92,9 @@ def check(root=ROOT, require_evidence=False):
                 raise ValueError("驗收尚未逐項 PASS：" + row["id"])
     if state["exe_policy"] != "DEFERRED_NO_AUTOMATIC_BUILD":
         raise ValueError("EXE 政策與使用者要求不符")
+    if "GOV-006" in ids:
+        from dev_progress import validate
+        validate(root)
     workflow = (root / ".github/workflows/first-version.yml").read_text(encoding="utf-8")
     if re.search(r"^  (push|pull_request):", workflow, re.MULTILINE):
         raise ValueError("EXE 工作流程仍會自動觸發")
@@ -126,6 +129,8 @@ def render(root=ROOT):
         lines.append(f"| {row['id']} | {name} | {row['status']} | {'是' if row['completed'] else '否'} | {scope} | {evidence} |")
     lines += ["", "驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。"]
     (root / "docs/dev/FEATURES.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    from dev_progress import render as render_progress
+    render_progress(root)
     return {"rendered": len(rows)}
 
 
