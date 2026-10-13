@@ -12,6 +12,8 @@ CORE-026：使用者單根受限背景唯讀掃描、大小預篩及 SHA-256＋b
 
 GOV-006 已落實使用者每次開發回報要求：render 自動產生統計，check 擋過期機器報告；immutable 前後快照對 stable ID、狀態、scope／acceptance 及分組計數。部分實作和未實作分桶，GOV 不算產品功能，不能把27 CORE當75父題的完整驗收。
 
+最終快照 `2437a98437087b3cb79b45a6d06b97bbb05adee6` 已逐檔讀回300檔；本輪新增7個 checkpoint，總計21個 REMOTE_VERIFIED。收據與STATE另提交保存，避免自參照SHA。
+
 ## 下一工作包
 
 UI-032 共用本機字型管理中心子包：先讀 UI_DECISIONS.md 的474行及 fonts.py。展示 Windows／本程式字型來源、可核對的家族／樣式、hash身份、可用／失聯／異動、實際模板引用與影響；未知原稿字型不假稱已識別。來源輸出字型管理不等於安裝Windows，仍不得自動安裝、接受授權條款或公開字体。完整不同版本同家族／TTC／字重選用需在 per-file 字形／Qt家族解析歧義實際驗收後處理，不能直接取消現有防混用 gate。先拆 CORE-028，保存新的進度基準／BEGIN／具名測試再改码。
