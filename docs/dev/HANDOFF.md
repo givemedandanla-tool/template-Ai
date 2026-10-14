@@ -1,3 +1,7 @@
+# 十包持續開發：1／10已驗收保存，包2事實校對開發中
+
+包1 RUN-TEN-QUALITY-002 243PASS，snapshot53506ac9與收據已逐檔讀回。CORE已實作47，包2開始新source後等待統一再驗；剩18子項／9新工作包。下一步同Library的TrainingStore／來源人工觀察與exact事實確認、CAS歷史／撤銷。按TEN契約繼續，不等待HUMAN；無EXE／代理／main合併，media精確metadata-first政策。
+
 # 新任務：連續完成十個新工作包（0／10）
 
 最新使用者要求10包。已保存TEN_PACKAGES_DESIGN與126列／45CORE的原基準，新增20待實作CORE046..065；146列，75父題仍0／46／24／2／3、GOV6。先包1品質診斷→作品事實→規則／noise治理→可信樣本／資料集→覆蓋→可恢復幾何訓練；不是深度模型。證明二進位僅本機生成與hash記錄，code／tests／JUnit／claims／checkpoint／machine audit優先GitHub。正式每包驗收與範圍明示；不停止在中途checkpoint。治理publication例外將擴充為本輪明列run，以確保乾淨checkout可核對。沒有代理／EXE／main合併。
