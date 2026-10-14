@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：CORE-035／036可恢復實作
+
+- ENGINE-GUI dc424abe讀回461檔；精確來源、三矩形、同步唯讀與審核已實作，6新組／23既有測試PASS。
+- 第一次生成進度時把待驗證status誤寫IMPLEMENTED，dev_progress拒絕；修正為既有IMPLEMENTED_PENDING_VERIFICATION並重新render，不改治理工具放行非法狀態。
+- 下一步新增實際三視圖附件、核准提示期间異動與正式回歸；當前不得宣稱完成。
+
 ## 2026-10-14：全清單目標與CORE-035／036開始
 
 - 最新使用者要求持續實作所有清單；全75父題原要求保留，順序／真正阻塞保存PROJECT_GOAL與PROJECT_ROADMAP。不是全清單完成宣告。
