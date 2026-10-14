@@ -9,6 +9,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from .model import Rect, new_id
 from .source_links import hash_source, check_verified
+from .noise import NoiseMixin
 
 
 def digest(value):
@@ -27,7 +28,7 @@ def identity(value):
     return value
 
 
-class TrainingStore:
+class TrainingStore(NoiseMixin):
     def __init__(self, library):
         self.library = library; self.db = library.db
         self.db.executescript('''

@@ -29,14 +29,17 @@ globalThis.syncTA = async message => {
   const {c,t}=await taRecover(),repo='givemedandanla-tool/template-Ai';
   const files=JSON.parse(await taShell("/workspace/bcoe-dev-venv/bin/python -c 'import sys,json;sys.path.insert(0,\"tools\");from dev_common import manifest;print(json.dumps(manifest()))'"));
   const remote=new Map(t.tree.filter(x=>x.type==='blob').map(x=>[x.path,x.sha]));
-  const allowed=Object.entries(files).filter(([p,r])=>!(/\.(png|jpg|pdf)$/.test(p)) || remote.get(p)===r.git_blob_sha1);
+  const allowed=Object.entries(files).filter(([p,r])=>!(/\.(png|jpg|pdf)$/.test(p)) || [...remote.values()].includes(r.git_blob_sha1));
   const changed=allowed.filter(([p,r])=>remote.get(p)!==r.git_blob_sha1),elements=[];
   for(const [path,row] of changed){
+    if(/\.(png|jpg|pdf)$/.test(path)){elements.push({path,mode:'100644',type:'blob',sha:row.git_blob_sha1});continue;}
     let content='';for(let off=0;off<row.bytes;off+=30000){content+=await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('from pathlib import Path\ns=Path('+JSON.stringify(path)+').read_text()\nprint(s['+off+':'+(off+30000)+'],end="")'));}
     elements.push({path,mode:'100644',type:'blob',content});
   }
   if(!elements.length)return {sha:c.sha,tree:t.sha,changed:0,verified_files:allowed.length};
-  const tree=taUnwrap(await taCall('mcp__codex_apps__github_create_tree',{repository_full_name:repo,base_tree_sha:t.sha,tree_elements:elements}));
+  let base=t.sha,tree;let groups=[],group=[],size=0;
+  for(const e of elements){const n=(e.content??'').length;if(group.length&&(size+n>180000||group.length>=8)){groups.push(group);group=[];size=0;}group.push(e);size+=n;}if(group.length)groups.push(group);
+  for(let i=0;i<groups.length;i++){tree=taUnwrap(await taCall('mcp__codex_apps__github_create_tree',{repository_full_name:repo,base_tree_sha:base,tree_elements:groups[i]}));base=tree.sha;await taWrite('/tmp/template-ai-partial-tree.json',{tree:base,batch:i+1,total:groups.length});notify({metadata_tree_batch:i+1,total:groups.length});}
   const created=taUnwrap(await taCall('mcp__codex_apps__github_create_commit',{repository_full_name:repo,parent_sha:c.sha,tree_sha:tree.sha,message}));
   await taWrite('/tmp/template-ai-pending-commit.json',{sha:created.sha,parent:c.sha,tree:tree.sha,message});
   taUnwrap(await taCall('mcp__codex_apps__github_update_ref',{repository_full_name:repo,branch_name:'dev/v0.1-first-version',expected_sha:c.sha,sha:created.sha,force:false}));

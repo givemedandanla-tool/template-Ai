@@ -1,5 +1,15 @@
 # 開發工作紀錄
 
+## 十包 3 可恢復實作
+
+包3局部候選排除／撤銷與剔除並記住PENDING規則、完整literal／明確NFC／來源type與相對區域、人工正反例、protected欄位／Logo／未知、CAS／late rollback及actualQt已實作；target8PASS，沒有啟用通用規則。正式來源freeze後回歸。
+
+
+## 包2 metadata保存恢復紀錄
+
+原1.4MB級create_tree呼叫60秒／120秒各逾時一次；不無界重試。單件小tree成功後以7個較小metadata tree組成相同快照。新同步helper首次漏掉15個已有相同approved Git blob的新增路徑，官方ack正確拒絕，未冒稱收據成功；補上同blob引用（無新增binary上傳）後4f9cd846逐檔1023驗證與收據成功，最後c6b15020結案2/10。原PREPARED不覆寫，GUI原media／tests保留。此為工具尺寸／同步缺陷，沒有新增版權或個資傳送事件。helper改為小tree批次與既有blob重用，暫存函式改存可讀工具檔避免reset丟失。
+
+
 ## 十包 2/10 正式驗收
 
 RUN-TEN-FACTS-001／source 37f2752fe15495afc5b6ec0b2fe2c1dbd54dcf1c：251PASS／0SKIP，63本機附件、source unchanged。CORE-048,CORE-049及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。

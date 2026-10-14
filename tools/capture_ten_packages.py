@@ -46,6 +46,18 @@ def capture_ten_packages(root):
         QApplication.processEvents()
         if not dialog.grab().save(str(root/'ten-facts-confirmed.png')): raise ValueError('事實GUI未保存')
         audit['facts'] = {'actual_qt': True, 'confirmed': facts.store.facts(work2['id']), 'history': facts.store.history('FACTS', work2['id']), 'source_and_slots_unchanged': True, 'sample_count': facts.store.count('SAMPLE'), 'rule_count': facts.store.count('RULE')}
+        from template_ai.noise_authoring_dialog import NoiseAuthoringDialog
+        facts.table.selectRow(next(i for i, o in enumerate(facts.loaded['observations']) if o['id'] == 'note'))
+        with patch.object(QMessageBox, 'question', return_value=QMessageBox.Yes): QTest.mouseClick(facts.exclude_button, Qt.LeftButton)
+        wizard = NoiseAuthoringDialog(facts.store, work2['id'], 'note', 'Synthetic Reviewer', dialog)
+        try:
+            wizard.show(); wizard.table.selectRow(0); QApplication.processEvents()
+            if not wizard.grab().save(str(root/'ten-noise-authoring.png')): raise ValueError('雜訊作者GUI未保存')
+            with patch.object(QMessageBox, 'question', return_value=QMessageBox.Yes): QTest.mouseClick(wizard.save_button, Qt.LeftButton)
+            assert wizard.saved_rule and wizard.saved_rule['state'] == 'PENDING'
+            assert window.library.artwork(work2['id']) == work2
+            audit['noise_authoring'] = {'actual_qt': True, 'rule': wizard.saved_rule, 'candidates': facts.store.noise_candidates(work2['id']), 'source_and_slots_unchanged': True, 'no_rule_activation': True}
+        finally: wizard.close()
         (root / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
     finally:
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()

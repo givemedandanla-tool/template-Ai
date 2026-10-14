@@ -28,6 +28,7 @@ class FactsPanel(QWidget):
         for button, handler in ((self.add_button, self.add), (self.update_button, self.update), (self.remove_button, self.remove), (self.confirm_button, self.confirm), (self.revoke_button, self.revoke)):
             button.clicked.connect(handler); bar.addWidget(button)
         outer.addLayout(bar); self.details = QPlainTextEdit(); self.details.setReadOnly(True); outer.addWidget(self.details, 1); self.reload()
+        bar = QHBoxLayout(); self.exclude_button = QPushButton('只排除此作品的選中觀察'); self.remember_button = QPushButton('剔除並記住（待審候選）'); self.undo_noise_button = QPushButton('撤銷選中局部剔除'); self.exclude_button.clicked.connect(self.exclude); self.remember_button.clicked.connect(self.remember); self.undo_noise_button.clicked.connect(self.undo_noise); bar.addWidget(self.exclude_button); bar.addWidget(self.remember_button); bar.addWidget(self.undo_noise_button); outer.addLayout(bar); self.controls()
 
     def page(self, delta):
         self.offset = max(0, self.offset+delta); self.reload()
@@ -56,13 +57,15 @@ class FactsPanel(QWidget):
                     for j, value in enumerate((o['text'], o['object_type']+' / '+o['classification'], o['slot_id'] or 'UNKNOWN', str(o['region']), o['id'])):
                         item = QTableWidgetItem(value); item.setToolTip(value); self.table.setItem(i, j, item)
                 self.status.setText(self.store.facts_state(wid)+f"／事實r{self.loaded['revision']}；確認範圍明列，沒有自動規則／樣本准入。")
-            self.details.setPlainText(json.dumps({'facts': self.loaded, 'history': self.store.history('FACTS', wid) if wid else []}, ensure_ascii=False, indent=2))
+            self.details.setPlainText(json.dumps({'facts': self.loaded, 'history': self.store.history('FACTS', wid) if wid else [], 'training_candidates': self.store.noise_candidates(wid) if wid else []}, ensure_ascii=False, indent=2))
         except Exception as error: self.loaded = None; self.status.setText('載入失敗：'+str(error))
         self.controls()
 
     def controls(self):
         enabled = bool(self.loaded) and not self.running and not self.window.busy
         for button in (self.add_button, self.update_button, self.remove_button, self.confirm_button, self.revoke_button): button.setEnabled(enabled)
+        if hasattr(self, 'exclude_button'):
+            self.exclude_button.setEnabled(enabled); self.remember_button.setEnabled(enabled); self.undo_noise_button.setEnabled(enabled)
         self.work_combo.setEnabled(not self.running); self.reload_button.setEnabled(not self.running)
 
     def indices(self):
@@ -133,3 +136,31 @@ class FactsPanel(QWidget):
             if not ok: return
             self.store.revoke_facts(self.loaded['id'], self.loaded['revision'], reason); self.load()
         except Exception as error: self.status.setText('未撤銷：'+str(error)); self.controls()
+
+    def exclude(self):
+        try:
+            ids = [self.loaded['observations'][i]['id'] for i in self.indices()]
+            if not ids: raise ValueError('先選取明確觀察')
+            local = self.store.local_record(self.loaded['id']); revision = self.loaded['revision']
+            if QMessageBox.question(self, '只排除此作品', f"作品{self.loaded['id']}／事實r{revision}／觀察{', '.join(ids)}\n只排除訓練候選；不刪原稿／正式欄位，不建立通用規則。", QMessageBox.Yes|QMessageBox.No, QMessageBox.No) != QMessageBox.Yes: return
+            self.store.local_noise(self.loaded['id'], ids, local['revision'], revision, approved=True); self.load()
+        except Exception as error: self.status.setText('未剔除：'+str(error)); self.controls()
+
+    def remember(self):
+        try:
+            rows = self.indices()
+            if len(rows) != 1: raise ValueError('一次明列一個完整來源觀察作正例')
+            from .noise_authoring_dialog import NoiseAuthoringDialog
+            dialog = NoiseAuthoringDialog(self.store, self.loaded['id'], self.loaded['observations'][rows[0]]['id'], self.actor.text(), self)
+            try: dialog.exec()
+            finally: dialog.deleteLater()
+            self.load()
+        except Exception as error: self.status.setText('未建立：'+str(error)); self.controls()
+
+    def undo_noise(self):
+        try:
+            ids = [self.loaded['observations'][i]['id'] for i in self.indices()]; local = self.store.local_record(self.loaded['id']); revision = self.loaded['revision']
+            if not ids: raise ValueError('先選取明確觀察')
+            if QMessageBox.question(self, '撤銷局部剔除', f"只撤銷作品{self.loaded['id']}／{', '.join(ids)}的局部決定，保留歷史。未啟用或回滾通用規則。", QMessageBox.Yes|QMessageBox.No, QMessageBox.No) != QMessageBox.Yes: return
+            self.store.clear_local_noise(self.loaded['id'], ids, local['revision'], revision, approved=True); self.load()
+        except Exception as error: self.status.setText('未撤銷局部剔除：'+str(error)); self.controls()
