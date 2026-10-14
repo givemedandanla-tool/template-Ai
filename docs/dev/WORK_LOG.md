@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 2/10 正式驗收
+
+RUN-TEN-FACTS-001／source 37f2752fe15495afc5b6ec0b2fe2c1dbd54dcf1c：251PASS／0SKIP，63本機附件、source unchanged。CORE-048,CORE-049及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。
+
+
 ## 十包 2 可恢復實作
 
 同Library版本化人工來源觀察、exact作品事實確認／撤銷及history/CAS/audit rollback已實作；target8PASS，原source／Slots未改、native UNKNOWN，真Qt背景核對／取消／過期／失败恢復。待source freeze正式全部回歸。

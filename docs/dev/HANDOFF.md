@@ -1,3 +1,7 @@
+# 十包最新接續：1/10已保存；ARTWORK-FACTS FORMAL_PASS_PENDING_REMOTE
+
+最新source與驗收 docs/evidence/runs/RUN-TEN-FACTS-001/run.json；按STATE下一包與TEN契約直接續做，不能把既有包／checkpoint重算。CORE基準45，本輪目標+20；每包2CORE。原75父需求保持完整缺口，SELF_VERIFIED／Linux／匿名合成，無EXE／代理／main合併。metadata-first source-bound政策，原失敗與本機媒體保留。
+
 # 十包持續開發：1／10已驗收保存，包2事實校對開發中
 
 包1 RUN-TEN-QUALITY-002 243PASS，snapshot53506ac9與收據已逐檔讀回。CORE已實作47，包2開始新source後等待統一再驗；剩18子項／9新工作包。下一步同Library的TrainingStore／來源人工觀察與exact事實確認、CAS歷史／撤銷。按TEN契約繼續，不等待HUMAN；無EXE／代理／main合併，media精確metadata-first政策。

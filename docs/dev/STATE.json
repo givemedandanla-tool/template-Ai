@@ -8,7 +8,7 @@
   "active_task": "TEN-PACKAGES-IN-PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-TEN-FACTS-SOURCE.receipt.json",
   "last_confirmed_commit": "2d5830c3ab95d40b446263bc80520cbb4fca9093",
-  "latest_evidence_run": null,
+  "latest_evidence_run": "docs/evidence/runs/RUN-TEN-FACTS-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -57,10 +57,12 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-TEN-P02-VERIFIED"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEN-QUALITY-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P01-END.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P02-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
@@ -192,7 +194,10 @@
           "CORE-048",
           "CORE-049"
         ],
-        "status": "IMPLEMENTED_PENDING_FORMAL"
+        "status": "FORMAL_PASS_PENDING_REMOTE",
+        "source_commit": "37f2752fe15495afc5b6ec0b2fe2c1dbd54dcf1c",
+        "evidence": "docs/evidence/runs/RUN-TEN-FACTS-001/run.json",
+        "tests": 251
       },
       {
         "sequence": 3,
