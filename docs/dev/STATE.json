@@ -29,14 +29,9 @@
   ],
   "next_tasks": [
     {
-      "id": "COVERAGE",
-      "status": "IN_PROGRESS",
-      "action": "包9全庫SQL來源／作品／無作品來源／pool／dataset總分母、paged current eligibility與role occurrence／保存歷史分離、size/people/company/content-group/Logo-native UNKNOWN多重分組／exact drilldown、readonly stats／source stale／無quota/no品質PASS/no補樣已實作；target7PASS，native/customer/代表性Unknown與掃描不完整均明示；既有訓練成果與DB不改。正式freeze及全回歸。"
-    },
-    {
-      "id": "TEN-NEXT",
+      "id": "TRAINING-QUEUE",
       "status": "CONTINUE",
-      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
+      "action": "直接下一包；不等待HUMAN"
     }
   ],
   "blocked": [
@@ -170,7 +165,7 @@
   "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
-    "completed": 8,
+    "completed": 9,
     "baseline_core": 45,
     "added_core": 20,
     "contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
@@ -295,10 +290,12 @@
           "CORE-062",
           "CORE-063"
         ],
-        "status": "FORMAL_PASS_PENDING_REMOTE",
+        "status": "COMPLETED_SAVED_SCOPE",
         "source_commit": "188674a019679a733e8213ca4afa448ea75fb929",
         "evidence": "docs/evidence/runs/RUN-TEN-COVERAGE-001/run.json",
-        "tests": 306
+        "tests": 306,
+        "snapshot_commit": "4410c2b8691f1a132941749320728f7f260d23e1",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P09-TEXT-VERIFIED.receipt.json"
       },
       {
         "sequence": 10,
