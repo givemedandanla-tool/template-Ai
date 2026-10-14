@@ -123,7 +123,7 @@ def main():
         capture_code = process.returncode
         capture_log.write_text(process.stdout + process.stderr, encoding="utf-8")
         if capture_code == 0:
-            for name in ("output-workspace.png", "training-workspace.png", "template-workspace.png", "decorated-output-workspace.png", "multiple-artworks-workspace.png", "batch-source-preview.png",
+            for name in ("output-workspace.png", "training-workspace.png", "template-workspace.png", "decorated-output-workspace.png", "multiple-artworks-workspace.png", "batch-source-preview.png", "font-center-workspace.png", "font-center-diagnostics.png",
                          "synthetic-FINAL.pdf", "synthetic-FINAL.png", "synthetic-FINAL.jpg", "decorated-FINAL.pdf", "decorated-FINAL.png", "decorated-FINAL.jpg"):
                 if not (generated / name).is_file():
                     capture_code = 1

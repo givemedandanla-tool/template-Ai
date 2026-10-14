@@ -125,6 +125,32 @@ def main():
     if not dialog.grab().save(str(artifacts / "batch-source-preview.png")):
         raise ValueError("批次來源預覽截圖保存失敗")
     dialog.close()
+    from template_ai.font_catalog import build_inventory,host_candidates,analyze_font
+    from template_ai.font_dialog import FontCenterDialog
+    environment_font = next((p for p in (Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),
+        Path('/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf'),Path(r'C:\Windows\Fonts\arial.ttf')) if p.is_file()),None)
+    if environment_font is None:
+        raise ValueError("沒有環境可用字型，無法生成實際字型中心驗收附件")
+    font_asset = window.font_manager.import_font(environment_font, approved=True)
+    font_template = demo_template()
+    font_template.name = "合成字型引用"
+    for slot in font_template.slots:
+        slot.font, slot.font_asset = font_asset["families"][0], dict(font_asset)
+    window.library.save_template(font_template)
+    hosts, partial = host_candidates()
+    center = FontCenterDialog(window)
+    center.show_inventory(build_inventory(window.library.fonts(),window.library.templates(),hosts,partial))
+    center.resize(1500,900)
+    center.show(); app.processEvents()
+    if not center.grab().save(str(artifacts / "font-center-workspace.png")):
+        raise ValueError("字型管理中心截圖保存失敗")
+    center.kind.setCurrentIndex(center.kind.findData("ASSET")); center.table.selectRow(0)
+    diagnosis = analyze_font(center.selected(),center.text.text(),center.size.value(),center.width.value(),center.minimum.value()/100)
+    assert diagnosis["status"] == "FEASIBLE_WIDTH", diagnosis
+    center.show_analysis(diagnosis); app.processEvents()
+    if not center.grab().save(str(artifacts / "font-center-diagnostics.png")):
+        raise ValueError("字形／毫米量測實際截圖保存失敗")
+    center.close()
     window.close()
     reopened = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     assert reopened.work["id"] == second["id"]

@@ -112,7 +112,7 @@
 | CORE-026 | 受控範圍背景來源定位與候選影響預覽 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成來源；單根受限掃描與人工勾選，不代表完整跨設備資產管理 | 無有效新版證據 |
 | CORE-027 | 批次來源重連交易、歷史與安全復原 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成來源批次位置交易與當前內容驗證，不更改客戶映射或源檔 | 無有效新版證據 |
 | GOV-006 | 每輪功能清單統計、基準與需求差異回報 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Human／GPT 開發治理報告，非 UI-066 產品報告 | 無有效新版證據 |
-| CORE-028 | 共用字型管理、資產身份與模板影響查詢 | IN_PROGRESS | 否 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | 無有效新版證據 |
-| CORE-029 | 實際字形覆蓋、固定字級毫米量測與框宽診斷 | IN_PROGRESS | 否 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | 無有效新版證據 |
+| CORE-028 | 共用字型管理、資產身份與模板影響查詢 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | 無有效新版證據 |
+| CORE-029 | 實際字形覆蓋、固定字級毫米量測與框宽診斷 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。
