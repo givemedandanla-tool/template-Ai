@@ -124,5 +124,11 @@
 | CORE-037 | 三向安全多選與混合共同屬性 | VERIFIED | 是 | Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質 | [run](../../docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json) |
 | CORE-038 | 持久物件鎖定與全編輯途徑保護 | VERIFIED | 是 | Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質 | [run](../../docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json) |
 | CORE-039 | 精確幾何差異、原子套用與持久UndoRedo | VERIFIED | 是 | Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質 | [run](../../docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json) |
+| CORE-040 | 人物 ROOT 語意引用、搜尋及 viewport 安全檢視 | NOT_IMPLEMENTED | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
+| CORE-041 | 衍生 SVG 結構唯讀索引與未知映射保護 | NOT_IMPLEMENTED | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
+| CORE-042 | 批次來源唯讀預檢、exact 去重及啟動確認 | NOT_IMPLEMENTED | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
+| CORE-043 | 單 worker 持久匯入佇列、取消及續跑 | NOT_IMPLEMENTED | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
+| CORE-044 | 可解釋例外排序、exact 影響及來源定位 | NOT_IMPLEMENTED | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
+| CORE-045 | 例外單件重試、排除與恢復的 CAS 歷史 | NOT_IMPLEMENTED | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

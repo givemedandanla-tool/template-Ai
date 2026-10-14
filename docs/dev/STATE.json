@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.11",
   "framework_status": "READY",
-  "active_task": "UI-035-SEMANTIC-SEARCH-VIEW",
+  "active_task": "THREE-PACKAGES-1-SEMANTIC",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-OBJECT-TOOLS-VERIFIED.receipt.json",
   "last_confirmed_commit": "67ea91a0b5c8a49b918bdf00c248dff594a72326",
   "latest_evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json",
@@ -123,7 +123,9 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-THREE-BEGIN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-END.json",
@@ -140,6 +142,37 @@
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
-  "active_contract": "docs/dev/OBJECT_TOOLS_DESIGN.md",
-  "next_work_package": "docs/dev/SEMANTIC_INDEX_NEXT_PLAN.md"
+  "active_contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
+  "next_work_package": "docs/dev/SEMANTIC_INDEX_NEXT_PLAN.md",
+  "three_packages": {
+    "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
+    "completed": 0,
+    "target": 3,
+    "packages": [
+      {
+        "id": "SEMANTIC",
+        "status": "PLANNED",
+        "requirements": [
+          "CORE-040",
+          "CORE-041"
+        ]
+      },
+      {
+        "id": "BATCH-IMPORT",
+        "status": "PLANNED",
+        "requirements": [
+          "CORE-042",
+          "CORE-043"
+        ]
+      },
+      {
+        "id": "EXCEPTION-CENTER",
+        "status": "PLANNED",
+        "requirements": [
+          "CORE-044",
+          "CORE-045"
+        ]
+      }
+    ]
+  }
 }
