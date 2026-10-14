@@ -130,11 +130,15 @@ def face_fingerprint(raw):
     return digest.hexdigest()
 
 
-def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=None):
+def validate_inputs(text, size_pt, width_mm, min_scale):
     if not isinstance(text,str) or len(text)>4096 or any(unicodedata.category(c) in ("Cc","Cs","Zl","Zp") for c in text):
         raise ValueError("診斷支援最多4096字元的單行文字，不接受控制字元")
     if not all(isinstance(v,(int,float)) and not isinstance(v,bool) and math.isfinite(v) for v in (size_pt,width_mm,min_scale)) or not 1<=size_pt<=200 or not 0<width_mm<=2000 or not .05<=min_scale<=1:
         raise ValueError("字級／框宽／水平比例超出合法範圍")
+
+
+def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=None):
+    validate_inputs(text, size_pt, width_mm, min_scale)
     result = {"status":"BLOCKED", "issues":[], "size_pt":size_pt, "width_mm":None, "scale":None, "missing":[], "coverage":None,
               "scope":"所選字面的單行字形與宽度，不代表原稿身份／授權／完整模板合格"}
     if row["kind"] == "ASSET":

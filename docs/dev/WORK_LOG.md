@@ -7,6 +7,8 @@
 - 開工check PASS；確認工作分支82e5bf5d、main仍436ca2d7，無pending。基準111列／30 CORE完成／6 GOV／75父題保持。
 - 使用者明確/goal要求候選硬篩、排名、唯讀預覽端到端驗收；新增CORE-031，原父題不降標。FONT_CANDIDATES_DESIGN.md列六項驗收、參考與有界預算。
 - 先BEGIN GitHub讀回再改碼；單一checkpoint或部分測試不是停止條件，不重試先前卡住的PR metadata工具。
+- BEGIN 8ce4461d0f830578620c2d87ea330b781e5957a1已讀回352檔；引擎、候選GUI與有界PNG已接上。既有18項字型中心及新增20項候選驗收PASS，包含真實worker與失敗重試；此時尚待正式全套證據及永久附件，未標完成。
+
 
 ## 2026-10-14：v0.1.7 字型中心／字形毫米診斷／真實背景交接完成
 

@@ -51,6 +51,7 @@ class FontCenterDialog(QDialog):
             (widget.textChanged if widget is self.text else widget.valueChanged).connect(self.clear_result)
         self.style.currentIndexChanged.connect(self.clear_result)
         actions=QHBoxLayout()
+        self.candidates_button=QPushButton("替代候選排名與唯讀預覽"); self.candidates_button.clicked.connect(self.open_candidates); actions.addWidget(self.candidates_button)
         self.import_button=QPushButton("匯入合法本機字型"); self.import_button.clicked.connect(self.import_font); actions.addWidget(self.import_button)
         self.repair_button=QPushButton("修復既有核准複本"); self.repair_button.clicked.connect(self.repair_font); actions.addWidget(self.repair_button)
         close=QDialogButtonBox(QDialogButtonBox.Close); close.button(QDialogButtonBox.Close).setText("關閉"); close.rejected.connect(self.reject); actions.addWidget(close)
@@ -63,7 +64,7 @@ class FontCenterDialog(QDialog):
     def start(self,message,work,done):
         if self.busy or self.window.busy: return
         self.busy=True; self.status.setText(message)
-        for button in (self.refresh_button,self.analyze_button,self.import_button,self.repair_button): button.setEnabled(False)
+        for button in (self.refresh_button,self.analyze_button,self.import_button,self.repair_button,self.candidates_button): button.setEnabled(False)
         self.table.setEnabled(False)
         for control in (self.query,self.kind,self.health): control.setEnabled(False)
         def guarded():
@@ -72,7 +73,7 @@ class FontCenterDialog(QDialog):
         def finished(payload):
             self.busy=False; self.table.setEnabled(True)
             for control in (self.query,self.kind,self.health): control.setEnabled(True)
-            for button in (self.refresh_button,self.import_button,self.repair_button): button.setEnabled(True)
+            for button in (self.refresh_button,self.import_button,self.repair_button,self.candidates_button): button.setEnabled(True)
             if "error" in payload: self.status.setText("尚未完成核對："+payload["error"])
             else: done(payload["value"])
             self.analyze_button.setEnabled(self.selected() is not None)
@@ -145,6 +146,12 @@ class FontCenterDialog(QDialog):
 
     def import_font(self):
         if not self.busy and not self.window.busy: self.window.import_font(); self.refresh()
+
+    def open_candidates(self):
+        if self.busy or self.window.busy: return
+        from .font_candidate_dialog import FontCandidateDialog
+        dialog=FontCandidateDialog(self)
+        dialog.exec()
 
     def repair_font(self):
         if not self.busy and not self.window.busy: self.window.repair_font(); self.refresh()
