@@ -1,3 +1,11 @@
+# 最新接續：三包全實作，229PASS，最後binary讀回受阻
+
+- v0.1.14三包全部程式／實際GUI／具名验收已實作。CORE040041：index／viewport／衍生來源；042043：批次只讀匯入／持久恢復；044045：例外exact排序／單件受控处理。当前local RUN-EXCEPTION-CENTER-002 source192db957：229PASS／0SKIP／60附件、source unchanged。新增hidden-lock真RED→GREEN与完整selection intent；228RUN001是修復前歷史，不能作現版驗收。
+- 前兩包分别REMOTE_VERIFIED（61f8c7e5／f656abcb）；当前新增source/測試/JSON/JUnit已用code/docs-only保存，e682b1b8讀回。完整3／3尚未宣告，因为一部分第三包GUI/PDF binary被自動審查要求具體payload核准。不是要求降低验收，也不是等待例行繼續。
+- 先读COPYRIGHT_PRIVACY_EVENTS与PUBLIC_EVIDENCE_APPROVAL_MANIFEST，恢復具體附件保存；90件14MB固定file/hashes已提出批准。未批准相依動作不得重試；没有换通道／影藏binary。保留CP-HIDDEN-LOCK-FIXED PREPARED與ZIP，code已远端保存；当前CORE皆IMPLEMENTED_PENDING_VERIFICATION以防旧證據误判。
+- 確認批准后：全部附件同API逐件匹配SHA保存→final完整checkpoint／receipt→require-evidence PASS→REQUIREMENTS／PROGRESS／WORK_LOG／STATE三包完成→receipt小commit全部readback。父题原0／44／26／2／3需真实UI004005部分后改0／46／24／2／3，不冒原题完整；39→45CORE，+6。
+- 已做12 exception目标／33相關回歸、25 object回歸及229全suite；不重包EXE／不merge main。不把单件success当可信样本或模型训练。后续MARKING_TRUST_NEXT_PLAN只是计划，当前读回阻塞先解决。
+
 # 最新接續：三包 2／3（v0.1.13）
 
 - 第二包 CORE042／043 全流程完成，RUN-BATCH-IMPORT-001 精確source882af2c7，216PASS／0SKIP／54附件、source unchanged。43CORE已驗／2新CORE待做；75父題仍0完整／44部分／26未實作／2受阻／3延後。
