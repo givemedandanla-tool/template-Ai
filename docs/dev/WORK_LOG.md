@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：editor安全修正與追加核驗
+
+- 舊MainWindow保存與Undo／Redo加入loaded db revision/hash，Library保存BEGIN IMMEDIATE CAS；保存／切換拒絕stale時保留人工內容。真實ABA故障test修正後PASS。
+- 一般publish亦檢查locked oldslot，字型新草稿後端雙重阻擋；舊Logo屬性不等比／轉一般文字拒絕。候選桌面resize／警告區改可捲、顯示actual非dirty值；實際3way和拖曳PASS。
+- 下一步檢驗發布lock繞過／字型forge、重開history鎖定、主窗口background手工變動與錯誤後retry；整包正式證據尚未產生。
+
 ## 2026-10-14：傳統editor安全RED
 
 - 14backend／真GUI3way／group drag候選／mixed patch／兩模式與retry全PASS。新增pin/style與cross-owner GUI亦PASS。

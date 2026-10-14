@@ -198,6 +198,9 @@ class MainWindow(QMainWindow):
         self.works = []
         self.slots = []
         self.template = None
+        self.template_revision=None
+        self.template_base_hash=None
+        self.template_base_payload=None
         self.current_slot = None
         self.candidates = []
         self.generation = 0
@@ -733,18 +736,18 @@ class MainWindow(QMainWindow):
                 if not (rect.x >= self.crop.x and rect.y >= self.crop.y and rect.x + rect.w <= self.crop.x + self.crop.w and rect.y + rect.h <= self.crop.y + self.crop.h):
                     self.error("資料框必須在目前橘色作品框內")
                     return
-                self.checkpoint()
+                if self.checkpoint() is False:return
                 mapped = Rect((rect.x - self.crop.x) * self.work_width / self.crop.w, (rect.y - self.crop.y) * self.work_height / self.crop.h,
                               rect.w * self.work_width / self.crop.w, rect.h * self.work_height / self.crop.h)
                 self.slots.append(self.make_slot(mapped))
                 self.save_labels(silent=True)
             self.refresh_training()
         elif self.tabs.currentIndex() == 1 and self.editable():
-            self.checkpoint()
+            if self.checkpoint() is False:return
             self.template.slots.append(self.make_slot(rect))
             self.refresh_editor()
 
-    def make_slot(self, rect):
+    def make_slot(self, rect,preserve=False):
         family=self.font.currentFont().family();asset=self.font_manager.asset_for_family(family)
         style=""
         displayed=getattr(self,'_selected_font_display',None)
@@ -758,7 +761,7 @@ class MainWindow(QMainWindow):
         return Slot(self.kind.currentData(), self.owner.currentData(), rect, self.index.value()-1,
                     family, self.pt.value(), self.scale.value()/100,
                     self.align.currentData(), self.required.isChecked(), color=self.text_color.text().strip(),
-                    font_asset=asset,font_style=style,locked=self.current_slot.locked if self.current_slot else False)
+                    font_asset=asset,font_style=style,locked=self.current_slot.locked if preserve and self.current_slot else False)
 
     def current_slots(self):
         return self.slots if self.tabs.currentIndex() == 0 else self.template.slots if self.template else []
@@ -797,18 +800,41 @@ class MainWindow(QMainWindow):
             self.train_canvas.select_id(self.slots[row].id)
 
     def checkpoint(self):
+        if not self.editor_fresh():return False
         self.undo_stack.append(copy.deepcopy(self.current_slots()))
         self.undo_stack = self.undo_stack[-50:]
         self.redo_stack.clear()
+        return True
+
+    def editor_fresh(self):
+        from .font_review import fingerprint
+        try:
+            if self.tabs.currentIndex()==0 and self.work:
+                current=self.library.object_snapshot('ARTWORK',self.work['id'])
+                if current['revision']!=self.work['revision'] or fingerprint(current['payload'])!=fingerprint(self.work['payload']):raise ValueError('來源標記已變更／過期，保留手工內容；請重新核對')
+            elif self.tabs.currentIndex()==1 and self.template:
+                current=self.library.object_snapshot('TEMPLATE',self.template.id)
+                if current['revision']!=self.template_revision or fingerprint(current['payload'])!=self.template_base_hash:raise ValueError('模板已變更／ABA／過期，保留手工內容；請重新核對')
+            return True
+        except ValueError as error:self.error(str(error));return False
+
+    def save_current_template(self):
+        if not self.template:return
+        if not self.editor_fresh():raise ValueError('模板上下文已變更，未覆寫；手工內容保留')
+        self.library.save_template(self.template,expected_revision=self.template_revision)
+        current=self.library.object_snapshot('TEMPLATE',self.template.id)
+        from .font_review import fingerprint
+        self.template_revision=current['revision'];self.template_base_hash=fingerprint(current['payload'])
+        self.template_base_payload=copy.deepcopy(current['payload'])
 
     def undo(self):
-        if not self.editable() or not self.undo_stack:
+        if not self.editable() or not self.undo_stack or not self.editor_fresh():
             return
         self.redo_stack.append(copy.deepcopy(self.current_slots()))
         self.replace_slots(self.undo_stack.pop())
 
     def redo(self):
-        if not self.editable() or not self.redo_stack:
+        if not self.editable() or not self.redo_stack or not self.editor_fresh():
             return
         self.undo_stack.append(copy.deepcopy(self.current_slots()))
         self.replace_slots(self.redo_stack.pop())
@@ -849,8 +875,11 @@ class MainWindow(QMainWindow):
         if not re.fullmatch(r"#[0-9a-fA-F]{6}", self.text_color.text().strip()):
             self.error("文字色彩請輸入 #RRGGBB，例如 #173d75")
             return
-        self.checkpoint()
-        s = self.make_slot(Rect(*(spin.value() for spin in self.coords)))
+        if self.checkpoint() is False:return
+        s = self.make_slot(Rect(*(spin.value() for spin in self.coords)),preserve=True)
+        if not s.rect.valid():self.undo_stack.pop();self.error('框位寬高需大於零且有限');return
+        if self.current_slot.kind=='logo' and (s.kind!='logo' or abs(s.rect.w/s.rect.h-self.current_slot.rect.w/self.current_slot.rect.h)>1e-6):
+            self.undo_stack.pop();self.error('完整Logo不能改成一般文字或不等比變形');return
         s.id = self.current_slot.id
         self.current_slot.__dict__.update(s.__dict__)
         if self.tabs.currentIndex() == 0:
@@ -863,7 +892,7 @@ class MainWindow(QMainWindow):
         if not self.current_slot or not self.editable():
             return
         if self.current_slot.locked:self.error('物件已鎖定；不能刪除');return
-        self.checkpoint()
+        if self.checkpoint() is False:return
         self.current_slots().remove(self.current_slot)
         self.current_slot = None
         if self.tabs.currentIndex() == 0:
@@ -888,7 +917,7 @@ class MainWindow(QMainWindow):
                 stored=[asdict(Slot(**{**s,'rect':Rect(**s['rect'])})) for s in snapshot['payload']['slots']]
                 if [Slot(**{**s,'rect':Rect(**s['rect'])}) for s in stored]!=self.slots:raise ValueError('來源標記有未保存內容，請先保存')
             if self.current_slot:
-                draft=self.make_slot(Rect(*(s.value() for s in self.coords)));draft.id=self.current_slot.id
+                draft=self.make_slot(Rect(*(s.value() for s in self.coords)),preserve=True);draft.id=self.current_slot.id
                 if draft!=self.current_slot:raise ValueError('屬性面板有未套用內容；請先套用或明確重選放棄')
             dialog=ObjectToolsDialog(self,kind,entity_id)
             try:dialog.exec()
@@ -990,8 +1019,13 @@ class MainWindow(QMainWindow):
         if not 0 <= row < len(self.templates):
             return
         if self.template and self.template.state == "draft":
-            self.library.save_template(self.template)
-        self.template = copy.deepcopy(self.templates[row])
+            try:self.save_current_template()
+            except Exception as error:self.error(str(error));return
+        from .font_review import fingerprint
+        snapshot=self.library.object_snapshot('TEMPLATE',self.templates[row].id)
+        self.template = Template.from_dict(snapshot['payload'])
+        self.template_revision=snapshot['revision'];self.template_base_hash=fingerprint(snapshot['payload'])
+        self.template_base_payload=copy.deepcopy(snapshot['payload'])
         self.undo_stack, self.redo_stack = [], []
         self.current_slot = None
         self.refresh_editor()
@@ -1076,7 +1110,7 @@ class MainWindow(QMainWindow):
                 return
             asset["approved"] = True
             self.template.background = asset
-            self.library.save_template(self.template)
+            self.save_current_template()
             self.refresh_templates(self.template.id)
             self.invalidate()
             self.statusBar().showMessage("已保存核准固定背景；預覽與數位輸出使用同一背景")
@@ -1090,13 +1124,14 @@ class MainWindow(QMainWindow):
         if QMessageBox.question(self, "移除固定背景", "將此草稿改為空白背景？原始背景檔與已發布歷史版本會保留。") != QMessageBox.Yes:
             return
         self.template.background = None
-        self.library.save_template(self.template)
+        self.save_current_template()
         self.refresh_templates(self.template.id)
         self.invalidate()
 
     def new_version(self):
         if not self.template:
             return
+        if not self.editor_fresh():return
         t = copy.deepcopy(self.template)
         t.id, t.state = new_id(), "draft"
         t.version = self.library.next_version(t.family_id)
@@ -1107,7 +1142,7 @@ class MainWindow(QMainWindow):
         if not self.template or not self.editable():
             return
         try:
-            self.library.save_template(self.template)
+            self.save_current_template()
             self.refresh_templates(self.template.id)
             self.invalidate()
             self.statusBar().showMessage("模板草稿已持久保存")
@@ -1117,6 +1152,7 @@ class MainWindow(QMainWindow):
     def publish_template(self):
         if not self.template or self.template.state != "draft":
             return
+        if not self.editor_fresh():return
         bindings = self.ask_bindings(self.template.slots)
         if bindings is None:
             return
@@ -1352,7 +1388,7 @@ class MainWindow(QMainWindow):
             return
         try:
             if self.template and self.template.state == "draft":
-                self.library.save_template(self.template)
+                self.save_current_template()
             if self.source:
                 self.save_labels(silent=True)
         except Exception as e:

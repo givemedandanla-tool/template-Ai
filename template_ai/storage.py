@@ -272,7 +272,17 @@ class Library:
         payload = legacy if legacy and all(k in legacy for k in ("crop", "work_width", "work_height", "slots")) else default_payload
         return self.create_artwork(source_id, "作品 1（舊標記）" if payload is legacy else "作品 1", payload)
 
-    def save_template(self, t: Template) -> None:
+    def save_template(self,t:Template,expected_revision=None) -> None:
+        if expected_revision is None:return self._save_template_data(t)
+        if self.db.in_transaction:raise ValueError('已有交易，不能巢狀草稿保存')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            current=self.object_snapshot('TEMPLATE',t.id)
+            if type(expected_revision) is not int or current['revision']!=expected_revision:raise ValueError('模板已由其他工作階段變更／ABA，未保存手工內容')
+            self._save_template_data(t);self.db.commit()
+        except BaseException:self.db.rollback();raise
+
+    def _save_template_data(self,t):
         self._template_provenance(t)
         row = self.db.execute("SELECT state,family_id,version,payload FROM templates WHERE id=?", (t.id,)).fetchone()
         if row and row[0] == "published":
@@ -306,6 +316,10 @@ class Library:
             row = self.db.execute("SELECT state FROM templates WHERE id=?", (t.id,)).fetchone()
             if row and row[0] == "published":
                 raise ValueError("已發布版本不可覆寫，請建立新版本草稿")
+            old=self.db.execute('SELECT payload FROM templates WHERE id=?',(t.id,)).fetchone()
+            if old:
+                from .object_tools import protect_locked
+                protect_locked(json.loads(old[0]),t.to_dict())
             collision = self.db.execute("SELECT id FROM templates WHERE family_id=? AND version=?", (t.family_id, t.version)).fetchone()
             if collision and collision[0] != t.id:
                 raise ValueError("此模板版次已存在，不可覆蓋歷史")
@@ -394,6 +408,8 @@ class Library:
             if r['plan']['request']['operation']!='LOCK':
                 from .object_tools import protect_locked
                 protect_locked(current['payload'],target)
+            from .object_tools import warnings_for
+            r['current_warnings']=warnings_for(target,r['kind'])
             self._object_write(r['kind'],r['entity_id'],target,current['revision'])
             r['phase']='UNDONE' if action=='UNDO' else 'APPLIED';r['sequence']+=1;r['expected_revision']=current['revision']+1
             self.db.execute('UPDATE object_edits SET payload=? WHERE id=?',(json.dumps(r,ensure_ascii=False),r['id']))

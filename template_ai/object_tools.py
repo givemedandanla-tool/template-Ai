@@ -89,6 +89,7 @@ def propose(payload,kind,request):
                 if key in ('x','y','w','h','size_pt','min_scale'):_number(v)
                 if key in ('x','y','w','h'):setattr(s.rect,key,v)
                 else:setattr(s,key,copy.deepcopy(v))
+            if old.kind=='logo' and s.kind!='logo':raise ValueError('完整Logo不能改成一般文字')
             if not s.rect.valid() or not 1<=s.size_pt<=200 or not .05<=s.min_scale<=1 or type(s.required) is not bool or type(s.index) is not int or s.index<0 or s.align not in ('left','center','right') or not isinstance(s.color,str) or not re.fullmatch(r'#[0-9a-fA-F]{6}',s.color):raise ValueError('共同屬性不合法，未套用')
             if old.kind=='logo' and abs(s.rect.w/s.rect.h-old.rect.w/old.rect.h)>1e-6:raise ValueError('Logo框尺寸不可不等比變形')
     elif operation=='MOVE':

@@ -23,10 +23,12 @@ class ObjectCanvas(Canvas):
         try:
             super().set_content(*args,**kw)
             self.base_positions={i.slot.id:(i.pos().x(),i.pos().y()) for i in self.scene().items() if isinstance(i,Box)}
+            self.setSceneRect(QRectF(-2010,-2010,6020,6020))
             self.overlays=[];self.mode='edit';self.setDragMode(Canvas.RubberBandDrag)
             for i in self.scene().items():
                 if isinstance(i,Box):i.setFlag(QGraphicsItem.ItemIsSelectable,True);i.setFlag(QGraphicsItem.ItemIsMovable,not self.readonly and not i.slot.locked)
         finally:self.resetting=False
+    def fit(self):self.fitInView(QRectF(-5,-5,self.width_mm+10,self.height_mm+10),Qt.KeepAspectRatio)
     def select_ids(self,ids):
         self.resetting=True
         try:
@@ -155,7 +157,8 @@ class ObjectToolsDialog(QDialog):
             for s in rows:self.reference.addItem(s['owner']+'/'+s['kind']+'/'+s['id'][:8],s['id'])
             for key,editor in self.editors.items():
                 value=common[key]['value'];editor.setEnabled(not self.canvas.readonly and (text_only or key not in ('size_pt','min_scale','align','color')) and (len(ids)==1 or key not in ('kind','owner','index')))
-                if isinstance(editor,QDoubleSpinBox):editor.setValue(value if value is not None else editor.minimum())
+                if isinstance(editor,QDoubleSpinBox):
+                    editor.setRange(min(-2001,value if value is not None else -2001),max(2000,value if value is not None else 2000));editor.setValue(value if value is not None else editor.minimum())
                 elif isinstance(editor,QComboBox):editor.setCurrentIndex(editor.findData(value) if value is not None else -1)
                 elif isinstance(editor,QLineEdit):editor.setText(value or '')
                 else:editor.setTristate(value is None);editor.setCheckState(Qt.PartiallyChecked if value is None else Qt.Checked if value else Qt.Unchecked)
@@ -191,7 +194,8 @@ class ObjectToolsDialog(QDialog):
             self.diff.setRowCount(len(self.plan['changes']))
             for i,c in enumerate(self.plan['changes']):
                 old=c['before'];new=c['after'];fmt=lambda s:'刪除' if not s else ' / '.join(f'{s["rect"][k]:.4f}' for k in ('x','y','w','h'))
-                differences=', '.join(k for k in old if new and old.get(k)!=new.get(k) and k!='rect')
+                differences='；'.join(k+': '+str(old.get(k))+' → '+str(new.get(k)) for k in old if new and old.get(k)!=new.get(k) and k not in ('rect','font_asset'))
+                if new and old.get('font_asset')!=new.get('font_asset'):differences+='；核准字型pin已變更，款式與家族見上列'
                 for col,value in enumerate((c['owner']+'/'+c['kind']+'/'+c['id'],fmt(old),fmt(new),f'{c["dx"]:.4f} / {c["dy"]:.4f}',differences)) :self.diff.setItem(i,col,QTableWidgetItem(value))
             self.diff.resizeColumnsToContents();self.apply_button.setEnabled(True)
             self.summary.setPlainText(f"候選 {request['operation']} · {len(self.plan['changes'])}實際差異／{len(request['ids'])}明確範圍 · reference {request.get('reference','不適用')} · gap {self.plan['gap_mm']} mm\n"+'；'.join(self.plan['warnings']))
@@ -202,12 +206,24 @@ class ObjectToolsDialog(QDialog):
         if self.kind=='TEMPLATE' and w.template and w.template.id==self.entity_id:w.template=None;w.refresh_templates(self.entity_id)
         elif self.kind=='ARTWORK' and w.work and w.work['id']==self.entity_id:w.load_work(self.library.artwork(self.entity_id))
         w.invalidate();self.reload()
+    def main_content_clean(self):
+        w=self.window
+        if self.kind=='TEMPLATE' and w.template and w.template.id==self.entity_id:
+            base=getattr(w,'template_base_payload',None)
+            if base is None or Template.from_dict(base)!=w.template:raise ValueError('主編輯有未保存手工內容，未覆蓋')
+        elif self.kind=='ARTWORK' and w.work and w.work['id']==self.entity_id:
+            slots=[Slot(**{**s,'rect':Rect(**s['rect'])}) for s in w.work['payload']['slots']]
+            if slots!=w.slots:raise ValueError('來源主編輯有未保存手工內容，未覆蓋')
+        if w.current_slot:
+            candidate=w.make_slot(Rect(*(spin.value() for spin in w.coords)),preserve=True);candidate.id=w.current_slot.id
+            if candidate!=w.current_slot:raise ValueError('主屬性面板有未套用手工內容，未覆蓋')
     def apply(self):
         if self.request is None or self.plan is None or self._preview_generation!=self.generation:return
         if QMessageBox.question(self,'核對差異與精確範圍',self.summary.toPlainText()+'\n物件：'+', '.join(self.request['ids'])+'\n確定僅套用本候選？不等於發布／正式輸出PASS。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
         if self.request is None or self._preview_generation!=self.generation:return
         self.apply_button.setEnabled(False)
         try:
+            self.main_content_clean()
             self.library.apply_object_edit(self.snapshot,copy.deepcopy(self.request),True);self.after_write();self.status.setText('已原子保存本次差異；不合格項目仍須修復，歷史可核對Undo／Redo。')
         except Exception as error:self.status.setText('未提交：'+str(error));self.apply_button.setEnabled(self.plan is not None)
     def history_action(self,action):
@@ -216,5 +232,5 @@ class ObjectToolsDialog(QDialog):
         record=self.records[rows[0].row()]
         scope=', '.join(c['owner']+'/'+c['kind']+'/'+c['id'] for c in record['plan']['changes'])
         if QMessageBox.question(self,'核對歷史'+action,scope+'\n'+record['plan']['request']['operation']+'；只對未有後續編輯／發布的此批次作用，可能包含明確鎖定／解鎖。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
-        try:self.library.object_history_action(record['id'],action,True);self.after_write();self.status.setText('本批歷史已'+action+'；全物件驗證仍涵蓋所有slot。')
+        try:self.main_content_clean();self.library.object_history_action(record['id'],action,True);self.after_write();self.status.setText('本批歷史已'+action+'；全物件驗證仍涵蓋所有slot。')
         except Exception as error:self.status.setText('歷史拒絕：'+str(error))

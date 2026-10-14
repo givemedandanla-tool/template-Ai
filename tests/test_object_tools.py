@@ -118,6 +118,21 @@ class ObjectToolsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'鎖定'):self.lib.save_template(t)
         r=self.apply(self.request('LOCK',[self.ids[0]],locked=False));self.assertFalse(r['after']['slots'][0]['locked'])
         self.lib.object_history_action(r['id'],'UNDO',True);self.assertTrue(self.lib.object_snapshot('TEMPLATE',self.t.id)['payload']['slots'][0]['locked'])
+        stale=copy.deepcopy(self.t)
+        with self.assertRaisesRegex(ValueError,'鎖定'):self.lib.publish(stale)
+        from template_ai.fonts import FontManager
+        from template_ai.font_catalog import build_inventory
+        from template_ai.font_review import evaluate_review,field_key,fingerprint
+        manager=FontManager(self.lib);self.addCleanup(manager.close)
+        asset=manager.import_font(Path('/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf'),approved=True);target=build_inventory([asset],[],[])['rows'][0]
+        snapshot=self.lib.object_snapshot('TEMPLATE',self.t.id);key=field_key(self.t.id,self.ids[0])
+        impact=evaluate_review([{'template':snapshot['payload'],'revision':snapshot['revision']}],target,{key:'Alex'})
+        self.assertFalse(impact['rows'][0]['eligible']);self.assertIn('鎖定',' '.join(impact['rows'][0]['reasons']))
+        unlocked=copy.deepcopy(snapshot['payload']);unlocked['slots'][0]['locked']=False
+        forged=evaluate_review([{'template':unlocked,'revision':snapshot['revision']}],target,{key:'Alex'})['rows'][0]
+        self.assertTrue(forged['eligible']);forged['template_hash']=fingerprint(snapshot['payload'])
+        with self.assertRaisesRegex(ValueError,'鎖定'):self.lib._commit_font_change({'target':target,'rows':[forged]})
+
 
 
 class ObjectToolsGuiTests(unittest.TestCase):
