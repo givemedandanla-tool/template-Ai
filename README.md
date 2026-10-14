@@ -6,11 +6,11 @@
 
 **開發以零例行問答、checkpoint 與 GitHub 持久化為核心。EXE 已延後，不再自動打包或重試；先完成清單要求及其證據。**
 
-**v0.1.10 完成來源／原模板／替代草稿同步唯讀對照，保留受控草稿與Undo／Redo；177項具名測試PASS、0 SKIP、37件證據附件，EXE依指令延後。** 三模式桌面工作台：來源標記、模板與 Logo、排版與數位輸出。本版包含多作品標記與歷史恢復、固定學習來源版次、本機持久字型、發布交易及來源快取完整性，新增同內容原稿重連與字型複本修復，受控批次來源定位／全批交易／內容驗證復原，共用字型管理、Unicode字形覆蓋與固定字級毫米字寬診斷，真實背景工作GUI交接。第一版學習為人工確認標記的幾何與語意規則內化；完整自動辨識／深度模型、客戶重訂、完整權限與實體印刷分析留後續計畫。
+**v0.1.11 完成安全多選、鎖定、精確幾何候選與持久Undo／Redo整包，保留同步唯讀對照；194項具名測試PASS、0 SKIP、44件證據附件，EXE依指令延後。** 三模式桌面工作台：來源標記、模板與 Logo、排版與數位輸出。本版包含多作品標記與歷史恢復、固定學習來源版次、本機持久字型、發布交易及來源快取完整性，新增同內容原稿重連與字型複本修復，受控批次來源定位／全批交易／內容驗證復原，共用字型管理、Unicode字形覆蓋與固定字級毫米字寬診斷，真實背景工作GUI交接。第一版學習為人工確認標記的幾何與語意規則內化；完整自動辨識／深度模型、客戶重訂、完整權限與實體印刷分析留後續計畫。
 
 ## 開啟與快速試用
 
-目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新可重現測試及附件見 [RUN-CANVAS-COMPARE-002](docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json)。
+目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新可重現測試及附件見 [RUN-OBJECT-TOOLS-001](docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json)。
 
 原始碼：安裝 Python 3.11 後，Windows 雙擊 `START_WINDOWS.bat`；或安裝 `requirements-lock.txt`，執行 `python app.py`。
 
@@ -58,3 +58,9 @@ python tools/validate_first_version.py
 逐欄詳審進入三視圖：原稿衍生參考、原模板已知文字、僅本欄替代的完整矩形。共用縮放／平移，列表或框選同一stable ID同步高亮與定位；可符合全頁／矩形／所選框。精確來源歷史版次與crop可逆映射；未物理標定圖片標參考單位，來源失聯及原字型未驗證保留未知。對照不寫模板／字型／DB；返回後明確核准仍須背景再驗與套用前驗證，檔案／來源context／template clock異動阻擋。
 
 完整長期目標與全部75父題路線見 [PROJECT_GOAL](docs/dev/PROJECT_GOAL.md)／[PROJECT_ROADMAP](docs/dev/PROJECT_ROADMAP.md)。本輪三視圖與定位附件見RUN-CANVAS-COMPARE-002；SELF_VERIFIED合成測試不代表真實AI视觉／Windows／指定硬體或獨立品質。
+
+## 安全多選與精確對齊
+
+訓練標記／模板工作台「安全多選／精確對齊」進入同一進階編輯器。畫布Ctrl複選／框選、清單複選與面板共享stable ID集合；mixed值不複製第一件，僅明確dirty欄位產生候選。原藍框／新綠框及old/new mm差異先核對，再原子保存；沒有新差異不建空歷史。明確基準可六向對齊、兩軸等邊界間距、group delta；保留固定pt、pin／style、未選物件及Logo比例，locked或未核對跨owner範圍整組拒絕。
+
+Lock／Unlock是獨立明確候選與核准；舊編輯、保存、發布與字型替代同受lock保護。持久歷史重開可UndoRedo，hash／clock擋ABA與後續編輯，晚期audit失敗全rollback；source幾何變更取消原visual確認。主窗口手工未保存／未套用時不丟棄或覆蓋。所有警告仍涵蓋全slot，來源文字與字距未知、未提供人物文字的readability須另排版核驗。正式證據見RUN-OBJECT-TOOLS-001，全部父題完成進度仍看PROGRESS。

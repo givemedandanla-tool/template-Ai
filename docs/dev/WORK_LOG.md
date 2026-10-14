@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：v0.1.11整包正式194PASS
+
+- 固定source 2f2d32bf313616414b86bf866faef73dac884a3f，RUN-OBJECT-TOOLS-001：194PASS／0SKIP、44附件、48验收PASS、source不变。全部具体子项已验，最後snapshot讀回後才REMOTE_VERIFIED。
+- CORE36→39新增／完成3，父題UI036→PARTIAL後0完整／44部分／26未實作／2受阻／3延後，GOV6，120列；原父題未完整完成仍75。
+- before/after故障log／真6新GUI与JSON audit永久保存；接下來UI035原要求索引／検索／安全檢視，不猜原生AI层。
+
 ## 2026-10-14：整包實作與正式前194PASS
 
 - 新17具名測試＋原177，全回歸194PASS／0SKIP；來源／模板兩模式真QTest、drag候選取消、dirty mixed只改選中、post-prompt保留主手工內容、DB／font／pub lockGate、持久history與CAS。

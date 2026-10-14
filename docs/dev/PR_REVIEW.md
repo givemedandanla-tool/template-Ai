@@ -1,6 +1,6 @@
 # PR #2 可複用審查說明
 
-建議標題：`feat: v0.1.10 矩形模板工作台、字型診斷與可靠背景交接`
+建議標題：`feat: v0.1.11 矩形模板工作台、字型診斷與可靠背景交接`
 
 本文件保存目前可審查結果；PR metadata 更新工具先前兩次被中止，本輪不反覆阻塞於同一操作，也不宣稱GitHub頁面標題已更新。
 
@@ -12,9 +12,9 @@
 
 真實背景測試發現worker已結束但GUI完成通知遺失、畫面停留busy。Job／Signals現在持有到明確GUI queued callback，成功、worker錯誤和GUI callback錯誤均清理／恢復，後續可重試；不是完整公平佇列或斷電恢復。
 
-開發治理包含AGENTS／STATE／HANDOFF、117筆要求與個別驗收、來源commit／JSON／JUnit／真實附件、GitHub逐檔checkpoint與不可變收據，每輪要求基準／結束差異及計數。最新測試來源 `36307d58ed8f10e6549ba3580a20541244b036db`，RUN-CANVAS-COMPARE-002：177 PASS／0 SKIP、37件紀錄／實際匿名附件，含字型中心、字形毫米診斷、候選排名與唯讀預覽、PNG與可讀量測報告。前輪未完成run、before／after故障紀錄保留，不當新版完成證據。
+開發治理包含AGENTS／STATE／HANDOFF、120筆要求與個別驗收、來源commit／JSON／JUnit／真實附件、GitHub逐檔checkpoint與不可變收據，每輪要求基準／結束差異及計數。最新測試來源 `2f2d32bf313616414b86bf866faef73dac884a3f`，RUN-OBJECT-TOOLS-001：194 PASS／0 SKIP、44件紀錄／實際匿名附件，含字型中心、字形毫米診斷、候選排名與唯讀預覽、PNG與可讀量測報告。前輪未完成run、before／after故障紀錄保留，不當新版完成證據。
 
-功能子項34→36完成具名範圍；治理6。75原始父題：完整0、部分43、未實作27、受阻2、延後3，全部仍有未完成條件；新增拆分不當整個產品百分比。詳見PROGRESS.md與progress/PROGRESS-20261014-CANVAS-COMPARE-FINAL.json。
+功能子項36→39完成具名範圍；治理6。75原始父題：完整0、部分44、未實作26、受阻2、延後3，全部仍有未完成條件；新增拆分不當整個產品百分比。詳見PROGRESS.md與progress/PROGRESS-20261014-OBJECT-TOOLS-END.json。
 
 參考InDesign、fontTools公開cmap原碼、Fontconfig歷史排序原碼與Qt實際字型／shaping，結合集合覆蓋、固定em點數換算與水平可行區間，自行實作，不複製第三方碼或新增fontTools依賴。環境／受限字型複本、個資、原稿、SQLite與秘密不公開；附件以合成來源與環境字型輸出。驗證為Linux自我驗證，Windows、真實AI、硬體、原稿字型身份、完整TTC／不同版本同家族、替代審核／嵌入授權及深度模型仍待。EXE／實體印刷延後，UI-048最後功能，PR未合併main。
 
@@ -23,3 +23,5 @@
 CORE-035／036：精確歷史來源／原模板／替代草稿完整矩形、可逆crop／pixel映射、三視圖唯讀同步zoom/pan与stable ID物件定位。來源或背景／目標異動、oldclock阻擋；人工提示後亦背景核驗。9組新驗收含實際Qt worker與像素／Italic字面；三視圖／同步定位／原與後PNG及映射報告永久附件。75父題狀態不變，新增2／刪除0／既有驗收scope改動0。
 
 CORE-035／036：精確歷史來源／原模板／替代草稿完整矩形、可逆crop／pixel映射、三視圖唯讀同步zoom/pan与stable ID物件定位。來源或背景／目標異動、oldclock阻擋；人工提示後亦背景核驗。9組新驗收含實際Qt worker與像素／Italic字面；三視圖／同步定位／原與後PNG及映射報告永久附件。75父題狀態不變，新增2／刪除0／既有驗收scope改動0。
+
+CORE037..039整包：兩模式真正三向多選／mixed dirty patch，persistent locked全途徑保護，明確reference六向align／gap／group delta，green preview／取消／原子套用與persistent UndoRedo。17新test加原177全PASS；舊Undo/保存ABA故障保留RED→GREEN，核心與資料庫寫入鎖CAS＋全rollback。實際6新GUI＋JSON audit永久證據；不改原檔／发布版本／font pt等幾何外屬性，不降低formal Gate。父題UI036變PARTIAL，CORE新增／完成3，未提前完成全父題。

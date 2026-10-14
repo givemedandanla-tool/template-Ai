@@ -1,6 +1,6 @@
 # 全75父題開發順序與驗收缺口
 
-本表不是完成宣告；狀態以REQUIREMENTS為準。每題原scope／原始文件／驗收保存在PROJECT_ROADMAP.json，實作前再讀來源；受阻條件不妨礙其他工作。
+完整原scope／來源保留PROJECT_ROADMAP.json；CORE子項不替代父題全部條款。
 
 | 階段 | ID | 要求 | 現況 | 已完成子項 |
 |---|---|---|---|---|
@@ -17,9 +17,9 @@
 | 1 | UI-031 | 字型缺失與 Illustrator 特殊文字效果處理 | PARTIAL | CORE-003, CORE-035 |
 | 1 | UI-032 | Windows 字型庫、智慧匹配、匯入與受控安裝介面 | PARTIAL | CORE-021, CORE-022, CORE-025, CORE-028, CORE-029, CORE-031, CORE-034 |
 | 1 | UI-033 | 字型替代影響範圍與風險分級批次審核 | PARTIAL | CORE-022, CORE-032, CORE-033, CORE-035, CORE-036 |
-| 1 | UI-034 | 畫布、物件清單與屬性面板同步安全編輯 | PARTIAL | CORE-013, CORE-014, CORE-015, CORE-016 |
-| 1 | UI-035 | 語意樹、Illustrator 圖層與搜尋／鎖定管理介面 | PARTIAL | 尚無 |
-| 1 | UI-036 | 多物件精確對齊、等距分布與群組位移 | NOT_IMPLEMENTED | 尚無 |
+| 1 | UI-034 | 畫布、物件清單與屬性面板同步安全編輯 | PARTIAL | CORE-013, CORE-014, CORE-015, CORE-016, CORE-037, CORE-038, CORE-039 |
+| 1 | UI-035 | 語意樹、Illustrator 圖層與搜尋／鎖定管理介面 | PARTIAL | CORE-038 |
+| 1 | UI-036 | 多物件精確對齊、等距分布與群組位移 | PARTIAL | CORE-039 |
 | 1 | UI-037 | 畫布縮放、平移、快速定位與同步對照檢視 | PARTIAL | CORE-036 |
 | 1 | UI-038 | 多作品總覽、智慧辨識框與作品上直接標記／修正 | PARTIAL | CORE-017, CORE-018 |
 | 1 | UI-039 | AI 智慧資料辨識框的畫布快捷標記與人工校正 | PARTIAL | 尚無 |

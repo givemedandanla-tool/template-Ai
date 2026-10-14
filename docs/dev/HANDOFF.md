@@ -1,8 +1,27 @@
 # Human／GPT 開發交接
 
+## 最新整包：v0.1.11 CORE-037／038／039
+
+先依AGENTS／STATE／要求／最新證據／PROGRESS／WORK_LOG／協議恢復，長期全清單目標仍存PROJECT_GOAL／ROADMAP；不重試EXE，不啟用agent，不要求例行重說繼續。
+
+source `2f2d32bf313616414b86bf866faef73dac884a3f`；RUN-OBJECT-TOOLS-001：194PASS／0SKIP、44附件、48acceptance全PASS，source前後不變。整個OBJECT_TOOLS_DESIGN具體契約已驗；最後snapshot／收據待GitHub讀回前不先宣稱REMOTE_VERIFIED。
+
+完成功能鏈：來源／模板入口→same advanced editor→真click/Ctrl／RubberBand／list／properties stable-ID集合→mixed dirty patch／lock→明確reference六方向／兩軸gap／group mm delta或drag→old/new與green候選→cancel或明確scope確認→鎖內重算／原子保存→persistent history／重開UndoRedo。Property schema／lock root沿用Slot boolean defaultFalse兼容舊data；普通原編輯、save／source、publish及font新草稿亦守lock。原稿／发布不可覆寫，Logo不轉一般文字或不等比，geometry只改selected x/y，font／pt／未選不變。
+
+object_tools.py純mm／stable排序／dirty request，負gap／bounds／font與語意問題保持warning；未提供人物資料的字形/readability仍另排版。最多200工具物件／50歷史展示，不以隱藏減少Gate。ObjectToolsDialog候選不改DB，樹／原生文字字距未知如實標，所有變動明列及trueQTest。Source幾何取消visual確認；historical explicitUndo能還原舊flag但仍不是機器證實原稿一致。
+
+Library.object_edits保留before/after、request／scope／warnings／clock及phase；BEGIN IMMEDIATE內用實際DB重算，不信任caller after，source newrevision／template clock／audit同交易，late event失敗整包rollback。UndoRedo先exacthash＋monotonicclock CAS，後續更改／發布／ABA拒絕；lock历史是獨立明確範圍，非自動解鎖。Source revision也提供保護。MainWindow loaded revision/hash／payload守傳統save/undo/newVersion/publish；保存失敗保留手工內容。Child返回確認期間主手工或properties變化也拒絕覆蓋，重新載入可針對外部新saved base再preview/retry。
+
+故障：第一legacy ABA fixture先Save清空UndoStack，不能表示真正風險；原FAIL保留，補保存後再手工改x10的fixture，REAL-ABA-RED真正顯示Undo誤退x9。修正版本防護後PASS，沒有刪failure測試／降低期望。首次UI長文字擠壓，scroll panel／readOnly可捲summary與show-fit修正，永久screens是真生成。元件clock與回歸194PASS不代表Windows／原生AI／hardware或獨立覆核。
+
+功能120列＝75父題＋39CORE＋6GOV；CORE36→39新增并完成3，父題0完整／44部分／26未實作／2受阻／3延後，75仍未完整完成；UI036僅从NOT_IMPLEMENTED→PARTIAL。不以已登记CORE39全verified當產品清單已完整拆分或產品100%。本輪BEGIN117列／END120列不可變差異，GOV6。
+
+下一大包UI035 semantic索引／共用實體搜尋／檢視隔離：先讀原條款與source可驗性，baseline／具體契約／BEGIN再code，native層未知不猜或用衍生SVG冒稱原生AI。共享公司和Logo以同一stable底層實體引用，hide不減少驗證；完整父題未滿前仍partial。UI048最後，print／EXE／future UI056D不提前；外部真實AI與可信參考、指定hardware、Windows、獨立品質及UI066兩未決項依原狀態，先做不依賴它的工作。
+
+
 先依AGENTS→STATE→本文件→PROJECT_GOAL／PROJECT_ROADMAP→REQUIREMENTS／FEATURES／PROGRESS→最新WORK_LOG／證據／收據→DEVELOPMENT_PROTOCOL恢復。全75父题長期目標持續，不要求重說繼續，不使用代理或重打EXE。
 
-## 最新完整大功能：v0.1.10 CORE-035／036
+## 歷史v0.1.10完整大功能 CORE-035／036
 
 精確來源`36307d58ed8f10e6549ba3580a20541244b036db`／tree`305cbd40fe75d940f46274ca8190ddda5fe52cd5`，RUN-CANVAS-COMPARE-002：177 PASS／0 SKIP、37附件、45acceptance全部PASS，source前後不變。正式來源metadata凍結獨立檔，收據提交不覆寫。最後完整snapshot `fb3f6c31d14c88018cd83ca059e69a6fb961ccaf`／tree`98d364b9fb2785acdccbcda7faee18128e163d0c`，550檔包含37附件逐一Git blob SHA讀回；require-evidence PASS。新增6個REMOTE_VERIFIED checkpoint、累計43；本完整大工作包已完成，收據／入口指針另小提交保存。
 

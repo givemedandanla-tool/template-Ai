@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.1.11",
   "framework_status": "READY",
-  "active_task": "CORE-037..039-OBJECT-TOOLS",
+  "active_task": "UI-035-SEMANTIC-SEARCH-VIEW",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-OBJECT-TOOLS-IMPLEMENTED.receipt.json",
   "last_confirmed_commit": "2f2d32bf313616414b86bf866faef73dac884a3f",
-  "latest_evidence_run": null,
+  "latest_evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -24,14 +24,19 @@
   ],
   "next_tasks": [
     {
+      "id": "CORE-037..039",
+      "status": "COMPLETED_SCOPED_PENDING_REMOTE",
+      "action": "194PASS／44附件，三向／lock／geometry／history整包待最後讀回"
+    },
+    {
+      "id": "UI-035-SEMANTIC-SEARCH-VIEW",
+      "status": "PENDING",
+      "action": "下一包先讀UI035：語意索引／共用物件搜尋／檢視隔離，native層來源未知不臆造；先契約／baseline／BEGIN再code"
+    },
+    {
       "id": "CORE-035..036",
       "status": "COMPLETED_REMOTE_VERIFIED",
       "action": "177 PASS／37附件，550檔完整snapshot與require-evidence PASS；source36307d58、finalfb3f6c31"
-    },
-    {
-      "id": "UI-034-UI-036-OBJECT-TOOLS",
-      "status": "PENDING",
-      "action": "先讀原UI034／036條款：物件／畫布／列表穩定ID三向選取、鎖定、同owner範圍與對齊分布；驗收先保存，實作後正式回歸"
     },
     {
       "id": "ALL-LIST",
@@ -117,7 +122,9 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-OBJECT-TOOLS-VERIFIED"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-CANVAS-COMPARE-FINAL.json",
@@ -125,8 +132,10 @@
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
     "id": "CORE-037..039",
-    "status": "IN_PROGRESS",
-    "contract": "docs/dev/OBJECT_TOOLS_DESIGN.md"
+    "status": "PASS_PENDING_FINAL_REMOTE",
+    "contract": "docs/dev/OBJECT_TOOLS_DESIGN.md",
+    "source_commit": "2f2d32bf313616414b86bf866faef73dac884a3f",
+    "evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json"
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
