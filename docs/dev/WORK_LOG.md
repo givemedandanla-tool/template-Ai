@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 3/10 正式驗收
+
+RUN-TEN-NOISE-AUTHOR-001／source 56854cefa88695eaeed2e7924df3c2663ab91b7c：259PASS／0SKIP，64本機附件、source unchanged。CORE-050,CORE-051及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。
+
+
 ## 十包 3 可恢復實作
 
 包3局部候選排除／撤銷與剔除並記住PENDING規則、完整literal／明確NFC／來源type與相對區域、人工正反例、protected欄位／Logo／未知、CAS／late rollback及actualQt已實作；target8PASS，沒有啟用通用規則。正式來源freeze後回歸。
