@@ -22,14 +22,24 @@
   ],
   "next_tasks": [
     {
+      "id": "CORE-035..036",
+      "status": "COMPLETED_SCOPED_PENDING_REMOTE",
+      "action": "176 PASS／37附件；來源與前後矩形同步對照大功能完成，待最後snapshot讀回"
+    },
+    {
+      "id": "UI-034-UI-036-OBJECT-TOOLS",
+      "status": "PENDING",
+      "action": "先讀原UI034／036條款：物件／畫布／列表穩定ID三向選取、鎖定、同owner範圍與對齊分布；驗收先保存，實作後正式回歸"
+    },
+    {
+      "id": "ALL-LIST",
+      "status": "ACTIVE_PERSISTENT_GOAL",
+      "action": "依PROJECT_GOAL／PROJECT_ROADMAP自主持續所有要求；不要求重說繼續"
+    },
+    {
       "id": "CORE-032..034",
       "status": "COMPLETED_SCOPED",
       "action": "完整受控草稿替代工作包完成；168PASS／31附件納入446檔REMOTE_VERIFIED snapshot"
-    },
-    {
-      "id": "UI-033-CANVAS-COMPARE",
-      "status": "PENDING",
-      "action": "來源／模板畫布與逐欄before-after定位對照；原稿資訊未知保留未知，先用合成資料建驗收"
     },
     {
       "id": "CORE-031",
@@ -105,16 +115,20 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-FONT-REVIEW-001/run.json",
+  "pending_remote": [
+    "CP-20261014-CANVAS-COMPARE-RESIZE-RED"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-CANVAS-COMPARE-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-FONT-REVIEW-END.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-CANVAS-COMPARE-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
     "id": "CORE-035..036",
-    "status": "IN_PROGRESS",
-    "contract": "docs/dev/CANVAS_COMPARE_DESIGN.md"
+    "status": "FIXING_RESIZE_REGRESSION",
+    "contract": "docs/dev/CANVAS_COMPARE_DESIGN.md",
+    "source_commit": "15748d7d49a1c9ea6d660ba95450b9abb6f9489e",
+    "evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-001/run.json"
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",

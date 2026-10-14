@@ -8,19 +8,19 @@
 | 1 | REV-02 | Inkscape 等視覺一致且可訓練的 AI 匯入 | PARTIAL | CORE-010, CORE-011 |
 | 1 | UI-001 | 三模式主視窗 | PARTIAL | 尚無 |
 | 1 | UI-002 | 模式切換狀態 | PARTIAL | CORE-017 |
-| 1 | UI-006 | 例外修正工作台 | PARTIAL | 尚無 |
+| 1 | UI-006 | 例外修正工作台 | PARTIAL | CORE-035 |
 | 1 | UI-009 | 模板庫瀏覽方式 | PARTIAL | 尚無 |
 | 1 | UI-010 | 模板版本編輯機制 | PARTIAL | CORE-007, CORE-015, CORE-020 |
 | 1 | UI-011 | 模板編輯器物件操作 | PARTIAL | 尚無 |
 | 1 | UI-012 | 物件移動縮放與智慧對齊 | PARTIAL | CORE-003 |
 | 1 | UI-013 | 文字框智慧編輯介面 | PARTIAL | CORE-001, CORE-034 |
-| 1 | UI-031 | 字型缺失與 Illustrator 特殊文字效果處理 | PARTIAL | CORE-003 |
+| 1 | UI-031 | 字型缺失與 Illustrator 特殊文字效果處理 | PARTIAL | CORE-003, CORE-035 |
 | 1 | UI-032 | Windows 字型庫、智慧匹配、匯入與受控安裝介面 | PARTIAL | CORE-021, CORE-022, CORE-025, CORE-028, CORE-029, CORE-031, CORE-034 |
-| 1 | UI-033 | 字型替代影響範圍與風險分級批次審核 | PARTIAL | CORE-022, CORE-032, CORE-033 |
+| 1 | UI-033 | 字型替代影響範圍與風險分級批次審核 | PARTIAL | CORE-022, CORE-032, CORE-033, CORE-035, CORE-036 |
 | 1 | UI-034 | 畫布、物件清單與屬性面板同步安全編輯 | PARTIAL | CORE-013, CORE-014, CORE-015, CORE-016 |
 | 1 | UI-035 | 語意樹、Illustrator 圖層與搜尋／鎖定管理介面 | PARTIAL | 尚無 |
 | 1 | UI-036 | 多物件精確對齊、等距分布與群組位移 | NOT_IMPLEMENTED | 尚無 |
-| 1 | UI-037 | 畫布縮放、平移、快速定位與同步對照檢視 | PARTIAL | 尚無 |
+| 1 | UI-037 | 畫布縮放、平移、快速定位與同步對照檢視 | PARTIAL | CORE-036 |
 | 1 | UI-038 | 多作品總覽、智慧辨識框與作品上直接標記／修正 | PARTIAL | CORE-017, CORE-018 |
 | 1 | UI-039 | AI 智慧資料辨識框的畫布快捷標記與人工校正 | PARTIAL | 尚無 |
 | 1 | UI-062 | template-Ai｜UI-062 跨模式 GUI 操作導覽、工作狀態與安全返回（正式決策） | PARTIAL | 尚無 |
@@ -56,6 +56,7 @@
 | 3 | UI-057 | AI 未涵蓋情境的分級風險提示、安全草稿與硬性無解阻擋 | PARTIAL | 尚無 |
 | 3 | UI-058 | 當次自動排版的真實進度、低負載執行、安全取消與候選恢復 | NOT_IMPLEMENTED | 尚無 |
 | 3 | UI-059 | 當次排版變更依賴局部重算、人工編輯保護與版本衝突防護 | PARTIAL | CORE-006 |
+| 3 | UI-060A | UI-060 補充決策 A｜排版完成後結果呈現、多方案比較與問題定位 | PARTIAL | 尚無 |
 | 3 | UI-061 | UI-061｜多候選與多尺寸修改同步、套用範圍及局部回復（正式決策） | NOT_IMPLEMENTED | 尚無 |
 | 3 | UI-065 | template-Ai｜UI-065 多物件／多候選／多作品批次修正：風險分級、差異預覽與安全回復（正式決策） | NOT_IMPLEMENTED | 尚無 |
 | 4 | UI-043 | 智慧客戶建檔、版型關聯與正式資料結構方案 | NOT_IMPLEMENTED | 尚無 |
@@ -70,7 +71,6 @@
 | 5 | UI-053 | 獨立樣本品質驗收、分類誤判診斷、版本比較與品質阻擋 | NOT_IMPLEMENTED | 尚無 |
 | 5 | UI-054 | 品質失敗根因分析、受控局部修復、獨立再驗收與安全回退 | NOT_IMPLEMENTED | 尚無 |
 | 5 | UI-056 | 訓練樣本類別覆蓋儀表板、缺口提醒與資料分布透明化 | NOT_IMPLEMENTED | 尚無 |
-| 3 | UI-060A | UI-060 補充決策 A｜排版完成後結果呈現、多方案比較與問題定位 | PARTIAL | 尚無 |
 | 5 | UI-066 | template-Ai｜UI-066 去重決策 A：重用既有診斷 GUI，僅保留獨立報告格式與安全交接補充規格 | NOT_IMPLEMENTED | 尚無 |
 | 5 | UI-067 | template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策） | NOT_IMPLEMENTED | 尚無 |
 | 6 | REV-04 | 16 GB＋RTX 5050 至 ASUS VivoBook 效能範圍 | PARTIAL | 尚無 |

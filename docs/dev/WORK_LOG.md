@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：CORE-036窗口resize故障與重驗
+
+- RUN-CANVAS-COMPARE-001：176PASS／37附件，但最終擴大操作驗收發現resizeAnchor NoAnchor令實際中心從(43,11.5)漂至约(29.6,35.94)，故本包不宣告完成。
+- 故障真實trace保存CORE-036/resize-before-fix.log；001原碼／結果完整保留，當前完成判定取消，補可恢復checkpoint後修正／新正式run。
+- PROGRESS...END是001通過當刻快照，最後差異將另存FINAL，不覆寫歷史。snapshot首次baseline只傳ID被拒，改完整相對路徑後成功；沒有偽造結果。
+
 ## 2026-10-14：CORE-035／036正式驗收前
 
 - 完整回歸176 PASS／0 SKIP（含8新對照組）；實際匿名GUI三視圖與定位圖可生成，已目視檢查。

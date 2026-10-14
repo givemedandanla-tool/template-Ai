@@ -1,6 +1,6 @@
 # PR #2 可複用審查說明
 
-建議標題：`feat: v0.1.9 矩形模板工作台、字型診斷與可靠背景交接`
+建議標題：`feat: v0.1.10 矩形模板工作台、字型診斷與可靠背景交接`
 
 本文件保存目前可審查結果；PR metadata 更新工具先前兩次被中止，本輪不反覆阻塞於同一操作，也不宣稱GitHub頁面標題已更新。
 
@@ -12,10 +12,12 @@
 
 真實背景測試發現worker已結束但GUI完成通知遺失、畫面停留busy。Job／Signals現在持有到明確GUI queued callback，成功、worker錯誤和GUI callback錯誤均清理／恢復，後續可重試；不是完整公平佇列或斷電恢復。
 
-開發治理包含AGENTS／STATE／HANDOFF、115筆要求與個別驗收、來源commit／JSON／JUnit／真實附件、GitHub逐檔checkpoint與不可變收據，每輪要求基準／結束差異及計數。最新測試來源 `ecb863bf3ee62277318e31792517945ed6674ccd`，RUN-FONT-REVIEW-001：168 PASS／0 SKIP、31件紀錄／實際匿名附件，含字型中心、字形毫米診斷、候選排名與唯讀預覽、PNG與可讀量測報告。前輪未完成run、before／after故障紀錄保留，不當新版完成證據。
+開發治理包含AGENTS／STATE／HANDOFF、117筆要求與個別驗收、來源commit／JSON／JUnit／真實附件、GitHub逐檔checkpoint與不可變收據，每輪要求基準／結束差異及計數。最新測試來源 `15748d7d49a1c9ea6d660ba95450b9abb6f9489e`，RUN-CANVAS-COMPARE-001：176 PASS／0 SKIP、37件紀錄／實際匿名附件，含字型中心、字形毫米診斷、候選排名與唯讀預覽、PNG與可讀量測報告。前輪未完成run、before／after故障紀錄保留，不當新版完成證據。
 
-功能子項31→34完成具名範圍；治理6。75原始父題：完整0、部分43、未實作27、受阻2、延後3，全部仍有未完成條件；新增拆分不當整個產品百分比。詳見PROGRESS.md與progress/PROGRESS-20261014-FONT-REVIEW-END.json。
+功能子項34→36完成具名範圍；治理6。75原始父題：完整0、部分43、未實作27、受阻2、延後3，全部仍有未完成條件；新增拆分不當整個產品百分比。詳見PROGRESS.md與progress/PROGRESS-20261014-CANVAS-COMPARE-END.json。
 
 參考InDesign、fontTools公開cmap原碼、Fontconfig歷史排序原碼與Qt實際字型／shaping，結合集合覆蓋、固定em點數換算與水平可行區間，自行實作，不複製第三方碼或新增fontTools依賴。環境／受限字型複本、個資、原稿、SQLite與秘密不公開；附件以合成來源與環境字型輸出。驗證為Linux自我驗證，Windows、真實AI、硬體、原稿字型身份、完整TTC／不同版本同家族、替代審核／嵌入授權及深度模型仍待。EXE／實體印刷延後，UI-048最後功能，PR未合併main。
 
 完整受控替代工作包：逐欄真實寬高與風險、HIGH人工詳審後勾選、背景重新核驗及GUI原子新版本草稿、內容＋单調edit clock CAS、全批晚期event失敗回滾、持久Undo／Redo及重開歷史。受控套用保留原模板、非選中欄位／Logo／字級／幾何。字型款式保存與實際渲染一致，修正Qt styleName選錯Regular及combo別名丟pin；23項新驗收與故障前後日志保留。仅临時文字hash及缺字數落DB，真實原文字及字元集合不持久保存。本包是新草稿審核，非正式輸出授權或完整UI-033來源畫布定位，父題保留PARTIAL。
+
+CORE-035／036：精確歷史來源／原模板／替代草稿完整矩形、可逆crop／pixel映射、三視圖唯讀同步zoom/pan与stable ID物件定位。來源或背景／目標異動、oldclock阻擋；人工提示後亦背景核驗。8組新驗收含實際Qt worker與像素／Italic字面；三視圖／同步定位／原與後PNG及映射報告永久附件。75父題狀態不變，新增2／刪除0／既有驗收scope改動0。
