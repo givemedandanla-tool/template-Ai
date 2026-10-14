@@ -1,33 +1,33 @@
 # Human／GPT 開發交接
 
-依序讀 AGENTS.md、STATE.json、REQUIREMENTS.json／FEATURES.md、PROGRESS.md／CURRENT_PROGRESS.json、WORK_LOG最新紀錄／checkpoint收據、DEVELOPMENT_PROTOCOL.md。每輪先保存新要求基準、結束保存差異與同數字回報。
+先讀 AGENTS.md → STATE.json → REQUIREMENTS.json／FEATURES.md → PROGRESS.md／CURRENT_PROGRESS.json → WORK_LOG最新紀錄／checkpoint收據 → DEVELOPMENT_PROTOCOL.md。每輪保存基準、要求差異、完成與未完成數量；零例行問答、checkpoint優先，不重試EXE打包。
 
-## 最新已驗證版本
+## 最新版本與完整里程碑
 
-v0.1.7，確切來源 `f347495579a8d43e191ce8e8471e0b90aaaaf3f5`；RUN-FONT-CENTER-002：122 PASS／0 SKIP、22件實際匿名附件與紀錄，含字型中心／診斷。初版RUN-FONT-CENTER-001未完成，不當PASS；before-fix／after-fix具名故障紀錄保留CORE-030。
+v0.1.8；來源 `17ce93d86c68df281c1d4868e6a65ba389215704`，正式 RUN-FONT-CANDIDATES-001：145 PASS／0 SKIP、26件實際匿名附件。23項候選focused驗收，含真實Qt worker、背景失敗重試、輸入過期、字面／檔案異動、有效比較寬度與有界PNG。4個CORE-031 acceptance逐項PASS；另36個已有CORE／GOV要求以同一精確來源重新驗證。自我驗證Linux／環境字型，不是獨立審查、Windows或真實AI全驗收。
 
-111列＝75父題＋30 CORE＋6 GOV。原始父題完整0／部分42／未實作28／受阻2／延後3，75仍有未完成條件；功能子項27→30（新增CORE-028／029／030），治理6不變。新增3、刪除0、既有驗收範圍修訂0；拆分增加不當原題完成率。對帳見PROGRESS-20261014-FONT-CENTER-BEGIN／END.json。
+本輪使用者 /goal 的「候選篩選、排名、唯讀預覽」契約已實作並通過測試；宣告最終完成前需將26件附件完整checkpoint逐檔讀回。最終保存狀態以STATE.goal_milestone、last_confirmed_checkpoint及REMOTE_VERIFIED收據為準，不以本段測試PASS代替遠端保存。
 
-## 本輪成果及注意
+112列＝75原父题＋31 CORE＋6 GOV。功能子項30→31（新增CORE-031完成1），治理6不變。父題完整0／部分42／未實作28／受阻2／延後3，75仍有未完成條件。新增1／刪除0／既有驗收範圍修訂0；部分題與子項不混算產品完成率。基準／結束見PROGRESS-20261014-FONT-CANDIDATES-BEGIN／END.json。
 
-CORE-028共用字型中心：GUI取得SQLite／Qt候選快照，背景只讀hash與可解析家族款式，列核准複本／主機Qt候選／模板待處理引用、健康／身份／影響，搜尋篩選與既有合法匯入／同內容修復。Qt來源未核實不冒稱Windows已安裝或原稿字型。
+## CORE-031實作及限制
 
-CORE-029：實際cmap不同codepoints覆蓋率，無fallback shaping及glyph-run字面主要tables核對，固定1000px em按pt轉mm及水平比例；缺字／字面不符／低比例／非法單行／空文本／背景期間改輸入等如實阻擋。不暗改字級、截字或改模板；診斷不等於完整模板／原稿身份／嵌入授權。TTC只有可解析字面，其他字面未知。
+FontCenterDialog所有模式共用中心提供入口，候選對話框沿用文字、固定pt、框寬、最低水平比例。比較中心所選字面需明確勾選，預設不勾、不選候選。字形／健康／檔案身份／no-fallback shaping及水平適配硬篩；不通過項目列原因。來源核實級別、已知比較字寬相對差、壓縮程度、穩定id／style依序排序；未知原稿與外觀一致不造分數。參考寬度measurement_verified只有hash與字面核對後成立；框寬不足可以顯示有效自然字寬，內容異動／缺字則未知。
 
-CORE-030：實際背景測試揭露Job完成但GUI訊號遺失。MainWindow持有_background_jobs及Signals parent、明確QueuedConnection，success／worker error／callback error均在GUI恢復busy並釋放，真實字型worker及後續重試通過。不能以mock或pool已空當GUI完成。不是完整公平佇列／取消／斷電候選恢复。
+每輪最多64字面、64 MiB資產大小、10展示候選，超額及來源快照部分明示PARTIAL；觀看預覽後仍保留未量測／未展示數量。單輪相同identity／style去重及量測快取，不跨輪沿用。此預算是檔案大小，不是全部hash I/O、牆鐘或完整記憶體硬上限；Qt資料庫來源無法核實者標未知。
 
-故障CP在before-fix日志仍寫入時prepare，讀回擋下不一致；以原ZIP冻结字節（當時日志空）完成不可變FAILURE snapshot，再在ASYNC-FIXED保存完整before／after。不得改歷史記錄或稱錯誤來源已驗證。
+明確選取後重新核對字型／输入／width／face fingerprint；glyph-run一致才生成PNG，Qt物件留worker、只回bytes/dict；GUI stale結果不發布，失敗恢復控制可重試。圖片最大1724×424px，整框觀看倍率不改物理pt、文字或水平比例。不改模板、發布font pin、原稿、字型登錄或系統安裝，沒有套用／正式輸出動作。預覽僅單行排字寬度，非完整ink bounds／模板品質／原稿視覺一致或嵌入授權。
 
-最終snapshot `73e67f1aff392973af9cbcddc170508876816c7f` 已逐檔讀回347檔；本輪新增6個已確認checkpoint，總計27個。收據與STATE另提交保存避免SHA自參照，實際before／after日志與22件新版附件已包含。
+正式附件包含候選排名／預覽真實GUI截圖、font-candidate-line.png及可讀font-candidates-report.json；原字型bytes／私有來源／本機DB不進GitHub。數學、InDesign、Fontconfig歷史原碼FcSortCompare／FcSortWalk与Qt參考見FONT_CANDIDATES_DESIGN.md。沒複製第三方代碼或新增依賴。
 
-## 下一工作包
+## 下一個工作包
 
-UI-032 少量替代候選只讀預覽子包，先讀原決策474行、UI-033、FONT_CENTER_DESIGN.md、font_catalog.py。可按所需字形全部覆蓋、固定點數shaping與框位可行比例做硬篩，再以可核實來源／字寬保持度排序；無可信原稿／原字型幾何就標未知，不能給外觀等同、找回原稿字型或原版審美的分數。限制候選数量與worker負載，以set-membership和已驗證字面量測快取避免重复解析；先拆CORE-031、基準／BEGIN／具名驗收。
+先讀UI-033原決策、候選契約、既有模板版次／Undo與發布保護；拆明確下一CORE驗收，保存新基準與BEGIN。建議先完成單欄影響／差異與人工審核，再設計受控草稿套用、CAS、防過期及可驗證Undo，不直接全庫批次替換。候選預覽完成不授權自動套用、Windows安裝、原稿修改、學習全域映射或改Logo。
 
-預覽不替換發布模板、不自動核准全域字型映射、不取消同名字型不同檔防混用 Gate。真正套用、範圍／差異／高風險逐筆審核依UI-033另包；完整不同版本同家族／TTC／字重需精確字面身份與渲染可重現驗收，不能只去掉現有拒絕判斷。Windows安裝單獨產品操作同意；原稿／字型權利未知仍須明示，不用本輪環境操作授權替代字型散布／使用授權。
-
-UI-049多根／掃描進度續跑／完整外部依賴與客戶映射、獨立品質、真實AI視覺與硬體仍待。印刷／EXE延後，UI-048最後功能／真實個資使用前完成。下一輪從功能清單按核准範圍推進。
+完整UI-032的Windows來源、TTC多字面、不同文件同名字型版本共存、字重、嵌入權利仍待；不能只刪現有same-family拒絕判斷。UI-049多根／完整外部依賴，真實AI／指定硬體／獨立覆核仍未全做。印刷与EXE延後，UI-048維持最後功能、真實個資使用前須完成。
 
 ## 恢復與GitHub
 
-每包與10分鐘保存；pending_remote先補確認，不累積未保存碼。程式／驗收改動使舊當前證據失效，歷史保留。完整附件checkpoint讀回後才當永久完成，收據／STATE再提交避免SHA循環。本輪PR metadata兩次歷史呼叫被中止，改以已可用tree／commit／ref API保存必要程式與文件；可複用審查說明見PR_REVIEW.md，不反覆卡住同一操作，不宣稱PR頁面標題已改。工作分支仍dev/v0.1-first-version／PR #2未合併main。
+工作分支dev/v0.1-first-version／PR #2，main未合併。本輪BEGIN 8ce4461d、WIP a60a6c89、IMPLEMENTED 17ce93d8均已REMOTE_VERIFIED；最終完整證據收據見STATE指向。每包／10分鐘保存，pending_remote先補確認，不累積未保存碼；程式或驗收更改使當前證據失效，歷史保留。最終收據与STATE再小提交以免SHA自參照。
+
+先前PR metadata工具多次長時間未返回並被中止；本輪不重試，同步說明在PR_REVIEW.md，PR頁面標題仍待同步，不宣稱已更新。資料持久化用已可用git tree／commit／ref lease API；GitHub讀回逐檔match後才確認，不能拿本機ZIP或hash冒充遠端成功。前版本完整工作紀錄、CORE-030真實背景交接故障及歷史checkpoint超時窗口繼續保留，不宣稱斷電零損失。
