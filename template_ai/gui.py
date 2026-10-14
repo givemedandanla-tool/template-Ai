@@ -1309,7 +1309,11 @@ class MainWindow(QMainWindow):
     def generate(self):
         try:
             people, companies, logos = self.input_data()
-            self.candidates = match(self.library.templates(True), self.out_w.value(), self.out_h.value(), people, companies, logos, self.generation)
+            eligible=[];excluded=[]
+            for template in self.library.templates(True):
+                try:self.library._template_provenance(template);eligible.append(template)
+                except ValueError as error:excluded.append(template.name+'：'+str(error))
+            self.candidates = match(eligible, self.out_w.value(), self.out_h.value(), people, companies, logos, self.generation)
             self.candidate_list.clear()
             for c in self.candidates:
                 self.candidate_list.addItem(f"{'可正式數位輸出' if c.valid else '阻擋／診斷候選'}\n{c.template.name} · v{c.template.version}")
@@ -1321,6 +1325,7 @@ class MainWindow(QMainWindow):
             else:
                 self.candidate_list.setCurrentRow(0)
                 self.statusBar().showMessage(f"已實際檢查 {len(self.candidates)} 個同尺寸同容量模板；排名為規則適配，不宣稱審美最優")
+            if excluded:self.issues.setText(self.issues.text()+'\n訓練來源失效／不可用：\n'+'\n'.join(excluded[:20]))
         except Exception as e:
             self.error(str(e))
 
@@ -1347,11 +1352,14 @@ class MainWindow(QMainWindow):
         if not 0 <= row < len(self.candidates):
             return
         c = self.candidates[row]
+        try:self.library._template_provenance(c.template)
+        except ValueError as error:self.error(str(error));self.export_button.setEnabled(False);return
         name = f"{c.template.width_mm:g}x{c.template.height_mm:g}_{'PREVIEW' if preview else 'FINAL'}.png"
         path, _ = QFileDialog.getSaveFileName(self, "保存數位檔案（預設不覆寫）", name, "PNG (*.png);;PDF (*.pdf);;JPG (*.jpg)")
         if not path:
             return
         try:
+            self.library._template_provenance(c.template)
             export(c, path, self.dpi.value(), preview, self.generation)
             self.statusBar().showMessage("檔案已實際寫入：" + path)
         except Exception as e:

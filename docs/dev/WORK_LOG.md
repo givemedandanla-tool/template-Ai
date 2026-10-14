@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 8 可恢復實作
+
+包8immutable Dataset manifest、Source整檔group跨集／全歷史角色鎖、exact label dedup不合併alias/customer identity／近似UNKNOWN、TRAIN-only明確幾何DRAFT與精確USE ledger、source/work/facts/rule/cache/rights freshness、source-linked trained模板發布/使用失效Gate、同交易late rollback與真Qt預覽／角色／取消／學習／過期／失败恢復已實作；target8PASS。source proof偽造抗性重算真hash／固定尺寸與font Gate保持；GIT新媒體全略過。
+
+
 ## 十包 7/10 正式驗收
 
 RUN-TEN-TRUSTED-SAMPLES-001／source 9ee4bf5d3ddd547fea52c0977eabf8dd537409af：290PASS／0SKIP，68本機附件、source unchanged。CORE-058,CORE-059及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。

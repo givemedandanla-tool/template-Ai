@@ -14,6 +14,7 @@ from .noise_review import RuleReviewMixin
 from .noise_hits import NoiseHitMixin
 from .noise_recovery import NoiseRecoveryMixin
 from .trusted_samples import TrustedSampleMixin
+from .datasets import DatasetMixin
 
 
 def digest(value):
@@ -32,7 +33,7 @@ def identity(value):
     return value
 
 
-class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMixin, TrustedSampleMixin):
+class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMixin, TrustedSampleMixin, DatasetMixin):
     def __init__(self, library):
         self.library = library; self.db = library.db
         self.db.create_function('training_casefold', 1, lambda value: str(value).casefold(), deterministic=True)
@@ -42,6 +43,11 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
         CREATE TABLE IF NOT EXISTS training_meta(id INTEGER PRIMARY KEY CHECK(id=1),epoch INTEGER NOT NULL);
         INSERT OR IGNORE INTO training_meta VALUES(1,0);
         '''); self.db.commit()
+
+    @classmethod
+    def bind(cls, library):
+        # Read/commit helpers inside an existing transaction must not execute schema DDL or commit.
+        obj=object.__new__(cls);obj.library=library;obj.db=library.db;return obj
 
     @property
     def epoch(self):
@@ -161,6 +167,7 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
         text(actor, '確認者', 120)
         with self.transaction():
             record = self.facts(work_id); self.checked(work_id, proof)
+            self.checked(work_id, self.source_proof(work_id))
             if self.pins(work_id) != expected_pins or record['pins'] != expected_pins: raise ValueError('來源或作品範圍已變更')
             ids = sorted(observation_ids)
             if not ids or len(ids) != len(set(ids)) or not set(ids) <= {o['id'] for o in record['observations']}: raise ValueError('明列有效且不重複的觀察範圍')

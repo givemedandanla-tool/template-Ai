@@ -329,6 +329,10 @@ class Library:
         t.state = "published"
 
     def _template_provenance(self, t: Template) -> None:
+        if t.training_reference is not None:
+            from .training_store import TrainingStore
+            try: TrainingStore.bind(self).validate_training_reference(t)
+            except (sqlite3.Error, KeyError, TypeError) as error: raise ValueError('訓練資料來源／准入無法核對，不能使用此模板') from error
         if not t.source_work_id:
             if t.source_work_revision != 0:
                 raise ValueError("模板缺少來源作品識別，不能只填版次")

@@ -92,6 +92,18 @@ def capture_ten_packages(root):
         assert not samples.running and samples.store.count('SAMPLE')==1;sample=samples.rows[0];samples.table.selectRow(0);QApplication.processEvents();assert samples.store.sample_state(sample['id'])=='APPROVED';assert not sample['used_for_training'] and window.library.templates()==[]
         if not dialog.grab().save(str(root/'ten-trusted-sample.png')):raise ValueError('可信樣本GUI未保存')
         audit['trusted_sample']={'actual_qt':True,'sample':sample,'positive_negative_separated':True,'not_trained':True,'state':'APPROVED','source_and_slots_unchanged':window.library.artwork(future_work['id'])==future_work}
+        datasets=dialog.dataset_panel;dialog.tabs.setCurrentWidget(datasets);datasets.reload();datasets.actor.setText('Synthetic Reviewer');datasets.name.setText('Synthetic TRAIN geometry dataset');idx=next(i for i,r in enumerate(datasets.rows) if r['id']==sample['id']);datasets.table.item(idx,0).setCheckState(Qt.Checked);datasets.table.cellWidget(idx,1).setCurrentText('TRAIN')
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(datasets.create_button,Qt.LeftButton)
+        ds=facts.store.get('DATASET',datasets.dataset_combo.currentData());assert ds['entries'][0]['role']=='TRAIN';datasets.template_name.setText('Synthetic Geometry Draft')
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
+            QTest.mouseClick(datasets.learn_button,Qt.LeftButton)
+            for _ in range(300):
+                QApplication.processEvents()
+                if not datasets.running:break
+                QTest.qWait(10)
+        assert not datasets.running and len(window.library.templates())==1;draft=window.library.templates()[0];assert draft.state=='draft' and draft.training_reference['sample_id']==sample['id'];assert window.library.artwork(future_work['id'])==future_work;datasets.load_dataset();QApplication.processEvents()
+        if not dialog.grab().save(str(root/'ten-dataset-learned-draft.png')):raise ValueError('幾何學習GUI未保存')
+        audit['dataset_geometry']={'actual_qt':True,'dataset':ds,'draft':draft.to_dict(),'use':facts.store.records('USE'),'not_published':True,'source_and_slots_unchanged':True,'neural_training_claim':False}
         (root / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
     finally:
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()

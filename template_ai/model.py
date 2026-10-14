@@ -67,6 +67,7 @@ class Template:
     background: dict | None = None
     source_work_id: str = ""
     source_work_revision: int = 0
+    training_reference: dict | None = None
 
     def to_dict(self) -> dict:
         return asdict(self)

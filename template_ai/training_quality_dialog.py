@@ -33,9 +33,11 @@ class TrainingQualityDialog(QDialog):
         self.hits_panel = NoiseHitsPanel(window, self); self.tabs.addTab(self.hits_panel, '雜訊命中追溯')
         from .trusted_samples_panel import TrustedSamplesPanel
         self.samples_panel=TrustedSamplesPanel(window,self);self.tabs.addTab(self.samples_panel,'可信樣本准入')
+        from .dataset_panel import DatasetPanel
+        self.dataset_panel=DatasetPanel(window,self);self.tabs.addTab(self.dataset_panel,'資料集／幾何學習')
         self.setWindowTitle('標記品質／來源事實與可信訓練')
     def reject(self):
-        if self.facts_panel.running or self.samples_panel.running: self.status.setText('背景來源核對尚未結束'); return
+        if self.facts_panel.running or self.samples_panel.running or self.dataset_panel.running: self.status.setText('背景來源核對尚未結束'); return
         super().reject()
     def selected_row(self):
         rows = self.table.selectionModel().selectedRows()

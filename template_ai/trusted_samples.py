@@ -78,7 +78,7 @@ class TrustedSampleMixin:
         datasets=[r[0] for r in self.db.execute("SELECT DISTINCT d.id FROM training_records d,json_each(d.payload,'$.entries') e WHERE d.kind='DATASET' AND json_extract(e.value,'$.sample_id')=? ORDER BY d.id LIMIT 201",(sample_id,))]
         uses=[self.get('USE',r[0]) for r in self.db.execute("SELECT id FROM training_records WHERE kind='USE' AND json_extract(payload,'$.sample_id')=? ORDER BY id LIMIT 201",(sample_id,))]
         jobs=[r[0] for r in self.db.execute("SELECT DISTINCT j.id FROM training_records j,json_each(j.payload,'$.items') i WHERE j.kind='JOB' AND json_extract(i.value,'$.sample_id')=? ORDER BY j.id LIMIT 201",(sample_id,))]
-        return {'dataset_ids':datasets[:200],'template_ids':sorted({u['template_id'] for u in uses[:200]}),'job_ids':jobs[:200],'complete':len(datasets)<=200 and len(uses)<=200 and len(jobs)<=200,'models_decontaminated':False,'originals_and_published_templates_unchanged':True}
+        return {'dataset_ids':datasets[:200],'template_ids':sorted({u['template_id'] for u in uses[:200]}),'job_ids':jobs[:200],'current_geometry_training_use':bool(uses),'scope':'sample.used_for_training is historical AT_ADMISSION; current use is this exact USE ledger','complete':len(datasets)<=200 and len(uses)<=200 and len(jobs)<=200,'models_decontaminated':False,'originals_and_published_templates_unchanged':True}
 
     def sample_transition_plan(self,sample_id,action):
         from .training_store import digest
