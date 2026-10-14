@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：整包實作與正式前194PASS
+
+- 新17具名測試＋原177，全回歸194PASS／0SKIP；來源／模板兩模式真QTest、drag候選取消、dirty mixed只改選中、post-prompt保留主手工內容、DB／font／pub lockGate、持久history與CAS。
+- 6件實際GUI多選／mixed／差異／history／lock／training及machineaudit可產生並目視核對，正式run將全部保存44附件。
+- Registry三CORE具體tests已登錄、狀態IMPLEMENTED_PENDING；父題不得先當完整。下一步固定source metadata、正式RUN-OBJECT-TOOLS-001、證據與計數／交接／讀回。
+
 ## 2026-10-14：editor安全修正與追加核驗
 
 - 舊MainWindow保存與Undo／Redo加入loaded db revision/hash，Library保存BEGIN IMMEDIATE CAS；保存／切換拒絕stale時保留人工內容。真實ABA故障test修正後PASS。

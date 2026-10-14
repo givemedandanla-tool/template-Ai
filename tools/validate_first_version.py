@@ -8,6 +8,7 @@ import subprocess
 import sys
 import argparse
 import shutil
+import copy
 from dataclasses import asdict
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -227,6 +228,35 @@ def main():
         review.history.selectRow(0);review.history_action('REDO');wait_review();assert review.records[0]['phase']=='APPLIED'
     (artifacts/'font-review-audit.json').write_text(json.dumps(review.records[0],ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     review.close()
+    from template_ai.object_dialog import ObjectToolsDialog
+    window.template=None;window.refresh_templates(created);window.tabs.setCurrentIndex(1)
+    objects=ObjectToolsDialog(window,'TEMPLATE',created);objects.show();app.processEvents();objects.canvas.fit()
+    object_ids=[s.id for s in window.template.slots[:2]];objects.select_ids(object_ids)
+    if not objects.grab().save(str(artifacts/'object-tools-multiselect.png')):raise ValueError('多選GUI證據失敗')
+    objects.editors['color'].setText('#224466');objects.preview_patch()
+    if not objects.grab().save(str(artifacts/'object-tools-mixed-patch.png')):raise ValueError('dirty patch證據失敗')
+    objects.invalidate();objects.reference.setCurrentIndex(objects.reference.findData(object_ids[0]));objects.direction.setCurrentIndex(1);objects.preview_geometry()
+    # Different-width fixture is not needed for a real MOVE; all geometry fields stay fixed.
+    objects.preview_request({'operation':'MOVE','ids':object_ids,'dx':1,'dy':1})
+    assert objects.plan,objects.status.text();scope_report=copy.deepcopy(objects.plan)
+    if not objects.grab().save(str(artifacts/'object-tools-difference.png')):raise ValueError('幾何候選證據失敗')
+    with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
+        objects.apply();assert objects.records,objects.status.text();objects.history.selectRow(0)
+        if not objects.grab().save(str(artifacts/'object-tools-history.png')):raise ValueError('歷史GUI證據失敗')
+        objects.history_action('UNDO');assert objects.records[0]['phase']=='UNDONE'
+        objects.history.selectRow(0);objects.history_action('REDO');assert objects.records[0]['phase']=='APPLIED'
+        objects.select_ids(object_ids);objects.preview_lock(True);objects.apply()
+        assert all(s['locked'] for s in objects.snapshot['payload']['slots'] if s['id'] in object_ids)
+        objects.select_ids(object_ids)
+        if not objects.grab().save(str(artifacts/'object-tools-locked.png')):raise ValueError('鎖定GUI證據失敗')
+    audit={'geometry_plan':scope_report,'history':objects.records,'template_before':font_template.to_dict(),'scope':'匿名／程序化明確核准，非真人獨立覆核；原字体／真實資料未上傳'}
+    (artifacts/'object-tools-audit.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n',encoding='utf-8');objects.close()
+    source_objects=ObjectToolsDialog(window,'ARTWORK',first['id']);source_objects.show();app.processEvents();source_objects.canvas.fit()
+    source_ids=[s['id'] for s in source_objects.snapshot['payload']['slots'][:2]];source_objects.select_ids(source_ids)
+    source_objects.preview_request({'operation':'MOVE','ids':source_ids,'dx':1,'dy':1})
+    assert source_objects.plan,source_objects.status.text()
+    if not source_objects.grab().save(str(artifacts/'object-tools-training.png')):raise ValueError('來源模式證據失敗')
+    source_objects.invalidate();source_objects.close()
     window.close()
     reopened = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     assert reopened.work["id"] == second["id"]

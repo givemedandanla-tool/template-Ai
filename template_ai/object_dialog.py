@@ -163,7 +163,12 @@ class ObjectToolsDialog(QDialog):
                 elif isinstance(editor,QLineEdit):editor.setText(value or '')
                 else:editor.setTristate(value is None);editor.setCheckState(Qt.PartiallyChecked if value is None else Qt.Checked if value else Qt.Unchecked)
             self.font_choice.setCurrentIndex(0);self.font_choice.setEnabled(text_only and not self.canvas.readonly)
-            detail='\n'.join(f"{s['owner']}/{s['kind']}／{s['id']} · {'鎖定' if s.get('locked',False) else '未鎖定'} · {s['font']}/{s.get('font_style') or '原生款式未知'}" for s in rows)
+            payload=self.snapshot['payload'];links=payload.get('company_bindings',{})
+            def association(s):
+                return '公司關聯 '+str(links.get(s['owner'],'未確認')) if s['owner'].startswith('p') else '共享人物 '+(', '.join(p for p,c in links.items() if c==s['owner']) or '未確認')
+            detail='\n'.join(f"{s['owner']}/{s['kind']}／{s['id']} · {'鎖定' if s.get('locked',False) else '未鎖定'} · {s['font']}/{s.get('font_style') or '原生款式未知'} · {association(s)}" for s in rows)
+            size=(payload['width_mm'],payload['height_mm']) if self.kind=='TEMPLATE' else (payload['work_width'],payload['work_height'])
+            detail=f"矩形 {size[0]:g}×{size[1]:g} mm／{self.kind} {self.entity_id}／来源作品 {payload.get('source_work_id') or (self.entity_id if self.kind=='ARTWORK' else '未知')}\n"+detail
             mixed=', '.join(k for k,v in common.items() if v['mixed']);self.properties.setPlainText(f'選取{len(ids)}件。混合：{mixed or "無"}\n'+detail+'\n文字內容／原生字距未知。Logo不適用文字patch；跨owner需核對範圍。')
         else:
             for editor in self.editors.values():editor.setEnabled(False)

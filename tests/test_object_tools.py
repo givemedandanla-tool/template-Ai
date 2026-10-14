@@ -246,3 +246,14 @@ class ObjectToolsGuiTests(unittest.TestCase):
         current=Template.from_dict(result);current.capacity=2;current.slots[1].owner='p2';self.w.library.save_template(current);self.d.reload();self.d.select_ids(self.ids[:2])
         self.d.preview_request({'operation':'MOVE','ids':self.d.ids,'dx':1,'dy':0});self.assertIsNone(self.d.plan);self.assertIn('跨人物',self.d.status.text())
         self.d.cross.setChecked(True);self.d.preview_request({'operation':'MOVE','ids':self.d.ids,'dx':1,'dy':0});self.assertTrue(self.d.plan);self.assertEqual(self.d.plan['scope']['owners'],['p1','p2'])
+
+    def test_main_manual_mutation_during_confirmation_preserved_and_refresh_retry(self):
+        from PySide6.QtWidgets import QMessageBox
+        self.d.select_ids(self.ids[:2]);self.d.preview_request({'operation':'MOVE','ids':self.d.ids,'dx':1,'dy':1})
+        before=self.w.library.object_snapshot('TEMPLATE',self.t.id)
+        def mutate(*args,**kw):self.w.template.name='manual during prompt';return QMessageBox.Yes
+        with patch('template_ai.object_dialog.QMessageBox.question',side_effect=mutate):self.d.apply()
+        self.assertIn('手工',self.d.status.text());self.assertEqual(self.w.template.name,'manual during prompt');self.assertEqual(self.w.library.object_snapshot('TEMPLATE',self.t.id),before)
+        self.w.template=Template.from_dict(before['payload']);external=copy.deepcopy(self.w.template);external.name='external saved';self.w.library.save_template(external)
+        self.d.reload();self.d.select_ids(self.ids[:2]);self.d.preview_request({'operation':'MOVE','ids':self.d.ids,'dx':1,'dy':1});self.d.apply()
+        self.assertIn('原子保存',self.d.status.text());self.assertEqual(self.w.template.name,'external saved')
