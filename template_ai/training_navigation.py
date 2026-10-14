@@ -1,13 +1,11 @@
 """Cross-workflow navigation checks all unsaved facts, not only the selected property row."""
 from dataclasses import asdict
-from .batch_dialog import navigation_clean
 from .font_review import fingerprint
 from .model import Rect
 
 
 def require_clean_navigation(window):
     if window.busy: raise ValueError('背景工作尚未完成，不能切換目前作用範圍')
-    if not navigation_clean(window): raise ValueError('屬性有未套用內容，先處理後再定位')
     if window.current_slot:
         try:
             pending = window.make_slot(Rect(*(spin.value() for spin in window.coords)), preserve=True)

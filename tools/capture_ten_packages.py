@@ -24,6 +24,8 @@ def capture_ten_packages(root):
         dialog.locate(); QApplication.processEvents()
         assert window.work['id'] == work['id'] and window.current_slot.id == payload['slots'][0]['id']
         assert window.library.artwork(work['id']) == before
+        dialog.locate(); assert '已定位' in dialog.status.text()
+        assert window.library.artwork(work['id']) == before
         audit = {'package': 1, 'actual_qt': True, 'rows': dialog.rows, 'selected': dialog.selected_row(),
                  'located_work': window.work['id'], 'located_slot': window.current_slot.id,
                  'db_markings_unchanged': True, 'source_mapping': 'UNKNOWN', 'full_quality_pass': False,

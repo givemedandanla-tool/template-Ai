@@ -74,6 +74,8 @@ class TrainingQualityGuiTests(unittest.TestCase):
     def test_actual_readonly_search_filter_navigation_and_stale_recovery(self):
         before = self.window.library.artwork(self.work['id']); self.select(); QTest.mouseClick(self.d.locate_button, Qt.LeftButton); APP.processEvents()
         self.assertEqual(self.window.work['id'], self.work['id']); self.assertEqual(self.window.current_slot.id, self.work['payload']['slots'][0]['id'])
+        QTest.mouseClick(self.d.locate_button, Qt.LeftButton); APP.processEvents()
+        self.assertIn('已定位', self.d.status.text()); self.assertEqual(self.window.library.artwork(self.work['id']), before)
         self.d.search.setText('no-match'); self.assertEqual(self.d.table.rowCount(), 0); self.d.search.setText('bounds'); self.select()
         payload = copy.deepcopy(before['payload']); payload['visual_confirmed'] = True; self.window.library.save_artwork(before['id'], payload, before['revision'])
         QTest.mouseClick(self.d.locate_button, Qt.LeftButton); self.assertIn('已變更', self.d.status.text()); self.assertTrue(self.d.reload_button.isEnabled())

@@ -1,5 +1,12 @@
 # 開發工作紀錄
 
+## 2026-10-14：包1真正RED與誤記摘要修正
+
+- CP-TEN-QUALITY-SOURCE摘要錯寫10PASS；實際target1FAIL，完整RUN-TEN-QUALITY-001為243測試／242PASS／1FAIL，無capture，未標completed。原checkpoint摘要／run不覆寫，這段修正與真正RED保留；不能沿用它宣告包1完成。
+- 根因是舊navigation_clean用make_slot(preserve=True)比較卻未還原stable id，重建Slot隨機ID使已選框永遠被判未套用。新helper直接還原id並比較actualcoords與整份保存狀態，取消舊錯誤比較。額外確保clean選取可重複定位且DB不變；dirty model与未套用coords分別實際阻擋。測試teardown的stale-close原本會開warning造成等待，改為assert後明確丟棄測試fixture與有界45秒，不降低產品斷言。
+- 修正後重新target與唯一新的RUN-TEN-QUALITY-002，未通過前仍0／10，不降驗收／不刪FAIL。
+
+
 ## 2026-10-14：包1可恢復實作
 
 - 標記診斷schema／stable IDs／semantic mapping／bounds／包含／公司unknown／必要person name、400單work問題／2000頁問題顯式預算、逐作品分頁／exact定位／既有editor已實作。初GUI定位RED因pan模式不可選／主slot未保存不被舊selected-property guard核對；新training_navigation檢查整份主slot與revision／props並明確定位mode，FAIL日誌保留。
