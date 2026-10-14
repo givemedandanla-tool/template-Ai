@@ -6,8 +6,8 @@
   "product_version": "0.1.11",
   "framework_status": "READY",
   "active_task": "UI-035-SEMANTIC-SEARCH-VIEW",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-OBJECT-TOOLS-IMPLEMENTED.receipt.json",
-  "last_confirmed_commit": "2f2d32bf313616414b86bf866faef73dac884a3f",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-OBJECT-TOOLS-VERIFIED.receipt.json",
+  "last_confirmed_commit": "67ea91a0b5c8a49b918bdf00c248dff594a72326",
   "latest_evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -20,13 +20,14 @@
     "docs/dev/PROJECT_ROADMAP.md",
     "docs/dev/CANVAS_COMPARE_DESIGN.md",
     "docs/dev/OBJECT_TOOLS_NEXT_PLAN.md",
-    "docs/dev/OBJECT_TOOLS_DESIGN.md"
+    "docs/dev/OBJECT_TOOLS_DESIGN.md",
+    "docs/dev/SEMANTIC_INDEX_NEXT_PLAN.md"
   ],
   "next_tasks": [
     {
       "id": "CORE-037..039",
-      "status": "COMPLETED_SCOPED_PENDING_REMOTE",
-      "action": "194PASS／44附件，三向／lock／geometry／history整包待最後讀回"
+      "status": "COMPLETED_REMOTE_VERIFIED",
+      "action": "194PASS／44附件／48驗收全PASS；623檔完整snapshot讀回与require-evidence PASS"
     },
     {
       "id": "UI-035-SEMANTIC-SEARCH-VIEW",
@@ -122,23 +123,23 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [
-    "CP-20261014-OBJECT-TOOLS-VERIFIED"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-CANVAS-COMPARE-FINAL.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
     "id": "CORE-037..039",
-    "status": "PASS_PENDING_FINAL_REMOTE",
+    "status": "COMPLETED_REMOTE_VERIFIED",
     "contract": "docs/dev/OBJECT_TOOLS_DESIGN.md",
     "source_commit": "2f2d32bf313616414b86bf866faef73dac884a3f",
-    "evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json"
+    "evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json",
+    "final_snapshot_commit": "67ea91a0b5c8a49b918bdf00c248dff594a72326",
+    "checkpoint_receipt": "docs/checkpoints/CP-20261014-OBJECT-TOOLS-VERIFIED.receipt.json"
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/OBJECT_TOOLS_DESIGN.md",
-  "next_work_package": "docs/dev/OBJECT_TOOLS_NEXT_PLAN.md"
+  "next_work_package": "docs/dev/SEMANTIC_INDEX_NEXT_PLAN.md"
 }

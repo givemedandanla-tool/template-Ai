@@ -4,7 +4,7 @@
 
 先依AGENTS／STATE／要求／最新證據／PROGRESS／WORK_LOG／協議恢復，長期全清單目標仍存PROJECT_GOAL／ROADMAP；不重試EXE，不啟用agent，不要求例行重說繼續。
 
-source `2f2d32bf313616414b86bf866faef73dac884a3f`；RUN-OBJECT-TOOLS-001：194PASS／0SKIP、44附件、48acceptance全PASS，source前後不變。整個OBJECT_TOOLS_DESIGN具體契約已驗；最後snapshot／收據待GitHub讀回前不先宣稱REMOTE_VERIFIED。
+source `2f2d32bf313616414b86bf866faef73dac884a3f`；RUN-OBJECT-TOOLS-001：194PASS／0SKIP、44附件、48acceptance全PASS，source前後不變。整個OBJECT_TOOLS_DESIGN具體契約已驗；最後完整snapshot `67ea91a0b5c8a49b918bdf00c248dff594a72326`／tree`80c70aa4b5974fcb71153e650556201329be14b4`已逐檔核對623檔，包括44附件；require-evidence PASS。入口與收據另提交讀回，本整包已完成REMOTE_VERIFIED。
 
 完成功能鏈：來源／模板入口→same advanced editor→真click/Ctrl／RubberBand／list／properties stable-ID集合→mixed dirty patch／lock→明確reference六方向／兩軸gap／group mm delta或drag→old/new與green候選→cancel或明確scope確認→鎖內重算／原子保存→persistent history／重開UndoRedo。Property schema／lock root沿用Slot boolean defaultFalse兼容舊data；普通原編輯、save／source、publish及font新草稿亦守lock。原稿／发布不可覆寫，Logo不轉一般文字或不等比，geometry只改selected x/y，font／pt／未選不變。
 
@@ -16,7 +16,9 @@ Library.object_edits保留before/after、request／scope／warnings／clock及ph
 
 功能120列＝75父題＋39CORE＋6GOV；CORE36→39新增并完成3，父題0完整／44部分／26未實作／2受阻／3延後，75仍未完整完成；UI036僅从NOT_IMPLEMENTED→PARTIAL。不以已登记CORE39全verified當產品清單已完整拆分或產品100%。本輪BEGIN117列／END120列不可變差異，GOV6。
 
-下一大包UI035 semantic索引／共用實體搜尋／檢視隔離：先讀原條款與source可驗性，baseline／具體契約／BEGIN再code，native層未知不猜或用衍生SVG冒稱原生AI。共享公司和Logo以同一stable底層實體引用，hide不減少驗證；完整父題未滿前仍partial。UI048最後，print／EXE／future UI056D不提前；外部真實AI與可信參考、指定hardware、Windows、獨立品質及UI066兩未決項依原狀態，先做不依賴它的工作。
+本輪新增7個REMOTE_VERIFIED checkpoint，累計50。確認間隔584.472／659.846／970.509／1036.163／948.732／904.373秒，5段超10分鐘，最長17分16.163秒；編碼／補安全驗收及附件讀回階段沒全達節奏，已保存本機與远端快照，不宣稱零風險或嚴格達標。後續應在6～8分鐘先凍結可恢復WIP，為工具上傳留緩衝。
+
+下一大包具體PLANNED入口SEMANTIC_INDEX_NEXT_PLAN.md。UI035 semantic索引／共用實體搜尋／檢視隔離：先讀原條款與source可驗性，baseline／具體契約／BEGIN再code，native層未知不猜或用衍生SVG冒稱原生AI。共享公司和Logo以同一stable底層實體引用，hide不減少驗證；完整父題未滿前仍partial。UI048最後，print／EXE／future UI056D不提前；外部真實AI與可信參考、指定hardware、Windows、獨立品質及UI066兩未決項依原狀態，先做不依賴它的工作。
 
 
 先依AGENTS→STATE→本文件→PROJECT_GOAL／PROJECT_ROADMAP→REQUIREMENTS／FEATURES／PROGRESS→最新WORK_LOG／證據／收據→DEVELOPMENT_PROTOCOL恢復。全75父题長期目標持續，不要求重說繼續，不使用代理或重打EXE。

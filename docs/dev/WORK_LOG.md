@@ -2,7 +2,7 @@
 
 ## 2026-10-14：v0.1.11整包正式194PASS
 
-- 固定source 2f2d32bf313616414b86bf866faef73dac884a3f，RUN-OBJECT-TOOLS-001：194PASS／0SKIP、44附件、48验收PASS、source不变。全部具体子项已验，最後snapshot讀回後才REMOTE_VERIFIED。
+- 固定source 2f2d32bf313616414b86bf866faef73dac884a3f，RUN-OBJECT-TOOLS-001：194PASS／0SKIP、44附件、48验收PASS、source不变。全部具体子项已验，最後snapshot 67ea91a0／tree80c70aa4，623檔包括44附件逐檔讀回，require-evidence PASS；整包REMOTE_VERIFIED。新增7 checkpoint累計50，5個確認間隔超10分鐘，最大1036.163秒（17分16秒）；如實保存，未宣稱節奏嚴格達標。下一包計画持久化SEMANTIC_INDEX_NEXT_PLAN，不當已實作。
 - CORE36→39新增／完成3，父題UI036→PARTIAL後0完整／44部分／26未實作／2受阻／3延後，GOV6，120列；原父題未完整完成仍75。
 - before/after故障log／真6新GUI与JSON audit永久保存；接下來UI035原要求索引／検索／安全檢視，不猜原生AI层。
 
