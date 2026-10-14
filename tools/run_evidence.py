@@ -125,6 +125,7 @@ def main():
         if capture_code == 0:
             for name in ("output-workspace.png", "training-workspace.png", "template-workspace.png", "decorated-output-workspace.png", "multiple-artworks-workspace.png", "batch-source-preview.png", "font-center-workspace.png", "font-center-diagnostics.png",
                          "font-candidates-ranked.png", "font-candidates-preview.png", "font-candidate-line.png", "font-candidates-report.json",
+                         "font-review-differences.png", "font-review-approved.png", "font-review-draft-history.png", "font-review-undone.png", "font-review-audit.json",
                          "synthetic-FINAL.pdf", "synthetic-FINAL.png", "synthetic-FINAL.jpg", "decorated-FINAL.pdf", "decorated-FINAL.png", "decorated-FINAL.jpg"):
                 if not (generated / name).is_file():
                     capture_code = 1

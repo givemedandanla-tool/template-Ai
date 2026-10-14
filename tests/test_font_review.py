@@ -181,6 +181,55 @@ class FontReviewTests(unittest.TestCase):
         self.library=Library(self.root/'data');self.addCleanup(self.library.close)
         self.assertEqual(len(self.library.template_snapshots()),len(before))
 
+    def test_low_risk_identical_face_rebinding_does_not_require_high_review(self):
+        alternate=self.root/'same-font.ttf';alternate.write_bytes(MONO.read_bytes())
+        snapshots=self.library.template_snapshots()
+        for slot in snapshots[0]['template']['slots']:
+            slot.update(font=self.asset['families'][0],font_style=self.target['styles'][0],font_asset={**self.asset,'path':str(alternate)})
+        report=self.engine.analyze(snapshots,self.target,self.texts)
+        row=report['rows'][0];self.assertEqual(row['risk'],'LOW');self.assertTrue(row['eligible'])
+        ticket=self.engine.prepare_apply(report['review_id'],[{'key':row['key'],'reviewed':False}])
+        self.assertTrue(ticket)
+
+    def test_ticket_expiry_confirmation_and_single_use_do_not_create_extra_drafts(self):
+        report=self.report();ticket=self.engine.prepare_apply(report['review_id'],[{'key':k,'reviewed':True} for k in self.texts])
+        with self.assertRaisesRegex(ValueError,'確認'):self.engine.commit(self.library,ticket,confirmed=False)
+        self.engine.commit(self.library,ticket,confirmed=True)
+        with self.assertRaises(ValueError):self.engine.commit(self.library,ticket,confirmed=True)
+        ticket=self.engine.prepare_apply(report['review_id'],[{'key':k,'reviewed':True} for k in self.texts])
+        now=time.monotonic()
+        with patch('template_ai.font_review.time.monotonic',return_value=now+121):
+            with self.assertRaisesRegex(ValueError,'過期'):self.engine.commit(self.library,ticket,confirmed=True)
+        self.assertEqual(len(self.library.templates()),2)
+
+    def test_missing_character_details_not_persisted_in_audit(self):
+        actual=analyze_font
+        def missing_old(row,*args,**kwargs):
+            result=actual(row,*args,**kwargs)
+            if row.get('asset',{}).get('hash')==self.old['hash']:
+                result.update(missing=['U+1234 PRIVATE_CHARACTER_MARKER'],measurement_verified=False,coverage=.5,width_mm=None)
+            return result
+        with patch('template_ai.font_review.analyze_font',side_effect=missing_old):
+            record=self.apply()
+        serialized=json.dumps(record,ensure_ascii=False)
+        self.assertNotIn('PRIVATE_CHARACTER_MARKER',serialized)
+        self.assertEqual(record['drafts'][0]['fields'][0]['original']['missing_count'],1)
+
+    def test_multi_draft_undo_late_failure_rolls_back_scope_and_can_retry(self):
+        other=copy.deepcopy(self.template);other.id='undo-other';other.family_id='undo-other';other.state='draft';self.library.save_template(other)
+        self.texts[field_key(other.id,other.slots[0].id)]='Jordan'
+        record=self.apply();before=self.library.template_snapshots();original=self.library.event;count=0
+        def fail_second(entity,action):
+            nonlocal count
+            if action=='font_replacement_undo':
+                count+=1
+                if count==2:raise RuntimeError('second undo failed')
+            original(entity,action)
+        with patch.object(self.library,'event',side_effect=fail_second):
+            with self.assertRaises(RuntimeError):self.engine.commit(self.library,self.engine.prepare_history(record,'UNDO'),confirmed=True)
+        self.assertEqual(self.library.template_snapshots(),before);self.assertEqual(self.library.font_change_history()[0]['phase'],'APPLIED')
+        self.assertEqual(self.engine.commit(self.library,self.engine.prepare_history(record,'UNDO'),confirmed=True)['phase'],'UNDONE')
+
     def test_persistent_actual_style_matches_layout_and_real_export(self):
         if ITALIC is None:self.fail('缺少實際Italic字型，不得當款式已驗證')
         asset=self.manager.import_font(ITALIC,approved=True);target=build_inventory([asset],[],[])['rows'][0]
@@ -265,3 +314,17 @@ class FontReviewGuiTests(unittest.TestCase):
         with patch.object(FontReviewDialog,'exec',return_value=0) as execute:self.window.font_review_history();execute.assert_called_once()
         history=FontReviewDialog(self.window);self.addCleanup(history.close)
         self.assertFalse(history.check_button.isEnabled());self.assertFalse(history.undo_button.isEnabled())
+
+    def test_geometry_and_color_edit_preserve_pinned_italic_style(self):
+        if ITALIC is None:self.fail('款式GUI驗收缺少實際字型')
+        asset=self.window.font_manager.import_font(ITALIC,approved=True)
+        row=build_inventory([asset],[],[])['rows'][0]
+        t=demo_template()
+        for slot in t.slots:slot.font=asset['families'][0];slot.font_asset=copy.deepcopy(asset);slot.font_style=row['styles'][0]
+        self.window.library.save_template(t);self.window.template=None;self.window.refresh_templates(t.id);self.window.tabs.setCurrentIndex(1)
+        self.window.select_slot(self.window.template.slots[0]);self.window.text_color.setText('#336699');self.window.apply_properties()
+        slot=self.window.template.slots[0]
+        self.assertEqual(slot.font_style,row['styles'][0]);self.assertEqual(slot.font_asset,asset);self.assertEqual(slot.color,'#336699')
+        self.window.library.save_template(self.window.template)
+        reopened=next(t for t in self.window.library.templates() if t.id==self.window.template.id)
+        self.assertEqual(reopened.slots[0].font_style,row['styles'][0])

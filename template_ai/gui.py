@@ -735,10 +735,20 @@ class MainWindow(QMainWindow):
             self.refresh_editor()
 
     def make_slot(self, rect):
+        family=self.font.currentFont().family();asset=self.font_manager.asset_for_family(family)
+        style=""
+        displayed=getattr(self,'_selected_font_display',None)
+        if self.current_slot and displayed and displayed['slot_id']==self.current_slot.id and family==displayed['display']:
+            # Qt combo可能將bare family顯示成foundry別名；保留實際已核准pin，不以別名重建身份。
+            family=self.current_slot.font;asset=copy.deepcopy(self.current_slot.font_asset);style=self.current_slot.font_style
+        elif asset:
+            from .font_catalog import raw_asset
+            try:style=raw_asset(asset).styleName()
+            except ValueError:pass  # 保留pin與既有Gate，不能暗借系統字型。
         return Slot(self.kind.currentData(), self.owner.currentData(), rect, self.index.value()-1,
-                    self.font.currentFont().family(), self.pt.value(), self.scale.value()/100,
+                    family, self.pt.value(), self.scale.value()/100,
                     self.align.currentData(), self.required.isChecked(), color=self.text_color.text().strip(),
-                    font_asset=self.font_manager.asset_for_family(self.font.currentFont().family()))
+                    font_asset=asset,font_style=style)
 
     def current_slots(self):
         return self.slots if self.tabs.currentIndex() == 0 else self.template.slots if self.template else []
@@ -762,13 +772,15 @@ class MainWindow(QMainWindow):
         self.index.setValue(s.index+1)
         for spin, value in zip(self.coords, [s.rect.x, s.rect.y, s.rect.w, s.rect.h]):
             spin.setValue(value)
-        self.font.setCurrentFont(QFont(s.font))
+        selected_font=QFontDatabase.font(s.font,s.font_style,10) if s.font_style else QFont(s.font)
+        self.font.setCurrentFont(selected_font)
+        self._selected_font_display={'slot_id':s.id,'display':self.font.currentFont().family()}
         self.pt.setValue(s.size_pt)
         self.text_color.setText(s.color)
         self.scale.setValue(s.min_scale*100)
         self.align.setCurrentIndex(self.align.findData(s.align))
         self.required.setChecked(s.required)
-        self.selected_info.setText(f"{KINDS[s.kind]} · {s.owner}\n已選取框位以作品毫米表示。\n原始字型／可編輯性未知時，不將本模板設計值冒稱原稿屬性。")
+        self.selected_info.setText(f"{KINDS[s.kind]} · {s.owner}\n款式：{s.font_style or '預設／待核驗'}；改幾何／色彩不重設已選款式。\n已選取框位以作品毫米表示。\n原始字型／可編輯性未知時，不將本模板設計值冒稱原稿屬性。")
 
     def list_selection(self, row):
         if 0 <= row < len(self.slots):

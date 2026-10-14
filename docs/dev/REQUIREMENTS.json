@@ -3014,7 +3014,7 @@
       "parents": [
         "UI-033"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權",
@@ -3034,11 +3034,12 @@
             "test_font_review.FontReviewTests.test_unverified_qt_modified_target_and_logo_never_eligible",
             "test_font_review.FontReviewTests.test_limits_and_same_binding_low_noop_are_visible",
             "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
-            "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry"
+            "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry",
+            "test_font_review.FontReviewTests.test_low_risk_identical_face_rebinding_does_not_require_high_review"
           ]
         }
       ],
-      "next_step": "依完整工作包實作、驗收與GitHub读回"
+      "next_step": "23項focused PASS，待確切來源正式全套與完整31件證據附件GitHub讀回"
     },
     {
       "id": "CORE-033",
@@ -3047,7 +3048,7 @@
       "parents": [
         "UI-033"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權",
@@ -3071,11 +3072,14 @@
             "test_font_review.FontReviewTests.test_modified_target_blocks_prepare_and_redo_while_undo_keeps_draft_gate",
             "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
             "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
-            "test_font_review.FontReviewGuiTests.test_history_menu_reopens_without_a_candidate"
+            "test_font_review.FontReviewGuiTests.test_history_menu_reopens_without_a_candidate",
+            "test_font_review.FontReviewTests.test_ticket_expiry_confirmation_and_single_use_do_not_create_extra_drafts",
+            "test_font_review.FontReviewTests.test_missing_character_details_not_persisted_in_audit",
+            "test_font_review.FontReviewTests.test_multi_draft_undo_late_failure_rolls_back_scope_and_can_retry"
           ]
         }
       ],
-      "next_step": "依完整工作包實作、驗收與GitHub读回"
+      "next_step": "23項focused PASS，待確切來源正式全套與完整31件證據附件GitHub讀回"
     },
     {
       "id": "CORE-034",
@@ -3085,7 +3089,7 @@
         "UI-032",
         "UI-013"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權",
@@ -3101,11 +3105,12 @@
           "expected": "舊模板相容；實際款式pin，固定字級與原幾何語意不改，實際無fallback量測／渲染拒絕字面不符",
           "tests": [
             "test_font_review.FontReviewTests.test_legacy_schema_migration_clock_noop_and_binding_styles_compatible",
-            "test_font_review.FontReviewTests.test_persistent_actual_style_matches_layout_and_real_export"
+            "test_font_review.FontReviewTests.test_persistent_actual_style_matches_layout_and_real_export",
+            "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style"
           ]
         }
       ],
-      "next_step": "依完整工作包實作、驗收與GitHub读回"
+      "next_step": "23項focused PASS，待確切來源正式全套與完整31件證據附件GitHub讀回"
     }
   ]
 }

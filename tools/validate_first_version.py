@@ -179,11 +179,48 @@ def main():
     (artifacts / "font-candidates-report.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
     candidates.close()
     center.close()
+    # 受控替代流程實際GUI／真正worker；只用合成模板與環境字型。
+    from template_ai.font_review_dialog import FontReviewDialog
+    from template_ai.font_review import field_key
+    from PySide6.QtWidgets import QMessageBox
+    from unittest.mock import patch
+    mono_path=Path('/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf')
+    if not mono_path.is_file():raise ValueError('受控替代實際證據缺少另一環境字型')
+    mono=window.font_manager.import_font(mono_path,approved=True)
+    target=build_inventory([mono],[],[])['rows'][0]
+    review=FontReviewDialog(window,target,'Alex Example');review.resize(1500,1040);review.show()
+    def wait_review():
+        deadline=time.monotonic()+20
+        while (review.busy or window.busy) and time.monotonic()<deadline:
+            app.processEvents();time.sleep(.005)
+        if review.busy or window.busy:raise ValueError('受控替代背景工作未完成')
+    row_index=next(i for i,r in enumerate(review.rows) if r['template']['id']==font_template.id and r['slot']['kind']=='name')
+    review.table.selectRow(row_index);review.fill_selected();review.validate();wait_review()
+    assert review.report and review.report['rows'][row_index]['eligible'],review.status.text()
+    assert all(not review.table.cellWidget(i,0).isChecked() for i in range(review.table.rowCount()))
+    if not review.grab().save(str(artifacts/'font-review-differences.png')):raise ValueError('差異GUI截圖失敗')
+    with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
+        review.table.selectRow(row_index);review.review_selected();wait_review()
+        assert review.preview_data,review.status.text()
+        if not review.grab().save(str(artifacts/'font-review-approved.png')):raise ValueError('逐欄審核GUI截圖失敗')
+        review.table.cellWidget(row_index,0).setChecked(True);review.apply_selected();wait_review()
+        assert review.records and review.records[0]['phase']=='APPLIED',review.status.text()
+        record=review.records[0];created=record['drafts'][0]['template_id']
+        assert next(t for t in window.library.templates() if t.id==font_template.id).to_dict()==font_template.to_dict()
+        review.history.selectRow(0);app.processEvents()
+        if not review.grab().save(str(artifacts/'font-review-draft-history.png')):raise ValueError('草稿／歷史GUI截圖失敗')
+        review.history_action('UNDO');wait_review();assert review.records[0]['phase']=='UNDONE'
+        if not review.grab().save(str(artifacts/'font-review-undone.png')):raise ValueError('Undo GUI截圖失敗')
+        review.history.selectRow(0);review.history_action('REDO');wait_review();assert review.records[0]['phase']=='APPLIED'
+    (artifacts/'font-review-audit.json').write_text(json.dumps(review.records[0],ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    review.close()
     window.close()
     reopened = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     assert reopened.work["id"] == second["id"]
     reopened.work_combo.setCurrentIndex(reopened.work_combo.findData(first["id"]))
     assert len(reopened.slots) == 4
+    assert reopened.library.font_change_history()[0]['phase']=='APPLIED'
+    assert next(t for t in reopened.library.templates() if t.id==created).slots[0].font_asset['hash']==mono['hash']
     reopened.close()
     files = {p.name: {"bytes": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
              for p in artifacts.iterdir() if p.is_file() and p.name != "VALIDATION.json"}

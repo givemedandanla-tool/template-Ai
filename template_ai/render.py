@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 
 from PySide6.QtCore import QRectF, QSizeF, Qt
-from PySide6.QtGui import QColor, QFont, QFontMetricsF, QImage, QPageLayout, QPageSize, QPainter, QPdfWriter
+from PySide6.QtGui import QColor, QFont, QFontDatabase, QFontMetricsF, QImage, QPageLayout, QPageSize, QPainter, QPdfWriter
 from PySide6.QtSvg import QSvgRenderer
 
 from .layout import Candidate, MM_PER_POINT
@@ -16,15 +16,14 @@ from .model import Template
 
 
 def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scale: float, align: str, color: str = "#111827", style: str = "", asset: dict | None = None) -> None:
-    font = QFont(family)
-    if style: font.setStyleName(style)
+    font = QFontDatabase.font(family,style,1000) if style else QFont(family)
     font.setPixelSize(1000)
     if style or asset:
         from .font_catalog import analyze_font
         row={"kind":"ASSET","asset":asset} if asset else {"kind":"QT","families":[family],"styles":[style]}
         result=analyze_font(row,text,pt,2000,.05,style or None)
         if not result.get("measurement_verified") or result.get("family")!=family: raise ValueError("渲染字面未核驗："+"；".join(result["issues"] or ["指定家族與實際字面不符"]))
-        font.setStyleName(result["style"])
+        font=QFontDatabase.font(family,result["style"],1000);font.setPixelSize(1000)
         font.setStyleStrategy(QFont.NoFontMerging); font.setHintingPreference(QFont.PreferNoHinting)
     metrics = QFontMetricsF(font)
     factor = pt * MM_PER_POINT / 1000

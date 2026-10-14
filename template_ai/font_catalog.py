@@ -152,7 +152,7 @@ def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=N
         if family not in QFontDatabase.families():
             result["issues"]=["主機候選已不可用"]; return result
         actual_style = style or (row["styles"][0] if row["styles"] else "")
-        font = QFont(family); font.setStyleName(actual_style); font.setPixelSize(1000); font.setHintingPreference(QFont.PreferNoHinting)
+        font = QFontDatabase.font(family,actual_style,1000); font.setPixelSize(1000); font.setHintingPreference(QFont.PreferNoHinting)
         font.setStyleStrategy(QFont.NoFontMerging)
         raw = QRawFont.fromFont(font)
         if not raw.isValid(): result["issues"]=["主機字面無法解析"]; return result
@@ -169,7 +169,7 @@ def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=N
     result.update(missing=[f"U+{cp:04X} {chr(cp)}" for cp in missing], coverage=(len(required)-len(missing))/len(required))
     if missing:
         result["issues"]=["所選字面缺少必要字形，不計算替代字型宽度"]; return result
-    font = QFont(family); font.setStyleName(actual_style); font.setPixelSize(1000)
+    font = QFontDatabase.font(family,actual_style,1000); font.setPixelSize(1000)
     font.setHintingPreference(QFont.PreferNoHinting); font.setStyleStrategy(QFont.NoFontMerging)
     layout = QTextLayout(text,font)
     layout.beginLayout(); line = layout.createLine()

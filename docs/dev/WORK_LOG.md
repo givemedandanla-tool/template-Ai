@@ -2,6 +2,13 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-14：受控替代完整流程與款式故障修正完成待正式證據
+
+- GUI checkpoint 0237e3ef已讀回403檔。新增23項focused全部PASS，含多模板晚期回滾、失效票據、LOW同字面修復、私密缺字集合不落DB、真實GUI全流程及重開Undo／Redo。
+- NimbusSans-Italic實際樣本揭露Qt setStyleName仍取Regular；診斷列raw family/style與table差異確認，改QFontDatabase.font取得weight／italic等完整屬性，保留所有glyph-table身份Gate。after-style-resolution-fix.log 18PASS，不以換掉失敗樣本或放寬fingerprint避開。
+- 主編輯QFontComboBox顯示foundry別名可能丟pin／Italic；保存原slot與顯示選取關聯，幾何／色彩修改保留原family／style／asset；before-editor-pin-fix與after-editor-pin-fix（23PASS）完整日志保留。
+- 新增真正worker／GUI擷取審核差異、逐欄核准、草稿歷史、Undo與匿名audit，重開核對新草稿與Redone歷史。正式全套與永久保存仍待，不標完成。
+
 ## 2026-10-14：審核GUI／持久歷史整合與樣本故障紀錄
 
 - ENGINE 021968bd已讀回397檔；候選入口→逐欄文字→背景差異→詳審實際PNG→明確勾選→新版本草稿→歷史Undo／Redo流程已接上。

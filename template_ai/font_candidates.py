@@ -5,7 +5,7 @@ import math
 from pathlib import Path
 
 from PySide6.QtCore import QBuffer, QByteArray, QIODevice, QPointF, QRectF
-from PySide6.QtGui import QColor, QFont, QImage, QPainter, QTextLayout
+from PySide6.QtGui import QColor, QFont, QFontDatabase, QImage, QPainter, QTextLayout
 
 from .font_catalog import (MM_PER_POINT, STATUS_NAMES, analyze_font, asset_health,
                            face_fingerprint, validate_inputs)
@@ -119,7 +119,7 @@ def render_candidate(candidate, inputs):
         any(not math.isclose(actual[key], expected[key], rel_tol=1e-10, abs_tol=1e-10)
             for key in ("width_mm", "scale", "size_pt"))):
         raise ValueError("候選字型或量測已變更／不可用，請重新查詢候選")
-    font = QFont(actual["family"]); font.setStyleName(actual["style"]); font.setPixelSize(1000)
+    font = QFontDatabase.font(actual["family"],actual["style"],1000); font.setPixelSize(1000)
     font.setHintingPreference(QFont.PreferNoHinting); font.setStyleStrategy(QFont.NoFontMerging)
     layout = QTextLayout(inputs["text"], font)
     layout.beginLayout(); line = layout.createLine()
