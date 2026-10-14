@@ -29,14 +29,9 @@
   ],
   "next_tasks": [
     {
-      "id": "NOISE-AUTHORING",
-      "status": "IN_PROGRESS",
-      "action": "包3局部候選排除／撤銷與剔除並記住PENDING規則、完整literal／明確NFC／來源type與相對區域、人工正反例、protected欄位／Logo／未知、CAS／late rollback及actualQt已實作；target8PASS，沒有啟用通用規則。正式來源freeze後回歸。"
-    },
-    {
-      "id": "TEN-NEXT",
+      "id": "RULE-REVIEW",
       "status": "CONTINUE",
-      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
+      "action": "直接下一包；不等待HUMAN"
     }
   ],
   "blocked": [
@@ -166,7 +161,7 @@
   "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
-    "completed": 2,
+    "completed": 3,
     "baseline_core": 45,
     "added_core": 20,
     "contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
@@ -206,10 +201,12 @@
           "CORE-050",
           "CORE-051"
         ],
-        "status": "FORMAL_PASS_PENDING_REMOTE",
+        "status": "COMPLETED_SAVED_SCOPE",
         "source_commit": "56854cefa88695eaeed2e7924df3c2663ab91b7c",
         "evidence": "docs/evidence/runs/RUN-TEN-NOISE-AUTHOR-001/run.json",
-        "tests": 259
+        "tests": 259,
+        "snapshot_commit": "e97d8eff7e2e2f029807d5c4a7f2a0c4f639c0dc",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P03-VERIFIED.receipt.json"
       },
       {
         "sequence": 4,
