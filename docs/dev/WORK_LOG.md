@@ -12,7 +12,9 @@
 - WIP `7e2664adc461a254f34c1c09305775794352185f` 已讀回308檔；14初版具名驗收通過，再加入實際Qt背景執行緒測試與2件真實字型中心／診斷截圖，不只mock背景工作。
 - 初版程式 `2db34fad5943aec86821d39ad0d16a9497cedc63` 已讀回311檔；真實背景測試FAIL並在清理時busy未恢復觸發modal，主動中止focus／RUN-FONT-CENTER-001，該run未完成不能當PASS。
 - 實際debug activeThreadCount=0但dialog／window仍busy、inventory未收到；before-fix.log保存真實結果。新增CORE-030共用worker／Signals生命週期及GUI queued交接子項（UI-051／003），清單110→111，不把修正故障冒充完整佇列完成。
-- 下一步故障checkpoint後修復run_job，增加成功／錯誤／真實字型背景驗收，重新完整證據。
+- 故障snapshot在日志仍寫入時prepare，讀回擋下差異；以原ZIP的凍結字節（當時日志为空）完成不可變snapshot `4986603780e50c8616209bd765d434c9d0d64708` 317檔確認，再於修正checkpoint保存完整before／after日志，不覆寫歷史。
+- 修復run_job持有Job／Signals生命週期至GUI queued callback完成，成功／worker錯誤／GUI callback錯誤均恢復busy與釋放；真實字型背景與3種交接故障合計18項focused驗收通過。
+- 下一步修正版SOURCE checkpoint、RUN-FONT-CENTER-002 全套122項與22件預期附件；run001未完成及失敗原因保留。
 
 ## 2026-10-14：v0.1.6 批次來源恢復與進度回報完成
 

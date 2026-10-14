@@ -195,6 +195,7 @@ class MainWindow(QMainWindow):
         self.generation = 0
         self.undo_stack, self.redo_stack = [], []
         self.busy = False
+        self._background_jobs = {}
         self.loading_form = False
         self.setWindowTitle(f"Template AI {__version__} · 矩形排版研究版")
         self.resize(1340, 850)
@@ -491,6 +492,12 @@ class MainWindow(QMainWindow):
         self.import_button.setEnabled(False)
         self.statusBar().showMessage(message + " · 背景執行中，完成前不宣稱成功")
         job = Job(function)
+        token = new_id()
+        self._background_jobs[token] = job
+        job.signals.setParent(self)
+        def release():
+            self._background_jobs.pop(token, None)
+            job.signals.deleteLater()
         def finished(value):
             self.busy = False
             self.import_button.setEnabled(True)
@@ -498,12 +505,17 @@ class MainWindow(QMainWindow):
                 callback(value)
             except Exception as e:
                 self.error(str(e))
+            finally:
+                release()
         def failed(text):
             self.busy = False
             self.import_button.setEnabled(True)
-            self.error(text)
-        job.signals.done.connect(finished)
-        job.signals.error.connect(failed)
+            try:
+                self.error(text)
+            finally:
+                release()
+        job.signals.done.connect(finished, Qt.QueuedConnection)
+        job.signals.error.connect(failed, Qt.QueuedConnection)
         self.pool.start(job)
 
     def import_source(self):

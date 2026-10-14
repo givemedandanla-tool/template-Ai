@@ -2911,7 +2911,7 @@
         "UI-051",
         "UI-003"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "Linux Qt 真實worker訊號持有／GUI queued交接與busy恢復；非完整公平佇列／當次候選恢復或斷電续跑",
@@ -2925,10 +2925,14 @@
         {
           "id": "CORE-030-A1",
           "expected": "真實背景工作成功及錯誤回到GUI執行緒，worker完工後不遺失busy／完成通知，訊號和worker生命週期持有與清理",
-          "tests": []
+          "tests": [
+            "test_font_center.BackgroundJobTests.test_real_success_holds_job_until_gui_callback_then_releases",
+            "test_font_center.BackgroundJobTests.test_real_worker_failure_returns_to_gui_and_can_run_next_job",
+            "test_font_center.BackgroundJobTests.test_gui_callback_failure_still_releases_job_and_busy_state"
+          ]
         }
       ],
-      "next_step": "故障checkpoint後修復run_job與真實執行緒驗收"
+      "next_step": "實際worker成功／錯誤／callback fault重新全套來源證據，父UI-051／003仍部分"
     }
   ]
 }

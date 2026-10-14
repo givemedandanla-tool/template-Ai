@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import tempfile
 import time
+import threading
 import unittest
 from unittest.mock import patch
 
@@ -185,3 +186,42 @@ class FontCenterGuiTests(unittest.TestCase):
         self.dialog.analyze(); wait_for_work()
         self.assertIn('100.00%',self.dialog.result.text())
         self.assertIn('mm',self.dialog.result.text())
+
+
+class BackgroundJobTests(unittest.TestCase):
+    def setUp(self):
+        self.temp=tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
+        self.window=MainWindow(Path(self.temp.name)/'gui'); self.addCleanup(self.window.close)
+        self.errors=[]
+        self.window.error=lambda text:self.errors.append((text,threading.get_ident()))
+        self.owner=threading.get_ident()
+
+    def wait_for_work(self):
+        deadline=time.monotonic()+10
+        while self.window.busy and time.monotonic()<deadline:
+            APP.processEvents(); time.sleep(.005)
+        # 失敗亦避免測試清理走modal而隱藏真正assertion；故障狀態先明列。
+        busy=self.window.busy
+        if busy: self.window.busy=False
+        self.assertFalse(busy,'worker完成通知未回GUI')
+
+    def test_real_success_holds_job_until_gui_callback_then_releases(self):
+        received=[]
+        self.window.run_job('anonymous job',lambda:threading.get_ident(),lambda worker:received.append((worker,threading.get_ident())))
+        self.assertEqual(len(self.window._background_jobs),1)
+        self.wait_for_work()
+        self.assertEqual(len(received),1); self.assertNotEqual(received[0][0],self.owner); self.assertEqual(received[0][1],self.owner)
+        self.assertEqual(self.window._background_jobs,{}); self.assertTrue(self.window.import_button.isEnabled())
+
+    def test_real_worker_failure_returns_to_gui_and_can_run_next_job(self):
+        def failing(): raise ValueError('synthetic worker failed')
+        self.window.run_job('failed job',failing,lambda value:self.fail('失敗工作不得當成功'))
+        self.wait_for_work()
+        self.assertEqual(self.errors,[('synthetic worker failed',self.owner)]); self.assertEqual(self.window._background_jobs,{})
+        done=[]; self.window.run_job('retry',lambda:'ok',done.append); self.wait_for_work(); self.assertEqual(done,['ok'])
+
+    def test_gui_callback_failure_still_releases_job_and_busy_state(self):
+        def callback(value): raise ValueError('synthetic callback failed')
+        self.window.run_job('callback fault',lambda:'ok',callback); self.wait_for_work()
+        self.assertEqual(self.errors,[('synthetic callback failed',self.owner)])
+        self.assertEqual(self.window._background_jobs,{})
