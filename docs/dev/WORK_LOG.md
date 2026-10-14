@@ -4,7 +4,7 @@
 
 - RESIZE-RED的49項差異上傳完、binary blob SHA已核對，create_tree因工具catalog changed拒絕。沒有移動分枝；checkpoint維持pending，未宣稱REMOTE_VERIFIED。
 - 工具重新可用後一次重試，沿用已存binary SHA（tree接受且506檔逐一讀回）；adc28fd4成功。沒有再上傳受限字型／DB，不force更新。
-- IMPLEMENTED收據05:46到RED確認06:45之間遠超10分鐘目標；網路／工具延遲如實記錄，本機PREPARED與原碼遠端保留，不宣稱頻率達標。
+- IMPLEMENTED收據05:46:18到RED確認06:55:45之間（約69分27秒）遠超10分鐘目標；網路／工具延遲如實記錄，本機PREPARED與原碼遠端保留，不宣稱頻率達標。
 - 每次GitHub工具呼叫加入60秒有界等待，超時保留pending並先核對ref，避免同操作無限等候。下一步resize固定、具名回歸、新RUN002。
 
 ## 2026-10-14：CORE-036窗口resize故障與重驗

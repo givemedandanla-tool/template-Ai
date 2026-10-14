@@ -1,8 +1,19 @@
 # Human／GPT 開發交接
 
+## 當前：CORE-035／036修正版正式驗收前
+
+全清單長期目標見PROJECT_GOAL／PROJECT_ROADMAP；所有75父題保留，按STATE接續，不能只讀本文件的歷史v0.1.9。
+
+三視圖、精確歷史crop、共享唯讀zoom／pan／定位、逐欄核准／套用前再驗已實作。001正式176PASS／37附件保留，但後續resize實際中心漂移被發現，完成判定取消。來源與測試不刪，修正ResizeEvent重設共同center／倍率、9新組測試PASS，下一步用獨立固定source metadata正式RUN-CANVAS-COMPARE-002；預期177，不以預期當證據。
+
+RESIZE-RED checkpoint adc28fd4已讀回506檔；GitHub create_tree catalog變更一次拒絕後一次重試成功，未force ref。二進位先前SHA已驗，重試tree接受且逐檔讀回，不重上傳字型／DB。實作至RED遠端確認間隔約69分27秒，超10分鐘目標如實記錄；原碼原有遠端snapshot／PREPARED快照保留。新增每GitHub操作60秒上限，超時保存pending並核對ref才能恢復。
+
+當前CORE／GOV均待新版本重驗；不要依001或PROGRESS...END當刻快照宣告最終完成。最後統計另存FINAL，以BEGIN115列／CORE34為基準；本輪新增CORE035／036，原始scope不降低。下一大包：UI034／036三向多选与混合值保護、鎖定／同owner範圍、精確對齊分布，先读原UI_DECISIONS條款並寫契約／baseline／BEGIN。
+
+
 開始先讀AGENTS.md、STATE.json、REQUIREMENTS.json／FEATURES.md、PROGRESS.md／CURRENT_PROGRESS.json、WORK_LOG最新紀錄與checkpoint收據，再讀DEVELOPMENT_PROTOCOL.md。每輪基準／結束差異與完成／未完成數量必須持久化並回報；零例行問答，checkpoint後繼續工作，不重試EXE。
 
-## 最新完整工作包
+## 歷史v0.1.9完整工作包
 
 v0.1.9，精確來源`ecb863bf3ee62277318e31792517945ed6674ccd`；RUN-FONT-REVIEW-001：168 PASS／0 SKIP、31件匿名附件、43個acceptance全PASS。使用者要求接續下一步並實作一個大功能後才停止；本輪將CORE-032影響／逐欄審核、CORE-033新草稿交易與持久Undo／Redo、CORE-034款式渲染一致整合為完整端到端工作包，沒有重做已完成CORE-031或停在小列表。
 
