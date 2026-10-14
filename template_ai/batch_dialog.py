@@ -5,6 +5,8 @@ import threading
 from PySide6.QtCore import Qt,QTimer
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QPushButton,QLabel,QTableWidget,QTableWidgetItem,QComboBox,QSpinBox,QFileDialog,QMessageBox,QDialogButtonBox,QProgressBar)
 from .batch_import import preflight,convert_item
+from .font_review import fingerprint
+import copy
 
 
 class BatchImportDialog(QDialog):
@@ -23,7 +25,7 @@ class BatchImportDialog(QDialog):
         self.cancel_button=QPushButton('取消（目前項保存後停止）');self.cancel_button.clicked.connect(self.cancel);row.addWidget(self.cancel_button);layout.addLayout(row)
         row=QHBoxLayout();self.history=QComboBox();self.history.currentIndexChanged.connect(self.load_history);row.addWidget(self.history,1);self.resume_button=QPushButton('明確續跑尚未開始項');self.resume_button.clicked.connect(self.resume);row.addWidget(self.resume_button);layout.addLayout(row)
         self.locate_button=QPushButton('載入所選已保存來源');self.locate_button.clicked.connect(self.locate);layout.addWidget(self.locate_button)
-        close=QDialogButtonBox(QDialogButtonBox.Close);close.rejected.connect(self.reject);layout.addWidget(close);self.refresh_history();self.controls()
+        close=QDialogButtonBox(QDialogButtonBox.Close);close.rejected.connect(self.reject);layout.addWidget(close);self.page.valueChanged.connect(self.reset_input);self.refresh_history();self.controls()
     def controls(self):
         idle=not self.busy and not self.running and not self.window.busy
         for widget in (self.choose_files,self.choose_folder,self.page,self.scan_button,self.history):widget.setEnabled(idle)
@@ -35,7 +37,7 @@ class BatchImportDialog(QDialog):
     def select_folder(self):
         folder=QFileDialog.getExistingDirectory(self,'選取已授權單一本機資料夾')
         if folder:self.paths=[folder];self.reset_input()
-    def reset_input(self):
+    def reset_input(self,*_):
         self.report=None;self.batch=None;self.table.setRowCount(0);self.summary.setText('已選取 '+str(len(self.paths))+' 路徑，請預檢');self.controls()
     def run_background(self,message,function,callback):
         if self.busy or self.window.busy:return
@@ -54,7 +56,13 @@ class BatchImportDialog(QDialog):
                     except Exception as blocked:self.status.setText(self.status.text()+'／資料完整性仍阻擋：'+str(blocked))
             finally:self.controls()
         try:self.window.run_job(message,work,done)
-        except Exception as error:self.busy=False;self.running=False;self.status.setText(str(error));self.controls()
+        except Exception as error:
+            self.busy=False;self.running=False;self.status.setText(str(error))
+            if self.batch:
+                try:
+                    b=self.store.get(self.batch['id']);self.batch=self.store.interrupt_owned(b['id'],b['revision'],error)
+                except Exception as blocked:self.status.setText(str(error)+'／恢復仍阻擋：'+str(blocked))
+            self.controls()
     def scan(self):
         if self.running or self.window.busy:return
         self.report=None;self.batch=None;self.cancel_event.clear();paths=list(self.paths);sources=self.window.library.list_sources();page=self.page.value()
@@ -67,16 +75,17 @@ class BatchImportDialog(QDialog):
         self.table.setRowCount(len(items))
         for i,r in enumerate(items):
             for c,value in enumerate((r['path']+'／p'+str(r['page']),r.get('expected_hash') or 'UNKNOWN',r['status'],str(r['attempts']),r.get('source_id') or '未登錄',r['reason'])):
-                cell=QTableWidgetItem(value);cell.setData(Qt.UserRole,r['id']);cell.setToolTip(value);self.table.setItem(i,c,cell)
+                display=Path(r['path']).name+'／p'+str(r['page'])+' · '+r['path'] if c==0 else value
+                cell=QTableWidgetItem(display);cell.setData(Qt.UserRole,r['id']);cell.setToolTip(value);self.table.setItem(i,c,cell)
         self.table.setColumnWidth(0,240);self.table.setColumnWidth(1,130);self.table.setColumnWidth(2,115);self.table.setColumnWidth(4,140);self.table.setColumnWidth(5,360)
         counts=Counter(r['status'] for r in items);self.progress.setRange(0,len(items));self.progress.setValue(len(items)-counts['READY']-counts['RUNNING']);self.progress.setFormat(f"%v/%m 已有單件結果 · {dict(counts)}")
     def start_confirmed(self):
         if self.busy or self.running or not self.report or self.window.busy:return
-        report=self.report
-        message=self.summary.text()+'\n'+'\n'.join(Path(r['path']).name+' p'+str(r['page'])+' '+r['status']+' '+(r.get('expected_hash') or 'UNKNOWN') for r in report['items'])+'\n只啟動來源預覽；未同意訓練／發布。'
+        report=self.report;prepared=copy.deepcopy(report);before=fingerprint(report)
+        message=self.summary.text()+'\n本次全部 '+str(len(report['items']))+' 項均在可捲動列表；完整路徑在每列提示。\n'+'\n'.join(Path(r['path']).name+' p'+str(r['page'])+' '+r['status'] for r in report['items'][:8])+'\n只啟動來源預覽；未同意訓練／發布。'
         if QMessageBox.question(self,'確認精確預檢範圍',message,QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
-        if report is not self.report or self.window.busy:return
-        try:self.batch=self.store.create(report,True);self.report=None;self.start_run()
+        if report is not self.report or fingerprint(report)!=before or self.window.busy:self.status.setText('確認期間預檢範圍異動，請重新核對');return
+        try:self.batch=self.store.create(prepared,True);self.report=None;self.start_run()
         except Exception as error:self.status.setText(str(error));self.controls()
     def start_run(self):
         self.running=True;self.cancel_requested=False;self.controls();QTimer.singleShot(0,self.advance)
@@ -86,13 +95,21 @@ class BatchImportDialog(QDialog):
             current=self.store.get(self.batch['id'])
             if current['revision']!=self.batch['revision']:raise ValueError('批次revision異動，停止且保留已完成結果')
             self.batch=current;item=next((r for r in current['items'] if r['status']=='READY'),None)
+            if self.window.busy:raise ValueError('其他背景工作正在執行，保留READY項，稍後續跑')
             if self.cancel_requested or not item:
                 self.batch=self.store.stop(current['id'],current['revision'],self.cancel_requested);self.running=False;self.render(self.batch['items']);self.refresh_history();self.status.setText('批次 '+self.batch['phase']+'；結果保存，失敗仍隔離，未核准訓練／規則。');self.controls();return
             self.batch=self.store.claim(current['id'],current['revision'],item['id']);item=next(r for r in self.batch['items'] if r['id']==item['id']);claimed_revision=self.batch['revision'];self.render(self.batch['items'])
             def done(result):
                 self.batch=self.store.finish(current['id'],claimed_revision,item['id'],result.get('value'),result.get('error'));self.render(self.batch['items']);QTimer.singleShot(0,self.advance)
             self.run_background('正在匯入 '+Path(item['path']).name+'；單worker／目前項保存才停止',lambda:convert_item(item,self.window.library.assets),done)
-        except Exception as error:self.running=False;self.status.setText('批次安全停止：'+str(error));self.controls()
+        except Exception as error:
+            self.running=False;self.status.setText('批次安全停止：'+str(error))
+            if self.batch:
+                try:
+                    b=self.store.get(self.batch['id'])
+                    if b['revision']==self.batch['revision'] and not any(r['status']=='RUNNING' for r in b['items']):self.batch=self.store.stop(b['id'],b['revision']);self.refresh_history()
+                except Exception:pass
+            self.controls()
     def cancel(self):
         self.cancel_event.set();self.cancel_requested=True;self.status.setText('取消已請求；目前轉換與保存後停止，不強殺或刪除已完成資料。')
     def resume(self):
@@ -118,6 +135,7 @@ class BatchImportDialog(QDialog):
         if row<0:return
         sid=self.batch['items'][row].get('source_id')
         if not sid:self.status.setText('尚未有保存來源；失敗保留原路徑與錯誤，不猜測作品');return
+        if not navigation_clean(self.window):self.status.setText('主工作台有尚未套用的手工屬性，請先明確保存或取消，再定位來源。');return
         self.window.refresh_sources(sid);self.window.tabs.setCurrentIndex(0);self.status.setText('已定位來源，視覺／訓練／發布未核准。')
     def reject(self):
         if self.running or self.busy:self.cancel();return
@@ -125,3 +143,10 @@ class BatchImportDialog(QDialog):
     def closeEvent(self,event):
         if self.running or self.busy:self.cancel();event.ignore()
         else:super().closeEvent(event)
+
+
+def navigation_clean(window):
+    if window.current_slot:
+        try:return window.make_slot(window.current_slot.rect,preserve=True)==window.current_slot
+        except Exception:return False
+    return True

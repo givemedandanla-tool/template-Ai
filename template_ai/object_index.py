@@ -84,7 +84,8 @@ def source_structure(source):
             label=e.get('{http://www.inkscape.org/namespaces/inkscape}label','')
             return {'label':f'{e.tag.rsplit("}",1)[-1]} · {label or identity or address} · 對應 UNKNOWN','address':address,'source_id':identity,'ids':[],'children':[visit(c,depth+1,address+'/'+str(i)) for i,c in enumerate(e)]}
         nodes=[visit(root,0,'0')]
-        if hashlib.sha256(path.read_bytes()).hexdigest()!=source['file_hashes']['svg']:
+        with path.open('rb') as stream:after_data=stream.read(MAX_XML_BYTES+1)
+        if len(after_data)>MAX_XML_BYTES or hashlib.sha256(after_data).hexdigest()!=source['file_hashes']['svg']:
             raise ValueError('結構讀取期間檔案異動')
         check_verified(proof,source['hash'])
         return {**unknown,'status':'VERIFIED_DERIVATIVE','reason':'SVG 有序結構可讀；沒有 slot↔SVG 唯一映射證據','nodes':nodes,'count':count}

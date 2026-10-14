@@ -68,6 +68,11 @@ class BatchImportTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError,'late audit'):self.store.finish(b['id'],b['revision'],r['id'],result)
         self.assertEqual(self.lib.list_sources(),[]);self.assertEqual(self.store.get(b['id']),b)
         b=self.store.finish(b['id'],b['revision'],r['id'],result);self.assertEqual(b['items'][0]['status'],'SUCCESS')
+    def test_other_live_session_cannot_take_over_between_items(self):
+        b=self.execute(self.batch());other=Library(self.root/'data');self.addCleanup(other.close);store=BatchStore(other)
+        with self.assertRaisesRegex(ValueError,'執行者'):store.claim(b['id'],b['revision'],b['items'][1]['id'])
+        with self.assertRaisesRegex(ValueError,'執行者'):store.stop(b['id'],b['revision'])
+        self.assertEqual(self.store.get(b['id']),b);b=self.execute(b,1);self.assertEqual(b['items'][1]['status'],'SUCCESS')
     def test_bounded_folder_files_cancel_page_and_final_cache_changed(self):
         with self.assertRaisesRegex(ValueError,'頁次'):preflight(self.paths,[],0)
         for i in range(201):svg(self.root/f'limit{i}.svg')
@@ -125,3 +130,19 @@ class BatchImportGuiTests(unittest.TestCase):
             with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.dlg.start_button,Qt.LeftButton)
             self.wait_for(lambda:not self.dlg.running and not self.dlg.busy)
         self.assertEqual(self.dlg.batch['phase'],'INTERRUPTED');self.assertEqual(self.dlg.batch['items'][0]['status'],'INTERRUPTED');self.assertEqual(self.dlg.batch['items'][1]['status'],'READY');self.assertEqual(self.window.library.list_sources(),[]);self.assertTrue(self.dlg.scan_button.isEnabled())
+    def test_page_change_invalidates_preview_and_worker_launch_failure_recovers(self):
+        self.scan();self.dlg.page.setValue(2);self.assertIsNone(self.dlg.report);self.assertFalse(self.dlg.start_button.isEnabled());self.dlg.page.setValue(1);self.scan()
+        with patch.object(self.window,'run_job',side_effect=RuntimeError('worker launch failed')):
+            with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.dlg.start_button,Qt.LeftButton)
+            self.wait_for(lambda:not self.dlg.running and not self.dlg.busy)
+        self.assertEqual(self.dlg.batch['phase'],'INTERRUPTED');self.assertFalse(self.window.busy);self.assertTrue(self.dlg.scan_button.isEnabled());self.assertEqual(self.window.library.list_sources(),[])
+    def test_modal_preflight_scope_mutation_and_dirty_navigation_are_blocked(self):
+        self.scan()
+        def mutate(*args):self.dlg.report['items'].pop();return QMessageBox.Yes
+        with patch.object(QMessageBox,'question',side_effect=mutate):self.dlg.start_confirmed()
+        self.assertEqual(self.window.import_store.list(),[]);self.assertIn('異動',self.dlg.status.text())
+        from template_ai.batch_dialog import navigation_clean
+        from template_ai.model import Slot,Rect
+        self.window.current_slot=Slot('name','p1',Rect(4,4,20,10));self.window.load_slot_form(self.window.current_slot) if hasattr(self.window,'load_slot_form') else None
+        with patch.object(self.window,'make_slot',return_value=Slot('name','p1',Rect(5,4,20,10))):self.assertFalse(navigation_clean(self.window))
+        self.window.current_slot=None

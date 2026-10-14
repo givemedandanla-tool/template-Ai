@@ -21,18 +21,18 @@ def end_session(library):
 
 def expand_paths(paths,cancel=None):
     if not paths:raise ValueError('未選取來源')
-    files=[];visited=0
+    files=[];directories=0;entries=0
     for raw in paths:
         p=Path(raw)
         if p.is_symlink():raise ValueError('批次來源不接受符號連結')
         if p.is_dir():
             for base,dirs,names in os.walk(p,followlinks=False):
-                visited+=1
-                if visited>2000:raise ValueError('資料夾掃描超出2000目錄預算')
+                directories+=1
+                if directories>2000:raise ValueError('資料夾掃描超出2000目錄預算')
                 dirs[:]=sorted(d for d in dirs if not d.startswith('.') and not (Path(base)/d).is_symlink())
                 for name in sorted(names):
-                    visited+=1
-                    if visited>10000:raise ValueError('資料夾掃描超出項目預算')
+                    entries+=1
+                    if entries>10000:raise ValueError('資料夾掃描超出項目預算')
                     f=Path(base)/name
                     if f.suffix.lower() in EXTENSIONS and not f.is_symlink():files.append(f.resolve())
                     if len(files)>MAX_ITEMS:raise ValueError('批次最多200來源／頁次')
@@ -135,6 +135,7 @@ class BatchStore:
     def claim(self,batch_id,revision,item_id):
         def change(b):
             if b['phase'] not in ('READY','RUNNING','CANCELLED','INTERRUPTED','PAUSED'):raise ValueError('此批次不可續跑')
+            if b['phase']=='RUNNING' and b.get('owner')!={'pid':os.getpid(),'session':self.session}:raise ValueError('不能接管其他執行者')
             if any(x['phase']=='RUNNING' and x['id']!=b['id'] for x in self.list()):raise ValueError('已有其他批次執行，單worker不重複啟動')
             if any(r['status']=='RUNNING' for r in b['items']):raise ValueError('目前項尚未完成，不重複執行')
             r=next((r for r in b['items'] if r['id']==item_id),None)
@@ -166,6 +167,7 @@ class BatchStore:
         return self.mutate(batch_id,revision,'import_item_result_saved',change)
     def stop(self,batch_id,revision,cancelled=False):
         def change(b):
+            if b['phase']=='RUNNING' and b.get('owner')!={'pid':os.getpid(),'session':self.session}:raise ValueError('不能停止其他執行者')
             if any(r['status']=='RUNNING' for r in b['items']):raise ValueError('目前轉換未結束，不能強制結案')
             b['phase']='CANCELLED' if cancelled else 'PAUSED' if any(r['status']=='READY' for r in b['items']) else 'DONE_WITH_ERRORS' if any(r['status'] in ('FAILED','INTERRUPTED') for r in b['items']) else 'DONE';b['owner']=None
         return self.mutate(batch_id,revision,'import_cancelled' if cancelled else 'import_run_stopped',change)

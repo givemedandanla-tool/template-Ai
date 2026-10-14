@@ -129,6 +129,7 @@ def main():
                          "canvas-compare-overview.png", "canvas-compare-focused.png", "canvas-compare-source.png", "canvas-compare-before.png", "canvas-compare-after.png", "canvas-compare-report.json",
                          "object-tools-multiselect.png", "object-tools-mixed-patch.png", "object-tools-difference.png", "object-tools-history.png", "object-tools-locked.png", "object-tools-training.png", "object-tools-audit.json",
                          "semantic-tree-shared.png", "semantic-search-preserved.png", "semantic-viewport-isolated.png", "semantic-derived-structure.png", "semantic-index-audit.json",
+                         "batch-import-preflight.png", "batch-import-running.png", "batch-import-cancelled.png", "batch-import-resumed.png", "batch-import-audit.json",
                          "synthetic-FINAL.pdf", "synthetic-FINAL.png", "synthetic-FINAL.jpg", "decorated-FINAL.pdf", "decorated-FINAL.png", "decorated-FINAL.jpg"):
                 if not (generated / name).is_file():
                     capture_code = 1
