@@ -29,14 +29,9 @@
   ],
   "next_tasks": [
     {
-      "id": "AUTO-NOISE",
-      "status": "IN_PROGRESS",
-      "action": "包5已核准完整literal/type/region與人工語境的後續自動命中、protected field/Logo/unknown／unlinked overlap保護、多active衝突／source/ref stale保留、current-vs-stored追溯、stable hit idempotent與facts/hits同交易late rollback、actualQt一次facts prompt不重問rule與定位／counts／失敗恢復已實作；target8PASS。正式freeze全回歸，原稿與formal Slots不變。"
-    },
-    {
-      "id": "TEN-NEXT",
+      "id": "RULE-RECOVERY",
       "status": "CONTINUE",
-      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
+      "action": "直接下一包；不等待HUMAN"
     }
   ],
   "blocked": [
@@ -166,7 +161,7 @@
   "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
-    "completed": 4,
+    "completed": 5,
     "baseline_core": 45,
     "added_core": 20,
     "contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
@@ -234,10 +229,12 @@
           "CORE-054",
           "CORE-055"
         ],
-        "status": "FORMAL_PASS_PENDING_REMOTE",
+        "status": "COMPLETED_SAVED_SCOPE",
         "source_commit": "279cddb726f5a1de28c3be26feb563ae92bd269d",
         "evidence": "docs/evidence/runs/RUN-TEN-AUTO-NOISE-001/run.json",
-        "tests": 275
+        "tests": 275,
+        "snapshot_commit": "139f635a12c91c76204de3143c9f6faa3bff7a0e",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P05-VERIFIED.receipt.json"
       },
       {
         "sequence": 6,
