@@ -1,5 +1,12 @@
 # 開發工作紀錄
 
+## 2026-10-14：v0.1.10完整對照大工作包正式PASS
+
+- 精確測試來源36307d58ed8f10e6549ba3580a20541244b036db／tree305cbd40fe75d940f46274ca8190ddda5fe52cd5，RUN-CANVAS-COMPARE-002：177 PASS、0 SKIP、37附件、45個驗收全PASS、來源前後不變。
+- 包含source／before／after完整矩形、同步zoom／pan／fit／stable ID定位、歷史crop／pixel／未標定單位、健康與預算、unknown不fallback、worker失敗retry／stale／三階段核准與套用前核驗。resize故障與修復測試、001完整結果保留。
+- CORE34→36，新增並完成2／刪除0／既有scope修訂0；父題0完整／43部分／27未實作／2受阻／3延後，75仍未完整完成。GOV6；117列。最後差異用FINAL快照，不覆寫END歷史。
+- 最後checkpoint／所有附件與Human／GPT交接讀回後才標目標REMOTE_VERIFIED；下一包按UI034／036原條款做三向多選與混合值、精確對齊分布，長期全清單目標不撤銷。
+
 ## 2026-10-14：GitHub catalog故障與有界恢復
 
 - RESIZE-RED的49項差異上傳完、binary blob SHA已核對，create_tree因工具catalog changed拒絕。沒有移動分枝；checkpoint維持pending，未宣稱REMOTE_VERIFIED。

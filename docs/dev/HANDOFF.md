@@ -1,17 +1,30 @@
 # Human／GPT 開發交接
 
-## 當前：CORE-035／036修正版正式驗收前
+先依AGENTS→STATE→本文件→PROJECT_GOAL／PROJECT_ROADMAP→REQUIREMENTS／FEATURES／PROGRESS→最新WORK_LOG／證據／收據→DEVELOPMENT_PROTOCOL恢復。全75父题長期目標持續，不要求重說繼續，不使用代理或重打EXE。
 
-全清單長期目標見PROJECT_GOAL／PROJECT_ROADMAP；所有75父題保留，按STATE接續，不能只讀本文件的歷史v0.1.9。
+## 最新完整大功能：v0.1.10 CORE-035／036
 
-三視圖、精確歷史crop、共享唯讀zoom／pan／定位、逐欄核准／套用前再驗已實作。001正式176PASS／37附件保留，但後續resize實際中心漂移被發現，完成判定取消。來源與測試不刪，修正ResizeEvent重設共同center／倍率、9新組測試PASS，下一步用獨立固定source metadata正式RUN-CANVAS-COMPARE-002；預期177，不以預期當證據。
+精確來源`36307d58ed8f10e6549ba3580a20541244b036db`／tree`305cbd40fe75d940f46274ca8190ddda5fe52cd5`，RUN-CANVAS-COMPARE-002：177 PASS／0 SKIP、37附件、45acceptance全部PASS，source前後不變。正式來源metadata凍結獨立檔，收據提交不覆寫。最後snapshot／收據待當前checkpoint逐檔讀回，不能先宣稱已完成遠端保存。
 
-RESIZE-RED checkpoint adc28fd4已讀回506檔；GitHub create_tree catalog變更一次拒絕後一次重試成功，未force ref。二進位先前SHA已驗，重試tree接受且逐檔讀回，不重上傳字型／DB。實作至RED遠端確認間隔約69分27秒，超10分鐘目標如實記錄；原碼原有遠端snapshot／PREPARED快照保留。新增每GitHub操作60秒上限，超時保存pending並核對ref才能恢復。
+功能鏈：核准候選→模板逐欄差異→所選欄臨時文字→背景產生原稿衍生參考／原模板／替代矩形→共用zoom／pan／fit／stable slot_id列表與框選定位→返回後背景再驗→明確人工核准後再驗→主動勾選→套用前驗來源／檔案／clock→新草稿與歷史。模板、原始檔、font pin及DB在只讀對照前後不改。三視圖另一欄文字未提供就只畫空框，Logo未提供不借別資產；原字型未知不fallback。
 
-當前CORE／GOV均待新版本重驗；不要依001或PROGRESS...END當刻快照宣告最終完成。最後統計另存FINAL，以BEGIN115列／CORE34為基準；本輪新增CORE035／036，原始scope不降低。下一大包：UI034／036三向多选与混合值保護、鎖定／同owner範圍、精確對齊分布，先读原UI_DECISIONS條款並寫契約／baseline／BEGIN。
+Library.comparison_source只在GUI取source_work_id／revision精確歷史crop／physical dimensions；普通資料傳worker。源原始文件SHA／導出image與SVG／metadata_checksum核對，missing UNKNOWN；修改／損壞BLOCKED。三視圖共用模板mm domain，source pixmap仿射回此domain，可逆crop→page→pixel；未物理標定明示參考單位。來源點陣只證衍生身份，不證原生字型／視覺一致。QFont glyph／face Gate與款式固定pt／align／color沿用既有可信渲染。
 
+每template圖6MP／源12MP解碼、单file50MiB／總64MiB／最多200框；不是硬性牆鐘或硬體實測保證。比較只渲染所選欄提供文字，其他全空框；不自稱完整正式人物排版。high-review資料與模板fingerprint／clock、来源context保存私有暫時proof；顯示返回／核准提示後／套用前都重驗，最新模板和來源登錄在GUI重查。start可串接真實背景階段但只在無下一階段時恢復controls；modal閉合deleteLater釋放圖像。
 
-開始先讀AGENTS.md、STATE.json、REQUIREMENTS.json／FEATURES.md、PROGRESS.md／CURRENT_PROGRESS.json、WORK_LOG最新紀錄與checkpoint收據，再讀DEVELOPMENT_PROTOCOL.md。每輪基準／結束差異與完成／未完成數量必須持久化並回報；零例行問答，checkpoint後繼續工作，不重試EXE。
+## 故障與覆核界限
+
+001原176PASS／37附件完整保留，但後續發現NoAnchor在resize後實際中心漂移（要求43,11.5→約29.6,35.94），因此取消当前完成、保存RED。ResizeEvent重套共享center／zoom，177th具名測試對多種視窗大小核對實際mapToScene中心，而不是只比內部state；新002全部PASS。首個SyntaxError及非法IMPLEMENTED狀態拒絕、baseline ID路徑拒絕均如實記WORK_LOG，沒有改治理工具降低標準。
+
+RED上傳完後GitHub create_tree catalog change拒絕；保持pending，一次重新載入後重試成功adc28fd4／506檔讀回，沒有force。IMPLEMENTED05:46:18→RED06:55:45確認約69分27秒，遠超10分鐘目標，如實保留；原碼原有遠端commit與本機PREPARED尚在。後续每GitHub操作60秒有界等待；超時先讀ref核對存下created commit，不能無限重試／假造確認。blob上傳最多4件一批／60k字元片段；tree／commit／lease ref／逐檔readback順序。SELF_VERIFIED Linux／匿名合成不等於獨立品質、真實AI／Windows／指定硬體。
+
+## 計數與下一個大工作包
+
+117列＝75父題＋36CORE＋6GOV；CORE34→36完成2，新增2／刪除0／既有scope改動0。父題完整0／部分43／未實作27／受阻2／延後3，75仍有缺口；GOV6。baseline BEGIN／正式001當刻END／最後FINAL均immutable，不混算父題與子項成產品百分比。
+
+全清單範圍／順序已保存PROJECT_GOAL／PROJECT_ROADMAP。下一包UI034／036：先讀original UI_DECISIONS（三向同一集合與混合值、明確基準及差異預覽／對齊不改字級Logo比例），寫具体完整大包契約、進度基準與BEGIN，再實作 stable-ID 多選／鎖定與安全共同／混合屬性、精確對齊等距與同owner或explicit範圍、原子可撤回差異預覽，背景結果不得覆蓋手工編輯。原題全部條款完成之前仍PARTIAL。
+
+外部真實合法AI／可靠參考、Windows／全TTC同名多檔字重、指定hardware／獨立覆核仍有缺口。UI066報告兩未決項BLOCKED；先做其他已授權功能。UI048完整權限維持最後且真實個資前完成；印刷與UI056-D按既有延後，EXE不重試。工作branch dev/v0.1-first-version／PR2，main不合併；PR頁面metadata未同步，PR_REVIEW保存可複用說明。
 
 ## 歷史v0.1.9完整工作包
 
