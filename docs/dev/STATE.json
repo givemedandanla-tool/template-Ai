@@ -3,12 +3,12 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.23",
+  "product_version": "0.1.24",
   "framework_status": "READY",
   "active_task": "TEN-PACKAGES-IN-PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-TEN-P09-TEXT-VERIFIED.receipt.json",
   "last_confirmed_commit": "4410c2b8691f1a132941749320728f7f260d23e1",
-  "latest_evidence_run": "docs/evidence/runs/RUN-TEN-COVERAGE-001/run.json",
+  "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -30,8 +30,13 @@
   "next_tasks": [
     {
       "id": "TRAINING-QUEUE",
+      "status": "IN_PROGRESS",
+      "action": "包10已實作durable JOB／WORKER lease與每item原子Template/USE/result/audit、源與sample/Dataset/rule/use逐項fresh、單worker／owner CAS／doubleclaim保護、合作取消／reopen/dead-owner明确resume／SUCCESS不重跑／既有成果REUSED／source失敗隔離與audit不可隔離停止、actualQt真实worker/进度/取消/续跑/启动失败恢复/close guard。12targetPASS；初history计数误写5实际6，已改完整6个revision/action断言保留原FAIL，不降低产品條件。全部10真实GUI流程capture已接上，正式全回归前未完成10/10。无EXE/新media发布/mainmerge。"
+    },
+    {
+      "id": "TEN-NEXT",
       "status": "CONTINUE",
-      "action": "直接下一包；不等待HUMAN"
+      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
     }
   ],
   "blocked": [
@@ -52,8 +57,10 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-TEN-DATASET-LEARNING-002/run.json",
+  "pending_remote": [
+    "CP-20261014-TEN-TRAINING-QUEUE-SOURCE"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-TEN-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P09-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
@@ -304,7 +311,7 @@
           "CORE-064",
           "CORE-065"
         ],
-        "status": "NOT_STARTED"
+        "status": "IMPLEMENTED_PENDING_FORMAL"
       }
     ]
   }

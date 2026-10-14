@@ -107,6 +107,17 @@ def capture_ten_packages(root):
         coverage=dialog.coverage_panel;dialog.tabs.setCurrentWidget(coverage);coverage.reload();assert coverage.report['totals']['sources']==3 and coverage.report['totals']['artworks']==3;assert coverage.report['sample_states']=={'APPROVED':1};assert coverage.report['current_role_occurrences_in_scanned_scope']=={'TRAIN':1};assert not coverage.report['quality_pass_claim'] and not coverage.report['supplementation'];QApplication.processEvents()
         if not dialog.grab().save(str(root/'ten-coverage-distribution.png')):raise ValueError('覆蓋GUI未保存')
         audit['coverage']={'actual_qt':True,'report':coverage.report,'read_only':True,'no_quality_threshold_or_supplementation':True}
+        extra_source,extra_work=source_work(window.library,root,'synthetic-queue.svg',note_text='佇列合成註記');extra_observations=observations(extra_work);next(o for o in extra_observations if o['id']=='note')['text']='佇列合成註記';extra_facts=facts.store.save_facts(extra_work['id'],extra_observations,0,1);facts.store.confirm_facts(extra_work['id'],[o['id'] for o in extra_observations],extra_facts['revision'],extra_facts['pins'],facts.store.source_proof(extra_work['id']),'Synthetic Reviewer',True);rights={'basis':'OWNED','reference':'Anonymous synthetic SVG author record','use':'GEOMETRY_TRAINING_LOCAL'};extra_sample=facts.store.approve_sample(facts.store.sample_approval_plan(extra_work['id'],rights),facts.store.source_proof(extra_work['id']),'Synthetic Reviewer',True);queue_ds=facts.store.create_dataset(facts.store.dataset_plan('Synthetic queue dataset',[{'sample_id':extra_sample['id'],'role':'TRAIN'}]),'Synthetic Reviewer',True)
+        queue=dialog.queue_panel;dialog.tabs.setCurrentWidget(queue);queue.reload();queue.dataset_combo.setCurrentIndex(queue.dataset_combo.findData(queue_ds['id']));queue.prefix.setText('Synthetic Queue Draft');queue.actor.setText('Synthetic Reviewer');queue.items.item(0,0).setCheckState(Qt.Checked)
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
+            QTest.mouseClick(queue.create_button,Qt.LeftButton)
+            for _ in range(1000):
+                QApplication.processEvents()
+                if not queue.running:break
+                QTest.qWait(10)
+        assert not queue.running;job=facts.store.get('JOB',queue.current_job);assert job['phase']=='COMPLETED' and job['items'][0]['state']=='SUCCESS';assert len(window.library.templates())==2 and all(t.state=='draft' for t in window.library.templates());assert window.library.artwork(extra_work['id'])==extra_work;QApplication.processEvents()
+        if not dialog.grab().save(str(root/'ten-training-queue-completed.png')):raise ValueError('真worker佇列GUI未保存')
+        audit['training_queue']={'actual_qt':True,'real_worker_own_sqlite_connection':True,'job':job,'history':facts.store.history('JOB',job['id']),'progress':queue.progress_label.text(),'controls_restored':queue.create_button.isEnabled() and not window.busy,'source_and_slots_unchanged':True,'all_ten_workflows_integrated':True,'only_draft_geometry':True}
         (root / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
     finally:
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()

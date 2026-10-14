@@ -37,9 +37,11 @@ class TrainingQualityDialog(QDialog):
         self.dataset_panel=DatasetPanel(window,self);self.tabs.addTab(self.dataset_panel,'資料集／幾何學習')
         from .coverage_panel import CoveragePanel
         self.coverage_panel=CoveragePanel(window,self);self.tabs.addTab(self.coverage_panel,'覆蓋／分布')
+        from .training_queue_panel import TrainingQueuePanel
+        self.queue_panel=TrainingQueuePanel(window,self);self.tabs.addTab(self.queue_panel,'可恢復幾何訓練工作')
         self.setWindowTitle('標記品質／來源事實與可信訓練')
     def reject(self):
-        if self.facts_panel.running or self.samples_panel.running or self.dataset_panel.running: self.status.setText('背景來源核對尚未結束'); return
+        if self.facts_panel.running or self.samples_panel.running or self.dataset_panel.running or self.queue_panel.running: self.status.setText('背景來源核對尚未結束'); return
         super().reject()
     def selected_row(self):
         rows = self.table.selectionModel().selectedRows()
