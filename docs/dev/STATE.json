@@ -8,7 +8,7 @@
   "active_task": "THREE-PACKAGES-1-SEMANTIC",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-THREE-BEGIN.receipt.json",
   "last_confirmed_commit": "d5cb3fd5fabaf7ad576553934fbd5e4ca17a01cd",
-  "latest_evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json",
+  "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -123,8 +123,10 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json",
+  "pending_remote": [
+    "CP-20261014-SEMANTIC-IMPLEMENTED"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
@@ -149,7 +151,7 @@
     "packages": [
       {
         "id": "SEMANTIC",
-        "status": "PLANNED",
+        "status": "IN_PROGRESS",
         "requirements": [
           "CORE-040",
           "CORE-041"

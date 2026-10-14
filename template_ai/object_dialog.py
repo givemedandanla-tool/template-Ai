@@ -3,7 +3,7 @@ import copy
 import json
 from PySide6.QtCore import Qt,QPointF,QRectF,Signal
 from PySide6.QtGui import QColor,QPen,QImage
-from PySide6.QtWidgets import (QDialog,QDialogButtonBox,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QListWidget,QListWidgetItem,QFormLayout,QDoubleSpinBox,QComboBox,QCheckBox,QLineEdit,QSplitter,QWidget,QTableWidget,QTableWidgetItem,QMessageBox,QGraphicsItem,QScrollArea,QPlainTextEdit)
+from PySide6.QtWidgets import (QDialog,QDialogButtonBox,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QListWidget,QListWidgetItem,QFormLayout,QDoubleSpinBox,QComboBox,QCheckBox,QLineEdit,QSplitter,QWidget,QTableWidget,QTableWidgetItem,QMessageBox,QGraphicsItem,QScrollArea,QPlainTextEdit,QTreeWidget,QTreeWidgetItem)
 from .gui import Canvas,Box
 from .model import Slot,Rect,KINDS,Template
 from .object_tools import propose,common_properties,warnings_for
@@ -63,13 +63,25 @@ class ObjectToolsDialog(QDialog):
     def __init__(self,window,kind,entity_id,parent=None):
         super().__init__(parent or window);self.window=window;self.library=window.library;self.kind=kind;self.entity_id=entity_id
         self.ids=[];self.dirty=set();self.loading=True;self.plan=None;self.request=None;self.generation=0;self._preview_generation=None
+        self.hidden_ids=set();self.dim_ids=set();self.structure={'status':'UNKNOWN','nodes':[]};self.tree_nodes=[]
         self.setWindowTitle('安全多選／精確對齊 · 候選、鎖定與持久歷史');self.resize(1450,1000)
         layout=QVBoxLayout(self);self.status=QLabel();self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout()
         for title,fn in (('重新載入',self.reload),('全矩形',lambda:self.canvas.fit()),('定位選取',self.focus_selection),('鎖定選取',lambda:self.preview_lock(True)),('明確解鎖選取',lambda:self.preview_lock(False)),('刪除選取候選',lambda:self.preview_request({'operation':'DELETE','ids':self.ids}))):
             b=QPushButton(title);b.clicked.connect(fn);bar.addWidget(b)
         layout.addLayout(bar)
-        body=QSplitter();self.objects=QListWidget();self.objects.setSelectionMode(QListWidget.ExtendedSelection);self.objects.itemSelectionChanged.connect(self.list_changed);body.addWidget(self.objects)
+        body=QSplitter();left=QWidget();index_layout=QVBoxLayout(left)
+        self.index_mode=QComboBox();self.index_mode.addItems(['人物／公司語意樹','來源結構（衍生 SVG）']);self.index_mode.currentIndexChanged.connect(self.rebuild_index);index_layout.addWidget(self.index_mode)
+        self.search=QLineEdit();self.search.setPlaceholderText('owner／種類／ID／字型／來源名稱');self.search.textChanged.connect(self.filter_index);index_layout.addWidget(self.search)
+        self.index_filter=QComboBox()
+        for title,value in [('全部','ALL'),('已鎖定','LOCKED'),('共享公司','SHARED'),('框位問題','PROBLEM')]:self.index_filter.addItem(title,value)
+        self.index_filter.currentIndexChanged.connect(self.filter_index);index_layout.addWidget(self.index_filter)
+        self.index_count=QLabel();self.index_count.setWordWrap(True);index_layout.addWidget(self.index_count)
+        self.index_tree=QTreeWidget();self.index_tree.setMinimumHeight(140);self.index_tree.setHeaderLabel('索引／對應不確定性');self.index_tree.setSelectionMode(QTreeWidget.ExtendedSelection);self.index_tree.itemSelectionChanged.connect(self.tree_changed);index_layout.addWidget(self.index_tree,2)
+        self.objects=QListWidget();self.objects.setMinimumHeight(65);self.objects.setMaximumHeight(130);self.objects.setSelectionMode(QListWidget.ExtendedSelection);self.objects.itemSelectionChanged.connect(self.list_changed);index_layout.addWidget(self.objects,1)
+        for title,action in [('暫時隱藏選取框','HIDE'),('淡化選取框','DIM'),('隔離選取框','ISOLATE'),('顯示所有框／解除隔離','ALL')]:
+            b=QPushButton(title);b.clicked.connect(lambda _,a=action:self.viewport_action(a));index_layout.addWidget(b)
+        body.addWidget(left)
         self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select_ids);self.canvas.drag_proposal.connect(self.preview_request);body.addWidget(self.canvas)
         right=QWidget();form=QFormLayout(right);self.editors={}
         for key,name in (('x','X'),('y','Y'),('w','寬'),('h','高'),('size_pt','固定字級pt'),('min_scale','水平比例下限')):
@@ -101,10 +113,10 @@ class ObjectToolsDialog(QDialog):
         move=QPushButton('預覽整組位移');move.clicked.connect(lambda:self.preview_request({'operation':'MOVE','ids':self.ids,'dx':self.dx.value(),'dy':self.dy.value()}));form.addRow(move)
         scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setWidget(right);scroll.setMinimumWidth(330);body.addWidget(scroll);body.setSizes([230,780,350]);layout.addWidget(body,3)
         self.summary=QPlainTextEdit();self.summary.setReadOnly(True);self.summary.setMaximumHeight(105);layout.addWidget(self.summary)
-        self.diff=QTableWidget(0,5);self.diff.setHorizontalHeaderLabels(['精確物件／歸屬','原X／Y／W／H','候選X／Y／W／H','ΔX／ΔY mm','屬性差異']);self.diff.setEditTriggers(QTableWidget.NoEditTriggers);layout.addWidget(self.diff,1)
+        self.diff=QTableWidget(0,5);self.diff.setMaximumHeight(140);self.diff.setHorizontalHeaderLabels(['精確物件／歸屬','原X／Y／W／H','候選X／Y／W／H','ΔX／ΔY mm','屬性差異']);self.diff.setEditTriggers(QTableWidget.NoEditTriggers);layout.addWidget(self.diff,1)
         actions=QHBoxLayout();cancel=QPushButton('取消候選，不寫入');cancel.clicked.connect(self.invalidate);actions.addWidget(cancel)
         self.apply_button=QPushButton('核對範圍並原子套用');self.apply_button.clicked.connect(self.apply);self.apply_button.setEnabled(False);actions.addWidget(self.apply_button);layout.addLayout(actions)
-        self.history=QTableWidget(0,3);self.history.setHorizontalHeaderLabels(['歷史階段／操作','物件／歸屬','clock／批次']);self.history.setSelectionBehavior(QTableWidget.SelectRows);self.history.setSelectionMode(QTableWidget.SingleSelection);self.history.setEditTriggers(QTableWidget.NoEditTriggers);layout.addWidget(self.history,1)
+        self.history=QTableWidget(0,3);self.history.setMaximumHeight(110);self.history.setHorizontalHeaderLabels(['歷史階段／操作','物件／歸屬','clock／批次']);self.history.setSelectionBehavior(QTableWidget.SelectRows);self.history.setSelectionMode(QTableWidget.SingleSelection);self.history.setEditTriggers(QTableWidget.NoEditTriggers);layout.addWidget(self.history,1)
         bar=QHBoxLayout()
         for title,action in (('核對並復原歷史','UNDO'),('核對並重做歷史','REDO')):
             b=QPushButton(title);b.clicked.connect(lambda _,a=action:self.history_action(a));bar.addWidget(b)
@@ -136,7 +148,11 @@ class ObjectToolsDialog(QDialog):
                 if not original.isNull():image=original.copy(QRectF(c['x']*original.width()/source['width_mm'],c['y']*original.height()/source['height_mm'],c['w']*original.width()/source['width_mm'],c['h']*original.height()/source['height_mm']).toAlignedRect())
             for s in slots:
                 item=QListWidgetItem(f"{'🔒 ' if s.locked else ''}{s.owner}／{KINDS.get(s.kind,s.kind)} 第{s.index+1}欄");item.setData(Qt.UserRole,s.id);item.setToolTip(s.id);self.objects.addItem(item)
-            self.canvas.set_content(w,h,image=image,slots=slots);self.ids=[];self.dirty.clear();self.loading=False;self.select_ids([])
+            self.canvas.set_content(w,h,image=image,slots=slots);self.ids=[];self.hidden_ids.clear();self.dim_ids.clear();self.dirty.clear()
+            from .object_index import source_structure
+            source_id=payload.get('source_id') if self.kind=='TEMPLATE' else self.library.artwork(self.entity_id)['source_id']
+            self.structure=source_structure(self.library.source(source_id) if source_id else None)
+            self.loading=False;self.rebuild_index();self.select_ids([])
             self.records=self.library.object_edit_history(self.kind,self.entity_id);self.history.setRowCount(len(self.records))
             for i,r in enumerate(self.records):
                 for col,value in enumerate((r['phase']+'／'+r['plan']['request']['operation'],', '.join(c['owner']+'/'+c['kind']+'/'+c['id'] for c in r['plan']['changes']),str(r['expected_revision'])+'／'+r['id'])):self.history.setItem(i,col,QTableWidgetItem(value))
@@ -144,6 +160,59 @@ class ObjectToolsDialog(QDialog):
         except Exception as error:self.loading=False;self.status.setText('未載入：'+str(error));self.apply_button.setEnabled(False)
     def list_changed(self):
         if not self.loading:self.select_ids(sorted(item.data(Qt.UserRole) for item in self.objects.selectedItems()))
+    def rebuild_index(self,*_):
+        if self.loading or not hasattr(self,'snapshot'):return
+        from .object_index import semantic_index
+        self.index_tree.blockSignals(True);self.index_tree.clear();self.tree_nodes=[]
+        def add(node,parent):
+            item=QTreeWidgetItem(parent,[node['label']]);item.setData(0,Qt.UserRole,node['ids']);self.tree_nodes.append(item)
+            if not node['ids']:item.setToolTip(0,'對應 UNKNOWN；選取這列不會猜測或更改 slot')
+            for child in node.get('children',[]):add(child,item)
+        nodes=semantic_index(self.snapshot['payload']) if self.index_mode.currentIndex()==0 else self.structure.get('nodes',[])+[{'label':'已標記物件（與來源節點對應 UNKNOWN）','ids':[],'children':[{'label':s['owner']+'/'+s['kind']+'/'+s['id'],'ids':[s['id']],'children':[]} for s in self.snapshot['payload']['slots']]}]
+        for node in nodes:add(node,self.index_tree)
+        self.index_tree.expandAll();self.index_tree.blockSignals(False);self.sync_tree();self.filter_index()
+    def sync_tree(self):
+        self.index_tree.blockSignals(True)
+        for item in self.tree_nodes:
+            ids=item.data(0,Qt.UserRole);item.setSelected(bool(ids) and len(ids)==1 and ids[0] in self.ids)
+        self.index_tree.blockSignals(False)
+    def tree_changed(self):
+        if self.loading:return
+        ids=sorted({i for item in self.index_tree.selectedItems() for i in item.data(0,Qt.UserRole) or []})
+        if ids:self.select_ids(ids)
+        else:self.index_count.setText('來源映射 UNKNOWN；原選取保持，不猜測物件')
+    def filter_index(self,*_):
+        if self.loading or not hasattr(self,'snapshot'):return
+        from .object_index import matching_ids
+        hits=set(matching_ids(self.snapshot['payload'],self.search.text(),self.index_filter.currentData()))
+        self.objects.blockSignals(True)
+        for i in range(self.objects.count()):
+            item=self.objects.item(i);item.setHidden(item.data(Qt.UserRole) not in hits)
+        self.objects.blockSignals(False)
+        self.index_tree.blockSignals(True)
+        def visible(item):
+            children=[visible(item.child(i)) for i in range(item.childCount())];ids=item.data(0,Qt.UserRole) or []
+            name_hit=self.index_mode.currentIndex()==1 and self.index_filter.currentData()=='ALL' and bool(self.search.text()) and all(t in item.text(0).casefold() for t in self.search.text().casefold().split())
+            show=bool(set(ids)&hits) or any(children) or name_hit or (not ids and not self.search.text() and self.index_filter.currentData()=='ALL')
+            item.setHidden(not show);return show
+        for i in range(self.index_tree.topLevelItemCount()):visible(self.index_tree.topLevelItem(i))
+        self.index_tree.blockSignals(False)
+        self.index_count.setText(f'符合 {len(hits)}／{len(self.snapshot["payload"]["slots"])}；选取 {len(self.ids)}，篩選外 {len(set(self.ids)-hits)}；隱藏框 {len(self.hidden_ids)}\n來源 {self.structure["status"]}／slot 映射 UNKNOWN')
+    def viewport_action(self,action):
+        known={s['id'] for s in self.snapshot['payload']['slots']}
+        if action=='ALL':self.hidden_ids.clear();self.dim_ids.clear()
+        elif not self.ids:self.status.setText('請明確選取；viewport不自動選其他物件');return
+        elif action=='HIDE':self.hidden_ids.update(self.ids)
+        elif action=='DIM':self.dim_ids.update(self.ids)
+        elif action=='ISOLATE':self.hidden_ids=known-set(self.ids)
+        self.canvas.resetting=True
+        try:
+            for item in self.canvas.scene().items():
+                if isinstance(item,Box):
+                    item.setVisible(item.slot.id not in self.hidden_ids);item.setOpacity(.18 if item.slot.id in self.dim_ids else 1)
+                    item.setSelected(item.slot.id in self.ids and item.slot.id not in self.hidden_ids)
+        finally:self.canvas.resetting=False
+        self.filter_index();self.status.setText('只改檢視框；原稿背景與 DB／正式 Gate 全量範圍不變。隱藏不等於解鎖。')
     def select_ids(self,ids):
         if self.loading:return
         known={s['id'] for s in self.snapshot['payload']['slots']}
@@ -152,6 +221,7 @@ class ObjectToolsDialog(QDialog):
         self.objects.blockSignals(True)
         for i in range(self.objects.count()):self.objects.item(i).setSelected(self.objects.item(i).data(Qt.UserRole) in ids)
         self.objects.blockSignals(False);self.reference.clear();self.reference.addItem('請明確指定基準',None);self.reference.addItem('選取邊界','SELECTION')
+        self.sync_tree();self.filter_index()
         if ids:
             common=common_properties(self.snapshot['payload'],ids);rows=[s for s in self.snapshot['payload']['slots'] if s['id'] in ids];text_only=all(s['kind']!='logo' for s in rows)
             for s in rows:self.reference.addItem(s['owner']+'/'+s['kind']+'/'+s['id'][:8],s['id'])
@@ -173,7 +243,7 @@ class ObjectToolsDialog(QDialog):
         else:
             for editor in self.editors.values():editor.setEnabled(False)
             self.font_choice.setEnabled(False);self.properties.setPlainText('未選取物件；沒有自動加入其他人物／公司。')
-        self.loading=False
+        self.loading=False;self.filter_index()
     def focus_selection(self):
         items=[i for i in self.canvas.scene().items() if isinstance(i,Box) and i.slot.id in self.ids]
         if items:
