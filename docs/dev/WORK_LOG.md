@@ -2,6 +2,13 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-14：v0.1.9完整受控字型替代正式驗收PASS
+
+- 精確程式來源ecb863bf3ee62277318e31792517945ed6674ccd；RUN-FONT-REVIEW-001：168 PASS／0 SKIP、31件匿名附件、43個acceptance全部PASS，來源前後hash不變。23項新驗收含真實GUI工作流、交易晚期失敗、CAS／ABA、重開Undo／Redo、票據過期、私密字元不落DB與實際Italic／PDF／PNG。
+- 正式runner首次使用收據提交metadata而來源SHA指定IMPLEMENTED，來源Guard在測試前拒絕；source-metadata-rejected.log保留，重新GitHub讀回並使用獨立凍結source commit/tree後正式執行。未建立失敗run、未以錯誤來源冒稱PASS。
+- 要求112→115新增3，CORE31→34完成3，GOV6不變；UI-033由未實作變部分，75父題完整0／部分43／未實作27／受阻2／延後3。新增3／刪除0／既有scope修訂0；相異粒度不混算。
+- 下一步來源／模板畫布與逐欄before-after定位對照。全UI-033／Windows／原稿視覺／正式輸出與嵌入授權仍未全面驗收，EXE／印刷延後、UI-048最後。最終完整附件checkpoint讀回尚待，不以本機PASS冒稱遠端完成。
+
 ## 2026-10-14：真實審核／草稿／Undo畫面核對與最後輸入失效修正
 
 - STYLE-FIXED 448d428b已讀回408檔。完整真實worker流程擷取差異、詳審預覽、新版草稿歷史與Undo，重開確認Redo持久。匿名audit不含Alex Example原文字，包含一欄目標Book pin與完整前後版本。
