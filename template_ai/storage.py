@@ -36,6 +36,9 @@ class Library:
         CREATE TABLE IF NOT EXISTS source_links(source_id TEXT PRIMARY KEY REFERENCES sources(id), current_path TEXT NOT NULL, revision INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS source_relinks(id TEXT PRIMARY KEY, source_id TEXT NOT NULL REFERENCES sources(id), revision INTEGER NOT NULL, previous_path TEXT NOT NULL, current_path TEXT NOT NULL, hash TEXT NOT NULL, timestamp REAL NOT NULL, UNIQUE(source_id,revision));
         CREATE TABLE IF NOT EXISTS relink_batches(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS template_edit_clocks(template_id TEXT PRIMARY KEY REFERENCES templates(id), revision INTEGER NOT NULL);
+        CREATE TABLE IF NOT EXISTS font_changes(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
+        INSERT OR IGNORE INTO template_edit_clocks SELECT id,0 FROM templates;
         """)
         self.db.commit()
 
@@ -268,14 +271,19 @@ class Library:
 
     def save_template(self, t: Template) -> None:
         self._template_provenance(t)
-        row = self.db.execute("SELECT state FROM templates WHERE id=?", (t.id,)).fetchone()
+        row = self.db.execute("SELECT state,family_id,version,payload FROM templates WHERE id=?", (t.id,)).fetchone()
         if row and row[0] == "published":
             raise ValueError("已發布版本不可覆寫，請建立新版本草稿")
+        if row and (row[1],row[2])!=(t.family_id,t.version):
+            raise ValueError("已有模板的family／版次識別不可改写")
         collision = self.db.execute("SELECT id FROM templates WHERE family_id=? AND version=?", (t.family_id, t.version)).fetchone()
         if collision and collision[0] != t.id:
             raise ValueError("此模板版次已存在，請取得下一個新版本，不可覆蓋歷史")
+        serialized=json.dumps(t.to_dict(),ensure_ascii=False)
+        if row and row[3]==serialized: return
         with self.db:
-            self.db.execute("INSERT INTO templates VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET state=excluded.state,payload=excluded.payload", (t.id, t.family_id, t.version, t.state, json.dumps(t.to_dict(), ensure_ascii=False)))
+            self.db.execute("INSERT INTO templates VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET state=excluded.state,payload=excluded.payload", (t.id, t.family_id, t.version, t.state, serialized))
+            self._bump_template_clock(t.id)
             self.event(t.id, "save_draft")
 
     def publish(self, t: Template) -> None:
@@ -296,6 +304,7 @@ class Library:
             if collision and collision[0] != t.id:
                 raise ValueError("此模板版次已存在，不可覆蓋歷史")
             self.db.execute("INSERT INTO templates VALUES(?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET state=excluded.state,payload=excluded.payload", (t.id, t.family_id, t.version, published.state, json.dumps(published.to_dict(), ensure_ascii=False)))
+            self._bump_template_clock(t.id)
             self.event(t.id, "publish_user_confirmed")
         t.state = "published"
 
@@ -310,6 +319,85 @@ class Library:
 
     def next_version(self, family_id: str) -> int:
         return self.db.execute("SELECT COALESCE(MAX(version),0)+1 FROM templates WHERE family_id=?", (family_id,)).fetchone()[0]
+
+    def _bump_template_clock(self, template_id):
+        self.db.execute("INSERT INTO template_edit_clocks VALUES(?,1) ON CONFLICT(template_id) DO UPDATE SET revision=revision+1",(template_id,))
+
+    def template_snapshots(self):
+        return [{"template":json.loads(payload),"revision":revision} for payload,revision in self.db.execute("SELECT t.payload,c.revision FROM templates t JOIN template_edit_clocks c ON c.template_id=t.id ORDER BY t.rowid DESC")]
+
+    def font_change_history(self):
+        return [json.loads(row[0]) for row in self.db.execute('SELECT payload FROM font_changes ORDER BY rowid DESC')]
+
+    def _assert_font_registered(self,target):
+        from .font_catalog import asset_health
+        asset=target['asset']
+        row=self.db.execute('SELECT payload FROM font_assets WHERE hash=?',(asset['hash'],)).fetchone()
+        if not row or json.loads(row[0])!=asset or asset_health(asset)[0]!='HEALTHY':
+            raise ValueError('目標字型登錄／核准內容已變更，請重新審核')
+
+    def _template_cas(self,template_id,expected_hash,expected_revision,draft_only=False):
+        from .font_review import fingerprint
+        row=self.db.execute('SELECT t.payload,c.revision,t.state FROM templates t JOIN template_edit_clocks c ON c.template_id=t.id WHERE t.id=?',(template_id,)).fetchone()
+        if not row or row[1]!=expected_revision or fingerprint(json.loads(row[0]))!=expected_hash or (draft_only and row[2]!='draft'):
+            raise ValueError('模板在審核後已變更或發布，不能覆蓋；請重新審核')
+        return Template.from_dict(json.loads(row[0]))
+
+    def _commit_font_change(self,data):
+        from .font_review import fingerprint
+        if self.db.in_transaction:raise ValueError('已有交易未完成，不能巢狀套用')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            self._assert_font_registered(data['target'])
+            groups={}
+            for row in data['rows']:groups.setdefault(row['template_id'],[]).append(row)
+            record={'id':new_id(),'phase':'APPLIED','sequence':1,'timestamp':time.time(),'target':copy.deepcopy(data['target']),
+                    'target_face':data['rows'][0]['proposed']['face_fingerprint'],'drafts':[],
+                    'scope':'僅此選取新草稿；未發布／未核准正式輸出，歷史不保存樣本文字'}
+            for template_id,rows in groups.items():
+                first=rows[0]
+                original=self._template_cas(template_id,first['template_hash'],first['revision'])
+                self._template_provenance(original)
+                draft=copy.deepcopy(original);draft.id=new_id();draft.version=self.next_version(original.family_id);draft.state='draft'
+                before=draft.to_dict();selected={r['slot_id']:r for r in rows}
+                for slot in draft.slots:
+                    if slot.id not in selected:continue
+                    if slot.kind=='logo':raise ValueError('Logo不可套用字型替代')
+                    after=selected[slot.id]['after']
+                    slot.font=after['font'];slot.font_style=after['font_style'];slot.font_asset=copy.deepcopy(after['font_asset'])
+                payload=draft.to_dict()
+                self.db.execute('INSERT INTO templates VALUES(?,?,?,?,?)',(draft.id,draft.family_id,draft.version,draft.state,json.dumps(payload,ensure_ascii=False)))
+                self._bump_template_clock(draft.id)
+                self.event(draft.id,'font_replacement_new_draft_reviewed')
+                record['drafts'].append({'template_id':draft.id,'base_template_id':original.id,'family_id':draft.family_id,'version':draft.version,
+                    'before':before,'after':payload,'current_hash':fingerprint(payload),'revision':1,
+                    'fields':[{k:r[k] for k in ('slot_id','risk','before','after','text_sha256','original','proposed','reasons')} for r in rows]})
+            self.db.execute('INSERT INTO font_changes VALUES(?,?)',(record['id'],json.dumps(record,ensure_ascii=False)))
+            self.event(record['id'],'font_replacement_batch_scope_confirmed')
+            self.db.commit();return record
+        except BaseException:self.db.rollback();raise
+
+    def _commit_font_history(self,data):
+        from .font_review import fingerprint
+        if self.db.in_transaction:raise ValueError('已有交易未完成，不能巢狀復原')
+        expected=data['record'];action=data['kind']
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            row=self.db.execute('SELECT payload FROM font_changes WHERE id=?',(expected['id'],)).fetchone()
+            if not row or json.loads(row[0])!=expected:raise ValueError('替代歷史已變更，請刷新')
+            record=copy.deepcopy(expected)
+            if action=='REDO':self._assert_font_registered(record['target'])
+            for item in record['drafts']:
+                self._template_cas(item['template_id'],item['current_hash'],item['revision'],draft_only=True)
+                payload=copy.deepcopy(item['before'] if action=='UNDO' else item['after'])
+                self.db.execute('UPDATE templates SET payload=? WHERE id=?',(json.dumps(payload,ensure_ascii=False),item['template_id']))
+                self._bump_template_clock(item['template_id']);item['revision']+=1;item['current_hash']=fingerprint(payload)
+                self.event(item['template_id'],'font_replacement_'+action.lower())
+            record['phase']='UNDONE' if action=='UNDO' else 'APPLIED';record['sequence']+=1
+            self.db.execute('UPDATE font_changes SET payload=? WHERE id=?',(json.dumps(record,ensure_ascii=False),record['id']))
+            self.event(record['id'],'font_replacement_'+action.lower()+'_scope_confirmed')
+            self.db.commit();return record
+        except BaseException:self.db.rollback();raise
 
     def templates(self, published_only: bool = False) -> list[Template]:
         sql = "SELECT payload FROM templates" + (" WHERE state='published'" if published_only else "") + " ORDER BY rowid DESC"

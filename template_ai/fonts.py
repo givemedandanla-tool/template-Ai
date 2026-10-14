@@ -45,10 +45,16 @@ def font_asset_errors(slots) -> list[str]:
         asset = slot.font_asset
         if asset is None:
             continue
-        key = (str(asset.get("hash")), str(asset.get("path")), slot.font) if isinstance(asset, dict) else (id(asset), slot.font)
+        key = (str(asset.get("hash")), str(asset.get("path")), slot.font, slot.font_style) if isinstance(asset, dict) else (id(asset), slot.font)
         if key not in seen:
             seen.add(key)
             errors.extend(slot.font + "：" + error for error in font_errors(asset, slot.font))
+            if slot.font_style and not font_errors(asset,slot.font):
+                from .font_catalog import raw_asset
+                try:
+                    if raw_asset(asset).styleName()!=slot.font_style:
+                        errors.append(slot.font+"：款式與核准字面不同，不能借用同家族其他款式")
+                except ValueError as error: errors.append(str(error))
     return errors
 
 

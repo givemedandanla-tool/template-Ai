@@ -33,9 +33,16 @@ class Candidate:
         return not self.issues
 
 
-def text_geometry(font_family: str, size_pt: float, text: str) -> tuple[float, float, list[str]]:
+def text_geometry(font_family: str, size_pt: float, text: str, style: str = "", asset: dict | None = None) -> tuple[float, float, list[str]]:
     """用固定 1000 像素 em 度量再換算毫米，避免螢幕 DPI 改變輸出。"""
     issues = []
+    if style or asset:
+        from .font_catalog import analyze_font
+        row={"kind":"ASSET","asset":asset} if asset else {"kind":"QT","families":[font_family],"styles":[style]}
+        result=analyze_font(row,text,size_pt,2000,.05,style or None)
+        if result.get("measurement_verified"):
+            return result["width_mm"],result["height_mm"],[]
+        return 0,0,result["issues"]
     if font_family not in QFontDatabase.families():
         return 0, 0, ["指定字型未安裝：" + font_family]
     font = QFont(font_family)
@@ -93,7 +100,7 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
                 issues.append(label + "：必要資料尚未提供")
             items.append(Placed(s))
             continue
-        tw, th, font_errors = text_geometry(s.font, s.size_pt, text)
+        tw, th, font_errors = text_geometry(s.font, s.size_pt, text, s.font_style, s.font_asset)
         issues.extend(label + "：" + x for x in font_errors)
         scale = min(1.0, s.rect.w / tw) if tw > 0 else 1.0
         if scale + 1e-6 < s.min_scale:

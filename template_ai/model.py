@@ -45,6 +45,7 @@ class Slot:
     id: str = field(default_factory=new_id)
     color: str = "#111827"
     font_asset: dict | None = None
+    font_style: str = ""
 
 
 @dataclass
@@ -111,6 +112,8 @@ def template_errors(t: Template) -> list[str]:
             errors.append(label + "：定案字級或模板字寬界限不合法")
         if s.align not in ("left", "center", "right"):
             errors.append(label + "：對齊設定不合法")
+        if not isinstance(s.font_style, str) or len(s.font_style)>128 or any(ord(c)<32 for c in s.font_style):
+            errors.append(label + "：字型款式識別不合法")
         if not isinstance(s.color, str) or not re.fullmatch(r"#[0-9a-fA-F]{6}", s.color):
             errors.append(label + "：文字色彩需為 #RRGGBB")
     for n in range(1, t.capacity + 1):

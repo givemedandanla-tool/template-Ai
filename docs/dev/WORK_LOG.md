@@ -2,6 +2,13 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-14：受控替代引擎與交易可恢復階段
+
+- BEGIN 7870a47c已REMOTE_VERIFIED，395檔含收據保存。新增Slot款式、模板單調edit clock、背景逐欄影響／字形高度量測、内部票據、新版草稿全批交易與持久Undo／Redo引擎。
+- schema以新增tables相容舊資料，不修改原發布模板；prepare票據只源自內部重驗，回傳report不能冒造核准。碼尚待完整GUI與故障驗收，不標完成。
+- 已實際閱讀Qt 6.8 qundostack.cpp undo／redo及obsolete／macro範圍判斷，借用command前後狀態思路，自行實作持久SQLite版本。
+- 下一步：具名交易／CAS／ABA／回滾測試、GUI逐欄審核與歷史操作、正式來源run。
+
 ## 2026-10-14：受控替代大功能啟動，先保存契約
 
 - 開工require-evidence PASS；遠端9531224c／main436ca2d7確認，CORE-031已完整完成，不重做。基準112列／31 CORE／6 GOV，75父題0完整／42部分／28未實作／2受阻／3延後。
