@@ -1,5 +1,14 @@
 # 開發工作紀錄
 
+## 2026-10-14：證據上傳自動審查阻塞與有界處理
+
+- 第一包201PASS／49附件仍local；完整附件checkpoint PREPARED，不宣稱REMOTE_VERIFIED。PDF因Noto字型被拒，實際pdffonts＋本機copyright＋上游OFL核對可嵌字，保存授權證據；再次PNG被拒，逐張view_image查34張確屬固定匿名fixture後仍被拒，理由需要具體使用者核准。已明確詢問，未繞通道／未刪證據／未降低验收。
+- 依較高優先「完成未受阻工作」及三包任務繼續包2／3；安全替代只保存code/docs，binary仍待核准，完整REMOTE驗收掛起。避免新增未持久code，checkpoint ZIP／部分遠端快照與STATE明示；不能當完整驗收。確認間隔已超10分，如實記錄。
+
+## 2026-10-14：三包第一包完成
+
+- CORE040／041，201PASS、49永久附件、source12f02a90。初期GUI選取fixture沒先捲到可見列，保留FAIL，補真scroll與增大樹區；24相關回歸PASS。41CORE已驗／4新CORE待做；父題狀態未假升完整。接續批次匯入与持久佇列。
+
 ## 2026-10-14：連續三包開始
 
 - 新指令三包：semantic／batch import／exception center；scope／驗收 THREE_PACKAGES_DESIGN 固定，開始前讀回。基準120列／39CORE verified，新增6待實作；不冒稱父題完整或自動辨識／訓練已做。無代理／EXE；每包 formal 全回歸、checkpoint，完成一包直接下一包。

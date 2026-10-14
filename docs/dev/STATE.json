@@ -3,9 +3,9 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.11",
+  "product_version": "0.1.12",
   "framework_status": "READY",
-  "active_task": "THREE-PACKAGES-1-SEMANTIC",
+  "active_task": "THREE-PACKAGES-2-BATCH-IMPORT",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-SEMANTIC-IMPLEMENTED.receipt.json",
   "last_confirmed_commit": "ca34731b950fdead2eb49ebb19a5bbadec8ed34a",
   "latest_evidence_run": null,
@@ -123,10 +123,12 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json",
+  "pending_remote": [
+    "CP-20261014-SEMANTIC-VERIFIED"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-END.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-SEMANTIC-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
@@ -149,15 +151,17 @@
     "packages": [
       {
         "id": "SEMANTIC",
-        "status": "IN_PROGRESS",
+        "status": "PASS_PENDING_REMOTE_APPROVAL",
         "requirements": [
           "CORE-040",
           "CORE-041"
-        ]
+        ],
+        "source_commit": "12f02a9056a03310c5412946e1b9792e90e55bdb",
+        "evidence": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json"
       },
       {
         "id": "BATCH-IMPORT",
-        "status": "PLANNED",
+        "status": "IN_PROGRESS",
         "requirements": [
           "CORE-042",
           "CORE-043"
@@ -172,5 +176,11 @@
         ]
       }
     ]
+  },
+  "artifact_upload_blocker": {
+    "status": "AWAITING_EXPLICIT_APPROVAL",
+    "reason": "Automatic review rejects inspected anonymous PNG as lacking specific user approval",
+    "action": "Upload new anonymous GUI/PDF evidence via same GitHub API, no bypass",
+    "safe_continuation": "Code/docs-only remote snapshots; full evidence remains PREPARED pending approval, no REMOTE_VERIFIED claim"
   }
 }

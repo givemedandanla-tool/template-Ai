@@ -1,3 +1,9 @@
+# 最新接續：連續三包 1／3（v0.1.12）
+
+- 包1 CORE040／041 完成；RUN-SEMANTIC-INDEX-001 source12f02a90，201PASS／0SKIP／49附件、所有該包具名验收PASS。39→41CORE完成，新增總6仍4待做；75父題0完整／44部分／26未實作／2受阻／3延後。
+- 當前契約 THREE_PACKAGES_DESIGN；直接繼續包2批次匯入，然後包3例外中心，未完成3包不得以checkpoint作停止點。
+- 語意樹是同一slotID引用，SVG是驗證快取衍生結構、所有slot映射UNKNOWN；viewport只改框，不改DB／原稿背景／正式Gate。來源標記公司關聯尚無confirm資訊則UNKNOWN。
+
 # Human／GPT 開發交接
 
 ## 最新整包：v0.1.11 CORE-037／038／039
