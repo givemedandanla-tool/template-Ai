@@ -42,6 +42,12 @@ class ComparisonCanvas(QGraphicsView):
             if key!=slot_id:pen.setStyle(Qt.DashLine)
             item.setPen(pen)
 
+    def resizeEvent(self,event):
+        super().resizeEvent(event)
+        # NoAnchor otherwise keeps the old top-left and silently changes the center.
+        if hasattr(self,'shared_center'):
+            self.set_view(self.shared_center,self.shared_zoom)
+
     def wheelEvent(self,event):
         factor=1.25 if event.angleDelta().y()>0 else .8
         self.navigated.emit(self.shared_center,max(.02,min(500,self.shared_zoom*factor)));event.accept()

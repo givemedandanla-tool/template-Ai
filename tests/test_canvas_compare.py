@@ -208,3 +208,18 @@ class CanvasCompareTests(unittest.TestCase):
             actual=view.mapToScene(view.viewport().rect().center())
             self.assertLessEqual(abs(actual.x()-d.center.x()),1.5/d.zoom_value);self.assertLessEqual(abs(actual.y()-d.center.y()),1.5/d.zoom_value)
         second=self.t.slots[1];d.objects.setCurrentRow(1);self.assertEqual(d.center,QPointF(second.rect.x+second.rect.w/2,second.rect.y+second.rect.h/2))
+
+    def test_resize_after_zoom_keeps_actual_center_and_per_field_selection(self):
+        d=CanvasCompareDialog(self.build());self.addCleanup(d.close);d.show();APP.processEvents();d.focus_selected()
+        selected=d.selected_id;center=QPointF(d.center);zoom=d.zoom_value
+        for width,height in ((1060,1000),(1800,560),(1400,790)):
+            d.resize(width,height);APP.processEvents()
+            self.assertEqual(d.selected_id,selected);self.assertEqual(d.center,center);self.assertEqual(d.zoom_value,zoom)
+            for view in d.views:
+                actual=view.mapToScene(view.viewport().rect().center())
+                self.assertLessEqual(abs(actual.x()-center.x()),1.5/zoom)
+                self.assertLessEqual(abs(actual.y()-center.y()),1.5/zoom)
+        d.fit_source();center=QPointF(d.center);d.resize(1200,900);APP.processEvents()
+        for view in d.views:
+            actual=view.mapToScene(view.viewport().rect().center());self.assertLessEqual(abs(actual.y()-center.y()),1.5/d.zoom_value)
+        self.assertEqual(self.library.font_change_history(),[])
