@@ -4,10 +4,11 @@ root=Path(__file__).resolve().parents[1];sys.path.insert(0,str(root/'tools'))
 from dev_common import write_json,contract_digest
 from dev_governance import verify_run,render
 from dev_progress import snapshot
-parser=argparse.ArgumentParser();parser.add_argument('number',type=int);parser.add_argument('run');parser.add_argument('--saved');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('number',type=int);parser.add_argument('run');parser.add_argument('--saved');parser.add_argument('--checkpoint');args=parser.parse_args()
 n=args.number;runpath='docs/evidence/runs/'+args.run+'/run.json';state=json.loads((root/'docs/dev/STATE.json').read_text());pack=state['ten_packages']['packages'][n-1]
 if args.saved:
- pack.update(status='COMPLETED_SAVED_SCOPE',snapshot_commit=args.saved,checkpoint=f'docs/checkpoints/CP-20261014-TEN-P{n:02}-VERIFIED.receipt.json');state['ten_packages']['completed']=n
+ checkpoint_id=args.checkpoint or f'CP-20261014-TEN-P{n:02}-VERIFIED';receipt=json.loads((root/'docs/checkpoints'/f'{checkpoint_id}.receipt.json').read_text());assert receipt['phase']=='REMOTE_VERIFIED' and receipt['snapshot_commit']==args.saved
+ pack.update(status='COMPLETED_SAVED_SCOPE',snapshot_commit=args.saved,checkpoint='docs/checkpoints/'+(args.checkpoint or f'CP-20261014-TEN-P{n:02}-VERIFIED')+'.receipt.json');state['ten_packages']['completed']=n
  state['next_tasks']=[{'id':state['ten_packages']['packages'][n]['id'] if n<10 else 'TEN-FINAL','status':'CONTINUE','action':'直接下一包；不等待HUMAN' if n<10 else '10包正式整合／保存範圍讀回，完整父需求仍按原清單續做'}]
 else:
  run,results=verify_run(root,runpath);assert run['status']=='PASS' and run['passed']==run['test_count'] and all(r['status']=='PASS' for r in results.values())
