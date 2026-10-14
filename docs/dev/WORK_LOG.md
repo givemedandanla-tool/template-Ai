@@ -10,7 +10,9 @@
 - BEGIN `db3039a5ade7716bfda5f905465b3732af7d7ef7` 已讀回304檔。已接中心查詢／影響／背景健康驗證，以及無fallback shaping／字型table核對／Unicode覆蓋／毫米適配診斷；輸入在背景診斷期間變更時，舊結果不套用新輸入。
 - GitHub PR說明更新先前兩次被中止；本輪用已成功的程式／文件快照API持久化，不反覆卡住同一PR操作。
 - WIP `7e2664adc461a254f34c1c09305775794352185f` 已讀回308檔；14初版具名驗收通過，再加入實際Qt背景執行緒測試與2件真實字型中心／診斷截圖，不只mock背景工作。
-- 下一步：v0.1.7 exact source checkpoint、119項全套驗證與22件預期附件；來源／不同字重／Windows／字型授權不冒稱全完成。
+- 初版程式 `2db34fad5943aec86821d39ad0d16a9497cedc63` 已讀回311檔；真實背景測試FAIL並在清理時busy未恢復觸發modal，主動中止focus／RUN-FONT-CENTER-001，該run未完成不能當PASS。
+- 實際debug activeThreadCount=0但dialog／window仍busy、inventory未收到；before-fix.log保存真實結果。新增CORE-030共用worker／Signals生命週期及GUI queued交接子項（UI-051／003），清單110→111，不把修正故障冒充完整佇列完成。
+- 下一步故障checkpoint後修復run_job，增加成功／錯誤／真實字型背景驗收，重新完整證據。
 
 ## 2026-10-14：v0.1.6 批次來源恢復與進度回報完成
 

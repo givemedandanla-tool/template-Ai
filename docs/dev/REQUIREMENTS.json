@@ -2902,6 +2902,33 @@
         }
       ],
       "next_step": "以確切來源產生全套證據與中心／診斷真實附件，父UI-032仍部分"
+    },
+    {
+      "id": "CORE-030",
+      "kind": "core",
+      "title": "背景工作生命週期與GUI成功／錯誤交接",
+      "parents": [
+        "UI-051",
+        "UI-003"
+      ],
+      "status": "IN_PROGRESS",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux Qt 真實worker訊號持有／GUI queued交接與busy恢復；非完整公平佇列／當次候選恢復或斷電续跑",
+      "phase": "P2、P7",
+      "decision_status": "既有核准需求子集；字型中心實際背景驗收揭露共用故障",
+      "sources": [
+        "docs/dev/FONT_CENTER_DESIGN.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-030-A1",
+          "expected": "真實背景工作成功及錯誤回到GUI執行緒，worker完工後不遺失busy／完成通知，訊號和worker生命週期持有與清理",
+          "tests": []
+        }
+      ],
+      "next_step": "故障checkpoint後修復run_job與真實執行緒驗收"
     }
   ]
 }
