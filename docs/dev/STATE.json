@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.14",
   "framework_status": "READY",
-  "active_task": "THREE-PACKAGES-FUNCTIONALLY-COMPLETED",
+  "active_task": "TEN-PACKAGES-IN-PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json",
   "last_confirmed_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
   "latest_evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
@@ -13,6 +13,7 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/HANDOFF.md",
+    "docs/dev/TEN_PACKAGES_DESIGN.md",
     "docs/dev/THREE_PACKAGES_DESIGN.md",
     "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
     "docs/dev/EVIDENCE_PUBLICATION_SCOPE_CHECK.md",
@@ -61,9 +62,11 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-TEN-BEGIN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-001/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-THREE-PACKAGES-BEGIN.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-THREE-PACKAGES-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
@@ -77,8 +80,8 @@
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
-  "active_contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
-  "next_work_package": "docs/dev/MARKING_TRUST_NEXT_PLAN.md",
+  "active_contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
+  "next_work_package": "docs/dev/TEN_PACKAGES_DESIGN.md",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -167,5 +170,104 @@
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
   "final_verification": "docs/dev/THREE_PACKAGES_FINAL_VERIFICATION.json",
-  "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json"
+  "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json",
+  "ten_packages": {
+    "target": 10,
+    "completed": 0,
+    "baseline_core": 45,
+    "added_core": 20,
+    "contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
+    "packages": [
+      {
+        "sequence": 1,
+        "id": "MARKING-QUALITY",
+        "requirements": [
+          "CORE-046",
+          "CORE-047"
+        ],
+        "status": "NOT_STARTED"
+      },
+      {
+        "sequence": 2,
+        "id": "ARTWORK-FACTS",
+        "requirements": [
+          "CORE-048",
+          "CORE-049"
+        ],
+        "status": "NOT_STARTED"
+      },
+      {
+        "sequence": 3,
+        "id": "NOISE-AUTHORING",
+        "requirements": [
+          "CORE-050",
+          "CORE-051"
+        ],
+        "status": "NOT_STARTED"
+      },
+      {
+        "sequence": 4,
+        "id": "RULE-REVIEW",
+        "requirements": [
+          "CORE-052",
+          "CORE-053"
+        ],
+        "status": "NOT_STARTED"
+      },
+      {
+        "sequence": 5,
+        "id": "AUTO-NOISE",
+        "requirements": [
+          "CORE-054",
+          "CORE-055"
+        ],
+        "status": "NOT_STARTED"
+      },
+      {
+        "sequence": 6,
+        "id": "RULE-RECOVERY",
+        "requirements": [
+          "CORE-056",
+          "CORE-057"
+        ],
+        "status": "NOT_STARTED"
+      },
+      {
+        "sequence": 7,
+        "id": "TRUSTED-SAMPLES",
+        "requirements": [
+          "CORE-058",
+          "CORE-059"
+        ],
+        "status": "NOT_STARTED"
+      },
+      {
+        "sequence": 8,
+        "id": "DATASET-LEARNING",
+        "requirements": [
+          "CORE-060",
+          "CORE-061"
+        ],
+        "status": "NOT_STARTED"
+      },
+      {
+        "sequence": 9,
+        "id": "COVERAGE",
+        "requirements": [
+          "CORE-062",
+          "CORE-063"
+        ],
+        "status": "NOT_STARTED"
+      },
+      {
+        "sequence": 10,
+        "id": "TRAINING-QUEUE",
+        "requirements": [
+          "CORE-064",
+          "CORE-065"
+        ],
+        "status": "NOT_STARTED"
+      }
+    ]
+  }
 }

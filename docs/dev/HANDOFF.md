@@ -1,3 +1,7 @@
+# 新任務：連續完成十個新工作包（0／10）
+
+最新使用者要求10包。已保存TEN_PACKAGES_DESIGN與126列／45CORE的原基準，新增20待實作CORE046..065；146列，75父題仍0／46／24／2／3、GOV6。先包1品質診斷→作品事實→規則／noise治理→可信樣本／資料集→覆蓋→可恢復幾何訓練；不是深度模型。證明二進位僅本機生成與hash記錄，code／tests／JUnit／claims／checkpoint／machine audit優先GitHub。正式每包驗收與範圍明示；不停止在中途checkpoint。治理publication例外將擴充為本輪明列run，以確保乾淨checkout可核對。沒有代理／EXE／main合併。
+
 # Human／GPT 接續：v0.1.14 三個實作工作包完成
 
 先AGENTS→STATE→本檔→THREE_PACKAGES_DESIGN→REQUIREMENTS／FEATURES／PROGRESS→最新run與收據。長期全清單目標仍PROJECT_GOAL／ROADMAP；下一包MARKING_TRUST_NEXT_PLAN為PLANNED，先读完整原條款、寫具名scope與BEGIN再code，避免重做本輪已完成程式。

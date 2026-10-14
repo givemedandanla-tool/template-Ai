@@ -130,5 +130,25 @@
 | CORE-043 | 單 worker 持久匯入佇列、取消及續跑 | VERIFIED | 是 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | [run](../../docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json) |
 | CORE-044 | 可解釋例外排序、exact 影響及來源定位 | VERIFIED | 是 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | [run](../../docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json) |
 | CORE-045 | 例外單件重試、排除與恢復的 CAS 歷史 | VERIFIED | 是 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | [run](../../docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json) |
+| CORE-046 | 標記完整性與有界幾何語意診斷 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包1的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-047 | 診斷搜尋排序與精確來源框定位 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包1的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-048 | 人工來源觀察與作品事實確認 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包2的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-049 | 事實revision差異與確認撤銷 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包2的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-050 | 單作品雜訊排除與精確作用範圍 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包3的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-051 | 有正反例的可重用雜訊候選 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包3的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-052 | 可解釋規則分組與審核詳情 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包4的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-053 | 低風險批准／逐條詳審與版本CAS | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包4的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-054 | 核准後後續精確命中自動排除 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包5的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-055 | 持久命中追溯與疑義保留 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包5的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-056 | 局部誤判恢复與可重用白名單 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包6的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-057 | 規則停用回滾與exact依賴影響 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包6的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-058 | 來源與用途核對的可信樣本准入 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包7的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-059 | 污染隔離撤銷與exact使用追溯 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包7的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-060 | exact資料集manifest與同源角色隔離 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包8的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-061 | 可信TRAIN樣本幾何草稿學習 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包8的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-062 | 審核覆蓋分母與分頁定位 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包9的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-063 | 樣本分布／未知分類與中性缺口提示 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包9的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-064 | 受控幾何學習單worker與持久結果 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包10的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
+| CORE-065 | 合作取消／中斷恢复與精確續跑 | NOT_IMPLEMENTED | 否 | TEN_PACKAGES_DESIGN 包10的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。
