@@ -29,14 +29,9 @@
   ],
   "next_tasks": [
     {
-      "id": "TRUSTED-SAMPLES",
-      "status": "IN_PROGRESS",
-      "action": "包7候選/APPROVED有效/STALE/QUARANTINED/REVOKED分離、exact SOURCE/WORK/FACTS/RULE/cache provenance与rights/use、必要人工正例／原錯誤預測分開、不自動訓練、dataset/template/job exact使用依賴與撤銷／隔離history/CAS/late rollback、真Qt背景健康核對／取消／過期／失败恢復已實作；target7PASS。環境切換檔案未丟失，WIP已Git讀回；進度render不同步已修。所有新媒體不公開，code/tests/metadata保存。"
-    },
-    {
-      "id": "TEN-NEXT",
+      "id": "DATASET-LEARNING",
       "status": "CONTINUE",
-      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
+      "action": "直接下一包；不等待HUMAN"
     }
   ],
   "blocked": [
@@ -170,7 +165,7 @@
   "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
-    "completed": 6,
+    "completed": 7,
     "baseline_core": 45,
     "added_core": 20,
     "contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
@@ -267,10 +262,12 @@
           "CORE-058",
           "CORE-059"
         ],
-        "status": "FORMAL_PASS_PENDING_REMOTE",
+        "status": "COMPLETED_SAVED_SCOPE",
         "source_commit": "9ee4bf5d3ddd547fea52c0977eabf8dd537409af",
         "evidence": "docs/evidence/runs/RUN-TEN-TRUSTED-SAMPLES-001/run.json",
-        "tests": 290
+        "tests": 290,
+        "snapshot_commit": "c3fe284fd14e6475bd3b23f5c759aff041dc8ba2",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P07-TEXT-VERIFIED.receipt.json"
       },
       {
         "sequence": 8,
