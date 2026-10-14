@@ -1,3 +1,7 @@
+# 十包最新接續：4/10已保存；RULE-REVIEW COMPLETED_SAVED_SCOPE
+
+最新source與驗收 docs/evidence/runs/RUN-TEN-RULE-REVIEW-001/run.json；按STATE下一包與TEN契約直接續做，不能把既有包／checkpoint重算。CORE基準45，本輪目標+20；每包2CORE。原75父需求保持完整缺口，SELF_VERIFIED／Linux／匿名合成，無EXE／代理／main合併。metadata-first source-bound政策，原失敗與本機媒體保留。
+
 # 十包最新接續：3/10已保存；RULE-REVIEW FORMAL_PASS_PENDING_REMOTE
 
 最新source與驗收 docs/evidence/runs/RUN-TEN-RULE-REVIEW-001/run.json；按STATE下一包與TEN契約直接續做，不能把既有包／checkpoint重算。CORE基準45，本輪目標+20；每包2CORE。原75父需求保持完整缺口，SELF_VERIFIED／Linux／匿名合成，無EXE／代理／main合併。metadata-first source-bound政策，原失敗與本機媒體保留。

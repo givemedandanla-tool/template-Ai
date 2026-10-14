@@ -29,14 +29,9 @@
   ],
   "next_tasks": [
     {
-      "id": "RULE-REVIEW",
-      "status": "IN_PROGRESS",
-      "action": "包4同前提LOW批次／HIGH逐條詳審／BLOCK缺證拒絕、APPROVE/REJECT/DEFER、exact當前觀察／作品／模板關聯影響、版本history/CAS與同交易late rollback、真Qt搜尋／詳情／確認／取消／過期／失敗恢復已實作；target8PASS。helper已改manifest分塊、shell所有yield輸出累積及小tree批次；原P3截斷失敗與恢復紀錄保留，非產品失敗。正式freeze。"
-    },
-    {
-      "id": "TEN-NEXT",
+      "id": "AUTO-NOISE",
       "status": "CONTINUE",
-      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
+      "action": "直接下一包；不等待HUMAN"
     }
   ],
   "blocked": [
@@ -166,7 +161,7 @@
   "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
-    "completed": 3,
+    "completed": 4,
     "baseline_core": 45,
     "added_core": 20,
     "contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
@@ -220,10 +215,12 @@
           "CORE-052",
           "CORE-053"
         ],
-        "status": "FORMAL_PASS_PENDING_REMOTE",
+        "status": "COMPLETED_SAVED_SCOPE",
         "source_commit": "bd0445c2d3312c28de8bb2c88aa214a0c8b1fa49",
         "evidence": "docs/evidence/runs/RUN-TEN-RULE-REVIEW-001/run.json",
-        "tests": 267
+        "tests": 267,
+        "snapshot_commit": "aaf524e6fa5903ac061d783418e47981cf001c8c",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P04-VERIFIED.receipt.json"
       },
       {
         "sequence": 5,
