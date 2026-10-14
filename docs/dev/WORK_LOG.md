@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 2026-10-14：包2可恢復階段12PASS
+
+- 批次預檢與健康exact重用、單worker SQLite結果＋audit同交易、session ownership、防多視窗接管、合作取消／重開續跑已實作；12具名backend／真Qt PASS。晚期結果audit回滾source與item並轉INTERRUPTED、GUI恢復操作。
+- 仍須永久GUI與正式全回歸，未把包2記完成；不宣稱自动語意學習。第一次apply_patch因source_imported名稱context不符，沒有部分改寫，核對後修正。使用者已明確授權匿名證據及事件報告／等效替代，保存正式修正。
+
 ## 2026-10-14：證據上傳自動審查阻塞與有界處理
 
 - 第一包201PASS／49附件仍local；完整附件checkpoint PREPARED，不宣稱REMOTE_VERIFIED。PDF因Noto字型被拒，實際pdffonts＋本機copyright＋上游OFL核對可嵌字，保存授權證據；再次PNG被拒，逐張view_image查34張確屬固定匿名fixture後仍被拒，理由需要具體使用者核准。已明確詢問，未繞通道／未刪證據／未降低验收。

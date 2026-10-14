@@ -8,7 +8,7 @@
   "active_task": "THREE-PACKAGES-2-BATCH-IMPORT",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-SEMANTIC-APPROVED.receipt.json",
   "last_confirmed_commit": "61f8c7e584041cd6d7fedf66dcaf1072d8de56f5",
-  "latest_evidence_run": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json",
+  "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -123,7 +123,9 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-BATCH-CORE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-SEMANTIC-END.json",
@@ -149,13 +151,14 @@
     "packages": [
       {
         "id": "SEMANTIC",
-        "status": "VERIFIED_PENDING_FINAL_READBACK",
+        "status": "REMOTE_VERIFIED",
         "requirements": [
           "CORE-040",
           "CORE-041"
         ],
         "source_commit": "12f02a9056a03310c5412946e1b9792e90e55bdb",
-        "evidence": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json"
+        "evidence": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json",
+        "snapshot_commit": "61f8c7e584041cd6d7fedf66dcaf1072d8de56f5"
       },
       {
         "id": "BATCH-IMPORT",

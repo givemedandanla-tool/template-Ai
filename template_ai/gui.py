@@ -189,6 +189,9 @@ class MainWindow(QMainWindow):
     def __init__(self, data_root):
         super().__init__()
         self.library = Library(data_root)
+        from .batch_import import BatchStore
+        self.import_store=BatchStore(self.library)
+        self.import_store.recover()
         self.font_manager = FontManager(self.library)
         self.pool = QThreadPool(self)
         self.pool.setMaxThreadCount(1)
@@ -284,6 +287,7 @@ class MainWindow(QMainWindow):
         self.button("檢查原稿連結", self.check_source_link, links_row)
         self.button("重新連結同內容原稿", self.relink_source, links_row)
         self.button("批次來源定位／復原", self.batch_source_links, links_row)
+        self.button("批次匯入／取消與續跑", self.batch_import, links_row)
         links_row.addStretch()
         layout.addLayout(links_row)
         works_row = QHBoxLayout()
@@ -544,6 +548,13 @@ class MainWindow(QMainWindow):
         source = self.library.add_source(Path(path), result)
         self.refresh_sources(source["id"])
         self.statusBar().showMessage("來源已保存；" + ("重用同內容解析，保留本次來源登錄" if result.get("reused") else "視覺一致性仍待原稿核對"))
+
+    def batch_import(self):
+        if self.busy:return
+        from .batch_dialog import BatchImportDialog
+        dialog=BatchImportDialog(self)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
 
     def check_source_link(self):
         if not self.source or self.busy:

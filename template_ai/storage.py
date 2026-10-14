@@ -569,4 +569,6 @@ class Library:
             self.db.backup(other)
 
     def close(self) -> None:
+        from .batch_import import end_session
+        end_session(self)
         self.db.close()
