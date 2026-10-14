@@ -8,7 +8,7 @@ from unittest.mock import patch
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 from PySide6.QtCore import Qt
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QMessageBox
 from template_ai.demo import demo_template
 from template_ai.model import Rect, Slot
 from template_ai.training_quality import analyse_work, quality_rows
@@ -58,12 +58,17 @@ class TrainingQualityTests(unittest.TestCase):
 
 class TrainingQualityGuiTests(unittest.TestCase):
     def setUp(self):
+        self.dialog_patch = patch.object(QMessageBox, 'warning', return_value=QMessageBox.Ok)
+        self.dialog_patch.start(); self.addCleanup(self.dialog_patch.stop)
         self.temp = tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup); self.root = Path(self.temp.name)
-        self.window = MainWindow(self.root/'data'); self.addCleanup(self.window.close)
+        self.window = MainWindow(self.root/'data'); self.addCleanup(self.close_fixture)
         self.source, self.work = source_work(self.window.library, self.root, visual=False)
         payload = copy.deepcopy(self.work['payload']); payload['slots'][0]['rect']['x'] = 999
         self.work = self.window.library.save_artwork(self.work['id'], payload, self.work['revision'])
         self.d = TrainingQualityDialog(self.window); self.addCleanup(self.d.close); self.d.show(); APP.processEvents()
+    def close_fixture(self):
+        # Explicitly discard test-only unsaved state after assertions; stale close normally asks the user.
+        self.window.source = None; self.window.work = None; self.window.template = None; self.window.close()
     def select(self, code='BOUNDS'):
         i = next(i for i, r in enumerate(self.d.rows) if r['code'] == code); self.d.table.selectRow(i); APP.processEvents()
     def test_actual_readonly_search_filter_navigation_and_stale_recovery(self):
@@ -74,11 +79,17 @@ class TrainingQualityGuiTests(unittest.TestCase):
         QTest.mouseClick(self.d.locate_button, Qt.LeftButton); self.assertIn('已變更', self.d.status.text()); self.assertTrue(self.d.reload_button.isEnabled())
         self.d.reload(); self.assertNotEqual(before, self.window.library.artwork(before['id']))
     def test_dirty_main_edit_and_backend_failure_preserve_content(self):
-        self.select(); self.d.locate(); self.window.slots[0].rect.x = 8; before = copy.deepcopy(self.window.slots)
+        self.select(); self.d.locate(); self.window.slots[0].rect.x = 8; self.window.coords[0].setValue(8); before = copy.deepcopy(self.window.slots)
         QTest.mouseClick(self.d.locate_button, Qt.LeftButton); self.assertIn('未保存', self.d.status.text()); self.assertEqual(self.window.slots, before)
         with patch('template_ai.training_quality_dialog.quality_rows', side_effect=RuntimeError('forced index failure')): self.d.reload()
         self.assertEqual(self.d.table.rowCount(), 0); self.assertIn('未完成', self.d.status.text()); self.assertTrue(self.d.reload_button.isEnabled())
         self.d.reload(); self.assertGreater(self.d.table.rowCount(), 0)
+    def test_unapplied_coordinate_panel_is_not_saved_by_navigation(self):
+        self.select(); self.d.locate(); before = self.window.library.artwork(self.work['id'])
+        self.window.coords[0].setValue(7)
+        QTest.mouseClick(self.d.locate_button, Qt.LeftButton)
+        self.assertIn('未套用', self.d.status.text()); self.assertEqual(self.window.coords[0].value(), 7)
+        self.assertEqual(self.window.library.artwork(self.work['id']), before)
     def test_paginated_report_and_source_entry_actual_dialog(self):
         result = quality_rows(self.window.library, offset=0, limit=1); self.assertEqual(result['scanned_works'], 1); self.assertFalse(result['full_quality_pass'])
         with self.assertRaises(ValueError): quality_rows(self.window.library, limit=201)

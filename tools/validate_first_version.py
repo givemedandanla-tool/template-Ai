@@ -261,6 +261,8 @@ def main():
     capture_index(window,artifacts,first['id'],created)
     capture_batch(window,artifacts)
     capture_exceptions(window,artifacts)
+    from capture_ten_packages import capture_ten_packages
+    capture_ten_packages(artifacts)
     window.close()
     reopened = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     assert reopened.work["id"] == second["id"]
