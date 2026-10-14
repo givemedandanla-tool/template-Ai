@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 10/10 正式驗收
+
+RUN-TEN-TRAINING-QUEUE-001／source 1278fd2b44f1da5670916c2b2056cf4cd8c909fb：318PASS／0SKIP，71本機附件、source unchanged。CORE-064,CORE-065及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。
+
+
 ## 十包 10 可恢復實作
 
 包10已實作durable JOB／WORKER lease與每item原子Template/USE/result/audit、源與sample/Dataset/rule/use逐項fresh、單worker／owner CAS／doubleclaim保護、合作取消／reopen/dead-owner明确resume／SUCCESS不重跑／既有成果REUSED／source失敗隔離與audit不可隔離停止、actualQt真实worker/进度/取消/续跑/启动失败恢复/close guard。12targetPASS；初history计数误写5实际6，已改完整6个revision/action断言保留原FAIL，不降低产品條件。全部10真实GUI流程capture已接上，正式全回归前未完成10/10。无EXE/新media发布/mainmerge。
