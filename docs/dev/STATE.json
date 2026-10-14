@@ -29,14 +29,9 @@
   ],
   "next_tasks": [
     {
-      "id": "DATASET-LEARNING",
-      "status": "IN_PROGRESS",
-      "action": "包8原RUN-DATASET-001 298PASS仅歷史；新增真GUI dirty-editor test得到RED：refresh_templates默默save旧DRAFT与清Undo。现新增preserve_editor真保留DB/内存/Undo，9targetPASS；保留RED与前版run，不降低標準。新版重凍source，正式299全回歸後才能結案8/10。"
-    },
-    {
-      "id": "TEN-NEXT",
+      "id": "COVERAGE",
       "status": "CONTINUE",
-      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
+      "action": "直接下一包；不等待HUMAN"
     }
   ],
   "blocked": [
@@ -170,7 +165,7 @@
   "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
-    "completed": 7,
+    "completed": 8,
     "baseline_core": 45,
     "added_core": 20,
     "contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
@@ -281,10 +276,12 @@
           "CORE-060",
           "CORE-061"
         ],
-        "status": "FORMAL_PASS_PENDING_REMOTE",
+        "status": "COMPLETED_SAVED_SCOPE",
         "source_commit": "9e6cc9490367473a00aacc9c2929ea1c430423e0",
         "evidence": "docs/evidence/runs/RUN-TEN-DATASET-LEARNING-002/run.json",
-        "tests": 299
+        "tests": 299,
+        "snapshot_commit": "682bd2b322af65817d700481a53f4bb47b5440be",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P08-TEXT-VERIFIED.receipt.json"
       },
       {
         "sequence": 9,
