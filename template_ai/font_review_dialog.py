@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (QCheckBox,QDialog,QDialogButtonBox,QHBoxLayout,QL
 from .font_catalog import build_inventory
 from .font_candidates import render_candidate
 from .font_review import FontReviewEngine,SCOPE,field_key,fingerprint
+from .model import KINDS
 
 
 class FontReviewDialog(QDialog):
@@ -64,9 +65,12 @@ class FontReviewDialog(QDialog):
     def invalidate(self,*_):
         self.generation+=1;self.report=None;self.approved.clear();self.preview_data=None
         self.preview.clear();self.preview.setText('輸入已變更，舊核准與預覽失效；請重新驗證。')
+        self.details.setText('舊差異與審核已失效；請重新驗證。'+SCOPE)
         for i in range(self.table.rowCount()):
             checkbox=self.table.cellWidget(i,0)
             if checkbox:checkbox.setChecked(False);checkbox.setEnabled(False)
+            for col,value in ((5,'未核驗／舊結果失效'),(6,'輸入已變更，須重新量測及逐欄審核')):
+                self.table.setItem(i,col,QTableWidgetItem(value))
         self.apply_button.setEnabled(False);self.review_button.setEnabled(False)
         self.status.setText('驗證文字或條件變更，核准及勾選已清除。')
 
@@ -85,9 +89,9 @@ class FontReviewDialog(QDialog):
             checkbox=QCheckBox();checkbox.setChecked(False);checkbox.setEnabled(False);self.table.setCellWidget(i,0,checkbox)
             edit=QLineEdit();edit.setMaxLength(4096);edit.textChanged.connect(self.invalidate);self.table.setCellWidget(i,3,edit)
             texts={1:f"{t['name']} v{t['version']}（{t['state']}）\n{t['width_mm']:g}×{t['height_mm']:g} mm\n來源作品 {t.get('source_work_id') or '未知'}／{t.get('source_work_revision',0)}",
-                   2:f"{s['owner']}／{s['kind']}／{s['id']}\n({box['x']:g},{box['y']:g}) {box['w']:g}×{box['h']:g} mm · {s['size_pt']:g} pt",
+                   2:f"{s['owner']}／{KINDS.get(s['kind'],s['kind'])} 第{s.get('index',0)+1}欄\n({box['x']:g},{box['y']:g}) {box['w']:g}×{box['h']:g} mm · {s['size_pt']:g} pt",
                    4:f"{s['font']} / {s.get('font_style') or '預設／待核驗'}",5:'未核驗',6:'未提供本欄文字；原稿身份／字寬差異未知'}
-            for col,value in texts.items():item=QTableWidgetItem(value);item.setToolTip(value);self.table.setItem(i,col,item)
+            for col,value in texts.items():item=QTableWidgetItem(value);item.setToolTip(value+('\n文字框識別：'+s['id'] if col==2 else ''));self.table.setItem(i,col,item)
         self.table.blockSignals(False)
         for col,width in enumerate((45,250,245,200,200,115,390)):self.table.setColumnWidth(col,width)
         self.table.resizeRowsToContents();self.table.clearSelection()
@@ -160,7 +164,7 @@ class FontReviewDialog(QDialog):
         candidate={'row':self.report['target'],'analysis':row['proposed'],'requested_style':row['proposed']['style'],'input':inputs}
         def show(result):
             pixmap=QPixmap();pixmap.loadFromData(result['png'],'PNG');self.preview.setPixmap(pixmap);self.preview_data=result
-            self.details.setText(f"{row['template_name']} v{row['version']}／{s['owner']}／{s['kind']}／{s['id']}\n"+self.table.item(i,6).text()+'\n'+SCOPE)
+            self.details.setText(f"{row['template_name']} v{row['version']}／{s['owner']}／{KINDS.get(s['kind'],s['kind'])} 第{s.get('index',0)+1}欄\n"+self.table.item(i,6).text()+'\n'+SCOPE)
             if QMessageBox.question(self,'逐欄核准草稿字型替代',self.details.text()+'\n核准僅此欄進入勾選候選；不等於正式輸出／原稿一致。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)==QMessageBox.Yes:
                 self.approved.add(row['key']);self.table.cellWidget(i,0).setEnabled(True);self.table.item(i,5).setText(row['risk']+' · 已逐欄核准，尚未勾選')
         self.start('重新核對所選欄候選字面，建立人工詳審預覽',lambda:render_candidate(candidate,inputs),show,allow_input=False)

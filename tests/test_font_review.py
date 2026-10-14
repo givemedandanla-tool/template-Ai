@@ -289,6 +289,7 @@ class FontReviewGuiTests(unittest.TestCase):
         self.verify();self.dialog.table.selectRow(0);self.dialog.review_selected();self.wait()
         self.dialog.table.cellWidget(0,0).setChecked(True);self.dialog.table.cellWidget(0,3).setText('Changed')
         self.assertFalse(self.dialog.approved);self.assertIsNone(self.dialog.report);self.assertFalse(self.dialog.table.cellWidget(0,0).isChecked())
+        self.assertNotIn('已逐欄核准',self.dialog.table.item(0,5).text());self.assertIn('失效',self.dialog.details.text())
         jobs=[]
         with patch.object(self.window,'run_job',side_effect=lambda msg,fn,callback:jobs.append((fn,callback))):self.dialog.validate()
         self.dialog.table.cellWidget(0,3).setText('Late');jobs[0][1](jobs[0][0]())

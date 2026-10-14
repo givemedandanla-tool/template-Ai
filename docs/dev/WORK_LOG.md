@@ -2,6 +2,12 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-14：真實審核／草稿／Undo畫面核對與最後輸入失效修正
+
+- STYLE-FIXED 448d428b已讀回408檔。完整真實worker流程擷取差異、詳審預覽、新版草稿歷史與Undo，重開確認Redo持久。匿名audit不含Alex Example原文字，包含一欄目標Book pin與完整前後版本。
+- 視覺核對發現輸入失效後詳細面板與表格風險文字仍可能显示舊數值／核准字樣；已清除成未核驗，具名stale測試補對可見狀態的驗收。欄位名轉中文，stable id保留tooltip與機器記錄，不顯示為使用者主要標籤。
+- 最終來源待IMPLEMENTED checkpoint與正式全套run；本輪仍持續至完整工作包持久化，不停止在修正或小checkpoint。
+
 ## 2026-10-14：受控替代完整流程與款式故障修正完成待正式證據
 
 - GUI checkpoint 0237e3ef已讀回403檔。新增23項focused全部PASS，含多模板晚期回滾、失效票據、LOW同字面修復、私密缺字集合不落DB、真實GUI全流程及重開Undo／Redo。
