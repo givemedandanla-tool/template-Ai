@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 6 可恢復實作
+
+包6局部KEEP／PENDING白名單／批准全域KEEP優先、規則DISABLE／人工來源CHANGE／immutable歷史ROLLBACK新PENDING再審、exact前後影响／樣本依賴定向失效、caller after重算／SHA/CAS、late hit audit整筆rollback、真Qt恢复／白名單／停止／回滾／stale controls已實作；target8PASS。新細則TEN_RECOVERY_ACCEPTANCE開始前保存本機，與source一同GitHub；不改發布模板或聲稱模型解污染。
+
+
 ## 十包 5/10 正式驗收
 
 RUN-TEN-AUTO-NOISE-001／source 279cddb726f5a1de28c3be26feb563ae92bd269d：275PASS／0SKIP，66本機附件、source unchanged。CORE-054,CORE-055及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。

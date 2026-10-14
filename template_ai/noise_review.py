@@ -53,9 +53,9 @@ class RuleReviewMixin:
             excluded = rule['action'] == 'EXCLUDE' and row['confirmed'] and not protected and observation['classification'] == rule['scope']['classification']
             if not row['confirmed'] or observation['classification'] == 'UNKNOWN': risks.append('完整字串有未知／未確認語境，將保留')
             matches.append({'work_id': row['work']['id'], 'source_id': row['source']['id'], 'observation_id': observation['id'], 'text': observation['text'], 'protected': protected,
-                            'confirmed': row['confirmed'], 'decision_if_active': 'EXCLUDED_RULE' if excluded else 'KEPT', 'work_revision': row['work']['revision'], 'facts_revision': row['facts']['revision']})
+                            'confirmed': row['confirmed'], 'decision_if_active': 'EXCLUDED_RULE' if excluded else 'KEPT_WHITELIST' if rule['action']=='KEEP' and row['confirmed'] and not protected and observation['classification']==rule['scope']['classification'] else 'KEPT', 'work_revision': row['work']['revision'], 'facts_revision': row['facts']['revision']})
         matches.sort(key=lambda r: (r['source_id'], r['work_id'], r['observation_id']))
-        affected = sorted({r['work_id'] for r in matches if r['decision_if_active'] == 'EXCLUDED_RULE'})
+        affected = sorted({r['work_id'] for r in matches if r['decision_if_active'] in ('EXCLUDED_RULE','KEPT_WHITELIST')})
         templates = sorted(t.id for t in self.library.templates() if t.source_work_id in affected)
         scope_group = digest({'scope': rule['scope'], 'normalization': rule['normalization'], 'action': rule['action']})
         return {'id': rule_id, 'revision': rule['revision'], 'state': rule['state'], 'risk': 'BLOCK' if errors else 'HIGH' if risks else 'LOW', 'errors': sorted(set(errors)), 'risk_reasons': sorted(set(risks)),

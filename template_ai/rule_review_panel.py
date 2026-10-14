@@ -17,6 +17,9 @@ class RuleReviewPanel(QWidget):
         bar=QHBoxLayout();self.approve_button=QPushButton('明確批准選中規則');self.reject_button=QPushButton('拒絕');self.defer_button=QPushButton('暫緩')
         for button,action in ((self.approve_button,'APPROVE'),(self.reject_button,'REJECT'),(self.defer_button,'DEFER')):button.clicked.connect(lambda _,a=action:self.decide(a));bar.addWidget(button)
         outer.addLayout(bar);self.reload()
+        bar=QHBoxLayout();self.disable_button=QPushButton('停用選中規則');self.rollback_button=QPushButton('歷史內容回滾為新版候選');self.change_button=QPushButton('從人工觀察建立新版本');self.disable_button.clicked.connect(lambda:self.version('DISABLE'));self.rollback_button.clicked.connect(lambda:self.version('ROLLBACK'));self.change_button.clicked.connect(self.change)
+        for b in (self.disable_button,self.rollback_button,self.change_button):bar.addWidget(b)
+        outer.addLayout(bar);self.selected()
 
     def search_changed(self,*_):self.offset=0;self.reload()
     def page(self,delta):self.offset=max(0,self.offset+delta);self.reload()
@@ -43,6 +46,8 @@ class RuleReviewPanel(QWidget):
         if self.loading:return
         ids=self.selected_ids();rows=[r for r in self.rows if r['id'] in ids];self.details.setPlainText(json.dumps(rows,ensure_ascii=False,indent=2))
         for button in (self.approve_button,self.reject_button,self.defer_button):button.setEnabled(bool(ids) and not self.window.busy)
+        if hasattr(self,'disable_button'):
+            for button in (self.disable_button,self.rollback_button,self.change_button):button.setEnabled(len(ids)==1 and not self.window.busy)
 
     def decide(self,action):
         for button in (self.approve_button,self.reject_button,self.defer_button):button.setEnabled(False)
@@ -54,3 +59,30 @@ class RuleReviewPanel(QWidget):
             result=self.store.review_rules(plan,action,actor,reason,approved=True,detail_reviewed=self.detail_reviewed.isChecked());self.status.setText('已保存：'+', '.join(r['id']+' '+r['state'] for r in result));self.reload()
         except Exception as error:self.status.setText('未審核：'+str(error))
         finally:self.selected()
+
+    def version(self,operation):
+        try:
+            from PySide6.QtWidgets import QInputDialog
+            from .training_store import text
+            ids=self.selected_ids()
+            if len(ids)!=1 or self.window.busy:raise ValueError('一次選一條規則且背景工作需結束')
+            actor=text(self.actor.text(),'操作人',120);reason=text(self.reason.text(),'原因');revision=None
+            if operation=='ROLLBACK':
+                history=self.store.history('RULE',ids[0]);revision,ok=QInputDialog.getInt(self,'回滾歷史內容','歷史版次（新PENDING版，不覆寫原歷史）',1,1,max(h['revision'] for h in history))
+                if not ok:return
+            plan=self.store.rule_version_plan(ids[0],operation,revision);self.details.setPlainText(json.dumps(plan,ensure_ascii=False,indent=2))
+            if QMessageBox.question(self,'確認規則版本影響',self.details.toPlainText(),QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
+            result=self.store.apply_rule_version(plan,actor,reason,True);self.status.setText(result['state']+'／新r'+str(result['revision'])+'；發布模板與模型未改');self.reload()
+        except Exception as error:self.status.setText('未變更規則版本：'+str(error))
+        finally:self.selected()
+
+    def change(self):
+        try:
+            ids=self.selected_ids()
+            if len(ids)!=1 or self.window.busy:raise ValueError('一次選一條規則')
+            from .rule_change_selector import RuleChangeSelector
+            dialog=RuleChangeSelector(self.store,ids[0],self.actor.text(),self.reason.text(),self)
+            try:dialog.exec()
+            finally:dialog.deleteLater()
+            self.reload()
+        except Exception as error:self.status.setText('未開新版本：'+str(error))

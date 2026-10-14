@@ -14,6 +14,7 @@ class NoiseHitsPanel(QWidget):
         bar=QHBoxLayout();self.previous_button=QPushButton('上一頁');self.next_button=QPushButton('下一頁');self.locate_button=QPushButton('定位exact來源／作品');self.refresh_button=QPushButton('保存選中作品的目前追溯');self.previous_button.clicked.connect(lambda:self.page(-200));self.next_button.clicked.connect(lambda:self.page(200));self.locate_button.clicked.connect(self.locate);self.refresh_button.clicked.connect(self.refresh)
         for b in (self.previous_button,self.next_button,self.locate_button,self.refresh_button):bar.addWidget(b)
         outer.addLayout(bar);self.reload()
+        bar=QHBoxLayout();self.actor=QLineEdit();self.actor.setPlaceholderText('恢復／白名單提出者（本機）');self.actor.setMaxLength(120);bar.addWidget(self.actor);self.keep_button=QPushButton('不是雜訊：只保留此項');self.whitelist_button=QPushButton('保留並建立待審白名單');self.keep_button.clicked.connect(self.keep);self.whitelist_button.clicked.connect(self.whitelist);bar.addWidget(self.keep_button);bar.addWidget(self.whitelist_button);outer.addLayout(bar);self.selected()
     def search_changed(self,*_):self.offset=0;self.reload()
     def page(self,delta):self.offset=max(0,self.offset+delta);self.reload()
     def selected_row(self):
@@ -39,6 +40,7 @@ class NoiseHitsPanel(QWidget):
     def selected(self):
         if self.loading:return
         row=self.selected_row();detail={**row,'history':self.store.history('HIT',row['id'])} if row else {};self.details.setPlainText(json.dumps(detail,ensure_ascii=False,indent=2));self.locate_button.setEnabled(bool(row) and not self.window.busy);self.refresh_button.setEnabled(bool(row) and not self.window.busy)
+        if hasattr(self,'keep_button'):self.keep_button.setEnabled(bool(row) and not self.window.busy);self.whitelist_button.setEnabled(bool(row) and not self.window.busy)
     def locate(self):
         try:
             row=self.selected_row()
@@ -51,3 +53,24 @@ class NoiseHitsPanel(QWidget):
             if not row:raise ValueError('先選取追溯')
             current=row['current'];self.store.refresh_noise(row['stored']['work_id'],current['facts_revision']);self.reload()
         except Exception as error:self.status.setText('未保存追溯：'+str(error));self.selected()
+
+    def keep(self):
+        try:
+            from PySide6.QtWidgets import QMessageBox
+            row=self.selected_row()
+            if not row or self.window.busy:raise ValueError('先選取exact觀察，結束背景工作')
+            stored=row['stored'];local=self.store.local_record(stored['work_id']);facts=self.store.facts(stored['work_id'])
+            if QMessageBox.question(self,'只恢復此觀察',stored['work_id']+'／'+stored['observation_id']+'\n只保留此項，不建立或批准通用白名單。原稿與欄位不改。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
+            self.store.local_keep(stored['work_id'],[stored['observation_id']],local['revision'],facts['revision'],True);self.reload()
+        except Exception as error:self.status.setText('未恢復：'+str(error));self.selected()
+
+    def whitelist(self):
+        try:
+            row=self.selected_row()
+            if not row or self.window.busy:raise ValueError('先選取exact觀察')
+            from .noise_authoring_dialog import NoiseAuthoringDialog
+            stored=row['stored'];dialog=NoiseAuthoringDialog(self.store,stored['work_id'],stored['observation_id'],self.actor.text(),self,action='KEEP')
+            try:dialog.exec()
+            finally:dialog.deleteLater()
+            self.reload()
+        except Exception as error:self.status.setText('未建立白名單：'+str(error));self.selected()

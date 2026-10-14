@@ -72,6 +72,16 @@ def capture_ten_packages(root):
         assert window.library.artwork(future_work['id']) == future_work
         if not dialog.grab().save(str(root/'ten-noise-auto-hit.png')): raise ValueError('自動命中GUI未保存')
         audit['auto_hits'] = {'actual_qt': True, 'future_work': future_work, 'hit': hits.selected_row(), 'counts': hits.count.text(), 'rule_reapproval_prompts': 0, 'source_and_slots_unchanged': True}
+        with patch.object(QMessageBox, 'question', return_value=QMessageBox.Yes): QTest.mouseClick(hits.keep_button, Qt.LeftButton)
+        assert hits.rows[0]['current']['state'] == 'KEPT_LOCAL'
+        rules.reload(); dialog.tabs.setCurrentWidget(rules); rules.table.selectRow(next(i for i, r in enumerate(rules.rows) if r['id']==reviewed['id']))
+        with patch.object(QMessageBox, 'question', return_value=QMessageBox.Yes): QTest.mouseClick(rules.disable_button, Qt.LeftButton)
+        disabled=facts.store.get('RULE',reviewed['id']);assert disabled['state']=='DISABLED';rules.table.selectRow(next(i for i,r in enumerate(rules.rows) if r['id']==reviewed['id']))
+        from PySide6.QtWidgets import QInputDialog
+        with patch.object(QInputDialog,'getInt',return_value=(2,True)),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes): QTest.mouseClick(rules.rollback_button,Qt.LeftButton)
+        restored=facts.store.get('RULE',reviewed['id']);assert restored['state']=='PENDING' and restored['revision']>disabled['revision'];assert window.library.artwork(future_work['id'])==future_work;QApplication.processEvents()
+        if not dialog.grab().save(str(root/'ten-noise-recovery.png')):raise ValueError('規則回滾GUI未保存')
+        audit['noise_recovery']={'actual_qt':True,'local_keep':facts.store.local_record(future_work['id']),'disabled':disabled,'restored_pending':restored,'history':facts.store.history('RULE',reviewed['id']),'published_templates_unchanged':True,'model_decontamination_claim':False}
         (root / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
     finally:
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()
