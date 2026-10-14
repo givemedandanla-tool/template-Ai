@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 5/10 正式驗收
+
+RUN-TEN-AUTO-NOISE-001／source 279cddb726f5a1de28c3be26feb563ae92bd269d：275PASS／0SKIP，66本機附件、source unchanged。CORE-054,CORE-055及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。
+
+
 ## 十包 5 可恢復實作
 
 包5已核准完整literal/type/region與人工語境的後續自動命中、protected field/Logo/unknown／unlinked overlap保護、多active衝突／source/ref stale保留、current-vs-stored追溯、stable hit idempotent與facts/hits同交易late rollback、actualQt一次facts prompt不重問rule與定位／counts／失敗恢復已實作；target8PASS。正式freeze全回歸，原稿與formal Slots不變。
