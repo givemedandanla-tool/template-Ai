@@ -104,6 +104,9 @@ def capture_ten_packages(root):
         assert not datasets.running and len(window.library.templates())==1;draft=window.library.templates()[0];assert draft.state=='draft' and draft.training_reference['sample_id']==sample['id'];assert window.library.artwork(future_work['id'])==future_work;datasets.load_dataset();QApplication.processEvents()
         if not dialog.grab().save(str(root/'ten-dataset-learned-draft.png')):raise ValueError('幾何學習GUI未保存')
         audit['dataset_geometry']={'actual_qt':True,'dataset':ds,'draft':draft.to_dict(),'use':facts.store.records('USE'),'not_published':True,'source_and_slots_unchanged':True,'neural_training_claim':False}
+        coverage=dialog.coverage_panel;dialog.tabs.setCurrentWidget(coverage);coverage.reload();assert coverage.report['totals']['sources']==3 and coverage.report['totals']['artworks']==3;assert coverage.report['sample_states']=={'APPROVED':1};assert coverage.report['current_role_occurrences_in_scanned_scope']=={'TRAIN':1};assert not coverage.report['quality_pass_claim'] and not coverage.report['supplementation'];QApplication.processEvents()
+        if not dialog.grab().save(str(root/'ten-coverage-distribution.png')):raise ValueError('覆蓋GUI未保存')
+        audit['coverage']={'actual_qt':True,'report':coverage.report,'read_only':True,'no_quality_threshold_or_supplementation':True}
         (root / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
     finally:
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()

@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 9 可恢復實作
+
+包9全庫SQL來源／作品／無作品來源／pool／dataset總分母、paged current eligibility與role occurrence／保存歷史分離、size/people/company/content-group/Logo-native UNKNOWN多重分組／exact drilldown、readonly stats／source stale／無quota/no品質PASS/no補樣已實作；target7PASS，native/customer/代表性Unknown與掃描不完整均明示；既有訓練成果與DB不改。正式freeze及全回歸。
+
+
 ## 十包 8/10 正式驗收
 
 RUN-TEN-DATASET-LEARNING-002／source 9e6cc9490367473a00aacc9c2929ea1c430423e0：299PASS／0SKIP，69本機附件、source unchanged。CORE-060,CORE-061及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。

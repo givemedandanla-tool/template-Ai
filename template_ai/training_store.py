@@ -15,6 +15,7 @@ from .noise_hits import NoiseHitMixin
 from .noise_recovery import NoiseRecoveryMixin
 from .trusted_samples import TrustedSampleMixin
 from .datasets import DatasetMixin
+from .quality_coverage import CoverageMixin
 
 
 def digest(value):
@@ -33,7 +34,7 @@ def identity(value):
     return value
 
 
-class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMixin, TrustedSampleMixin, DatasetMixin):
+class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMixin, TrustedSampleMixin, DatasetMixin, CoverageMixin):
     def __init__(self, library):
         self.library = library; self.db = library.db
         self.db.create_function('training_casefold', 1, lambda value: str(value).casefold(), deterministic=True)

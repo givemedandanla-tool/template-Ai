@@ -3,12 +3,12 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.22",
+  "product_version": "0.1.23",
   "framework_status": "READY",
   "active_task": "TEN-PACKAGES-IN-PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-TEN-P08-TEXT-VERIFIED.receipt.json",
   "last_confirmed_commit": "682bd2b322af65817d700481a53f4bb47b5440be",
-  "latest_evidence_run": "docs/evidence/runs/RUN-TEN-DATASET-LEARNING-002/run.json",
+  "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -30,8 +30,13 @@
   "next_tasks": [
     {
       "id": "COVERAGE",
+      "status": "IN_PROGRESS",
+      "action": "包9全庫SQL來源／作品／無作品來源／pool／dataset總分母、paged current eligibility與role occurrence／保存歷史分離、size/people/company/content-group/Logo-native UNKNOWN多重分組／exact drilldown、readonly stats／source stale／無quota/no品質PASS/no補樣已實作；target7PASS，native/customer/代表性Unknown與掃描不完整均明示；既有訓練成果與DB不改。正式freeze及全回歸。"
+    },
+    {
+      "id": "TEN-NEXT",
       "status": "CONTINUE",
-      "action": "直接下一包；不等待HUMAN"
+      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
     }
   ],
   "blocked": [
@@ -52,8 +57,10 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-TEN-TRUSTED-SAMPLES-001/run.json",
+  "pending_remote": [
+    "CP-20261014-TEN-COVERAGE-SOURCE"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-TEN-DATASET-LEARNING-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P08-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
@@ -290,7 +297,7 @@
           "CORE-062",
           "CORE-063"
         ],
-        "status": "NOT_STARTED"
+        "status": "IMPLEMENTED_PENDING_FORMAL"
       },
       {
         "sequence": 10,
