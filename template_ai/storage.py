@@ -372,6 +372,12 @@ class Library:
                 record['drafts'].append({'template_id':draft.id,'base_template_id':original.id,'family_id':draft.family_id,'version':draft.version,
                     'before':before,'after':payload,'current_hash':fingerprint(payload),'revision':1,
                     'fields':[{k:r[k] for k in ('slot_id','risk','before','after','text_sha256','original','proposed','reasons')} for r in rows]})
+                # 原字面缺字資訊含字元，不將臨時姓名／聯絡文字字元集合持久保存。
+                for field in record['drafts'][-1]['fields']:
+                    for side in ('original','proposed'):
+                        if field[side]:
+                            field[side]=copy.deepcopy(field[side])
+                            field[side]['missing_count']=len(field[side].get('missing',[]));field[side].pop('missing',None)
             self.db.execute('INSERT INTO font_changes VALUES(?,?)',(record['id'],json.dumps(record,ensure_ascii=False)))
             self.event(record['id'],'font_replacement_batch_scope_confirmed')
             self.db.commit();return record

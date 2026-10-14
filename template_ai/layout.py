@@ -40,9 +40,9 @@ def text_geometry(font_family: str, size_pt: float, text: str, style: str = "", 
         from .font_catalog import analyze_font
         row={"kind":"ASSET","asset":asset} if asset else {"kind":"QT","families":[font_family],"styles":[style]}
         result=analyze_font(row,text,size_pt,2000,.05,style or None)
-        if result.get("measurement_verified"):
+        if result.get("measurement_verified") and result.get("family")==font_family:
             return result["width_mm"],result["height_mm"],[]
-        return 0,0,result["issues"]
+        return 0,0,result["issues"] or ["指定家族與實際核驗字面不符"]
     if font_family not in QFontDatabase.families():
         return 0, 0, ["指定字型未安裝：" + font_family]
     font = QFont(font_family)

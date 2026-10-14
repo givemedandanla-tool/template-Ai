@@ -46,6 +46,8 @@ class FontCandidateDialog(QDialog):
         self.exclusions.setEditTriggers(QTableWidget.NoEditTriggers); layout.addWidget(self.exclusions, 1)
         self.preview_button = QPushButton("重新核驗所選候選並唯讀預覽")
         self.preview_button.setEnabled(False); self.preview_button.clicked.connect(self.preview); layout.addWidget(self.preview_button)
+        self.review_button=QPushButton("核准本機候選的模板影響／草稿替代審核")
+        self.review_button.setEnabled(False);self.review_button.clicked.connect(self.open_review);layout.addWidget(self.review_button)
         self.preview_label = QLabel("未建立預覽；預览不代表原稿外觀一致或正式成品合格。")
         self.preview_label.setTextFormat(Qt.PlainText); self.preview_label.setAlignment(Qt.AlignCenter)
         scroll = QScrollArea(); scroll.setWidgetResizable(True); scroll.setWidget(self.preview_label); scroll.setMinimumHeight(130); layout.addWidget(scroll, 1)
@@ -72,6 +74,7 @@ class FontCandidateDialog(QDialog):
         self.preview_data = None; self.preview_label.clear()
         self.preview_label.setText("明確選取一個候選後，重新核驗並預覽；不套用模板。")
         self.preview_button.setEnabled(self.selected() is not None and not self.busy)
+        self.review_button.setEnabled(bool(self.selected() and self.selected()['row']['kind']=='ASSET') and not self.busy)
         self.details.setText(SCOPE)
 
     def start(self, message, work, done):
@@ -79,6 +82,7 @@ class FontCandidateDialog(QDialog):
         generation = self.generation
         self.busy = True; self.status.setText(message)
         self.search_button.setEnabled(False); self.preview_button.setEnabled(False); self.table.setEnabled(False)
+        self.review_button.setEnabled(False)
         def guarded():
             try: return {"value":work()}
             except Exception as error: return {"error":str(error)}
@@ -93,6 +97,7 @@ class FontCandidateDialog(QDialog):
             finally:
                 self.busy = False; self.search_button.setEnabled(True); self.table.setEnabled(True)
                 self.preview_button.setEnabled(self.selected() is not None)
+                self.review_button.setEnabled(bool(self.selected() and self.selected()['row']['kind']=='ASSET'))
         try: self.window.run_job(message, guarded, finished)
         except Exception:
             self.busy = False; self.search_button.setEnabled(True); self.table.setEnabled(True)
@@ -151,6 +156,12 @@ class FontCandidateDialog(QDialog):
     def reject(self):
         if self.busy: self.status.setText("背景核驗中，請等候完成再關閉。"); return
         super().reject()
+
+    def open_review(self):
+        candidate=self.selected()
+        if self.busy or not candidate or candidate['row']['kind']!='ASSET':return
+        from .font_review_dialog import FontReviewDialog
+        FontReviewDialog(self.window,candidate['row'],self.text.text(),self).exec()
 
     def closeEvent(self,event):
         if self.busy: event.ignore()

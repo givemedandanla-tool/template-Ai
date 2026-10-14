@@ -23,7 +23,7 @@ def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scal
         from .font_catalog import analyze_font
         row={"kind":"ASSET","asset":asset} if asset else {"kind":"QT","families":[family],"styles":[style]}
         result=analyze_font(row,text,pt,2000,.05,style or None)
-        if not result.get("measurement_verified"): raise ValueError("渲染字面未核驗："+"；".join(result["issues"]))
+        if not result.get("measurement_verified") or result.get("family")!=family: raise ValueError("渲染字面未核驗："+"；".join(result["issues"] or ["指定家族與實際字面不符"]))
         font.setStyleName(result["style"])
         font.setStyleStrategy(QFont.NoFontMerging); font.setHintingPreference(QFont.PreferNoHinting)
     metrics = QFontMetricsF(font)

@@ -3028,7 +3028,14 @@
         {
           "id": "CORE-032-A1",
           "expected": "實際影響／前後尺寸、未知與BLOCKED／HIGH／LOW分組、無預選及逐欄核准，有界背景且stale失效",
-          "tests": []
+          "tests": [
+            "test_font_review.FontReviewTests.test_actual_impact_dimensions_owner_source_and_unknown_reference",
+            "test_font_review.FontReviewTests.test_empty_missing_glyph_height_and_geometry_block_individual_field",
+            "test_font_review.FontReviewTests.test_unverified_qt_modified_target_and_logo_never_eligible",
+            "test_font_review.FontReviewTests.test_limits_and_same_binding_low_noop_are_visible",
+            "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
+            "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry"
+          ]
         }
       ],
       "next_step": "依完整工作包實作、驗收與GitHub读回"
@@ -3054,7 +3061,18 @@
         {
           "id": "CORE-033-A1",
           "expected": "選中欄位建立新草稿，hash＋單調clock CAS、全批rollback與不可偽造票據，重開歷史Undo／Redo且不覆蓋後續編輯或發布",
-          "tests": []
+          "tests": [
+            "test_font_review.FontReviewTests.test_high_risk_unreviewed_unselected_duplicate_and_forged_ticket_rejected",
+            "test_font_review.FontReviewTests.test_selected_only_new_draft_preserves_publication_geometry_and_no_raw_text",
+            "test_font_review.FontReviewTests.test_base_change_aba_and_target_registration_race_block_commit",
+            "test_font_review.FontReviewTests.test_multi_template_late_audit_failure_rolls_back_every_draft_and_clock",
+            "test_font_review.FontReviewTests.test_undo_redo_persist_after_reopen_and_reject_later_editor_change",
+            "test_font_review.FontReviewTests.test_undo_publish_aba_and_late_failure_do_not_overwrite",
+            "test_font_review.FontReviewTests.test_modified_target_blocks_prepare_and_redo_while_undo_keeps_draft_gate",
+            "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
+            "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
+            "test_font_review.FontReviewGuiTests.test_history_menu_reopens_without_a_candidate"
+          ]
         }
       ],
       "next_step": "依完整工作包實作、驗收與GitHub读回"
@@ -3081,7 +3099,10 @@
         {
           "id": "CORE-034-A1",
           "expected": "舊模板相容；實際款式pin，固定字級與原幾何語意不改，實際無fallback量測／渲染拒絕字面不符",
-          "tests": []
+          "tests": [
+            "test_font_review.FontReviewTests.test_legacy_schema_migration_clock_noop_and_binding_styles_compatible",
+            "test_font_review.FontReviewTests.test_persistent_actual_style_matches_layout_and_real_export"
+          ]
         }
       ],
       "next_step": "依完整工作包實作、驗收與GitHub读回"
