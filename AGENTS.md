@@ -3,7 +3,7 @@
 **開始或恢復工作前，依序讀取**：
 1. `docs/dev/STATE.json`：目前 checkpoint、工作包、下一步及阻擋。
 2. `docs/dev/HANDOFF.md`：人類交接與實作上下文。
-3. `docs/dev/REQUIREMENTS.json` 與 `docs/dev/FEATURES.md`：要求、驗收條件及完成證據。
+3. `docs/dev/PROJECT_GOAL.md`／`PROJECT_ROADMAP.md`與STATE.active_contract，恢復全清單目標及當前驗收；再讀 `docs/dev/REQUIREMENTS.json` 與 `docs/dev/FEATURES.md`：要求、驗收條件及完成證據。
 4. `docs/dev/WORK_LOG.md` 最新紀錄；`STATE.json` 指向的 checkpoint 收據與證據 run。
 5. `docs/dev/DEVELOPMENT_PROTOCOL.md`：保存、GitHub 讀回及證據覆核規則。
 

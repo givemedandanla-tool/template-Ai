@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "registry_sha256": "f64cfc2edcd16eb71fca6c1ad639badf9cd9ca5421ef0e019f369cc48174b5f5",
+  "registry_sha256": "3cfa1ac710fa543405452d34e1a1e2e509108756336fbc3b652d359077f92f6d",
   "groups": {
     "topic": {
       "total": 75,
@@ -15,15 +15,15 @@
       "has_implementation": 43
     },
     "core": {
-      "total": 34,
+      "total": 36,
       "verified": 34,
       "implemented_pending": 0,
       "partial": 0,
       "in_progress": 0,
-      "not_implemented": 0,
+      "not_implemented": 2,
       "blocked": 0,
       "deferred": 0,
-      "not_complete": 0,
+      "not_complete": 2,
       "has_implementation": 34
     },
     "governance": {
@@ -844,6 +844,20 @@
       "status": "VERIFIED",
       "completed": true,
       "contract_sha256": "10601e60b2b45c8a800cf3b9a3f5318045e03d4783258a3106333356c3058465"
+    },
+    {
+      "id": "CORE-035",
+      "kind": "core",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "contract_sha256": "9233102bff52d81b8f2fb7550bd36e222936d2b26b3ff14cff33d5752b68ddef"
+    },
+    {
+      "id": "CORE-036",
+      "kind": "core",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "contract_sha256": "ab74d713967f796554fcf4b7560d88d427965c49aa57685a7dd397caf85e717c"
     }
   ]
 }
