@@ -6,8 +6,8 @@
   "product_version": "0.1.8",
   "framework_status": "READY",
   "active_task": "UI-033",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-FONT-CANDIDATES-IMPLEMENTED.receipt.json",
-  "last_confirmed_commit": "17ce93d86c68df281c1d4868e6a65ba389215704",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-FONT-CANDIDATES-VERIFIED.receipt.json",
+  "last_confirmed_commit": "bd52b1c2115b13bb7c538d92e90e29420ce664fe",
   "latest_evidence_run": "docs/evidence/runs/RUN-FONT-CANDIDATES-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -21,7 +21,7 @@
     {
       "id": "CORE-031",
       "status": "COMPLETED_SCOPED",
-      "action": "23項focused、145項全套PASS；候選唯讀契約完成，26件附件待本次完整checkpoint讀回"
+      "action": "完整候選唯讀契約驗收完成；145 PASS／0 SKIP與26件附件已納入389檔REMOTE_VERIFIED snapshot"
     },
     {
       "id": "UI-033-SINGLE-REVIEW",
@@ -97,9 +97,7 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [
-    "CP-20261014-FONT-CANDIDATES-VERIFIED"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-FONT-CENTER-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-FONT-CANDIDATES-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-FONT-CANDIDATES-END.json",
@@ -107,9 +105,11 @@
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
     "id": "CORE-031",
-    "status": "TESTS_PASSED_PENDING_FINAL_REMOTE_READBACK",
+    "status": "COMPLETED_REMOTE_VERIFIED",
     "contract": "docs/dev/FONT_CANDIDATES_DESIGN.md",
     "source_commit": "17ce93d86c68df281c1d4868e6a65ba389215704",
-    "evidence_run": "docs/evidence/runs/RUN-FONT-CANDIDATES-001/run.json"
+    "evidence_run": "docs/evidence/runs/RUN-FONT-CANDIDATES-001/run.json",
+    "final_snapshot_commit": "bd52b1c2115b13bb7c538d92e90e29420ce664fe",
+    "checkpoint_receipt": "docs/checkpoints/CP-20261014-FONT-CANDIDATES-VERIFIED.receipt.json"
   }
 }

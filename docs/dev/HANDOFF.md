@@ -6,7 +6,7 @@
 
 v0.1.8；來源 `17ce93d86c68df281c1d4868e6a65ba389215704`，正式 RUN-FONT-CANDIDATES-001：145 PASS／0 SKIP、26件實際匿名附件。23項候選focused驗收，含真實Qt worker、背景失敗重試、輸入過期、字面／檔案異動、有效比較寬度與有界PNG。4個CORE-031 acceptance逐項PASS；另36個已有CORE／GOV要求以同一精確來源重新驗證。自我驗證Linux／環境字型，不是獨立審查、Windows或真實AI全驗收。
 
-本輪使用者 /goal 的「候選篩選、排名、唯讀預覽」契約已實作並通過測試；宣告最終完成前需將26件附件完整checkpoint逐檔讀回。最終保存狀態以STATE.goal_milestone、last_confirmed_checkpoint及REMOTE_VERIFIED收據為準，不以本段測試PASS代替遠端保存。
+本輪使用者 /goal 的「候選篩選、排名、唯讀預覽」契約已完整實作、驗收與持久化。最終snapshot `bd52b1c2115b13bb7c538d92e90e29420ce664fe` 已逐檔讀回389檔，包含26件證據附件；CP-20261014-FONT-CANDIDATES-VERIFIED收據已生成。此次新增4個REMOTE_VERIFIED checkpoint，總計31；確認間隔均少於10分鐘，歷史超時窗口仍保留。收據與STATE另小提交避免自身SHA循環。平台Goal是否已註冊以客戶端狀態為準，不虛構平台操作。
 
 112列＝75原父题＋31 CORE＋6 GOV。功能子項30→31（新增CORE-031完成1），治理6不變。父題完整0／部分42／未實作28／受阻2／延後3，75仍有未完成條件。新增1／刪除0／既有驗收範圍修訂0；部分題與子項不混算產品完成率。基準／結束見PROGRESS-20261014-FONT-CANDIDATES-BEGIN／END.json。
 

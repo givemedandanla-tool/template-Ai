@@ -2,6 +2,13 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-14：CORE-031目標完整完成，GitHub讀回與治理PASS
+
+- 完整snapshot `bd52b1c2115b13bb7c538d92e90e29420ce664fe`／tree `a5848ed590b0a1ae4fcf2c2c7af263816130b64f`，389檔全部Git blob SHA match，26件附件與基準／結束統計永久保存。check --require-evidence PASS：112列、37個明列CORE／GOV範圍、145具名測試。
+- 新增4個REMOTE_VERIFIED checkpoint，總計31；確認間隔小於10分鐘。最後未保存操作零風險不作保證；完整收據／STATE再小提交讀回。
+- 本輪功能完成1，CORE30→31／GOV6；75父題狀態不變。目標完成不是全產品或完整UI-032／033完成；具體下一步單欄影響與人工審核已持久化。
+- 工作分支與PR未合併main，PR metadata仍待同步，沒有重試EXE。
+
 ## 2026-10-14：CORE-031正式驗收PASS，保存完整證據中
 
 - 來源17ce93d86c68df281c1d4868e6a65ba389215704；RUN-FONT-CANDIDATES-001：145 PASS／0 SKIP、26件永久待保存附件；來源前後fingerprint不變。40個具名acceptance全部PASS，包含CORE-031的4條與舊36項範圍重新驗證。
