@@ -246,6 +246,7 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("重做目前標記／草稿", self.redo)
         self.menuBar().addAction("匯入合法本機字型", self.import_font)
         self.menuBar().addAction("修復既有本機字型", self.repair_font)
+        self.menuBar().addAction("共用字型管理中心", self.font_center)
         self.menuBar().addAction("操作說明", self.help)
 
     def build_training(self):
@@ -531,6 +532,13 @@ class MainWindow(QMainWindow):
             return
         from .source_dialog import SourceRelinkDialog
         SourceRelinkDialog(self).exec()
+
+    def font_center(self):
+        if self.busy: return
+        from .font_dialog import FontCenterDialog
+        dialog = FontCenterDialog(self)
+        dialog.refresh()
+        dialog.exec()
 
     def relink_source(self):
         if not self.source or self.busy:
