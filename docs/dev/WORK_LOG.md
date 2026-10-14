@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：第二包正式216PASS
+
+- source882af2c7，216PASS／0SKIP，54附件、source未變；新CORE042043全部验收。43已驗CORE，2待做；父題不冒升完整。实际GUI preflight→RUNNING→CANCELLED→重開resume DONE；14目标PASS后补modal范围变更及dirty导航，最后15PASS。
+- 新SVG post-read资源边界修正與shared树可见定位纳入全回归。源路径列改善先显示filename完整路径tooltip；200件确认摘要有界且精確范围指紋防变更。
+- 下一步只处理真实失败／中断结果的exact依赖索引及安全retry/exclude/restore，不把pendingimport误当可信训练。
+
 ## 2026-10-14：包2可恢復階段12PASS
 
 - 批次預檢與健康exact重用、單worker SQLite結果＋audit同交易、session ownership、防多視窗接管、合作取消／重開續跑已實作；12具名backend／真Qt PASS。晚期結果audit回滾source與item並轉INTERRUPTED、GUI恢復操作。

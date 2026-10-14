@@ -1,3 +1,10 @@
+# 最新接續：三包 2／3（v0.1.13）
+
+- 第二包 CORE042／043 全流程完成，RUN-BATCH-IMPORT-001 精確source882af2c7，216PASS／0SKIP／54附件、source unchanged。43CORE已驗／2新CORE待做；75父題仍0完整／44部分／26未實作／2受阻／3延後。
+- BatchStore source注册／结果／audit同交易；owner session＋revision CAS、单worker、防between-item接管；合作取消目前项保存后停止，重開不自動訓練或發布。失敗仍隔離；INTEGRITY晚期故障停止剩餘Ready，markInterrupted可恢復。
+- 15新测试真实QTest＋late rollback＋source/cache变化、取消重開與startfailure、确认时范围变化拒绝。四张新的实际GUI＋audit，永久证据。
+- 按 THREE_PACKAGES_DESIGN 直接包3 exception center；不结束在2／3。匿名GUI/PDF已取得具体核准；版权／隐私事件报告会保存事件内容及解决方案。
+
 # 最新接續：連續三包 1／3（v0.1.12）
 
 - 包1 CORE040／041 完成；RUN-SEMANTIC-INDEX-001 source12f02a90，201PASS／0SKIP／49附件、所有該包具名验收PASS。39→41CORE完成，新增總6仍4待做；75父題0完整／44部分／26未實作／2受阻／3延後。
