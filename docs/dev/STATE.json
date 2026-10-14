@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.1.7",
   "framework_status": "READY",
-  "active_task": "CORE-028/CORE-029/CORE-030",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-FONT-CENTER-ASYNC-FAILURE.receipt.json",
-  "last_confirmed_commit": "4986603780e50c8616209bd765d434c9d0d64708",
-  "latest_evidence_run": null,
+  "active_task": "UI-032",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-FONT-CENTER-ASYNC-FIXED.receipt.json",
+  "last_confirmed_commit": "f347495579a8d43e191ce8e8471e0b90aaaaf3f5",
+  "latest_evidence_run": "docs/evidence/runs/RUN-FONT-CENTER-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -44,9 +44,19 @@
       "action": "每輪功能统计与要求差異生成、持久化及對使用者回報"
     },
     {
-      "id": "UI-032-FONT-CENTER",
+      "id": "CORE-030",
+      "status": "COMPLETED_SCOPED",
+      "action": "真實worker持有／GUIqueued成功錯誤交接、釋放與重試"
+    },
+    {
+      "id": "UI-032-FONT-CANDIDATES",
       "status": "PENDING",
-      "action": "共用本機字型管理中心：可解析家族／樣式、來源與內容身份、健康狀態／影響查詢；不移除不同版本同家族防混用 Gate"
+      "action": "以已知字形覆蓋／固定字級字寬／來源可信度提出少量替代候選，未知原稿參考不做外觀等同評分；先只讀預覽，再UI-033範圍審核"
+    },
+    {
+      "id": "UI-032-FONT-CENTER",
+      "status": "COMPLETED_SCOPED",
+      "action": "CORE-028只讀管理與CORE-029單行字形／字寬診斷已完成明列範圍"
     },
     {
       "id": "UI-049-BATCH",
@@ -60,7 +70,7 @@
     },
     {
       "id": "UI-032",
-      "action": "CORE-025 字型修復完成，完整字重／版本管理另包",
+      "action": "核准修復／管理／診斷完成，完整候選替代審核及字重版本另包",
       "status": "PARTIAL"
     }
   ],
@@ -83,10 +93,11 @@
     "UI-056-D 未來補樣"
   ],
   "pending_remote": [
-    "CP-20261014-FONT-CENTER-ASYNC-FIXED"
+    "CP-20261014-FONT-CENTER-VERIFIED"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-BATCH-RELINK-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-FONT-CENTER-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-END.json",
-  "progress_report": "docs/dev/PROGRESS.md"
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-FONT-CENTER-END.json",
+  "progress_report": "docs/dev/PROGRESS.md",
+  "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步"
 }

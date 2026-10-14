@@ -1,0 +1,17 @@
+# PR #2 可複用審查說明
+
+建議標題：`feat: v0.1.7 矩形模板工作台、字型診斷與可靠背景交接`
+
+本文件保存目前可審查結果；PR metadata 更新工具先前兩次被中止，本輪不反覆阻塞於同一操作，也不宣稱GitHub頁面標題已更新。
+
+來源移動／本機字型複本失聯後可安全恢復，保留原登錄、作品與模板版本。三模式工作台提供矩形標記與規則模板學習／發布、固定字級排版、同尺寸Logo、數位PDF／PNG／JPG；加入受控批次來源定位／CAS交易／內容驗證復原、核准字型複本修復、共用字型管理與實際字形／固定點數毫米字寬診斷。
+
+字型中心只讀核對程式資產的hash／家族／字面、健康及模板／欄位影響；Qt可用候選不冒稱Windows或原稿來源已證實。Unicode覆蓋以實際cmap非零glyph判定，QTextLayout shaping／kerning及glyph-run字面table核對後換算mm、判定水平比例；缺字、混用、過低比例、非法輸入或過期診斷均拒絕，不暗改字級或修改發布模板。
+
+真實背景測試發現worker已結束但GUI完成通知遺失、畫面停留busy。Job／Signals現在持有到明確GUI queued callback，成功、worker錯誤和GUI callback錯誤均清理／恢復，後續可重試；不是完整公平佇列或斷電恢復。
+
+開發治理包含AGENTS／STATE／HANDOFF、111筆要求與個別驗收、來源commit／JSON／JUnit／真實附件、GitHub逐檔checkpoint與不可變收據，每輪要求基準／結束差異及計數。最新測試來源 `f347495579a8d43e191ce8e8471e0b90aaaaf3f5`，RUN-FONT-CENTER-002：122 PASS／0 SKIP、22件紀錄／實際匿名附件，含字型中心與字形毫米診斷。前輪未完成run、before／after故障紀錄保留，不當新版完成證據。
+
+功能子項27→30完成具名範圍；治理6。75原始父題：完整0、部分42、未實作28、受阻2、延後3，全部仍有未完成條件；新增拆分不當整個產品百分比。詳見PROGRESS.md與progress/PROGRESS-20261014-FONT-CENTER-END.json。
+
+參考InDesign、fontTools公開cmap原碼與Qt實際字型／shaping，結合集合覆蓋、固定em點數換算與水平可行區間，自行實作，不複製第三方碼或新增fontTools依賴。環境／受限字型複本、個資、原稿、SQLite與秘密不公開；附件以合成來源與環境字型輸出。驗證為Linux自我驗證，Windows、真實AI、硬體、原稿字型身份、完整TTC／不同版本同家族、替代審核／嵌入授權及深度模型仍待。EXE／實體印刷延後，UI-048最後功能，PR未合併main。

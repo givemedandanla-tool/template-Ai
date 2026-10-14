@@ -79,41 +79,41 @@
 | REV-02 | Inkscape 等視覺一致且可訓練的 AI 匯入 | PARTIAL | 否 | 真實參考視覺無可辨識差異且有效可訓練；完整原生結構非共同必要條件 | 無有效新版證據 |
 | REV-03 | 軟體完善後再做實體印刷分析 | DEFERRED | 否 | 前期數位輸出與幾何仍驗證，實體樣張／設備／材料條件後移 | 無有效新版證據 |
 | REV-04 | 16 GB＋RTX 5050 至 ASUS VivoBook 效能範圍 | PARTIAL | 否 | VivoBook 型號待補；16 GB 整機非程序可占滿預算，實測 CPU／GPU 與峰值資源 | 無有效新版證據 |
-| CORE-001 | 固定字級與長文字無解阻擋 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-002 | 資料完整映射與人物容量 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-003 | 缺字型與幾何檢查 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-004 | 人物公司與同尺寸 Logo 防混配 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-005 | 數位三格式尺寸與安全寫檔 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-006 | 候選過期與非正式預覽標示 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-007 | 模板發布歷史不可覆寫 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-008 | 同內容快取與獨立來源登錄 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-009 | 人工標記規則模板閉環 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-010 | Inkscape SVG 與 PDF 相容 AI | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-011 | 多頁 PDF 正確頁與備援 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-012 | 匯入前像素預算 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-013 | 固定背景實際向量與圖像輸出 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-014 | 背景核准、内容与失聯保護 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-015 | 背景 GUI 核對及版本保護 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-016 | 人工文字色彩 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-017 | 多作品與上次來源上下文 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-018 | 標記歷史、遷移與競爭寫入 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-019 | 模板固定學習來源版次 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-020 | 發布與審核同一交易 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-021 | 字型持久複本與新程序載入 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-022 | 字型核准、異動與失敗保護 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | 無有效新版證據 |
-| CORE-023 | 來源快取完整性與損壞恢復 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成來源衍生快取完整性，非完整批次來源重連；checksum非安全簽章 | 無有效新版證據 |
-| GOV-001 | 開發 checkpoint 與安全恢復 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |
-| GOV-002 | Human／GPT 開工交接與下一步 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |
-| GOV-003 | 要求與個別證據完成 Gate | IMPLEMENTED_PENDING_VERIFICATION | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |
-| GOV-004 | 持久 AI 入口与零例行問答 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |
-| GOV-005 | EXE 延後且不自動打包 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | 無有效新版證據 |
-| CORE-024 | 單件來源內容驗證與安全重連 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成來源單件重連與歷史保留；非完整批次重連或來源內容替換 | 無有效新版證據 |
-| CORE-025 | 核准同內容字型複本修復與中斷核對 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／環境既有字型與匿名模板；非完整字重版本或 Windows 安裝 | 無有效新版證據 |
-| CORE-026 | 受控範圍背景來源定位與候選影響預覽 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成來源；單根受限掃描與人工勾選，不代表完整跨設備資產管理 | 無有效新版證據 |
-| CORE-027 | 批次來源重連交易、歷史與安全復原 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／合成來源批次位置交易與當前內容驗證，不更改客戶映射或源檔 | 無有效新版證據 |
-| GOV-006 | 每輪功能清單統計、基準與需求差異回報 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Human／GPT 開發治理報告，非 UI-066 產品報告 | 無有效新版證據 |
-| CORE-028 | 共用字型管理、資產身份與模板影響查詢 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | 無有效新版證據 |
-| CORE-029 | 實際字形覆蓋、固定字級毫米量測與框宽診斷 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | 無有效新版證據 |
-| CORE-030 | 背景工作生命週期與GUI成功／錯誤交接 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux Qt 真實worker訊號持有／GUI queued交接與busy恢復；非完整公平佇列／當次候選恢復或斷電续跑 | 無有效新版證據 |
+| CORE-001 | 固定字級與長文字無解阻擋 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-002 | 資料完整映射與人物容量 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-003 | 缺字型與幾何檢查 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-004 | 人物公司與同尺寸 Logo 防混配 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-005 | 數位三格式尺寸與安全寫檔 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-006 | 候選過期與非正式預覽標示 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-007 | 模板發布歷史不可覆寫 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-008 | 同內容快取與獨立來源登錄 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-009 | 人工標記規則模板閉環 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-010 | Inkscape SVG 與 PDF 相容 AI | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-011 | 多頁 PDF 正確頁與備援 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-012 | 匯入前像素預算 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-013 | 固定背景實際向量與圖像輸出 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-014 | 背景核准、内容与失聯保護 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-015 | 背景 GUI 核對及版本保護 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-016 | 人工文字色彩 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-017 | 多作品與上次來源上下文 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-018 | 標記歷史、遷移與競爭寫入 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-019 | 模板固定學習來源版次 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-020 | 發布與審核同一交易 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-021 | 字型持久複本與新程序載入 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-022 | 字型核准、異動與失敗保護 | VERIFIED | 是 | Linux／合成或環境字型的明列子範圍；完整父要求仍待續 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-023 | 來源快取完整性與損壞恢復 | VERIFIED | 是 | Linux／合成來源衍生快取完整性，非完整批次來源重連；checksum非安全簽章 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| GOV-001 | 開發 checkpoint 與安全恢復 | VERIFIED | 是 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| GOV-002 | Human／GPT 開工交接與下一步 | VERIFIED | 是 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| GOV-003 | 要求與個別證據完成 Gate | VERIFIED | 是 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| GOV-004 | 持久 AI 入口与零例行問答 | VERIFIED | 是 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| GOV-005 | EXE 延後且不自動打包 | VERIFIED | 是 | 本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-024 | 單件來源內容驗證與安全重連 | VERIFIED | 是 | Linux／合成來源單件重連與歷史保留；非完整批次重連或來源內容替換 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-025 | 核准同內容字型複本修復與中斷核對 | VERIFIED | 是 | Linux／環境既有字型與匿名模板；非完整字重版本或 Windows 安裝 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-026 | 受控範圍背景來源定位與候選影響預覽 | VERIFIED | 是 | Linux／合成來源；單根受限掃描與人工勾選，不代表完整跨設備資產管理 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-027 | 批次來源重連交易、歷史與安全復原 | VERIFIED | 是 | Linux／合成來源批次位置交易與當前內容驗證，不更改客戶映射或源檔 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| GOV-006 | 每輪功能清單統計、基準與需求差異回報 | VERIFIED | 是 | Human／GPT 開發治理報告，非 UI-066 產品報告 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-028 | 共用字型管理、資產身份與模板影響查詢 | VERIFIED | 是 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-029 | 實際字形覆蓋、固定字級毫米量測與框宽診斷 | VERIFIED | 是 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-030 | 背景工作生命週期與GUI成功／錯誤交接 | VERIFIED | 是 | Linux Qt 真實worker訊號持有／GUI queued交接與busy恢復；非完整公平佇列／當次候選恢復或斷電续跑 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。
