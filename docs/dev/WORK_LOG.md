@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 2 可恢復實作
+
+同Library版本化人工來源觀察、exact作品事實確認／撤銷及history/CAS/audit rollback已實作；target8PASS，原source／Slots未改、native UNKNOWN，真Qt背景核對／取消／過期／失败恢復。待source freeze正式全部回歸。
+
+
 ## 十包 1/10 正式驗收
 
 RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0SKIP、62實際本機附件與source unchanged。對應 CORE-046/CORE-047 全具名PASS；原所有已實作CORE與GOV一同重驗。GUI/media本機保留及source-bound豁免清單，metadata/tests/JUnit/claims/audit/checkpoint保存；只對核准保存範圍讀回，不宣稱所有新media永久保存。完成checkpoint後直接包2，不等待HUMAN。

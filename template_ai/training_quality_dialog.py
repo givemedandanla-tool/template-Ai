@@ -1,7 +1,7 @@
 """Readonly marking overview with stable issue selection and explicit navigation."""
 import json
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QComboBox, QPushButton, QTableWidget, QTableWidgetItem, QPlainTextEdit, QDialogButtonBox
+from PySide6.QtWidgets import QDialog, QWidget, QTabWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QComboBox, QPushButton, QTableWidget, QTableWidgetItem, QPlainTextEdit, QDialogButtonBox
 from .training_quality import quality_rows
 from .training_navigation import require_clean_navigation, locate_work
 
@@ -10,7 +10,7 @@ class TrainingQualityDialog(QDialog):
     def __init__(self, window):
         super().__init__(window); self.window = window; self.rows = []; self.loading = False; self.offset = 0; self.advance = 200; self.page_history = []
         self.setWindowTitle('標記完整性／衝突定位'); self.resize(1150, 800)
-        layout = QVBoxLayout(self); self.status = QLabel('只讀已保存標記，未知來源內容不當PASS；發布Gate保持原範圍。'); self.status.setWordWrap(True); self.status.setTextFormat(Qt.PlainText); layout.addWidget(self.status)
+        outer = QVBoxLayout(self); self.tabs = QTabWidget(); outer.addWidget(self.tabs); quality = QWidget(); self.tabs.addTab(quality, '標記品質'); layout = QVBoxLayout(quality); self.status = QLabel('只讀已保存標記，未知來源內容不當PASS；發布Gate保持原範圍。'); self.status.setWordWrap(True); self.status.setTextFormat(Qt.PlainText); layout.addWidget(self.status)
         bar = QHBoxLayout(); self.search = QLineEdit(); self.search.setPlaceholderText('搜尋問題／作品／exact ID'); self.search.textChanged.connect(self.reload); bar.addWidget(self.search, 1)
         self.filter = QComboBox()
         for name in ('ALL', 'BLOCK', 'REVIEW', 'INFO'): self.filter.addItem(name, name)
@@ -25,6 +25,12 @@ class TrainingQualityDialog(QDialog):
         self.edit_button = QPushButton('在既有安全編輯器核對'); self.edit_button.clicked.connect(self.edit); bar.addWidget(self.edit_button); layout.addLayout(bar)
         close = QDialogButtonBox(QDialogButtonBox.Close); close.rejected.connect(self.reject); layout.addWidget(close)
         self.reload()
+        from .training_facts_panel import FactsPanel
+        self.facts_panel = FactsPanel(window, self); self.tabs.addTab(self.facts_panel, '來源觀察／作品事實')
+        self.setWindowTitle('標記品質／來源事實與可信訓練')
+    def reject(self):
+        if self.facts_panel.running: self.status.setText('背景來源核對尚未結束'); return
+        super().reject()
     def selected_row(self):
         rows = self.table.selectionModel().selectedRows()
         return self.rows[rows[0].row()] if rows and rows[0].row() < len(self.rows) else None

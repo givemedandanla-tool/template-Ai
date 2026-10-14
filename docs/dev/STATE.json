@@ -3,7 +3,7 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.15",
+  "product_version": "0.1.16",
   "framework_status": "READY",
   "active_task": "TEN-PACKAGES-IN-PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-TEN-P01-VERIFIED.receipt.json",
@@ -29,19 +29,14 @@
   ],
   "next_tasks": [
     {
-      "id": "CORE-040..045",
-      "status": "FUNCTIONALLY_COMPLETED_SELF_VERIFIED",
-      "action": "三包全部具名驗收229PASS，全部code/tests/JUnit/claims與已接受GUI永久保存；9件證明附件依使用者新指令略過，非全附件REMOTE claim"
+      "id": "ARTWORK-FACTS",
+      "status": "IN_PROGRESS",
+      "action": "同Library版本化人工來源觀察、exact作品事實確認／撤銷及history/CAS/audit rollback已實作；target8PASS，原source／Slots未改、native UNKNOWN，真Qt背景核對／取消／過期／失败恢復。待source freeze正式全部回歸。"
     },
     {
-      "id": "UI-040/041/055/007/008",
-      "status": "PLANNED",
-      "action": "先讀完整原條款與MARKING_TRUST_NEXT_PLAN，新的BEGIN／契約後再實作標記完整性、可信樣本准入；不將匯入SUCCESS當訓練核准"
-    },
-    {
-      "id": "ALL-LIST",
-      "status": "ACTIVE_PERSISTENT_GOAL",
-      "action": "75父題仍需續做，依PROJECT_GOAL/ROADMAP，無EXE；UI048最後、印刷後置"
+      "id": "TEN-NEXT",
+      "status": "CONTINUE",
+      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
     }
   ],
   "blocked": [
@@ -62,7 +57,9 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-TEN-FACTS-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEN-QUALITY-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P01-END.json",
@@ -197,7 +194,7 @@
           "CORE-048",
           "CORE-049"
         ],
-        "status": "IN_PROGRESS"
+        "status": "IMPLEMENTED_PENDING_FORMAL"
       },
       {
         "sequence": 3,

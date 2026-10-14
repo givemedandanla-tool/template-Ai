@@ -3617,7 +3617,7 @@
         "UI-007",
         "UI-039"
       ],
-      "status": "NOT_IMPLEMENTED",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "TEN_PACKAGES_DESIGN 包2的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
@@ -3631,10 +3631,19 @@
         {
           "id": "CORE-048-A1",
           "expected": "人工來源觀察與作品事實確認；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
-          "tests": []
+          "tests": [
+            "test_training_facts.FactsGuiTests.test_actual_add_confirm_cancel_revoke_and_entry",
+            "test_training_facts.FactsGuiTests.test_stale_scope_during_confirmation_and_failed_worker_controls_recover",
+            "test_training_facts.FactsTests.test_confirmation_subset_and_unapproved_scope_are_separate",
+            "test_training_facts.FactsTests.test_full_manual_text_unknown_native_and_reopen_history",
+            "test_training_facts.FactsTests.test_invalid_empty_duplicate_slot_region_and_prediction_fail_closed",
+            "test_training_facts.FactsTests.test_late_audit_failure_atomic_and_revocation_monotonic",
+            "test_training_facts.FactsTests.test_source_changed_after_proof_and_record_CAS_rejected",
+            "test_training_facts.FactsTests.test_work_and_source_change_invalidate_confirmation"
+          ]
         }
       ],
-      "next_step": "按已持久化十包契約實作；建立具名實際測試後登錄，不把規格當完成"
+      "next_step": "正式來源對應驗收與GitHub保存範圍讀回"
     },
     {
       "id": "CORE-049",
@@ -3644,7 +3653,7 @@
         "UI-007",
         "UI-039"
       ],
-      "status": "NOT_IMPLEMENTED",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "TEN_PACKAGES_DESIGN 包2的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
@@ -3658,10 +3667,19 @@
         {
           "id": "CORE-049-A1",
           "expected": "事實revision差異與確認撤銷；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
-          "tests": []
+          "tests": [
+            "test_training_facts.FactsGuiTests.test_actual_add_confirm_cancel_revoke_and_entry",
+            "test_training_facts.FactsGuiTests.test_stale_scope_during_confirmation_and_failed_worker_controls_recover",
+            "test_training_facts.FactsTests.test_confirmation_subset_and_unapproved_scope_are_separate",
+            "test_training_facts.FactsTests.test_full_manual_text_unknown_native_and_reopen_history",
+            "test_training_facts.FactsTests.test_invalid_empty_duplicate_slot_region_and_prediction_fail_closed",
+            "test_training_facts.FactsTests.test_late_audit_failure_atomic_and_revocation_monotonic",
+            "test_training_facts.FactsTests.test_source_changed_after_proof_and_record_CAS_rejected",
+            "test_training_facts.FactsTests.test_work_and_source_change_invalidate_confirmation"
+          ]
         }
       ],
-      "next_step": "按已持久化十包契約實作；建立具名實際測試後登錄，不把規格當完成"
+      "next_step": "正式來源對應驗收與GitHub保存範圍讀回"
     },
     {
       "id": "CORE-050",
