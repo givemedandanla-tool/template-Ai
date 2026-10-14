@@ -70,6 +70,8 @@ def evaluate_review(snapshots,target,texts,max_fields=20,max_rows=200,max_bytes=
                  'risk':'BLOCKED','eligible':False,'reasons':[],'original':None,'proposed':None,'width_delta_ratio':None,
                  'template_hash':fingerprint(snapshot['template']),'revision':snapshot['revision'],'scope':SCOPE}
             report['rows'].append(row)
+            if slot.locked:
+                row['reasons']=['物件已鎖定；請先明確解鎖，不能以字型替代繞過'];continue
             text=texts.get(key,'')
             if not isinstance(text,str):row['reasons']=['驗證文字必須是字串'];continue
             if not text.strip():row['reasons']=['未提供此欄實際驗證文字，不能借用別人的姓名'];continue

@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：物件核心可恢復階段
+
+- 新Slot.locked相容defaultFalse、純mm提案／dirty patch／cross-owner gate／完整Logo比例、六向align／等邊界gap／group delta已實作；8具名backend測試PASS。
+- SQLite object_edits鎖內重新計算與hash＋revision CAS，apply／source history／audit同交易；重開UndoRedo／晚期audit rollback／ABA／发布拒絕已驗。lock保護亦接一般template/source save與font replacement backend。
+- 還沒完成GUI與所有驗收，不宣告整包完成；下一步實際兩模式advanced editor／3way／preview／lock與歷史。
+
 ## 2026-10-14：CORE037／038／039整包開始
 
 - 使用者要求持續到整包完成；按原UI034／035／036与已保存計畫，scope及不可降低验收先OBJECT_TOOLS_DESIGN，整合進階共同編輯器至兩模式，原單選途徑同受lock。

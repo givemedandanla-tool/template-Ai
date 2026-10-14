@@ -46,6 +46,7 @@ class Slot:
     color: str = "#111827"
     font_asset: dict | None = None
     font_style: str = ""
+    locked: bool = False
 
 
 @dataclass
@@ -95,6 +96,8 @@ def template_errors(t: Template) -> list[str]:
         errors.append("模板沒有欄位")
     for s in t.slots:
         label = KINDS.get(s.kind, s.kind) + "／" + s.owner
+        if type(s.locked) is not bool:
+            errors.append(label + "：鎖定狀態不合法")
         if s.kind not in KINDS or not s.rect.inside(t.width_mm, t.height_mm):
             errors.append(label + "：欄位類型或矩形邊界不合法")
         prefix = "c" if s.kind in ("company", "logo") else "p"

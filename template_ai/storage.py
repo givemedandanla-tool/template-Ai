@@ -38,6 +38,7 @@ class Library:
         CREATE TABLE IF NOT EXISTS relink_batches(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS template_edit_clocks(template_id TEXT PRIMARY KEY REFERENCES templates(id), revision INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS font_changes(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS object_edits(id TEXT PRIMARY KEY, entity_kind TEXT NOT NULL, entity_id TEXT NOT NULL, payload TEXT NOT NULL);
         INSERT OR IGNORE INTO template_edit_clocks SELECT id,0 FROM templates;
         """)
         self.db.commit()
@@ -235,6 +236,8 @@ class Library:
         artwork = self.artwork(artwork_id)
         if artwork["revision"] != expected_revision:
             raise ValueError("作品已由另一工作階段更新，請重新載入；本次修改未覆蓋新標記")
+        from .object_tools import protect_locked
+        protect_locked(artwork['payload'],payload)
         data = self._artwork_payload(artwork["source_id"], payload)
         previous = json.dumps(artwork["payload"], ensure_ascii=False, sort_keys=True, allow_nan=False)
         if data == previous:
@@ -276,6 +279,9 @@ class Library:
             raise ValueError("已發布版本不可覆寫，請建立新版本草稿")
         if row and (row[1],row[2])!=(t.family_id,t.version):
             raise ValueError("已有模板的family／版次識別不可改写")
+        if row:
+            from .object_tools import protect_locked
+            protect_locked(json.loads(row[3]),t.to_dict())
         collision = self.db.execute("SELECT id FROM templates WHERE family_id=? AND version=?", (t.family_id, t.version)).fetchone()
         if collision and collision[0] != t.id:
             raise ValueError("此模板版次已存在，請取得下一個新版本，不可覆蓋歷史")
@@ -326,6 +332,74 @@ class Library:
     def template_snapshots(self):
         return [{"template":json.loads(payload),"revision":revision} for payload,revision in self.db.execute("SELECT t.payload,c.revision FROM templates t JOIN template_edit_clocks c ON c.template_id=t.id ORDER BY t.rowid DESC")]
 
+    def object_snapshot(self,kind,entity_id):
+        if kind=='TEMPLATE':
+            row=self.db.execute('SELECT t.payload,c.revision FROM templates t JOIN template_edit_clocks c ON c.template_id=t.id WHERE t.id=?',(entity_id,)).fetchone()
+            if not row:raise ValueError('模板不存在')
+            return {'kind':kind,'id':entity_id,'payload':json.loads(row[0]),'revision':row[1]}
+        if kind=='ARTWORK':
+            w=self.artwork(entity_id)
+            return {'kind':kind,'id':entity_id,'payload':w['payload'],'revision':w['revision']}
+        raise ValueError('物件上下文不合法')
+
+    def object_edit_history(self,kind,entity_id):
+        return [json.loads(r[0]) for r in self.db.execute('SELECT payload FROM object_edits WHERE entity_kind=? AND entity_id=? ORDER BY rowid DESC LIMIT 50',(kind,entity_id))]
+
+    def _object_write(self,kind,entity_id,payload,revision):
+        if kind=='TEMPLATE':
+            t=Template.from_dict(payload);self._template_provenance(t)
+            if t.state!='draft' or t.id!=entity_id:raise ValueError('發布版本唯讀／模板身份不符')
+            self.db.execute('UPDATE templates SET payload=? WHERE id=? AND state=?',(json.dumps(payload,ensure_ascii=False),entity_id,'draft'))
+            self._bump_template_clock(entity_id)
+        else:
+            w=self.artwork(entity_id);data=self._artwork_payload(w['source_id'],payload)
+            self.db.execute('UPDATE artworks SET revision=?,payload=? WHERE id=?',(revision+1,data,entity_id))
+            self.db.execute('INSERT INTO artwork_revisions VALUES(?,?,?,?)',(entity_id,revision+1,data,time.time()))
+
+    def apply_object_edit(self,snapshot,request,confirmed=False):
+        from .object_tools import propose
+        from .font_review import fingerprint
+        if confirmed is not True:raise ValueError('需明確核准精確範圍與差異')
+        if self.db.in_transaction:raise ValueError('已有交易，不能巢狀物件編輯')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            current=self.object_snapshot(snapshot['kind'],snapshot['id'])
+            if current['revision']!=snapshot['revision'] or fingerprint(current['payload'])!=fingerprint(snapshot['payload']):raise ValueError('物件資料已變更／ABA，請重新載入與預覽')
+            # Recompute under write lock; caller-supplied after/eligibility is never trusted.
+            plan=propose(current['payload'],current['kind'],request)
+            if request.get('operation')=='PATCH' and 'font_asset' in request.get('patch',{}):self._assert_font_registered({'asset':request['patch']['font_asset']})
+            self._object_write(current['kind'],current['id'],plan['after'],current['revision'])
+            record={'id':new_id(),'kind':current['kind'],'entity_id':current['id'],'phase':'APPLIED','sequence':1,'created':time.time(),
+                    'before':copy.deepcopy(current['payload']),'after':copy.deepcopy(plan['after']),'expected_revision':current['revision']+1,
+                    'plan':plan,'before_revision':current['revision']}
+            self.db.execute('INSERT INTO object_edits VALUES(?,?,?,?)',(record['id'],current['kind'],current['id'],json.dumps(record,ensure_ascii=False)))
+            self.event(current['id'],'object_edit_'+request['operation'].lower());self.db.commit()
+            return record
+        except BaseException:self.db.rollback();raise
+
+    def object_history_action(self,record_id,action,confirmed=False):
+        from .font_review import fingerprint
+        if confirmed is not True or action not in ('UNDO','REDO'):raise ValueError('需明確核對歷史範圍／復原或重做')
+        if self.db.in_transaction:raise ValueError('已有交易，不能巢狀歷史編輯')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            row=self.db.execute('SELECT payload FROM object_edits WHERE id=?',(record_id,)).fetchone()
+            if not row:raise ValueError('歷史不存在')
+            r=json.loads(row[0]);expected_phase='APPLIED' if action=='UNDO' else 'UNDONE'
+            if r['phase']!=expected_phase:raise ValueError('歷史階段已變更')
+            current=self.object_snapshot(r['kind'],r['entity_id']);expected=r['after'] if action=='UNDO' else r['before'];target=r['before'] if action=='UNDO' else r['after']
+            if current['revision']!=r['expected_revision'] or fingerprint(current['payload'])!=fingerprint(expected):raise ValueError('歷史後已有編輯／ABA，不能覆蓋；請重新核對')
+            if current['kind']=='TEMPLATE' and current['payload']['state']!='draft':raise ValueError('發布版本唯讀')
+            # Undo lock operation is an explicit, separately confirmed scope; no automatic unlock.
+            if r['plan']['request']['operation']!='LOCK':
+                from .object_tools import protect_locked
+                protect_locked(current['payload'],target)
+            self._object_write(r['kind'],r['entity_id'],target,current['revision'])
+            r['phase']='UNDONE' if action=='UNDO' else 'APPLIED';r['sequence']+=1;r['expected_revision']=current['revision']+1
+            self.db.execute('UPDATE object_edits SET payload=? WHERE id=?',(json.dumps(r,ensure_ascii=False),r['id']))
+            self.event(r['entity_id'],'object_edit_'+action.lower());self.db.commit();return r
+        except BaseException:self.db.rollback();raise
+
     def comparison_source(self, template: dict) -> dict:
         """GUI thread only: copy exact pinned historical geometry for a read-only worker."""
         t = Template.from_dict(template)
@@ -374,6 +448,7 @@ class Library:
                 for slot in draft.slots:
                     if slot.id not in selected:continue
                     if slot.kind=='logo':raise ValueError('Logo不可套用字型替代')
+                    if slot.locked:raise ValueError('物件已鎖定；不能以新草稿替代繞過')
                     after=selected[slot.id]['after']
                     slot.font=after['font'];slot.font_style=after['font_style'];slot.font_asset=copy.deepcopy(after['font_asset'])
                 payload=draft.to_dict()
