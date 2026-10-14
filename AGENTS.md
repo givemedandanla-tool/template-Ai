@@ -32,3 +32,7 @@ python tools/dev_governance.py render
 ```
 
 GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須實際讀回；沒有 Git HEAD 的工作區不得虛構 HEAD，使用已確認遠端 SHA 與快照。上傳中斷時保留本機快照與 pending 記錄，下次先恢復保存。
+
+## 本輪使用者核准的證明附件保存例外
+
+2026-10-14使用者後續指令以開發速度優先，9件證明附件略過上傳，精確決策與清單在STATE／EVIDENCE_PUBLICATION_EXCEPTIONS。乾淨checkout的原check若只因該9件附件失聯，先執行docs/dev/EVIDENCE_PUBLICATION_SCOPE_CHECK.md的只讀核對，再按STATE直接下一包；不重複要求授權或上傳證明附件。其他程式／測試／metadata缺失、hash不符或功能失敗仍需先修。此例外不宣稱全附件require-evidence Gate已PASS，不更動原run／失败测试或父需求完成判定。新來源仍要正式回歸，EXE規則不變。

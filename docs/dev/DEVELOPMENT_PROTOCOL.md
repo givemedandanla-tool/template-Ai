@@ -31,3 +31,5 @@ REQUIREMENTS.json 是狀態來源；FEATURES.md 是自動生成的人類視圖�
 ## 本輪使用者核准的證明附件例外
 
 2026-10-14使用者明確要求略過上傳證明附件並優先開發；精確9件見EVIDENCE_PUBLICATION_EXCEPTIONS.json與決策2026-10-14-EVIDENCE-UPLOAD-PRIORITY。只有這9件從新的可保存checkpoint view排除，全部code/tests/claims/結果與其餘公開附件仍核對；不覆寫舊full manifest，不以移除失敗測試或改程式標準結案。原full ZIP與本機附件保留。收據只對實際列入manifest的保存範圍REMOTE_VERIFIED，舊全附件require-evidence Gate仍未滿足並明示。新附件不自動套用此例外，也不把實際程式／測試缺漏當證明文件略過。
+
+乾淨checkout缺少核准9件證明附件時，按 EVIDENCE_PUBLICATION_SCOPE_CHECK.md 逐項核對source／tests／claims及現存附件；僅容許精確例外，其他缺漏不略過。保留舊strict Gate未滿足，不重做證據上傳。

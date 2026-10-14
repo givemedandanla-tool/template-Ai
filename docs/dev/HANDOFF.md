@@ -15,3 +15,5 @@
 數學採stable-ID圖／集合、token AND、SHA-256 exact identity、有限狀態機＋單worker＋CAS、嚴重性與exact影響lex排序；參考Adobe Layers、Qt 6.8及SQLite官方方法，不複製未知許可代碼。原生Illustrator階層及slot↔SVG映射未知即UNKNOWN，viewport不降低全slot輸出Gate。
 
 Checkpoint節奏未嚴格達10分鐘，審查／工具中斷有長間隔；來源code/docs及部分tree中途已保存。具體時刻／例外與恢復見WORK_LOG、COPYRIGHT_PRIVACY_EVENTS、APPROVED_EVIDENCE_UPLOAD_STATE；不得改寫歷史PREPARED為ACK。所有舊交接、失敗、接受與中斷事件保留在WORK_LOG／证据attempts。
+
+乾淨checkout缺少核准9件證明附件時，按 EVIDENCE_PUBLICATION_SCOPE_CHECK.md 逐項核對source／tests／claims及現存附件；僅容許精確例外，其他缺漏不略過。保留舊strict Gate未滿足，不重做證據上傳。

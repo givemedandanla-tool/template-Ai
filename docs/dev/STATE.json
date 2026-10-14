@@ -6,8 +6,8 @@
   "product_version": "0.1.14",
   "framework_status": "READY",
   "active_task": "THREE-PACKAGES-FUNCTIONALLY-COMPLETED",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-EXCEPTION-IMPLEMENTED.receipt.json",
-  "last_confirmed_commit": "9a9f808a28652ca3bf2c46373c7eb43c8475fe61",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json",
+  "last_confirmed_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
   "latest_evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -15,6 +15,8 @@
     "docs/dev/HANDOFF.md",
     "docs/dev/THREE_PACKAGES_DESIGN.md",
     "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
+    "docs/dev/EVIDENCE_PUBLICATION_SCOPE_CHECK.md",
+    "docs/dev/THREE_PACKAGES_FINAL_VERIFICATION.json",
     "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md",
     "docs/dev/REQUIREMENTS.json",
     "docs/dev/FEATURES.md",
@@ -59,9 +61,7 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [
-    "CP-20261014-THREE-SOURCE-VERIFIED"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-THREE-PACKAGES-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-THREE-PACKAGES-END.json",
@@ -115,7 +115,8 @@
         ],
         "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
         "evidence": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
-        "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json"
+        "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
+        "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42"
       }
     ]
   },
@@ -161,6 +162,10 @@
     "id": "CP-20261014-THREE-SOURCE-VERIFIED",
     "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
     "excluded_attachment_count": 9,
-    "all_code_tests_metadata_included": true
-  }
+    "all_code_tests_metadata_included": true,
+    "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
+    "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
+  },
+  "final_verification": "docs/dev/THREE_PACKAGES_FINAL_VERIFICATION.json",
+  "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json"
 }
