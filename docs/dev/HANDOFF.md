@@ -4,7 +4,7 @@
 
 ## 最新完整大功能：v0.1.10 CORE-035／036
 
-精確來源`36307d58ed8f10e6549ba3580a20541244b036db`／tree`305cbd40fe75d940f46274ca8190ddda5fe52cd5`，RUN-CANVAS-COMPARE-002：177 PASS／0 SKIP、37附件、45acceptance全部PASS，source前後不變。正式來源metadata凍結獨立檔，收據提交不覆寫。最後snapshot／收據待當前checkpoint逐檔讀回，不能先宣稱已完成遠端保存。
+精確來源`36307d58ed8f10e6549ba3580a20541244b036db`／tree`305cbd40fe75d940f46274ca8190ddda5fe52cd5`，RUN-CANVAS-COMPARE-002：177 PASS／0 SKIP、37附件、45acceptance全部PASS，source前後不變。正式來源metadata凍結獨立檔，收據提交不覆寫。最後完整snapshot `fb3f6c31d14c88018cd83ca059e69a6fb961ccaf`／tree`98d364b9fb2785acdccbcda7faee18128e163d0c`，550檔包含37附件逐一Git blob SHA讀回；require-evidence PASS。新增6個REMOTE_VERIFIED checkpoint、累計43；本完整大工作包已完成，收據／入口指針另小提交保存。
 
 功能鏈：核准候選→模板逐欄差異→所選欄臨時文字→背景產生原稿衍生參考／原模板／替代矩形→共用zoom／pan／fit／stable slot_id列表與框選定位→返回後背景再驗→明確人工核准後再驗→主動勾選→套用前驗來源／檔案／clock→新草稿與歷史。模板、原始檔、font pin及DB在只讀對照前後不改。三視圖另一欄文字未提供就只畫空框，Logo未提供不借別資產；原字型未知不fallback。
 
@@ -16,13 +16,13 @@ Library.comparison_source只在GUI取source_work_id／revision精確歷史crop�
 
 001原176PASS／37附件完整保留，但後續發現NoAnchor在resize後實際中心漂移（要求43,11.5→約29.6,35.94），因此取消当前完成、保存RED。ResizeEvent重套共享center／zoom，177th具名測試對多種視窗大小核對實際mapToScene中心，而不是只比內部state；新002全部PASS。首個SyntaxError及非法IMPLEMENTED狀態拒絕、baseline ID路徑拒絕均如實記WORK_LOG，沒有改治理工具降低標準。
 
-RED上傳完後GitHub create_tree catalog change拒絕；保持pending，一次重新載入後重試成功adc28fd4／506檔讀回，沒有force。IMPLEMENTED05:46:18→RED06:55:45確認約69分27秒，遠超10分鐘目標，如實保留；原碼原有遠端commit與本機PREPARED尚在。後续每GitHub操作60秒有界等待；超時先讀ref核對存下created commit，不能無限重試／假造確認。blob上傳最多4件一批／60k字元片段；tree／commit／lease ref／逐檔readback順序。SELF_VERIFIED Linux／匿名合成不等於獨立品質、真實AI／Windows／指定硬體。
+RED上傳完後GitHub create_tree catalog change拒絕；保持pending，一次重新載入後重試成功adc28fd4／506檔讀回，沒有force。IMPLEMENTED05:46:18→RED06:55:45確認約69分27秒，遠超10分鐘目標，如實保留；原碼原有遠端commit與本機PREPARED尚在。FIXED→VERIFIED也相隔664.35秒（11分4.35秒，超目標64.35秒），其餘本輪間隔低於10分鐘；不能宣稱本輪頻率嚴格達標。後续每GitHub操作60秒有界等待；超時先讀ref核對存下created commit，不能無限重試／假造確認。blob上傳最多4件一批／60k字元片段；tree／commit／lease ref／逐檔readback順序。SELF_VERIFIED Linux／匿名合成不等於獨立品質、真實AI／Windows／指定硬體。
 
 ## 計數與下一個大工作包
 
 117列＝75父題＋36CORE＋6GOV；CORE34→36完成2，新增2／刪除0／既有scope改動0。父題完整0／部分43／未實作27／受阻2／延後3，75仍有缺口；GOV6。baseline BEGIN／正式001當刻END／最後FINAL均immutable，不混算父題與子項成產品百分比。
 
-全清單範圍／順序已保存PROJECT_GOAL／PROJECT_ROADMAP。下一包UI034／036：先讀original UI_DECISIONS（三向同一集合與混合值、明確基準及差異預覽／對齊不改字級Logo比例），寫具体完整大包契約、進度基準與BEGIN，再實作 stable-ID 多選／鎖定與安全共同／混合屬性、精確對齊等距與同owner或explicit範圍、原子可撤回差異預覽，背景結果不得覆蓋手工編輯。原題全部條款完成之前仍PARTIAL。
+全清單範圍／順序已保存PROJECT_GOAL／PROJECT_ROADMAP。已讀原UI034／035／036條款並開始下一包分析，具體scope／算式／驗收方向保存OBJECT_TOOLS_NEXT_PLAN.md；這是PLANNED，不冒充下一包已實作。下一包UI034／036：先讀original UI_DECISIONS（三向同一集合與混合值、明確基準及差異預覽／對齊不改字級Logo比例），寫具体完整大包契約、進度基準與BEGIN，再實作 stable-ID 多選／鎖定與安全共同／混合屬性、精確對齊等距與同owner或explicit範圍、原子可撤回差異預覽，背景結果不得覆蓋手工編輯。原題全部條款完成之前仍PARTIAL。
 
 外部真實合法AI／可靠參考、Windows／全TTC同名多檔字重、指定hardware／獨立覆核仍有缺口。UI066報告兩未決項BLOCKED；先做其他已授權功能。UI048完整權限維持最後且真實個資前完成；印刷與UI056-D按既有延後，EXE不重試。工作branch dev/v0.1-first-version／PR2，main不合併；PR頁面metadata未同步，PR_REVIEW保存可複用說明。
 
