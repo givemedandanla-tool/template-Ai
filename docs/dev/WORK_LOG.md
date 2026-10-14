@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 4 可恢復實作
+
+包4同前提LOW批次／HIGH逐條詳審／BLOCK缺證拒絕、APPROVE/REJECT/DEFER、exact當前觀察／作品／模板關聯影響、版本history/CAS與同交易late rollback、真Qt搜尋／詳情／確認／取消／過期／失敗恢復已實作；target8PASS。helper已改manifest分塊、shell所有yield輸出累積及小tree批次；原P3截斷失敗與恢復紀錄保留，非產品失敗。正式freeze。
+
+
 ## 十包 3/10 正式驗收
 
 RUN-TEN-NOISE-AUTHOR-001／source 56854cefa88695eaeed2e7924df3c2663ab91b7c：259PASS／0SKIP，64本機附件、source unchanged。CORE-050,CORE-051及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。

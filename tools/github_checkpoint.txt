@@ -13,8 +13,8 @@ globalThis.taUnwrap = r => {
 globalThis.taCall = async (name,args) => {let timer;try{return await Promise.race([tools[name](args),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('60s connector timeout: '+name)),60000);})]);}finally{clearTimeout(timer);}};
 globalThis.taShell = async cmd => {
   let r=await tools.exec_command({cmd,workdir:'/workspace/template-Ai',yield_time_ms:1000,max_output_tokens:60000});
-  while(r.session_id) r=await tools.write_stdin({session_id:r.session_id,chars:'',yield_time_ms:1000,max_output_tokens:60000});
-  if(r.exit_code)throw Error(r.output.slice(0,2000));return r.output;
+  let output=r.output;while(r.session_id){r=await tools.write_stdin({session_id:r.session_id,chars:'',yield_time_ms:1000,max_output_tokens:60000});output+=r.output;}
+  if(r.exit_code)throw Error(output.slice(0,2000));return output;
 };
 globalThis.taRead = async path => JSON.parse(await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('from pathlib import Path\nprint(Path('+JSON.stringify(path)+').read_text())')));
 globalThis.taWrite = async (path,value) => {await tools.apply_patch('*** Begin Patch\n*** Add File: '+path+'\n+'+JSON.stringify(value)+'\n*** End Patch');};
@@ -27,13 +27,16 @@ globalThis.taRecover = async () => {
 };
 globalThis.syncTA = async message => {
   const {c,t}=await taRecover(),repo='givemedandanla-tool/template-Ai';
-  const files=JSON.parse(await taShell("/workspace/bcoe-dev-venv/bin/python -c 'import sys,json;sys.path.insert(0,\"tools\");from dev_common import manifest;print(json.dumps(manifest()))'"));
+  const length=Number(await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('import sys,json\nfrom pathlib import Path\nsys.path.insert(0,"tools")\nfrom dev_common import manifest\ns=json.dumps(manifest());Path("/tmp/ta-sync-manifest.json").write_text(s);print(len(s))')));
+  if(!Number.isFinite(length)||length<=0)throw Error('Manifest length missing');let raw='';
+  for(let off=0;off<length;off+=12000)raw+=await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('from pathlib import Path\ns=Path("/tmp/ta-sync-manifest.json").read_text();print(s['+off+':'+(off+12000)+'],end="")'));
+  const files=JSON.parse(raw);
   const remote=new Map(t.tree.filter(x=>x.type==='blob').map(x=>[x.path,x.sha]));
   const allowed=Object.entries(files).filter(([p,r])=>!(/\.(png|jpg|pdf)$/.test(p)) || [...remote.values()].includes(r.git_blob_sha1));
   const changed=allowed.filter(([p,r])=>remote.get(p)!==r.git_blob_sha1),elements=[];
   for(const [path,row] of changed){
     if(/\.(png|jpg|pdf)$/.test(path)){elements.push({path,mode:'100644',type:'blob',sha:row.git_blob_sha1});continue;}
-    let content='';for(let off=0;off<row.bytes;off+=30000){content+=await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('from pathlib import Path\ns=Path('+JSON.stringify(path)+').read_text()\nprint(s['+off+':'+(off+30000)+'],end="")'));}
+    let content='';for(let off=0;off<row.bytes;off+=8000){content+=await taShell('/workspace/bcoe-dev-venv/bin/python -c '+taQuote('from pathlib import Path\ns=Path('+JSON.stringify(path)+').read_text()\nprint(s['+off+':'+(off+8000)+'],end="")'));}
     elements.push({path,mode:'100644',type:'blob',content});
   }
   if(!elements.length)return {sha:c.sha,tree:t.sha,changed:0,verified_files:allowed.length};

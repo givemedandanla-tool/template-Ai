@@ -131,7 +131,7 @@ def main():
                          "semantic-tree-shared.png", "semantic-search-preserved.png", "semantic-viewport-isolated.png", "semantic-derived-structure.png", "semantic-index-audit.json",
                          "batch-import-preflight.png", "batch-import-running.png", "batch-import-cancelled.png", "batch-import-resumed.png", "batch-import-audit.json",
                          "exception-center-ranked.png", "exception-center-excluded.png", "exception-center-restored.png", "exception-center-retry-preview.png", "exception-center-retried.png", "exception-center-audit.json",
-                         "ten-quality-overview.png", "ten-facts-confirmed.png", "ten-noise-authoring.png", "ten-packages-audit.json",
+                         "ten-quality-overview.png", "ten-facts-confirmed.png", "ten-noise-authoring.png", "ten-rule-review.png", "ten-packages-audit.json",
                          "synthetic-FINAL.pdf", "synthetic-FINAL.png", "synthetic-FINAL.jpg", "decorated-FINAL.pdf", "decorated-FINAL.png", "decorated-FINAL.jpg"):
                 if not (generated / name).is_file():
                     capture_code = 1

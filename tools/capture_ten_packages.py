@@ -58,6 +58,12 @@ def capture_ten_packages(root):
             assert window.library.artwork(work2['id']) == work2
             audit['noise_authoring'] = {'actual_qt': True, 'rule': wizard.saved_rule, 'candidates': facts.store.noise_candidates(work2['id']), 'source_and_slots_unchanged': True, 'no_rule_activation': True}
         finally: wizard.close()
+        rules = dialog.rules_panel; rules.reload(); dialog.tabs.setCurrentWidget(rules); rules.table.selectRow(next(i for i, r in enumerate(rules.rows) if r['id'] == wizard.saved_rule['id'])); rules.actor.setText('Synthetic Reviewer'); rules.reason.setText('exact scope and source examples checked'); QApplication.processEvents()
+        if not dialog.grab().save(str(root/'ten-rule-review.png')): raise ValueError('規則審核GUI未保存')
+        with patch.object(QMessageBox, 'question', return_value=QMessageBox.Yes): QTest.mouseClick(rules.approve_button, Qt.LeftButton)
+        reviewed = facts.store.get('RULE', wizard.saved_rule['id']); assert reviewed['state'] == 'ACTIVE'
+        assert window.library.artwork(work2['id']) == work2
+        audit['rule_review'] = {'actual_qt': True, 'active_rule': reviewed, 'inspection': facts.store.inspect_rule(reviewed['id']), 'source_and_slots_unchanged': True}
         (root / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
     finally:
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()

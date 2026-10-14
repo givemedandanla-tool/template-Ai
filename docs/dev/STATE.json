@@ -3,12 +3,12 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.17",
+  "product_version": "0.1.18",
   "framework_status": "READY",
   "active_task": "TEN-PACKAGES-IN-PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-TEN-P03-VERIFIED.receipt.json",
   "last_confirmed_commit": "e97d8eff7e2e2f029807d5c4a7f2a0c4f639c0dc",
-  "latest_evidence_run": "docs/evidence/runs/RUN-TEN-NOISE-AUTHOR-001/run.json",
+  "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -30,8 +30,13 @@
   "next_tasks": [
     {
       "id": "RULE-REVIEW",
+      "status": "IN_PROGRESS",
+      "action": "包4同前提LOW批次／HIGH逐條詳審／BLOCK缺證拒絕、APPROVE/REJECT/DEFER、exact當前觀察／作品／模板關聯影響、版本history/CAS與同交易late rollback、真Qt搜尋／詳情／確認／取消／過期／失敗恢復已實作；target8PASS。helper已改manifest分塊、shell所有yield輸出累積及小tree批次；原P3截斷失敗與恢復紀錄保留，非產品失敗。正式freeze。"
+    },
+    {
+      "id": "TEN-NEXT",
       "status": "CONTINUE",
-      "action": "直接下一包；不等待HUMAN"
+      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
     }
   ],
   "blocked": [
@@ -52,8 +57,10 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-TEN-FACTS-001/run.json",
+  "pending_remote": [
+    "CP-20261014-TEN-RULE-REVIEW-SOURCE"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-TEN-NOISE-AUTHOR-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P03-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
@@ -215,7 +222,7 @@
           "CORE-052",
           "CORE-053"
         ],
-        "status": "NOT_STARTED"
+        "status": "IMPLEMENTED_PENDING_FORMAL"
       },
       {
         "sequence": 5,

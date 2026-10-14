@@ -10,6 +10,7 @@ from pathlib import Path
 from .model import Rect, new_id
 from .source_links import hash_source, check_verified
 from .noise import NoiseMixin
+from .noise_review import RuleReviewMixin
 
 
 def digest(value):
@@ -28,9 +29,10 @@ def identity(value):
     return value
 
 
-class TrainingStore(NoiseMixin):
+class TrainingStore(NoiseMixin, RuleReviewMixin):
     def __init__(self, library):
         self.library = library; self.db = library.db
+        self.db.create_function('training_casefold', 1, lambda value: str(value).casefold(), deterministic=True)
         self.db.executescript('''
         CREATE TABLE IF NOT EXISTS training_records(kind TEXT NOT NULL,id TEXT NOT NULL,revision INTEGER NOT NULL,payload TEXT NOT NULL,PRIMARY KEY(kind,id));
         CREATE TABLE IF NOT EXISTS training_history(kind TEXT NOT NULL,id TEXT NOT NULL,revision INTEGER NOT NULL,action TEXT NOT NULL,before_json TEXT,after_json TEXT NOT NULL,created REAL NOT NULL,PRIMARY KEY(kind,id,revision));
