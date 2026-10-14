@@ -68,7 +68,7 @@ class DatasetPanel(QWidget):
             try:
                 self.details.setPlainText(json.dumps(plan,ensure_ascii=False,indent=2))
                 if QMessageBox.question(self,'明確啟動本機幾何學習',f"資料集{plan['dataset_id']}／TRAIN樣本{plan['entry']['sample_id']} r{plan['sample_revision']}\n範圍SHA {plan['digest']}\n只從人工標記建立新DRAFT幾何模板，保留原作品与發布版，不是神經模型或自動發布。",QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:self.status.setText('已取消，未學習');return
-                template=self.store.learn_dataset_sample(plan,proof,actor,True);self.window.refresh_templates();self.status.setText('已生成DRAFT '+template.id+'；dataset／sample來源與USE已保存');self.last_template=template
+                template=self.store.learn_dataset_sample(plan,proof,actor,True);self.window.refresh_templates(preserve_editor=True);self.status.setText('已生成DRAFT '+template.id+'；dataset／sample來源與USE已保存；目前人工編輯保持');self.last_template=template
             except Exception as error:self.status.setText('學習未完成：'+str(error))
             finally:release()
         job.signals.done.connect(done,Qt.QueuedConnection);job.signals.error.connect(failed,Qt.QueuedConnection);QThreadPool.globalInstance().start(job)

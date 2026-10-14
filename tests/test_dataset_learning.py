@@ -88,3 +88,10 @@ class DatasetLearningGuiTests(unittest.TestCase):
         def revoke(*args):self.store.transition_sample(self.store.sample_transition_plan(self.sample['id'],'REVOKE'),'Reviewer','during confirmation',True);return QMessageBox.Yes
         with patch.object(QMessageBox,'question',side_effect=revoke):self.p.learn();self.wait()
         self.assertEqual(self.window.library.templates(),[]);self.assertIn('未完成',self.p.status.text());self.assertTrue(self.p.learn_button.isEnabled())
+    def test_learning_result_does_not_save_or_reset_unrelated_dirty_editor(self):
+        from template_ai.demo import demo_template
+        old=demo_template();self.window.library.save_template(old);self.window.refresh_templates(old.id);self.window.tabs.setCurrentIndex(1);self.window.template.slots[0].rect.x=7;edited=copy.deepcopy(self.window.template);before=self.window.library.object_snapshot('TEMPLATE',old.id);self.window.undo_stack=[{'synthetic_pending_edit':True}]
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):self.p.create()
+        self.p.template_name.setText('New Separate Draft')
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):self.p.learn();self.wait()
+        self.assertEqual(self.window.library.object_snapshot('TEMPLATE',old.id),before);self.assertEqual(self.window.template,edited);self.assertEqual(self.window.undo_stack,[{'synthetic_pending_edit':True}]);self.assertEqual(len(self.window.library.templates()),2)

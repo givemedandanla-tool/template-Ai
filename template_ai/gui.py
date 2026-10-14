@@ -1032,12 +1032,16 @@ class MainWindow(QMainWindow):
         self.refresh_templates(t.id)
         self.statusBar().showMessage("合成示範模板已加入草稿；請驗證並發布後排版")
 
-    def refresh_templates(self, select=None):
+    def refresh_templates(self, select=None, preserve_editor=False):
         self.templates = self.library.templates()
         self.template_list.blockSignals(True)
         self.template_list.clear()
         for t in self.templates:
             self.template_list.addItem(f"{t.name} · v{t.version}\n{t.width_mm:g}×{t.height_mm:g} mm · {t.capacity} 人 · {'已發布' if t.state == 'published' else '草稿'}")
+        if preserve_editor:
+            current_id=self.template.id if self.template else None
+            index=next((i for i,t in enumerate(self.templates) if t.id==current_id),-1)
+            self.template_list.setCurrentRow(index);self.template_list.blockSignals(False);return
         self.template_list.blockSignals(False)
         if self.templates:
             index = next((i for i, t in enumerate(self.templates) if t.id == select), 0)
