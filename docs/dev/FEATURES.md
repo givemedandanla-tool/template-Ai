@@ -115,5 +115,6 @@
 | CORE-028 | 共用字型管理、資產身份與模板影響查詢 | VERIFIED | 是 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
 | CORE-029 | 實際字形覆蓋、固定字級毫米量測與框宽診斷 | VERIFIED | 是 | Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
 | CORE-030 | 背景工作生命週期與GUI成功／錯誤交接 | VERIFIED | 是 | Linux Qt 真實worker訊號持有／GUI queued交接與busy恢復；非完整公平佇列／當次候選恢復或斷電续跑 | [run](../../docs/evidence/runs/RUN-FONT-CENTER-002/run.json) |
+| CORE-031 | 字型替代候選硬篩、可解釋排名與唯讀預覽 | IN_PROGRESS | 否 | 候選只讀端到端功能；Linux環境字型／匿名文字單行診斷，不代表完整UI-032、Windows、原稿一致或UI-033套用 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

@@ -2,6 +2,12 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-14：CORE-031 目標啟動，先保存完整候選唯讀契約
+
+- 開工check PASS；確認工作分支82e5bf5d、main仍436ca2d7，無pending。基準111列／30 CORE完成／6 GOV／75父題保持。
+- 使用者明確/goal要求候選硬篩、排名、唯讀預覽端到端驗收；新增CORE-031，原父題不降標。FONT_CANDIDATES_DESIGN.md列六項驗收、參考與有界預算。
+- 先BEGIN GitHub讀回再改碼；單一checkpoint或部分測試不是停止條件，不重試先前卡住的PR metadata工具。
+
 ## 2026-10-14：v0.1.7 字型中心／字形毫米診斷／真實背景交接完成
 
 - 來源 `f347495579a8d43e191ce8e8471e0b90aaaaf3f5`，RUN-FONT-CENTER-002：122 PASS／0 SKIP、22件紀錄與實際匿名附件，包含中心／診斷畫面，已視覺核對。18個focused驗收含真正Qt worker／GUI執行緒、成功／worker錯誤／callback錯誤／重試，非只mock背景。

@@ -2933,6 +2933,48 @@
         }
       ],
       "next_step": "維持真實GUIqueued交接與清理驗收；公平排程、候選取消與斷電恢复仍待"
+    },
+    {
+      "id": "CORE-031",
+      "kind": "core",
+      "title": "字型替代候選硬篩、可解釋排名與唯讀預覽",
+      "parents": [
+        "UI-032"
+      ],
+      "status": "IN_PROGRESS",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "候選只讀端到端功能；Linux環境字型／匿名文字單行診斷，不代表完整UI-032、Windows、原稿一致或UI-033套用",
+      "phase": "P3、P4",
+      "decision_status": "使用者本輪/goal明確要求完整實作候選唯讀里程碑",
+      "sources": [
+        "docs/dev/FONT_CANDIDATES_DESIGN.md",
+        "docs/decisions/2026-10-14-GOAL-FONT-CANDIDATES.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-031-A1",
+          "expected": "固定字級、實際字形及健康／字面／尺寸硬篩，空非法輸入與逐條排除原因，不fallback",
+          "tests": []
+        },
+        {
+          "id": "CORE-031-A2",
+          "expected": "按來源身份、可驗證比較字寬、壓縮與穩定identity排序，未知參考不造數字；候選去重與預算PARTIAL",
+          "tests": []
+        },
+        {
+          "id": "CORE-031-A3",
+          "expected": "實際共用GUI候選及唯讀PNG預覽，重新核對hash／字面／量測與stale，文字與pt不暗改",
+          "tests": []
+        },
+        {
+          "id": "CORE-031-A4",
+          "expected": "真實worker成功／錯誤／重試恢復，模板及資產／來源不變，逐條證據與完整GitHub讀回",
+          "tests": []
+        }
+      ],
+      "next_step": "先保存BEGIN契約；實作引擎、GUI、故障與正式回歸證據"
     }
   ]
 }
