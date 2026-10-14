@@ -8,7 +8,7 @@
   "active_task": "TEN-PACKAGES-IN-PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-TEN-NOISE-RECOVERY-SOURCE.receipt.json",
   "last_confirmed_commit": "f38691a2b80daefd1b4a421a95cb0c277f8d1538",
-  "latest_evidence_run": null,
+  "latest_evidence_run": "docs/evidence/runs/RUN-TEN-NOISE-RECOVERY-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -57,10 +57,12 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-TEN-P06-TEXT-VERIFIED"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEN-AUTO-NOISE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P05-END.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P06-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
@@ -142,6 +144,10 @@
     {
       "id": "CP-20261014-THREE-EVIDENCE-RECOVERY",
       "reason": "原完整manifest及ZIP不覆寫；審查期間文件變更，使用者後續核准9件證明附件略過；新明確保存範圍checkpoint取代，不冒稱舊記錄已ack。"
+    },
+    {
+      "id": "CP-20261014-TEN-P06-VERIFIED",
+      "reason": "自動審查拒絕新路徑引用舊PNG/PDF/JPG blob；使用者明確略過證明媒体，採新text保存範圍；原PREPARED/ZIP不覆寫、未宣稱ACK。"
     }
   ],
   "evidence_publication": {
@@ -248,7 +254,11 @@
           "CORE-056",
           "CORE-057"
         ],
-        "status": "IMPLEMENTED_PENDING_FORMAL"
+        "status": "FORMAL_PASS_PENDING_REMOTE",
+        "source_commit": "814a6e54e7858e797e5027286cf2db2bd6a413c4",
+        "evidence": "docs/evidence/runs/RUN-TEN-NOISE-RECOVERY-001/run.json",
+        "tests": 283,
+        "publication_checkpoint": "CP-20261014-TEN-P06-TEXT-VERIFIED"
       },
       {
         "sequence": 7,

@@ -1,5 +1,15 @@
 # 開發工作紀錄
 
+## 第六包自動審查媒體引用拒絕與安全替代
+
+283PASS無產品阻塞。tree batch6含既有PNG/PDF blob新路徑引用，被自動審查拒絕；已完成前幾個tree物件不移分支，不把部分tree當checkpoint。依使用者略過證明文件授權，採所有新媒体引用全排除／text code-metadata保存；原P06 record/ZIP不改，STATE記superseded。新TEXT收據只對實際scope核對，不改run/tests或以hash冒稱binary可下載。事件內容／解法見COPYRIGHT_PRIVACY_EVENTS。
+
+
+## 十包 6/10 正式驗收
+
+RUN-TEN-NOISE-RECOVERY-001／source 814a6e54e7858e797e5027286cf2db2bd6a413c4：283PASS／0SKIP，67本機附件、source unchanged。CORE-056,CORE-057及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。
+
+
 ## 十包 6 可恢復實作
 
 包6局部KEEP／PENDING白名單／批准全域KEEP優先、規則DISABLE／人工來源CHANGE／immutable歷史ROLLBACK新PENDING再審、exact前後影响／樣本依賴定向失效、caller after重算／SHA/CAS、late hit audit整筆rollback、真Qt恢复／白名單／停止／回滾／stale controls已實作；target8PASS。新細則TEN_RECOVERY_ACCEPTANCE開始前保存本機，與source一同GitHub；不改發布模板或聲稱模型解污染。

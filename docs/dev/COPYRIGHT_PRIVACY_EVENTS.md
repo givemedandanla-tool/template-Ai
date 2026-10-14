@@ -43,3 +43,10 @@
 使用者明确后续指令原文见2026-10-14-EVIDENCE-UPLOAD-PRIORITY。停止9件重复證明附件上傳；精确清单／bytes／SHA256與Gitblob在EVIDENCE_PUBLICATION_EXCEPTIONS。原匿名檔、完整run／FAIL紀錄和full local ZIP不刪，沒有换格式转藏被拒payload或换通道；其餘已接受81／90件與全部程式／測試／結果／claims保存。最新run為51／60附件公開，未公開9件不冒称可下載。
 
 事件內容為binary API缺少具名檔案欄位／審查無法關聯已核准payload，以及工具cell中斷；已有具名hash与实际视觉、OFL核對後正常成功的保存，但不是全部成功。解決方案由使用者定為保存事件文件與明确上傳例外、停止证据重試、回到功能開發；本轮该上传阻塞不再卡功能工作包。風險与未满足全附件Gate仍明示；真實私人原稿、實際客戶DB、受限字型原檔始終未上传。後續完整附件交付另以有具名binary能力的正常工具處理，不能把本次例外擴成一般未验程式可略過。
+
+
+## TEN-MEDIA-REF-006：新路徑媒體引用被審查拒絕
+
+事件：第六包283PASS後，create_tree的既有approved圖片/PDF/JPG blob在新run路徑引用被自動審查拒絕；理由為大量證明媒體重新發布與使用者較新「略過binary，持久化文件」不一致，具體外傳範圍未核准。沒有宣稱新的媒体發布成功。
+
+解法：不重試被拒blob、不改傳輸通道、不包進其他payload；全部新run媒體（含既有相同blob的新路徑）略過。程式／tests／JUnit／claims／machine GUI audit／metadata與事件完整保存，原本機media及exact manifest留存。舊P06完整scope PREPARED/ZIP保留與superseded，新TEXT checkpoint僅包含已存在同路徑同SHA的媒體與全部文字文件。現存遠端歷史媒體不刪。功能標準未變、全附件Gate仍不宣称滿足。後續新run沿用此更窄安全保存方式，不反覆询问圖片授權。
