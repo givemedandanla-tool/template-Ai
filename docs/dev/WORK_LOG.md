@@ -1,5 +1,14 @@
 # 開發工作紀錄
 
+## 2026-10-14：三包實作結案與證明上傳優先序修正
+
+- 使用者明確決定若只是證明文件就略過上傳、事件持久化GitHub並優先開發。停止原未接受9件附件二進位重試；原檔／60附件manifest／失败測試都保留，名單／bytes／hash公開保存。未轉藏payload或換通道；功能验收不降低。公開保存範圍例外與完整全附件Gate未滿足分開记錄。
+- 三包CORE040..045全部實作并具名驗收；最終source192db957，229PASS／0SKIP、source unchanged。第一包201PASS49附件与第二包216PASS54附件全量readback；最終51／60附件與所有code/tests/JUnit/claims、事件文件保存。最后hidden-lock真RED修復與25相关回归保留，RUN001的228是歷史。
+- CORE39→45新增完成6、刪除0、原既有scope改動0；EXCEPTION-END內4個test-list scope新增驗收（040041 hidden-lock、044045具名testlist），不降低条件。父題UI004005仅PARTIAL，75為0完整／46部分／24未實作／2受阻／3延後，GOV6、126列。全部CORE45／GOV6以當前229結果SELF_VERIFIED，原父题未冒稱完整。
+- eb11f23f先逐檔897保存79／90批准附件；另外history／locked成功blob在最後保存範圍提交一起讀回。新scope checkpoint使用乾淨staging，明确排除9件證明例外，只對实际manifest確認，旧full ZIP与PREPARED記錄不覆寫。舊require-evidence全附件Gate不宣稱PASS。
+- 下一包MARKING_TRUST_NEXT_PLAN：先原UI040／041／055／007／008完整條款、BEGIN、具名契约，再标記完整性／可信样本。3个具體實作工作包完成；無EXE／main合併／代理，未作Windows／真實AI全面視覺／指定硬體／獨立驗收聲明。
+
+
 ## 2026-10-14：具體90件已核准，附件API阻塞恢复
 
 - 固定清單全90件bytes／SHA256／Git blob SHA本機匹配；使用者明確核准全部90，另從GitHub讀出immutable manifest驗證對應。多次同API具名单件檢視後成功；API回應由structuredContent.sha取值，UTF8 blob fetch無法讀PNG不是新隱私事件。實際Git tree核對restored PNG hash成功。

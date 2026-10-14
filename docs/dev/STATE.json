@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.14",
   "framework_status": "READY",
-  "active_task": "THREE-PACKAGES-FINAL-EVIDENCE-READBACK",
+  "active_task": "THREE-PACKAGES-FUNCTIONALLY-COMPLETED",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-EXCEPTION-IMPLEMENTED.receipt.json",
   "last_confirmed_commit": "9a9f808a28652ca3bf2c46373c7eb43c8475fe61",
   "latest_evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
@@ -13,100 +13,32 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/HANDOFF.md",
-    "docs/dev/APPROVED_EVIDENCE_UPLOAD_STATE.json",
     "docs/dev/THREE_PACKAGES_DESIGN.md",
+    "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
     "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md",
-    "docs/dev/PUBLIC_EVIDENCE_APPROVAL_MANIFEST.json",
     "docs/dev/REQUIREMENTS.json",
     "docs/dev/FEATURES.md",
+    "docs/dev/PROGRESS.md",
     "docs/dev/WORK_LOG.md",
     "docs/dev/PROJECT_GOAL.md",
     "docs/dev/PROJECT_ROADMAP.md",
-    "docs/dev/CANVAS_COMPARE_DESIGN.md",
-    "docs/dev/OBJECT_TOOLS_NEXT_PLAN.md",
-    "docs/dev/OBJECT_TOOLS_DESIGN.md",
-    "docs/dev/SEMANTIC_INDEX_NEXT_PLAN.md"
+    "docs/dev/MARKING_TRUST_NEXT_PLAN.md"
   ],
   "next_tasks": [
     {
-      "id": "CORE-037..039",
-      "status": "COMPLETED_REMOTE_VERIFIED",
-      "action": "194PASS／44附件／48驗收全PASS；623檔完整snapshot讀回与require-evidence PASS"
+      "id": "CORE-040..045",
+      "status": "FUNCTIONALLY_COMPLETED_SELF_VERIFIED",
+      "action": "三包全部具名驗收229PASS，全部code/tests/JUnit/claims與已接受GUI永久保存；9件證明附件依使用者新指令略過，非全附件REMOTE claim"
     },
     {
-      "id": "UI-035-SEMANTIC-SEARCH-VIEW",
-      "status": "PENDING",
-      "action": "下一包先讀UI035：語意索引／共用物件搜尋／檢視隔離，native層來源未知不臆造；先契約／baseline／BEGIN再code"
-    },
-    {
-      "id": "CORE-035..036",
-      "status": "COMPLETED_REMOTE_VERIFIED",
-      "action": "177 PASS／37附件，550檔完整snapshot與require-evidence PASS；source36307d58、finalfb3f6c31"
+      "id": "UI-040/041/055/007/008",
+      "status": "PLANNED",
+      "action": "先讀完整原條款與MARKING_TRUST_NEXT_PLAN，新的BEGIN／契約後再實作標記完整性、可信樣本准入；不將匯入SUCCESS當訓練核准"
     },
     {
       "id": "ALL-LIST",
       "status": "ACTIVE_PERSISTENT_GOAL",
-      "action": "依PROJECT_GOAL／PROJECT_ROADMAP自主持續所有要求；不要求重說繼續"
-    },
-    {
-      "id": "CORE-032..034",
-      "status": "COMPLETED_SCOPED",
-      "action": "完整受控草稿替代工作包完成；168PASS／31附件納入446檔REMOTE_VERIFIED snapshot"
-    },
-    {
-      "id": "CORE-031",
-      "status": "COMPLETED_SCOPED",
-      "action": "完整候選唯讀契約驗收完成；145 PASS／0 SKIP與26件附件已納入389檔REMOTE_VERIFIED snapshot"
-    },
-    {
-      "id": "GOV-001..GOV-005",
-      "action": "完成結構化框架證據、GitHub 讀回及 READY checkpoint",
-      "status": "COMPLETED"
-    },
-    {
-      "id": "CORE-023",
-      "action": "框架 READY 後實作来源快取 hash／損壞 metadata／重新轉換驗收",
-      "status": "COMPLETED"
-    },
-    {
-      "id": "CORE-024",
-      "action": "單件受控來源重連；內容驗證及交易歷史",
-      "status": "COMPLETED"
-    },
-    {
-      "id": "CORE-025",
-      "action": "同內容字型複本修復與中斷核對",
-      "status": "COMPLETED"
-    },
-    {
-      "id": "GOV-006",
-      "status": "COMPLETED",
-      "action": "每輪功能统计与要求差異生成、持久化及對使用者回報"
-    },
-    {
-      "id": "CORE-030",
-      "status": "COMPLETED_SCOPED",
-      "action": "真實worker持有／GUIqueued成功錯誤交接、釋放與重試"
-    },
-    {
-      "id": "UI-032-FONT-CENTER",
-      "status": "COMPLETED_SCOPED",
-      "action": "CORE-028只讀管理與CORE-029單行字形／字寬診斷已完成明列範圍"
-    },
-    {
-      "id": "UI-049-BATCH",
-      "action": "CORE-026 受限候選／CORE-027 全批交易與復原已完成明列範圍",
-      "status": "COMPLETED_SCOPED"
-    },
-    {
-      "id": "UI-049",
-      "action": "單件／受限批次重連完成；完整跨設備來源依賴仍待",
-      "status": "PARTIAL"
-    },
-    {
-      "id": "UI-032",
-      "action": "核准複本／中心／候選／診斷／款式完成，完整Windows／TTC／字重版本與嵌入權利仍待",
-      "status": "PARTIAL"
+      "action": "75父題仍需續做，依PROJECT_GOAL/ROADMAP，無EXE；UI048最後、印刷後置"
     }
   ],
   "blocked": [
@@ -128,29 +60,28 @@
     "UI-056-D 未來補樣"
   ],
   "pending_remote": [
-    "CP-20261014-HIDDEN-LOCK-FIXED"
+    "CP-20261014-THREE-SOURCE-VERIFIED"
   ],
-  "previous_evidence_run": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-BATCH-END.json",
+  "previous_evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-001/run.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-THREE-PACKAGES-BEGIN.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-THREE-PACKAGES-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
-    "id": "CORE-037..039",
-    "status": "COMPLETED_REMOTE_VERIFIED",
-    "contract": "docs/dev/OBJECT_TOOLS_DESIGN.md",
-    "source_commit": "2f2d32bf313616414b86bf866faef73dac884a3f",
-    "evidence_run": "docs/evidence/runs/RUN-OBJECT-TOOLS-001/run.json",
-    "final_snapshot_commit": "67ea91a0b5c8a49b918bdf00c248dff594a72326",
-    "checkpoint_receipt": "docs/checkpoints/CP-20261014-OBJECT-TOOLS-VERIFIED.receipt.json"
+    "id": "CORE-040..045",
+    "status": "FUNCTIONALLY_COMPLETED_SELF_VERIFIED",
+    "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
+    "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
+    "evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
+    "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json"
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
-  "next_work_package": "docs/dev/THREE_PACKAGES_DESIGN.md",
+  "next_work_package": "docs/dev/MARKING_TRUST_NEXT_PLAN.md",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
-    "completed": 2,
+    "completed": 3,
     "target": 3,
     "packages": [
       {
@@ -177,33 +108,59 @@
       },
       {
         "id": "EXCEPTION-CENTER",
-        "status": "PASS_PENDING_REMOTE",
+        "status": "FUNCTIONALLY_COMPLETED_WITH_USER_AUTHORIZED_PUBLICATION_EXCEPTION",
         "requirements": [
           "CORE-044",
           "CORE-045"
         ],
         "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
-        "evidence": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json"
+        "evidence": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
+        "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json"
       }
     ]
   },
   "artifact_upload_blocker": {
-    "status": "AUTO_REVIEW_PAYLOAD_ASSOCIATION_BLOCKED",
-    "reason": "Exact 90-item approval received and manifest hashes matched. Remaining binary API calls still intermittently rejected for no filename/payload association; named-file inspection and same-API bounded retries succeeded for some files, object-tools-difference remained rejected and final call was aborted.",
+    "status": "CLOSED_FOR_CURRENT_SCOPE_BY_USER_INSTRUCTION",
+    "reason": "使用者明確改為略過證明附件上傳、持久化事件文件並優先開發；不再重試缺少具名payload關聯的binary操作。",
     "manifest": "docs/dev/PUBLIC_EVIDENCE_APPROVAL_MANIFEST.json",
     "events": "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md",
     "code_docs_commit": "e682b1b8f4e3a61b71cfe69dc05627fd8cb09a7d",
     "current_local_formal": "229PASS/0SKIP/60attachments/source unchanged",
-    "resume": "Do not repeat rejected/cancelled payload blindly. Restore accepted blob records, publish allowed partial snapshot, resolve API association capability for remaining original approved attachments, then final full checkpoint and require-evidence.",
+    "resume": "後續若有新的完整附件保存交付，再依具體檔案及工具能力处理；不因這些證明附件重複停頓開發。",
     "user_approval": "核准清單中全部90件具體附件",
     "approval_manifest_commit": "e682b1b8f4e3a61b71cfe69dc05627fd8cb09a7d",
     "upload_state": "docs/dev/APPROVED_EVIDENCE_UPLOAD_STATE.json",
-    "pending_files_at_recovery": 11
+    "pending_files_at_recovery": 9,
+    "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json"
   },
   "superseded_prepared_checkpoints": [
     {
       "id": "CP-20261014-SEMANTIC-VERIFIED",
       "reason": "Two review blockers required explicit approval; governance changed during pending. New full approved checkpoint replaces it without rewriting historical manifest."
+    },
+    {
+      "id": "CP-20261014-HIDDEN-LOCK-FIXED",
+      "reason": "原完整manifest及ZIP不覆寫；審查期間文件變更，使用者後續核准9件證明附件略過；新明確保存範圍checkpoint取代，不冒稱舊記錄已ack。"
+    },
+    {
+      "id": "CP-20261014-THREE-EVIDENCE-RECOVERY",
+      "reason": "原完整manifest及ZIP不覆寫；審查期間文件變更，使用者後續核准9件證明附件略過；新明確保存範圍checkpoint取代，不冒稱舊記錄已ack。"
     }
-  ]
+  ],
+  "evidence_publication": {
+    "policy": "USER_AUTHORIZED_ATTACHMENT_EXCEPTION",
+    "exception_manifest": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
+    "local_formal": "229PASS/0SKIP/60attachments/source unchanged",
+    "published_current_run_attachments_expected": 51,
+    "unpublished_current_run_attachments": 9,
+    "strict_all_attachment_gate": "NOT_SATISFIED; retained original checker, not claimed PASS",
+    "functional_scope_changed": false,
+    "test_results_changed": false
+  },
+  "source_checkpoint_scope": {
+    "id": "CP-20261014-THREE-SOURCE-VERIFIED",
+    "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
+    "excluded_attachment_count": 9,
+    "all_code_tests_metadata_included": true
+  }
 }

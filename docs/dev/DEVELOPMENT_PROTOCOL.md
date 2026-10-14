@@ -27,3 +27,7 @@ REQUIREMENTS.json 是狀態來源；FEATURES.md 是自動生成的人類視圖�
 ## GitHub 與優先順序
 
 使用分支／PR，保存失敗與反覆嘗試次數；不得自動 merge。EXE 流程只手動 dispatch，沒有新交付指令不使用。功能與治理驗證可在本地或 CI 執行；CI 可用性不是本地功能完成的證據。框架 check 失败先修復治理，框架 READY checkpoint 已確認後再開產品工作包。詳細參考方案見 EVIDENCE_DESIGN.md。
+
+## 本輪使用者核准的證明附件例外
+
+2026-10-14使用者明確要求略過上傳證明附件並優先開發；精確9件見EVIDENCE_PUBLICATION_EXCEPTIONS.json與決策2026-10-14-EVIDENCE-UPLOAD-PRIORITY。只有這9件從新的可保存checkpoint view排除，全部code/tests/claims/結果與其餘公開附件仍核對；不覆寫舊full manifest，不以移除失敗測試或改程式標準結案。原full ZIP與本機附件保留。收據只對實際列入manifest的保存範圍REMOTE_VERIFIED，舊全附件require-evidence Gate仍未滿足並明示。新附件不自動套用此例外，也不把實際程式／測試缺漏當證明文件略過。

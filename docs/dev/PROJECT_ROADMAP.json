@@ -67,14 +67,16 @@
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
       "completed_core_children": [
         "CORE-008",
-        "CORE-030"
+        "CORE-030",
+        "CORE-042",
+        "CORE-043"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-004",
       "title": "訓練例外處理",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P2",
       "order_group": 2,
       "scope": "單件例外隔離，其餘合法工作繼續",
@@ -88,14 +90,17 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "CORE044045已實作且本機229PASS；全部原父題仍含辨識／可信樣本／規則流程，需按來源拆分其餘条件。新版完整遠端證據仍待附件保存。",
+      "completed_core_children": [
+        "CORE-044",
+        "CORE-045"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-005",
       "title": "例外中心智慧待辦排序",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P2",
       "order_group": 2,
       "scope": "待辦排序與影響數有來源，不能自動解除隔離",
@@ -109,8 +114,11 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "CORE044045已實作且本機229PASS；全部原父題仍含辨識／可信樣本／規則流程，需按來源拆分其餘条件。新版完整遠端證據仍待附件保存。",
+      "completed_core_children": [
+        "CORE-044",
+        "CORE-045"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -801,7 +809,9 @@
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
       "completed_core_children": [
-        "CORE-038"
+        "CORE-038",
+        "CORE-040",
+        "CORE-041"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
@@ -822,7 +832,7 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
+      "next_step": "CORE039精確候選／原子保存／持久UndoRedo已驗；完整父題與跨平台／獨立覆核未全部完成",
       "completed_core_children": [
         "CORE-039"
       ],
@@ -959,7 +969,9 @@
       "completed_core_children": [
         "CORE-008",
         "CORE-018",
-        "CORE-023"
+        "CORE-023",
+        "CORE-042",
+        "CORE-043"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
@@ -1156,7 +1168,8 @@
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
       "completed_core_children": [
         "CORE-012",
-        "CORE-030"
+        "CORE-030",
+        "CORE-043"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },

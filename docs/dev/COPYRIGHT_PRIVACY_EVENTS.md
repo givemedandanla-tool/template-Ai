@@ -37,3 +37,9 @@
 使用者已明確回覆「核准清單中全部90件具體附件」，不再記為缺少其授權。全清單本機bytes／SHA256／Gitblob匹配，並從GitHub immutable blob9426b2d8核對清單原內容。批次RUNNING、例外RESTORED及字型審核PNG各有同API具名檢視後成功；RESTORED回應parser修正後以新tree核對實際SHA997d29d6，PNG的UTF8 fetch限制不是審查拒絕。
 
 仍有API呼叫以無檔名／SHA／manifest對應拒絕，雖然呼叫前均列出對應且部分逐張實際檢視。object-tools-difference最後呼叫被中止，停止盲目重試此檔。cell失聯有界恢復及批准blob清單持久化。保留歷史與原匿名位元；未轉藏圖片、未更換通道、未用替代文件冒稱GUI證據完成。截至恢復紀錄仍11件pending；詳見APPROVED_EVIDENCE_UPLOAD_STATE。需平台具體payload關聯問題解決才能完整結案，已完成不受阻的程式／測試／來源metadata保存。
+
+## E-003 本輪結案：使用者核准略過證明附件，優先開發
+
+使用者明确后续指令原文见2026-10-14-EVIDENCE-UPLOAD-PRIORITY。停止9件重复證明附件上傳；精确清单／bytes／SHA256與Gitblob在EVIDENCE_PUBLICATION_EXCEPTIONS。原匿名檔、完整run／FAIL紀錄和full local ZIP不刪，沒有换格式转藏被拒payload或换通道；其餘已接受81／90件與全部程式／測試／結果／claims保存。最新run為51／60附件公開，未公開9件不冒称可下載。
+
+事件內容為binary API缺少具名檔案欄位／審查無法關聯已核准payload，以及工具cell中斷；已有具名hash与实际视觉、OFL核對後正常成功的保存，但不是全部成功。解決方案由使用者定為保存事件文件與明确上傳例外、停止证据重試、回到功能開發；本轮该上传阻塞不再卡功能工作包。風險与未满足全附件Gate仍明示；真實私人原稿、實際客戶DB、受限字型原檔始終未上传。後續完整附件交付另以有具名binary能力的正常工具處理，不能把本次例外擴成一般未验程式可略過。

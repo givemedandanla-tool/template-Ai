@@ -32,3 +32,7 @@
 ## 執行與證據
 
 先 BEGIN baseline 與本契約 GitHub 讀回，再逐包實作。每包具名 tests 登錄、固定 source commit/tree、formal run／真 GUI／永久附件、清單差異、HANDOFF／STATE／WORK_LOG、REMOTE_VERIFIED checkpoint。所有後續 code 變更使目前舊證據失效，下一包 formal 重驗所有已做 CORE。目標 6–8 分鐘 prepare 留上傳餘裕；任何超 10 分鐘確認間隔如實記錄。完整完成三包才结束本輪；checkpoint／部分 PASS 不中止工作。
+
+## 後續保存優先序修正（功能驗收不變）
+
+使用者明確改為略過證明附件上傳、將事件持久化並優先開發。依 EVIDENCE-UPLOAD-PRIORITY 決策，最新run的9件重複證明附件停止重試；原檔／原manifest／FAIL記錄不刪，功能及229項驗收不變。完整程式、JUnit、claims與51件可保存附件逐檔讀回；保存範圍checkpoint明列9件例外，不宣稱60件皆永久保存或舊strict Gate已PASS。三個具體實作工作包已完成，完整75父題仍續做。
