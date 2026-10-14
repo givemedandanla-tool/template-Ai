@@ -87,4 +87,4 @@ class RuleReviewMixin:
                 record = copy.deepcopy(row['rule']); record['state'] = {'APPROVE': 'ACTIVE', 'REJECT': 'REJECTED', 'DEFER': 'DEFERRED'}[action]
                 record['review'] = {'actor': actor, 'reason': reason, 'decision': action, 'reviewed_revision': row['revision'], 'plan_digest': current['digest'], 'risk': row['risk'], 'impact': row['matches'], 'timestamp': time.time(), 'detail_reviewed': detail_reviewed}
                 result.append(self._write('RULE', row['id'], record, row['revision'], 'rule_'+action.lower()))
-            return result
+            self._refresh_rule_impacts(current['ids']); return result

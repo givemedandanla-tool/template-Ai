@@ -29,6 +29,8 @@ class TrainingQualityDialog(QDialog):
         self.facts_panel = FactsPanel(window, self); self.tabs.addTab(self.facts_panel, '來源觀察／作品事實')
         from .rule_review_panel import RuleReviewPanel
         self.rules_panel = RuleReviewPanel(window, self); self.tabs.addTab(self.rules_panel, '規則審核中心')
+        from .noise_hits_panel import NoiseHitsPanel
+        self.hits_panel = NoiseHitsPanel(window, self); self.tabs.addTab(self.hits_panel, '雜訊命中追溯')
         self.setWindowTitle('標記品質／來源事實與可信訓練')
     def reject(self):
         if self.facts_panel.running: self.status.setText('背景來源核對尚未結束'); return

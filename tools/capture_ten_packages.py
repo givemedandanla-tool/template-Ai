@@ -64,6 +64,14 @@ def capture_ten_packages(root):
         reviewed = facts.store.get('RULE', wizard.saved_rule['id']); assert reviewed['state'] == 'ACTIVE'
         assert window.library.artwork(work2['id']) == work2
         audit['rule_review'] = {'actual_qt': True, 'active_rule': reviewed, 'inspection': facts.store.inspect_rule(reviewed['id']), 'source_and_slots_unchanged': True}
+        future_source, future_work = source_work(window.library, root, 'synthetic-future.svg')
+        future_facts = facts.store.save_facts(future_work['id'], observations(future_work), 0, 1)
+        future_facts = facts.store.confirm_facts(future_work['id'], [o['id'] for o in future_facts['observations']], future_facts['revision'], future_facts['pins'], facts.store.source_proof(future_work['id']), 'Synthetic Reviewer', True)
+        hits = dialog.hits_panel; dialog.tabs.setCurrentWidget(hits); hits.search.setText(future_work['id']+' 已校稿'); assert len(hits.rows) == 1; hits.table.selectRow(0); QApplication.processEvents()
+        assert hits.rows[0]['current']['state'] == 'EXCLUDED_RULE' and hits.rows[0]['trace_current']
+        assert window.library.artwork(future_work['id']) == future_work
+        if not dialog.grab().save(str(root/'ten-noise-auto-hit.png')): raise ValueError('自動命中GUI未保存')
+        audit['auto_hits'] = {'actual_qt': True, 'future_work': future_work, 'hit': hits.selected_row(), 'counts': hits.count.text(), 'rule_reapproval_prompts': 0, 'source_and_slots_unchanged': True}
         (root / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
     finally:
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()

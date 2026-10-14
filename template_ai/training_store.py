@@ -11,6 +11,7 @@ from .model import Rect, new_id
 from .source_links import hash_source, check_verified
 from .noise import NoiseMixin
 from .noise_review import RuleReviewMixin
+from .noise_hits import NoiseHitMixin
 
 
 def digest(value):
@@ -29,7 +30,7 @@ def identity(value):
     return value
 
 
-class TrainingStore(NoiseMixin, RuleReviewMixin):
+class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin):
     def __init__(self, library):
         self.library = library; self.db = library.db
         self.db.create_function('training_casefold', 1, lambda value: str(value).casefold(), deterministic=True)
@@ -135,7 +136,8 @@ class TrainingStore(NoiseMixin, RuleReviewMixin):
             pins = self.pins(work_id)
             if pins['work_revision'] != expected_work_revision: raise ValueError('作品已變更，觀察未覆蓋新標記')
             checked = self.validate_observations(work_id, observations)
-            return self._write('FACTS', work_id, {'observations': checked, 'confirmation': None, 'state': 'PENDING', 'pins': pins}, expected_revision, 'facts_saved')
+            saved = self._write('FACTS', work_id, {'observations': checked, 'confirmation': None, 'state': 'PENDING', 'pins': pins}, expected_revision, 'facts_saved')
+            self._refresh_noise(work_id); return saved
 
     def facts_state(self, work_id, proof=None):
         record = self.facts(work_id)
@@ -163,7 +165,8 @@ class TrainingStore(NoiseMixin, RuleReviewMixin):
             record['confirmation'] = {'actor': actor, 'timestamp': time.time(), 'observation_ids': ids, 'observations_digest': digest(record['observations']), 'pins': expected_pins,
                                       'source_stat': list(proof.stat), 'scope': 'EXACT_WORK_FACTS_ONLY; NOT_SAMPLE_OR_RULE_APPROVAL'}
             record['state'] = 'CONFIRMED'
-            return self._write('FACTS', work_id, record, expected_revision, 'facts_confirmed')
+            saved = self._write('FACTS', work_id, record, expected_revision, 'facts_confirmed')
+            self._refresh_noise(work_id); return saved
 
     def revoke_facts(self, work_id, expected_revision, reason):
         text(reason, '撤銷原因')
@@ -171,4 +174,5 @@ class TrainingStore(NoiseMixin, RuleReviewMixin):
             record = self.facts(work_id)
             if not record['confirmation']: raise ValueError('沒有有效確認可撤銷')
             record.update(confirmation=None, state='REVOKED', revocation_reason=reason)
-            return self._write('FACTS', work_id, record, expected_revision, 'facts_revoked')
+            saved = self._write('FACTS', work_id, record, expected_revision, 'facts_revoked')
+            self._refresh_noise(work_id); return saved

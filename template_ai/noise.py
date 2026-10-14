@@ -37,7 +37,18 @@ class NoiseMixin:
 
     def protected_observation(self, work_id, observation):
         work = self.library.artwork(work_id); linked = next((s for s in work['payload']['slots'] if s.get('id') == observation['slot_id']), None)
-        return observation['classification'] in ('FIELD', 'LOGO', 'UNKNOWN') or observation['object_type'] in ('LOGO_PART', 'UNKNOWN') or bool(linked and linked.get('kind') in ('name', 'company', 'logo'))
+        direct = observation['classification'] in ('FIELD', 'LOGO', 'UNKNOWN') or observation['object_type'] in ('LOGO_PART', 'UNKNOWN') or bool(linked and linked.get('kind') in ('name', 'company', 'logo'))
+        if direct: return True
+        # An unlinked annotation overlapping confirmed real content cannot evade protection.
+        from .model import Rect
+        facts = self.facts(work_id); confirmation = facts.get('confirmation') or {}; confirmed_ids = set(confirmation.get('observation_ids', []))
+        protected_slots = {o['slot_id'] for o in facts['observations'] if o['id'] in confirmed_ids and o['classification'] in ('FIELD', 'LOGO')}
+        payload = work['payload']; crop = payload['crop']; sx = crop['w']/payload['work_width']; sy = crop['h']/payload['work_height']; region = Rect(**observation['region'])
+        for slot in payload['slots']:
+            if slot.get('id') not in protected_slots and slot.get('kind') not in ('name', 'company', 'logo'): continue
+            r = slot['rect']; source_rect = Rect(crop['x']+r['x']*sx, crop['y']+r['y']*sy, r['w']*sx, r['h']*sy)
+            if region.intersects(source_rect): return True
+        return False
 
     def evidence_ref(self, work_id, observation_id):
         from .training_store import digest
@@ -61,7 +72,8 @@ class NoiseMixin:
             _, observation = self.observation(work_id, oid)
             if action == 'EXCLUDE' and (self.protected_observation(work_id, observation) or observation['classification'] != 'ANNOTATION'): raise ValueError('真實欄位／Logo／未知不能當雜訊剔除')
             local['items'][oid] = {'intent': action, 'observation_digest': digest(observation), 'pins': self.pins(work_id), 'created': time.time()}
-        return self._write('LOCAL', work_id, local, expected_revision, 'local_noise_'+action.lower())
+        saved = self._write('LOCAL', work_id, local, expected_revision, 'local_noise_'+action.lower())
+        self._refresh_noise(work_id); return saved
 
     def local_noise(self, work_id, ids, expected_revision, expected_facts_revision, approved=False):
         if approved is not True: raise ValueError('需要確認只排除此作品的exact選項')
@@ -73,19 +85,11 @@ class NoiseMixin:
             local = self.local_record(work_id)
             if self.facts(work_id)['revision'] != expected_facts_revision or not set(ids) <= set(local['items']): raise ValueError('局部剔除或事實範圍已變更')
             for oid in ids: del local['items'][oid]
-            return self._write('LOCAL', work_id, local, expected_revision, 'local_noise_cleared')
+            saved = self._write('LOCAL', work_id, local, expected_revision, 'local_noise_cleared')
+            self._refresh_noise(work_id); return saved
 
     def noise_candidates(self, work_id):
-        from .training_store import digest
-        facts = self.facts(work_id); local = self.local_record(work_id); pins = self.pins(work_id); result = []
-        confirmed = self.facts_state(work_id) == 'CONFIRMED'
-        for observation in facts['observations']:
-            item = local['items'].get(observation['id']); state = 'INCLUDED'; reason = '未排除；不代表已准入訓練'
-            if item:
-                if confirmed and observation['id'] in facts['confirmation']['observation_ids'] and item['pins'] == pins and item['observation_digest'] == digest(observation): state = 'EXCLUDED_LOCAL' if item['intent'] == 'EXCLUDE' else 'KEPT_LOCAL'; reason = '人工只對此作品／觀察決定'
-                else: state = 'STALE_LOCAL'; reason = '舊局部決定過期，保留候選'
-            result.append({'work_id': work_id, 'observation_id': observation['id'], 'text': observation['text'], 'state': state, 'reason': reason, 'protected': self.protected_observation(work_id, observation)})
-        return result
+        return self.noise_decisions(work_id)
 
     def propose_noise_rule(self, work_id, observation_id, counterexamples, zone, normalization, expected_facts_revision, expected_epoch, actor, approved=False, normalization_approved=False):
         from .training_store import text

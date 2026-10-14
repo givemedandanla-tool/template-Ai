@@ -3,12 +3,12 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.18",
+  "product_version": "0.1.19",
   "framework_status": "READY",
   "active_task": "TEN-PACKAGES-IN-PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-TEN-P04-VERIFIED.receipt.json",
   "last_confirmed_commit": "aaf524e6fa5903ac061d783418e47981cf001c8c",
-  "latest_evidence_run": "docs/evidence/runs/RUN-TEN-RULE-REVIEW-001/run.json",
+  "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -30,8 +30,13 @@
   "next_tasks": [
     {
       "id": "AUTO-NOISE",
+      "status": "IN_PROGRESS",
+      "action": "包5已核准完整literal/type/region與人工語境的後續自動命中、protected field/Logo/unknown／unlinked overlap保護、多active衝突／source/ref stale保留、current-vs-stored追溯、stable hit idempotent與facts/hits同交易late rollback、actualQt一次facts prompt不重問rule與定位／counts／失敗恢復已實作；target8PASS。正式freeze全回歸，原稿與formal Slots不變。"
+    },
+    {
+      "id": "TEN-NEXT",
       "status": "CONTINUE",
-      "action": "直接下一包；不等待HUMAN"
+      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
     }
   ],
   "blocked": [
@@ -52,8 +57,10 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-TEN-NOISE-AUTHOR-001/run.json",
+  "pending_remote": [
+    "CP-20261014-TEN-AUTO-NOISE-SOURCE"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-TEN-RULE-REVIEW-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P04-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
@@ -229,7 +236,7 @@
           "CORE-054",
           "CORE-055"
         ],
-        "status": "NOT_STARTED"
+        "status": "IMPLEMENTED_PENDING_FORMAL"
       },
       {
         "sequence": 6,
