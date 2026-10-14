@@ -18,6 +18,8 @@ CORE-030：實際背景測試揭露Job完成但GUI訊號遺失。MainWindow持�
 
 故障CP在before-fix日志仍寫入時prepare，讀回擋下不一致；以原ZIP冻结字節（當時日志空）完成不可變FAILURE snapshot，再在ASYNC-FIXED保存完整before／after。不得改歷史記錄或稱錯誤來源已驗證。
 
+最終snapshot `73e67f1aff392973af9cbcddc170508876816c7f` 已逐檔讀回347檔；本輪新增6個已確認checkpoint，總計27個。收據與STATE另提交保存避免SHA自參照，實際before／after日志與22件新版附件已包含。
+
 ## 下一工作包
 
 UI-032 少量替代候選只讀預覽子包，先讀原決策474行、UI-033、FONT_CENTER_DESIGN.md、font_catalog.py。可按所需字形全部覆蓋、固定點數shaping與框位可行比例做硬篩，再以可核實來源／字寬保持度排序；無可信原稿／原字型幾何就標未知，不能給外觀等同、找回原稿字型或原版審美的分數。限制候選数量與worker負載，以set-membership和已驗證字面量測快取避免重复解析；先拆CORE-031、基準／BEGIN／具名驗收。
