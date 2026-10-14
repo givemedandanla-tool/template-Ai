@@ -78,3 +78,11 @@ class ObjectIndexGuiTests(unittest.TestCase):
         other=ObjectToolsDialog(self.window,'ARTWORK',work['id']);self.addCleanup(other.close);other.show();APP.processEvents();self.assertEqual(other.structure['status'],'VERIFIED_DERIVATIVE')
         other.select_ids([self.t.slots[0].id]);other.index_mode.setCurrentIndex(1);node=next(n for n in other.tree_nodes if not n.data(0,Qt.UserRole));other.index_tree.clearSelection();node.setSelected(True);self.assertEqual(other.ids,[self.t.slots[0].id])
         self.assertEqual(other.snapshot['payload']['slots'][0]['owner'],'p1');self.assertEqual(len(self.window.library.list_sources()),1)
+    def test_hidden_locked_intended_member_blocks_visible_group_drag(self):
+        from PySide6.QtCore import QPointF
+        d=self.dialog;locked=self.t.slots[0].id;visible=self.t.slots[1].id
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):d.select_ids([locked]);d.preview_lock(True);d.apply()
+        d.select_ids([locked]);d.viewport_action('HIDE');d.select_ids([locked,visible]);self.assertEqual(set(d.ids),{locked,visible})
+        box=next(i for i in d.canvas.scene().items() if isinstance(i,Box) and i.slot.id==visible);before=QPointF(box.pos());box.setPos(before+QPointF(1,0))
+        self.assertEqual(box.pos(),before,'Hidden locked member must not be silently dropped from the retained selection intent')
+        self.assertEqual(d.canvas.selection_intent,{locked,visible})

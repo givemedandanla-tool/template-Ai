@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 2026-10-14：最後边界實際RED与修复
+
+- RUN-EXCEPTION-CENTER-001 228PASS／60附件已产生，但最後檢查新hidden-lock-intent test實際RED：锁定成员隐藏后QGraphics会丢该scene selected，visible member setPos从(8,19)变(9,19)，默默漏掉保留的UI selection scope。保留RED，没有放宽期望。
+- ObjectCanvas保存完整selection_intent，position guard查全部scene locked IDs与intent交集；drag候选沿完整intent，不因隐藏偷偷剔除。重新25物件回归与新229formal继续；旧228 run是修复前历史，不冒称当前完成。
+
 ## 2026-10-14：第三包可恢復階段
 
 - exact来源／作品／模板／Logo依赖索引与固定lex排序，ExceptionDialog搜索／filter／定位／hash差異重试／exclude原因／restore及同交易CAS歷史已實作；選中重試runner新增精確ID範圍，不重跑其他READY或SUCCESS。資料完整性例外在action中quick_check＋FK gate。

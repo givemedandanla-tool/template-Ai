@@ -14,12 +14,12 @@ class ObjectCanvas(Canvas):
     selection_ids=Signal(object)
     drag_proposal=Signal(object)
     def __init__(self):
-        self.resetting=True;super().__init__();self.allow_multi_drag=True;self.resetting=False;self.base_positions={};self.overlays=[]
+        self.resetting=True;super().__init__();self.allow_multi_drag=True;self.resetting=False;self.base_positions={};self.overlays=[];self.selection_intent=set()
     def selection_changed(self):
         if self.resetting:return
         self.selection_ids.emit(sorted(i.slot.id for i in self.scene().selectedItems() if isinstance(i,Box)))
     def set_content(self,*args,**kw):
-        self.resetting=True
+        self.resetting=True;self.selection_intent=set()
         try:
             super().set_content(*args,**kw)
             self.base_positions={i.slot.id:(i.pos().x(),i.pos().y()) for i in self.scene().items() if isinstance(i,Box)}
@@ -30,7 +30,7 @@ class ObjectCanvas(Canvas):
         finally:self.resetting=False
     def fit(self):self.fitInView(QRectF(-5,-5,self.width_mm+10,self.height_mm+10),Qt.KeepAspectRatio)
     def select_ids(self,ids):
-        self.resetting=True
+        self.resetting=True;self.selection_intent=set(ids)
         try:
             for i in self.scene().items():
                 if isinstance(i,Box):i.setSelected(i.slot.id in ids)
@@ -44,7 +44,7 @@ class ObjectCanvas(Canvas):
                 if abs(dx)+abs(dy)>1e-6:changed.append((i.slot.id,dx,dy))
                 i.setPos(x,y);i.slot.rect.x,i.slot.rect.y=x,y
         if changed:
-            ids=sorted(i.slot.id for i in self.scene().selectedItems() if isinstance(i,Box))
+            ids=sorted(self.selection_intent)
             dx,dy=changed[0][1:]
             self.drag_proposal.emit({'operation':'MOVE','ids':ids,'dx':dx,'dy':dy})
     def clear_preview(self):

@@ -59,7 +59,9 @@ class Box(QGraphicsRectItem):
         if change==QGraphicsItem.ItemPositionChange and self.scene():
             views=self.scene().views()
             selected=[i for i in self.scene().selectedItems() if isinstance(i,Box)]
-            if self.slot.locked or any(i.slot.locked for i in selected) or any(v.readonly for v in views) or (len(selected)>1 and any(not getattr(v,'allow_multi_drag',False) for v in views)):
+            locked_ids={i.slot.id for i in self.scene().items() if isinstance(i,Box) and i.slot.locked}
+            intended_locked=any(locked_ids & getattr(v,'selection_intent',set()) for v in views)
+            if self.slot.locked or intended_locked or any(i.slot.locked for i in selected) or any(v.readonly for v in views) or (len(selected)>1 and any(not getattr(v,'allow_multi_drag',False) for v in views)):
                 return self.pos()
         return super().itemChange(change,value)
 
