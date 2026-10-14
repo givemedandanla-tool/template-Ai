@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 8/10 正式驗收
+
+RUN-TEN-DATASET-LEARNING-002／source 9e6cc9490367473a00aacc9c2929ea1c430423e0：299PASS／0SKIP，69本機附件、source unchanged。CORE-060,CORE-061及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。
+
+
 ## 十包 8 可恢復實作
 
 包8原RUN-DATASET-001 298PASS仅歷史；新增真GUI dirty-editor test得到RED：refresh_templates默默save旧DRAFT与清Undo。现新增preserve_editor真保留DB/内存/Undo，9targetPASS；保留RED与前版run，不降低標準。新版重凍source，正式299全回歸後才能結案8/10。
