@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 7/10 正式驗收
+
+RUN-TEN-TRUSTED-SAMPLES-001／source 9ee4bf5d3ddd547fea52c0977eabf8dd537409af：290PASS／0SKIP，68本機附件、source unchanged。CORE-058,CORE-059及全部已實作CORE／GOV具名再驗。原GUI／media本機保留、source-bound hash清單與metadata/tests/JUnit/claims/audit/CP保存；不宣稱全media已上傳。保存後直接下一包。
+
+
 ## 十包 7 可恢復實作
 
 包7候選/APPROVED有效/STALE/QUARANTINED/REVOKED分離、exact SOURCE/WORK/FACTS/RULE/cache provenance与rights/use、必要人工正例／原錯誤預測分開、不自動訓練、dataset/template/job exact使用依賴與撤銷／隔離history/CAS/late rollback、真Qt背景健康核對／取消／過期／失败恢復已實作；target7PASS。環境切換檔案未丟失，WIP已Git讀回；進度render不同步已修。所有新媒體不公開，code/tests/metadata保存。
