@@ -886,10 +886,10 @@ class MainWindow(QMainWindow):
             else:
                 from dataclasses import asdict
                 stored=[asdict(Slot(**{**s,'rect':Rect(**s['rect'])})) for s in snapshot['payload']['slots']]
-                if fingerprint(stored)!=fingerprint([asdict(s) for s in self.slots]):raise ValueError('來源標記有未保存內容，請先保存')
+                if [Slot(**{**s,'rect':Rect(**s['rect'])}) for s in stored]!=self.slots:raise ValueError('來源標記有未保存內容，請先保存')
             if self.current_slot:
                 draft=self.make_slot(Rect(*(s.value() for s in self.coords)));draft.id=self.current_slot.id
-                if fingerprint(draft.__dict__ | {'rect':draft.rect.__dict__})!=fingerprint(self.current_slot.__dict__ | {'rect':self.current_slot.rect.__dict__}):raise ValueError('屬性面板有未套用內容；請先套用或明確重選放棄')
+                if draft!=self.current_slot:raise ValueError('屬性面板有未套用內容；請先套用或明確重選放棄')
             dialog=ObjectToolsDialog(self,kind,entity_id)
             try:dialog.exec()
             finally:dialog.deleteLater()

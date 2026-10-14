@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：傳統editor安全RED
+
+- 14backend／真GUI3way／group drag候選／mixed patch／兩模式與retry全PASS。新增pin/style與cross-owner GUI亦PASS。
+- 原legacy test先保存導致舊UndoStack清空，第一FAIL沒有實際展示ABA；保留原log，補保存後再次手工更改的真實fixture（不放寬期望）。REAL-ABA-RED實際驗證舊Undo把未保存手工x10退回x9，在外部資料已更改又回復後仍未阻擋。
+- 保存兩份FAIL logs；下一步舊MainWindow持有DB revision/hash，保存與Undo先檢查，失敗保留手工內容；完整包尚未完成。
+
 ## 2026-10-14：物件GUI可恢復階段
 
 - 新ObjectToolsDialog兩模式entry、複選清單／框選畫布／mixed dirty面板、實際green差異與old/new table、lock及persistent歷史可操作；23原字型審核回歸PASS、首次真GUI預覽與截圖生成。
