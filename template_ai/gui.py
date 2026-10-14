@@ -47,13 +47,21 @@ class Box(QGraphicsRectItem):
         super().__init__(0, 0, slot.rect.w, slot.rect.h)
         self.slot, self.callback = slot, callback
         self.setPos(slot.rect.x, slot.rect.y)
-        self.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsMovable)
+        self.setFlags(QGraphicsItem.ItemIsSelectable | QGraphicsItem.ItemIsMovable | QGraphicsItem.ItemSendsGeometryChanges)
         self.setZValue(2)
         pen = QPen(QColor("#2563eb"), 1)
         pen.setCosmetic(True)
         self.setPen(pen)
         self.setBrush(QColor(37, 99, 235, 24))
         self.caption = KINDS.get(slot.kind, "欄位") + " · " + slot.owner
+
+    def itemChange(self,change,value):
+        if change==QGraphicsItem.ItemPositionChange and self.scene():
+            views=self.scene().views()
+            selected=[i for i in self.scene().selectedItems() if isinstance(i,Box)]
+            if self.slot.locked or any(i.slot.locked for i in selected) or any(v.readonly for v in views) or (len(selected)>1 and any(not getattr(v,'allow_multi_drag',False) for v in views)):
+                return self.pos()
+        return super().itemChange(change,value)
 
     def paint(self, p, option, widget=None):
         super().paint(p, option, widget)
@@ -126,7 +134,7 @@ class Canvas(QGraphicsView):
         self.setCursor(Qt.CrossCursor if mode in ("crop", "slot") else Qt.ArrowCursor)
         for item in self.scene().items():
             if isinstance(item, Box):
-                item.setFlag(QGraphicsItem.ItemIsMovable, mode == "edit")
+                item.setFlag(QGraphicsItem.ItemIsMovable, mode == "edit" and not item.slot.locked)
                 item.setFlag(QGraphicsItem.ItemIsSelectable, mode == "edit")
 
     def selection_changed(self):
@@ -308,6 +316,7 @@ class MainWindow(QMainWindow):
         self.button("依標記學習模板", self.learn_template, row)
         self.button("將選取框核准為 Logo", self.capture_logo, row)
         self.button("刪除選取標記", self.delete_slot, row)
+        self.button("安全多選／精確對齊", self.object_tools, row)
         layout.addLayout(row)
         return widget
 
@@ -337,6 +346,7 @@ class MainWindow(QMainWindow):
         self.button("選取／移動", lambda: self.edit_canvas.set_mode("edit"), row)
         self.button("全稿", lambda: self.edit_canvas.fit(), row)
         self.button("刪除欄位", self.delete_slot, row)
+        self.button("安全多選／精確對齊", self.object_tools, row)
         layout.addLayout(row)
         row = QHBoxLayout()
         self.background_button = self.button("匯入乾淨固定背景", self.import_background, row)
@@ -748,7 +758,7 @@ class MainWindow(QMainWindow):
         return Slot(self.kind.currentData(), self.owner.currentData(), rect, self.index.value()-1,
                     family, self.pt.value(), self.scale.value()/100,
                     self.align.currentData(), self.required.isChecked(), color=self.text_color.text().strip(),
-                    font_asset=asset,font_style=style)
+                    font_asset=asset,font_style=style,locked=self.current_slot.locked if self.current_slot else False)
 
     def current_slots(self):
         return self.slots if self.tabs.currentIndex() == 0 else self.template.slots if self.template else []
@@ -764,7 +774,7 @@ class MainWindow(QMainWindow):
     def select_slot(self, slot):
         self.current_slot = next((s for s in self.current_slots() if slot and s.id == slot.id), None)
         s = self.current_slot
-        self.property_button.setEnabled(s is not None and self.tabs.currentIndex() != 2)
+        self.property_button.setEnabled(s is not None and not s.locked and self.tabs.currentIndex() != 2 and (self.tabs.currentIndex()==0 or (self.template and self.template.state=='draft')))
         if not s:
             return
         self.kind.setCurrentIndex(self.kind.findData(s.kind))
@@ -780,7 +790,7 @@ class MainWindow(QMainWindow):
         self.scale.setValue(s.min_scale*100)
         self.align.setCurrentIndex(self.align.findData(s.align))
         self.required.setChecked(s.required)
-        self.selected_info.setText(f"{KINDS[s.kind]} · {s.owner}\n款式：{s.font_style or '預設／待核驗'}；改幾何／色彩不重設已選款式。\n已選取框位以作品毫米表示。\n原始字型／可編輯性未知時，不將本模板設計值冒稱原稿屬性。")
+        self.selected_info.setText(f"{KINDS[s.kind]} · {s.owner} · {'已鎖定；須明確解鎖' if s.locked else '未鎖定'}\n款式：{s.font_style or '預設／待核驗'}；改幾何／色彩不重設已選款式。\n已選取框位以作品毫米表示。\n原始字型／可編輯性未知時，不將本模板設計值冒稱原稿屬性。")
 
     def list_selection(self, row):
         if 0 <= row < len(self.slots):
@@ -804,6 +814,10 @@ class MainWindow(QMainWindow):
         self.replace_slots(self.redo_stack.pop())
 
     def replace_slots(self, slots):
+        from dataclasses import asdict
+        from .object_tools import protect_locked
+        try:protect_locked({'slots':[asdict(s) for s in self.current_slots()]},{'slots':[asdict(s) for s in slots]})
+        except ValueError as error:self.error(str(error));return
         if self.tabs.currentIndex() == 0:
             self.slots = slots
             self.refresh_training()
@@ -813,6 +827,7 @@ class MainWindow(QMainWindow):
             self.refresh_editor()
 
     def box_moved(self, action, displayed_slot):
+        if displayed_slot.locked:return
         if action == "before_move":
             if self.tabs.currentIndex() == 1 and not self.editable():
                 return
@@ -829,6 +844,7 @@ class MainWindow(QMainWindow):
     def apply_properties(self):
         if not self.current_slot or not self.editable():
             return
+        if self.current_slot.locked:self.error('物件已鎖定；請在安全多選工具明確解鎖');return
         import re
         if not re.fullmatch(r"#[0-9a-fA-F]{6}", self.text_color.text().strip()):
             self.error("文字色彩請輸入 #RRGGBB，例如 #173d75")
@@ -846,6 +862,7 @@ class MainWindow(QMainWindow):
     def delete_slot(self):
         if not self.current_slot or not self.editable():
             return
+        if self.current_slot.locked:self.error('物件已鎖定；不能刪除');return
         self.checkpoint()
         self.current_slots().remove(self.current_slot)
         self.current_slot = None
@@ -854,6 +871,29 @@ class MainWindow(QMainWindow):
             self.save_labels(silent=True)
         else:
             self.refresh_editor()
+
+    def object_tools(self):
+        from .object_dialog import ObjectToolsDialog
+        from .font_review import fingerprint
+        try:
+            tab=self.tabs.currentIndex()
+            if tab==0 and self.work:kind,entity_id='ARTWORK',self.work['id']
+            elif tab==1 and self.template:kind,entity_id='TEMPLATE',self.template.id
+            else:self.inform('請先選取來源作品或保存的模板草稿');return
+            snapshot=self.library.object_snapshot(kind,entity_id)
+            if kind=='TEMPLATE':
+                if fingerprint(Template.from_dict(snapshot['payload']).to_dict())!=fingerprint(self.template.to_dict()):raise ValueError('主工作台有未保存編輯；請先保存或明確放棄')
+            else:
+                from dataclasses import asdict
+                stored=[asdict(Slot(**{**s,'rect':Rect(**s['rect'])})) for s in snapshot['payload']['slots']]
+                if fingerprint(stored)!=fingerprint([asdict(s) for s in self.slots]):raise ValueError('來源標記有未保存內容，請先保存')
+            if self.current_slot:
+                draft=self.make_slot(Rect(*(s.value() for s in self.coords)));draft.id=self.current_slot.id
+                if fingerprint(draft.__dict__ | {'rect':draft.rect.__dict__})!=fingerprint(self.current_slot.__dict__ | {'rect':self.current_slot.rect.__dict__}):raise ValueError('屬性面板有未套用內容；請先套用或明確重選放棄')
+            dialog=ObjectToolsDialog(self,kind,entity_id)
+            try:dialog.exec()
+            finally:dialog.deleteLater()
+        except Exception as error:self.error(str(error))
 
     def labels_changed(self):
         if self.source:

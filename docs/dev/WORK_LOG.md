@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：物件GUI可恢復階段
+
+- 新ObjectToolsDialog兩模式entry、複選清單／框選畫布／mixed dirty面板、實際green差異與old/new table、lock及persistent歷史可操作；23原字型審核回歸PASS、首次真GUI預覽與截圖生成。
+- 目視第一圖發現右panel長內容與下方warnings擠壓，改scroll panel與readOnly可捲文字、showEvent fit；不是只靠測試數冒稱UI完成。
+- 仍須QTest實際3way／drag／retry／lock全paths／兩模式與完整formal证據，checkpoint後繼續。
+
 ## 2026-10-14：物件核心可恢復階段
 
 - 新Slot.locked相容defaultFalse、純mm提案／dirty patch／cross-owner gate／完整Logo比例、六向align／等邊界gap／group delta已實作；8具名backend測試PASS。
