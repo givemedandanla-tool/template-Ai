@@ -2,7 +2,11 @@
 
 依序讀 AGENTS.md、STATE.json、REQUIREMENTS.json／FEATURES.md、PROGRESS.md／CURRENT_PROGRESS.json、最新 WORK_LOG 與 checkpoint 收據、DEVELOPMENT_PROTOCOL.md。每次開發前保存新要求基準，結束保存差異快照與同數字使用者回報。
 
-## 已確認現況
+## 字型中心開發中
+
+本輪依使用者要求參考數學、開源與商用思路，CORE-028／029設計見FONT_CENTER_DESIGN.md。修改前保存108列基準與BEGIN，旧當前完成判定暫退為待驗證；歷史證據保留。基準27功能子項／6治理已驗證，75父題0完整／42部分／28未實作／2受阻／3延後。最後應重新全套證據，產生結束差異及永久GitHub恢復點。
+
+## 上一個已確認版本
 
 v0.1.6，測試來源 `8e8d2bab1789966636b1ac6d7b9a160aaab05cfc`；RUN-BATCH-RELINK-003：104 PASS／0 SKIP、20 件紀錄／實際匿名附件，含可閱讀的批次候選預覽。歷史 103／104 PASS 的前兩個 run 保留，不當最新版碼的證據。
 
