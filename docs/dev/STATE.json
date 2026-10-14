@@ -6,8 +6,8 @@
   "product_version": "0.1.9",
   "framework_status": "READY",
   "active_task": "UI-033-CANVAS-COMPARE",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-FONT-REVIEW-IMPLEMENTED.receipt.json",
-  "last_confirmed_commit": "ecb863bf3ee62277318e31792517945ed6674ccd",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-FONT-REVIEW-VERIFIED.receipt.json",
+  "last_confirmed_commit": "bcef39a942912272ab32aae2348efa6b976577dc",
   "latest_evidence_run": "docs/evidence/runs/RUN-FONT-REVIEW-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -21,7 +21,7 @@
     {
       "id": "CORE-032..034",
       "status": "COMPLETED_SCOPED",
-      "action": "完整受控草稿替代、持久Undo／Redo與實際款式；168PASS／31附件，待最終完整遠端讀回"
+      "action": "完整受控草稿替代工作包完成；168PASS／31附件納入446檔REMOTE_VERIFIED snapshot"
     },
     {
       "id": "UI-033-CANVAS-COMPARE",
@@ -80,7 +80,7 @@
     },
     {
       "id": "UI-032",
-      "action": "核准修復／管理／診斷完成，完整候選替代審核及字重版本另包",
+      "action": "核准複本／中心／候選／診斷／款式完成，完整Windows／TTC／字重版本與嵌入權利仍待",
       "status": "PARTIAL"
     }
   ],
@@ -102,9 +102,7 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [
-    "CP-20261014-FONT-REVIEW-VERIFIED"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-FONT-CANDIDATES-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-FONT-REVIEW-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-FONT-REVIEW-END.json",
@@ -112,9 +110,11 @@
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
     "id": "CORE-032..034",
-    "status": "TESTS_PASSED_PENDING_FINAL_REMOTE_READBACK",
+    "status": "COMPLETED_REMOTE_VERIFIED",
     "contract": "docs/dev/FONT_REVIEW_DESIGN.md",
     "source_commit": "ecb863bf3ee62277318e31792517945ed6674ccd",
-    "evidence_run": "docs/evidence/runs/RUN-FONT-REVIEW-001/run.json"
+    "evidence_run": "docs/evidence/runs/RUN-FONT-REVIEW-001/run.json",
+    "final_snapshot_commit": "bcef39a942912272ab32aae2348efa6b976577dc",
+    "checkpoint_receipt": "docs/checkpoints/CP-20261014-FONT-REVIEW-VERIFIED.receipt.json"
   }
 }
