@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：第三包可恢復階段
+
+- exact来源／作品／模板／Logo依赖索引与固定lex排序，ExceptionDialog搜索／filter／定位／hash差異重试／exclude原因／restore及同交易CAS歷史已實作；選中重試runner新增精確ID範圍，不重跑其他READY或SUCCESS。資料完整性例外在action中quick_check＋FK gate。
+- 6backend首次PASS；GUI fixture漏MainWindow import的5ERROR完整保留exception-initial.log，修正import后实际GUI验收继续，不降低断言。完整第三包尚未驗收／远端完成。
+- 第二包216PASS54附件与readback765檔f656abcb完成；PNG無檔名payload審查多次拒絕，實際檔名hash＋view核對后改為獨立單件同API call明確綁定purpose，成功；不换通道／不刪证据。後續控binary單件scope，source checkpoint先保存降低程式丟失窗口。
+
 ## 2026-10-14：第二包正式216PASS
 
 - source882af2c7，216PASS／0SKIP，54附件、source未變；新CORE042043全部验收。43已驗CORE，2待做；父題不冒升完整。实际GUI preflight→RUNNING→CANCELLED→重開resume DONE；14目标PASS后补modal范围变更及dirty导航，最后15PASS。

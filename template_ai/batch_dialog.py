@@ -87,14 +87,14 @@ class BatchImportDialog(QDialog):
         if report is not self.report or fingerprint(report)!=before or self.window.busy:self.status.setText('確認期間預檢範圍異動，請重新核對');return
         try:self.batch=self.store.create(prepared,True);self.report=None;self.start_run()
         except Exception as error:self.status.setText(str(error));self.controls()
-    def start_run(self):
-        self.running=True;self.cancel_requested=False;self.controls();QTimer.singleShot(0,self.advance)
+    def start_run(self,ids=None):
+        self.run_ids=set(ids) if ids is not None else None;self.running=True;self.cancel_requested=False;self.controls();QTimer.singleShot(0,self.advance)
     def advance(self):
         if not self.running:return
         try:
             current=self.store.get(self.batch['id'])
             if current['revision']!=self.batch['revision']:raise ValueError('批次revision異動，停止且保留已完成結果')
-            self.batch=current;item=next((r for r in current['items'] if r['status']=='READY'),None)
+            self.batch=current;item=next((r for r in current['items'] if r['status']=='READY' and (self.run_ids is None or r['id'] in self.run_ids)),None)
             if self.window.busy:raise ValueError('其他背景工作正在執行，保留READY項，稍後續跑')
             if self.cancel_requested or not item:
                 self.batch=self.store.stop(current['id'],current['revision'],self.cancel_requested);self.running=False;self.render(self.batch['items']);self.refresh_history();self.status.setText('批次 '+self.batch['phase']+'；結果保存，失敗仍隔離，未核准訓練／規則。');self.controls();return

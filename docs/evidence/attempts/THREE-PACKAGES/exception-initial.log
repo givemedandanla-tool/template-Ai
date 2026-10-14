@@ -1,0 +1,61 @@
+test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched (test_import_exceptions.ImportExceptionGuiTests.test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched) ... ERROR
+test_background_failure_and_late_apply_failure_controls_recover (test_import_exceptions.ImportExceptionGuiTests.test_background_failure_and_late_apply_failure_controls_recover) ... ERROR
+test_gui_exclude_decline_reason_restore_and_reopen_history (test_import_exceptions.ImportExceptionGuiTests.test_gui_exclude_decline_reason_restore_and_reopen_history) ... ERROR
+test_real_search_sort_filter_and_exact_source_navigation (test_import_exceptions.ImportExceptionGuiTests.test_real_search_sort_filter_and_exact_source_navigation) ... ERROR
+test_stale_source_modal_selection_and_plan_mutation_rejected (test_import_exceptions.ImportExceptionGuiTests.test_stale_source_modal_selection_and_plan_mutation_rejected) ... ERROR
+test_action_late_audit_atomic_rollback_and_forged_plan_no_partial (test_import_exceptions.ImportExceptionTests.test_action_late_audit_atomic_rollback_and_forged_plan_no_partial) ... ok
+test_cas_invalid_scope_proof_mutation_and_running_batch_rejected (test_import_exceptions.ImportExceptionTests.test_cas_invalid_scope_proof_mutation_and_running_batch_rejected) ... ok
+test_cross_batch_and_excluded_not_silently_retried (test_import_exceptions.ImportExceptionTests.test_cross_batch_and_excluded_not_silently_retried) ... ok
+test_exact_registered_dependencies_stable_ranking_and_filters (test_import_exceptions.ImportExceptionTests.test_exact_registered_dependencies_stable_ranking_and_filters) ... ok
+test_exclude_restore_reopen_never_success_or_modify_source (test_import_exceptions.ImportExceptionTests.test_exclude_restore_reopen_never_success_or_modify_source) ... ok
+test_retry_changed_hash_selected_only_preserves_ready_and_attempt_history (test_import_exceptions.ImportExceptionTests.test_retry_changed_hash_selected_only_preserves_ready_and_attempt_history) ... ok
+
+======================================================================
+ERROR: test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched (test_import_exceptions.ImportExceptionGuiTests.test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_exceptions.py", line 72, in setUp
+    self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=MainWindow(self.root/'data');self.addCleanup(lambda:self.window.close());self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')];self.b=failed_batch(self.window.import_store,self.paths);self.dlg=ImportExceptionDialog(self.window);self.dlg.show();APP.processEvents();self.addCleanup(lambda:self.dlg.close())
+                                                                                                                          ^^^^^^^^^^
+NameError: name 'MainWindow' is not defined
+
+======================================================================
+ERROR: test_background_failure_and_late_apply_failure_controls_recover (test_import_exceptions.ImportExceptionGuiTests.test_background_failure_and_late_apply_failure_controls_recover)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_exceptions.py", line 72, in setUp
+    self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=MainWindow(self.root/'data');self.addCleanup(lambda:self.window.close());self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')];self.b=failed_batch(self.window.import_store,self.paths);self.dlg=ImportExceptionDialog(self.window);self.dlg.show();APP.processEvents();self.addCleanup(lambda:self.dlg.close())
+                                                                                                                          ^^^^^^^^^^
+NameError: name 'MainWindow' is not defined
+
+======================================================================
+ERROR: test_gui_exclude_decline_reason_restore_and_reopen_history (test_import_exceptions.ImportExceptionGuiTests.test_gui_exclude_decline_reason_restore_and_reopen_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_exceptions.py", line 72, in setUp
+    self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=MainWindow(self.root/'data');self.addCleanup(lambda:self.window.close());self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')];self.b=failed_batch(self.window.import_store,self.paths);self.dlg=ImportExceptionDialog(self.window);self.dlg.show();APP.processEvents();self.addCleanup(lambda:self.dlg.close())
+                                                                                                                          ^^^^^^^^^^
+NameError: name 'MainWindow' is not defined
+
+======================================================================
+ERROR: test_real_search_sort_filter_and_exact_source_navigation (test_import_exceptions.ImportExceptionGuiTests.test_real_search_sort_filter_and_exact_source_navigation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_exceptions.py", line 72, in setUp
+    self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=MainWindow(self.root/'data');self.addCleanup(lambda:self.window.close());self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')];self.b=failed_batch(self.window.import_store,self.paths);self.dlg=ImportExceptionDialog(self.window);self.dlg.show();APP.processEvents();self.addCleanup(lambda:self.dlg.close())
+                                                                                                                          ^^^^^^^^^^
+NameError: name 'MainWindow' is not defined
+
+======================================================================
+ERROR: test_stale_source_modal_selection_and_plan_mutation_rejected (test_import_exceptions.ImportExceptionGuiTests.test_stale_source_modal_selection_and_plan_mutation_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_import_exceptions.py", line 72, in setUp
+    self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=MainWindow(self.root/'data');self.addCleanup(lambda:self.window.close());self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')];self.b=failed_batch(self.window.import_store,self.paths);self.dlg=ImportExceptionDialog(self.window);self.dlg.show();APP.processEvents();self.addCleanup(lambda:self.dlg.close())
+                                                                                                                          ^^^^^^^^^^
+NameError: name 'MainWindow' is not defined
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.299s
+
+FAILED (errors=5)

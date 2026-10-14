@@ -169,7 +169,7 @@ class BatchStore:
         def change(b):
             if b['phase']=='RUNNING' and b.get('owner')!={'pid':os.getpid(),'session':self.session}:raise ValueError('不能停止其他執行者')
             if any(r['status']=='RUNNING' for r in b['items']):raise ValueError('目前轉換未結束，不能強制結案')
-            b['phase']='CANCELLED' if cancelled else 'PAUSED' if any(r['status']=='READY' for r in b['items']) else 'DONE_WITH_ERRORS' if any(r['status'] in ('FAILED','INTERRUPTED') for r in b['items']) else 'DONE';b['owner']=None
+            b['phase']='CANCELLED' if cancelled else 'PAUSED' if any(r['status']=='READY' for r in b['items']) else 'DONE_WITH_ERRORS' if any(r['status'] in ('FAILED','INTERRUPTED') for r in b['items']) else 'DONE_WITH_EXCLUSIONS' if any(r['status']=='EXCLUDED' for r in b['items']) else 'DONE';b['owner']=None
         return self.mutate(batch_id,revision,'import_cancelled' if cancelled else 'import_run_stopped',change)
     def recover(self):
         recovered=[]

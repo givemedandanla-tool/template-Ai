@@ -288,6 +288,7 @@ class MainWindow(QMainWindow):
         self.button("重新連結同內容原稿", self.relink_source, links_row)
         self.button("批次來源定位／復原", self.batch_source_links, links_row)
         self.button("批次匯入／取消與續跑", self.batch_import, links_row)
+        self.button("來源匯入例外中心", self.import_exceptions, links_row)
         links_row.addStretch()
         layout.addLayout(links_row)
         works_row = QHBoxLayout()
@@ -553,6 +554,13 @@ class MainWindow(QMainWindow):
         if self.busy:return
         from .batch_dialog import BatchImportDialog
         dialog=BatchImportDialog(self)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
+
+    def import_exceptions(self):
+        if self.busy:return
+        from .exception_dialog import ImportExceptionDialog
+        dialog=ImportExceptionDialog(self)
         try:dialog.exec()
         finally:dialog.deleteLater()
 
