@@ -69,7 +69,7 @@ def find_candidates(inventory, text, size_pt=10., width_mm=80., min_scale=.85,
         measured = measure(reference, ref_style)
         if measured is None:
             report["status"] = "PARTIAL"; report["reference_issue"] = "比較字面超出本輪預算，字寬未知"
-        elif measured.get("coverage") == 1 and measured.get("width_mm") is not None:
+        elif measured.get("measurement_verified") is True and measured.get("width_mm") is not None:
             report["reference_width_mm"] = measured["width_mm"]
             report["reference_issue"] = "僅比較所選字面的實測自然字寬，不代表外觀相同或原稿身份"
         else:
@@ -146,10 +146,10 @@ def render_candidate(candidate, inputs):
         painter.scale(em*actual["scale"], em)
         painter.setPen(QColor("#111111")); layout.draw(painter, QPointF(0, 0))
     finally: painter.end()
-    if row["kind"] == "ASSET" and asset_health(row["asset"])[0] != "HEALTHY":
-        raise ValueError("預覽期間字型檔異動，未發布畫面；請重新查詢")
     data = QByteArray(); buffer = QBuffer(data); buffer.open(QIODevice.WriteOnly)
     if not image.save(buffer, "PNG"): raise ValueError("唯讀預覽PNG建立失敗")
     buffer.close()
+    if row["kind"] == "ASSET" and asset_health(row["asset"])[0] != "HEALTHY":
+        raise ValueError("預覽期間字型檔異動，未發布畫面；請重新查詢")
     return {"png":bytes(data), "analysis":actual, "pixels_per_mm":ppm,
             "pixel_width":image.width(), "pixel_height":image.height(), "scope":SCOPE}

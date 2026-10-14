@@ -150,6 +150,34 @@ def main():
     center.show_analysis(diagnosis); app.processEvents()
     if not center.grab().save(str(artifacts / "font-center-diagnostics.png")):
         raise ValueError("字形／毫米量測實際截圖保存失敗")
+    from template_ai.font_candidate_dialog import FontCandidateDialog
+    import time
+    candidates = FontCandidateDialog(center)
+    candidates.resize(1500,1000); candidates.compare.setChecked(True)
+    candidates.show(); candidates.search_button.click()
+    def wait_candidates():
+        deadline=time.monotonic()+20
+        while (candidates.busy or window.busy) and time.monotonic()<deadline:
+            app.processEvents(); time.sleep(.005)
+        if candidates.busy or window.busy: raise ValueError("候選真實背景工作未完成")
+    wait_candidates()
+    assert candidates.report and candidates.report["candidates"], candidates.status.text()
+    assert candidates.selected() is None
+    app.processEvents()
+    if not candidates.grab().save(str(artifacts / "font-candidates-ranked.png")):
+        raise ValueError("候選排名實際截圖保存失敗")
+    candidates.table.selectRow(0); candidates.preview_button.click(); wait_candidates()
+    assert candidates.preview_data, candidates.status.text()
+    app.processEvents()
+    if not candidates.grab().save(str(artifacts / "font-candidates-preview.png")):
+        raise ValueError("候選唯讀預覽實際截圖保存失敗")
+    (artifacts / "font-candidate-line.png").write_bytes(candidates.preview_data["png"])
+    report=candidates.report
+    summary={k:report[k] for k in ("status","input","reference_width_mm","reference_issue","checked_faces","omitted_faces","hidden_eligible","bytes_budgeted","scope")}
+    summary["candidates"]=[{k:c[k] for k in ("rank","requested_style","analysis","source_priority","width_delta_ratio","reasons")} for c in report["candidates"]]
+    summary["excluded"]=[{"families":c["row"]["families"],"style":c["requested_style"],"reasons":c["reasons"]} for c in report["excluded"]]
+    (artifacts / "font-candidates-report.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    candidates.close()
     center.close()
     window.close()
     reopened = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))

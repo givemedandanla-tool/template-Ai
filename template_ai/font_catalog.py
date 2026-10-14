@@ -139,7 +139,7 @@ def validate_inputs(text, size_pt, width_mm, min_scale):
 
 def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=None):
     validate_inputs(text, size_pt, width_mm, min_scale)
-    result = {"status":"BLOCKED", "issues":[], "size_pt":size_pt, "width_mm":None, "scale":None, "missing":[], "coverage":None,
+    result = {"status":"BLOCKED", "issues":[], "size_pt":size_pt, "width_mm":None, "scale":None, "missing":[], "coverage":None, "measurement_verified":False,
               "scope":"所選字面的單行字形與宽度，不代表原稿身份／授權／完整模板合格"}
     if row["kind"] == "ASSET":
         try: raw = raw_asset(row["asset"])
@@ -187,6 +187,7 @@ def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=N
     if row["kind"]=="ASSET":
         status,issues=asset_health(row["asset"])
         if status!="HEALTHY": result["issues"]=issues; return result
+    result["measurement_verified"] = True
     if scale+1e-12 < min_scale:
         result["issues"]=["固定字級下所需水平縮放低於設定下限，不截字或縮小字級"]; return result
     result["status"]="FEASIBLE_WIDTH"

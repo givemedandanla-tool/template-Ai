@@ -35,6 +35,8 @@ class FontCandidateDialog(QDialog):
         layout.addWidget(self.compare)
         self.status = QLabel("請查詢候選；不預設選取或套用字型。")
         self.status.setTextFormat(Qt.PlainText); self.status.setWordWrap(True); layout.addWidget(self.status)
+        self.summary = QLabel("每輪最多量測64字面、64 MiB資產大小，最多展示10個候選；排序依來源身份、已知比較字寬差異、水平壓縮及穩定身份。")
+        self.summary.setTextFormat(Qt.PlainText); self.summary.setWordWrap(True); layout.addWidget(self.summary)
         self.table = QTableWidget(0, 7)
         self.table.setHorizontalHeaderLabels(["排名／實際字面", "來源／身份", "覆蓋率", "自然字寬", "水平比例", "比較字寬差異", "排名理由／限制"])
         self.table.setEditTriggers(QTableWidget.NoEditTriggers); self.table.setSelectionBehavior(QTableWidget.SelectRows)
@@ -58,6 +60,7 @@ class FontCandidateDialog(QDialog):
 
     def invalidate(self, *_):
         self.generation += 1; self.report = None
+        self.summary.setText("輸入已變更，舊搜尋統計不適用；每輪最多量測64字面、展示10個候選。")
         self.table.setRowCount(0); self.exclusions.setRowCount(0); self.selection_changed()
         self.status.setText("輸入或比較條件已變更；請重新查詢，舊候選不適用。")
 
@@ -109,7 +112,8 @@ class FontCandidateDialog(QDialog):
     def show_report(self, report):
         self.report = report
         total = len(report["candidates"])
-        self.status.setText(f"{'部分搜尋' if report['status']=='PARTIAL' else '無實際文字' if report['status']=='NO_TEXT' else '本輪搜尋完成'}；量測 {report['checked_faces']} 字面，展示 {total} 候選，排除 {len(report['excluded'])}，未量測 {report['omitted_faces']}，其餘合格 {report['hidden_eligible']}。\n"+report["reference_issue"])
+        self.summary.setText(f"{'部分搜尋' if report['status']=='PARTIAL' else '無實際文字' if report['status']=='NO_TEXT' else '本輪搜尋完成'}；量測 {report['checked_faces']} 字面，展示 {total} 候選，排除 {len(report['excluded'])}，未量測 {report['omitted_faces']}，其餘合格 {report['hidden_eligible']}。排序：來源身份 → 已知比較字寬差異 → 水平壓縮 → 穩定身份。\n"+report["reference_issue"])
+        self.status.setText("請明確選取候選後重新核驗並唯讀預覽；不預設選取或套用。")
         self.table.blockSignals(True); self.table.setRowCount(total)
         for i,candidate in enumerate(report["candidates"]):
             a = candidate["analysis"]; delta = candidate["width_delta_ratio"]
@@ -118,7 +122,7 @@ class FontCandidateDialog(QDialog):
                       "；".join(candidate["reasons"])]
             for j,value in enumerate(values):
                 item = QTableWidgetItem(value)
-                item.setToolTip(value+"\n"+candidate["row"]["identity"] if j==1 else value)
+                item.setToolTip(value+"\n"+candidate["row"]["identity"]+"\n"+candidate["id"] if j==1 else value)
                 self.table.setItem(i,j,item)
         self.table.clearSelection(); self.table.blockSignals(False)
         for j,w in enumerate((225,150,85,115,100,115,330)): self.table.setColumnWidth(j,w)

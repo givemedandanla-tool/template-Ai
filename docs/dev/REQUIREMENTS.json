@@ -2944,7 +2944,7 @@
       "parents": [
         "UI-032"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "候選只讀端到端功能；Linux環境字型／匿名文字單行診斷，不代表完整UI-032、Windows、原稿一致或UI-033套用",
@@ -2975,7 +2975,9 @@
             "test_font_candidates.FontCandidateTests.test_reference_width_is_measured_and_missing_reference_stays_unknown",
             "test_font_candidates.FontCandidateTests.test_reference_delta_orders_actual_different_widths",
             "test_font_candidates.FontCandidateTests.test_permutation_and_duplicate_identity_do_not_change_rank_or_measure_twice",
-            "test_font_candidates.FontCandidateTests.test_face_bytes_and_inventory_limits_are_explicit_partial"
+            "test_font_candidates.FontCandidateTests.test_face_bytes_and_inventory_limits_are_explicit_partial",
+            "test_font_candidates.FontCandidateTests.test_reference_modified_during_measurement_does_not_publish_width",
+            "test_font_candidates.FontCandidateTests.test_reference_can_measure_width_even_if_frame_fit_fails"
           ]
         },
         {
@@ -2986,7 +2988,8 @@
             "test_font_candidates.FontCandidateTests.test_preview_rejects_modified_file_and_same_width_changed_text",
             "test_font_candidates.FontCandidateGuiTests.test_shared_center_entry_has_explicit_unchecked_reference_and_no_auto_selection",
             "test_font_candidates.FontCandidateGuiTests.test_input_changes_reject_late_search_and_preview_results",
-            "test_font_candidates.FontCandidateGuiTests.test_modified_preview_clears_old_image_and_can_requery"
+            "test_font_candidates.FontCandidateGuiTests.test_modified_preview_clears_old_image_and_can_requery",
+            "test_font_candidates.FontCandidateGuiTests.test_partial_search_warning_remains_visible_after_preview"
           ]
         },
         {
@@ -3001,7 +3004,7 @@
           ]
         }
       ],
-      "next_step": "先保存BEGIN契約；實作引擎、GUI、故障與正式回歸證據"
+      "next_step": "已完成端到端實作，待確切來源正式全套證據與最終GitHub讀回"
     }
   ]
 }

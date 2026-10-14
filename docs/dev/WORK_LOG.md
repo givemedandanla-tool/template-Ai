@@ -2,6 +2,14 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-14：CORE-031 完整實作待正式驗證
+
+- WIP a60a6c8995164e84d5c12575a3a1db75976bab4f 已讀回357檔；v0.1.8引擎／GUI／實際PNG及原子输入失效接上。23項候選focused PASS，既有18項中心PASS。
+- 補充量測完整性flag：比較字面在量測末尾異動不可發布舊字寬；單純框宽不足仍能顯示有效自然字寬，缺字／身份失敗則未知。
+- 真實Qt背景生成候選／預覽截圖與PNG已視覺核對；發現預覽狀態可能掩蓋部分搜尋警示，增永久統計label及具名驗收。匿名報告與實際附件納入正式runner，無字型原bytes或私人來源上傳。
+- Fontconfig上游兩個web讀取入口不可用，改實際閱讀維護者歷史fcmatch.c的FcSortCompare／FcSortWalk，參考理由如實列設計；不複製第三方代碼。
+- 下一步：IMPLEMENTED來源checkpoint、正式145項全套run與26件附件、永久證據及完成差異。此時不標VERIFIED。
+
 ## 2026-10-14：CORE-031 目標啟動，先保存完整候選唯讀契約
 
 - 開工check PASS；確認工作分支82e5bf5d、main仍436ca2d7，無pending。基準111列／30 CORE完成／6 GOV／75父題保持。

@@ -93,6 +93,25 @@ class FontCandidateTests(unittest.TestCase):
         self.assertAlmostEqual(report['candidates'][0]['width_delta_ratio'],0)
         self.assertGreater(abs(report['candidates'][1]['width_delta_ratio']),.001)
 
+    def test_reference_modified_during_measurement_does_not_publish_width(self):
+        from template_ai.font_catalog import asset_health
+        count=0
+        def mutate_on_final_check(asset):
+            nonlocal count
+            count+=1
+            if count==3: Path(asset['path']).write_bytes(b'changed while measuring')
+            return asset_health(asset)
+        with patch('template_ai.font_catalog.asset_health',side_effect=mutate_on_final_check):
+            report=find_candidates(self.inventory,'Alex',reference=self.row)
+        self.assertIsNone(report['reference_width_mm']); self.assertIn('未知',report['reference_issue'])
+        self.assertEqual(report['candidates'],[])
+
+    def test_reference_can_measure_width_even_if_frame_fit_fails(self):
+        width=analyze_font(self.row,'Alex Example')['width_mm']
+        report=find_candidates(self.inventory,'Alex Example',width_mm=width*.8,reference=self.row)
+        self.assertAlmostEqual(report['reference_width_mm'],width)
+        self.assertEqual(report['candidates'],[])
+
     def test_permutation_and_duplicate_identity_do_not_change_rank_or_measure_twice(self):
         rows=[self.host,self.row,self.host,copy.deepcopy(self.row)]
         a=find_candidates({'status':'COMPLETE','rows':rows},'Alex')
@@ -237,7 +256,7 @@ class FontCandidateGuiTests(unittest.TestCase):
 
     def test_empty_missing_glyph_and_no_candidate_are_visible_not_success(self):
         self.dialog.text.setText(' '); self.search_sync()
-        self.assertIn('無實際文字',self.dialog.status.text()); self.assertEqual(self.dialog.table.rowCount(),0)
+        self.assertIn('無實際文字',self.dialog.summary.text()); self.assertEqual(self.dialog.table.rowCount(),0)
         self.dialog.text.setText('Alex'+chr(0x10ffff)); self.search_sync()
         self.assertEqual(self.dialog.table.rowCount(),0); self.assertEqual(self.dialog.exclusions.rowCount(),1)
         self.assertIn('U+10FFFF',self.dialog.exclusions.item(0,1).text())
@@ -248,3 +267,12 @@ class FontCandidateGuiTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'callback error'): self.dialog.search()
         self.assertFalse(self.dialog.busy); self.assertTrue(self.dialog.search_button.isEnabled())
         self.assertTrue(self.dialog.table.isEnabled())
+
+    def test_partial_search_warning_remains_visible_after_preview(self):
+        report=find_candidates({'status':'PARTIAL','rows':[self.center.selected()]},'Alex')
+        self.dialog.text.setText('Alex'); self.dialog.show_report(report)
+        self.dialog.table.selectRow(0)
+        with patch.object(self.window,'run_job',side_effect=lambda msg,fn,callback:callback(fn())): self.dialog.preview()
+        self.assertIsNotNone(self.dialog.preview_data)
+        self.assertIn('部分搜尋',self.dialog.summary.text())
+        self.assertIn('未量測',self.dialog.summary.text())
