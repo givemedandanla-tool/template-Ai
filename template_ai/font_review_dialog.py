@@ -188,7 +188,10 @@ class FontReviewDialog(QDialog):
             current();line,comparison=result
             pixmap=QPixmap();pixmap.loadFromData(line['png'],'PNG');self.preview.setPixmap(pixmap);self.preview_data=line;self.comparison_data=comparison
             self.details.setText(f"{row['template_name']} v{row['version']}／{s['owner']}／{KINDS.get(s['kind'],s['kind'])} 第{s.get('index',0)+1}欄\n"+self.table.item(i,6).text()+'\n'+SCOPE)
-            if CanvasCompareDialog(comparison,self).exec()!=QDialog.Accepted:return
+            dialog=CanvasCompareDialog(comparison,self)
+            try:accepted=dialog.exec()==QDialog.Accepted
+            finally:dialog.deleteLater()
+            if not accepted:return
             current()
             def recheck():verify_comparison(comparison);return comparison
             self.start('對照返回後背景重新核對資產，才可人工核准',recheck,approve,allow_input=False)

@@ -119,7 +119,7 @@
 | CORE-032 | 字型替代影響、逐欄量測與人工審核 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權 | 無有效新版證據 |
 | CORE-033 | 受控字型替代新版本草稿、全批交易及持久復原重做 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權 | 無有效新版證據 |
 | CORE-034 | 字型款式持久與候選、排版及渲染身份一致 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權 | 無有效新版證據 |
-| CORE-035 | 實際來源與前後矩形渲染 | IN_PROGRESS | 否 | Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題 | 無有效新版證據 |
-| CORE-036 | 唯讀同步視圖、欄位定位與字型審核整合 | IN_PROGRESS | 否 | Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題 | 無有效新版證據 |
+| CORE-035 | 實際來源與前後矩形渲染 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題 | 無有效新版證據 |
+| CORE-036 | 唯讀同步視圖、欄位定位與字型審核整合 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

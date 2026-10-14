@@ -134,6 +134,7 @@ def main():
     font_asset = window.font_manager.import_font(environment_font, approved=True)
     font_template = demo_template()
     font_template.name = "合成字型引用"
+    font_template.source_id=multi_source["id"];font_template.source_work_id=first["id"];font_template.source_work_revision=first["revision"];font_template.artwork=Rect(0,0,90,54)
     for slot in font_template.slots:
         slot.font, slot.font_asset = font_asset["families"][0], dict(font_asset)
     window.library.save_template(font_template)
@@ -199,7 +200,19 @@ def main():
     assert review.report and review.report['rows'][row_index]['eligible'],review.status.text()
     assert all(not review.table.cellWidget(i,0).isChecked() for i in range(review.table.rowCount()))
     if not review.grab().save(str(artifacts/'font-review-differences.png')):raise ValueError('差異GUI截圖失敗')
-    with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
+    from template_ai.comparison_view import CanvasCompareDialog
+    def capture_compare(dialog):
+        dialog.show();app.processEvents();dialog.fit_template();app.processEvents()
+        assert dialog.data['source']['mapping']['revision']==first['revision']
+        if not dialog.grab().save(str(artifacts/'canvas-compare-overview.png')):raise ValueError('完整三視圖截圖失敗')
+        dialog.focus_selected();dialog.zoom(1.5);app.processEvents()
+        if not dialog.grab().save(str(artifacts/'canvas-compare-focused.png')):raise ValueError('同步定位截圖失敗')
+        for mode in ('source','before','after'):(artifacts/('canvas-compare-'+mode+'.png')).write_bytes(dialog.data[mode+'_png'])
+        report={k:v for k,v in dialog.data.items() if not k.endswith('_png') and k!='files'}
+        report['file_sha256']=list(dialog.data['files'].values())
+        (artifacts/'canvas-compare-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+        dialog.accept();return CanvasCompareDialog.Accepted
+    with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes),patch.object(CanvasCompareDialog,'exec',capture_compare):
         review.table.selectRow(row_index);review.review_selected();wait_review()
         assert review.preview_data,review.status.text()
         if not review.grab().save(str(artifacts/'font-review-approved.png')):raise ValueError('逐欄審核GUI截圖失敗')
@@ -226,10 +239,10 @@ def main():
              for p in artifacts.iterdir() if p.is_file() and p.name != "VALIDATION.json"}
     evidence = {"app_version": app_version, "python": platform.python_version(), "platform": platform.platform(), "PySide6": qt_version,
                 "inkscape": inkscape_path(), "tests_exit_code": None if args.skip_tests else result.returncode, "files": files,
-                "scope": "合成／匿名來源、實際 Inkscape 多頁轉換、Qt GUI、固定背景／文字色彩、多作品標記恢復、本機持久字型與新 Python 程序載入、數位輸出；程式化核准並非真人視覺驗收",
+                "scope": "合成／匿名來源、實際 Inkscape 多頁轉換、Qt GUI、固定背景／文字色彩、多作品標記恢復、本機持久字型與新 Python 程序載入、來源與前後矩形同步唯讀對照、數位輸出；程式化核准並非真人視覺驗收",
                 "not_verified": ["真實 Illustrator 私有樣本全面視覺驗收", "VivoBook／RTX 5050 效能", "實體印刷", "獨立審查"]}
     (artifacts / "VALIDATION.json").write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({"tests": "NOT_RUN_CAPTURE_ONLY" if args.skip_tests else "PASS", "captures": 5, "exports": 6, "validation": str(artifacts / "VALIDATION.json")}))
+    print(json.dumps({"tests": "NOT_RUN_CAPTURE_ONLY" if args.skip_tests else "PASS", "captures": sum(name.endswith(".png") and not name.endswith("FINAL.png") for name in files), "exports": 6, "validation": str(artifacts / "VALIDATION.json")}))
 
 
 if __name__ == "__main__":

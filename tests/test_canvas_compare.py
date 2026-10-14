@@ -174,3 +174,37 @@ class CanvasCompareTests(unittest.TestCase):
             QTimer.singleShot(0,act);return real_exec(dialog)
         with patch.object(CanvasCompareDialog,'exec',mutate_clock),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):review.review_selected();self.wait(review)
         self.assertFalse(review.approved);self.assertIn('變更',review.status.text())
+
+    def test_decline_prompt_mutation_and_post_approval_apply_gate(self):
+        review=self.review();real_exec=CanvasCompareDialog.exec
+        def answer(dialog):QTimer.singleShot(0,dialog.accept);return real_exec(dialog)
+        def decline(dialog):QTimer.singleShot(0,dialog.reject);return real_exec(dialog)
+        with patch.object(CanvasCompareDialog,'exec',decline),patch.object(QMessageBox,'question') as question:
+            review.review_selected();self.wait(review);question.assert_not_called()
+        self.assertFalse(review.approved)
+        cache=Path(self.source['image']);saved=cache.read_bytes()
+        def change_during_prompt(*args,**kwargs):cache.write_bytes(b'changed during approval prompt');return QMessageBox.Yes
+        with patch.object(CanvasCompareDialog,'exec',answer),patch.object(QMessageBox,'question',side_effect=change_during_prompt):review.review_selected();self.wait(review)
+        self.assertFalse(review.approved);self.assertIn('異動',review.status.text());cache.write_bytes(saved)
+        with patch.object(CanvasCompareDialog,'exec',answer),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):review.review_selected();self.wait(review)
+        self.assertTrue(review.approved);review.table.cellWidget(0,0).setChecked(True);cache.write_bytes(b'changed after approval')
+        before=self.library.template_snapshots()
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):review.apply_selected();self.wait(review)
+        self.assertEqual(self.library.template_snapshots(),before);self.assertEqual(self.library.font_change_history(),[]);self.assertIn('異動',review.status.text())
+        self.assertTrue(review.apply_button.isEnabled());cache.write_bytes(saved)
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):review.apply_selected();self.wait(review)
+        self.assertEqual(len(self.library.font_change_history()),1)
+        self.assertEqual(next(s for s in self.library.template_snapshots() if s['template']['id']==self.t.id),self.snap)
+
+    def test_italic_actual_face_full_rectangles_and_affine_scene_alignment(self):
+        italic=Path('/usr/share/fonts/opentype/urw-base35/NimbusSans-Italic.otf')
+        self.asset=self.window.font_manager.import_font(italic,approved=True);self.target=build_inventory([self.asset],[],[])['rows'][0];self.refresh()
+        self.assertIn('Italic',self.row['proposed']['style']);result=self.build();self.assertTrue(result['after_png'])
+        d=CanvasCompareDialog(result);self.addCleanup(d.close);d.show();APP.processEvents();d.focus_selected()
+        m=result['source']['mapping'];u,v=45,27;px,py=pixel_point(m,u,v)
+        pixmap_item=next(item for item in d.views[0].scene().items() if hasattr(item,'pixmap'))
+        scene_point=pixmap_item.mapToScene(QPointF(px,py));self.assertAlmostEqual(scene_point.x(),u);self.assertAlmostEqual(scene_point.y(),v)
+        for view in d.views:
+            actual=view.mapToScene(view.viewport().rect().center())
+            self.assertLessEqual(abs(actual.x()-d.center.x()),1.5/d.zoom_value);self.assertLessEqual(abs(actual.y()-d.center.y()),1.5/d.zoom_value)
+        second=self.t.slots[1];d.objects.setCurrentRow(1);self.assertEqual(d.center,QPointF(second.rect.x+second.rect.w/2,second.rect.y+second.rect.h/2))

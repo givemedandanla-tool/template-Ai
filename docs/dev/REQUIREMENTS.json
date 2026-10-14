@@ -3124,7 +3124,7 @@
         "UI-031",
         "UI-033"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題",
@@ -3141,7 +3141,8 @@
           "tests": [
             "test_canvas_compare.CanvasCompareTests.test_mapping_inverse_pixel_units_and_exact_historical_crop",
             "test_canvas_compare.CanvasCompareTests.test_full_rectangles_only_selected_text_style_color_and_unknown_before",
-            "test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation"
+            "test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation",
+            "test_canvas_compare.CanvasCompareTests.test_italic_actual_face_full_rectangles_and_affine_scene_alignment"
           ]
         }
       ],
@@ -3155,7 +3156,7 @@
         "UI-033",
         "UI-037"
       ],
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題",
@@ -3172,7 +3173,8 @@
           "tests": [
             "test_canvas_compare.CanvasCompareTests.test_synchronized_fit_pan_zoom_selection_and_readonly",
             "test_canvas_compare.CanvasCompareTests.test_real_review_entry_worker_failure_retry_stale_and_no_writes",
-            "test_canvas_compare.CanvasCompareTests.test_live_file_and_clock_change_prevents_approval"
+            "test_canvas_compare.CanvasCompareTests.test_live_file_and_clock_change_prevents_approval",
+            "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate"
           ]
         }
       ],

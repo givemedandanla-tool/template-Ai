@@ -70,7 +70,7 @@
 | 5 | UI-053 | 獨立樣本品質驗收、分類誤判診斷、版本比較與品質阻擋 | NOT_IMPLEMENTED | 尚無 |
 | 5 | UI-054 | 品質失敗根因分析、受控局部修復、獨立再驗收與安全回退 | NOT_IMPLEMENTED | 尚無 |
 | 5 | UI-056 | 訓練樣本類別覆蓋儀表板、缺口提醒與資料分布透明化 | NOT_IMPLEMENTED | 尚無 |
-| 5 | UI-060A | UI-060 補充決策 A｜排版完成後結果呈現、多方案比較與問題定位 | PARTIAL | 尚無 |
+| 3 | UI-060A | UI-060 補充決策 A｜排版完成後結果呈現、多方案比較與問題定位 | PARTIAL | 尚無 |
 | 5 | UI-066 | template-Ai｜UI-066 去重決策 A：重用既有診斷 GUI，僅保留獨立報告格式與安全交接補充規格 | NOT_IMPLEMENTED | 尚無 |
 | 5 | UI-067 | template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策） | NOT_IMPLEMENTED | 尚無 |
 | 6 | REV-04 | 16 GB＋RTX 5050 至 ASUS VivoBook 效能範圍 | PARTIAL | 尚無 |

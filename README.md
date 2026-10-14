@@ -1,3 +1,4 @@
+<!-- 本輪來源與前後同步對照：CORE-035/036；docs/dev/CANVAS_COMPARE_DESIGN.md -->
 # Template AI｜矩形區域自動排版與模板 AI
 
 ## Human／AI 從這裡開始

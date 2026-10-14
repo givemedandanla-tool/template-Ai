@@ -123,6 +123,8 @@ class CanvasCompareDialog(QDialog):
         # Label is created after views / object list during construction.
         if hasattr(self,'position'):self.position.setText(text)
         self._position_text=text
+        if hasattr(self,'center'):
+            self.synchronize(QPointF(r['x']+r['w']/2,r['y']+r['h']/2),self.zoom_value)
         return True
 
     def focus_selected(self):
