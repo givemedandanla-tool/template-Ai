@@ -29,14 +29,9 @@
   ],
   "next_tasks": [
     {
-      "id": "RULE-RECOVERY",
-      "status": "IN_PROGRESS",
-      "action": "包6局部KEEP／PENDING白名單／批准全域KEEP優先、規則DISABLE／人工來源CHANGE／immutable歷史ROLLBACK新PENDING再審、exact前後影响／樣本依賴定向失效、caller after重算／SHA/CAS、late hit audit整筆rollback、真Qt恢复／白名單／停止／回滾／stale controls已實作；target8PASS。新細則TEN_RECOVERY_ACCEPTANCE開始前保存本機，與source一同GitHub；不改發布模板或聲稱模型解污染。"
-    },
-    {
-      "id": "TEN-NEXT",
+      "id": "TRUSTED-SAMPLES",
       "status": "CONTINUE",
-      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
+      "action": "直接下一包；不等待HUMAN"
     }
   ],
   "blocked": [
@@ -170,7 +165,7 @@
   "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
-    "completed": 5,
+    "completed": 6,
     "baseline_core": 45,
     "added_core": 20,
     "contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
@@ -252,11 +247,13 @@
           "CORE-056",
           "CORE-057"
         ],
-        "status": "FORMAL_PASS_PENDING_REMOTE",
+        "status": "COMPLETED_SAVED_SCOPE",
         "source_commit": "814a6e54e7858e797e5027286cf2db2bd6a413c4",
         "evidence": "docs/evidence/runs/RUN-TEN-NOISE-RECOVERY-001/run.json",
         "tests": 283,
-        "publication_checkpoint": "CP-20261014-TEN-P06-TEXT-VERIFIED"
+        "publication_checkpoint": "CP-20261014-TEN-P06-TEXT-VERIFIED",
+        "snapshot_commit": "10331782141f1fad42bbc49e1383d438ef26988a",
+        "checkpoint": "docs/checkpoints/CP-20261014-TEN-P06-TEXT-VERIFIED.receipt.json"
       },
       {
         "sequence": 7,
