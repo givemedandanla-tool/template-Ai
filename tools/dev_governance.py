@@ -35,8 +35,12 @@ def verify_run(root, run_path, current=True):
     remote = {item["path"]: item["sha"] for item in tree["tree"] if item["type"] == "blob"}
     if any(remote.get(path) != item["git_blob_sha1"] for path, item in files.items()):
         raise ValueError("證據來源與 GitHub 讀回 tree 不一致")
+    from evidence_publication import waived_attachments
+    waived, _ = waived_attachments(root, run_path, run)
     for name, item in run["attachments"].items():
         path = safe_path(folder, name)
+        if not path.is_file() and str(path.relative_to(root)).replace('\\', '/') in waived:
+            continue  # Existing-but-corrupt originals never qualify for a publication waiver.
         if not path.is_file() or path.stat().st_size != item["bytes"] or digest(path.read_bytes()) != item["sha256"]:
             raise ValueError("證據附件失聯或内容變更：" + name)
     tests = read_json(folder / "tests.json")
@@ -48,7 +52,8 @@ def verify_run(root, run_path, current=True):
     return run, {test["id"]: test for test in tests}
 
 
-def check(root=ROOT, require_evidence=False):
+def check(root=ROOT, require_evidence=False, publication_scope=False):
+    require_evidence = require_evidence or publication_scope
     root = Path(root)
     for path in ("AGENTS.md", ".github/copilot-instructions.md", "docs/dev/STATE.json", "docs/dev/HANDOFF.md",
                  "docs/dev/WORK_LOG.md", "docs/dev/REQUIREMENTS.json", "docs/dev/DEVELOPMENT_PROTOCOL.md", "docs/dev/EVIDENCE_DESIGN.md"):
@@ -111,6 +116,14 @@ def check(root=ROOT, require_evidence=False):
         if require_evidence:
             folder = str(Path(state["latest_evidence_run"]).parent).replace("\\", "/")
             required = [state["latest_evidence_run"], *[folder + "/" + name for name in latest["attachments"]]]
+            if publication_scope:
+                from evidence_publication import waived_attachments
+                waived, policies = waived_attachments(root, state['latest_evidence_run'], latest)
+                required = [path for path in required if path not in waived] + policies
+                for policy in policies:
+                    recorded = checkpoint['source_files'].get(policy)
+                    if not recorded or recorded['sha256'] != digest(safe_path(root, policy).read_bytes()):
+                        raise ValueError('證據保存例外policy未在該checkpoint核對，不能略過')
             if any(path not in checkpoint["source_files"] for path in required):
                 raise ValueError("證據還未全部納入已確認的遠端 checkpoint，不能當作永久保存完成")
     return {"status": "PASS", "requirements": len(rows), "completed_scoped": sum(row["completed"] for row in rows),
@@ -138,8 +151,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("check", "render"))
     parser.add_argument("--require-evidence", action="store_true")
+    parser.add_argument("--publication-scope", action="store_true", help="核對已核准保存範圍；不等於全附件永久保存")
     args = parser.parse_args()
-    result = render() if args.command == "render" else check(require_evidence=args.require_evidence)
+    result = render() if args.command == "render" else check(require_evidence=args.require_evidence, publication_scope=args.publication_scope)
     print(json.dumps(result))
 
 

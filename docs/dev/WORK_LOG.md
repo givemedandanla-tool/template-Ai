@@ -1,5 +1,12 @@
 # 開發工作紀錄
 
+## 2026-10-14：包1可恢復實作
+
+- 標記診斷schema／stable IDs／semantic mapping／bounds／包含／公司unknown／必要person name、400單work問題／2000頁問題顯式預算、逐作品分頁／exact定位／既有editor已實作。初GUI定位RED因pan模式不可選／主slot未保存不被舊selected-property guard核對；新training_navigation檢查整份主slot與revision／props並明確定位mode，FAIL日誌保留。
+- 已讀Label Studio公開README人工標記與MLflow dataset.py source/digest追蹤設計；採自製schema／stable sort／source hash，不導入服務／複製其碼。references：https://raw.githubusercontent.com/HumanSignal/label-studio/develop/README.md；https://raw.githubusercontent.com/mlflow/mlflow/master/mlflow/data/dataset.py 。publication適配4test、原framework8回歸PASS，治理不算十包之一。
+- 包1未正式結案；先WIP checkpoint，補actualGUI audit及完整242回歸，再包2。原始父題／CORE新增20計數保留，並未全部完成。
+
+
 ## 2026-10-14：十個新工作包開始
 
 - 最新目標10包（不重算已完成3包）。基準45CORE／229PASS、126列；新增20待做CORE046..065、146列。原75父題0完整／46部分／24未實作／2受阻／3延後，GOV6。原UI007／008／040／041／055／056全條款已讀；scope／驗收與演算法在TEN_PACKAGES_DESIGN開始前保存。

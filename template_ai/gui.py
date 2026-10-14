@@ -291,6 +291,7 @@ class MainWindow(QMainWindow):
         self.button("批次來源定位／復原", self.batch_source_links, links_row)
         self.button("批次匯入／取消與續跑", self.batch_import, links_row)
         self.button("來源匯入例外中心", self.import_exceptions, links_row)
+        self.button("標記品質／規則與可信樣本", self.training_center, links_row)
         links_row.addStretch()
         layout.addLayout(links_row)
         works_row = QHBoxLayout()
@@ -921,6 +922,12 @@ class MainWindow(QMainWindow):
             self.save_labels(silent=True)
         else:
             self.refresh_editor()
+
+    def training_center(self):
+        from .training_quality_dialog import TrainingQualityDialog
+        dialog = TrainingQualityDialog(self)
+        try: dialog.exec()
+        finally: dialog.deleteLater()
 
     def object_tools(self):
         from .object_dialog import ObjectToolsDialog
