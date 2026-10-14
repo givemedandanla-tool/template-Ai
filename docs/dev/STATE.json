@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.24",
   "framework_status": "READY",
-  "active_task": "TEN-PACKAGES-IN-PROGRESS",
+  "active_task": "TEN-PACKAGES-COMPLETED_SAVED_SCOPE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-TEN-P10-TEXT-VERIFIED.receipt.json",
   "last_confirmed_commit": "df60e20936b21107f67e030c8e26ec1852ac7fbc",
   "latest_evidence_run": "docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json",
@@ -13,25 +13,27 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/HANDOFF.md",
-    "docs/dev/TEN_PACKAGES_DESIGN.md",
-    "docs/dev/THREE_PACKAGES_DESIGN.md",
-    "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
-    "docs/dev/EVIDENCE_PUBLICATION_SCOPE_CHECK.md",
-    "docs/dev/THREE_PACKAGES_FINAL_VERIFICATION.json",
-    "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md",
+    "docs/dev/TEN_PACKAGES_FINAL_VERIFICATION.json",
+    "docs/dev/NEXT_AFTER_TEN.md",
     "docs/dev/REQUIREMENTS.json",
     "docs/dev/FEATURES.md",
     "docs/dev/PROGRESS.md",
     "docs/dev/WORK_LOG.md",
+    "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md",
+    "docs/dev/TEN_PACKAGES_PUBLICATION.json",
     "docs/dev/PROJECT_GOAL.md",
-    "docs/dev/PROJECT_ROADMAP.md",
-    "docs/dev/MARKING_TRUST_NEXT_PLAN.md"
+    "docs/dev/PROJECT_ROADMAP.md"
   ],
   "next_tasks": [
     {
-      "id": "TEN-FINAL",
-      "status": "CONTINUE",
-      "action": "10包正式整合／保存範圍讀回，完整父需求仍按原清單續做"
+      "id": "UI-016/017/020/023/026",
+      "status": "PLANNED_READ_FULL_PARENT_REQUIREMENTS_FIRST",
+      "action": "按NEXT_AFTER_TEN，補人物/公司owner與尺寸Logo資產管理，先BEGIN/contract再code，不重做已完成十包。"
+    },
+    {
+      "id": "ALL-LIST",
+      "status": "ACTIVE_PERSISTENT_GOAL",
+      "action": "原75父需求仍未全部完成，保持PROJECT_GOAL/ROADMAP；無EXE、UI048最後、印刷後置。"
     }
   ],
   "blocked": [
@@ -52,7 +54,9 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-TEN-FINAL-HANDOFF-TEXT"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEN-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P10-END.json",
@@ -69,7 +73,7 @@
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/TEN_PACKAGES_DESIGN.md",
-  "next_work_package": "docs/dev/TEN_PACKAGES_DESIGN.md",
+  "next_work_package": "docs/dev/NEXT_AFTER_TEN.md",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -144,14 +148,12 @@
     }
   ],
   "evidence_publication": {
-    "policy": "USER_AUTHORIZED_ATTACHMENT_EXCEPTION",
-    "exception_manifest": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json",
-    "local_formal": "229PASS/0SKIP/60attachments/source unchanged",
-    "published_current_run_attachments_expected": 51,
-    "unpublished_current_run_attachments": 9,
-    "strict_all_attachment_gate": "NOT_SATISFIED; retained original checker, not claimed PASS",
-    "functional_scope_changed": false,
-    "test_results_changed": false
+    "policy": "USER_AUTHORIZED_TEXT_METADATA_FIRST",
+    "manifest": "docs/dev/TEN_PACKAGES_PUBLICATION.json",
+    "local_formal": "318PASS/0SKIP/71 local attachments/source unchanged",
+    "new_media_uploads": "NONE_AFTER_EVENT006",
+    "all_attachment_gate_claim": false,
+    "functional_standard_changed": false
   },
   "source_checkpoint_scope": {
     "id": "CP-20261014-THREE-SOURCE-VERIFIED",
@@ -161,8 +163,8 @@
     "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
-  "final_verification": "docs/dev/THREE_PACKAGES_FINAL_VERIFICATION.json",
-  "checkpoint_cadence": "docs/dev/THREE_PACKAGES_CHECKPOINT_CADENCE.json",
+  "final_verification": "docs/dev/TEN_PACKAGES_FINAL_VERIFICATION.json",
+  "checkpoint_cadence": "docs/dev/TEN_PACKAGES_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
     "completed": 10,

@@ -1,3 +1,13 @@
+# 最新：十個新工作包10／10完整實作與保存（v0.1.24）
+
+最終RUN-TEN-TRAINING-QUEUE-001 source1278fd2b，318PASS／0SKIP／71本機附件／source unchanged，十流程actual Qt＋真worker audit。CORE45→65新增完成20、本輪未做0，GOV6；原75父題0完整／53部分／17未做／2阻塞／3延後，非全產品完成。P10純文字snapshot df60e209與857檔官方收據已Git readback，所有current CORE/GOV具名重驗。GIT仍dev/v0.1-first-version／PR2 open，main436ca2d7不改。
+
+入口AGENTS→STATE→TEN_PACKAGES_FINAL_VERIFICATION→NEXT_AFTER_TEN→功能/要求/進度/最新source证据。不要重做十包或把checkpoint算功能；下一大包人物/公司強綁與尺寸Logo安全管理，先完整原UI條款、BEGIN/契約再code。Code變更後舊current驗收待重驗，render保持同步。無EXE／代理／main merge、UI048最後與印刷／UI056D後置。
+
+源文件與DB、字型只本機；證明media依使用者新指示略過發布、保留exact hash與所有文字tests/JUnit/claims/machine audit。事件006 automatic review拒絕舊blob的新路徑引用，已採更窄text-only，不換通道／不再要求图片授权。完整binary Gate不宣稱滿足；current publication-scope Gate與乾淨text view PASS。Checkpoint有超10分间隔，实际JSON保存，不宣稱strict達標。
+
+以下保留歷史接續，最新以STATE為準。
+
 # 十包最新接續：10/10已保存；TRAINING-QUEUE COMPLETED_SAVED_SCOPE
 
 最新source與驗收 docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json；按STATE下一包與TEN契約直接續做，不能把既有包／checkpoint重算。CORE基準45，本輪目標+20；每包2CORE。原75父需求保持完整缺口，SELF_VERIFIED／Linux／匿名合成，無EXE／代理／main合併。metadata-first source-bound政策，原失敗與本機媒體保留。
