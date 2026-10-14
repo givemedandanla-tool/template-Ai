@@ -8,7 +8,7 @@
   "active_task": "THREE-PACKAGES-2-BATCH-IMPORT",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-SEMANTIC-IMPLEMENTED.receipt.json",
   "last_confirmed_commit": "ca34731b950fdead2eb49ebb19a5bbadec8ed34a",
-  "latest_evidence_run": null,
+  "latest_evidence_run": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -124,7 +124,7 @@
     "UI-056-D 未來補樣"
   ],
   "pending_remote": [
-    "CP-20261014-SEMANTIC-VERIFIED"
+    "CP-20261014-SEMANTIC-APPROVED"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-SEMANTIC-INDEX-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-BEGIN.json",
@@ -146,12 +146,12 @@
   "next_work_package": "docs/dev/SEMANTIC_INDEX_NEXT_PLAN.md",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
-    "completed": 0,
+    "completed": 1,
     "target": 3,
     "packages": [
       {
         "id": "SEMANTIC",
-        "status": "PASS_PENDING_REMOTE_APPROVAL",
+        "status": "VERIFIED_PENDING_FINAL_READBACK",
         "requirements": [
           "CORE-040",
           "CORE-041"
@@ -178,9 +178,16 @@
     ]
   },
   "artifact_upload_blocker": {
-    "status": "AWAITING_EXPLICIT_APPROVAL",
+    "status": "EXPLICITLY_APPROVED",
     "reason": "Automatic review rejects inspected anonymous PNG as lacking specific user approval",
     "action": "Upload new anonymous GUI/PDF evidence via same GitHub API, no bypass",
-    "safe_continuation": "Code/docs-only remote snapshots; full evidence remains PREPARED pending approval, no REMOTE_VERIFIED claim"
-  }
+    "safe_continuation": "Code/docs-only remote snapshots; full evidence remains PREPARED pending approval, no REMOTE_VERIFIED claim",
+    "user_approval": "核准上述匿名合成證據上傳；涵蓋後兩包同匿名fixture"
+  },
+  "superseded_prepared_checkpoints": [
+    {
+      "id": "CP-20261014-SEMANTIC-VERIFIED",
+      "reason": "Two review blockers required explicit approval; governance changed during pending. New full approved checkpoint replaces it without rewriting historical manifest."
+    }
+  ]
 }
