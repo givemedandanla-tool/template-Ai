@@ -3005,6 +3005,85 @@
         }
       ],
       "next_step": "本候選唯讀契約完整驗收；真正套用及完整UI-033影響／審核另包"
+    },
+    {
+      "id": "CORE-032",
+      "kind": "core",
+      "title": "字型替代影響、逐欄量測與人工審核",
+      "parents": [
+        "UI-033"
+      ],
+      "status": "IN_PROGRESS",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權",
+      "phase": "P3、P4",
+      "decision_status": "既有核准需求與本輪接續大功能指令",
+      "sources": [
+        "docs/dev/FONT_REVIEW_DESIGN.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-032-A1",
+          "expected": "實際影響／前後尺寸、未知與BLOCKED／HIGH／LOW分組、無預選及逐欄核准，有界背景且stale失效",
+          "tests": []
+        }
+      ],
+      "next_step": "依完整工作包實作、驗收與GitHub读回"
+    },
+    {
+      "id": "CORE-033",
+      "kind": "core",
+      "title": "受控字型替代新版本草稿、全批交易及持久復原重做",
+      "parents": [
+        "UI-033"
+      ],
+      "status": "IN_PROGRESS",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權",
+      "phase": "P3、P4",
+      "decision_status": "既有核准需求與本輪接續大功能指令",
+      "sources": [
+        "docs/dev/FONT_REVIEW_DESIGN.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-033-A1",
+          "expected": "選中欄位建立新草稿，hash＋單調clock CAS、全批rollback與不可偽造票據，重開歷史Undo／Redo且不覆蓋後續編輯或發布",
+          "tests": []
+        }
+      ],
+      "next_step": "依完整工作包實作、驗收與GitHub读回"
+    },
+    {
+      "id": "CORE-034",
+      "kind": "core",
+      "title": "字型款式持久與候選、排版及渲染身份一致",
+      "parents": [
+        "UI-032",
+        "UI-013"
+      ],
+      "status": "IN_PROGRESS",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權",
+      "phase": "P3、P4",
+      "decision_status": "既有核准需求與本輪接續大功能指令",
+      "sources": [
+        "docs/dev/FONT_REVIEW_DESIGN.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-034-A1",
+          "expected": "舊模板相容；實際款式pin，固定字級與原幾何語意不改，實際無fallback量測／渲染拒絕字面不符",
+          "tests": []
+        }
+      ],
+      "next_step": "依完整工作包實作、驗收與GitHub读回"
     }
   ]
 }

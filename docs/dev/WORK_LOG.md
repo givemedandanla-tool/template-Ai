@@ -2,6 +2,12 @@
 
 每條紀錄應含要求 ID、動作／結果、測試、確切 checkpoint／commit、限制與下一步。最新資料置頂；資料可供 Human 與 GPT 覆核。歷史版本不是即時完成度。
 
+## 2026-10-14：受控替代大功能啟動，先保存契約
+
+- 開工require-evidence PASS；遠端9531224c／main436ca2d7確認，CORE-031已完整完成，不重做。基準112列／31 CORE／6 GOV，75父題0完整／42部分／28未實作／2受阻／3延後。
+- 使用者新增下一步後繼續至一個大功能完成；接續UI-033，把CORE-032影響審核、CORE-033交易新草稿與持久Undo／Redo、CORE-034款式渲染一致整合端到端工作包，新增3列，舊scope不降標。
+- 先BEGIN再改碼／schema；參考InDesign、Qt command原碼、SQLite交易、集合覆蓋／幾何與hash＋單調clock CAS。完整契約見FONT_REVIEW_DESIGN.md；EXE／印刷與最后UI-048順序不變。
+
 ## 2026-10-14：CORE-031目標完整完成，GitHub讀回與治理PASS
 
 - 完整snapshot `bd52b1c2115b13bb7c538d92e90e29420ce664fe`／tree `a5848ed590b0a1ae4fcf2c2c7af263816130b64f`，389檔全部Git blob SHA match，26件附件與基準／結束統計永久保存。check --require-evidence PASS：112列、37個明列CORE／GOV範圍、145具名測試。

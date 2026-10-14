@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.8",
   "framework_status": "READY",
-  "active_task": "UI-033",
+  "active_task": "CORE-032..034",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-FONT-CANDIDATES-VERIFIED.receipt.json",
   "last_confirmed_commit": "bd52b1c2115b13bb7c538d92e90e29420ce664fe",
   "latest_evidence_run": "docs/evidence/runs/RUN-FONT-CANDIDATES-001/run.json",
@@ -97,19 +97,17 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-FONT-REVIEW-BEGIN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FONT-CENTER-002/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-FONT-CANDIDATES-BEGIN.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-FONT-REVIEW-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-FONT-CANDIDATES-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
-    "id": "CORE-031",
-    "status": "COMPLETED_REMOTE_VERIFIED",
-    "contract": "docs/dev/FONT_CANDIDATES_DESIGN.md",
-    "source_commit": "17ce93d86c68df281c1d4868e6a65ba389215704",
-    "evidence_run": "docs/evidence/runs/RUN-FONT-CANDIDATES-001/run.json",
-    "final_snapshot_commit": "bd52b1c2115b13bb7c538d92e90e29420ce664fe",
-    "checkpoint_receipt": "docs/checkpoints/CP-20261014-FONT-CANDIDATES-VERIFIED.receipt.json"
+    "id": "CORE-032..034",
+    "status": "IN_PROGRESS",
+    "contract": "docs/dev/FONT_REVIEW_DESIGN.md"
   }
 }
