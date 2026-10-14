@@ -121,5 +121,8 @@
 | CORE-034 | 字型款式持久與候選、排版及渲染身份一致 | VERIFIED | 是 | 完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權 | [run](../../docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json) |
 | CORE-035 | 實際來源與前後矩形渲染 | VERIFIED | 是 | Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題 | [run](../../docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json) |
 | CORE-036 | 唯讀同步視圖、欄位定位與字型審核整合 | VERIFIED | 是 | Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題 | [run](../../docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json) |
+| CORE-037 | 三向安全多選與混合共同屬性 | NOT_IMPLEMENTED | 否 | Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質 | 無有效新版證據 |
+| CORE-038 | 持久物件鎖定與全編輯途徑保護 | NOT_IMPLEMENTED | 否 | Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質 | 無有效新版證據 |
+| CORE-039 | 精確幾何差異、原子套用與持久UndoRedo | NOT_IMPLEMENTED | 否 | Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

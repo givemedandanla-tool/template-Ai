@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.10",
   "framework_status": "READY",
-  "active_task": "UI-034-UI-036-OBJECT-TOOLS",
+  "active_task": "CORE-037..039-OBJECT-TOOLS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-CANVAS-COMPARE-VERIFIED.receipt.json",
   "last_confirmed_commit": "fb3f6c31d14c88018cd83ca059e69a6fb961ccaf",
   "latest_evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json",
@@ -19,23 +19,14 @@
     "docs/dev/PROJECT_GOAL.md",
     "docs/dev/PROJECT_ROADMAP.md",
     "docs/dev/CANVAS_COMPARE_DESIGN.md",
-    "docs/dev/OBJECT_TOOLS_NEXT_PLAN.md"
+    "docs/dev/OBJECT_TOOLS_NEXT_PLAN.md",
+    "docs/dev/OBJECT_TOOLS_DESIGN.md"
   ],
   "next_tasks": [
     {
       "id": "CORE-035..036",
       "status": "COMPLETED_REMOTE_VERIFIED",
       "action": "177 PASS／37附件，550檔完整snapshot與require-evidence PASS；source36307d58、finalfb3f6c31"
-    },
-    {
-      "id": "UI-034-UI-036-OBJECT-TOOLS",
-      "status": "PENDING",
-      "action": "先讀原UI034／036條款：物件／畫布／列表穩定ID三向選取、鎖定、同owner範圍與對齊分布；驗收先保存，實作後正式回歸"
-    },
-    {
-      "id": "ALL-LIST",
-      "status": "ACTIVE_PERSISTENT_GOAL",
-      "action": "依PROJECT_GOAL／PROJECT_ROADMAP自主持續所有要求；不要求重說繼續"
     },
     {
       "id": "UI-034-UI-036-OBJECT-TOOLS",
@@ -126,23 +117,21 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-OBJECT-TOOLS-BEGIN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-001/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-CANVAS-COMPARE-BEGIN.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261014-OBJECT-TOOLS-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-CANVAS-COMPARE-FINAL.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
   "goal_milestone": {
-    "id": "CORE-035..036",
-    "status": "COMPLETED_REMOTE_VERIFIED",
-    "contract": "docs/dev/CANVAS_COMPARE_DESIGN.md",
-    "source_commit": "36307d58ed8f10e6549ba3580a20541244b036db",
-    "evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-002/run.json",
-    "final_snapshot_commit": "fb3f6c31d14c88018cd83ca059e69a6fb961ccaf",
-    "checkpoint_receipt": "docs/checkpoints/CP-20261014-CANVAS-COMPARE-VERIFIED.receipt.json"
+    "id": "CORE-037..039",
+    "status": "PLANNED",
+    "contract": "docs/dev/OBJECT_TOOLS_DESIGN.md"
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
-  "active_contract": "docs/dev/CANVAS_COMPARE_DESIGN.md",
+  "active_contract": "docs/dev/OBJECT_TOOLS_DESIGN.md",
   "next_work_package": "docs/dev/OBJECT_TOOLS_NEXT_PLAN.md"
 }

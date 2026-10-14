@@ -1,5 +1,11 @@
 # 開發工作紀錄
 
+## 2026-10-14：CORE037／038／039整包開始
+
+- 使用者要求持續到整包完成；按原UI034／035／036与已保存計畫，scope及不可降低验收先OBJECT_TOOLS_DESIGN，整合進階共同編輯器至兩模式，原單選途徑同受lock。
+- 基準117列／36CORE已驗，新增3待開發=39CORE；父題0／43／27／2／3，GOV6。先BEGIN讀回再改碼，所有舊当前evidence將因新code取消判定、保留歷史、正式重驗。
+- 環境ready／connected／network enforced，來源branch f1b3a542；沒有一般外部credentials，Github用既有connector，無代理／EXE。
+
 ## 2026-10-14：v0.1.10完整對照大工作包正式PASS
 
 - 精確測試來源36307d58ed8f10e6549ba3580a20541244b036db／tree305cbd40fe75d940f46274ca8190ddda5fe52cd5，RUN-CANVAS-COMPARE-002：177 PASS、0 SKIP、37附件、45個驗收全PASS、來源前後不變。

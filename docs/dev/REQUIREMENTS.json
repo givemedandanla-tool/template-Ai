@@ -3182,6 +3182,92 @@
       ],
       "next_step": "明列Linux／匿名完整對照工作包已驗收；完整父題、原生AI／Windows／指定硬體與獨立品質仍各自待",
       "previous_evidence_run": "docs/evidence/runs/RUN-CANVAS-COMPARE-001/run.json"
+    },
+    {
+      "id": "CORE-037",
+      "kind": "core",
+      "title": "三向安全多選與混合共同屬性",
+      "parents": [
+        "UI-034"
+      ],
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質",
+      "phase": "P2、P3",
+      "decision_status": "既有核准要求＋使用者持續至整包完成",
+      "sources": [
+        "docs/dev/OBJECT_TOOLS_DESIGN.md",
+        "docs/dev/OBJECT_TOOLS_NEXT_PLAN.md",
+        "docs/UI_DECISIONS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-037-A1",
+          "expected": "三向安全多選與混合共同屬性；OBJECT_TOOLS_DESIGN.md列出的全部具體條件與正式證據",
+          "tests": []
+        }
+      ],
+      "next_step": "依整包契約完成具名測試、GUI與持久化"
+    },
+    {
+      "id": "CORE-038",
+      "kind": "core",
+      "title": "持久物件鎖定與全編輯途徑保護",
+      "parents": [
+        "UI-034",
+        "UI-035"
+      ],
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質",
+      "phase": "P2、P3",
+      "decision_status": "既有核准要求＋使用者持續至整包完成",
+      "sources": [
+        "docs/dev/OBJECT_TOOLS_DESIGN.md",
+        "docs/dev/OBJECT_TOOLS_NEXT_PLAN.md",
+        "docs/UI_DECISIONS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-038-A1",
+          "expected": "持久物件鎖定與全編輯途徑保護；OBJECT_TOOLS_DESIGN.md列出的全部具體條件與正式證據",
+          "tests": []
+        }
+      ],
+      "next_step": "依整包契約完成具名測試、GUI與持久化"
+    },
+    {
+      "id": "CORE-039",
+      "kind": "core",
+      "title": "精確幾何差異、原子套用與持久UndoRedo",
+      "parents": [
+        "UI-036",
+        "UI-034"
+      ],
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質",
+      "phase": "P2、P3",
+      "decision_status": "既有核准要求＋使用者持續至整包完成",
+      "sources": [
+        "docs/dev/OBJECT_TOOLS_DESIGN.md",
+        "docs/dev/OBJECT_TOOLS_NEXT_PLAN.md",
+        "docs/UI_DECISIONS.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-039-A1",
+          "expected": "精確幾何差異、原子套用與持久UndoRedo；OBJECT_TOOLS_DESIGN.md列出的全部具體條件與正式證據",
+          "tests": []
+        }
+      ],
+      "next_step": "依整包契約完成具名測試、GUI與持久化"
     }
   ]
 }
