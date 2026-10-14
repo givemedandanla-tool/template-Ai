@@ -128,7 +128,7 @@
 | CORE-041 | 衍生 SVG 結構唯讀索引與未知映射保護 | IMPLEMENTED_PENDING_VERIFICATION | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
 | CORE-042 | 批次來源唯讀預檢、exact 去重及啟動確認 | IMPLEMENTED_PENDING_VERIFICATION | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
 | CORE-043 | 單 worker 持久匯入佇列、取消及續跑 | IMPLEMENTED_PENDING_VERIFICATION | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
-| CORE-044 | 可解釋例外排序、exact 影響及來源定位 | IN_PROGRESS | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
-| CORE-045 | 例外單件重試、排除與恢復的 CAS 歷史 | IN_PROGRESS | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
+| CORE-044 | 可解釋例外排序、exact 影響及來源定位 | IMPLEMENTED_PENDING_VERIFICATION | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
+| CORE-045 | 例外單件重試、排除與恢復的 CAS 歷史 | IMPLEMENTED_PENDING_VERIFICATION | 否 | THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

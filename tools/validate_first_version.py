@@ -257,9 +257,10 @@ def main():
     assert source_objects.plan,source_objects.status.text()
     if not source_objects.grab().save(str(artifacts/'object-tools-training.png')):raise ValueError('來源模式證據失敗')
     source_objects.invalidate();source_objects.close()
-    from capture_work_packages import capture_index,capture_batch
+    from capture_work_packages import capture_index,capture_batch,capture_exceptions
     capture_index(window,artifacts,first['id'],created)
     capture_batch(window,artifacts)
+    capture_exceptions(window,artifacts)
     window.close()
     reopened = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     assert reopened.work["id"] == second["id"]

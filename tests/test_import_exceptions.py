@@ -66,6 +66,15 @@ class ImportExceptionTests(unittest.TestCase):
         row=self.row();b=apply_action(self.store,self.b['id'],self.b['revision'],[row['item']['id']],'EXCLUDE','not used',confirmed=True)
         with self.assertRaisesRegex(ValueError,'已排除'):prepare_retry(exception_rows(self.lib,self.store,status='EXCLUDED'),[])
         self.assertEqual(self.store.get(second['id'])['items'][0]['status'],'FAILED');self.assertEqual(b['items'][1]['status'],'READY')
+    def test_integrity_corruption_blocks_exclusion_without_discarding_audit(self):
+        # Real FK corruption creates an integrity guard failure instead of a fake PASS.
+        b=copy.deepcopy(self.b);b['items'][0]['error_type']='INTEGRITY'
+        import json
+        self.store.db.execute('UPDATE import_batches SET payload=? WHERE id=?',(json.dumps(b),b['id']));self.store.db.commit()
+        self.store.db.execute('PRAGMA foreign_keys=OFF');self.store.db.execute('INSERT INTO active_artworks VALUES(?,?)',('missing-source','missing-artwork'));self.store.db.commit();self.store.db.execute('PRAGMA foreign_keys=ON')
+        with self.assertRaisesRegex(ValueError,'完整性'):apply_action(self.store,b['id'],b['revision'],[b['items'][0]['id']],'EXCLUDE','cannot hide corruption',confirmed=True)
+        self.assertEqual(self.store.get(b['id']),b);self.store.db.execute('DELETE FROM active_artworks WHERE source_id=?',('missing-source',));self.store.db.commit()
+        result=apply_action(self.store,b['id'],b['revision'],[b['items'][0]['id']],'EXCLUDE','explicit known item exclusion after actual integrity repair',confirmed=True);self.assertEqual(result['items'][0]['status'],'EXCLUDED');self.assertEqual(result['items'][1]['status'],'READY')
 
 
 class ImportExceptionGuiTests(unittest.TestCase):
