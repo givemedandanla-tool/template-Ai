@@ -1,0 +1,23 @@
+{
+  "user_reply": "核准清單中全部90件具體附件",
+  "manifest_commit": "e682b1b8f4e3a61b71cfe69dc05627fd8cb09a7d",
+  "rejected_file": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/batch-import-running.png",
+  "reason": "create_blob lacks filename/verifiable manifest association",
+  "action": "Reverify exact approved item and actual visual content; one independent same-API retry; no altered binary or alternate route",
+  "item": {
+    "path": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/batch-import-running.png",
+    "bytes": 101956,
+    "sha256": "3b825bd0f78ae939158709d428cccc0b4171c68e32f9c0ccc839e74d9b9f1e61",
+    "git_blob_sha1": "e2ebccf60efb2946828066e049d0f9ad061c7710"
+  },
+  "result": "SAME_API_SUCCESS",
+  "returned_blob_sha1": "e2ebccf60efb2946828066e049d0f9ad061c7710",
+  "view_inspection": "Actual high-detail view: synthetic file basenames, hash fragments, status and controls only",
+  "remaining_strategy": "One file per same API call with exact filename, bytes, SHA256 and immutable approved manifest URL; no altered binary or alternate channel",
+  "second_reviewed_file": {
+    "path": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/exception-center-restored.png",
+    "sha256": "4e517915954299bf2c3ca77ea24a1df6b47efedf90a4c8e7e4c95957a141e057",
+    "result": "Same API accepted after immutable manifest fetched and direct explicit path/hash verification; response parser corrected by immutable tree readback",
+    "binary_fetch_limit": "GitHub fetch UTF8-only; UnicodeDecodeError/400 not a privacy rejection"
+  }
+}

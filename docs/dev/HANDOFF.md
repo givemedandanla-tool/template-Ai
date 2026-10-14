@@ -1,3 +1,13 @@
+# 最新恢復：具體90附件已核准，仍有11件原附件待保存
+
+三包程式已完整實作，最新RUN-EXCEPTION-CENTER-002 source192db957為229PASS／0SKIP／60附件、source unchanged。前兩包REMOTE_VERIFIED，第三包完整遠端結案尚未完成。先讀STATE、APPROVED_EVIDENCE_UPLOAD_STATE與COPYRIGHT_PRIVACY_EVENTS；核准已取得，不能再把它記為等待授權。已接受blob SHA需從持久紀錄恢復，不能依賴functions store。
+
+GitHub create_blob沒有檔名欄位，自動審查仍間歇拒絕原位元與manifest關聯；同API核對实际畫面、遠端固定manifest、bytes／SHA後已有多件成功。object-tools-difference.png最後一次呼叫被中止，不盲目重試該呼叫或改用隱藏payload通道。先保存全部已接受blob的部分tree與完整本機ZIP；部分snapshot不可ack為全證據REMOTE_VERIFIED。所有未存具体files/hashes見UPLOAD_STATE。
+
+功能126列＝75父題＋45CORE＋6GOV，45CORE已實作與本機具名验收，但当前完整遠端證據pending；75父题为0完整／46部分／24未實作／2受阻／3延後。UI004005仅PARTIAL。恢復依原驗收补齊全部60附件→新唯一完整checkpoint與receipt→require-evidence PASS→登錄45CORE＋6GOV當前VERIFIED→三包3／3、进度END與交接。下一包仍MARKING_TRUST_NEXT_PLAN；不把計画當已做，無EXE／main合併。
+
+以下為歷史交接，較新狀態以上述入口為準。
+
 # 最新接續：三包全實作，229PASS，最後binary讀回受阻
 
 - v0.1.14三包全部程式／實際GUI／具名验收已實作。CORE040041：index／viewport／衍生來源；042043：批次只讀匯入／持久恢復；044045：例外exact排序／單件受控处理。当前local RUN-EXCEPTION-CENTER-002 source192db957：229PASS／0SKIP／60附件、source unchanged。新增hidden-lock真RED→GREEN与完整selection intent；228RUN001是修復前歷史，不能作現版驗收。

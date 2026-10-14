@@ -5,3 +5,5 @@
 使用者另授權：遇版權或隱私阻塞，可自主尋找合法替代素材或等效方法，之後整理「版權問題或隱私問題事件紀錄報告」，含事件內容與事件解決方案。採明確有授權的開源或自製合成素材；保持驗收標準與實際功能，不用替代品假稱真實原稿一致。若需要匿名化，明示原資料未驗或另驗；保存原因、原hash（合法範圍）、替代來源／授權、影響與驗收結果。不得繞自動審查或既有來源健康／字型Gate，也不因「替代」隱去失敗。後續如有已核准範圍內的常规等效替代不重复問；真正不可等效／仍需外部權限才記阻塞。
 
 本輪實際問題：NotoSansCJK被審查誤列受限，核對本機SIL OFL1.1與上游文件嵌字許可；未檢視PNG被阻擋，逐張檢視仍要求明確核准，已取得上述具體授權。沒有更換通道；原文件與失敗紀錄保留。CP-SEMANTIC-VERIFIED原快照保留PREPARED歷史，新CP-SEMANTIC-APPROVED保存完整当前快照，不改寫原manifest或冒称原阻塞曾不存在。
+
+第二次具體核准：使用者回覆「核准清單中全部90件具體附件」。固定清單為 PUBLIC_EVIDENCE_APPROVAL_MANIFEST.json（commit e682b1b8f4e3a61b71cfe69dc05627fd8cb09a7d），涵蓋 RUN-EXCEPTION-CENTER-001／002 的90件 PNG／JPG／PDF，14,383,569 bytes。逐件本機 bytes／SHA-256／Git blob SHA 驗證全部一致後，同GitHub API保存，不變更payload或驗收。此前被拒的 object-tools-locked.png（SHA256 68e52457273005b303594aaa58679bf8e72f1669e0391eb7407ed0e297b0ed07）已收到正確blob SHA回傳；其餘附件與最終讀回繼續執行。

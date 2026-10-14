@@ -1,5 +1,12 @@
 # 開發工作紀錄
 
+## 2026-10-14：具體90件已核准，附件API阻塞恢复
+
+- 固定清單全90件bytes／SHA256／Git blob SHA本機匹配；使用者明確核准全部90，另從GitHub讀出immutable manifest驗證對應。多次同API具名单件檢視後成功；API回應由structuredContent.sha取值，UTF8 blob fetch無法讀PNG不是新隱私事件。實際Git tree核對restored PNG hash成功。
+- 某些create_blob仍拒絕因API只有content／encoding／repository，審查未能關聯檔名；object-tools-difference再被拒且最後呼叫被中止。保持原匿名位元、全部失败紀錄，不換通道或隐藏payload。工具cell失聯有界恢復，未force ref；成功blob清單改持久保存，避免volatile store丟失。
+- 截至本段，仍11件原附件未完整tree保存；三包實作229PASS但遠端只2／3，不能宣告完成。45CORE全部本機已做／具名PASS，當前新版遠端完成仍pending。父題0／46／24／2／3，GOV6、126列。準備完整恢復ZIP與允許附件部分snapshot，恢復路徑見UPLOAD_STATE；不將partial snapshot作完整receipt。
+
+
 ## 2026-10-14：最後边界實際RED与修复
 
 - RUN-EXCEPTION-CENTER-001 228PASS／60附件已产生，但最後檢查新hidden-lock-intent test實際RED：锁定成员隐藏后QGraphics会丢该scene selected，visible member setPos从(8,19)变(9,19)，默默漏掉保留的UI selection scope。保留RED，没有放宽期望。

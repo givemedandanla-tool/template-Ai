@@ -3,7 +3,7 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.13",
+  "product_version": "0.1.14",
   "framework_status": "READY",
   "active_task": "THREE-PACKAGES-FINAL-EVIDENCE-READBACK",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-EXCEPTION-IMPLEMENTED.receipt.json",
@@ -13,6 +13,7 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/HANDOFF.md",
+    "docs/dev/APPROVED_EVIDENCE_UPLOAD_STATE.json",
     "docs/dev/THREE_PACKAGES_DESIGN.md",
     "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md",
     "docs/dev/PUBLIC_EVIDENCE_APPROVAL_MANIFEST.json",
@@ -187,13 +188,17 @@
     ]
   },
   "artifact_upload_blocker": {
-    "status": "AWAITING_EXACT_MANIFEST_APPROVAL",
-    "reason": "Automatic review still rejects specific binary payload association after actual viewing and named/hash checks; broader prior follow-up approval not accepted for these calls",
+    "status": "AUTO_REVIEW_PAYLOAD_ASSOCIATION_BLOCKED",
+    "reason": "Exact 90-item approval received and manifest hashes matched. Remaining binary API calls still intermittently rejected for no filename/payload association; named-file inspection and same-API bounded retries succeeded for some files, object-tools-difference remained rejected and final call was aborted.",
     "manifest": "docs/dev/PUBLIC_EVIDENCE_APPROVAL_MANIFEST.json",
     "events": "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md",
     "code_docs_commit": "e682b1b8f4e3a61b71cfe69dc05627fd8cb09a7d",
     "current_local_formal": "229PASS/0SKIP/60attachments/source unchanged",
-    "resume": "Explicit manifest approval then same API named-file verification; final full checkpoint+require-evidence+receipt readback, no bypass"
+    "resume": "Do not repeat rejected/cancelled payload blindly. Restore accepted blob records, publish allowed partial snapshot, resolve API association capability for remaining original approved attachments, then final full checkpoint and require-evidence.",
+    "user_approval": "核准清單中全部90件具體附件",
+    "approval_manifest_commit": "e682b1b8f4e3a61b71cfe69dc05627fd8cb09a7d",
+    "upload_state": "docs/dev/APPROVED_EVIDENCE_UPLOAD_STATE.json",
+    "pending_files_at_recovery": 11
   },
   "superseded_prepared_checkpoints": [
     {
