@@ -326,6 +326,17 @@ class Library:
     def template_snapshots(self):
         return [{"template":json.loads(payload),"revision":revision} for payload,revision in self.db.execute("SELECT t.payload,c.revision FROM templates t JOIN template_edit_clocks c ON c.template_id=t.id ORDER BY t.rowid DESC")]
 
+    def comparison_source(self, template: dict) -> dict:
+        """GUI thread only: copy exact pinned historical geometry for a read-only worker."""
+        t = Template.from_dict(template)
+        if not t.source_work_id:
+            return {"status": "UNKNOWN", "reason": "模板未綁定來源作品／歷史版次"}
+        row = self.db.execute("SELECT a.source_id,r.payload FROM artworks a JOIN artwork_revisions r ON r.artwork_id=a.id WHERE a.id=? AND r.revision=?", (t.source_work_id, t.source_work_revision)).fetchone()
+        if not row or row[0] != t.source_id:
+            raise ValueError("對照來源作品／歷史版次不符")
+        return {"status": "PINNED", "work_id": t.source_work_id, "revision": t.source_work_revision,
+                "work": json.loads(row[1]), "source": self.source(row[0])}
+
     def font_change_history(self):
         return [json.loads(row[0]) for row in self.db.execute('SELECT payload FROM font_changes ORDER BY rowid DESC')]
 

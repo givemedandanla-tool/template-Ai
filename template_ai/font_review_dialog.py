@@ -11,13 +11,15 @@ from .font_catalog import build_inventory
 from .font_candidates import render_candidate
 from .font_review import FontReviewEngine,SCOPE,field_key,fingerprint
 from .model import KINDS
+from .canvas_compare import build_comparison, verify_comparison, check_source, Assets
+from .comparison_view import CanvasCompareDialog
 
 
 class FontReviewDialog(QDialog):
     def __init__(self,window,target=None,seed_text="",parent=None):
         super().__init__(parent or window)
         self.window=window;self.target=copy.deepcopy(target);self.busy=False;self.generation=0
-        self.report=None;self.rows=[];self.approved=set();self.preview_data=None
+        self.report=None;self.rows=[];self.approved=set();self.preview_data=None;self.comparisons={};self.comparison_data=None
         if not hasattr(window,'font_review_engine'):window.font_review_engine=FontReviewEngine()
         self.engine=window.font_review_engine
         self.setWindowTitle('字型替代影響審核 · 新草稿與歷史復原');self.resize(1320,920)
@@ -63,7 +65,7 @@ class FontReviewDialog(QDialog):
         return True
 
     def invalidate(self,*_):
-        self.generation+=1;self.report=None;self.approved.clear();self.preview_data=None
+        self.generation+=1;self.report=None;self.approved.clear();self.preview_data=None;self.comparisons.clear();self.comparison_data=None
         self.preview.clear();self.preview.setText('輸入已變更，舊核准與預覽失效；請重新驗證。')
         self.details.setText('舊差異與審核已失效；請重新驗證。'+SCOPE)
         for i in range(self.table.rowCount()):
@@ -117,15 +119,18 @@ class FontReviewDialog(QDialog):
             try:return {'value':work()}
             except Exception as error:return {'error':str(error)}
         def finished(payload):
+            self.busy=False
             try:
                 if generation!=self.generation:self.status.setText('背景期間輸入改變，結果過期；請重新驗證。')
                 elif 'error' in payload:self.status.setText('未完成：'+payload['error']+'；可重新核對。')
                 else:done(payload['value'])
             except Exception as error:self.status.setText('未提交／處理失敗：'+str(error))
             finally:
-                self.busy=False;self.table.setEnabled(True);self.history.setEnabled(True)
-                self.check_button.setEnabled(self.target is not None);self.refresh_button.setEnabled(True);self.fill_button.setEnabled(True)
-                self.apply_button.setEnabled(self.report is not None);self.selection_changed();self.history_selection()
+                # A completed stage may launch a fresh background verification stage.
+                if not self.busy:
+                    self.table.setEnabled(True);self.history.setEnabled(True)
+                    self.check_button.setEnabled(self.target is not None);self.refresh_button.setEnabled(True);self.fill_button.setEnabled(True)
+                    self.apply_button.setEnabled(self.report is not None);self.selection_changed();self.history_selection()
         try:self.window.run_job(message,guarded,finished)
         except Exception:
             finished({'error':'背景工作未啟動'});raise
@@ -160,14 +165,34 @@ class FontReviewDialog(QDialog):
         row=copy.deepcopy(self.report['rows'][i])
         if not row['eligible']:return
         text=self.table.cellWidget(i,3).text();s=row['slot']
+        target=copy.deepcopy(self.report['target'])
         inputs={'text':text,'size_pt':s['size_pt'],'width_mm':s['rect']['w'],'min_scale':s['min_scale']}
-        candidate={'row':self.report['target'],'analysis':row['proposed'],'requested_style':row['proposed']['style'],'input':inputs}
-        def show(result):
-            pixmap=QPixmap();pixmap.loadFromData(result['png'],'PNG');self.preview.setPixmap(pixmap);self.preview_data=result
-            self.details.setText(f"{row['template_name']} v{row['version']}／{s['owner']}／{KINDS.get(s['kind'],s['kind'])} 第{s.get('index',0)+1}欄\n"+self.table.item(i,6).text()+'\n'+SCOPE)
+        candidate={'row':target,'analysis':row['proposed'],'requested_style':row['proposed']['style'],'input':inputs}
+        snapshot=next(x for x in self.snapshots if x['template']['id']==row['template_id'])
+        try:context=self.window.library.comparison_source(snapshot['template'])
+        except ValueError as error:self.status.setText('來源未完成：'+str(error));return
+        generation=self.generation
+        def current():
+            if generation!=self.generation:raise ValueError('輸入已變更，對照過期')
+            self.window.library._template_cas(row['template_id'],row['template_hash'],row['revision'])
+            if fingerprint(self.window.library.comparison_source(snapshot['template']))!=fingerprint(context):raise ValueError('來源登錄已變更，請重新對照')
+        def approve(result):
+            current()
             if QMessageBox.question(self,'逐欄核准草稿字型替代',self.details.text()+'\n核准僅此欄進入勾選候選；不等於正式輸出／原稿一致。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)==QMessageBox.Yes:
-                self.approved.add(row['key']);self.table.cellWidget(i,0).setEnabled(True);self.table.item(i,5).setText(row['risk']+' · 已逐欄核准，尚未勾選')
-        self.start('重新核對所選欄候選字面，建立人工詳審預覽',lambda:render_candidate(candidate,inputs),show,allow_input=False)
+                current()
+                def verified(_):
+                    current();self.approved.add(row['key']);self.comparisons[row['key']]=result
+                    self.table.cellWidget(i,0).setEnabled(True);self.table.item(i,5).setText(row['risk']+' · 已逐欄核准，尚未勾選')
+                self.start('明確核准後再核對對照資產，拒絕提示期間異動',lambda:verify_comparison(result),verified,allow_input=False)
+        def show(result):
+            current();line,comparison=result
+            pixmap=QPixmap();pixmap.loadFromData(line['png'],'PNG');self.preview.setPixmap(pixmap);self.preview_data=line;self.comparison_data=comparison
+            self.details.setText(f"{row['template_name']} v{row['version']}／{s['owner']}／{KINDS.get(s['kind'],s['kind'])} 第{s.get('index',0)+1}欄\n"+self.table.item(i,6).text()+'\n'+SCOPE)
+            if CanvasCompareDialog(comparison,self).exec()!=QDialog.Accepted:return
+            current()
+            def recheck():verify_comparison(comparison);return comparison
+            self.start('對照返回後背景重新核對資產，才可人工核准',recheck,approve,allow_input=False)
+        self.start('重新核對所選欄與來源，產生完整矩形對照',lambda:(render_candidate(candidate,inputs),build_comparison(snapshot,row,target,text,context)),show,allow_input=False)
 
     def apply_selected(self):
         if self.busy or not self.report or not self.clean_editor():return
@@ -175,10 +200,28 @@ class FontReviewDialog(QDialog):
         if not selected:self.status.setText('尚未勾選欄位，沒有修改。');return
         keys={s['key'] for s in selected};summary='\n'.join(f"{r['template_name']} v{r['version']}／{r['slot']['owner']}／{r['slot']['kind']}／{r['slot_id']} → {r['after']['font']} / {r['after']['font_style']}" for r in self.report['rows'] if r['key'] in keys)
         if QMessageBox.question(self,'確認選取範圍與新草稿',summary+'\n僅上述欄位建立新版本草稿；原版本保留，版次在交易內分配。不發布或核准正式輸出。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
+        contexts={}
+        try:
+            for r in self.report['rows']:
+                if r['key'] in keys:
+                    snapshot=next(x for x in self.snapshots if x['template']['id']==r['template_id'])
+                    context=self.window.library.comparison_source(snapshot['template']);contexts[r['template_id']]=(snapshot['template'],context)
+                    if r['key'] in self.comparisons and fingerprint(context)!=self.comparisons[r['key']]['context_hash']:raise ValueError('對照後來源登錄已變更')
+        except ValueError as error:self.status.setText('不能提交：'+str(error));return
+        review_id=self.report['review_id'];proofs=copy.deepcopy([self.comparisons[k] for k in keys if k in self.comparisons])
+        def prepare():
+            from .model import Template
+            for proof in proofs:verify_comparison(proof)
+            assets=Assets()
+            for template,context in contexts.values():check_source(context,Template.from_dict(template),assets)
+            assets.verify()
+            return self.engine.prepare_apply(review_id,selected)
         def apply(token):
+            for template,context in contexts.values():
+                if fingerprint(self.window.library.comparison_source(template))!=fingerprint(context):raise ValueError('背景期間來源登錄已變更')
             record=self.engine.commit(self.window.library,token,confirmed=True)
             self.after_commit(record);self.reload(force=True);self.status.setText(f"已原子建立 {len(record['drafts'])} 份新版本草稿；可在下方歷史復原。原版本未改。")
-        self.start('背景重新驗證全部勾選欄位，再提交草稿交易',lambda:self.engine.prepare_apply(self.report['review_id'],selected),apply,allow_input=False)
+        self.start('背景重新驗證全部勾選欄位與對照來源，再提交草稿交易',prepare,apply,allow_input=False)
 
     def after_commit(self,record):
         self.window.template=None

@@ -9,6 +9,8 @@ import unittest
 from unittest.mock import patch
 
 os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
+from PySide6.QtCore import QTimer
+from template_ai.comparison_view import CanvasCompareDialog
 from PySide6.QtGui import QFont,QFontMetricsF
 from PySide6.QtWidgets import QApplication,QMessageBox
 from template_ai.demo import demo_template
@@ -260,6 +262,10 @@ class FontReviewGuiTests(unittest.TestCase):
         self.window.library.save_template(self.template);self.window.library.publish(self.template)
         self.dialog=FontReviewDialog(self.window,self.target,'Alex');self.addCleanup(self.dialog.close)
         self.yes=patch.object(QMessageBox,'question',return_value=QMessageBox.Yes);self.yes.start();self.addCleanup(self.yes.stop)
+        original_exec=CanvasCompareDialog.exec
+        def inspect(dialog):
+            QTimer.singleShot(0,dialog.accept);return original_exec(dialog)
+        self.compare=patch.object(CanvasCompareDialog,'exec',inspect);self.compare.start();self.addCleanup(self.compare.stop)
 
     def wait(self):
         deadline=time.monotonic()+10
