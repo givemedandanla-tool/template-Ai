@@ -82,6 +82,16 @@ def capture_ten_packages(root):
         restored=facts.store.get('RULE',reviewed['id']);assert restored['state']=='PENDING' and restored['revision']>disabled['revision'];assert window.library.artwork(future_work['id'])==future_work;QApplication.processEvents()
         if not dialog.grab().save(str(root/'ten-noise-recovery.png')):raise ValueError('規則回滾GUI未保存')
         audit['noise_recovery']={'actual_qt':True,'local_keep':facts.store.local_record(future_work['id']),'disabled':disabled,'restored_pending':restored,'history':facts.store.history('RULE',reviewed['id']),'published_templates_unchanged':True,'model_decontamination_claim':False}
+        samples=dialog.samples_panel;dialog.tabs.setCurrentWidget(samples);samples.reload();samples.work_combo.setCurrentIndex(samples.work_combo.findData(future_work['id']));samples.basis.setCurrentText('OWNED');samples.reference.setText('Anonymous synthetic SVG author record');samples.actor.setText('Synthetic Reviewer')
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
+            QTest.mouseClick(samples.admit_button,Qt.LeftButton)
+            for _ in range(300):
+                QApplication.processEvents()
+                if not samples.running:break
+                QTest.qWait(10)
+        assert not samples.running and samples.store.count('SAMPLE')==1;sample=samples.rows[0];samples.table.selectRow(0);QApplication.processEvents();assert samples.store.sample_state(sample['id'])=='APPROVED';assert not sample['used_for_training'] and window.library.templates()==[]
+        if not dialog.grab().save(str(root/'ten-trusted-sample.png')):raise ValueError('可信樣本GUI未保存')
+        audit['trusted_sample']={'actual_qt':True,'sample':sample,'positive_negative_separated':True,'not_trained':True,'state':'APPROVED','source_and_slots_unchanged':window.library.artwork(future_work['id'])==future_work}
         (root / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
     finally:
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()

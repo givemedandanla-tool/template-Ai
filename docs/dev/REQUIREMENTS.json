@@ -3972,7 +3972,7 @@
       "parents": [
         "UI-055"
       ],
-      "status": "NOT_IMPLEMENTED",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "TEN_PACKAGES_DESIGN 包7的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
@@ -3986,10 +3986,18 @@
         {
           "id": "CORE-058-A1",
           "expected": "來源與用途核對的可信樣本准入；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
-          "tests": []
+          "tests": [
+            "test_trusted_samples.TrustedSamplesGuiTests.test_actual_failed_worker_and_scope_changed_during_confirmation_controls_recover",
+            "test_trusted_samples.TrustedSamplesGuiTests.test_actual_preview_cancel_admit_and_revoke_without_training",
+            "test_trusted_samples.TrustedSamplesTests.test_admission_preserves_labels_does_not_train_and_reopen_positive_negative_separation",
+            "test_trusted_samples.TrustedSamplesTests.test_current_admission_dedup_stale_scope_and_late_audit_rollback",
+            "test_trusted_samples.TrustedSamplesTests.test_quarantine_revoke_exact_usage_impact_preserves_history_and_templates",
+            "test_trusted_samples.TrustedSamplesTests.test_rights_visual_unknown_missing_coverage_and_unapproved_admission_blocked",
+            "test_trusted_samples.TrustedSamplesTests.test_source_work_facts_and_cache_changes_invalidate_approved_sample"
+          ]
         }
       ],
-      "next_step": "按已持久化十包契約實作；建立具名實際測試後登錄，不把規格當完成"
+      "next_step": "正式來源對應驗收與GitHub保存範圍讀回"
     },
     {
       "id": "CORE-059",
@@ -3998,7 +4006,7 @@
       "parents": [
         "UI-055"
       ],
-      "status": "NOT_IMPLEMENTED",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "TEN_PACKAGES_DESIGN 包7的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
@@ -4012,10 +4020,18 @@
         {
           "id": "CORE-059-A1",
           "expected": "污染隔離撤銷與exact使用追溯；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
-          "tests": []
+          "tests": [
+            "test_trusted_samples.TrustedSamplesGuiTests.test_actual_failed_worker_and_scope_changed_during_confirmation_controls_recover",
+            "test_trusted_samples.TrustedSamplesGuiTests.test_actual_preview_cancel_admit_and_revoke_without_training",
+            "test_trusted_samples.TrustedSamplesTests.test_admission_preserves_labels_does_not_train_and_reopen_positive_negative_separation",
+            "test_trusted_samples.TrustedSamplesTests.test_current_admission_dedup_stale_scope_and_late_audit_rollback",
+            "test_trusted_samples.TrustedSamplesTests.test_quarantine_revoke_exact_usage_impact_preserves_history_and_templates",
+            "test_trusted_samples.TrustedSamplesTests.test_rights_visual_unknown_missing_coverage_and_unapproved_admission_blocked",
+            "test_trusted_samples.TrustedSamplesTests.test_source_work_facts_and_cache_changes_invalidate_approved_sample"
+          ]
         }
       ],
-      "next_step": "按已持久化十包契約實作；建立具名實際測試後登錄，不把規格當完成"
+      "next_step": "正式來源對應驗收與GitHub保存範圍讀回"
     },
     {
       "id": "CORE-060",

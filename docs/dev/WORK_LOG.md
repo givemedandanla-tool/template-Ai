@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 十包 7 可恢復實作
+
+包7候選/APPROVED有效/STALE/QUARANTINED/REVOKED分離、exact SOURCE/WORK/FACTS/RULE/cache provenance与rights/use、必要人工正例／原錯誤預測分開、不自動訓練、dataset/template/job exact使用依賴與撤銷／隔離history/CAS/late rollback、真Qt背景健康核對／取消／過期／失败恢復已實作；target7PASS。環境切換檔案未丟失，WIP已Git讀回；進度render不同步已修。所有新媒體不公開，code/tests/metadata保存。
+
+
 ## 第六包自動審查媒體引用拒絕與安全替代
 
 283PASS無產品阻塞。tree batch6含既有PNG/PDF blob新路徑引用，被自動審查拒絕；已完成前幾個tree物件不移分支，不把部分tree當checkpoint。依使用者略過證明文件授權，採所有新媒体引用全排除／text code-metadata保存；原P06 record/ZIP不改，STATE記superseded。新TEXT收據只對實際scope核對，不改run/tests或以hash冒稱binary可下載。事件內容／解法見COPYRIGHT_PRIVACY_EVENTS。

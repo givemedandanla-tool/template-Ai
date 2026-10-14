@@ -3,7 +3,7 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.20",
+  "product_version": "0.1.21",
   "framework_status": "READY",
   "active_task": "TEN-PACKAGES-IN-PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261014-TEN-TRUSTED-ENV-WIP.receipt.json",
@@ -30,8 +30,13 @@
   "next_tasks": [
     {
       "id": "TRUSTED-SAMPLES",
+      "status": "IN_PROGRESS",
+      "action": "包7候選/APPROVED有效/STALE/QUARANTINED/REVOKED分離、exact SOURCE/WORK/FACTS/RULE/cache provenance与rights/use、必要人工正例／原錯誤預測分開、不自動訓練、dataset/template/job exact使用依賴與撤銷／隔離history/CAS/late rollback、真Qt背景健康核對／取消／過期／失败恢復已實作；target7PASS。環境切換檔案未丟失，WIP已Git讀回；進度render不同步已修。所有新媒體不公開，code/tests/metadata保存。"
+    },
+    {
+      "id": "TEN-NEXT",
       "status": "CONTINUE",
-      "action": "直接下一包；不等待HUMAN"
+      "action": "完成來源對應回歸／保存／下一包，不等待HUMAN；無EXE。"
     }
   ],
   "blocked": [
@@ -52,7 +57,9 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261014-TEN-TRUSTED-SAMPLES-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEN-NOISE-RECOVERY-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261014-TEN-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P06-END.json",
@@ -262,7 +269,7 @@
           "CORE-058",
           "CORE-059"
         ],
-        "status": "IN_PROGRESS"
+        "status": "IMPLEMENTED_PENDING_FORMAL"
       },
       {
         "sequence": 8,
