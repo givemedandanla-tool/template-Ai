@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 70父需求：介面與當次候選WIP
+
+輸入儲存格exact定位、尺寸Logo只讀隔離與跨庫參考、ObjectTools上下文/釘選、當次單worker真進度/邊界暫停取消、局部候選副本毫米修改、既有ObjectEdit操作ID冪等批次adapter、診斷重用路由及75父題機器對帳已編碼。此checkpoint為WIP，尚待target測試與修正，不標完成。來源/發布模板不變；候選只記憶體、不承諾跨啟動恢復。
+
+
 ## 70父需求：客戶／備份可恢復實作
 
 CORE068..072真實人工建檔、exact模板關聯／搜尋預填、stable欄位CAS原子回寫、只讀雙方比對、一致SQLite快照＋Scrypt/AES-GCM完整性驗證＋新目錄隔離還原；8個具名測試含actual Qt PASS。密碼／key不入metadata，明示DATABASE_ONLY_PARTIAL外部資產未包含。新增cryptography46.0.3（Apache/BSD）與cffi2.1.0+；第一次無網sandboxpip失敗，有界重試以允許網路正常安裝46.0.3/cffi2.1.1/pycparser3.11。未上傳真實資料，未把父項先升PARTIAL，等待正式全回歸。

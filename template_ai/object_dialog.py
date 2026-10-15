@@ -83,7 +83,10 @@ class ObjectToolsDialog(QDialog):
             b=QPushButton(title);b.clicked.connect(lambda _,a=action:self.viewport_action(a));index_layout.addWidget(b)
         body.addWidget(left)
         self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select_ids);self.canvas.drag_proposal.connect(self.preview_request);body.addWidget(self.canvas)
-        right=QWidget();form=QFormLayout(right);self.editors={}
+        right=QWidget();form=QFormLayout(right);self.context_form=form;self.editors={}
+        self.context_status=QLabel('未選取／未知上下文');self.context_status.setWordWrap(True);form.addRow(self.context_status)
+        self.pin_text=QCheckBox('釘選文字工具（不適用仍禁止操作）');self.pin_text.toggled.connect(self.update_context);form.addRow(self.pin_text)
+        self.all_properties=QCheckBox('展開全部屬性');self.all_properties.toggled.connect(self.update_context);form.addRow(self.all_properties)
         for key,name in (('x','X'),('y','Y'),('w','寬'),('h','高'),('size_pt','固定字級pt'),('min_scale','水平比例下限')):
             spin=QDoubleSpinBox();spin.setRange(-2001,2000);spin.setDecimals(4);spin.setSpecialValueText('混合／未提供');spin.valueChanged.connect(lambda value,k=key:self.changed(k));self.editors[key]=spin;form.addRow(name,spin)
         for key,name,choices in (('kind','類型',list(KINDS.items())),('owner','歸屬',[(f'{p}{n}',f'{p}{n}') for p in ('p','c') for n in range(1,21)]),('align','對齊',[('left','靠左'),('center','置中'),('right','靠右')])):
@@ -241,9 +244,23 @@ class ObjectToolsDialog(QDialog):
             detail=f"矩形 {size[0]:g}×{size[1]:g} mm／{self.kind} {self.entity_id}／来源作品 {payload.get('source_work_id') or (self.entity_id if self.kind=='ARTWORK' else '未知')}\n"+detail
             mixed=', '.join(k for k,v in common.items() if v['mixed']);self.properties.setPlainText(f'選取{len(ids)}件。混合：{mixed or "無"}\n'+detail+'\n文字內容／原生字距未知。Logo不適用文字patch；跨owner需核對範圍。')
         else:
-            for editor in self.editors.values():editor.setEnabled(False)
+            for editor in self.editors.values():
+                editor.setEnabled(False)
+                if isinstance(editor,QDoubleSpinBox):editor.setValue(editor.minimum())
+                elif isinstance(editor,QComboBox):editor.setCurrentIndex(-1)
+                elif isinstance(editor,QLineEdit):editor.clear()
+                else:editor.setCheckState(Qt.Unchecked)
             self.font_choice.setEnabled(False);self.properties.setPlainText('未選取物件；沒有自動加入其他人物／公司。')
-        self.loading=False;self.filter_index()
+        self.loading=False;self.filter_index();self.update_context()
+
+    def update_context(self, *_):
+        rows=[s for s in self.snapshot['payload']['slots'] if s['id'] in self.ids] if hasattr(self,'snapshot') else []
+        text=bool(rows) and all(s['kind']!='logo' for s in rows)
+        label='未選取／過期時無可用值' if not rows else '多選（混合值逐欄判斷）' if len(rows)>1 else '完整Logo；文字工具不適用' if not text else '文字物件；固定字級'
+        self.context_status.setText(label+'／'+self.kind+' '+self.entity_id)
+        for key in ('size_pt','min_scale','align','color'):
+            editor=self.editors[key];self.context_form.setRowVisible(editor,text or self.pin_text.isChecked() or self.all_properties.isChecked())
+            if not text:editor.setEnabled(False)
     def focus_selection(self):
         items=[i for i in self.canvas.scene().items() if isinstance(i,Box) and i.slot.id in self.ids]
         if items:

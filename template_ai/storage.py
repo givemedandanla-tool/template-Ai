@@ -374,20 +374,27 @@ class Library:
             self.db.execute('UPDATE artworks SET revision=?,payload=? WHERE id=?',(revision+1,data,entity_id))
             self.db.execute('INSERT INTO artwork_revisions VALUES(?,?,?,?)',(entity_id,revision+1,data,time.time()))
 
-    def apply_object_edit(self,snapshot,request,confirmed=False):
+    def apply_object_edit(self,snapshot,request,confirmed=False,operation_id=None):
         from .object_tools import propose
         from .font_review import fingerprint
         if confirmed is not True:raise ValueError('需明確核准精確範圍與差異')
         if self.db.in_transaction:raise ValueError('已有交易，不能巢狀物件編輯')
         self.db.execute('BEGIN IMMEDIATE')
         try:
+            if operation_id is not None:
+                if not isinstance(operation_id,str) or not operation_id.startswith('batch:') or len(operation_id)!=70:raise ValueError('批次操作ID不合法')
+                old=self.db.execute('SELECT payload FROM object_edits WHERE id=?',(operation_id,)).fetchone()
+                if old:
+                    record=json.loads(old[0])
+                    if record['kind']!=snapshot['kind'] or record['entity_id']!=snapshot['id'] or record['plan']['request']!=request or record['before']!=snapshot['payload'] or record['before_revision']!=snapshot['revision'] or record['phase']!='APPLIED':raise ValueError('操作ID已用於不同範圍或已復原；不能盲目重試')
+                    self.db.commit();return {**record,'reused':True}
             current=self.object_snapshot(snapshot['kind'],snapshot['id'])
             if current['revision']!=snapshot['revision'] or fingerprint(current['payload'])!=fingerprint(snapshot['payload']):raise ValueError('物件資料已變更／ABA，請重新載入與預覽')
             # Recompute under write lock; caller-supplied after/eligibility is never trusted.
             plan=propose(current['payload'],current['kind'],request)
             if request.get('operation')=='PATCH' and 'font_asset' in request.get('patch',{}):self._assert_font_registered({'asset':request['patch']['font_asset']})
             self._object_write(current['kind'],current['id'],plan['after'],current['revision'])
-            record={'id':new_id(),'kind':current['kind'],'entity_id':current['id'],'phase':'APPLIED','sequence':1,'created':time.time(),
+            record={'id':operation_id or new_id(),'kind':current['kind'],'entity_id':current['id'],'phase':'APPLIED','sequence':1,'created':time.time(),
                     'before':copy.deepcopy(current['payload']),'after':copy.deepcopy(plan['after']),'expected_revision':current['revision']+1,
                     'plan':plan,'before_revision':current['revision']}
             self.db.execute('INSERT INTO object_edits VALUES(?,?,?,?)',(record['id'],current['kind'],current['id'],json.dumps(record,ensure_ascii=False)))

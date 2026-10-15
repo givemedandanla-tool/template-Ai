@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 import sys
 
-from PySide6.QtCore import QObject, QPointF, QRectF, QRunnable, Qt, QThreadPool, Signal
+from PySide6.QtCore import QObject, QPointF, QRectF, QRunnable, Qt, QThreadPool, Signal, QTimer, QSignalBlocker
 from PySide6.QtGui import QAction, QColor, QFont, QFontDatabase, QImage, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox, QFileDialog,
     QDialog, QDialogButtonBox, QFontComboBox, QFormLayout, QGraphicsItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView,
@@ -266,7 +266,27 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("共用字型管理中心", self.font_center)
         self.menuBar().addAction("字型替代審核歷史", self.font_review_history)
         self.menuBar().addAction("本機客戶／版型與備份", self.customer_center)
+        self.menuBar().addAction("尺寸獨立 Logo 庫", self.logo_center)
+        self.menuBar().addAction("多作品安全批次對齊", self.batch_object_center)
+        self.menuBar().addAction("輸入問題定位（既有診斷）", lambda: self.open_diagnostic('input'))
         self.menuBar().addAction("操作說明", self.help)
+
+    def open_diagnostic(self, kind):
+        from .diagnostic_routes import open_diagnostic
+        try:return open_diagnostic(self,kind)
+        except Exception as error:self.error(str(error))
+
+    def batch_object_center(self):
+        from .batch_objects import BatchObjectDialog
+        dialog=BatchObjectDialog(self)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
+
+    def logo_center(self):
+        from .logo_library_dialog import LogoLibraryDialog
+        dialog = LogoLibraryDialog(self)
+        try: dialog.exec()
+        finally: dialog.deleteLater()
 
     def customer_center(self):
         from .customer_dialog import CustomerDialog
@@ -396,6 +416,9 @@ class MainWindow(QMainWindow):
         size_row.addWidget(self.out_w)
         size_row.addWidget(self.out_h)
         self.button("開始自動排版", self.generate, size_row)
+        self.button("當次單worker／暫停取消", self.layout_session, size_row)
+        self.button("解除重訂版型限定", self.clear_reorder_filter, size_row)
+        self.button("當次候選局部修改", self.candidate_editor, size_row)
         layout.addLayout(size_row)
         self.people = QTableWidget(1, 8)
         self.people.setHorizontalHeaderLabels(["姓名", "職稱", "電話", "Email", "LINE", "IG", "地址", "公司序號"])
@@ -415,6 +438,15 @@ class MainWindow(QMainWindow):
         self.companies.setMaximumHeight(75)
         self.companies.itemChanged.connect(self.invalidate)
         layout.addWidget(self.companies)
+        self.input_state = QLabel('輸入待驗證；欄位提示不代表印前通過')
+        layout.addWidget(self.input_state)
+        self.input_problems = QListWidget()
+        self.input_problems.setMaximumHeight(100)
+        self.input_problems.itemClicked.connect(self.locate_input_problem)
+        layout.addWidget(self.input_problems)
+        self.input_timer = QTimer(self)
+        self.input_timer.setSingleShot(True)
+        self.input_timer.timeout.connect(self.refresh_input_problems)
         row = QHBoxLayout()
         self.button("新增公司", self.add_company, row)
         self.button("移除選取公司", lambda: self.remove_row(self.companies), row)
@@ -443,6 +475,22 @@ class MainWindow(QMainWindow):
         self.preview_button.setEnabled(False)
         layout.addLayout(row)
         return widget
+
+    def candidate_editor(self):
+        from .candidate_edit import CandidateEditDialog
+        dialog=CandidateEditDialog(self)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
+
+    def clear_reorder_filter(self):
+        self.reorder_template_id=None
+        self.invalidate()
+
+    def layout_session(self):
+        from .layout_session import LayoutSessionDialog
+        dialog=LayoutSessionDialog(self)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
 
     def build_properties(self):
         widget = QWidget()
@@ -1312,16 +1360,41 @@ class MainWindow(QMainWindow):
 
     def invalidate(self, *_):
         self.generation += 1
+        if hasattr(self, 'input_timer'): self.input_timer.start(180)
         self.export_button.setEnabled(False)
         self.preview_button.setEnabled(False)
         if self.candidates:
             self.issues.setText("資料／尺寸／模板或 Logo 已變更；目前候選過期，請重新排版。")
+
+    def refresh_input_problems(self):
+        from .input_diagnostics import diagnose
+        try:
+            people, companies, _ = self.input_data()
+            report = diagnose(people, companies, self.library.templates(True), self.out_w.value(), self.out_h.value())
+        except (ValueError, TypeError) as error:
+            report = {'issues': [{'table':'people','row':i,'col':7,'owner':f'p{i+1}','reason':'公司序號需為有效整數：'+str(error)} for i in range(self.people.rowCount()) if self.people.item(i,7) and not self.people.item(i,7).text().strip().isdigit() and self.people.item(i,7).text().strip()]}
+        self.input_problems.clear()
+        from PySide6.QtWidgets import QListWidgetItem
+        for issue in report['issues']:
+            item = QListWidgetItem(issue['owner']+' · '+issue['reason']); item.setData(Qt.UserRole, issue); self.input_problems.addItem(item)
+        for table in (self.people,self.companies):
+            blocker = QSignalBlocker(table)
+            for row in range(table.rowCount()):
+                for col in range(table.columnCount()):
+                    item=table.item(row,col)
+                    if item: item.setToolTip('\n'.join(i['reason'] for i in report['issues'] if i['table']==('people' if table is self.people else 'companies') and i['row']==row and i['col']==col))
+            del blocker
+        self.input_state.setText(f"{len(report['issues'])}項輸入提示／待版面驗證；非全域無解，正式輸出依當前候選Gate")
+
+    def locate_input_problem(self, item):
+        issue=item.data(Qt.UserRole);table=getattr(self,issue['table']);table.setCurrentCell(issue['row'],issue['col']);table.setFocus()
 
     def generate(self):
         try:
             people, companies, logos = self.input_data()
             eligible=[];excluded=[]
             for template in self.library.templates(True):
+                if getattr(self,'reorder_template_id',None) and template.id!=self.reorder_template_id: continue
                 try:self.library._template_provenance(template);eligible.append(template)
                 except ValueError as error:excluded.append(template.name+'：'+str(error))
             self.candidates = match(eligible, self.out_w.value(), self.out_h.value(), people, companies, logos, self.generation)
