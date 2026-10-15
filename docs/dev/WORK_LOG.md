@@ -916,3 +916,5 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI052 full original10 self-verified milestone
 - 本輪剩餘28已完成UI046/UI047/UI049/UI050/UI051/UI052六題，共62原條款；798/798正式PASS、0skip/0Qt錯誤、capture0、source unchanged。全75：50 VERIFIED／22 PARTIAL／3 DEFERRED；固定70：48閉合／22仍部分。CORE87／GOV7另計。
 - 38 text metadata/117 local media，actualsixparent Qt/SQLite/process/current-host capture，144 claims digest吻合；publication gate待readback實查。下一UI053，非全28完成。
+
+- CP-20261015-REMAINING28-UI052-VERIFIED snapshot bbb89dfa6cc0dd439d927e4e2bdc562539cd47de/tree83bea2e8dd7eb5605375c81042d23d73144d31f2已逐檔Git讀回；require-evidence --publication-scope實際PASS後才將STATE標PASS，default JSONL collector已納入真正journal，無資料adapter/文字豁免。formal process exit0已確認。
