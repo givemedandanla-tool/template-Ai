@@ -19,8 +19,8 @@
 | UI-013 | 文字框智慧編輯介面 | PARTIAL | 否 | 字級定案不依字數改變，無合法解不截字 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-014 | 文字框無解診斷與輸入密度分級提醒 | PARTIAL | 否 | 實測無解與證據不足分開，禁止暗縮字級 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-015 | 使用者資料輸入警告介面 | PARTIAL | 否 | 欄位提醒、整體狀態與問題定位判定一致 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-016 | 新增人物、公司與多筆聯絡資料 | PARTIAL | 否 | 多人多公司、多聯絡方式保持各自語意所有權 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-017 | 共享公司與聯絡資料編輯 | PARTIAL | 否 | 實體共享、複本、解除關聯與刪除區別 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-016 | 新增人物、公司與多筆聯絡資料 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 原UI-016全部已核准條款：人物ROOT卡片、stable圖、多公司與共享引用、安全複製解除刪除、Undo/Redo、當次資料及既有輸出Gate不放寬 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-017 | 共享公司與聯絡資料編輯 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 原UI-017全部已核准條款：人物ROOT卡片、stable圖、多公司與共享引用、安全複製解除刪除、Undo/Redo、當次資料及既有輸出Gate不放寬 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-018 | 自動排版結果與候選模板呈現 | PARTIAL | 否 | 先硬驗證後候選排序，未完成搜尋不稱全域最佳 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-019 | 印刷預檢與高保真 Logo 預覽輸出 | PARTIAL | 否 | 本輪修訂：數位視覺／輸出品質前期驗證；實體印刷分析移至軟體完善後 P10 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-020 | 複合公司 Logo 與來源品質管理 | PARTIAL | 否 | Logo 圖形加文字整體保護，OCR 不拆商標 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
@@ -169,5 +169,7 @@
 | CORE-081 | 明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史；其他模型／Logo／客戶依賴全面掃描與解除重審後續；Linux匿名合成SELF範圍 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | CORE-082 | 共用診斷快照與離線HTML／JSON安全交接包 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 共用診斷快照與離線HTML／JSON安全交接包；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | CORE-083 | 既有GUI報告保存重開與exact版本定位 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 既有GUI報告保存重開與exact版本定位；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| CORE-084 | 人物ROOT穩定實體圖與安全共享操作 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 當次人物卡片、真實引用／獨立複本、受控差異、Undo/Redo、多公司模板port與公司聯絡資料；不改已發布模板／原稿／固定字級 | 無有效新版證據 |
+| CORE-085 | 正規化客戶語意關聯與當次資料逐欄整合 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 單一CustomerStore穩定實體／外鍵、舊欄位ID安全遷移、exact版型預填、共享影響、三方CAS回寫、歷史值受控恢復；不宣稱自動AI建檔或全多尺寸縮圖／新增刪除主檔同步完成 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

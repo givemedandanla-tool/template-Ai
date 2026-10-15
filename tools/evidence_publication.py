@@ -16,7 +16,7 @@ def waived_attachments(root, run_path, run):
                            if r['path'].startswith(folder + '/')]
             if candidates:
                 policies.append(str(legacy.relative_to(root)))
-    for policy_path, policy_id in (('docs/dev/TEN_PACKAGES_PUBLICATION.json', 'USER_AUTHORIZED_METADATA_FIRST_TEN_PACKAGES'), ('docs/dev/SEVENTY_PARENTS_PUBLICATION.json', 'USER_AUTHORIZED_METADATA_FIRST_SEVENTY'), ('docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json','USER_AUTHORIZED_METADATA_FIRST_DIAGNOSTICS')):
+    for policy_path, policy_id in (('docs/dev/TEN_PACKAGES_PUBLICATION.json', 'USER_AUTHORIZED_METADATA_FIRST_TEN_PACKAGES'), ('docs/dev/SEVENTY_PARENTS_PUBLICATION.json', 'USER_AUTHORIZED_METADATA_FIRST_SEVENTY'), ('docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json','USER_AUTHORIZED_METADATA_FIRST_DIAGNOSTICS'), ('docs/dev/FULL70_PUBLICATION.json','USER_AUTHORIZED_METADATA_FIRST_FULL70')):
         path = root / policy_path
         if path.exists():
             policy = read_json(path)

@@ -3,9 +3,9 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.26",
+  "product_version": "0.1.27",
   "framework_status": "READY",
-  "active_task": "FULL70-ENTITY-RELATIONS-IMPLEMENTING",
+  "active_task": "FULL70-ENTITIES-SOURCE-FREEZE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-ENTITIES-GRAPH.receipt.json",
   "last_confirmed_commit": "5bcb5502f7fdd30186d1f725a9eae2d4d03f88d5",
   "latest_evidence_run": null,
@@ -21,8 +21,8 @@
   "next_tasks": [
     {
       "id": "ENTITY-RELATIONS",
-      "status": "PLANNED",
-      "next": "先修改前checkpoint；穩定實體圖與Qt人物卡片，接模板port及CustomerStore，具名故障測試"
+      "status": "PENDING_VERIFICATION",
+      "next": "凍結source checkpoint與新run全回歸／Qt capture；修錯需新source/run，之後繼續其餘68題"
     }
   ],
   "blocked": [],
@@ -31,7 +31,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-ENTITIES-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-FULL70-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-DIAGNOSTICS-END.json",

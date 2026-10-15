@@ -152,12 +152,12 @@ def make_snapshot(window,kind,work_id=None,session=None):
         data['scope'].update(width_mm=window.out_w.value(),height_mm=window.out_h.value())
         try:
             people,companies,_=window.input_data()
-            if sum(len(v) for p in people for v in p.values() if isinstance(v,list))>2000:raise RuntimeError('輸入欄位超出2000項報告預算，請縮小範圍，尚未檢查')
+            if sum(len(p.get(k,[])) for p in people for k in INPUT_KINDS)>2000:raise RuntimeError('輸入欄位超出2000項報告預算，請縮小範圍，尚未檢查')
             result=diagnose(people,companies,selected_templates(window),window.out_w.value(),window.out_h.value())
             for row in result['issues']:
-                row=dict(row);row.update(severity='REVIEW',kind=INPUT_KINDS[row['col']] if row['col']<7 else 'company',locatable=True)
-                add(row,'人物'+str(row['row']+1),{'kind':'input','table':row['table'],'row':row['row'],'col':row['col']})
-            data['scope']['fields']=sum(len(v) for p in people for v in p.values() if isinstance(v,list))
+                row=dict(row);row.update(severity='REVIEW',kind=row.get('field_kind','company' if row['table']=='companies' else INPUT_KINDS[row['col']] if row['col']<7 else 'company'),locatable=True)
+                add(row,('公司' if row['table']=='companies' else '人物')+str(row['row']+1),{'kind':'input','table':row['table'],'row':row['row'],'col':row['col']})
+            data['scope']['fields']=sum(len(p.get(k,[])) for p in people for k in INPUT_KINDS)
             data['progress']['total']=result['templates_checked']
         except (ValueError,TypeError,KeyError):add(issue('INVALID_INPUT','REVIEW'))
         data['status']='PENDING_LAYOUT'
@@ -289,6 +289,8 @@ def locate(window,data,index,snapshot=None):
     if target['kind']=='training':return locate_work(window,target['work_id'],target['slot_ids'])
     window.tabs.setCurrentIndex(2)
     if target['kind']=='input':
+        if getattr(window,'active_input_graph',None) is not None:
+            window.edit_input_graph();return
         table=getattr(window,target['table']);table.setCurrentCell(target['row'],target['col']);table.setFocus()
     else:
         i=target['index'];c=window.candidates[i]

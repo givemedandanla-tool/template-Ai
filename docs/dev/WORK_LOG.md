@@ -1,3 +1,7 @@
+# 人物公司／客戶整合待正式驗收
+
+25項新語意與實際Qt入口測試PASS，原客戶8PASS。客戶新增FK正規化語意表，舊fieldID不變；有歧義遷移保留原值且待核對。新圖完整原子共享／獨立／解除／刪除差異，三方逐欄回寫與歷史CAS恢復；新CORE084/085及UI016/017 full條款已具名登錄，尚未標完成。SQL初版佔位符錯誤8ERROR與新版fixture撞既有模板版次1ERROR均保留，修正實作／測試設定後重跑。實際Qt capture已操作並檢視卡片及客戶差異頁，修正空白伸展與公司名稱標籤；新binary依授權不發布。現在凍結source正式全回歸，勿以target PASS代替。
+
 # 人物公司主幹第一階段
 
 InputGraph明確stableID與真引用、受控preview/apply、100步Undo/Redo、人物ROOT卡片、共享公司與聯絡資料，以及模板多公司port與公司聯絡欄位已接通。舊客戶8項回歸PASS；新12項第一輪11PASS/1ERROR為測試使用Qt實例未提供的class enum，修正後重跑。首次compile引號錯誤與失敗測試保留attempts。尚未完成客戶正規化及正式全回歸，不升父需求。準備資料結構修改前checkpoint。

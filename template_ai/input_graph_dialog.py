@@ -15,13 +15,15 @@ class InputGraphDialog(QDialog):
             if current:graph=current.data
             else:
                 p,c,l=window.input_data();graph=InputGraph.from_legacy(p,c,l).data
-        self.graph=InputGraph(graph);self.initial=self.graph.data.copy()
+        self.graph=InputGraph(graph);self.initial_revision=self.graph.data["revision"]
         self.setWindowTitle('人物卡片／公司與共享聯絡資料（當次製作）');self.resize(1180,780)
         layout=QVBoxLayout(self)
-        self.status=QLabel('資料來源：當次輸入；未採用前不改主視窗或客戶主檔。模板p1/c1為位置，卡片內ID為穩定身分。');self.status.setWordWrap(True);layout.addWidget(self.status)
+        source=getattr(window,'reorder_customer_snapshot',None)
+        origin=('客戶 '+source['code']+'／主檔 v'+str(source['revision'])+' 的當次複本') if source else '當次輸入'
+        self.status=QLabel('資料來源：'+origin+'；未採用前不改主視窗或客戶主檔。模板p1/c1為位置，卡片內ID為穩定身分。');self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout();self.add_button(bar,'＋新增人物',lambda:self.execute('add_person'));self.undo_button=self.add_button(bar,'復原',self.undo);self.redo_button=self.add_button(bar,'重做',self.redo);layout.addLayout(bar)
         split=QSplitter();self.tree=QTreeWidget();self.tree.setHeaderLabels(['結構導覽／真實引用']);self.tree.currentItemChanged.connect(self.navigate);split.addWidget(self.tree)
-        self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);split.addWidget(self.scroll);split.setStretchFactor(1,3);layout.addWidget(split)
+        self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);split.addWidget(self.scroll);split.setStretchFactor(1,3);layout.addWidget(split,1)
         self.summary=QLabel();self.summary.setWordWrap(True);layout.addWidget(self.summary)
         buttons=QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel);buttons.button(QDialogButtonBox.Ok).setText('採用到當次輸入（須重新排版）');buttons.button(QDialogButtonBox.Cancel).setText('取消全部未採用修改');buttons.accepted.connect(self.accept);buttons.rejected.connect(self.reject);layout.addWidget(buttons)
         self.field_editors={};self.cards={};self.rebuild()
@@ -36,6 +38,11 @@ class InputGraphDialog(QDialog):
             if plan['requires_confirmation']:
                 impact='\n'.join(plan['labels']) or '僅新增資料'
                 detail=f"操作：{action}\n實際受影響實體：\n{impact}\n引用ID："+', '.join(plan['affected'])+'\n資料來源：當次輸入；不改客戶主檔／原稿／Logo資產。'
+                detail+='\n欄位變化：'
+                for delta in plan['differences']:
+                    old,new=delta['before'],delta['after'];field=new or old
+                    detail+='\n'+KINDS[field['kind']]+'／'+field['owner_id']+'：'+('未有此欄位' if old is None else old['value'])+' → '+('刪除此欄位' if new is None else new['value'])
+                detail+='\n關聯變化：'+str(plan['link_changes'])+'\n操作後（人物／公司／欄位／關聯）：'+str(plan['result_counts'])
                 if action=='edit_field':
                     old=self.graph.field(params['field_id']);detail+='\n舊值：'+old['value']+'\n新值：'+params['value']
                 if action=='copy_person':detail+='\n私人欄位：獨立複本；公司：'+('連結既有共享實體' if params['company_mode']=='SHARED' else '公司與聯絡欄位建立獨立複本；Logo引用既有核准資產')
@@ -85,7 +92,7 @@ class InputGraphDialog(QDialog):
         if ok:self.execute('copy_person',person_id=pid,company_mode='SHARED' if mode=='連結既有共享公司' else 'INDEPENDENT')
 
     def field_row(self,layout,f,eid):
-        row=QHBoxLayout();label=QLabel(KINDS[f['kind']]);label.setMinimumWidth(50);row.addWidget(label)
+        row=QHBoxLayout();label=QLabel('公司名稱' if f['kind']=='name' and eid in {c['id'] for c in self.graph.data['companies']} else KINDS[f['kind']]);label.setMinimumWidth(50);row.addWidget(label)
         editor=QLineEdit(f['value']);editor.setMaxLength(2048);editor.setObjectName('input-field-'+f['id']);row.addWidget(editor,1)
         editor.setToolTip('欄位ID：'+f['id']+'\n所有者：'+self.graph.label(f['owner_id'])+'／'+f['owner_id']+'\n資料來源：當次輸入')
         def commit():
@@ -94,11 +101,12 @@ class InputGraphDialog(QDialog):
         editor.editingFinished.connect(commit);self.field_editors.setdefault(f['id'],editor)
         impact=self.graph.field_impact(f['id'])
         shared=len(impact)>1
-        row.addWidget(QLabel(('共享：'+'／'.join(self.graph.label(x) for x in impact)) if shared else '獨立'))
+        marker=QLabel(('共享：'+'／'.join(self.graph.label(x) for x in impact)) if shared else '獨立');marker.setTextFormat(Qt.PlainText);row.addWidget(marker)
         if f['owner_id']!=eid:
             self.add_button(row,'解除此引用',lambda:self.execute('unlink_field',field_id=f['id'],entity_id=eid))
             self.add_button(row,'改獨立複本',lambda:self.execute('independent_field',field_id=f['id'],entity_id=eid))
-        elif f['kind']!='name':self.add_button(row,'刪除此欄位實體',lambda:self.execute('delete_field',field_id=f['id']))
+        if f['kind'] in CONTACT_KINDS:self.add_button(row,'複製獨立欄位',lambda:self.execute('copy_field',field_id=f['id'],owner_id=eid))
+        if f['owner_id']==eid and f['kind']!='name':self.add_button(row,'刪除此欄位實體',lambda:self.execute('delete_field',field_id=f['id']))
         layout.addLayout(row)
 
     def entity_fields(self,layout,eid):

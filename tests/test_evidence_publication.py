@@ -72,3 +72,13 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(waived_attachments(self.root,'docs/evidence/runs/RUN-Y/run.json',self.run|{'id':'RUN-Y'}),({},[]))
         self.policy['runs']['RUN-X']['attachments']['tests.json']={'bytes':12,'sha256':'b'*64};path.write_text(json.dumps(self.policy))
         with self.assertRaises(ValueError):waived_attachments(self.root,'docs/evidence/runs/RUN-X/run.json',self.run)
+
+    def test_full70_exact_media_policy_cannot_waive_metadata(self):
+        self.policy['policy']='USER_AUTHORIZED_METADATA_FIRST_FULL70'
+        self.policy['contract']='docs/dev/FULL_70_COMPLETION_PLAN.json'
+        target=self.root/self.policy['contract'];target.parent.mkdir(parents=True,exist_ok=True);target.write_text('{}')
+        path=self.root/'docs/dev/FULL70_PUBLICATION.json';path.write_text(json.dumps(self.policy))
+        result,policies=waived_attachments(self.root,'docs/evidence/runs/RUN-X/run.json',self.run)
+        self.assertEqual(list(result),['docs/evidence/runs/RUN-X/gui.png']);self.assertEqual(policies,['docs/dev/FULL70_PUBLICATION.json'])
+        self.policy['runs']['RUN-X']['attachments']['facts.json']=dict(bytes=2,sha256='x');self.run['attachments']['facts.json']=dict(bytes=2,sha256='x');path.write_text(json.dumps(self.policy))
+        with self.assertRaises(ValueError):waived_attachments(self.root,'docs/evidence/runs/RUN-X/run.json',self.run)

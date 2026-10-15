@@ -18,6 +18,8 @@ class CustomerStore:
         CREATE TABLE IF NOT EXISTS customer_styles(id TEXT PRIMARY KEY, customer_id TEXT NOT NULL REFERENCES customers(id), template_id TEXT NOT NULL REFERENCES templates(id), template_hash TEXT NOT NULL, width REAL NOT NULL, height REAL NOT NULL, UNIQUE(customer_id,template_id));
         CREATE TABLE IF NOT EXISTS customer_changes(id TEXT PRIMARY KEY,customer_id TEXT NOT NULL REFERENCES customers(id),revision INTEGER NOT NULL,payload TEXT NOT NULL);
         ''');self.db.commit()
+        from .customer_entities import migrate
+        migrate(self.db)
     def create(self,code,name,fields,template_id,approved=False):
         code=str(code).strip();name=str(name).strip()
         if not approved or not code or len(code)>64 or not name or len(name)>256:raise ValueError('需人工確認非空字串客戶編號與名稱')
@@ -38,6 +40,8 @@ class CustomerStore:
             self.db.execute('INSERT INTO customers VALUES(?,?,?,1)',(cid,code,name))
             self.db.executemany('INSERT INTO customer_fields VALUES(?,?,?,?,?)',[(fid,cid,o,k,v) for fid,o,k,v in checked])
             self.db.execute('INSERT INTO customer_styles VALUES(?,?,?,?,?,?)',(new_id(),cid,t.id,digest(t.to_dict()),t.width_mm,t.height_mm))
+            from .customer_entities import from_legacy_fields, insert_graph
+            insert_graph(self.db,cid,from_legacy_fields([dict(id=fid,owner=o,kind=k,value=v) for fid,o,k,v in checked]))
             self.library.event(cid,'customer_manual_confirmed')
         return self.get(cid)
     def get(self,cid):
@@ -45,7 +49,10 @@ class CustomerStore:
         if not r:raise ValueError('客戶不存在')
         fields=[dict(zip(('id','owner','kind','value'),x)) for x in self.db.execute('SELECT id,owner,kind,value FROM customer_fields WHERE customer_id=? ORDER BY rowid',(cid,))]
         styles=[dict(zip(('id','template_id','template_hash','width_mm','height_mm'),x)) for x in self.db.execute('SELECT id,template_id,template_hash,width,height FROM customer_styles WHERE customer_id=? ORDER BY id',(cid,))]
-        return dict(zip(('id','code','name','revision'),r),fields=fields,styles=styles)
+        from .customer_entities import read_graph
+        graph=read_graph(self.db,cid,r[3])
+        state=self.db.execute('SELECT status FROM customer_graph_states WHERE customer_id=?',(cid,)).fetchone()
+        return dict(zip(('id','code','name','revision'),r),fields=fields,styles=styles,graph=graph,ownership_state=state[0] if state else 'NOT_MIGRATED')
     def search(self,query,offset=0):
         q=query.strip().casefold()
         if not q:return []
@@ -57,10 +64,12 @@ class CustomerStore:
         current=self.get(snapshot['id']);byid={f['id']:f for f in snapshot['fields']}
         if set(values)-byid.keys():raise ValueError('不能按位置新增或跨客戶更新欄位')
         rows=[]
+        from .input_graph import InputGraph
+        graph=InputGraph(current['graph']) if current.get('graph') else None
         for fid,new in values.items():
             if not isinstance(new,str) or len(new)>2048:raise ValueError('欄位值不合法')
             old=byid[fid]
-            if new!=old['value']:rows.append({**old,'old':old['value'],'new':new,'current':next(f['value'] for f in current['fields'] if f['id']==fid),'operation':'CLEAR' if new=='' else 'EDIT'})
+            if new!=old['value']:rows.append({**old,'old':old['value'],'new':new,'current':next(f['value'] for f in current['fields'] if f['id']==fid),'operation':'CLEAR' if new=='' else 'EDIT','owner_entity_id':graph.field(fid)['owner_id'] if graph else None,'affected_entities':graph.field_impact(fid) if graph else [],'source_revision':snapshot['revision']})
         return {'customer_id':snapshot['id'],'revision':snapshot['revision'],'current_revision':current['revision'],'rows':rows,'snapshot_digest':digest(snapshot)}
     def writeback(self,snapshot,values,selected,approved=False):
         if not approved or not selected or len(set(selected))!=len(selected):raise ValueError('需明確勾選與確認')
@@ -83,6 +92,10 @@ class CustomerStore:
         t=next((t for t in self.library.templates() if t.id==link['template_id']),None)
         if not t or digest(t.to_dict())!=link['template_hash']:raise ValueError('版型版本已改變，需重新核對')
         self.library._template_provenance(t)
+        if c.get('graph'):
+            from .input_graph import InputGraph
+            people,companies,logos=InputGraph(c['graph']).compile(self.library.logos())
+            return {'snapshot':c,'graph':c['graph'],'template_id':t.id,'people':people,'companies':companies,'logos':logos,'width_mm':t.width_mm,'height_mm':t.height_mm,'status':'PREFILL_PENDING_VALIDATION','template_state':t.state}
         people=[]
         for owner in sorted({f['owner'] for f in c['fields']},key=lambda x:int(x[1:])):
             p={}
@@ -95,3 +108,46 @@ class CustomerStore:
         x,y=self.get(a),self.get(b);keys=lambda c:{(f['kind'],f['value'].casefold()) for f in c['fields'] if f['value']}
         common=sorted(keys(x)&keys(y))
         return {'left':x,'right':y,'shared_clues':common,'identity':'UNKNOWN','automatic_merge':False,'reason':'相同姓名／聯絡資料／內容不足以判定同一客戶'}
+
+    def create_graph(self,code,name,data,template_id,approved=False):
+        from .customer_entities import clone_for_master,insert_graph
+        from .input_graph import InputGraph
+        code=str(code).strip();name=str(name).strip()
+        if not approved or not code or len(code)>64 or not name or len(name)>256:raise ValueError('需人工確認客戶編號與名稱')
+        graph=clone_for_master(data);g=InputGraph(graph)
+        if not graph['people'] or any(not g.label(e['id']).strip() or g.label(e['id'])=='未命名／待補' for e in graph['people']+graph['companies']):raise ValueError('人工建檔前需補齊人物及公司名稱')
+        t=next((t for t in self.library.templates() if t.id==template_id),None)
+        if not t or t.capacity!=len(graph['people']):raise ValueError('確切版型容量不符')
+        self.library._template_provenance(t);cid=new_id()
+        with self.db:
+            self.db.execute('INSERT INTO customers VALUES(?,?,?,1)',(cid,code,name))
+            insert_graph(self.db,cid,graph,write_fields=True)
+            self.db.execute('INSERT INTO customer_styles VALUES(?,?,?,?,?,?)',(new_id(),cid,t.id,digest(t.to_dict()),t.width_mm,t.height_mm))
+            self.library.event(cid,'customer_entities_manually_confirmed')
+        return self.get(cid)
+
+    def link_style(self,snapshot,template_id,approved=False):
+        if not approved:raise ValueError('先確認客戶與確切版型')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            now=self.get(snapshot['id'])
+            if digest(now)!=digest(snapshot):raise ValueError('主檔已更新，重新核對')
+            t=next((t for t in self.library.templates() if t.id==template_id),None)
+            if not t or (now.get('graph') and t.capacity!=len(now['graph']['people'])):raise ValueError('版型不存在或人物容量不符')
+            self.library._template_provenance(t)
+            self.db.execute('INSERT INTO customer_styles VALUES(?,?,?,?,?,?)',(new_id(),now['id'],t.id,digest(t.to_dict()),t.width_mm,t.height_mm))
+            self.db.execute('UPDATE customers SET revision=revision+1 WHERE id=?',(now['id'],))
+            self.library.event(now['id'],'customer_exact_style_linked');self.db.commit()
+        except BaseException:self.db.rollback();raise
+        return self.get(snapshot['id'])
+
+    def history(self,cid):
+        self.get(cid)
+        return [dict(id=r[0],revision=r[1],payload=json.loads(r[2])) for r in self.db.execute('SELECT id,revision,payload FROM customer_changes WHERE customer_id=? ORDER BY revision DESC',(cid,))]
+
+    def restore_change(self,snapshot,change_id,selected,approved=False):
+        change=next((r for r in self.history(snapshot['id']) if r['id']==change_id),None)
+        if not change:raise ValueError('變更不屬於此客戶')
+        old={f['id']:f['old'] for f in change['payload']['fields']}
+        if set(selected)-old.keys():raise ValueError('恢復欄位不屬於此變更')
+        return self.writeback(snapshot,old,selected,approved)

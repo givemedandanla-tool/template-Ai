@@ -26,7 +26,7 @@ class InputGraph:
 
     @staticmethod
     def validate(d):
-        if not isinstance(d, dict) or set(d) != {'schema','revision','people','companies','fields','links'} or d['schema'] != 1:
+        if not isinstance(d, dict) or set(d) != {'schema','revision','people','companies','fields','links'} or type(d['schema']) is not int or d['schema'] != 1:
             raise ValueError('輸入圖格式不合法')
         if type(d['revision']) is not int or d['revision'] < 0:
             raise ValueError('輸入圖版本不合法')
@@ -140,9 +140,16 @@ class InputGraph:
     def preview(self, action, **params):
         g=InputGraph(self.data); affected, destructive=g._execute(action,deepcopy(params))
         self.validate(g.data)
+        old={f['id']:f for f in self.data['fields']};new={f['id']:f for f in g.data['fields']}
+        differences=[{'id':fid,'before':deepcopy(old.get(fid)),'after':deepcopy(new.get(fid))}
+                     for fid in sorted(old.keys()|new.keys()) if old.get(fid)!=new.get(fid)]
+        links={'removed':[x for x in self.data['links'] if x not in g.data['links']],
+               'added':[x for x in g.data['links'] if x not in self.data['links']]}
         return dict(action=action,params=deepcopy(params),base=fingerprint(self.data),after=g.data,
                     affected=sorted(set(affected)),requires_confirmation=destructive or len(set(affected))>1,
-                    labels=[self.label(x) for x in sorted(set(affected)) if x in {e['id'] for e in self.data['people']+self.data['companies']}])
+                    labels=[self.label(x) for x in sorted(set(affected)) if x in {e['id'] for e in self.data['people']+self.data['companies']}],
+                    differences=differences,link_changes=links,
+                    result_counts={k:len(g.data[k]) for k in ('people','companies','fields','links')})
 
     def apply(self, plan, approved=False):
         if plan['base']!=fingerprint(self.data):raise ValueError('影響預覽已過期，重新查看引用與差異')
@@ -156,12 +163,12 @@ class InputGraph:
 
     def command(self, action, approved=False, **params):
         # IDs fixed before preview so apply can verify the exact operation.
-        if action in ('add_person','add_company','add_field','copy_person','independent_company','independent_field'):
+        if action in ('add_person','add_company','add_field','copy_person','independent_company','independent_field','copy_field'):
             params.setdefault('new_id',new_id())
         p=self.preview(action,**params);self.apply(p,approved);return p
 
     def make_plan(self, action, **params):
-        if action in ('add_person','add_company','add_field','copy_person','independent_company','independent_field'):
+        if action in ('add_person','add_company','add_field','copy_person','independent_company','independent_field','copy_field'):
             params.setdefault('new_id',new_id())
         return self.preview(action,**params)
 
@@ -188,6 +195,10 @@ class InputGraph:
             cid=p['new_id'];d['companies'].append(dict(id=cid,logo_id=''));field(cid,'name',p.get('name',''));d['links'].append([pid,cid]);return [pid],False
         if action=='add_field':
             eid=p['owner_id'];entity(eid);field(eid,p['kind'],p.get('value',''));return self.references(eid),False
+        if action=='copy_field':
+            source=self.field(p['field_id']);eid=p['owner_id'];entity(eid)
+            if source['kind'] not in CONTACT_KINDS:raise ValueError('姓名／職稱不能複製成重複語意欄位')
+            field(eid,source['kind'],source['value']);return self.references(eid),False
         if action=='edit_field':
             f=self.field(p['field_id']);impact=self.field_impact(f['id']);f['value']=p['value'];return impact,False
         if action=='edit_logo':
@@ -238,7 +249,7 @@ class InputGraph:
             f=self.field(p['field_id']);eid=p['entity_id'];entity(eid)
             if f['kind'] not in CONTACT_KINDS or eid in f['users']:raise ValueError('只能連結未引用的聯絡資料')
             affected=self.field_impact(f['id'])+self.references(eid);f['users'].append(eid);return affected,False
-        if action in ('unlink_field','independent_field'):
+        if action in ('unlink_field','independent_field','copy_field'):
             f=self.field(p['field_id']);eid=p['entity_id']
             if eid not in f['users'] or eid==f['owner_id']:raise ValueError('所有者不能直接解除自己；可刪除實體欄位或先讓其他引用獨立')
             impact=self.field_impact(f['id']);f['users'].remove(eid)
