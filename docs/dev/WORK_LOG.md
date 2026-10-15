@@ -782,3 +782,13 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 剩餘28本輪已完成UI046/UI047/UI049三題，共32原條款；正式662/662 PASS、Qt錯誤0、capture成功、來源未變。全75：47 VERIFIED／25 PARTIAL／3 DEFERRED；固定70：45閉合／25仍部分。CORE87／GOV7另計。
 - 真Qt多根/完整依賴/明確套用/撤銷原位置capture，10新scope測試納入正式662全回歸；141claims契約digest匹配。
 - 32文字metadata GitHub、103媒體精確例外留本機；來源與客戶/版型未破壞，不改失敗run。下一UI050真watch/安全增量。
+
+### UI050 implementation contract before source change
+- 原12軟體條款：明列/停用/移除根、格式/排除；事件只提示，補掃和兩次hash為事實，離線不刪；同名新內容保舊ID進人工例外、異名同內容獨立來源身份但共享解析。重用同DB/import_batches/TrainingStore、既有UI003啟動權限。
+- 實讀Qt6.8.3 QFileSystemWatcher及VSCode File Watcher Issues，確認更名移除會停止監看、OS句柄上限/網路通知不保證，採bounded事件去抖+週期/重啟補掃。reference/hash待本包basis保存。
+- 計畫驗收：真Qt事件/無事件補掃/休眠與離線、tmp排除/半寫入/取消、root CAS及queue atomic失敗、異名同bytes不同source/customer候選、同名改內容保舊版，GUI全部控制和關閉守衛；不自動開始真訓練或發布。
+
+### UI050 scan/index core WIP checkpoint
+- 重用既有bounded walker，500項/256MiB雙讀取配額，tmp/自有data排除；原索引不因離線刪除，新候選idempotent同SQLite，內容變動僅舊pending候選stale，人工啟動沿UI003既有權限/多頁/獨立alias身份。
+- 7新指標測試+55相關=62PASS；首個目標失敗為舊fixture keyword介面，改source named cancel且保留全部原不匯入半成品斷言，log/sha已保存。
+- SourceWatchService/新版GUI未完成，原12條未註冊，不結案；先checkpoint，下一接Qt事件與背景job。

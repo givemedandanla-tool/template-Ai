@@ -1,0 +1,32 @@
+......E................................................
+======================================================================
+ERROR: test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected (test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_operations.py", line 80, in test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected
+    with patch('template_ai.source_scan.hash_source',side_effect=mutate):result=scan_files(root,{},stable_wait=.05)
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/source_scan.py", line 74, in scan_files
+    report=discover_sources([],directory,signal,max_entries=500,max_bytes=256*1024*1024,recursive=root.get('recursive',False),visit=visit,exclude=excluded)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/source_discovery.py", line 83, in discover_sources
+    visit(path,value);continue
+    ^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/source_scan.py", line 68, in visit
+    proof=hash_source(path,signal,byte_limit=50_000_000);read_bytes+=proof.stat[2]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected.<locals>.mutate() takes 1 positional argument but 2 were given
+
+----------------------------------------------------------------------
+Ran 55 tests in 16.578s
+
+FAILED (errors=1)

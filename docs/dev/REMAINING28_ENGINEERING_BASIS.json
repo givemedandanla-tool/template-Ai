@@ -45,6 +45,18 @@
       "url": "https://raw.githubusercontent.com/microsoft/vscode-docs/main/docs/editing/workspaces/multi-root-workspaces.md",
       "sha256": "f9a39d1eb62d88355c1e3e38c0e657babf337e0871c81c5b44cfb3be42cb0431",
       "inspected": "Add Folder to Workspace and Search sections: explicitly selected multiple roots, combined search with per-folder scope. Design reference, not VSCode execution or source-identity approval."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/corelib/io/qfilesystemwatcher.cpp",
+      "sha256": "94af330e6aecae2dda3a57e7da041b22f87790ab71c51aae9223dc4d3664c467",
+      "bytes": 15789,
+      "inspected": "Qt6.8.3 QFileSystemWatcher public source: notifications stop after removal/rename, drive removal and platform watcher limits; use events as hints and reconcile actual files with restart/periodic scans."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/wiki/microsoft/vscode/File-Watcher-Issues.md",
+      "sha256": "5701d8190fbe649a5c43626bb5ae557fb41d5ca3daf1dffed6f806eb9a763a14",
+      "bytes": 3200,
+      "inspected": "VSCode commercial editor File Watcher Issues: recursive watchers can exhaust handles; network/third-party file events are not guaranteed; explicit watcher exclusions. Design reference only, no VSCode execution."
     }
   ],
   "mathematical_basis": [
@@ -54,7 +66,8 @@
     "Compare-and-swap exact snapshot digests within BEGIN IMMEDIATE; on split partition CURRENT graph rather than replay stale historical values",
     "Dependency closure: SQLite consistent whole DB plus actual referenced asset bytes; missing or unauthorized references make the bundle PARTIAL",
     "SHA256 per member and whole encrypted file distinguish data integrity from successful isolated restoration; AEAD tag binds content before extraction",
-    "UI049: streaming SHA256+length matches physical content, never customer identity; bounded root-union removes nested traversals; disjoint persisted source/customer/style IDs stay independent; snapshot-digest and source-revision CAS plus SQLite transaction make stale context or audit failure roll back all location changes."
+    "UI049: streaming SHA256+length matches physical content, never customer identity; bounded root-union removes nested traversals; disjoint persisted source/customer/style IDs stay independent; snapshot-digest and source-revision CAS plus SQLite transaction make stale context or audit failure roll back all location changes.",
+    "UI050: two independent SHA256/stat snapshots are evidence only at verification time; explicit source/root revision checks and later UI003 preflight recheck prevent treating notifications or old stable samples as permanent truth. Deterministic root+path+content candidate keys give idempotent persistence; SQLite transaction rolls back candidate/root audit together."
   ],
   "commercial_approach": [
     "Separate font activation from OS installation, per-face identity and technical embedding constraints from user licence attestation; no download or licence acceptance on behalf of user"

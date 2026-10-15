@@ -1,0 +1,11 @@
+{
+  "kind": "NON_FORMAL_WORKTREE_TARGET_RUN",
+  "status": "FAILED",
+  "tests": 55,
+  "errors": 1,
+  "failures": 0,
+  "log": "docs/evidence/attempts/REMAINING28/watch-scan001-cancel-keyword.log",
+  "sha256": "d0011d3171fae4b42f37fc0933f05ad05ca56ac89c21c2aec3ef79df606076ee",
+  "cause": "Legacy mutation fixture accepts path and keyword arguments; new cancel argument was passed positionally.",
+  "correction": "Use named cancel parameter at hash_source call sites; original changing-bytes assertion retained. Next target62 PASS."
+}

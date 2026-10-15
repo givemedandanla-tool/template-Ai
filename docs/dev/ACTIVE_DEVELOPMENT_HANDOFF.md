@@ -11,3 +11,8 @@
 - 下一UI050：現source_scan只手動雙hash；source_scan_dialog明示無watch。重用Qt QFileSystemWatcher(提示)+debounce/週期/重啟補掃，明列根/排除/暫停、低量有界掃描、舊索引不因離線刪除；沿用import_batches候選，不另建影子庫。檢查BatchStore目前異名同hash會重用同source ID風險，需保存獨立來源/客戶審核；同名內容變更保舊ID版型進人工例外。
 - UI031/032/REV02仍需合法真AI、Windows字型受控安裝/host output rights/版本映射；REV04真16GB/RTX5050/VivoBook未實測。UI048 LAST；UI056D/REV03延後。
 - 下一來源修改先把141完成標pending、保存previous_evidence/清latest、render；正式凍結後全回歸再恢復。
+
+- 現開始UI050來源擴充；141歷史完成已標pending、latest=None。下一watch/scan/queue/alias原12條，非正式通過前不可宣稱目前source全驗。
+
+- UI050 core WIP：source_scan重用source_discovery有界scandir visitor，不另造walker。根/格式/排除/暫停/移除CAS，雙hash按size配額，失聯/等穩定/部分不稱成功；同TrainingStore SCAN_CANDIDATE穩定ID，異名獨立、同名新bytes舊候選stale、manual後auto才入隊，未建立AUTO_JOB。7新+55相關=62PASS。
+- 下一SourceWatchService(Qt事件僅hint/debounce/開啟與週期補掃/共享worker/stop)及新版SourceScanDialog；候選交既有AutomaticTrainingDialog，該管線已保異名source獨立，無需改一般BatchStore重用行為。尚未真watch/GUI/原12完整註冊/全formal；UI050仍PARTIAL，141歷史要求待重驗。

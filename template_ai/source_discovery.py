@@ -22,7 +22,7 @@ def availability(source):
         return "不可讀"
 
 
-def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256 * 1024 * 1024):
+def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256 * 1024 * 1024, *,recursive=True,visit=None,exclude=None):
     if len(sources) > 2000 or type(max_entries) is not int or max_entries < 1 or type(max_bytes) is not int or max_bytes < 1:
         raise ValueError("搜尋來源或資源預算不合法／超過支援範圍")
     root = Path(root)
@@ -70,12 +70,17 @@ def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256
                     report["errors"].append({"path": str(path), "reason": "跨檔案系統未搜尋"}); continue
                 if not path.resolve().is_relative_to(root):
                     report["errors"].append({"path": str(path), "reason": "實際位置在指定搜尋範圍之外，未進入"}); continue
+                if exclude and exclude(path):
+                    report['excluded_entries']=report.get('excluded_entries',0)+1;continue
                 if entry.is_dir(follow_symlinks=False):
+                    if not recursive:continue
                     if len(stack) >= 32:
                         report["errors"].append({"path": str(path), "reason": "目錄深度超過 32，請縮小範圍"}); continue
                     stack.append(os.scandir(path)); continue
                 if not entry.is_file(follow_symlinks=False):
                     continue
+                if visit:
+                    visit(path,value);continue
                 names = by_name.get(path.name.casefold(), [])
                 if value.st_size not in lengths:
                     for row in names:different(row,path)
