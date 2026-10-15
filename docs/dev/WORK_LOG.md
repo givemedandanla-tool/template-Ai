@@ -887,3 +887,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 保持已測application/tests/tools原樣，不改或重算歷史run；docs/dev/prepare_checkpoint_with_jsonl.py重用原prepare/archive/ACK API，建立新checkpoint前加真正public QA JSONL bytes/SHA/Gitblob並逐line解析，無附件豁免/無改舊checkpoint，native readback與原Gate照驗。下一UI052正常改code時把.jsonl加default collector並正式回歸。
 
 - 新CP-20261015-REMAINING28-UI051-JOURNAL-PUBLICATION已snapshot/Zip/逐檔Git讀回，真正check --require-evidence --publication-scope PASS；唯一缺的JSONL已入manifest，未更動原run/未豁免文字附件。狀態在實際PASS後改回PASS。
+
+### UI052 original10 execution plan before implementation
+- 原10全文/SHA與6包、數學anti-join/OCC/immutable contentmanifest/分層分母、counterexamples已保存，無新增父題/無縮scope。實際讀GE0.18.21 checkpoint explicitbatch/runid/results與MSVSCode1.105.1 workingcopycorrelation/participants，版本/bytes/sha記錄；PowerBI候選URL404/403未採用或虛稱讀過。
+- 仍5/28已完成；此階段只planning docs，749 source軟體未改。後續143完成標pending，JSONL defaultcollector修正與sameSQLite batch records後回歸，不把ledger/100%畫面當全批處置。

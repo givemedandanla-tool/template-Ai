@@ -1,5 +1,5 @@
 {
-  "scope": "REMAINING28-SOURCE-FONT-EVIDENCE",
+  "scope": "REMAINING28_APPROVED_PARENT_FEATURES",
   "sources": [
     {
       "project": "fontTools",
@@ -78,6 +78,26 @@
       "bytes": 88747,
       "scope": "Popen stdlib process isolation/pipe/timeout;psutil child-tree termination;reuse SQLite transactional commits and existing engines;bounded metadata protocol rather than original documents",
       "mathematics": "finite unit deadline120s,cancel grace10s,one worker,bounded command queue1/event queue32/line16KiB;no failed job auto-retry"
+    },
+    {
+      "project": "Great Expectations checkpoint",
+      "version": "0.18.21",
+      "url": "https://raw.githubusercontent.com/great-expectations/great_expectations/0.18.21/great_expectations/checkpoint/checkpoint.py",
+      "bytes": 56138,
+      "sha256": "7b7e802103b8019b7e7abe7a92dc2b45c34de10b401cb6a9f2921ffdcd7bb2cc",
+      "source_file": "/tmp/remaining28-ge-checkpoint.py",
+      "inspected": "checkpoint.run explicit batch_request,expectation suite,run identifier and validation results;reuse existing SQLite/rules/facts instead of installing GE/pandas/Spark",
+      "use": "Exact declared batch and evidence version separate from validation success;retain unexpected/missing records"
+    },
+    {
+      "project": "Microsoft VS Code working-copy file operations",
+      "version": "1.105.1",
+      "url": "https://raw.githubusercontent.com/microsoft/vscode/1.105.1/src/vs/workbench/services/workingCopy/common/workingCopyFileService.ts",
+      "bytes": 21211,
+      "sha256": "9a3f312dffee582af394fa260329f2daf1cd3660de90a1aac699bad4b24cf61d",
+      "source_file": "/tmp/remaining28-vscode-workingcopy.ts",
+      "inspected": "correlationId,working-copy operation participants and will-run/did-run/did-fail events",
+      "use": "Scoped preview/commit/failure receipts and stale working-copy handling;no VS Code dependency/code copy"
     }
   ],
   "mathematical_basis": [

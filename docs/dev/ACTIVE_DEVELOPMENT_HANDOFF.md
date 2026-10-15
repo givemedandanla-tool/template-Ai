@@ -12,3 +12,6 @@
 - 37文字metadata保存GitHub；112媒體在.checkpoints/formal-media/RUN-REMAINING28-RUNTIME-003，FULL70_PUBLICATION精確source/sha/bytes；不宣稱strict全附件上傳。
 - 下一UI052：現有quality_coverage是查詢/facets/unknown；缺exact批次邊界/分層分母/正式規則驗證/高風險個別處置/漏審阻擋/結案快照與變更重開/500+分頁。先保存原10條計畫與參照再開發，別把UI051 ledger或進度百分比當結案。
 - UI031/032/REV02合法真AI/Windows字型版本與安裝、REV04實機仍未全驗；UI048 LAST、UI056D/REV03延後。新source變更前把143已完成標pending，保留previous evidence/清latest，再新source全量回歸。
+
+- UI052原10逐條計畫已保存UI052_EXECUTION_PLAN；GE0.18.21 checkpoint及MicrosoftVSCode1.105.1 working-copy participants實際source/sha在REMAINING28_ENGINEERING_BASIS，重用既有SQLite/rules/facts/ledger，不安裝GE或商用服務。下步先143完成pending/previous證據、default collector加.jsonl，再同DB batch/member/schema。
+- UI051 publication-scope真PASS在CP-20261015-REMAINING28-UI051-JOURNAL-PUBLICATION，原collector未含JSONL先用docs/dev/prepare_checkpoint_with_jsonl.py資料adapter補真正manifest/ZIP/ACK，未改舊run或waive文字；80aa1ca source followup已讀回。

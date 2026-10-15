@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI051-COMPLETE-NEXT-UI052",
+  "active_task": "REMAINING28-UI052-ORIGINAL10-PLANNED",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-UI051-JOURNAL-PUBLICATION.receipt.json",
   "last_confirmed_commit": "1d4450c7cb69dff1061f9f516626f85dc8c066fd",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json",
@@ -20,7 +20,7 @@
     {
       "id": "UI052-EXACT-SCOPE-COVERAGE-CLOSURE",
       "status": "IN_PROGRESS",
-      "next": "先保存UI051完整milestone及receipt/readback，凍結UI052原10條工作包；重用現有quality_coverage/TrainingStore/source index/facts/noise/rules/versions，實作exact來源批次快照、分層分母/未解析與缺失不減分母、正式核准規則低風險驗證/高風險人工、精確CAS結案/失效重開、500+低負載GUI。"
+      "next": "Persist this original10 plan and references before code/schema;mark143completedpending andpreserve previous evidence when implementation starts;include.jsonl indefault collector atnextcodechange"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-UI052-ORIGINAL10-PLAN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-RUNTIME.json",
