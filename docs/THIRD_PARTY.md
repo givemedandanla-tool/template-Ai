@@ -7,6 +7,7 @@
 | Python | 主程式與標準庫 SQLite、雜湊、檔案／背景工作 | PSF License；https://docs.python.org/3/license.html |
 | PySide6 / Qt 6.8.3 | 桌面 GUI、字型量測、SVG、PDF 讀取及向量 PDF 寫入 | Qt/PySide 提供 LGPLv3／GPL／商業等路線，具體模組及 wheel 的第三方授權需隨分發核對；https://doc.qt.io/qtforpython-6/licenses.html 及 https://doc.qt.io/qt-6/licensing.html |
 | Inkscape | 外部只讀匯入／轉 SVG／渲染；環境實測 1.4 | GPL，第一版不隨成品重新散布，使用者安裝既有執行檔；https://inkscape.org/about/license/ |
+| pypdf 5.9.0 | 設定 Qt 產出 PDF 的精確毫米 MediaBox/CropBox；不重繪、縮放或向量點陣化內容 | BSD-3-Clause，已核對安裝套件 LICENSE；https://github.com/py-pdf/pypdf/tree/5.9.0 及 https://pypdf.readthedocs.io/ |
 | PyInstaller | Windows 打包工具，不是 runtime 功能 | GPL 帶 bootloader 特殊例外，產物仍須遵守 Qt 等被打包元件授權；https://pyinstaller.org/en/stable/license.html |
 
 Windows 使用 onedir 而非把 Qt 藏在不可替換的靜態產物；保留動態庫與隨 wheel 授權資訊，說明相應來源及版本。這是研究交付的授權盤點，不取代發行時逐模組／字型授權核對。使用者字型不自動打包或提交 GitHub。

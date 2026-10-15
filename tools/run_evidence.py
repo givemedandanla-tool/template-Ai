@@ -176,6 +176,16 @@ def main():
             claims.append({"requirement_id": row["id"], "acceptance_id": acceptance["id"], "expected": acceptance["expected"],
                            "tests": acceptance["tests"], "status": "PASS" if passed else "NOT_VERIFIED", "scope": row["scope"], "contract_sha256": contract_digest(row)})
     write_json(folder / "claims.json", claims)
+    ten_contract=ROOT/'docs/dev/FIXED70_NEXT_TEN_CONTRACT.json'
+    if ten_contract.is_file():
+        ten=read_json(ten_contract);targets=set(ten['target_parent_ids'])
+        actual=[c for c in claims if c['requirement_id'] in targets]
+        write_json(folder/'fixed70-ten-parent-audit.json',dict(
+            kind='DERIVED_CLAUSE_TRACEABILITY_FROM_ACTUAL_TEST_EXECUTION',source_commit=args.source_commit,
+            source_unchanged=source_unchanged,parent_count=len(targets),clause_count=len(actual),
+            parents=[dict(id=pid,clauses=[c for c in actual if c['requirement_id']==pid]) for pid in ten['target_parent_ids']],
+            all_registered_clauses_pass=bool(actual) and all(c['status']=='PASS' for c in actual),
+            independent_review=False,physical_print_verified=False,private_ai_comprehensive_verified=False))
     seventy = ROOT / "docs/dev/SEVENTY_PARENTS_CONTRACT.json"
     if seventy.is_file():
         contract = read_json(seventy)

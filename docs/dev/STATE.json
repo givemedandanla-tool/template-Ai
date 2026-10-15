@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "FIXED70-TEN-CLAUSE-REPAIR-WIP",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-MULTISIZE-WIP.receipt.json",
-  "last_confirmed_commit": "d42462824929de8d275fa9fdb14f48e368e1713b",
+  "active_task": "FIXED70-TEN-FROZEN-SOURCE-FORMAL-VALIDATION",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-TEN-CLAUSE-REPAIR.receipt.json",
+  "last_confirmed_commit": "cfd305e17c3f282afcfde8822a88a95919afd650",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -19,8 +19,8 @@
   "next_tasks": [
     {
       "id": "FIXED70-NEXT-TEN",
-      "status": "IN_PROGRESS",
-      "next": "衝突線索與撤銷10測試PASS、Logo審核GUI16測試PASS、sync9PASS；補實際數位品質proof與逐條登錄，凍結來源正式回歸"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "next": "十父題87原條款已登錄，498具名測試；push來源後正式run，不改code；依實際結果結案並保存metadata/進度/收據"
     }
   ],
   "blocked": [],
@@ -31,7 +31,7 @@
   ],
   "pending_remote": [
     "CP-20261015-CATALOG-VERIFIED",
-    "CP-20261015-TEN-CLAUSE-REPAIR"
+    "CP-20261015-TEN-FORMAL-SOURCE"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",

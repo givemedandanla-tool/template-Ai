@@ -222,6 +222,8 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
             finally:
                 p.end()
             del writer
+            from .pdf_geometry import exact_page_box
+            exact_page_box(temporary,candidate.template.width_mm,height)
         else:
             image = render_image(candidate, dpi, preview)
             if not image.save(str(temporary), "PNG" if extension == ".png" else "JPEG", 95):

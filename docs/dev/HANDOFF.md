@@ -1,3 +1,6 @@
+## 2026-10-15 十父題凍結來源／正式驗證前
+UI043、045、020～027的原文87條軟體驗收已登錄TEN_PARENT_TRACEABILITY及REQUIREMENTS；498具名測試，目標修補已PASS，正式全回歸尚未開始。新增目標框位三格式真實proof與讀回、Qt整點PDF盒問題由BSD-3-Clause pypdf5.9.0設定精確毫米盒（內容不縮放／重繪）、雲端重建script已實際PASS。下一步使用此CP來源執行run_evidence，未完整PASS不得標10/10。新證明媒體依既有metadata-first留本機及exact hashes，文字／程式／測試／audit保存GitHub。
+
 ## 2026-10-15 多尺寸可恢復階段
 UI027獨立尺寸矩陣與Qt入口、部分輸出確認、FINAL/PREVIEW三格式隔離、過期重驗及動態完整診斷附註已實作，10項目標PASS。尚未標完整父題。下一步補原條款差距（客戶衝突／關聯撤銷、Logo拖曳校正與例外入口），再全量正式證據。
 

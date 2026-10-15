@@ -23,14 +23,14 @@
 | UI-017 | 共享公司與聯絡資料編輯 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 原UI-017全部已核准條款：人物ROOT卡片、stable圖、多公司與共享引用、安全複製解除刪除、Undo/Redo、當次資料及既有輸出Gate不放寬 | [run](../../docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json) |
 | UI-018 | 自動排版結果與候選模板呈現 | PARTIAL | 否 | 先硬驗證後候選排序，未完成搜尋不稱全域最佳 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-019 | 印刷預檢與高保真 Logo 預覽輸出 | PARTIAL | 否 | 本輪修訂：數位視覺／輸出品質前期驗證；實體印刷分析移至軟體完善後 P10 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-020 | 複合公司 Logo 與來源品質管理 | PARTIAL | 否 | Logo 圖形加文字整體保護，OCR 不拆商標 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-021 | 複合 Logo 訓練校正、Logo 資料庫與缺圖占位 | PARTIAL | 否 | 候選核准入庫，缺圖同框位黑底白字只作占位 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-022 | Logo 資料庫管理與審核介面 | PARTIAL | 否 | 同尺寸跨模式入口共用，候選未核准不入正式庫 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-023 | 同公司 Logo 版本選用與按尺寸獨立 Logo 庫 | PARTIAL | 否 | 已知尺寸不跨庫，唯一新尺寸例外仍須目標核准 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-024 | 各尺寸 Logo 庫管理與新尺寸預測專區 | PARTIAL | 否 | 新尺寸預測專區與正常尺寸庫隔離 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-025 | Logo 框位等比適配與安全候選比較 | PARTIAL | 否 | 等比完整放入，留白不自動失敗，不能裁切變形 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-026 | 公司 Logo 自動匹配、選擇與匯入介面 | PARTIAL | 否 | 單一有效版可預覽，多版歧義人工選擇並綁版本 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-027 | 多尺寸驗證總覽、部分正式輸出與黑底白字預覽檔 | PARTIAL | 否 | 各矩形尺寸獨立排版／數位驗證，部分正式輸出明確確認；印刷分析後移 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-020 | 複合公司 Logo 與來源品質管理 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-021 | 複合 Logo 訓練校正、Logo 資料庫與缺圖占位 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-022 | Logo 資料庫管理與審核介面 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-023 | 同公司 Logo 版本選用與按尺寸獨立 Logo 庫 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-024 | 各尺寸 Logo 庫管理與新尺寸預測專區 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-025 | Logo 框位等比適配與安全候選比較 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-026 | 公司 Logo 自動匹配、選擇與匯入介面 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-027 | 多尺寸驗證總覽、部分正式輸出與黑底白字預覽檔 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-028 | 黑底白字占位預覽檔格式與非正式標示 | PARTIAL | 否 | PNG 預設與非正式標示保留；數位內容與比例驗證，實體印刷分析後移 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-029 | 批次輸出清單、智慧命名與安全儲存 | PARTIAL | 否 | 正式／預覽分流，預設不覆寫，逐檔真實狀態 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-030 | 批次輸出失敗診斷與安全重試 | PARTIAL | 否 | 只重試失敗項，保護成功檔，半成品不作正式成功 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
@@ -46,9 +46,9 @@
 | UI-040 | 智慧標記完整性衝突檢查與可重用雜訊剔除規則 | PARTIAL | 否 | 核准雜訊條件後自動排除，不反覆問也不刪原稿 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-041 | 雜訊規則庫、命中追溯、例外白名單與安全回滾 | PARTIAL | 否 | 命中追溯、單項恢復、白名單及規則回滾可核對 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-042 | 訓練可恢復進度、精確去重與客戶資料庫重訂關聯 | PARTIAL | 否 | 異名同內容共用分析、保留來源客戶映射及斷點 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-043 | 智慧客戶建檔、版型關聯與正式資料結構方案 | PARTIAL | 否 | 客戶關聯尺寸版型，不設購買分類，編號保留前導零 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-043 | 智慧客戶建檔、版型關聯與正式資料結構方案 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-044 | 舊客戶多條件搜尋、多尺寸版型比較與安全沿用重訂 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 原UI-044完整已核准條款；穩定實體尺寸／capacity目錄、純唯讀預覽與明確編輯／exact版型採用，未知與過期來源不假稱通過 | [run](../../docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json) |
-| UI-045 | 客戶主檔與當次製作逐欄差異、選擇性回寫與版本保護 | PARTIAL | 否 | 只回寫明確勾選欄位，過期主檔版本阻擋 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-045 | 客戶主檔與當次製作逐欄差異、選擇性回寫與版本保護 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-046 | 疑似重複客戶比對、受控合併與可追溯拆分恢復 | PARTIAL | 否 | 合併須確認、別名可查，拆分不覆蓋後續新值 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-047 | 本機關聯資料智慧備份、加密驗證與安全還原移轉 | PARTIAL | 否 | 加密完整性及隔離還原，缺資產不宣稱完整可用 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-048 | 客戶個資存取權限、遮罩與稽核：最後完成功能 | DEFERRED | 否 | 核心功能完善後最後接入；正式真實個資使用前必須完成 | 無有效新版證據 |

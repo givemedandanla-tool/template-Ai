@@ -639,3 +639,9 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 
 ## 2026-10-15 十父題逐條修補checkpoint
 客戶同聯絡／編號／多作品線索、審核後衝突變更CAS、來源及選定版型關聯事務撤銷、最小稽核，10項目標PASS；sync9PASS。重用Canvas原來源拖曳完整邊界、僅不確定／待修復Logo進例外入口，Logo GUI16PASS。新增真實Qt五畫面與六實際輸出擷取，已本機執行且目視檢查，修正初始畫布適應及矩陣可讀性；後續修改仍待正式凍結回歸。
+
+## 2026-10-15 十父題正式來源凍結
+- 87原始軟體條款→具名測試登錄；498測試已知，正式回歸待跑，不先標完整完成。
+- Logo實際PDF/PNG/JPG proof讀回尺寸／解碼／透明；Logo全37測試PASS，matrix10PASS。Qt整點MediaBox量化由成熟BSD-3-Clause pypdf5.9.0修復為精確毫米，保留內容原座標。
+- cloud_setup.sh使用固定依賴、本機OCR固定官方模型，已實際PASS；沒有付費API或Actions觸發。
+- Windows／私人AI全面／實體印刷／獨立覆核仍未驗證，既定功能順序不變。

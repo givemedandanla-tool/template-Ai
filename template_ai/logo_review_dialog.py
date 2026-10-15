@@ -59,6 +59,8 @@ class LogoReviewDialog(QDialog):
         button = QPushButton('預覽比較框位（不改模板）')
         button.clicked.connect(self.preview)
         bar.addWidget(button)
+        button=QPushButton('建立目標框位PDF／PNG／JPG品質比較檔')
+        button.clicked.connect(self.proof);bar.addWidget(button)
         layout.addLayout(bar)
         self.compare = LogoCompareWidget()
         layout.addWidget(self.compare, 3)
@@ -129,9 +131,21 @@ class LogoReviewDialog(QDialog):
 
     def invalidate_review(self, *_):
         self.preview_signature = None
+        self.output_proof=None
         for check in self.flags.values():
             check.setChecked(False)
         self.status.setText('條件已變更，請重新預覽並核對每一項；尚未核准。')
+
+    def proof(self):
+        try:
+            from .logo_output_proof import create_proof
+            asset=deepcopy(self.proposal['asset']);asset['crop']=self.crop()
+            self.output_proof=create_proof(asset,self.frame_width.value(),self.frame_height.value(),self.store.library.assets/'logo-proofs')
+            self.proof_signature=digest([self.crop(),self.frame_width.value(),self.frame_height.value(),self.company.currentData()])
+            self.details.setPlainText(json.dumps(self.output_proof,ensure_ascii=False,indent=2))
+            self.status.setText('三種數位比較檔已實際產生、讀回與核對尺寸；可在上述本機路徑開啟。仍需人工核對細節，尚未核准或證明實體印刷。')
+            return True
+        except (ValueError,OSError) as error:self.output_proof=None;self.status.setText('數位比較未通過：'+str(error));return False
 
     def correct(self):
         try:
@@ -162,6 +176,9 @@ class LogoReviewDialog(QDialog):
                           compared_frame_mm=[self.frame_width.value(), self.frame_height.value()])
             if not all(check.isChecked() for check in self.flags.values()):
                 raise ValueError('請完成每一項來源／身分／完整性／品質核對')
+            if getattr(self,'output_proof',None) is None or self.proof_signature!=signature:
+                if not self.proof():raise ValueError('實際數位比較檔產生／讀回未通過')
+            review['output_proof']=deepcopy(self.output_proof)
             if QMessageBox.question(self, '此尺寸與版本核准',
                     '公司：' + self.company.currentText() + '\n卡片尺寸：' +
                     str([self.proposal['width_mm'], self.proposal['height_mm']]) +
