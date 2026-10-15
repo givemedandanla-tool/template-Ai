@@ -1,0 +1,438 @@
+......E.........EEEEEE.......F.........EEEEEEEEEEEEEEEEEE........
+======================================================================
+ERROR: test_gui_real_demo_flow_and_readonly_published_canvas (test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_first_version.py", line 211, in test_gui_real_demo_flow_and_readonly_published_canvas
+    window = MainWindow(self.root / "gui")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_changed_text_clears_approval_selection_and_late_result (test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 255, in setUp
+    self.window=MainWindow(Path(self.temp.name)/'gui');self.addCleanup(self.window.close)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_final_decline_no_selection_and_unsaved_editor_do_not_write (test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 255, in setUp
+    self.window=MainWindow(Path(self.temp.name)/'gui');self.addCleanup(self.window.close)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_geometry_and_color_edit_preserve_pinned_italic_style (test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 255, in setUp
+    self.window=MainWindow(Path(self.temp.name)/'gui');self.addCleanup(self.window.close)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_history_menu_reopens_without_a_candidate (test_font_review.FontReviewGuiTests.test_history_menu_reopens_without_a_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 255, in setUp
+    self.window=MainWindow(Path(self.temp.name)/'gui');self.addCleanup(self.window.close)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_real_gui_review_apply_history_undo_redo_complete_workflow (test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 255, in setUp
+    self.window=MainWindow(Path(self.temp.name)/'gui');self.addCleanup(self.window.close)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_real_worker_failure_controls_recover_and_retry (test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 255, in setUp
+    self.window=MainWindow(Path(self.temp.name)/'gui');self.addCleanup(self.window.close)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_corrupt_source_background_target_budget_and_mid_render_mutation (test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_compare.py", line 33, in setUp
+    self.window=MainWindow(self.root/'data');self.addCleanup(self.window.close);self.library=self.window.library
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_decline_prompt_mutation_and_post_approval_apply_gate (test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_compare.py", line 33, in setUp
+    self.window=MainWindow(self.root/'data');self.addCleanup(self.window.close);self.library=self.window.library
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_full_rectangles_only_selected_text_style_color_and_unknown_before (test_canvas_compare.CanvasCompareTests.test_full_rectangles_only_selected_text_style_color_and_unknown_before)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_compare.py", line 33, in setUp
+    self.window=MainWindow(self.root/'data');self.addCleanup(self.window.close);self.library=self.window.library
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_italic_actual_face_full_rectangles_and_affine_scene_alignment (test_canvas_compare.CanvasCompareTests.test_italic_actual_face_full_rectangles_and_affine_scene_alignment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_compare.py", line 33, in setUp
+    self.window=MainWindow(self.root/'data');self.addCleanup(self.window.close);self.library=self.window.library
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_live_file_and_clock_change_prevents_approval (test_canvas_compare.CanvasCompareTests.test_live_file_and_clock_change_prevents_approval)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_compare.py", line 33, in setUp
+    self.window=MainWindow(self.root/'data');self.addCleanup(self.window.close);self.library=self.window.library
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_mapping_inverse_pixel_units_and_exact_historical_crop (test_canvas_compare.CanvasCompareTests.test_mapping_inverse_pixel_units_and_exact_historical_crop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_compare.py", line 33, in setUp
+    self.window=MainWindow(self.root/'data');self.addCleanup(self.window.close);self.library=self.window.library
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_real_review_entry_worker_failure_retry_stale_and_no_writes (test_canvas_compare.CanvasCompareTests.test_real_review_entry_worker_failure_retry_stale_and_no_writes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_compare.py", line 33, in setUp
+    self.window=MainWindow(self.root/'data');self.addCleanup(self.window.close);self.library=self.window.library
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_resize_after_zoom_keeps_actual_center_and_per_field_selection (test_canvas_compare.CanvasCompareTests.test_resize_after_zoom_keeps_actual_center_and_per_field_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_compare.py", line 33, in setUp
+    self.window=MainWindow(self.root/'data');self.addCleanup(self.window.close);self.library=self.window.library
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_synchronized_fit_pan_zoom_selection_and_readonly (test_canvas_compare.CanvasCompareTests.test_synchronized_fit_pan_zoom_selection_and_readonly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_compare.py", line 33, in setUp
+    self.window=MainWindow(self.root/'data');self.addCleanup(self.window.close);self.library=self.window.library
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_actual_apply_history_reopen_undo_redo_and_stale_controls (test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 143, in setUp
+    self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_both_mode_entries_source_history_and_unsaved_editor_protection (test_object_tools.ObjectToolsGuiTests.test_both_mode_entries_source_history_and_unsaved_editor_protection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 143, in setUp
+    self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_explicit_font_pin_style_patch_and_cross_owner_gui_gate (test_object_tools.ObjectToolsGuiTests.test_explicit_font_pin_style_patch_and_cross_owner_gui_gate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 143, in setUp
+    self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_late_failure_retry_publication_and_no_selection_do_not_write (test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 143, in setUp
+    self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots (test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 143, in setUp
+    self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_main_manual_mutation_during_confirmation_preserved_and_refresh_retry (test_object_tools.ObjectToolsGuiTests.test_main_manual_mutation_during_confirmation_preserved_and_refresh_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 143, in setUp
+    self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_mixed_dirty_only_panel_preserves_other_values_and_cancel (test_object_tools.ObjectToolsGuiTests.test_mixed_dirty_only_panel_preserves_other_values_and_cancel)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 143, in setUp
+    self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_real_drag_only_candidate_group_and_locked_main_paths (test_object_tools.ObjectToolsGuiTests.test_real_drag_only_candidate_group_and_locked_main_paths)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 143, in setUp
+    self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+ERROR: test_real_three_way_click_modifier_list_and_rubber_selection (test_object_tools.ObjectToolsGuiTests.test_real_three_way_click_modifier_list_and_rubber_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 143, in setUp
+    self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 241, in __init__
+    self.build_ui()
+  File "/workspace/template-Ai/template_ai/gui.py", line 292, in build_ui
+    self.property_panel=self.build_properties()
+                        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/gui.py", line 696, in build_properties
+    form.addRow(self.button("字距／語意分散規則",self.text_policy_editor))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MainWindow.button() missing 1 required positional argument: 'layout'
+
+======================================================================
+FAIL: test_missing_character_details_not_persisted_in_audit (test_font_review.FontReviewTests.test_missing_character_details_not_persisted_in_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 218, in test_missing_character_details_not_persisted_in_audit
+    self.assertEqual(record['drafts'][0]['fields'][0]['original']['missing_count'],1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 65 tests in 3.636s
+
+FAILED (failures=1, errors=25)

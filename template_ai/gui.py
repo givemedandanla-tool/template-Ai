@@ -13,7 +13,7 @@ from PySide6.QtGui import QAction, QColor, QFont, QFontDatabase, QImage, QPainte
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox, QFileDialog,
     QDialog, QDialogButtonBox, QFontComboBox, QFormLayout, QGraphicsItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView,
     QGroupBox, QHBoxLayout, QHeaderView, QInputDialog, QLabel, QLineEdit, QListWidget,
-    QMainWindow, QMessageBox, QPushButton, QSpinBox, QSplitter, QTabWidget, QTableWidget,
+    QMainWindow, QMessageBox, QPushButton, QSpinBox, QSplitter, QTabWidget, QTableWidget, QTreeWidget, QTreeWidgetItem,
     QTableWidgetItem, QVBoxLayout, QWidget, QStackedWidget)
 
 from . import __version__
@@ -498,14 +498,17 @@ class MainWindow(QMainWindow):
         split = QSplitter()
         self.template_list = QListWidget()
         self.template_list.currentRowChanged.connect(self.choose_template)
-        split.addWidget(self.template_list)
-        self.edit_canvas = Canvas()
-        self.edit_canvas.selected.connect(self.select_slot)
+        left=QWidget();left_layout=QVBoxLayout(left);left_layout.addWidget(self.template_list)
+        self.editor_tree=QTreeWidget();self.editor_tree.setHeaderLabel('人物／公司／欄位（共享引用）');self.editor_tree.setSelectionMode(QTreeWidget.ExtendedSelection);self.editor_tree.itemSelectionChanged.connect(self.editor_tree_selection);left_layout.addWidget(self.editor_tree);split.addWidget(left)
+        from .object_dialog import ObjectCanvas,canvas_controls
+        self.edit_canvas = ObjectCanvas();self.edit_canvas.allow_multi_drag=False
+        self.edit_canvas.selection_ids.connect(self.editor_selection)
+        self.edit_canvas.drag_proposal.connect(self.editor_canvas_apply)
+        self.edit_canvas.preview_proposal.connect(self.editor_canvas_preview)
         self.edit_canvas.rectangle.connect(self.add_rectangle)
-        self.edit_canvas.moved.connect(self.box_moved)
         split.addWidget(self.edit_canvas)
         from .viewport_controls import navigation_controls
-        layout.addWidget(navigation_controls(self.edit_canvas))
+        layout.addWidget(canvas_controls(self.edit_canvas,self.library))
         split.setSizes([230, 720])
         layout.addWidget(split, 1)
         row = QHBoxLayout()
@@ -688,7 +691,9 @@ class MainWindow(QMainWindow):
         form.addRow("定案字級", self.pt)
         form.addRow("文字色彩", self.text_color)
         form.addRow("本模板字寬下限", self.scale)
+        self.align.addItem("分散（需獨立核准欄位規則）","distributed")
         form.addRow("對齊", self.align)
+        policy_button=QPushButton("字距／語意分散規則");policy_button.clicked.connect(self.text_policy_editor);form.addRow(policy_button)
         form.addRow(self.required)
         self.property_button = QPushButton("套用至選取欄位")
         self.property_button.clicked.connect(self.apply_properties)
@@ -1014,7 +1019,8 @@ class MainWindow(QMainWindow):
         return Slot(self.kind.currentData(), self.owner.currentData(), rect, self.index.value()-1,
                     family, self.pt.value(), self.scale.value()/100,
                     self.align.currentData(), self.required.isChecked(), color=self.text_color.text().strip(),
-                    font_asset=asset,font_style=style,locked=self.current_slot.locked if preserve and self.current_slot else False)
+                    font_asset=asset,font_style=style,locked=self.current_slot.locked if preserve and self.current_slot else False,
+                    **({key:copy.deepcopy(getattr(self.current_slot,key)) for key in ('tracking_mm','tracking_min_mm','tracking_max_mm','distribution_approval')} if preserve and self.current_slot else {}))
 
     def current_slots(self):
         return self.slots if self.tabs.currentIndex() == 0 else self.template.slots if self.template else []
@@ -1307,6 +1313,7 @@ class MainWindow(QMainWindow):
         if not self.template:
             return
         t = self.template
+        selected=set(getattr(self.edit_canvas,'selection_intent',set()))
         self.edit_canvas.readonly = t.state == "published"
         self.background_button.setEnabled(t.state == "draft" and not self.busy)
         self.clear_background_button.setEnabled(t.state == "draft" and t.background is not None and not self.busy)
@@ -1317,9 +1324,55 @@ class MainWindow(QMainWindow):
                 background_image = render_background(t)
             except ValueError as e:
                 errors.append(str(e))
-        self.edit_canvas.set_content(t.width_mm, t.height_mm, image=background_image, slots=t.slots)
+        self.edit_canvas.set_content(t.width_mm, t.height_mm, image=background_image, slots=copy.deepcopy(t.slots),safe_margin_mm=t.safe_margin_mm)
         self.edit_canvas.set_mode("edit" if t.state == "draft" else "pan")
+        self.rebuild_editor_tree();self.editor_selection(sorted(selected))
         self.template_info.setText(f"{t.name} v{t.version} · {'唯讀已發布' if t.state == 'published' else '可編輯草稿'}\n" + ("；".join(errors[:5]) if errors else "幾何與語意檢查未發現問題；正式輸出仍需實際資料量測") + "\n" + "；".join(t.reasons))
+
+    def text_policy_editor(self):
+        if self.tabs.currentIndex()!=1 or not self.template or not self.current_slot or self.current_slot.kind=='logo' or not self.editable():self.inform('請選取模板草稿的一般文字框');return
+        from .text_policy_dialog import TextPolicyDialog
+        dialog=TextPolicyDialog(self);dialog.exec();dialog.deleteLater()
+
+    def rebuild_editor_tree(self):
+        from .object_index import semantic_index
+        self.editor_tree.blockSignals(True);self.editor_tree.clear();self.editor_tree_nodes=[]
+        def add(parent,node):
+            item=QTreeWidgetItem([node['label']]);item.setData(0,Qt.UserRole,node['ids']);self.editor_tree_nodes.append(item)
+            parent.addChild(item) if parent else self.editor_tree.addTopLevelItem(item)
+            for child in node['children']:add(item,child)
+        for node in semantic_index(self.template.to_dict()):add(None,node)
+        self.editor_tree.expandAll();self.editor_tree.blockSignals(False)
+
+    def editor_tree_selection(self):
+        ids=sorted({identity for item in self.editor_tree.selectedItems() for identity in item.data(0,Qt.UserRole) or []});self.editor_selection(ids)
+
+    def editor_selection(self,ids):
+        if not self.template:return
+        valid={slot.id for slot in self.template.slots};ids=[identity for identity in ids if identity in valid]
+        self.edit_canvas.select_ids(ids);self.editor_tree.blockSignals(True)
+        for item in getattr(self,'editor_tree_nodes',[]):
+            members=item.data(0,Qt.UserRole) or [];item.setSelected(bool(members) and set(members)<=set(ids))
+        self.editor_tree.blockSignals(False)
+        if self.tabs.currentIndex()==1:
+            self.select_slot(next((slot for slot in self.template.slots if len(ids)==1 and slot.id==ids[0]),None))
+            if len(ids)>1:self.selected_info.setText(f'選取{len(ids)}物件；共同屬性／群組操作請用安全多選工具。未擴大範圍。')
+
+    def editor_canvas_preview(self,request):
+        try:
+            from .object_tools import propose
+            plan=propose(self.template.to_dict(),'TEMPLATE',request);self.edit_canvas.show_preview(plan);self.template_info.setText('幾何候選，未套用：'+'；'.join(plan['warnings']))
+        except (ValueError,TypeError,KeyError) as error:self.template_info.setText('候選未通過：'+str(error))
+
+    def editor_canvas_apply(self,request):
+        try:
+            if self.tabs.currentIndex()!=1 or not self.editable():return
+            from .object_tools import propose
+            plan=propose(self.template.to_dict(),'TEMPLATE',request)
+            if self.checkpoint() is False:return
+            self.template=Template.from_dict(plan['after']);self.refresh_editor();self.editor_selection(request['ids'])
+            self.template_info.setText('已套用目前未發布草稿；'+'；'.join(plan['warnings']) if plan['warnings'] else '已套用目前未發布草稿；幾何與語意檢查未發現問題，輸出仍需實際資料驗證。')
+        except (ValueError,TypeError,KeyError) as error:self.template_info.setText('未套用：'+str(error));self.refresh_editor()
 
     def import_background(self):
         if not self.template or not self.editable() or self.busy:

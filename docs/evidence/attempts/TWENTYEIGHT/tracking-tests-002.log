@@ -1,0 +1,52 @@
+E..E.................This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+...This plugin does not support propagateSizeHints()
+.........F..........This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+..This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+..This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.........
+======================================================================
+ERROR: test_actual_text_policy_dialog_cancel_then_explicit_draft_apply_and_normal_edit_preserves_policy (test_text_policy.TextPolicyTests.test_actual_text_policy_dialog_cancel_then_explicit_draft_apply_and_normal_edit_preserves_policy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_text_policy.py", line 50, in test_actual_text_policy_dialog_cancel_then_explicit_draft_apply_and_normal_edit_preserves_policy
+    self.assertEqual(self.w.library.template_snapshots()[0]['payload']['slots'][1]['tracking_mm'],0)
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'payload'
+
+======================================================================
+ERROR: test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft (test_text_policy.TextPolicyTests.test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_text_policy.py", line 29, in test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft
+    self.assertGreater(self.w.template.slots[0].rect.w,original['slots'][0]['rect']['w']);self.assertEqual(self.w.template.slots[0].size_pt,18);self.assertEqual(self.w.library.template_snapshots()[0]['payload'],original)
+                                                                                                                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'payload'
+
+======================================================================
+FAIL: test_missing_character_details_not_persisted_in_audit (test_font_review.FontReviewTests.test_missing_character_details_not_persisted_in_audit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_font_review.py", line 218, in test_missing_character_details_not_persisted_in_audit
+    self.assertEqual(record['drafts'][0]['fields'][0]['original']['missing_count'],1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 70 tests in 16.021s
+
+FAILED (failures=1, errors=2)

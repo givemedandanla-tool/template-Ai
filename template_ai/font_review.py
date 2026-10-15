@@ -82,8 +82,9 @@ def evaluate_review(snapshots,target,texts,max_fields=20,max_rows=200,max_bytes=
             report['checked_fields']+=1
             row['text_sha256']=hashlib.sha256(text.encode()).hexdigest()
             try:
-                proposed=analyze_font(target,text,slot.size_pt,slot.rect.w,slot.min_scale,target['style'])
-                original=analyze_font(source_row(slot),text,slot.size_pt,slot.rect.w,slot.min_scale,slot.font_style or None)
+                from .text_policy import analyse_slot_font
+                proposed=analyse_slot_font(target,slot,text,target['style'],analyzer=analyze_font)
+                original=analyse_slot_font(source_row(slot),slot,text,slot.font_style or None,analyzer=analyze_font)
                 if original.get('family')!=slot.font:original['measurement_verified']=False;original['issues'].append('原綁定家族與實際字面不符')
                 row.update(proposed=proposed,original=original)
             except ValueError as error:row['reasons']=[str(error)];continue

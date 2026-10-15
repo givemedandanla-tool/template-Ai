@@ -21,5 +21,14 @@
     "templates": 500,
     "comparison_budget": 100000
   },
-  "unknown": "Budget overflow, renderer failure, missing geometry or unhealthy cache are explicit unknown; never interpreted as duplicate-free."
+  "unknown": "Budget overflow, renderer failure, missing geometry or unhealthy cache are explicit unknown; never interpreted as duplicate-free.",
+  "tracking": {
+    "algorithm": "Fixed point size; Qt shaping with bounded nonnegative absolute letter spacing. Verified linear interpolation and bounded bisection if needed; compression remains within template min_scale. Distributed alignment requires explicit per-template title/address approval.",
+    "reference": {
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/gui/text/qfont.cpp",
+      "bytes": 118246,
+      "sha256": "6043c6f4a19c34640b8ae359641e22f091009ad4e668c57ee6ab9302263516d5"
+    },
+    "reuse": "QFont AbsoluteSpacing, QTextLayout/QFontMetrics and existing renderer/versioning; no string slicing or new layout engine."
+  }
 }

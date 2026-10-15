@@ -15,16 +15,17 @@ from .background import background_errors
 from .model import Template
 
 
-def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scale: float, align: str, color: str = "#111827", style: str = "", asset: dict | None = None) -> None:
+def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scale: float, align: str, color: str = "#111827", style: str = "", asset: dict | None = None, tracking_mm: float = 0.0) -> None:
     font = QFontDatabase.font(family,style,1000) if style else QFont(family)
     font.setPixelSize(1000)
     if style or asset:
         from .font_catalog import analyze_font
         row={"kind":"ASSET","asset":asset} if asset else {"kind":"QT","families":[family],"styles":[style]}
-        result=analyze_font(row,text,pt,2000,.05,style or None)
+        result=analyze_font(row,text,pt,2000,.05,style or None,tracking_mm=tracking_mm)
         if not result.get("measurement_verified") or result.get("family")!=family: raise ValueError("渲染字面未核驗："+"；".join(result["issues"] or ["指定家族與實際字面不符"]))
         font=QFontDatabase.font(family,result["style"],1000);font.setPixelSize(1000)
         font.setStyleStrategy(QFont.NoFontMerging); font.setHintingPreference(QFont.PreferNoHinting)
+    font.setLetterSpacing(QFont.AbsoluteSpacing,tracking_mm/(pt*MM_PER_POINT/1000))
     metrics = QFontMetricsF(font)
     factor = pt * MM_PER_POINT / 1000
     text_w = metrics.horizontalAdvance(text) * factor * scale
@@ -148,7 +149,7 @@ def paint_candidate(p: QPainter, candidate: Candidate, preview: bool = False) ->
                 p.drawText(QRectF(0, 0, rect.width() / factor, rect.height() / factor), Qt.AlignCenter, item.text or "Logo")
                 p.restore()
         elif item.text:
-            draw_text(p, rect, item.text, s.font, s.size_pt, item.scale, s.align, s.color, s.font_style, s.font_asset)
+            draw_text(p, rect, item.text, s.font, s.size_pt, item.scale, s.align, s.color, s.font_style, s.font_asset,item.tracking_mm)
     if preview:
         # 附註位於矩形本體外，矩形內的幾何與比例不改動。
         document,factor,_=preview_footer(candidate)

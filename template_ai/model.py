@@ -72,6 +72,10 @@ class Slot:
     font_asset: dict | None = None
     font_style: str = ""
     locked: bool = False
+    tracking_mm: float = 0.0
+    tracking_min_mm: float = 0.0
+    tracking_max_mm: float = 0.0
+    distribution_approval: dict | None = None
 
 
 @dataclass
@@ -145,8 +149,10 @@ def template_errors(t: Template) -> list[str]:
         keys.add(key)
         if not 0.05 <= s.min_scale <= 1 or not math.isfinite(s.size_pt) or not 1 <= s.size_pt <= 200:
             errors.append(label + "：定案字級或模板字寬界限不合法")
-        if s.align not in ("left", "center", "right"):
+        if s.align not in ("left", "center", "right", "distributed"):
             errors.append(label + "：對齊設定不合法")
+        from .text_policy import policy_errors
+        errors.extend(label+'：'+e for e in policy_errors(s))
         if not isinstance(s.font_style, str) or len(s.font_style)>128 or any(ord(c)<32 for c in s.font_style):
             errors.append(label + "：字型款式識別不合法")
         if not isinstance(s.color, str) or not re.fullmatch(r"#[0-9a-fA-F]{6}", s.color):

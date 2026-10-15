@@ -137,8 +137,9 @@ def validate_inputs(text, size_pt, width_mm, min_scale):
         raise ValueError("字級／框宽／水平比例超出合法範圍")
 
 
-def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=None):
+def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=None, tracking_mm=0.0):
     validate_inputs(text, size_pt, width_mm, min_scale)
+    if type(tracking_mm) not in (int,float) or not math.isfinite(tracking_mm) or not 0<=tracking_mm<=2:raise ValueError("字距需0～2mm")
     result = {"status":"BLOCKED", "issues":[], "size_pt":size_pt, "width_mm":None, "scale":None, "missing":[], "coverage":None, "measurement_verified":False,
               "scope":"所選字面的單行字形與宽度，不代表原稿身份／授權／完整模板合格"}
     if row["kind"] == "ASSET":
@@ -171,6 +172,7 @@ def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=N
         result["issues"]=["所選字面缺少必要字形，不計算替代字型宽度"]; return result
     font = QFontDatabase.font(family,actual_style,1000); font.setPixelSize(1000)
     font.setHintingPreference(QFont.PreferNoHinting); font.setStyleStrategy(QFont.NoFontMerging)
+    font.setLetterSpacing(QFont.AbsoluteSpacing,tracking_mm/(size_pt*MM_PER_POINT/1000))
     layout = QTextLayout(text,font)
     layout.beginLayout(); line = layout.createLine()
     if line.isValid(): line.setLineWidth(1e9)

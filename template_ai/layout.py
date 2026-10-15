@@ -16,6 +16,7 @@ class Placed:
     slot: Slot
     text: str = ""
     scale: float = 1.0
+    tracking_mm: float = 0.0
     logo: dict | None = None
 
 
@@ -37,13 +38,13 @@ class Candidate:
         return not self.issues
 
 
-def text_geometry(font_family: str, size_pt: float, text: str, style: str = "", asset: dict | None = None) -> tuple[float, float, list[str]]:
+def text_geometry(font_family: str, size_pt: float, text: str, style: str = "", asset: dict | None = None, tracking_mm: float = 0.0) -> tuple[float, float, list[str]]:
     """用固定 1000 像素 em 度量再換算毫米，避免螢幕 DPI 改變輸出。"""
     issues = []
     if style or asset:
         from .font_catalog import analyze_font
         row={"kind":"ASSET","asset":asset} if asset else {"kind":"QT","families":[font_family],"styles":[style]}
-        result=analyze_font(row,text,size_pt,2000,.05,style or None)
+        result=analyze_font(row,text,size_pt,2000,.05,style or None,tracking_mm=tracking_mm)
         if result.get("measurement_verified") and result.get("family")==font_family:
             return result["width_mm"],result["height_mm"],[]
         return 0,0,result["issues"] or ["指定家族與實際核驗字面不符"]
@@ -51,6 +52,7 @@ def text_geometry(font_family: str, size_pt: float, text: str, style: str = "", 
         return 0, 0, ["指定字型未安裝：" + font_family]
     font = QFont(font_family)
     font.setPixelSize(1000)
+    font.setLetterSpacing(QFont.AbsoluteSpacing,tracking_mm/(size_pt*MM_PER_POINT/1000))
     metrics = QFontMetricsF(font)
     raw = QRawFont.fromFont(font)
     if any(not raw.supportsCharacter(ch) for ch in text if not ch.isspace()):
@@ -143,10 +145,11 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
                 add(label + "：必要資料尚未提供", "REQUIRED", s)
             items.append(Placed(s))
             continue
-        tw, th, font_errors = text_geometry(s.font, s.size_pt, text, s.font_style, s.font_asset)
+        from .text_policy import tracking_geometry
+        tw,th,font_errors,tracking,strategy=tracking_geometry(s,text,text_geometry)
         for error in font_errors:
             add(label + "：" + error, "FONT_UNVERIFIED", s)
-        parameters = dict(size_pt=s.size_pt, width_mm=s.rect.w, height_mm=s.rect.h,
+        parameters = dict(tracking_mm=tracking,tracking_strategy=strategy,size_pt=s.size_pt, width_mm=s.rect.w, height_mm=s.rect.h,
                           text_width_mm=None if font_errors else tw, text_height_mm=None if font_errors else th,
                           required_scale=None if font_errors else min(1.0, s.rect.w / tw) if tw > 0 else 1.0, min_scale=s.min_scale,
                           x=s.rect.x, y=s.rect.y, w=s.rect.w, h=s.rect.h)
@@ -156,7 +159,7 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
             add(label + f"：固定 {s.size_pt:g} pt 下需字寬 {scale:.1%}，低於本模板核准下限 {s.min_scale:.1%}", "WIDTH", s, **parameters)
         if th > s.rect.h + 1e-5:
             add(label + "：固定字級的完整字形高度超出框位", "HEIGHT", s, **parameters)
-        items.append(Placed(s, text, max(scale, s.min_scale)))
+        items.append(Placed(s, text, max(scale, s.min_scale),tracking))
     # 不允許輸入的聯絡資料無聲消失。
     for owner, data in list(persons.items())+list(company_map.items()):
         for kind, values in data.items():

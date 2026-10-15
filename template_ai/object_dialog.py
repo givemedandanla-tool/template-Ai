@@ -32,7 +32,7 @@ class ObjectCanvas(Canvas):
             for i in self.scene().items():
                 if isinstance(i,Box):i.setFlag(QGraphicsItem.ItemIsSelectable,True);i.setFlag(QGraphicsItem.ItemIsMovable,not self.readonly and not i.slot.locked)
         finally:self.resetting=False
-    def fit(self):self.fitInView(QRectF(-5,-5,self.width_mm+10,self.height_mm+10),Qt.KeepAspectRatio)
+    def fit(self):self.fitInView(QRectF(-5,-5,self.width_mm+10,self.height_mm+10),Qt.KeepAspectRatio);self.view_changed.emit()
     def select_ids(self,ids):
         self.resetting=True;self.selection_intent=set(ids)
         try:

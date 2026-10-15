@@ -118,9 +118,10 @@ def build_comparison(snapshot,row,target,text,context,dpi=150):
     errors=background_errors(t.background,t.width_mm,t.height_mm)
     if errors:raise ValueError('；'.join(errors))
     source=check_source(context,t,assets)
-    after=analyze_font(target,text,selected.size_pt,selected.rect.w,selected.min_scale,row['proposed']['style'])
+    from .text_policy import analyse_slot_font
+    after=analyse_slot_font(target,selected,text,row['proposed']['style'])
     if fingerprint(after)!=fingerprint(row['proposed']) or after['status']!='FEASIBLE_WIDTH' or after['height_mm']>selected.rect.h+1e-6:raise ValueError('目標字型／尺寸核驗已變更')
-    before=analyze_font(source_row(selected),text,selected.size_pt,selected.rect.w,selected.min_scale,selected.font_style or None)
+    before=analyse_slot_font(source_row(selected),selected,text,selected.font_style or None)
     # Original drawing is a verified template binding, never an inferred original-source font.
     known=bool(before.get('measurement_verified') and before.get('family')==selected.font and before.get('scale') is not None and before['height_mm']<=selected.rect.h+1e-6 and before['status']=='FEASIBLE_WIDTH')
     if known and before.get('asset_hash') and selected.font_asset:assets.add(selected.font_asset['path'],selected.font_asset['hash'])
@@ -134,7 +135,7 @@ def build_comparison(snapshot,row,target,text,context,dpi=150):
             if analysis:
                 r=selected.rect
                 asset=target.get('asset') if analysis is after else selected.font_asset
-                draw_text(p,QRectF(r.x,r.y,r.w,r.h),text,analysis['family'],selected.size_pt,analysis['scale'],selected.align,selected.color,analysis['style'],asset)
+                draw_text(p,QRectF(r.x,r.y,r.w,r.h),text,analysis['family'],selected.size_pt,analysis['scale'],selected.align,selected.color,analysis['style'],asset,analysis.get('tracking_mm',0))
         finally:p.end()
         return png(image)
     before_png=render(before if known else None);after_png=render(after)
