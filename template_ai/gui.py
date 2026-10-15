@@ -332,6 +332,9 @@ class MainWindow(QMainWindow):
         finally:dialog.deleteLater()
 
     def logo_center(self):
+        if self.busy:
+            self.inform('背景工作進行中，請保留目前作用範圍')
+            return
         from .logo_library_dialog import LogoLibraryDialog
         dialog = LogoLibraryDialog(self)
         try: dialog.exec()
@@ -676,7 +679,13 @@ class MainWindow(QMainWindow):
                 release()
         job.signals.done.connect(finished, Qt.QueuedConnection)
         job.signals.error.connect(failed, Qt.QueuedConnection)
-        self.pool.start(job)
+        try:
+            self.pool.start(job)
+        except Exception:
+            self.busy = False
+            self.import_button.setEnabled(True)
+            release()
+            raise
 
     def import_source(self):
         path, _ = QFileDialog.getOpenFileName(self, "選擇只讀原稿", "", "設計來源 (*.ai *.pdf *.svg *.eps *.png *.jpg *.jpeg)")
@@ -1358,46 +1367,50 @@ class MainWindow(QMainWindow):
         if not self.visual.isChecked():
             self.error("請先確認作品與可信原稿視覺一致")
             return
-        company, ok = QInputDialog.getText(self, "公司歸屬", "此完整 Logo 所屬公司的已確認名稱")
-        if not ok or not company.strip():
-            return
-        if QMessageBox.question(self, "Logo 核准", "確認框位包含完整圖文、來源可用且歸屬正確？\n僅核准目前作品尺寸，不跨尺寸借用。") != QMessageBox.Yes:
-            return
-        s = self.current_slot.rect
-        crop = {"x": self.crop.x + s.x * self.crop.w / self.work_width, "y": self.crop.y + s.y * self.crop.h / self.work_height,
-                "w": s.w * self.crop.w / self.work_width, "h": s.h * self.crop.h / self.work_height}
-        self.library.add_logo(company, self.work_width, self.work_height, {"image": self.source["image"], "svg": self.source["svg"],
-            "source_width_mm": self.source["width_mm"], "source_height_mm": self.source["height_mm"], "crop": crop, "source_id": self.source["id"]})
-        self.refresh_logos()
+        try:
+            from .training_navigation import require_clean_navigation
+            from .logo_store import LogoStore
+            require_clean_navigation(self)
+            s = self.current_slot.rect
+            crop = {"x": self.crop.x + s.x * self.crop.w / self.work_width, "y": self.crop.y + s.y * self.crop.h / self.work_height,
+                    "w": s.w * self.crop.w / self.work_width, "h": s.h * self.crop.h / self.work_height}
+            candidate=LogoStore(self.library).propose_source(self.source['id'],self.work['id'],crop,
+                object_ids=[self.current_slot.id],evidence={'method':'USER_MARKED_ENTIRE_LOGO_FRAME'})
+            self.open_logo_proposal(candidate['id'])
+        except Exception as error:
+            self.error(str(error))
+
+    def open_logo_proposal(self,identity):
+        from .logo_library_dialog import LogoLibraryDialog
+        dialog=LogoLibraryDialog(self)
+        dialog.focus_proposal(identity)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
 
     def import_logo(self):
         path, _ = QFileDialog.getOpenFileName(self, "完整 Logo 圖文來源", "", "Logo (*.svg *.pdf *.ai *.png *.jpg *.jpeg)")
         if not path:
             return
-        company, ok = QInputDialog.getText(self, "公司歸屬", "已確認公司名稱")
-        if not ok or not company.strip():
-            return
         w, h = self.out_w.value(), self.out_h.value()
         def finished(result):
-            if QMessageBox.question(self, "核准 Logo", f"請先核對原檔完整圖文及公司歸屬。\n核准公司「{company}」、矩形尺寸 {w:g}×{h:g} mm 的 Logo？") != QMessageBox.Yes:
-                return
-            self.library.add_logo(company, w, h, {"image": result["image"], "svg": result["svg"], "source_width_mm": result["width_mm"],
-                "source_height_mm": result["height_mm"], "crop": None, "source_hash": result["hash"]})
-            self.refresh_logos()
+            from .logo_store import LogoStore
+            candidate=LogoStore(self.library).propose({"image": result["image"], "svg": result["svg"], "source_width_mm": result["width_mm"],
+                "source_height_mm": result["height_mm"], "crop": None, "source_hash": result["hash"]},w,h,'MANUAL')
+            self.open_logo_proposal(candidate['id'])
         self.run_job("匯入完整 Logo", lambda: import_file(path, self.library.assets), finished)
 
     def refresh_logos(self):
         self.logo_assets = self.library.logos()
         self.logo_list.clear()
         for asset in self.logo_assets:
-            self.logo_list.addItem(f"{asset['company']} · {asset['width_mm']:g}×{asset['height_mm']:g} mm · 已核准")
+            self.logo_list.addItem(f"{asset['company']} · {asset['width_mm']:g}×{asset['height_mm']:g} mm · "+('已核准' if asset.get('approved') else '已撤銷／不可用'))
         for row in range(self.companies.rowCount()):
             old = self.companies.cellWidget(row, 1)
             selected = old.currentData() if old else None
             combo = QComboBox()
             combo.addItem("尚未選取真實 Logo", None)
             for asset in self.logo_assets:
-                if abs(asset["width_mm"]-self.out_w.value()) < 1e-5 and abs(asset["height_mm"]-self.out_h.value()) < 1e-5:
+                if asset.get('approved') and abs(asset["width_mm"]-self.out_w.value()) < 1e-5 and abs(asset["height_mm"]-self.out_h.value()) < 1e-5:
                     combo.addItem(asset["company"] + " · 已核准 " + asset["id"][:6], asset["id"])
             index = combo.findData(selected)
             if index >= 0:

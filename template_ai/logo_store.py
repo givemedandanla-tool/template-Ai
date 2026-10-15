@@ -96,7 +96,7 @@ class LogoStore:
             raise ValueError('Logo 所屬卡片尺寸需為0～2000 mm範圍的正數')
 
     def propose(self, payload, width, height, origin='MANUAL', company_id=None,
-                pins=None, evidence=None, family_base=None):
+                pins=None, evidence=None, family_base=None, _commit=True):
         self._size(width, height)
         if origin not in ('MANUAL', 'SOURCE', 'SIZE_PREDICTION'):
             raise ValueError('候選來源類型不合法')
@@ -114,11 +114,61 @@ class LogoStore:
                                        (data['candidate_key'],)).fetchone()
             if existing:
                 return self.proposal(existing[0])
-        with self.db:
+        def insert():
             self.db.execute('INSERT INTO logo_proposals VALUES(?,1,?,?)',
                 (identity, 'PENDING', json.dumps(data, ensure_ascii=False, allow_nan=False)))
             self.library.event(identity, 'logo_candidate_proposed_not_approved')
+        if _commit:
+            with self.db:
+                insert()
+        else:
+            insert()
         return self.proposal(identity)
+
+    def regions(self, selections, regions, note):
+        """同作品候選合併／拆分只建立新待審項；原始圖文與既有資產都不動。"""
+        if not isinstance(note, str) or not note.strip() or len(note) > 512 or not 1 <= len(selections) <= 20 \
+                or len({x['id'] for x in selections}) != len(selections):
+            raise ValueError('選取確切來源候選並記錄邊界校正理由')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            originals = [self.proposal(x['id']) for x in selections]
+            for old, selected in zip(originals, selections):
+                if old['revision'] != selected['revision'] or old['state'] not in ('PENDING', 'NEEDS_REPAIR') \
+                        or old['origin'] != 'SOURCE':
+                    raise ValueError('只校正同一作品、尚待審核的來源候選')
+                self._fresh(old)
+            first = originals[0]
+            if any(digest(x['pins']) != digest(first['pins']) for x in originals):
+                raise ValueError('不同來源／作品／版本不能合併')
+            work = self.library.artwork(first['pins']['artwork_id'])
+            area = Rect(**work['payload']['crop'])
+            if regions is None:
+                frames = [Rect(**x['asset']['crop']) for x in originals]
+                x, y = min(r.x for r in frames), min(r.y for r in frames)
+                regions = [dict(x=x, y=y, w=max(r.x+r.w for r in frames)-x,
+                                h=max(r.y+r.h for r in frames)-y)]
+            if not isinstance(regions, list) or not 1 <= len(regions) <= 10:
+                raise ValueError('明確指定1至10個新完整候選區域')
+            for region in regions:
+                rect = Rect(**region)
+                if not rect.valid() or rect.x < area.x or rect.y < area.y \
+                        or rect.x+rect.w > area.x+area.w+1e-5 or rect.y+rect.h > area.y+area.h+1e-5:
+                    raise ValueError('新候選不能跨入其他作品或越界')
+            results = []
+            for region in regions:
+                asset = {**first['asset'], 'crop': deepcopy(region)}
+                evidence = dict(object_ids=sorted({oid for x in originals for oid in x['evidence'].get('object_ids', [])}),
+                    source_evidence=dict(method='HUMAN_REGION_CORRECTION', note=note),
+                    corrected_from=[x['id'] for x in originals],
+                    uncertainty='校正後每個區域均須重新核對圖文完整性及公司身分')
+                results.append(self.propose(asset, first['width_mm'], first['height_mm'], 'SOURCE',
+                    first['company_id'], first['pins'], evidence, _commit=False))
+            self.db.commit()
+            return results
+        except BaseException:
+            self.db.rollback()
+            raise
 
     def propose_source(self, source_id, work_id, crop, company_id=None, object_ids=None, evidence=None):
         source = self.library.source(source_id)

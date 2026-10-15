@@ -623,3 +623,7 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 
 ## 2026-10-15T10:39:28.720181+00:00 LOGO-CORE WIP
 14項Logo目標測試6.138秒PASS，包含實際Inkscape變換後mm幾何、圖文整體、透明、三格式、來源hash、撤銷使舊候選失效、尺寸隔離與新尺寸獨立審核。尚未串完GUI與多尺寸，不能算父題full。31新目標測試分別9+8+14PASS。舊證據隨來源改變已過期，100項歷史已驗範圍保留previous_verified_source並改IMPLEMENTED_PENDING_VERIFICATION，正式回歸後才恢復當前VERIFIED，不減原驗收。查閱Adobe官方範例README與Qt6.8.3來源文件、InkscapeCLI並保存URL/hash及重用／數學依據；沒有呼叫商用API。checkpoint實際間隔超過10分，原因為較大程式／測試批次，已記錄而不宣稱嚴格達標；後續縮短。
+
+
+## 2026-10-15T11:00:45.291823+00:00 LOGO GUI WIP
+新14項實際Qt測試8.286秒PASS：三檢視／背景匯入、未知與單版狀態、明確採用／Undo、確認途中撤銷、版本草稿保護、新尺寸預測按鈕、合併／拆分及範圍保護。原人物公司30測試PASS，舊11介面測試PASS。持久tools/git_readback.py由4個本機bare Git remote驗證，收據誠實標示原生Git而非REST；不再依賴/tmp。正式459驗收來源為6ac8a535固定快照，文字22件保存，68媒體本機且未宣稱全附件Gate。現有GUI屬後續source，尚待正式回歸／逐父題完整驗收。

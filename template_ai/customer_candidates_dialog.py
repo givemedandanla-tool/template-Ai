@@ -133,14 +133,16 @@ class CustomerCandidatesDialog(QDialog):
             self.status.setText('背景核對來源與已標記事實，尚未建立主檔。')
             def worker():
                 from .storage import Library
-                library = Library(root)
+                library = None
                 try:
+                    library = Library(root)
                     rows = CustomerCandidates(CustomerStore(library)).propose(sid, pattern)
                     return {'ids': [r['id'] for r in rows]}
                 except Exception as error:
                     return {'error': str(error)}
                 finally:
-                    library.close()
+                    if library:
+                        library.close()
             def finished(result):
                 self.running = False
                 self.reload()

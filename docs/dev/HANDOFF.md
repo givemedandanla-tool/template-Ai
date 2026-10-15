@@ -1,3 +1,11 @@
+# 最新：Logo GUI／持久讀回工具已實作，下一UI027多尺寸
+
+固定來源6ac8a535的正式RUN-FIXED70-LOGO-CORE-001為459PASS/0SKIP/capture0/source unchanged；新證明媒體68件依原新媒體政策留本機，22文字／metadata保存GitHub。其後GUI新14項PASS、原人物公司30項PASS、原生Git工具4項PASS；現有源碼已增加GUI，不能把459當新增GUI正式驗收。全部待重驗狀態保留，不提前關父題。
+
+Logo三檢視／尺寸樹、人工與來源候選、完整原稿對照、邊界合併拆分、逐項核准、不可變版本／撤銷、獨立新尺寸預測、公司卡片身分與確切版本選擇均已接通。新增通用worker啟動失敗清理，背景資料庫初始化失敗可復原。接下來OCR線索與原FULL對帳，再UI027。
+
+持久讀回現有正式工具：`.venv/bin/python tools/git_readback.py --checkpoint <唯一CP>`，4個真實本機bare remote測試PASS；先git commit/push，再重新fetch與逐檔確認。無需依賴/tmp helper。新對話按AGENTS→STATE.active_contract→ACTIVE_DEVELOPMENT_HANDOFF恢復，零例行問答。
+
 # 當前接續：固定70下一批十個完整父題
 
 入口 STATE.active_contract＝FIXED70_NEXT_TEN_CONTRACT。使用者要求零例行問答、每10分鐘及可恢復階段checkpoint並GitHub讀回。先UI043/045，再UI020～027，共十父題；原GUI-first契約已被使用者指定的4238ebc報告優先序取代，未開始GUI-first實作。不可只讀main或重做舊十工作包。

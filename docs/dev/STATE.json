@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "FIXED70-LOGO-CORE-PENDING-FORMAL",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-UI043-CANDIDATES-WIP.receipt.json",
-  "last_confirmed_commit": "1993727072a66c0eb4cf98e017aeebad7cf32f30",
+  "active_task": "FIXED70-LOGO-GUI-WIP",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-LOGO-CORE-SOURCE.receipt.json",
+  "last_confirmed_commit": "6ac8a5351f5369a7a9a7a357f1c325f0ef2d0261",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -18,14 +18,14 @@
   ],
   "next_tasks": [
     {
-      "id": "FORMAL-LOGO-CORE",
+      "id": "LOGO-OCR-AND-GUI-CLOSURE",
       "status": "IN_PROGRESS",
-      "next": "保存來源後459測試正式回歸；舊完成狀態保留歷史，目前待重驗"
+      "next": "補OCR線索及完整條款對帳；source來源／審核／版本／公司卡片14新GUI測試PASS"
     },
     {
-      "id": "LOGO-GUI",
+      "id": "UI-027",
       "status": "PLANNED",
-      "next": "完整Logo管理／比較／公司卡片與多尺寸輸出"
+      "next": "同次輸入多尺寸驗證矩陣、部分正式與預覽分離、安全重驗"
     }
   ],
   "blocked": [],
@@ -36,7 +36,7 @@
   ],
   "pending_remote": [
     "CP-20261015-CATALOG-VERIFIED",
-    "CP-20261015-LOGO-CORE-SOURCE"
+    "CP-20261015-LOGO-GUI-WIP"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",
@@ -501,5 +501,13 @@
     "CORE-085",
     "CORE-086",
     "CORE-087"
-  ]
+  ],
+  "last_formal_validation": {
+    "run": "docs/evidence/runs/RUN-FIXED70-LOGO-CORE-001/run.json",
+    "source_commit": "6ac8a5351f5369a7a9a7a357f1c325f0ef2d0261",
+    "passed": 459,
+    "test_count": 459,
+    "source_unchanged": true,
+    "current_source_has_additional_GUI_changes": true
+  }
 }

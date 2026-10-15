@@ -43,7 +43,7 @@ def prepare(root, checkpoint_id, source_commit, summary, next_step, requirement_
     return data
 
 
-def acknowledge(root, checkpoint_id, commit_path, tree_path):
+def acknowledge(root, checkpoint_id, commit_path, tree_path, verification=None):
     valid_id(checkpoint_id)
     root = Path(root)
     checkpoint = read_json(root / "docs/checkpoints" / (checkpoint_id + ".json"))
@@ -64,7 +64,7 @@ def acknowledge(root, checkpoint_id, commit_path, tree_path):
                "snapshot_commit": commit["sha"], "tree_sha": tree["sha"], "verified_utc": datetime.now(timezone.utc).isoformat(),
                "verified_files": len(checkpoint["source_files"]) + 1,
                "source_manifest_sha256": checkpoint["source_manifest_sha256"],
-               "next_step": checkpoint["next_step"], "verification": "GitHub API commit/tree 讀回；逐檔 Git blob SHA 比對"}
+               "next_step": checkpoint["next_step"], "verification": verification or "GitHub API commit/tree 讀回；逐檔 Git blob SHA 比對"}
     path = root / "docs/checkpoints" / (checkpoint_id + ".receipt.json")
     if path.exists():
         raise FileExistsError("遠端確認收據不可覆寫")

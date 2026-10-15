@@ -17,6 +17,8 @@ class InputGraphDialog(QDialog):
             else:
                 p,c,l=window.input_data();graph=InputGraph.from_legacy(p,c,l).data
         self.graph=history.clone() if history is not None else InputGraph(graph);self.initial_revision=self.graph.data["revision"]
+        from .logo_store import LogoStore
+        self.logo_store=LogoStore(window.library)
         self.setWindowTitle('人物卡片／公司與共享聯絡資料（當次製作）');self.resize(1180,780)
         layout=QVBoxLayout(self)
         source=getattr(window,'reorder_customer_snapshot',None)
@@ -126,16 +128,36 @@ class InputGraphDialog(QDialog):
         row=QHBoxLayout();row.addWidget(QLabel('本尺寸完整Logo（公司資產引用）'));combo=QComboBox();combo.addItem('尚未選取／僅占位預覽','')
         c=self.graph.entity(cid);assets=self.window.library.logos()
         for a in assets:
-            if abs(a['width_mm']-self.window.out_w.value())<1e-5 and abs(a['height_mm']-self.window.out_h.value())<1e-5:combo.addItem(a['company']+' · '+a['id'],a['id'])
+            binding=self.logo_store.db.execute('SELECT company_id FROM logo_entity_bindings WHERE entity_id=?',(cid,)).fetchone()
+            managed_allowed=not a.get('managed_logo') or (binding and a.get('company_id')==binding[0])
+            if a.get('approved') and managed_allowed and a['company']==self.graph.label(cid) and abs(a['width_mm']-self.window.out_w.value())<1e-5 and abs(a['height_mm']-self.window.out_h.value())<1e-5:combo.addItem(a['company']+' · '+a['id'],a['id'])
         found=combo.findData(c['logo_id'])
         if found<0 and c['logo_id']:combo.addItem('既有引用失聯／非目前尺寸（須重新核對）',c['logo_id']);found=combo.count()-1
         combo.setCurrentIndex(max(0,found));combo.currentIndexChanged.connect(lambda:self.execute('edit_logo',company_id=cid,logo_id=combo.currentData()))
         row.addWidget(combo,1);v.addLayout(row);row=QHBoxLayout()
+        match=self.logo_store.match(cid,self.graph.label(cid),self.window.out_w.value(),self.window.out_h.value(),selected_id=c['logo_id'] or None)
+        status=QLabel(f"卡片尺寸 {self.window.out_w.value():g}×{self.window.out_h.value():g} mm："+match['state']+'／'+match['reason']);status.setTextFormat(Qt.PlainText);status.setWordWrap(True);v.addWidget(status)
+        self.add_button(row,'選擇 Logo',lambda:self.choose_logo(cid));self.add_button(row,'匯入新 Logo',lambda:self.open_logo_library(cid,True));self.add_button(row,'查看審核狀態',lambda:self.open_logo_library(cid,False));v.addLayout(row);row=QHBoxLayout()
         if pid:
             self.add_button(row,'解除此人物公司關聯',lambda:self.execute('unlink_company',person_id=pid,company_id=cid))
             self.add_button(row,'此人物改用獨立公司複本',lambda:self.execute('independent_company',person_id=pid,company_id=cid))
         self.add_button(row,'刪除公司實體（引用中會阻擋）',lambda:self.execute('delete_company',company_id=cid));v.addLayout(row)
         return box
+
+    def choose_logo(self,cid):
+        from .logo_choice_dialog import LogoChoiceDialog
+        dialog=LogoChoiceDialog(self.window,self.graph,cid,self)
+        if dialog.exec()==QDialog.Accepted and dialog.selected_asset:
+            self.execute('edit_logo',company_id=cid,logo_id=dialog.selected_asset['id'])
+
+    def open_logo_library(self,cid,import_new):
+        from .logo_library_dialog import LogoLibraryDialog
+        dialog=LogoLibraryDialog(self.window)
+        dialog.query.setText(self.graph.label(cid));dialog.views.setCurrentIndex(2 if import_new else 1)
+        binding=self.logo_store.db.execute('SELECT company_id FROM logo_entity_bindings WHERE entity_id=?',(cid,)).fetchone()
+        if binding:dialog.company.setCurrentIndex(max(0,dialog.company.findData(binding[0])))
+        if import_new:dialog.manual_import()
+        dialog.exec();self.rebuild()
 
     def rebuild(self):
         self.rebuilding=True;self.tree.blockSignals(True)
