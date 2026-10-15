@@ -873,3 +873,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 24 launch regression tests PASS；guarded JobCallbacks擴到font/custom layout/exception/output/source等所有既有guarded worker，3arg mocks相容，sync raise保留。batch deferred錯誤/取消沿原interrupt_owned保存＋UI重載，sources lookup移worker own connection。
 - 106 broad唯一FAIL為新測試在QTimer step前assert busy，不是產品故障；改等實際wait入口後9PASS，原106fail保存。ledger加入legacy import source_idNone/SKIPPED alias範圍與另計分母，不讓同bytes審核消失。all-callbacks002在跑但兩錯module待補正，749已知正式003未啟動。
 - checkpoint實際時間diagnostics22:10:49→launch22:20:55約10m6s，未聲稱嚴格10分鐘全達成；後續改較早保存。
+
+### UI051 runtime003 formal source ready
+- async guarded callback擴充後broad139中137 real cases PASS，錯module loader2不列成功，補正連結/例外/輸出/watch56/56 PASS；resource-wait batch cancel真INTERUPTED/來源0及legacy skip alias pending9/9 PASS。新helper維持sync raise與3arg mocks，所有欄位/資料/Gate原assert保留。
+- capture_remaining28完整實際Qt/SQLite/source current-host probes PASS、0runtime，無Windows/reference/independent宣稱。當前749已知，原8仍pending，待新source固定與正式003。

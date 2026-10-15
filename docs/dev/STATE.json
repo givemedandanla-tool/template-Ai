@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI051-DEFERRED-CALLBACKS-WIP",
+  "active_task": "REMAINING28-UI051-FORMAL003-STAGED",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-UI051-OWNED-CALLBACKS-WIP.receipt.json",
   "last_confirmed_commit": "091207c62eca4c3ba971f2e56c85df2b241e1a69",
   "latest_evidence_run": null,
@@ -20,7 +20,7 @@
     {
       "id": "UI051-LOW-LOAD-FAIR-QUEUE",
       "status": "IN_PROGRESS",
-      "next": "24 launch/Qt PASS、106 broad中1早於QTimer step的fixture assert失敗，改等實際waiting入口後9/9 PASS（含真resource等待cancel持久INTERRUPTED與legacy SKIPPED alias可見）。所有guarded wrappers同3arg JobCallbacks(error/cancel)，source/cancel不假保存，batch定點source lookup。all-callbacks002在跑但誤列test_source_links/test_exception_center需補正用source_relink/import_exceptions；新source749正式003之前完整broad/capture/source checkpoint。"
+      "next": "24launch PASS；137 actual callback cases PASS/2錯module不算pass，補正56PASS；9resource-batch/ledger PASS；完整capturePASS 0Qt。新source checkpoint/ACK後freeze跑RUNTIME003全749，.checkpoints/formal-live記當前test與60s堆疊；前1/2不改，原8/4歷史里程碑不能提前結案。"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-UI051-FORMAL003-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-WATCH.json",
