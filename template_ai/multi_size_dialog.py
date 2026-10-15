@@ -1,0 +1,180 @@
+"""結果輸出區的多尺寸矩陣：各尺寸、確切候選與正式／預覽分開。"""
+from copy import deepcopy
+import json
+import threading
+
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTableWidget,
+    QTableWidgetItem,QComboBox,QCheckBox,QDoubleSpinBox,QPlainTextEdit,QFileDialog,QMessageBox)
+
+from .customers import digest
+from .input_graph import InputGraph
+from .multi_size import MultiSizeWorkflow,size_key
+
+
+class MultiSizeDialog(QDialog):
+    def __init__(self,window):
+        super().__init__(window);self.window=window;self.running=False;self.service=None
+        self.selections={};self.stop=threading.Event();self.stale=threading.Event()
+        self.setWindowTitle('多尺寸驗證總覽／部分正式輸出與獨立占位預覽');self.resize(1180,780)
+        layout=QVBoxLayout(self);self.status=QLabel('勾選要計算的實體尺寸；每尺寸獨立驗證。輸出模式預設不選。');self.status.setWordWrap(True);layout.addWidget(self.status)
+        bar=QHBoxLayout();self.width,self.height=QDoubleSpinBox(),QDoubleSpinBox()
+        for spin,value in ((self.width,window.out_w.value()),(self.height,window.out_h.value())):
+            spin.setRange(1,2000);spin.setDecimals(4);spin.setValue(value);spin.setSuffix(' mm');bar.addWidget(spin)
+        self.button(bar,'加入尺寸',self.add_size);self.button(bar,'計算所選尺寸',self.start);self.button(bar,'安全取消計算',self.stop.set);layout.addLayout(bar)
+        self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['計算尺寸','實體尺寸 mm','確切模板／版本','最後驗證狀態','Logo狀態','輸出類別（預設不選）']);layout.addWidget(self.table,2)
+        bar=QHBoxLayout();self.button(bar,'預覽目前尺寸與全部問題',self.preview);self.button(bar,'選此尺寸公司的確切Logo',self.choose_logo)
+        self.formats={}
+        for name in ('pdf','png','jpg'):
+            box=QCheckBox(name.upper());box.setChecked(name=='pdf');self.formats[name]=box;bar.addWidget(box)
+        self.export_button=self.button(bar,'確認清單後輸出',self.export);self.export_button.setEnabled(False);layout.addLayout(bar)
+        self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
+        sizes={(t.width_mm,t.height_mm) for t in window.library.templates(True)}|{(window.out_w.value(),window.out_h.value())}
+        self.sizes=[]
+        for size in sorted(sizes):self.insert_size(size,checked=list(size)==[window.out_w.value(),window.out_h.value()])
+        window.inputs_invalidated.connect(self.changed)
+
+    def button(self,bar,label,action):
+        button=QPushButton(label);button.clicked.connect(action);bar.addWidget(button);return button
+
+    def changed(self,*_):
+        self.stale.set();self.export_button.setEnabled(False)
+        self.status.setText('輸入／模板／Logo版本已變更，先重新計算；舊候選未獲放行。')
+
+    def insert_size(self,size,checked=True):
+        if size_key(*size) in {size_key(*s) for s in self.sizes}:return
+        self.sizes.append(list(size));row=self.table.rowCount();self.table.setRowCount(row+1)
+        item=QTableWidgetItem();item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsUserCheckable);item.setCheckState(Qt.Checked if checked else Qt.Unchecked);self.table.setItem(row,0,item)
+        for col,text in ((1,f'{size[0]:g}×{size[1]:g}'),(3,'NOT_CHECKED'),(4,'尚未匹配')):
+            item=QTableWidgetItem(text);item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsSelectable);self.table.setItem(row,col,item)
+        mode=QComboBox();mode.addItems(['不輸出','FINAL','PREVIEW']);self.table.setCellWidget(row,5,mode)
+
+    def add_size(self):
+        if not self.running:self.insert_size([self.width.value(),self.height.value()]);self.changed()
+
+    def is_current(self):
+        return not self.stale.is_set() and self.window.generation==self.generation and digest(self.window.input_data())==self.input_signature
+
+    def background(self,label,operation,finished):
+        root=self.window.library.root;self.running=True;self.table.setEnabled(False)
+        def worker():
+            from .storage import Library
+            library=None
+            try:
+                library=Library(root);return {'result':operation(library)}
+            except Exception as error:return {'error':str(error)}
+            finally:
+                if library:library.close()
+        def completed(result):
+            self.running=False;self.table.setEnabled(True)
+            if 'error' in result:self.status.setText('未完成：'+result['error']);return
+            finished(result['result'])
+        try:self.window.run_job(label,worker,completed)
+        except Exception:self.running=False;self.table.setEnabled(True);raise
+
+    def start(self):
+        if self.running or self.window.busy:return
+        try:
+            sizes=[s for i,s in enumerate(self.sizes) if self.table.item(i,0).checkState()==Qt.Checked]
+            if not sizes:raise ValueError('先勾選要計算的實體尺寸')
+            self.inputs=deepcopy(self.window.input_data());self.generation=self.window.generation;self.input_signature=digest(self.inputs)
+            active=getattr(self.window,'active_input_graph',None)
+            if active:self.graph=active.clone()
+            elif not hasattr(self,'graph') or getattr(self,'graph_input_signature',None)!=self.input_signature:self.graph=InputGraph.from_legacy(*self.inputs)
+            self.graph_input_signature=self.input_signature;self.stop.clear();self.stale.clear();self.export_button.setEnabled(False)
+            inputs,graph,generation,chosen=deepcopy(self.inputs),deepcopy(self.graph.data),self.generation,deepcopy(self.selections)
+            scope=None
+            if getattr(self.window,'reorder_template_id',None):
+                snapshot=getattr(self.window,'reorder_customer_snapshot',None)
+                scope=[s['template_id'] for s in snapshot['styles']] if snapshot else [self.window.reorder_template_id]
+            def operation(library):return MultiSizeWorkflow(library,inputs,graph,generation).calculate(sizes,chosen,scope,self.stop)
+            def finished(entries):
+                self.service=MultiSizeWorkflow(self.window.library,inputs,graph,generation);self.service.entries=entries;self.render_rows()
+                self.export_button.setEnabled(self.is_current())
+                self.status.setText(f'實際處理{len(entries)}個尺寸；未檢查／取消／失敗各自保留狀態。正式與PREVIEW須明確選擇。')
+            self.background('逐尺寸計算／驗證',operation,finished)
+        except (ValueError,KeyError,OSError) as error:self.status.setText('未開始：'+str(error))
+
+    def render_rows(self):
+        for entry in self.service.entries:
+            row=next(i for i,s in enumerate(self.sizes) if size_key(*s)==entry['key'])
+            combo=QComboBox()
+            for candidate in entry['candidates']:combo.addItem(f'{candidate.template.name}／v{candidate.template.version}／{candidate.template.id}',candidate.template.id)
+            combo.activated.connect(lambda _,key=entry['key'],control=combo:self.select_candidate(key,control.currentData()))
+            self.table.setCellWidget(row,2,combo);self.table.item(row,3).setText(entry['state']);self.table.item(row,4).setText(str(entry['logo_states']))
+            mode=self.table.cellWidget(row,5);mode.setCurrentIndex(0);mode.model().item(1).setEnabled(bool(self.service.selected(entry) and self.service.selected(entry).valid))
+        self.details.setPlainText(json.dumps([dict(size_mm=e['size_mm'],state=e['state'],failures=e['failures'],issues=list(self.service.selected(e).issues) if self.service.selected(e) else []) for e in self.service.entries],ensure_ascii=False,indent=2))
+
+    def select_candidate(self,key,identity):
+        if self.running or not self.service:return
+        self.service.select(key,identity)
+        entry=next(e for e in self.service.entries if e['key']==key);row=next(i for i,s in enumerate(self.sizes) if size_key(*s)==key)
+        self.table.item(row,3).setText(entry['state']);self.table.cellWidget(row,5).setCurrentIndex(0);self.table.cellWidget(row,5).model().item(1).setEnabled(self.service.selected(entry).valid)
+
+    def entry(self):
+        if not self.service:raise ValueError('先完成所選尺寸計算')
+        row=self.table.currentRow()
+        if not 0<=row<len(self.sizes):raise ValueError('選取一個尺寸')
+        entry=next((e for e in self.service.entries if e['key']==size_key(*self.sizes[row])),None)
+        if entry is None:raise ValueError('此尺寸尚未計算')
+        return entry
+
+    def preview(self):
+        try:
+            entry=self.entry()
+            if not self.is_current():raise ValueError('資料已變，先重新計算')
+            candidate=self.service.revalidate(entry)
+            from .gui import Canvas
+            from .render import render_image,preview_height
+            dialog=QDialog(self);dialog.setWindowTitle('此尺寸非正式預覽／所有未通過事項');dialog.resize(950,700);layout=QVBoxLayout(dialog)
+            canvas=Canvas();canvas.set_content(candidate.template.width_mm,preview_height(candidate),render_image(candidate,96,True));canvas.set_mode('pan');layout.addWidget(canvas);canvas.fit()
+            detail=QPlainTextEdit('\n'.join(candidate.issues) or '數位檢查通過；本畫面仍為預覽。');detail.setReadOnly(True);layout.addWidget(detail);dialog.exec()
+        except (ValueError,KeyError,OSError) as error:self.status.setText('未預覽：'+str(error))
+
+    def choose_logo(self):
+        try:
+            entry=self.entry();companies=self.graph.data['companies']
+            if not companies:raise ValueError('此輸入無公司Logo關聯')
+            from PySide6.QtWidgets import QInputDialog
+            labels=[self.graph.label(c['id'])+'／'+c['id'] for c in companies]
+            label,ok=QInputDialog.getItem(self,'此尺寸的公司','只改此尺寸選擇，不移植幾何',labels,0,False)
+            if not ok:return
+            cid=companies[labels.index(label)]['id']
+            from .logo_choice_dialog import LogoChoiceDialog
+            dialog=LogoChoiceDialog(self.window,self.graph,cid,self,width=entry['size_mm'][0],height=entry['size_mm'][1])
+            if dialog.exec()==QDialog.Accepted and dialog.selected_asset:
+                self.selections.setdefault(entry['key'],{})[cid]=dialog.selected_asset['id'];self.changed()
+        except (ValueError,KeyError,OSError) as error:self.status.setText(str(error))
+
+    def export(self):
+        try:
+            if self.running or not self.service or not self.is_current():raise ValueError('先完成目前資料的多尺寸驗證')
+            requests=[]
+            for i,size in enumerate(self.sizes):
+                mode=self.table.cellWidget(i,5).currentText()
+                if mode!='不輸出':requests.append(dict(key=size_key(*size),mode=mode,formats=[f for f,b in self.formats.items() if b.isChecked()]))
+            directory=QFileDialog.getExistingDirectory(self,'選一次本機輸出資料夾；FINAL／PREVIEW分開')
+            if not directory:return
+            plan=self.service.plan(directory,requests)
+            lines=['請核對以下尺寸與輸出類別；占位預覽不能作正式成品。']
+            for item in plan['items']:
+                lines.append(item['mode']+'：'+item['path'])
+                lines.extend('  待解問題：'+issue for issue in item['issues'])
+            for item in plan['omitted']:
+                lines.append('不輸出 '+str(item['size_mm'])+' mm：'+('；'.join(item['issues']) or item['state']))
+            if plan['partial']:lines.append('本次為部分輸出。確認表示只輸出上述檔案，其他尺寸仍未完成。')
+            if QMessageBox.question(self,'確認每尺寸類別、未輸出原因與實際檔案','\n'.join(lines))!=QMessageBox.Yes:return
+            if not self.is_current():raise ValueError('確認期間輸入已變更，未輸出')
+            entries=deepcopy(self.service.entries);inputs=deepcopy(self.inputs);graph=deepcopy(self.graph.data);generation=self.generation;stale=self.stale;stop=self.stop
+            def operation(library):
+                workflow=MultiSizeWorkflow(library,inputs,graph,generation);workflow.entries=entries
+                return workflow.execute(plan,True,acknowledge_partial=plan['partial'],current_check=lambda:not stale.is_set() and not stop.is_set())
+            def finished(results):
+                self.details.setPlainText(json.dumps(results,ensure_ascii=False,indent=2));passed=sum(r['status']=='SUCCESS' for r in results)
+                self.status.setText(f'成功{passed}／實際{len(results)}檔；各尺寸FINAL／PREVIEW及失敗分開記錄，沒有假稱全批成功。')
+            self.background('安全逐檔輸出',operation,finished)
+        except (ValueError,KeyError,OSError) as error:self.status.setText('未輸出：'+str(error))
+
+    def closeEvent(self,event):
+        if self.running:self.stop.set();self.status.setText('安全停止中；等待當前工作完成再關閉。');event.ignore()
+        else:super().closeEvent(event)

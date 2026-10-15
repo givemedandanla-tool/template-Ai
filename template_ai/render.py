@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 
 from PySide6.QtCore import QRectF, QSizeF, Qt
-from PySide6.QtGui import QColor, QFont, QFontDatabase, QFontMetricsF, QImage, QPageLayout, QPageSize, QPainter, QPdfWriter
+from PySide6.QtGui import QColor, QFont, QFontDatabase, QFontMetricsF, QImage, QPageLayout, QPageSize, QPainter, QPdfWriter, QTextDocument
 from PySide6.QtSvg import QSvgRenderer
 
 from .layout import Candidate, MM_PER_POINT
@@ -101,6 +101,23 @@ def render_background(t: Template, dpi: int = 150) -> QImage:
     return image
 
 
+def preview_footer(candidate):
+    # 診斷附註使用獨立 UI 字型，不沿用商標／版型字型。Qt 6.8 的
+    # Noto CJK TTC 在跨段落 PDF subset 會產生錯誤的數字 ToUnicode；
+    # Latin 主字型＋Qt CJK fallback 保留可複製搜尋的完整問題文字。
+    font=QFont();font.setFamilies(['DejaVu Sans','Arial']);font.setPixelSize(1000)
+    factor=6*MM_PER_POINT/1000
+    document=QTextDocument();document.setDocumentMargin(0);document.setDefaultFont(font)
+    document.setPlainText('PREVIEW / 非正式 / Logo 占位或待驗證\n'+
+        f'{candidate.template.width_mm:g}×{candidate.template.height_mm:g} mm\n'+
+        ('\n'.join(candidate.issues) if candidate.issues else '數位檢查通過；本檔仍為預覽，未作實體印刷驗收。'))
+    document.setTextWidth(max(.1,candidate.template.width_mm-4)/factor)
+    return document,factor,max(14,document.size().height()*factor+4)
+
+
+def preview_height(candidate):return candidate.template.height_mm+preview_footer(candidate)[2]
+
+
 def paint_candidate(p: QPainter, candidate: Candidate, preview: bool = False) -> None:
     t = candidate.template
     from .fonts import font_asset_errors
@@ -134,14 +151,15 @@ def paint_candidate(p: QPainter, candidate: Candidate, preview: bool = False) ->
             draw_text(p, rect, item.text, s.font, s.size_pt, item.scale, s.align, s.color, s.font_style, s.font_asset)
     if preview:
         # 附註位於矩形本體外，矩形內的幾何與比例不改動。
-        note = QRectF(0, t.height_mm + 2, t.width_mm, 10)
-        draw_text(p, note, "PREVIEW / 非正式 / Logo 占位或待驗證", "Noto Sans CJK TC" if "Noto" in t.slots[0].font else t.slots[0].font, 6, 1, "left")
+        document,factor,_=preview_footer(candidate)
+        p.save();p.translate(2,t.height_mm+2);p.scale(factor,factor)
+        document.drawContents(p);p.restore()
 
 
 def render_image(candidate: Candidate, dpi: int = 150, preview: bool = False) -> QImage:
     if not 72 <= dpi <= 600:
         raise ValueError("本版數位輸出 DPI 設定支援 72～600，非印刷品質保證")
-    w, h = candidate.template.width_mm, candidate.template.height_mm + (14 if preview else 0)
+    w, h = candidate.template.width_mm, preview_height(candidate) if preview else candidate.template.height_mm
     px_w, px_h = max(1, round(w * dpi / 25.4)), max(1, round(h * dpi / 25.4))
     if px_w * px_h > 24_000_000:
         raise ValueError("輸出超過本版 2400 萬像素預算，請降低 DPI 或分批")
@@ -190,7 +208,7 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
         if extension == ".pdf":
             writer = QPdfWriter(str(temporary))
             writer.setResolution(600)
-            height = candidate.template.height_mm + (14 if preview else 0)
+            height = preview_height(candidate) if preview else candidate.template.height_mm
             writer.setPageSize(QPageSize(QSizeF(candidate.template.width_mm, height), QPageSize.Millimeter))
             from PySide6.QtCore import QMarginsF
             writer.setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout.Millimeter)

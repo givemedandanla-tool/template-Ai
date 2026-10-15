@@ -11,11 +11,12 @@ from .logo_store import LogoStore
 
 
 class LogoChoiceDialog(QDialog):
-    def __init__(self,window,graph,company_id,parent=None):
+    def __init__(self,window,graph,company_id,parent=None,width=None,height=None):
         super().__init__(parent or window)
         self.window,self.graph,self.entity_id=window,graph,company_id
         self.graph_signature=fingerprint(graph.data)
-        self.width,self.height=window.out_w.value(),window.out_h.value()
+        self.uses_window_size=width is None and height is None
+        self.width,self.height=(window.out_w.value(),window.out_h.value()) if self.uses_window_size else (width,height)
         self.store=LogoStore(window.library);self.selected_asset=None
         self.setWindowTitle('此公司／此卡片尺寸的完整 Logo 選擇');self.resize(1190,760)
         layout=QVBoxLayout(self);self.status=QLabel();self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);layout.addWidget(self.status)
@@ -66,7 +67,7 @@ class LogoChoiceDialog(QDialog):
             index=self.table.currentRow()
             if not 0<=index<len(self.rows):raise ValueError('請選一個同尺寸的確切版本；多版本不預選')
             asset=deepcopy(self.rows[index])
-            if fingerprint(self.graph.data)!=self.graph_signature or [self.window.out_w.value(),self.window.out_h.value()]!=[self.width,self.height]:raise ValueError('當次公司或尺寸已變更，重新核對')
+            if fingerprint(self.graph.data)!=self.graph_signature or (self.uses_window_size and [self.window.out_w.value(),self.window.out_h.value()]!=[self.width,self.height]):raise ValueError('當次公司或尺寸已變更，重新核對')
             if QMessageBox.question(self,'確切版本與尺寸引用',asset['company']+'／'+asset['id']+f'／v{asset["version"]}\n'+f'{self.width:g}×{self.height:g} mm；仍須重新排版與輸出驗證。確認？')!=QMessageBox.Yes:return
             fresh=self.store.match(self.entity_id,self.graph.label(self.entity_id),self.width,self.height,selected_id=asset['id'])
             if not fresh['selected'] or fresh['selected']!=asset:raise ValueError('來源／版本／身分已變更，不套用過期選擇')
@@ -76,6 +77,10 @@ class LogoChoiceDialog(QDialog):
     def library(self):
         from .logo_library_dialog import LogoLibraryDialog
         dialog=LogoLibraryDialog(self.window)
+        for i in range(dialog.tree.topLevelItemCount()):
+            node=dialog.tree.topLevelItem(i)
+            if node.data(0,Qt.UserRole)==[self.width,self.height]:dialog.tree.setCurrentItem(node);break
+        dialog.company.setCurrentIndex(max(0,dialog.company.findData(self.company.currentData())))
         dialog.query.setText(self.graph.label(self.entity_id))
         dialog.exec()
         selected=self.company.currentData();self.company.clear();self.company.addItem('先核對確切資產公司身分',None)

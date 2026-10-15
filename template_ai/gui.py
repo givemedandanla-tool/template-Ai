@@ -189,6 +189,7 @@ class Canvas(QGraphicsView):
 
 
 class MainWindow(QMainWindow):
+    inputs_invalidated = Signal(int)
     def __init__(self, data_root):
         super().__init__()
         self.library = Library(data_root)
@@ -494,6 +495,7 @@ class MainWindow(QMainWindow):
         size_row.addWidget(self.out_h)
         self.button("開始自動排版", self.generate, size_row)
         self.button("當次單worker／暫停取消", self.layout_session, size_row)
+        self.button('多尺寸驗證／部分輸出',self.multi_size,size_row)
         self.button("解除重訂版型限定", self.clear_reorder_filter, size_row)
         self.button("當次候選局部修改", self.candidate_editor, size_row)
         layout.addLayout(size_row)
@@ -565,6 +567,12 @@ class MainWindow(QMainWindow):
     def candidate_editor(self):
         from .candidate_edit import CandidateEditDialog
         dialog=CandidateEditDialog(self)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
+
+    def multi_size(self):
+        from .multi_size_dialog import MultiSizeDialog
+        dialog=MultiSizeDialog(self)
         try:dialog.exec()
         finally:dialog.deleteLater()
 
@@ -1513,6 +1521,7 @@ class MainWindow(QMainWindow):
         self.preview_button.setEnabled(False)
         if self.candidates:
             self.issues.setText("資料／尺寸／模板或 Logo 已變更；目前候選過期，請重新排版。")
+        self.inputs_invalidated.emit(self.generation)
 
     def refresh_input_problems(self):
         try:self.library.db.execute("SELECT 1")
@@ -1572,7 +1581,8 @@ class MainWindow(QMainWindow):
         c = self.candidates[row]
         try:
             image = render_image(c, 150, not c.valid)
-            self.output_canvas.set_content(c.template.width_mm, c.template.height_mm+(14 if not c.valid else 0), image)
+            from .render import preview_height
+            self.output_canvas.set_content(c.template.width_mm, preview_height(c) if not c.valid else c.template.height_mm, image)
             self.output_canvas.set_mode("pan")
             self.output_canvas.fit()
             current = c.generation == self.generation

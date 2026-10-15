@@ -631,3 +631,8 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 
 ## 2026-10-15T11:12:01.300081+00:00 LOGO OCR
 沿用已安裝Tesseract5.5.0，官方tessdata_fast4.1.0固定commit與三個Git blob通過完整性驗證；本機安裝chi_tra/eng及LICENSE，不推送模型。新增實際OCR及CAS／來源保護5PASS，0skip。第一次測試發現自訂tessdata沒有configs/tsv，改用官方tessedit_create_tsv旗標並檢查TSV header後5PASS；未關閉斷言／驗證。GUI來源候選可背景附加OCR線索，沒有自動身份／核准／拆字。下步UI027。
+
+## 2026-10-15 UI027 多尺寸可恢復階段
+- 新增獨立尺寸workflow／Qt矩陣；各尺寸確切模板、公司Logo、最後驗證、顯式部分輸出、逐檔失敗與既有成果保護。
+- 實際PDF/PNG/JPG正式與PREVIEW輸出，問題附註完整換行於卡片外。修復Qt CJK TTC跨段落PDF數字ToUnicode問題，Latin主字型＋CJK fallback可讀回。
+- 目標10測試PASS（4.651s）；父題仍待逐條完整對帳與source-bound回歸。

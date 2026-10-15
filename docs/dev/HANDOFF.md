@@ -1,3 +1,6 @@
+## 2026-10-15 多尺寸可恢復階段
+UI027獨立尺寸矩陣與Qt入口、部分輸出確認、FINAL/PREVIEW三格式隔離、過期重驗及動態完整診斷附註已實作，10項目標PASS。尚未標完整父題。下一步補原條款差距（客戶衝突／關聯撤銷、Logo拖曳校正與例外入口），再全量正式證據。
+
 # 最新：Logo GUI／持久讀回工具已實作，下一UI027多尺寸
 
 固定來源6ac8a535的正式RUN-FIXED70-LOGO-CORE-001為459PASS/0SKIP/capture0/source unchanged；新證明媒體68件依原新媒體政策留本機，22文字／metadata保存GitHub。其後GUI新14項PASS、原人物公司30項PASS、原生Git工具4項PASS；現有源碼已增加GUI，不能把459當新增GUI正式驗收。全部待重驗狀態保留，不提前關父題。
