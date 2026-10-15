@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI050-COMPLETE-NEXT-UI051",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-WATCH-SOURCE2.receipt.json",
-  "last_confirmed_commit": "57b7216498f0d00c4d2d55f051de3381bf16add7",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-UI050-VERIFIED.receipt.json",
+  "last_confirmed_commit": "cdc26372aec1287f648e5017f14917a8ce8cd271",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -29,9 +29,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261015-REMAINING28-UI050-VERIFIED"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-WATCH.json",
@@ -409,8 +407,8 @@
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
   "publication_status": {
     "run": "RUN-REMAINING28-WATCH-002",
-    "text_metadata_remote_verified": false,
-    "publication_scope_gate": "PENDING_REMOTE_READBACK",
+    "text_metadata_remote_verified": true,
+    "publication_scope_gate": "PASS",
     "local_media_count": 108,
     "strict_all_attachment_publication": false
   },
@@ -485,7 +483,7 @@
     "latest_remote_commit": "e828c2e4ce1109b4254701c6806a3a98b85c9c4d",
     "reason": "GUI/source integration checkpoint exceeded 10 minutes; recorded actual gap, immediate WIP preservation; no claim cadence was met"
   },
-  "latest_verification": "docs/dev/REMAINING28_RELINK_VERIFICATION.json",
+  "latest_verification": "docs/dev/REMAINING28_WATCH_VERIFICATION.json",
   "failed_evidence_runs": [
     "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json"
   ]
