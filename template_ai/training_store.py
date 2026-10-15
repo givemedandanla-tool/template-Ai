@@ -110,6 +110,7 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
             raise ValueError('來源位置或長度已變更')
 
     def validate_observations(self, work_id, observations):
+        from .semantic_fields import recognize
         if not isinstance(observations, list) or not 1 <= len(observations) <= 200:
             raise ValueError('觀察需1～200項；空白不算來源事實')
         work = self.library.artwork(work_id); source = self.library.source(work['source_id'])
@@ -133,8 +134,9 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
             except (KeyError, TypeError, ValueError): raise ValueError('來源區域需有效毫米矩形') from None
             result.append({'id': oid, 'slot_id': slot_id, 'text': text(item.get('text'), '完整來源文字'),
                            'object_type': item['object_type'], 'classification': item['classification'], 'region': copy.deepcopy(item['region']),
-                           'evidence': 'USER_OBSERVATION', 'native_mapping': 'UNKNOWN',
-                           'prior_prediction': item.get('prior_prediction') if item.get('prior_prediction') is not None else None})
+                           'evidence': item.get('evidence') if item.get('evidence') in ('AI_SOURCE_HYPOTHESIS','USER_OBSERVATION_DRAFT') else 'USER_OBSERVATION', 'native_mapping': 'UNKNOWN',
+                           'prior_prediction': item.get('prior_prediction') if item.get('prior_prediction') is not None else None,
+                           'semantic': recognize(item['text']) if item['object_type']=='TEXT' else None})
             if result[-1]['prior_prediction'] is not None: text(result[-1]['prior_prediction'], '原預測')
         return sorted(result, key=lambda x: x['id'])
 

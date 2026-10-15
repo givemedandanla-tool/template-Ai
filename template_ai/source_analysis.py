@@ -15,8 +15,9 @@ from .importer import inkscape_path
 from .model import Rect,Slot
 from .source_links import verify_source
 from .training_store import digest
+from .semantic_fields import recognize
 
-ANALYSER_VERSION='source-hypotheses-1'
+ANALYSER_VERSION='source-hypotheses-2-semantic'
 
 
 def vector_objects(source,assets):
@@ -48,12 +49,7 @@ def contains(outer,inner,tolerance=.05):
 
 
 def classify(value):
-    text=value.strip()
-    if re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+',text):return 'email'
-    if re.fullmatch(r'[+()\d .-]{7,}',text):return 'phone'
-    if re.match(r'(?i)^line\s*[:：]',text):return 'line'
-    if re.match(r'(?i)^(ig|instagram)\s*[:：]',text):return 'ig'
-    return None
+    return recognize(value)['slot_kind']
 
 
 def analyse_source(source,assets):
@@ -82,22 +78,25 @@ def analyse_source(source,assets):
         if value.strip() and rect:texts.append((node.get('id'),value.strip()[:512],rect))
     result=[]
     for key,crop in sorted(regions,key=lambda item:(item[1].y,item[1].x,item[0])):
-        slots=[];observations=[];counts={};clues=[]
+        slots=[];observations=[];counts={};clues=[];companies=[]
         local=sorted([row for row in texts if contains(crop,row[2])],key=lambda row:(row[2].y,row[2].x,row[0]))
         if len(local)+len(logos)>200:raise ValueError('單作品標記超過200，需人工縮小作品')
         name_used=False
         for native,value,rect in local:
-            kind=classify(value)
+            semantic=recognize(value);kind=semantic['slot_kind']
+            identity='box-'+digest([source['hash'],key,native])[:28]
             if kind is None:
-                kind='name' if not name_used else 'title';name_used=True
-                clues.append('文字語意／人物歸屬為位置推定，需逐筆核對')
+                clues.append('文字語意或平台欄位待確認；未從位置猜人名／職稱')
+                observations.append(dict(id='obs-'+identity,slot_id=None,text=value,object_type='TEXT',classification='UNKNOWN',region=asdict(rect),prior_prediction='UNCONFIRMED_SEMANTIC_UNKNOWN',semantic=semantic))
+                continue
+            if kind=='name':name_used=True
             index=counts.get(kind,0);counts[kind]=index+1
             local_rect=Rect(rect.x-crop.x,rect.y-crop.y,rect.w,rect.h)
-            identity='box-'+digest([source['hash'],key,native])[:28]
-            slot=Slot(kind,'p1',local_rect,index=index,id=identity,required=kind=='name')
+            owner='p1'
+            if kind=='company':owner='c'+str(len(companies)+1);companies.append(owner)
+            slot=Slot(kind,owner,local_rect,index=index,id=identity,required=kind=='name')
             slots.append(asdict(slot))
-            observations.append(dict(id='obs-'+identity,slot_id=identity,text=value,object_type='TEXT',classification='FIELD',region=asdict(rect),prior_prediction='UNCONFIRMED_SOURCE_DERIVATIVE'))
-        companies=[]
+            observations.append(dict(id='obs-'+identity,slot_id=identity,text=value,object_type='TEXT',classification='FIELD',region=asdict(rect),prior_prediction='UNCONFIRMED_SOURCE_DERIVATIVE',semantic=semantic))
         for node in logos:
             rect=bounds[node.get('id')]
             if not contains(crop,rect):continue

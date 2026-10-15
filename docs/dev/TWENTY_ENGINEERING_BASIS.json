@@ -28,6 +28,15 @@
       "sha256": "8aed35f9e78e08c251bc0f4c3ed941f7294b89ed9e9c8554fe88fcfc52b9a5ed",
       "relevant_excerpt": "ocument.\n\n```$xslt\npython src/electronicseal/electronic_seal_with_time_stamp_authority.py\n```\n\n\n### Extract PDF\n\nThese samples illustrate extracting content of PDF in a structured JSON format along with the renditions inside PDF. \nThe output of SDK extract operation is Zip package. The Zip package consists of following:\n\n* The structuredData.json file with the extracted content & PDF element structure. See the [JSON schema](https://opensource.ado",
       "use": "僅參照設計與公開介面，不複製第三方原碼或呼叫商用API"
+    },
+    {
+      "name": "python-phonenumbers 9.0.16 / Google libphonenumber",
+      "url": "https://raw.githubusercontent.com/daviddrysdale/python-phonenumbers/v9.0.16/README.md",
+      "status": "READ",
+      "bytes": 9421,
+      "sha256": "ebf38fed861a53d06955764465597f71842c89b25671b3d779c074c0d9542bf9",
+      "use": "直接重用離線號碼有效性、E.164、固定／行動號碼類型與分機",
+      "relevant_excerpt": "phonenumbers Python Library\n===========================\n\n[![Coverage Status](https://coveralls.io/repos/daviddrysdale/python-phonenumbers/badge.svg?branch=dev&service=github)](https://coveralls.io/github/daviddrysdale/python-phonenumbers?branch=dev)\n"
     }
   ],
   "math": [
@@ -50,6 +59,11 @@
       "method": "吸附與對齊",
       "formula": "以毫米最近參考線投影，容差由視窗像素/縮放換算；等距沿用既有邊界間距",
       "validation": "鎖定／Logo比例／固定字級／安全區保護，預覽不等於套用"
+    },
+    {
+      "method": "字元Multinomial Naive Bayes",
+      "formula": "log P(c)+sum count(t)*log((count(t,c)+1)/(total(c)+|V|))",
+      "validation": "只收confirmed且SEMANTIC_CLASSIFICATION_LOCAL樣本；多類、多筆、特徵覆蓋與margin門檻；非校準機率，未知可拒答"
     }
   ],
   "reuse_map": [

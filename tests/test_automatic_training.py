@@ -23,9 +23,9 @@ class AutomaticTrainingTests(unittest.TestCase):
         self.path=self.root/'00001.svg'
         self.path.write_text('''<svg xmlns="http://www.w3.org/2000/svg" width="190mm" height="60mm" viewBox="0 0 190 60">
         <g id="cardA"><rect id="frameA" width="90" height="54" fill="white"/>
-        <text id="nameA" x="5" y="12" font-size="4">Alex Example</text><text id="phoneA" x="5" y="22" font-size="3">020-000-0100</text>
+        <text id="nameA" x="5" y="12" font-size="4">姓名：Alex Example</text><text id="phoneA" x="5" y="22" font-size="3">020-000-0100</text>
         <g id="logoA"><rect x="45" y="32" width="8" height="8" fill="red"/><text x="55" y="38" font-size="3">Whole Brand</text></g></g>
-        <g id="cardB" transform="translate(100 0)"><rect id="frameB" width="90" height="54" fill="white"/><text id="nameB" x="5" y="12" font-size="4">Blair Example</text></g></svg>''')
+        <g id="cardB" transform="translate(100 0)"><rect id="frameB" width="90" height="54" fill="white"/><text id="nameB" x="5" y="12" font-size="4">姓名：Blair Example</text></g></svg>''')
         self.tokens=[]
 
     def tearDown(self):

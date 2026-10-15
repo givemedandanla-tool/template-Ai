@@ -99,7 +99,7 @@ class AutomaticTrainingDialog(QDialog):
                 self.running=False;self.cancel_button.setEnabled(False);self.resume_button.setEnabled(True);self.start_button.setEnabled(self.report is not None)
                 if result.get('job'):self.render(result['job'])
                 else:self.status.setText('工作未完成：'+result['error']+'；依持久狀態接續')
-                self.reload();self.window.refresh_sources();self.window.refresh_templates(preserve_editor=True)
+                self.reload();self.window.refresh_sources(preserve_editor=True);self.window.refresh_templates(preserve_editor=True)
             self.window.run_job('來源→作品→標記→品質→學習候選',worker,finished)
         except Exception as error:
             if claimed:

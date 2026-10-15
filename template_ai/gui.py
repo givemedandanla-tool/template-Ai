@@ -217,6 +217,7 @@ class MainWindow(QMainWindow):
         self.reorder_customer_snapshot = None
         self.generation = 0
         self.undo_stack, self.redo_stack = [], []
+        self._mode_memory={};self._active_mode=0
         self.busy = False
         self._background_jobs = {}
         self.loading_form = False
@@ -253,7 +254,11 @@ class MainWindow(QMainWindow):
         title.setObjectName("title")
         outer.addWidget(title)
         outer.addWidget(QLabel("匯入原稿 → 視覺核對與標記 → 學習並發布模板 → 輸入人物資料 → 驗證與數位輸出"))
-        splitter = QSplitter()
+        splitter = QSplitter();self.workspace_splitter=splitter
+        rail=QWidget();rail.setMaximumWidth(185);rail_layout=QVBoxLayout(rail)
+        for label,index in [('訓練與原稿',0),('模板／Logo',1),('排版與輸出',2)]:
+            button=QPushButton(label);button.clicked.connect(lambda _,i=index:self.tabs.setCurrentIndex(i));rail_layout.addWidget(button)
+        rail_layout.addStretch();self.function_rail=rail;splitter.addWidget(rail)
         self.tabs = QTabWidget()
         self.tabs.addTab(self.build_training(), "① 訓練與原稿標記")
         self.tabs.addTab(self.build_templates(), "② 模板與 Logo")
@@ -265,7 +270,9 @@ class MainWindow(QMainWindow):
         self.tabs.currentChanged.connect(self.sync_property_mode)
         self.template_stack.currentChanged.connect(self.sync_property_mode)
         self.sync_property_mode()
-        splitter.setSizes([1000, 300])
+        for label,panel in [('功能導覽',rail),('屬性面板',self.property_panel)]:
+            action=QPushButton(label+' 顯示／收合');action.clicked.connect(lambda _,p=panel:p.setVisible(not p.isVisible()));outer.addWidget(action)
+        splitter.setSizes([160,1000,300])
         outer.addWidget(splitter, 1)
         self.setCentralWidget(root)
         self.setStyleSheet("""
@@ -769,7 +776,8 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage("原稿已重新連結；內容一致，原登錄、作品與模板版次保留")
         self.run_job("核對原稿內容後重連", lambda: verify_source(path, source["hash"]), finished)
 
-    def refresh_sources(self, select=None):
+    def refresh_sources(self, select=None, preserve_editor=False):
+        retained=self.source['id'] if preserve_editor and self.source else None
         self.sources = self.library.list_sources()
         self.source_combo.blockSignals(True)
         self.source_combo.clear()
@@ -777,11 +785,11 @@ class MainWindow(QMainWindow):
             self.source_combo.addItem(f"{Path(s['current_path']).name} · 第 {s['page']} 頁 · {s['engine']}", s["id"])
             self.source_combo.setItemData(self.source_combo.count() - 1,
                 f"原始登錄：{s['original_path']}\n目前位置：{s['current_path']}\n位置版次：r{s['link_revision']}", Qt.ToolTipRole)
-        select = select or self.library.active_source_id()
+        select = retained or select or self.library.active_source_id()
         if select:
             self.source_combo.setCurrentIndex(next((i for i, s in enumerate(self.sources) if s["id"] == select), 0))
         self.source_combo.blockSignals(False)
-        if self.sources:
+        if self.sources and not retained:
             self.choose_source(self.source_combo.currentIndex())
 
     def choose_source(self, index):
@@ -1642,10 +1650,12 @@ class MainWindow(QMainWindow):
         except Exception as e:
             self.error(str(e))
 
-    def mode_changed(self):
-        self.current_slot = None
-        self.property_button.setEnabled(False)
-        self.undo_stack, self.redo_stack = [], []
+    def mode_changed(self,index=None):
+        index=self.tabs.currentIndex() if index is None else index
+        self._mode_memory[self._active_mode]=(self.current_slot.id if self.current_slot else None,self.undo_stack,self.redo_stack)
+        self._active_mode=index
+        selected,self.undo_stack,self.redo_stack=self._mode_memory.get(index,(None,[],[]))
+        self.select_slot(next((s for s in self.current_slots() if s.id==selected),None))
 
     def repair_font(self):
         if self.busy:

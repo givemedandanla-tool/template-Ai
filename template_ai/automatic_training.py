@@ -100,16 +100,18 @@ class AutomaticTraining:
     def process_work(self,work,job):
         from .source_analysis import ANALYSER_VERSION
         identity=digest([work['id'],ANALYSER_VERSION]);before=self.store.get('AUTO_UNIT',identity);signature=self.work_signature(work)
-        if before and before['input_signature']==signature and before['state'] in ('WAITING_REVIEW','DRAFT_READY','EXCLUDED'):
+        if before and (before['state']=='EXCLUDED' or before['input_signature']==signature and before['state'] in ('WAITING_REVIEW','DRAFT_READY')):
             return before,True
         proof=self.store.source_proof(work['id']);self.store.checked(work['id'],proof)
         quality=analyse_work(work,self.library.source(work['source_id']));facts=self.store.facts(work['id'])
         noise=self.store.noise_decisions(work['id']);issues=[r for r in quality if r['severity'] in ('BLOCK','REVIEW')]
         templates=[];state='WAITING_REVIEW'
-        approved=[self.store.get('SAMPLE',sid) for sid, in self.db.execute("SELECT id FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id",(work['id'],))]
+        approved=[self.store.get('SAMPLE',sid) for sid, in self.db.execute("SELECT id FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id LIMIT 201",(work['id'],))]
+        if len(approved)>200:raise ValueError('單作品樣本超過200，需縮小已授權學習範圍')
         for sample in approved:
             if self.store.sample_state(sample['id'])!='APPROVED':continue
-            entries=list(self.db.execute("SELECT DISTINCT d.id FROM training_records d,json_each(d.payload,'$.entries') e WHERE d.kind='DATASET' AND json_extract(e.value,'$.sample_id')=? AND json_extract(e.value,'$.role')='TRAIN' ORDER BY d.id",(sample['id'],)))
+            entries=list(self.db.execute("SELECT DISTINCT d.id FROM training_records d,json_each(d.payload,'$.entries') e WHERE d.kind='DATASET' AND json_extract(e.value,'$.sample_id')=? AND json_extract(e.value,'$.role')='TRAIN' ORDER BY d.id LIMIT 201",(sample['id'],)))
+            if len(entries)>200:raise ValueError('單樣本資料集超過200，需明確縮小學習範圍')
             for dataset_id, in entries:
                 if not self.store.dataset_validity(dataset_id,[sample['id']])['valid']:continue
                 existing=self.store.existing_geometry_result(dataset_id,sample['id'])
@@ -159,6 +161,7 @@ class AutomaticTraining:
                     work=self.library.artwork(wid)
                     if hypothesis['observations']:
                         observations=self.store.validate_observations(wid,hypothesis['observations'])
+                        for observation in observations:observation['evidence']='AI_SOURCE_HYPOTHESIS'
                         self.store._write('FACTS',wid,dict(observations=observations,confirmation=None,state='PENDING',pins=self.store.pins(wid)),0,'source_observations_proposed_not_confirmed')
                         self.store._refresh_noise(wid)
                 works.append(work)

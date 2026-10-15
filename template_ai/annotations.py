@@ -33,12 +33,25 @@ class AnnotationSession:
         plan=propose(self.payload,'ARTWORK',request);self.checkpoint();self.payload=plan['after'];self.sync_observations();return plan
 
     def add(self,rect,kind='name',owner='p1',value='待來源核對'):
+        from .model import KINDS
+        import re
+        if kind not in KINDS or not isinstance(owner,str) or not re.fullmatch(r'[pc][1-9]\d*',owner):raise ValueError('先指定有效欄位類型與人物／公司歸屬')
         if len(self.payload['slots'])>=200 or not rect.inside(self.payload['work_width'],self.payload['work_height']):raise ValueError('新框需位於作品範圍且不超過200框')
         text(value,'候選來源內容',512);self.checkpoint()
         index=sum(s['kind']==kind and s['owner']==owner for s in self.payload['slots'])
         slot=Slot(kind,owner,rect,index=index);self.payload['slots'].append(asdict(slot));self.payload['visual_confirmed']=False
         self.observations.append(dict(id=new_id(),slot_id=slot.id,text=value,object_type='LOGO_PART' if kind=='logo' else 'TEXT',classification='LOGO' if kind=='logo' else 'FIELD',region=self.source_rect(rect)))
         return slot.id
+
+    def bind_observation(self,observation_id,kind,owner):
+        observation=next((o for o in self.observations if o['id']==observation_id and o.get('slot_id') is None),None)
+        if observation is None:raise ValueError('待審來源觀察已更新，請重新核對')
+        crop=self.payload['crop'];region=observation['region'];sx=self.payload['work_width']/crop['w'];sy=self.payload['work_height']/crop['h']
+        rect=Rect((region['x']-crop['x'])*sx,(region['y']-crop['y'])*sy,region['w']*sx,region['h']*sy)
+        identity=self.add(rect,kind,owner,observation['text'])
+        # Keep the source observation's stable identity and original prediction.
+        self.observations.pop();observation['slot_id']=identity;observation['classification']='LOGO' if kind=='logo' else 'FIELD'
+        return identity
 
     def source_rect(self,rect):
         crop=self.payload['crop'];sx=crop['w']/self.payload['work_width'];sy=crop['h']/self.payload['work_height']
@@ -52,6 +65,9 @@ class AnnotationSession:
                 observation['region']=self.source_rect(Rect(**slot['rect']))
                 observation['classification']='LOGO' if slot['kind']=='logo' else 'FIELD'
                 observation['object_type']='LOGO_PART' if slot['kind']=='logo' else 'TEXT'
+            original=next((o for o in self.facts['observations'] if o['id']==observation['id']),None)
+            if original is None or any(observation.get(k)!=original.get(k) for k in ('slot_id','text','region','classification')):
+                observation['evidence']='USER_OBSERVATION_DRAFT'
 
     def save(self):
         self.sync_observations();identity=self.base['id']

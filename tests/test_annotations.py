@@ -47,7 +47,7 @@ class AnnotationTests(unittest.TestCase):
         self.assertEqual({s['owner'] for s in slots if s['kind']=='name'},{'p1','p2'})
         self.assertEqual(sum(s['kind']=='logo' for s in slots),1)
         self.assertEqual(self.path.read_bytes(),before)
-        facts=self.service.store.facts(merged[0]['id']);self.assertIsNone(facts['confirmation']);self.assertTrue(any(o['text']=='Blair Example' for o in facts['observations']))
+        facts=self.service.store.facts(merged[0]['id']);self.assertIsNone(facts['confirmation']);self.assertTrue(any(o['text']=='姓名：Blair Example' for o in facts['observations']))
         self.assertTrue(all(self.library.artwork(w['id'])['payload']['segmentation_state']=='SUPERSEDED' for w in self.works))
         with self.assertRaisesRegex(ValueError,'取代'):AnnotationSession(self.library,self.works[0]['id'])
 

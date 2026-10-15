@@ -29,7 +29,7 @@ class AnnotationDialog(QDialog):
         self.coords=[]
         for key in ('x','y','w','h'):
             form.addWidget(QLabel(key+' mm'));spin=QDoubleSpinBox();spin.setRange(-2000,2000);spin.setDecimals(4);self.coords.append(spin);form.addWidget(spin)
-        for label,fn in [('套用此框屬性草稿',self.apply_properties),('刪除選定標記草稿',self.delete),('保存草稿（未確認）',self.save),('確認所選作品事實',self.confirm),('改正作品邊界／拆分',self.split),('合併同來源明確作品',self.merge)]:
+        for label,fn in [('將待審文字映射為所選類型',self.bind_observation),('套用此框屬性草稿',self.apply_properties),('刪除選定標記草稿',self.delete),('保存草稿（未確認）',self.save),('確認所選作品事實',self.confirm),('改正作品邊界／拆分',self.split),('合併同來源明確作品',self.merge)]:
             b=QPushButton(label);b.clicked.connect(fn);form.addWidget(b)
         self.visual=QCheckBox('已核對目前原作品／完整圖文及物理尺寸');form.addWidget(self.visual)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);form.addWidget(self.details,1);body.addWidget(panel);body.setSizes([220,760,340]);layout.addWidget(body,1);self.overlay=True;self.refresh()
@@ -52,6 +52,9 @@ class AnnotationDialog(QDialog):
         for slot in slots:
             observation=by_slot.get(slot.id,{});state='已確認' if observation.get('id') in confirmed else '候選／待核對'
             item=QListWidgetItem(slot.owner+'／'+KINDS.get(slot.kind,slot.kind)+'／'+state);item.setData(Qt.UserRole,slot.id);item.setToolTip(slot.id);self.objects.addItem(item)
+        for observation in self.session.observations:
+            if observation.get('slot_id') is None:
+                item=QListWidgetItem('待審文字／'+observation['text'][:60]);item.setData(Qt.UserRole,'observation:'+observation['id']);self.objects.addItem(item)
         self.canvas.set_content(payload['work_width'],payload['work_height'],image,slots,crop=Rect(0,0,payload['work_width'],payload['work_height']));self.canvas.set_mode('edit')
         self.visual.setChecked(bool(payload.get('visual_confirmed')));self.loading=False;self.select([i for i in self.ids if any(s.id==i for s in slots)])
 
@@ -62,15 +65,30 @@ class AnnotationDialog(QDialog):
 
     def select(self,ids):
         if self.loading:return
-        self.ids=list(ids);self.loading=True;self.canvas.select_ids(ids)
+        self.observation_id=next((i.split(':',1)[1] for i in ids if i.startswith('observation:')),None)
+        self.ids=[i for i in ids if not i.startswith('observation:')];self.loading=True;self.canvas.select_ids(self.ids)
         for i in range(self.objects.count()):self.objects.item(i).setSelected(self.objects.item(i).data(Qt.UserRole) in ids)
         self.loading=False
+        if self.observation_id:
+            observation=next(o for o in self.session.observations if o['id']==self.observation_id);self.value.setText(observation['text']);self.details.setPlainText('來源文字尚無可靠欄位映射；請選類型與歸屬再建立框。\n'+self.semantic_details(observation));return
         if len(ids)==1:
             slot=next(s for s in self.session.payload['slots'] if s['id']==ids[0]);self.kind.setCurrentIndex(self.kind.findData(slot['kind']));self.owner.setText(slot['owner'])
             observation=next((o for o in self.session.observations if o.get('slot_id')==ids[0]),None);self.value.setText(observation['text'] if observation else '')
             for spin,key in zip(self.coords,('x','y','w','h')):spin.setValue(slot['rect'][key])
-            self.details.setPlainText(f"作品 {self.session.base['id']}／來源 {self.session.base['source_id']}\n框 {ids[0]}／{slot['owner']}\n原生Illustrator對應未知；AI線索不等於真值。\n內容："+(observation['text'] if observation else '待補來源觀察'))
+            self.details.setPlainText(f"作品 {self.session.base['id']}／來源 {self.session.base['source_id']}\n框 {ids[0]}／{slot['owner']}\n原生Illustrator對應未知；AI線索不等於真值。\n"+self.semantic_details(observation))
         else:self.details.setPlainText(f'明確選取{len(ids)}框。多選只允許適用操作，不以首框值覆蓋共同屬性。')
+
+    def semantic_details(self,observation):
+        if not observation:return '待補來源觀察'
+        from .semantic_fields import recognize
+        row=recognize(observation['text'])
+        return observation['text']+'\n語意候選：'+row['semantic_type']+'／平台：'+str(row['platform'])+'\n正規化：'+row['normalized']+'\n判斷依據：'+'；'.join(row['signals'])+'\n'+row['confidence']+'／'+row['version']
+
+    def bind_observation(self):
+        def action():
+            if not self.observation_id:raise ValueError('先選左側待審文字')
+            self.ids=[self.session.bind_observation(self.observation_id,self.kind.currentData(),self.owner.text())];self.refresh()
+        self.guarded(action)
 
     def move(self,request):
         def action():self.session.change(dict(request,cross_owner=len({s['owner'] for s in self.session.payload['slots'] if s['id'] in request['ids']})<=1));self.refresh()
@@ -100,6 +118,7 @@ class AnnotationDialog(QDialog):
         for item in self.canvas.scene().items():
             if isinstance(item,Box):item.setVisible(self.overlay)
         self.canvas.resetting=False;self.status.setText('原稿檢視；選取保留、資料驗證仍涵蓋全部框' if not self.overlay else '作品邊界為橘色虛線，資料標記為藍框；來源未修改')
+        if self.overlay:self.canvas.select_ids(self.ids)
 
     def compare(self):
         old={s['id']:s for s in self.session.base['payload']['slots']};new={s['id']:s for s in self.session.payload['slots']}
