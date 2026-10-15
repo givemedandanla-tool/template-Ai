@@ -28,7 +28,7 @@ class AnnotationGuiTests(unittest.TestCase):
         dialog.select([slot['id']]);self.assertIn('name',dialog.details.toPlainText());self.assertIn('PENDING',dialog.session.facts['state'])
         dialog.value.setText('姓名：Alex Revised');dialog.coords[0].setValue(slot['rect']['x']+1);dialog.apply_properties()
         self.assertEqual(window.library.artwork(before['id']),before);dialog.undo();self.assertEqual(dialog.session.payload,before['payload']);dialog.redo();dialog.save()
-        self.assertEqual(window.library.artwork(before['id'])['revision'],before['revision']+1);self.assertIsNone(dialog.session.facts['confirmation']);self.assertEqual(dialog.session.observations[0]['evidence'],'USER_OBSERVATION_DRAFT')
+        self.assertEqual(window.library.artwork(before['id'])['revision'],before['revision']+1);self.assertIsNone(dialog.session.facts['confirmation']);self.assertEqual(next(o for o in dialog.session.observations if o.get('slot_id')==slot['id'])['evidence'],'USER_OBSERVATION_DRAFT')
         self.assertFalse(window.library.templates());self.assertEqual(self.path.read_bytes(),self.original_bytes)
 
     def test_unknown_source_observation_is_explicitly_mapped_with_same_stable_id_and_undo(self):

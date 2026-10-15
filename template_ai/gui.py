@@ -13,8 +13,8 @@ from PySide6.QtGui import QAction, QColor, QFont, QFontDatabase, QImage, QPainte
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBox, QFileDialog,
     QDialog, QDialogButtonBox, QFontComboBox, QFormLayout, QGraphicsItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView,
     QGroupBox, QHBoxLayout, QHeaderView, QInputDialog, QLabel, QLineEdit, QListWidget,
-    QMainWindow, QMessageBox, QPushButton, QSpinBox, QSplitter, QTabWidget, QTableWidget, QTreeWidget, QTreeWidgetItem,
-    QTableWidgetItem, QVBoxLayout, QWidget, QStackedWidget)
+    QMainWindow, QMessageBox, QPushButton, QSpinBox, QSplitter, QTabWidget, QTableWidget, QTreeWidget, QTreeWidgetItem, QPlainTextEdit,
+    QTableWidgetItem, QVBoxLayout, QWidget, QStackedWidget, QScrollArea)
 
 from . import __version__
 from .importer import import_file, inkscape_path
@@ -248,6 +248,7 @@ class MainWindow(QMainWindow):
 
     def sync_property_mode(self,*args):
         browsing=self.tabs.currentIndex()==1 and self.template_stack.currentIndex()==0
+        self.property_fields.setVisible(self.tabs.currentIndex()!=2);self.selected_info.setVisible(self.tabs.currentIndex()!=2);self.output_properties.setVisible(self.tabs.currentIndex()==2)
         self.property_panel.setEnabled(not browsing)
         self.property_panel.setToolTip("模板瀏覽為唯讀；先明確開啟模板編輯區" if browsing else "")
 
@@ -266,8 +267,8 @@ class MainWindow(QMainWindow):
         outer = QVBoxLayout(root)
         title = QLabel("Template AI   矩形區域自動排版與模板學習")
         title.setObjectName("title")
-        outer.addWidget(title)
-        outer.addWidget(QLabel("匯入原稿 → 視覺核對與標記 → 學習並發布模板 → 輸入人物資料 → 驗證與數位輸出"))
+        header=QHBoxLayout();header.addWidget(title,1);outer.addLayout(header)
+        title.setToolTip("匯入原稿 → 視覺核對與標記 → 學習並發布模板 → 輸入人物資料 → 驗證與數位輸出")
         splitter = QSplitter();self.workspace_splitter=splitter
         rail=QWidget();rail.setMaximumWidth(185);rail_layout=QVBoxLayout(rail)
         for label,index in [('訓練與原稿',0),('模板／Logo',1),('排版與輸出',2)]:
@@ -295,7 +296,7 @@ class MainWindow(QMainWindow):
         self.template_stack.currentChanged.connect(self.sync_property_mode)
         self.sync_property_mode()
         for label,panel in [('功能導覽',rail),('屬性面板',self.property_panel)]:
-            action=QPushButton(label+' 顯示／收合');action.clicked.connect(lambda _,p=panel:p.setVisible(not p.isVisible()));outer.addWidget(action)
+            action=QPushButton(label+' 顯示／收合');action.clicked.connect(lambda _,p=panel:p.setVisible(not p.isVisible()));header.addWidget(action)
         splitter.setSizes([160,1000,300])
         outer.addWidget(splitter, 1)
         self.setCentralWidget(root)
@@ -560,25 +561,28 @@ class MainWindow(QMainWindow):
         self.graph_button = self.button("人物ROOT卡片／共享公司與聯絡資料", self.edit_input_graph, graph_bar)
         self.button("清除當次輸入並回到簡易表格", self.clear_input_graph, graph_bar)
         layout.addLayout(graph_bar)
+        self.legacy_input_panel=QGroupBox('相容表格輸入／輸入問題（展開或收合）');self.legacy_input_panel.setCheckable(True)
+        table_container=QWidget();table_layout=QVBoxLayout(table_container);table_scroll=QScrollArea();table_scroll.setWidgetResizable(True);table_scroll.setWidget(table_container);table_scroll.setMaximumHeight(260)
+        group_layout=QVBoxLayout(self.legacy_input_panel);group_layout.addWidget(table_scroll);self.legacy_input_panel.toggled.connect(table_scroll.setVisible);self.legacy_input_panel.setChecked(False);layout.addWidget(self.legacy_input_panel)
         self.people = QTableWidget(1, 8)
         self.people.setHorizontalHeaderLabels(["姓名", "職稱", "電話", "Email", "LINE", "IG", "地址", "公司序號"])
         self.people.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.people.setMaximumHeight(115)
         self.people.itemChanged.connect(self.invalidate)
-        layout.addWidget(QLabel("人物資料：多筆同類聯絡資訊以「；」分隔，公司序號對應下方公司 1、2…"))
-        layout.addWidget(self.people)
+        table_layout.addWidget(QLabel("人物資料：多筆同類聯絡資訊以「；」分隔，公司序號對應下方公司 1、2…"))
+        table_layout.addWidget(self.people)
         row = QHBoxLayout()
         self.button("輸入問題報告", lambda: self.diagnostic_report("input"), row)
         self.button("新增人物", lambda: self.add_row(self.people), row)
         self.button("移除選取人物", lambda: self.remove_row(self.people), row)
         self.button("填入匿名示範資料", self.demo_input, row)
-        layout.addLayout(row)
+        table_layout.addLayout(row)
         self.companies = QTableWidget(1, 2)
         self.companies.setHorizontalHeaderLabels(["公司名稱", "已核准 Logo（依目前尺寸選取）"])
         self.companies.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.companies.setMaximumHeight(75)
         self.companies.itemChanged.connect(self.invalidate)
-        layout.addWidget(self.companies)
+        table_layout.addWidget(self.companies)
         from .input_warning_delegate import InputWarningDelegate
         self.people.setItemDelegate(InputWarningDelegate(self.people));self.companies.setItemDelegate(InputWarningDelegate(self.companies))
         self.input_state = QLabel('輸入待驗證；欄位提示不代表印前通過')
@@ -586,7 +590,7 @@ class MainWindow(QMainWindow):
         self.input_problems = QListWidget()
         self.input_problems.setMaximumHeight(100)
         self.input_problems.itemClicked.connect(self.locate_input_problem)
-        layout.addWidget(self.input_problems)
+        table_layout.addWidget(self.input_problems)
         self.input_timer = QTimer(self)
         self.input_timer.setSingleShot(True)
         self.input_timer.timeout.connect(self.refresh_input_problems)
@@ -594,7 +598,7 @@ class MainWindow(QMainWindow):
         self.button("新增公司", self.add_company, row)
         self.button("移除選取公司", lambda: self.remove_row(self.companies), row)
         self.button("更新同尺寸 Logo 選項", self.refresh_logos, row)
-        layout.addLayout(row)
+        table_layout.addLayout(row)
         split = QSplitter()
         self.button('無合格現成模板：授權特製草稿',self.custom_layout,layout)
         self.candidate_list = QListWidget()
@@ -654,7 +658,7 @@ class MainWindow(QMainWindow):
         widget = QWidget()
         widget.setMinimumWidth(260)
         layout = QVBoxLayout(widget)
-        group = QGroupBox("目前欄位 · 毫米屬性")
+        group = QGroupBox("目前欄位 · 毫米屬性");self.property_fields=group
         form = QFormLayout(group)
         self.kind = QComboBox()
         for key, name in KINDS.items():
@@ -710,8 +714,8 @@ class MainWindow(QMainWindow):
         self.selected_info = QLabel("先在畫布選取一個欄位。\n字級定案後不因字數自動改變。\n字寬下限是模板設計值，尚未實體印刷驗證。")
         self.selected_info.setWordWrap(True)
         layout.addWidget(self.selected_info)
-        layout.addStretch()
-        layout.addWidget(QLabel("第一版：標記幾何規則學習\n自動語意辨識與深度模型仍待後續研究\n本機資料不會自動上傳"))
+        self.output_properties=QPlainTextEdit();self.output_properties.setReadOnly(True);self.output_properties.setPlainText('尚無目前候選；請完成輸入並試排。');layout.addWidget(self.output_properties,1)
+        layout.addWidget(QLabel('標記／規則須明確核准；本機資料不會自動上傳。'))
         return widget
 
     def inform(self, text):
@@ -1640,6 +1644,7 @@ class MainWindow(QMainWindow):
         self.reorder_template_id=None
         self.people.clearContents();self.people.setRowCount(1);self.companies.clearContents();self.companies.setRowCount(1)
         for table in (self.people,self.companies):table.setEditTriggers(QTableWidget.DoubleClicked|QTableWidget.EditKeyPressed|QTableWidget.AnyKeyPressed)
+        self.legacy_input_panel.setChecked(True)
         self.graph_status.setText("簡易表格模式；可隨時轉入人物ROOT卡片。")
         self.refresh_logos();self.invalidate()
 
@@ -1672,6 +1677,7 @@ class MainWindow(QMainWindow):
         self.preview_button.setEnabled(False)
         if self.candidates:
             self.issues.setText("資料／尺寸／模板或 Logo 已變更；目前候選過期，請重新排版。")
+        if hasattr(self,'output_properties'):self.output_properties.setPlainText('當次資料／尺寸／模板已變更；候選過期，請重新試排。')
         if hasattr(self,'qualified_candidates'):
             self.qualified_candidates.setEnabled(False);self.blocked_candidates.setEnabled(False)
         self.inputs_invalidated.emit(self.generation)
@@ -1705,6 +1711,7 @@ class MainWindow(QMainWindow):
     def locate_input_problem(self, item):
         if self.active_input_graph is not None:
             self.edit_input_graph();return
+        self.legacy_input_panel.setChecked(True)
         issue=item.data(Qt.UserRole);table=getattr(self,issue['table']);table.setCurrentCell(issue['row'],issue['col']);table.setFocus()
 
     def custom_layout(self):
@@ -1769,6 +1776,7 @@ class MainWindow(QMainWindow):
             current = c.generation == self.generation
             self.export_button.setEnabled(c.valid and current)
             self.preview_button.setEnabled(current)
+            self.output_properties.setPlainText(f"目前候選：{c.template.name} v{c.template.version}\nID {c.template.id}\n尺寸 {c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n"+('已驗證合格（有效版本）' if c.valid and current else '不合格／過期：禁止正式輸出')+'\n排序為規則適配，非審美保證\n'+'；'.join(c.reasons)+'\n問題：\n'+'\n'.join(c.issues[:20]))
             self.input_state.setText(('目前所選候選已驗證合格；輸出前仍需重核有效版本。' if c.valid else '目前所選候選已驗證不合格：禁止正式輸出。可修正輸入或授權範圍內特製草稿；不推論所有設計都無解。') if current else '輸入／候選已變更，待重新驗證。')
             self.issues.setText(("數位排版檢查通過；尚未做實體印刷分析。" if c.valid else "正式輸出阻擋：\n" + "\n".join(c.issues[:8])) + "\n" + "；".join(c.reasons))
         except Exception as e:

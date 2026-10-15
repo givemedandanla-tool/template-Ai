@@ -1,0 +1,35 @@
+........This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+..This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+..This plugin does not support propagateSizeHints()
+FThis plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+...This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+..This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.
+======================================================================
+FAIL: test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save (test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_annotation_gui.py", line 31, in test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save
+    self.assertEqual(window.library.artwork(before['id'])['revision'],before['revision']+1);self.assertIsNone(dialog.session.facts['confirmation']);self.assertEqual(dialog.session.observations[0]['evidence'],'USER_OBSERVATION_DRAFT')
+                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'AI_SOURCE_HYPOTHESIS' != 'USER_OBSERVATION_DRAFT'
+- AI_SOURCE_HYPOTHESIS
++ USER_OBSERVATION_DRAFT
+
+
+----------------------------------------------------------------------
+Ran 25 tests in 21.190s
+
+FAILED (failures=1)

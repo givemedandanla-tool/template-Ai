@@ -11,6 +11,7 @@ import shutil
 import subprocess
 import sys
 import time
+import traceback
 import unittest
 import xml.etree.ElementTree as ET
 
@@ -108,14 +109,25 @@ def main():
     write_json(folder / "source-manifest.json", before)
     log = io.StringIO()
     runner = unittest.TextTestRunner(stream=log, verbosity=2, resultclass=EvidenceResult)
-    result = runner.run(unittest.defaultTestLoader.discover(str(ROOT / "tests")))
+    runtime_errors=[];previous_hook=sys.excepthook
+    def runtime_hook(kind,value,tb):
+        runtime_errors.append(dict(type=kind.__name__,message=str(value),traceback=''.join(traceback.format_exception(kind,value,tb))))
+        previous_hook(kind,value,tb)
+    sys.excepthook=runtime_hook
+    try:
+        result = runner.run(unittest.defaultTestLoader.discover(str(ROOT / "tests")))
+        from PySide6.QtWidgets import QApplication
+        from PySide6.QtCore import QCoreApplication,QEvent
+        if QApplication.instance():QApplication.instance().processEvents();QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete)
+    finally:sys.excepthook=previous_hook
+    write_json(folder/'runtime-errors.json',runtime_errors)
     records = list(result.records.values())
     write_json(folder / "tests.json", records)
     (folder / "tests.log").write_text(log.getvalue(), encoding="utf-8")
     junit(records, folder / "junit.xml")
     capture_log = folder / "capture.log"
     capture_code = 1
-    if result.wasSuccessful() and records:
+    if result.wasSuccessful() and records and not runtime_errors:
         generated = ROOT / ".checkpoints/evidence-workspaces" / args.run_id
         command = [sys.executable, str(ROOT / "tools/validate_first_version.py"), "--skip-tests",
                    "--artifacts-dir", str(generated), "--dpi", "96"]
@@ -129,6 +141,13 @@ def main():
         if capture_code == 0:
             for path in generated.glob('next20-*'):
                 if path.is_file():shutil.copyfile(path,folder/path.name)
+        if capture_code == 0:
+            extra=subprocess.run([sys.executable,str(ROOT/'tools/capture_next_twentyeight.py'),'--artifacts-dir',str(generated)],cwd=ROOT,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=90)
+            with capture_log.open('a') as log:log.write(extra.stdout+extra.stderr)
+            capture_code=extra.returncode
+            if capture_code==0:
+                for path in generated.glob('next28-*'):
+                    if path.is_file():shutil.copyfile(path,folder/path.name)
         if capture_code == 0:
             extra=subprocess.run([sys.executable,str(ROOT / 'tools/capture_fixed70_ten.py'),'--artifacts-dir',str(generated)],cwd=ROOT,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=60)
             with capture_log.open('a') as log:log.write(extra.stdout+extra.stderr)
@@ -171,7 +190,7 @@ def main():
     from template_ai.importer import inkscape_path
     converter = inkscape_path()
     inkscape_version = subprocess.run([converter, "--version"], capture_output=True, text=True, timeout=10).stdout.strip() if converter else None
-    status = "PASS" if result.wasSuccessful() and records and capture_code == 0 and source_unchanged else "FAIL"
+    status = "PASS" if result.wasSuccessful() and records and capture_code == 0 and source_unchanged and not runtime_errors else "FAIL"
     tests_lookup = {item["id"]: item["status"] for item in records}
     registry = read_json(ROOT / "docs/dev/REQUIREMENTS.json")
     claims = []
@@ -193,6 +212,13 @@ def main():
             parents=[dict(id=pid,clauses=[c for c in actual if c['requirement_id']==pid]) for pid in ten['target_parent_ids']],
             all_registered_clauses_pass=bool(actual) and all(c['status']=='PASS' for c in actual),
             independent_review=False,physical_print_verified=False,private_ai_comprehensive_verified=False))
+    twenty_eight=ROOT/'docs/dev/FIXED70_NEXT_TWENTYEIGHT_CONTRACT.json'
+    if twenty_eight.is_file():
+        contract=read_json(twenty_eight);targets=contract['target_parent_ids'];parent_clauses=[dict(id=pid,clauses=[c for c in claims if c['requirement_id']==pid]) for pid in targets]
+        expected={a['parent']:a.get('clause_count',0) for a in contract['acceptance']}
+        complete=all(parent['clauses'] and len(parent['clauses'])==expected.get(parent['id']) and all(c['status']=='PASS' for c in parent['clauses']) for parent in parent_clauses)
+        write_json(folder/'fixed70-twentyeight-parent-audit.json',dict(kind='DERIVED_CLAUSE_TRACEABILITY_FROM_ACTUAL_TEST_EXECUTION',source_commit=args.source_commit,source_unchanged=source_unchanged,parent_count=len(targets),clause_count=sum(len(p['clauses']) for p in parent_clauses),parents=parent_clauses,all_registered_clauses_pass=complete,independent_review=False,physical_print_verified=False,private_ai_comprehensive_verified=False))
+        if not complete:status='FAIL'
     seventy = ROOT / "docs/dev/SEVENTY_PARENTS_CONTRACT.json"
     if seventy.is_file():
         contract = read_json(seventy)
@@ -202,7 +228,7 @@ def main():
                    for path in folder.iterdir() if path.is_file()}
     run = {"schema_version": 1, "id": args.run_id, "created_utc": datetime.now(timezone.utc).isoformat(), "source_commit": args.source_commit,
            "source_manifest_sha256": manifest_digest(before), "source_unchanged": source_unchanged, "status": status,
-           "test_count": len(records), "passed": sum(r["status"] == "PASS" for r in records), "capture_exit_code": capture_code,
+           "unhandled_runtime_errors":len(runtime_errors), "test_count": len(records), "passed": sum(r["status"] == "PASS" for r in records), "capture_exit_code": capture_code,
            "tests_sha256": digest((folder / "tests.json").read_bytes()), "attachments": attachments,
            "environment": {"python": platform.python_version(), "os": platform.platform(), "PySide6": qt_version, "inkscape": inkscape_version, "qt_platform": os.environ.get("QT_QPA_PLATFORM")},
            "command": "python tools/run_evidence.py --run-id " + args.run_id + " --source-commit " + args.source_commit + " --commit-json <readback> --tree-json <readback>",
