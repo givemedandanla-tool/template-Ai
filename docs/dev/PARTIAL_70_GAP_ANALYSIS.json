@@ -1,0 +1,3327 @@
+{
+  "schema_version": 1,
+  "id": "PARTIAL-70-GAPS-20261015",
+  "created_at_taipei": "2026-10-15T15:35:45.187744+08:00",
+  "status": "FINAL_SOURCE_BOUND",
+  "baseline": "docs/dev/progress/PROGRESS-20261015-DIAGNOSTICS-BEGIN.json",
+  "baseline_partial_parent_count": 70,
+  "covered_parent_count": 70,
+  "source_commit": "fc5956bcbff2a068f36c4bbc440f938ca177d7e1",
+  "source_evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+  "effective_decisions": [
+    "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md",
+    "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md"
+  ],
+  "method": "原始完整條款＋程式閱讀＋具名CORE範圍／測試證據對帳。缺完整驗收不推論全部程式不存在。這是缺口分析，不是70題的完整功能驗收或獨立覆核。",
+  "not_counted_as_current_missing": [
+    "EXE",
+    "全面Illustrator私有結構還原",
+    "UI056D補樣",
+    "前期實體印刷分析",
+    "新訂單／永久案件庫"
+  ],
+  "types": {
+    "implementation_and_acceptance": "仍缺明列行為／整合，且須完整驗收",
+    "acceptance": "已有較多能力，主要尚缺整項條款覆核；可沿用有效證據，不要求重寫",
+    "external_and_acceptance": "需要合法實例或指定設備等實際條件與證據",
+    "umbrella": "跨功能整體目標，不能以單一子功能結案"
+  },
+  "rows": [
+    {
+      "id": "UI-001",
+      "title": "三模式主視窗",
+      "current_status": "PARTIAL",
+      "implemented_subset": "三個工作頁及共用工具入口已存在",
+      "why_still_partial": "主視窗尚未完成原定左功能／中央畫布／右側理由與底部狀態的統一、可收合配置",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "完成各模式面板收合與狀態一致；驗證切換時選取、未提交內容及背景任務不丟失",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "三模式入口、可收合面板與共用工具一致",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-001",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-002",
+      "title": "模式切換狀態",
+      "current_status": "PARTIAL",
+      "implemented_subset": "可保留當次部分頁面狀態，已有來源／作品上下文",
+      "why_still_partial": "尚無各模式縮放、平移、多選、未套用屬性及背景任務切換的完整驗收矩陣",
+      "gap_kind": "acceptance",
+      "remaining_scope_and_full_acceptance": "逐模式驗證安全切換與焦點保持；只提醒真正會遺失的修改，不把本題擴成永久案件恢復",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-017",
+          "title": "多作品與上次來源上下文",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/training_navigation.py",
+          "sha256": "79fce04ea0b9e16fe7323f93ee482c8686fa80ba904e646d70cf7d0f4a73dc60"
+        }
+      ],
+      "original_full_requirement": "模式切換保留有效當次狀態，恢復擴充依 UI-058",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-002",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-003",
+      "title": "訓練區批次匯入與啟動",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有精確去重、批次匯入與可恢復幾何學習工作",
+      "why_still_partial": "一次確認後自動切作品、辨欄位／歸屬、學習及驗證的完整流程未串齊；近似重複仍未知",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補預檢到候選驗證的一鍵管線與例外分流，測多來源、多作品、重用、取消及跨啟動續跑",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-008",
+          "title": "同內容快取與獨立來源登錄",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-030",
+          "title": "背景工作生命週期與GUI成功／錯誤交接",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-042",
+          "title": "批次來源唯讀預檢、exact 去重及啟動確認",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-043",
+          "title": "單 worker 持久匯入佇列、取消及續跑",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-064",
+          "title": "受控幾何學習單worker與持久結果",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-065",
+          "title": "合作取消／中斷恢复與精確續跑",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/batch_import.py",
+          "sha256": "72beb7e35b1c38e83e056689b58241872d517a2ff4328dbaf62a6f7e31cb98e6"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        }
+      ],
+      "original_full_requirement": "預檢確認一次啟動，三層去重不混淆",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-003",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-004",
+      "title": "訓練例外處理",
+      "current_status": "PARTIAL",
+      "implemented_subset": "例外隔離、篩選、受控重試與來源保護已具子項證據",
+      "why_still_partial": "隔離目前涵蓋明列的匯入／版本失敗；全部辨識、語意、字型、Logo錯誤與依賴增量重分析未全覆蓋",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補齊錯誤家族與增量依賴；驗證單件失敗其餘繼續、不可隔離錯誤才暫停",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-044",
+          "title": "可解釋例外排序、exact 影響及來源定位",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-045",
+          "title": "例外單件重試、排除與恢復的 CAS 歷史",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "單件例外隔離，其餘合法工作繼續",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-004",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-005",
+      "title": "例外中心智慧待辦排序",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有可解釋排序、真實影響數及例外檢視",
+      "why_still_partial": "不同錯誤家族、來源與影響範圍尚未整合成完整待辦；修復後只重算依賴的閉環不足",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "逐類對照排序／搜尋／篩選與定位，測不同人物公司不能盲目批次修正",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-044",
+          "title": "可解釋例外排序、exact 影響及來源定位",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-045",
+          "title": "例外單件重試、排除與恢復的 CAS 歷史",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "待辦排序與影響數有來源，不能自動解除隔離",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-005",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-006",
+      "title": "例外修正工作台",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有來源對照、字型差異及安全物件修正工具",
+      "why_still_partial": "尚未完整連接所有辨識問題的原稿／疊圖／修正後同步視角、語意與歸屬編輯和局部重分析",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "完成同作品各檢視選取同步、取消／復原／確認差異，再驗證只影響選取作品",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-035",
+          "title": "實際來源與前後矩形渲染",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/object_dialog.py",
+          "sha256": "90c4b9f1b73ce6d30fadf3efa58d4217a65ca39585cc689061377d06fdd83d37"
+        },
+        {
+          "path": "template_ai/comparison_view.py",
+          "sha256": "aee177ee977c6be486f58d60941039be1cc6d34830f45858db2745cff6510b63"
+        }
+      ],
+      "original_full_requirement": "原稿／疊圖／前後對照，修正可撤銷且不改原檔",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-006",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-007",
+      "title": "修正套用與 AI 學習確認",
+      "current_status": "PARTIAL",
+      "implemented_subset": "作品事實確認、候選規則、幾何模板學習及版本保存已存在",
+      "why_still_partial": "目前以人工事實與雜訊規則為主，其他欄位／歸屬修正自動累積跨作品候選及反例的閉環未完整",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補候選產生、適用條件／反例／衝突、正式人工核准與依賴重算；不要求指定深度模型架構",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-009",
+          "title": "人工標記規則模板閉環",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-019",
+          "title": "模板固定學習來源版次",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-048",
+          "title": "人工來源觀察與作品事實確認",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-049",
+          "title": "事實revision差異與確認撤銷",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-050",
+          "title": "單作品雜訊排除與精確作用範圍",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-051",
+          "title": "有正反例的可重用雜訊候選",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-060",
+          "title": "exact資料集manifest與同源角色隔離",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-061",
+          "title": "可信TRAIN樣本幾何草稿學習",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-064",
+          "title": "受控幾何學習單worker與持久結果",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-065",
+          "title": "合作取消／中斷恢复與精確續跑",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        }
+      ],
+      "original_full_requirement": "確認作品事實不自動發布跨作品規則",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-007",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-008",
+      "title": "待審核規則中心",
+      "current_status": "PARTIAL",
+      "implemented_subset": "規則審核中心可確認或拒絕明列規則，保留版本",
+      "why_still_partial": "低風險分組批次核准與高風險逐條審核、完整來源反例／衝突資訊尚未涵蓋所有規則種類",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "完成風險與適用條件分組、精確選取、批准／暫緩理由，測一個高風險規則不被整批放行",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-052",
+          "title": "可解釋規則分組與審核詳情",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-053",
+          "title": "低風險批准／逐條詳審與版本CAS",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/rule_review_panel.py",
+          "sha256": "160c0daaa991304e62102bd8320fa52bb3e9fa44ce585b6f17392d7a373596e7"
+        }
+      ],
+      "original_full_requirement": "低風險批次、高風險逐條，啟用均有人為核准",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-008",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-009",
+      "title": "模板庫瀏覽方式",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有模板選取、版本與基本詳情",
+      "why_still_partial": "尚缺完整尺寸→人物容量階層、縮圖／列表切換、狀態與搜尋篩選及批次選取流程",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補雙檢視共用同一索引；測切換不丟搜尋或選取、預覽不直接進編輯",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        }
+      ],
+      "original_full_requirement": "按實體尺寸及 peopleCapacity 分類並保持搜尋選取",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-009",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-010",
+      "title": "模板版本編輯機制",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已發布唯讀、新版草稿、物件／字型歷史與發布檢查已有證據",
+      "why_still_partial": "已驗證的是數個子流程，未逐條覆蓋所有模板變更種類的版本差異、回滾及正式版持續可用",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "先對帳現有能力，補缺失的差異／回滾入口與跨欄位發布驗收，不重建第二套Undo",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-007",
+          "title": "模板發布歷史不可覆寫",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-015",
+          "title": "背景 GUI 核對及版本保護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-020",
+          "title": "發布與審核同一交易",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        },
+        {
+          "path": "template_ai/object_dialog.py",
+          "sha256": "90c4b9f1b73ce6d30fadf3efa58d4217a65ca39585cc689061377d06fdd83d37"
+        },
+        {
+          "path": "template_ai/font_review.py",
+          "sha256": "cdec6d5f6eaad56a382d57fe0883ad74b51c74ac471d666f535e3b77c5143a52"
+        }
+      ],
+      "original_full_requirement": "正式版本唯讀，草稿持久，驗證及核准後發布",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-010",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-011",
+      "title": "模板編輯器物件操作",
+      "current_status": "PARTIAL",
+      "implemented_subset": "畫布、語意物件與屬性編輯已有基礎工具",
+      "why_still_partial": "完整人物ROOT與共享公司模型尚缺，主編輯畫布三向同步與即時全部硬條件未整項證明",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "與UI016／017共用穩定歸屬模型，驗證畫布／清單／屬性選取同一物件及保護發布版本",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/object_dialog.py",
+          "sha256": "90c4b9f1b73ce6d30fadf3efa58d4217a65ca39585cc689061377d06fdd83d37"
+        },
+        {
+          "path": "template_ai/model.py",
+          "sha256": "b663b0e0fd856f211b67a48fbade9e6945a60674a04281c890a14a230e0c54de"
+        }
+      ],
+      "original_full_requirement": "畫布／語意樹／屬性同一物件與歸屬",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-011",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-012",
+      "title": "物件移動縮放與智慧對齊",
+      "current_status": "PARTIAL",
+      "implemented_subset": "毫米數值、幾何檢查與受控對齊已有子項",
+      "why_still_partial": "自由拖曳／縮放、鍵盤微調、邊界／中心吸附及可切換參考線尚未形成完整一致流程",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補吸附與手勢的精確預覽、鎖定保護和Undo；逐一驗證關閉疊圖不關閉驗證",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-003",
+          "title": "缺字型與幾何檢查",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/object_tools.py",
+          "sha256": "99b21322eea6981bed740d79eac9f9ca205b1b318113801c1cec44a108917ab9"
+        },
+        {
+          "path": "template_ai/model.py",
+          "sha256": "b663b0e0fd856f211b67a48fbade9e6945a60674a04281c890a14a230e0c54de"
+        }
+      ],
+      "original_full_requirement": "毫米幾何、吸附及鎖定，草稿違規不可發布",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-012",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-013",
+      "title": "文字框智慧編輯介面",
+      "current_status": "PARTIAL",
+      "implemented_subset": "固定字級與字形量測、受限水平壓縮及字型預覽已驗證",
+      "why_still_partial": "尚缺字級先決定的可解釋設計策略、字距／延展／條件式分散對齊及其完整編輯介面",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "在已定案字級不變前提補合法策略與理由，測長姓名／電話／Email不被一律分散或暗縮字級",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-001",
+          "title": "固定字級與長文字無解阻擋",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-034",
+          "title": "字型款式持久與候選、排版及渲染身份一致",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/model.py",
+          "sha256": "b663b0e0fd856f211b67a48fbade9e6945a60674a04281c890a14a230e0c54de"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "字級定案不依字數改變，無合法解不截字",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-013",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-014",
+      "title": "文字框無解診斷與輸入密度分級提醒",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已會量測字寬、阻擋違反固定字級條件並區分預估風險",
+      "why_still_partial": "尚未遍歷所有允許安全調整／特製排版及形成可核對的無解範圍證據；密度分級未完整",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補安全候選與適用限制、空間／字距方案及跨階段一致提示；只對實際證明的搜尋範圍宣告無解",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-001",
+          "title": "固定字級與長文字無解阻擋",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/input_diagnostics.py",
+          "sha256": "8e792dfacf244cf4f333e9e1e221460a46927b26000e22f5c5c416d47075611f"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "實測無解與證據不足分開，禁止暗縮字級",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-014",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-015",
+      "title": "使用者資料輸入警告介面",
+      "current_status": "PARTIAL",
+      "implemented_subset": "逐欄提示、輸入問題清單與exact儲存格定位已做",
+      "why_still_partial": "公司／共享資料與全部多筆欄位的分級導覽及輸入→試排→輸出同一狀態尚未完整",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "完成右側問題導覽與不同風險來源，驗證輸入法、連續打字不奪焦點及刪改後即時更新",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-002",
+          "title": "資料完整映射與人物容量",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-066",
+          "title": "逐欄輸入問題、整體待驗狀態與exact儲存格定位",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/input_diagnostics.py",
+          "sha256": "8e792dfacf244cf4f333e9e1e221460a46927b26000e22f5c5c416d47075611f"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "欄位提醒、整體狀態與問題定位判定一致",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-015",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "PEOPLE_CUSTOMERS",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-016",
+      "title": "新增人物、公司與多筆聯絡資料",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有多人物表格、分號多值及基本人物容量檢查",
+      "why_still_partial": "尚缺人物卡片ROOT、同人多公司、穩定共享實體、情境新增／複製／解除／刪除影響預覽",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "先做人物／公司／聯絡資料穩定ID及關聯模型，再驗證共享與獨立複本不混用",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-002",
+          "title": "資料完整映射與人物容量",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/model.py",
+          "sha256": "b663b0e0fd856f211b67a48fbade9e6945a60674a04281c890a14a230e0c54de"
+        },
+        {
+          "path": "template_ai/customers.py",
+          "sha256": "a1dbba7e01b7304ff5da028af9fc7bb25f58a0c87482450432ec36f6d56a6f65"
+        }
+      ],
+      "original_full_requirement": "多人多公司、多聯絡方式保持各自語意所有權",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-016",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "PEOPLE_CUSTOMERS",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-017",
+      "title": "共享公司與聯絡資料編輯",
+      "current_status": "PARTIAL",
+      "implemented_subset": "公司序號映射及同尺寸Logo防混配已存在",
+      "why_still_partial": "當次輸入仍非完整共享實體模型；連結、獨立複本、解除關聯、刪除及多引用影響提示未完成",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補可追溯共享關聯與差異／撤銷，測解除一人關聯不刪其他人公司或私人聯絡資料",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-004",
+          "title": "人物公司與同尺寸 Logo 防混配",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/model.py",
+          "sha256": "b663b0e0fd856f211b67a48fbade9e6945a60674a04281c890a14a230e0c54de"
+        },
+        {
+          "path": "template_ai/customers.py",
+          "sha256": "a1dbba7e01b7304ff5da028af9fc7bb25f58a0c87482450432ec36f6d56a6f65"
+        }
+      ],
+      "original_full_requirement": "實體共享、複本、解除關聯與刪除區別",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-017",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "PEOPLE_CUSTOMERS",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-018",
+      "title": "自動排版結果與候選模板呈現",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有同尺寸同容量候選、硬性檢查及字寬保持程度排名",
+      "why_still_partial": "缺合格／待驗／不合格分區的完整比較、允許的特製排版及完整推薦／淘汰解釋",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補多方案比較與特製草案同等驗證；測部分搜尋不宣稱唯一最佳，切換不改發布模板",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/layout_session.py",
+          "sha256": "74974eca81b1aa403c2698185a18f0f8e9c65c7a790bcfbe52ce8231cbfab82b"
+        }
+      ],
+      "original_full_requirement": "先硬驗證後候選排序，未完成搜尋不稱全域最佳",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-018",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-019",
+      "title": "印刷預檢與高保真 Logo 預覽輸出",
+      "current_status": "PARTIAL",
+      "implemented_subset": "合成樣本的數位三格式、背景、字型、比例及基本預覽已有證據",
+      "why_still_partial": "尚缺完整數位預檢項目的可定位清單、真實複合Logo／文字細節與格式來源一致性驗收",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補安全區／裁切等已核准數位檢查與高保真參考；實體設備／材料印刷依REV03後移，不作本期阻塞",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-005",
+          "title": "數位三格式尺寸與安全寫檔",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-013",
+          "title": "固定背景實際向量與圖像輸出",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/render.py",
+          "sha256": "76bbced53625f97137cc72df4927d90eba098f39cc8d407103a410d7137305f1"
+        },
+        {
+          "path": "template_ai/background.py",
+          "sha256": "4ddd9797ce662335106e07f6f7817d813f63322f1c80511c177fbae9276644ac"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "本輪修訂：數位視覺／輸出品質前期驗證；實體印刷分析移至軟體完善後 P10",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-019",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LOGO",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-020",
+      "title": "複合公司 Logo 與來源品質管理",
+      "current_status": "PARTIAL",
+      "implemented_subset": "Logo作整體資產、公司歸屬與缺圖占位已有防線",
+      "why_still_partial": "複合圖文Logo的自動邊界／公司辨識、來源品質與完整內容證據尚未完整",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "建立整體Logo來源候選與人工核對，測Logo內公司文字不被拆成可變文字且圖文完整",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/render.py",
+          "sha256": "76bbced53625f97137cc72df4927d90eba098f39cc8d407103a410d7137305f1"
+        },
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        }
+      ],
+      "original_full_requirement": "Logo 圖形加文字整體保護，OCR 不拆商標",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-020",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LOGO",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-021",
+      "title": "複合 Logo 訓練校正、Logo 資料庫與缺圖占位",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有Logo資產表、核准標記與黑底白字占位",
+      "why_still_partial": "缺自動提出複合Logo、框位合併／拆分校正及候選→審核→正式入庫的完整閉環",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補來源候選與包含內容／歸屬比較；測拒絕、撤銷或缺圖都不能冒充正式Logo",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        },
+        {
+          "path": "template_ai/render.py",
+          "sha256": "76bbced53625f97137cc72df4927d90eba098f39cc8d407103a410d7137305f1"
+        }
+      ],
+      "original_full_requirement": "候選核准入庫，缺圖同框位黑底白字只作占位",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-021",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LOGO",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-022",
+      "title": "Logo 資料庫管理與審核介面",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有按尺寸查閱的Logo表與既有匯入能力",
+      "why_still_partial": "尚非完整已核准／AI待審／人工匯入三檢視；版本替換、撤銷、近似比較與引用影響不足",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "完成同庫管理、來源細節與風險審核，驗證更新不靜默改變已選Logo或其他公司",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/logo_library_dialog.py",
+          "sha256": "f3e13d2bddc6800a63be2ab8d9eb9b488c7787464ccadbf81c5fb76a4ce23837"
+        },
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "同尺寸跨模式入口共用，候選未核准不入正式庫",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-022",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LOGO",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-023",
+      "title": "同公司 Logo 版本選用與按尺寸獨立 Logo 庫",
+      "current_status": "PARTIAL",
+      "implemented_subset": "尺寸與公司核對可阻止跨庫Logo混用",
+      "why_still_partial": "版本歧義比較、確切已核准版本持久綁定及唯一新尺寸預測例外尚未完整",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補單版／多版狀態和版本變動失效，測正常已知尺寸絕不跨庫借用",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-004",
+          "title": "人物公司與同尺寸 Logo 防混配",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        },
+        {
+          "path": "template_ai/logo_library_dialog.py",
+          "sha256": "f3e13d2bddc6800a63be2ab8d9eb9b488c7787464ccadbf81c5fb76a4ce23837"
+        }
+      ],
+      "original_full_requirement": "已知尺寸不跨庫，唯一新尺寸例外仍須目標核准",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-023",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LOGO",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-024",
+      "title": "各尺寸 Logo 庫管理與新尺寸預測專區",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已做尺寸樹、正常尺寸隔離與唯讀跨尺寸參考",
+      "why_still_partial": "唯讀參考不是新尺寸預測；尚缺預測候選驗證、明確核准與寫入目標尺寸庫",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "完成獨立預測專區及入庫流程，驗證返回一般模式後恢復嚴格尺寸隔離",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-067",
+          "title": "依實體尺寸樹隔離既有核准Logo及唯讀跨尺寸參考區",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/logo_library_dialog.py",
+          "sha256": "f3e13d2bddc6800a63be2ab8d9eb9b488c7787464ccadbf81c5fb76a4ce23837"
+        },
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        }
+      ],
+      "original_full_requirement": "新尺寸預測專區與正常尺寸庫隔離",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-024",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LOGO",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-025",
+      "title": "Logo 框位等比適配與安全候選比較",
+      "current_status": "PARTIAL",
+      "implemented_subset": "現有渲染保持Logo比例、完整放入框位並阻擋錯尺寸",
+      "why_still_partial": "缺完整占用／留白／比例資訊、同尺寸變體比較及安全框位調整候選",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補原框與實際占用疊圖及版本比較，測留白不等於失敗、無方案不裁切拉伸商標",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-004",
+          "title": "人物公司與同尺寸 Logo 防混配",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/render.py",
+          "sha256": "76bbced53625f97137cc72df4927d90eba098f39cc8d407103a410d7137305f1"
+        },
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "等比完整放入，留白不自動失敗，不能裁切變形",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-025",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LOGO",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-026",
+      "title": "公司 Logo 自動匹配、選擇與匯入介面",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有公司資料與同尺寸Logo選擇入口",
+      "why_still_partial": "尚缺人物ROOT公司卡片、單一合格版預填、多版歧義比較、候選審核狀態與來源連動",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補公司卡片狀態與人工選擇，驗證無合格Logo保留占位而非借用其他尺寸或品牌",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/logo_library_dialog.py",
+          "sha256": "f3e13d2bddc6800a63be2ab8d9eb9b488c7787464ccadbf81c5fb76a4ce23837"
+        },
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        }
+      ],
+      "original_full_requirement": "單一有效版可預覽，多版歧義人工選擇並綁版本",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-026",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LOGO",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-027",
+      "title": "多尺寸驗證總覽、部分正式輸出與黑底白字預覽檔",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有單一尺寸候選驗證、正式／PREVIEW分流",
+      "why_still_partial": "尚無同一次輸入的多尺寸狀態總覽、各尺寸獨立排版及只輸出勾選合格尺寸的整體流程",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "完成多尺寸矩陣與部分成功確認，測A尺寸正式成功、B缺Logo僅能預覽且互不放行",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/render.py",
+          "sha256": "76bbced53625f97137cc72df4927d90eba098f39cc8d407103a410d7137305f1"
+        }
+      ],
+      "original_full_requirement": "各矩形尺寸獨立排版／數位驗證，部分正式輸出明確確認；印刷分析後移",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-027",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-028",
+      "title": "黑底白字占位預覽檔格式與非正式標示",
+      "current_status": "PARTIAL",
+      "implemented_subset": "PREVIEW檔名與內容非正式標記及三種格式已有子證據",
+      "why_still_partial": "尺寸分檔、所有問題摘要及多尺寸預覽／正式路徑分離尚未整項覆蓋",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補多尺寸外側說明區及缺Logo加其他錯誤的完整標記；驗證不蓋掉作品內容、不以預覽當正式",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-006",
+          "title": "候選過期與非正式預覽標示",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/render.py",
+          "sha256": "76bbced53625f97137cc72df4927d90eba098f39cc8d407103a410d7137305f1"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "PNG 預設與非正式標示保留；數位內容與比例驗證，實體印刷分析後移",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-028",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-029",
+      "title": "批次輸出清單、智慧命名與安全儲存",
+      "current_status": "PARTIAL",
+      "implemented_subset": "單檔有格式選擇、不覆寫與完整暫存後排他發布",
+      "why_still_partial": "尚缺一次選資料夾的多尺寸多格式待輸出清單、智慧命名、同批重名處理和逐檔真狀態",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "建置共用批次輸出計畫，測FINAL／PREVIEW分流、取消／略過／撞名與部分成功",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-005",
+          "title": "數位三格式尺寸與安全寫檔",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/render.py",
+          "sha256": "76bbced53625f97137cc72df4927d90eba098f39cc8d407103a410d7137305f1"
+        },
+        {
+          "path": "template_ai/safe_publish.py",
+          "sha256": "802f96238011de4eaa5769d11715f5051ba224ad7a8f75ee80615f45d38c4133"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "正式／預覽分流，預設不覆寫，逐檔真實狀態",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-029",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-030",
+      "title": "批次輸出失敗診斷與安全重試",
+      "current_status": "PARTIAL",
+      "implemented_subset": "單次輸出失敗不留下成功假檔，已有錯誤提示",
+      "why_still_partial": "還沒有完整批次輸出清單與僅重試選定失敗項的安全狀態機",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補逐項原因與重新驗證／更名，注入磁碟滿、占用、中斷，測成功檔不被重產或刪除",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-005",
+          "title": "數位三格式尺寸與安全寫檔",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/render.py",
+          "sha256": "76bbced53625f97137cc72df4927d90eba098f39cc8d407103a410d7137305f1"
+        },
+        {
+          "path": "template_ai/safe_publish.py",
+          "sha256": "802f96238011de4eaa5769d11715f5051ba224ad7a8f75ee80615f45d38c4133"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "只重試失敗項，保護成功檔，半成品不作正式成功",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-030",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-031",
+      "title": "字型缺失與 Illustrator 特殊文字效果處理",
+      "current_status": "PARTIAL",
+      "implemented_subset": "Inkscape／PDF相容AI路徑、字型健康與缺字阻擋已有證據",
+      "why_still_partial": "真實特殊效果AI仍欠可信視覺參考及有效訓練閉環；缺失原生資訊不能冒稱已還原",
+      "gap_kind": "external_and_acceptance",
+      "remaining_scope_and_full_acceptance": "以合法匿名真AI逐例核對字形／遮罩／Logo並實際學習；完整私有原生結構不是共同必要條件",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-003",
+          "title": "缺字型與幾何檢查",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-035",
+          "title": "實際來源與前後矩形渲染",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/importer.py",
+          "sha256": "1aae2dd4d4c6ff3f898bde22fd6883ffb102541bdb02dcbcf97ec4c51bb88dcf"
+        },
+        {
+          "path": "template_ai/fonts.py",
+          "sha256": "01acecaf1703d8f78c91e31ac46f022923bf281aa2a23b88193ee4412403c674"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        }
+      ],
+      "original_full_requirement": "本輪修訂：Inkscape 等路徑視覺一致且可訓練可完成匯入；原生資訊缺失如實標記",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-031",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "EXTERNAL",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-032",
+      "title": "Windows 字型庫、智慧匹配、匯入與受控安裝介面",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有本機字型核准複本、健康檢查、候選排名、款式預覽與持久載入",
+      "why_still_partial": "尚缺Windows實測、完整TTC／同家族不同檔版本處理、受控系統安裝及嵌字授權流程",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補Windows能力探測及明確安裝授權，驗證載入不等於安裝、缺字／失聯／異動不借字型通過",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-021",
+          "title": "字型持久複本與新程序載入",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-022",
+          "title": "字型核准、異動與失敗保護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-025",
+          "title": "核准同內容字型複本修復與中斷核對",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-028",
+          "title": "共用字型管理、資產身份與模板影響查詢",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-029",
+          "title": "實際字形覆蓋、固定字級毫米量測與框宽診斷",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-031",
+          "title": "字型替代候選硬篩、可解釋排名與唯讀預覽",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-034",
+          "title": "字型款式持久與候選、排版及渲染身份一致",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/fonts.py",
+          "sha256": "01acecaf1703d8f78c91e31ac46f022923bf281aa2a23b88193ee4412403c674"
+        },
+        {
+          "path": "template_ai/font_catalog.py",
+          "sha256": "184b1987b902681a788a181c982a1c6c9b38980c31f4657aeff79bc569aa2dc0"
+        },
+        {
+          "path": "template_ai/font_candidates.py",
+          "sha256": "e1a7de869c9e7a37d13ce04bf8404dc1d52e2c1816ef1e0a7df530028e0b446d"
+        }
+      ],
+      "original_full_requirement": "程式載入與 Windows 安裝不同，系統安裝需明確同意",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-032",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-033",
+      "title": "字型替代影響範圍與風險分級批次審核",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有逐欄影響差異、風險審核、新草稿、持久Undo／Redo",
+      "why_still_partial": "原稿與主畫布定位、所有來源品質、跨尺寸及正式輸出完整重驗尚未整項驗證",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補完整影響／選取矩陣及失敗隔離，測高風險未看預覽不得整批核准、舊版及其他欄位不變",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-022",
+          "title": "字型核准、異動與失敗保護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-032",
+          "title": "字型替代影響、逐欄量測與人工審核",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-033",
+          "title": "受控字型替代新版本草稿、全批交易及持久復原重做",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-035",
+          "title": "實際來源與前後矩形渲染",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-036",
+          "title": "唯讀同步視圖、欄位定位與字型審核整合",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/font_review.py",
+          "sha256": "cdec6d5f6eaad56a382d57fe0883ad74b51c74ac471d666f535e3b77c5143a52"
+        },
+        {
+          "path": "template_ai/font_review_dialog.py",
+          "sha256": "75ba508c2749dcc410fa8e59ca5457cb59e5f855b7d878d72c8f1fb96a71938a"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "替代前逐欄影響，勾選低風險批次，高風險逐筆",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-033",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-034",
+      "title": "畫布、物件清單與屬性面板同步安全編輯",
+      "current_status": "PARTIAL",
+      "implemented_subset": "物件工具已有三向選取、多選混合值、差異與原子保存",
+      "why_still_partial": "工具對話框的已驗範圍不代表所有主畫布／模式／共享實體及屬性都完整同步",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補主編輯入口與全部物件類型，驗證空選取清舊值、混合值不覆蓋、鎖定／來源／發布版本受保護",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-013",
+          "title": "固定背景實際向量與圖像輸出",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-014",
+          "title": "背景核准、内容与失聯保護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-015",
+          "title": "背景 GUI 核對及版本保護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-016",
+          "title": "人工文字色彩",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-037",
+          "title": "三向安全多選與混合共同屬性",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-038",
+          "title": "持久物件鎖定與全編輯途徑保護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-039",
+          "title": "精確幾何差異、原子套用與持久UndoRedo",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/object_dialog.py",
+          "sha256": "90c4b9f1b73ce6d30fadf3efa58d4217a65ca39585cc689061377d06fdd83d37"
+        },
+        {
+          "path": "template_ai/object_tools.py",
+          "sha256": "99b21322eea6981bed740d79eac9f9ca205b1b318113801c1cec44a108917ab9"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "三向多選同一集合，混合值不被默默覆蓋",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-034",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-035",
+      "title": "語意樹、Illustrator 圖層與搜尋／鎖定管理介面",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有語意索引、可證實或衍生結構、搜尋與暫時隱藏／鎖定",
+      "why_still_partial": "尚欠完整共享人物／公司ROOT、所有可得來源的雙索引唯一映射與深層群組狀態矩陣驗收",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補可得映射與共享引用，測切換搜尋不丟選取、隱藏不減驗證；不要求還原全部Illustrator私有結構",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-038",
+          "title": "持久物件鎖定與全編輯途徑保護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-040",
+          "title": "人物 ROOT 語意引用、搜尋及 viewport 安全檢視",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-041",
+          "title": "衍生 SVG 結構唯讀索引與未知映射保護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/object_dialog.py",
+          "sha256": "90c4b9f1b73ce6d30fadf3efa58d4217a65ca39585cc689061377d06fdd83d37"
+        },
+        {
+          "path": "template_ai/object_tools.py",
+          "sha256": "99b21322eea6981bed740d79eac9f9ca205b1b318113801c1cec44a108917ab9"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "已取得的原圖層或衍生物件結構分層呈現，不虛構原生結構；隱藏不減驗證範圍",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-035",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-036",
+      "title": "多物件精確對齊、等距分布與群組位移",
+      "current_status": "PARTIAL",
+      "implemented_subset": "精確對齊、等距分布、群組位移、差異、CAS與Undo已有子項證據",
+      "why_still_partial": "尚未逐條驗證全部畫布入口、各參照基準、深層群組／共享Logo與不適用成員處理",
+      "gap_kind": "acceptance",
+      "remaining_scope_and_full_acceptance": "先核對現有功能，補缺失互動或驗收；測取消零變更、含鎖定物件不得偷偷排除後稱整組成功",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-039",
+          "title": "精確幾何差異、原子套用與持久UndoRedo",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/object_tools.py",
+          "sha256": "99b21322eea6981bed740d79eac9f9ca205b1b318113801c1cec44a108917ab9"
+        },
+        {
+          "path": "template_ai/object_dialog.py",
+          "sha256": "90c4b9f1b73ce6d30fadf3efa58d4217a65ca39585cc689061377d06fdd83d37"
+        }
+      ],
+      "original_full_requirement": "明確基準與差異預覽，對齊不改字級／Logo 比例",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-036",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-037",
+      "title": "畫布縮放、平移、快速定位與同步對照檢視",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有縮放、平移、聚焦與同步對照視角工具",
+      "why_still_partial": "尚未涵蓋所有主畫布倍率輸入／滑桿、視角連動與可核對的螢幕物理尺寸校準",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補多入口視角操作與選取錨點測試；未校準只說顯示倍率，不能保證螢幕1:1毫米",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-036",
+          "title": "唯讀同步視圖、欄位定位與字型審核整合",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/comparison_view.py",
+          "sha256": "aee177ee977c6be486f58d60941039be1cc6d34830f45858db2745cff6510b63"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "縮放平移只改視角，實際尺寸須校準才承諾",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-037",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-038",
+      "title": "多作品總覽、智慧辨識框與作品上直接標記／修正",
+      "current_status": "PARTIAL",
+      "implemented_subset": "可手動切分多作品、畫布標記、保存歷史與重新定位",
+      "why_still_partial": "智慧作品邊界／欄位候選與跨頁作品隔離未完整自動化；真AI視覺與可訓練有效性待驗",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補作品總覽與候選框校正，驗證同頁多人多尺寸不混作品，來源只讀且衍生資訊標UNKNOWN",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-017",
+          "title": "多作品與上次來源上下文",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-018",
+          "title": "標記歷史、遷移與競爭寫入",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        },
+        {
+          "path": "template_ai/importer.py",
+          "sha256": "1aae2dd4d4c6ff3f898bde22fd6883ffb102541bdb02dcbcf97ec4c51bb88dcf"
+        }
+      ],
+      "original_full_requirement": "矩形作品範圍與雙層標記；適用 Inkscape 衍生來源，視覺一致且有效可訓練",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-038",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-039",
+      "title": "AI 智慧資料辨識框的畫布快捷標記與人工校正",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有人工來源觀察、欄位事實確認及語意屬性",
+      "why_still_partial": "來源文字及欄位候選多由人工提供，尚缺自動辨識候選、畫布旁快捷標記及風險批次確認閉環",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補候選證據／不確定性與就近校正，測修改標記不等於修改原稿、未確認不得成訓練真值",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-048",
+          "title": "人工來源觀察與作品事實確認",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-049",
+          "title": "事實revision差異與確認撤銷",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/training_facts_panel.py",
+          "sha256": "21e854caf391e33d5496e4749095796e63ffd70e665b54df63eb6fc6404023f2"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "標記中介資料與真物件編輯區別，確認可追溯",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-039",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-040",
+      "title": "智慧標記完整性衝突檢查與可重用雜訊剔除規則",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有幾何／映射／重疊品質檢查與核准雜訊規則自動命中",
+      "why_still_partial": "原生語意對應、全部來源真實欄位完整性及複合Logo包含關係仍有UNKNOWN，未覆蓋全部辨識衝突",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補可靠來源對應與語意檢查；測行政註記排除不刪原稿、Logo合理包含不誤刪、真欄位優先",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-046",
+          "title": "標記完整性與有界幾何語意診斷",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-047",
+          "title": "診斷搜尋排序與精確來源框定位",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-050",
+          "title": "單作品雜訊排除與精確作用範圍",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-051",
+          "title": "有正反例的可重用雜訊候選",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-054",
+          "title": "核准後後續精確命中自動排除",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-055",
+          "title": "持久命中追溯與疑義保留",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_quality.py",
+          "sha256": "9b6890c41616df38c657c9e59f3e7a12e938cffd32cfd830c468c20991dd1bba"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/noise.py",
+          "sha256": "352bb899d587e18ab4ed97faf470e64fb296c14082aac2f281a8ba29cc9344ca"
+        }
+      ],
+      "original_full_requirement": "核准雜訊條件後自動排除，不反覆問也不刪原稿",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-040",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-041",
+      "title": "雜訊規則庫、命中追溯、例外白名單與安全回滾",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有雜訊命中、白名單、單項恢復、版本回滾與安全隔離",
+      "why_still_partial": "已做明列規則流程，全部匹配條件／衝突優先序、畫布定位及完整歷史依賴重算尚未整項覆蓋",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "逐種規則／白名單做完整對帳與回歸；測回滾不覆蓋後續人工資料、不以恢復代表已再驗證",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-054",
+          "title": "核准後後續精確命中自動排除",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-055",
+          "title": "持久命中追溯與疑義保留",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-056",
+          "title": "局部誤判恢复與可重用白名單",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-057",
+          "title": "規則停用回滾與exact依賴影響",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/noise_hits_panel.py",
+          "sha256": "7744b05b84c57b1cd7c43f51a4bfa84d67b8c3c1a2adfd90b28c9618c60fd921"
+        }
+      ],
+      "original_full_requirement": "命中追溯、單項恢復、白名單及規則回滾可核對",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-041",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-042",
+      "title": "訓練可恢復進度、精確去重與客戶資料庫重訂關聯",
+      "current_status": "PARTIAL",
+      "implemented_subset": "來源內容與獨立登錄、精確去重、標記歷史及幾何學習續跑已做",
+      "why_still_partial": "尚缺完整解析→辨識→學習的跨啟動斷點及來源檔名客戶碼→穩定人物／公司／版型重訂關聯",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補各階段版本化檢查點與客戶候選審核，測異名同位元仍保留各客戶身份與前導零",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-008",
+          "title": "同內容快取與獨立來源登錄",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-018",
+          "title": "標記歷史、遷移與競爭寫入",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-023",
+          "title": "來源快取完整性與損壞恢復",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-042",
+          "title": "批次來源唯讀預檢、exact 去重及啟動確認",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-043",
+          "title": "單 worker 持久匯入佇列、取消及續跑",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-064",
+          "title": "受控幾何學習單worker與持久結果",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-065",
+          "title": "合作取消／中斷恢复與精確續跑",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/batch_import.py",
+          "sha256": "72beb7e35b1c38e83e056689b58241872d517a2ff4328dbaf62a6f7e31cb98e6"
+        },
+        {
+          "path": "template_ai/customers.py",
+          "sha256": "a1dbba7e01b7304ff5da028af9fc7bb25f58a0c87482450432ec36f6d56a6f65"
+        }
+      ],
+      "original_full_requirement": "異名同內容共用分析、保留來源客戶映射及斷點",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-042",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-043",
+      "title": "智慧客戶建檔、版型關聯與正式資料結構方案",
+      "current_status": "PARTIAL",
+      "implemented_subset": "本機手動客戶建檔、穩定欄位、客戶編號與確切版型關聯已驗證",
+      "why_still_partial": "尚缺從來源檔名／作品／人物公司自動提出建檔候選及衝突審核後的安全批次入庫",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補智慧候選及人工確認，測多作品、多尺寸與重複客戶碼不錯綁、不建立購買分類",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-068",
+          "title": "單一Library內人工客戶建檔、stable人物與欄位ID、前導零及確切模板關聯",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/customers.py",
+          "sha256": "a1dbba7e01b7304ff5da028af9fc7bb25f58a0c87482450432ec36f6d56a6f65"
+        },
+        {
+          "path": "template_ai/customer_dialog.py",
+          "sha256": "d097f6ee232fb4ee680ff7c7e02613c397f899284db78246335ebfc28d886333"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        }
+      ],
+      "original_full_requirement": "客戶關聯尺寸版型，不設購買分類，編號保留前導零",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-043",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "PEOPLE_CUSTOMERS",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-044",
+      "title": "舊客戶多條件搜尋、多尺寸版型比較與安全沿用重訂",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有有界文字搜尋、身份確認與exact模板版本預填",
+      "why_still_partial": "完整多條件與聯絡欄位搜尋、多尺寸縮圖／版本比較及完整重訂互動尚缺",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補可解釋匹配及各尺寸版型選取，測同名同電話不推定同人，過期版型不能沿用為合格",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-069",
+          "title": "受控多條件搜尋、身份確認後引用確切版本預填當次資料",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/customers.py",
+          "sha256": "a1dbba7e01b7304ff5da028af9fc7bb25f58a0c87482450432ec36f6d56a6f65"
+        },
+        {
+          "path": "template_ai/customer_dialog.py",
+          "sha256": "d097f6ee232fb4ee680ff7c7e02613c397f899284db78246335ebfc28d886333"
+        }
+      ],
+      "original_full_requirement": "搜尋核對身份，沿用確切版型開新稿並重驗",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-044",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "PEOPLE_CUSTOMERS",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-045",
+      "title": "客戶主檔與當次製作逐欄差異、選擇性回寫與版本保護",
+      "current_status": "PARTIAL",
+      "implemented_subset": "逐欄差異、明確勾選、清空／未提供區別及CAS交易回寫已驗證",
+      "why_still_partial": "尚缺共享公司／聯絡實體及跨實體版本影響、完整反向回復與重訂引用的連動流程",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "接上人物公司模型，測只用本次不改主檔、過期或晚期失敗全交易不部分回寫",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-070",
+          "title": "逐欄勾選差異確認與客戶revision CAS原子回寫",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/customers.py",
+          "sha256": "a1dbba7e01b7304ff5da028af9fc7bb25f58a0c87482450432ec36f6d56a6f65"
+        },
+        {
+          "path": "template_ai/customer_dialog.py",
+          "sha256": "d097f6ee232fb4ee680ff7c7e02613c397f899284db78246335ebfc28d886333"
+        }
+      ],
+      "original_full_requirement": "只回寫明確勾選欄位，過期主檔版本阻擋",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-045",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "PEOPLE_CUSTOMERS",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-046",
+      "title": "疑似重複客戶比對、受控合併與可追溯拆分恢復",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有兩個客戶的唯讀重複比對",
+      "why_still_partial": "合併、舊編號別名搜尋、全部關聯遷移及可追溯拆分尚未實作",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補合併前全影響預覽與雙方CAS、別名及拆分；測後續新值不被歷史拆分覆蓋",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-071",
+          "title": "疑似重複只讀雙方比對與線索，不自動合併",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/customers.py",
+          "sha256": "a1dbba7e01b7304ff5da028af9fc7bb25f58a0c87482450432ec36f6d56a6f65"
+        },
+        {
+          "path": "template_ai/customer_dialog.py",
+          "sha256": "d097f6ee232fb4ee680ff7c7e02613c397f899284db78246335ebfc28d886333"
+        }
+      ],
+      "original_full_requirement": "合併須確認、別名可查，拆分不覆蓋後續新值",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-046",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "PEOPLE_CUSTOMERS",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-047",
+      "title": "本機關聯資料智慧備份、加密驗證與安全還原移轉",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有一致SQLite部分備份、成熟加密驗證與新目錄隔離還原",
+      "why_still_partial": "目前明示DATABASE_ONLY_PARTIAL，未封裝外部來源／字型／Logo，無完整排程與全關聯移轉",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補可選範圍與完整依賴Manifest、排程／保留政策及隔離還原驗證；缺資產必須報不完整",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-072",
+          "title": "一致SQLite快照、驗證加密檔與新目錄隔離還原、外部資產明示缺失",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/secure_backup.py",
+          "sha256": "b1b59daaf56b9823e5be71ebf9494f12db3f0ccdf3167e872c9cfba71c90a45a"
+        },
+        {
+          "path": "template_ai/customer_dialog.py",
+          "sha256": "d097f6ee232fb4ee680ff7c7e02613c397f899284db78246335ebfc28d886333"
+        },
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        }
+      ],
+      "original_full_requirement": "加密完整性及隔離還原，缺資產不宣稱完整可用",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-047",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "PEOPLE_CUSTOMERS",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-049",
+      "title": "Illustrator 來源搬移失聯、內容驗證與受控批次重新連結",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已做同位元單件／有界批次來源重新連結與快取恢復",
+      "why_still_partial": "尚缺多根目錄、完整字型／其他資產依賴與所有真實客戶關聯的重連驗收；Windows待實測",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補多根搜尋／歧義選擇及完整影響摘要，測不同內容同名不重連、映射與原稿不改",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-023",
+          "title": "來源快取完整性與損壞恢復",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-024",
+          "title": "單件來源內容驗證與安全重連",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-026",
+          "title": "受控範圍背景來源定位與候選影響預覽",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-027",
+          "title": "批次來源重連交易、歷史與安全復原",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/source_links.py",
+          "sha256": "e12846cc020ec9d49df048c3662b62cae3e7c927afc2e02e9ffb5146af032429"
+        },
+        {
+          "path": "template_ai/source_discovery.py",
+          "sha256": "e145b6d84264975fa3cfe4edc7928ade6e74707600a46317ec65c9fe2e779ff4"
+        },
+        {
+          "path": "template_ai/source_dialog.py",
+          "sha256": "6d3598be6083f3b06cbb9366c3e390ff2e134abd82443a00ccf439e1406baf46"
+        }
+      ],
+      "original_full_requirement": "來源重連以內容驗證，不憑同名，原檔不修改",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-049",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-050",
+      "title": "AI 來源資料夾智慧監看、安全增量匯入與版本衝突審核",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已做註冊根目錄、手動重掃、兩次實際hash確認穩定及增量分類",
+      "why_still_partial": "尚無OS事件自動監看／自動安全匯入、事件去抖與跨啟動重掃恢復的完整流程",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補事件只是提示的監看器及有界匯入佇列，測暫存檔、寫入中、漏事件／離線／改名均重新核實",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-073",
+          "title": "明確根目錄人工重掃、雙次穩定內容核對、增量分類與只讀來源",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/source_scan.py",
+          "sha256": "9ab2558cb32fb45cc8611f985ef6f52c49b17a3fa1c83e294b343b08b3d6955b"
+        },
+        {
+          "path": "template_ai/source_scan_dialog.py",
+          "sha256": "4af35aebc5869dd47391219758f92eafffbbd3628f2eefce45b1260639d63c31"
+        },
+        {
+          "path": "template_ai/batch_import.py",
+          "sha256": "72beb7e35b1c38e83e056689b58241872d517a2ff4328dbaf62a6f7e31cb98e6"
+        }
+      ],
+      "original_full_requirement": "監看事件需重掃核實，寫入未穩定不分析",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-050",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-051",
+      "title": "低配置友善、公平審核佇列與安全續跑",
+      "current_status": "PARTIAL",
+      "implemented_subset": "有單worker、像素／檔案預算、分頁、錯誤隔離與幾何工作續跑",
+      "why_still_partial": "尚缺跨所有解析／OCR／排版工作的整體資源背壓、公平性及指定Windows低配峰值／反應時間實測",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補保守資源預算和不飢餓佇列；逐來源逐作品審核，測重啟／磁碟失敗；不新增急件分類",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-012",
+          "title": "匯入前像素預算",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-030",
+          "title": "背景工作生命週期與GUI成功／錯誤交接",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-043",
+          "title": "單 worker 持久匯入佇列、取消及續跑",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-064",
+          "title": "受控幾何學習單worker與持久結果",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-065",
+          "title": "合作取消／中斷恢复與精確續跑",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/layout_session.py",
+          "sha256": "74974eca81b1aa403c2698185a18f0f8e9c65c7a790bcfbe52ce8231cbfab82b"
+        },
+        {
+          "path": "template_ai/importer.py",
+          "sha256": "1aae2dd4d4c6ff3f898bde22fd6883ffb102541bdb02dcbcf97ec4c51bb88dcf"
+        }
+      ],
+      "original_full_requirement": "參考 16 GB 整機 RAM＋RTX 5050 與待補規格 VivoBook；CPU 核心、限流及檢查點",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-051",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "EXTERNAL",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-052",
+      "title": "全來源與作品審核覆蓋率、風險分級與安全批次結案",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有全庫來源／作品／樣本分母、有效性與角色分離及下鑽",
+      "why_still_partial": "統計不等於所有來源及語意審核完成；尚缺全部風險類型的逐項處置與安全批次結案快照",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補未審／排除／失聯／待人工區分和版本化結案，測無作品來源與異名客戶不得漏掉",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-062",
+          "title": "審核覆蓋分母與分頁定位",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-063",
+          "title": "樣本分布／未知分類與中性缺口提示",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/coverage_panel.py",
+          "sha256": "f80b6f337d3e8b8b19c58e6ac5c4ee1da731dcffc6003c76dd4826d16b8c7b54"
+        }
+      ],
+      "original_full_requirement": "分母不漏來源，未審不可結案，重大错誤可重審歷史批次",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-052",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-053",
+      "title": "獨立樣本品質驗收、分類誤判診斷、版本比較與品質阻擋",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有固定HOLDOUT分類紀錄、混淆矩陣／TPFPFN、A/B及證據不足Gate",
+      "why_still_partial": "預測仍為人工／外部紀錄，未形成實際模型／解析管線推論、可靠群組獨立性與核准品質門檻",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補真實推論與獨立有權樣本、各類門檻／樣本量依據；測關鍵歸屬錯誤與分類退步不得用平均分掩蓋",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-074",
+          "title": "固定HOLDOUT資料集版本的分類預測與人工真值比對、混淆計數及不足Gate",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/quality_evaluation.py",
+          "sha256": "3d90351f956374637c704e82596b097f40469278f18b2187f9431a264fe575ad"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/quality_evaluation_panel.py",
+          "sha256": "5ec0dcffeb9f9e5ffbf37a3ac953433a0b0344ad91f0e9551166374b8025d0ae"
+        }
+      ],
+      "original_full_requirement": "獨立資料分類品質保留；解析品質依視覺一致、訓練有效性及已取得證據判定",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-053",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-054",
+      "title": "品質失敗根因分析、受控局部修復、獨立再驗收與安全回退",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有根因假說、隔離修復候選、holdout揭露與禁止無證據回退",
+      "why_still_partial": "尚無實際受影響範圍的修復／再訓練執行、新獨立驗收與可批准採用／回退的完整閉環",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補受控候選執行及反向退步測試，測舊測試用於修復後需新holdout、兩版均差不可聲稱退回安全",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-075",
+          "title": "exact失敗評估建立隔離根因修復待辦、候選版本對照與無證據回退阻擋",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/quality_evaluation.py",
+          "sha256": "3d90351f956374637c704e82596b097f40469278f18b2187f9431a264fe575ad"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        }
+      ],
+      "original_full_requirement": "根因候選隔離、回歸及獨立再驗收，兩版有問題不假退回安全",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-054",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-055",
+      "title": "人工修正可信訓練樣本池、標記版本與資料污染防護",
+      "current_status": "PARTIAL",
+      "implemented_subset": "可信樣本准入、來源／標記版本、exact資料集與角色鎖已有證據",
+      "why_still_partial": "精確hash隔離尚不能涵蓋不同位元近似設計／客戶與模板家族；完整模型用途及污染撤銷仍有缺口",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補可核實相關群組、防洩漏與各用途消費紀錄，測隔離後所有真正依賴失效且原資料保留",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-019",
+          "title": "模板固定學習來源版次",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-058",
+          "title": "來源與用途核對的可信樣本准入",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-059",
+          "title": "污染隔離撤銷與exact使用追溯",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-060",
+          "title": "exact資料集manifest與同源角色隔離",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-061",
+          "title": "可信TRAIN樣本幾何草稿學習",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/trusted_samples_panel.py",
+          "sha256": "08f5e69185d20a5f204a110f2fd460536c48d6ab214192aac0fd1b0e55a0be4f"
+        },
+        {
+          "path": "template_ai/dataset_panel.py",
+          "sha256": "487f994e2f3a3db949400ba90ca57c8299c5a4222789b833a74728880b78a70d"
+        }
+      ],
+      "original_full_requirement": "樣本准入與訓練分離，污染可追查 exact 資料集與模型",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-055",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-056",
+      "title": "訓練樣本類別覆蓋儀表板、缺口提醒與資料分布透明化",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有有效樣本分布、來源／作品／內容分母、角色分離與UNKNOWN提示",
+      "why_still_partial": "現行C的全部分類維度、可靠標記、近似群組／中性缺口提示及下鑽尚未逐條具證；不是因未做D補樣",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補已核准C的可追溯分類與門檻依據／未知處理；測重疊類別不灌大總數、不自動產生補樣任務",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-062",
+          "title": "審核覆蓋分母與分頁定位",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-063",
+          "title": "樣本分布／未知分類與中性缺口提示",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/coverage_panel.py",
+          "sha256": "f80b6f337d3e8b8b19c58e6ac5c4ee1da731dcffc6003c76dd4826d16b8c7b54"
+        }
+      ],
+      "original_full_requirement": "C 分布與缺口提醒；D 系統補樣不得提前做",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-056",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-057",
+      "title": "AI 未涵蓋情境的分級風險提示、安全草稿與硬性無解阻擋",
+      "current_status": "PARTIAL",
+      "implemented_subset": "硬性違反會阻擋、過期失效、非正式預覽及診斷未知分流已有基礎",
+      "why_still_partial": "安全推薦／低把握待確認草稿／已證實無安全方案三態尚未覆蓋全部未見情境及來源證據",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補安全草稿與分尺寸風險理由，測忽略警告不放行、缺經驗不自動宣稱無解",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/diagnostic_snapshot.py",
+          "sha256": "f54f014505d7de7c17daa25e3baa12017b3be685ce06133e0ea005857b3416e4"
+        }
+      ],
+      "original_full_requirement": "低把握、缺證據、已證實無解區別，忽略警告不能放行",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-057",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-058",
+      "title": "當次自動排版的真實進度、低負載執行、安全取消與候選恢復",
+      "current_status": "PARTIAL",
+      "implemented_subset": "當次單worker真進度、邊界暫停／取消及有效候選採用已驗證",
+      "why_still_partial": "尚無跨啟動短期受控恢復、敏感資料期限／清除、全階段事件和低配硬體證據",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補合法短期恢復及exact依賴核對／明確放棄，測異常／滿碟不能冒稱落盤；不建永久訂單庫",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-076",
+          "title": "當次候選逐模板單worker真進度、邊界暫停／續跑／取消及generation過期防護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/layout_session.py",
+          "sha256": "74974eca81b1aa403c2698185a18f0f8e9c65c7a790bcfbe52ce8231cbfab82b"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "真實進度、短期恢復；按指定參考機實測 RAM、VRAM 與 CPU／GPU 路徑；既有標記歷史是 UI-038 子能力，不能充當當次排版候選恢復已完成",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-058",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-059",
+      "title": "當次排版變更依賴局部重算、人工編輯保護與版本衝突防護",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有generation失效、過期拒絕與單候選明確局部位移",
+      "why_still_partial": "目前多為整批失效，缺內容／資產／幾何有向依賴圖的最小重算及人工修改衝突處理",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補增量排程、保留手工布局與新舊差異選擇，測舊worker不能覆蓋新版、局部重算仍需整體驗證",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-006",
+          "title": "候選過期與非正式預覽標示",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/candidate_edit.py",
+          "sha256": "c992bf717d8c42fb3f8ab99b4e45694be23c134ec85a0ec58ed9b982448e7c1c"
+        },
+        {
+          "path": "template_ai/layout_session.py",
+          "sha256": "74974eca81b1aa403c2698185a18f0f8e9c65c7a790bcfbe52ce8231cbfab82b"
+        }
+      ],
+      "original_full_requirement": "局部失效、人工位置保護，舊運算結果不可覆寫新版",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-059",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-060A",
+      "title": "UI-060 補充決策 A｜排版完成後結果呈現、多方案比較與問題定位",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有候選列表、推薦理由、預覽與問題顯示",
+      "why_still_partial": "尚缺完整首選／可展開替代方案／待驗區、比較欄位、問題畫布定位與多尺寸結果呈現",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補結果比較與選取狀態保留，測排序更新不悄悄覆蓋人工選擇、不宣稱部分搜尋為最優",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/comparison_view.py",
+          "sha256": "aee177ee977c6be486f58d60941039be1cc6d34830f45858db2745cff6510b63"
+        }
+      ],
+      "original_full_requirement": "推薦與候選對照、問題定位，未搜尋完整不稱最佳",
+      "sources": [
+        {
+          "path": "docs/decisions/UI-060A-RESULT-PRESENTATION.md",
+          "section": "UI-060A",
+          "sha256": "307c7222ba2b9c58b04712c14b05722c4d8860b682fef4c699bc34dde78153bf"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-061",
+      "title": "UI-061｜多候選與多尺寸修改同步、套用範圍及局部回復（正式決策）",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有單候選獨立幾何副本、預覽差異與明確套用",
+      "why_still_partial": "共享來源內容的穩定語意ID跨候選／尺寸同步及單次局部回復未完成",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補精確目標／可套用屬性比較與獨立幾何重算，測跨尺寸不直接複製座標、回復不動其他人工修改",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-077",
+          "title": "當次exact候選／尺寸的局部幾何變更隔離、明確範圍差異與版本保護",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/candidate_edit.py",
+          "sha256": "c992bf717d8c42fb3f8ab99b4e45694be23c134ec85a0ec58ed9b982448e7c1c"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/object_tools.py",
+          "sha256": "99b21322eea6981bed740d79eac9f9ca205b1b318113801c1cec44a108917ab9"
+        }
+      ],
+      "original_full_requirement": "來源內容依 ID 同步，幾何分候選尺寸，跨目標先比對",
+      "sources": [
+        {
+          "path": "docs/decisions/UI-061-CROSS-CANDIDATE-SIZE-SYNC.md",
+          "section": "UI-061",
+          "sha256": "9fa2646c6e0f5090e8209f7504383fa7782998cd268a460d4ee73d2f654b516a"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-062",
+      "title": "template-Ai｜UI-062 跨模式 GUI 操作導覽、工作狀態與安全返回（正式決策）",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有部分問題路由、來源／作品定位及未保存內容保護",
+      "why_still_partial": "尚缺全模式可見導覽／上下文條、返回原候選／尺寸／視角及失效降級的統一狀態管理",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補跨既有工具的安全返回鏈，測失聯或版本變動不錯定位、不丟未套用內容、不自動重算或回寫",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/training_navigation.py",
+          "sha256": "79fce04ea0b9e16fe7323f93ee482c8686fa80ba904e646d70cf7d0f4a73dc60"
+        },
+        {
+          "path": "template_ai/diagnostic_routes.py",
+          "sha256": "864f1389b1469b3568f268d57fda85ad352caa2df1e0793f3b65332793b2e369"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "上下文返回有效位置，失效安全降級不丟人工內容",
+      "sources": [
+        {
+          "path": "docs/decisions/UI-062-CROSS-MODE-NAVIGATION-SAFE-RETURN.md",
+          "section": "UI-062",
+          "sha256": "d3fc1231c68d3fb0d18eaa2ebb423efd6b7bb9c0fb30e0cb64c92fd4e88908a7"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-063",
+      "title": "template-Ai｜UI-063 右側工作面板：智慧自適應、常用工具固定與問題提示（正式決策）",
+      "current_status": "PARTIAL",
+      "implemented_subset": "物件工具已有文字／Logo上下文、釘選與空選取清除",
+      "why_still_partial": "只在物件對話框完成具名子集，主視窗全部模式右側面板尚未統一自適應",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補按模式／類型／多選的工具優先序與全部屬性入口，測釘選保持可見但不適用時停用不帶舊值",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-078",
+          "title": "既有右側物件工具上下文與釘選可見性、不適用與stale清空",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/object_dialog.py",
+          "sha256": "90c4b9f1b73ce6d30fadf3efa58d4217a65ca39585cc689061377d06fdd83d37"
+        },
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        }
+      ],
+      "original_full_requirement": "上下文工具可釘選，不適用對象不能錯用舊值",
+      "sources": [
+        {
+          "path": "docs/decisions/UI-063-RIGHT-PANEL-ADAPTIVE-TOOLS.md",
+          "section": "UI-063",
+          "sha256": "8298bf19547d707586fc8e89d3e9c2a80a04bd782adf5c652da23d2368203a4a"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-064",
+      "title": "template-Ai｜UI-064 畫布快捷鍵、滑鼠手勢與誤觸衝突防護（正式決策）",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有基本選取、拖曳、平移及部分Undo工具",
+      "why_still_partial": "尚缺完整可探索快捷鍵、自訂衝突檢查、焦點→模式→目標派送與中文IME／Windows矩陣驗收",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補中央指令作用域與安全提示，測文字Ctrl+Z不撤銷畫布、Delete不誤刪共享／鎖定物件",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/gui.py",
+          "sha256": "7d6dc84df18643ad77961a0c891b2500a17c078fbbaa6b2c202b9ee3991e99f3"
+        },
+        {
+          "path": "template_ai/object_dialog.py",
+          "sha256": "90c4b9f1b73ce6d30fadf3efa58d4217a65ca39585cc689061377d06fdd83d37"
+        }
+      ],
+      "original_full_requirement": "焦點與中文輸入法優先，模式／Undo 作用域不混淆",
+      "sources": [
+        {
+          "path": "docs/decisions/UI-064-SHORTCUTS-GESTURES-SAFETY.md",
+          "section": "UI-064",
+          "sha256": "0b96d619d38d0b78ad9ad1d8844dc988a928c01389142e12c8f3b18d55f1caa8"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-065",
+      "title": "template-Ai｜UI-065 多物件／多候選／多作品批次修正：風險分級、差異預覽與安全回復（正式決策）",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有多作品精確對齊批次、預覽／CAS、部分失敗、冪等及單筆歷史回復",
+      "why_still_partial": "尚未覆蓋跨候選／尺寸各類修正、完整受控批次回復與語意／共享歸屬風險分流",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補各操作家族及跨尺寸語意映射，測只重試失敗、整批回復不覆蓋後續新值／不改字級或Logo比例",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-079",
+          "title": "重用既有object_edit具名目標的跨作品低風險差異／逐項結果與冪等防重",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/batch_objects.py",
+          "sha256": "bb58f239d0b5044292bc732041031510466e2fe630f7aacdcc41f6442b7ac982"
+        },
+        {
+          "path": "template_ai/object_tools.py",
+          "sha256": "99b21322eea6981bed740d79eac9f9ca205b1b318113801c1cec44a108917ab9"
+        },
+        {
+          "path": "template_ai/storage.py",
+          "sha256": "cfaac055f7a9a826203d4bf77cfcb5ea2579bb6584cd9e8ddbb656e12e0eb2f3"
+        }
+      ],
+      "original_full_requirement": "精確範圍預覽、部分成功、冪等重試與安全回復",
+      "sources": [
+        {
+          "path": "docs/decisions/UI-065-BATCH-REPAIR-SAFETY.md",
+          "section": "UI-065",
+          "sha256": "d0d9e0809eabe78288adb37339598b40f6d64fc978a529e1a01f584e45535360"
+        }
+      ],
+      "recommended_package": "GUI",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-066",
+      "title": "template-Ai｜UI-066 去重決策 A：重用既有診斷 GUI，僅保留獨立報告格式與安全交接補充規格",
+      "current_status": "PARTIAL",
+      "implemented_subset": "既有診斷入口重用，R1／R2的內部閱讀與安全報告工作包本輪完成",
+      "why_still_partial": "報告缺規格受阻已消除；父題跨UI014／015／027／028／048／057的原始六項去重驗收尚未逐條完整關閉",
+      "gap_kind": "acceptance",
+      "remaining_scope_and_full_acceptance": "完成原六項→現有證據對帳；可被既有證據涵蓋者直接結案，不另造新功能或要求所有其他父題先完成",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-080",
+          "title": "診斷入口路由重用既有問題與定位、版本與未知不改Gate",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/diagnostic_routes.py",
+          "sha256": "864f1389b1469b3568f268d57fda85ad352caa2df1e0793f3b65332793b2e369"
+        },
+        {
+          "path": "template_ai/diagnostic_snapshot.py",
+          "sha256": "f54f014505d7de7c17daa25e3baa12017b3be685ce06133e0ea005857b3416e4"
+        },
+        {
+          "path": "template_ai/diagnostic_bundle.py",
+          "sha256": "560cb4897037602f0af2d9b7085f7fd2f56814dd4c5bf6d8aea00adc239eef60"
+        }
+      ],
+      "original_full_requirement": "既有診斷重用；獨立報告必要性格式交接尚 OPEN",
+      "sources": [
+        {
+          "path": "docs/decisions/UI-066-DEDUP-REPORT-HANDOFF.md",
+          "section": "UI-066",
+          "sha256": "8f388f97d414091fc24f10305f6aa6fadd63965c59dcf8128c887874570b4759"
+        }
+      ],
+      "recommended_package": "GOVERNANCE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-067",
+      "title": "template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策）",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有75題機器對帳、去重／衝突／未決分類及進度統計",
+      "why_still_partial": "尚未把全部原始子條款逐項映射到實際負責元件與驗收；多筆next_step仍泛用，部分歷史索引待清理",
+      "gap_kind": "acceptance",
+      "remaining_scope_and_full_acceptance": "補逐條規格→元件→測試→證據矩陣與過期引用修訂；純治理不算新軟體功能",
+      "scoped_child_requirements": [
+        {
+          "id": "GOV-007",
+          "title": "機器GUI路由／決策去重對帳與未決分流檢查",
+          "kind": "governance",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "tools/gui_convergence.py",
+          "sha256": "081be2d14d8b45ba37f0976551001d538e36b4d73b5abf63b65c505eda89902d"
+        }
+      ],
+      "original_full_requirement": "全面對帳只問真缺口，治理不算新產品功能",
+      "sources": [
+        {
+          "path": "docs/decisions/UI-067-GUI-CONVERGENCE-GOVERNANCE.md",
+          "section": "UI-067",
+          "sha256": "36794fa5012bbe22a65409ce185bbe4f0dc70d5efba9c92c1aa5b6bc19bee77c"
+        }
+      ],
+      "recommended_package": "GOVERNANCE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "UI-052-REVIEW",
+      "title": "重大共通錯誤跨歷史批次重審追加核准",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有exact規則依賴反查、歷史樣本隔離、case／audit及新學習阻擋",
+      "why_still_partial": "目前只處理可證實規則依賴，未涵蓋模型／Logo／解析器／客戶等全部家族及重審完成解除信任暫停",
+      "gap_kind": "implementation_and_acceptance",
+      "remaining_scope_and_full_acceptance": "補跨家族直接／間接依賴與逐項重審結論，測舊通過保留歷史、原成品不刪、新證據不足不自動恢復",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-081",
+          "title": "明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/quality_evaluation.py",
+          "sha256": "3d90351f956374637c704e82596b097f40469278f18b2187f9431a264fe575ad"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        }
+      ],
+      "original_full_requirement": "依賴追溯、暫停信任、逐項再審，保留歷史與原成品",
+      "sources": [
+        {
+          "path": "docs/UI_DECISIONS.md",
+          "section": "UI-052-REVIEW",
+          "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232"
+        }
+      ],
+      "recommended_package": "AI_PIPELINE",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "REV-01",
+      "title": "矩形區域自動排版與模板 AI；X-04 結案",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已統一矩形毫米模型、規則模板與數位輸出，名稱爭議已結案",
+      "why_still_partial": "本題是整體產品範圍，底下自動辨識、人物公司共享、多尺寸及安全工作閉環尚未全部完成",
+      "gap_kind": "umbrella",
+      "remaining_scope_and_full_acceptance": "依既有UI要求逐包補齊並整體驗收；不重問名片／門禁卡，不增加第二套商品引擎",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-009",
+          "title": "人工標記規則模板閉環",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/model.py",
+          "sha256": "b663b0e0fd856f211b67a48fbade9e6945a60674a04281c890a14a230e0c54de"
+        },
+        {
+          "path": "template_ai/layout.py",
+          "sha256": "996d4afb23e1e1f847801e5b4fc7599589c501a510842ba654d789470e226812"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        }
+      ],
+      "original_full_requirement": "同一矩形模型，名稱不再待決；既有客戶人物公司與資產功能沿用",
+      "sources": [
+        {
+          "path": "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md",
+          "section": "REV-01",
+          "sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb"
+        }
+      ],
+      "recommended_package": "LAYOUT_OUTPUT",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "REV-02",
+      "title": "Inkscape 等視覺一致且可訓練的 AI 匯入",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有Inkscape／PDF相容AI／SVG與可人工標記的有效資料路徑",
+      "why_still_partial": "尚缺合法真AI與可信同版參考在字形、Logo、遮罩、透明度、位置細節均無可辨識差異且實際可學習的證據",
+      "gap_kind": "external_and_acceptance",
+      "remaining_scope_and_full_acceptance": "以獲授權匿名或合法替代真AI樣本逐例比對並真正進訓練管線；不能拿縮圖或合成SVG通過代替",
+      "scoped_child_requirements": [
+        {
+          "id": "CORE-010",
+          "title": "Inkscape SVG 與 PDF 相容 AI",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        },
+        {
+          "id": "CORE-011",
+          "title": "多頁 PDF 正確頁與備援",
+          "kind": "core",
+          "status": "VERIFIED",
+          "evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+        }
+      ],
+      "code_inspection": [
+        {
+          "path": "template_ai/importer.py",
+          "sha256": "1aae2dd4d4c6ff3f898bde22fd6883ffb102541bdb02dcbcf97ec4c51bb88dcf"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        },
+        {
+          "path": "template_ai/comparison_view.py",
+          "sha256": "aee177ee977c6be486f58d60941039be1cc6d34830f45858db2745cff6510b63"
+        }
+      ],
+      "original_full_requirement": "真實參考視覺無可辨識差異且有效可訓練；完整原生結構非共同必要條件",
+      "sources": [
+        {
+          "path": "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md",
+          "section": "REV-02",
+          "sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb"
+        }
+      ],
+      "recommended_package": "EXTERNAL",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    },
+    {
+      "id": "REV-04",
+      "title": "16 GB＋RTX 5050 至 ASUS VivoBook 效能範圍",
+      "current_status": "PARTIAL",
+      "implemented_subset": "已有CPU為主的保守worker／預算與Linux驗證，未宣稱GPU實測",
+      "why_still_partial": "16GB＋RTX5050及ASUS VivoBook尚未實機測量，VivoBook型號／RAM／CPU／GPU／系統仍未知",
+      "gap_kind": "external_and_acceptance",
+      "remaining_scope_and_full_acceptance": "取得可用參考環境後測冷啟動、尖峰RAM／VRAM、GUI反應與取消；16GB是整機上限而非程式可占滿",
+      "scoped_child_requirements": [],
+      "code_inspection": [
+        {
+          "path": "template_ai/importer.py",
+          "sha256": "1aae2dd4d4c6ff3f898bde22fd6883ffb102541bdb02dcbcf97ec4c51bb88dcf"
+        },
+        {
+          "path": "template_ai/layout_session.py",
+          "sha256": "74974eca81b1aa403c2698185a18f0f8e9c65c7a790bcfbe52ce8231cbfab82b"
+        },
+        {
+          "path": "template_ai/training_store.py",
+          "sha256": "1f2316cd1c67ca0ec9c5c19f832134bb030e7e42ea8f54cff27fe3a658e21670"
+        }
+      ],
+      "original_full_requirement": "VivoBook 型號待補；16 GB 整機非程序可占滿預算，實測 CPU／GPU 與峰值資源",
+      "sources": [
+        {
+          "path": "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md",
+          "section": "REV-04",
+          "sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb"
+        }
+      ],
+      "recommended_package": "EXTERNAL",
+      "not_a_new_requirement": true,
+      "full_acceptance_complete": false
+    }
+  ],
+  "verification": {
+    "status": "PASS",
+    "unique_baseline_ids": 70,
+    "current_partial_ids": 70,
+    "source_bound_code_references": 183,
+    "original_requirement_file_references": 70,
+    "requirements_removed": 0,
+    "full_parent_completion_claim": false
+  }
+}

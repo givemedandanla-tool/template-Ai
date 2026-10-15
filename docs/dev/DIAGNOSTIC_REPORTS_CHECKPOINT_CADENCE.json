@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "target_seconds": 600,
+  "strict_ten_minute_claim": false,
+  "receipts": [
+    {
+      "id": "CP-20261015-DIAG-APPROVED",
+      "snapshot_commit": "a514c828d008844c971c4b403bf5460dc83bbce0",
+      "verified_utc": "2026-10-15T06:53:28.327284+00:00"
+    },
+    {
+      "id": "CP-20261015-DIAG-WIP1",
+      "snapshot_commit": "f21530c4d3d7dae3dd550c80d99fde0cb860f5a1",
+      "verified_utc": "2026-10-15T07:02:55.675004+00:00"
+    },
+    {
+      "id": "CP-20261015-DIAG-SOURCE",
+      "snapshot_commit": "01d0dec8f0fb46d642a91d02af2ca6d981b7b7bc",
+      "verified_utc": "2026-10-15T07:16:44.563271+00:00"
+    },
+    {
+      "id": "CP-20261015-DIAG-READABLE-SOURCE",
+      "snapshot_commit": "37e7d9c386ca3182682931796ad67e36edeedf33",
+      "verified_utc": "2026-10-15T07:27:17.269082+00:00"
+    }
+  ],
+  "intervals": [
+    {
+      "from": "CP-20261015-DIAG-APPROVED",
+      "to": "CP-20261015-DIAG-WIP1",
+      "seconds": 567.34772
+    },
+    {
+      "from": "CP-20261015-DIAG-WIP1",
+      "to": "CP-20261015-DIAG-SOURCE",
+      "seconds": 828.888267
+    },
+    {
+      "from": "CP-20261015-DIAG-SOURCE",
+      "to": "CP-20261015-DIAG-READABLE-SOURCE",
+      "seconds": 632.705811
+    }
+  ],
+  "maximum_verified_gap_seconds": 828.888267,
+  "note": "實際正式收據間隔包含程式／測試／序列化及GitHub同步；有超10分鐘，如實列示。最終收據見STATE，來源仍有可恢復階段。"
+}

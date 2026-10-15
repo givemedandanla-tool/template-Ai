@@ -10,9 +10,11 @@
 
 **v0.1.25：擴充客戶建檔／搜尋與逐欄回寫、加密資料庫部分備份、尺寸Logo只讀管理、當次排版單worker控制、候選局部修改、多作品安全批次、來源重掃、分類評估／隔離修復與重大規則重審。** 操作與每項未做範圍見 [使用指南](docs/dev/SEVENTY_USER_GUIDE.md)，最新驗收與父需求數量以 STATE／PROGRESS 為準。這些是明列範圍實作，仍不是全部父需求完整完成。幾何學習不是完整自動辨識或深度模型；分類評估不冒稱模型推論／獨立品質PASS；完整個資權限、指定設備及印刷仍待後續。
 
+[70個部分父需求的完整化缺口報告](docs/dev/PARTIAL_70_GAP_REPORT.md)與[AI可讀清單](docs/dev/PARTIAL_70_GAP_ANALYSIS.json)逐條保留現況、缺口及驗收，不把83個子功能當全產品完成。
+
 ## 開啟與快速試用
 
-目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新來源綁定驗收見 [STATE](docs/dev/STATE.json) 與 [進度](docs/dev/PROGRESS.md)，證明媒體保存例外見 [本輪清單](docs/dev/SEVENTY_PARENTS_PUBLICATION.json)；程式／測試／文字證據完整保存，原附件及hash清單保留。
+目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新來源綁定驗收見 [STATE](docs/dev/STATE.json) 與 [進度](docs/dev/PROGRESS.md)，證明媒體保存例外見 [本輪清單](docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json)；程式／測試／文字證據完整保存，原附件及hash清單保留。
 
 原始碼：安裝 Python 3.11 後，Windows 雙擊 `START_WINDOWS.bat`；或安裝 `requirements-lock.txt`，執行 `python app.py`。
 

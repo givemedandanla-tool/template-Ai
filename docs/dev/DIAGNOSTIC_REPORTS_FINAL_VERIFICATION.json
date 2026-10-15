@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "id": "DIAGNOSTIC-REPORTS-FINAL",
+  "status": "FUNCTIONALLY_VERIFIED_PENDING_REMOTE",
+  "product_version": "0.1.26",
+  "source_commit": "fc5956bcbff2a068f36c4bbc440f938ca177d7e1",
+  "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+  "tests": 378,
+  "passed": 378,
+  "skipped": 0,
+  "source_unchanged": true,
+  "capture_exit_code": 0,
+  "attachments_local": 78,
+  "requirements_completed": [
+    "CORE-082",
+    "CORE-083",
+    "UI-066-R1",
+    "UI-066-R2"
+  ],
+  "full_original_parents_completed": [
+    "UI-066-R1",
+    "UI-066-R2"
+  ],
+  "acceptance_conditions_passed": 12,
+  "baseline_core": 81,
+  "current_core_verified": 83,
+  "new_core": 2,
+  "current_governance_verified": 7,
+  "new_governance": 0,
+  "original_parent_counts": {
+    "VERIFIED": 2,
+    "PARTIAL": 70,
+    "NOT_IMPLEMENTED": 0,
+    "BLOCKED": 0,
+    "DEFERRED": 3
+  },
+  "gui_evidence": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/diagnostic-gui-audit.json",
+  "safe_sample_report": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/diagnostic-safe-report.json",
+  "gap_report": "docs/dev/PARTIAL_70_GAP_REPORT.md",
+  "gap_machine": "docs/dev/PARTIAL_70_GAP_ANALYSIS.json",
+  "gap_ids": 70,
+  "review_level": "SELF_VERIFIED",
+  "scope": "Linux／匿名合成／實際Qt與worker；非Windows或指定設備、真AI全面視覺、實體印刷、獨立覆核",
+  "media_publication": "new PNG/JPG/PDF local only; exact source-bound hash manifest; all code/tests/text metadata saved",
+  "failures_preserved": [
+    "docs/evidence/attempts/DIAGNOSTICS/target001.log",
+    "docs/evidence/attempts/DIAGNOSTICS/target004.log"
+  ],
+  "previous_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-001/run.json",
+  "checkpoint": null,
+  "remote_verification_pending": true
+}

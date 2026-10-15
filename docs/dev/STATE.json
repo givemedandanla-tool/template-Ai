@@ -5,41 +5,31 @@
   "pull_request": 2,
   "product_version": "0.1.26",
   "framework_status": "READY",
-  "active_task": "DIAGNOSTIC-REPORTS-SOURCE-READY",
+  "active_task": "DIAGNOSTIC-REPORTS-VERIFIED-PENDING-REMOTE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-DIAG-READABLE-SOURCE.receipt.json",
   "last_confirmed_commit": "37e7d9c386ca3182682931796ad67e36edeedf33",
-  "latest_evidence_run": null,
+  "latest_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
-    "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",
-    "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
+    "docs/dev/DIAGNOSTIC_REPORTS_FINAL_VERIFICATION.json",
+    "docs/dev/PARTIAL_70_GAP_REPORT.md",
+    "docs/dev/PARTIAL_70_GAP_ANALYSIS.json",
+    "docs/dev/NEXT_AFTER_DIAGNOSTICS.md",
+    "docs/dev/DIAGNOSTIC_REPORTS_USER_GUIDE.md",
     "docs/dev/REQUIREMENTS.json",
-    "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md",
-    "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
-    "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md",
-    "docs/dev/SEVENTY_FINAL_VERIFICATION.json",
-    "docs/dev/NEXT_AFTER_SEVENTY.md",
-    "docs/dev/SEVENTY_USER_GUIDE.md",
-    "docs/dev/REQUIREMENTS.json",
-    "docs/dev/PROGRESS.md",
-    "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md"
+    "docs/dev/PROGRESS.md"
   ],
   "next_tasks": [
     {
-      "id": "DIAGNOSTIC-REPORTS",
-      "status": "APPROVED_NOT_IMPLEMENTED",
-      "action": "兩功能完整實作及驗收，再逐條整理基準70父題缺口；不重問已採納方案"
+      "id": "DIAG-FINAL",
+      "status": "PENDING_REMOTE",
+      "action": "完成最終checkpoint與乾淨文字check／PR讀回，然後交付兩功能與70題缺口報告"
     },
     {
       "id": "UI-016/017/043/044/045",
       "status": "PLANNED_NEW_CONTRACT_REQUIRED",
-      "action": "依NEXT_AFTER_SEVENTY補完整人物/公司/客戶歸屬；70部分已達標，原75FULL未完成，先新BEGIN與驗收契約再code"
-    },
-    {
-      "id": "ALL-LIST",
-      "status": "ACTIVE_LONG_TERM_GOAL",
-      "action": "逐原FULL條款補缺，不把81具名子項誤認70完整父題；不重做本輪17scope"
+      "action": "依NEXT_AFTER_DIAGNOSTICS補人物公司語意主幹；新包先BEGIN／完整條款與驗收再改碼"
     }
   ],
   "blocked": [],
@@ -48,26 +38,29 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-DIAG-VERIFIED"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-DIAGNOSTICS-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-R1R2-VISIBILITY-END.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-DIAGNOSTICS-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
   "goal_milestone": {
-    "id": "SEVENTY-PARENTS",
-    "status": "COMPLETED_SAVED_SCOPE",
-    "contract": "docs/dev/SEVENTY_PARENTS_CONTRACT.json",
-    "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
-    "evidence_run": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
-    "snapshot_commit": "24a3f40d69907c51c87d3a9c718ecd77f79c1153",
-    "parent_partial": 70,
-    "parent_full": 0
+    "id": "DIAGNOSTIC-REPORTS",
+    "status": "FUNCTIONALLY_VERIFIED_PENDING_REMOTE",
+    "contract": "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
+    "source_commit": "fc5956bcbff2a068f36c4bbc440f938ca177d7e1",
+    "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+    "completed_work_packages": 2,
+    "target_work_packages": 2,
+    "original_parent_full": 2,
+    "original_parent_partial": 70
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
-  "next_work_package": "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
+  "next_work_package": "docs/dev/NEXT_AFTER_DIAGNOSTICS.md",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -148,7 +141,7 @@
   "evidence_publication": {
     "policy": "USER_AUTHORIZED_TEXT_METADATA_FIRST",
     "manifest": "docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json",
-    "local_formal": "348PASS/0SKIP/72local attachments/source unchanged",
+    "local_formal": "378PASS/0SKIP/78local attachments/source unchanged",
     "new_media_uploads": "NONE",
     "all_attachment_gate_claim": false,
     "functional_standard_changed": false
@@ -348,12 +341,22 @@
       "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
       "evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
       "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json"
+    },
+    {
+      "id": "SEVENTY-PARENTS",
+      "status": "COMPLETED_SAVED_SCOPE",
+      "contract": "docs/dev/SEVENTY_PARENTS_CONTRACT.json",
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence_run": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
+      "snapshot_commit": "24a3f40d69907c51c87d3a9c718ecd77f79c1153",
+      "parent_partial": 70,
+      "parent_full": 0
     }
   ],
   "design_proposals": [
     {
       "id": "PROPOSAL-UI066-R1R2-20261015",
-      "status": "ADOPTED_PENDING_IMPLEMENTATION",
+      "status": "IMPLEMENTED_SELF_VERIFIED_PENDING_REMOTE",
       "requirements": [
         "UI-066-R1",
         "UI-066-R2"
@@ -361,7 +364,7 @@
       "document": "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md",
       "base_commit": "ae1db49469f546e6b9ac7ad715304112f4ce527d",
       "source_evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
-      "functional_counts_changed": false,
+      "functional_counts_changed": true,
       "decision_pending": null,
       "confirmed_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
       "adoption_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md"
@@ -371,9 +374,9 @@
     "decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
     "in_app_readable": true,
     "outside_app_saved_readable": true,
-    "implementation_status": "IMPLEMENTED_PENDING_VERIFICATION",
+    "implementation_status": "FUNCTIONALLY_VERIFIED_PENDING_REMOTE",
     "whole_proposal_adopted": false,
-    "functional_completion_delta": 0,
+    "functional_completion_delta": 2,
     "adoption_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",
     "design_adopted": true
   }

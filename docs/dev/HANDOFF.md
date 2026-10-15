@@ -1,3 +1,9 @@
+# 最新：R1／R2完整實作與驗收，最後保存待讀回
+
+v0.1.26／RUN-DIAGNOSTIC-REPORTS-002 source fc5956bcbff2a068f36c4bbc440f938ca177d7e1：378PASS／0SKIP、78本機附件、capture0/source unchanged。兩工作包及12驗收全部具名PASS；CORE81→83（+2）、GOV7不變；原75父題2完整／70部分／0受阻／3延後。70個基準ID逐條完成缺口報告及AI JSON，來源／code／已做／未做／需驗收／外部條件分開，沒有把摘要取代原FULL。讀FINAL_VERIFICATION、PARTIAL_70_GAP_REPORT與NEXT_AFTER_DIAGNOSTICS，不重做已完成包。001為人類閱讀改善前的歷史run，不當current；target001／004失敗保留。
+
+新證明媒體只本機＋source-bound hash manifest，全部文字與code/tests保存。正式保存狀態以STATE最新receipt為準；無EXE／main merge／代理。下一建議大包UI016／017＋043／044／045，先新BEGIN與驗收。以下保留歷史，不把舊BLOCKED或等待採納當現況。
+
 # 最新：R1／R2設計採納，完整工作包開發
 
 讀STATE.active_contract；使用者已授權直到完成兩功能及原70父題缺口報告。R1/R2 BLOCKED→NOT_IMPLEMENTED，新增CORE082/083待做；75父題0完整／70部分／2未做／0受阻／3延後。既有CORE81／GOV7仍舊source範圍；改碼後全部待重驗，不宣稱已完成。
