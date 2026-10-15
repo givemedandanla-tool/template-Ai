@@ -149,6 +149,13 @@ def main():
                 for path in generated.glob('next28-*'):
                     if path.is_file():shutil.copyfile(path,folder/path.name)
         if capture_code == 0:
+            extra=subprocess.run([sys.executable,str(ROOT/'tools/capture_remaining28.py'),'--artifacts-dir',str(generated)],cwd=ROOT,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=60)
+            with capture_log.open('a') as log:log.write(extra.stdout+extra.stderr)
+            capture_code=extra.returncode
+            if capture_code==0:
+                for path in generated.glob('remaining28-*'):
+                    if path.is_file():shutil.copyfile(path,folder/path.name)
+        if capture_code == 0:
             extra=subprocess.run([sys.executable,str(ROOT / 'tools/capture_fixed70_ten.py'),'--artifacts-dir',str(generated)],cwd=ROOT,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=60)
             with capture_log.open('a') as log:log.write(extra.stdout+extra.stderr)
             capture_code=extra.returncode
@@ -219,6 +226,23 @@ def main():
         complete=all(parent['clauses'] and len(parent['clauses'])==expected.get(parent['id']) and all(c['status']=='PASS' for c in parent['clauses']) for parent in parent_clauses)
         write_json(folder/'fixed70-twentyeight-parent-audit.json',dict(kind='DERIVED_CLAUSE_TRACEABILITY_FROM_ACTUAL_TEST_EXECUTION',source_commit=args.source_commit,source_unchanged=source_unchanged,parent_count=len(targets),clause_count=sum(len(p['clauses']) for p in parent_clauses),parents=parent_clauses,all_registered_clauses_pass=complete,independent_review=False,physical_print_verified=False,private_ai_comprehensive_verified=False))
         if not complete:status='FAIL'
+    remaining=ROOT/'docs/dev/FIXED70_REMAINING28_CONTRACT.json'
+    if remaining.is_file():
+        contract=read_json(remaining);targets=contract['target_parent_ids']
+        expected={a['parent']:a.get('clause_count',0) for a in contract['acceptance']}
+        parents=[]
+        for pid in targets:
+            actual=[c for c in claims if c['requirement_id']==pid]
+            registered=expected.get(pid,0)>0
+            passed=registered and len(actual)==expected[pid] and all(c['status']=='PASS' for c in actual)
+            parents.append(dict(id=pid,registered=registered,clauses=actual,software_self_verified=passed))
+            if registered and not passed:status='FAIL'
+        complete=len(parents)==28 and all(p['software_self_verified'] for p in parents)
+        write_json(folder/'remaining28-full-parent-audit.json',dict(kind='DERIVED_FROM_ACTUAL_TESTS_NOT_EXTRA_EXECUTION',
+            source_commit=args.source_commit,source_unchanged=source_unchanged,target_count=28,parents=parents,
+            verified_count=sum(p['software_self_verified'] for p in parents),all_28_complete=complete,
+            goal_status='SELF_VERIFIED_SOFTWARE' if complete else 'IN_PROGRESS',
+            independent_review=False,windows_reference_hardware_verified=False))
     seventy = ROOT / "docs/dev/SEVENTY_PARENTS_CONTRACT.json"
     if seventy.is_file():
         contract = read_json(seventy)

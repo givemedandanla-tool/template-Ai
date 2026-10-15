@@ -1,0 +1,144 @@
+{
+  "id": "REMAINING28-ORIGINAL-CLAUSE-AUDIT",
+  "status": "IMPLEMENTING",
+  "original_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "parents": [
+    {
+      "id": "UI-046",
+      "source_clauses_sha256": "17ff65fc95b81922ccfb02b63e83f81f38c6ba619aceccea59bb9cdab38d3938",
+      "implementation": [
+        "template_ai/customer_identity.py",
+        "template_ai/customers.py",
+        "template_ai/customer_search.py",
+        "template_ai/customer_candidates.py",
+        "template_ai/customer_dialog.py",
+        "template_ai/customer_identity_dialog.py"
+      ],
+      "clauses": [
+        {
+          "id": "UI-046-CLAUSE-1",
+          "expected": "使用者選擇 **D｜智慧重複偵測＋來源比對＋受控合併／拆分**。沿用 UI-042／UI-043 已核准的本機持久客戶主檔、客戶編號和各尺寸版型版本關聯，延伸 UI-044 的身份核對及 UI-045 的版本化主檔修訂；**AI 只能提出可能重複或錯誤歸屬的候選，不得自行合併、拆分、刪除客戶編號或修改關聯**。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-2",
+          "expected": "**偵測與證據分層**：以可核對的客戶編號、姓名、人物聯絡方式（手機、私人電話、LINE、IG）、原始來源 .ai 檔名及路徑、來源作品、公司／人物歸屬、版型與卡片尺寸關聯提出候選，標示線索、信心及不一致處。**相同姓名、同電話、共享公司、同 Logo、同 SHA-256 或近似名片外觀，任一條件皆不足以直接認定兩個客戶是同一人**；特別是 UI-042 的異名同內容檔案僅共用內容解析結果，不能因快取重用而自動合併客戶實體。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_review_decisions_persist_without_merging_and_normalized_third_party_code_conflict_blocks",
+            "test_customer_candidates.CustomerCandidateTests.test_same_content_different_source_codes_keep_two_customers_and_independent_entities",
+            "test_customer_candidates.CustomerCandidateTests.test_shared_contact_conflicts_show_both_people_without_merging_and_late_conflict_blocks"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-3",
+          "expected": "**雙欄客戶比對 GUI**：點選候選顯示客戶 A／B 的**內部穩定 customer_id、所有現用客戶編號、可合法檢視的人物／聯絡資料、來源及審核狀態、每一尺寸的版型版本及來源作品**，將相同、衝突、僅 A／僅 B、來源不足分開標示；可以從候選跳轉到 UI-038／UI-039 的原稿、智慧框與 UI-043 的客戶卡片，避免僅憑文字相同就誤判。提供**保留獨立／確認合併／標示待審／糾正原歸屬**等明確操作，衝突不清時安全保留獨立。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_actual_gui_separates_preview_cancel_and_explicit_commit"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-4",
+          "expected": "**合併前的全範圍影響預覽**：合併選擇必須由使用者指定保留的**主客戶內部 ID／主要顯示編號**，並逐項預覽舊客戶編號作為可查找的歷史別名、人物與公司、電話／LINE／IG、來源文件、尺寸及每個 `style_version_id`、其來源作品及已存在的關聯或衝突。**僅在核對人物／公司的身份及關聯後**整合，不能只把 A、B 所有姓名與電話扁平拼接或讓不同人物資料互換。合併不意味改變原 Illustrator 內容、真實 Logo、版型檔或已發布模板。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_swapped_primary_display_code_splits_back_and_stale_split_cannot_overwrite",
+            "test_customer_identity.CustomerIdentityTests.test_source_identity_unchanged_relation_moves_and_splits_with_exact_original_style_scope"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-5",
+          "expected": "**歷史編號與來源不丟失**：原本各客戶編號必須仍能用 UI-044 搜尋並清楚導向合併後唯一已確認的主客戶，同時揭露「舊編號別名／已合併」而非冒充兩條獨立主檔；有任何別名與其他主編號或其他別名衝突時需阻擋並人工解決，不能暗中覆蓋。兩份檔名不同但位元相同的 `source_files` 仍各自保留原名、路徑、原推定編號、原始關聯及重用的 `content_blobs`；合併客戶不得破壞 UI-042 的精確去重紀錄。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct",
+            "test_customer_identity.CustomerIdentityTests.test_review_decisions_persist_without_merging_and_normalized_third_party_code_conflict_blocks"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-6",
+          "expected": "**資料模型最小延伸**：重用 UI-043 的 `customers`、`people`、`contact_methods`、`companies`、`customer_card_styles`、`source_files`、`review_events`，視實際完整性需求**最小增加** `customer_code_aliases`（別名碼→保留的主客戶 ID，含原始來源與版本）及有版本的**合併／拆分來源映射與操作憑證**（可擴充 `review_events` 或最小關聯事件表）。原始 `customer_id` 不可在合併後被當作可重用新客戶 ID；保留停用來源記錄及操作前快照引用，以支持回復。**不新增另一套重複客戶資料庫、客戶身分 AI 或完整訂單系統**。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct",
+            "test_customer_identity.CustomerIdentityTests.test_source_identity_unchanged_relation_moves_and_splits_with_exact_original_style_scope"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-7",
+          "expected": "**明確核准、版本防競爭與事務安全**：合併前檢查雙方主檔、人物、聯絡資料、版型關聯及別名索引的最新版本；若預覽後已有人更新（沿用 UI-045 的並行寫入防護），須重新取得最新差異再詢問，不得直接以過期預覽執行。執行時需有必要的本機交易一致性、FK／唯一編號保護與失敗可核對狀態；**只有使用者明確確認的合併方案能修改永久資料庫**，不能因瀏覽候選、自動檢索或匯入新檔自行合併。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_stale_or_tampered_preview_cannot_merge_and_audit_failure_rolls_back_every_relation",
+            "test_customer_identity.CustomerIdentityTests.test_changed_source_after_merge_preview_blocks_all_permanent_identity_changes"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-8",
+          "expected": "**合併錯誤時的受控拆分**：提供從原合併操作記錄查看**當時 A／B 身分、舊客戶碼、原人物／聯絡方式／來源檔案／每尺寸版型版本歸屬及合併後新變動**的對照，再由使用者選擇恢復獨立客戶、重新分配明確屬於各方的資料及別名。不能只用一次「還原」就默默覆寫合併後新合法更新；後續編輯造成所有權不明時**停下並逐項要求重新核對**。恢復需保留證據、舊編號可重新導向正確客戶、不可遺失來源或已確認版型關聯。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_split_preserves_legitimate_later_values_and_restores_old_code_ownership",
+            "test_customer_identity.CustomerIdentityTests.test_ambiguous_post_merge_cross_customer_company_link_is_blocked_without_data_loss",
+            "test_customer_identity.CustomerIdentityTests.test_swapped_primary_display_code_splits_back_and_stale_split_cannot_overwrite"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-9",
+          "expected": "**相容性與外部影響**：合併、拆分、重新指派客戶關聯，不等於合併不同人物／公司或將其他客戶的 Logo 與版型發布權限併入；UI-016／UI-017 人物／公司語意、UI-020／UI-023 完整複合 Logo 與尺寸獨立庫繼續保護。已輸出的正式成品、UI-010 已發布版型及原始 .ai 不因客戶身份操作而被改寫；需要重新生成卡片必須以新作業經既定 UI-013／UI-019 印前 Gate 核實。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_each_original_style_prefills_only_its_original_stable_person_after_merge",
+            "test_customer_identity.CustomerIdentityTests.test_source_identity_unchanged_relation_moves_and_splits_with_exact_original_style_scope"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-10",
+          "expected": "**個資、審計與失敗回報**：合併或拆分的審查 GUI 僅對有權者提供必要的個人資料，比對、來源與版本操作紀錄在受控本機保存，允許校正／刪除／匯出並避免把電話、LINE、IG 原文或原圖傳至 GitHub。中斷、寫入競爭、來源缺失或來源歸屬不可證實時必須明確顯示**未完成／待審／安全阻擋**，不可偽稱合併或拆分已成功。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_local_audit_export_no_overwrite_and_closed_event_redaction_cannot_destroy_active_split_mapping",
+            "test_customer_identity.CustomerIdentityTests.test_failed_split_audit_rolls_back_aliases_fields_scopes_and_history"
+          ]
+        },
+        {
+          "id": "UI-046-CLAUSE-11",
+          "expected": "**既定決策相容**：UI-043 已確認候選入庫與客戶編號唯一，UI-044 已確認客戶搜尋與版型沿用，UI-045 已確認欄位層級回寫，本 UI-046 只補足**主檔級重複候選比對、合併影響確認、歷史編號別名與安全拆分復原**。UI-043 的「不區分曾設計／已確認購買」仍然有效，客戶合併也不重新引入購買或交易分類。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct"
+          ]
+        }
+      ],
+      "historical_context": [
+        "**狀態**：此項為正式 GUI／資料一致性／未來驗收規格，**尚未實作疑似重複偵測、資料庫合併拆分、別名索引或任何真實客戶資料處理及程式測試**。"
+      ],
+      "limits": [
+        "Linux synthetic SELF only; authorized local OS user assumption while UI048 full permissions is deferred last",
+        "Ambiguous new entities/cross-customer sharing/new links block split until explicit correction; no blind historical overwrite"
+      ]
+    }
+  ],
+  "unregistered_parent_ids": [
+    "UI-019",
+    "UI-031",
+    "UI-032",
+    "UI-047",
+    "UI-049",
+    "UI-050",
+    "UI-051",
+    "UI-052",
+    "UI-053",
+    "UI-054",
+    "UI-055",
+    "UI-056",
+    "UI-057",
+    "UI-058",
+    "UI-059",
+    "UI-060A",
+    "UI-061",
+    "UI-062",
+    "UI-063",
+    "UI-064",
+    "UI-065",
+    "UI-066",
+    "UI-067",
+    "UI-052-REVIEW",
+    "REV-01",
+    "REV-02",
+    "REV-04"
+  ]
+}

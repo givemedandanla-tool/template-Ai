@@ -1,7 +1,7 @@
 """One customer entry backed by the existing Library connection."""
 import json
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLineEdit,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox,QFileDialog,QInputDialog,QHeaderView,QComboBox
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLineEdit,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox,QFileDialog,QInputDialog,QHeaderView,QComboBox,QWidget
 from .customers import CustomerStore
 
 class CustomerDialog(QDialog):
@@ -20,8 +20,36 @@ class CustomerDialog(QDialog):
         bar=QHBoxLayout();self.add_button(bar,'加密資料庫部分備份',self.backup);self.add_button(bar,'隔離還原到新目錄',self.restore);self.add_button(bar,'關閉',self.accept);layout.addLayout(bar)
         bar=QHBoxLayout();self.add_button(bar,'核對並撤銷來源／版型關聯',self.revoke_association);layout.addLayout(bar)
         self.identity_plan=None
-        bar=QHBoxLayout();self.add_button(bar,'合併前完整影響預覽',self.preview_merge);self.add_button(bar,'合併歷史／拆分預覽',self.preview_split);self.add_button(bar,'確認目前身份方案',self.commit_identity);self.add_button(bar,'保留獨立／取消方案',self.cancel_identity);layout.addLayout(bar)
-        bar=QHBoxLayout();self.add_button(bar,'記錄兩客戶保留獨立',lambda:self.review_identity('KEEP_SEPARATE'));self.add_button(bar,'記錄身份待審',lambda:self.review_identity('PENDING_REVIEW'));layout.addLayout(bar)
+        toggle=QPushButton('身份合併／拆分與稽核工具');toggle.setCheckable(True);layout.addWidget(toggle)
+        self.identity_tools=QWidget();identity_layout=QVBoxLayout(self.identity_tools);identity_layout.setContentsMargins(0,0,0,0)
+        toggle.toggled.connect(self.identity_tools.setVisible);self.identity_tools.hide();layout.addWidget(self.identity_tools)
+        bar=QHBoxLayout();self.add_button(bar,'合併前完整影響預覽',self.preview_merge);self.add_button(bar,'合併歷史／拆分預覽',self.preview_split);self.add_button(bar,'確認目前身份方案',self.commit_identity);self.add_button(bar,'保留獨立／取消方案',self.cancel_identity);identity_layout.addLayout(bar)
+        bar=QHBoxLayout();self.add_button(bar,'記錄兩客戶保留獨立',lambda:self.review_identity('KEEP_SEPARATE'));self.add_button(bar,'記錄身份待審',lambda:self.review_identity('PENDING_REVIEW'));identity_layout.addLayout(bar)
+        bar=QHBoxLayout();self.add_button(bar,'身份稽核本機匯出',lambda:self.identity_audit('EXPORT'));self.add_button(bar,'清理已結束身份稽核個資',lambda:self.identity_audit('REDACT'));identity_layout.addLayout(bar)
+
+    def identity_audit(self,operation):
+        def action():
+            if not self.snapshot:raise ValueError('先選目前客戶')
+            service=self.identity_service();rows=service.history(self.snapshot['id'])
+            if not rows:raise ValueError('此客戶沒有身份稽核')
+            labels=[f"{r['state']} · {r['id']}" for r in rows]
+            chosen,ok=QInputDialog.getItem(self,'身份稽核','資料只在本機；有效合併的拆分映射需先保留',labels,0,False)
+            if not ok:return
+            identity=rows[labels.index(chosen)]['id']
+            if operation=='EXPORT':
+                path,_=QFileDialog.getSaveFileName(self,'個資稽核僅供本機受控交接，勿公開上傳','','JSON (*.json)')
+                if not path:return
+                if QMessageBox.question(self,'本機個資匯出','確認有權將所選事件的身份／聯絡與來源映射匯出至這個本機位置？')!=QMessageBox.Yes:return
+                result=service.export_event(identity,path,True)
+            else:
+                actor,ok=QInputDialog.getText(self,'稽核個資清理','核准者')
+                if not ok:return
+                reason,ok=QInputDialog.getText(self,'稽核個資清理','原因（不填電話／姓名等多餘個資）')
+                if not ok:return
+                if QMessageBox.question(self,'清理已結束事件','只清理所選事件中的原個資快照，保留技術映射識別與前內容hash；清理不可復原。有效合併不允許清理。')!=QMessageBox.Yes:return
+                result=service.redact_event(identity,actor,reason,True)
+            self.details.setPlainText(json.dumps(result,ensure_ascii=False,indent=2));self.status.setText('稽核處置完成；目前客戶、來源及模板未變更')
+        self.guarded(action)
 
     def review_identity(self,state):
         def action():
@@ -40,7 +68,14 @@ class CustomerDialog(QDialog):
         return CustomerIdentity(self.store)
 
     def cancel_identity(self):
-        self.identity_plan=None;self.status.setText('已取消身份方案；本機主檔與來源關聯未變更')
+        self.identity_plan=None;self.identity_viewed_pin=None;self.status.setText('已取消身份方案；本機主檔與來源關聯未變更')
+
+    def show_identity_preview(self):
+        from .customer_identity_dialog import IdentityPreviewDialog
+        self.identity_viewed_pin=None
+        self.identity_preview=IdentityPreviewDialog(self.window,self.store,self.identity_plan,self)
+        self.identity_preview.reviewed.connect(lambda pin:setattr(self,'identity_viewed_pin',pin))
+        self.identity_preview.open()
 
     def preview_merge(self):
         def action():
@@ -54,7 +89,8 @@ class CustomerDialog(QDialog):
             code,ok=QInputDialog.getItem(self,'主要顯示編號','舊編號保留可搜尋別名',[a['code'],b['code']],0,False)
             if not ok:return
             self.identity_plan=self.identity_service().plan_merge(a['id'],b['id'],code)
-            self.details.setPlainText(json.dumps(self.identity_plan,ensure_ascii=False,indent=2))
+            self.details.setPlainText('已建立合併影響預覽；請於雙欄工作台逐項核對。未改永久主檔。')
+            self.show_identity_preview()
             self.status.setText('只讀合併預覽：核對全部人物／公司、欄位、來源、每尺寸版型與別名後，另按確認')
         self.guarded(action)
 
@@ -67,13 +103,15 @@ class CustomerDialog(QDialog):
             chosen,ok=QInputDialog.getItem(self,'合併歷史','檢查原A/B與合併後新修改；不以歷史值覆蓋新合法值',labels,0,False)
             if not ok:return
             self.identity_plan=self.identity_service().plan_split(chosen)
-            self.details.setPlainText(json.dumps(self.identity_plan,ensure_ascii=False,indent=2))
+            self.details.setPlainText('已建立拆分預覽；雙欄工作台顯示原歸屬與目前合法新值。未套用。')
+            self.show_identity_preview()
             self.status.setText('只讀拆分預覽：保留目前可明確歸屬的新值；跨客戶共享或新歸屬不明時阻擋')
         self.guarded(action)
 
     def commit_identity(self):
         def action():
             if not self.identity_plan:raise ValueError('先取得完整合併／拆分影響預覽')
+            if getattr(self,'identity_viewed_pin',None)!=self.identity_plan['sha256']:raise ValueError('先於雙欄預覽逐項核對，然後另外確認方案')
             actor,ok=QInputDialog.getText(self,'身份核准','核准者')
             if not ok:return
             reason,ok=QInputDialog.getText(self,'身份證據','核對理由；同名、同電話、同Logo、同bytes均不能單獨證明身份')
@@ -187,7 +225,10 @@ class CustomerDialog(QDialog):
         def action():
             selected=sorted({i.row() for i in self.customers.selectedItems()})
             if len(selected)!=2:raise ValueError('Ctrl選取兩個客戶列')
-            result=self.store.compare(*(self.results[i]['id'] for i in selected));self.details.setPlainText(json.dumps(result,ensure_ascii=False,indent=2));self.status.setText('只讀線索比對；身份UNKNOWN、不合併')
+            from .customer_identity_dialog import IdentityPreviewDialog
+            plan=self.identity_service().comparison(*(self.results[i]['id'] for i in selected))
+            self.identity_comparison=IdentityPreviewDialog(self.window,self.store,plan,self);self.identity_comparison.open()
+            self.details.setPlainText('請在雙欄比對工作台核對人物／公司、來源與版型。相同值僅為線索。');self.status.setText('只讀線索比對；身份UNKNOWN、不合併')
         self.guarded(action)
     def backup(self):
         def action():

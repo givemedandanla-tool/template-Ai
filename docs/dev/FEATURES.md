@@ -49,7 +49,7 @@
 | UI-043 | 智慧客戶建檔、版型關聯與正式資料結構方案 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json) |
 | UI-044 | 舊客戶多條件搜尋、多尺寸版型比較與安全沿用重訂 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 原UI-044完整已核准條款；穩定實體尺寸／capacity目錄、純唯讀預覽與明確編輯／exact版型採用，未知與過期來源不假稱通過 | [run](../../docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json) |
 | UI-045 | 客戶主檔與當次製作逐欄差異、選擇性回寫與版本保護 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | [run](../../docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json) |
-| UI-046 | 疑似重複客戶比對、受控合併與可追溯拆分恢復 | PARTIAL | 否 | 合併須確認、別名可查，拆分不覆蓋後續新值 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-046 | 疑似重複客戶比對、受控合併與可追溯拆分恢復 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-047 | 本機關聯資料智慧備份、加密驗證與安全還原移轉 | PARTIAL | 否 | 加密完整性及隔離還原，缺資產不宣稱完整可用 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-048 | 客戶個資存取權限、遮罩與稽核：最後完成功能 | DEFERRED | 否 | 核心功能完善後最後接入；正式真實個資使用前必須完成 | 無有效新版證據 |
 | UI-049 | Illustrator 來源搬移失聯、內容驗證與受控批次重新連結 | PARTIAL | 否 | 來源重連以內容驗證，不憑同名，原檔不修改 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |

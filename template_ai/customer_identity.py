@@ -97,6 +97,14 @@ class CustomerIdentity:
                 self.library._template_provenance(Template.from_dict(json.loads(row[0])))
         return pins
 
+    def comparison(self,a,b):
+        left,right=self._state(a),self._state(b)
+        if a==b:raise ValueError('請選兩個獨立客戶')
+        plan=dict(operation='COMPARE',before=[left,right],primary_code=left['customer']['code'],
+                  identity='UNKNOWN',automatic_merge=False)
+        if len(json.dumps(plan,ensure_ascii=False).encode())>1_048_576:raise ValueError('比對資料超出1MiB，請縮小範圍')
+        plan['sha256']=digest(plan);return plan
+
     def plan_merge(self,a,b,primary_code=None):
         if a==b:raise ValueError('請選兩個獨立客戶')
         left,right=self._state(a),self._state(b)
@@ -191,6 +199,40 @@ class CustomerIdentity:
             self.db.execute('INSERT INTO customer_identity_events VALUES(?,?,?,?,?)',(identity,a,b,state,json.dumps(payload,ensure_ascii=False)))
             self.library.event(identity,'customer_identity_review_recorded');self.db.commit()
             return dict(id=identity,state=state)
+        except BaseException:self.db.rollback();raise
+
+    def export_event(self,event_id,target,approved=False):
+        """Explicit local export only; original assets are never in this JSON."""
+        if not approved:raise ValueError('稽核包含個資，請明確核准本機匯出，不得公開上傳')
+        row=self.db.execute('SELECT primary_id,secondary_id,state,payload FROM customer_identity_events WHERE id=?',(event_id,)).fetchone()
+        if not row:raise ValueError('稽核事件不存在')
+        target=Path(target)
+        if target.suffix.lower()!='.json' or not target.parent.is_dir():raise ValueError('請選本機JSON檔案位置')
+        payload=dict(id=event_id,primary_id=row[0],secondary_id=row[1],state=row[2],payload=json.loads(row[3]),privacy='LOCAL_PERSONAL_DATA_DO_NOT_UPLOAD')
+        import os,tempfile
+        from .safe_publish import publish_complete
+        fd,name=tempfile.mkstemp(prefix='.identity-export-',dir=target.parent)
+        temporary=Path(name)
+        try:
+            with os.fdopen(fd,'w',encoding='utf8') as stream:
+                json.dump(payload,stream,ensure_ascii=False,indent=2);stream.flush();os.fsync(stream.fileno())
+            publish_complete(temporary,target)
+        finally:temporary.unlink(missing_ok=True)
+        return dict(path=str(target),state='EXPORTED_LOCAL',contains_personal_data=True)
+
+    def redact_event(self,event_id,actor,reason,approved=False):
+        if not approved or not actor.strip() or not reason.strip():raise ValueError('清理稽核個資需要明確核准及理由')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            row=self.db.execute('SELECT state,payload FROM customer_identity_events WHERE id=?',(event_id,)).fetchone()
+            if not row:raise ValueError('稽核事件不存在')
+            if row[0]=='MERGED':raise ValueError('有效合併仍依賴原始映射以安全拆分；先核對拆分，再清理已結束事件')
+            old=json.loads(row[1])
+            if old.get('redacted'):raise ValueError('此事件已清理個資')
+            payload=dict(redacted=True,previous_payload_sha256=digest(old),actor=actor[:200],reason=reason[:2048],created=time.time())
+            self.db.execute('UPDATE customer_identity_events SET payload=? WHERE id=?',(json.dumps(payload,ensure_ascii=False),event_id))
+            self.library.event(event_id,'customer_identity_closed_event_redacted');self.db.commit()
+            return dict(id=event_id,state='REDACTED',active_customer_fields_changed=False)
         except BaseException:self.db.rollback();raise
 
     def plan_split(self,event_id):

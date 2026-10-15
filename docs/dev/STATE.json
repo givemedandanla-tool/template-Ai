@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-CUSTOMER-IDENTITY-WIP",
+  "active_task": "REMAINING28-UI046-FORMAL-REGRESSION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-IDENTITY-WIP.receipt.json",
   "last_confirmed_commit": "2a07f3d3d2aa137448fd0b3f5b4f214b894c0509",
   "latest_evidence_run": null,
@@ -18,9 +18,9 @@
   ],
   "next_tasks": [
     {
-      "id": "UI046-IDENTITY-AUDIT-AND-FULL-CLAUSES",
+      "id": "UI046-FORMAL-REGRESSION",
       "status": "IN_PROGRESS",
-      "next": "客戶合併/別名/作用域/拆分59目標測試PASS；補本機稽核匯出/去個資與完整條款對照，再接UI047。仍無新父題完成，全138待正式重驗。"
+      "next": "已凍結UI046完整11原軟體條款；12新身份測試與61相關PASS。新雙欄Qt預覽/逐項核對/本機稽核匯出及已結束快照個資清理；正式全回歸通過後才能結案，28目標其餘27仍未結案。"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-IDENTITY-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-TWENTYEIGHT-END.json",
@@ -39,7 +41,7 @@
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
-  "next_work_package": "UI046-IDENTITY-AUDIT-AND-FULL-CLAUSES",
+  "next_work_package": "UI047-RELATIONAL-BACKUP",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -562,7 +564,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": null,
+  "planned_evidence_run": "RUN-REMAINING28-IDENTITY-001",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",

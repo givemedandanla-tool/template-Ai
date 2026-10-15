@@ -136,6 +136,9 @@ class CustomerIdentityTests(unittest.TestCase):
         dialog.cancel_identity();self.assertIsNone(dialog.identity_plan)
         self.assertEqual(self.store.get(self.b['id'])['id'],self.b['id'])
         dialog.identity_plan=dialog.identity_service().plan_merge(self.a['id'],self.b['id'])
+        dialog.show_identity_preview();APP.processEvents()
+        self.assertFalse(dialog.identity_preview.confirm.isEnabled())
+        dialog.identity_preview.ack.setChecked(True);dialog.identity_preview.confirm.click();APP.processEvents()
         with patch('template_ai.customer_dialog.QInputDialog.getText',side_effect=[('test',True),('Synthetic verified identity',True)]),patch('template_ai.customer_dialog.QMessageBox.question',return_value=QMessageBox.Yes):
             dialog.commit_identity()
         self.assertIsNone(dialog.identity_plan);self.assertEqual(self.store.get(self.b['id'])['id'],self.a['id'])
@@ -150,3 +153,30 @@ class CustomerIdentityTests(unittest.TestCase):
         graph=InputGraph.from_legacy([{'name':['Third Person']}],[])
         self.store.create_graph('000b','Third customer',graph.data,self.template.id,approved=True)
         with self.assertRaisesRegex(ValueError,'正規化衝突'):self.identity.plan_merge(self.a['id'],self.b['id'])
+
+    def test_local_audit_export_no_overwrite_and_closed_event_redaction_cannot_destroy_active_split_mapping(self):
+        record=self.merge();target=Path(self.temp.name)/'private-local-audit.json'
+        with self.assertRaises(ValueError):self.identity.export_event(record['id'],target)
+        self.assertFalse(target.exists())
+        self.identity.export_event(record['id'],target,True);original=target.read_bytes()
+        self.assertIn(b'Alex Example',original)
+        with self.assertRaises(FileExistsError):self.identity.export_event(record['id'],target,True)
+        self.assertEqual(target.read_bytes(),original)
+        with self.assertRaisesRegex(ValueError,'有效合併'):self.identity.redact_event(record['id'],'test','test',True)
+        self.identity.split(self.identity.plan_split(record['id']),True,'test','test')
+        before=[self.store.get(c['id']) for c in self.customers]
+        for event in self.identity.history(self.a['id']):
+            self.identity.redact_event(event['id'],'test','remove synthetic snapshots',True)
+        for event in self.identity.history(self.a['id']):
+            self.assertTrue(event['redacted']);self.assertNotIn('Alex Example',str(event));self.assertNotIn('0200',str(event))
+        self.assertEqual([self.store.get(c['id']) for c in self.customers],before)
+
+    def test_failed_split_audit_rolls_back_aliases_fields_scopes_and_history(self):
+        record=self.merge();plan=self.identity.plan_split(record['id']);before=self.store.get(self.a['id'])
+        history=self.identity.history(self.a['id'])
+        with patch.object(self.library,'event',side_effect=RuntimeError('injected split audit')):
+            with self.assertRaises(RuntimeError):self.identity.split(plan,True,'test','test')
+        self.assertEqual(self.store.get(self.a['id']),before)
+        self.assertEqual(self.store.get(self.b['id'])['id'],self.a['id'])
+        self.assertEqual(self.identity.history(self.a['id']),history)
+        self.assertEqual(self.library.db.execute('PRAGMA foreign_key_check').fetchall(),[])

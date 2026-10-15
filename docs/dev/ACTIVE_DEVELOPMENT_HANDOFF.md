@@ -2,6 +2,7 @@
 
 - 進行中source/font：fontTools4.60.1、TTC明確字面、輸出授權、原稿衍生屬性證據；尚未完成原父題。138舊完成要求待新來源正式回歸，前次完成數保留為歷史基準。下一步先檢查/tmp/remaining28-source-font-tests.log，再補Windows受控安裝、字型版本／來源完整條款，接續其餘父題。
 - UI046 WIP：既有SQLite同庫新增redirect/alias/style-scope/event，人物公司欄位stable IDs保留；主客戶別名搜尋唯一、每原版型人物範圍不串、原來源關聯移轉/拆回、CAS、審核處置、真Qt確認入口。59相關測試PASS（/tmp/remaining28-customer-tests-005.log）；後續合法新值在拆分保留，歧義新歸屬BLOCK。待補稽核匯出/去個資及完整原條款驗收；尚不結案父題。
+- UI046 source凍結：完整11原條款已註冊，12新身份測試PASS；雙欄人類可讀差異預覽+ack才可另外確認、目前新值/刪除/新增欄位/共享與關係可見、客戶卡片與來源定位、本機稽核匯出/結束快照去個資。capture smoke3 PASS。下一步RUN-REMAINING28-IDENTITY-001全回歸；尚不可宣告整父題完成，其餘27原題待開發。
 - 新指令：持續完成剩餘28父題並自我驗證；active契約FIXED70_REMAINING28_CONTRACT.json保存完整原來源與hash。BEGIN快照PROGRESS-20261015-REMAINING28-BEGIN。正在逐題稽核，尚無新增完成。
 - 核心：CONTEXT_AND_PERSISTENCE_RULES.md；零例行問答、GitHub持久化、先rg再讀段落，一般工具總輸出≤1600tokens。新對話只帶倉庫／提交／本檔，不搬整串聊天或大型媒體全文。
 - /workspace/template-Ai；dev/v0.1-first-version／PR2，未merge main。先`.venv/bin/python tools/resume_status.py`取精確HEAD／變更／最後讀回收據。無多代理、不建EXE；提交[skip ci]。

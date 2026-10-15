@@ -721,3 +721,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 明列預覽/人工核准/CAS/來源hash重查/FK驗證/交易回退；分割目前圖而非覆蓋歷史值，保留後續合法新值，跨客戶共享/新實體與新關聯需要先重新指派。
 - 59相關測試PASS；其中10新identity測試含真正Qt入口與來源關聯、失敗注入。曾55測試1錯誤（公司名稱欄位scope漏選）已修；後19測試1測試fixture path key錯已修；歷史失敗不當PASS。
 - UI046原條款仍待本機稽核匯出/個資清理與逐條具名驗收，未標整父題完成。
+
+### UI046 complete original-clause source freeze
+- 已補身份處置、可人工讀取雙欄預覽/逐項核對後才另行確認、目前合法新值與刪除/新增欄位/共享關係呈現，以及本機稽核匯出與已結束快照去個資。有效合併映射在拆分前不可清理。
+- 12新identity測試PASS；61相關合併回歸PASS；實際Qt preview/export/merge/split capture smoke3 PASS、0未處理回呼。原UI046 11條完整normative逐條具名綁定，歷史未開發狀態原文保留作context。
+- 下一步固定來源commit正式全回歸，未驗收前不更新completed；其餘27父題與Windows/真AI/參考硬體仍未完成。
