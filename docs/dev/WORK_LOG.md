@@ -885,3 +885,5 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### Runtime003 evidence journal checkpoint coverage correction
 - 749/749、0Qt、capture0/source unchanged與5父題52原條/143 claims完整通過。Publication-scope Gate實查發現原collector allowed suffix缺.jsonl，唯一未在checkpoint manifest的是RUNTIME003/test-progress.jsonl，雖native Git tree已包含；先前STATE提前標PASS已更正pending。
 - 保持已測application/tests/tools原樣，不改或重算歷史run；docs/dev/prepare_checkpoint_with_jsonl.py重用原prepare/archive/ACK API，建立新checkpoint前加真正public QA JSONL bytes/SHA/Gitblob並逐line解析，無附件豁免/無改舊checkpoint，native readback與原Gate照驗。下一UI052正常改code時把.jsonl加default collector並正式回歸。
+
+- 新CP-20261015-REMAINING28-UI051-JOURNAL-PUBLICATION已snapshot/Zip/逐檔Git讀回，真正check --require-evidence --publication-scope PASS；唯一缺的JSONL已入manifest，未更動原run/未豁免文字附件。狀態在實際PASS後改回PASS。
