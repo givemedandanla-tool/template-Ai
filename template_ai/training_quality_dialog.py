@@ -45,6 +45,8 @@ class TrainingQualityDialog(QDialog):
         self.recheck_panel=RecheckPanel(window,self);self.tabs.addTab(self.recheck_panel,'重大規則依賴重審')
         from .training_exceptions_panel import TrainingExceptionsPanel
         self.automatic_exceptions=TrainingExceptionsPanel(window,self);self.tabs.addTab(self.automatic_exceptions,'作品分析例外')
+        from .rule_hints_panel import RuleHintsPanel
+        self.rule_hints=RuleHintsPanel(window,self);self.tabs.addTab(self.rule_hints,'確認修正／待審規則線索')
         self.setWindowTitle('標記品質／來源事實與可信訓練')
     def report(self):
         from .diagnostic_dialog import DiagnosticReportDialog

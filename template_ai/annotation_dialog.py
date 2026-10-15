@@ -6,7 +6,7 @@ from PySide6.QtGui import QImage
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QSplitter,QWidget,QLabel,QPushButton,QComboBox,
     QTableWidget,QTableWidgetItem,QPlainTextEdit,QLineEdit,QDoubleSpinBox,QCheckBox,QMessageBox,QInputDialog,QListWidget,QListWidgetItem)
 from .annotations import AnnotationSession,resegment
-from .object_dialog import ObjectCanvas
+from .object_dialog import ObjectCanvas,canvas_controls
 from .gui import Box,Canvas
 from .model import Slot,Rect,KINDS
 from .batch_import import healthy_source
@@ -22,6 +22,7 @@ class AnnotationDialog(QDialog):
         for label,fn in [('框選新增標記',lambda:self.canvas.set_mode('slot')),('選取／校正',lambda:self.canvas.set_mode('edit')),('視角平移',lambda:self.canvas.set_mode('pan')),('原稿／疊圖切換',self.toggle_overlay),('改前／改後比較',self.compare),('復原',self.undo),('重做',self.redo)]:self.button(bar,label,fn)
         layout.addLayout(bar);body=QSplitter();self.objects=QListWidget();self.objects.setSelectionMode(QListWidget.ExtendedSelection);self.objects.itemSelectionChanged.connect(self.from_list);body.addWidget(self.objects)
         self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select);self.canvas.drag_proposal.connect(self.move);self.canvas.rectangle.connect(self.add);body.addWidget(self.canvas)
+        self.canvas.preview_proposal.connect(self.preview_move);layout.addWidget(canvas_controls(self.canvas))
         panel=QWidget();form=QVBoxLayout(panel);self.kind=QComboBox()
         for key,value in KINDS.items():self.kind.addItem(value,key)
         self.owner=QLineEdit('p1');self.owner.setPlaceholderText('人物p1／公司c1，需核對真實歸屬');self.value=QLineEdit();self.value.setMaxLength(512)
@@ -75,17 +76,17 @@ class AnnotationDialog(QDialog):
             slot=next(s for s in self.session.payload['slots'] if s['id']==ids[0]);self.kind.setCurrentIndex(self.kind.findData(slot['kind']));self.owner.setText(slot['owner'])
             observation=next((o for o in self.session.observations if o.get('slot_id')==ids[0]),None);self.value.setText(observation['text'] if observation else '')
             for spin,key in zip(self.coords,('x','y','w','h')):spin.setValue(slot['rect'][key])
-            self.details.setPlainText(f"作品 {self.session.base['id']}／來源 {self.session.base['source_id']}\n框 {ids[0]}／{slot['owner']}\n原生Illustrator對應未知；AI線索不等於真值。\n"+self.semantic_details(observation))
+            self.details.setPlainText(f"作品 {self.session.base['id']}／來源 {self.session.base['source_id']}\n框 {ids[0]}／{slot['owner']}\n標記字型：{slot['font']}／{slot.get('font_style') or '款式未知'}／{slot['size_pt']}pt（標記值，原稿字型仍待核對）\n原生Illustrator對應未知；AI線索不等於真值。\n"+self.semantic_details(observation))
         else:self.details.setPlainText(f'明確選取{len(ids)}框。多選只允許適用操作，不以首框值覆蓋共同屬性。')
 
     def semantic_details(self,observation):
         if not observation:return '待補來源觀察'
-        from .semantic_fields import recognize
+        from .semantic_fields import recognize,TYPE_LABELS
         row=recognize(observation['text'])
         prior=self.session.base['payload'].get('analysis_evidence',{});candidate=prior.get('semantic_candidates',{}).get(observation['id'])
         history=''
         if candidate:history='\n來源分析時的AI候選：'+candidate['semantic_type']+'；模型：'+str(prior.get('semantic_model',{}))+'；依據：'+'；'.join(candidate['signals'])
-        return observation['text']+'\n目前內容語意候選：'+row['semantic_type']+'／平台：'+str(row['platform'])+'\n正規化：'+row['normalized']+'\n判斷依據：'+'；'.join(row['signals'])+'\n'+row['confidence']+'／'+row['version']+history
+        return observation['text']+'\n目前內容語意候選：'+TYPE_LABELS[row['semantic_type']]+'（'+row['semantic_type']+'）／平台：'+str(row['platform'])+'\n正規化：'+row['normalized']+'\n判斷依據：'+'；'.join(row['signals'])+'\n'+row['confidence']+'／'+row['version']+history
 
     def reject(self):
         changed=self.session.payload!=self.session.base['payload'] or self.session.observations!=self.session.facts['observations'] or self.visual.isChecked()!=bool(self.session.payload.get('visual_confirmed'))
@@ -106,6 +107,12 @@ class AnnotationDialog(QDialog):
     def move(self,request):
         def action():self.session.change(dict(request,cross_owner=len({s['owner'] for s in self.session.payload['slots'] if s['id'] in request['ids']})<=1));self.refresh()
         self.guarded(action)
+
+    def preview_move(self,request):
+        try:
+            from .object_tools import propose
+            plan=propose(self.session.payload,'ARTWORK',request);self.canvas.show_preview(plan);self.status.setText('僅預覽，未改標記：'+'；'.join(plan['warnings']))
+        except Exception as error:self.status.setText('未套用：'+str(error))
 
     def add(self,rect):
         def action():
@@ -160,15 +167,20 @@ class AnnotationDialog(QDialog):
 
     def split(self):
         def action():
-            value,ok=QInputDialog.getMultiLineText(self,'明確作品邊界／拆分','每行原來源毫米 x,y,w,h；所有既有框必須完整且唯一指派',text=','.join(str(self.session.payload['crop'][key]) for key in ('x','y','w','h')))
-            if not ok:return
-            regions=[Rect(*[float(v.strip()) for v in line.split(',')]) for line in value.splitlines() if line.strip()]
+            self.require_saved()
+            from .work_overview_dialog import SourceRegionsDialog
+            dialog=SourceRegionsDialog(self.library,self.session.base,self)
+            try:
+                if dialog.exec()!=QDialog.Accepted:return
+                regions=list(dialog.regions)
+            finally:dialog.deleteLater()
             if QMessageBox.question(self,'確認作品邊界候選','保留舊作品與原稿；新區域／來源觀察均重新待審。確認？')!=QMessageBox.Yes:return
             result=resegment(self.library,[self.session.base],regions,'LOCAL_OPERATOR','人工作品邊界校正',True);self.session=AnnotationSession(self.library,result[0]['id']);self.ids=[];self.refresh()
         self.guarded(action)
 
     def merge(self):
         def action():
+            self.require_saved()
             works=[w for w in self.library.artworks(self.session.base['source_id']) if w['id']!=self.session.base['id'] and w['payload'].get('segmentation_state')!='SUPERSEDED']
             if not works:raise ValueError('同來源沒有另一現行作品')
             labels=[w['name']+'／'+w['id'] for w in works];label,ok=QInputDialog.getItem(self,'選擇明確同一作品的區域','不同人物／公司保留獨立歸屬，不合併身分',labels,0,False)
@@ -177,3 +189,7 @@ class AnnotationDialog(QDialog):
             if QMessageBox.question(self,'確認作品合併範圍',label+'\n新區域保留獨立人物與完整Logo，舊作品保留歷史；新事實需重新核對。')!=QMessageBox.Yes:return
             result=resegment(self.library,[self.session.base,other],[region],'LOCAL_OPERATOR','人工同來源區域合併',True);self.session=AnnotationSession(self.library,result[0]['id']);self.ids=[];self.refresh()
         self.guarded(action)
+
+    def require_saved(self):
+        if self.session.payload!=self.session.base['payload'] or self.session.observations!=self.session.facts['observations'] or self.visual.isChecked()!=bool(self.session.payload.get('visual_confirmed')):
+            raise ValueError('有未保存標記；先保存或明確撤回，不能由作品邊界校正丟棄')

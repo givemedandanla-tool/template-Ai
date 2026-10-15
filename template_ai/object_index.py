@@ -41,11 +41,15 @@ def matching_ids(payload, query='', state='ALL', structure=None):
     slots = slots_of(payload)
     links = payload.get('company_bindings', {})
     tokens = query.casefold().split()
-    result = []
+    result = [];source_words={}
+    def index(node):
+        for identity in node.get('ids',[]):source_words[identity]=source_words.get(identity,'')+' '+node.get('label','')
+        for child in node.get('children',[]):index(child)
+    for node in (structure or {}).get('nodes',[]):index(node)
     for s in sorted(slots, key=lambda s: (s.owner, s.kind, s.index, s.id)):
         shared = s.owner.startswith('c') and sum(s.owner in company_ports(c) for c in links.values()) > 1
         problem = not s.rect.inside(payload.get('width_mm',payload.get('work_width',0)),payload.get('height_mm',payload.get('work_height',0)))
-        words = ' '.join([s.id,s.owner,s.kind,KINDS.get(s.kind,s.kind),s.font,s.font_style, 'locked 鎖定' if s.locked else 'unlocked 未鎖定', 'shared 共享' if shared else '', 'problem 問題' if problem else '', '來源對應 UNKNOWN']).casefold()
+        words = ' '.join([s.id,s.owner,s.kind,KINDS.get(s.kind,s.kind),s.font,s.font_style, 'locked 鎖定' if s.locked else 'unlocked 未鎖定', 'shared 共享' if shared else '', 'problem 問題' if problem else '', source_words.get(s.id,'來源對應 UNKNOWN')]).casefold()
         if state == 'LOCKED' and not s.locked or state == 'SHARED' and not shared or state == 'PROBLEM' and not problem:
             continue
         if all(t in words for t in tokens):
@@ -53,7 +57,7 @@ def matching_ids(payload, query='', state='ALL', structure=None):
     return result
 
 
-def source_structure(source):
+def source_structure(source,payload=None):
     """Read the verified derivative only. No native/layer or slot association is invented."""
     unknown = {'status':'UNKNOWN','provenance':'衍生 SVG／非 Illustrator 原生圖層','mapping':'UNKNOWN','nodes':[]}
     if not source or not source.get('svg'):
@@ -85,10 +89,17 @@ def source_structure(source):
             label=e.get('{http://www.inkscape.org/namespaces/inkscape}label','')
             return {'label':f'{e.tag.rsplit("}",1)[-1]} · {label or identity or address} · 對應 UNKNOWN','address':address,'source_id':identity,'ids':[],'children':[visit(c,depth+1,address+'/'+str(i)) for i,c in enumerate(e)]}
         nodes=[visit(root,0,'0')]
+        mapping=(payload or {}).get('analysis_evidence',{}).get('slot_source_map',{});slot_ids={s['id'] for s in (payload or {}).get('slots',[])};linked=[]
+        if isinstance(mapping,dict) and len(mapping)<=200:
+            def link(node):
+                node['ids']=sorted(sid for sid,reference in mapping.items() if sid in slot_ids and isinstance(reference,dict) and reference.get('source_hash')==source['hash'] and reference.get('svg_hash')==source['file_hashes']['svg'] and reference.get('svg_object_id') and reference['svg_object_id']==node['source_id'])
+                if node['ids']:node['label']=node['label'].replace('對應 UNKNOWN','衍生SVG對應；原生Illustrator UNKNOWN');linked.extend(node['ids'])
+                for child in node['children']:link(child)
+            for node in nodes:link(node)
         with path.open('rb') as stream:after_data=stream.read(MAX_XML_BYTES+1)
         if len(after_data)>MAX_XML_BYTES or hashlib.sha256(after_data).hexdigest()!=source['file_hashes']['svg']:
             raise ValueError('結構讀取期間檔案異動')
         check_verified(proof,source['hash'])
-        return {**unknown,'status':'VERIFIED_DERIVATIVE','reason':'SVG 有序結構可讀；沒有 slot↔SVG 唯一映射證據','nodes':nodes,'count':count}
+        return {**unknown,'status':'VERIFIED_DERIVATIVE','mapping':'VERIFIED_SVG_LINKS' if linked else 'UNKNOWN','reason':'只對已保存且來源／快取hash一致的衍生SVG連結；其餘slot及原生Illustrator對應UNKNOWN','nodes':nodes,'count':count,'linked_slot_ids':sorted(set(linked))}
     except (OSError,ValueError,ET.ParseError,KeyError,TypeError) as error:
         return {**unknown,'status':'BLOCKED','reason':str(error)}

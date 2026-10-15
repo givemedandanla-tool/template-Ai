@@ -78,7 +78,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
         if value.strip() and rect:texts.append((node.get('id'),value.strip()[:512],rect))
     result=[]
     for key,crop in sorted(regions,key=lambda item:(item[1].y,item[1].x,item[0])):
-        slots=[];observations=[];counts={};clues=[];companies=[]
+        slots=[];observations=[];counts={};clues=[];companies=[];source_map={}
         local=sorted([row for row in texts if contains(crop,row[2])],key=lambda row:(row[2].y,row[2].x,row[0]))
         if len(local)+len(logos)>200:raise ValueError('單作品標記超過200，需人工縮小作品')
         name_used=False
@@ -96,6 +96,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             if kind=='company':owner='c'+str(len(companies)+1);companies.append(owner)
             slot=Slot(kind,owner,local_rect,index=index,id=identity,required=kind=='name')
             slots.append(asdict(slot))
+            source_map[identity]=dict(svg_object_id=native,source_hash=source['hash'],svg_hash=source['file_hashes']['svg'])
             observations.append(dict(id='obs-'+identity,slot_id=identity,text=value,object_type='TEXT',classification='FIELD',region=asdict(rect),prior_prediction='UNCONFIRMED_SOURCE_DERIVATIVE',semantic=semantic))
         for node in logos:
             rect=bounds[node.get('id')]
@@ -103,6 +104,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             owner='c'+str(len(companies)+1);companies.append(owner)
             identity='box-'+digest([source['hash'],key,node.get('id')])[:28]
             slots.append(asdict(Slot('logo',owner,Rect(rect.x-crop.x,rect.y-crop.y,rect.w,rect.h),id=identity)))
+            source_map[identity]=dict(svg_object_id=node.get('id'),source_hash=source['hash'],svg_hash=source['file_hashes']['svg'])
             observations.append(dict(id='obs-'+identity,slot_id=identity,text='完整複合Logo／公司身分待核對',object_type='LOGO_PART',classification='LOGO',region=asdict(rect),prior_prediction='UNCONFIRMED_WHOLE_GROUP'))
         result.append(dict(key=digest([ANALYSER_VERSION,source['hash'],source.get('page',1),key,asdict(crop)]),
             source_id=source['id'],source_hash=source['hash'],source_page=source.get('page',1),source_object_id=key,
@@ -114,5 +116,6 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
                 confidence='UNVALIDATED_HEURISTIC',issues=sorted(set(clues)),
                 object_ids=[row[0] for row in local],source_unchanged=True,
                 semantic_model=model_context or dict(state='NONE'),
+                slot_source_map=source_map,
                 semantic_candidates={o['id']:o['semantic'] for o in observations if o.get('semantic')})))
     return result

@@ -114,7 +114,7 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
         if not isinstance(observations, list) or not 1 <= len(observations) <= 200:
             raise ValueError('觀察需1～200項；空白不算來源事實')
         work = self.library.artwork(work_id); source = self.library.source(work['source_id'])
-        slots = work['payload']['slots']; ids = [s.get('id') for s in slots]
+        slots = work['payload']['slots']; ids = [s.get('id') for s in slots];by_slot={s.get('id'):s for s in slots}
         if len(ids) != len(set(ids)): raise ValueError('作品stable slot IDs重複，先修標記')
         result = []; seen = set(); linked = set()
         for item in observations:
@@ -136,7 +136,8 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
                            'object_type': item['object_type'], 'classification': item['classification'], 'region': copy.deepcopy(item['region']),
                            'evidence': item.get('evidence') if item.get('evidence') in ('AI_SOURCE_HYPOTHESIS','USER_OBSERVATION_DRAFT') else 'USER_OBSERVATION', 'native_mapping': 'UNKNOWN',
                            'prior_prediction': item.get('prior_prediction') if item.get('prior_prediction') is not None else None,
-                           'semantic': recognize(item['text']) if item['object_type']=='TEXT' else None})
+                           'semantic': recognize(item['text']) if item['object_type']=='TEXT' else None,
+                           'slot_kind':by_slot.get(slot_id,{}).get('kind'),'owner':by_slot.get(slot_id,{}).get('owner')})
             if result[-1]['prior_prediction'] is not None: text(result[-1]['prior_prediction'], '原預測')
         return sorted(result, key=lambda x: x['id'])
 
@@ -185,9 +186,9 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
             if prior:
                 old={o['id']:o for o in prior['after']['observations']}
                 for observation in record['observations']:
-                    before=old.get(observation['id']);keys=('text','slot_id','classification','region')
+                    before=old.get(observation['id']);keys=('text','slot_id','classification','region','slot_kind','owner')
                     if observation['id'] in ids and before and any(before.get(k)!=observation.get(k) for k in keys):
-                        hint_id=digest([work_id,prior['revision'],record['revision'],observation['id']])
+                        hint_id=digest([work_id,prior['after']['pins'].get('work_revision'),expected_pins['work_revision'],observation['id'],{k:before.get(k) for k in keys},{k:observation.get(k) for k in keys}])
                         if not self.get('RULE_HINT',hint_id):self._write('RULE_HINT',hint_id,dict(state='PENDING',risk='HIGH',work_id=work_id,
                             observation_id=observation['id'],pins=expected_pins,before={k:before.get(k) for k in keys},after={k:observation.get(k) for k in keys},
                             actor=actor,reason='單例修正證據；跨作品適用條件／反例尚待驗證，不自動啟用',created=time.time()),0,'confirmed_correction_rule_hint_proposed')

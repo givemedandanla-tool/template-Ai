@@ -15,6 +15,7 @@ import phonenumbers as pn
 
 VERSION = 'semantic-fields-1/phonenumbers-' + pn.__version__
 TYPES = {'email','social_id','landline','mobile','phone','fax','address','title','name','company'}
+TYPE_LABELS=dict(email='電子郵件',social_id='社群軟體ID',landline='市內電話',mobile='手機',phone='電話（固網／行動類型未能區分）',fax='傳真',address='地址',title='職稱',name='姓名',company='公司',unknown='語意待確認')
 SLOTS = dict(email='email',landline='phone',mobile='phone',phone='phone',fax='phone',address='address',title='title',name='name',company='company')
 PLATFORMS = {'line':'line','instagram':'ig','ig':'ig','facebook':None,'fb':None,'telegram':None,'whatsapp':None,'wechat':None,'微信':None,'threads':None,'x':None}
 LABEL = re.compile(r'^\s*(姓名|name|公司|company|e-?mail|電子郵件|電郵|mail|手機|行動電話|mobile|cell(?:phone)?|tel(?:ephone)?|電話|市話|市內電話|phone|fax|傳真|住址|地址|address|職稱|職位|title|position|line|ig|instagram|facebook|fb|telegram|whatsapp|wechat|微信|threads)\s*[:：]\s*(.+)$',re.I)
@@ -110,3 +111,21 @@ def recognize(value,region='TW',model=None):
     if kind=='social_id' and slot_kind is None:signals.append('已辨識平台；現有輸出欄位尚未支援此平台，需人工映射')
     return dict(version=VERSION,raw=value,normalized=normal,semantic_type=kind,slot_kind=slot_kind,platform=platform,
                 candidates=candidates,signals=signals,model=learned,state='PENDING_REVIEW',confidence='UNCALIBRATED_CANDIDATE',region=region)
+
+
+def review_issues(work,facts,confirmation_valid=False):
+    """Current unresolved text evidence for the shared work exception center."""
+    import hashlib,json
+    confirmed=set((facts.get('confirmation') or {}).get('observation_ids',[])) if confirmation_valid else set();result=[]
+    for observation in facts['observations']:
+        if observation['object_type']!='TEXT' or observation['id'] in confirmed:continue
+        row=recognize(observation['text']);reasons=[]
+        if row['semantic_type']=='unknown':reasons.append('字串語意證據不足，需核對類型／歸屬或註記排除')
+        if row['semantic_type']=='social_id' and row['slot_kind'] is None:reasons.append('已辨識社群平台，但現有輸出欄位尚未支援，需明確映射')
+        reasons.extend(s for s in row['signals'] if '矛盾' in s)
+        if not reasons:continue
+        reason='；'.join(reasons);slot_ids=[observation['slot_id']] if observation.get('slot_id') else []
+        identity=hashlib.sha256(json.dumps([work['id'],observation['id'],reason],ensure_ascii=False).encode()).hexdigest()
+        result.append(dict(id=identity,code='SEMANTIC_REVIEW',severity='REVIEW',reason=reason,slot_ids=slot_ids,observation_id=observation['id'],
+            work_id=work['id'],work_revision=work['revision'],work_name=work['name'],source_id=work['source_id'],locatable=True))
+    return result

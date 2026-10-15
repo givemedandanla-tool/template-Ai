@@ -103,7 +103,8 @@ class AutomaticTraining:
         if before and (before['state']=='EXCLUDED' or before['input_signature']==signature and before['state'] in ('WAITING_REVIEW','DRAFT_READY')):
             return before,True
         proof=self.store.source_proof(work['id']);self.store.checked(work['id'],proof)
-        quality=analyse_work(work,self.library.source(work['source_id']));facts=self.store.facts(work['id'])
+        from .semantic_fields import review_issues
+        facts=self.store.facts(work['id']);quality=analyse_work(work,self.library.source(work['source_id']))+review_issues(work,facts,self.store.facts_state(work['id'])=='CONFIRMED')
         noise=self.store.noise_decisions(work['id']);issues=[r for r in quality if r['severity'] in ('BLOCK','REVIEW')]
         templates=[];state='WAITING_REVIEW'
         approved=[self.store.get('SAMPLE',sid) for sid, in self.db.execute("SELECT id FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id LIMIT 201",(work['id'],))]

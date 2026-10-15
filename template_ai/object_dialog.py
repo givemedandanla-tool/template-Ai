@@ -13,13 +13,16 @@ from .font_review import fingerprint
 class ObjectCanvas(Canvas):
     selection_ids=Signal(object)
     drag_proposal=Signal(object)
+    preview_proposal=Signal(object)
     def __init__(self):
         self.resetting=True;super().__init__();self.allow_multi_drag=True;self.resetting=False;self.base_positions={};self.overlays=[];self.selection_intent=set()
+        self.snap_enabled=False;self.guides_enabled=True;self.safety_visible=True;self.resize_enabled=True;self.nudge_mm=.1;self.resize_state=None;self.snap_lines=[];self.pan_restore=None
     def selection_changed(self):
         if self.resetting:return
         self.selection_ids.emit(sorted(i.slot.id for i in self.scene().selectedItems() if isinstance(i,Box)))
     def set_content(self,*args,**kw):
         self.resetting=True;self.selection_intent=set()
+        self.resize_state=None;self.snap_lines=[]
         try:
             super().set_content(*args,**kw)
             self.base_positions={i.slot.id:(i.pos().x(),i.pos().y()) for i in self.scene().items() if isinstance(i,Box)}
@@ -35,7 +38,75 @@ class ObjectCanvas(Canvas):
             for i in self.scene().items():
                 if isinstance(i,Box):i.setSelected(i.slot.id in ids)
         finally:self.resetting=False
+        self.viewport().update()
+
+    def set_mode(self,mode):
+        super().set_mode(mode)
+        if self.mode=='edit':self.setDragMode(Canvas.RubberBandDrag)
+
+    def selected_boxes(self):return [i for i in self.scene().items() if isinstance(i,Box) and i.slot.id in self.selection_intent]
+
+    def snap(self,dx,dy):
+        boxes=self.selected_boxes();self.snap_lines=[]
+        if not self.snap_enabled or not boxes:return dx,dy
+        original=[(self.base_positions[b.slot.id][0],self.base_positions[b.slot.id][1],b.slot.rect.w,b.slot.rect.h) for b in boxes]
+        x=min(r[0] for r in original);y=min(r[1] for r in original);w=max(r[0]+r[2] for r in original)-x;h=max(r[1]+r[3] for r in original)-y
+        references=[[0,self.width_mm/2,self.width_mm],[0,self.height_mm/2,self.height_mm]]
+        for item in self.scene().items():
+            if isinstance(item,Box) and item.slot.id not in self.selection_intent:
+                r=item.slot.rect;references[0].extend((r.x,r.x+r.w/2,r.x+r.w));references[1].extend((r.y,r.y+r.h/2,r.y+r.h))
+        tolerance=6/max(.0001,self.transform().m11());deltas=[dx,dy]
+        for axis,(start,size) in enumerate(((x,w),(y,h))):
+            choices=[(abs(ref-(start+deltas[axis]+offset)),ref-(start+deltas[axis]+offset),ref) for ref in references[axis] for offset in (0,size/2,size)]
+            distance,adjust,reference=min(choices)
+            if distance<=tolerance:deltas[axis]+=adjust;self.snap_lines.append((axis,reference))
+        return tuple(deltas)
+
+    def resize_request(self,point):
+        box=self.resize_state;r=box.slot.rect;x,y=self.base_positions[box.slot.id];w=max(.01,point.x()-x);h=max(.01,point.y()-y)
+        self.snap_lines=[]
+        if self.snap_enabled:
+            references=[[0,self.width_mm/2,self.width_mm],[0,self.height_mm/2,self.height_mm]]
+            for item in self.scene().items():
+                if isinstance(item,Box) and item.slot.id!=box.slot.id:
+                    q=item.slot.rect;references[0].extend((q.x,q.x+q.w/2,q.x+q.w));references[1].extend((q.y,q.y+q.h/2,q.y+q.h))
+            for axis,edge in ((0,x+w),(1,y+h)):
+                reference=min(references[axis],key=lambda v:abs(v-edge))
+                if abs(reference-edge)<=6/max(.0001,self.transform().m11()):
+                    if axis==0:w=max(.01,reference-x)
+                    else:h=max(.01,reference-y)
+                    self.snap_lines.append((axis,reference))
+        if box.slot.kind=='logo':
+            scale=max(.001,(w*r.w+h*r.h)/(r.w*r.w+r.h*r.h));w,h=r.w*scale,r.h*scale
+            # Aspect-ratio projection can move away from a snapped line. Display
+            # only references actually reached by the constrained geometry.
+            self.snap_lines=[(axis,value) for axis,value in self.snap_lines if abs((x+w if axis==0 else y+h)-value)<1e-6]
+        return dict(operation='PATCH',ids=[box.slot.id],patch=dict(w=w,h=h))
+
+    def mousePressEvent(self,event):
+        boxes=self.selected_boxes()
+        if self.mode=='edit' and self.resize_enabled and not self.readonly and len(boxes)==1 and not boxes[0].slot.locked and event.button()==Qt.LeftButton:
+            box=boxes[0];r=box.slot.rect;point=self.mapToScene(event.position().toPoint());corner=QPointF(box.pos().x()+r.w,box.pos().y()+r.h)
+            if (point-corner).manhattanLength()<=9/max(.0001,self.transform().m11()):self.resize_state=box;event.accept();return
+        super().mousePressEvent(event)
+
+    def mouseMoveEvent(self,event):
+        if self.resize_state:
+            self.preview_proposal.emit(self.resize_request(self.mapToScene(event.position().toPoint())));event.accept();return
+        super().mouseMoveEvent(event)
+        if event.buttons()&Qt.LeftButton and self.mode=='edit':
+            boxes=self.selected_boxes()
+            if boxes and not self.readonly and not any(b.slot.locked for b in boxes):
+                first=boxes[0];x,y=self.base_positions[first.slot.id];dx,dy=self.snap(first.pos().x()-x,first.pos().y()-y)
+                if abs(dx)+abs(dy)>1e-6:
+                    for box in boxes:
+                        bx,by=self.base_positions[box.slot.id];box.setPos(bx+dx,by+dy)
+                    self.preview_proposal.emit(dict(operation='MOVE',ids=sorted(self.selection_intent),dx=dx,dy=dy))
+        self.viewport().update()
+
     def mouseReleaseEvent(self,event):
+        if self.resize_state:
+            request=self.resize_request(self.mapToScene(event.position().toPoint()));self.resize_state=None;self.drag_proposal.emit(request);event.accept();return
         super().mouseReleaseEvent(event)
         changed=[]
         for i in self.scene().items():
@@ -45,8 +116,37 @@ class ObjectCanvas(Canvas):
                 i.setPos(x,y);i.slot.rect.x,i.slot.rect.y=x,y
         if changed:
             ids=sorted(self.selection_intent)
-            dx,dy=changed[0][1:]
+            dx,dy=self.snap(*changed[0][1:])
             self.drag_proposal.emit({'operation':'MOVE','ids':ids,'dx':dx,'dy':dy})
+
+    def keyPressEvent(self,event):
+        if event.key()==Qt.Key_Space and not event.isAutoRepeat():
+            self.pan_restore=(self.mode,set(self.selection_intent));self.resetting=True;self.set_mode('pan');self.resetting=False;event.accept();return
+        directions={Qt.Key_Left:(-1,0),Qt.Key_Right:(1,0),Qt.Key_Up:(0,-1),Qt.Key_Down:(0,1)}
+        if event.key() in directions and self.mode=='edit' and self.selection_intent and not self.readonly:
+            dx,dy=directions[event.key()];step=self.nudge_mm*(10 if event.modifiers()&Qt.ShiftModifier else 1)
+            self.drag_proposal.emit(dict(operation='MOVE',ids=sorted(self.selection_intent),dx=dx*step,dy=dy*step));event.accept();return
+        super().keyPressEvent(event)
+
+    def keyReleaseEvent(self,event):
+        if event.key()==Qt.Key_Space and self.pan_restore and not event.isAutoRepeat():
+            mode,ids=self.pan_restore;self.pan_restore=None;self.resetting=True;self.set_mode(mode);self.resetting=False;self.select_ids(ids);event.accept();return
+        super().keyReleaseEvent(event)
+
+    def drawForeground(self,painter,rect):
+        super().drawForeground(painter,rect);painter.save()
+        if self.safety_visible:
+            pen=QPen(QColor('#dc2626'),1,Qt.DashLine);pen.setCosmetic(True);painter.setPen(pen);painter.drawRect(QRectF(0,0,self.width_mm,self.height_mm))
+        if self.guides_enabled:
+            pen=QPen(QColor('#9333ea'),1,Qt.DashLine);pen.setCosmetic(True);painter.setPen(pen)
+            painter.drawLine(QPointF(self.width_mm/2,0),QPointF(self.width_mm/2,self.height_mm));painter.drawLine(QPointF(0,self.height_mm/2),QPointF(self.width_mm,self.height_mm/2))
+            for axis,value in self.snap_lines:
+                if axis==0:painter.drawLine(QPointF(value,0),QPointF(value,self.height_mm))
+                else:painter.drawLine(QPointF(0,value),QPointF(self.width_mm,value))
+        boxes=self.selected_boxes()
+        if self.resize_enabled and self.mode=='edit' and not self.readonly and len(boxes)==1 and not boxes[0].slot.locked:
+            box=boxes[0];r=box.slot.rect;size=7/max(.0001,self.transform().m11());painter.setPen(QPen(QColor('#1d4ed8'),0));painter.setBrush(QColor('#ffffff'));painter.drawRect(QRectF(box.pos().x()+r.w-size/2,box.pos().y()+r.h-size/2,size,size))
+        painter.restore()
     def clear_preview(self):
         for item in self.overlays:
             if item.scene():self.scene().removeItem(item)
@@ -57,6 +157,13 @@ class ObjectCanvas(Canvas):
             if not c['after']:continue
             r=c['after']['rect'];pen=QPen(QColor('#16a34a'),2);pen.setCosmetic(True)
             item=self.scene().addRect(QRectF(r['x'],r['y'],r['w'],r['h']),pen);item.setZValue(9);item.setAcceptedMouseButtons(Qt.NoButton);self.overlays.append(item)
+
+
+def canvas_controls(canvas):
+    widget=QWidget();bar=QHBoxLayout(widget);bar.setContentsMargins(0,0,0,0)
+    for label,attribute in [('邊界／中心吸附','snap_enabled'),('對齊參考線','guides_enabled'),('作品邊界疊圖','safety_visible'),('單框縮放控制點','resize_enabled')]:
+        checkbox=QCheckBox(label);checkbox.setChecked(getattr(canvas,attribute));checkbox.toggled.connect(lambda value,key=attribute:(setattr(canvas,key,value),canvas.viewport().update()));bar.addWidget(checkbox)
+    bar.addWidget(QLabel('微調mm（Shift×10）'));step=QDoubleSpinBox();step.setRange(.01,10);step.setDecimals(2);step.setValue(canvas.nudge_mm);step.valueChanged.connect(lambda value:setattr(canvas,'nudge_mm',value));bar.addWidget(step);bar.addWidget(QLabel('Space暫時平移；疊圖開關不改驗證'));return widget
 
 
 class ObjectToolsDialog(QDialog):
@@ -82,7 +189,8 @@ class ObjectToolsDialog(QDialog):
         for title,action in [('暫時隱藏選取框','HIDE'),('淡化選取框','DIM'),('隔離選取框','ISOLATE'),('顯示所有框／解除隔離','ALL')]:
             b=QPushButton(title);b.clicked.connect(lambda _,a=action:self.viewport_action(a));index_layout.addWidget(b)
         body.addWidget(left)
-        self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select_ids);self.canvas.drag_proposal.connect(self.preview_request);body.addWidget(self.canvas)
+        self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select_ids);self.canvas.drag_proposal.connect(self.preview_request);self.canvas.preview_proposal.connect(self.preview_request);body.addWidget(self.canvas)
+        layout.addWidget(canvas_controls(self.canvas))
         right=QWidget();form=QFormLayout(right);self.context_form=form;self.editors={}
         self.context_status=QLabel('未選取／未知上下文');self.context_status.setWordWrap(True);form.addRow(self.context_status)
         self.pin_text=QCheckBox('釘選文字工具（不適用仍禁止操作）');self.pin_text.toggled.connect(self.update_context);form.addRow(self.pin_text)
@@ -154,7 +262,7 @@ class ObjectToolsDialog(QDialog):
             self.canvas.set_content(w,h,image=image,slots=slots);self.ids=[];self.hidden_ids.clear();self.dim_ids.clear();self.dirty.clear()
             from .object_index import source_structure
             source_id=payload.get('source_id') if self.kind=='TEMPLATE' else self.library.artwork(self.entity_id)['source_id']
-            self.structure=source_structure(self.library.source(source_id) if source_id else None)
+            self.structure=source_structure(self.library.source(source_id) if source_id else None,payload)
             self.loading=False;self.rebuild_index();self.select_ids([])
             self.records=self.library.object_edit_history(self.kind,self.entity_id);self.history.setRowCount(len(self.records))
             for i,r in enumerate(self.records):
@@ -200,7 +308,7 @@ class ObjectToolsDialog(QDialog):
             item.setHidden(not show);return show
         for i in range(self.index_tree.topLevelItemCount()):visible(self.index_tree.topLevelItem(i))
         self.index_tree.blockSignals(False)
-        self.index_count.setText(f'符合 {len(hits)}／{len(self.snapshot["payload"]["slots"])}；选取 {len(self.ids)}，篩選外 {len(set(self.ids)-hits)}；隱藏框 {len(self.hidden_ids)}\n來源 {self.structure["status"]}／slot 映射 UNKNOWN')
+        self.index_count.setText(f'符合 {len(hits)}／{len(self.snapshot["payload"]["slots"])}；选取 {len(self.ids)}，篩選外 {len(set(self.ids)-hits)}；隱藏框 {len(self.hidden_ids)}\n來源 {self.structure["status"]}／slot 映射 {self.structure.get("mapping","UNKNOWN")}；原生Illustrator UNKNOWN')
     def viewport_action(self,action):
         known={s['id'] for s in self.snapshot['payload']['slots']}
         if action=='ALL':self.hidden_ids.clear();self.dim_ids.clear()

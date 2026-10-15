@@ -1,13 +1,14 @@
 """Explainable per-work exceptions over the same persistent pipeline and facts."""
 from .automatic_training import AutomaticTraining
 from .training_quality import analyse_work
+from .semantic_fields import review_issues
 
 
 def exception_rows(library,query='',order='SMART',severity='ALL',offset=0):
     service=AutomaticTraining(library);rows=[]
     for unit in service.store.records('AUTO_UNIT',offset,100):
         if unit['state']=='EXCLUDED':continue
-        work=library.artwork(unit['work_id']);issues=analyse_work(work,library.source(work['source_id']))
+        work=library.artwork(unit['work_id']);issues=analyse_work(work,library.source(work['source_id']))+review_issues(work,service.store.facts(work['id']),service.store.facts_state(work['id'])=='CONFIRMED')
         if unit['state']=='FAILED':issues=unit['issues']+issues
         dependencies=[r[0] for r in library.db.execute("SELECT id FROM templates WHERE json_extract(payload,'$.source_work_id')=? ORDER BY id",(work['id'],))]
         for issue in issues:

@@ -4,7 +4,7 @@
 
 目前引擎為本機混合分析：Inkscape真實幾何→矩形包含與座標轉換→語意候選→逐作品品質／雜訊檢查→有效已授權TRAIN的幾何模板草稿。電話直接重用python-phonenumbers 9.0.16 / Google libphonenumber；保留地區與類型依據，不將國際固網／行動混合類型硬猜為手機。郵件、社群平台與URL、地址、職稱依有界Unicode文字與明確證據產生待審分類；未知文字不按位置猜姓名或職稱。
 
-尚未接入GPT／Claude／預訓練神經模型。開發助理不等於產品中的AI引擎，無付費API或來源檔外傳。新增CharacterModel是字元Multinomial Naive Bayes，採Laplace平滑、特徵覆蓋與類間margin拒答；現已整合到同一TrainingStore的版本化訓練／留出／獨立啟用流程，以及新來源分析管線。尚未替使用者的真實資料訓練或核准模型；測試使用合成來源。UNCALIBRATED分數不假稱正確率或機率。
+尚未接入GPT／Claude等大型語言或多模態模型。既有OCR補救路徑另用Tesseract 5.5與eng／chi_tra預訓練辨字模型；OCR負責文字線索，不是本模組的語意理解或公司身分證明。開發助理不等於產品中的AI引擎，無付費API或來源檔外傳。新增CharacterModel是字元Multinomial Naive Bayes，採Laplace平滑、特徵覆蓋與類間margin拒答；現已整合到同一TrainingStore的版本化訓練／留出／獨立啟用流程，以及新來源分析管線。尚未替使用者的真實資料訓練或核准模型；測試使用合成來源。UNCALIBRATED分數不假稱正確率或機率。
 
 訓練只能從明確確認與另行授權SEMANTIC_CLASSIFICATION_LOCAL的文字樣本估計詞頻／特徵權重；既有GEOMETRY_TRAINING_LOCAL權利不可無聲擴張。可累積新特徵及候選，不能自行改程式、擴神經網路架構或未審啟用／發布規則。修正來源事實與批准通用規則是不同操作。
 

@@ -378,10 +378,13 @@ class MainWindow(QMainWindow):
         self.button("批次來源定位／復原", self.batch_source_links, links_row)
         self.button("批次匯入／取消與續跑", self.batch_import, links_row)
         self.button("來源匯入例外中心", self.import_exceptions, links_row)
-        self.button("預檢後一鍵自動訓練", self.automatic_training, links_row)
-        self.button("本機字串語意模型", self.semantic_learning, links_row)
         links_row.addStretch()
         layout.addLayout(links_row)
+        workflow_row=QHBoxLayout()
+        self.button("預檢後一鍵自動訓練",self.automatic_training,workflow_row)
+        self.button("本機字串語意模型",self.semantic_learning,workflow_row)
+        self.button("來源／作品總覽與校正",self.work_overview,workflow_row)
+        workflow_row.addStretch();layout.addLayout(workflow_row)
         works_row = QHBoxLayout()
         works_row.addWidget(QLabel("目前作品"))
         self.work_combo = QComboBox()
@@ -452,6 +455,7 @@ class MainWindow(QMainWindow):
         self.button("新增空白矩形模板", self.new_template, row)
         self.button("加入合成示範模板", self.add_demo, row)
         self.button("建立新版本草稿", self.new_version, row)
+        self.button("版本差異／回退草稿", self.template_versions, row)
         self.button("保存草稿", self.save_draft, row)
         self.button("驗證並發布", self.publish_template, row)
         layout.addLayout(row)
@@ -726,6 +730,11 @@ class MainWindow(QMainWindow):
         if self.busy:return
         from .semantic_learning_dialog import SemanticLearningDialog
         dialog=SemanticLearningDialog(self);dialog.exec();dialog.deleteLater()
+
+    def work_overview(self):
+        if self.busy:return
+        from .work_overview_dialog import WorkOverviewDialog
+        dialog=WorkOverviewDialog(self);dialog.exec();dialog.deleteLater()
 
     def schedule_affected_work(self,work_id):
         from .automatic_training import AutomaticTraining
@@ -1347,11 +1356,17 @@ class MainWindow(QMainWindow):
         if not self.template:
             return
         if not self.editor_fresh():return
-        t = copy.deepcopy(self.template)
-        t.id, t.state = new_id(), "draft"
-        t.version = self.library.next_version(t.family_id)
-        self.library.save_template(t)
-        self.refresh_templates(t.id)
+        from .template_versions import TemplateVersions
+        try:
+            current=self.library.object_snapshot('TEMPLATE',self.template.id)
+            if Template.from_dict(current['payload'])!=self.template:raise ValueError('請先保存目前草稿，保留未保存的版本內容')
+            service=TemplateVersions(self.library);t=service.clone(service.plan(self.template.id),'LOCAL_OPERATOR','明確建立同一模板新版本草稿',True);self.refresh_templates(t.id)
+        except Exception as error:self.error(str(error))
+
+    def template_versions(self):
+        if not self.template or self.busy:return
+        from .template_versions_dialog import TemplateVersionsDialog
+        dialog=TemplateVersionsDialog(self);dialog.exec();dialog.deleteLater()
 
     def save_draft(self):
         if not self.template or not self.editable():
@@ -1665,10 +1680,16 @@ class MainWindow(QMainWindow):
 
     def mode_changed(self,index=None):
         index=self.tabs.currentIndex() if index is None else index
-        self._mode_memory[self._active_mode]=(self.current_slot.id if self.current_slot else None,self.undo_stack,self.redo_stack)
+        form=dict(kind=self.kind.currentData(),owner=self.owner.currentData(),index=self.index.value(),coords=[s.value() for s in self.coords],font=self.font.currentFont(),pt=self.pt.value(),color=self.text_color.text(),scale=self.scale.value(),align=self.align.currentData(),required=self.required.isChecked(),font_display=copy.deepcopy(getattr(self,'_selected_font_display',None)))
+        self._mode_memory[self._active_mode]=(self.current_slot.id if self.current_slot else None,self.undo_stack,self.redo_stack,form)
         self._active_mode=index
-        selected,self.undo_stack,self.redo_stack=self._mode_memory.get(index,(None,[],[]))
+        selected,self.undo_stack,self.redo_stack,form=self._mode_memory.get(index,(None,[],[],None))
         self.select_slot(next((s for s in self.current_slots() if s.id==selected),None))
+        if form and self.current_slot:
+            for combo,key in ((self.kind,'kind'),(self.owner,'owner'),(self.align,'align')):combo.setCurrentIndex(combo.findData(form[key]))
+            self.index.setValue(form['index'])
+            for spin,value in zip(self.coords,form['coords']):spin.setValue(value)
+            self.font.setCurrentFont(form['font']);self.pt.setValue(form['pt']);self.text_color.setText(form['color']);self.scale.setValue(form['scale']);self.required.setChecked(form['required']);self._selected_font_display=form['font_display']
 
     def repair_font(self):
         if self.busy:
