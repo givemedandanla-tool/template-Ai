@@ -249,6 +249,8 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage("字型資產需處理：" + "；".join(self.font_manager.issues))
         from .backup_center import BackupScheduler
         self.backup_scheduler=BackupScheduler(self)
+        from .source_watch import SourceWatchService
+        self.source_watch=SourceWatchService(self)
         if (self.library.root/'RESTORE_REPORT.json').is_file():
             self.setWindowTitle(self.windowTitle()+' · 還原副本（需重新驗證）')
             self.statusBar().showMessage('目前為隔離還原副本；原環境保留，來源／字型／學習與正式輸出需重新驗證')
@@ -1914,6 +1916,7 @@ class MainWindow(QMainWindow):
             return
         self.input_timer.stop()
         self.backup_scheduler.shutdown()
+        self.source_watch.shutdown()
         self.font_manager.close()
         self.library.close()
         event.accept()

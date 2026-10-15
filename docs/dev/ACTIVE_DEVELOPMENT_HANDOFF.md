@@ -16,3 +16,6 @@
 
 - UI050 core WIP：source_scan重用source_discovery有界scandir visitor，不另造walker。根/格式/排除/暫停/移除CAS，雙hash按size配額，失聯/等穩定/部分不稱成功；同TrainingStore SCAN_CANDIDATE穩定ID，異名獨立、同名新bytes舊候選stale、manual後auto才入隊，未建立AUTO_JOB。7新+55相關=62PASS。
 - 下一SourceWatchService(Qt事件僅hint/debounce/開啟與週期補掃/共享worker/stop)及新版SourceScanDialog；候選交既有AutomaticTrainingDialog，該管線已保異名source獨立，無需改一般BatchStore重用行為。尚未真watch/GUI/原12完整註冊/全formal；UI050仍PARTIAL，141歷史要求待重驗。
+
+- UI050 service WIP：source_watch SourceWatchService已接MainWindow，Qt QFileSystemWatcher根/最多128提示點、600ms去抖、30秒補掃/啟動補掃、FIFO共享run_job、實際worker獨立SQLite、root與來源索引digest CAS、途中取消/延後安全pause及close守衛。6新真Qt事件測試+7index+9操作=22PASS；前62相關也PASS。
+- source_scan known_sources局部SQL最多2000登錄（同路徑多版本hash保留），內容全庫查索引判alias只當線索；候選不自動訓練，已實際登錄仍標需歸屬審核。下一重寫SourceScanDialog接共用service及根控制/候選分頁/UI003交接，現舊GUI仍手動，勿結案UI050。

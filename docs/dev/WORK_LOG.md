@@ -792,3 +792,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 重用既有bounded walker，500項/256MiB雙讀取配額，tmp/自有data排除；原索引不因離線刪除，新候選idempotent同SQLite，內容變動僅舊pending候選stale，人工啟動沿UI003既有權限/多頁/獨立alias身份。
 - 7新指標測試+55相關=62PASS；首個目標失敗為舊fixture keyword介面，改source named cancel且保留全部原不匯入半成品斷言，log/sha已保存。
 - SourceWatchService/新版GUI未完成，原12條未註冊，不結案；先checkpoint，下一接Qt事件與背景job。
+
+### UI050 Qt service recoverable checkpoint
+- Qt真目錄訊號、漏事件週期與重啟補掃、重複hint有界FIFO、共享worker busy等待、途中pause取消、來源索引競爭與關閉前shutdown均已實作。root/來源索引CAS保護候選transaction；目錄提示最多128，其餘明示補掃fallback。
+- 新6個實際Qt/SQLite測試PASS；合index7+操作9共22/22 PASS。source自上milestone141完成仍pending；UI050未全12條/新GUI/全formal，不結案。下一管理介面及既有UI003交接。

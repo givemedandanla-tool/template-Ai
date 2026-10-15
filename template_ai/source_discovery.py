@@ -42,6 +42,7 @@ def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256
             row["availability"] = "內容指紋資料不足，待審"
     lengths = {key[1] for key in by_content}
     report = {"root": str(root), "status": "COMPLETE", "entries": 0, "bytes_budgeted": 0, "hashed_files": 0, "errors": [], "rows": rows}
+    if visit:report['directories']=[str(root)]
     def different(row,path):
         row['same_name_different_count']+=1
         if len(row['same_name_different'])<32:row['same_name_different'].append(str(path))
@@ -76,7 +77,9 @@ def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256
                     if not recursive:continue
                     if len(stack) >= 32:
                         report["errors"].append({"path": str(path), "reason": "目錄深度超過 32，請縮小範圍"}); continue
-                    stack.append(os.scandir(path)); continue
+                    stack.append(os.scandir(path))
+                    if visit:report['directories'].append(str(path))
+                    continue
                 if not entry.is_file(follow_symlinks=False):
                     continue
                 if visit:

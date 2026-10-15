@@ -54,20 +54,33 @@ def configure_root(store,root,*,mode=None,enabled=None,recursive=None,extensions
         return store._write('SCAN_ROOT',now['id'],now,now['revision'],'scan_root_removed_without_data_deletion' if archive else 'scan_root_configuration_confirmed')
 
 
-def scan_files(root,known,cancel=lambda:False,stable_wait=.25,progress=None):
+
+def known_sources(library,root):
+    prefix=str(Path(root['path']).resolve())+__import__('os').sep
+    rows=library.db.execute("SELECT s.id,COALESCE(l.current_path,s.original_path),s.hash,json_extract(s.payload,'$.page') FROM sources s LEFT JOIN source_links l ON l.source_id=s.id WHERE substr(COALESCE(l.current_path,s.original_path),1,?)=? ORDER BY s.id LIMIT 2001",(len(prefix),prefix)).fetchall()
+    if len(rows)>2000:raise ValueError('單一來源根目錄登錄超過2000筆；請分組核對，未省略舊來源')
+    known={}
+    for sid,path,content,page in rows:
+        item=known.setdefault(path,dict(hashes=[],sources=[]))
+        if content not in item['hashes']:item['hashes'].append(content)
+        item['sources'].append(dict(id=sid,hash=content,page=page))
+    return known,digest(rows)
+
+
+def scan_files(root,known,cancel=lambda:False,stable_wait=.25,progress=None,content_lookup=None):
     directory=Path(root['path']);prior={r['path']:r for r in (root.get('last_scan') or {}).get('entries',[])}
     if directory.is_symlink() or not directory.is_dir():return dict(state='ROOT_OFFLINE',entries=[],scanned_entries=0,complete=False,originals_modified=False,deletions_inferred=False)
     directory=directory.resolve();formats,patterns=options(root.get('extensions'),root.get('excludes'));rows=[];first=[];budgeted=0;read_bytes=0
     class Cancel:
         def is_set(self):return cancel()
-    signal=Cancel();known_hashes={p:(v if isinstance(v,str) else v['hash']) for p,v in known.items()}
+    signal=Cancel();known_hashes={p:([v] if isinstance(v,str) else v.get('hashes',[v.get('hash')])) for p,v in known.items()};all_hashes={h for values in known_hashes.values() for h in values}
     def excluded(path):
         relative=path.relative_to(directory).as_posix();name=path.name
         return any(fnmatch.fnmatchcase(relative.casefold(),p.casefold()) or fnmatch.fnmatchcase(name.casefold(),p.casefold()) or fnmatch.fnmatchcase(relative.casefold()+'/',p.casefold()) for p in patterns)
     def visit(path,stat):
         nonlocal budgeted,read_bytes
         if path.suffix.lower() not in formats:return
-        entry=dict(path=str(path),state='WAIT_STABLE',bytes=stat.st_size,registered_hash=known_hashes.get(str(path)))
+        entry=dict(path=str(path),state='WAIT_STABLE',bytes=stat.st_size,registered_hashes=known_hashes.get(str(path),[]))
         if 2*stat.st_size+budgeted>256*1024*1024:raise ValueError('兩次內容核對超過256MiB實際讀取預算；請分組掃描')
         budgeted+=2*stat.st_size;rows.append(entry)
         try:
@@ -87,9 +100,9 @@ def scan_files(root,known,cancel=lambda:False,stable_wait=.25,progress=None):
         try:
             second=hash_source(entry['path'],cancel=signal,byte_limit=min(50_000_000,proof.stat[2]));read_bytes+=second.stat[2]
             if proof.hash!=second.hash or proof.stat!=second.stat:entry.update(state='WAIT_STABLE',reason='兩次內容／stat不同，不匯入');continue
-            old=prior.get(entry['path']);registered=known_hashes.get(entry['path']);previous=registered or (old.get('hash') if old else None)
-            state='UNCHANGED' if previous==second.hash else 'CONTENT_CHANGED_REVIEW_REQUIRED' if previous else 'DUPLICATE_ALIAS_KEEP_IDENTITY' if second.hash in known_hashes.values() or any(x.get('hash')==second.hash and x['path']!=entry['path'] for x in rows) else 'NEW_CANDIDATE'
-            entry.update(state=state,previous_hash=previous,verified_hash=second.hash,verified_stat=list(second.stat),registered=registered==second.hash,
+            old=prior.get(entry['path']);registered=known_hashes.get(entry['path'],[]);previous=(old.get('hash') if old else None) or (registered[0] if len(registered)==1 else registered or None)
+            state='UNCHANGED' if second.hash in registered or previous==second.hash else 'CONTENT_CHANGED_REVIEW_REQUIRED' if previous else 'DUPLICATE_ALIAS_KEEP_IDENTITY' if second.hash in all_hashes or (content_lookup and content_lookup(second.hash)) or any(x.get('hash')==second.hash and x['path']!=entry['path'] for x in rows) else 'NEW_CANDIDATE'
+            entry.update(state=state,previous_hash=previous,verified_hash=second.hash,verified_stat=list(second.stat),registered=second.hash in registered,registered_source_ids=[v['id'] for v in (known.get(entry['path'],{}).get('sources',[]) if isinstance(known.get(entry['path']),dict) else []) if v['hash']==second.hash],
                          customer_code_candidate=Path(entry['path']).stem,artwork_count='UNKNOWN_UNTIL_PARSED')
         except ScanCancelled:return dict(state='CANCELLED',entries=rows,scanned_entries=report['entries'],complete=False,originals_modified=False,deletions_inferred=False)
         except (ValueError,OSError) as error:entry.update(state='WAIT_STABLE',reason=str(error))
@@ -97,7 +110,7 @@ def scan_files(root,known,cancel=lambda:False,stable_wait=.25,progress=None):
     enumeration_complete=report['status']=='COMPLETE'
     present={r['path'] for r in rows}
     if enumeration_complete:
-        baseline={**prior,**{p:dict(path=p,hash=h) for p,h in known_hashes.items()}}
+        baseline={**prior,**{p:dict(path=p,hash=h[0] if len(h)==1 else h) for p,h in known_hashes.items()}}
         for path,old in baseline.items():
             p=Path(path)
             if p.is_relative_to(directory) and (root.get('recursive') or p.parent==directory) and not excluded(p) and p.suffix.lower() in formats and path not in present:
@@ -105,23 +118,30 @@ def scan_files(root,known,cancel=lambda:False,stable_wait=.25,progress=None):
     complete=enumeration_complete and all(r['state'] not in ('WAIT_STABLE','READ_ERROR','MISSING_OR_MOVED_REVIEW_REQUIRED') for r in rows)
     return dict(state='SCANNED' if complete else 'PARTIAL',entries=rows,scanned_entries=report['entries'],complete=complete,enumeration_complete=enumeration_complete,
                 timestamp=time.time(),bytes_first_pass=sum(p.stat[2] for _,p in first),verified_hash_bytes=read_bytes,source_imported=False,originals_modified=False,deletions_inferred=False,
-                excluded_entries=report.get('excluded_entries',0),errors=report['errors'],candidate_semantics='檔案未變不等於已匯入／已審；每個異名客戶獨立，解析作品數尚未知')
+                directories=report.get('directories',[str(directory)]),excluded_entries=report.get('excluded_entries',0),errors=report['errors'],candidate_semantics='檔案未變不等於已匯入／已審；每個異名客戶獨立，解析作品數尚未知')
 
 
 def candidate_id(root,path,content_hash):return digest(['SCAN_CANDIDATE',root['id'],path,content_hash])
 
 
-def save_scan(store,root,result,*,automatic=False):
+def save_scan(store,root,result,*,automatic=False,cancel=lambda:False):
     with store.transaction():
         now=store.get('SCAN_ROOT',root['id'])
         if now!=root or now.get('archived'):raise ValueError('根目錄版本已變更，結果不套用')
         if automatic and (not now.get('enabled') or now.get('mode')!='AUTO_PRECHECK' or now.get('requires_reconnect')):raise ValueError('監看已停用／須重新連結，未建立自動候選')
+        if result.get('source_index_digest') and known_sources(store.library,root)[1]!=result['source_index_digest']:raise ValueError('來源登錄索引在掃描期間已變更，未套用過期候選')
         now['latest_attempt']=result
         if result['state'] not in ('ROOT_OFFLINE','CANCELLED'):
             if result.get('enumeration_complete',result.get('complete')):now['last_scan']=result
             if result.get('complete'):now['last_success']=result['timestamp']
             for entry in result['entries']:
-                if not entry.get('verified_hash') or entry.get('registered'):continue
+                if cancel():raise ScanCancelled()
+                if not entry.get('verified_hash'):continue
+                if entry.get('registered'):
+                    item_id=candidate_id(root,entry['path'],entry['verified_hash']);existing=store.get('SCAN_CANDIDATE',item_id)
+                    if existing and existing['state'] in ('FOUND_NOT_QUEUED','QUEUED_FOR_UI003_PREFLIGHT','DISPATCHED'):
+                        existing.update(state='SOURCE_REGISTERED_REVIEW_PENDING',source_ids=entry.get('registered_source_ids',[]));store._write('SCAN_CANDIDATE',item_id,existing,existing['revision'],'candidate_source_registered_ownership_still_unreviewed')
+                    continue
                 stale_ids=[row[0] for row in store.db.execute("SELECT id FROM training_records WHERE kind='SCAN_CANDIDATE' AND json_extract(payload,'$.root_id')=? AND json_extract(payload,'$.path')=? AND json_extract(payload,'$.source_hash')!=? AND json_extract(payload,'$.state') IN ('FOUND_NOT_QUEUED','QUEUED_FOR_UI003_PREFLIGHT','REVIEW_REQUIRED')",(root['id'],entry['path'],entry['verified_hash']))]
                 for stale_id in stale_ids:
                     stale=store.get('SCAN_CANDIDATE',stale_id);stale.update(state='STALE_SOURCE_CHANGED',replacement_hash=entry['verified_hash']);store._write('SCAN_CANDIDATE',stale_id,stale,stale['revision'],'source_candidate_changed_not_silently_reused')
