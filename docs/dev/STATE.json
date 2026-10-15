@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "FULL70-CATALOG-VERIFIED-PENDING-REMOTE",
+  "active_task": "RESUME-TEN-PARENTS-AUDIT",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-CATALOG-SOURCE.receipt.json",
   "last_confirmed_commit": "459dc8cafe4490495eef98096388f8f308c1d23f",
   "latest_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
@@ -31,7 +31,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261015-CATALOG-VERIFIED"
+    "CP-20261015-CATALOG-VERIFIED",
+    "CP-20261015-RESUME-TEN-PARENTS-BEGIN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",
@@ -47,7 +48,7 @@
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
-  "active_contract": "docs/dev/CATALOG_CONTRACT.json",
+  "active_contract": "docs/dev/RESUME_TEN_PARENTS_CONTRACT.json",
   "next_work_package": "docs/dev/CATALOG_CONTRACT.json",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
@@ -373,5 +374,21 @@
     "reason": "REV04要求指定設備實測，環境僅Linux且無配置外部裝置／憑證／連線",
     "requested": "ASUS VivoBook完整型號CPU/RAM/GPU/Windows與兩目標機實測方式；async文字詢問，其他工作持續",
     "status": "AWAITING_INFORMATION_NOT_GLOBAL_BLOCKER"
+  },
+  "resumed_ten_parent_target": {
+    "contract": "docs/dev/RESUME_TEN_PARENTS_CONTRACT.json",
+    "target_ids": [
+      "UI-045",
+      "UI-001",
+      "UI-002",
+      "UI-006",
+      "UI-010",
+      "UI-011",
+      "UI-012",
+      "UI-034",
+      "UI-035",
+      "UI-036"
+    ],
+    "completed": []
   }
 }
