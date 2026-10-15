@@ -230,6 +230,11 @@ class MainWindow(QMainWindow):
         if self.font_manager.issues:
             self.statusBar().showMessage("字型資產需處理：" + "；".join(self.font_manager.issues))
 
+    def sync_property_mode(self,*args):
+        browsing=self.tabs.currentIndex()==1 and self.template_stack.currentIndex()==0
+        self.property_panel.setEnabled(not browsing)
+        self.property_panel.setToolTip("模板瀏覽為唯讀；先明確開啟模板編輯區" if browsing else "")
+
     def closeEvent(self,event):
         if hasattr(self,'template_catalog'):self.template_catalog.close_previews()
         super().closeEvent(event)
@@ -254,7 +259,11 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self.build_output(), "③ 排版與輸出")
         self.tabs.currentChanged.connect(self.mode_changed)
         splitter.addWidget(self.tabs)
-        splitter.addWidget(self.build_properties())
+        self.property_panel=self.build_properties()
+        splitter.addWidget(self.property_panel)
+        self.tabs.currentChanged.connect(self.sync_property_mode)
+        self.template_stack.currentChanged.connect(self.sync_property_mode)
+        self.sync_property_mode()
         splitter.setSizes([1000, 300])
         outer.addWidget(splitter, 1)
         self.setCentralWidget(root)
@@ -419,7 +428,7 @@ class MainWindow(QMainWindow):
     def return_catalog(self):
         from .training_navigation import require_clean_navigation
         try:
-            require_clean_navigation(self);self.template_catalog.reload();self.template_stack.setCurrentIndex(0)
+            require_clean_navigation(self);self.current_slot=None;self.property_button.setEnabled(False);self.template_catalog.reload();self.template_stack.setCurrentIndex(0)
         except ValueError as error:self.error(str(error))
 
     def build_template_editor(self):

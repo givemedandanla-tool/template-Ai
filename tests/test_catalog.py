@@ -128,7 +128,7 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(d.catalog.source_results[entry['id']]['result']['status'],'VERIFIED_DERIVATIVE');self.assertFalse(d.catalog.items.item(0).icon().isNull())
         def mutate(*args):Path(s['original_path']).write_bytes(b'synthetic changed source');return QMessageBox.Yes
         with patch('template_ai.customer_catalog.QMessageBox.question',side_effect=mutate):d.catalog.pick()
-        self.assertFalse(d.adopted);self.assertIsNone(self.w.active_input_graph);self.assertIn('來源',d.catalog.status.text());d.catalog.reload();pump(lambda:d.catalog.controller.active is None and not d.catalog.controller.queue);self.assertTrue(d.catalog.items.item(0).icon().isNull())
+        self.assertFalse(d.adopted);self.assertIsNone(self.w.active_input_graph);self.assertIn('來源',d.catalog.status.text());d.catalog.rebuild();self.assertTrue(d.catalog.items.item(0).icon().isNull());d.catalog.reload();pump(lambda:d.catalog.controller.active is None and not d.catalog.controller.queue);self.assertTrue(d.catalog.items.item(0).icon().isNull())
     def test_pagination_and_view_switch_preserve_all_explicit_ids_no_visual_dedup(self):
         for i in range(49):self.w.library.save_template(Template(f'Look alike {i:02d}',90,54,[Slot('name','p1',Rect(4,4,42,9))]))
         c=self.w.template_catalog;c.reload();self.assertEqual(len(c.entries),52);first=c.visible[0]['id'];select(c,[first]);c.change_page(1);last=c.visible[-1]['id'];c.selected_ids.add(last);c.rebuild();c.mode.setCurrentIndex(1);c.change_page(-1);self.assertIn(first,c.selected_ids);self.assertIn(last,c.selected_ids);self.assertEqual(len(c.entries),52)
@@ -145,3 +145,6 @@ class CatalogTests(unittest.TestCase):
         empty=MainWindow(self.root/'empty-library');self.extra.append(empty.template_catalog);self.addCleanup(empty.library.db.close);button=next(b for b in empty.template_catalog.findChildren(QPushButton) if b.text()=='新增空白矩形模板')
         with patch('template_ai.gui.QInputDialog.getText',return_value=('First Example',True)),patch('template_ai.gui.QInputDialog.getDouble',side_effect=[(90,True),(54,True)]):button.click()
         self.assertEqual(len(empty.library.templates()),1);self.assertEqual(empty.template_stack.currentIndex(),0);self.assertEqual(empty.template_catalog.items.count(),1)
+
+    def test_browse_disables_old_property_target_until_explicit_editor(self):
+        self.w.tabs.setCurrentIndex(1);self.assertEqual(self.w.template_stack.currentIndex(),0);self.assertFalse(self.w.property_panel.isEnabled());c=self.w.template_catalog;select(c,[self.t.id]);self.assertFalse(self.w.property_panel.isEnabled());c.open_editor();self.assertTrue(self.w.property_panel.isEnabled());self.w.return_catalog();self.assertFalse(self.w.property_panel.isEnabled());self.assertFalse(self.w.property_button.isEnabled())

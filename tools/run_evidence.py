@@ -131,6 +131,10 @@ def main():
             with capture_log.open("a") as log:log.write(extra.stdout+extra.stderr)
             capture_code=extra.returncode
         if capture_code == 0:
+            extra=subprocess.run([sys.executable,str(ROOT / "tools/capture_catalog.py"),"--artifacts-dir",str(generated)],cwd=ROOT,capture_output=True,text=True,encoding="utf-8",errors="replace",timeout=60)
+            with capture_log.open("a") as log:log.write(extra.stdout+extra.stderr)
+            capture_code=extra.returncode
+        if capture_code == 0:
             for name in ("output-workspace.png", "training-workspace.png", "template-workspace.png", "decorated-output-workspace.png", "multiple-artworks-workspace.png", "batch-source-preview.png", "font-center-workspace.png", "font-center-diagnostics.png",
                          "font-candidates-ranked.png", "font-candidates-preview.png", "font-candidate-line.png", "font-candidates-report.json",
                          "font-review-differences.png", "font-review-approved.png", "font-review-draft-history.png", "font-review-undone.png", "font-review-audit.json",
@@ -141,7 +145,7 @@ def main():
                          "exception-center-ranked.png", "exception-center-excluded.png", "exception-center-restored.png", "exception-center-retry-preview.png", "exception-center-retried.png", "exception-center-audit.json",
                          "ten-quality-overview.png", "ten-facts-confirmed.png", "ten-noise-authoring.png", "ten-rule-review.png", "ten-noise-auto-hit.png", "ten-noise-recovery.png", "ten-trusted-sample.png", "ten-dataset-learned-draft.png", "ten-coverage-distribution.png", "ten-training-queue-completed.png", "ten-packages-audit.json",
                          "synthetic-FINAL.pdf", "synthetic-FINAL.png", "synthetic-FINAL.jpg", "decorated-FINAL.pdf", "decorated-FINAL.png", "decorated-FINAL.jpg",
-                         "diagnostic-preview.png", "diagnostic-saved-reopened.png", "diagnostic-stale-refused.png", "diagnostic-work-issues.png", "diagnostic-safe-report.json", "diagnostic-gui-audit.json", "entity-person-cards.png", "entity-adopted-input.png", "entity-customer-diff.png", "entity-gui-audit.json"):
+                         "diagnostic-preview.png", "diagnostic-saved-reopened.png", "diagnostic-stale-refused.png", "diagnostic-work-issues.png", "diagnostic-safe-report.json", "diagnostic-gui-audit.json", "entity-person-cards.png", "entity-adopted-input.png", "entity-customer-diff.png", "entity-gui-audit.json", "catalog-template-icons.png", "catalog-template-list.png", "catalog-explicit-editor.png", "catalog-customer-source-preview.png", "catalog-customer-compare.png", "catalog-customer-prefilled.png", "catalog-gui-audit.json"):
                 if not (generated / name).is_file():
                     capture_code = 1
                     break

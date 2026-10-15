@@ -1,3 +1,7 @@
+# CATALOG完整來源凍結
+
+19項新測試PASS，實際GUI capture成功並逐張檢視模板縮圖及客戶並排：只顯示真實來源衍生圖或明確UNKNOWN；矩形框位示意另標示。新增返回瀏覽時停用舊property target，避免誤編輯；過期來源在翻頁／比較也不重顯舊圖。UI009/044原FULL每條完整保留並登錄named測試，新CORE086/087是子範圍數，不灌父題。準備新source全回歸428項及89本機附件，通過前均pending。無新增受限素材、無EXE／代理／merge。
+
 # CATALOG具名target通過
 
 18項新測試PASS、原客戶8PASS。真來源採現有importer的image/file_hashes.image欄位，使用現成解析器實際生成的匿名PNG確認裁切紅／藍ROI，非僅UNKNOWN stub；舊作品引用查特定歷史版次，能沿用合法舊版且不取假最新。快取過期清除舊圖、主檔／來源在確認期間異動阻擋、分頁多選及空庫新增已驗。全current仍待source正式回歸，不升父題。保存WIP2，下一實際GUI capture／逐條full登錄／凍結來源。

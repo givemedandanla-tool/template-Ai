@@ -12,7 +12,7 @@
 | UI-006 | 例外修正工作台 | PARTIAL | 否 | 原稿／疊圖／前後對照，修正可撤銷且不改原檔 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-007 | 修正套用與 AI 學習確認 | PARTIAL | 否 | 確認作品事實不自動發布跨作品規則 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-008 | 待審核規則中心 | PARTIAL | 否 | 低風險批次、高風險逐條，啟用均有人為核准 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-009 | 模板庫瀏覽方式 | PARTIAL | 否 | 按實體尺寸及 peopleCapacity 分類並保持搜尋選取 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-009 | 模板庫瀏覽方式 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 原UI-009完整已核准條款；穩定實體尺寸／capacity目錄、純唯讀預覽與明確編輯／exact版型採用，未知與過期來源不假稱通過 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-010 | 模板版本編輯機制 | PARTIAL | 否 | 正式版本唯讀，草稿持久，驗證及核准後發布 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-011 | 模板編輯器物件操作 | PARTIAL | 否 | 畫布／語意樹／屬性同一物件與歸屬 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-012 | 物件移動縮放與智慧對齊 | PARTIAL | 否 | 毫米幾何、吸附及鎖定，草稿違規不可發布 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
@@ -47,7 +47,7 @@
 | UI-041 | 雜訊規則庫、命中追溯、例外白名單與安全回滾 | PARTIAL | 否 | 命中追溯、單項恢復、白名單及規則回滾可核對 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-042 | 訓練可恢復進度、精確去重與客戶資料庫重訂關聯 | PARTIAL | 否 | 異名同內容共用分析、保留來源客戶映射及斷點 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-043 | 智慧客戶建檔、版型關聯與正式資料結構方案 | PARTIAL | 否 | 客戶關聯尺寸版型，不設購買分類，編號保留前導零 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-044 | 舊客戶多條件搜尋、多尺寸版型比較與安全沿用重訂 | PARTIAL | 否 | 搜尋核對身份，沿用確切版型開新稿並重驗 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-044 | 舊客戶多條件搜尋、多尺寸版型比較與安全沿用重訂 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 原UI-044完整已核准條款；穩定實體尺寸／capacity目錄、純唯讀預覽與明確編輯／exact版型採用，未知與過期來源不假稱通過 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-045 | 客戶主檔與當次製作逐欄差異、選擇性回寫與版本保護 | PARTIAL | 否 | 只回寫明確勾選欄位，過期主檔版本阻擋 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-046 | 疑似重複客戶比對、受控合併與可追溯拆分恢復 | PARTIAL | 否 | 合併須確認、別名可查，拆分不覆蓋後續新值 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-047 | 本機關聯資料智慧備份、加密驗證與安全還原移轉 | PARTIAL | 否 | 加密完整性及隔離還原，缺資產不宣稱完整可用 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
@@ -171,5 +171,7 @@
 | CORE-083 | 既有GUI報告保存重開與exact版本定位 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 既有GUI報告保存重開與exact版本定位；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍 | [run](../../docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json) |
 | CORE-084 | 人物ROOT穩定實體圖與安全共享操作 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 當次人物卡片、真實引用／獨立複本、受控差異、Undo/Redo、多公司模板port與公司聯絡資料；不改已發布模板／原稿／固定字級 | [run](../../docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json) |
 | CORE-085 | 正規化客戶語意關聯與當次資料逐欄整合 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 單一CustomerStore穩定實體／外鍵、舊欄位ID安全遷移、exact版型預填、共享影響、三方CAS回寫、歷史值受控恢復；不宣稱自動AI建檔或全多尺寸縮圖／新增刪除主檔同步完成 | [run](../../docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json) |
+| CORE-086 | 實體尺寸容量目錄、同索引雙檢視與明確編輯 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 單一模板庫尺寸→capacity、縮圖／列表、搜尋狀態版本篩選、跨分頁穩定多選、可讀詳情、實際框位示意／驗證來源圖，瀏覽停用舊物件編輯target；需明確進入既有編輯區 | 無有效新版證據 |
+| CORE-087 | 客戶尺寸版型來源並排與身份確認exact預填 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 多類欄位／格式電話只讀搜尋、同名同電話保持獨立、身份確認只看該客戶確切款式、歷史來源hash裁切／未知／過期檢查、雙尺寸並排、確認前後CAS及來源新鮮度、僅改當次資料並保持原Gate | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

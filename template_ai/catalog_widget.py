@@ -86,7 +86,7 @@ class CatalogWidget(QWidget):
                 state=row['state']+'／'+row['reference_state'];text=f"{row['name']} · v{row['version'] if row['version'] is not None else 'UNKNOWN'}\n{row['width']:g}×{row['height']:g} mm · 容量 {row['capacity']}人\n{state}\n{row['template_id']}"
                 item=QListWidgetItem(text);item.setData(Qt.UserRole,row['id']);item.setToolTip(text+'\n'+('來源縮圖待核對／UNKNOWN' if self.customer else '實際模板框位示意，非原稿縮圖／非新排版'))
                 if not self.customer:item.setIcon(QIcon(QPixmap.fromImage(catalog.frame_diagram(row))))
-                elif row['id'] in self.source_results:self.set_source_icon(item,self.source_results[row['id']])
+                elif self.current_message(row['id']):self.set_source_icon(item,self.current_message(row['id']))
                 self.items.addItem(item);item.setSelected(row['id'] in self.selected_ids)
                 if row['id']==self.primary_id:self.items.setCurrentItem(item,QItemSelectionModel.NoUpdate)
             self.previous.setEnabled(self.page>0);self.next.setEnabled((self.page+1)*catalog.PAGE_SIZE<len(matching));self.change_view();self.update_status(len(matching))
@@ -111,7 +111,7 @@ class CatalogWidget(QWidget):
         if not self.customer:
             self.picture.setPixmap(QPixmap.fromImage(catalog.frame_diagram(entry)));self.preview_state.setText('實際模板框位示意；不是原稿／新排版／品質證明')
         else:self.picture.clear();self.picture.setText('來源縮圖讀取中／UNKNOWN')
-        if entry['id'] in self.source_results and self.cache_current(self.source_results[entry['id']]):self.display_result(entry['id'],self.source_results[entry['id']])
+        if self.current_message(entry['id']):self.display_result(entry['id'],self.current_message(entry['id']))
         self.controller.prioritize(entry)
 
     def set_source_icon(self,item,message):
@@ -146,6 +146,11 @@ class CatalogWidget(QWidget):
         for dialog,ids in list(self.compare_dialogs):
             if dialog.isVisible() and message['id'] in ids:self.fill_compare(dialog,ids)
 
+    def current_message(self,eid):
+        message=self.source_results.get(eid);entry=self.byid.get(eid)
+        if not message or not entry or message['signature']!=entry['signature'] or not self.cache_current(message):return None
+        return message
+
     def cache_current(self,message):
         try:
             from .source_links import check_verified
@@ -155,9 +160,9 @@ class CatalogWidget(QWidget):
 
     def display_result(self,eid,message):
         result=message['result'];image=result.get('image')
-        if image is not None:self.picture.setPixmap(QPixmap.fromImage(image))
+        if image is not None:self.picture.setPixmap(QPixmap.fromImage(image).scaled(QSize(320,210),Qt.KeepAspectRatio,Qt.SmoothTransformation))
         elif self.customer:self.picture.clear();self.picture.setText('來源縮圖 '+result['status'])
-        self.preview_state.setText(result['status']+'：'+result['reason'])
+        self.preview_state.setText(('模板框位示意（非原稿）；' if not self.customer and image is None else '')+result['status']+'：'+result['reason'])
 
     def update_status(self,count):
         hidden=len(self.selected_ids-{r['id'] for r in getattr(self,'visible',[])})
@@ -166,7 +171,7 @@ class CatalogWidget(QWidget):
         if self.pick_button:self.pick_button.setEnabled(len(self.selected_ids)==1 and not self.window.busy)
 
     def clear_selection(self):
-        self.selected_ids.clear();self.primary_id=None;self.picture.clear();self.details.clear();self.rebuild()
+        self.selected_ids.clear();self.primary_id=None;self.picture.clear();self.details.clear();self.preview_state.setText('未選取模板／來源縮圖 UNKNOWN');self.rebuild()
 
     def choose_exact(self):
         if len(self.selected_ids)!=1:raise ValueError('請明確選一個版本；未自動取最新或排除隱藏選取')
@@ -192,7 +197,7 @@ class CatalogWidget(QWidget):
         dialog=QDialog(self);dialog.setWindowTitle('兩個確切版型：唯讀並排比較／各尺寸獨立');dialog.resize(1060,700);layout=QVBoxLayout(dialog);row=QHBoxLayout();dialog.columns=[]
         for eid in ids:
             column=QWidget();v=QVBoxLayout(column);image=QLabel();image.setTextFormat(Qt.PlainText);image.setMinimumHeight(180);v.addWidget(image);text=QPlainTextEdit();text.setReadOnly(True);v.addWidget(text);dialog.columns.append((image,text));row.addWidget(column)
-        layout.addLayout(row);buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.rejected.connect(dialog.reject);layout.addWidget(buttons);self.compare_dialogs.append((dialog,ids));self.fill_compare(dialog,ids);dialog.show()
+        layout.addLayout(row);buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.rejected.connect(dialog.reject);buttons.button(QDialogButtonBox.Close).setText('關閉');layout.addWidget(buttons);self.compare_dialogs.append((dialog,ids));self.fill_compare(dialog,ids);dialog.show()
         for eid in ids:self.controller.prioritize(self.byid[eid])
         return dialog
 
@@ -200,11 +205,11 @@ class CatalogWidget(QWidget):
         for eid,(picture,text) in zip(ids,dialog.columns):
             row=self.byid.get(eid)
             if not row:picture.setText('版本失聯');continue
-            result=self.source_results.get(eid,{}).get('result',{});image=result.get('image')
+            result=(self.current_message(eid) or {}).get('result',{});image=result.get('image')
             if image is not None:picture.setPixmap(QPixmap.fromImage(image))
             elif self.customer:picture.clear();picture.setText('原稿預覽 '+result.get('status','UNKNOWN'))
             else:picture.setPixmap(QPixmap.fromImage(catalog.frame_diagram(row)))
-            text.setPlainText(catalog.metadata(self.window.library,row)+'\n\n來源圖：'+result.get('status','UNKNOWN')+'\n'+result.get('reason','沒有來源證據時不編造縮圖')+'\n\n幾何與欄位：\n'+str((row.get('template') or {}).get('slots',[])))
+            text.setPlainText(catalog.metadata(self.window.library,row)+'\n\n來源圖：'+result.get('status','UNKNOWN')+'\n'+result.get('reason','沒有來源證據時不編造縮圖')+'\n\n'+catalog.geometry_description(row))
 
     def close_previews(self):
         self.closed=True;self.controller.close()

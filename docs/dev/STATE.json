@@ -3,9 +3,9 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.27",
+  "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "FULL70-CATALOG-IMPLEMENTING",
+  "active_task": "FULL70-CATALOG-SOURCE-FREEZE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-CATALOG-WIP2.receipt.json",
   "last_confirmed_commit": "c1de9b0e3192ab7362b78f88b8bfe632f1afd770",
   "latest_evidence_run": null,
@@ -20,8 +20,8 @@
   "next_tasks": [
     {
       "id": "CATALOG",
-      "status": "PLANNED",
-      "next": "修改前checkpoint，然後索引／安全來源預覽worker／實際目錄與客戶入口，逐full條款測試"
+      "status": "PENDING_VERIFICATION",
+      "next": "RUN-FULL70-CATALOG-001，新code正式全回歸及GUI；來源變更則重凍來源／新run"
     }
   ],
   "blocked": [],
@@ -30,7 +30,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-CATALOG-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-ENTITIES-END.json",

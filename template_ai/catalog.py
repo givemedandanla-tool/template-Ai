@@ -140,3 +140,11 @@ def metadata(library,entry):
     lines+=['來源：'+(Path(source['original_path']).name if source else 'UNKNOWN／無來源'), '來源作品：'+(t.get('source_work_id') or 'UNKNOWN')+'／作品版次 '+str(t.get('source_work_revision') or 'UNKNOWN'), '模板family：'+t['family_id'], '欄位條件：']
     lines += [f"{s['owner']}／{KINDS.get(s['kind'],s['kind'])} #{s['index']+1} · {'必填' if s['required'] else '可空'} · {s['size_pt']:g}pt · 字寬≥{s['min_scale']:.0%}" for s in t['slots']]
     return '\n'.join(lines)
+
+
+def geometry_description(entry):
+    lines=['實際框位（毫米；不同尺寸各自驗證）：']
+    for s in (entry.get('template') or {}).get('slots',[]):
+        r=s['rect']
+        lines.append(f"{s['owner']}／{KINDS.get(s['kind'],s['kind'])} #{s['index']+1}：X {r['x']:g}、Y {r['y']:g}、寬 {r['w']:g}、高 {r['h']:g} mm；固定{s['size_pt']:g}pt")
+    return '\n'.join(lines)

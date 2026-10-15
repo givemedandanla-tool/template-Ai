@@ -20,7 +20,7 @@ class CustomerStyleDialog(QDialog):
         super().__init__(parent or window);self.window=window;self.snapshot=snapshot;self.store=CustomerStore(window.library);self.adopted=False
         self.setWindowTitle('客戶exact尺寸／版型版本：先比較，再確認當次沿用');self.resize(1280,780);layout=QVBoxLayout(self)
         label=QLabel('已確認客戶 '+snapshot['code']+' · '+snapshot['name']+' · ID '+snapshot['id']+' · 主檔 v'+str(snapshot['revision'])+'；原值可能過時，預填後仍需重新排版。');label.setTextFormat(Qt.PlainText);label.setWordWrap(True);layout.addWidget(label)
-        self.catalog=CatalogWidget(window,snapshot,self.prefill,False);layout.addWidget(self.catalog,1);buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.rejected.connect(self.reject);layout.addWidget(buttons)
+        self.catalog=CatalogWidget(window,snapshot,self.prefill,False);layout.addWidget(self.catalog,1);buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.button(QDialogButtonBox.Close).setText('關閉');buttons.rejected.connect(self.reject);layout.addWidget(buttons)
         self.finished.connect(lambda:self.catalog.close_previews())
     def prefill(self,entry):
         current=self.store.get(self.snapshot['id'])
