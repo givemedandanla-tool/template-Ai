@@ -30,8 +30,10 @@ class AutomaticTrainingDialog(QDialog):
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
         bar=QHBoxLayout();self.jobs=QComboBox();bar.addWidget(self.jobs,1);self.retry=QCheckBox('明確重試失敗項');bar.addWidget(self.retry)
         self.button(bar,'上一頁工作',lambda:self.job_page(-200));self.button(bar,'下一頁工作',lambda:self.job_page(200));self.button(bar,'讀回持久工作',self.reload);self.resume_button=self.button(bar,'繼續選定工作',self.resume)
-        self.cancel_button=self.button(bar,'安全取消',self.cancel_event.set);self.cancel_button.setEnabled(False)
-        self.button(bar,'開啟作品例外／品質中心',window.training_center);layout.addLayout(bar);self.reload()
+        self.cancel_button=self.button(bar,'安全取消',self.cancel);self.cancel_button.setEnabled(False)
+        self.button(bar,'開啟作品例外／品質中心',window.training_center);layout.addLayout(bar);self.reload();self.request_id=None
+        dispatcher=getattr(window,'execution_queue',None)
+        if dispatcher:dispatcher.progress.connect(self.queued_progress);dispatcher.finished.connect(self.queued_finished)
 
     def button(self,bar,label,fn):
         button=QPushButton(label);button.clicked.connect(fn);bar.addWidget(button);return button
@@ -127,9 +129,12 @@ class AutomaticTrainingDialog(QDialog):
         if QMessageBox.question(self,'接續確切持久工作',job['id']+'\n保留既有成果，只重分析變更單元；失敗項依勾選重試。')==QMessageBox.Yes:self.start_job(job)
 
     def start_job(self,job):
-        if self.running or self.window.busy:return
+        if self.running:return
         claimed=None
         try:
+            dispatcher=getattr(self.window,'execution_queue',None)
+            if dispatcher:
+                request=dispatcher.submit('AUTO_JOB',job,self.actor.text() or job['actor'],self.retry.isChecked());self.request_id=request['id'];self.running=True;self.start_button.setEnabled(False);self.resume_button.setEnabled(False);self.cancel_button.setEnabled(True);self.status.setText('執行範圍已持久確認，依先進先出等待資源；尚未宣稱分析或人審完成');return
             supervisor=getattr(self.window,'runtime',None)
             if supervisor:
                 decision=supervisor.admit('ANALYSIS',requested=True)
@@ -152,10 +157,26 @@ class AutomaticTrainingDialog(QDialog):
                 finally:LIVE_OWNERS.discard(claimed['owner']['token'])
             self.running=False;self.cancel_button.setEnabled(False);self.resume_button.setEnabled(True);self.start_button.setEnabled(self.report is not None);self.status.setText('啟動失敗：'+str(error))
 
+    def queued_progress(self,identity,job):
+        if identity!=self.request_id:return
+        self.running=True;self.render(job);self.cancel_button.setEnabled(True)
+
+    def queued_finished(self,identity,job):
+        if identity!=self.request_id:return
+        self.running=False;self.cancel_button.setEnabled(False);self.resume_button.setEnabled(True);self.start_button.setEnabled(self.report is not None)
+        if 'items' in job:self.render(job)
+        self.status.setText('已保存執行狀態：'+job['phase']+'；分析與人工審核分開');self.reload()
+
+    def cancel(self):
+        if self.request_id:
+            try:self.window.execution_queue.cancel(self.request_id)
+            except Exception as error:self.status.setText('取消未保存：'+str(error))
+        else:self.cancel_event.set()
+
     def reject(self):
-        if self.running:self.cancel_event.set();self.status.setText('安全取消中；等待目前檔案步驟完成再關閉。');return
+        if self.running:self.cancel();self.status.setText('安全取消中；等待目前檔案步驟完成再關閉。');return
         super().reject()
 
     def closeEvent(self,event):
-        if self.running:self.cancel_event.set();self.status.setText('安全取消中，當前原子步驟完成後可關閉。');event.ignore()
+        if self.running:self.cancel();self.status.setText('安全取消中，當前原子步驟完成後可關閉。');event.ignore()
         else:super().closeEvent(event)

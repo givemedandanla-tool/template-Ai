@@ -83,7 +83,7 @@ class AutomaticTraining:
     def phase(self,row):
         return 'INTERRUPTED' if row['phase']=='RUNNING' and not owner_alive(row.get('owner')) else row['phase']
 
-    def claim(self,identity,revision,approved=False,retry=False):
+    def claim(self,identity,revision,approved=False,retry=False,claimed_hook=None):
         if approved is not True:raise ValueError('需明確啟動／接續確切工作')
         with self.store.transaction():
             row=self.get(identity)
@@ -98,6 +98,7 @@ class AutomaticTraining:
             lease=self.store.get('WORKER','automatic-worker')
             self.store._write('WORKER','automatic-worker',dict(active=True,owner=owner,job_id=identity),lease['revision'] if lease else 0,'automatic_worker_claimed')
             result=self.store._write('AUTO_JOB',identity,row,revision,'automatic_job_started')
+            if claimed_hook:claimed_hook(result)
         LIVE_OWNERS.add(owner['token']);return result
 
     def owned(self,identity,token):

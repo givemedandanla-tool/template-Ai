@@ -29,7 +29,7 @@ MAGIC=b'TABI2'
 MAX_BYTES=256*1024*1024
 MAX_FILES=5000
 from .asset_references import PATH_KEYS,is_asset_path
-ACTIVE_JSON={'sources','templates','logos','font_assets','artworks','training_records'}
+ACTIVE_JSON={'sources','templates','logos','font_assets','artworks','training_records','runtime_requests'}
 REQUIRED_TABLES={'sources','contents','templates','logos','font_assets','source_links'}
 
 
@@ -405,6 +405,9 @@ def restore_bundle(archive,target,password,trusted=False,allow_partial=False,can
                 for identity,kind,payload,revision,record_id in rows:
                     old=json.loads(payload);new=_rewrite(old,mapping)
                     if table=='logos' and new.get('managed_logo'):new['restore_revalidation_required']=True
+                    if table=='runtime_requests':
+                        new.update(consent_session=None,consent_owner=None,owner=None,restore_state='EXPLICIT_RESUME_REQUIRED')
+                        if new.get('state') in ('WAITING','RUNNING','PAUSED_RESOURCES'):new['state']='INTERRUPTED'
                     if table=='templates' and new.get('background'):new['background']['restore_revalidation_required']=True
                     if kind=='SCAN_ROOT':new.update(mode='MANUAL_ONLY',enabled=False,restore_state='RECONNECT_REQUIRED')
                     if kind=='WORKER' and new.get('active'):new.update(active=False,owner=None,restore_state='INTERRUPTED')

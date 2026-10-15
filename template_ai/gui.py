@@ -238,6 +238,8 @@ class MainWindow(QMainWindow):
         self._background_jobs = {}
         from .runtime_supervisor import RuntimeSupervisor
         self.runtime=RuntimeSupervisor(self)
+        from .runtime_dispatch import RuntimeDispatch
+        self.execution_queue=RuntimeDispatch(self)
         self.loading_form = False
         self.setWindowTitle(f"Template AI {__version__} · 矩形排版研究版")
         self.resize(1340, 850)
@@ -741,7 +743,7 @@ class MainWindow(QMainWindow):
         from .runtime_panel import RuntimePanel
         panel=RuntimePanel(self);panel.setAttribute(Qt.WA_DeleteOnClose);panel.show();return panel
 
-    def run_job(self, message, function, callback):
+    def run_job(self, message, function, callback,*,on_error=None,resource_kind='ANALYSIS'):
         if self.busy:
             self.inform("目前仍有背景匯入工作，請等待完成")
             return
@@ -768,7 +770,7 @@ class MainWindow(QMainWindow):
             self.busy = False
             self.import_button.setEnabled(True)
             try:
-                self.error(text)
+                (on_error or self.error)(text)
             finally:
                 release()
         job.signals.done.connect(finished, Qt.QueuedConnection)
@@ -777,7 +779,7 @@ class MainWindow(QMainWindow):
         def launch():
             if context.closed or self.library is not context:
                 self.busy=False;release();return
-            decision=self.runtime.admit('ANALYSIS',foreground=True)
+            decision=self.runtime.admit(resource_kind,foreground=True)
             if not decision.allowed:
                 self.statusBar().showMessage(message+' · 等待資源；尚未執行／保存：'+','.join(decision.reasons))
                 QTimer.singleShot(500,self,launch);return

@@ -848,3 +848,5 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI051 actual execution admission / before FIFO schema
 - MainWindow監測/資源面板、watch/backup保留待辦壓力延後、JOB/AUTO_JOB逐安全單位pressure pause並釋放lease；實際完成unit續跑不重做，原AI分析與人審仍分開。17專用PASS，廣回歸尚有舊GUI fixture未處理warmup的失敗，未宣稱整包通過。
 - 保留三份初失敗/修正17PASS的原log+sha；新來源仍142 pending。下一bounded startup與同DB FIFO requests，不建立平行模型資料庫。此為持久queue schema之前checkpoint。
+
+- UI051 after FIFO schema：runtime_requests同一DB持久佇列，max200活動/page50、arrival seq FIFO、scope/session/actor明確確認、原子queue+JOB/WORKER claim、blocked隔離、壓力續跑重用、舊面板與GUI接入。備份完整保留requests但還原清consent/owner且需明確恢復。8 FIFO專用PASS、44資源/backup合集PASS、12既有pipeline PASS；先前GUI失敗保留，fixture精確控資源及更新真worker patch，不降低結果/rollback/cancel檢查。尚缺startup bounded與完整Qt/父題證據。

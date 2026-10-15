@@ -51,7 +51,7 @@ class TrainingQueueMixin:
         if not job:raise ValueError('訓練工作不存在')
         return 'INTERRUPTED' if job['phase']=='RUNNING' and not owner_alive(job['owner']) else job['phase']
 
-    def claim_training_job(self,job_id,expected_revision,approved=False,retry_failed=False):
+    def claim_training_job(self,job_id,expected_revision,approved=False,retry_failed=False,claimed_hook=None):
         if approved is not True:raise ValueError('啟動／中斷續跑需明確確認')
         token=new_id();owner={'pid':os.getpid(),'token':token,'started':time.time()}
         LIVE_OWNERS.add(token)
@@ -71,6 +71,7 @@ class TrainingQueueMixin:
                     if item['state']=='FAILED' and retry_failed:item.update(state='READY',error=None)
                 if not any(i['state']=='READY' for i in job['items']):raise ValueError('沒有待續跑項；失敗項需明確選擇重試')
                 job.update(phase='RUNNING',owner=owner,cancel_requested=False,last_error=None);saved=self._write('JOB',job_id,job,expected_revision,'training_job_claimed');self._write('WORKER','geometry-worker',{'active':True,'job_id':job_id,'owner':owner},lease['revision'] if lease else 0,'training_worker_claimed')
+                if claimed_hook:claimed_hook(saved)
             return saved
         except BaseException:
             LIVE_OWNERS.discard(token);raise

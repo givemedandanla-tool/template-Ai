@@ -45,6 +45,8 @@ class Library:
         CREATE TABLE IF NOT EXISTS template_edit_clocks(template_id TEXT PRIMARY KEY REFERENCES templates(id), revision INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS font_changes(id TEXT PRIMARY KEY, payload TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS object_edits(id TEXT PRIMARY KEY, entity_kind TEXT NOT NULL, entity_id TEXT NOT NULL, payload TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS runtime_requests(seq INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNIQUE,revision INTEGER NOT NULL,payload TEXT NOT NULL);
+        CREATE INDEX IF NOT EXISTS runtime_requests_state ON runtime_requests(json_extract(payload,'$.state'),seq);
         INSERT OR IGNORE INTO template_edit_clocks SELECT id,0 FROM templates;
         """)
         self.db.commit()

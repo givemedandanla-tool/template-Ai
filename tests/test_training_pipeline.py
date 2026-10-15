@@ -87,6 +87,8 @@ class PipelineGuiTests(unittest.TestCase):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.window=MainWindow(self.root/'data');self.addCleanup(self.close);self.store=TrainingStore(self.window.library);self.samples,self.works=pipeline_samples(self.store,self.root);self.dataset=frozen(self.store,self.samples);self.d=TrainingQualityDialog(self.window);self.addCleanup(self.d.close);self.p=self.d.queue_panel;self.d.show();self.d.tabs.setCurrentWidget(self.p);self.p.prefix.setText('Actual Queue Draft');self.p.actor.setText('Synthetic Reviewer')
         for i in range(self.p.items.rowCount()):self.p.items.item(i,0).setCheckState(Qt.Checked)
         APP.processEvents()
+        from runtime_fixture import controlled_resources
+        controlled_resources(self.window)
     def close(self):self.window.source=None;self.window.work=None;self.window.template=None;self.window.close()
     def wait(self):
         for _ in range(1000):
@@ -117,7 +119,7 @@ class PipelineGuiTests(unittest.TestCase):
         self.assertEqual(self.store.count('JOB'),0);self.assertFalse(self.p.running);self.assertTrue(self.p.create_button.isEnabled())
         self.p.running=True;self.d.reject();self.assertTrue(self.d.isVisible());self.p.running=False
     def test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume(self):
-        with patch('template_ai.training_queue_panel.run_training_job',side_effect=RuntimeError('worker start failed')),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.p.create_button,Qt.LeftButton);self.wait()
+        with patch('template_ai.runtime_dispatch.run_training_job',side_effect=RuntimeError('worker start failed')),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.p.create_button,Qt.LeftButton);self.wait()
         job=self.store.records('JOB')[0];self.assertEqual(self.store.training_job_state(job['id']),'INTERRUPTED');self.assertIn('已停止',self.p.status.text());self.assertFalse(self.window.busy);self.assertTrue(self.p.resume_button.isEnabled());self.assertEqual(self.window.library.templates(),[])
         self.p.reload();self.p.jobs_table.selectRow(0)
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.p.resume_button,Qt.LeftButton);self.wait()
