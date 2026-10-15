@@ -1,0 +1,20 @@
+.....This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+........F.....This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.........
+======================================================================
+FAIL: test_pagination_and_view_switch_preserve_all_explicit_ids_no_visual_dedup (test_catalog.CatalogTests.test_pagination_and_view_switch_preserve_all_explicit_ids_no_visual_dedup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_catalog.py", line 134, in test_pagination_and_view_switch_preserve_all_explicit_ids_no_visual_dedup
+    c=self.w.template_catalog;c.reload();self.assertEqual(len(c.entries),52);first=c.visible[0]['id'];select(c,[first]);c.change_page(1);last=c.visible[-1]['id'];c.selected_ids.add(last);c.rebuild();c.mode.setCurrentIndex(1);c.change_page(-1);self.assertIn(first,c.selected_ids);self.assertIn(last,c.selected_ids);self.assertEqual(len(c.entries),52)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 48 != 52
+
+----------------------------------------------------------------------
+Ran 31 tests in 33.762s
+
+FAILED (failures=1)

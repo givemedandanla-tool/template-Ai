@@ -41,6 +41,9 @@ class ResourceSnapshot:
     process_rss:int|None
     unknown:tuple[str,...]
     basis:str='CURRENT_RUNTIME_ONLY_NOT_REFERENCE_HARDWARE'
+    io_wait_percent:float|None=None
+    io_read_bytes_per_second:float|None=None
+    io_write_bytes_per_second:float|None=None
 
     def to_dict(self):return asdict(self)
 
@@ -50,12 +53,21 @@ class ResourceSampler:
         self.provider=provider;self.cgroup_reader=cgroup_reader;self.clock=clock;self.previous=None;self.sequence=0
 
     def sample(self,data_root):
-        now=self.clock();self.sequence+=1;unknown=[];total=available=cpu=cores=disk=rss=None;usage=None
+        now=self.clock();self.sequence+=1;unknown=[];total=available=cpu=cores=disk=rss=None;usage=None;io_wait=read_rate=write_rate=read_bytes=write_bytes=None
         provider=self.provider
         if provider is None:
             try:import psutil;provider=psutil
             except ImportError:unknown.append('psutil-unavailable')
         if provider is not None:
+            try:
+                times=provider.cpu_times_percent(interval=None);io_wait=_number(getattr(times,'iowait',None)) if self.previous is not None else None
+                if io_wait is None:unknown.append('io-wait-unavailable')
+                counters=provider.disk_io_counters();read_bytes=_number(counters.read_bytes);write_bytes=_number(counters.write_bytes)
+                if self.previous and now>self.previous['time']:
+                    elapsed=now-self.previous['time'];prior_read=self.previous.get('read_bytes');prior_write=self.previous.get('write_bytes')
+                    if read_bytes is not None and prior_read is not None and read_bytes>=prior_read:read_rate=(read_bytes-prior_read)/elapsed
+                    if write_bytes is not None and prior_write is not None and write_bytes>=prior_write:write_rate=(write_bytes-prior_write)/elapsed
+            except Exception as error:unknown.append('io-metrics:'+type(error).__name__)
             try:
                 memory=provider.virtual_memory();total=_number(memory.total);available=_number(memory.available)
                 if total is None or available is None:unknown.append('memory-invalid')
@@ -101,8 +113,8 @@ class ResourceSampler:
                     cpu=max(cpu or 0,min(100.0,measured))
             except (KeyError,ValueError,TypeError):unknown.append('container-cpu-unknown')
             unknown.extend(group.get('errors',[]))
-        self.previous=dict(time=now,usage=usage)
-        return ResourceSnapshot(now,self.sequence,total,available,cpu,cores,disk,rss,tuple(dict.fromkeys(unknown)))
+        self.previous=dict(time=now,usage=usage,read_bytes=read_bytes,write_bytes=write_bytes)
+        return ResourceSnapshot(now,self.sequence,total,available,cpu,cores,disk,rss,tuple(dict.fromkeys(unknown)),io_wait_percent=io_wait,io_read_bytes_per_second=read_rate,io_write_bytes_per_second=write_rate)
 
 
 class ResourceMonitor:
@@ -161,6 +173,7 @@ class AdmissionControl:
             if snapshot.disk_free is None:reasons.append('WRITABLE_VOLUME_SPACE_UNKNOWN')
             elif snapshot.disk_free<max(32*MiB,estimated_write_bytes*2):reasons.append('DISK_HEADROOM_LOW')
             if snapshot.cpu_percent is not None and snapshot.cpu_percent>=self.cpu_limit:reasons.append('CPU_PRESSURE')
+            if snapshot.io_wait_percent is not None and snapshot.io_wait_percent>=40:reasons.append('IO_WAIT_PRESSURE')
         if gui_lag is not None and gui_lag>self.gui_lag_limit:reasons.append('GUI_HEARTBEAT_LATE')
         if interactive:reasons.append('FOREGROUND_INTERACTION_PRIORITY')
         with self.lock:

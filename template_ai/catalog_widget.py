@@ -46,16 +46,23 @@ class CatalogWidget(QWidget):
     def reload(self):
         if self.closed:return
         try:
-            self.entries=catalog.rows(self.window.library,self.customer);self.byid={r['id']:r for r in self.entries}
+            if self.customer is None:
+                from .startup_catalog import facets
+                index=facets(self.window.library);self.partial_facets=index['partial_facets'];tree=index['tree'];versions=index['versions']
+                keep=self.selected_ids|({self.primary_id} if self.primary_id else set())
+                ids=[identity for identity in keep if self.window.library.db.execute('SELECT 1 FROM templates WHERE id=?',(identity,)).fetchone()]
+                self.entries=catalog.rows(self.window.library,template_ids=ids);self.byid={r['id']:r for r in self.entries}
+            else:
+                self.entries=catalog.rows(self.window.library,self.customer);self.byid={r['id']:r for r in self.entries};tree=catalog.hierarchy(self.entries);versions=sorted({r['version'] for r in self.entries if r['version'] is not None})
             self.source_results={k:v for k,v in self.source_results.items() if k in self.byid and v['signature']==self.byid[k]['signature'] and self.cache_current(v)}
             gone=self.selected_ids-self.byid.keys();self.selected_ids.intersection_update(self.byid)
             if self.primary_id not in self.byid:self.primary_id=None
             old_version=self.version.currentData();self.version.blockSignals(True);self.version.clear();self.version.addItem('全部版次',None)
-            for version in sorted({r['version'] for r in self.entries if r['version'] is not None}):self.version.addItem('v'+str(version),version)
+            for version in versions:self.version.addItem('v'+str(version),version)
             self.version.setCurrentIndex(max(0,self.version.findData(old_version)));self.version.blockSignals(False)
             previous=self.tree.currentItem();key=previous.data(0,Qt.UserRole) if previous else None
             self.tree.blockSignals(True);self.tree.clear();root=QTreeWidgetItem(['全部尺寸／容量']);root.setData(0,Qt.UserRole,None);self.tree.addTopLevelItem(root);selected=root
-            for size,caps in catalog.hierarchy(self.entries).items():
+            for size,caps in tree.items():
                 item=QTreeWidgetItem([f'{size[0]:g} × {size[1]:g} mm']);item.setData(0,Qt.UserRole,dict(size=list(size),capacity=None));self.tree.addTopLevelItem(item)
                 if key==item.data(0,Qt.UserRole):selected=item
                 for capacity,count in sorted(caps.items(),key=lambda x:x[0] or 0):
@@ -80,7 +87,14 @@ class CatalogWidget(QWidget):
     def rebuild(self):
         self.blocked=True;self.items.blockSignals(True)
         try:
-            matching=self.matching();self.page=min(self.page,max(0,(len(matching)-1)//catalog.PAGE_SIZE));self.visible=matching[self.page*catalog.PAGE_SIZE:(self.page+1)*catalog.PAGE_SIZE]
+            if self.customer is None:
+                from .startup_catalog import search
+                current=self.tree.currentItem();key=current.data(0,Qt.UserRole) if current else None
+                result=search(self.window.library,self.query.text(),key.get('size') if key else None,key.get('capacity') if key else None,self.state.currentData(),self.version.currentData(),self.page)
+                self.page=result['page'];self.matching_count=result['total'];self.visible=catalog.rows(self.window.library,template_ids=result['ids']);self.entries=self.visible
+                keep=self.selected_ids|({self.primary_id} if self.primary_id else set());self.byid={identity:row for identity,row in self.byid.items() if identity in keep};self.byid.update({row['id']:row for row in self.visible});count=self.matching_count
+            else:
+                matching=self.matching();count=len(matching);self.page=min(self.page,max(0,(count-1)//catalog.PAGE_SIZE));self.visible=matching[self.page*catalog.PAGE_SIZE:(self.page+1)*catalog.PAGE_SIZE]
             self.items.clear()
             for row in self.visible:
                 state=row['state']+'／'+row['reference_state'];text=f"{row['name']} · v{row['version'] if row['version'] is not None else 'UNKNOWN'}\n{row['width']:g}×{row['height']:g} mm · 容量 {row['capacity']}人\n{state}\n{row['template_id']}"
@@ -89,9 +103,11 @@ class CatalogWidget(QWidget):
                 elif self.current_message(row['id']):self.set_source_icon(item,self.current_message(row['id']))
                 self.items.addItem(item);item.setSelected(row['id'] in self.selected_ids)
                 if row['id']==self.primary_id:self.items.setCurrentItem(item,QItemSelectionModel.NoUpdate)
-            self.previous.setEnabled(self.page>0);self.next.setEnabled((self.page+1)*catalog.PAGE_SIZE<len(matching));self.change_view();self.update_status(len(matching))
+            self.previous.setEnabled(self.page>0);self.next.setEnabled((self.page+1)*catalog.PAGE_SIZE<count);self.change_view();self.update_status(count)
             self.controller.reset(self.visible if self.customer else [])
             if self.primary_id in self.byid:self.show_primary()
+        except (ValueError,KeyError,TypeError,sqlite3.Error) as error:
+            self.status.setText('目錄未完成，請修正篩選或從診斷核對：'+str(error));self.previous.setEnabled(False);self.next.setEnabled(False)
         finally:self.items.blockSignals(False);self.blocked=False
 
     def change_view(self,*args):
@@ -165,8 +181,10 @@ class CatalogWidget(QWidget):
         self.preview_state.setText(('模板框位示意（非原稿）；' if not self.customer and image is None else '')+result['status']+'：'+result['reason'])
 
     def update_status(self,count):
+        if self.customer is None:count=getattr(self,'matching_count',0)
         hidden=len(self.selected_ids-{r['id'] for r in getattr(self,'visible',[])})
         self.status.setText(f'符合{count}版本／第{self.page+1}頁；已選{len(self.selected_ids)}（其中{hidden}不在本頁，仍保留）；瀏覽／切換不保存、不發布、不採用。')
+        if getattr(self,'partial_facets',False):self.status.setText(self.status.text()+' 尺寸／版次樹顯示前200組；搜尋及分頁涵蓋全部。')
         if self.edit_button:self.edit_button.setEnabled(len(self.selected_ids)==1 and not self.window.busy)
         if self.pick_button:self.pick_button.setEnabled(len(self.selected_ids)==1 and not self.window.busy)
 

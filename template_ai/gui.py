@@ -214,8 +214,8 @@ class MainWindow(QMainWindow):
         except (OSError,ValueError):pass
         from .batch_import import BatchStore
         self.import_store=BatchStore(self.library)
-        self.import_store.recover()
-        self.font_manager = FontManager(self.library)
+        self.font_manager = FontManager(self.library,lazy=True)
+        self.source_offset=0;self.template_offset=0
         self.pool = QThreadPool(self)
         self.pool.setMaxThreadCount(1)
         self.source = None
@@ -255,9 +255,15 @@ class MainWindow(QMainWindow):
         self.backup_scheduler=BackupScheduler(self)
         from .source_watch import SourceWatchService
         self.source_watch=SourceWatchService(self)
+        QTimer.singleShot(500,self,self.recover_import_startup)
         if (self.library.root/'RESTORE_REPORT.json').is_file():
             self.setWindowTitle(self.windowTitle()+' · 還原副本（需重新驗證）')
             self.statusBar().showMessage('目前為隔離還原副本；原環境保留，來源／字型／學習與正式輸出需重新驗證')
+
+    def recover_import_startup(self):
+        if self.library.closed:return
+        try:self.import_store.recover(limit=20)
+        except Exception as error:self.statusBar().showMessage('匯入斷點尚未核實；已停止恢復，請從診斷處理：'+str(error))
 
     def sync_property_mode(self,*args):
         browsing=self.tabs.currentIndex()==1 and self.template_stack.currentIndex()==0
@@ -421,6 +427,7 @@ class MainWindow(QMainWindow):
         self.source_combo = QComboBox()
         self.source_combo.currentIndexChanged.connect(self.choose_source)
         layout.addWidget(self.source_combo)
+        source_pages=QHBoxLayout();self.source_previous=self.button('上頁來源',lambda:self.source_page(-48),source_pages);self.source_next=self.button('下頁來源',lambda:self.source_page(48),source_pages);self.source_count=QLabel();source_pages.addWidget(self.source_count);layout.addLayout(source_pages)
         links_row = QHBoxLayout()
         self.button("檢查原稿連結", self.check_source_link, links_row)
         self.button("重新連結同內容原稿", self.relink_source, links_row)
@@ -486,6 +493,9 @@ class MainWindow(QMainWindow):
         from .training_navigation import require_clean_navigation
         require_clean_navigation(self)
         index=next((i for i,t in enumerate(self.templates) if t.id==template_id),None)
+        if index is None:
+            self.refresh_templates(select=template_id)
+            index=next((i for i,t in enumerate(self.templates) if t.id==template_id),None)
         if index is None:raise ValueError('模板已失聯，未開啟其他版本')
         self.template_list.setCurrentRow(index)
         if not self.template or self.template.id!=template_id:self.choose_template(index)
@@ -514,6 +524,7 @@ class MainWindow(QMainWindow):
         self.template_list = QListWidget()
         self.template_list.currentRowChanged.connect(self.choose_template)
         left=QWidget();left_layout=QVBoxLayout(left);left_layout.addWidget(self.template_list)
+        template_pages=QHBoxLayout();self.template_previous=self.button('上頁模板',lambda:self.template_page(-48),template_pages);self.template_next=self.button('下頁模板',lambda:self.template_page(48),template_pages);self.template_count=QLabel();template_pages.addWidget(self.template_count);left_layout.addLayout(template_pages)
         self.editor_tree=QTreeWidget();self.editor_tree.setHeaderLabel('人物／公司／欄位（共享引用）');self.editor_tree.setSelectionMode(QTreeWidget.ExtendedSelection);self.editor_tree.itemSelectionChanged.connect(self.editor_tree_selection);left_layout.addWidget(self.editor_tree);split.addWidget(left)
         from .object_dialog import ObjectCanvas,canvas_controls
         self.edit_canvas = ObjectCanvas();self.edit_canvas.allow_multi_drag=False
@@ -895,7 +906,12 @@ class MainWindow(QMainWindow):
 
     def refresh_sources(self, select=None, preserve_editor=False):
         retained=self.source['id'] if preserve_editor and self.source else None
-        self.sources = self.library.list_sources()
+        from .startup_catalog import editor_page
+        selected=retained or select or (self.library.active_source_id() if self.source is None else None)
+        page=editor_page(self.library,'sources',self.source_offset,selected);self.source_offset=page['offset'];self.sources=page['items']
+        self.source_count.setText(f"本頁{len(self.sources)}／全部{page['total']}；起點{self.source_offset+1 if page['total'] else 0}")
+        self.source_previous.setEnabled(self.source_offset>0);self.source_next.setEnabled(self.source_offset+48<page['total'])
+        self.source_count.setToolTip('\n'.join(page['issues']))
         self.source_combo.blockSignals(True)
         self.source_combo.clear()
         for s in self.sources:
@@ -908,6 +924,11 @@ class MainWindow(QMainWindow):
         self.source_combo.blockSignals(False)
         if self.sources and not retained:
             self.choose_source(self.source_combo.currentIndex())
+
+    def source_page(self,delta):
+        from .training_navigation import require_clean_navigation
+        try:require_clean_navigation(self);self.source_offset=max(0,self.source_offset+delta);self.refresh_sources()
+        except Exception as error:self.error(str(error))
 
     def choose_source(self, index):
         if not 0 <= index < len(self.sources):
@@ -945,6 +966,7 @@ class MainWindow(QMainWindow):
         saved = work["payload"]
         self.crop = Rect(**saved["crop"])
         self.slots = [Slot(**{**s, "rect": Rect(**s["rect"])}) for s in saved["slots"]]
+        self.font_manager.ensure_slots(self.slots)
         self.work_width, self.work_height = saved["work_width"], saved["work_height"]
         self.visual.blockSignals(True)
         self.visual.setChecked(bool(saved.get("visual_confirmed")))
@@ -1328,7 +1350,10 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage("合成示範模板已加入草稿；請驗證並發布後排版")
 
     def refresh_templates(self, select=None, preserve_editor=False):
-        self.templates = self.library.templates()
+        from .startup_catalog import editor_page
+        page=editor_page(self.library,'templates',self.template_offset,self.template.id if preserve_editor and self.template else select);self.template_offset=page['offset'];self.templates=page['items']
+        self.template_count.setText(f"本頁{len(self.templates)}／全部{page['total']}");self.template_count.setToolTip('\n'.join(page['issues']))
+        self.template_previous.setEnabled(self.template_offset>0);self.template_next.setEnabled(self.template_offset+48<page['total'])
         if hasattr(self,"template_catalog"):self.template_catalog.reload()
         self.template_list.blockSignals(True)
         self.template_list.clear()
@@ -1342,6 +1367,11 @@ class MainWindow(QMainWindow):
         if self.templates:
             index = next((i for i, t in enumerate(self.templates) if t.id == select), 0)
             self.template_list.setCurrentRow(index)
+
+    def template_page(self,delta):
+        from .training_navigation import require_clean_navigation
+        try:require_clean_navigation(self);self.template_offset=max(0,self.template_offset+delta);self.refresh_templates()
+        except Exception as error:self.error(str(error))
 
     def choose_template(self, row):
         if not 0 <= row < len(self.templates):
@@ -1363,6 +1393,7 @@ class MainWindow(QMainWindow):
         if not self.template:
             return
         t = self.template
+        self.font_manager.ensure_slots(t.slots)
         selected=set(getattr(self.edit_canvas,'selection_intent',set()))
         self.edit_canvas.readonly = t.state == "published"
         self.background_button.setEnabled(t.state == "draft" and not self.busy)

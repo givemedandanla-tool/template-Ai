@@ -850,3 +850,5 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 保留三份初失敗/修正17PASS的原log+sha；新來源仍142 pending。下一bounded startup與同DB FIFO requests，不建立平行模型資料庫。此為持久queue schema之前checkpoint。
 
 - UI051 after FIFO schema：runtime_requests同一DB持久佇列，max200活動/page50、arrival seq FIFO、scope/session/actor明確確認、原子queue+JOB/WORKER claim、blocked隔離、壓力續跑重用、舊面板與GUI接入。備份完整保留requests但還原清consent/owner且需明確恢復。8 FIFO專用PASS、44資源/backup合集PASS、12既有pipeline PASS；先前GUI失敗保留，fixture精確控資源及更新真worker patch，不降低結果/rollback/cancel檢查。尚缺startup bounded與完整Qt/父題證據。
+
+- UI051可恢復startup stage：bounded editor catalogs/source selectedID跨頁，catalog server全庫filter/count、不eager模板payload，字型lazy/僅active slots，import checkpoint延後GUI後且20 bound；實際Qt4測試、5大型startup測試與既有catalog/fonts/pipeline等82PASS。原31test內1 eager entries長度斷言失敗保留，改查新matching_count52與payload<=48，選取/無寫入既有assert全留。psutil IOwait/disk byte delta顯示，40%IOwait僅保守默認非reference保證。仍未閉合UI051。

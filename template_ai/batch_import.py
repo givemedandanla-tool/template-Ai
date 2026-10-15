@@ -173,10 +173,11 @@ class BatchStore:
             if any(r['status']=='RUNNING' for r in b['items']):raise ValueError('目前轉換未結束，不能強制結案')
             b['phase']='CANCELLED' if cancelled else 'PAUSED' if any(r['status']=='READY' for r in b['items']) else 'DONE_WITH_ERRORS' if any(r['status'] in ('FAILED','INTERRUPTED') for r in b['items']) else 'DONE_WITH_EXCLUSIONS' if any(r['status']=='EXCLUDED' for r in b['items']) else 'DONE';b['owner']=None
         return self.mutate(batch_id,revision,'import_cancelled' if cancelled else 'import_run_stopped',change)
-    def recover(self):
+    def recover(self,limit=100):
         recovered=[]
-        for b in self.list():
-            if b['phase']!='RUNNING':continue
+        if type(limit) is not int or not 1<=limit<=100:raise ValueError('中斷恢復每次最多100工作')
+        for batch_id, in self.db.execute("SELECT id FROM import_batches WHERE json_extract(payload,'$.phase')='RUNNING' ORDER BY rowid LIMIT ?",(limit,)).fetchall():
+            b=self.get(batch_id)
             owner=b.get('owner') or {};pid=owner.get('pid')
             if pid==os.getpid():alive=owner.get('session') in LIVE_SESSIONS
             else:

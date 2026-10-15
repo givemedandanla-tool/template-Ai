@@ -20,8 +20,14 @@ def digest(value):
     return hashlib.sha256(json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
 
-def rows(library,customer=None):
-    templates=library.templates();byid={t.id:t for t in templates};result=[]
+def rows(library,customer=None,template_ids=None):
+    if template_ids is None and customer is not None:
+        template_ids=[identity for identity in dict.fromkeys(s['template_id'] for s in customer['styles']) if library.db.execute('SELECT 1 FROM templates WHERE id=?',(identity,)).fetchone()]
+    if template_ids is None:templates=library.templates()
+    else:
+        from .startup_catalog import payload
+        templates=[Template.from_dict(payload(library,'templates',identity)) for identity in template_ids]
+    byid={t.id:t for t in templates};result=[]
     pairs=[(t,None) for t in templates] if customer is None else [(byid.get(s['template_id']),s) for s in customer['styles']]
     for t,link in pairs:
         if t:

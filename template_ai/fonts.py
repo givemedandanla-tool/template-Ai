@@ -59,12 +59,12 @@ def font_asset_errors(slots) -> list[str]:
 
 
 class FontManager:
-    def __init__(self, library):
+    def __init__(self, library, lazy=False):
         self.library = library
         self.loaded = {}
         self.issues = []
-        self._recover_repairs()
-        for asset in library.fonts():
+        if not lazy:self._recover_repairs()
+        for asset in ([] if lazy else library.fonts()):
             families = asset.get("families", []) if isinstance(asset, dict) else []
             family = families[0] if isinstance(families, list) and families else ""
             errors = font_errors(asset, family)
@@ -76,6 +76,18 @@ class FontManager:
                 self.issues.append("已保存字型無法載入：" + asset.get("original_name", "未知"))
             else:
                 self.loaded[asset["hash"]] = (font_id, asset)
+
+    def ensure_slots(self,slots):
+        for slot in slots:
+            asset=slot.font_asset
+            if not asset:continue
+            if not isinstance(asset,dict):self.issues.append('選中字型資產記錄不完整');continue
+            if asset.get('hash') in self.loaded:continue
+            errors=font_errors(asset,slot.font)
+            if errors:self.issues.extend(errors);continue
+            font_id=QFontDatabase.addApplicationFont(asset['path'])
+            if font_id<0:self.issues.append('選中字型無法載入：'+slot.font)
+            else:self.loaded[asset['hash']]=(font_id,asset)
 
     def asset_for_family(self, family: str) -> dict | None:
         # 失聯也保留引用，讓指定此資產的欄位阻擋，而不是偷偷借用同名系統字型。
@@ -203,12 +215,15 @@ class FontManager:
         return target
 
     def _recover_repairs(self) -> None:
-        assets = {asset["hash"]: asset for asset in self.library.fonts()}
-        for record in self.library.font_repairs():
-            if record["phase"] != "PREPARED":
-                continue
+        import json
+        records=self.library.db.execute("SELECT hash,payload FROM font_repairs WHERE phase='PREPARED' ORDER BY rowid LIMIT 101").fetchall()
+        if len(records)>100:self.issues.append('超過100件未完成修復；剩餘項留待字型管理中心核對')
+        for asset_hash,raw in records[:100]:
+            record=json.loads(raw)
             try:
-                asset = assets[record["hash"]]
+                row=self.library.db.execute('SELECT payload FROM font_assets WHERE hash=?',(asset_hash,)).fetchone()
+                if not row:raise ValueError('字型資產已失聯')
+                asset=json.loads(row[0])
                 self._owned_target(asset)
                 valid = not font_errors(asset, asset["families"][0])
                 if valid:

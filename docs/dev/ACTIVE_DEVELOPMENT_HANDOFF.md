@@ -23,3 +23,5 @@
 - UI051新增真MainWindow資源監督／前景等待、背景watch/backup gate、訓練/分析安全單位PAUSED_RESOURCES及資源GUI；17專用測試PASS（含中途保已存unit、續跑重用、寫audit失敗仍INTERRUPTED），尚未full regression。舊pipeline GUI 29測試有4FAIL（含尚未修audit fixture與新warmup未注入可預測資源），原失敗不改。下一lazy catalogs/fonts及同SQLite公平request schema，先保存本schema變更前checkpoint。
 
 - UI051 sameSQLite runtime_requests已建schema/索引，FIFO按seq而非clock；既有JOB/AUTO_JOB claim同一交易hook原子化queue+WORKER，queue-only不動learning epoch；active200/page50、session明確範圍、dead owner需恢復、壓力同session自動續跑、BLOCKED不占執行權。MainWindow dispatcher與兩舊面板整合、資源/佇列GUI、取消、restore清consent。44資源/queue/backup目標+12pipeline全PASS；舊GUI改用synthetic可預測資源fixture，原功能assert保留，worker failure patch移至新真入口。下一真Qt queue/pause/recovery測試與bounded startup/fonts/catalogs；未full original8閉合。
+
+- UI051 startup/Qt整合82目標PASS：來源/編輯模板48分頁+ID定位、catalog全庫SQL搜尋/計數+48 payload/200facets，模板過1MiB明示阻擋不減分母、字型lazy只載目前slots、不eager讀all models/fonts/originals/jobs。1003templates/123sources/1000fontrecords測試；舊catalog測試改檢查全庫matching_count與48 bound，原跨頁選取assert保留。4真Qt pause/resume/FIFO/cancel/poolfailure/contextclose PASS；IOwait與byte rates實測delta/pressure gate，參考硬體未驗。下一逐來源作品審核狀態/總分母GUI、等待啟動可取消、整個原8與formal/capture。

@@ -9,6 +9,14 @@ def snapshot(sequence=1):return ResourceSnapshot(100,sequence,16*1024*MiB,8*1024
 
 
 class RuntimeResourcesTests(unittest.TestCase):
+    def test_io_rates_are_measured_deltas_and_high_io_wait_pauses_new_work(self):
+        from dataclasses import replace
+        api=provider();api.cpu_times_percent=lambda interval=None:NS(iowait=70);counts=[1000,2000];api.disk_io_counters=lambda:NS(read_bytes=counts[0],write_bytes=counts[1]);clock=[100.0]
+        sampler=ResourceSampler(api,lambda:dict(applicable=False),lambda:clock[0]);first=sampler.sample('.')
+        self.assertIsNone(first.io_read_bytes_per_second);self.assertIsNone(first.io_wait_percent)
+        clock[0]+=2;counts[:]=[5000,8000];value=sampler.sample('.')
+        self.assertEqual(value.io_read_bytes_per_second,2000);self.assertEqual(value.io_write_bytes_per_second,3000)
+        control=AdmissionControl(clock=lambda:clock[0]);self.assertIn('IO_WAIT_PRESSURE',control.decide(value,'SCAN').reasons)
     def test_host_and_container_memory_cpu_affinity_are_clamped_and_first_cpu_is_unknown(self):
         clock=[100];usage=[2_000_000]
         def group():return dict(applicable=True,memory_max=str(4*1024*MiB),memory_current=str(3*1024*MiB),cpu_max='200000 100000',cpu_stat='usage_usec '+str(usage[0]))
