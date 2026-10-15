@@ -167,8 +167,14 @@ class AnnotationDialog(QDialog):
         if self.overlay:self.canvas.select_ids(self.ids)
 
     def compare(self):
-        old={s['id']:s for s in self.session.base['payload']['slots']};new={s['id']:s for s in self.session.payload['slots']}
-        self.details.setPlainText('\n'.join(identity+'\n原：'+str(old.get(identity))+'\n擬改：'+str(new.get(identity)) for identity in sorted(set(old)|set(new)) if old.get(identity)!=new.get(identity)) or '沒有幾何／語意變更')
+        def action():
+            from .annotation_compare import build_annotation_comparison
+            from .comparison_view import CanvasCompareDialog
+            self.comparison=CanvasCompareDialog(build_annotation_comparison(self.session),self)
+            for view in self.comparison.views:view.picked.connect(lambda identity:self.select([identity]))
+            self.comparison.open()
+            if self.ids:self.comparison.select_slot(self.ids[0])
+        self.guarded(action)
 
     def save_or_raise(self):
         if self.visual.isChecked()!=bool(self.session.payload.get('visual_confirmed')):self.session.checkpoint();self.session.payload['visual_confirmed']=self.visual.isChecked()

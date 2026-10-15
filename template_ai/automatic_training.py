@@ -20,18 +20,21 @@ class AutomaticTraining:
     def __init__(self,library):
         self.library=library;self.store=TrainingStore(library);self.db=library.db
 
-    def preflight(self,paths,page=1):
+    def preflight(self,paths,page=1,compare=True):
         report=preflight(paths,self.library.list_sources(),page)
         for item in report['items']:
             matching=[s for s in self.library.list_sources() if s['hash']==item.get('expected_hash') and s['page']==page and Path(s['current_path']).resolve()==Path(item['path']).resolve()]
             item['existing_source_id']=matching[0]['id'] if matching else None
         report['scope']='來源／作品／候選標記／品質／已授權幾何學習一鍵管線；人工事實、樣本准入及發布不自動核准'
+        if compare:
+            from .similarity_preflight import inspect_report
+            inspect_report(self.library,report)
         return report
 
     def create(self,report,actor,approved=False):
         if approved is not True:raise ValueError('需先核對預檢並明確開始訓練')
         text(actor,'啟動者',120)
-        fresh=self.preflight([i['path'] for i in report['items']],report['page'])
+        fresh=self.preflight([i['path'] for i in report['items']],report['page'],compare=False)
         identity=lambda r:[(i['path'],i.get('expected_hash'),i['page'],i['status'],i.get('existing_source_id')) for i in r['items']]
         if identity(fresh)!=identity(report):raise ValueError('預檢來源已變更，請重新核對')
         # Duplicate bytes keep separate source identities / customer-code evidence.

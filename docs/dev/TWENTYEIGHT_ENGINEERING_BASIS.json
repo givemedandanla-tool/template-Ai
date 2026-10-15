@@ -1,0 +1,25 @@
+{
+  "algorithm": "64-bit horizontal difference hash / Hamming distance; multiset Jaccard for normalized slot tuples; SHA256 exact bytes and crop signatures",
+  "reference": {
+    "url": "https://raw.githubusercontent.com/JohannesBuchner/imagehash/v4.3.2/README.rst",
+    "version": "4.3.2",
+    "bytes": 8008,
+    "sha256": "d7927718045b1c954e15a11ecbbd1303303e85b575866509fdae905b8f842e75"
+  },
+  "reuse": "Existing Qt rasterizer, existing linked comparison_view and TrainingStore; stdlib Counter handles multiset intersection. Tiny bounded dHash kernel avoids a second raster engine; no identity or customer merging from similarity. Existing Qt/SQLite/Adobe public comparison basis retained from TWENTY_ENGINEERING_BASIS.",
+  "validation": "test_similarity_preflight 4 PASS; test_viewport_workbench 3 PASS; prior canvas/annotation controls regression 26 PASS. Formal source-bound run pending.",
+  "parameters": {
+    "file_hash": "SHA256",
+    "dhash_max_hamming": 6,
+    "structure_quantization": 50,
+    "structure_min_jaccard": 0.8,
+    "calibration": "UNVALIDATED_REVIEW_HEURISTIC"
+  },
+  "limits": {
+    "selected_files": 200,
+    "works": 500,
+    "templates": 500,
+    "comparison_budget": 100000
+  },
+  "unknown": "Budget overflow, renderer failure, missing geometry or unhealthy cache are explicit unknown; never interpreted as duplicate-free."
+}

@@ -669,3 +669,6 @@ CP-20261015-TEN-PARENTS-VERIFIED已push並重新fetch逐檔確認，保存範圍
 
 ## 2026-10-15 28父題 BEGIN
 使用者持續工作直到完成28部分：延伸原20題，加8個編輯／排版／輸出父題，完整原條款凍結於FIXED70_NEXT_TWENTYEIGHT_CONTRACT。基準16完整/56部分/3延後，本輪新完成0。預期具名測試＋Qt＋正式來源綁定＋GitHub讀回；先UI003近似預檢，不把553 PASS當父題完成。
+
+## 2026-10-15 28父題 檢視／預檢 checkpoint
+新增三層只讀預檢：SHA256、dHash/Hamming、作品裁切與內容指紋、標記幾何multiset Jaccard；近似僅提示，未知明示，不合併來源或客戶。4目標PASS，最初漏current_path造成0作品候選，已修並保留失敗。重用同步comparison_view實作標記前後實際疊圖；可解除／恢復同步，名義DPI未校準明示、倍率數值／滑桿／快捷鍵／定位全稿。新增3實際Qt PASS，原26畫布／標記／對照PASS；正式來源驗收與28原條款mapping尚未完成。110既有驗證列暫待新來源重驗，舊證據保留。

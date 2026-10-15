@@ -1,0 +1,14 @@
+...F..............
+======================================================================
+FAIL: test_three_levels_keep_all_paths_original_bytes_and_database_unchanged (test_similarity_preflight.SimilarityPreflightTests.test_three_levels_keep_all_paths_original_bytes_and_database_unchanged)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_similarity_preflight.py", line 25, in test_three_levels_keep_all_paths_original_bytes_and_database_unchanged
+    self.assertGreaterEqual(report['near_file_candidates'],1);self.assertGreaterEqual(report['artwork_duplicates'],1)
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than or equal to 1
+
+----------------------------------------------------------------------
+Ran 18 tests in 18.252s
+
+FAILED (failures=1)

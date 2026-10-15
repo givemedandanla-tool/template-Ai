@@ -1,5 +1,6 @@
 """繁體中文三模式桌面工作台；所有背景工作都不直接改動目前畫布。"""
 from __future__ import annotations
+import math
 
 import copy
 import json
@@ -88,6 +89,7 @@ class Box(QGraphicsRectItem):
 
 
 class Canvas(QGraphicsView):
+    view_changed = Signal()
     rectangle = Signal(object)
     selected = Signal(object)
     moved = Signal(str, object)
@@ -128,6 +130,11 @@ class Canvas(QGraphicsView):
 
     def fit(self):
         self.fitInView(self.sceneRect(), Qt.KeepAspectRatio)
+        self.view_changed.emit()
+
+    def set_zoom(self,value):
+        if not math.isfinite(value):return
+        value=max(.2,min(500,value));self.scale(value/max(.00001,self.transform().m11()),value/max(.00001,self.transform().m22()));self.view_changed.emit()
 
     def set_mode(self, mode):
         if self.readonly and mode in ("edit", "slot"):
@@ -151,11 +158,18 @@ class Canvas(QGraphicsView):
                 item.setSelected(True)
                 self.ensureVisible(item)
 
+    def keyPressEvent(self,event):
+        if event.modifiers() & Qt.ControlModifier and event.key() in (Qt.Key_Plus,Qt.Key_Equal,Qt.Key_Minus,Qt.Key_0):
+            value=self.logicalDpiX()/25.4 if event.key()==Qt.Key_0 else self.transform().m11()*(.8 if event.key()==Qt.Key_Minus else 1.25)
+            self.set_zoom(value);event.accept();return
+        super().keyPressEvent(event)
+
     def wheelEvent(self, event):
         factor = 1.15 if event.angleDelta().y() > 0 else 1 / 1.15
         scale = self.transform().m11() * factor
         if 0.2 <= scale <= 500:
             self.scale(factor, factor)
+            self.view_changed.emit()
         event.accept()
 
     def mousePressEvent(self, event):
@@ -423,6 +437,8 @@ class MainWindow(QMainWindow):
         self.train_canvas.selected.connect(self.select_slot)
         self.train_canvas.moved.connect(self.box_moved)
         split.addWidget(self.train_canvas)
+        from .viewport_controls import navigation_controls
+        layout.addWidget(navigation_controls(self.train_canvas))
         self.slot_list = QListWidget()
         self.slot_list.currentRowChanged.connect(self.list_selection)
         split.addWidget(self.slot_list)
@@ -488,6 +504,8 @@ class MainWindow(QMainWindow):
         self.edit_canvas.rectangle.connect(self.add_rectangle)
         self.edit_canvas.moved.connect(self.box_moved)
         split.addWidget(self.edit_canvas)
+        from .viewport_controls import navigation_controls
+        layout.addWidget(navigation_controls(self.edit_canvas))
         split.setSizes([230, 720])
         layout.addWidget(split, 1)
         row = QHBoxLayout()
@@ -578,6 +596,8 @@ class MainWindow(QMainWindow):
         split.addWidget(self.candidate_list)
         self.output_canvas = Canvas()
         split.addWidget(self.output_canvas)
+        from .viewport_controls import navigation_controls
+        layout.addWidget(navigation_controls(self.output_canvas))
         split.setSizes([220, 740])
         layout.addWidget(split, 1)
         self.issues = QLabel("輸入資料後開始排版。缺少同尺寸真實 Logo 或超出固定字級字寬限制時，正式輸出會被阻擋。")

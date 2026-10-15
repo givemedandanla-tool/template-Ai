@@ -55,7 +55,9 @@ class AutomaticTrainingDialog(QDialog):
         def finished(result):
             if result.get('error'):self.status.setText('預檢未完成：'+result['error']);return
             self.report=result['report'];self.start_button.setEnabled(True);self.render(dict(items=self.report['items'],phase='PREFLIGHT'))
-            self.details.setPlainText(f"檔案位元重複{self.report['file_duplicates']}；健康快取可重用{self.report['reuse_candidates']}。\n作品重複與模板結構近似尚未核實，不刪除來源或合併客戶。\n完整檔名／來源身分保留；文字、歸屬與作品邊界為待審候選。")
+            import json
+            r=self.report
+            self.details.setPlainText(f"檔案位元重複{r['file_duplicates']}；健康快取可重用{r['reuse_candidates']}；近似檔案候選{r['near_file_candidates']}；作品重複候選{r['artwork_duplicates']}；模板結構相似{r['template_similarity']}；未核實{r['similarity_unknown']}。\n近似不等於相同；不刪除來源或合併客戶。\n"+json.dumps(r['similarity'],ensure_ascii=False,indent=2))
         try:self.window.run_job('掃描及來源預檢',worker,finished)
         except Exception as error:self.status.setText('預檢無法啟動：'+str(error))
 

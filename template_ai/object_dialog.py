@@ -164,7 +164,8 @@ def canvas_controls(canvas,library=None):
     if library is not None:
         from .editor_settings import load
         for key,value in load(library).items():setattr(canvas,key,value)
-    widget=QWidget();bar=QHBoxLayout(widget);bar.setContentsMargins(0,0,0,0);canvas.preference_widgets={}
+    widget=QWidget();outer=QVBoxLayout(widget);from .viewport_controls import navigation_controls
+    outer.addWidget(navigation_controls(canvas));bar=QHBoxLayout();outer.addLayout(bar);bar.setContentsMargins(0,0,0,0);canvas.preference_widgets={}
     for label,attribute in [('邊界／中心吸附','snap_enabled'),('對齊參考線','guides_enabled'),('作品邊界疊圖','safety_visible'),('單框縮放控制點','resize_enabled')]:
         checkbox=QCheckBox(label);checkbox.setChecked(getattr(canvas,attribute));checkbox.toggled.connect(lambda value,key=attribute:(setattr(canvas,key,value),canvas.viewport().update()));bar.addWidget(checkbox);canvas.preference_widgets[attribute]=checkbox
     bar.addWidget(QLabel('微調mm（Shift×10）'));step=QDoubleSpinBox();step.setRange(.01,10);step.setDecimals(2);step.setValue(canvas.nudge_mm);step.valueChanged.connect(lambda value:setattr(canvas,'nudge_mm',value));bar.addWidget(step);canvas.preference_widgets['nudge_mm']=step;bar.addWidget(QLabel('Space暫時平移；疊圖開關不改驗證'));return widget
