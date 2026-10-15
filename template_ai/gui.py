@@ -5,6 +5,7 @@ import copy
 import json
 from pathlib import Path
 import sys
+import sqlite3
 
 from PySide6.QtCore import QObject, QPointF, QRectF, QRunnable, Qt, QThreadPool, Signal, QTimer, QSignalBlocker
 from PySide6.QtGui import QAction, QColor, QFont, QFontDatabase, QImage, QPainter, QPen, QPixmap
@@ -1367,6 +1368,8 @@ class MainWindow(QMainWindow):
             self.issues.setText("資料／尺寸／模板或 Logo 已變更；目前候選過期，請重新排版。")
 
     def refresh_input_problems(self):
+        try:self.library.db.execute("SELECT 1")
+        except sqlite3.ProgrammingError:self.input_timer.stop();return
         from .input_diagnostics import diagnose
         try:
             people, companies, _ = self.input_data()
@@ -1515,6 +1518,7 @@ class MainWindow(QMainWindow):
             self.error("保存失敗，尚未安全關閉：" + str(e))
             event.ignore()
             return
+        self.input_timer.stop()
         self.font_manager.close()
         self.library.close()
         event.accept()

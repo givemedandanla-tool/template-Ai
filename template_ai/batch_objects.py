@@ -1,7 +1,7 @@
 """Bounded text-alignment batch adapter: reuse proposals, CAS, history and per-item commits."""
 import json
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox,QComboBox
 from .customers import digest
 from .object_tools import propose
 from .model import new_id
@@ -44,17 +44,17 @@ class BatchObjectDialog(QDialog):
         for i,r in enumerate(self.rows):
             item=QTableWidgetItem();item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsUserCheckable);item.setCheckState(Qt.Unchecked);self.table.setItem(i,0,item)
             for j,v in ((1,r['name']+'／'+r['id']),(2,','.join(r['slot_ids']))):item=QTableWidgetItem(v);item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsSelectable);self.table.setItem(i,j,item)
-        self.details=QPlainTextEdit();self.details.setReadOnly(True);l.addWidget(self.details);bar=QHBoxLayout()
-        for title,fn in [('預檢／逐項靠左差異',self.preview),('確認選中集合套用／安全重試',self.apply)]:b=QPushButton(title);b.clicked.connect(fn);bar.addWidget(b)
+        self.details=QPlainTextEdit();self.details.setReadOnly(True);l.addWidget(self.details);bar=QHBoxLayout();self.align=QComboBox();self.align.addItems(['center','left','right']);bar.addWidget(self.align)
+        for title,fn in [('預檢／逐項文字對齊差異',self.preview),('確認選中集合套用／安全重試',self.apply)]:b=QPushButton(title);b.clicked.connect(fn);bar.addWidget(b)
         l.addLayout(bar)
     def preview(self):
         try:
             from .training_navigation import require_clean_navigation
-            require_clean_navigation(self.window);self.plan=batch_plan(self.window.library,[r for i,r in enumerate(self.rows) if self.table.item(i,0).checkState()==Qt.Checked]);self.selected_ids=[r['id'] for i,r in enumerate(self.rows) if self.table.item(i,0).checkState()==Qt.Checked];self.details.setPlainText(json.dumps(self.plan,ensure_ascii=False,indent=2));self.status.setText('已預檢exact集合；READY可核對，不等於整卡PASS')
+            require_clean_navigation(self.window);self.plan=batch_plan(self.window.library,[r for i,r in enumerate(self.rows) if self.table.item(i,0).checkState()==Qt.Checked],self.align.currentText());self.preview_align=self.align.currentText();self.selected_ids=[r['id'] for i,r in enumerate(self.rows) if self.table.item(i,0).checkState()==Qt.Checked];self.details.setPlainText(json.dumps(self.plan,ensure_ascii=False,indent=2));self.status.setText('已預檢exact集合；READY可核對，不等於整卡PASS')
         except Exception as e:self.plan=None;self.status.setText('未預檢：'+str(e))
     def apply(self):
         try:
-            if not self.plan or self.selected_ids!=[r['id'] for i,r in enumerate(self.rows) if self.table.item(i,0).checkState()==Qt.Checked]:raise ValueError('勾選範圍改變或沒有預覽，請重新預檢')
+            if not self.plan or self.preview_align!=self.align.currentText() or self.selected_ids!=[r['id'] for i,r in enumerate(self.rows) if self.table.item(i,0).checkState()==Qt.Checked]:raise ValueError('勾選範圍改變或沒有預覽，請重新預檢')
             from .training_navigation import require_clean_navigation
             require_clean_navigation(self.window)
             if QMessageBox.question(self,'批次差異確認',self.details.toPlainText())!=QMessageBox.Yes:return

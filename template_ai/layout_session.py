@@ -43,7 +43,7 @@ class LayoutSessionDialog(QDialog):
                 if (t.width_mm,t.height_mm)!=self.size or t.capacity!=len(self.people) or (getattr(w,'reorder_template_id',None) and w.reorder_template_id!=t.id):continue
                 w.library._template_provenance(t);templates.append(copy.deepcopy(t))
             if len(templates)>200:raise ValueError('超過單次200候選預算；請縮小模板範圍，未開始亦未宣稱全部檢查')
-            self.template_digests={t.id:digest(t.to_dict()) for t in templates};self.rows=[];self.list.clear();self.pause_event.clear();self.cancel_event.clear();self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event);self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.finished,Qt.QueuedConnection);self.running=True;w.busy=True;self.controls();self.status.setText(f'已核對{len(templates)}個同尺寸同容量模板，單worker；未遍歷完成前不是全域最佳')
+            self.template_digests={t.id:digest(t.to_dict()) for t in templates};self.rows=[];self.list.clear();self.pause_event.clear();self.cancel_event.clear();self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event);self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.running=True;w.busy=True;self.controls();self.status.setText(f'已核對{len(templates)}個同尺寸同容量模板，單worker；未遍歷完成前不是全域最佳')
             try:w.pool.start(self.worker)
             except BaseException:self.running=False;w.busy=False;self.controls();raise
         except Exception as e:self.status.setText('未開始：'+str(e));self.controls()
@@ -51,7 +51,7 @@ class LayoutSessionDialog(QDialog):
         self.status.setText(f"實際階段{event['phase']}：{event['index']}/{event['total']}；取消／暫停在候選邊界生效")
         if event['phase']=='ITEM_FINISHED':
             r=event['row'];self.rows.append(r);self.list.addItem(r['template_id']+' · '+r['state']+(' · 阻擋' if r['candidate'] and not r['candidate'].valid else ''));self.details.setPlainText('\n'.join(r['candidate'].issues) if r['candidate'] else r.get('error',''))
-    def finished(self,result):
+    def on_finished(self,result):
         self.running=False;self.window.busy=False;self.rows=result['rows'];self.status.setText(result['state']+f'；實際完成{len(self.rows)}，結果僅對原快照有效／正式輸出仍需Gate');self.controls()
     def pause(self):
         self.pause_event.set();self.status.setText('暫停要求已提出，當前候選可能尚在安全結束');self.controls()

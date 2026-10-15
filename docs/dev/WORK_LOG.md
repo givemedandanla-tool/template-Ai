@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 70父需求：13項子流程target驗證
+
+客戶8＋UI11＝19 targeted PASS；UI001保留5FAIL：真Qt finished與QDialog內建訊號名稱衝突造成worker未啟動，已改on_finished；空對齊預覽正確阻擋，GUI補明確方向；no-op保存不升revision，測試改用真正更動visual_confirmed製造stale；Timer已防關庫並於正常關閉停止。保留原FAIL，不降低產品Gate。13 scope已編碼／target；父仍53部分17未做待正式。下一4 scope來源重掃／品質評估／隔離修復／歷史重審。
+
+
 ## 70父需求：介面與當次候選WIP
 
 輸入儲存格exact定位、尺寸Logo只讀隔離與跨庫參考、ObjectTools上下文/釘選、當次單worker真進度/邊界暫停取消、局部候選副本毫米修改、既有ObjectEdit操作ID冪等批次adapter、診斷重用路由及75父題機器對帳已編碼。此checkpoint為WIP，尚待target測試與修正，不標完成。來源/發布模板不變；候選只記憶體、不承諾跨啟動恢復。
