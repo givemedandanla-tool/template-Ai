@@ -809,3 +809,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI050 compact center checkpoint
 - 監看中心兩分頁，根/格式/排除與掃描/候選交接分開；相同版本的明列選取保留。單一UI003子視窗與固定job_created handler，既有來源可重核依賴，不冒充重用已過品質。
 - source_context沿備份既有規則把SCAN_ROOT/BACKUP配置當metadata，避免根目錄被誤當必需單一資產；FSW dispatch清舊debounce。前次31PASS，當前integration004：31/31 PASS；來源仍待全formal。
+
+### UI050 original12 source freeze
+- 25新專用測試，107相關整合PASS；真Qt/檔案系統事件/SQLite/既有UI003明確啟動/兩alias source IDs/修改版待審共5畫面capture PASS。原12條逐字登錄具名測試，未縮scope。
+- 補實際SQLite max_page_count導致FULL完整回滾、短暫read error保last verified hash、新版本仍人工審；已訓練來源改版保customer/styles/其他來源/舊training records不改。
+- 修正paging test不依scandir順序，保留失敗log/sha；最新107PASS。顯示用語/欄寬/編號候選/未知作品與原客戶審核權威明列。source freeze後RUN-REMAINING28-WATCH-001全687，未正式前不結案UI050。

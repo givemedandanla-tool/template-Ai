@@ -1,0 +1,24 @@
+FThis plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+.........................................................................................................
+======================================================================
+FAIL: test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection (test_source_watch_center.SourceWatchCenterTests.test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_watch_center.py", line 99, in test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection
+    selected=self.select(lambda c:c['path']==str(self.a));self.assertEqual(len(selected),1);self.dialog.only_changed.setChecked(True);self.assertEqual([c['id'] for c in self.dialog.selected()],[selected[0]['id']])
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 107 tests in 69.908s
+
+FAILED (failures=1)

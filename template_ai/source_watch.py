@@ -121,7 +121,7 @@ class SourceWatchService(QObject):
             elif payload.get('cancelled'):self.status(identity,'CANCELLED','本次已取消；原資料保留，監看設定維持，可暫停後續工作')
             elif payload.get('error'):self.status(identity,'FAILED','掃描／候選保存失敗：'+payload['error'])
             else:
-                result=payload['result'];self.status(identity,result['state'],f"本次核對{result['scanned_entries']}個目錄項／{len(result['entries'])}個檔案處置；"+('已保存候選；未開始訓練' if result.get('complete') else '仍有離線／未核驗／部分範圍，不宣稱完成'))
+                result=payload['result'];self.status(identity,result['state'],f"本次核對{result['scanned_entries']}個目錄項／{len(result['entries'])}個檔案處置；"+('已保存候選；本次掃描未啟動訓練' if result.get('complete') else '仍有離線／未核驗／部分範圍，不宣稱完成'))
             self.window.statusBar().showMessage(self.last_status)
             try:self.sync()
             except Exception as error:self.status(identity,'REFRESH_FAILED','結果已取得，監看清單需重新載入：'+str(error))

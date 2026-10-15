@@ -53,7 +53,7 @@
 | UI-047 | 本機關聯資料智慧備份、加密驗證與安全還原移轉 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。 | [run](../../docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json) |
 | UI-048 | 客戶個資存取權限、遮罩與稽核：最後完成功能 | DEFERRED | 否 | 核心功能完善後最後接入；正式真實個資使用前必須完成 | 無有效新版證據 |
 | UI-049 | Illustrator 來源搬移失聯、內容驗證與受控批次重新連結 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。 | [run](../../docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json) |
-| UI-050 | AI 來源資料夾智慧監看、安全增量匯入與版本衝突審核 | PARTIAL | 否 | 監看事件需重掃核實，寫入未穩定不分析 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-050 | AI 來源資料夾智慧監看、安全增量匯入與版本衝突審核 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-051 | 低配置友善、公平審核佇列與安全續跑 | PARTIAL | 否 | 參考 16 GB 整機 RAM＋RTX 5050 與待補規格 VivoBook；CPU 核心、限流及檢查點 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-052 | 全來源與作品審核覆蓋率、風險分級與安全批次結案 | PARTIAL | 否 | 分母不漏來源，未審不可結案，重大错誤可重審歷史批次 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-053 | 獨立樣本品質驗收、分類誤判診斷、版本比較與品質阻擋 | PARTIAL | 否 | 獨立資料分類品質保留；解析品質依視覺一致、訓練有效性及已取得證據判定 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |

@@ -6,7 +6,7 @@ from .training_store import TrainingStore,digest
 from .source_scan import (register_root,configure_root,active_roots,candidate_page,review_candidate,record_dispatch,DEFAULT_EXCLUDES,EXTENSIONS)
 from .source_links import verify_source
 
-LABELS={'NEW_CANDIDATE':'新來源候選','DUPLICATE_ALIAS_KEEP_IDENTITY':'異名同內容，身份仍獨立待審','CONTENT_CHANGED_REVIEW_REQUIRED':'同名內容改變，需人工核對','UNCHANGED':'內容未變，是否完成另依來源／作品狀態','MISSING_OR_MOVED_REVIEW_REQUIRED':'失聯或搬移，需定位','READ_ERROR':'不可讀，需重試','WAIT_STABLE':'等待寫入穩定','QUEUED_FOR_UI003_PREFLIGHT':'已入預檢待辦，未開始訓練','FOUND_NOT_QUEUED':'手動發現，未自動入隊','REVIEW_REQUIRED':'修改版待人工核對','REVIEWED_NEW_VERSION_CANDIDATE':'修改版已核對，可作新候選','STALE_SOURCE_CHANGED':'舊候選內容已變，暫停使用','SOURCE_REGISTERED_REVIEW_PENDING':'來源已登錄，歸屬仍需審核','DISPATCHED':'已交接實際一鍵工作，成果另查'}
+LABELS={'NEW_CANDIDATE':'新來源候選','DUPLICATE_ALIAS_KEEP_IDENTITY':'異名同內容，身份仍獨立待審','CONTENT_CHANGED_REVIEW_REQUIRED':'同名內容改變，需人工核對','UNCHANGED':'內容未變，是否完成另依來源／作品狀態','MISSING_OR_MOVED_REVIEW_REQUIRED':'失聯或搬移，需定位','READ_ERROR':'不可讀，需重試','WAIT_STABLE':'等待寫入穩定','QUEUED_FOR_UI003_PREFLIGHT':'已入預檢待辦，未開始訓練','FOUND_NOT_QUEUED':'手動發現，未自動入隊','REVIEW_REQUIRED':'修改版待人工核對','REVIEWED_NEW_VERSION_CANDIDATE':'修改版已核對，可作新候選','STALE_SOURCE_CHANGED':'舊候選內容已變，暫停使用','SOURCE_REGISTERED_REVIEW_PENDING':'來源已登錄，歸屬依原審核紀錄','DISPATCHED':'已交接實際一鍵工作，成果另查'}
 CONFIG_KEYS=['path','recursive','extensions','excludes','mode','archived','requires_reconnect']
 
 
@@ -23,7 +23,7 @@ class SourceScanDialog(QDialog):
         inspect_row=QHBoxLayout();self.scan_items=QComboBox();inspect_row.addWidget(self.scan_items,1);self.button(inspect_row,'查看原來源完整影響',self.inspect_source);self.button(inspect_row,'重核未變來源／快取',self.recheck_existing);scan.addLayout(inspect_row)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setMaximumHeight(125);scan.addWidget(self.details)
         scan_pages=QHBoxLayout();self.button(scan_pages,'掃描摘要上一頁',lambda:self.scan_page(-1));self.button(scan_pages,'掃描摘要下一頁',lambda:self.scan_page(1));scan.addLayout(scan_pages)
-        self.candidates=QTreeWidget();self.candidates.setHeaderLabels(['選取／檔名','候選狀態','內容版本／實際工作','來源位置']);scan.addWidget(self.candidates,1)
+        self.candidates=QTreeWidget();self.candidates.setHeaderLabels(['選取／檔名／編號線索','候選狀態','內容版本／實際工作','來源位置']);scan.addWidget(self.candidates,1)
         for column,width in enumerate((190,250,280,350)):self.candidates.setColumnWidth(column,width)
         actions=QHBoxLayout();self.button(actions,'候選上一頁50筆',lambda:self.page(-1));self.button(actions,'候選下一頁50筆',lambda:self.page(1));self.button(actions,'核對修改版為新候選',self.review);self.button(actions,'交既有一鍵預檢／開啟工作',self.launch);scan.addLayout(actions)
         self.actor=QLineEdit('本機操作人');actor_form=QFormLayout();actor_form.addRow('修改版核對人',self.actor);scan.addLayout(actor_form)
@@ -113,17 +113,21 @@ class SourceScanDialog(QDialog):
         attempt=root.get('latest_attempt') or root.get('last_scan') or {};rows=attempt.get('entries',[]);shown=[r for r in rows if not self.only_changed.isChecked() or r['state']!='UNCHANGED']
         from datetime import datetime
         last=datetime.fromtimestamp(root['last_success']).astimezone().strftime('%Y-%m-%d %H:%M:%S %Z') if root.get('last_success') else '尚無'
-        lines=[f"上次完整核對時間：{last}；目前結果 {attempt.get('state','尚未掃描')}；本次顯示{len(shown)}／{len(rows)}檔案處置；已核對目錄項{attempt.get('scanned_entries','未知')}。",'檔案數不是作品數；未變不是已學習／已核准。']
+        scan_label={'SCANNED':'本次掃描核對完成','PARTIAL':'部分範圍／仍需處理','ROOT_OFFLINE':'根目錄離線，來源數未知','CANCELLED':'本次已取消'}.get(attempt.get('state'),'尚未掃描')
+        lines=[f"上次完整掃描核對時間：{last}；目前結果 {scan_label}；本次顯示{len(shown)}／{len(rows)}檔案處置；已核對目錄項{attempt.get('scanned_entries','未知')}。",'檔案數不是作品數；未變不是已學習／已核准。']
         selected=self.scan_items.currentText();self.scan_items.clear()
         for row in shown[self.scan_offset:self.scan_offset+50]:self.scan_items.addItem(Path(row['path']).name+'／'+LABELS.get(row['state'],row['state']),row)
         index=self.scan_items.findText(selected)
         if index>=0:self.scan_items.setCurrentIndex(index)
-        for row in shown[self.scan_offset:self.scan_offset+50]:lines.append(f"{row['path']}\n  {LABELS.get(row['state'],row['state'])} [{row['state']}]；SHA {row.get('verified_hash',row.get('hash','尚未核驗'))}；作品記錄{row.get('artwork_count','未知')}；原來源{','.join(row.get('affected_source_ids',[])) or '未登錄'}；{row.get('reason','')}")
+        for row in shown[self.scan_offset:self.scan_offset+50]:
+            count=row.get('artwork_count');work_label=f'{count}筆已登錄作品記錄' if type(count) is int else '作品尚未解析，數量未知'
+            lines.append(f"{row['path']}\n  {LABELS.get(row['state'],row['state'])}；SHA {row.get('verified_hash',row.get('hash','尚未核驗'))}；{work_label}；原來源{','.join(row.get('affected_source_ids',[])) or '未登錄'}；{row.get('reason','')}")
         if len(shown)>50:lines.append(f'掃描摘要本頁{self.scan_offset+1}～{min(self.scan_offset+50,len(shown))}／{len(shown)}；可翻頁核對；完整結果與候選已持久保存，不代表全部已處置。')
         self.details.setPlainText('\n'.join(lines))
         for candidate in candidate_page(self.store,identity,self.offset):
-            item=QTreeWidgetItem([Path(candidate['path']).name,LABELS.get(candidate['state'],candidate['state']),candidate['source_hash']+'／'+str(candidate.get('auto_job_id','未建立訓練工作')),candidate['path']]);item.setFlags(item.flags()|Qt.ItemIsUserCheckable);item.setCheckState(0,Qt.Checked if (candidate['id'],candidate['revision'],candidate['source_hash'],candidate['state']) in checked else Qt.Unchecked);item.setData(0,Qt.UserRole,candidate)
+            item=QTreeWidgetItem([Path(candidate['path']).name+'\n編號線索：'+candidate.get('customer_code_candidate',Path(candidate['path']).stem)+'（待核對）',LABELS.get(candidate['state'],candidate['state']),candidate['source_hash']+'／'+str(candidate.get('auto_job_id','未建立訓練工作')),candidate['path']]);item.setFlags(item.flags()|Qt.ItemIsUserCheckable);item.setCheckState(0,Qt.Checked if (candidate['id'],candidate['revision'],candidate['source_hash'],candidate['state']) in checked else Qt.Unchecked);item.setData(0,Qt.UserRole,candidate)
             for column in range(4):item.setToolTip(column,item.text(column))
+            item.setToolTip(0,item.text(0)+'\nsource_file_id：'+(','.join(candidate.get('source_ids',[])) or '尚未登錄')+'\n候選版次：'+str(candidate['revision']))
             self.candidates.addTopLevelItem(item)
 
     def reset_scan_page(self,*args):self.scan_offset=0;self.render_current()

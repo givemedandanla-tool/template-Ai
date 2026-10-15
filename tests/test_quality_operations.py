@@ -83,7 +83,7 @@ class QualityOperationsTests(unittest.TestCase):
     def test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck(self):
         directory=self.root/'scan';directory.mkdir();(directory/'input.svg').write_text('synthetic');root=register_root(self.store,directory);d=SourceScanDialog(self.w);self.addCleanup(d.deleteLater);d.roots.setCurrentIndex(d.roots.findData(root['id']));d.scan();end=time.monotonic()+5
         while d.running and time.monotonic()<end:APP.processEvents();QTest.qWait(10)
-        self.assertFalse(d.running);self.assertFalse(self.w.busy);self.assertTrue(d.scan_button.isEnabled());self.assertIn('NEW_CANDIDATE',d.details.toPlainText())
+        self.assertFalse(d.running);self.assertFalse(self.w.busy);self.assertTrue(d.scan_button.isEnabled());self.assertIn('新來源候選',d.details.toPlainText())
         panel=EvaluationPanel(self.w);self.addCleanup(panel.deleteLater);panel.predictions.setPlainText('[]');panel.preview();self.assertIsNotNone(panel.plan)
         with patch('template_ai.quality_evaluation_panel.QMessageBox.question',return_value=QMessageBox.No):panel.save()
         self.assertEqual(self.store.count('EVALUATION'),0)

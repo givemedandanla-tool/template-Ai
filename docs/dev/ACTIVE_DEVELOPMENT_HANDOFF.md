@@ -27,3 +27,6 @@
 - 新加掃描摘要分頁/可讀時間/已登錄作品記錄數與source-link revisions/affected source IDs；可背景唯讀查看共用完整關聯；未變既有來源可交UI003重核失效依賴。下一補已訓練來源局部變更/移除途中race tests、dirty pause/removed狀態刷新，真capture後綁原12條及正式回歸。UI050仍PARTIAL，141歷史待重驗。
 
 - UI050 current UI checkpoint：兩分頁1120×740，掃描摘要/候選各自分頁，勾選僅保留相同id/revision/hash/state；共用單一UI003視窗，避免累積交接handler；root/backup配置目錄只作context metadata不當必備檔案。前次31測試PASS；最新004重驗狀態：31/31 PASS。下一真capture＋SQLite FULL/短暫讀取錯誤版次測試，再綁原12正式回歸，未結案。
+
+- UI050 SOURCE FREEZE：原12條完整註冊，新增25測試（index11/service7/center7）；107相關整合PASS，5張capture smoke與實際FS事件/UI003明確開始2alias來源/新版本保舊證據PASS。後續展示修正編號線索/未知作品中文/來源歸屬依原審核/共用解析保留身份；正式全687尚未執行，不用目標PASS當整父題。
+- 下一RUN-REMAINING28-WATCH-001凍結來源及治理直到全687與capture完成；只讀盤點UI051。141歷史完成仍pending，UI050也pending未結案。失敗107目標run為測試誤信A001在首50，已保留log/hash並改按實際首項id驗53總數/分頁/同版勾選；下一107全PASS。

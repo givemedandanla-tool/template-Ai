@@ -60,6 +60,13 @@ class SourceWatchCenterTests(unittest.TestCase):
         sources=self.window.library.list_sources();self.assertEqual(len(sources),2);self.assertEqual(len({s['id'] for s in sources}),2);self.assertEqual({Path(s['original_path']).name for s in sources},{'A001.svg','B002.svg'})
         candidates=candidate_page(self.store);self.assertEqual({c['state'] for c in candidates},{'DISPATCHED'});job_ids={c['auto_job_id'] for c in candidates};self.assertEqual(len(job_ids),1);self.assertIsNotNone(self.store.get('AUTO_JOB',next(iter(job_ids))))
         self.assertEqual(self.a.read_bytes(),SVG);self.assertEqual(self.b.read_bytes(),SVG);self.assertTrue(all(t.state.lower()!='published' for t in self.window.library.templates() if t.source_id in {s['id'] for s in sources}))
+        self.scan();root=self.store.get('SCAN_ROOT',self.watch['id'])
+        for row in root['last_scan']['entries']:
+            self.assertTrue(row['registered']);self.assertEqual(row['artwork_count'],sum(len(self.window.library.artworks(identity)) for identity in row['registered_source_ids']))
+        active=self.window.library.active_source_id()
+        with patch('template_ai.source_dialog.QDialog.exec',return_value=0):self.dialog.inspect_source();self.wait()
+        self.assertEqual(self.window.library.active_source_id(),active);self.dialog.recheck_existing();self.assertIs(self.dialog.training_dialog,child);self.wait(lambda:not child.running and not self.window.busy)
+        self.assertIsNotNone(child.report);self.assertEqual(self.store.count('AUTO_JOB'),1)
 
     def test_modified_version_needs_review_and_changed_bytes_during_later_preflight_never_start_a_job(self):
         self.scan();self.a.write_bytes(SVG.replace(b'Alex Example',b'Blair Example'));self.scan();selected=self.select(lambda c:c['path']==str(self.a) and c['state']=='REVIEW_REQUIRED');self.assertEqual(len(selected),1)
@@ -85,3 +92,9 @@ class SourceWatchCenterTests(unittest.TestCase):
         self.dialog.formats.setText('.svg');self.dialog.formats.textEdited.emit('.svg');self.dialog.pause()
         self.assertTrue(self.dialog.dirty);self.assertEqual(self.dialog.formats.text(),'.svg');self.dialog.save_settings();root=self.store.get('SCAN_ROOT',self.watch['id'])
         self.assertEqual(root['extensions'],['.svg']);self.assertFalse(root['enabled']);self.assertNotIn('另一介面',self.dialog.status.text())
+
+    def test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection(self):
+        for i in range(51):(self.directory/f'C{i:03d}.svg').write_bytes(SVG)
+        self.scan();self.assertEqual(len(self.store.get('SCAN_ROOT',self.watch['id'])['last_scan']['entries']),53);self.assertEqual(self.dialog.scan_items.count(),50);self.assertEqual(self.dialog.candidates.topLevelItemCount(),50)
+        first=self.dialog.candidates.topLevelItem(0).data(0,Qt.UserRole)['id'];selected=self.select(lambda c:c['id']==first);self.assertEqual(len(selected),1);self.dialog.only_changed.setChecked(True);self.assertEqual([c['id'] for c in self.dialog.selected()],[selected[0]['id']])
+        self.dialog.scan_page(1);self.assertEqual(self.dialog.scan_items.count(),3);self.dialog.page(1);self.assertEqual(self.dialog.candidates.topLevelItemCount(),3);self.assertEqual(len(candidate_page(self.store,self.watch['id'],limit=100)),53)

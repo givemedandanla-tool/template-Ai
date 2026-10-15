@@ -16,6 +16,44 @@ from template_ai import backup_policy
 
 
 
+
+def capture_watch(folder):
+    from unittest.mock import patch
+    from PySide6.QtTest import QSignalSpy
+    from PySide6.QtWidgets import QMessageBox
+    from template_ai.source_scan import candidate_page
+    import test_source_watch_center as fixture
+    case=fixture.SourceWatchCenterTests('test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts');case.setUp();folder=Path(folder)
+    def shot(widget,name):
+        widget.show();QApplication.processEvents()
+        if not widget.grab().save(str(folder/name)):raise RuntimeError('watch Qt screenshot failed: '+name)
+    try:
+        dialog=case.dialog;service=case.window.source_watch;dialog.actor.setText('SYNTHETIC_CAPTURE');dialog.start_watch();service.dispatch();case.wait(lambda:len(candidate_page(case.store))==2 and not case.window.busy)
+        dialog.show();dialog.tabs.setCurrentIndex(1);shot(dialog,'remaining28-watch-explicit-scope.png')
+        spy=QSignalSpy(service.watcher.directoryChanged);extra=case.directory/'C003.svg';extra.write_bytes(fixture.SVG)
+        case.wait(lambda:len(candidate_page(case.store))==3 and not case.window.busy)
+        if spy.count()<1:raise RuntimeError('no actual filesystem notification during watch capture')
+        dialog.tabs.setCurrentIndex(0);dialog.render_current();shot(dialog,'remaining28-watch-live-candidates.png')
+        dialog.pause();case.select(lambda c:Path(c['path']).name in ('A001.svg','B002.svg'));dialog.launch();child=dialog.training_dialog;case.wait(lambda:not child.running and not case.window.busy)
+        if child.report is None or case.store.count('AUTO_JOB')!=0:raise RuntimeError('watch handoff must stop at actual preflight until explicit start')
+        shot(child,'remaining28-watch-ui003-preflight.png')
+        with patch('template_ai.automatic_training_dialog.QMessageBox.question',return_value=QMessageBox.Yes):child.start()
+        case.wait(lambda:not child.running and not case.window.busy,seconds=40);sources=case.window.library.list_sources()
+        if len(sources)!=2 or len({s['id'] for s in sources})!=2:raise RuntimeError('watch alias source identity lost')
+        receipts=candidate_page(case.store);job_ids={c.get('auto_job_id') for c in receipts if c['state']=='DISPATCHED'}
+        if len(job_ids)!=1 or None in job_ids:raise RuntimeError('watch actual job receipts absent')
+        child.close();dialog.scan();case.wait();dialog.render_current();shot(dialog,'remaining28-watch-registered-works.png')
+        before={s['id']:s['hash'] for s in sources};new_bytes=fixture.SVG.replace(b'Alex Example',b'Blair Example');case.a.write_bytes(new_bytes);dialog.scan();case.wait();dialog.render_current();shot(dialog,'remaining28-watch-modified-version-review.png')
+        if {s['id']:s['hash'] for s in case.window.library.list_sources()}!=before or not any(c['state']=='REVIEW_REQUIRED' for c in candidate_page(case.store)):raise RuntimeError('modified version overwrote prior source or skipped review')
+        if case.a.read_bytes()!=new_bytes or case.b.read_bytes()!=fixture.SVG:raise RuntimeError('application modified source bytes')
+        result=dict(status='PASS',parent='UI-050',kind='ACTUAL_QT_DIRECTORY_EVENT_SQLITE_CANDIDATES_UI003_EXPLICIT_PIPELINE_SYNTHETIC',
+                    real_filesystem_notifications=spy.count(),new_candidates_before_training=3,automatic_training_before_explicit_start=False,
+                    distinct_alias_source_ids=[s['id'] for s in sources],original_names=[Path(s['original_path']).name for s in sources],actual_auto_job_ids=sorted(job_ids),
+                    new_content_review_required=True,old_source_hash_records_retained=True,application_originals_modified=False,windows_verified=False,independent_review=False)
+        (folder/'remaining28-watch-capture.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
+    finally:case.doCleanups()
+
+
 def capture_relink(folder):
     import hashlib,shutil,time
     from unittest.mock import patch
@@ -120,10 +158,11 @@ def capture(folder):
         if errors:raise RuntimeError('Unhandled Qt capture error: '+str(errors))
         backup=capture_backup(folder)
         relink=capture_relink(folder)
+        watch=capture_watch(folder)
         report=dict(status='PASS',kind='ACTUAL_QT_AND_SQLITE_SYNTHETIC_CAPTURE',
                     parent='UI-046',merged=True,split=True,original_template_payload_unchanged=True,
                     foreign_keys='PASS',runtime_errors=errors,local_export_has_only_synthetic_people=True,
-                    windows_verified=False,independent_review=False,backup_parent_self_capture=backup['status'],relink_parent_self_capture=relink['status'])
+                    windows_verified=False,independent_review=False,backup_parent_self_capture=backup['status'],relink_parent_self_capture=relink['status'],watch_parent_self_capture=watch['status'])
         (folder/'remaining28-identity-capture.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
         return report
     finally:

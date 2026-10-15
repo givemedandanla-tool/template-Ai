@@ -15606,10 +15606,10 @@
       "id": "UI-050",
       "kind": "topic",
       "title": "AI 來源資料夾智慧監看、安全增量匯入與版本衝突審核",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
-      "review_level": "SELF_VERIFIED_SUBSET_ONLY",
-      "scope": "監看事件需重掃核實，寫入未穩定不分析",
+      "review_level": "NOT_REVIEWED",
+      "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
       "phase": "P6",
       "decision_status": "需求已核准",
       "sources": [
@@ -15619,12 +15619,129 @@
       "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
       "acceptance": [
         {
-          "id": "UI-050-FULL",
-          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：監看事件需重掃核實，寫入未穩定不分析",
-          "tests": []
+          "id": "UI-050-CLAUSE-1",
+          "expected": "使用者選擇 **D｜智慧資料夾監看＋安全增量匯入＋版本衝突審核**。延伸 UI-003「預檢後一鍵啟動訓練」、UI-042 已核准精確內容去重及跨次啟動恢復、UI-043 客戶編號與尺寸版型來源關聯、UI-049 已核准來源搬移失聯的安全重新連結。**UI-050 決定的是新增／修改的來源發現、候選匯入、增量處理與風險分流的 GUI**，不重做 UI-049 的舊檔搬移功能，亦不因自動監看而繞過正式 AI 學習規則與模板核准。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-2",
+          "expected": "**來源監看設定工作台**：使用者可新增／移除／暫停**明確選定的 Windows 本機來源根資料夾**，設定「僅按鈕手動重新掃描／監看變動並自動進行安全預檢」，顯示個別監看來源、上次成功核對時間、目前掃描／監看狀態、可用性及最近出錯事件。新監看來源需讓使用者確認包含子資料夾、支援格式（以 `.ai` 為主及明確核准的外部素材）與排除路徑／暫存目錄。**不預設監看整個磁碟、私人任意資料夾、網路磁碟，亦不自動將原稿或客戶資料送上雲端**。可按「立即重新掃描」獨立執行，不強迫一直監看。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_real_gui_start_pause_config_and_remove_preserve_customer_styles_sources_and_candidate_history",
+            "test_source_watch_index.SourceWatchIndexTests.test_explicit_configuration_cas_formats_exclusions_and_archive_keep_all_existing_records",
+            "test_source_watch_center.SourceWatchCenterTests.test_pause_preserves_unsaved_form_and_saves_against_fresh_control_state"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-3",
+          "expected": "**監看事件不是資料來源真相**：檔案系統通知可能重複、遺漏、亂序或在系統休眠、程式關閉、檔案更名及目錄離線期間無法接收；因此**事件只是提早發現變更的提示**，實際狀態需靠重新掃描指定來源範圍、版本化索引與可核實的內容指紋核對。**程式重新開啟時應補掃描上次有效掃描以後的新增／修改候選**，但須判斷目錄未掛載與檔案真被刪除的差別，不能因外接硬碟暫離就把所有舊客戶來源標成永久刪除。",
+          "tests": [
+            "test_source_watch_service.SourceWatchServiceTests.test_real_qt_directory_notification_creates_exact_new_candidates_and_preserves_alias_identity",
+            "test_source_watch_service.SourceWatchServiceTests.test_lost_notifications_and_restart_reconcile_without_duplicate_pending_or_fake_training"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-4",
+          "expected": "**等待檔案寫入穩定才處理**：Illustrator 存檔、複製大量檔案或外部同步期間，可能先產生部分檔、暫存檔或被鎖定檔。GUI 顯示**「複製／寫入中、等待穩定」「可驗證」「讀取失敗／需重試」**等真實狀態；需以合理的穩定性檢查（如大小、修改時間、可讀性、多次一致的內容比對等，未來技術驗證）避免只看到檔案出現便讀取半成品或把 Illustrator 暫存物誤匯入。等待或失敗時不更動現有訓練快取與客戶主檔。",
+          "tests": [
+            "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+            "test_source_watch_index.SourceWatchIndexTests.test_temporary_read_failure_preserves_last_verified_hash_for_later_modified_version_review",
+            "test_source_watch_index.SourceWatchIndexTests.test_temporary_files_are_excluded_and_directory_work_is_bounded_without_silent_completion"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-5",
+          "expected": "**檔案變更分類的單一總覽**：按來源根目錄／檔案／作品列出**新加入且內容未知、異名但位元內容完全相同、原路徑同名但內容指紋改變、來源搬移或更名線索、來源不可讀／離線、已完成且未變動**；逐項顯示 `source_file_id`／原檔名、客戶編號候選、SHA-256／位元長度核對結果、來源版本、實際作品數（已解析時）、是否需訓練與對應例外。計數必須來自已核實結果，不可把通知次數當新檔數、將來源檔數誤當作品數或將相似外觀當作完全相同位元。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection",
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_registered_source_keeps_customer_templates_other_source_and_training_evidence",
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-6",
+          "expected": "**異名同內容避免重訓、但保留客戶關聯**：如果 `A001.ai` 和 `B002.ai` 的**實際位元內容與依賴版本一致**，只需重用可驗證的 `content_blobs`／作品解析與訓練快取；但 `source_files` 仍需分別保留實際檔名、路徑及每個**客戶編號候選與獨立已確認關聯**，且用 UI-043 審核跨客戶來源的資料歸屬。**內容重複不等於可略過新檔帶來的客戶登錄，也不代表能自動合併兩位客戶或刪除來源檔**。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+            "test_source_watch_index.SourceWatchIndexTests.test_alias_candidate_index_is_persistent_idempotent_and_never_starts_training_or_merges_customers"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-7",
+          "expected": "**同名但內容已變更是新的候選版本**：若 `00123.ai` 的實際位元內容在重新掃描後改變，顯示舊、新內容指紋及可能受影響的畫板／作品、版型版本、訓練快取與客戶來源關聯，**登錄新來源內容／候選版次**，保留舊版證據與舊 `style_version_id`，由 UI-010 模板版本核准與 UI-043 客戶來源歸屬流程判斷。**不得直接覆寫原已核准模板、已訓練來源事實或使用者已確認的客戶資料**；若只是在資料夾搬移而內容一致，則轉交 UI-049 重新連結流程，不要將之當作新的版型。",
+          "tests": [
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_registered_source_keeps_customer_templates_other_source_and_training_evidence",
+            "test_source_watch_center.SourceWatchCenterTests.test_modified_version_needs_review_and_changed_bytes_during_later_preflight_never_start_a_job",
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_version_review_requires_live_proof_and_dispatch_requires_an_actual_job"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-8",
+          "expected": "**自動安全分流與人工例外**：已設定自動監看時，可自動執行**非破壞性的檔案清單核對、穩定性確認、內容去重及合規預檢**，將安全候選納入已核准的增量候選／訓練待辦，並於 GUI 顯示**待處理、可重用已驗證結果、需人工審核、暫停／失敗／受阻**。真正的 AI 訓練啟動仍沿用 UI-003 已確認的「智慧預檢後一鍵啟動」及已經核准的訓練作業權限；未知人物公司歸屬、跨客戶編號、同名不同內容、缺字型／Logo 或規則衝突進 UI-004／UI-005 例外中心，**不得因資料夾監看開啟而自動核准永久學習規則、正式發布模板或製作成品**。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts",
+            "test_source_watch_index.SourceWatchIndexTests.test_manual_discovery_enters_auto_queue_only_after_explicit_enable",
+            "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-9",
+          "expected": "**增量重新分析、失效及斷點**：監看發現新位元內容時，只使其**真正依賴的解析／標記／學習快取與候選**失效；UI-039／UI-040／UI-041 的人工標記與已核准雜訊規則、UI-042 的快取版本、來源作品分割及檢查點均需納入依賴。正確且版本仍有效的其他內容不應重訓；已核准規則可按正式適用條件自動排除雜訊而不逐件重問，模糊情境仍交例外中心。程式重啟後依**本機持久索引與可核實的掃描版本**重建候選、避免重複登錄／重複工作；不能把掃描發現成功當成已學習或已完成印前驗證。",
+          "tests": [
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_registered_source_keeps_customer_templates_other_source_and_training_evidence",
+            "test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units",
+            "test_source_watch_service.SourceWatchServiceTests.test_source_index_changed_during_scan_cannot_commit_a_stale_candidate_or_overwrite_real_new_source"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-10",
+          "expected": "**操作控制與效能**：GUI 提供個別根目錄的「開始／暫停監看」「立即重新掃描」「只顯示有變更／問題檔案」「查看來源／差異及處理原因」；對資料量大、複製中、路徑不通、檔案存取拒絕、重複通知或系統睡眠提供可理解的狀態、重試及非阻塞操作。目錄巡查頻率、資源負載和實際訓練工作排程管理**留 UI-051 專門決策**；監看來源撤銷時須確認停止未來掃描，**不得偷偷刪除既有訓練資料、來源登錄、客戶資料庫或已發布模板**。",
+          "tests": [
+            "test_source_watch_service.SourceWatchServiceTests.test_busy_window_and_duplicate_hints_keep_one_fifo_root_without_counting_events_as_files",
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection",
+            "test_source_watch_center.SourceWatchCenterTests.test_unsaved_root_input_survives_reconciliation_and_concurrent_config_is_not_overwritten",
+            "test_source_watch_center.SourceWatchCenterTests.test_review_worker_launch_failure_releases_gui_without_losing_review_or_source_data",
+            "test_source_watch_service.SourceWatchServiceTests.test_shutdown_stops_qt_watchers_and_timers_before_library_close"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-11",
+          "expected": "**事故與來源保護**：資料夾監看或新檔匯入**只讀原來源，不搬移／覆寫／刪除檔案**；有衝突時保存舊版和來源證據，寫入新索引前核對來源當下仍穩定、索引版本仍適用，遇到權限不足、損毀、中斷或磁碟滿要標示局部成功與失敗，不得宣稱全數增量訓練完成或把失聯誤當刪除。開發測試遵守 UI-048「權限完整介面最後實作，但以合成資料及受控目錄先保留安全邊界」。",
+          "tests": [
+            "test_source_watch_index.SourceWatchIndexTests.test_actual_sqlite_full_rolls_back_whole_candidate_index_without_losing_existing_root",
+            "test_source_watch_index.SourceWatchIndexTests.test_root_pause_or_audit_failure_cannot_partially_commit_candidates_or_a_fake_success",
+            "test_source_watch_service.SourceWatchServiceTests.test_pause_during_real_worker_cancels_before_candidate_commit_then_disables_future_work",
+            "test_source_watch_service.SourceWatchServiceTests.test_remove_during_actual_worker_stops_future_watch_and_preserves_all_raw_files",
+            "test_source_watch_index.SourceWatchIndexTests.test_offline_and_missing_are_unresolved_and_keep_last_effective_index"
+          ]
+        },
+        {
+          "id": "UI-050-CLAUSE-12",
+          "expected": "**相容及範圍**：持久索引和作品歸屬重用 UI-042／UI-043 的 `source_files`、`content_blobs`、`artworks`、`training_checkpoints`、`customers`、`customer_card_styles`；不另建影子客戶或訓練庫。UI-043 **沒有曾設計／已確認購買狀態分級**、UI-010 模板核准、UI-013 固定字級、UI-020／UI-023 Logo 完整與尺寸隔離、正式印前 Gate 全部維持。",
+          "tests": [
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_registered_source_keeps_customer_templates_other_source_and_training_evidence",
+            "test_source_watch_center.SourceWatchCenterTests.test_real_gui_start_pause_config_and_remove_preserve_customer_styles_sources_and_candidate_history"
+          ]
         }
       ],
-      "next_step": "補事件只是提示的監看器及有界匯入佇列，測暫存檔、寫入中、漏事件／離線／改名均重新核實；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT"
+      "next_step": "完整12原條款已註冊，等待固定source正式全687回歸與真Qt監看/候選/UI003/獨立alias/修改版capture。",
+      "scope_history": [
+        {
+          "scope": "監看事件需重掃核實，寫入未穩定不分析",
+          "acceptance": [
+            {
+              "id": "UI-050-FULL",
+              "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：監看事件需重掃核實，寫入未穩定不分析",
+              "tests": []
+            }
+          ],
+          "status": "PARTIAL"
+        }
+      ],
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-051",

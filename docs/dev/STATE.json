@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI050-WATCH-WIP",
+  "active_task": "REMAINING28-UI050-FULL-FORMAL",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-WATCH-COMPACT-WIP.receipt.json",
   "last_confirmed_commit": "b8b5c6b871335047e94789895876b9c928dae9c2",
   "latest_evidence_run": null,
@@ -18,9 +18,9 @@
   ],
   "next_tasks": [
     {
-      "id": "UI050-WATCH-SAFE-INCREMENTAL",
+      "id": "UI050-FULL-CLAUSE-FORMAL",
       "status": "IN_PROGRESS",
-      "next": "實作已核准原12條：Qt事件僅提示+debounded補掃、明列根/排除/暫停、雙hash真穩定、有界同SQLite候選批次、alias獨立來源與變更版人工例外。141歷史完成待新source重驗，不先結案。"
+      "next": "完整原12條已註冊，25新watch/index/center測試；107相關整合PASS，5張真Qt監看/既有UI003/修改版capture smoke PASS。凍結source後全687正式回歸與capture，141歷史完成+UI050共142要求不先結案。"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-WATCH-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-RELINK.json",
@@ -561,7 +563,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": null,
+  "planned_evidence_run": "RUN-REMAINING28-WATCH-001",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",

@@ -26,6 +26,7 @@ class AutomaticTrainingDialog(QDialog):
         self.actor=QLineEdit('LOCAL_OPERATOR');self.actor.setMaxLength(120);bar.addWidget(self.actor)
         self.start_button=self.button(bar,'確認預檢並開始訓練',self.start);self.start_button.setEnabled(False);layout.addLayout(bar)
         self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['來源檔','頁次','實際狀態','已分析作品','重用作品','問題／待核對']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);layout.addWidget(self.table,2)
+        for column,width in enumerate((180,65,245,100,100,420)):self.table.setColumnWidth(column,width)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
         bar=QHBoxLayout();self.jobs=QComboBox();bar.addWidget(self.jobs,1);self.retry=QCheckBox('明確重試失敗項');bar.addWidget(self.retry)
         self.button(bar,'上一頁工作',lambda:self.job_page(-200));self.button(bar,'下一頁工作',lambda:self.job_page(200));self.button(bar,'讀回持久工作',self.reload);self.resume_button=self.button(bar,'繼續選定工作',self.resume)
@@ -87,7 +88,9 @@ class AutomaticTrainingDialog(QDialog):
     def render(self,job):
         items=job['items'];self.table.setRowCount(len(items))
         for row,item in enumerate(items):
-            values=(Path(item['path']).name,str(item['page']),item.get('state',item.get('status','UNKNOWN')),str(item.get('analysed_units','尚未分析')),str(item.get('reused_units','尚未分析')),item.get('error') or item.get('reason') or ('作品資料待核對' if item.get('state')=='WAITING_REVIEW' else ''))
+            state=item.get('state',item.get('status','UNKNOWN'));label={'READY':'待啟動核對','SKIPPED':'共用解析，保留獨立來源','RUNNING':'處理中','SUCCESS':'此來源階段已完成','WAITING_REVIEW':'待必要審核','FAILED':'失敗待處理','CANCELLED':'已安全取消'}.get(state,state)
+            reason=('同位元內容，啟動後仍各自保留來源登錄／檔名，客戶歸屬待核對' if job['phase']=='PREFLIGHT' and state=='SKIPPED' else None)
+            values=(Path(item['path']).name,str(item['page']),label,str(item.get('analysed_units','尚未分析')),str(item.get('reused_units','尚未分析')),reason or item.get('error') or item.get('reason') or ('作品資料待核對' if item.get('state')=='WAITING_REVIEW' else ''))
             for col,value in enumerate(values):
                 cell=QTableWidgetItem(value);cell.setToolTip(item['path'] if col==0 else value);self.table.setItem(row,col,cell)
         if job['phase']!='PREFLIGHT':self.status.setText(job['phase']+f"；來源{len(items)}，成功{sum(i.get('state')=='SUCCESS' for i in items)}，待核對{sum(i.get('state')=='WAITING_REVIEW' for i in items)}，失敗{sum(i.get('state')=='FAILED' for i in items)}。未自動發布。")

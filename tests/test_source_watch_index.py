@@ -87,3 +87,26 @@ class SourceWatchIndexTests(unittest.TestCase):
         with self.assertRaises(ValueError):review_candidate(self.store,candidate,proof,'synthetic',True)
         with self.assertRaisesRegex(ValueError,'實際UI003'):record_dispatch(self.store,[candidate],'absent-job')
         self.assertEqual(self.store.get('SCAN_CANDIDATE',candidate['id']),candidate);self.assertEqual(self.store.count('AUTO_JOB'),0)
+
+    def test_temporary_read_failure_preserves_last_verified_hash_for_later_modified_version_review(self):
+        from template_ai.source_links import hash_source
+        self.enable();self.save();old_hash=next(c['source_hash'] for c in candidate_page(self.store) if c['path']==str(self.a))
+        def denied(path,**kwargs):
+            if Path(path)==self.a:raise PermissionError('synthetic sharing violation')
+            return hash_source(path,**kwargs)
+        with patch('template_ai.source_scan.hash_source',side_effect=denied):failed=self.scan()
+        self.assertFalse(failed['complete']);self.watch=save_scan(self.store,self.watch,failed,automatic=True)
+        self.a.write_bytes(b'<svg>later modified source</svg>');changed=self.scan();entry=next(r for r in changed['entries'] if r['path']==str(self.a))
+        self.assertEqual(entry['previous_hash'],old_hash);self.assertEqual(entry['state'],'CONTENT_CHANGED_REVIEW_REQUIRED')
+        self.watch=save_scan(self.store,self.watch,changed,automatic=True);self.assertTrue(any(c['state']=='REVIEW_REQUIRED' and c['path']==str(self.a) for c in candidate_page(self.store)))
+
+    def test_actual_sqlite_full_rolls_back_whole_candidate_index_without_losing_existing_root(self):
+        import sqlite3
+        self.enable()
+        for i in range(48):(self.directory/f'new-{i}.svg').write_bytes(self.a.read_bytes())
+        report=self.scan();before=self.store.get('SCAN_ROOT',self.watch['id']);page_count=self.library.db.execute('PRAGMA page_count').fetchone()[0];old_limit=self.library.db.execute('PRAGMA max_page_count').fetchone()[0]
+        self.library.db.execute('PRAGMA max_page_count='+str(page_count))
+        try:
+            with self.assertRaisesRegex(sqlite3.OperationalError,'full'):save_scan(self.store,self.watch,report,automatic=True)
+        finally:self.library.db.execute('PRAGMA max_page_count='+str(old_limit))
+        self.assertEqual(self.store.get('SCAN_ROOT',self.watch['id']),before);self.assertEqual(candidate_page(self.store),[]);self.assertEqual(len(list(self.directory.glob('*.svg'))),50)

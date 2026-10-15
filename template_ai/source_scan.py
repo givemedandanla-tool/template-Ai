@@ -83,7 +83,8 @@ def scan_files(root,known,cancel=lambda:False,stable_wait=.25,progress=None,cont
     def visit(path,stat):
         nonlocal budgeted,read_bytes
         if path.suffix.lower() not in formats:return
-        entry=dict(path=str(path),state='WAIT_STABLE',bytes=stat.st_size,registered_hashes=known_hashes.get(str(path),[]))
+        old=prior.get(str(path),{});last_verified=old.get('verified_hash') or old.get('last_verified_hash') or (old.get('hash') if old.get('state') not in ('READ_ERROR','WAIT_STABLE') else None)
+        entry=dict(path=str(path),state='WAIT_STABLE',bytes=stat.st_size,registered_hashes=known_hashes.get(str(path),[]),last_verified_hash=last_verified)
         if 2*stat.st_size+budgeted>256*1024*1024:raise ValueError('兩次內容核對超過256MiB實際讀取預算；請分組掃描')
         budgeted+=2*stat.st_size;rows.append(entry)
         try:
@@ -105,7 +106,7 @@ def scan_files(root,known,cancel=lambda:False,stable_wait=.25,progress=None,cont
             if proof.hash!=second.hash or proof.stat!=second.stat:entry.update(state='WAIT_STABLE',reason='兩次內容／stat不同，不匯入');continue
             source_metadata=known.get(entry['path'],{}) if isinstance(known.get(entry['path']),dict) else {}
             matching=[v for v in source_metadata.get('sources',[]) if v['hash']==second.hash]
-            old=prior.get(entry['path']);registered=known_hashes.get(entry['path'],[]);previous=(old.get('hash') if old else None) or (registered[0] if len(registered)==1 else registered or None)
+            old=prior.get(entry['path']);registered=known_hashes.get(entry['path'],[]);previous=((old.get('verified_hash') or old.get('last_verified_hash') or (old.get('hash') if old.get('state') not in ('READ_ERROR','WAIT_STABLE') else None)) if old else None) or (registered[0] if len(registered)==1 else registered or None)
             state='UNCHANGED' if second.hash in registered or previous==second.hash else 'CONTENT_CHANGED_REVIEW_REQUIRED' if previous else 'DUPLICATE_ALIAS_KEEP_IDENTITY' if second.hash in all_hashes or (content_lookup and content_lookup(second.hash)) or any(x.get('hash')==second.hash and x['path']!=entry['path'] for x in rows) else 'NEW_CANDIDATE'
             entry.update(state=state,previous_hash=previous,verified_hash=second.hash,verified_stat=list(second.stat),registered=second.hash in registered,registered_source_ids=[v['id'] for v in (known.get(entry['path'],{}).get('sources',[]) if isinstance(known.get(entry['path']),dict) else []) if v['hash']==second.hash],
                          customer_code_candidate=Path(entry['path']).stem,artwork_count=sum(v['artwork_count'] for v in matching) if matching else 'UNKNOWN_UNTIL_PARSED',affected_source_ids=[v['id'] for v in source_metadata.get('sources',[])],source_link_revisions={v['id']:v['link_revision'] for v in source_metadata.get('sources',[])})
@@ -145,7 +146,7 @@ def save_scan(store,root,result,*,automatic=False,cancel=lambda:False):
                 if entry.get('registered'):
                     item_id=candidate_id(root,entry['path'],entry['verified_hash']);existing=store.get('SCAN_CANDIDATE',item_id)
                     if existing and existing['state'] in ('FOUND_NOT_QUEUED','QUEUED_FOR_UI003_PREFLIGHT','DISPATCHED'):
-                        existing.update(state='SOURCE_REGISTERED_REVIEW_PENDING',source_ids=entry.get('registered_source_ids',[]));store._write('SCAN_CANDIDATE',item_id,existing,existing['revision'],'candidate_source_registered_ownership_still_unreviewed')
+                        existing.update(state='SOURCE_REGISTERED_REVIEW_PENDING',source_ids=entry.get('registered_source_ids',[]),customer_ownership='SEE_EXISTING_CUSTOMER_AUDIT');store._write('SCAN_CANDIDATE',item_id,existing,existing['revision'],'candidate_source_registered_ownership_still_unreviewed')
                     continue
                 stale_ids=[row[0] for row in store.db.execute("SELECT id FROM training_records WHERE kind='SCAN_CANDIDATE' AND json_extract(payload,'$.root_id')=? AND json_extract(payload,'$.path')=? AND json_extract(payload,'$.source_hash')!=? AND json_extract(payload,'$.state') IN ('FOUND_NOT_QUEUED','QUEUED_FOR_UI003_PREFLIGHT','REVIEW_REQUIRED')",(root['id'],entry['path'],entry['verified_hash']))]
                 for stale_id in stale_ids:
@@ -157,7 +158,7 @@ def save_scan(store,root,result,*,automatic=False,cancel=lambda:False):
                     continue
                 state='REVIEW_REQUIRED' if entry['state']=='CONTENT_CHANGED_REVIEW_REQUIRED' else 'QUEUED_FOR_UI003_PREFLIGHT' if automatic else 'FOUND_NOT_QUEUED'
                 payload=dict(root_id=root['id'],root_revision=root['revision'],path=entry['path'],source_hash=entry['verified_hash'],bytes=entry['bytes'],verified_stat=entry['verified_stat'],state=state,
-                             classification=entry['state'],previous_hash=entry.get('previous_hash'),created=time.time(),source_ids=[],affected_source_ids=entry.get('affected_source_ids',[]),artwork_count='UNKNOWN_UNTIL_PARSED',customer_ownership='UNREVIEWED',training_started=False)
+                             classification=entry['state'],previous_hash=entry.get('previous_hash'),created=time.time(),original_filename=Path(entry['path']).name,customer_code_candidate=entry.get('customer_code_candidate',Path(entry['path']).stem),source_ids=[],affected_source_ids=entry.get('affected_source_ids',[]),artwork_count='UNKNOWN_UNTIL_PARSED',customer_ownership='UNREVIEWED',training_started=False)
                 store._write('SCAN_CANDIDATE',identity,payload,0,'source_candidate_indexed_without_training')
         return store._write('SCAN_ROOT',now['id'],now,now['revision'],'source_automatic_scan_recorded' if automatic else 'source_manual_scan_recorded')
 
