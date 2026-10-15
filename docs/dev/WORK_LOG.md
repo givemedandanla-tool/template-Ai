@@ -828,3 +828,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 剩餘28本輪已完成UI046/UI047/UI049/UI050四題，共44原條款；正式692/692 PASS、Qt錯誤0、capture成功、來源未變。全75：48 VERIFIED／24 PARTIAL／3 DEFERRED；固定70：46閉合／24仍部分。CORE87／GOV7另計。
 - 真Qt多根/完整依賴/明確套用/撤銷原位置capture，10新scope測試納入正式692全回歸；141claims契約digest匹配。
 - 33文字metadata GitHub、108媒體精確例外留本機；來源與客戶/版型未破壞，不改失敗run。下一UI051真watch/安全增量。
+
+### UI051 contract before dependency/structure change
+- 原8條hash/計畫已UI051_EXECUTION_PLAN；沿現WORKER/CAS/checkpoints與Qt，實讀psutil7.2.2/VSCode1.105.1 Limiter來源hash。先保守資源背壓/分批啟動，再同SQLite FIFO操作與逐source/work狀態。
+- 692正式舊milestone已publication-scope PASS/receipt90435a3d72dfd9df81aaf928c4d2940ac2eeaae7讀回；142已完成先標pending，再改依賴/結構。無急件新需求、不宣稱參考硬體實測。

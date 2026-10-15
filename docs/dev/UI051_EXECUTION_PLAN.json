@@ -1,0 +1,44 @@
+{
+  "id": "UI051-LOW-LOAD-FAIR-QUEUE",
+  "status": "IMPLEMENTING_ORIGINAL_SCOPE",
+  "parent": "UI-051",
+  "original_clause_count": 8,
+  "original_clause_sha256": "16514fdbf129d127ed027892f0102c52d402e7a8c011e41046dffcec3882be56",
+  "source_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "baseline_evidence": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
+  "packages": [
+    {
+      "id": "RESOURCES",
+      "work": "psutil actual memory/CPU/disk/process metrics,container caps,GUI heartbeat lag,conservative hysteresis/backpressure and explicit unknowns;single active heavy worker"
+    },
+    {
+      "id": "STARTUP",
+      "work": "bounded lazy source/template/model/font catalogs and selected-ID navigation;responsive low-load startup and diagnostics/recovery before heavy work"
+    },
+    {
+      "id": "FAIR_EXECUTION",
+      "work": "same TrainingStore durable requests referencing existing JOB/AUTO_JOB,SQLite arrival order FIFO,explicit scope consent,leases/CAS,blocked items separated,pause/cancel/interrupt/restart without false saved progress"
+    },
+    {
+      "id": "GUI_AND_ACCEPTANCE",
+      "work": "per-source/work analysis versus review status,queue/resources/exception/pause/recovery controls;original8 clauses bound only after code/tests/actual Qt capture"
+    }
+  ],
+  "mathematics": [
+    "FIFO eligibility rank decreases as older finite jobs finish;new arrivals append by SQLite insertion order,independent of wall-clock rollback",
+    "EWMA/bounded lag samples plus hysteresis prevent load oscillation;all thresholds conservative defaults pending reference hardware measurement",
+    "Resource pressure pauses new claims and checkpoints at safe unit boundaries;SQLite audit failure stops persistence instead of fabricating memory-only saved progress"
+  ],
+  "planned_tests": [
+    "Host/cgroup clamp,unknown metrics,CPU/disk/memory/GUI pressure and recovery hysteresis",
+    "Large catalogs page counts/selected IDs andstartup no eager model/original load",
+    "FIFO with incoming jobs,blocked-unit isolation,no duplicate lease across windows,new consent after restart",
+    "Actual disk/SQLite failure,cancel/worker launch/closed context,completed units survive interruption",
+    "Actual GUI resource/pause/queue/recovery flow and complete immutable formal regression"
+  ],
+  "limits": [
+    "No urgent/nonurgent classifier",
+    "No arbitrary low-end hardware guarantee;real16GB/RTX5050/VivoBook testing remains REV04 and exact device specs unresolved",
+    "No new parallel customer/model database,no EXE/no paid service activation/no main merge"
+  ]
+}

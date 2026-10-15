@@ -11,3 +11,5 @@
 - 33文字metadata GitHub；108媒體.checkpoints/formal-media/RUN-REMAINING28-WATCH-002，FULL70_PUBLICATION精確source/sha/bytes，strict全附件上傳未宣稱。
 - 下一UI051：既有training_pipeline/automatic_training共用跨窗口WORKER鎖、逐unit CAS/checkpoint及paged panel，缺資源探測/背壓、跨job公平排程、啟動不整批載入。psutil7.2.2 runtime已可用，尚未pin；實讀actual host/cgroup僅開發環境，非16GB/RTX5050/VivoBook基準。重用SQLite/Qt/psutil/stdlib FIFO，避免平行模型客戶庫。
 - UI031/032/REV02合法真AI/Windows字型與版本映射、REV04實機硬體仍待完整驗收；其餘按active_contract。修改來源先把142已完成標pending、保存previous_evidence/清latest，再新source正式回歸。
+
+- 現開始UI051：原8條完整計畫UI051_EXECUTION_PLAN，psutil7.2.2/VSCode Limiter實讀hash已basis。142歷史完成先標pending/latest=None；下一先pin既有psutil與lock、資源探測/背壓，再bounded啟動catalog/既有JOB/AUTO_JOB公平request調度與GUI，不用子包PASS結案。
