@@ -1,3 +1,5 @@
+> 最新：RUN-RUNTIME002在第409測試卡同步啟動失敗QMessageBox；前408已實際PASS，partial journal/stack/interrupted.json已保留，整run未PASS。generic run_job同步pool.start錯誤恢復raise；deferred callback採JobCallbacks，舊3arg mock仍相容，7 guarded dialog接入，launch-fix001驗證中。下一先batch_dialog deferred失敗/取消與broad tests，再新source003全747；原8未關閉仍4/28歷史。
+
 > 最新正式狀態：RUN-REMAINING28-RUNTIME-001未結束，約12分鐘後停止；不是PASS，不可執行close_runtime_milestone.py。原證據docs/evidence/attempts/REMAINING28/runtime-formal001-interrupted.json及partial run folder。原8已綁仍4/28歷史完成。新增逐測試live journal與faulthandler60s堆疊（.checkpoints/formal-live/RUN-...），7smokePASS；新source ACK後跑002定位停滯。
 
 # 當前精簡接手

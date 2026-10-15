@@ -7,6 +7,7 @@ from PySide6.QtWidgets import (QCheckBox, QDialog, QDialogButtonBox, QDoubleSpin
     QHBoxLayout, QLabel, QLineEdit, QPushButton, QScrollArea, QTableWidget,
     QTableWidgetItem, QVBoxLayout)
 
+from .worker_callbacks import JobCallbacks
 from .font_catalog import build_inventory, host_candidates
 from .font_candidates import SCOPE, find_candidates, render_candidate
 
@@ -98,7 +99,7 @@ class FontCandidateDialog(QDialog):
                 self.busy = False; self.search_button.setEnabled(True); self.table.setEnabled(True)
                 self.preview_button.setEnabled(self.selected() is not None)
                 self.review_button.setEnabled(bool(self.selected() and self.selected()['row']['kind']=='ASSET'))
-        try: self.window.run_job(message, guarded, finished)
+        try: self.window.run_job(message, guarded, JobCallbacks(finished,lambda error:finished({'error':str(error)})))
         except Exception:
             self.busy = False; self.search_button.setEnabled(True); self.table.setEnabled(True)
             self.preview_button.setEnabled(self.selected() is not None)

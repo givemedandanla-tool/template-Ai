@@ -864,3 +864,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### Formal runtime001 incomplete attempt / diagnostic observability
 - source6a7ded4全746正式runner約12分鐘沒有終報，SIGINT未讓C/Qt等待返回，22:08:09 SIGTERM；無已收集單項結果/無capture，不宣稱pass或測試0失敗。停止前code manifest未變，原log及3source proof保持，另建INTERRUPTED attempt metadata，不偽造正式run.json。
 - 臨時read-only py-spy0.4.1診斷工具在workspace uv工具cache下載，app .venv/lock未改；OS拒絕附加既有process，未申請提權，採標準庫faulthandler。新runner每test原子local progress＋append結果（ignored .checkpoints/formal-live），60秒C watchdog dump各thread堆疊，最終原QA仍由實際TestResult/來源/traceability判定。7個現有supervisor Smoke PASS，正式002待新source ACK。
+
+### Runtime002 identified blocking launch regression
+- 新live progress定位第409 LogoWorkflow generic worker start failure；前408PASS，stack gui.error→failed→launch→run_job→test line121顯示同步pool.start failure被新入口改成QMessageBox modal。22:16:49 TERM，保存partial journal/stack/progress/source/hash，不宣稱整runPASS，001原失敗不改。
+- 恢復無explicit on_error的同步raise/cleanup；資源延後啟動失敗走擁有者error callback。JobCallbacks(done,error,cancel_event)可呼叫、仍3arg API兼容舊mocks；7既有guarded dialogs接deferred error，Logo fixture給可預測資源，原assertRaises/controls/jobcleanup不減。新增真延後pool故障無modal與復原測試。當前launch-fix001在跑，batch接入與broad尚待。

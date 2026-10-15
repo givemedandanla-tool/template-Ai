@@ -28,6 +28,8 @@ class LogoWorkflowGuiTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name)
         self.window=MainWindow(self.root/'library');self.store=LogoStore(self.window.library)
+        from runtime_fixture import controlled_resources
+        controlled_resources(self.window)
         self.company=self.store.create_company('Synthetic Brand','Synthetic explicit identity',True)
         self.path=self.root/'synthetic-logo.svg'
         self.path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="20mm" height="10mm" viewBox="0 0 20 10"><g id="whole"><rect id="symbol" x="1" y="1" width="5" height="5" fill="red"/><text id="brand" x="8" y="6" font-size="2">Example</text></g></svg>')

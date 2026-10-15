@@ -760,6 +760,7 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage('已請求取消尚未啟動的工作；當前已執行的原子步驟請在工作面板安全取消')
 
     def run_job(self, message, function, callback,*,on_error=None,resource_kind='ANALYSIS',cancel=None):
+        """Legacy immediate launch failures raise; deferred failures use the explicit error callback."""
         if self.busy:
             self.inform("目前仍有背景匯入工作，請等待完成")
             return
@@ -770,7 +771,7 @@ class MainWindow(QMainWindow):
         token = new_id()
         if cancel is None:
             import threading
-            cancel=threading.Event()
+            cancel=getattr(callback,'cancel_event',None) or threading.Event()
         self._waiting_launches[token]=cancel
         self._background_jobs[token] = job
         job.signals.setParent(self)
@@ -791,23 +792,26 @@ class MainWindow(QMainWindow):
             self.busy = False
             self.import_button.setEnabled(True)
             try:
-                (on_error or self.error)(text)
+                (on_error or getattr(callback,'error',None) or self.error)(text)
             finally:
                 release()
         job.signals.done.connect(finished, Qt.QueuedConnection)
         job.signals.error.connect(failed, Qt.QueuedConnection)
         context=self.library
-        def launch():
+        def launch(deferred=False):
             if context.closed or self.library is not context:
                 self.busy=False;release();return
             if cancel.is_set():failed('已取消尚未啟動的工作；沒有新增成果');return
             decision=self.runtime.admit(resource_kind,foreground=True)
             if not decision.allowed:
                 self.statusBar().showMessage(message+' · 等待資源；尚未執行／保存：'+','.join(decision.reasons))
-                QTimer.singleShot(500,self,launch);return
+                QTimer.singleShot(500,self,lambda:launch(True));return
             self._waiting_launches.pop(token,None)
             try:self.pool.start(job)
-            except Exception as error:failed(str(error))
+            except Exception as error:
+                if not deferred and on_error is None:
+                    self.busy=False;self.import_button.setEnabled(True);release();raise
+                failed(str(error))
         launch()
 
     def import_source(self):

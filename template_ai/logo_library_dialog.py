@@ -9,6 +9,7 @@ from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,
     QPlainTextEdit,QComboBox,QTabBar,QDoubleSpinBox,QFileDialog,QInputDialog,QMessageBox,
     QDialogButtonBox)
 
+from .worker_callbacks import JobCallbacks
 from .customers import digest
 from .logo_store import LogoStore
 from .logo_assets import errors
@@ -167,7 +168,7 @@ class LogoLibraryDialog(QDialog):
         def finished(result):
             self.running=False;self.reload()
             self.status.setText('未完成：'+result['error'] if 'error' in result else label+'已建立／重用候選，仍需逐項核准。')
-        try:self.window.run_job(label,worker,finished)
+        try:self.window.run_job(label,worker,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
         except Exception:self.running=False;raise
 
     def manual_import(self,base=None):

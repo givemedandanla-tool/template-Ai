@@ -7,6 +7,7 @@ from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import (QCheckBox,QDialog,QDialogButtonBox,QHBoxLayout,QLabel,QLineEdit,
     QMessageBox,QPushButton,QScrollArea,QTableWidget,QTableWidgetItem,QVBoxLayout)
 
+from .worker_callbacks import JobCallbacks
 from .font_catalog import build_inventory
 from .font_candidates import render_candidate
 from .font_review import FontReviewEngine,SCOPE,field_key,fingerprint
@@ -131,7 +132,7 @@ class FontReviewDialog(QDialog):
                     self.table.setEnabled(True);self.history.setEnabled(True)
                     self.check_button.setEnabled(self.target is not None);self.refresh_button.setEnabled(True);self.fill_button.setEnabled(True)
                     self.apply_button.setEnabled(self.report is not None);self.selection_changed();self.history_selection()
-        try:self.window.run_job(message,guarded,finished)
+        try:self.window.run_job(message,guarded,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
         except Exception:
             finished({'error':'背景工作未啟動'});raise
 

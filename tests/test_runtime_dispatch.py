@@ -47,6 +47,15 @@ class RuntimeDispatchTests(unittest.TestCase):
             self.assertTrue(self.window.busy);panel=RuntimePanel(self.window);self.panels.append(panel);QTest.mouseClick(panel.cancel_foreground,Qt.LeftButton);self.wait(lambda:not self.window.busy)
         self.assertEqual(calls,[]);self.assertEqual(len(errors),1);self.assertIn('取消尚未啟動',errors[0]);self.assertEqual(self.window._waiting_launches,{})
 
+    def test_deferred_pool_failure_uses_owned_callback_and_restores_controls_without_a_modal(self):
+        import test_runtime_execution as resources
+        from template_ai.worker_callbacks import JobCallbacks
+        errors=[];calls=[]
+        with patch.object(self.window.pool,'start',side_effect=RuntimeError('SYNTHETIC deferred pool failure')):
+            with patch.object(self.window.runtime,'admit',return_value=resources.HOLD):self.window.run_job('SYNTHETIC',lambda:calls.append('ran'),JobCallbacks(calls.append,errors.append))
+            self.wait(lambda:not self.window.busy)
+        self.assertEqual(calls,[]);self.assertEqual(errors,['SYNTHETIC deferred pool failure']);self.assertTrue(self.window.import_button.isEnabled());self.assertEqual(self.window._background_jobs,{})
+
     def test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims(self):
         self.window.runtime.set_paused(True);jobs=[self.job() for _ in range(3)];requests=[self.dispatch.submit('AUTO_JOB',job,'SYNTHETIC_FIFO') for job in jobs];finished=[];self.dispatch.finished.connect(lambda identity,result:finished.append(identity))
         self.dispatch.cancel(requests[1]['id']);self.assertEqual(self.service.get(jobs[1]['id'])['phase'],'READY');self.assertEqual(self.dispatch.queue.get(requests[1]['id'])['state'],'CANCELLED')

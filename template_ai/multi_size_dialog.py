@@ -7,6 +7,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTableWidget,
     QTableWidgetItem,QComboBox,QCheckBox,QDoubleSpinBox,QPlainTextEdit,QFileDialog,QMessageBox,QHeaderView)
 
+from .worker_callbacks import JobCallbacks
 from .customers import digest
 from .input_graph import InputGraph
 from .multi_size import MultiSizeWorkflow,size_key
@@ -73,7 +74,7 @@ class MultiSizeDialog(QDialog):
             self.running=False;self.table.setEnabled(True)
             if 'error' in result:self.status.setText('未完成：'+result['error']);return
             finished(result['result'])
-        try:self.window.run_job(label,worker,completed)
+        try:self.window.run_job(label,worker,JobCallbacks(completed,lambda error:completed({'error':str(error)})))
         except Exception:self.running=False;self.table.setEnabled(True);raise
 
     def start(self):

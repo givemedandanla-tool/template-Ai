@@ -4,6 +4,7 @@ import sqlite3
 from shiboken6 import isValid
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QLabel,QPushButton,QComboBox,QPlainTextEdit,QFileDialog,QCheckBox,QLineEdit,QTreeWidget,QTreeWidgetItem,QMessageBox,QDialogButtonBox,QInputDialog,QWidget,QTabWidget)
+from .worker_callbacks import JobCallbacks
 from .training_store import TrainingStore,digest
 from .source_scan import (register_root,configure_root,active_roots,candidate_page,review_candidate,record_dispatch,DEFAULT_EXCLUDES,EXTENSIONS)
 from .source_links import verify_source
@@ -170,7 +171,7 @@ class SourceScanDialog(QDialog):
             source=payload['source'];preview=SourceRelinkDialog(self.window);preview.setParent(self,Qt.Dialog)
             preview.show_report(dict(status='COMPLETE',roots=[],entries=0,hashed_files=0,errors=[],rows=[dict(source=source,availability=availability(source),candidates=[],same_name_different=[])]))
             preview.show_details();preview.close();preview.deleteLater()
-        try:self.window.run_job('唯讀核對原來源關聯',work,done)
+        try:self.window.run_job('唯讀核對原來源關聯',work,JobCallbacks(done,lambda error:done({'error':str(error)})))
         except Exception as error:self.status.setText('未開始影響查詢：'+str(error))
 
     def recheck_existing(self):
@@ -197,7 +198,7 @@ class SourceScanDialog(QDialog):
                 if payload.get('error'):raise ValueError(payload['error'])
                 review_candidate(self.store,candidate,payload['proof'],actor,True);self.render_current();self.status.setText('修改版已核對為新來源候選；請交既有預檢，客戶／模板仍未批准')
             except Exception as error:self.status.setText('未核准候選：'+str(error))
-        try:self.window.run_job('核對修改版實際內容',work,done)
+        try:self.window.run_job('核對修改版實際內容',work,JobCallbacks(done,lambda error:done({'error':str(error)})))
         except Exception as error:self.running=False;self.status.setText('未開始候選核對：'+str(error))
 
     def launch(self):

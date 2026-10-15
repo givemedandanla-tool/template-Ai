@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushB
     QComboBox, QTableWidget, QTableWidgetItem, QPlainTextEdit, QMessageBox, QInputDialog,
     QListWidget, QListWidgetItem, QDialogButtonBox, QAbstractItemView)
 
+from .worker_callbacks import JobCallbacks
 from .customer_candidates import CustomerCandidates
 from .customers import CustomerStore
 
@@ -149,7 +150,7 @@ class CustomerCandidatesDialog(QDialog):
                 self.status.setText('未完成：' + result['error'] if 'error' in result else
                     f"本來源提出／重用 {len(result['ids'])} 筆候選；0筆時請先核對作品並學習確切版型。尚未入庫。")
             try:
-                self.window.run_job('建立來源客戶候選', worker, finished)
+                self.window.run_job('建立來源客戶候選', worker, JobCallbacks(finished,lambda error:finished({'error':str(error)})))
             except Exception:
                 self.running = False
                 raise

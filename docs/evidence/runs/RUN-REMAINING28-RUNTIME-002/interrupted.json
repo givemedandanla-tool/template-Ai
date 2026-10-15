@@ -1,0 +1,44 @@
+{
+  "status": "INTERRUPTED_WITH_IDENTIFIED_REGRESSION_NOT_PASS",
+  "run_id": "RUN-REMAINING28-RUNTIME-002",
+  "source_commit": "da132107ddfbd64e65432a14f953070c7e2f1598",
+  "known_tests": 746,
+  "partial_completed": 408,
+  "partial_passed": 408,
+  "remaining_not_verified": 338,
+  "current_test": "test_logo_workflow_gui.LogoWorkflowGuiTests.test_generic_worker_start_failure_restores_controls_and_does_not_leave_job",
+  "source_unchanged_until_interruption": true,
+  "reason": "Synchronous pool.start failure changed from raise to blocking MainWindow.error QMessageBox;stack gui.py error/failed/launch/run_job and logo test line121",
+  "stopped_at": "2026-10-15T22:16:49Z",
+  "capture_executed": false,
+  "attachments": {
+    "partial-tests.jsonl": {
+      "bytes": 70050,
+      "sha256": "2aafb161aca892e1def871ff176b7bf1141352557a40ecaa13889580de1fd2c1"
+    },
+    "tree.json": {
+      "bytes": 434435,
+      "sha256": "e2015994421bf332c591a637fffabb5c21e98eee389055577eca25faede98d99"
+    },
+    "interrupted-runner.log": {
+      "bytes": 5457,
+      "sha256": "dd9cbf3f4c7d42d4e06c87ffdf6ecb31d2e8f395becd101712ab451149a7f402"
+    },
+    "source-manifest.json": {
+      "bytes": 53873,
+      "sha256": "e837ac83450e86d4271804fbc746bf6bb0d32b89a7e3f26d1bed684e2eea5f75"
+    },
+    "timeout-stacks.log": {
+      "bytes": 26338,
+      "sha256": "2b202eb8995edeb5951ff2e77bc4d5083be18ae7f882d21614c05149176c3026"
+    },
+    "commit.json": {
+      "bytes": 201,
+      "sha256": "0e9f21bec82bd2b806a77776d4351327c56260513b234e9b10fbee469d1cb45b"
+    },
+    "interrupted-progress.json": {
+      "bytes": 325,
+      "sha256": "12441bc6405e2218ec293866975a39963a4156b7ce887b509c26a3087c5111c5"
+    }
+  }
+}
