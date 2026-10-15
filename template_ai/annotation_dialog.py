@@ -106,6 +106,11 @@ class AnnotationDialog(QDialog):
             for spin,key in zip(self.coords,('x','y','w','h')):spin.setValue(slot['rect'][key])
             self.details.setPlainText(str(observation.get('review',{}))+'\n'+f"作品 {self.session.base['id']}／來源 {self.session.base['source_id']}\n框 {ids[0]}／{slot['owner']}\n標記字型：{slot['font']}／{slot.get('font_style') or '款式未知'}／{slot['size_pt']}pt（標記值，原稿字型仍待核對）\n原生Illustrator對應未知；AI線索不等於真值。\n"+self.semantic_details(observation))
         else:self.details.setPlainText(f'明確選取{len(ids)}框。多選只允許適用操作，不以首框值覆蓋共同屬性。')
+        if len(ids)==1:
+            import json
+            proof=self.session.base['payload'].get('analysis_evidence',{}).get('text_object_evidence',{}).get(ids[0])
+            self.details.appendPlainText('\n來源文字／效果證據（衍生SVG屬性不證明原生可編輯性；原稿字級未知不借標記值）：\n'+
+                (json.dumps(proof,ensure_ascii=False,indent=2) if proof else '目前無原物件證據，維持UNKNOWN；可開啟原稿／改後比較定位。'))
 
         self.restore_form(ids)
 

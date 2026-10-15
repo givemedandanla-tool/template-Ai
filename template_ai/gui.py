@@ -1821,7 +1821,14 @@ class MainWindow(QMainWindow):
         if QMessageBox.question(self, "字型使用", "確認有權將此字型複本保存於本機並使用？\n只載入本程式，重開時自動載入，不修改 Windows 字型系統；嵌入與印刷授權仍需核對。") != QMessageBox.Yes:
             return
         try:
-            asset = self.font_manager.import_font(path, approved=True)
+            from .font_evidence import inspect_font
+            proof=inspect_font(path); face_index=0
+            if len(proof['faces'])>1:
+                labels=[f"{f['index']} · {f['family']} / {f['style']} / {f['version']}" for f in proof['faces']]
+                selected,ok=QInputDialog.getItem(self,'TTC字面選擇','選取本次匯入字面；其他字面不會被借用',labels,0,False)
+                if not ok:return
+                face_index=labels.index(selected)
+            asset = self.font_manager.import_font(path, approved=True,face_index=face_index)
             self.font.setCurrentFont(QFont(asset["families"][0]))
             self.inform("已保存並載入本程式：" + "、".join(asset["families"]) + "\n重開時會核對內容後自動載入；字型不會隨原始碼包上傳。")
             self.invalidate()

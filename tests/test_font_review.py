@@ -234,7 +234,9 @@ class FontReviewTests(unittest.TestCase):
 
     def test_persistent_actual_style_matches_layout_and_real_export(self):
         if ITALIC is None:self.fail('缺少實際Italic字型，不得當款式已驗證')
-        asset=self.manager.import_font(ITALIC,approved=True);target=build_inventory([asset],[],[])['rows'][0]
+        asset=self.manager.import_font(ITALIC,approved=True)
+        asset=self.manager.record_output_rights(asset,'synthetic-test','Environment font fixture, test export only',True)
+        target=build_inventory([asset],[],[])['rows'][0]
         t=Template('Style',90,54,[Slot('name','p1',Rect(8,6,70,11),font=asset['families'][0],font_asset=asset,font_style=target['styles'][0],size_pt=18)])
         self.library.save_template(t);self.library.publish(t)
         candidate=generate(t,[{'name':'AV Wi Example'}],[],{})

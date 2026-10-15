@@ -196,6 +196,12 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
         raise ValueError("候選版本已過期，請重新排版")
     if not preview and not candidate.valid:
         raise ValueError("正式數位輸出被阻擋：" + "；".join(candidate.issues))
+    if not preview:
+        from .font_evidence import output_rights_errors
+        rights_issues = [error for item in candidate.items if item.slot.kind != 'logo'
+                        for error in output_rights_errors(item.slot.font_asset, target.suffix.lstrip('.'))]
+        if rights_issues:
+            raise ValueError('；'.join(dict.fromkeys(rights_issues)))
     if preview and "PREVIEW" not in target.stem.upper():
         raise ValueError("非正式預覽檔名必須包含 PREVIEW")
     if not target.parent.is_dir():

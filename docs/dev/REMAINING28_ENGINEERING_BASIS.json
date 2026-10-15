@@ -1,0 +1,25 @@
+{
+  "scope": "REMAINING28-SOURCE-FONT-EVIDENCE",
+  "sources": [
+    {
+      "project": "fontTools",
+      "version": "4.60.1",
+      "url": "https://raw.githubusercontent.com/fonttools/fonttools/4.60.1/Lib/fontTools/ttLib/ttCollection.py",
+      "sha256": "691a61d8c9012b791df7e2422ea849d4437da5f7cdfe5557e965a63934dec1cf",
+      "inspected": "TTCollection.__init__/save; collection face selection and sfnt extraction via mature parser",
+      "reuse": "TTCollection/TTFont parse name/OS2/cmap and extract one explicit face; do not write a binary font parser"
+    }
+  ],
+  "mathematical_basis": [
+    "SHA256 byte identity is distinct from font name / visual similarity; exact equality cannot infer human/customer identity",
+    "Three-valued evidence: observed derivative attributes / unknown native semantics / explicit user attestation; missing evidence cannot become PASS"
+  ],
+  "commercial_approach": [
+    "Separate font activation from OS installation, per-face identity and technical embedding constraints from user licence attestation; no download or licence acceptance on behalf of user"
+  ],
+  "not_claimed": [
+    "Windows installation or real Windows validation",
+    "Real private Illustrator special-effect training equivalence",
+    "Host-font licence validation is not yet implemented"
+  ]
+}

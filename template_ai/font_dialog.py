@@ -53,6 +53,7 @@ class FontCenterDialog(QDialog):
         actions=QHBoxLayout()
         self.candidates_button=QPushButton("替代候選排名與唯讀預覽"); self.candidates_button.clicked.connect(self.open_candidates); actions.addWidget(self.candidates_button)
         self.import_button=QPushButton("匯入合法本機字型"); self.import_button.clicked.connect(self.import_font); actions.addWidget(self.import_button)
+        self.rights_button=QPushButton('核對所選字面輸出授權'); self.rights_button.clicked.connect(self.attest_rights); actions.addWidget(self.rights_button)
         self.repair_button=QPushButton("修復既有核准複本"); self.repair_button.clicked.connect(self.repair_font); actions.addWidget(self.repair_button)
         close=QDialogButtonBox(QDialogButtonBox.Close); close.button(QDialogButtonBox.Close).setText("關閉"); close.rejected.connect(self.reject); actions.addWidget(close)
         layout.addLayout(actions)
@@ -146,6 +147,19 @@ class FontCenterDialog(QDialog):
 
     def import_font(self):
         if not self.busy and not self.window.busy: self.window.import_font(); self.refresh()
+
+    def attest_rights(self):
+        from PySide6.QtWidgets import QInputDialog,QMessageBox
+        row=self.selected()
+        if self.busy or not row or not row.get('asset'):return
+        actor,ok=QInputDialog.getText(self,'字型輸出授權','核准者（不等於授權提供者）')
+        if not ok:return
+        basis,ok=QInputDialog.getText(self,'字型輸出授權','有權印製／轉出的授權依據；不接受以外觀或可載入當授權')
+        if not ok:return
+        pdf=QMessageBox.question(self,'PDF嵌入用途','授權是否也明確允許PDF嵌入？\nOpenType技術限制仍會獨立檢查；選否仍可核對點陣輸出。')==QMessageBox.Yes
+        if QMessageBox.question(self,'確認授權範圍','只更新所選字面記錄；既有模板不會被自動改寫，需另建草稿重新套用並驗證。是否確認？')!=QMessageBox.Yes:return
+        try:self.window.font_manager.record_output_rights(row['asset'],actor,basis,pdf);self.refresh()
+        except (ValueError,OSError) as error:self.result.setText(str(error))
 
     def open_candidates(self):
         if self.busy or self.window.busy: return

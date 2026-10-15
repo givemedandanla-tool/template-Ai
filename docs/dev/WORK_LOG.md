@@ -710,3 +710,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ## 2026-10-15 剩餘28題啟動
 - 使用者要求接續直到自我驗證；已核對HEAD b6f1193／GitHub開發分支一致、工作區乾淨、治理check PASS。保存BEGIN與原條款契約，不刪來源、不重算已完成28題。
 - 從UI031/032/REV02原條款稽核。REV04參考硬體、Windows實機、合法匿名真AI若不可取得，保留外部未驗證；繼續所有可獨立開發工作。
+
+### REMAINING28 source/font implementation checkpoint
+- 使用fontTools4.60.1解析OpenType/TTC/name/OS2/cmap；多字面要求明確選擇，抽出單字面本機複本。新增輸出用途授權，正式PDF對未知／禁止子集／限制嵌入採阻擋。程式內載入不授權系統安裝。
+- 衍生SVG逐物件字型宣告／效果屬性／幾何證據接入既有原稿校正面板；原生可編輯性、轉曲與字級維持UNKNOWN，不把路徑效果當原生轉曲證明。
+- 全138既有已完成要求改為待新source重驗，保留舊證據；本輪尚無父題宣告完成。第一輪75目標測試2項未通過（新授權前提/錯誤訊息改版）；第二輪正在重驗，失敗不抹除。

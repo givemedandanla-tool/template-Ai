@@ -68,7 +68,7 @@ class PersistentFontTests(unittest.TestCase):
             self.manager.import_font(FONT)
         bad = self.root / "not-a-font.ttf"
         bad.write_bytes(b"not a font")
-        with self.assertRaisesRegex(ValueError, "無法由 Qt"):
+        with self.assertRaisesRegex(ValueError, "無法解析OpenType"):
             self.manager.import_font(bad, approved=True)
         self.assertEqual(self.library.fonts(), [])
         self.assertEqual(list((self.library.assets / "fonts").iterdir()), [])

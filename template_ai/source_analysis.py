@@ -17,7 +17,7 @@ from .source_links import verify_source
 from .training_store import digest
 from .semantic_fields import recognize
 
-ANALYSER_VERSION='source-hypotheses-4-complete-text'
+ANALYSER_VERSION='source-hypotheses-5-text-evidence'
 
 
 def vector_objects(source,assets):
@@ -76,6 +76,8 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
         value=node.get('aria-label') or (''.join(node.itertext()) if node.tag.rsplit('}',1)[-1]=='text' else '')
         rect=bounds.get(node.get('id'))
         if value.strip() and rect:texts.append((node.get('id'),value.strip(),rect))
+    from .source_text_evidence import text_evidence
+    text_proofs=text_evidence(source,elements,bounds,logo_members)
     result=[]
     for key,crop in sorted(regions,key=lambda item:(item[1].y,item[1].x,item[0])):
         slots=[];observations=[];counts={};clues=[];companies=[];source_map={};oversized=[]
@@ -122,5 +124,6 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
                 object_ids=[row[0] for row in local],source_unchanged=True,
                 semantic_model=model_context or dict(state='NONE'),
                 slot_source_map=source_map,
+                text_object_evidence={identity:text_proofs[mapping['svg_object_id']] for identity,mapping in source_map.items() if mapping['svg_object_id'] in text_proofs},
                 semantic_candidates={o['id']:o['semantic'] for o in observations if o.get('semantic')})))
     return result

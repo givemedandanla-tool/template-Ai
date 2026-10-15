@@ -70,6 +70,8 @@ def build_inventory(assets, templates, hosts, hosts_partial=False, max_assets=25
         row = {"id":"asset:"+key[0]+":"+key[1], "kind":"ASSET", "families":families,
                "styles":[], "asset":asset, "references":asset_refs.get(key, []), "source":"程式核准複本", "notes":[],
                "identity":"SHA-256 核准身份；不代表原稿字型或嵌入授權"}
+        face=asset.get('font_evidence',{}); rights=asset.get('usage_rights',{})
+        row['identity']+=f" · 字面{face.get('index','未知')} · 嵌入{face.get('embedding','UNKNOWN')} · 印製授權{'已明確記錄' if rights.get('print_export') else '未核實'}"
         try: length = Path(asset["path"]).stat().st_size
         except (KeyError,OSError,TypeError): length = 0
         if budget+length > max_bytes:

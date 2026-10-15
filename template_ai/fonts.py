@@ -81,7 +81,63 @@ class FontManager:
         # 失聯也保留引用，讓指定此資產的欄位阻擋，而不是偷偷借用同名系統字型。
         return next((asset for asset in self.library.fonts() if family in asset["families"]), None)
 
-    def import_font(self, path: str | Path, approved: bool = False) -> dict:
+    def record_output_rights(self, expected, actor, basis, pdf_embedding=False):
+        """Explicit attestation changes the asset record, never old templates."""
+        from copy import deepcopy
+        from .font_evidence import inspect_font
+        if not isinstance(actor,str) or not actor.strip() or len(actor)>200 or not isinstance(basis,str) or not basis.strip() or len(basis)>2048 or type(pdf_embedding) is not bool:
+            raise ValueError('授權需要核准者、依據及明確PDF用途')
+        errors=font_errors(expected,expected['families'][0])
+        if errors:raise ValueError('；'.join(errors))
+        evidence=inspect_font(expected['path'])
+        if len(evidence['faces'])!=1 or evidence['hash']!=expected['hash']:
+            raise ValueError('字面身份不完整，請重新匯入明確字面')
+        updated=deepcopy(expected)
+        updated['font_evidence']=dict(evidence['faces'][0],source_hash=expected.get('font_evidence',{}).get('source_hash',evidence['hash']))
+        updated['usage_rights']=dict(actor=actor.strip(),basis=basis.strip(),print_export=True,pdf_embedding=pdf_embedding)
+        import json
+        with self.library.db:
+            row=self.library.db.execute('SELECT payload FROM font_assets WHERE hash=?',(expected['hash'],)).fetchone()
+            if not row or json.loads(row[0])!=expected:raise ValueError('字型記錄已改變，請重新核對授權')
+            self.library.db.execute('UPDATE font_assets SET payload=? WHERE hash=?',(json.dumps(updated,ensure_ascii=False),expected['hash']))
+            self.library.event(expected['hash'],'font_output_rights_attested')
+        return updated
+
+    def import_font(self, path: str | Path, approved: bool = False, face_index: int | None = None,
+                    usage_rights: dict | None = None) -> dict:
+        from .font_evidence import inspect_font, face_bytes
+        if not approved:
+            raise ValueError("請先確認有權將此字型保存於本機並在程式使用")
+        path = Path(path)
+        proof = inspect_font(path)
+        if face_index is None:
+            if len(proof['faces']) != 1:
+                raise ValueError("TTC含多個字面；請明確選取家族／款式後再匯入")
+            face_index = 0
+        data = face_bytes(path, face_index)
+        if file_digest(path) != proof['hash']:
+            raise ValueError("來源字型在解析期間已變更，未匯入")
+        evidence = dict(proof['faces'][face_index], source_hash=proof['hash'],
+                        source_name=path.name, collection=proof['collection'])
+        rights = dict(usage_rights or {})
+        if rights and (not isinstance(rights.get('actor'),str) or not rights['actor'].strip() or
+                       not isinstance(rights.get('basis'),str) or not rights['basis'].strip() or
+                       len(rights['basis']) > 2048 or len(rights['actor']) > 200 or
+                       any(type(rights.get(key,False)) is not bool for key in ('print_export','pdf_embedding'))):
+            raise ValueError("字型用途授權需要核准者、合法依據與明確用途")
+        if not proof['collection']:
+            return self._import_single(path, approved, evidence, rights, path.name)
+        folder = self.library.assets / 'fonts'
+        folder.mkdir(exist_ok=True)
+        fd, name = tempfile.mkstemp(prefix='.face-',suffix='.otf',dir=folder)
+        try:
+            with os.fdopen(fd,'wb') as stream:
+                stream.write(data)
+            return self._import_single(Path(name), approved, evidence, rights, path.name)
+        finally:
+            Path(name).unlink(missing_ok=True)
+
+    def _import_single(self, path, approved, evidence, rights, original_name) -> dict:
         path = Path(path)
         if not approved:
             raise ValueError("請先確認有權將此字型保存於本機並在程式使用")
@@ -124,7 +180,8 @@ class FontManager:
             if any(set(families).intersection(asset["families"]) for asset in self.library.fonts()):
                 raise ValueError("同名字型家族已有不同檔案版本；本版不自動替換或混用，請先使用既有資產")
             asset = {"hash": digest, "path": str(target), "families": families,
-                     "original_name": path.name, "approved": True}
+                     "original_name": original_name, "approved": True,
+                     "font_evidence": evidence, "usage_rights": rights}
             self.library.register_font(asset)
             self.loaded[digest] = (font_id, asset)
             return asset
