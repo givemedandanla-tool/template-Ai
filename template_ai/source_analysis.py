@@ -17,7 +17,7 @@ from .source_links import verify_source
 from .training_store import digest
 from .semantic_fields import recognize
 
-ANALYSER_VERSION='source-hypotheses-3-pages'
+ANALYSER_VERSION='source-hypotheses-4-complete-text'
 
 
 def vector_objects(source,assets):
@@ -75,14 +75,19 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
         if id(node) in logo_members:continue
         value=node.get('aria-label') or (''.join(node.itertext()) if node.tag.rsplit('}',1)[-1]=='text' else '')
         rect=bounds.get(node.get('id'))
-        if value.strip() and rect:texts.append((node.get('id'),value.strip()[:512],rect))
+        if value.strip() and rect:texts.append((node.get('id'),value.strip(),rect))
     result=[]
     for key,crop in sorted(regions,key=lambda item:(item[1].y,item[1].x,item[0])):
-        slots=[];observations=[];counts={};clues=[];companies=[];source_map={}
+        slots=[];observations=[];counts={};clues=[];companies=[];source_map={};oversized=[]
         local=sorted([row for row in texts if contains(crop,row[2])],key=lambda row:(row[2].y,row[2].x,row[0]))
         if len(local)+len(logos)>200:raise ValueError('單作品標記超過200，需人工縮小作品')
         name_used=False
         for native,value,rect in local:
+            if len(value)>2048:
+                import hashlib
+                oversized.append(dict(svg_object_id=native,characters=len(value),sha256=hashlib.sha256(value.encode()).hexdigest(),region=asdict(rect)))
+                clues.append('來源文字超出2048字觀察資源預算；未截斷為假完整文字，需來源校正')
+                continue
             semantic=recognize(value,model=semantic_model);kind=semantic['slot_kind']
             identity='box-'+digest([source['hash'],source.get('page',1),key,native])[:28]
             if kind is None:
@@ -113,7 +118,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             analysis_version=ANALYSER_VERSION,review_state='AI_PENDING_REVIEW',
             evidence=dict(method='INKSCAPE_TRANSFORMED_BOUNDS_AND_SOURCE_LABELS',native_illustrator_mapping='UNKNOWN',
                 physical_size='SOURCE_GEOMETRY_HYPOTHESIS_REQUIRES_CONFIRMATION',font_size='DEFAULT_REQUIRES_SOURCE_REVIEW',
-                confidence='UNVALIDATED_HEURISTIC',issues=sorted(set(clues)),
+                confidence='UNVALIDATED_HEURISTIC',issues=sorted(set(clues)),oversized_text=oversized,
                 object_ids=[row[0] for row in local],source_unchanged=True,
                 semantic_model=model_context or dict(state='NONE'),
                 slot_source_map=source_map,

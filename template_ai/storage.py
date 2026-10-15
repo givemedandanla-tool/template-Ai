@@ -345,9 +345,10 @@ class Library:
             if t.source_work_revision != 0:
                 raise ValueError("模板缺少來源作品識別，不能只填版次")
             return
-        row = self.db.execute("SELECT a.source_id FROM artworks a JOIN artwork_revisions r ON r.artwork_id=a.id WHERE a.id=? AND r.revision=?", (t.source_work_id, t.source_work_revision)).fetchone()
+        row = self.db.execute("SELECT a.source_id,r.payload FROM artworks a JOIN artwork_revisions r ON r.artwork_id=a.id WHERE a.id=? AND r.revision=?", (t.source_work_id, t.source_work_revision)).fetchone()
         if not row or row[0] != t.source_id:
             raise ValueError("模板的來源作品／標記版次不符，不可混配來源")
+        if json.loads(row[1]).get('analysis_evidence',{}).get('oversized_text'):raise ValueError('來源文字超出觀察資源預算且未完整核實，不能發布衍生模板')
 
     def next_version(self, family_id: str) -> int:
         return self.db.execute("SELECT COALESCE(MAX(version),0)+1 FROM templates WHERE family_id=?", (family_id,)).fetchone()[0]

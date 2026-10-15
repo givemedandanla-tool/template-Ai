@@ -173,7 +173,9 @@
         "test_similarity_preflight.SimilarityPreflightTests.test_exact_rendered_work_and_structure_are_separate_and_template_match_is_explicit",
         "test_similarity_preflight.SimilarityPreflightTests.test_new_file_is_compared_with_registered_source_even_without_registered_works",
         "test_similarity_preflight.SimilarityPreflightTests.test_renderer_failure_is_unknown_not_duplicate_zero_claim_or_lost_source",
-        "test_similarity_preflight.SimilarityPreflightTests.test_three_levels_keep_all_paths_original_bytes_and_database_unchanged"
+        "test_similarity_preflight.SimilarityPreflightTests.test_three_levels_keep_all_paths_original_bytes_and_database_unchanged",
+        "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+        "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation"
       ]
     },
     {
@@ -224,6 +226,8 @@
         "test_marker_review.MarkerReviewTests.test_overview_global_status_source_page_size_and_sort_apply_before_pagination",
         "test_marker_review.MarkerReviewTests.test_rejected_and_quarantined_marker_persists_reason_and_blocks_truth_until_explicit_restore",
         "test_marker_review.MarkerReviewTests.test_unapplied_form_survives_selection_and_close_cancel_and_save_refuses_loss",
+        "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+        "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation",
         "test_training_quality.TrainingQualityGuiTests.test_actual_readonly_search_filter_navigation_and_stale_recovery",
         "test_training_quality.TrainingQualityGuiTests.test_dirty_main_edit_and_backend_failure_preserve_content",
         "test_training_quality.TrainingQualityGuiTests.test_paginated_report_and_source_entry_actual_dialog",
@@ -420,6 +424,9 @@
         "test_marker_review.MarkerReviewTests.test_overview_global_status_source_page_size_and_sort_apply_before_pagination",
         "test_marker_review.MarkerReviewTests.test_rejected_and_quarantined_marker_persists_reason_and_blocks_truth_until_explicit_restore",
         "test_marker_review.MarkerReviewTests.test_unapplied_form_survives_selection_and_close_cancel_and_save_refuses_loss",
+        "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
+        "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+        "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation",
         "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
         "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
         "test_viewport_workbench.ViewportWorkbenchTests.test_unlinked_views_pan_independently_then_relink_to_source_anchor"
@@ -471,7 +478,10 @@
         "test_marker_review.MarkerReviewTests.test_canvas_noise_entry_reuses_exact_facts_context_beyond_first_page",
         "test_marker_review.MarkerReviewTests.test_overview_global_status_source_page_size_and_sort_apply_before_pagination",
         "test_marker_review.MarkerReviewTests.test_rejected_and_quarantined_marker_persists_reason_and_blocks_truth_until_explicit_restore",
-        "test_marker_review.MarkerReviewTests.test_unapplied_form_survives_selection_and_close_cancel_and_save_refuses_loss"
+        "test_marker_review.MarkerReviewTests.test_unapplied_form_survives_selection_and_close_cancel_and_save_refuses_loss",
+        "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
+        "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+        "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation"
       ]
     },
     {
@@ -517,6 +527,8 @@
         "test_noise_recovery.NoiseRecoveryTests.test_local_keep_and_pending_whitelist_are_different_from_global_approved_keep",
         "test_noise_recovery.NoiseRecoveryTests.test_stale_plan_tampered_after_and_late_audit_rollback_do_not_partial_apply",
         "test_noise_recovery.NoiseRecoveryTests.test_whitelist_requires_noncontradictory_real_refs_and_source_freshness",
+        "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+        "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation",
         "test_training_facts.FactsGuiTests.test_actual_add_confirm_cancel_revoke_and_entry",
         "test_training_facts.FactsGuiTests.test_stale_scope_during_confirmation_and_failed_worker_controls_recover",
         "test_training_facts.FactsTests.test_confirmation_subset_and_unapproved_scope_are_separate",
@@ -681,6 +693,7 @@
         "test_canvas_controls.CanvasControlTests.test_keyboard_millimetre_nudge_space_pan_preserves_selection_and_lock_blocks_changes",
         "test_canvas_controls.CanvasControlTests.test_shared_settings_persist_view_defaults_and_sync_controls_without_changing_template",
         "test_canvas_controls.CanvasControlTests.test_snap_projection_is_mm_based_toggleable_and_hiding_boundary_never_disables_validation",
+        "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
         "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
         "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once"
       ]
@@ -716,6 +729,7 @@
         "test_object_tools.ObjectToolsTests.test_six_alignments_independent_math_and_protected_fields",
         "test_object_tools.ObjectToolsTests.test_source_revision_visual_revalidation_and_transaction_rollback",
         "test_object_tools.ObjectToolsTests.test_spacing_both_axes_stable_ties_and_group_displacement",
+        "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
         "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
         "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
         "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
@@ -756,6 +770,9 @@
         "test_marker_review.MarkerReviewTests.test_overview_global_status_source_page_size_and_sort_apply_before_pagination",
         "test_marker_review.MarkerReviewTests.test_rejected_and_quarantined_marker_persists_reason_and_blocks_truth_until_explicit_restore",
         "test_marker_review.MarkerReviewTests.test_unapplied_form_survives_selection_and_close_cancel_and_save_refuses_loss",
+        "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
+        "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+        "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation",
         "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
         "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
         "test_viewport_workbench.ViewportWorkbenchTests.test_unlinked_views_pan_independently_then_relink_to_source_anchor"
@@ -813,6 +830,8 @@
         "test_object_tools.ObjectToolsTests.test_six_alignments_independent_math_and_protected_fields",
         "test_object_tools.ObjectToolsTests.test_source_revision_visual_revalidation_and_transaction_rollback",
         "test_object_tools.ObjectToolsTests.test_spacing_both_axes_stable_ties_and_group_displacement",
+        "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+        "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation",
         "test_template_versions.TemplateVersionTests.test_actual_qt_difference_review_cancel_then_explicit_restore_keeps_published_usable",
         "test_template_versions.TemplateVersionTests.test_late_audit_failure_rolls_back_new_version_and_its_clock",
         "test_template_versions.TemplateVersionTests.test_restore_published_version_as_same_family_new_draft_with_complete_difference_and_provenance",
@@ -884,6 +903,7 @@
         "test_object_tools.ObjectToolsTests.test_six_alignments_independent_math_and_protected_fields",
         "test_object_tools.ObjectToolsTests.test_source_revision_visual_revalidation_and_transaction_rollback",
         "test_object_tools.ObjectToolsTests.test_spacing_both_axes_stable_ties_and_group_displacement",
+        "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
         "test_text_policy.TextPolicyTests.test_actual_text_policy_dialog_cancel_then_explicit_draft_apply_and_normal_edit_preserves_policy",
         "test_text_policy.TextPolicyTests.test_bounded_measured_tracking_keeps_fixed_size_and_blocks_long_content",
         "test_text_policy.TextPolicyTests.test_distributed_requires_explicit_semantic_approval_and_never_applies_to_identifiers",
@@ -1096,6 +1116,7 @@
         "test_object_tools.ObjectToolsTests.test_six_alignments_independent_math_and_protected_fields",
         "test_object_tools.ObjectToolsTests.test_source_revision_visual_revalidation_and_transaction_rollback",
         "test_object_tools.ObjectToolsTests.test_spacing_both_axes_stable_ties_and_group_displacement",
+        "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
         "test_text_policy.TextPolicyTests.test_actual_text_policy_dialog_cancel_then_explicit_draft_apply_and_normal_edit_preserves_policy",
         "test_text_policy.TextPolicyTests.test_bounded_measured_tracking_keeps_fixed_size_and_blocks_long_content",
         "test_text_policy.TextPolicyTests.test_distributed_requires_explicit_semantic_approval_and_never_applies_to_identifiers",
@@ -1239,6 +1260,8 @@
         "test_font_review.FontReviewTests.test_undo_publish_aba_and_late_failure_do_not_overwrite",
         "test_font_review.FontReviewTests.test_undo_redo_persist_after_reopen_and_reject_later_editor_change",
         "test_font_review.FontReviewTests.test_unverified_qt_modified_target_and_logo_never_eligible",
+        "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+        "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation",
         "test_text_ink_bounds.TextInkBoundsTests.test_exact_fit_italic_render_keeps_same_ink_as_large_unclipped_reference",
         "test_text_ink_bounds.TextInkBoundsTests.test_italic_overhang_is_measured_in_fit_bounds_and_cannot_pass_at_advance_only_width",
         "test_text_policy.TextPolicyTests.test_actual_text_policy_dialog_cancel_then_explicit_draft_apply_and_normal_edit_preserves_policy",
@@ -1576,5 +1599,18 @@
   ],
   "previous_contract": "docs/dev/FIXED70_NEXT_TWENTY_CONTRACT.json",
   "clause_audit": "docs/dev/TWENTYEIGHT_CLAUSE_AUDIT.json",
-  "planned_evidence_run": "RUN-TWENTYEIGHT-FULL-001"
+  "planned_evidence_run": "RUN-TWENTYEIGHT-FULL-002",
+  "formal_attempts": [
+    {
+      "run": "RUN-TWENTYEIGHT-FULL-001",
+      "source_commit": "b39ccd301e3cc492758597921c737f5730999a9d",
+      "status": "FAIL",
+      "tests": 598,
+      "passed": 598,
+      "unhandled_runtime_errors": 1,
+      "capture_exit_code": 1,
+      "source_unchanged": true,
+      "reason": "First manual-source selection read training_records before schema initialization; not accepted as parent completion."
+    }
+  ]
 }

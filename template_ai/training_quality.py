@@ -25,6 +25,8 @@ def analyse_work(work, source=None):
                        'work_revision': work['revision'], 'work_name': work['name'],
                        'locatable': bool(ids) and locatable,
                        'source_text_identity': 'UNKNOWN', 'native_mapping': 'UNKNOWN'})
+    if payload.get('analysis_evidence',{}).get('oversized_text'):
+        add('SOURCE_TEXT_BUDGET','BLOCK','來源文字超出2048字觀察資源預算；未截斷。此作品來源內容尚未完整核實，禁止訓練／發布')
     dimensions = (payload.get('work_width'), payload.get('work_height'))
     if any(type(v) not in (int, float) or not math.isfinite(v) or not 0 < v <= 2000 for v in dimensions):
         add('DIMENSIONS', 'BLOCK', '作品毫米尺寸不合法，不能推論可學習或可輸出')

@@ -1,0 +1,7 @@
+[
+  {
+    "type": "OperationalError",
+    "message": "no such table: training_records",
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/template-Ai/template_ai/gui.py\", line 1071, in select_slot\n    facts=TrainingStore.bind(self.library).facts(self.work['id']);observation=next((o for o in facts['observations'] if o.get('slot_id')==s.id),None)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/template-Ai/template_ai/training_store.py\", line 150, in facts\n    return self.get('FACTS', work_id) or {'id': work_id, 'revision': 0, 'observations': [], 'confirmation': None, 'state': 'PENDING', 'pins': self.pins(work_id)}\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/template-Ai/template_ai/training_store.py\", line 59, in get\n    row = self.db.execute('SELECT revision,payload FROM training_records WHERE kind=? AND id=?', (kind, record_id)).fetchone()\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.OperationalError: no such table: training_records\n"
+  }
+]

@@ -9,5 +9,5 @@
 - 輸入卡片180ms即時欄位旁警告／頂部預估狀態／右側精確ID定位，不奪焦點或改未採用資料；公司欄位也量測。舊表格delegate可見警告。回呼關庫安全停止。
 - 多尺寸新增OutputBatch逐檔更名／略過／明確覆寫（原檔保留恢復，移動後驗證、排他完整發布，非全交易原子replace）；真實進度、成功保護、精確失敗重試≤3、明確暫存清理。PREVIEW預設PNG，FINAL/PREVIEW分流。9新檔案故障／Qt測試及10既有PASS。
 - 依賴新增kiwisolver1.4.9鎖requirements與lock。Cassowary只在無合格現成模板時，以核准基準及明定位移／擴框／間距求特製草稿；固定字級／歸屬／Logo、原拓撲不變；原TemplateVersions CAS交易存同family新版，發布獨立。6新測試及80字型／版本PASS。工程來源／hash見TWENTYEIGHT_ENGINEERING_BASIS.json（Qt/ImageHash/Python/Kiwi/Figma公開typings），不呼叫付費服務。
-- 下一步：完整28／239 norm條款已登錄TWENTYEIGHT_CLAUSE_AUDIT，598已知測試；實際新7Qt／2數位輸出smoke PASS且目視修正中央畫布壓縮，原標記斷言改用stable ID不假設SHA排序。run_evidence新增Qt未捕捉錯誤Gate與28父題無遺漏稽核。凍結正式來源後跑RUN-TWENTYEIGHT-FULL-001；PASS才恢復138列（舊110＋新28）與更新完成數、媒體metadata政策、所有進度／交接／收據。不要重跑註冊腳本或覆寫run ID，失敗保留後修正新來源、新run。
+- 下一步：完整28／239 norm條款已登錄TWENTYEIGHT_CLAUSE_AUDIT，601已知測試；實際新7Qt／2數位輸出smoke PASS且目視修正中央畫布壓縮，原標記斷言改用stable ID不假設SHA排序。run_evidence新增Qt未捕捉錯誤Gate與28父題無遺漏稽核。凍結正式來源後跑RUN-TWENTYEIGHT-FULL-002；RUN001因未處理Qt schema讀取錯誤整體FAIL（598單測皆PASS），不當完成。啟動schema與完整文字／超限BLOCK3新測試已修PASS；PASS才恢復138列（舊110＋新28）與更新完成數、媒體metadata政策、所有進度／交接／收據。不要重跑註冊腳本或覆寫run ID，失敗保留後修正新來源、新run。
 - 環境.venv Python3.12/Qt6.8.3/SQLite3.53.1，XDG_CACHE_HOME=/workspace/.cache QT_QPA_PLATFORM=offscreen；OCR local-data/tessdata。舊正式86媒體依FULL70_PUBLICATION精確metadata留本機，不重傳；新正式媒體同政策，code/tests/text全保存。真實私人AI全面／原生Illustrator／Windows／實體印刷／獨立覆核未驗證，UI048最後，REV03/UI056D按既定延後。

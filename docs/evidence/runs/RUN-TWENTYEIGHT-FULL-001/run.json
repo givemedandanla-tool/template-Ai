@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "id": "RUN-TWENTYEIGHT-FULL-001",
+  "created_utc": "2026-10-15T15:09:31.455422+00:00",
+  "source_commit": "b39ccd301e3cc492758597921c737f5730999a9d",
+  "source_manifest_sha256": "2b796f0ae2fdc219738583f25c728cdd47d8cc2a361d28a5e40f176f2d910094",
+  "source_unchanged": true,
+  "status": "FAIL",
+  "unhandled_runtime_errors": 1,
+  "test_count": 598,
+  "passed": 598,
+  "capture_exit_code": 1,
+  "tests_sha256": "07a3893a0a5133913bcf1c15dbdc36c98e715bca1d3405e3fde56b8ed6be59ab",
+  "attachments": {
+    "claims.json": {
+      "bytes": 1768845,
+      "sha256": "3523dd9de8c5b19bdb28f5339b08d3698c41e451a45d3c5c44d53cbe5c09f453",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 352335,
+      "sha256": "88ff6e195f22d03b0357b08c2b0e25b6b6a33452b4de0a56ff28b4f6b3f32c21",
+      "mime": "application/json"
+    },
+    "capture.log": {
+      "bytes": 55,
+      "sha256": "3bd6a10f7caf96e91bc85af78c0cae82c45f4a25f0f349f0379e44e25318b093",
+      "mime": "text/plain"
+    },
+    "fixed70-ten-parent-audit.json": {
+      "bytes": 346033,
+      "sha256": "07501e8b27ad556d135f64c198cd65c2726934d28af8076098ded4eba342a9c8",
+      "mime": "application/json"
+    },
+    "seventy-parent-audit.json": {
+      "bytes": 34846,
+      "sha256": "bf7bf5e957584b4a837c8810834f8d7dbf92704ee76572d3acf9b2b37fd15036",
+      "mime": "application/json"
+    },
+    "source-manifest.json": {
+      "bytes": 44700,
+      "sha256": "c22a09023f6043a14f0a05d299096d438de33e58af9bb01efad2f4ffd809b718",
+      "mime": "application/json"
+    },
+    "tests.json": {
+      "bytes": 115764,
+      "sha256": "07a3893a0a5133913bcf1c15dbdc36c98e715bca1d3405e3fde56b8ed6be59ab",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 109762,
+      "sha256": "fb7684bc6e2aa6ff609dc0c10730750f3c896f36a3356075ecdd8d17f9fa36b1",
+      "mime": "text/plain"
+    },
+    "junit.xml": {
+      "bytes": 113677,
+      "sha256": "af97dd9aff4dc9bf45767a9b2f902ee45bb529a159eebb69ebf4e36696cfdf66",
+      "mime": "application/xml"
+    },
+    "fixed70-twentyeight-parent-audit.json": {
+      "bytes": 1221318,
+      "sha256": "fc93bebff0c375caaba26b63045fe3938b5f4f616af9639fc5e181d805f98b22",
+      "mime": "application/json"
+    },
+    "runtime-errors.json": {
+      "bytes": 1122,
+      "sha256": "b1d333b84e0caf085eacf2c7962b18c22bc5a56e7ecacf4f1050825dc994194f",
+      "mime": "application/json"
+    },
+    "commit.json": {
+      "bytes": 201,
+      "sha256": "e289bd7b919798f85edcaca571480e2c58a026755880f512d692ee967c002d84",
+      "mime": "application/json"
+    }
+  },
+  "environment": {
+    "python": "3.12.14",
+    "os": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-TWENTYEIGHT-FULL-001 --source-commit b39ccd301e3cc492758597921c737f5730999a9d --commit-json <readback> --tree-json <readback>",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ]
+}

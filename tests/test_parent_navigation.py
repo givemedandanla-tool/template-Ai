@@ -33,3 +33,10 @@ class ParentNavigationTests(unittest.TestCase):
         view=self.w.blocked_candidates;QTest.mouseClick(view.viewport(),Qt.LeftButton,pos=view.visualItemRect(view.item(0)).center());APP.processEvents();self.assertFalse(self.w.export_button.isEnabled());self.assertIn('禁止正式',self.w.input_state.text());self.assertEqual(len(self.w.library.templates(True)),2)
         view=self.w.qualified_candidates;QTest.mouseClick(view.viewport(),Qt.LeftButton,pos=view.visualItemRect(view.item(0)).center());APP.processEvents();self.assertTrue(self.w.export_button.isEnabled())
         self.w.people.item(0,0).setText('Changed input');self.assertFalse(self.w.export_button.isEnabled());self.assertFalse(self.w.qualified_candidates.isEnabled())
+
+    def test_manual_source_selection_has_schema_before_readonly_fact_properties(self):
+        from training_fixture import source_work
+        from template_ai.model import Slot,Rect
+        from template_ai.training_store import TrainingStore
+        source,work=source_work(self.w.library,Path(self.temp.name),'manual-without-training-panel.svg');self.w.work=work;self.w.slots=[Slot(**{**row,'rect':Rect(**row['rect'])}) for row in work['payload']['slots']];self.w.tabs.setCurrentIndex(0);changes=self.w.library.db.total_changes
+        self.w.select_slot(self.w.slots[0]);self.assertEqual(self.w.current_slot.id,self.w.slots[0].id);self.assertEqual(TrainingStore.bind(self.w.library).count('FACTS'),0);self.assertEqual(self.w.library.db.total_changes,changes)

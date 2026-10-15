@@ -26,7 +26,7 @@ class AnnotationDialog(QDialog):
         self.canvas.preview_proposal.connect(self.preview_move);layout.addWidget(canvas_controls(self.canvas,self.library))
         panel=QWidget();form=QVBoxLayout(panel);self.kind=QComboBox()
         for key,value in KINDS.items():self.kind.addItem(value,key)
-        self.owner=QLineEdit('p1');self.owner.setPlaceholderText('人物p1／公司c1，需核對真實歸屬');self.value=QLineEdit();self.value.setMaxLength(512)
+        self.owner=QLineEdit('p1');self.owner.setPlaceholderText('人物p1／公司c1，需核對真實歸屬');self.value=QLineEdit();self.value.setMaxLength(2048);self.value.setPlaceholderText('完整來源內容，最多2048字資源預算；非排版容納上限')
         form.addWidget(QLabel('欄位類型 → 人物／公司歸屬 → 來源內容'));form.addWidget(self.kind);form.addWidget(self.owner);form.addWidget(self.value)
         self.coords=[]
         for key in ('x','y','w','h'):

@@ -132,7 +132,7 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
                 rect = Rect(**item['region'])
                 if not rect.inside(source['width_mm'], source['height_mm']): raise ValueError()
             except (KeyError, TypeError, ValueError): raise ValueError('來源區域需有效毫米矩形') from None
-            result.append({'id': oid, 'slot_id': slot_id, 'text': text(item.get('text'), '完整來源文字'),
+            result.append({'id': oid, 'slot_id': slot_id, 'text': text(item.get('text'), '完整來源文字',2048),
                            'object_type': item['object_type'], 'classification': item['classification'], 'region': copy.deepcopy(item['region']),
                            'evidence': item.get('evidence') if item.get('evidence') in ('AI_SOURCE_HYPOTHESIS','USER_OBSERVATION_DRAFT') else 'USER_OBSERVATION', 'native_mapping': 'UNKNOWN',
                            'prior_prediction': item.get('prior_prediction') if item.get('prior_prediction') is not None else None,

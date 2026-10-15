@@ -207,6 +207,8 @@ class MainWindow(QMainWindow):
     def __init__(self, data_root):
         super().__init__()
         self.library = Library(data_root)
+        from .training_store import TrainingStore
+        TrainingStore(self.library)  # Complete schema before any read-only selection callback.
         from .diagnostic_snapshot import LocatorStore
         try:LocatorStore(self.library)
         except (OSError,ValueError):pass

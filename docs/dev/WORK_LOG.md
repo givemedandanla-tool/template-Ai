@@ -696,3 +696,6 @@ UI039補明確REJECTED/QUARANTINED/HUMAN_PENDING_CONFIRMATION、理由與操作�
 
 ## 2026-10-15 28父題 正式驗收凍結
 完整原條款逐條對照code與具名flow測試：28父題239條normative，歷史「尚未開發」狀態原文保留但不當現行功能要求。TWENTYEIGHT_CLAUSE_AUDIT與REQUIREMENTS完整登錄；28列待正式驗證，原110列亦待重驗，共138，未提前完成。新7實際Qt截圖＋2實際輸出檔smoke捕捉PASS，已目視發現中央畫布被輸入／header壓縮，修為收合相容表格與單行header、結果右側只顯示目前候選，Qt驗證畫布>=240px。14標記／導航回歸PASS；既有標記測試改以stable slot_id查對被修改觀察，取代原SHA排序下偶然觀察[0]假設，原證據斷言保留。run_evidence新增28/239不漏父題稽核與未處理Qt回呼錯誤Gate。接著正式來源全598測試與全部原數位附件／新增Qt擷取。
+
+## 2026-10-15 28父題 正式001 FAIL與修復
+來源b39ccd301e3cc492758597921c737f5730999a9d，RUN-TWENTYEIGHT-FULL-001：598/598單測PASS、source未改，但新Qt外部回呼Gate記到OperationalError(training_records尚未初始化)；整體FAIL、擷取未啟動，沒有結案任何父題。MainWindow啟動即建立TrainingStore schema，選取仍只讀；新直接回歸防此錯誤。另發現來源文字[:512]曾會截短候選，改為完整2048字觀察預算；超限保留來源物件／長度／hash證據，僅受影響作品BLOCK，禁止衍生發布，不產生假完整觀察。長600字在辨識／屬性／保存完整保留；資源預算非所有尺寸字數上限。新增3測試PASS；第一次新fixture root／tuple回傳誤用已修、log保留。下一RUN002新來源601全回歸，原失敗run不可覆寫。

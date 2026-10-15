@@ -16,7 +16,7 @@ class FactsPanel(QWidget):
         self.previous_button = QPushButton('上一頁'); self.next_button = QPushButton('下一頁'); self.previous_button.clicked.connect(lambda: self.page(-200)); self.next_button.clicked.connect(lambda: self.page(200)); bar.addWidget(self.previous_button); bar.addWidget(self.next_button); outer.addLayout(bar)
         self.status = QLabel('人工來源觀察；原生映射UNKNOWN。事實確認、通用規則與樣本准入分開。'); self.status.setTextFormat(Qt.PlainText); self.status.setWordWrap(True); outer.addWidget(self.status)
         self.table = QTableWidget(0, 5); self.table.setHorizontalHeaderLabels(['完整來源文字', 'type／分類', 'exact框', '區域mm', '觀察ID']); self.table.setEditTriggers(QTableWidget.NoEditTriggers); self.table.setSelectionBehavior(QTableWidget.SelectRows); self.table.setSelectionMode(QTableWidget.ExtendedSelection); self.table.itemSelectionChanged.connect(self.selected); outer.addWidget(self.table, 2)
-        form = QFormLayout(); self.observed_text = QLineEdit(); form.addRow('完整來源文字（最多512字，超限拒絕而不截斷）', self.observed_text)
+        form = QFormLayout(); self.observed_text = QLineEdit(); form.addRow('完整來源文字（最多2048字資源預算，超限拒絕而不截斷）', self.observed_text)
         self.object_type = QComboBox(); self.object_type.addItems(['TEXT', 'ANNOTATION', 'LOGO_PART', 'UNKNOWN']); form.addRow('来源物件類型', self.object_type)
         self.classification = QComboBox(); self.classification.addItems(['FIELD', 'ANNOTATION', 'LOGO', 'UNKNOWN']); form.addRow('人工分類', self.classification)
         self.slot_combo = QComboBox(); form.addRow('連結已保存框（可無）', self.slot_combo)
