@@ -192,6 +192,9 @@ class MainWindow(QMainWindow):
     def __init__(self, data_root):
         super().__init__()
         self.library = Library(data_root)
+        from .diagnostic_snapshot import LocatorStore
+        try:LocatorStore(self.library)
+        except OSError:pass
         from .batch_import import BatchStore
         self.import_store=BatchStore(self.library)
         self.import_store.recover()
@@ -270,8 +273,31 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("尺寸獨立 Logo 庫", self.logo_center)
         self.menuBar().addAction("多作品安全批次對齊", self.batch_object_center)
         self.menuBar().addAction("輸入問題定位（既有診斷）", lambda: self.open_diagnostic('input'))
+        self.menuBar().addAction("輸入問題報告", lambda: self.diagnostic_report("input"))
+        self.menuBar().addAction("當前候選問題報告", lambda: self.diagnostic_report("candidate"))
+        self.menuBar().addAction("當前模板問題報告", lambda: self.diagnostic_report("template"))
+        self.menuBar().addAction("開啟歷史診斷報告", self.open_report_file)
+        self.menuBar().addAction("清除本機報告定位索引", self.clear_report_locators)
         self.menuBar().addAction("來源根目錄安全重掃", self.source_scan_center)
         self.menuBar().addAction("操作說明", self.help)
+
+    def diagnostic_report(self, kind, work_id=None):
+        from .diagnostic_dialog import DiagnosticReportDialog
+        dialog=DiagnosticReportDialog(self,kind,work_id)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
+
+    def open_report_file(self):
+        from .diagnostic_dialog import open_saved_report
+        try:open_saved_report(self)
+        except Exception as error:self.error(str(error))
+
+    def clear_report_locators(self):
+        from .diagnostic_snapshot import LocatorStore
+        try:
+            LocatorStore(self.library).clear()
+            self.inform('本機報告定位索引已清除；已保存的安全報告檔仍保留。')
+        except Exception as error:self.error(str(error))
 
     def source_scan_center(self):
         from .source_scan_dialog import SourceScanDialog
@@ -436,6 +462,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(QLabel("人物資料：多筆同類聯絡資訊以「；」分隔，公司序號對應下方公司 1、2…"))
         layout.addWidget(self.people)
         row = QHBoxLayout()
+        self.button("輸入問題報告", lambda: self.diagnostic_report("input"), row)
         self.button("新增人物", lambda: self.add_row(self.people), row)
         self.button("移除選取人物", lambda: self.remove_row(self.people), row)
         self.button("填入匿名示範資料", self.demo_input, row)
@@ -471,6 +498,7 @@ class MainWindow(QMainWindow):
         self.issues = QLabel("輸入資料後開始排版。缺少同尺寸真實 Logo 或超出固定字級字寬限制時，正式輸出會被阻擋。")
         self.issues.setWordWrap(True)
         layout.addWidget(self.issues)
+        self.button("候選問題報告", lambda: self.diagnostic_report("candidate"), layout)
         row = QHBoxLayout()
         self.dpi = QSpinBox()
         self.dpi.setRange(72, 600)
@@ -1408,6 +1436,7 @@ class MainWindow(QMainWindow):
                 try:self.library._template_provenance(template);eligible.append(template)
                 except ValueError as error:excluded.append(template.name+'：'+str(error))
             self.candidates = match(eligible, self.out_w.value(), self.out_h.value(), people, companies, logos, self.generation)
+            self.last_layout_summary = dict(state="COMPLETED", total=len(self.candidates), checked=len(self.candidates), calculated=len(self.candidates), failed=0, unstarted=0, global_unsolvable=False)
             self.candidate_list.clear()
             for c in self.candidates:
                 self.candidate_list.addItem(f"{'可正式數位輸出' if c.valid else '阻擋／診斷候選'}\n{c.template.name} · v{c.template.version}")

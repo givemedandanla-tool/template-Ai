@@ -24,6 +24,7 @@ class TrainingQualityDialog(QDialog):
         self.locate_button = QPushButton('定位作品／exact框'); self.locate_button.clicked.connect(self.locate); bar.addWidget(self.locate_button)
         self.edit_button = QPushButton('在既有安全編輯器核對'); self.edit_button.clicked.connect(self.edit); bar.addWidget(self.edit_button); layout.addLayout(bar)
         close = QDialogButtonBox(QDialogButtonBox.Close); close.rejected.connect(self.reject); layout.addWidget(close)
+        self.report_button=QPushButton('選取作品的問題報告');self.report_button.clicked.connect(self.report);layout.addWidget(self.report_button)
         self.reload()
         from .training_facts_panel import FactsPanel
         self.facts_panel = FactsPanel(window, self); self.tabs.addTab(self.facts_panel, '來源觀察／作品事實')
@@ -43,6 +44,13 @@ class TrainingQualityDialog(QDialog):
         self.evaluation_panel=EvaluationPanel(window,self);self.tabs.addTab(self.evaluation_panel,'分類評估／隔離修復')
         self.recheck_panel=RecheckPanel(window,self);self.tabs.addTab(self.recheck_panel,'重大規則依賴重審')
         self.setWindowTitle('標記品質／來源事實與可信訓練')
+    def report(self):
+        from .diagnostic_dialog import DiagnosticReportDialog
+        row=self.selected_row()
+        if not row:self.status.setText('先選取問題，以確定本次只檢查哪個作品');return
+        dialog=DiagnosticReportDialog(self.window,'training',row['work_id'],parent=self)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
     def reject(self):
         if self.facts_panel.running or self.samples_panel.running or self.dataset_panel.running or self.queue_panel.running: self.status.setText('背景來源核對尚未結束'); return
         super().reject()

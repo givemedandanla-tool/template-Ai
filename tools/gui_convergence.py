@@ -15,7 +15,9 @@ def reconcile(registry):
         if not r['sources']:raise ValueError('缺決策來源')
         decision='OPEN_HUMAN_DECISION' if r['status']=='BLOCKED' and r['id'].startswith('UI-066-R') else 'FUTURE_BACKLOG' if r['status']=='DEFERRED' else 'RESEARCH_OR_TEST_NEEDED' if r['id'] in ('REV-02','REV-04') else 'APPROVED_REQUIREMENT'
         rows.append({'id':r['id'],'decision_state':decision,'implementation_state':r['status'],'source':r['sources'],'owner':OWNERS.get(r['id'],'REUSE_EXISTING_OR_UNMAPPED_NO_NEW_CENTER'),'fully_verified':r['completed']})
-    if any(r['implementation_state']!='BLOCKED' for r in rows if r['id'] in ('UI-066-R1','UI-066-R2')):raise ValueError('不能替Human選擇獨立報告格式')
-    return {'schema':1,'rows':rows,'diagnostic_routes':ROUTES,'conflicts_resolved':['UI-060跨尺寸歷史題由UI-061接手','UI-002記憶體與UI-058受控恢復為不同已核准範圍','產品統一矩形自動排版；.ai正式輸出未核准'],'open':['UI-066-R1','UI-066-R2'],'product_features_added':0,'new_order_database':False,'formal_output_formats':['PDF','PNG','JPG']}
+    for r in topics:
+        if r['id'] in ('UI-066-R1','UI-066-R2') and r['status']!='BLOCKED' and 'docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md' not in r['sources']:
+            raise ValueError('解除報告受阻需有使用者具名採納決策')
+    return {'schema':1,'rows':rows,'diagnostic_routes':ROUTES,'conflicts_resolved':['UI-060跨尺寸歷史題由UI-061接手','UI-002記憶體與UI-058受控恢復為不同已核准範圍','產品統一矩形自動排版；.ai正式輸出未核准'],'open':[r['id'] for r in topics if r['status']=='BLOCKED'],'product_features_added':0,'new_order_database':False,'formal_output_formats':['PDF','PNG','JPG']}
 if __name__=='__main__':
     result=reconcile(json.loads((ROOT/'docs/dev/REQUIREMENTS.json').read_text()));print(json.dumps(result,ensure_ascii=False,indent=2))
