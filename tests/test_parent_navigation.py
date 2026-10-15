@@ -21,3 +21,14 @@ class ParentNavigationTests(unittest.TestCase):
             APP.processEvents();QTest.qWait(5)
             if not self.w.busy:break
         self.assertEqual(calls,[1]);self.assertEqual(done,['complete']);self.assertEqual(self.w._background_jobs,{});self.assertFalse(self.w.busy);self.assertEqual(self.w.tabs.count(),3)
+
+    def test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input(self):
+        from template_ai.demo import demo_template
+        from PySide6.QtWidgets import QTableWidgetItem
+        good=demo_template();good.name='Qualified synthetic';bad=demo_template();bad.name='Narrow diagnostic';bad.slots[0].rect.w=20;self.w.library.publish(good);self.w.library.publish(bad)
+        self.w.people.setRowCount(1)
+        for col,value in enumerate(('Alex Example','Designer','123','a@example.test','','','','')):self.w.people.setItem(0,col,QTableWidgetItem(value))
+        self.w.tabs.setCurrentIndex(2);self.w.generate();APP.processEvents();self.assertEqual(self.w.qualified_candidates.count(),1);self.assertEqual(self.w.blocked_candidates.count(),1);self.assertTrue(self.w.export_button.isEnabled());self.assertTrue(self.w.candidates[0].valid)
+        view=self.w.blocked_candidates;QTest.mouseClick(view.viewport(),Qt.LeftButton,pos=view.visualItemRect(view.item(0)).center());APP.processEvents();self.assertFalse(self.w.export_button.isEnabled());self.assertIn('禁止正式',self.w.input_state.text());self.assertEqual(len(self.w.library.templates(True)),2)
+        view=self.w.qualified_candidates;QTest.mouseClick(view.viewport(),Qt.LeftButton,pos=view.visualItemRect(view.item(0)).center());APP.processEvents();self.assertTrue(self.w.export_button.isEnabled())
+        self.w.people.item(0,0).setText('Changed input');self.assertFalse(self.w.export_button.isEnabled());self.assertFalse(self.w.qualified_candidates.isEnabled())

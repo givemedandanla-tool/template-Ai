@@ -17,7 +17,7 @@ from .source_links import verify_source
 from .training_store import digest
 from .semantic_fields import recognize
 
-ANALYSER_VERSION='source-hypotheses-2-semantic'
+ANALYSER_VERSION='source-hypotheses-3-pages'
 
 
 def vector_objects(source,assets):
@@ -84,7 +84,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
         name_used=False
         for native,value,rect in local:
             semantic=recognize(value,model=semantic_model);kind=semantic['slot_kind']
-            identity='box-'+digest([source['hash'],key,native])[:28]
+            identity='box-'+digest([source['hash'],source.get('page',1),key,native])[:28]
             if kind is None:
                 clues.append('文字語意或平台欄位待確認；未從位置猜人名／職稱')
                 observations.append(dict(id='obs-'+identity,slot_id=None,text=value,object_type='TEXT',classification='UNKNOWN',region=asdict(rect),prior_prediction='UNCONFIRMED_SEMANTIC_UNKNOWN',semantic=semantic))
@@ -102,7 +102,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             rect=bounds[node.get('id')]
             if not contains(crop,rect):continue
             owner='c'+str(len(companies)+1);companies.append(owner)
-            identity='box-'+digest([source['hash'],key,node.get('id')])[:28]
+            identity='box-'+digest([source['hash'],source.get('page',1),key,node.get('id')])[:28]
             slots.append(asdict(Slot('logo',owner,Rect(rect.x-crop.x,rect.y-crop.y,rect.w,rect.h),id=identity)))
             source_map[identity]=dict(svg_object_id=node.get('id'),source_hash=source['hash'],svg_hash=source['file_hashes']['svg'])
             observations.append(dict(id='obs-'+identity,slot_id=identity,text='完整複合Logo／公司身分待核對',object_type='LOGO_PART',classification='LOGO',region=asdict(rect),prior_prediction='UNCONFIRMED_WHOLE_GROUP'))

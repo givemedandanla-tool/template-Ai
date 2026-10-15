@@ -20,25 +20,40 @@ class AutomaticTraining:
     def __init__(self,library):
         self.library=library;self.store=TrainingStore(library);self.db=library.db
 
-    def preflight(self,paths,page=1,compare=True,cancel=None,progress=None):
+    def preflight(self,paths,page=1,compare=True,cancel=None,progress=None,all_pages=True):
         report=preflight(paths,self.library.list_sources(),page,cancel,lambda done,total,path:progress(dict(stage='來源雜湊',done=done,total=total,path=path)) if progress else None)
-        for item in report['items']:
-            matching=[s for s in self.library.list_sources() if s['hash']==item.get('expected_hash') and s['page']==page and Path(s['current_path']).resolve()==Path(item['path']).resolve()]
-            item['existing_source_id']=matching[0]['id'] if matching else None
+        report['all_pages']=all_pages and page==1;report['source_file_count']=len(report['items'])
         report['scope']='來源／作品／候選標記／品質／已授權幾何學習一鍵管線；人工事實、樣本准入及發布不自動核准'
         if compare:
             from .similarity_preflight import inspect_report
             inspect_report(self.library,report,cancel,lambda done,total,path:progress(dict(stage='作品／結構比對',done=done,total=total,path=path)) if progress else None)
+        known=self.library.list_sources()
+        for item in report['items']:
+            matching=[source for source in known if source['hash']==item.get('expected_hash') and source['page']==item['page'] and Path(source['current_path']).resolve()==Path(item['path']).resolve()]
+            item['existing_source_id']=matching[0]['id'] if matching else None
         return report
 
-    def create(self,report,actor,approved=False):
+    def create(self,report,actor,approved=False,cancel=None):
         if approved is not True:raise ValueError('需先核對預檢並明確開始訓練')
         text(actor,'啟動者',120)
-        fresh=self.preflight([i['path'] for i in report['items']],report['page'],compare=False)
+        fresh=self.preflight([i['path'] for i in report['items']],report['page'],compare=False,all_pages=report.get('all_pages',False),cancel=cancel)
+        files={item['path']:item for item in fresh['items']};known=self.library.list_sources();expanded=[];seen=set()
+        for old in report['items']:
+            item=deepcopy(files[old['path']]);key=(old['path'],old['page'])
+            if key in seen or type(old['page']) is not int or not 1<=old['page']<=1000:raise ValueError('來源頁次重複或不合法，請重新預檢')
+            seen.add(key);item.update(page=old['page'],available_pages=old.get('available_pages',old['page']))
+            matches=[s for s in known if s['hash']==item.get('expected_hash') and s['page']==item['page'] and Path(s['current_path']).resolve()==Path(item['path']).resolve()]
+            item['existing_source_id']=matches[0]['id'] if matches else None;expanded.append(item)
+        for path in files:
+            pages=[i for i in report['items'] if i['path']==path]
+            if report.get('all_pages') and pages and pages[0].get('available_pages'):
+                count=pages[0]['available_pages']
+                if type(count) is not int or not 1<=count<=200 or {i['page'] for i in pages}!=set(range(1,count+1)):raise ValueError('全部可讀頁次清單不完整，請重新預檢')
+        fresh['items']=expanded
         identity=lambda r:[(i['path'],i.get('expected_hash'),i['page'],i['status'],i.get('existing_source_id')) for i in r['items']]
         if identity(fresh)!=identity(report):raise ValueError('預檢來源已變更，請重新核對')
         # Duplicate bytes keep separate source identities / customer-code evidence.
-        rows=[dict(path=i['path'],page=i['page'],source_hash=i.get('expected_hash'),state='READY' if i['status'] in ('READY','SKIPPED') else 'FAILED',
+        rows=[dict(path=i['path'],page=i['page'],expected_page_count=i.get('available_pages'),source_hash=i.get('expected_hash'),state='READY' if i['status'] in ('READY','SKIPPED') else 'FAILED',
             source_id=i.get('existing_source_id'),error=None if i['status'] in ('READY','SKIPPED') else i['reason'],unit_ids=[],attempts=0) for i in fresh['items']]
         with self.store.transaction():return self.store._write('AUTO_JOB',new_id(),dict(phase='READY',items=rows,actor=actor,created=time.time(),owner=None,cancel_requested=False),0,'automatic_pipeline_preflight_confirmed')
 
@@ -152,8 +167,10 @@ class AutomaticTraining:
         if source is None:
             reuse=next((s for s in self.library.list_sources() if s['hash']==item['source_hash'] and s['page']==item['page'] and healthy_source(s)),None)
             result=convert_item(dict(path=str(path),page=item['page'],expected_hash=item['source_hash'],reuse_source=reuse),self.library.assets)
+            if item.get('expected_page_count') and result['payload']['page_count']!=item['expected_page_count']:raise ValueError('可讀頁次數與預檢不符，未登錄部分來源')
             source=self.library.add_source(path,result['payload']);source=self.library.source(source['id'])
         if not healthy_source(source):raise ValueError('來源或衍生快取失效，需重新核對')
+        if item.get('expected_page_count') and source['page_count']!=item['expected_page_count']:raise ValueError('可讀頁次數與預檢不符，不能聲稱全來源已完成')
         works=self.library.artworks(source['id'])
         works=[w for w in works if w['payload'].get('segmentation_state')!='SUPERSEDED']
         if item.get('work_scope'):

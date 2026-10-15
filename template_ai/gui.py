@@ -599,7 +599,12 @@ class MainWindow(QMainWindow):
         self.button('無合格現成模板：授權特製草稿',self.custom_layout,layout)
         self.candidate_list = QListWidget()
         self.candidate_list.currentRowChanged.connect(self.choose_candidate)
-        split.addWidget(self.candidate_list)
+        self.candidate_list.hide()
+        candidate_panel=QWidget();candidate_layout=QVBoxLayout(candidate_panel);self.qualified_candidates=QListWidget();self.blocked_candidates=QListWidget()
+        for title,view in [('已驗證合格候選（固定字級與硬性條件通過）',self.qualified_candidates),('不合格／診斷候選（禁止正式輸出）',self.blocked_candidates)]:
+            candidate_layout.addWidget(QLabel(title));candidate_layout.addWidget(view)
+            view.currentItemChanged.connect(lambda item,previous:self.candidate_list.setCurrentRow(item.data(Qt.UserRole)) if item else None)
+        split.addWidget(candidate_panel)
         self.output_canvas = Canvas()
         split.addWidget(self.output_canvas)
         from .viewport_controls import navigation_controls
@@ -1667,6 +1672,8 @@ class MainWindow(QMainWindow):
         self.preview_button.setEnabled(False)
         if self.candidates:
             self.issues.setText("資料／尺寸／模板或 Logo 已變更；目前候選過期，請重新排版。")
+        if hasattr(self,'qualified_candidates'):
+            self.qualified_candidates.setEnabled(False);self.blocked_candidates.setEnabled(False)
         self.inputs_invalidated.emit(self.generation)
 
     def refresh_input_problems(self):
@@ -1730,7 +1737,26 @@ class MainWindow(QMainWindow):
         except Exception as e:
             self.error(str(e))
 
+    def refresh_candidate_views(self,row=None):
+        if not hasattr(self,'qualified_candidates'):return
+        from PySide6.QtWidgets import QListWidgetItem
+        signature=tuple((c.template.id,c.template.version,c.valid,c.generation,c.score) for c in self.candidates)
+        views=(self.qualified_candidates,self.blocked_candidates)
+        for view in views:view.blockSignals(True)
+        if signature!=getattr(self,'_candidate_view_signature',None):
+            for view in views:view.clear()
+            for index,c in enumerate(self.candidates):
+                view=self.qualified_candidates if c.valid else self.blocked_candidates
+                item=QListWidgetItem(c.template.name+f' v{c.template.version}／{c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n'+('排序依據：'+str(c.score)+'；'+'；'.join(c.reasons) if c.valid else '；'.join(c.issues[:3])));item.setData(Qt.UserRole,index);view.addItem(item)
+            self._candidate_view_signature=signature
+        for view in views:
+            view.clearSelection();view.setCurrentRow(-1)
+            for index in range(view.count()):
+                if view.item(index).data(Qt.UserRole)==row:view.setCurrentRow(index)
+            view.setEnabled(bool(self.candidates) and all(c.generation==self.generation for c in self.candidates));view.blockSignals(False)
+
     def choose_candidate(self, row):
+        self.refresh_candidate_views(row)
         if not 0 <= row < len(self.candidates):
             return
         c = self.candidates[row]

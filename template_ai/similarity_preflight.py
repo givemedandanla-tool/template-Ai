@@ -5,6 +5,7 @@ crop raster+content signature: duplicate work candidates. Quantised normalized
 slot geometry/Jaccard: template structure. These never authorize deduplication.
 """
 from collections import Counter
+from copy import deepcopy
 from pathlib import Path
 import tempfile
 from PySide6.QtCore import Qt
@@ -14,6 +15,7 @@ from .batch_import import healthy_source
 from .importer import import_file
 from .source_analysis import analyse_source
 from .training_store import digest,TrainingStore
+from .model import new_id
 
 VERSION='three-level-readonly-1'
 MAX_WORKS=500
@@ -77,7 +79,7 @@ def inspect_report(library,report,cancel=None,progress=None):
         if facts:payload=dict(payload,observations=facts.get('observations',[]))
         # Existing work geometry remains comparable even if no semantic truth exists.
         try:
-            d=work_descriptor(payload,QImage(source['image']),source);d.update(id=row[0],source_hash=source['hash'],path=source['current_path'],region=payload['crop']);works.append(d)
+            d=work_descriptor(payload,QImage(source['image']),source);d.update(id=row[0],source_hash=source['hash'],path=source['current_path'],region=payload['crop'],page=source['page']);works.append(d)
         except (ValueError,KeyError,TypeError):unknown.append(dict(scope=row[0],reason='作品描述不足，未作相同判定'))
     referenced=set()
     registered=list(library.db.execute('SELECT id FROM sources ORDER BY id LIMIT 201'))
@@ -93,7 +95,7 @@ def inspect_report(library,report,cancel=None,progress=None):
         if key in referenced:continue
         referenced.add(key)
         try:
-            sig=image_signature(QImage(source['image']));pages.append(dict(path=source['current_path'],hash=source['hash'],width=source['width_mm'],height=source['height_mm'],**sig))
+            sig=image_signature(QImage(source['image']));pages.append(dict(path=source['current_path'],hash=source['hash'],width=source['width_mm'],height=source['height_mm'],page=source['page'],**sig))
         except ValueError as error:unknown.append(dict(scope=identity,reason=str(error)))
     with tempfile.TemporaryDirectory(prefix='template-preflight-') as temp:
         for index,item in enumerate(report['items']):
@@ -106,15 +108,24 @@ def inspect_report(library,report,cancel=None,progress=None):
                 if not source:
                     source=import_file(item['path'],temp,item['page']);source.update(id='preflight-'+item['id'],current_path=item['path'])
                 if source['hash']!=item['expected_hash']:raise ValueError('掃描期間來源變更，請重新預檢')
+                item['available_pages']=source['page_count'];item['page_evidence']='PDF_COMPATIBLE_RENDERED_PAGES; NATIVE_ARTBOARD_MAPPING_UNKNOWN'
+                if report.get('all_pages') and item['page']==1 and source['page_count']>1:
+                    existing={(r['path'],r['page']) for r in report['items']}
+                    for number in range(2,source['page_count']+1):
+                        if (item['path'],number) in existing:continue
+                        if len(report['items'])>=200:raise ValueError('全部可讀頁次超過200來源頁預算，需縮小來源範圍')
+                        extra=deepcopy(item);extra.update(id=new_id(),page=number,reuse_source=None,existing_source_id=None)
+                        report['items'].append(extra)
+
                 image=QImage(source['image']);sig=image_signature(image)
-                current=dict(path=item['path'],hash=source['hash'],width=source['width_mm'],height=source['height_mm'],**sig)
+                current=dict(path=item['path'],hash=source['hash'],width=source['width_mm'],height=source['height_mm'],page=source['page'],**sig)
                 for other in pages:
                     if comparisons>=MAX_COMPARISONS:raise ValueError('比較預算已滿，剩餘範圍未核實')
                     comparisons+=1
                     distance=(sig['dhash']^other['dhash']).bit_count()
                     aspect=abs(current['width']/current['height']-other['width']/other['height'])
                     if source['hash']!=other['hash'] and distance<=6 and aspect<.01:
-                        near.append(dict(left=other['path'],right=item['path'],hamming_distance=distance,bits=64,classification='VISUAL_NEAR_CANDIDATE',warning='未校準；須比對內容，不等同檔案相同'))
+                        near.append(dict(left=other['path'],right=item['path'],left_page=other['page'],right_page=item['page'],hamming_distance=distance,bits=64,classification='VISUAL_NEAR_CANDIDATE',warning='未校準頁面近似；整檔差異尚待核對，不等同檔案相同'))
                 pages.append(current)
                 try:predictions=analyse_source(source,temp)
                 except ValueError as error:
@@ -124,12 +135,12 @@ def inspect_report(library,report,cancel=None,progress=None):
                         unknown.append(dict(scope=item['path'],reason='作品比較預算已滿，未檢查其餘作品'));break
                     d=work_descriptor(p,image,source)
                     if not d['structure']:unknown.append(dict(scope=p['key'],reason='無可靠欄位／Logo結構，模板相似未核實'))
-                    d.update(id=p['key'],source_hash=source['hash'],path=item['path'],region=p['crop'])
+                    d.update(id=p['key'],source_hash=source['hash'],path=item['path'],region=p['crop'],page=item['page'])
                     for old in works:
                         if comparisons>=MAX_COMPARISONS:raise ValueError('比較預算已滿，剩餘作品未核實')
                         comparisons+=1
                         if old.get('path')==d['path'] and old.get('region')==d['region']:continue
-                        if old['design']==d['design']:duplicates.append(dict(left=old['id'],right=d['id'],source_path=item['path'],classification='EXACT_RENDERED_WORK_CANDIDATE',warning='衍生圖與內容相同；非原生AI物件或客戶身分證明'))
+                        if old['design']==d['design']:duplicates.append(dict(left=old['id'],right=d['id'],source_path=item['path'],source_page=item['page'],reference_page=old.get('page'),classification='EXACT_RENDERED_WORK_CANDIDATE',warning='衍生圖與內容相同；非原生AI物件或客戶身分證明'))
                     for tid,shape in templates:
                         if comparisons>=MAX_COMPARISONS:raise ValueError('比較預算已滿，剩餘模板未核實')
                         comparisons+=1;score=structure_score(d['structure'],shape)
@@ -137,7 +148,9 @@ def inspect_report(library,report,cancel=None,progress=None):
                     works.append(d)
                 # Renderer and parser both must leave original bytes unchanged.
                 if file_digest(item['path'])!=item['expected_hash']:raise ValueError('預檢來源已變更')
-            except (OSError,ValueError,KeyError,TypeError) as error:unknown.append(dict(scope=item['path'],reason=str(error)))
+            except (OSError,ValueError,KeyError,TypeError) as error:
+                if '全部可讀頁次超過' in str(error):raise
+                unknown.append(dict(scope=item['path'],reason=str(error)))
             if progress:progress(index+1,len(report['items']),item['path'])
     result=dict(version=VERSION,near_files=near,duplicate_works=duplicates,similar_templates=similar,unknown=unknown,comparisons=comparisons,automatic_merge=False,thresholds=dict(dhash_max_hamming=6,structure_min_jaccard=.8),calibration='UNVALIDATED_REVIEW_HEURISTIC')
     report.update(similarity=result,near_file_candidates=len(near),artwork_duplicates=len(duplicates),template_similarity=len(similar),similarity_unknown=len(unknown))

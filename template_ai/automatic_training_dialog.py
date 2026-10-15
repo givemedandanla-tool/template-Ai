@@ -1,5 +1,6 @@
 """One preflight/start action with persistent, independently reviewed work units."""
 import threading
+from copy import deepcopy
 from pathlib import Path
 from PySide6.QtCore import QObject,Signal,Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QComboBox,QTableWidget,QTableWidgetItem,QPlainTextEdit,QFileDialog,QMessageBox,QLineEdit,QCheckBox)
@@ -91,8 +92,27 @@ class AutomaticTrainingDialog(QDialog):
     def start(self):
         if not self.report or self.running or self.window.busy:return
         try:
-            if QMessageBox.question(self,'確認預檢並一鍵開始',f"來源{len(self.report['items'])}，位元重複{self.report['file_duplicates']}。\n自動作品候選、標記、品質與已授權幾何學習；不核准新事實、不建立真實客戶、不發布。")==QMessageBox.Yes:self.start_job(self.service.create(self.report,self.actor.text(),True))
+            if QMessageBox.question(self,'確認預檢並一鍵開始',f"來源{len(self.report['items'])}，位元重複{self.report['file_duplicates']}。\n自動作品候選、標記、品質與已授權幾何學習；不核准新事實、不建立真實客戶、不發布。")==QMessageBox.Yes:self.prepare_job()
         except Exception as error:self.status.setText('未開始：'+str(error))
+
+    def prepare_job(self):
+        root=self.window.library.root;report=deepcopy(self.report);actor=self.actor.text();self.running=True;self.cancel_event.clear();self.cancel_button.setEnabled(True);self.start_button.setEnabled(False)
+        def worker():
+            from .storage import Library
+            from .source_links import ScanCancelled
+            library=None
+            try:
+                library=Library(root);job=AutomaticTraining(library).create(report,actor,True,cancel=self.cancel_event);return dict(job_id=job['id'])
+            except Exception as error:return dict(error='已取消啟動核對；未假稱已訓練' if isinstance(error,ScanCancelled) else str(error))
+            finally:
+                if library:library.close()
+        def finished(result):
+            self.running=False;self.cancel_button.setEnabled(False)
+            if result.get('error'):self.status.setText('未開始：'+result['error']);self.start_button.setEnabled(self.report is not None);return
+            if self.cancel_event.is_set():self.status.setText('啟動已取消；已保存READY工作未執行，可稍後明確續跑');self.reload();self.start_button.setEnabled(self.report is not None);return
+            self.start_job(self.service.get(result['job_id']))
+        try:self.window.run_job('背景核對完整來源／頁次清單',worker,finished)
+        except Exception as error:self.running=False;self.cancel_button.setEnabled(False);self.start_button.setEnabled(True);self.status.setText('未開始：'+str(error))
 
     def resume(self):
         if self.running or self.window.busy or not self.jobs.currentData():return
