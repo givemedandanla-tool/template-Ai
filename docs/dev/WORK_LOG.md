@@ -702,3 +702,6 @@ UI039補明確REJECTED/QUARANTINED/HUMAN_PENDING_CONFIRMATION、理由與操作�
 
 ## 2026-10-15 28父題 正式002 PASS／進度結案
 來源81f73e03449bbe2abb79251d2ec8919662b5ab2c，RUN-TWENTYEIGHT-FULL-002：601/601 PASS、0跳過、Qt未處理錯誤0、capture0、source未改，28父題239原條款全部具名PASS。核對所有claim與contract digest後恢復138列（原110＋本輪28）。全75累計44完整／28部分／3延後，固定70完成42剩28，CORE87/GOV7另計；沒有新增／刪除父題，本輪修訂28、完成28。95媒體逐檔驗bytes/hash後移ignored .checkpoints/formal-media/RUN-TWENTYEIGHT-FULL-002，精確政策追加FULL70_PUBLICATION；27文字metadata全部待GitHub保存。原失敗RUN001不改。進度／路線／完成報告／精簡接手更新，下一UI031。
+
+## 2026-10-15 28父題 最終遠端確認
+CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733dc3945c3619a7ba2db1c9d2688／tree 99572a0c49113d4ccc5b6d314bf9e9f9ae7d163e。27文字metadata及全部程式／測試／交接逐檔Git讀回；核准保存範圍check --require-evidence --publication-scope PASS（169列、138完成、75父題、601測試）。95媒體精確例外仍local-only，strict全媒體公開未宣稱。收據／STATE／最終驗證以後續小提交保存並再次讀回，避免自SHA循環。

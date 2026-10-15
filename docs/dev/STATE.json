@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "TWENTYEIGHT-PARENTS-SOFTWARE-COMPLETE",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-TWENTYEIGHT-FORMAL-SOURCE-002.receipt.json",
-  "last_confirmed_commit": "81f73e03449bbe2abb79251d2ec8919662b5ab2c",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-TWENTYEIGHT-COMPLETE.receipt.json",
+  "last_confirmed_commit": "6262fe8b431733dc3945c3619a7ba2db1c9d2688",
   "latest_evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -29,9 +29,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261015-TWENTYEIGHT-COMPLETE"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-TWENTYEIGHT-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-TWENTYEIGHT-END.json",
@@ -409,11 +407,14 @@
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
   "publication_status": {
     "policy": "docs/dev/FULL70_PUBLICATION.json",
-    "text_metadata_persisting": true,
-    "text_metadata_remote_verified": false,
+    "text_metadata_persisting": false,
+    "text_metadata_remote_verified": true,
     "local_media_count": 95,
     "local_media_archive": ".checkpoints/formal-media/RUN-TWENTYEIGHT-FULL-002",
-    "strict_all_attachment_publication": false
+    "strict_all_attachment_publication": false,
+    "verified_snapshot_commit": "6262fe8b431733dc3945c3619a7ba2db1c9d2688",
+    "verified_checkpoint": "docs/checkpoints/CP-20261015-TWENTYEIGHT-COMPLETE.receipt.json",
+    "publication_scope_gate": "PASS"
   },
   "cloud_environment_configuration": {
     "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
@@ -447,7 +448,9 @@
     "governance_verified": 7,
     "source_commit": "81f73e03449bbe2abb79251d2ec8919662b5ab2c",
     "evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
-    "publication_scope_gate": "PENDING_REMOTE_ACK"
+    "publication_scope_gate": "PASS",
+    "remote_verified_checkpoint": "docs/checkpoints/CP-20261015-TWENTYEIGHT-COMPLETE.receipt.json",
+    "remote_verified_snapshot_commit": "6262fe8b431733dc3945c3619a7ba2db1c9d2688"
   },
   "previous_final_verification": "docs/dev/CATALOG_FINAL_VERIFICATION.json"
 }

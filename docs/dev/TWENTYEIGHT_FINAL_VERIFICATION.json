@@ -1,5 +1,5 @@
 {
-  "status": "PASS_LOCAL_PENDING_REMOTE",
+  "status": "PASS_APPROVED_PUBLICATION_SCOPE",
   "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
   "source_commit": "81f73e03449bbe2abb79251d2ec8919662b5ab2c",
   "source_manifest_sha256": "8add490ed52b9e546e5d1b7dadd17a7ff4539641c717d842515c40a338a13fde",
@@ -28,12 +28,18 @@
     "text_metadata": 27,
     "local_only_media": 95,
     "strict_all_attachment_publication": false,
-    "remote_verification": "PENDING"
+    "remote_verification": "REMOTE_VERIFIED",
+    "publication_scope_gate": "PASS",
+    "text_metadata_remote_verified": true
   },
   "limits": [
     "Linux synthetic/offscreen Qt self verification",
     "No comprehensive private AI/native unknown details claim",
     "No Windows/device crash durability/physical print/independent review validation"
   ],
-  "next_task": "UI031-FULL-SOFTWARE-GAP-AUDIT"
+  "next_task": "UI031-FULL-SOFTWARE-GAP-AUDIT",
+  "remote_snapshot_commit": "6262fe8b431733dc3945c3619a7ba2db1c9d2688",
+  "remote_snapshot_tree": "99572a0c49113d4ccc5b6d314bf9e9f9ae7d163e",
+  "checkpoint_receipt": "docs/checkpoints/CP-20261015-TWENTYEIGHT-COMPLETE.receipt.json",
+  "verified_files": 1924
 }
