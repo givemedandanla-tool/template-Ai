@@ -1,0 +1,125 @@
+{
+  "id": "ENTITY-RELATIONS",
+  "status": "PLANNED",
+  "goal": "docs/dev/FULL_70_COMPLETION_PLAN.json",
+  "parents": [
+    "UI-016",
+    "UI-017",
+    "UI-043",
+    "UI-044",
+    "UI-045"
+  ],
+  "full_parent_targets": [
+    "UI-016",
+    "UI-017"
+  ],
+  "partial_integration_targets": [
+    "UI-043",
+    "UI-044",
+    "UI-045"
+  ],
+  "reason_not_full": "UI043來源自動抽取／批次入庫，UI044完整多尺寸縮圖，UI045新實體新增刪除回寫及整體隱私留存等未驗收不得提前完整",
+  "source_sections": {
+    "UI-016": "docs/UI_DECISIONS.md#UI-016",
+    "UI-017": "docs/UI_DECISIONS.md#UI-017",
+    "UI-043": "docs/UI_DECISIONS.md#UI-043",
+    "UI-044": "docs/UI_DECISIONS.md#UI-044",
+    "UI-045": "docs/UI_DECISIONS.md#UI-045"
+  },
+  "design": [
+    "當次InputGraph穩定ID／明確人物ROOT與公司及contact引用，UI稽核不依相同字串合併",
+    "共用Library SQLite外鍵與交易，既有CustomerStore延伸；不建訂單庫",
+    "模板p1/c1是位置port，與人物身份明確區別；兼容舊單公司資料，binding可多公司",
+    "所有shared改動與破壞性操作preview fingerprint再apply；undo/redo本次資料，版本回寫CAS",
+    "借鑑關聯正規化／圖引用、商用CRM逐欄三方比較、QUndoStack式command歷史；不複製外部程式或新增授權依賴"
+  ],
+  "acceptance": [
+    {
+      "id": "STABLE",
+      "expected": "同名與相同聯絡字串仍是不同stable實體，排序／刪除不轉移身份",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "ROOT",
+      "expected": "人物卡片情境新增／多欄位／展開收合／結構導覽",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "MANY",
+      "expected": "一人多公司及多人共享公司，Logo僅屬公司；獨立公司不自動合併",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "SHARE",
+      "expected": "聯絡資料明確所有者與共享引用；個人欄位無彈窗，shared編輯列全部引用",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "COPY",
+      "expected": "複製人物可選共享公司或獨立公司；私人欄位必獨立；複製共享欄位可獨立",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "DELETE",
+      "expected": "解除、刪除、複製不同；引用中公司停止刪除，影響快照需重新核對",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "UNDO",
+      "expected": "所有本次操作可Undo/Redo，取消編輯不影響主視窗／主檔",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "COMPILE",
+      "expected": "stable人物／公司／欄位編譯到模板port；多公司與公司聯絡不丟失／不誤配",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "GATE",
+      "expected": "所有異動invalidate候選／重算輸入提示，固定字級及同尺寸Logo Gate不放寬",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "CUSTOMER",
+      "expected": "既有CustomerStore正規化延伸並可原子遷移舊欄位，保留前導零／原stable欄位ID",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "WRITEBACK",
+      "expected": "目前製作與主檔分離，精確fieldID逐欄三方差異、CAS、未提供不同清空、共享影響及全交易回滾",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "REORDER",
+      "expected": "公司／人物多聯絡資訊沿exact版型預填，無自動寫回及舊版改動",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "RESTORE",
+      "expected": "主檔歷史恢復是新的CAS操作，舊私人值不自動成搜尋別名",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "UIFLOW",
+      "expected": "實際Qt入口完成新增、共享、複製、解除、刪除拒絕、取消、採用與重新排版",
+      "test_module": "tests/test_entity_relations.py",
+      "status": "NOT_RUN"
+    }
+  ],
+  "validation_scope": "Linux/Qt匿名SELF；非Windows／硬體／真AI／獨立覆核",
+  "publication": "code/tests/text保存GitHub，新PNG/JPG/PDF只本機＋精確hash",
+  "checkpoint": "修改前及每個可恢復階段；目標600秒，逾時如實記錄"
+}

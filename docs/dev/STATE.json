@@ -5,26 +5,24 @@
   "pull_request": 2,
   "product_version": "0.1.26",
   "framework_status": "READY",
-  "active_task": "DIAGNOSTIC-REPORTS-COMPLETED_SAVED_SCOPE",
+  "active_task": "FULL70-ENTITY-RELATIONS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-DIAG-VERIFIED.receipt.json",
   "last_confirmed_commit": "7889de735985fbb12c62e6d3981df6292a820c28",
   "latest_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
-    "docs/dev/DIAGNOSTIC_REPORTS_FINAL_VERIFICATION.json",
-    "docs/dev/PARTIAL_70_GAP_REPORT.md",
+    "docs/dev/FULL_70_COMPLETION_PLAN.json",
+    "docs/dev/ENTITY_RELATIONS_CONTRACT.json",
     "docs/dev/PARTIAL_70_GAP_ANALYSIS.json",
-    "docs/dev/NEXT_AFTER_DIAGNOSTICS.md",
-    "docs/dev/DIAGNOSTIC_REPORTS_USER_GUIDE.md",
     "docs/dev/REQUIREMENTS.json",
     "docs/dev/PROGRESS.md"
   ],
   "next_tasks": [
     {
-      "id": "UI-016/017/043/044/045",
-      "status": "PLANNED_NEW_CONTRACT_REQUIRED",
-      "action": "依NEXT_AFTER_DIAGNOSTICS補人物公司語意主幹；新包先BEGIN／完整條款與驗收再改碼"
+      "id": "ENTITY-RELATIONS",
+      "status": "PLANNED",
+      "next": "先修改前checkpoint；穩定實體圖與Qt人物卡片，接模板port及CustomerStore，具名故障測試"
     }
   ],
   "blocked": [],
@@ -33,29 +31,24 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-FULL70-START"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261015-DIAGNOSTICS-BEGIN.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261015-FULL70-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-DIAGNOSTICS-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
   "goal_milestone": {
-    "id": "DIAGNOSTIC-REPORTS",
-    "status": "COMPLETED_SAVED_SCOPE",
-    "contract": "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
-    "source_commit": "fc5956bcbff2a068f36c4bbc440f938ca177d7e1",
-    "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
-    "completed_work_packages": 2,
-    "target_work_packages": 2,
-    "original_parent_full": 2,
-    "original_parent_partial": 70,
-    "snapshot_commit": "7889de735985fbb12c62e6d3981df6292a820c28",
-    "checkpoint": "docs/checkpoints/CP-20261015-DIAG-VERIFIED.receipt.json"
+    "id": "FULL-70-COMPLETION",
+    "status": "IN_PROGRESS",
+    "target_parent_count": 70,
+    "closed": 0
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
-  "active_contract": "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
-  "next_work_package": "docs/dev/NEXT_AFTER_DIAGNOSTICS.md",
+  "active_contract": "docs/dev/ENTITY_RELATIONS_CONTRACT.json",
+  "next_work_package": "docs/dev/ENTITY_RELATIONS_CONTRACT.json",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -149,8 +142,8 @@
     "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
-  "final_verification": "docs/dev/SEVENTY_FINAL_VERIFICATION.json",
-  "checkpoint_cadence": "docs/dev/SEVENTY_CHECKPOINT_CADENCE.json",
+  "final_verification": "docs/dev/DIAGNOSTIC_REPORTS_FINAL_VERIFICATION.json",
+  "checkpoint_cadence": "docs/dev/DIAGNOSTIC_REPORTS_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
     "completed": 10,
@@ -374,5 +367,6 @@
     "functional_completion_delta": 2,
     "adoption_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",
     "design_adopted": true
-  }
+  },
+  "full70_goal": "docs/dev/FULL_70_COMPLETION_PLAN.json"
 }
