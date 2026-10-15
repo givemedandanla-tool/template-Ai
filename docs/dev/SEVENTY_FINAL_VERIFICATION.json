@@ -2,7 +2,7 @@
   "product_version": "0.1.25",
   "goal": "至少70父需求部分實作，原2受阻與3延後排除",
   "functional_status": "PASS_SELF_VERIFIED",
-  "publication_status": "PENDING_OFFICIAL_FINAL_CHECKPOINT",
+  "publication_status": "REMOTE_VERIFIED_DECLARED_SCOPE",
   "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
   "run": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
   "test_count": 348,
@@ -46,5 +46,22 @@
   "media": "No new PNG/JPG/PDF publication; exact source-bound identities, metadata mandatory",
   "privacy_event": "SEVENTY-PRIVACY-007; raw lease omitted in publication view; raw001 private, sanitized substitute published; no rejected payload retry",
   "next": "docs/dev/NEXT_AFTER_SEVENTY.md",
-  "final_checkpoint": null
+  "final_checkpoint": {
+    "schema_version": 1,
+    "checkpoint_id": "CP-20261015-SEVENTY-VERIFIED",
+    "phase": "REMOTE_VERIFIED",
+    "snapshot_commit": "24a3f40d69907c51c87d3a9c718ecd77f79c1153",
+    "tree_sha": "0f7035b8154d783d55365b1968471e6c60fb6d46",
+    "verified_utc": "2026-10-15T04:20:57.778967+00:00",
+    "verified_files": 945,
+    "source_manifest_sha256": "f1c6d157cae9083c548723c7f05d673f36dbc0228307e2c94c0e791924481902",
+    "next_step": "官方readback後乾淨text Gate／PR對帳；70部分不冒稱70完整，下一大包人物公司客戶歸屬",
+    "verification": "GitHub API commit/tree 讀回；逐檔 Git blob SHA 比對"
+  },
+  "publication_scope_gate": "PASS",
+  "clean_text_gate": "docs/dev/SEVENTY_CLEAN_TEXT_VERIFICATION.json",
+  "pr": 2,
+  "pr_state": "OPEN_UNMERGED",
+  "main_unchanged": "436ca2d7db10fab3de3d9700538dee701cd81a97",
+  "final_handoff": "docs/dev/NEXT_AFTER_SEVENTY.md"
 }

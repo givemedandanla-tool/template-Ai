@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.25",
   "framework_status": "READY",
-  "active_task": "SEVENTY-PARENTS-FORMAL-PASS-PENDING-REMOTE",
+  "active_task": "SEVENTY-PARENTS-COMPLETED_SAVED_SCOPE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-SEVENTY-VERIFIED.receipt.json",
   "last_confirmed_commit": "24a3f40d69907c51c87d3a9c718ecd77f79c1153",
   "latest_evidence_run": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
@@ -21,9 +21,14 @@
   ],
   "next_tasks": [
     {
-      "id": "SEVENTY-FINAL",
-      "status": "PENDING_REMOTE",
-      "action": "官方最終scope checkpoint/API讀回、乾淨text Gate；70部分非70完整"
+      "id": "UI-016/017/043/044/045",
+      "status": "PLANNED_NEW_CONTRACT_REQUIRED",
+      "action": "依NEXT_AFTER_SEVENTY補完整人物/公司/客戶歸屬；70部分已達標，原75FULL未完成，先新BEGIN與驗收契約再code"
+    },
+    {
+      "id": "ALL-LIST",
+      "status": "ACTIVE_LONG_TERM_GOAL",
+      "action": "逐原FULL條款補缺，不把81具名子項誤認70完整父題；不重做本輪17scope"
     }
   ],
   "blocked": [
@@ -48,14 +53,16 @@
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-SEVENTY-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-SEVENTY-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
-  "pending_pr_metadata": "docs/dev/PR_REVIEW.md；先前工具更新被中止，未宣稱PR標題同步",
+  "pending_pr_metadata": null,
   "goal_milestone": {
-    "id": "CORE-040..045",
-    "status": "FUNCTIONALLY_COMPLETED_SELF_VERIFIED",
-    "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
-    "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
-    "evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
-    "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json"
+    "id": "SEVENTY-PARENTS",
+    "status": "COMPLETED_SAVED_SCOPE",
+    "contract": "docs/dev/SEVENTY_PARENTS_CONTRACT.json",
+    "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+    "evidence_run": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
+    "snapshot_commit": "24a3f40d69907c51c87d3a9c718ecd77f79c1153",
+    "parent_partial": 70,
+    "parent_full": 0
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
@@ -315,7 +322,11 @@
     "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
     "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
     "tests": 348,
-    "status": "FORMAL_PASS_PENDING_REMOTE"
+    "status": "COMPLETED_SAVED_SCOPE",
+    "snapshot_commit": "24a3f40d69907c51c87d3a9c718ecd77f79c1153",
+    "checkpoint": "docs/checkpoints/CP-20261015-SEVENTY-VERIFIED.receipt.json",
+    "publication_scope_gate": "PASS",
+    "clean_text_gate": "PASS"
   },
   "external_validation_gaps": [
     {
@@ -327,6 +338,16 @@
       "id": "REV-04",
       "reason": "VivoBook 型號及指定參考設備尚未實測",
       "resume_when": "有設備與規格"
+    }
+  ],
+  "previous_goal_milestones": [
+    {
+      "id": "CORE-040..045",
+      "status": "FUNCTIONALLY_COMPLETED_SELF_VERIFIED",
+      "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
+      "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
+      "evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
+      "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json"
     }
   ]
 }

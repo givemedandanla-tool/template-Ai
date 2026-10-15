@@ -1,8 +1,8 @@
-# 最新：70父需求部分實作正式通過，等待最終保存範圍讀回
+# 最新：70父需求部分實作正式通過並保存（v0.1.25）
 
 v0.1.25／RUN-SEVENTY-PARENTS-002／source 8903e260fa2043db584dcef83a362e22b35712b6：348PASS、0SKIP、72本機附件、actual Qt與真worker、source unchanged。原75＝0完整／70部分／0未做／2受阻／3延後；CORE81（本輪+16）、GOV7（+1），16子功能+1治理不當17完整父題。SEVENTY_FINAL_VERIFICATION、REVIEW與USER_GUIDE含每條未做邊界。父題FULL條款不刪。
 
-依STATE最新receipt恢復，先最終GitHub readback；之後NEXT_AFTER_SEVENTY。禁止重跑EXE／mainmerge／代理；UI048最後／印刷及UI056D後置。兩個BLOCKED是UI066-R1/R2；REV02/04為外部待驗證條件，仍PARTIAL。
+正式snapshot 24a3f40d／945檔官方readback，收據已GitHub保存；publication-scope及乾淨文字view PASS。依STATE最新receipt恢復，按NEXT_AFTER_SEVENTY開新完整大包。禁止重跑EXE／mainmerge／代理；UI048最後／印刷及UI056D後置。兩個BLOCKED是UI066-R1/R2；REV02/04為外部待驗證條件，仍PARTIAL。
 
 事件007：自動審查拒絕新raw owner.token，未移分支；001 raw與原CP ZIP本機保留，公開tests/JUnit/claims及sanitized替代，CP-LOCK未ACK並superseded。002 producer公開view去除lease值，private工作狀態不變，新增GOV005-REDACTION真驗收；不重試被拒值。新媒體只本機+hash，GitHub全code/tests/文字metadata；完整media Gate不冒稱PASS。
 

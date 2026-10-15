@@ -11,3 +11,5 @@ v0.1.25完成原17個NOT_IMPLEMENTED父題的具體子流程；原75父題保持
 當前兩個BLOCKED實際是UI066-R1/R2未決報告；STATE舊REV02/REV04 blocker已改作external_validation_gaps，父狀態仍PARTIAL，沒有假裝完成視覺或硬體。REV03/UI048/UI056D延後；EXE不打包、main不合併、無agents。Checkpoint實際時刻／超10分鐘間隔見SEVENTY_CHECKPOINT_CADENCE，不虛報嚴格達標。
 
 下一大包按NEXT_AFTER_SEVENTY補人物／公司與客戶完整歸屬，先原條款／新BEGIN／契約，再code與固定來源回歸；不重做本輪17子流程。
+
+最終snapshot `24a3f40d69907c51c87d3a9c718ecd77f79c1153`，945檔官方保存範圍逐檔讀回、收據GitHub永久保存。現行publication-scope及946檔無圖片乾淨副本PASS；PR2 open/unmerged、main436ca2d7不變。
