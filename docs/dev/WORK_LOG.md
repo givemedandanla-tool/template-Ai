@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 2026-10-15：R1／R2按現有程式設計提案（未定案）
+
+使用者要求推測實際需求並提出方案；readback branch ae1db494。分析input_diagnostics/Candidate字串issues/layout session真進度/training_quality typed issues/quality_evaluation/render安全寫檔及diagnostic_routes。提出按需安全ZIP（HTML+JSON+manifest）、共用快照與白名單轉換、本機版本定位與建議7天索引，不輸出原稿或個資包；12項驗收均PLANNED未執行。只有docs/STATE/HANDOFF變更，未更新REQUIREMENTS／source／完成數；2受阻與3延後維持，CORE81與GOV7未增加。治理publication-scope開工PASS，依原348有效source核對，未重跑程式測試或宣稱報告已實作。新提案將checkpoint保存GitHub供Human/GPT讀取。
+
+
 ## 最終保存範圍與乾淨文字驗證完成
 
 snapshot24a3f40d／945檔官方readback；receipt保存於b29d8576。正式source8903e260、348PASS/0SKIP、currentpublication Gate與946檔純文字view PASS。PR2標題/說明更新讀回open/unmerged、main436ca2d7不改。70父部分目標完成，CORE81（+16）、GOV7（+1）、0父完整，2報告受阻/3延後不變；完整的原FULL缺口保留。事件007已安全替代閉合，原001raw本機、public audit無lease值，新證明media不發布。checkpoint最大768.030838秒，明記未嚴格10分鐘。下一個大包NEXT_AFTER_SEVENTY，從新契約開始。

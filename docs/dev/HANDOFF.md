@@ -1,3 +1,11 @@
+# 最新設計交接：R1／R2提案完成，尚未採納／實作
+
+使用者要求依當前功能推測實際需求。已讀現有診斷／generation／正式與PREVIEW輸出／安全寫檔／品質評估程式，形成docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md。建議按需安全ZIP（HTML+JSON+manifest）、重用原驗證器／typed診斷快照、匿名白名單與本機私有定位索引分離；7天索引期限為建議預設，非既定政策；首版不含原圖／完整個資包或PDF。附12項待驗收與順序，不能把字串錯誤解析或開發用token移除函數冒稱完整產品去識別。
+
+狀態PROPOSED，原UI066歷史與R1/R2 BLOCKED保持。只新增提案／入口／交接文件，程式與原要求登錄不改；原75＝0完整／70部分／2受阻／3延後，CORE81／GOV7，變化0。舊348PASS仍僅證明既有source，不是報告功能驗收；後續採納→保存要求／BEGIN→實作與正式驗收，不能直接標完成。最新checkpoint以STATE為準。
+
+以下保留已完成軟體工作交接。
+
 # 最新：70父需求部分實作正式通過並保存（v0.1.25）
 
 v0.1.25／RUN-SEVENTY-PARENTS-002／source 8903e260fa2043db584dcef83a362e22b35712b6：348PASS、0SKIP、72本機附件、actual Qt與真worker、source unchanged。原75＝0完整／70部分／0未做／2受阻／3延後；CORE81（本輪+16）、GOV7（+1），16子功能+1治理不當17完整父題。SEVENTY_FINAL_VERIFICATION、REVIEW與USER_GUIDE含每條未做邊界。父題FULL條款不刪。

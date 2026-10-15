@@ -12,6 +12,7 @@
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
+    "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md",
     "docs/dev/SEVENTY_FINAL_VERIFICATION.json",
     "docs/dev/NEXT_AFTER_SEVENTY.md",
     "docs/dev/SEVENTY_USER_GUIDE.md",
@@ -20,6 +21,11 @@
     "docs/dev/COPYRIGHT_PRIVACY_EVENTS.md"
   ],
   "next_tasks": [
+    {
+      "id": "UI-066-R1/R2-PROPOSAL",
+      "status": "PROPOSED_PENDING_ADOPTION",
+      "action": "已根據現有功能完成可交接快照方案，先讀提案；尚未採納／實作。其他已核准工作可依原計畫續行。"
+    },
     {
       "id": "UI-016/017/043/044/045",
       "status": "PLANNED_NEW_CONTRACT_REQUIRED",
@@ -35,12 +41,14 @@
     {
       "id": "UI-066-R1",
       "reason": "只處理真缺口，不重問診斷和預覽",
-      "resume_when": "Human提供必要性／格式／安全交接具體資訊"
+      "resume_when": "Human提供必要性／格式／安全交接具體資訊",
+      "design_proposal": "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md"
     },
     {
       "id": "UI-066-R2",
       "reason": "只處理真缺口，不重問診斷和預覽",
-      "resume_when": "Human提供必要性／格式／安全交接具體資訊"
+      "resume_when": "Human提供必要性／格式／安全交接具體資訊",
+      "design_proposal": "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md"
     }
   ],
   "deferred": [
@@ -48,7 +56,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-R1R2-PROPOSAL"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-SEVENTY-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-SEVENTY-END.json",
@@ -348,6 +358,21 @@
       "source_commit": "192db957a927e6fcdedf7b62ef835748bf238717",
       "evidence_run": "docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json",
       "publication_exception": "docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json"
+    }
+  ],
+  "design_proposals": [
+    {
+      "id": "PROPOSAL-UI066-R1R2-20261015",
+      "status": "PROPOSED_NOT_ADOPTED_NOT_IMPLEMENTED",
+      "requirements": [
+        "UI-066-R1",
+        "UI-066-R2"
+      ],
+      "document": "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md",
+      "base_commit": "ae1db49469f546e6b9ac7ad715304112f4ce527d",
+      "source_evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
+      "functional_counts_changed": false,
+      "decision_pending": "本輪僅要求根據當前程式提出設計；未當作Human已採納、未解除BLOCKED、未開始產品實作"
     }
   ]
 }
