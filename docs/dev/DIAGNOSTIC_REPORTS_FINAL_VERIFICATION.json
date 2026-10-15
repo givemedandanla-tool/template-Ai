@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "DIAGNOSTIC-REPORTS-FINAL",
-  "status": "FUNCTIONALLY_VERIFIED_PENDING_REMOTE",
+  "status": "COMPLETED_SAVED_SCOPE",
   "product_version": "0.1.26",
   "source_commit": "fc5956bcbff2a068f36c4bbc440f938ca177d7e1",
   "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
@@ -47,6 +47,12 @@
     "docs/evidence/attempts/DIAGNOSTICS/target004.log"
   ],
   "previous_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-001/run.json",
-  "checkpoint": null,
-  "remote_verification_pending": true
+  "checkpoint": "docs/checkpoints/CP-20261015-DIAG-VERIFIED.receipt.json",
+  "remote_verification_pending": false,
+  "snapshot_commit": "7889de735985fbb12c62e6d3981df6292a820c28",
+  "tree_sha": "fd420568f92a1e97cd88d86cba777c30b4f9a2a4",
+  "verified_files": 1033,
+  "publication_scope_gate": "PASS",
+  "clean_text_gate": "PASS",
+  "clean_text_verification": "docs/dev/DIAGNOSTIC_REPORTS_CLEAN_TEXT_VERIFICATION.json"
 }

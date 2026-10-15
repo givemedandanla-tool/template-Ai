@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.26",
   "framework_status": "READY",
-  "active_task": "DIAGNOSTIC-REPORTS-VERIFIED-PENDING-REMOTE",
+  "active_task": "DIAGNOSTIC-REPORTS-COMPLETED_SAVED_SCOPE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-DIAG-VERIFIED.receipt.json",
   "last_confirmed_commit": "7889de735985fbb12c62e6d3981df6292a820c28",
   "latest_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
@@ -21,11 +21,6 @@
     "docs/dev/PROGRESS.md"
   ],
   "next_tasks": [
-    {
-      "id": "DIAG-FINAL",
-      "status": "PENDING_REMOTE",
-      "action": "完成最終checkpoint與乾淨文字check／PR讀回，然後交付兩功能與70題缺口報告"
-    },
     {
       "id": "UI-016/017/043/044/045",
       "status": "PLANNED_NEW_CONTRACT_REQUIRED",
@@ -46,14 +41,16 @@
   "pending_pr_metadata": null,
   "goal_milestone": {
     "id": "DIAGNOSTIC-REPORTS",
-    "status": "FUNCTIONALLY_VERIFIED_PENDING_REMOTE",
+    "status": "COMPLETED_SAVED_SCOPE",
     "contract": "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
     "source_commit": "fc5956bcbff2a068f36c4bbc440f938ca177d7e1",
     "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
     "completed_work_packages": 2,
     "target_work_packages": 2,
     "original_parent_full": 2,
-    "original_parent_partial": 70
+    "original_parent_partial": 70,
+    "snapshot_commit": "7889de735985fbb12c62e6d3981df6292a820c28",
+    "checkpoint": "docs/checkpoints/CP-20261015-DIAG-VERIFIED.receipt.json"
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
@@ -354,7 +351,7 @@
   "design_proposals": [
     {
       "id": "PROPOSAL-UI066-R1R2-20261015",
-      "status": "IMPLEMENTED_SELF_VERIFIED_PENDING_REMOTE",
+      "status": "IMPLEMENTED_SELF_VERIFIED_REMOTE_SAVED",
       "requirements": [
         "UI-066-R1",
         "UI-066-R2"
@@ -372,7 +369,7 @@
     "decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
     "in_app_readable": true,
     "outside_app_saved_readable": true,
-    "implementation_status": "FUNCTIONALLY_VERIFIED_PENDING_REMOTE",
+    "implementation_status": "COMPLETED_SAVED_SCOPE",
     "whole_proposal_adopted": false,
     "functional_completion_delta": 2,
     "adoption_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",

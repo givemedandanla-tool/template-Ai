@@ -1,3 +1,7 @@
+# 最新：兩個診斷報告包與70父題缺口已保存
+
+最終snapshot 7889de735985fbb12c62e6d3981df6292a820c28／1033檔官方逐檔readback，receipt已保存；current publication-scope PASS，1034檔乾淨文字副本PASS。軟體source fc5956bc／378PASS／0SKIP／78本機附件／12驗收具名PASS。STATE已COMPLETED_SAVED_SCOPE。兩父題完整／70部分／0受阻／3延後，CORE83／GOV7，原70逐題清單70唯一ID、183程式引用及70來源引用均驗證。PR2新版標題／說明已讀回open／unmerged，main436ca2d7不變；完成標記同步GitHub後交付。下一包見NEXT_AFTER_DIAGNOSTICS，不重做報告與不重問已採納設計。
+
 # 最新：R1／R2完整實作與驗收，最後保存待讀回
 
 v0.1.26／RUN-DIAGNOSTIC-REPORTS-002 source fc5956bcbff2a068f36c4bbc440f938ca177d7e1：378PASS／0SKIP、78本機附件、capture0/source unchanged。兩工作包及12驗收全部具名PASS；CORE81→83（+2）、GOV7不變；原75父題2完整／70部分／0受阻／3延後。70個基準ID逐條完成缺口報告及AI JSON，來源／code／已做／未做／需驗收／外部條件分開，沒有把摘要取代原FULL。讀FINAL_VERIFICATION、PARTIAL_70_GAP_REPORT與NEXT_AFTER_DIAGNOSTICS，不重做已完成包。001為人類閱讀改善前的歷史run，不當current；target001／004失敗保留。

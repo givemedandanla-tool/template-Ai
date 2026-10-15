@@ -22,6 +22,11 @@
       "id": "CP-20261015-DIAG-READABLE-SOURCE",
       "snapshot_commit": "37e7d9c386ca3182682931796ad67e36edeedf33",
       "verified_utc": "2026-10-15T07:27:17.269082+00:00"
+    },
+    {
+      "id": "CP-20261015-DIAG-VERIFIED",
+      "snapshot_commit": "7889de735985fbb12c62e6d3981df6292a820c28",
+      "verified_utc": "2026-10-15T07:41:18.514820+00:00"
     }
   ],
   "intervals": [
@@ -39,8 +44,13 @@
       "from": "CP-20261015-DIAG-SOURCE",
       "to": "CP-20261015-DIAG-READABLE-SOURCE",
       "seconds": 632.705811
+    },
+    {
+      "from": "CP-20261015-DIAG-READABLE-SOURCE",
+      "to": "CP-20261015-DIAG-VERIFIED",
+      "seconds": 841.245738
     }
   ],
-  "maximum_verified_gap_seconds": 828.888267,
+  "maximum_verified_gap_seconds": 841.245738,
   "note": "實際正式收據間隔包含程式／測試／序列化及GitHub同步；有超10分鐘，如實列示。最終收據見STATE，來源仍有可恢復階段。"
 }
