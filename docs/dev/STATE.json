@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "FULL70-CATALOG-SOURCE-FREEZE",
+  "active_task": "FULL70-CATALOG-VERIFIED-PENDING-REMOTE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-CATALOG-SOURCE.receipt.json",
   "last_confirmed_commit": "459dc8cafe4490495eef98096388f8f308c1d23f",
-  "latest_evidence_run": null,
+  "latest_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -19,9 +19,9 @@
   ],
   "next_tasks": [
     {
-      "id": "CATALOG",
-      "status": "PENDING_VERIFICATION",
-      "next": "RUN-FULL70-CATALOG-001，新code正式全回歸及GUI；來源變更則重凍來源／新run"
+      "id": "CUSTOMER-GRAPH-SYNC",
+      "status": "PLANNED",
+      "next": "UI045完整圖差異／當次與主檔選擇同步，含新增刪除及person-scope保護；先新契約及BEGIN再code"
     }
   ],
   "blocked": [],
@@ -30,18 +30,20 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-CATALOG-VERIFIED"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-ENTITIES-END.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-CATALOG-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
   "goal_milestone": {
     "id": "FULL-70-COMPLETION",
     "status": "IN_PROGRESS",
     "target_parent_count": 70,
-    "closed": 2,
-    "remaining": 68
+    "closed": 4,
+    "remaining": 66
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
@@ -140,7 +142,7 @@
     "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
-  "final_verification": "docs/dev/ENTITY_RELATIONS_FINAL_VERIFICATION.json",
+  "final_verification": "docs/dev/CATALOG_FINAL_VERIFICATION.json",
   "checkpoint_cadence": "docs/dev/ENTITY_RELATIONS_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
@@ -366,5 +368,10 @@
     "adoption_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",
     "design_adopted": true
   },
-  "full70_goal": "docs/dev/FULL_70_COMPLETION_PLAN.json"
+  "full70_goal": "docs/dev/FULL_70_COMPLETION_PLAN.json",
+  "external_resource_request": {
+    "reason": "REV04要求指定設備實測，環境僅Linux且無配置外部裝置／憑證／連線",
+    "requested": "ASUS VivoBook完整型號CPU/RAM/GPU/Windows與兩目標機實測方式；async文字詢問，其他工作持續",
+    "status": "AWAITING_INFORMATION_NOT_GLOBAL_BLOCKER"
+  }
 }

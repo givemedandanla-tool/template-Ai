@@ -1,3 +1,9 @@
+# 全70接續：目錄包驗收完成，保存後下一包
+
+source 6fa3b900817c73c20269fd33f11ff54b0c007808，RUN-FULL70-CATALOG-001 428/428 PASS、0SKIP、capture0/source unchanged，89本機附件。UI009/044完整原條款完成，新CORE086/087；CORE87/GOV7。原75＝6完整66部分3延後，固定70完成4／剩66。圖示／列表同索引、穩定多選分頁、唯讀詳情明確編輯、客戶身份與exact款式、真來源裁切／未知、同客戶多尺寸並排／預填、確認前後CAS及來源新鮮度均實作。
+
+下一UI045主檔圖差異／新增刪除共享關係／選擇性同步；先完整原條款、新契約／BEGIN與checkpoint，不等待human。真機外部資訊已async問一次，環境讀回無外部硬體連線，不阻擋其餘開發。無EXE／代理／main merge，新媒體不發布，code/tests/text全保存。
+
 # 當前：CATALOG，修改前契約已保存
 
 人物公司包已完成GitHub官方讀回／乾淨text Gate，固定70剩68；現在UI009＋UI044共用模板／客戶版型目錄。先CATALOG_CONTRACT及新BEGIN，checkpoint後再code。來源縮圖不得以示意圖冒充，身份／exact版本和當次輸入／主檔邊界保持。

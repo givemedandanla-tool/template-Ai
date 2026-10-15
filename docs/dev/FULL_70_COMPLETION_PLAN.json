@@ -332,8 +332,9 @@
         }
       ],
       "required": "補雙檢視共用同一索引；測切換不丟搜尋或選取、預覽不直接進編輯",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json"
     },
     {
       "id": "UI-010",
@@ -424,7 +425,8 @@
       ],
       "required": "先做人物／公司／聯絡資料穩定ID及關聯模型，再驗證共享與獨立複本不混用",
       "state": "VERIFIED",
-      "evidence": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json"
+      "evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json"
     },
     {
       "id": "UI-017",
@@ -437,7 +439,8 @@
       ],
       "required": "補可追溯共享關聯與差異／撤銷，測解除一人關聯不刪其他人公司或私人聯絡資料",
       "state": "VERIFIED",
-      "evidence": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json"
+      "evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json"
     },
     {
       "id": "UI-018",
@@ -787,8 +790,9 @@
         }
       ],
       "required": "補可解釋匹配及各尺寸版型選取，測同名同電話不推定同人，過期版型不能沿用為合格",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json"
     },
     {
       "id": "UI-045",
@@ -1129,8 +1133,8 @@
       "evidence": null
     }
   ],
-  "closed_parent_count": 2,
-  "remaining_parent_count": 68,
-  "latest_evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
-  "next_package": "CATALOG"
+  "closed_parent_count": 4,
+  "remaining_parent_count": 66,
+  "latest_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+  "next_package": "CUSTOMER-GRAPH-SYNC"
 }

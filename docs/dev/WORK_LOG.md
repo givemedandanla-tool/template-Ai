@@ -1,3 +1,7 @@
+# CATALOG正式428全PASS，原UI009/044完整化
+
+第一輪正式全428PASS/0SKIP；source 6fa3b900817c73c20269fd33f11ff54b0c007808、capture0/source unchanged、89本機附件。新19功能測試，+2CORE、+2原完整父題；原75=6完整66部分3延後，CORE87/GOV7；固定70已完整化4、剩66，未將進度當產品完成百分比。12契約條件及18原來源條款具名claims/digest核對。實際畫面已檢視模板縮圖及客戶並排兩張，其他capture操作有Qtassert，無新受限素材事件。下一UI045完整主檔圖同步，仍先契約checkpoint；REV04已問具體硬體資訊，其他工作持續。待最終GitHub checkpoint／乾淨text／PR讀回。
+
 # CATALOG完整來源凍結
 
 19項新測試PASS，實際GUI capture成功並逐張檢視模板縮圖及客戶並排：只顯示真實來源衍生圖或明確UNKNOWN；矩形框位示意另標示。新增返回瀏覽時停用舊property target，避免誤編輯；過期來源在翻頁／比較也不重顯舊圖。UI009/044原FULL每條完整保留並登錄named測試，新CORE086/087是子範圍數，不灌父題。準備新source全回歸428項及89本機附件，通過前均pending。無新增受限素材、無EXE／代理／merge。
