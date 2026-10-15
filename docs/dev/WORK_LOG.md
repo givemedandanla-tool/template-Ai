@@ -757,3 +757,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI047 full original-clause source freeze
 - 完整10原條款逐字保留，綁定32備份測試及實作檔；沒有縮減父題範圍或把目標回歸冒充結案。成熟依據補restic v0.18.0保留聯集，明列本案wall-clock與其latest-snapshot差別。
 - 已檢查實際scope截圖並改善表格欄寬；排程結束主視窗呈現真實結果。以新來源正式全回歸及capture後再判定完成。
+
+### UI047 complete original10 clauses / formal backup milestone
+- 剩餘28本輪已完成UI046/UI047兩題，共21原條款；正式652/652 PASS、Qt錯誤0、capture成功、來源未變。全75：46 VERIFIED／26 PARTIAL／3 DEFERRED；固定70：44閉合／26仍部分。CORE87／GOV7另計。
+- 真GUI備份/隔離測試還原/現有差異capture，32新備份測試納入正式全652；全部140 claims匹配固定來源與contract digest。
+- 證據附件逐SHA/bytes核對，31文字metadata GitHub、100媒體依既定metadata-first保留本機；不改歷史失敗run、不主張獨立覆核。下一UI049完整11條。

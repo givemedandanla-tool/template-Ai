@@ -2,11 +2,9 @@
 
 基準4238ebc24ae62a2ef90051a86685a4c13bfca94b；70個原父題不增刪。
 
-固定70：**43完整軟體條款自我驗證／27仍部分**。全75：45 VERIFIED／27 PARTIAL／3 DEFERRED；CORE87／GOV7另計。
+剩餘28本輪已完成UI046/UI047兩題，共21原條款；正式652/652 PASS、Qt錯誤0、capture成功、來源未變。全75：46 VERIFIED／26 PARTIAL／3 DEFERRED；固定70：44閉合／26仍部分。CORE87／GOV7另計。
 
-剩餘28本輪完成UI046／11原條款；RUN-REMAINING28-IDENTITY-002，620/620 PASS、Qt錯誤0、擷取成功、來源未變。97媒體依既定metadata-first留本機，30文字metadata與全部程式測試保存GitHub。
-
-Linux合成與實際Qt/數位檔SELF，未宣稱Windows、真AI全面、參考硬體、實體印刷與獨立覆核。
+31文字metadata與全部程式測試保存GitHub；100 PNG/JPG/PDF依既定metadata-first精確清單留本機，不宣稱全附件上傳。
 
 |原父題|狀態|完整化要求／證據|
 |---|---|---|
@@ -56,7 +54,7 @@ Linux合成與實際Qt/數位檔SELF，未宣稱Windows、真AI全面、參考�
 |UI-044|VERIFIED|docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json|
 |UI-045|VERIFIED|docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json|
 |UI-046|VERIFIED|docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json|
-|UI-047|PARTIAL|補可選範圍與完整依賴Manifest、排程／保留政策及隔離還原驗證；缺資產必須報不完整|
+|UI-047|CLOSED_FULL_SOFTWARE_SELF_VERIFIED|docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json|
 |UI-049|PARTIAL|補多根搜尋／歧義選擇及完整影響摘要，測不同內容同名不重連、映射與原稿不改|
 |UI-050|PARTIAL|補事件只是提示的監看器及有界匯入佇列，測暫存檔、寫入中、漏事件／離線／改名均重新核實|
 |UI-051|PARTIAL|補保守資源預算和不飢餓佇列；逐來源逐作品審核，測重啟／磁碟失敗；不新增急件分類|

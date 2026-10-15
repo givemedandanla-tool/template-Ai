@@ -274,12 +274,12 @@
       ],
       "unresolved": [],
       "clause_count": 11,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
-      "source_commit": "a283709672af5c3cf5cac41081971035ad44d259"
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json",
+      "source_commit": "5a9969b33741c74e279dcffc443ecb33fb0ad05b"
     },
     {
       "parent": "UI-047",
-      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_backup_center.BackupCenterTests.test_actual_background_cancel_keeps_user_files_and_releases_shared_worker",
         "test_backup_center.BackupCenterTests.test_partial_scope_and_shared_database_dependency_never_become_silent_full_success",
@@ -315,7 +315,9 @@
         "test_relational_backup.RelationalBackupTests.test_wrong_password_corruption_existing_target_and_untrusted_source_never_touch_current_data"
       ],
       "unresolved": [],
-      "clause_count": 10
+      "clause_count": 10,
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json",
+      "source_commit": "5a9969b33741c74e279dcffc443ecb33fb0ad05b"
     },
     {
       "parent": "UI-049",
@@ -456,6 +458,6 @@
       "unresolved": []
     }
   ],
-  "verified_parent_count": 1,
-  "remaining_parent_count": 27
+  "verified_parent_count": 2,
+  "remaining_parent_count": 26
 }
