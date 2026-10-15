@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "TWENTYEIGHT-PARENTS-SOFTWARE-COMPLETE",
+  "active_task": "REMAINING28-FULL-CLAUSE-AUDIT",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-TWENTYEIGHT-COMPLETE.receipt.json",
   "last_confirmed_commit": "6262fe8b431733dc3945c3619a7ba2db1c9d2688",
   "latest_evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
@@ -18,9 +18,9 @@
   ],
   "next_tasks": [
     {
-      "id": "UI031-FULL-SOFTWARE-GAP-AUDIT",
-      "status": "READY",
-      "next": "下一輪從UI031完整原條款／原缺口開始，凍結驗收再開發；剩餘固定70有28題，UI048維持最後，REV03／UI056D延後。不重做已結案28題、不建EXE。"
+      "id": "REMAINING28-FULL-CLAUSE-AUDIT",
+      "status": "IN_PROGRESS",
+      "next": "依新契約逐題核對完整原條款與實作；先UI031/UI032/REV02，不重做已完成28；真實AI/Windows/硬體未實測不可冒稱通過。"
     }
   ],
   "blocked": [],
@@ -29,16 +29,18 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-CONTRACT"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261015-TWENTYEIGHT-BEGIN.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-TWENTYEIGHT-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
   "goal_milestone": "28原父題完整軟體條款SELF_VERIFIED；全75仍28部分3延後",
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
-  "active_contract": "docs/dev/FIXED70_NEXT_TWENTYEIGHT_CONTRACT.json",
+  "active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "next_work_package": "UI031-FULL-SOFTWARE-GAP-AUDIT",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
