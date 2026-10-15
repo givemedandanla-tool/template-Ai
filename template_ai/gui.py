@@ -230,6 +230,10 @@ class MainWindow(QMainWindow):
         if self.font_manager.issues:
             self.statusBar().showMessage("字型資產需處理：" + "；".join(self.font_manager.issues))
 
+    def closeEvent(self,event):
+        if hasattr(self,'template_catalog'):self.template_catalog.close_previews()
+        super().closeEvent(event)
+
     def button(self, text, action, layout):
         button = QPushButton(text)
         button.clicked.connect(action)

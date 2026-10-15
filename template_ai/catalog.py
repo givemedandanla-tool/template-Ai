@@ -83,10 +83,13 @@ def preview_request(library,entry):
         try:source=library.source(t['source_id'])
         except (ValueError,KeyError):pass
     if t.get('source_work_id'):
-        try:work=library.artwork(t['source_work_id'])
+        try:
+            current=library.artwork(t['source_work_id'])
+            reference=library.db.execute('SELECT revision FROM artwork_revisions WHERE artwork_id=? AND revision=?',(t['source_work_id'],t['source_work_revision'])).fetchone()
+            if reference:work=dict(id=current['id'],source_id=current['source_id'],revision=reference[0],current_revision=current['revision'])
         except (ValueError,KeyError):pass
-    if source:source={k:source[k] for k in ('id','hash','png','width_mm','height_mm','original_path','current_path','file_hashes') if k in source}
-    if work:work={k:work[k] for k in ('id','source_id','revision')}
+    if source:source={k:source[k] for k in ('id','hash','image','width_mm','height_mm','original_path','current_path','file_hashes','calibrated') if k in source}
+    if work:work={k:work[k] for k in ('id','source_id','revision','current_revision')}
     return dict(entry=deepcopy(entry),source=deepcopy(source),work=deepcopy(work))
 
 
@@ -104,7 +107,7 @@ def source_preview(request,cancel=None):
     try:
         original=hash_source(source.get('current_path',source['original_path']),cancel)
         if original.hash!=source['hash']:return unavailable('CHANGED','來源位元已異動')
-        path=source.get('png');expected=source.get('file_hashes',{}).get('png')
+        path=source.get('image');expected=source.get('file_hashes',{}).get('image')
         if not path or not expected:return unavailable('UNKNOWN','沒有可核對的原稿衍生圖雜湊')
         path=Path(path)
         if path.is_symlink():return unavailable('UNKNOWN','不採用符號連結影像')
@@ -122,7 +125,7 @@ def source_preview(request,cancel=None):
         if rect.width()<1 or rect.height()<1 or not image.rect().contains(rect):return unavailable('UNKNOWN','像素裁切無法核對')
         picture=image.copy(rect).scaled(QSize(480,320),Qt.KeepAspectRatio,Qt.SmoothTransformation)
         check_verified(original,source['hash']);check_verified(proof,expected)
-        return dict(status='VERIFIED_DERIVATIVE',reason='雜湊核對的來源作品衍生圖；視覺一致性／印刷品質未由此認證',image=picture,proofs=[original,proof])
+        return dict(status='VERIFIED_DERIVATIVE',reason='雜湊核對的來源作品衍生圖；'+(('引用歷史作品版次'+str(work['revision'])+'（當前'+str(work.get('current_revision'))+'）；') if work and work.get('current_revision')!=work['revision'] else '')+('來源物理尺度已標定；' if source.get('calibrated') else '來源物理尺度UNKNOWN；')+'視覺一致性／印刷品質未由此認證',image=picture,proofs=[original,proof])
     except ScanCancelled:return unavailable('CANCELLED','已取消來源縮圖')
     except (OSError,ValueError,KeyError,TypeError):return unavailable('UNAVAILABLE','來源失聯／異動或資料無法核對；可重新整理後再試')
 

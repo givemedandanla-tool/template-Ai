@@ -1,5 +1,6 @@
 """One read-only index, two views, and explicit edit/reorder actions."""
 from copy import deepcopy
+import sqlite3
 from PySide6.QtCore import Qt,QSize,QItemSelectionModel
 from PySide6.QtGui import QIcon,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QSplitter,QLineEdit,QComboBox,QLabel,
@@ -12,7 +13,7 @@ from .catalog_preview import PreviewController
 class CatalogWidget(QWidget):
     def __init__(self,window,customer=None,on_pick=None,allow_edit=True):
         super().__init__(window);self.window=window;self.customer=deepcopy(customer);self.on_pick=on_pick;self.allow_edit=allow_edit
-        self.entries=[];self.byid={};self.selected_ids=set();self.primary_id=None;self.page=0;self.blocked=False;self.closed=False;self.source_results={};self.compare_dialogs=[]
+        self.entries=[];self.visible=[];self.byid={};self.selected_ids=set();self.primary_id=None;self.page=0;self.blocked=False;self.closed=False;self.source_results={};self.compare_dialogs=[]
         self.controller=PreviewController(window,self);self.controller.result.connect(self.preview_done)
         layout=QVBoxLayout(self)
         bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('搜尋模板名稱／ID／版次／來源ID');bar.addWidget(self.query)
@@ -20,7 +21,10 @@ class CatalogWidget(QWidget):
         for label,value in [('全部狀態',None),('已發布','published'),('草稿','draft'),('未知','UNKNOWN')]:self.state.addItem(label,value)
         bar.addWidget(self.state);self.version=QComboBox();bar.addWidget(self.version)
         self.mode=QComboBox();self.mode.addItems(['縮圖瀏覽','詳細列表']);bar.addWidget(self.mode)
-        self.refresh_button=self.button(bar,'重新整理',self.reload);layout.addLayout(bar)
+        self.refresh_button=self.button(bar,'重新整理',self.reload)
+        if allow_edit:
+            self.button(bar,'新增空白矩形模板',window.new_template);self.button(bar,'加入合成示範模板',window.add_demo)
+        layout.addLayout(bar)
         split=QSplitter();self.tree=QTreeWidget();self.tree.setHeaderLabels(['實體尺寸 → 人物容量']);split.addWidget(self.tree)
         self.items=QListWidget();self.items.setSelectionMode(QAbstractItemView.ExtendedSelection);self.items.setResizeMode(QListWidget.Adjust);split.addWidget(self.items)
         detail=QWidget();v=QVBoxLayout(detail);self.picture=QLabel('請選擇一個模板，瀏覽不進入編輯');self.picture.setTextFormat(Qt.PlainText);self.picture.setAlignment(Qt.AlignCenter);self.picture.setMinimumSize(240,150);v.addWidget(self.picture)
@@ -43,6 +47,7 @@ class CatalogWidget(QWidget):
         if self.closed:return
         try:
             self.entries=catalog.rows(self.window.library,self.customer);self.byid={r['id']:r for r in self.entries}
+            self.source_results={k:v for k,v in self.source_results.items() if k in self.byid and v['signature']==self.byid[k]['signature'] and self.cache_current(v)}
             gone=self.selected_ids-self.byid.keys();self.selected_ids.intersection_update(self.byid)
             if self.primary_id not in self.byid:self.primary_id=None
             old_version=self.version.currentData();self.version.blockSignals(True);self.version.clear();self.version.addItem('全部版次',None)
@@ -59,7 +64,7 @@ class CatalogWidget(QWidget):
             self.tree.setCurrentItem(selected);self.tree.expandAll();self.tree.blockSignals(False)
             self.page=0;self.rebuild()
             if gone:self.status.setText(self.status.text()+f'；{len(gone)}個原選取已失聯，未替換版本')
-        except (ValueError,KeyError,TypeError) as error:self.status.setText('目錄未完成：'+str(error))
+        except (ValueError,KeyError,TypeError,sqlite3.DatabaseError) as error:self.status.setText('目錄未完成：'+str(error))
 
     def filter_changed(self,*args):
         if self.blocked:return
@@ -106,12 +111,13 @@ class CatalogWidget(QWidget):
         if not self.customer:
             self.picture.setPixmap(QPixmap.fromImage(catalog.frame_diagram(entry)));self.preview_state.setText('實際模板框位示意；不是原稿／新排版／品質證明')
         else:self.picture.clear();self.picture.setText('來源縮圖讀取中／UNKNOWN')
-        if entry['id'] in self.source_results:self.display_result(entry['id'],self.source_results[entry['id']])
+        if entry['id'] in self.source_results and self.cache_current(self.source_results[entry['id']]):self.display_result(entry['id'],self.source_results[entry['id']])
         self.controller.prioritize(entry)
 
     def set_source_icon(self,item,message):
         result=message['result']
         if result.get('image') is not None:item.setIcon(QIcon(QPixmap.fromImage(result['image'])))
+        else:item.setIcon(QIcon())
         item.setToolTip(item.toolTip()+'\n'+result['status']+'：'+result['reason'])
 
     def preview_done(self,message):
@@ -125,7 +131,10 @@ class CatalogWidget(QWidget):
                 if catalog.digest(current)!=catalog.digest(row['template']):raise ValueError('版型已變')
             from .source_links import check_verified
             for proof in result.get('proofs',[]):check_verified(proof,proof.hash)
-        except (ValueError,OSError):message={**message,'result':dict(status='STALE',reason='預覽期間依賴已變，重新整理後再核對',image=None,proofs=[])}
+            if row['template']:
+                from .model import Template
+                self.window.library._template_provenance(Template.from_dict(row['template']))
+        except (ValueError,OSError,sqlite3.DatabaseError):message={**message,'result':dict(status='STALE',reason='預覽期間依賴已變，重新整理後再核對',image=None,proofs=[])}
         self.source_results[message['id']]=message
         if len(self.source_results)>96:
             oldest=next(k for k in self.source_results if k!=self.primary_id);self.source_results.pop(oldest)
@@ -136,6 +145,13 @@ class CatalogWidget(QWidget):
         if self.primary_id==message['id']:self.display_result(message['id'],message)
         for dialog,ids in list(self.compare_dialogs):
             if dialog.isVisible() and message['id'] in ids:self.fill_compare(dialog,ids)
+
+    def cache_current(self,message):
+        try:
+            from .source_links import check_verified
+            for proof in message['result'].get('proofs',[]):check_verified(proof,proof.hash)
+            return True
+        except (OSError,ValueError):return False
 
     def display_result(self,eid,message):
         result=message['result'];image=result.get('image')
@@ -164,11 +180,11 @@ class CatalogWidget(QWidget):
         try:
             from .training_navigation import require_clean_navigation
             require_clean_navigation(self.window);row=self.choose_exact();self.window.open_catalog_editor(row['template_id'])
-        except (ValueError,KeyError) as error:self.status.setText('未進入編輯：'+str(error))
+        except (ValueError,KeyError,sqlite3.DatabaseError) as error:self.status.setText('未進入編輯：'+str(error))
 
     def pick(self):
         try:self.on_pick(self.choose_exact())
-        except (ValueError,KeyError) as error:self.status.setText('未沿用：'+str(error))
+        except (ValueError,KeyError,sqlite3.DatabaseError) as error:self.status.setText('未沿用：'+str(error))
 
     def compare(self):
         ids=[r['id'] for r in self.entries if r['id'] in self.selected_ids]

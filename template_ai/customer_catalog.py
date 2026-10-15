@@ -25,6 +25,7 @@ class CustomerStyleDialog(QDialog):
     def prefill(self,entry):
         current=self.store.get(self.snapshot['id'])
         if digest(current)!=digest(self.snapshot):raise ValueError('客戶主檔已變，重新核對身份與款式')
+        self.check_source_ready(entry)
         draft=self.store.reorder(self.snapshot['id'],entry['link']['id'],True)
         summary='客戶 '+current['code']+'／'+current['name']+'\n確切版型 '+entry['template_id']+' v'+str(entry['version'])+f"\n{entry['width']:g}×{entry['height']:g} mm · {entry['state']}\n"
         from .input_graph import InputGraph
@@ -35,4 +36,11 @@ class CustomerStyleDialog(QDialog):
         # Recheck after the modal confirmation; another process may have written.
         now=self.store.get(self.snapshot['id'])
         if digest(now)!=digest(self.snapshot):raise ValueError('確認期間主檔已更新，未預填')
+        self.check_source_ready(entry)
         draft=self.store.reorder(self.snapshot['id'],entry['link']['id'],True);apply_reorder(self.window,draft);self.adopted=True;self.catalog.status.setText('exact版本已預填本次，主檔未改；請重新排版與逐尺寸驗證')
+
+    def check_source_ready(self,entry):
+        if entry['template'].get('source_id'):
+            proof=self.catalog.source_results.get(entry['id'])
+            if not proof or proof['signature']!=entry['signature'] or proof['result']['status']!='VERIFIED_DERIVATIVE' or not self.catalog.cache_current(proof):
+                raise ValueError('來源圖尚未核對／失聯或異動；只供參考，不能直接沿用')

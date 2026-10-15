@@ -1,3 +1,7 @@
+# CATALOG具名target通過
+
+18項新測試PASS、原客戶8PASS。真來源採現有importer的image/file_hashes.image欄位，使用現成解析器實際生成的匿名PNG確認裁切紅／藍ROI，非僅UNKNOWN stub；舊作品引用查特定歷史版次，能沿用合法舊版且不取假最新。快取過期清除舊圖、主檔／來源在確認期間異動阻擋、分頁多選及空庫新增已驗。全current仍待source正式回歸，不升父題。保存WIP2，下一實際GUI capture／逐條full登錄／凍結來源。
+
 # CATALOG第一階段WIP
 
 共用尺寸→capacity索引、單一縮圖／列表選取狀態、分頁、來源雜湊與裁切驗證的純DTO worker、明確編輯工作區、客戶身份核對及exact版型目錄入口已接。電話正規化僅搜尋，不改原資料。來源圖未知不以示意圖替代，主檔／新稿分離。compile PASS；尚需新功能測試、完整GUI／失敗與回歸，所有current要求隨code轉pending，不宣稱父題完成。先保存WIP，再進行具名測試修正。

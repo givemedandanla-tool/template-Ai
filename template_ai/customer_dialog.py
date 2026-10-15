@@ -91,6 +91,8 @@ class CustomerDialog(QDialog):
             if not ok:return
             if QMessageBox.question(self,'預填影響','這會替換本次人物輸入。確認身份及上述確切版型？')!=QMessageBox.Yes:return
             draft=self.store.reorder(self.snapshot['id'],links[labels.index(choice)]['id'],True);w=self.window
+            source_template=next(t for t in w.library.templates() if t.id==draft['template_id'])
+            if source_template.source_id:raise ValueError('有來源圖的版型請使用尺寸版型目錄核對來源，快速文字入口不略過來源檢查')
             if not draft.get('graph'):
                 # Ambiguous historical records remain review-only; never flatten away ownership.
                 raise ValueError('舊客戶歸屬遷移待人工核對；資料保留，尚未預填')
