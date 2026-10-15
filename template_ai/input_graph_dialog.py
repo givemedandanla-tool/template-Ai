@@ -10,12 +10,13 @@ from .model import KINDS
 class InputGraphDialog(QDialog):
     def __init__(self,window,graph=None):
         super().__init__(window);self.window=window;self.rebuilding=False;self.collapsed=set();self.selected_id=None
+        history=None
         if graph is None:
             current=getattr(window,'active_input_graph',None)
-            if current:graph=current.data
+            if current:graph=current.data;history=current
             else:
                 p,c,l=window.input_data();graph=InputGraph.from_legacy(p,c,l).data
-        self.graph=InputGraph(graph);self.initial_revision=self.graph.data["revision"]
+        self.graph=history.clone() if history is not None else InputGraph(graph);self.initial_revision=self.graph.data["revision"]
         self.setWindowTitle('人物卡片／公司與共享聯絡資料（當次製作）');self.resize(1180,780)
         layout=QVBoxLayout(self)
         source=getattr(window,'reorder_customer_snapshot',None)

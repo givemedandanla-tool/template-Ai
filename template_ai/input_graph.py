@@ -24,6 +24,12 @@ class InputGraph:
         self.undo_stack, self.redo_stack = [], []
         self.serial = self.data['revision']
 
+    def clone(self, with_history=True):
+        g=InputGraph(self.data)
+        if with_history:
+            g.undo_stack=deepcopy(self.undo_stack);g.redo_stack=deepcopy(self.redo_stack);g.serial=self.serial
+        return g
+
     @staticmethod
     def validate(d):
         if not isinstance(d, dict) or set(d) != {'schema','revision','people','companies','fields','links'} or type(d['schema']) is not int or d['schema'] != 1:

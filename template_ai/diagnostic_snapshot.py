@@ -157,7 +157,7 @@ def make_snapshot(window,kind,work_id=None,session=None):
             for row in result['issues']:
                 row=dict(row);row.update(severity='REVIEW',kind=row.get('field_kind','company' if row['table']=='companies' else INPUT_KINDS[row['col']] if row['col']<7 else 'company'),locatable=True)
                 add(row,('公司' if row['table']=='companies' else '人物')+str(row['row']+1),{'kind':'input','table':row['table'],'row':row['row'],'col':row['col']})
-            data['scope']['fields']=sum(len(p.get(k,[])) for p in people for k in INPUT_KINDS)
+            data['scope']['fields']=len(window.active_input_graph.data['fields']) if getattr(window,'active_input_graph',None) is not None else sum(len(p.get(k,[])) for p in people for k in INPUT_KINDS)
             data['progress']['total']=result['templates_checked']
         except (ValueError,TypeError,KeyError):add(issue('INVALID_INPUT','REVIEW'))
         data['status']='PENDING_LAYOUT'

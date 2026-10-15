@@ -242,3 +242,23 @@ class EntityEntryTests(unittest.TestCase):
         def cancel():
             d=APP.activeModalWidget();d.execute('add_field',owner_id=observed[0],kind='phone',value='Cancelled phone');d.reject()
         QTimer.singleShot(0,cancel);w.graph_button.click();self.assertEqual(w.active_input_graph.data,snapshot);self.assertEqual(w.library.db.total_changes,before)
+
+
+class EntityAdoptionTests(unittest.TestCase):
+    def test_undo_redo_survives_adopt_and_reopen_in_same_session_without_disk_history(self):
+        tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);w=MainWindow(Path(tmp.name)/'library');self.addCleanup(w.library.db.close);g=fixture();w.adopt_input_graph(g.data);d=InputGraphDialog(w);self.addCleanup(d.deleteLater)
+        pid=g.data['people'][0]['id'];fid=next(f['id'] for f in g.data['fields'] if f['owner_id']==pid and f['kind']=='phone');d.execute('edit_field',field_id=fid,value='Adopted edit');w.adopt_input_graph(d.graph.data,history=d.graph)
+        reopened=InputGraphDialog(w);self.addCleanup(reopened.deleteLater);self.assertTrue(reopened.undo_button.isEnabled());reopened.undo();self.assertEqual(reopened.graph.field(fid)['value'],'020-000-0100');reopened.redo();self.assertEqual(reopened.graph.field(fid)['value'],'Adopted edit')
+        self.assertEqual(w.active_input_graph.field(fid)['value'],'Adopted edit');reopened.reject();self.assertEqual(w.active_input_graph.field(fid)['value'],'Adopted edit');self.assertFalse(any('input-graph' in p.name for p in w.library.root.rglob('*')))
+    def test_company_contact_report_count_and_problem_location_use_graph_entry(self):
+        from template_ai.diagnostic_snapshot import make_snapshot,locate
+        tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup);w=MainWindow(Path(tmp.name)/'library');self.addCleanup(w.library.db.close);g=fixture();cid=g.data['companies'][0]['id'];g.command('add_field',owner_id=cid,kind='phone',value='Company Example Phone',approved=True)
+        t=Template('Anonymous scope',90,54,[Slot('name','p1',Rect(3,3,40,7)),Slot('name','p2',Rect(3,15,40,7))],capacity=2);w.library.publish(t);w.adopt_input_graph(g.data);s=make_snapshot(w,'input');self.assertEqual(s.data['scope']['fields'],len(g.data['fields']))
+        index=next(i for i,target in enumerate(s.targets) if target and target.get('table')=='companies')
+        with patch.object(w,'edit_input_graph') as entry:locate(w,s.data,index,s);entry.assert_called_once()
+        self.assertNotIn('Company Example Phone',json_text(s.data))
+
+
+def json_text(data):
+    import json
+    return json.dumps(data,ensure_ascii=False)

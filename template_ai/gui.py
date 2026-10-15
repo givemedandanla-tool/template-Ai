@@ -1394,12 +1394,14 @@ class MainWindow(QMainWindow):
         from .input_graph_dialog import InputGraphDialog
         try:
             dialog=InputGraphDialog(self)
-            if dialog.exec()==QDialog.Accepted:self.adopt_input_graph(dialog.graph.data)
+            if dialog.exec()==QDialog.Accepted:self.adopt_input_graph(dialog.graph.data,history=dialog.graph)
         except (ValueError,TypeError) as error:self.error(str(error))
 
-    def adopt_input_graph(self, data, snapshot=None):
+    def adopt_input_graph(self, data, snapshot=None, history=None):
         from .input_graph import InputGraph
-        graph=InputGraph(data);people,companies,logos=graph.compile(self.library.logos())
+        graph=history.clone() if history is not None else InputGraph(data)
+        if graph.data!=data:raise ValueError("歷史與目前卡片版本不符")
+        people,companies,logos=graph.compile(self.library.logos())
         self.active_input_graph=graph
         if snapshot is not None:self.reorder_customer_snapshot=copy.deepcopy(snapshot)
         for table in (self.people,self.companies):table.blockSignals(True)
