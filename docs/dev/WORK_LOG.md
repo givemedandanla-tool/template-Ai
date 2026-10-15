@@ -903,3 +903,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-15 23:16 UTC UI052 explicit scope and GUI WIP
 - 41 unique combined target cases PASS (30 backend,4 realQt/subprocess,7 existingquality). Explicit unregistered files stay denominator, partial root blocked, newfile invalidates oldreceipt, pending observations block fields. GUI remains heartbeat responsive; one high-risk layer only, immutable receipt no rule/style/output sideeffects.
 - New command processor uses bounded metadata and existing stop_tree/run_job resource admission, no new database/renderer/paidservice. Still WIP; original10 not closed, currentformal source pending.
+
+### 2026-10-15 23:25 UTC UI052 controlled-rule/facets WIP
+- 49 unique combined target PASS;600-file actualQt pages/globalsearch,FG resourceHOLD cancel nochild, realownedchild timeout/stop, exactapprovedrule group nohighrisk/facts/stylewrites, groupdiskfailure/rulerollback failclosed, indexed descriptive facets and failedanalysis/duplicatequalitygates.
+- Preserve local-priority fixture failure2errors; use independently confirmed future source for true approved-rule reuse. Last review also pins exclusion work contexts/customer-candidate versions; bounded_rows streams <=4MiB instead of fetchall. Original10 still pending fullcapture/formal, no parent claim changed.

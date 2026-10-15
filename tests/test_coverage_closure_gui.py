@@ -73,3 +73,28 @@ class CoverageClosureGuiTests(unittest.TestCase):
     def test_subprocess_failure_and_unknown_command_do_not_create_success(self):
         with self.assertRaisesRegex(ValueError,'不支援'):run_command(self.library.root,'UNKNOWN',{})
         self.assertEqual(self.store.count('COVERAGE_CLOSURE'),0)
+
+    def test_resource_wait_can_be_cancelled_without_launching_child_or_claiming_saved(self):
+        import test_runtime_execution as resources
+        with patch.object(self.window.runtime,'admit',return_value=resources.HOLD),patch('template_ai.coverage_closure_panel.run_command',side_effect=AssertionError('resource-blocked child started')):
+            self.panel.activate();self.assertTrue(self.panel.loading);self.panel.cancel();self.wait(lambda:not self.panel.loading)
+        self.assertEqual(self.store.count('COVERAGE_BATCH'),0);self.assertEqual(self.window._waiting_launches,{})
+        self.assertIn('結果未確認',self.panel.status.text())
+
+    def test_600_file_gui_pages_search_globally_without_opening_source_models(self):
+        sources=[self.source(f'file-{i:04}.svg') for i in range(600)];batch=self.batch(sources)
+        self.panel.activate();self.wait(lambda:not self.panel.loading);self.panel.load_batch();self.wait(lambda:not self.panel.loading)
+        self.assertEqual(len(self.panel.rows),50);self.assertEqual(self.panel.batch['file_count'],600)
+        self.panel.query.setText('FILE-0599');self.panel.search();self.wait(lambda:not self.panel.loading)
+        self.assertEqual(len(self.panel.rows),1);self.assertTrue(self.panel.rows[0]['frozen']['original_path'].endswith('0599.svg'))
+        self.assertEqual(self.store.count('AUTO_UNIT'),0);self.assertEqual(self.store.count('AUTO_JOB'),0)
+
+    def test_subprocess_timeout_stops_owned_child_and_keeps_no_success_receipt(self):
+        import psutil
+        import template_ai.coverage_command as commands
+        original=commands.subprocess.Popen;processes=[]
+        def start(*args,**kwargs):
+            process=original(*args,**kwargs);processes.append(process);return process
+        with patch.object(commands.subprocess,'Popen',side_effect=start):
+            with self.assertRaisesRegex(ValueError,'隔離停止'):run_command(self.library.root,'BATCHES',{},timeout=0)
+        self.assertTrue(processes);self.assertFalse(psutil.pid_exists(processes[0].pid));self.assertEqual(self.store.count('COVERAGE_CLOSURE'),0)

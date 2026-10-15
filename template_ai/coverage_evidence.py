@@ -11,9 +11,12 @@ def table_exists(db, name):
 
 
 def bounded_rows(db, query, args=(), maximum=2000):
-    rows = db.execute(query+' LIMIT ?', (*args, maximum+1)).fetchall()
-    if len(rows)>maximum: raise ValueError('證據超過有界核對範圍，需明確分組；未截斷當完整')
-    return [list(row) for row in rows]
+    rows=[];size=0
+    for row in db.execute(query+' LIMIT ?', (*args, maximum+1)):
+        size+=sum(len(value.encode()) if isinstance(value,str) else 16 for value in row)
+        if len(rows)>=maximum or size>4*1024*1024:raise ValueError('證據超過4MiB／筆數有界核對範圍，需明確分組；未截斷當完整')
+        rows.append(list(row))
+    return rows
 
 
 def work_context(service, work_id):
@@ -22,6 +25,9 @@ def work_context(service, work_id):
     work = service.library.artwork(work_id); facts = store.facts(work_id)
     slots = work['payload'].get('slots', [])
     associations = []
+    customer_candidates=[]
+    if table_exists(db,'customer_import_candidates'):
+        customer_candidates=bounded_rows(db,"SELECT id,revision,state,payload FROM customer_import_candidates WHERE json_extract(payload,'$.pins.artwork_id')=? ORDER BY id",(work_id,))
     if table_exists(db, 'customer_source_associations'):
         associations = bounded_rows(db, 'SELECT id,customer_id,source_id,artwork_id,template_id,source_hash,artwork_revision,template_hash,person_scope,candidate_id FROM customer_source_associations WHERE artwork_id=? ORDER BY id', (work_id,))
     owners, styles, templates = [], [], []
@@ -39,14 +45,19 @@ def work_context(service, work_id):
     model = store.get('SEMANTIC_MODEL', active_model['model_id']) if active_model else None
     from .source_analysis import ANALYSER_VERSION
     context = dict(pins=store.pins(work_id), analyser_version=ANALYSER_VERSION, semantic_active_digest=digest(active_model), semantic_model_digest=digest(model), facts_digest=digest(facts), associations_digest=digest(associations), owners_digest=digest(owners), styles_digest=digest(styles), templates=templates, related_digest=digest(related), active_rule_versions=[dict(id=r[0], revision=r[1], payload_digest=digest(json.loads(r[2]))) for r in active_rules])
+    context.update(association_refs=[dict(association_id=r[0],customer_id=r[1],template_id=r[4],template_hash=r[7]) for r in associations],style_version_refs=[dict(style_id=r[0],customer_id=r[1],template_id=r[2],template_hash=r[3]) for r in styles])
+    context['customer_candidate_digest']=digest(customer_candidates)
     confirmed = set((facts.get('confirmation') or {}).get('observation_ids', [])) if store.facts_state(work_id)=='CONFIRMED' else set()
     observations = facts.get('observations', [])
     missing = [o['id'] for o in observations if o['id'] not in confirmed]
     unobserved_slots = [slot['id'] for slot in slots if slot.get('id') not in {o.get('slot_id') for o in observations}]
     unresolved_observations = [o['id'] for o in observations if o.get('classification')=='UNKNOWN' or o.get('review',{}).get('state') in ('REJECTED','QUARANTINED')]
+    from .training_quality import analyse_work
+    quality_blockers=[row for row in analyse_work(work,service.library.source(work['source_id'])) if row['severity']=='BLOCK' and row['code']!='NO_LABELS']
+    analysis_states=[dict(id=row[1],revision=row[2],state=json.loads(row[3]).get('state'),issues=json.loads(row[3]).get('issues',[])) for row in related if row[0]=='AUTO_UNIT']
     people = sorted({str(slot.get('owner')) for slot in slots if slot.get('kind')=='name'})
     companies = sorted({str(slot.get('owner')) for slot in slots if slot.get('kind')=='company'})
-    return dict(work_id=work_id, source_id=work['source_id'], revision=work['revision'], context=context, context_digest=digest(context), facts_state=store.facts_state(work_id), observation_count=len(observations), unconfirmed_observation_ids=missing, unobserved_slot_ids=unobserved_slots, unresolved_observation_ids=unresolved_observations, person_root_candidates=people, company_candidates=companies, whole_logo_candidates=sum(slot.get('kind')=='logo' for slot in slots), association_count=len(associations), style_version_count=len(styles), required_layers=list(LAYERS), automated_analysis_is_review=False)
+    return dict(work_id=work_id, source_id=work['source_id'], revision=work['revision'], context=context, context_digest=digest(context), facts_state=store.facts_state(work_id), observation_count=len(observations), unconfirmed_observation_ids=missing, unobserved_slot_ids=unobserved_slots, unresolved_observation_ids=unresolved_observations, person_root_candidates=people, company_candidates=companies, whole_logo_candidates=sum(slot.get('kind')=='logo' for slot in slots), association_count=len(associations), style_version_count=len(styles), unresolved_customer_candidates=[dict(id=r[0],revision=r[1],state=r[2]) for r in customer_candidates if r[2] not in ('COMMITTED','REJECT')], quality_blockers=quality_blockers, analysis_states=analysis_states, required_layers=list(LAYERS), automated_analysis_is_review=False)
 
 
 def low_risk_rule_evidence(service, work_id):

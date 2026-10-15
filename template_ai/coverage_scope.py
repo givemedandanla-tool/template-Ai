@@ -17,6 +17,7 @@ def directory_snapshot(root, recursive=True, extensions=None):
     for path in report.get('directories',[]):
         try:directories.append(dict(path=path,stat=list(fingerprint(Path(path).stat()))))
         except OSError as error:report['errors'].append(dict(path=path,reason=str(error)))
+    directories.sort(key=lambda value:value['path']);report['errors'].sort(key=lambda value:(value.get('path',''),value.get('reason','')))
     result=dict(root=str(Path(root).resolve()),recursive=bool(recursive),extensions=formats,paths=sorted(paths),directories=directories,scan_status=report['status'],scan_errors=report['errors'],scan_complete=report['status']=='COMPLETE' and not report['errors'],scanned_entries=report['entries'],unscanned_entries=None if report['status']!='COMPLETE' or report['errors'] else 0,algorithm='EXISTING_DISCOVER_SOURCES_VISITOR_V1',excluded_extensions_explicit=True)
     return result
 

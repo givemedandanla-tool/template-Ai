@@ -25,8 +25,9 @@ def execute(root,command,payload):
             return dict(rows=[{key:row[key] for key in ('id','revision','state','file_count','source_page_count','created')} for row in rows],total=total,offset=offset)
         if command=='PLAN_FILES':return service.plan_source_files(payload['paths'],payload.get('selected_source_ids'))
         if command=='PLAN_ROOT':return service.plan_directory(payload['root'],payload.get('recursive',True),payload.get('extensions'),payload.get('selected_source_ids'))
-        if command=='MEMBERS':return dict(batch=service.batch(payload['batch_id']),page=service.members(payload['batch_id'],payload.get('offset',0),50,payload.get('query','')),summary=service.boundary_summary(payload['batch_id']))
-        if command=='DETAIL':return service.member_evidence(payload['member_id'])
+        if command=='MEMBERS':return dict(batch=service.batch(payload['batch_id']),page=service.members(payload['batch_id'],payload.get('offset',0),50,payload.get('query',''),payload.get('group_by','file')),summary=service.boundary_summary(payload['batch_id']))
+        if command=='DETAIL':return service.refresh_assessment(payload['member_id'])
+        if command=='PLAN_GROUP_RULE':return service.group_rule_plan(payload['member_ids'],payload['rule_id'],payload['rule_revision'])
         if command=='CHECK':return service.check_member_sources(payload['member_id'],payload['revision'])
         if command=='PLAN_SEGMENTATION':return service.segmentation_plan(payload['member_id'],payload['work_ids'],payload['reason'])
         if command=='PLAN_LAYER':return service.layer_plan(payload['member_id'],payload['work_id'],payload['layer'],payload['decision'],payload['reason'],payload['evidence'])
@@ -41,7 +42,7 @@ def execute(root,command,payload):
             return dict(batch_id=batch['id'],expected_revision=batch['revision'],new_scope_plan=scope,reason=payload['reason'])
         if command=='CONFIRM':
             action=payload['action'];plan=payload['plan'];actor=payload['actor'];approved=payload.get('approved',False)
-            methods={'CREATE':service.create,'SEGMENTATION':service.confirm_segmentation,'LAYER':service.confirm_layer,'EXCLUSION':service.confirm_exclusion,'CLOSE':service.close}
+            methods={'CREATE':service.create,'SEGMENTATION':service.confirm_segmentation,'LAYER':service.confirm_layer,'EXCLUSION':service.confirm_exclusion,'CLOSE':service.close,'GROUP_RULE':service.confirm_group_rule}
             if action in methods:return methods[action](plan,actor,approved)
             if action=='REOPEN':return service.reopen(plan['batch_id'],plan['expected_revision'],plan['new_scope_plan'],actor,plan['reason'],approved)
         raise ValueError('不支援此覆蓋審核命令')

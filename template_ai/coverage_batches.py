@@ -11,6 +11,7 @@ from .source_links import verify_source,check_verified
 from .coverage_review import CoverageReviewMixin
 from .coverage_closure import CoverageClosureMixin
 from .coverage_scope import CoverageScopeMixin
+from .coverage_rules import CoverageRuleMixin
 
 BATCH='COVERAGE_BATCH'
 MEMBER='COVERAGE_MEMBER'
@@ -21,7 +22,7 @@ MAX_PLAN_BYTES=32*1024*1024
 def logical_path(value):return os.path.normcase(os.path.normpath(str(value)))
 
 
-class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin,CoverageScopeMixin):
+class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin,CoverageScopeMixin,CoverageRuleMixin):
     def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library);self.db=library.db
 
     def source_pin(self,identity):
@@ -74,14 +75,20 @@ class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin,CoverageScopeMixi
         if not value:raise ValueError('批次已失聯')
         return value
 
-    def members(self,batch_id,offset=0,limit=50,query=''):
+    def members(self,batch_id,offset=0,limit=50,query='',group_by='file'):
         self.batch(batch_id)
         if type(offset) is not int or offset<0 or type(limit) is not int or not 1<=limit<=200 or not isinstance(query,str) or len(query)>500:raise ValueError('批次成員需有效分頁／搜尋，最多200項')
         self.db.create_function('coverage_casefold',1,lambda value:str(value).casefold(),deterministic=True)
-        where="kind=? AND json_extract(payload,'$.batch_id')=?";args=[MEMBER,batch_id]
-        for token in query.casefold().split():where+=" AND instr(coverage_casefold(json_extract(payload,'$.frozen.original_path')||' '||id),?)>0";args.append(token)
-        total=self.db.execute('SELECT count(*) FROM training_records WHERE '+where,args).fetchone()[0]
-        rows=[self.store.get(MEMBER,identity) for identity, in self.db.execute('SELECT id FROM training_records WHERE '+where+" ORDER BY json_extract(payload,'$.ordinal') LIMIT ? OFFSET ?",(*args,limit,offset))]
+        groups={'file':"json_extract(m.payload,'$.frozen.original_path')",'directory':"json_extract(a.payload,'$.directory')",'work':"json_extract(a.payload,'$.works')",'risk':"json_extract(a.payload,'$.risks')",'method':"json_extract(a.payload,'$.review_methods')",'blocker':"json_extract(a.payload,'$.blocker_reasons')",'style':"json_extract(a.payload,'$.style_versions')"}
+        if group_by not in groups:raise ValueError('分組方式不支援')
+        source="training_records m LEFT JOIN training_records a ON a.kind='COVERAGE_ASSESSMENT' AND a.id=m.id"
+        where="m.kind=? AND json_extract(m.payload,'$.batch_id')=?";args=[MEMBER,batch_id]
+        for token in query.casefold().split():where+=" AND instr(coverage_casefold(json_extract(m.payload,'$.frozen.original_path')||' '||m.id||' '||COALESCE(a.payload,'')),?)>0";args.append(token)
+        total=self.db.execute('SELECT count(*) FROM '+source+' WHERE '+where,args).fetchone()[0]
+        rows=[]
+        order="json_extract(m.payload,'$.ordinal')" if group_by=='file' else groups[group_by]+",json_extract(m.payload,'$.ordinal')"
+        for identity,label in self.db.execute('SELECT m.id,'+groups[group_by]+' FROM '+source+' WHERE '+where+" ORDER BY "+order+" LIMIT ? OFFSET ?",(*args,limit,offset)):
+            row=self.store.get(MEMBER,identity);row['last_assessment_group']=label or '未保存此分組核對；當前有效數未知';rows.append(row)
         return dict(rows=rows,total=total,offset=offset,limit=limit)
 
     def check_member_sources(self,member_id,expected_revision):

@@ -30,3 +30,9 @@
 - coverage_command重用runtime_worker.stop_tree隔離程序，命令/結果各32MiB、120s/cancel，GUI經既有run_job資源gate，結果未讀回不宣稱成功。新quality tab延遲載入，每批次/成員50，個別source切分、7層審核、排除、結案/reopen皆確切預覽+本次明確同意。
 - 30 backend +4 actual Qt/subprocess +7既有quality =41 PASS。首GUI單module原import TestCase造成另執行30 backend，明列4GUI+30，已改module fixture防正式重複計數。
 - 未完成：資源等待取消/重啟/大量新頁實測與實際capture、完整原10註冊及新source正式全回歸。整體仍5/28，143 claims pending。
+
+### UI052 approved-rule groups / facets / risk gates WIP
+- 新coverage_rules只重用有效正式核准EXCLUDED_RULE且not protected、exact同版本，最多200明列檔案分組預覽/影響數與整transaction receipt；AUTO_VERIFIED_BY_APPROVED_RULE不冒稱人工，不核准人物/公司/Logo/客戶/版型。既有local exclusion優先保留，不改標rule。49 target PASS（30 backend+7 GUI/process+5 rule/facet+7 oldquality）。
+- GUI可切換目錄/檔案/作品/風險/方法/原因/版型版本，上次assessment cache明示非當前有效總數，全局搜尋再分頁；來源事實/雜訊/客戶/例外工具入口。原品質analyse_work重用阻擋重複框等、AUTO_UNIT FAILED及客戶候選未處置不可結案/以排除繞過；排除釘選workcontext並隨facts/model/style changes失效。
+- 600檔實際Qt分頁/全局搜尋、資源HOLD取消不啟child、真timeout停止owned process、審核收據持久化均PASS。最初groupfixture LOCAL優先導致2 error，原log保留；改獨立新來源正式規則重用後通過，未放寬predicate。
+- 待做：原10逐條trace/code審核、來源/歸屬/排除變更補充counterexamples、實際GUI captures與fullsource formalregression；不可只用49PASS關父題。仍5/28，143current claims pending。
