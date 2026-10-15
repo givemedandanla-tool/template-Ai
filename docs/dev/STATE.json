@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI052-LAYERED-CLOSURE-WIP",
+  "active_task": "REMAINING28-UI052-EXACT-SCOPE-GUI-WIP",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-UI052-LAYERED-CLOSURE-WIP.receipt.json",
   "last_confirmed_commit": "ed22c6e2c32d7fe871f7518831babdad975740ca",
   "latest_evidence_run": null,
@@ -17,9 +17,9 @@
     "docs/dev/PROJECT_ROADMAP.md"
   ],
   "next_tasks": [
-    "UI052 explicit unregistered files and exact root snapshot/new-file invalidation",
-    "UI052 bounded worker GUI integration and meaningful resource/capture tests",
-    "Register full original10 only after full acceptance, fresh source formal regression"
+    "UI052 resource waiting cancellation, restart/source-version/root/new-file and 600-file paged GUI counterexamples",
+    "UI052 actual Qt captures and exact original10 requirement registration",
+    "Fresh source formal regression and publication-scope verification before UI052 closure"
   ],
   "blocked": [],
   "deferred": [
@@ -27,7 +27,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-UI052-SCOPE-GUI-WIP"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-RUNTIME.json",

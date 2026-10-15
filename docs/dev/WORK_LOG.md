@@ -899,3 +899,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-15 23:09 UTC UI052 layered backend WIP
 - 22 targeted tests PASS; original 001 layer import failure log retained. Actual hash/stat, exact page/work segmentation, 7 pinned human layers, independent exclusions, immutable closure, CAS, disk/audit rollback, stale/reopen tested. No full-parent completion or current formal-source pass.
 - Boundary checkpoint首輪漏stage docs/checkpoints導致readback拒絕；未冒稱成功，補manifest後b19080b逐檔確認，receipt 1ce1e75已推送。
+
+### 2026-10-15 23:16 UTC UI052 explicit scope and GUI WIP
+- 41 unique combined target cases PASS (30 backend,4 realQt/subprocess,7 existingquality). Explicit unregistered files stay denominator, partial root blocked, newfile invalidates oldreceipt, pending observations block fields. GUI remains heartbeat responsive; one high-risk layer only, immutable receipt no rule/style/output sideeffects.
+- New command processor uses bounded metadata and existing stop_tree/run_job resource admission, no new database/renderer/paidservice. Still WIP; original10 not closed, currentformal source pending.

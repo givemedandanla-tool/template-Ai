@@ -218,3 +218,62 @@ class CoverageBatchTests(unittest.TestCase):
         with self.library.db:self.library.db.execute('DELETE FROM training_records WHERE kind=? AND id=?',('COVERAGE_CLOSURE',receipt['id']))
         self.assertEqual(self.service.closure_status(batch['id'])['state'],'MISSING_RECEIPT')
         self.assertEqual(self.store.count('AUTO_JOB'),0)
+
+    def test_explicit_unregistered_files_stay_in_denominator_and_block_closure(self):
+        source=self.source();unknown=self.root/'unregistered.ai';unknown.write_bytes(b'not yet parsed')
+        batch=self.service.create(self.service.plan_source_files([source['original_path'],str(unknown)]),'Reviewer',True)
+        plan=self.service.closure_plan(batch['id'])
+        self.assertEqual((plan['file_count'],plan['source_page_count'],plan['unresolved_files']),(2,1,2))
+        self.assertIsNone(plan['actual_work_count']);self.assertFalse(plan['closure_allowed'])
+        unknown_member=next(row for row in self.service.members(batch['id'])['rows'] if not row['frozen']['source_pins'])
+        checked=self.service.check_member_sources(unknown_member['id'],unknown_member['revision'])
+        self.assertEqual(checked['check_state'],'SOURCE_UNREGISTERED');self.assertEqual(self.store.count('AUTO_JOB'),0)
+
+    def test_missing_explicit_file_can_be_persisted_as_unresolved_not_dropped(self):
+        missing=str(self.root/'missing.ai');batch=self.service.create(self.service.plan_source_files([missing]),'Reviewer',True)
+        self.assertEqual(self.service.members(batch['id'])['total'],1)
+        self.assertFalse(self.service.closure_plan(batch['id'])['closure_allowed'])
+
+    def test_registered_page_appearing_after_file_preview_invalidates_creation(self):
+        path=self.root/'later.svg';path.write_bytes(b'<svg/>');plan=self.service.plan_source_files([str(path)])
+        self.source('later.svg')
+        with self.assertRaisesRegex(ValueError,'已改變'):self.service.create(plan,'Reviewer',True)
+        self.assertEqual(self.store.count(BATCH),0)
+
+    def test_root_snapshot_new_file_before_create_is_rejected(self):
+        folder=self.root/'inputs';folder.mkdir();self.source('inputs/one.svg')
+        plan=self.service.plan_directory(folder);(folder/'new.ai').write_text('new file')
+        with self.assertRaisesRegex(ValueError,'成員已變更'):self.service.create(plan,'Reviewer',True)
+        self.assertEqual(self.store.count(BATCH),0)
+
+    def test_root_snapshot_new_file_invalidates_closed_receipt_without_mutating_it(self):
+        source,work,unused,unused_member=self.work_member()
+        # An isolated source root excludes the application's live database directory.
+        folder=self.root/'inputs';folder.mkdir();path=folder/'one.svg';path.write_bytes(Path(source['original_path']).read_bytes())
+        with self.library.db:
+            payload=dict(source,original_path=str(path),page_count=1,width_mm=90,height_mm=54)
+            self.library.db.execute('UPDATE sources SET original_path=?,payload=? WHERE id=?',(str(path),json.dumps(payload),source['id']))
+        batch=self.service.create(self.service.plan_directory(folder),'Reviewer',True);member=self.service.members(batch['id'])['rows'][0]
+        self.review_all(member,work);receipt=self.service.close(self.service.closure_plan(batch['id']),'Reviewer',True)
+        (folder/'new.ai').write_text('unparsed new source')
+        status=self.service.closure_status(batch['id']);self.assertFalse(status['current_complete']);self.assertEqual(status['state'],'STALE_REOPEN_REQUIRED')
+        self.assertEqual(self.store.get('COVERAGE_CLOSURE',receipt['id']),receipt)
+
+    def test_partial_root_scan_is_persisted_but_never_closable(self):
+        folder=self.root/'inputs';folder.mkdir();self.source('inputs/one.svg');(folder/'linked.ai').symlink_to(folder/'one.svg')
+        plan=self.service.plan_directory(folder);self.assertFalse(plan['root_snapshot']['scan_complete'])
+        batch=self.service.create(plan,'Reviewer',True);closure=self.service.closure_plan(batch['id'])
+        self.assertFalse(closure['closure_allowed']);self.assertTrue(closure['scope_blockers'])
+        self.assertIsNone(plan['root_snapshot']['unscanned_entries'])
+
+    def test_exact_source_version_selection_never_drops_declared_unknown_files(self):
+        a=self.source();b=self.source(content=b'<svg>new</svg>');unknown=str(self.root/'unknown.ai')
+        plan=self.service.plan_source_files([a['original_path'],unknown],[b['id']])
+        self.assertEqual(plan['file_count'],2);self.assertEqual(plan['source_ids'],[b['id']]);self.assertEqual(len(plan['members'][0]['expected_hashes']),1)
+        with self.assertRaises(ValueError):self.service.plan_source_files([unknown],[b['id']])
+
+    def test_pending_source_observation_blocks_semantic_layer_confirmation(self):
+        source,work,batch,member=self.work_member()
+        observation=dict(id='note',slot_id=None,text='已校稿',object_type='ANNOTATION',classification='ANNOTATION',region=dict(x=0,y=0,w=1,h=1))
+        self.store.save_facts(work['id'],[observation],0,work['revision'])
+        with self.assertRaisesRegex(ValueError,'未確認／過期'):self.service.layer_plan(member['id'],work['id'],'fields','CONFIRMED','Not a substitute for facts review','Page1')

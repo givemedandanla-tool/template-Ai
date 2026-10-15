@@ -10,6 +10,7 @@ from .training_store import TrainingStore,digest,text
 from .source_links import verify_source,check_verified
 from .coverage_review import CoverageReviewMixin
 from .coverage_closure import CoverageClosureMixin
+from .coverage_scope import CoverageScopeMixin
 
 BATCH='COVERAGE_BATCH'
 MEMBER='COVERAGE_MEMBER'
@@ -20,7 +21,7 @@ MAX_PLAN_BYTES=32*1024*1024
 def logical_path(value):return os.path.normcase(os.path.normpath(str(value)))
 
 
-class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin):
+class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin,CoverageScopeMixin):
     def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library);self.db=library.db
 
     def source_pin(self,identity):
@@ -56,7 +57,7 @@ class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin):
         if expected!=digest(preview):raise ValueError('批次預覽已被修改，請重新核對')
         # Metadata is checked under one write lock; no originals/models are opened here.
         with self.store.transaction():
-            current=self.plan_registered_sources(plan['source_ids'])
+            current=self.rebuild_scope_plan(plan)
             if current['scope_digest']!=expected:raise ValueError('來源位置／版本／作品集合已改變，未建立過期批次')
             return self._create_current(current,actor)
 
@@ -65,7 +66,8 @@ class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin):
         for ordinal,member in enumerate(current['members']):
             mid=digest(['coverage-member',identity,member['logical_file_key']]);member_digests.append(member['member_scope_digest'])
             self.store._write(MEMBER,mid,dict(batch_id=identity,ordinal=ordinal,frozen=member,check_state='DECLARED_PENDING_PROOF',last_check=None,source_error=None,review_state='UNKNOWN_NOT_YET_REVIEWED'),0,'coverage_member_boundary_declared')
-        return self.store._write(BATCH,identity,dict(schema_version=1,scope_kind=current['scope_kind'],scope_digest=current['scope_digest'],member_manifest_digest=digest(member_digests),file_count=current['file_count'],source_page_count=current['source_page_count'],source_ids=current['source_ids'],state='BOUNDARY_FROZEN',actor=actor,created=time.time(),previous_batch_id=previous_id,whole_directory_claim=False,all_file_work_coverage_verified=False,closure_receipt=None),0,'coverage_batch_exact_boundary_created')
+        details={key:copy.deepcopy(current[key]) for key in ('declared_paths','selected_source_ids','root_snapshot') if key in current}
+        return self.store._write(BATCH,identity,dict(schema_version=1,scope_kind=current['scope_kind'],scope_digest=current['scope_digest'],scope_details=details,member_manifest_digest=digest(member_digests),file_count=current['file_count'],source_page_count=current['source_page_count'],source_ids=current['source_ids'],state='BOUNDARY_FROZEN',actor=actor,created=time.time(),previous_batch_id=previous_id,whole_directory_claim=False,all_file_work_coverage_verified=False,closure_receipt=None),0,'coverage_batch_exact_boundary_created')
 
     def batch(self,identity):
         value=self.store.get(BATCH,identity)
@@ -88,7 +90,8 @@ class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin):
         batch=self.batch(member['batch_id'])
         if batch.get('closure_receipt'):raise ValueError('已有結案憑證，需先明確重開；不覆寫舊結論')
         frozen=member['frozen'];proofs={};error=None;state='SOURCE_BYTES_VERIFIED_AWAITING_REVIEW'
-        if len(frozen['expected_hashes'])!=1:error='同一原始檔名納入互相矛盾的內容版本，需明確選擇';state='SOURCE_VERSION_CONFLICT'
+        if not frozen['expected_hashes']:error='來源未登錄／未解析，仍保留在檔案分母；需先經來源預檢與分析';state='SOURCE_UNREGISTERED'
+        elif len(frozen['expected_hashes'])!=1:error='同一原始檔名納入互相矛盾的內容版本，需明確選擇';state='SOURCE_VERSION_CONFLICT'
         try:
             if not error:
                 for pin in frozen['source_pins']:

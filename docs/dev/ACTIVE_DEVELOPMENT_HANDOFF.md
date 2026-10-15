@@ -24,3 +24,9 @@
 - coverage_evidence/review/closure引用既有FACTS/RULE/SEMANTIC_ACTIVE/實際客戶關聯/模板版本；全來源切分需全頁且明列真實作品，7層個別人工審核，低風險僅既有核准noise-rule annotation。無來源／未解析不能藉排除隱藏；排除不算學習/版型通過。
 - 結案實際hash在transaction前、鎖內stat+metadata/CAS重核；同transaction保存不可變receipt與batch link。source/model/review變更失效，明確reopen新batch保留舊receipt。22目標測試PASS含600分頁、diskfull整批回滾、漏層/缺頁/變更/reopen/missingreceipt。第一輪錯import analyser constant 4 errors原log保留，改正import後通過。
 - 原10尚未完整：未登錄來源／目錄新檔分母、受控GUI/worker/capture、完整正式回歸待做。仍5/28里程碑，143 current claims pending，UI052父題未關閉。
+
+### UI052 explicit files/root + lazy GUI WIP
+- coverage_scope重用discover_sources visitor，明列檔案含未登錄/不存在，根目錄雙次有界遍歷/目錄stat釘選，partial/errors保留未知且禁止結案；新檔/改名使舊收據失效。無訓練自動dispatch。
+- coverage_command重用runtime_worker.stop_tree隔離程序，命令/結果各32MiB、120s/cancel，GUI經既有run_job資源gate，結果未讀回不宣稱成功。新quality tab延遲載入，每批次/成員50，個別source切分、7層審核、排除、結案/reopen皆確切預覽+本次明確同意。
+- 30 backend +4 actual Qt/subprocess +7既有quality =41 PASS。首GUI單module原import TestCase造成另執行30 backend，明列4GUI+30，已改module fixture防正式重複計數。
+- 未完成：資源等待取消/重啟/大量新頁實測與實際capture、完整原10註冊及新source正式全回歸。整體仍5/28，143 claims pending。
