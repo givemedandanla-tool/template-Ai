@@ -891,3 +891,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI052 original10 execution plan before implementation
 - 原10全文/SHA與6包、數學anti-join/OCC/immutable contentmanifest/分層分母、counterexamples已保存，無新增父題/無縮scope。實際讀GE0.18.21 checkpoint explicitbatch/runid/results與MSVSCode1.105.1 workingcopycorrelation/participants，版本/bytes/sha記錄；PowerBI候選URL404/403未採用或虛稱讀過。
 - 仍5/28已完成；此階段只planning docs，749 source軟體未改。後續143完成標pending，JSONL defaultcollector修正與sameSQLite batch records後回歸，不把ledger/100%畫面當全批處置。
+
+### 2026-10-15 UI052 exact registered-boundary WIP
+- 新增coverage_batches.py；同TrainingStore transaction/audit/version，不建第二資料真相；file/page/work分母分離，未知不當100%。
+- py_compile PASS；尚無功能自驗。143 current claims pending revalidation；5/28先前已驗里程碑保留。default collector納JSONL，舊run/checkpoint不變。

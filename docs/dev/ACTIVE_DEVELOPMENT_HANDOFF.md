@@ -15,3 +15,7 @@
 
 - UI052原10逐條計畫已保存UI052_EXECUTION_PLAN；GE0.18.21 checkpoint及MicrosoftVSCode1.105.1 working-copy participants實際source/sha在REMAINING28_ENGINEERING_BASIS，重用既有SQLite/rules/facts/ledger，不安裝GE或商用服務。下步先143完成pending/previous證據、default collector加.jsonl，再同DB batch/member/schema。
 - UI051 publication-scope真PASS在CP-20261015-REMAINING28-UI051-JOURNAL-PUBLICATION，原collector未含JSONL先用docs/dev/prepare_checkpoint_with_jsonl.py資料adapter補真正manifest/ZIP/ACK，未改舊run或waive文字；80aa1ca source followup已讀回。
+
+### UI052 exact-boundary P1 WIP
+- 已新增同SQLite COVERAGE_BATCH/MEMBER固定已登錄來源頁範圍、原路徑分組/同內容不同檔名獨立分母、來源/作品版本釘選、CAS與有界分頁；位元驗證明示不等於人審或結案。僅py_compile通過，尚未功能測試，不宣稱P1或父題完成。
+- default collector已加入.jsonl；source改變，143歷史完成claims皆pending保留原證據，下一寫P1實際檔案/競爭/500+分頁測試，再做分層證據與規則/處置/結案GUI。整體仍5/28里程碑，23未閉合。
