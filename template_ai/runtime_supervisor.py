@@ -50,7 +50,7 @@ class RuntimeSupervisor(QObject):
         ordered=sorted(self.lag_samples);p95=ordered[max(0,math.ceil(len(ordered)*.95)-1)] if ordered else 0
         return max(self.lag_ewma,p95)
 
-    def admit(self,kind='ANALYSIS',*,foreground=False,estimated_peak_bytes=0,estimated_write_bytes=0):
+    def admit(self,kind='ANALYSIS',*,foreground=False,requested=False,estimated_peak_bytes=0,estimated_write_bytes=0):
         # May be called by a worker: no Qt calls and no access to the GUI SQLite connection.
         reason=None
         if not self.context_active():reason='PROJECT_CONTEXT_CLOSED_OR_CHANGED'
@@ -58,7 +58,9 @@ class RuntimeSupervisor(QObject):
         elif not foreground and self.pause_event.is_set():reason='BACKGROUND_PAUSED_BY_OPERATOR'
         elif self.clock()<self.ready_after:reason='GUI_STARTUP_WARMUP'
         if reason:return ResourceDecision(False,'PAUSED_RESOURCES',(reason,),0,estimated_peak_bytes,None)
-        return (self.foreground_control if foreground else self.control).decide(self.monitor.snapshot(),kind,estimated_peak_bytes,estimated_write_bytes,self.gui_lag(),not foreground and self.clock()-self.last_interaction<1.5)
+        result=(self.foreground_control if foreground else self.control).decide(self.monitor.snapshot(),kind,estimated_peak_bytes,estimated_write_bytes,self.gui_lag(),not (foreground or requested) and self.clock()-self.last_interaction<1.5)
+        if result.allowed and requested:self.last_interaction=-math.inf
+        return result
 
     def set_paused(self,paused):
         if type(paused) is not bool:raise ValueError('背景暫停需明確布林選擇')

@@ -12,10 +12,10 @@ class QueueSignals(QObject):
 
 
 class QueueTask(QRunnable):
-    def __init__(self,root,job_id,token,cancel):
-        super().__init__();self.root=root;self.job_id=job_id;self.token=token;self.cancel=cancel;self.signals=QueueSignals()
+    def __init__(self,root,job_id,token,cancel,admission=None):
+        super().__init__();self.root=root;self.job_id=job_id;self.token=token;self.cancel=cancel;self.admission=admission;self.signals=QueueSignals()
     def run(self):
-        try:self.signals.done.emit(run_training_job(self.root,self.job_id,self.token,self.cancel,self.signals.progress.emit))
+        try:self.signals.done.emit(run_training_job(self.root,self.job_id,self.token,self.cancel,self.signals.progress.emit,admission=self.admission))
         except BaseException as error:self.signals.error.emit(str(error))
 
 
@@ -75,7 +75,11 @@ class TrainingQueuePanel(QWidget):
         if self.running or self.window.busy:return
         try:
             if not already_confirmed and QMessageBox.question(self,'明確啟動／續跑',json.dumps(job,ensure_ascii=False,indent=2)+'\nSUCCESS／REUSED不重跑；FAILED僅在勾選後重試。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
-            claimed=self.store.claim_training_job(job['id'],job['revision'],True,self.retry_failed.isChecked());self.current_job=claimed['id'];self.token=claimed['owner']['token'];self.running=True;self.window.busy=True;self.window.import_button.setEnabled(False);self.cancel_event=threading.Event();self.task=QueueTask(self.store.library.root,claimed['id'],self.token,self.cancel_event);self.task.signals.setParent(self);self.task.signals.progress.connect(self.progress,Qt.QueuedConnection);self.task.signals.done.connect(self.done,Qt.QueuedConnection);self.task.signals.error.connect(self.failed,Qt.QueuedConnection);self.controls();self.progress(claimed);QThreadPool.globalInstance().start(self.task)
+            supervisor=getattr(self.window,'runtime',None)
+            if supervisor:
+                decision=supervisor.admit('GEOMETRY',requested=True)
+                if not decision.allowed:self.status.setText('未取得工作；等待背景資源：'+','.join(decision.reasons));return
+            claimed=self.store.claim_training_job(job['id'],job['revision'],True,self.retry_failed.isChecked());self.current_job=claimed['id'];self.token=claimed['owner']['token'];self.running=True;self.window.busy=True;self.window.import_button.setEnabled(False);self.cancel_event=threading.Event();self.task=QueueTask(self.store.library.root,claimed['id'],self.token,self.cancel_event,(lambda:supervisor.admit('GEOMETRY')) if supervisor else None);self.task.signals.setParent(self);self.task.signals.progress.connect(self.progress,Qt.QueuedConnection);self.task.signals.done.connect(self.done,Qt.QueuedConnection);self.task.signals.error.connect(self.failed,Qt.QueuedConnection);self.controls();self.progress(claimed);QThreadPool.globalInstance().start(self.task)
         except Exception as error:self.status.setText('啟動／續跑阻擋：'+str(error));self.controls()
     def progress(self,job):
         states=[i['state'] for i in job['items']];self.progress_label.setText(f"{job['phase']}／實際SUCCESS{states.count('SUCCESS')}／REUSED{states.count('REUSED')}／FAILED{states.count('FAILED')}／READY{states.count('READY')}／全部{len(states)}／保存r{job['revision']}");self.details.setPlainText(json.dumps(job,ensure_ascii=False,indent=2))

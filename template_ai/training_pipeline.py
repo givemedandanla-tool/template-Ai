@@ -88,7 +88,7 @@ class TrainingQueueMixin:
         job=self._owned_job(job_id,token);job.update(phase=phase,last_error=error,finished=time.time());result=self._write('JOB',job_id,job,job['revision'],'training_job_'+phase.lower());lease=self.get('WORKER','geometry-worker');lease['active']=False;self._write('WORKER','geometry-worker',lease,lease['revision'],'training_worker_released');return result
 
 
-def run_training_job(root,job_id,token,cancel=None,progress=None,proof_function=None,audit_hook=None):
+def run_training_job(root,job_id,token,cancel=None,progress=None,proof_function=None,audit_hook=None,admission=None):
     from .storage import Library
     from .training_store import TrainingStore
     library=Library(root);store=TrainingStore(library)
@@ -100,6 +100,12 @@ def run_training_job(root,job_id,token,cancel=None,progress=None,proof_function=
                 with store.transaction():result=store._finish_training_job(job_id,token,'CANCELLED')
                 if progress:progress(result)
                 return result
+            if admission:
+                decision=admission()
+                if not decision.allowed:
+                    with store.transaction():result=store._finish_training_job(job_id,token,'PAUSED_RESOURCES',','.join(decision.reasons))
+                    if progress:progress(result)
+                    return result
             index=next((i for i,item in enumerate(job['items']) if item['state']=='READY'),None)
             if index is None:
                 phase='COMPLETED_WITH_EXCEPTIONS' if any(i['state']=='FAILED' for i in job['items']) else 'COMPLETED'

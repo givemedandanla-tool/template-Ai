@@ -158,7 +158,9 @@ class AutomaticTraining:
             reason='只使用有效已准入TRAIN與已核對事實；候選結果從不自動發布',created=time.time())
         with self.store.transaction():return self.store._write('AUTO_UNIT',identity,payload,before['revision'] if before else 0,'automatic_work_analysed'),False
 
-    def run_source(self,item,job,cancel=None):
+    def run_source(self,item,job,cancel=None,admission=None):
+        from .runtime_admission import require_resources
+        require_resources(admission)
         from .source_analysis import analyse_source
         path=Path(item['path']);verify_source(path,item['source_hash'])
         source=self.library.source(item['source_id']) if item.get('source_id') else None
@@ -183,6 +185,7 @@ class AutomaticTraining:
             hypotheses=analyse_source(source,self.library.assets,model,model_context)
             for number,hypothesis in enumerate(hypotheses,1):
                 if cancel and cancel.is_set():break
+                require_resources(admission)
                 if any(w['payload'].get('analysis_key')==hypothesis['key'] or
                     w['payload'].get('crop')==hypothesis['crop'] for w in works):continue
                 # Atomically save the source-derived work and unconfirmed observations.
@@ -204,6 +207,7 @@ class AutomaticTraining:
         units=[];reused=0
         for work in works:
             if cancel and cancel.is_set():break
+            require_resources(admission)
             try:
                 unit,was_reused=self.process_work(work,job);units.append(unit);reused+=int(was_reused)
             except (ValueError,OSError) as error:
@@ -214,7 +218,8 @@ class AutomaticTraining:
             analysed_units=len(units)-reused,reused_units=reused,stages_complete=not(cancel and cancel.is_set()))
 
 
-def run_automatic(root,identity,token,cancel=None,progress=None):
+def run_automatic(root,identity,token,cancel=None,progress=None,admission=None):
+    from .runtime_admission import ResourcePause,require_resources
     from .storage import Library
     library=Library(root);service=AutomaticTraining(library)
     try:
@@ -224,10 +229,12 @@ def run_automatic(root,identity,token,cancel=None,progress=None):
             if cancel and cancel.is_set():return service.finish(identity,token,'CANCELLED')
             if item['state'] not in ('READY','SUCCESS'):continue
             try:
-                result=service.run_source(item,job,cancel)
+                require_resources(admission)
+                result=service.run_source(item,job,cancel,admission) if admission else service.run_source(item,job,cancel)
                 with service.store.transaction():
                     current=service.owned(identity,token);current['items'][index].update(result,error=None,attempts=item['attempts']+1)
                     job=service.store._write('AUTO_JOB',identity,current,current['revision'],'automatic_source_result_saved')
+            except ResourcePause as error:return service.finish(identity,token,'PAUSED_RESOURCES',str(error))
             except (ValueError,OSError,ET_PARSE_ERROR) as error:
                 with service.store.transaction():
                     current=service.owned(identity,token);current['items'][index].update(state='FAILED',error=str(error),attempts=item['attempts']+1)

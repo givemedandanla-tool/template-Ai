@@ -17,7 +17,7 @@
     },
     {
       "id": "FAIR_EXECUTION",
-      "work": "same TrainingStore durable requests referencing existing JOB/AUTO_JOB,SQLite arrival order FIFO,explicit scope consent,leases/CAS,blocked items separated,pause/cancel/interrupt/restart without false saved progress"
+      "work": "Same existing SQLite dedicated runtime_requests table referencing existing JOB/AUTO_JOB;avoids bumping learning epoch for queue-only bookkeeping;FIFO insertion rank,explicit consent,leases/CAS,blocked isolation,pause/cancel/restart without false saved progress"
     },
     {
       "id": "GUI_AND_ACCEPTANCE",

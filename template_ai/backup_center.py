@@ -62,6 +62,10 @@ class BackupScheduler(QObject):
                 'WAITING_IDLE':'備份已到期：等待目前背景工作完成，尚未建立新備份',
                 'CLOCK_ROLLBACK_REVIEW':'系統時鐘回退，先核對排程時間；上次成功紀錄保留'}
         if state!='DUE':self.set_status(labels[state]);return
+        supervisor=getattr(self.window,'runtime',None)
+        if supervisor:
+            decision=supervisor.admit('EXPORT')
+            if not decision.allowed:self.set_status('備份到期，等待背景資源：'+','.join(decision.reasons));return
         password=self._password;root=str(self.window.library.root);snapshot=json.loads(json.dumps(record));self.cancel_event.clear();self.running=True
         emit=progress_emitter(self.phase)
         filename='template-Ai-'+datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S')+'-'+new_id()[:8]+'.tabi'

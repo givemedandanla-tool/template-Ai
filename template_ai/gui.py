@@ -236,6 +236,8 @@ class MainWindow(QMainWindow):
         self._mode_memory={};self._active_mode=0
         self.busy = False
         self._background_jobs = {}
+        from .runtime_supervisor import RuntimeSupervisor
+        self.runtime=RuntimeSupervisor(self)
         self.loading_form = False
         self.setWindowTitle(f"Template AI {__version__} · 矩形排版研究版")
         self.resize(1340, 850)
@@ -291,7 +293,7 @@ class MainWindow(QMainWindow):
             for label,fn in group:self.button(label,fn,panel_layout)
             panel_layout.addStretch();self.function_stack.addWidget(panel)
         rail_layout.addWidget(self.function_stack,1)
-        for label,fn in [('共用字型管理',self.font_center),('共用畫布設定',self.editor_settings),('目前問題診斷',self.shared_diagnostic)]:self.button(label,fn,rail_layout)
+        for label,fn in [('共用字型管理',self.font_center),('共用畫布設定',self.editor_settings),('目前問題診斷',self.shared_diagnostic),('低負載／背景暫停',self.runtime_center)]:self.button(label,fn,rail_layout)
         rail_layout.addStretch();self.function_rail=rail;splitter.addWidget(rail)
         self.tabs = QTabWidget()
         self.tabs.addTab(self.build_training(), "① 訓練與原稿標記")
@@ -735,6 +737,10 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage("操作未完成：" + text[:150])
         QMessageBox.warning(self, "需要處理", text)
 
+    def runtime_center(self):
+        from .runtime_panel import RuntimePanel
+        panel=RuntimePanel(self);panel.setAttribute(Qt.WA_DeleteOnClose);panel.show();return panel
+
     def run_job(self, message, function, callback):
         if self.busy:
             self.inform("目前仍有背景匯入工作，請等待完成")
@@ -767,13 +773,17 @@ class MainWindow(QMainWindow):
                 release()
         job.signals.done.connect(finished, Qt.QueuedConnection)
         job.signals.error.connect(failed, Qt.QueuedConnection)
-        try:
-            self.pool.start(job)
-        except Exception:
-            self.busy = False
-            self.import_button.setEnabled(True)
-            release()
-            raise
+        context=self.library
+        def launch():
+            if context.closed or self.library is not context:
+                self.busy=False;release();return
+            decision=self.runtime.admit('ANALYSIS',foreground=True)
+            if not decision.allowed:
+                self.statusBar().showMessage(message+' · 等待資源；尚未執行／保存：'+','.join(decision.reasons))
+                QTimer.singleShot(500,self,launch);return
+            try:self.pool.start(job)
+            except Exception as error:failed(str(error))
+        launch()
 
     def import_source(self):
         path, _ = QFileDialog.getOpenFileName(self, "選擇只讀原稿", "", "設計來源 (*.ai *.pdf *.svg *.eps *.png *.jpg *.jpeg)")

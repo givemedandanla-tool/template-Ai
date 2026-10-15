@@ -90,6 +90,11 @@ class SourceWatchService(QObject):
         if not self.context_open() or self.running or not self.pending:return
         if self.window.busy:
             self.status('SERVICE','WAITING_BACKGROUND_SLOT','其他背景工作執行中；保留先進先出待掃根目錄');self.debounce.start(1000);return
+        supervisor=getattr(self.window,'runtime',None)
+        if supervisor:
+            decision=supervisor.admit('SCAN')
+            if not decision.allowed:
+                self.status('SERVICE','PAUSED_RESOURCES','待掃範圍保留；尚未啟動：'+','.join(decision.reasons));self.debounce.start(1000);return
         self.debounce.stop()
         identity=self.pending.popleft();reasons=self.reasons.pop(identity,set());root=TrainingStore.bind(self.window.library).get('SCAN_ROOT',identity)
         automatic='MANUAL' not in reasons

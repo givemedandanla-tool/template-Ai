@@ -844,3 +844,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI051 Qt resource supervisor recoverable stage
 - 資源控制器量Qt心跳、獨立thread-safe前景/背景准入，policy prefs CAS不改learning epoch；本次暫停和持久保存分開真實狀態，close observers停timer/probe。
 - 14/14目標PASS；首個14中1FAIL為假clock首pulse跳1s形成真750ms延遲，修fixture250ms且加前/背景hysteresis隔離，保留原失敗log/hash。尚未接現有worker/GUI入口，UI051仍PARTIAL；142歷史要求待新source全驗。
+
+### UI051 actual execution admission / before FIFO schema
+- MainWindow監測/資源面板、watch/backup保留待辦壓力延後、JOB/AUTO_JOB逐安全單位pressure pause並釋放lease；實際完成unit續跑不重做，原AI分析與人審仍分開。17專用PASS，廣回歸尚有舊GUI fixture未處理warmup的失敗，未宣稱整包通過。
+- 保留三份初失敗/修正17PASS的原log+sha；新來源仍142 pending。下一bounded startup與同DB FIFO requests，不建立平行模型資料庫。此為持久queue schema之前checkpoint。

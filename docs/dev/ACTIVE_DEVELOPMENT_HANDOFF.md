@@ -19,3 +19,5 @@
 - UI051 after-env：psutil7.2.2已正確uv install至/workspace/template-Ai/.venv，resource核心8/8PASS（含實際probe）；UI051_RESOURCE_ENVIRONMENT＋text log已保存。setup script lock sync的smoke加psutil，並未整份apt/OCR重跑。下一ResourceSupervisor真Qt heartbeat/close guard及worker准入，再catalog/queue；目前核心未接GUI、不結案UI051。
 
 - UI051 Qt核心WIP：runtime_supervisor QObject已作250ms heartbeat/EWMA/p95、純worker-safe admission、前景/背景分開hysteresis、僅事件型別時間不記鍵值、同preferences CAS低負載暫停（失敗保本次pause並明示未存）、Library close/原作用域守衛/daemon停止。8 resource+6 Qt/policy測試=14PASS；原模型training epoch不因runtime policy變動。尚未掛MainWindow/worker，不宣稱已控制實際訓練；下一接入並做bounded catalogs與公平queue。
+
+- UI051新增真MainWindow資源監督／前景等待、背景watch/backup gate、訓練/分析安全單位PAUSED_RESOURCES及資源GUI；17專用測試PASS（含中途保已存unit、續跑重用、寫audit失敗仍INTERRUPTED），尚未full regression。舊pipeline GUI 29測試有4FAIL（含尚未修audit fixture與新warmup未注入可預測資源），原失敗不改。下一lazy catalogs/fonts及同SQLite公平request schema，先保存本schema變更前checkpoint。

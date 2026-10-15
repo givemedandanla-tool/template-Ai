@@ -1,0 +1,51 @@
+F................This plugin does not support propagateSizeHints()
+FThis plugin does not support propagateSizeHints()
+FThis plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+F........
+======================================================================
+FAIL: test_pause_commit_audit_failure_is_failure_and_keeps_recoverable_running_state (test_runtime_execution.RuntimeAutomaticExecutionTests.test_pause_commit_audit_failure_is_failure_and_keeps_recoverable_running_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_execution.py", line 44, in test_pause_commit_audit_failure_is_failure_and_keeps_recoverable_running_state
+    with patch.object(Library,'event',fail),self.assertRaises(OSError):self.execute(job,lambda:HOLD)
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: OSError not raised
+
+======================================================================
+FAIL: test_actual_cancel_during_worker_then_resume_without_duplicate_success (test_training_pipeline.PipelineGuiTests.test_actual_cancel_during_worker_then_resume_without_duplicate_success)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_training_pipeline.py", line 110, in test_actual_cancel_during_worker_then_resume_without_duplicate_success
+    self.assertTrue(entered.is_set());QTest.mouseClick(self.p.cancel_button,Qt.LeftButton);release.set();self.wait()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_actual_preflight_confirm_worker_progress_and_controls_restored (test_training_pipeline.PipelineGuiTests.test_actual_preflight_confirm_worker_progress_and_controls_restored)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_training_pipeline.py", line 100, in test_actual_preflight_confirm_worker_progress_and_controls_restored
+    job=self.store.records('JOB')[0];self.assertEqual(job['phase'],'COMPLETED');self.assertEqual(len(self.window.library.templates()),2);self.assertIn('SUCCESS2',self.p.progress_label.text());self.assertTrue(self.p.create_button.isEnabled());self.assertFalse(self.window.busy);self.assertFalse(self.p.cancel_button.isEnabled());self.assertEqual([self.window.library.artwork(w['id']) for w in self.works],self.works)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PENDING' != 'COMPLETED'
+- PENDING
++ COMPLETED
+
+
+======================================================================
+FAIL: test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume (test_training_pipeline.PipelineGuiTests.test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_training_pipeline.py", line 121, in test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume
+    job=self.store.records('JOB')[0];self.assertEqual(self.store.training_job_state(job['id']),'INTERRUPTED');self.assertIn('已停止',self.p.status.text());self.assertFalse(self.window.busy);self.assertTrue(self.p.resume_button.isEnabled());self.assertEqual(self.window.library.templates(),[])
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PENDING' != 'INTERRUPTED'
+- PENDING
++ INTERRUPTED
+
+
+----------------------------------------------------------------------
+Ran 29 tests in 17.915s
+
+FAILED (failures=4)

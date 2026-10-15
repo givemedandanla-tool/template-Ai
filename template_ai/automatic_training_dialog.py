@@ -130,11 +130,15 @@ class AutomaticTrainingDialog(QDialog):
         if self.running or self.window.busy:return
         claimed=None
         try:
+            supervisor=getattr(self.window,'runtime',None)
+            if supervisor:
+                decision=supervisor.admit('ANALYSIS',requested=True)
+                if not decision.allowed:self.status.setText('未取得工作；等待背景資源：'+','.join(decision.reasons));return
             claimed=self.service.claim(job['id'],job['revision'],True,self.retry.isChecked());self.running=True;self.cancel_event.clear()
             self.start_button.setEnabled(False);self.resume_button.setEnabled(False);self.cancel_button.setEnabled(True)
             root=self.window.library.root;identity=claimed['id'];token=claimed['owner']['token'];cancel=self.cancel_event;signal=self.progress_signal.updated
             def worker():
-                try:return dict(job=run_automatic(root,identity,token,cancel,signal.emit))
+                try:return dict(job=run_automatic(root,identity,token,cancel,signal.emit,admission=(lambda:supervisor.admit('ANALYSIS')) if supervisor else None))
                 except Exception as error:return dict(error=str(error))
             def finished(result):
                 self.running=False;self.cancel_button.setEnabled(False);self.resume_button.setEnabled(True);self.start_button.setEnabled(self.report is not None)
