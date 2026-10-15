@@ -235,7 +235,7 @@ def run_automatic(root,identity,token,cancel=None,progress=None,admission=None):
                 with service.store.transaction():
                     current=service.owned(identity,token);current['items'][index].update(result,error=None,attempts=item['attempts']+1)
                     job=service.store._write('AUTO_JOB',identity,current,current['revision'],'automatic_source_result_saved')
-            except ResourcePause as error:return service.finish(identity,token,'PAUSED_RESOURCES',str(error))
+            except ResourcePause as error:return service.finish(identity,token,'CANCELLED' if cancel and cancel.is_set() else 'PAUSED_RESOURCES',str(error))
             except (ValueError,OSError,ET_PARSE_ERROR) as error:
                 with service.store.transaction():
                     current=service.owned(identity,token);current['items'][index].update(state='FAILED',error=str(error),attempts=item['attempts']+1)

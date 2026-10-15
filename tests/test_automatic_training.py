@@ -175,7 +175,7 @@ class AutomaticTrainingGuiTests(unittest.TestCase):
         from template_ai.automatic_training_dialog import AutomaticTrainingDialog
         window=self.window();dialog=AutomaticTrainingDialog(window);self.addCleanup(dialog.deleteLater)
         job=self.service.create(self.service.preflight([self.path]),'TEST',True)
-        with patch.object(window,'run_job',side_effect=RuntimeError('Synthetic pool failure')):dialog.start_job(job)
+        with patch.object(window,'run_job',side_effect=RuntimeError('Synthetic pool failure')):dialog.start_job(job);self.wait(lambda:not dialog.running)
         self.assertFalse(dialog.running);self.assertFalse(window.busy)
         self.assertFalse(self.service.store.get('WORKER','automatic-worker')['active'])
         self.assertEqual(self.service.get(job['id'])['phase'],'FAILED_SYSTEM')

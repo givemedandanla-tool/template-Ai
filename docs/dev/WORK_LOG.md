@@ -852,3 +852,5 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - UI051 after FIFO schema：runtime_requests同一DB持久佇列，max200活動/page50、arrival seq FIFO、scope/session/actor明確確認、原子queue+JOB/WORKER claim、blocked隔離、壓力續跑重用、舊面板與GUI接入。備份完整保留requests但還原清consent/owner且需明確恢復。8 FIFO專用PASS、44資源/backup合集PASS、12既有pipeline PASS；先前GUI失敗保留，fixture精確控資源及更新真worker patch，不降低結果/rollback/cancel檢查。尚缺startup bounded與完整Qt/父題證據。
 
 - UI051可恢復startup stage：bounded editor catalogs/source selectedID跨頁，catalog server全庫filter/count、不eager模板payload，字型lazy/僅active slots，import checkpoint延後GUI後且20 bound；實際Qt4測試、5大型startup測試與既有catalog/fonts/pipeline等82PASS。原31test內1 eager entries長度斷言失敗保留，改查新matching_count52與payload<=48，選取/無寫入既有assert全留。psutil IOwait/disk byte delta顯示，40%IOwait僅保守默認非reference保證。仍未閉合UI051。
+
+- UI051 process isolation recoverable checkpoint：新增stdlibPopen+psutil安全timeout/cancel/child tree、bounded pipe protocol及真正SQLite result readback，無新模型engine。20process/Qt/pipeline PASS；001/002 stdin daemon fatal、004廣35中1queued launch release FAIL原始保存；已修同步launch failure標FAILED_SYSTEM釋lease、005驗證中。尚未整父題驗證，下一review ledger。

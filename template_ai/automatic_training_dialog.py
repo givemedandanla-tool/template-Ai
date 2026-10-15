@@ -50,6 +50,7 @@ class AutomaticTrainingDialog(QDialog):
 
     def preflight(self,paths,expected_hashes=None):
         if self.running or self.window.busy:return
+        self.request_id=None
         root=self.window.library.root;self.start_button.setEnabled(False);self.report=None;self.running=True;self.cancel_event.clear();self.cancel_button.setEnabled(True);self.table.setRowCount(0);self.status.setText('掃描來源中，取消在目前檔案步驟完成後生效')
         def worker():
             from .storage import Library
@@ -70,7 +71,7 @@ class AutomaticTrainingDialog(QDialog):
             import json
             r=self.report
             self.details.setPlainText(f"檔案位元重複{r['file_duplicates']}；健康快取可重用{r['reuse_candidates']}；近似檔案候選{r['near_file_candidates']}；作品重複候選{r['artwork_duplicates']}；模板結構相似{r['template_similarity']}；未核實{r['similarity_unknown']}。\n近似不等於相同；不刪除來源或合併客戶。\n"+json.dumps(r['similarity'],ensure_ascii=False,indent=2))
-        try:self.window.run_job('掃描及來源預檢',worker,finished)
+        try:self.window.run_job('掃描及來源預檢',worker,finished,on_error=self.job_error,cancel=self.cancel_event)
         except Exception as error:self.running=False;self.cancel_button.setEnabled(False);self.status.setText('預檢無法啟動：'+str(error))
 
     def scan_progress(self,progress):
@@ -104,6 +105,7 @@ class AutomaticTrainingDialog(QDialog):
         except Exception as error:self.status.setText('未開始：'+str(error))
 
     def prepare_job(self):
+        self.request_id=None
         root=self.window.library.root;report=deepcopy(self.report);actor=self.actor.text();self.running=True;self.cancel_event.clear();self.cancel_button.setEnabled(True);self.start_button.setEnabled(False)
         def worker():
             from .storage import Library
@@ -120,7 +122,7 @@ class AutomaticTrainingDialog(QDialog):
             self.job_created.emit(self.service.get(result['job_id']))
             if self.cancel_event.is_set():self.status.setText('啟動已取消；已保存READY工作未執行，可稍後明確續跑');self.reload();self.start_button.setEnabled(self.report is not None);return
             self.start_job(self.service.get(result['job_id']))
-        try:self.window.run_job('背景核對完整來源／頁次清單',worker,finished)
+        try:self.window.run_job('背景核對完整來源／頁次清單',worker,finished,on_error=self.job_error,cancel=self.cancel_event)
         except Exception as error:self.running=False;self.cancel_button.setEnabled(False);self.start_button.setEnabled(True);self.status.setText('未開始：'+str(error))
 
     def resume(self):
@@ -172,6 +174,9 @@ class AutomaticTrainingDialog(QDialog):
             try:self.window.execution_queue.cancel(self.request_id)
             except Exception as error:self.status.setText('取消未保存：'+str(error))
         else:self.cancel_event.set()
+
+    def job_error(self,error):
+        self.running=False;self.cancel_button.setEnabled(False);self.resume_button.setEnabled(True);self.start_button.setEnabled(self.report is not None);self.status.setText('工作未完成：'+str(error)+'；已保存資料保留，可明確重試')
 
     def reject(self):
         if self.running:self.cancel();self.status.setText('安全取消中；等待目前檔案步驟完成再關閉。');return

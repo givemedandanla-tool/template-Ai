@@ -101,15 +101,21 @@ class PipelineGuiTests(unittest.TestCase):
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.p.create_button,Qt.LeftButton);self.wait()
         job=self.store.records('JOB')[0];self.assertEqual(job['phase'],'COMPLETED');self.assertEqual(len(self.window.library.templates()),2);self.assertIn('SUCCESS2',self.p.progress_label.text());self.assertTrue(self.p.create_button.isEnabled());self.assertFalse(self.window.busy);self.assertFalse(self.p.cancel_button.isEnabled());self.assertEqual([self.window.library.artwork(w['id']) for w in self.works],self.works)
     def test_actual_cancel_during_worker_then_resume_without_duplicate_success(self):
-        entered=threading.Event();release=threading.Event();original=TrainingStore.source_proof
-        def blocked(store,wid):entered.set();release.wait(3);return original(store,wid)
-        with patch('template_ai.training_store.TrainingStore.source_proof',blocked),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
+        import subprocess,sys
+        from template_ai.runtime_worker import run_isolated
+        entered=self.root/'proof-entered';release=self.root/'proof-release'
+        script=('from pathlib import Path;import time\nfrom template_ai.training_store import TrainingStore\noriginal=TrainingStore.source_proof\n'
+                +'def blocked(store,wid):\n    marker=Path('+repr(str(entered))+')\n    if not marker.exists():\n        marker.write_text("ready")\n        deadline=time.monotonic()+5\n        while not Path('+repr(str(release))+').exists() and time.monotonic()<deadline:time.sleep(.01)\n    return original(store,wid)\n'
+                +'TrainingStore.source_proof=blocked\nfrom template_ai.runtime_worker import child_main\nraise SystemExit(child_main())')
+        def factory(command,**options):return subprocess.Popen([sys.executable,'-c',script,*command[3:]],**options)
+        def isolated(*args,**kwargs):return run_isolated(*args,**kwargs,process_factory=factory)
+        with patch('template_ai.runtime_dispatch.run_isolated',isolated),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
             QTest.mouseClick(self.p.create_button,Qt.LeftButton)
             for _ in range(300):
                 APP.processEvents()
-                if entered.is_set():break
+                if entered.exists():break
                 QTest.qWait(10)
-            self.assertTrue(entered.is_set());QTest.mouseClick(self.p.cancel_button,Qt.LeftButton);release.set();self.wait()
+            self.assertTrue(entered.exists());QTest.mouseClick(self.p.cancel_button,Qt.LeftButton);release.write_text('release');self.wait()
         cancelled=self.store.records('JOB')[0];self.assertEqual(cancelled['phase'],'CANCELLED');self.assertEqual(sum(i['state']=='SUCCESS' for i in cancelled['items']),1);self.p.reload();self.p.jobs_table.selectRow(0)
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.p.resume_button,Qt.LeftButton);self.wait()
         completed=self.store.get('JOB',cancelled['id']);self.assertEqual(completed['phase'],'COMPLETED');self.assertEqual(len(self.window.library.templates()),2);self.assertTrue(all(i['attempts']==1 for i in completed['items']))
@@ -119,7 +125,7 @@ class PipelineGuiTests(unittest.TestCase):
         self.assertEqual(self.store.count('JOB'),0);self.assertFalse(self.p.running);self.assertTrue(self.p.create_button.isEnabled())
         self.p.running=True;self.d.reject();self.assertTrue(self.d.isVisible());self.p.running=False
     def test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume(self):
-        with patch('template_ai.runtime_dispatch.run_training_job',side_effect=RuntimeError('worker start failed')),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.p.create_button,Qt.LeftButton);self.wait()
+        with patch('template_ai.runtime_dispatch.run_isolated',side_effect=RuntimeError('worker start failed')),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.p.create_button,Qt.LeftButton);self.wait()
         job=self.store.records('JOB')[0];self.assertEqual(self.store.training_job_state(job['id']),'INTERRUPTED');self.assertIn('已停止',self.p.status.text());self.assertFalse(self.window.busy);self.assertTrue(self.p.resume_button.isEnabled());self.assertEqual(self.window.library.templates(),[])
         self.p.reload();self.p.jobs_table.selectRow(0)
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.p.resume_button,Qt.LeftButton);self.wait()

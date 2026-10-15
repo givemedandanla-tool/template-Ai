@@ -1,0 +1,67 @@
+.EE.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+FF..This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.........
+======================================================================
+ERROR: test_real_subprocess_pauses_at_boundary_and_reuses_saved_work_on_explicit_resume (test_runtime_worker.RuntimeWorkerTests.test_real_subprocess_pauses_at_boundary_and_reuses_saved_work_on_explicit_resume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_worker.py", line 24, in test_real_subprocess_pauses_at_boundary_and_reuses_saved_work_on_explicit_resume
+    result=run_isolated(self.library.root,'AUTO_JOB',claimed['id'],claimed['owner']['token'],admission=lambda:resources.HOLD if self.service.store.count('AUTO_UNIT') else resources.ALLOW)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/runtime_worker.py", line 105, in run_isolated
+    if process.returncode!=0 or not result:raise RuntimeError('worker未完成已核實結果；'+''.join(errors)[-4000:])
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: worker未完成已核實結果；Fatal Python error: _enter_buffered_busy: could not acquire lock for <_io.BufferedReader name='<stdin>'> at interpreter shutdown, possibly due to daemon threads
+Python runtime state: finalizing (tstate=0x00000000015b7de0)
+
+Current thread 0x00007f16114c9740 (most recent call first):
+  <no Python frame>
+
+
+======================================================================
+ERROR: test_real_subprocess_runs_existing_engine_and_returns_only_verified_committed_job (test_runtime_worker.RuntimeWorkerTests.test_real_subprocess_runs_existing_engine_and_returns_only_verified_committed_job)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_worker.py", line 18, in test_real_subprocess_runs_existing_engine_and_returns_only_verified_committed_job
+    result=run_isolated(self.library.root,'AUTO_JOB',claimed['id'],claimed['owner']['token'],progress=progress.append,admission=lambda:resources.ALLOW)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/runtime_worker.py", line 105, in run_isolated
+    if process.returncode!=0 or not result:raise RuntimeError('worker未完成已核實結果；'+''.join(errors)[-4000:])
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: worker未完成已核實結果；Fatal Python error: _enter_buffered_busy: could not acquire lock for <_io.BufferedReader name='<stdin>'> at interpreter shutdown, possibly due to daemon threads
+Python runtime state: finalizing (tstate=0x00000000015b7de0)
+
+Current thread 0x00007f35b9944740 (most recent call first):
+  <no Python frame>
+
+
+======================================================================
+FAIL: test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending (test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_dispatch.py", line 36, in test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending
+    QTest.mouseClick(panel.resume,Qt.LeftButton);self.wait(lambda:self.dispatch.queue.get(request['id'])['state']=='DONE')
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_runtime_dispatch.py", line 30, in wait
+    self.fail('bounded runtime dispatch did not reach expected state: '+str(self.dispatch.error))
+AssertionError: bounded runtime dispatch did not reach expected state: None
+
+======================================================================
+FAIL: test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop (test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_runtime_dispatch.py", line 50, in test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop
+    retry=self.dispatch.submit('AUTO_JOB',self.service.get(job['id']),'SYNTHETIC_EXPLICIT_RETRY');self.assertGreater(retry['seq'],request['seq']);self.wait(lambda:self.dispatch.queue.get(retry['id'])['state']=='DONE')
+                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_runtime_dispatch.py", line 30, in wait
+    self.fail('bounded runtime dispatch did not reach expected state: '+str(self.dispatch.error))
+AssertionError: bounded runtime dispatch did not reach expected state: None
+
+----------------------------------------------------------------------
+Ran 20 tests in 58.984s
+
+FAILED (failures=2, errors=2)

@@ -236,6 +236,7 @@ class MainWindow(QMainWindow):
         self._mode_memory={};self._active_mode=0
         self.busy = False
         self._background_jobs = {}
+        self._waiting_launches={}
         from .runtime_supervisor import RuntimeSupervisor
         self.runtime=RuntimeSupervisor(self)
         from .runtime_dispatch import RuntimeDispatch
@@ -754,7 +755,11 @@ class MainWindow(QMainWindow):
         from .runtime_panel import RuntimePanel
         panel=RuntimePanel(self);panel.setAttribute(Qt.WA_DeleteOnClose);panel.show();return panel
 
-    def run_job(self, message, function, callback,*,on_error=None,resource_kind='ANALYSIS'):
+    def cancel_waiting_jobs(self):
+        for cancel in self._waiting_launches.values():cancel.set()
+        self.statusBar().showMessage('已請求取消尚未啟動的工作；當前已執行的原子步驟請在工作面板安全取消')
+
+    def run_job(self, message, function, callback,*,on_error=None,resource_kind='ANALYSIS',cancel=None):
         if self.busy:
             self.inform("目前仍有背景匯入工作，請等待完成")
             return
@@ -763,9 +768,14 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage(message + " · 背景執行中，完成前不宣稱成功")
         job = Job(function)
         token = new_id()
+        if cancel is None:
+            import threading
+            cancel=threading.Event()
+        self._waiting_launches[token]=cancel
         self._background_jobs[token] = job
         job.signals.setParent(self)
         def release():
+            self._waiting_launches.pop(token,None)
             self._background_jobs.pop(token, None)
             job.signals.deleteLater()
         def finished(value):
@@ -790,10 +800,12 @@ class MainWindow(QMainWindow):
         def launch():
             if context.closed or self.library is not context:
                 self.busy=False;release();return
+            if cancel.is_set():failed('已取消尚未啟動的工作；沒有新增成果');return
             decision=self.runtime.admit(resource_kind,foreground=True)
             if not decision.allowed:
                 self.statusBar().showMessage(message+' · 等待資源；尚未執行／保存：'+','.join(decision.reasons))
                 QTimer.singleShot(500,self,launch);return
+            self._waiting_launches.pop(token,None)
             try:self.pool.start(job)
             except Exception as error:failed(str(error))
         launch()

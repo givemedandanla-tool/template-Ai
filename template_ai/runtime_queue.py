@@ -70,7 +70,7 @@ class RuntimeQueue:
     def cancel_waiting(self,identity,revision):
         with self.transaction():
             request=self.get(identity)
-            if not request or request['revision']!=revision or request['state']=='RUNNING':raise ValueError('請求已變更／正在執行，請先安全停止')
+            if not request or request['revision']!=revision or request['state'] not in ('WAITING','PAUSED_RESOURCES','INTERRUPTED','BLOCKED'):raise ValueError('請求已變更／正在執行／已結束，未改寫歷史結果')
             return self._write(dict(request,state='CANCELLED',consent_session=None),revision,'cancelled_before_claim')
 
     def recover_dead(self):

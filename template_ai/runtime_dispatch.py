@@ -4,6 +4,7 @@ from shiboken6 import isValid
 from .runtime_queue import RuntimeQueue
 from .training_pipeline import LIVE_OWNERS,run_training_job
 from .automatic_training import run_automatic
+from .runtime_worker import run_isolated
 from .model import new_id
 import threading
 
@@ -47,17 +48,26 @@ class RuntimeDispatch(QObject):
                 admission=lambda:runtime.admit('GEOMETRY' if kind=='JOB' else 'ANALYSIS')
                 progress=lambda value:self.progress.emit(identity,value)
                 try:
-                    result=run_training_job(self.library.root,claimed['id'],token,cancel=self.cancel_event,progress=progress,admission=admission) if kind=='JOB' else run_automatic(self.library.root,claimed['id'],token,cancel=self.cancel_event,progress=progress,admission=admission)
+                    result=run_isolated(self.library.root,kind,claimed['id'],token,cancel=self.cancel_event,progress=progress,admission=admission)
                     return dict(result=result)
                 except BaseException as error:return dict(error=str(error))
             def done(payload):
-                LIVE_OWNERS.discard(token);self.active=None
-                if self.closed or self.library.closed:return
+                self.active=None
+                if self.closed or self.library.closed:LIVE_OWNERS.discard(token);return
                 try:
-                    result=payload.get('result');saved=self.queue.finish(identity,token,result,payload.get('error'));self.finished.emit(identity,result or dict(phase='INTERRUPTED',error=payload.get('error')));self.changed.emit()
+                    result=payload.get('result')
+                    if payload.get('launch_failed'):
+                        if kind=='JOB':
+                            with self.queue.store.transaction():result=self.queue.store._finish_training_job(claimed['id'],token,'FAILED_SYSTEM',payload['error'])
+                        else:
+                            from .automatic_training import AutomaticTraining
+                            result=AutomaticTraining(self.library).finish(claimed['id'],token,'FAILED_SYSTEM',payload['error'])
+                    LIVE_OWNERS.discard(token)
+                    saved=self.queue.finish(identity,token,result,payload.get('error'));self.finished.emit(identity,result or dict(phase='INTERRUPTED',error=payload.get('error')));self.changed.emit()
                     self.window.refresh_sources(preserve_editor=True);self.window.refresh_templates(preserve_editor=True)
-                except Exception as error:self.error='執行結果未寫入佇列收據；保留工作與已存單位：'+str(error);self.changed.emit()
-            self.window.run_job('持久工作先進先出 · '+kind,work,done,on_error=lambda error:done(dict(error=error)),resource_kind='GEOMETRY' if kind=='JOB' else 'ANALYSIS')
+                except Exception as error:LIVE_OWNERS.discard(token);self.error='執行結果未寫入佇列收據；保留工作與已存單位：'+str(error);self.changed.emit()
+            try:self.window.run_job('持久工作先進先出 · '+kind,work,done,on_error=lambda error:done(dict(error=error,launch_failed=True)),resource_kind='GEOMETRY' if kind=='JOB' else 'ANALYSIS',cancel=self.cancel_event)
+            except Exception as error:done(dict(error=str(error),launch_failed=True))
         except Exception as error:self.error='排程停止，尚未宣稱成功：'+str(error);self.changed.emit()
 
     def cancel(self,identity):

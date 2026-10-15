@@ -104,7 +104,8 @@ def run_training_job(root,job_id,token,cancel=None,progress=None,proof_function=
             if admission:
                 decision=admission()
                 if not decision.allowed:
-                    with store.transaction():result=store._finish_training_job(job_id,token,'PAUSED_RESOURCES',','.join(decision.reasons))
+                    phase='CANCELLED' if cancel and cancel.is_set() else 'PAUSED_RESOURCES'
+                    with store.transaction():result=store._finish_training_job(job_id,token,phase,','.join(decision.reasons))
                     if progress:progress(result)
                     return result
             index=next((i for i,item in enumerate(job['items']) if item['state']=='READY'),None)
