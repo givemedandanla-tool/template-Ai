@@ -856,3 +856,5 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - UI051 process isolation recoverable checkpoint：新增stdlibPopen+psutil安全timeout/cancel/child tree、bounded pipe protocol及真正SQLite result readback，無新模型engine。20process/Qt/pipeline PASS；001/002 stdin daemon fatal、004廣35中1queued launch release FAIL原始保存；已修同步launch failure標FAILED_SYSTEM釋lease、005驗證中。尚未整父題驗證，下一review ledger。
 
 - UI051 source-work ledger recoverable stage：readonlySQLite來源/作品/索引預檢三模式，global SQL搜尋/50paging/真sourceHash及pins，人審已核准與analysis/explicit exclusion不同欄，未知全庫當前審核數不偽造；QProcess30s隔離核實，無新truthDB。AUTO全來源read改bounded定點hash/page/path，字型家族定點。35 isolated005 PASS；ledger fixture首次錯把invalidXML預檢當FAILED已更正unsupported格式，原log留存；廣watch failure資源fixture已精確注入，004驗證中。原8仍未閉合。
+
+- UI051逐項超時與safe receipt recovery完成可恢復階段：16專用PASS、69廣PASS、22startup/resources PASS；007式錯誤不覆蓋歷史log。新source/work RUNNING先落盤、唯一timeout項隔離後繼續其他已准範圍，FAILED不自動重試、retry一次消耗，已提交完成但receipt失敗可核對補收據不重做。反例/數學/界線見UI051_TIMEOUT_RECOVERY.md。原8未formal尚不標整父題VERIFIED，後續capture/全回歸。

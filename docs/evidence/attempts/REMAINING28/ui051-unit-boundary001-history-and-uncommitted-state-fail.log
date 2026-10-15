@@ -1,0 +1,45 @@
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+..F..F................................This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.....This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+......
+======================================================================
+FAIL: test_dead_owner_is_interrupted_manual_resume_only_preserves_scope (test_training_pipeline.PipelineTests.test_dead_owner_is_interrupted_manual_resume_only_preserves_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_training_pipeline.py", line 64, in test_dead_owner_is_interrupted_manual_resume_only_preserves_scope
+    history=self.store.history('JOB',job['id']);self.assertEqual([h['revision'] for h in history],[6,5,4,3,2,1]);self.assertEqual([h['action'] for h in reversed(history)],['training_job_created','training_job_claimed','training_job_claimed','training_item_success','training_item_success','training_job_completed'])
+                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [8, 7, 6, 5, 4, 3, 2, 1] != [6, 5, 4, 3, 2, 1]
+
+First differing element 0:
+8
+6
+
+First list contains 2 additional elements.
+First extra element 6:
+2
+
+- [8, 7, 6, 5, 4, 3, 2, 1]
+?  ------
+
++ [6, 5, 4, 3, 2, 1]
+
+======================================================================
+FAIL: test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system (test_training_pipeline.PipelineTests.test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_training_pipeline.py", line 73, in test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system
+    failed=self.store.get('JOB',job['id']);self.assertEqual(failed['phase'],'FAILED_SYSTEM');self.assertTrue(all(i['state']=='READY' for i in failed['items']));self.assertEqual(self.library.templates(),[]);self.assertEqual(self.store.count('USE'),0);self.assertFalse(self.store.get('WORKER','geometry-worker')['active'])
+                                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 53 tests in 60.675s
+
+FAILED (failures=2)

@@ -84,3 +84,17 @@ class RuntimeQueueTests(unittest.TestCase):
         before=self.service.get(request['job_id']);self.queue.recover_dead();saved=self.queue.get(request['id'])
         self.assertEqual(saved['state'],'INTERRUPTED');self.assertIsNone(saved['consent_session']);self.assertEqual(self.service.get(request['job_id']),before)
         self.assertEqual(self.service.phase(before),'INTERRUPTED')
+
+    def test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure(self):
+        import subprocess,sys
+        from template_ai.runtime_worker import run_isolated,WorkerTimeout
+        import test_runtime_execution as resources
+        stalled=self.path.with_name('00000-stall.svg');stalled.write_bytes(self.path.read_bytes());job=self.job([stalled,self.path]);self.queue=RuntimeQueue(self.library);session=self.session();request=self.queue.enqueue('AUTO_JOB',job['id'],'SYNTHETIC_TIMEOUT',session,True,True);claimed=self.queue.claim(request,session);token=claimed['owner']['token']
+        script="from template_ai.automatic_training import AutomaticTraining\noriginal=AutomaticTraining.run_source\ndef stalled(self,item,job,cancel=None,admission=None):\n    if item['path'].endswith('00000-stall.svg'):\n        self.db.execute('BEGIN IMMEDIATE')\n        self.db.execute(\"INSERT INTO preferences VALUES('synthetic_uncommitted_source','unsafe')\")\n        import time;time.sleep(30)\n    return original(self,item,job,cancel,admission)\nAutomaticTraining.run_source=stalled\nfrom template_ai.runtime_worker import child_main\nraise SystemExit(child_main())"
+        def factory(command,**options):return subprocess.Popen([sys.executable,'-c',script,*command[3:]],**options)
+        with self.assertRaises(WorkerTimeout):run_isolated(self.library.root,'AUTO_JOB',job['id'],token,admission=lambda:resources.ALLOW,unit_timeout=2.5,process_factory=factory)
+        self.assertEqual(self.service.get(job['id'])['items'][0]['state'],'RUNNING');self.assertIsNone(self.library.db.execute("SELECT value FROM preferences WHERE key='synthetic_uncommitted_source'").fetchone())
+        isolated=self.queue.isolate_timed_out(request['id'],token,'SYNTHETIC isolated timeout');self.assertEqual(isolated['phase'],'CONTINUATION_PENDING');self.assertEqual(isolated['items'][0]['state'],'FAILED')
+        saved=self.queue.finish(request['id'],token,isolated);self.assertEqual(saved['state'],'WAITING');self.assertFalse(saved['retry_failed']);claimed=self.queue.claim(saved,session)
+        result=run_isolated(self.library.root,'AUTO_JOB',job['id'],claimed['owner']['token'],admission=lambda:resources.ALLOW);self.queue.finish(request['id'],claimed['owner']['token'],result)
+        self.assertEqual(result['items'][0]['state'],'FAILED');self.assertEqual(result['items'][0]['attempts'],1);self.assertEqual(result['items'][1]['state'],'WAITING_REVIEW');self.assertEqual(len(self.library.list_sources()),1);self.assertEqual(self.queue.get(request['id'])['state'],'DONE')

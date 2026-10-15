@@ -64,7 +64,8 @@ def read_page(root,mode='SOURCE',query='',source_id=None,offset=0):
             for token in tokens:where.append('instr('+text+',?)>0');args.append(token)
             wrapper=' FROM ('+sql+') WHERE '+' AND '.join(where);total=db.execute('SELECT count(*)'+wrapper,args).fetchone()[0]
             rows=[dict(id=r[0],kind=r[1],path=r[2],source_hash=r[3],analysis_state=r[4],review_state='尚未據此核准來源／作品／客戶',next='明列範圍預檢／人工處理；此處只讀') for r in db.execute('SELECT id,kind,path,hash,state'+wrapper+' ORDER BY kind,id LIMIT ? OFFSET ?',(*args,LIMIT,offset))]
-        result=dict(mode=mode,rows=rows,total=total,offset=offset,limit=LIMIT,summary=summary,scope='Declared registered source pages,actual active works,and separately identified indexed/preflight scopes;no byte-hash deduplication',read_only=True,page_reviewed=sum(row.get('review_state')=='CONFIRMED' for row in rows),page_excluded=sum(row.get('review_state')=='EXPLICITLY_EXCLUDED' for row in rows))
+        summary['all_file_work_coverage_verified']=False
+        result=dict(mode=mode,rows=rows,total=total,offset=offset,limit=LIMIT,summary=summary,scope='Declared registered source pages,recorded active works including unconfirmed hypotheses,and separately identified indexed/preflight scopes;no byte-hash deduplication;full source coverage needs independent review',read_only=True,page_reviewed=sum(row.get('review_state')=='CONFIRMED' for row in rows),page_excluded=sum(row.get('review_state')=='EXPLICITLY_EXCLUDED' for row in rows))
         if len(json.dumps(result,ensure_ascii=False,allow_nan=False).encode())>MAX_BYTES:raise ValueError('審核快照超過4MiB，請縮小搜尋範圍；未截斷分母')
         return result
 

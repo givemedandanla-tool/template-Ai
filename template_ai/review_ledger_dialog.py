@@ -46,7 +46,7 @@ class ReviewLedgerDialog(QDialog):
                     title=(row.get('name') or row.get('path') or '')+'／頁'+str(row.get('page','UNKNOWN'))
                     state=str(row.get('actual_works',''))+' '+row.get('analysis_state','UNKNOWN');review=row.get('review_state','UNKNOWN')+'；'+row.get('ownership','')
                     for column,text in enumerate((row['id'],title,state,review,row.get('source_error') or row.get('exclusion_reason') or row['next'])):self.table.setItem(index,column,QTableWidgetItem(text))
-                summary=value['summary'];self.summary.setText(f"登錄來源頁{summary['registered_source_pages']}／原始路徑{summary['registered_original_paths']}；實際有效作品{summary['actual_active_works']}（另存已取代歷史{summary['superseded_work_history']}）；已存人工核准紀錄{summary['human_confirmation_records']}，全庫當前有效已審數尚未逐頁核實。此頁有效已審{value['page_reviewed']}／明確排除{value['page_excluded']}，兩者分開。")
+                summary=value['summary'];self.summary.setText(f"登錄來源頁{summary['registered_source_pages']}／原始路徑{summary['registered_original_paths']}；已登錄作品紀錄{summary['actual_active_works']}（另存已取代歷史{summary['superseded_work_history']}）；已存人工核准紀錄{summary['human_confirmation_records']}，全庫當前有效已審數尚未逐頁核實。作品紀錄含未核對候選，不宣稱已覆蓋所有原稿作品。此頁有效已審{value['page_reviewed']}／明確排除{value['page_excluded']}，兩者分開。")
                 self.status.setText(f"已核實只讀快照；本頁{len(self.rows)}／符合{value['total']}，起點{value['offset']}。候選／預檢另計，不用內容去重減少來源；正式輸出仍走原Gate。")
                 self.previous.setEnabled(self.offset>0);self.next.setEnabled(self.offset+50<value['total']);self.loaded.emit(value)
             except Exception as error:self.status.setText('核實未完成，保留上次有效快照：'+str(error))

@@ -63,3 +63,14 @@ class StartupCatalogTests(unittest.TestCase):
         self.assertEqual(first['total'],203);self.assertEqual(len(first['ids']),48);self.assertEqual(len(last['ids']),11);self.assertFalse(set(first['ids'])&set(last['ids']))
         with self.assertRaises(ValueError):search(self.library,'a'*501)
         with self.assertRaises(ValueError):editor_page(self.library,'templates',limit=101)
+
+    def test_invalid_resource_policy_still_opens_gui_and_diagnostic_entry_with_background_fail_closed(self):
+        with self.library.db:self.library.db.execute('INSERT INTO preferences VALUES(?,?)',('runtime_execution_policy','{"version":99}'))
+        window=self.window();self.assertIsNotNone(window.runtime.policy_error);self.assertTrue(window.runtime.pause_event.is_set());self.assertFalse(window.runtime.admit().allowed);self.assertTrue(window.isEnabled());self.assertTrue(hasattr(window,'execution_queue'))
+
+    def test_explicit_source_preflight_and_registration_lookup_never_expand_all_other_source_records(self):
+        from template_ai.automatic_training import AutomaticTraining
+        source,work=source_work(self.library,self.root)
+        with patch.object(Library,'list_sources',side_effect=AssertionError('unbounded analysis source lookup')):
+            report=AutomaticTraining(self.library).preflight([source['original_path']],compare=False);job=AutomaticTraining(self.library).create(report,'SYNTHETIC',True)
+        self.assertEqual(job['items'][0]['source_id'],source['id']);self.assertEqual(report['items'][0]['existing_source_id'],source['id'])

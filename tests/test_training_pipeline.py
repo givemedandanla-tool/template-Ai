@@ -61,7 +61,7 @@ class PipelineTests(unittest.TestCase):
         job=self.claim(self.job());LIVE_OWNERS.discard(job['owner']['token']);self.assertEqual(self.store.training_job_state(job['id']),'INTERRUPTED')
         with self.assertRaises(ValueError):self.store.claim_training_job(job['id'],job['revision'])
         resumed=self.store.claim_training_job(job['id'],job['revision'],True);done=run_training_job(self.library.root,job['id'],resumed['owner']['token']);self.assertEqual(done['phase'],'COMPLETED')
-        history=self.store.history('JOB',job['id']);self.assertEqual([h['revision'] for h in history],[6,5,4,3,2,1]);self.assertEqual([h['action'] for h in reversed(history)],['training_job_created','training_job_claimed','training_job_claimed','training_item_success','training_item_success','training_job_completed'])
+        history=self.store.history('JOB',job['id']);self.assertEqual([h['revision'] for h in history],[8,7,6,5,4,3,2,1]);self.assertEqual([h['action'] for h in reversed(history)],['training_job_created','training_job_claimed','training_job_claimed','training_item_started_not_completed','training_item_success','training_item_started_not_completed','training_item_success','training_job_completed'])
     def test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system(self):
         job=self.claim(self.job())
         def hook(original):

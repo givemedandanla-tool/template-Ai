@@ -4,7 +4,7 @@ from shiboken6 import isValid
 from .runtime_queue import RuntimeQueue
 from .training_pipeline import LIVE_OWNERS,run_training_job
 from .automatic_training import run_automatic
-from .runtime_worker import run_isolated
+from .runtime_worker import run_isolated,WorkerTimeout
 from .model import new_id
 import threading
 
@@ -50,12 +50,16 @@ class RuntimeDispatch(QObject):
                 try:
                     result=run_isolated(self.library.root,kind,claimed['id'],token,cancel=self.cancel_event,progress=progress,admission=admission)
                     return dict(result=result)
+                except WorkerTimeout as error:return dict(error=str(error),unit_timeout=True)
                 except BaseException as error:return dict(error=str(error))
             def done(payload):
                 self.active=None
                 if self.closed or self.library.closed:LIVE_OWNERS.discard(token);return
                 try:
                     result=payload.get('result')
+                    if payload.get('unit_timeout'):
+                        try:result=self.queue.isolate_timed_out(identity,token,payload['error'])
+                        except ValueError as error:payload['error']+='；'+str(error)
                     if payload.get('launch_failed'):
                         if kind=='JOB':
                             with self.queue.store.transaction():result=self.queue.store._finish_training_job(claimed['id'],token,'FAILED_SYSTEM',payload['error'])
@@ -79,6 +83,13 @@ class RuntimeDispatch(QObject):
             if request['kind']=='JOB':self.queue.store.request_training_cancel(request['job_id'],self.active[1])
             self.last_wait='已請求安全取消；當前原子單位仍可能完成';self.changed.emit();return
         self.queue.cancel_waiting(identity,request['revision']);self.finished.emit(identity,dict(phase='CANCELLED_BEFORE_CLAIM'));self.changed.emit()
+
+    def recover_scheduler(self):
+        if self.closed or self.library.closed or self.active or self.window.busy:raise ValueError('先等目前工作安全停止；原專案需保持開啟')
+        self.window.runtime.refresh_policy();self.queue.recover_dead();proof=new_id()
+        with self.queue.transaction():self.library.event(proof,'runtime_scheduler_recovery_write_checked')
+        if not self.library.db.execute("SELECT 1 FROM reviews WHERE entity=? AND action='runtime_scheduler_recovery_write_checked'",(proof,)).fetchone():raise ValueError('沒有可核對的保存憑證，未解除排程故障')
+        self.window.runtime.policy_error=None;self.error=None;self.last_wait='已核對可讀寫及工作收據；未完成範圍仍需明確恢復';self.changed.emit()
 
     def shutdown(self):
         if self.closed:return

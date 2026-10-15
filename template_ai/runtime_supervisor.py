@@ -19,7 +19,8 @@ class RuntimeSupervisor(QObject):
         self.destroyed.connect(lambda *_:(stopped.set(),probe.close()))
         app=QApplication.instance()
         if app:app.installEventFilter(self)
-        self.refresh_policy()
+        try:self.refresh_policy()
+        except (sqlite3.Error,ValueError,TypeError) as error:self.policy_error=str(error);self.pause_event.set()
         if start:self.monitor.start();self.timer.start()
 
     def eventFilter(self,watched,event):

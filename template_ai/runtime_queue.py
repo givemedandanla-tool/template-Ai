@@ -77,7 +77,11 @@ class RuntimeQueue:
         with self.transaction():
             for row in self.db.execute("SELECT id FROM runtime_requests WHERE json_extract(payload,'$.state')='RUNNING' ORDER BY seq LIMIT 200").fetchall():
                 request=self.get(row[0])
-                if not owner_alive(request.get('owner')):self._write(dict(request,state='INTERRUPTED',consent_session=None,message='原執行者已離開；明確確認恢復，已保存單位保留'),request['revision'],'dead_owner_recoverable')
+                if not owner_alive(request.get('owner')):
+                    job=self.store.get(request['kind'],request['job_id'])
+                    committed=bool(job and job['phase'] in ('COMPLETED','COMPLETED_WITH_EXCEPTIONS') and (job.get('owner') or {}).get('token')==(request.get('owner') or {}).get('token') and scope_digest(request['kind'],job)==request['scope_digest'])
+                    value=dict(request,state='DONE' if committed else 'INTERRUPTED',consent_session=None,result_phase=job['phase'] if committed else 'INTERRUPTED',message='已從原工作提交讀回遺失收據' if committed else '原執行者已離開；明確確認恢復，已保存單位保留')
+                    self._write(value,request['revision'],'committed_result_receipt_recovered' if committed else 'dead_owner_recoverable')
 
     def block(self,request,message):
         with self.transaction():return self._write(dict(request,state='BLOCKED',message=str(message)[:4000],consent_session=None),request['revision'],'blocked_not_discarded')
@@ -91,7 +95,7 @@ class RuntimeQueue:
             current=self.get(request['id']);ordered=[r for r in self.eligible() if r['id'] in chosen]
             if not ordered or ordered[0]['id']!=request['id'] or current['consent_session']!=session or current['revision']!=request['revision']:raise ValueError('佇列順序／作用域／請求版次已改變，未接管')
             if scope_digest(request['kind'],claimed)!=request['scope_digest']:raise ValueError('工作範圍已改變')
-            self._write(dict(current,state='RUNNING',owner=claimed['owner'],job_revision=claimed['revision']),current['revision'],'claimed_with_existing_worker_lease')
+            self._write(dict(current,state='RUNNING',owner=claimed['owner'],job_revision=claimed['revision'],retry_failed=False),current['revision'],'claimed_with_existing_worker_lease')
         if request['kind']=='JOB':return self.store.claim_training_job(job['id'],job['revision'],True,request['retry_failed'],claimed_hook=atomic_claim)
         from .automatic_training import AutomaticTraining
         return AutomaticTraining(self.library).claim(job['id'],job['revision'],True,request['retry_failed'],claimed_hook=atomic_claim)
@@ -101,5 +105,19 @@ class RuntimeQueue:
             request=self.get(identity)
             if request['state']!='RUNNING' or request['owner']['token']!=token:raise ValueError('執行請求擁有者已變更')
             phase=result['phase'] if result else 'INTERRUPTED'
-            state='PAUSED_RESOURCES' if phase=='PAUSED_RESOURCES' else 'DONE' if phase in ('COMPLETED','COMPLETED_WITH_EXCEPTIONS') else 'BLOCKED'
-            return self._write(dict(request,state=state,owner=None,result_phase=phase,message=str(error)[:4000] if error else (result.get('last_error') or result.get('system_error')),consent_session=request['consent_session'] if state=='PAUSED_RESOURCES' else None),request['revision'],'result_committed')
+            state='WAITING' if phase=='CONTINUATION_PENDING' else 'PAUSED_RESOURCES' if phase=='PAUSED_RESOURCES' else 'DONE' if phase in ('COMPLETED','COMPLETED_WITH_EXCEPTIONS') else 'BLOCKED'
+            return self._write(dict(request,state=state,owner=None,result_phase=phase,message=str(error)[:4000] if error else (result.get('last_error') or result.get('system_error')),consent_session=request['consent_session'] if state in ELIGIBLE else None),request['revision'],'result_committed')
+
+    def isolate_timed_out(self,identity,token,message):
+        """Called only after our child is stopped; isolate exactly its durable active item."""
+        with self.transaction():
+            request=self.get(identity);job=self.store.get(request['kind'],request['job_id'])
+            if request['state']!='RUNNING' or request['owner']['token']!=token or job['phase']!='RUNNING' or job['owner']['token']!=token or owner_alive(job['owner']) or scope_digest(request['kind'],job)!=request['scope_digest']:raise ValueError('無法證明已停止工作及原範圍，未自動續跑')
+            active=[item for item in job['items'] if item['state']=='RUNNING']
+            if len(active)!=1:raise ValueError('沒有唯一持久執行項，未猜測要隔離的來源／樣本')
+            active[0].update(state='FAILED',error=str(message)[:4000],attempts=active[0].get('attempts',0)+1)
+            job['phase']='CONTINUATION_PENDING' if any(item['state']=='READY' for item in job['items']) else 'COMPLETED_WITH_EXCEPTIONS'
+            result=self.store._write(request['kind'],job['id'],job,job['revision'],'runtime_timed_out_item_isolated')
+            worker='geometry-worker' if request['kind']=='JOB' else 'automatic-worker';lease=self.store.get('WORKER',worker)
+            if not lease or lease.get('owner',{}).get('token')!=token:raise ValueError('既有worker執行權已改變')
+            lease['active']=False;self.store._write('WORKER',worker,lease,lease['revision'],'runtime_timed_out_worker_released');return result

@@ -108,6 +108,9 @@ class AutomaticTraining:
     def finish(self,identity,token,phase,error=None):
         with self.store.transaction():
             row=self.owned(identity,token);row.update(phase=phase,finished=time.time(),system_error=error)
+            if phase in ('CANCELLED','PAUSED_RESOURCES','FAILED_SYSTEM'):
+                for item in row['items']:
+                    if item['state']=='RUNNING':item.update(state='READY',error=error)
             result=self.store._write('AUTO_JOB',identity,row,row['revision'],'automatic_job_'+phase.lower())
             lease=self.store.get('WORKER','automatic-worker');lease['active']=False
             self.store._write('WORKER','automatic-worker',lease,lease['revision'],'automatic_worker_released')
@@ -172,6 +175,11 @@ class AutomaticTraining:
             if item.get('expected_page_count') and result['payload']['page_count']!=item['expected_page_count']:raise ValueError('可讀頁次數與預檢不符，未登錄部分來源')
             source=self.library.add_source(path,result['payload']);source=self.library.source(source['id'])
         if not healthy_source(source):raise ValueError('來源或衍生快取失效，需重新核對')
+        if not item.get('source_id'):
+            with self.store.transaction():
+                current=self.owned(job['id'],job['owner']['token'])
+                index=next(i for i,row in enumerate(current['items']) if row['path']==item['path'] and row['page']==item['page'])
+                current['items'][index]['source_id']=source['id'];self.store._write('AUTO_JOB',current['id'],current,current['revision'],'automatic_source_registered_before_work_analysis')
         if item.get('expected_page_count') and source['page_count']!=item['expected_page_count']:raise ValueError('可讀頁次數與預檢不符，不能聲稱全來源已完成')
         works=self.library.artworks(source['id'])
         works=[w for w in works if w['payload'].get('segmentation_state')!='SUPERSEDED']
@@ -230,6 +238,8 @@ def run_automatic(root,identity,token,cancel=None,progress=None,admission=None):
             if item['state'] not in ('READY','SUCCESS'):continue
             try:
                 require_resources(admission)
+                with service.store.transaction():
+                    current=service.owned(identity,token);current['items'][index]['state']='RUNNING';job=service.store._write('AUTO_JOB',identity,current,current['revision'],'automatic_source_started_not_completed')
                 result=service.run_source(item,job,cancel,admission) if admission else service.run_source(item,job,cancel)
                 with service.store.transaction():
                     current=service.owned(identity,token);current['items'][index].update(result,error=None,attempts=item['attempts']+1)

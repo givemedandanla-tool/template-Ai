@@ -68,6 +68,7 @@ class TrainingQueueMixin:
                     old=self.get('JOB',lease['job_id'])
                     if old and old['phase']=='RUNNING':old.update(phase='INTERRUPTED',owner=None,last_error='original owner exited');self._write('JOB',old['id'],old,old['revision'],'training_job_interrupted')
                 for item in job['items']:
+                    if item['state']=='RUNNING':item.update(state='READY',error='先前未提交單位需恢復')
                     if item['state']=='FAILED' and retry_failed:item.update(state='READY',error=None)
                 if not any(i['state']=='READY' for i in job['items']):raise ValueError('沒有待續跑項；失敗項需明確選擇重試')
                 job.update(phase='RUNNING',owner=owner,cancel_requested=False,last_error=None);saved=self._write('JOB',job_id,job,expected_revision,'training_job_claimed');self._write('WORKER','geometry-worker',{'active':True,'job_id':job_id,'owner':owner},lease['revision'] if lease else 0,'training_worker_claimed')
@@ -86,6 +87,11 @@ class TrainingQueueMixin:
             job=self._owned_job(job_id,token);job['cancel_requested']=True;return self._write('JOB',job_id,job,job['revision'],'training_cancel_requested')
 
     def _finish_training_job(self,job_id,token,phase,error=None):
+        if phase in ('CANCELLED','PAUSED_RESOURCES','FAILED_SYSTEM'):
+            job=self._owned_job(job_id,token)
+            for item in job['items']:
+                if item['state']=='RUNNING':item.update(state='READY',error=error)
+            self._write('JOB',job_id,job,job['revision'],'training_uncommitted_item_recoverable')
         job=self._owned_job(job_id,token);job.update(phase=phase,last_error=error,finished=time.time());result=self._write('JOB',job_id,job,job['revision'],'training_job_'+phase.lower());lease=self.get('WORKER','geometry-worker');lease['active']=False;self._write('WORKER','geometry-worker',lease,lease['revision'],'training_worker_released');return result
 
 
@@ -97,6 +103,12 @@ def run_training_job(root,job_id,token,cancel=None,progress=None,proof_function=
     try:
         for _ in range(201):
             job=store._owned_job(job_id,token)
+            index=next((i for i,item in enumerate(job['items']) if item['state']=='READY'),None)
+            if index is None:
+                phase='COMPLETED_WITH_EXCEPTIONS' if any(i['state']=='FAILED' for i in job['items']) else 'COMPLETED'
+                with store.transaction():result=store._finish_training_job(job_id,token,phase)
+                if progress:progress(result)
+                return result
             if (cancel and cancel.is_set()) or job['cancel_requested']:
                 with store.transaction():result=store._finish_training_job(job_id,token,'CANCELLED')
                 if progress:progress(result)
@@ -108,18 +120,14 @@ def run_training_job(root,job_id,token,cancel=None,progress=None,proof_function=
                     with store.transaction():result=store._finish_training_job(job_id,token,phase,','.join(decision.reasons))
                     if progress:progress(result)
                     return result
-            index=next((i for i,item in enumerate(job['items']) if item['state']=='READY'),None)
-            if index is None:
-                phase='COMPLETED_WITH_EXCEPTIONS' if any(i['state']=='FAILED' for i in job['items']) else 'COMPLETED'
-                with store.transaction():result=store._finish_training_job(job_id,token,phase)
-                if progress:progress(result)
-                return result
             item=job['items'][index];sample=store.get('SAMPLE',item['sample_id'])
+            with store.transaction():
+                active=store._owned_job(job_id,token);active['items'][index]['state']='RUNNING';store._write('JOB',job_id,active,active['revision'],'training_item_started_not_completed')
             try:
                 proof=proof_function(store,sample) if proof_function else store.source_proof(sample['work_id'])
                 with store.transaction():
                     current=store._owned_job(job_id,token);current_item=current['items'][index];fresh=store.get('SAMPLE',current_item['sample_id'])
-                    if current_item['state']!='READY' or fresh['revision']!=current_item['sample_revision'] or fresh['pins']!=current_item['source_pins'] or fresh['scope_digest']!=current_item['scope_digest']:raise ValueError('選中樣本／用途／版本已變更')
+                    if current_item['state']!='RUNNING' or fresh['revision']!=current_item['sample_revision'] or fresh['pins']!=current_item['source_pins'] or fresh['scope_digest']!=current_item['scope_digest']:raise ValueError('選中樣本／用途／版本已變更')
                     validity=store.dataset_validity(current['dataset_id'],[fresh['id']])
                     if not validity['valid'] or validity['dataset']['manifest_digest']!=current['manifest_digest'] or validity['dataset']['revision']!=current['dataset_revision']:raise ValueError('資料集或選中樣本已過期')
                     store.checked(fresh['work_id'],proof);existing=store.existing_geometry_result(current['dataset_id'],fresh['id'])

@@ -93,7 +93,9 @@ class BackupScheduler(QObject):
             except Exception as error:self.set_status('已取得實際結果；排程狀態未改寫：'+str(error))
             self.window.statusBar().showMessage(self.status)
         self.set_status('已送本機背景佇列，完成前不宣稱成功')
-        try:self.window.run_job('本機排程備份',work,done)
+        try:
+            if getattr(self.window,'runtime',None):self.window.run_job('本機排程備份',work,done,resource_kind='EXPORT',cancel=self.cancel_event,on_error=lambda error:done(dict(error=error)))
+            else:self.window.run_job('本機排程備份',work,done)
         except Exception:self.running=False;raise
 
     def shutdown(self):
@@ -229,7 +231,9 @@ class BackupManagerDialog(QDialog):
             if clear_secret and not self.remember.isChecked():self.password.clear()
             self.refresh_history()
             self.window.statusBar().showMessage(self.status.text().splitlines()[0])
-        try:self.window.run_job(message,run,finished)
+        try:
+            if getattr(self.window,'runtime',None):self.window.run_job(message,run,finished,resource_kind='RESTORE',cancel=self.cancel_event,on_error=lambda error:finished(dict(error=error)))
+            else:self.window.run_job(message,run,finished)
         except Exception:
             self.running=False;self.tabs.setEnabled(True);self.progress.setRange(0,1);raise
 

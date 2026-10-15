@@ -65,3 +65,19 @@ class RuntimeDispatchTests(unittest.TestCase):
         self.window.library.close();APP.processEvents();self.assertTrue(self.dispatch.closed);self.assertFalse(self.dispatch.timer.isActive());self.assertFalse(panel.timer.isActive());self.assertFalse(panel.restore.isEnabled())
         self.assertEqual(self.service.get(job['id'])['phase'],'READY');self.assertEqual(self.dispatch.queue.library.closed,True)
         self.assertEqual(self.library.db.execute('SELECT count(*) FROM runtime_requests').fetchone()[0],1)
+
+    def test_committed_backend_result_with_failed_queue_receipt_is_recovered_without_repeating_any_analysis(self):
+        job=self.job();event=self.window.library.event
+        def fail(entity,action):
+            if action=='runtime_queue_result_committed':raise OSError('SYNTHETIC receipt disk full')
+            return event(entity,action)
+        with patch.object(self.window.library,'event',fail):
+            request=self.dispatch.submit('AUTO_JOB',job,'SYNTHETIC_RECEIPT');self.wait(lambda:self.dispatch.error is not None)
+        self.assertEqual(self.dispatch.queue.get(request['id'])['state'],'RUNNING');self.assertEqual(self.service.get(job['id'])['phase'],'COMPLETED_WITH_EXCEPTIONS');before=self.service.store.records('AUTO_UNIT')
+        panel=RuntimePanel(self.window);self.panels.append(panel);QTest.mouseClick(panel.recover,Qt.LeftButton)
+        self.assertIsNone(self.dispatch.error);self.assertEqual(self.dispatch.queue.get(request['id'])['state'],'DONE');self.dispatch.dispatch();self.assertEqual(self.service.store.records('AUTO_UNIT'),before);self.assertFalse(self.window.busy)
+
+    def test_recovery_requires_real_successful_audit_commit_and_never_clears_fault_on_write_failure(self):
+        self.dispatch.error='SYNTHETIC disk full'
+        with patch.object(self.window.library,'event',side_effect=OSError('SYNTHETIC still full')),self.assertRaises(OSError):self.dispatch.recover_scheduler()
+        self.assertEqual(self.dispatch.error,'SYNTHETIC disk full');self.assertEqual(self.dispatch.queue.page(),[])

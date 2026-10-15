@@ -135,7 +135,9 @@ class SourceWatchService(QObject):
             except Exception as error:self.status(identity,'REFRESH_FAILED','結果已取得，監看清單需重新載入：'+str(error))
             if self.pending:self.debounce.start(600)
         self.status(identity,'SCANNING','核對實際內容與版本中；檔案通知只是提示，尚未完成')
-        try:self.window.run_job('來源安全增量補掃',work,done)
+        try:
+            if getattr(self.window,'runtime',None):self.window.run_job('來源安全增量補掃',work,done,resource_kind='SCAN',cancel=self.cancel_event,on_error=lambda error:done(dict(error=error,cancelled=self.cancel_event.is_set())))
+            else:self.window.run_job('來源安全增量補掃',work,done)
         except Exception:
             self.running=False;self.current_root=None;self.mark(identity,'WORKER_START_RETRY');raise
 

@@ -13,6 +13,10 @@ PREFIX=b'TEMPLATE_AI_RUNTIME_V1 '
 MAX_LINE=16384
 
 
+class WorkerTimeout(RuntimeError):
+    pass
+
+
 def read_job(root,kind,identity):
     if kind not in ('JOB','AUTO_JOB'):raise ValueError('未知持久工作種類')
     with closing(sqlite3.connect((Path(root)/'library.sqlite3').resolve().as_uri()+'?mode=ro',uri=True,timeout=2)) as db:
@@ -90,7 +94,7 @@ def run_isolated(root,kind,identity,token,*,cancel=None,progress=None,admission=
                 next_control=now+.25
             if reader_error.is_set():raise RuntimeError('worker回傳超出協定範圍，已隔離停止')
             if cancel_at is not None and now-cancel_at>cancel_grace:raise RuntimeError('安全取消超時，已停止worker；已提交單位保留，未提交部分需明確恢復')
-            if now-last_boundary>unit_timeout:raise RuntimeError('工作長時間未達安全邊界，已隔離停止；保留已提交單位，需明確恢復')
+            if now-last_boundary>unit_timeout:raise WorkerTimeout('工作長時間未達安全邊界，已隔離停止；保留已提交單位，未完成項列為例外')
             try:event=events.get(timeout=.05)
             except queue.Empty:event=None
             if event:
