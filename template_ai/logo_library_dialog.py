@@ -39,6 +39,7 @@ class LogoLibraryDialog(QDialog):
         self.table.currentCellChanged.connect(self.show_details);layout.addWidget(self.table,2)
         bar=QHBoxLayout();self.import_button=self.button(bar,'人工匯入（先進待審核）',self.manual_import)
         self.discover_button=self.button(bar,'從目前來源作品提出複合群組候選',self.discover)
+        self.button(bar,'附加本機 OCR 文字線索',self.ocr)
         self.button(bar,'查看／校正／逐項核准候選',self.review);self.button(bar,'拒絕／標為待修復',self.reject_candidate)
         self.button(bar,'放大比較完整來源與變體',self.compare);layout.addLayout(bar)
         bar=QHBoxLayout();self.button(bar,'合併所選來源候選',self.merge);self.button(bar,'另建兩個完整候選區域',self.split)
@@ -196,6 +197,17 @@ class LogoLibraryDialog(QDialog):
             company=self.company.currentData();width,height=self.target_w.value(),self.target_h.value()
             if not company:raise ValueError('先選定已核對的公司身分')
             self.background('提出新卡片尺寸 Logo 候選',lambda store:[r['id'] for r in store.predict_new_size(company,width,height)])
+        self.guarded(action)
+
+    def ocr(self):
+        def action():
+            row=self.current()
+            if row['_kind']!='PROPOSAL':raise ValueError('OCR只補充待審候選線索，不改正式Logo文字')
+            identity,revision=row['id'],row['revision']
+            def operation(store):
+                from .logo_ocr import annotate
+                return annotate(store,identity,revision)['id']
+            self.background('附加本機 OCR 線索（不是公司身分確認）',operation)
         self.guarded(action)
 
     def review(self):

@@ -627,3 +627,7 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 
 ## 2026-10-15T11:00:45.291823+00:00 LOGO GUI WIP
 新14項實際Qt測試8.286秒PASS：三檢視／背景匯入、未知與單版狀態、明確採用／Undo、確認途中撤銷、版本草稿保護、新尺寸預測按鈕、合併／拆分及範圍保護。原人物公司30測試PASS，舊11介面測試PASS。持久tools/git_readback.py由4個本機bare Git remote驗證，收據誠實標示原生Git而非REST；不再依賴/tmp。正式459驗收來源為6ac8a535固定快照，文字22件保存，68媒體本機且未宣稱全附件Gate。現有GUI屬後續source，尚待正式回歸／逐父題完整驗收。
+
+
+## 2026-10-15T11:12:01.300081+00:00 LOGO OCR
+沿用已安裝Tesseract5.5.0，官方tessdata_fast4.1.0固定commit與三個Git blob通過完整性驗證；本機安裝chi_tra/eng及LICENSE，不推送模型。新增實際OCR及CAS／來源保護5PASS，0skip。第一次測試發現自訂tessdata沒有configs/tsv，改用官方tessedit_create_tsv旗標並檢查TSV header後5PASS；未關閉斷言／驗證。GUI來源候選可背景附加OCR線索，沒有自動身份／核准／拆字。下步UI027。

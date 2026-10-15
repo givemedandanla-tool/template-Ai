@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "FIXED70-LOGO-GUI-WIP",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-LOGO-CORE-SOURCE.receipt.json",
-  "last_confirmed_commit": "6ac8a5351f5369a7a9a7a357f1c325f0ef2d0261",
+  "active_task": "FIXED70-UI027-MULTISIZE-IN-PROGRESS",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-LOGO-GUI-WIP.receipt.json",
+  "last_confirmed_commit": "550090ec6d366ea15c9a62c0ed1f37a58f62902d",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -18,14 +18,9 @@
   ],
   "next_tasks": [
     {
-      "id": "LOGO-OCR-AND-GUI-CLOSURE",
-      "status": "IN_PROGRESS",
-      "next": "補OCR線索及完整條款對帳；source來源／審核／版本／公司卡片14新GUI測試PASS"
-    },
-    {
       "id": "UI-027",
-      "status": "PLANNED",
-      "next": "同次輸入多尺寸驗證矩陣、部分正式與預覽分離、安全重驗"
+      "status": "IN_PROGRESS",
+      "next": "同次輸入多尺寸獨立候選／狀態矩陣、各尺寸確切Logo及部分正式／預覽分離；再全10原條款對帳及正式驗收"
     }
   ],
   "blocked": [],
@@ -36,7 +31,7 @@
   ],
   "pending_remote": [
     "CP-20261015-CATALOG-VERIFIED",
-    "CP-20261015-LOGO-GUI-WIP"
+    "CP-20261015-LOGO-OCR-SOURCE"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",
