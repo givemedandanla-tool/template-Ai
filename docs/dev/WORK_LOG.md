@@ -836,3 +836,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI051 resource core / before project-venv install
 - 資源取樣與保守gate/hysteresis核心及8專用測試已實作，未接UI051整體。7PASS，實機probe1FAIL：前次查的是global python，不是project .venv，後者缺psutil；sampler實際回UNKNOWN並hold，未偽造可用RAM/磁碟數值。
 - 已保留失敗log/sha。requirements及lock固定7.2.2，正確runtime dependency無強制transitive（dev/test extras不啟用）。此checkpoint先保存源碼，再uv install到.venv與重驗；不修改全域環境。
+
+### UI051 after exact project dependency install
+- 專案venv精確安裝psutil7.2.2，8/8資源測試PASS，真probe回有限度量；全域與venv差異失敗證據保留。版本/指令/loghash/UI051_RESOURCE_ENVIRONMENT與可重建cloud setup import smoke已保存。
+- 原命題8條整包尚在開發，資源取樣核心未接工作/GUI。下一Qt心跳/背壓與生命週期，保守啟動catalog与FIFO同DB job requests。

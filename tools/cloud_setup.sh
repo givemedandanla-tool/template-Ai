@@ -22,5 +22,5 @@ else
   .venv/bin/python -m pip install -r requirements-lock.txt
 fi
 .venv/bin/python tools/install_ocr_models.py
-QT_QPA_PLATFORM=offscreen .venv/bin/python -c 'from PySide6.QtWidgets import QApplication; from PySide6.QtPdf import QPdfDocument; from pypdf import PdfReader; import sqlite3; a=QApplication([]); print("Qt/PDF/SQLite ready", sqlite3.sqlite_version)'
+QT_QPA_PLATFORM=offscreen .venv/bin/python -c 'from PySide6.QtWidgets import QApplication; from PySide6.QtPdf import QPdfDocument; from pypdf import PdfReader; import sqlite3,psutil; a=QApplication([]); print("Qt/PDF/SQLite/resource probe ready", sqlite3.sqlite_version,psutil.__version__)'
 .venv/bin/python tools/dev_governance.py check

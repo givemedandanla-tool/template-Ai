@@ -15,3 +15,5 @@
 - 現開始UI051：原8條完整計畫UI051_EXECUTION_PLAN，psutil7.2.2/VSCode Limiter實讀hash已basis。142歷史完成先標pending/latest=None；下一先pin既有psutil與lock、資源探測/背壓，再bounded啟動catalog/既有JOB/AUTO_JOB公平request調度與GUI，不用子包PASS結案。
 
 - UI051 resources WIP：runtime_resources.py已作psutil/cgroup夾限、CPU首次未知、daemon單取樣thread（阻塞volume不堵GUI/關閉）、per-kind fresh-sample hysteresis/age/CPU/RAM/disk/GUI與互動背壓判斷；尚未接排程/GUI。8新測試7PASS1FAIL，真正venv probe揭示psutil只在global python而.venv尚無。requirements/lock已pin7.2.2，下一先uv pip --python .venv/bin/python install同版再重驗；此次before-env checkpoint，不把7PASS當父題完成。
+
+- UI051 after-env：psutil7.2.2已正確uv install至/workspace/template-Ai/.venv，resource核心8/8PASS（含實際probe）；UI051_RESOURCE_ENVIRONMENT＋text log已保存。setup script lock sync的smoke加psutil，並未整份apt/OCR重跑。下一ResourceSupervisor真Qt heartbeat/close guard及worker准入，再catalog/queue；目前核心未接GUI、不結案UI051。
