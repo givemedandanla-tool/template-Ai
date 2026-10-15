@@ -56,7 +56,9 @@ def source_context(library, source_id):
             for item in value:walk(item,origin)
     walk(source,'SOURCE:'+source_id)
     for name,items in [('ARTWORK',works),('TEMPLATE',templates),('LOGO',logos),('TRAINING',training)]:
-        for item in items:walk(json.loads(item['payload']),name+':'+item['id'])
+        for item in items:
+            if name=='TRAINING' and item.get('kind') in ('SCAN_ROOT','BACKUP_HISTORY','BACKUP_SCHEDULE'):continue
+            walk(json.loads(item['payload']),name+':'+item['id'])
     records={name:[{k:(digest(json.loads(v)) if k=='payload' else v) for k,v in item.items()} for item in items]
              for name,items in [('works',works),('templates',templates),('logos',logos),('training',training),('candidates',candidates)]}
     evidence=dict(source={key:source.get(key) for key in ['id','hash','byte_size','original_path','current_path','link_revision']},

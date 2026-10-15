@@ -73,3 +73,11 @@ class SourceWatchServiceTests(unittest.TestCase):
     def test_shutdown_stops_qt_watchers_and_timers_before_library_close(self):
         self.enable();self.assertTrue(self.service.watcher.directories());self.window.close();self.assertTrue(self.service.closed);self.assertFalse(self.service.timer.isActive());self.assertFalse(self.service.debounce.isActive());self.assertEqual(self.service.watcher.directories(),[])
         self.service.tick();self.service.hint(str(self.directory));self.assertFalse(self.service.running)
+
+    def test_remove_during_actual_worker_stops_future_watch_and_preserves_all_raw_files(self):
+        started=threading.Event();release=threading.Event();before=(self.directory/'A001.svg').read_bytes()
+        def gated(*args,**kwargs):started.set();release.wait(2);return scan_files(*args,**kwargs)
+        self.watch=configure_root(self.store,self.watch,mode='AUTO_PRECHECK',enabled=True)
+        with patch('template_ai.source_watch.scan_files',side_effect=gated):
+            self.service.sync();self.service.dispatch();self.wait(started.is_set);self.service.remove(self.watch['id']);release.set();self.wait(lambda:not self.service.running and not self.window.busy)
+        self.assertTrue(self.store.get('SCAN_ROOT',self.watch['id'])['archived']);self.assertEqual(self.service.watcher.directories(),[]);self.assertEqual((self.directory/'A001.svg').read_bytes(),before);self.assertEqual(candidate_page(self.store),[])

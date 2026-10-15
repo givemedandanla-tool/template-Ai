@@ -87,6 +87,7 @@ class SourceWatchService(QObject):
         if self.closed or self.running or not self.pending:return
         if self.window.busy:
             self.status('SERVICE','WAITING_BACKGROUND_SLOT','其他背景工作執行中；保留先進先出待掃根目錄');self.debounce.start(1000);return
+        self.debounce.stop()
         identity=self.pending.popleft();reasons=self.reasons.pop(identity,set());root=TrainingStore.bind(self.window.library).get('SCAN_ROOT',identity)
         automatic='MANUAL' not in reasons
         if not root or root.get('archived') or identity in self.pause_pending:return

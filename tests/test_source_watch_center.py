@@ -79,3 +79,9 @@ class SourceWatchCenterTests(unittest.TestCase):
         self.scan();self.a.write_bytes(SVG+b' ');self.scan();selected=self.select(lambda c:c['state']=='REVIEW_REQUIRED');self.assertEqual(len(selected),1)
         with patch('template_ai.source_scan_dialog.QMessageBox.question',return_value=QMessageBox.Yes),patch.object(self.window,'run_job',side_effect=RuntimeError('worker launch refused')):self.dialog.review()
         self.assertFalse(self.dialog.running);self.assertIn('worker launch refused',self.dialog.status.text());self.assertEqual(self.store.get('SCAN_CANDIDATE',selected[0]['id'])['state'],'REVIEW_REQUIRED');self.assertEqual(self.window.library.list_sources(),[])
+
+    def test_pause_preserves_unsaved_form_and_saves_against_fresh_control_state(self):
+        self.dialog.start_watch();self.window.source_watch.dispatch();self.wait(lambda:not self.window.busy)
+        self.dialog.formats.setText('.svg');self.dialog.formats.textEdited.emit('.svg');self.dialog.pause()
+        self.assertTrue(self.dialog.dirty);self.assertEqual(self.dialog.formats.text(),'.svg');self.dialog.save_settings();root=self.store.get('SCAN_ROOT',self.watch['id'])
+        self.assertEqual(root['extensions'],['.svg']);self.assertFalse(root['enabled']);self.assertNotIn('另一介面',self.dialog.status.text())

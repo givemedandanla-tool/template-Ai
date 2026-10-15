@@ -805,3 +805,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 新5實際GUI測試PASS，真UI003一鍵開始後相同bytes異名來源保持2個source IDs，候選只在真AUTO_JOB存在且path/hash匹配才DISPATCHED；未明確開始前無AUTO_JOB。
 - 修改版人工審核/取消與後續改bytes、dirty根設定並存/CAS、worker啟動失敗、root移除保留真customer graph/styles均測；加source ID/版次/實際work record counts、掃描摘要分頁與只讀影響檢視。
 - 27整合PASS，下一補既有已訓練來源改版局部失效/途中移除race/capture/原12完整正式；不把目標測試算父題結案。
+
+### UI050 compact center checkpoint
+- 監看中心兩分頁，根/格式/排除與掃描/候選交接分開；相同版本的明列選取保留。單一UI003子視窗與固定job_created handler，既有來源可重核依賴，不冒充重用已過品質。
+- source_context沿備份既有規則把SCAN_ROOT/BACKUP配置當metadata，避免根目錄被誤當必需單一資產；FSW dispatch清舊debounce。前次31PASS，當前integration004：31/31 PASS；來源仍待全formal。

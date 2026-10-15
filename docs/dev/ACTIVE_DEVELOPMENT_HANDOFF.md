@@ -25,3 +25,5 @@
 
 - UI050 GUI專用5測試全PASS：開始/暫停/移除保護真customer graph/styles；真UI003明確啟動後A001/B002同bytes得到2獨立source IDs與同一真AUTO_JOB的各自收據；修改版No/Yes+後續bytes改變阻擋預檢；dirty設定保留與foreign config CAS；worker啟動失敗釋放。合watch/index/操作27/27 PASS。
 - 新加掃描摘要分頁/可讀時間/已登錄作品記錄數與source-link revisions/affected source IDs；可背景唯讀查看共用完整關聯；未變既有來源可交UI003重核失效依賴。下一補已訓練來源局部變更/移除途中race tests、dirty pause/removed狀態刷新，真capture後綁原12條及正式回歸。UI050仍PARTIAL，141歷史待重驗。
+
+- UI050 current UI checkpoint：兩分頁1120×740，掃描摘要/候選各自分頁，勾選僅保留相同id/revision/hash/state；共用單一UI003視窗，避免累積交接handler；root/backup配置目錄只作context metadata不當必備檔案。前次31測試PASS；最新004重驗狀態：31/31 PASS。下一真capture＋SQLite FULL/短暫讀取錯誤版次測試，再綁原12正式回歸，未結案。

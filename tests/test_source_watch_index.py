@@ -58,3 +58,32 @@ class SourceWatchIndexTests(unittest.TestCase):
         (self.directory/'~Illustrator.svg').write_bytes(b'partial temporary');result=self.scan();self.assertEqual(len(result['entries']),2);self.assertGreater(result['excluded_entries'],0)
         for i in range(505):(self.directory/f'ignored-{i}.txt').write_text('not a source')
         result=self.scan();self.assertEqual(result['state'],'PARTIAL');self.assertLessEqual(result['scanned_entries'],500);self.assertFalse(result['enumeration_complete'])
+
+    def test_changed_registered_source_keeps_customer_templates_other_source_and_training_evidence(self):
+        import test_customer_candidates as fixture
+        from template_ai.source_scan import known_sources
+        from template_ai.source_links import verify_source
+        c=fixture.CustomerCandidateTests('test_filename_full_rule_and_actual_facts_propose_only_without_master_writes');c.setUp();self.addCleanup(c.tearDown)
+        first=c.commit([c.reviewed(c.candidates.propose(c.source['id'])[0])])[0]
+        second,work,template=c.make_source('00002.svg');other=c.commit([c.reviewed(c.candidates.propose(second['id'])[0])])[0]
+        store=TrainingStore(c.library);root=register_root(store,c.root);known,index=known_sources(c.library,root);initial=scan_files(root,known,stable_wait=.05)
+        self.assertEqual({r['artwork_count'] for r in initial['entries']},{1});self.assertTrue(all(r['registered'] for r in initial['entries']));root=save_scan(store,root,initial)
+        sources=c.library.list_sources();templates=c.library.template_snapshots();customers=[c.store.get(item['customer_id']) for item in [first,other]]
+        evidence=c.library.db.execute("SELECT kind,id,revision,payload FROM training_records WHERE kind NOT LIKE 'SCAN_%' ORDER BY kind,id").fetchall()
+        path=Path(c.source['original_path']);path.write_bytes(path.read_bytes()+b'\n<!-- synthetic user new version -->')
+        known,index=known_sources(c.library,root);result=scan_files(root,known,stable_wait=.05);save_scan(store,root,result)
+        changed=next(r for r in result['entries'] if r['path']==str(path));self.assertEqual(changed['state'],'CONTENT_CHANGED_REVIEW_REQUIRED');self.assertEqual(changed['affected_source_ids'],[c.source['id']])
+        self.assertEqual(candidate_page(store,root['id'])[0]['state'],'REVIEW_REQUIRED');self.assertEqual(c.library.list_sources(),sources);self.assertEqual(c.library.template_snapshots(),templates);self.assertEqual([c.store.get(item['customer_id']) for item in [first,other]],customers)
+        self.assertEqual(c.library.db.execute("SELECT kind,id,revision,payload FROM training_records WHERE kind NOT LIKE 'SCAN_%' ORDER BY kind,id").fetchall(),evidence)
+        with self.assertRaisesRegex(ValueError,'內容已變更'):verify_source(path,c.source['hash'])
+        self.assertEqual(verify_source(second['original_path'],second['hash']).hash,second['hash'])
+
+    def test_changed_version_review_requires_live_proof_and_dispatch_requires_an_actual_job(self):
+        from template_ai.source_scan import review_candidate,record_dispatch
+        from template_ai.source_links import verify_source
+        self.enable();self.save();self.a.write_bytes(b'<svg>new version</svg>');values=self.save();candidate=next(c for c in values if c['path']==str(self.a) and c['state']=='REVIEW_REQUIRED');proof=verify_source(self.a,candidate['source_hash'])
+        with self.assertRaises(ValueError):review_candidate(self.store,candidate,proof,'synthetic',False)
+        self.a.write_bytes(self.a.read_bytes()+b' ')
+        with self.assertRaises(ValueError):review_candidate(self.store,candidate,proof,'synthetic',True)
+        with self.assertRaisesRegex(ValueError,'實際UI003'):record_dispatch(self.store,[candidate],'absent-job')
+        self.assertEqual(self.store.get('SCAN_CANDIDATE',candidate['id']),candidate);self.assertEqual(self.store.count('AUTO_JOB'),0)
