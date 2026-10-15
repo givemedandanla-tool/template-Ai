@@ -20,3 +20,6 @@ Windows 使用 onedir 而非把 Qt 藏在不可替換的靜態產物；保留動
 - tesseract-ocr/tessdata_fast 4.1.0，commit 65727574dfcd264acbb0c3e07860e4e9e9b22185；繁中／英文模型及Apache-2.0 LICENSE由官方Git tree取得預期blob，下載後逐檔驗證；精確hash見docs/dev/OCR_MODEL_LOCK.json。原模型與LICENSE保留ignored local-data/tessdata，未推送GitHub。
 - 重建：確保tesseract CLI可用，執行python tools/install_ocr_models.py；可用TEMPLATE_AI_TESSERACT／TEMPLATE_AI_TESSDATA指定既有本機工具與資料目錄。套件不提供時回報能力未知，不能把英文OCR當繁中已驗證。
 - OCR只提供文字／位置線索，不重建品牌、合併公司或替代原生文字真值。已實際辨識合成圖，未宣稱所有真實AI／中文字型皆已驗收。
+
+## 本輪有界特製排版
+kiwisolver 1.4.9（BSD-3-Clause），重用Cassowary線性約束引擎，requirements及lock精確鎖版。原始來源／LICENSE hash與數學、Figma公開介面參照見docs/dev/TWENTYEIGHT_ENGINEERING_BASIS.json；不呼叫Figma或付費服務。

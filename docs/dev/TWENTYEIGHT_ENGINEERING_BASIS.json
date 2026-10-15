@@ -40,5 +40,32 @@
     "reuse": "Existing render.export / safe_publish.publish_complete / MultiSizeWorkflow.revalidate. Explicit overwrite first retains original in unique recovery directory, verifies moved bytes, then exclusively publishes complete staged file; not an atomic replace transaction. Race conflicts preserve both versions and expose recovery paths.",
     "validation": "7 real filesystem/fault tests + 2 actual Qt worker delivery/retry tests + 10 previous multi-size tests PASS. Linux synthetic only; Windows/external disk crash durability unverified.",
     "scope": "Ephemeral batch state; no parallel customer database or paid service. FINAL/PREVIEW separate folders, preview default PNG; retry exact selected recoverable failures <=3 attempts."
+  },
+  "custom_layout": {
+    "algorithm": "Cassowary incremental linear constraint solver, required safety bounds/typed geometry/non-overlap topology; weak stays minimize design displacement. Fixed point size, font and ownership remain constants. Searches only user-specified move/expand/gap bounds, <=64 objects.",
+    "dependency": "kiwisolver==1.4.9 (BSD-3-Clause)",
+    "references": [
+      {
+        "label": "kiwi",
+        "url": "https://raw.githubusercontent.com/nucleic/kiwi/1.4.9/README.rst",
+        "sha256": "9a4762e7639f1896584cf37679102be008a7e4e39a66c1e17f305672ce20c9c4",
+        "bytes": 1230
+      },
+      {
+        "label": "figma",
+        "url": "https://raw.githubusercontent.com/figma/plugin-typings/master/plugin-api.d.ts",
+        "sha256": "7102bde6771033114711975b1184210fbd9164c4616ebbaf6f11a7c281858bea",
+        "bytes": 503528
+      },
+      {
+        "label": "license",
+        "url": "https://raw.githubusercontent.com/nucleic/kiwi/1.4.9/LICENSE",
+        "sha256": "cf20799d32de0eefa2ea904e3ac5122f47aed5d352930751eb61724762c49d90",
+        "bytes": 3289
+      }
+    ],
+    "commercial_design_basis": "Figma public plugin typings minWidth/maxWidth, Constraints and layoutMode show explicit parent/layout constraints; inspected relevant declarations. No Figma service/API use.",
+    "reuse": "Existing generate, template_errors, TemplateVersions same-family CAS transaction, renderer and explicit publication. Creates an unpublished draft; no direct published-version mutation or invented template when no approved base exists.",
+    "validation": "6 custom solver/GUI/fault tests + 80 font/version regression PASS. No general geometric packing optimum or unbounded no-solution claim."
   }
 }

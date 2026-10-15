@@ -596,6 +596,7 @@ class MainWindow(QMainWindow):
         self.button("更新同尺寸 Logo 選項", self.refresh_logos, row)
         layout.addLayout(row)
         split = QSplitter()
+        self.button('無合格現成模板：授權特製草稿',self.custom_layout,layout)
         self.candidate_list = QListWidget()
         self.candidate_list.currentRowChanged.connect(self.choose_candidate)
         split.addWidget(self.candidate_list)
@@ -1699,6 +1700,11 @@ class MainWindow(QMainWindow):
             self.edit_input_graph();return
         issue=item.data(Qt.UserRole);table=getattr(self,issue['table']);table.setCurrentCell(issue['row'],issue['col']);table.setFocus()
 
+    def custom_layout(self):
+        if self.busy:return
+        from .custom_layout_dialog import CustomLayoutDialog
+        dialog=CustomLayoutDialog(self);dialog.exec();dialog.deleteLater()
+
     def generate(self):
         try:
             people, companies, logos = self.input_data()
@@ -1713,7 +1719,7 @@ class MainWindow(QMainWindow):
             for c in self.candidates:
                 self.candidate_list.addItem(f"{'可正式數位輸出' if c.valid else '阻擋／診斷候選'}\n{c.template.name} · v{c.template.version}")
             if not self.candidates:
-                self.issues.setText("目前沒有同矩形尺寸、同人物容量的已發布模板；請先建立或發布合適模板。本版尚未實作無模板的特製排版。")
+                self.issues.setText("目前沒有同矩形尺寸、同人物容量的已發布模板；請先建立或發布合適模板。可依已核准基準授權特製草稿；沒有核准設計規則時不猜造版面。")
                 self.export_button.setEnabled(False)
                 self.preview_button.setEnabled(False)
                 self.output_canvas.scene().clear()

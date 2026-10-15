@@ -305,6 +305,14 @@ class Library:
     def publish(self, t: Template) -> None:
         self._template_provenance(t)
         errors = template_errors(t)
+        from PySide6.QtGui import QFontDatabase,QGuiApplication
+        if QGuiApplication.instance() is None:errors.append('字型系統未初始化，不能核驗發布')
+        else:
+            families=set(QFontDatabase.families())
+            for slot in t.slots:
+                if slot.kind!='logo' and slot.font_asset is None:
+                    if slot.font not in families:errors.append(slot.id+'：指定字型未安裝，不可發布')
+                    elif slot.font_style and slot.font_style not in QFontDatabase.styles(slot.font):errors.append(slot.id+'：指定款式未安裝，不可借用其他款式發布')
         from .background import background_errors
         errors.extend(background_errors(t.background, t.width_mm, t.height_mm))
         if errors:
