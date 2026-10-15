@@ -1,6 +1,6 @@
 {
   "id": "FIXED70-NEXT-TWENTYEIGHT",
-  "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+  "status": "SELF_VERIFIED_SOFTWARE_COMPLETE",
   "baseline_commit": "df54956fb543689e120eacefd013329840cea3bd",
   "target_parent_count": 28,
   "target_parent_ids": [
@@ -133,7 +133,7 @@
   "acceptance": [
     {
       "parent": "UI-003",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 7,
       "tests": [
         "test_automatic_pages.AutomaticPagesTests.test_all_readable_pages_have_separate_sources_hypotheses_and_exact_second_page_retry",
@@ -176,11 +176,12 @@
         "test_similarity_preflight.SimilarityPreflightTests.test_three_levels_keep_all_paths_original_bytes_and_database_unchanged",
         "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
         "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-004",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 7,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -238,11 +239,12 @@
         "test_training_quality.TrainingQualityTests.test_large_overlap_set_is_bounded_and_invalid_coordinate_not_crash",
         "test_training_quality.TrainingQualityTests.test_logo_containment_is_uncertain_not_automatic_deletion",
         "test_training_quality.TrainingQualityTests.test_stable_sort_independent_of_slot_order_and_source_bounds"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-005",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 6,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -279,11 +281,12 @@
         "test_training_quality.TrainingQualityTests.test_large_overlap_set_is_bounded_and_invalid_coordinate_not_crash",
         "test_training_quality.TrainingQualityTests.test_logo_containment_is_uncertain_not_automatic_deletion",
         "test_training_quality.TrainingQualityTests.test_stable_sort_independent_of_slot_order_and_source_bounds"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-007",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 8,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -336,11 +339,12 @@
         "test_training_facts.FactsTests.test_late_audit_failure_atomic_and_revocation_monotonic",
         "test_training_facts.FactsTests.test_source_changed_after_proof_and_record_CAS_rejected",
         "test_training_facts.FactsTests.test_work_and_source_change_invalidate_confirmation"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-008",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 7,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -378,11 +382,12 @@
         "test_rule_review.RuleReviewTests.test_reject_defer_and_reopen_preserve_current_versions",
         "test_rule_review.RuleReviewTests.test_same_scope_low_batch_and_high_requires_individual_details",
         "test_rule_review.RuleReviewTests.test_stale_source_missing_evidence_and_bounded_impact_block_approval"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-038",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 12,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -430,11 +435,12 @@
         "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
         "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
         "test_viewport_workbench.ViewportWorkbenchTests.test_unlinked_views_pan_independently_then_relink_to_source_anchor"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-039",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 10,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -482,11 +488,12 @@
         "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
         "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
         "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-040",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 13,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -544,11 +551,12 @@
         "test_training_quality.TrainingQualityTests.test_duplicate_identity_mapping_bounds_and_bad_schema_explained",
         "test_training_quality.TrainingQualityTests.test_invalid_dimensions_budget_owner_and_missing_person_name",
         "test_training_quality.TrainingQualityTests.test_stable_sort_independent_of_slot_order_and_source_bounds"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-041",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 10,
       "tests": [
         "test_noise_authoring.NoiseAuthorGuiTests.test_actual_local_confirm_cancel_and_rule_authoring",
@@ -580,11 +588,12 @@
         "test_rule_review.RuleReviewTests.test_reject_defer_and_reopen_preserve_current_versions",
         "test_rule_review.RuleReviewTests.test_same_scope_low_batch_and_high_requires_individual_details",
         "test_rule_review.RuleReviewTests.test_stale_source_missing_evidence_and_bounded_impact_block_approval"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-042",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 11,
       "tests": [
         "test_automatic_pages.AutomaticPagesTests.test_all_readable_pages_have_separate_sources_hypotheses_and_exact_second_page_retry",
@@ -669,11 +678,12 @@
         "test_preflight_progress.PreflightProgressTests.test_actual_preflight_escape_cancels_safely_and_shows_no_learned_job",
         "test_preflight_progress.PreflightProgressTests.test_persistent_jobs_are_paged_and_not_limited_to_first_two_hundred",
         "test_preflight_progress.PreflightProgressTests.test_preflight_true_hash_progress_cancel_keeps_database_and_original_unchanged"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-001",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 5,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -696,11 +706,12 @@
         "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
         "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
         "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-002",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 6,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -740,11 +751,12 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-006",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 7,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -776,11 +788,12 @@
         "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
         "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
         "test_viewport_workbench.ViewportWorkbenchTests.test_unlinked_views_pan_independently_then_relink_to_source_anchor"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-010",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 8,
       "tests": [
         "test_custom_layout.CustomLayoutTests.test_actual_gui_custom_preview_cancel_then_explicit_new_draft_does_not_publish",
@@ -836,11 +849,12 @@
         "test_template_versions.TemplateVersionTests.test_late_audit_failure_rolls_back_new_version_and_its_clock",
         "test_template_versions.TemplateVersionTests.test_restore_published_version_as_same_family_new_draft_with_complete_difference_and_provenance",
         "test_template_versions.TemplateVersionTests.test_stale_family_version_and_unapproved_restore_write_nothing"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-011",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 7,
       "tests": [
         "test_canvas_controls.CanvasControlTests.test_actual_resize_handle_previews_without_writing_and_applies_through_existing_history",
@@ -909,11 +923,12 @@
         "test_text_policy.TextPolicyTests.test_distributed_requires_explicit_semantic_approval_and_never_applies_to_identifiers",
         "test_text_policy.TextPolicyTests.test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft",
         "test_text_policy.TextPolicyTests.test_raster_uses_same_fixed_point_tracking_parameter_as_measurement"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-012",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 8,
       "tests": [
         "test_canvas_controls.CanvasControlTests.test_actual_resize_handle_previews_without_writing_and_applies_through_existing_history",
@@ -963,11 +978,12 @@
         "test_text_policy.TextPolicyTests.test_distributed_requires_explicit_semantic_approval_and_never_applies_to_identifiers",
         "test_text_policy.TextPolicyTests.test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft",
         "test_text_policy.TextPolicyTests.test_raster_uses_same_fixed_point_tracking_parameter_as_measurement"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-033",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 10,
       "tests": [
         "test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation",
@@ -1062,11 +1078,12 @@
         "test_persistent_fonts.PersistentFontTests.test_new_python_process_loads_persisted_font",
         "test_persistent_fonts.PersistentFontTests.test_same_family_different_file_is_not_silently_replaced",
         "test_persistent_fonts.PersistentFontTests.test_unapproved_invalid_and_duplicate_font_protect_catalog"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-034",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 10,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -1122,11 +1139,12 @@
         "test_text_policy.TextPolicyTests.test_distributed_requires_explicit_semantic_approval_and_never_applies_to_identifiers",
         "test_text_policy.TextPolicyTests.test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft",
         "test_text_policy.TextPolicyTests.test_raster_uses_same_fixed_point_tracking_parameter_as_measurement"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-035",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 9,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -1166,11 +1184,12 @@
         "test_object_tools.ObjectToolsTests.test_six_alignments_independent_math_and_protected_fields",
         "test_object_tools.ObjectToolsTests.test_source_revision_visual_revalidation_and_transaction_rollback",
         "test_object_tools.ObjectToolsTests.test_spacing_both_axes_stable_ties_and_group_displacement"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-036",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 10,
       "tests": [
         "test_canvas_controls.CanvasControlTests.test_actual_resize_handle_previews_without_writing_and_applies_through_existing_history",
@@ -1199,11 +1218,12 @@
         "test_text_policy.TextPolicyTests.test_distributed_requires_explicit_semantic_approval_and_never_applies_to_identifiers",
         "test_text_policy.TextPolicyTests.test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft",
         "test_text_policy.TextPolicyTests.test_raster_uses_same_fixed_point_tracking_parameter_as_measurement"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-013",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 9,
       "tests": [
         "test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation",
@@ -1269,11 +1289,12 @@
         "test_text_policy.TextPolicyTests.test_distributed_requires_explicit_semantic_approval_and_never_applies_to_identifiers",
         "test_text_policy.TextPolicyTests.test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft",
         "test_text_policy.TextPolicyTests.test_raster_uses_same_fixed_point_tracking_parameter_as_measurement"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-014",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 7,
       "tests": [
         "test_custom_layout.CustomLayoutTests.test_actual_gui_custom_preview_cancel_then_explicit_new_draft_does_not_publish",
@@ -1312,11 +1333,12 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-015",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 8,
       "tests": [
         "test_customer_graph_sync.CustomerGraphSyncTests.test_actual_dialog_default_work_only_cancel_confirmation_and_commit",
@@ -1372,11 +1394,12 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-018",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 9,
       "tests": [
         "test_custom_layout.CustomLayoutTests.test_actual_gui_custom_preview_cancel_then_explicit_new_draft_does_not_publish",
@@ -1424,11 +1447,12 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-028",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 9,
       "tests": [
         "test_first_version.FirstVersionTests.test_actual_inkscape_svg_and_pdf_compatible_ai",
@@ -1456,11 +1480,12 @@
         "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
         "test_multi_size.MultiSizeTests.test_revoked_or_changed_logo_and_template_block_only_affected_output",
         "test_multi_size.MultiSizeTests.test_sizes_keep_independent_geometry_and_missing_logo_does_not_borrow_or_block_other_size"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-029",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 9,
       "tests": [
         "test_first_version.FirstVersionTests.test_actual_inkscape_svg_and_pdf_compatible_ai",
@@ -1494,11 +1519,12 @@
         "test_output_batch.OutputBatchTests.test_explicit_overwrite_keeps_original_recovery_and_publishes_complete_result",
         "test_output_batch_gui.OutputBatchGuiTests.test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults",
         "test_output_batch_gui.OutputBatchGuiTests.test_actual_exact_retry_does_not_rewrite_success_and_cleanup_requires_specific_stage"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-030",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 8,
       "tests": [
         "test_first_version.FirstVersionTests.test_actual_inkscape_svg_and_pdf_compatible_ai",
@@ -1536,11 +1562,12 @@
         "test_output_batch.OutputBatchTests.test_late_destination_conflict_preserves_both_old_and_new_user_file",
         "test_output_batch_gui.OutputBatchGuiTests.test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults",
         "test_output_batch_gui.OutputBatchGuiTests.test_actual_exact_retry_does_not_rewrite_success_and_cleanup_requires_specific_stage"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     },
     {
       "parent": "UI-037",
-      "status": "IMPLEMENTED_PENDING_FORMAL_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "clause_count": 9,
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
@@ -1577,7 +1604,8 @@
         "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm",
         "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
         "test_viewport_workbench.ViewportWorkbenchTests.test_unlinked_views_pan_independently_then_relink_to_source_anchor"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json"
     }
   ],
   "interim_validation": {
@@ -1594,8 +1622,7 @@
     "review_level": "SELF_VERIFIED"
   },
   "remaining_claim_gaps": [
-    "已逐條登錄原軟體條款及具名測試，待凍結來源完整正式回歸／實際Qt附件／GitHub讀回；父題尚未結案",
-    "Windows／私人AI全面／原生未知細節／外部磁碟崩潰耐久／實體印刷／獨立覆核未驗證"
+    "本批28父題完整原軟體條款已通過自我驗證；不宣稱Windows／真實私人AI全面／原生未知細節／外部磁碟崩潰耐久／實體印刷／獨立覆核已通過。"
   ],
   "previous_contract": "docs/dev/FIXED70_NEXT_TWENTY_CONTRACT.json",
   "clause_audit": "docs/dev/TWENTYEIGHT_CLAUSE_AUDIT.json",
@@ -1611,6 +1638,32 @@
       "capture_exit_code": 1,
       "source_unchanged": true,
       "reason": "First manual-source selection read training_records before schema initialization; not accepted as parent completion."
+    },
+    {
+      "run": "RUN-TWENTYEIGHT-FULL-002",
+      "source_commit": "81f73e03449bbe2abb79251d2ec8919662b5ab2c",
+      "status": "PASS",
+      "tests": 601,
+      "passed": 601,
+      "unhandled_runtime_errors": 0,
+      "capture_exit_code": 0,
+      "source_unchanged": true
     }
-  ]
+  ],
+  "parents_newly_closed": 28,
+  "final_validation": {
+    "run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+    "source_commit": "81f73e03449bbe2abb79251d2ec8919662b5ab2c",
+    "tests": 601,
+    "passed": 601,
+    "skipped": 0,
+    "unhandled_runtime_errors": 0,
+    "capture_exit_code": 0,
+    "source_unchanged": true,
+    "registered_parent_clauses": 239,
+    "parent_count": 28,
+    "attachments": 122,
+    "text_metadata": 27,
+    "local_media": 95
+  }
 }

@@ -6,7 +6,7 @@
     {
       "id": "UI-001",
       "title": "三模式主視窗",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P1、P7",
       "order_group": 1,
       "scope": "三模式入口、可收合面板與共用工具一致",
@@ -20,14 +20,17 @@
           "tests": []
         }
       ],
-      "next_step": "完成各模式面板收合與狀態一致；驗證切換時選取、未提交內容及背景任務不丟失；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-001",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-002",
       "title": "模式切換狀態",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P1、P7",
       "order_group": 1,
       "scope": "模式切換保留有效當次狀態，恢復擴充依 UI-058",
@@ -41,16 +44,19 @@
           "tests": []
         }
       ],
-      "next_step": "逐模式驗證安全切換與焦點保持；只提醒真正會遺失的修改，不把本題擴成永久案件恢復；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-017"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-002",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-003",
       "title": "訓練區批次匯入與啟動",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2",
       "order_group": 2,
       "scope": "預檢確認一次啟動，三層去重不混淆",
@@ -64,7 +70,7 @@
           "tests": []
         }
       ],
-      "next_step": "補預檢到候選驗證的一鍵管線與例外分流，測多來源、多作品、重用、取消及跨啟動續跑；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-008",
         "CORE-030",
@@ -73,12 +79,15 @@
         "CORE-064",
         "CORE-065"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-003",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-004",
       "title": "訓練例外處理",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2",
       "order_group": 2,
       "scope": "單件例外隔離，其餘合法工作繼續",
@@ -92,17 +101,20 @@
           "tests": []
         }
       ],
-      "next_step": "補齊錯誤家族與增量依賴；驗證單件失敗其餘繼續、不可隔離錯誤才暫停；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-044",
         "CORE-045"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-004",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-005",
       "title": "例外中心智慧待辦排序",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2",
       "order_group": 2,
       "scope": "待辦排序與影響數有來源，不能自動解除隔離",
@@ -116,17 +128,20 @@
           "tests": []
         }
       ],
-      "next_step": "逐類對照排序／搜尋／篩選與定位，測不同人物公司不能盲目批次修正；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-044",
         "CORE-045"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-005",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-006",
       "title": "例外修正工作台",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2",
       "order_group": 1,
       "scope": "原稿／疊圖／前後對照，修正可撤銷且不改原檔",
@@ -140,16 +155,19 @@
           "tests": []
         }
       ],
-      "next_step": "完成同作品各檢視選取同步、取消／復原／確認差異，再驗證只影響選取作品；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-035"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-006",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-007",
       "title": "修正套用與 AI 學習確認",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P4",
       "order_group": 2,
       "scope": "確認作品事實不自動發布跨作品規則",
@@ -163,7 +181,7 @@
           "tests": []
         }
       ],
-      "next_step": "補候選產生、適用條件／反例／衝突、正式人工核准與依賴重算；不要求指定深度模型架構；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-009",
         "CORE-019",
@@ -176,12 +194,15 @@
         "CORE-064",
         "CORE-065"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-007",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-008",
       "title": "待審核規則中心",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P4",
       "order_group": 2,
       "scope": "低風險批次、高風險逐條，啟用均有人為核准",
@@ -195,12 +216,15 @@
           "tests": []
         }
       ],
-      "next_step": "完成風險與適用條件分組、精確選取、批准／暫緩理由，測一個高風險規則不被整批放行；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-052",
         "CORE-053"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-008",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-009",
@@ -417,14 +441,17 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-009",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-010",
       "title": "模板版本編輯機制",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3、P4",
       "order_group": 1,
       "scope": "正式版本唯讀，草稿持久，驗證及核准後發布",
@@ -438,18 +465,21 @@
           "tests": []
         }
       ],
-      "next_step": "先對帳現有能力，補缺失的差異／回滾入口與跨欄位發布驗收，不重建第二套Undo；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-007",
         "CORE-015",
         "CORE-020"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-010",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-011",
       "title": "模板編輯器物件操作",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3、P4",
       "order_group": 1,
       "scope": "畫布／語意樹／屬性同一物件與歸屬",
@@ -463,14 +493,17 @@
           "tests": []
         }
       ],
-      "next_step": "與UI016／017共用穩定歸屬模型，驗證畫布／清單／屬性選取同一物件及保護發布版本；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-011",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-012",
       "title": "物件移動縮放與智慧對齊",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3、P4",
       "order_group": 1,
       "scope": "毫米幾何、吸附及鎖定，草稿違規不可發布",
@@ -484,16 +517,19 @@
           "tests": []
         }
       ],
-      "next_step": "補吸附與手勢的精確預覽、鎖定保護和Undo；逐一驗證關閉疊圖不關閉驗證；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-003"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-012",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-013",
       "title": "文字框智慧編輯介面",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3",
       "order_group": 1,
       "scope": "字級定案不依字數改變，無合法解不截字",
@@ -507,17 +543,20 @@
           "tests": []
         }
       ],
-      "next_step": "在已定案字級不變前提補合法策略與理由，測長姓名／電話／Email不被一律分散或暗縮字級；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-001",
         "CORE-034"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-013",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-014",
       "title": "文字框無解診斷與輸入密度分級提醒",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3、P5",
       "order_group": 3,
       "scope": "實測無解與證據不足分開，禁止暗縮字級",
@@ -531,16 +570,19 @@
           "tests": []
         }
       ],
-      "next_step": "補安全候選與適用限制、空間／字距方案及跨階段一致提示；只對實際證明的搜尋範圍宣告無解；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-001"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-014",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-015",
       "title": "使用者資料輸入警告介面",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3、P5",
       "order_group": 3,
       "scope": "欄位提醒、整體狀態與問題定位判定一致",
@@ -554,12 +596,15 @@
           "tests": []
         }
       ],
-      "next_step": "完成右側問題導覽與不同風險來源，驗證輸入法、連續打字不奪焦點及刪改後即時更新；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-002",
         "CORE-066"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-015",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-016",
@@ -853,11 +898,14 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-002"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-016",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-017",
@@ -1231,16 +1279,19 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-004"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-017",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-018",
       "title": "自動排版結果與候選模板呈現",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P5",
       "order_group": 3,
       "scope": "先硬驗證後候選排序，未完成搜尋不稱全域最佳",
@@ -1254,9 +1305,12 @@
           "tests": []
         }
       ],
-      "next_step": "補多方案比較與特製草案同等驗證；測部分搜尋不宣稱唯一最佳，切換不改發布模板；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-018",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-019",
@@ -1280,7 +1334,8 @@
         "CORE-005",
         "CORE-013"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-019"
     },
     {
       "id": "UI-020",
@@ -1617,9 +1672,12 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-020",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-021",
@@ -2028,9 +2086,12 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-021",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-022",
@@ -2319,9 +2380,12 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-022",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-023",
@@ -2511,11 +2575,14 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-004"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-023",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-024",
@@ -2711,11 +2778,14 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-067"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-024",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-025",
@@ -3057,11 +3127,14 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-004"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-025",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-026",
@@ -3479,9 +3552,12 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-026",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-027",
@@ -3675,14 +3751,17 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-027",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-028",
       "title": "黑底白字占位預覽檔格式與非正式標示",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3、P5",
       "order_group": 3,
       "scope": "PNG 預設與非正式標示保留；數位內容與比例驗證，實體印刷分析後移",
@@ -3696,16 +3775,19 @@
           "tests": []
         }
       ],
-      "next_step": "補多尺寸外側說明區及缺Logo加其他錯誤的完整標記；驗證不蓋掉作品內容、不以預覽當正式；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-006"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-028",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-029",
       "title": "批次輸出清單、智慧命名與安全儲存",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3、P5",
       "order_group": 3,
       "scope": "正式／預覽分流，預設不覆寫，逐檔真實狀態",
@@ -3719,16 +3801,19 @@
           "tests": []
         }
       ],
-      "next_step": "建置共用批次輸出計畫，測FINAL／PREVIEW分流、取消／略過／撞名與部分成功；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-005"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-029",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-030",
       "title": "批次輸出失敗診斷與安全重試",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3、P5",
       "order_group": 3,
       "scope": "只重試失敗項，保護成功檔，半成品不作正式成功",
@@ -3742,11 +3827,14 @@
           "tests": []
         }
       ],
-      "next_step": "補逐項原因與重新驗證／更名，注入磁碟滿、占用、中斷，測成功檔不被重產或刪除；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-005"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-030",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-031",
@@ -3770,7 +3858,8 @@
         "CORE-003",
         "CORE-035"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-031"
     },
     {
       "id": "UI-032",
@@ -3799,12 +3888,13 @@
         "CORE-031",
         "CORE-034"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-032"
     },
     {
       "id": "UI-033",
       "title": "字型替代影響範圍與風險分級批次審核",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P3、P4",
       "order_group": 1,
       "scope": "替代前逐欄影響，勾選低風險批次，高風險逐筆",
@@ -3818,7 +3908,7 @@
           "tests": []
         }
       ],
-      "next_step": "補完整影響／選取矩陣及失敗隔離，測高風險未看預覽不得整批核准、舊版及其他欄位不變；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-022",
         "CORE-032",
@@ -3826,12 +3916,15 @@
         "CORE-035",
         "CORE-036"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-033",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-034",
       "title": "畫布、物件清單與屬性面板同步安全編輯",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2、P3、P7",
       "order_group": 1,
       "scope": "三向多選同一集合，混合值不被默默覆蓋",
@@ -3845,7 +3938,7 @@
           "tests": []
         }
       ],
-      "next_step": "補主編輯入口與全部物件類型，驗證空選取清舊值、混合值不覆蓋、鎖定／來源／發布版本受保護；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-013",
         "CORE-014",
@@ -3855,12 +3948,15 @@
         "CORE-038",
         "CORE-039"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-034",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-035",
       "title": "語意樹、Illustrator 圖層與搜尋／鎖定管理介面",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2、P3、P7",
       "order_group": 1,
       "scope": "已取得的原圖層或衍生物件結構分層呈現，不虛構原生結構；隱藏不減驗證範圍",
@@ -3874,18 +3970,21 @@
           "tests": []
         }
       ],
-      "next_step": "補可得映射與共享引用，測切換搜尋不丟選取、隱藏不減驗證；不要求還原全部Illustrator私有結構；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-038",
         "CORE-040",
         "CORE-041"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-035",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-036",
       "title": "多物件精確對齊、等距分布與群組位移",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2、P3、P7",
       "order_group": 1,
       "scope": "明確基準與差異預覽，對齊不改字級／Logo 比例",
@@ -3899,16 +3998,19 @@
           "tests": []
         }
       ],
-      "next_step": "先核對現有功能，補缺失互動或驗收；測取消零變更、含鎖定物件不得偷偷排除後稱整組成功；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-039"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-036",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-037",
       "title": "畫布縮放、平移、快速定位與同步對照檢視",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2、P3、P7",
       "order_group": 1,
       "scope": "縮放平移只改視角，實際尺寸須校準才承諾",
@@ -3922,16 +4024,19 @@
           "tests": []
         }
       ],
-      "next_step": "補多入口視角操作與選取錨點測試；未校準只說顯示倍率，不能保證螢幕1:1毫米；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-036"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-037",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-038",
       "title": "多作品總覽、智慧辨識框與作品上直接標記／修正",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2",
       "order_group": 1,
       "scope": "矩形作品範圍與雙層標記；適用 Inkscape 衍生來源，視覺一致且有效可訓練",
@@ -3945,17 +4050,20 @@
           "tests": []
         }
       ],
-      "next_step": "補作品總覽與候選框校正，驗證同頁多人多尺寸不混作品，來源只讀且衍生資訊標UNKNOWN；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-017",
         "CORE-018"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-038",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-039",
       "title": "AI 智慧資料辨識框的畫布快捷標記與人工校正",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P2、P3、P7",
       "order_group": 1,
       "scope": "標記中介資料與真物件編輯區別，確認可追溯",
@@ -3969,17 +4077,20 @@
           "tests": []
         }
       ],
-      "next_step": "補候選證據／不確定性與就近校正，測修改標記不等於修改原稿、未確認不得成訓練真值；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-048",
         "CORE-049"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-039",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-040",
       "title": "智慧標記完整性衝突檢查與可重用雜訊剔除規則",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P4",
       "order_group": 2,
       "scope": "核准雜訊條件後自動排除，不反覆問也不刪原稿",
@@ -3993,7 +4104,7 @@
           "tests": []
         }
       ],
-      "next_step": "補可靠來源對應與語意檢查；測行政註記排除不刪原稿、Logo合理包含不誤刪、真欄位優先；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-046",
         "CORE-047",
@@ -4002,12 +4113,15 @@
         "CORE-054",
         "CORE-055"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-040",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-041",
       "title": "雜訊規則庫、命中追溯、例外白名單與安全回滾",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P4",
       "order_group": 2,
       "scope": "命中追溯、單項恢復、白名單及規則回滾可核對",
@@ -4021,19 +4135,22 @@
           "tests": []
         }
       ],
-      "next_step": "逐種規則／白名單做完整對帳與回歸；測回滾不覆蓋後續人工資料、不以恢復代表已再驗證；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-054",
         "CORE-055",
         "CORE-056",
         "CORE-057"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-041",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-042",
       "title": "訓練可恢復進度、精確去重與客戶資料庫重訂關聯",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P1、P6",
       "order_group": 2,
       "scope": "異名同內容共用分析、保留來源客戶映射及斷點",
@@ -4047,7 +4164,7 @@
           "tests": []
         }
       ],
-      "next_step": "補各階段版本化檢查點與客戶候選審核，測異名同位元仍保留各客戶身份與前導零；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-008",
         "CORE-018",
@@ -4057,7 +4174,10 @@
         "CORE-064",
         "CORE-065"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-042",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-043",
@@ -4231,11 +4351,14 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-068"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-043",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-044",
@@ -4568,11 +4691,14 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-069"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-044",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-045",
@@ -4751,11 +4877,14 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-070"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-045",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-046",
@@ -4778,7 +4907,8 @@
       "completed_core_children": [
         "CORE-071"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-046"
     },
     {
       "id": "UI-047",
@@ -4801,7 +4931,8 @@
       "completed_core_children": [
         "CORE-072"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-047"
     },
     {
       "id": "UI-048",
@@ -4822,7 +4953,8 @@
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-048"
     },
     {
       "id": "UI-049",
@@ -4848,7 +4980,8 @@
         "CORE-026",
         "CORE-027"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-049"
     },
     {
       "id": "UI-050",
@@ -4871,7 +5004,8 @@
       "completed_core_children": [
         "CORE-073"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-050"
     },
     {
       "id": "UI-051",
@@ -4898,7 +5032,8 @@
         "CORE-064",
         "CORE-065"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-051"
     },
     {
       "id": "UI-052",
@@ -4922,7 +5057,8 @@
         "CORE-062",
         "CORE-063"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-052"
     },
     {
       "id": "UI-053",
@@ -4945,7 +5081,8 @@
       "completed_core_children": [
         "CORE-074"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-053"
     },
     {
       "id": "UI-054",
@@ -4968,7 +5105,8 @@
       "completed_core_children": [
         "CORE-075"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-054"
     },
     {
       "id": "UI-055",
@@ -4995,7 +5133,8 @@
         "CORE-060",
         "CORE-061"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-055"
     },
     {
       "id": "UI-056",
@@ -5019,7 +5158,8 @@
         "CORE-062",
         "CORE-063"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-056"
     },
     {
       "id": "UI-057",
@@ -5040,7 +5180,8 @@
       ],
       "next_step": "補安全草稿與分尺寸風險理由，測忽略警告不放行、缺經驗不自動宣稱無解；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-057"
     },
     {
       "id": "UI-058",
@@ -5063,7 +5204,8 @@
       "completed_core_children": [
         "CORE-076"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-058"
     },
     {
       "id": "UI-059",
@@ -5086,7 +5228,8 @@
       "completed_core_children": [
         "CORE-006"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-059"
     },
     {
       "id": "UI-060A",
@@ -5107,7 +5250,8 @@
       ],
       "next_step": "補結果比較與選取狀態保留，測排序更新不悄悄覆蓋人工選擇、不宣稱部分搜尋為最優；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-060A"
     },
     {
       "id": "UI-061",
@@ -5130,7 +5274,8 @@
       "completed_core_children": [
         "CORE-077"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-061"
     },
     {
       "id": "UI-062",
@@ -5151,7 +5296,8 @@
       ],
       "next_step": "補跨既有工具的安全返回鏈，測失聯或版本變動不錯定位、不丟未套用內容、不自動重算或回寫；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-062"
     },
     {
       "id": "UI-063",
@@ -5174,7 +5320,8 @@
       "completed_core_children": [
         "CORE-078"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-063"
     },
     {
       "id": "UI-064",
@@ -5195,7 +5342,8 @@
       ],
       "next_step": "補中央指令作用域與安全提示，測文字Ctrl+Z不撤銷畫布、Delete不誤刪共享／鎖定物件；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-064"
     },
     {
       "id": "UI-065",
@@ -5218,7 +5366,8 @@
       "completed_core_children": [
         "CORE-079"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-065"
     },
     {
       "id": "UI-066",
@@ -5241,7 +5390,8 @@
       "completed_core_children": [
         "CORE-080"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-066"
     },
     {
       "id": "UI-067",
@@ -5262,7 +5412,8 @@
       ],
       "next_step": "補逐條規格→元件→測試→證據矩陣與過期引用修訂；純治理不算新軟體功能；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-067"
     },
     {
       "id": "UI-052-REVIEW",
@@ -5285,7 +5436,8 @@
       "completed_core_children": [
         "CORE-081"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-052-REVIEW"
     },
     {
       "id": "UI-056-D",
@@ -5306,7 +5458,8 @@
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-056-D"
     },
     {
       "id": "UI-066-R1",
@@ -5390,11 +5543,14 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-082"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-066-R1",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-066-R2",
@@ -5478,11 +5634,14 @@
           ]
         }
       ],
-      "next_step": "目前來源的具名原條款／子範圍已自我驗證；程式修改後須重驗。真實私人AI全面、Windows、實體印刷與獨立覆核仍分開未驗證。",
+      "next_step": "完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。",
       "completed_core_children": [
         "CORE-083"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-066-R2",
+      "software_evidence": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "REV-01",
@@ -5505,7 +5664,8 @@
       "completed_core_children": [
         "CORE-009"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#REV-01"
     },
     {
       "id": "REV-02",
@@ -5529,7 +5689,8 @@
         "CORE-010",
         "CORE-011"
       ],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#REV-02"
     },
     {
       "id": "REV-03",
@@ -5550,7 +5711,8 @@
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#REV-03"
     },
     {
       "id": "REV-04",
@@ -5571,14 +5733,19 @@
       ],
       "next_step": "取得可用參考環境後測冷啟動、尖峰RAM／VRAM、GUI反應與取消；16GB是整機上限而非程式可占滿；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
       "completed_core_children": [],
-      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
+      "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#REV-04"
     }
   ],
-  "latest_status_note": "原75為16完整／56部分／3延後；固定70完成14／剩56。20題中繼553PASS，尚無新父題完整結案。完整要求以REQUIREMENTS及目前契約為準。",
-  "current_full70_progress": "docs/dev/FULL70_PROGRESS.json",
+  "latest_status_note": "本輪28完整原軟體父題239條驗收通過，601/601 PASS，Qt錯誤0，來源未改；累計44完整／28部分／3延後。",
+  "current_full70_progress": {
+    "closed": 42,
+    "remaining": 28,
+    "report": "docs/dev/FULL70_PROGRESS.md"
+  },
   "current_parent_counts": {
-    "PARTIAL": 56,
-    "VERIFIED": 16,
+    "VERIFIED": 44,
+    "PARTIAL": 28,
     "DEFERRED": 3
   }
 }

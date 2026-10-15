@@ -1,3 +1,5 @@
+> 最新里程碑（2026-10-15）：使用者指定28部分已依原父題完整軟體條款完成自我驗證；239條驗收、601/601 PASS、Qt錯誤0、擷取成功、來源未變。全75仍有28部分與3延後，固定70尚餘28；下一UI031。詳見STATE／TWENTYEIGHT_CLAUSE_AUDIT／ACTIVE_DEVELOPMENT_HANDOFF。以下保留早期目標與歷史里程碑。
+
 > 2026-10-15本輪十父題UI043、045、020～027已完成軟體條款自我驗證；498PASS／87條新驗收，固定70累計14完整／56剩餘。下一項UI003自動管線，見STATE及NEXT_AFTER_TEN_PARENTS；全清單長期目標保留，Windows／真AI全面／實體印刷／獨立覆核未驗證。
 
 > 最新指令（2026-10-15）：持續完成4238ebc固定70題報告內所有工作。全70機器計畫見FULL_70_COMPLETION_PLAN.json，先ENTITY_RELATIONS_CONTRACT；不可把只完成下一建議包當全目標完成。

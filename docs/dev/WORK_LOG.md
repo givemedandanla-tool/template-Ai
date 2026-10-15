@@ -699,3 +699,6 @@ UI039補明確REJECTED/QUARANTINED/HUMAN_PENDING_CONFIRMATION、理由與操作�
 
 ## 2026-10-15 28父題 正式001 FAIL與修復
 來源b39ccd301e3cc492758597921c737f5730999a9d，RUN-TWENTYEIGHT-FULL-001：598/598單測PASS、source未改，但新Qt外部回呼Gate記到OperationalError(training_records尚未初始化)；整體FAIL、擷取未啟動，沒有結案任何父題。MainWindow啟動即建立TrainingStore schema，選取仍只讀；新直接回歸防此錯誤。另發現來源文字[:512]曾會截短候選，改為完整2048字觀察預算；超限保留來源物件／長度／hash證據，僅受影響作品BLOCK，禁止衍生發布，不產生假完整觀察。長600字在辨識／屬性／保存完整保留；資源預算非所有尺寸字數上限。新增3測試PASS；第一次新fixture root／tuple回傳誤用已修、log保留。下一RUN002新來源601全回歸，原失敗run不可覆寫。
+
+## 2026-10-15 28父題 正式002 PASS／進度結案
+來源81f73e03449bbe2abb79251d2ec8919662b5ab2c，RUN-TWENTYEIGHT-FULL-002：601/601 PASS、0跳過、Qt未處理錯誤0、capture0、source未改，28父題239原條款全部具名PASS。核對所有claim與contract digest後恢復138列（原110＋本輪28）。全75累計44完整／28部分／3延後，固定70完成42剩28，CORE87/GOV7另計；沒有新增／刪除父題，本輪修訂28、完成28。95媒體逐檔驗bytes/hash後移ignored .checkpoints/formal-media/RUN-TWENTYEIGHT-FULL-002，精確政策追加FULL70_PUBLICATION；27文字metadata全部待GitHub保存。原失敗RUN001不改。進度／路線／完成報告／精簡接手更新，下一UI031。

@@ -1,58 +1,60 @@
-# 固定70題完整化進度
+# 固定70父題當前進度
 
-原75父題：16軟體條款自我驗證完成／56部分／3延後。固定70完成14、剩56；本輪20題尚無新增整題結案。CORE87／GOV7另計。
+基準：4238ebc24ae62a2ef90051a86685a4c13bfca94b；70個原父題不增刪。
 
-中繼來源 `46d367bee0c642437d13de7202b8ac611f7ae08c`；553／553 PASS、0跳過、擷取成功、來源未改。重驗既有110列；7個新Qt畫面及模型14目標測試不等於20父題完整完成。
+固定70：**42完整軟體條款自我驗證／28仍部分**。全75：44 VERIFIED／28 PARTIAL／3 DEFERRED；CORE87與GOV7另計。
 
-86件PNG／JPG／PDF依核准metadata-first保留本機與精確hash；24件文字metadata保存GitHub。未宣稱全媒體公開Gate。run：docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json
+本輪28原父題／239條驗收全部通過；來源 `81f73e03449bbe2abb79251d2ec8919662b5ab2c`；[RUN-TWENTYEIGHT-FULL-002](../evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json)：601/601 PASS、0跳過、0未處理Qt錯誤、擷取成功、來源未變。
 
-|ID|狀態|完整驗收證據／剩餘工作|
+驗證限Linux合成資料及實際Qt／數位檔；未宣稱Windows、真實私人AI全面、原生未知細節、外部磁碟崩潰耐久、實體印刷或獨立覆核通過。95件媒體依既定例外留本機，27件文字metadata與全部code/tests保存GitHub。
+
+|父題|狀態|驗收／剩餘工作|
 |---|---|---|
-|UI-001|PARTIAL|完成各模式面板收合與狀態一致；驗證切換時選取、未提交內容及背景任務不丟失|
-|UI-002|PARTIAL|逐模式驗證安全切換與焦點保持；只提醒真正會遺失的修改，不把本題擴成永久案件恢復|
-|UI-003|PARTIAL|補預檢到候選驗證的一鍵管線與例外分流，測多來源、多作品、重用、取消及跨啟動續跑|
-|UI-004|PARTIAL|補齊錯誤家族與增量依賴；驗證單件失敗其餘繼續、不可隔離錯誤才暫停|
-|UI-005|PARTIAL|逐類對照排序／搜尋／篩選與定位，測不同人物公司不能盲目批次修正|
-|UI-006|PARTIAL|完成同作品各檢視選取同步、取消／復原／確認差異，再驗證只影響選取作品|
-|UI-007|PARTIAL|補候選產生、適用條件／反例／衝突、正式人工核准與依賴重算；不要求指定深度模型架構|
-|UI-008|PARTIAL|完成風險與適用條件分組、精確選取、批准／暫緩理由，測一個高風險規則不被整批放行|
-|UI-009|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-010|PARTIAL|先對帳現有能力，補缺失的差異／回滾入口與跨欄位發布驗收，不重建第二套Undo|
-|UI-011|PARTIAL|與UI016／017共用穩定歸屬模型，驗證畫布／清單／屬性選取同一物件及保護發布版本|
-|UI-012|PARTIAL|補吸附與手勢的精確預覽、鎖定保護和Undo；逐一驗證關閉疊圖不關閉驗證|
-|UI-013|PARTIAL|在已定案字級不變前提補合法策略與理由，測長姓名／電話／Email不被一律分散或暗縮字級|
-|UI-014|PARTIAL|補安全候選與適用限制、空間／字距方案及跨階段一致提示；只對實際證明的搜尋範圍宣告無解|
-|UI-015|PARTIAL|完成右側問題導覽與不同風險來源，驗證輸入法、連續打字不奪焦點及刪改後即時更新|
-|UI-016|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-017|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-018|PARTIAL|補多方案比較與特製草案同等驗證；測部分搜尋不宣稱唯一最佳，切換不改發布模板|
+|UI-001|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-002|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-003|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-004|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-005|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-006|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-007|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-008|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-009|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-010|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-011|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-012|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-013|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-014|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-015|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-016|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-017|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-018|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
 |UI-019|PARTIAL|補安全區／裁切等已核准數位檢查與高保真參考；實體設備／材料印刷依REV03後移，不作本期阻塞|
-|UI-020|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-021|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-022|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-023|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-024|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-025|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-026|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-027|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-028|PARTIAL|補多尺寸外側說明區及缺Logo加其他錯誤的完整標記；驗證不蓋掉作品內容、不以預覽當正式|
-|UI-029|PARTIAL|建置共用批次輸出計畫，測FINAL／PREVIEW分流、取消／略過／撞名與部分成功|
-|UI-030|PARTIAL|補逐項原因與重新驗證／更名，注入磁碟滿、占用、中斷，測成功檔不被重產或刪除|
+|UI-020|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-021|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-022|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-023|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-024|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-025|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-026|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-027|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-028|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-029|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-030|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
 |UI-031|PARTIAL|以合法匿名真AI逐例核對字形／遮罩／Logo並實際學習；完整私有原生結構不是共同必要條件|
 |UI-032|PARTIAL|補Windows能力探測及明確安裝授權，驗證載入不等於安裝、缺字／失聯／異動不借字型通過|
-|UI-033|PARTIAL|補完整影響／選取矩陣及失敗隔離，測高風險未看預覽不得整批核准、舊版及其他欄位不變|
-|UI-034|PARTIAL|補主編輯入口與全部物件類型，驗證空選取清舊值、混合值不覆蓋、鎖定／來源／發布版本受保護|
-|UI-035|PARTIAL|補可得映射與共享引用，測切換搜尋不丟選取、隱藏不減驗證；不要求還原全部Illustrator私有結構|
-|UI-036|PARTIAL|先核對現有功能，補缺失互動或驗收；測取消零變更、含鎖定物件不得偷偷排除後稱整組成功|
-|UI-037|PARTIAL|補多入口視角操作與選取錨點測試；未校準只說顯示倍率，不能保證螢幕1:1毫米|
-|UI-038|PARTIAL|補作品總覽與候選框校正，驗證同頁多人多尺寸不混作品，來源只讀且衍生資訊標UNKNOWN|
-|UI-039|PARTIAL|補候選證據／不確定性與就近校正，測修改標記不等於修改原稿、未確認不得成訓練真值|
-|UI-040|PARTIAL|補可靠來源對應與語意檢查；測行政註記排除不刪原稿、Logo合理包含不誤刪、真欄位優先|
-|UI-041|PARTIAL|逐種規則／白名單做完整對帳與回歸；測回滾不覆蓋後續人工資料、不以恢復代表已再驗證|
-|UI-042|PARTIAL|補各階段版本化檢查點與客戶候選審核，測異名同位元仍保留各客戶身份與前導零|
-|UI-043|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-044|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
-|UI-045|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-033|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-034|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-035|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-036|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-037|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-038|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-039|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-040|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-041|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-042|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-043|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-044|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-045|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
 |UI-046|PARTIAL|補合併前全影響預覽與雙方CAS、別名及拆分；測後續新值不被歷史拆分覆蓋|
 |UI-047|PARTIAL|補可選範圍與完整依賴Manifest、排程／保留政策及隔離還原驗證；缺資產必須報不完整|
 |UI-049|PARTIAL|補多根搜尋／歧義選擇及完整影響摘要，測不同內容同名不重連、映射與原稿不改|
