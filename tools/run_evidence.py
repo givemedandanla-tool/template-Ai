@@ -156,6 +156,11 @@ def main():
             claims.append({"requirement_id": row["id"], "acceptance_id": acceptance["id"], "expected": acceptance["expected"],
                            "tests": acceptance["tests"], "status": "PASS" if passed else "NOT_VERIFIED", "scope": row["scope"], "contract_sha256": contract_digest(row)})
     write_json(folder / "claims.json", claims)
+    seventy = ROOT / "docs/dev/SEVENTY_PARENTS_CONTRACT.json"
+    if seventy.is_file():
+        contract = read_json(seventy)
+        trace = [{"parent": s["parent"], "scoped_requirement": s["id"], "implemented_subset": s["acceptance"], "remaining_parent_scope": s["remaining"], "tests": [{"id": tid, "status": tests_lookup.get(tid, "MISSING")} for tid in s["tests"]], "scoped_pass": status == "PASS" and bool(s["tests"]) and all(tests_lookup.get(tid) == "PASS" for tid in s["tests"])} for s in contract["scopes"]]
+        write_json(folder / "seventy-parent-audit.json", {"evidence_kind": "DERIVED_TRACEABILITY_FROM_ACTUAL_TESTS_NOT_EXTRA_EXECUTION", "source_commit": args.source_commit, "source_unchanged": source_unchanged, "baseline_partial": 53, "target_partial": 70, "new_scopes": trace, "all_scopes_pass": all(s["scoped_pass"] for s in trace), "full_parent_completion_claim": False, "blocked_unchanged": 2, "deferred_unchanged": 3})
     attachments = {path.name: {"bytes": path.stat().st_size, "sha256": digest(path.read_bytes()), "mime": mimetypes.guess_type(path.name)[0] or "text/plain"}
                    for path in folder.iterdir() if path.is_file()}
     run = {"schema_version": 1, "id": args.run_id, "created_utc": datetime.now(timezone.utc).isoformat(), "source_commit": args.source_commit,

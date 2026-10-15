@@ -39,6 +39,9 @@ class TrainingQualityDialog(QDialog):
         self.coverage_panel=CoveragePanel(window,self);self.tabs.addTab(self.coverage_panel,'覆蓋／分布')
         from .training_queue_panel import TrainingQueuePanel
         self.queue_panel=TrainingQueuePanel(window,self);self.tabs.addTab(self.queue_panel,'可恢復幾何訓練工作')
+        from .quality_evaluation_panel import EvaluationPanel, RecheckPanel
+        self.evaluation_panel=EvaluationPanel(window,self);self.tabs.addTab(self.evaluation_panel,'分類評估／隔離修復')
+        self.recheck_panel=RecheckPanel(window,self);self.tabs.addTab(self.recheck_panel,'重大規則依賴重審')
         self.setWindowTitle('標記品質／來源事實與可信訓練')
     def reject(self):
         if self.facts_panel.running or self.samples_panel.running or self.dataset_panel.running or self.queue_panel.running: self.status.setText('背景來源核對尚未結束'); return

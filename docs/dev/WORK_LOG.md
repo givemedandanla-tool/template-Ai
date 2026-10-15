@@ -1,5 +1,15 @@
 # 開發工作紀錄
 
+## 70父需求：凍結正式來源前
+
+全部17scope target29項（客戶8/UI11/品質9/新發布邊界1）PASS；原publications4額外回歸亦PASS。347全回歸及原actual Qt capture待執行。新增嚴格SEVENTY source-bound具名media政策，僅媒體略過新上傳、metadata不可略過；派生seventy-parent-audit從actual個別測試結果產生，明示不是另一次操作／不等於父FULL完成。新增seventy_finish僅全PASS/17scope/契約匹配且原75狀態守恆才升部分。
+
+
+## 70父需求：全部17 scope實作／28 targeted PASS
+
+新增來源根目錄手動worker重掃、兩次實際SHA+stat穩定核對／離線不刪除；HOLDOUT固定manifest與人工/外部預測分類混淆矩陣、TP/FP/FN與未知分母、exact A/B；隔離根因候選、明示holdout用於修復即需新集、兩版無可信證據回退阻擋；SQL全歷史exact規則依賴反查、原子sample隔離+重審case+audit，未改原稿／發布模板。quality001測試誤以同hash新身份為TRAIN，被既有group Gate正確拒絕；改真正不同合成內容、人工觀察一致，quality002九PASS。全部新測試8+11+9=28PASS，仍待完整來源346+必要capture；未假稱新模型已推論或品質PASS。
+
+
 ## 70父需求：13項子流程target驗證
 
 客戶8＋UI11＝19 targeted PASS；UI001保留5FAIL：真Qt finished與QDialog內建訊號名稱衝突造成worker未啟動，已改on_finished；空對齊預覽正確阻擋，GUI補明確方向；no-op保存不升revision，測試改用真正更動visual_confirmed製造stale；Timer已防關庫並於正常關閉停止。保留原FAIL，不降低產品Gate。13 scope已編碼／target；父仍53部分17未做待正式。下一4 scope來源重掃／品質評估／隔離修復／歷史重審。

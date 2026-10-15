@@ -16,20 +16,21 @@ def waived_attachments(root, run_path, run):
                            if r['path'].startswith(folder + '/')]
             if candidates:
                 policies.append(str(legacy.relative_to(root)))
-    path = root / 'docs/dev/TEN_PACKAGES_PUBLICATION.json'
-    if path.exists():
-        policy = read_json(path)
-        if policy.get('policy') != 'USER_AUTHORIZED_METADATA_FIRST_TEN_PACKAGES':
-            raise ValueError('未知的證據保存例外policy')
-        if '如果這只是證明文件就略過' not in policy.get('user_instruction', ''):
-            raise ValueError('證據保存例外缺少明確使用者決策')
-        safe_path(root, policy['contract']).read_text(encoding='utf-8')
-        item = policy.get('runs', {}).get(run['id'])
-        if item:
-            if item['source_commit'] != run['source_commit']:
-                raise ValueError('上傳例外與測試來源版本不符')
-            candidates += [(folder + '/' + name, r) for name, r in item['attachments'].items()]
-            policies.append(str(path.relative_to(root)))
+    for policy_path, policy_id in (('docs/dev/TEN_PACKAGES_PUBLICATION.json', 'USER_AUTHORIZED_METADATA_FIRST_TEN_PACKAGES'), ('docs/dev/SEVENTY_PARENTS_PUBLICATION.json', 'USER_AUTHORIZED_METADATA_FIRST_SEVENTY')):
+        path = root / policy_path
+        if path.exists():
+            policy = read_json(path)
+            if policy.get('policy') != policy_id:
+                raise ValueError('未知的證據保存例外policy')
+            if '如果這只是證明文件就略過' not in policy.get('user_instruction', ''):
+                raise ValueError('證據保存例外缺少明確使用者決策')
+            safe_path(root, policy['contract']).read_text(encoding='utf-8')
+            item = policy.get('runs', {}).get(run['id'])
+            if item:
+                if item['source_commit'] != run['source_commit']:
+                    raise ValueError('上傳例外與測試來源版本不符')
+                candidates += [(folder + '/' + name, r) for name, r in item['attachments'].items()]
+                policies.append(str(path.relative_to(root)))
     result = {}
     for path, row in candidates:
         safe_path(root, path)

@@ -51,3 +51,13 @@ class PublicationTests(unittest.TestCase):
         self.policy['contract'] = '../outside.md'
         self.save()
         with self.assertRaises(ValueError): waived_attachments(self.root, 'docs/evidence/runs/RUN-X/run.json', self.run)
+
+    def test_seventy_policy_keeps_exact_source_media_and_contract_boundary(self):
+        self.policy['policy']='USER_AUTHORIZED_METADATA_FIRST_SEVENTY'
+        self.policy['contract']='docs/dev/SEVENTY_PARENTS_CONTRACT.json'
+        (self.root/self.policy['contract']).write_text('{}')
+        path=self.root/'docs/dev/SEVENTY_PARENTS_PUBLICATION.json';path.write_text(json.dumps(self.policy))
+        result,policies=waived_attachments(self.root,'docs/evidence/runs/RUN-X/run.json',self.run)
+        self.assertEqual(list(result),['docs/evidence/runs/RUN-X/gui.png']);self.assertEqual(policies,['docs/dev/SEVENTY_PARENTS_PUBLICATION.json'])
+        self.policy['runs']['RUN-X']['source_commit']='c'*40;path.write_text(json.dumps(self.policy))
+        with self.assertRaises(ValueError):waived_attachments(self.root,'docs/evidence/runs/RUN-X/run.json',self.run)

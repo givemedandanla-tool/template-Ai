@@ -139,24 +139,54 @@
       "id": "CORE-073",
       "acceptance": "明確根目錄人工重掃、雙次穩定內容核對、增量分類與只讀來源",
       "remaining": "事件自動監看／自動增量匯入後續",
-      "status": "PLANNED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "tests": [
+        "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+        "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
+        "test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe",
+        "test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope",
+        "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+        "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
+        "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
+      ]
     },
     {
       "parent": "UI-053",
       "id": "CORE-074",
       "acceptance": "固定HOLDOUT資料集版本的分類預測與人工真值比對、混淆計數及不足Gate",
       "remaining": "原生AI模型／正式門檻與品質合格發布後續",
-      "status": "PLANNED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "tests": [
+        "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+        "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
+        "test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe",
+        "test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope",
+        "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+        "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
+        "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
+      ]
     },
     {
       "parent": "UI-054",
       "id": "CORE-075",
       "acceptance": "exact失敗評估建立隔離根因修復待辦、候選版本對照與無證據回退阻擋",
       "remaining": "自動模型修復／訓練／部署後續",
-      "status": "PLANNED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "tests": [
+        "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+        "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
+        "test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe",
+        "test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope",
+        "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+        "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
+        "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
+      ]
     },
     {
       "parent": "UI-058",
@@ -283,8 +313,18 @@
       "id": "CORE-081",
       "acceptance": "明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史",
       "remaining": "其他模型／Logo／客戶依賴全面掃描與解除重審後續",
-      "status": "PLANNED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "tests": [
+        "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+        "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
+        "test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe",
+        "test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate",
+        "test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope",
+        "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+        "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
+        "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
+      ]
     }
   ],
   "rules": [

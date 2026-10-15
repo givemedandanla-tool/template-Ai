@@ -270,7 +270,14 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("尺寸獨立 Logo 庫", self.logo_center)
         self.menuBar().addAction("多作品安全批次對齊", self.batch_object_center)
         self.menuBar().addAction("輸入問題定位（既有診斷）", lambda: self.open_diagnostic('input'))
+        self.menuBar().addAction("來源根目錄安全重掃", self.source_scan_center)
         self.menuBar().addAction("操作說明", self.help)
+
+    def source_scan_center(self):
+        from .source_scan_dialog import SourceScanDialog
+        dialog=SourceScanDialog(self)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
 
     def open_diagnostic(self, kind):
         from .diagnostic_routes import open_diagnostic
