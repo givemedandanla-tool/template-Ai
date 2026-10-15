@@ -19,3 +19,8 @@
 ### UI052 exact-boundary P1 WIP
 - 已新增同SQLite COVERAGE_BATCH/MEMBER固定已登錄來源頁範圍、原路徑分組/同內容不同檔名獨立分母、來源/作品版本釘選、CAS與有界分頁；位元驗證明示不等於人審或結案。僅py_compile通過，尚未功能測試，不宣稱P1或父題完成。
 - default collector已加入.jsonl；source改變，143歷史完成claims皆pending保留原證據，下一寫P1實際檔案/競爭/500+分頁測試，再做分層證據與規則/處置/結案GUI。整體仍5/28里程碑，23未閉合。
+
+### UI052 layered review/closure backend WIP, 22 targeted PASS
+- coverage_evidence/review/closure引用既有FACTS/RULE/SEMANTIC_ACTIVE/實際客戶關聯/模板版本；全來源切分需全頁且明列真實作品，7層個別人工審核，低風險僅既有核准noise-rule annotation。無來源／未解析不能藉排除隱藏；排除不算學習/版型通過。
+- 結案實際hash在transaction前、鎖內stat+metadata/CAS重核；同transaction保存不可變receipt與batch link。source/model/review變更失效，明確reopen新batch保留舊receipt。22目標測試PASS含600分頁、diskfull整批回滾、漏層/缺頁/變更/reopen/missingreceipt。第一輪錯import analyser constant 4 errors原log保留，改正import後通過。
+- 原10尚未完整：未登錄來源／目錄新檔分母、受控GUI/worker/capture、完整正式回歸待做。仍5/28里程碑，143 current claims pending，UI052父題未關閉。

@@ -8,6 +8,8 @@ from pathlib import Path
 from .model import new_id
 from .training_store import TrainingStore,digest,text
 from .source_links import verify_source,check_verified
+from .coverage_review import CoverageReviewMixin
+from .coverage_closure import CoverageClosureMixin
 
 BATCH='COVERAGE_BATCH'
 MEMBER='COVERAGE_MEMBER'
@@ -18,7 +20,7 @@ MAX_PLAN_BYTES=32*1024*1024
 def logical_path(value):return os.path.normcase(os.path.normpath(str(value)))
 
 
-class CoverageBatches:
+class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin):
     def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library);self.db=library.db
 
     def source_pin(self,identity):
@@ -56,11 +58,14 @@ class CoverageBatches:
         with self.store.transaction():
             current=self.plan_registered_sources(plan['source_ids'])
             if current['scope_digest']!=expected:raise ValueError('來源位置／版本／作品集合已改變，未建立過期批次')
-            identity=new_id();member_digests=[]
-            for ordinal,member in enumerate(current['members']):
-                mid=digest(['coverage-member',identity,member['logical_file_key']]);member_digests.append(member['member_scope_digest'])
-                self.store._write(MEMBER,mid,dict(batch_id=identity,ordinal=ordinal,frozen=member,check_state='DECLARED_PENDING_PROOF',last_check=None,source_error=None,review_state='UNKNOWN_NOT_YET_REVIEWED'),0,'coverage_member_boundary_declared')
-            return self.store._write(BATCH,identity,dict(schema_version=1,scope_kind=current['scope_kind'],scope_digest=expected,member_manifest_digest=digest(member_digests),file_count=current['file_count'],source_page_count=current['source_page_count'],source_ids=current['source_ids'],state='BOUNDARY_FROZEN',actor=actor,created=time.time(),whole_directory_claim=False,all_file_work_coverage_verified=False,closure_receipt=None),0,'coverage_batch_exact_boundary_created')
+            return self._create_current(current,actor)
+
+    def _create_current(self,current,actor,previous_id=None):
+        identity=new_id();member_digests=[]
+        for ordinal,member in enumerate(current['members']):
+            mid=digest(['coverage-member',identity,member['logical_file_key']]);member_digests.append(member['member_scope_digest'])
+            self.store._write(MEMBER,mid,dict(batch_id=identity,ordinal=ordinal,frozen=member,check_state='DECLARED_PENDING_PROOF',last_check=None,source_error=None,review_state='UNKNOWN_NOT_YET_REVIEWED'),0,'coverage_member_boundary_declared')
+        return self.store._write(BATCH,identity,dict(schema_version=1,scope_kind=current['scope_kind'],scope_digest=current['scope_digest'],member_manifest_digest=digest(member_digests),file_count=current['file_count'],source_page_count=current['source_page_count'],source_ids=current['source_ids'],state='BOUNDARY_FROZEN',actor=actor,created=time.time(),previous_batch_id=previous_id,whole_directory_claim=False,all_file_work_coverage_verified=False,closure_receipt=None),0,'coverage_batch_exact_boundary_created')
 
     def batch(self,identity):
         value=self.store.get(BATCH,identity)

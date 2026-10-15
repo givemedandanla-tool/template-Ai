@@ -895,3 +895,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-15 UI052 exact registered-boundary WIP
 - 新增coverage_batches.py；同TrainingStore transaction/audit/version，不建第二資料真相；file/page/work分母分離，未知不當100%。
 - py_compile PASS；尚無功能自驗。143 current claims pending revalidation；5/28先前已驗里程碑保留。default collector納JSONL，舊run/checkpoint不變。
+
+### 2026-10-15 23:09 UTC UI052 layered backend WIP
+- 22 targeted tests PASS; original 001 layer import failure log retained. Actual hash/stat, exact page/work segmentation, 7 pinned human layers, independent exclusions, immutable closure, CAS, disk/audit rollback, stale/reopen tested. No full-parent completion or current formal-source pass.
+- Boundary checkpoint首輪漏stage docs/checkpoints導致readback拒絕；未冒稱成功，補manifest後b19080b逐檔確認，receipt 1ce1e75已推送。
