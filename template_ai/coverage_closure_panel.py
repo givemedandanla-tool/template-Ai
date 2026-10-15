@@ -9,6 +9,7 @@ from .coverage_command import run_command
 
 LAYER_LABELS={'native_or_ocr':'原生文字／OCR來源證據','people':'人物ROOT與跨人物邊界','companies':'公司及歸屬','whole_logo':'完整Logo與尺寸資產','fields':'欄位意涵及缺標記','customer':'客戶身分及來源關聯','styles':'版型候選／版本'}
 STATE_LABELS={'BOUNDARY_FROZEN':'邊界已固定、尚未結案','OPEN':'審核中','CLOSED':'已存結案，仍需核對版本','REOPENED':'已保留並重開新版本','DECLARED_PENDING_PROOF':'等待來源核對','SOURCE_BYTES_VERIFIED_AWAITING_REVIEW':'位元相符，尚未完成審核','SOURCE_UNREGISTERED':'未登錄／未解析','SOURCE_UNRESOLVED':'來源失聯／改變／待釐清','SOURCE_VERSION_CONFLICT':'來源版本衝突'}
+DISPOSITION_LABELS={'APPROVED_EXCLUSION':'明確核准排除（不計成功學習）','ALL_REQUIRED_LAYERS_REVIEWED':'必要層次已核對','UNRESOLVED':'仍有未解／待審項目','AUTO_VERIFIED_BY_APPROVED_RULE':'依正式核准規則自動驗證完成','RULE_ELIGIBLE_AWAITING_CONTROLLED_GROUP':'符合低風險規則條件，待本次受控分組核對','MANUAL_FACT_CONFIRMED':'來源事實已人工確認','WAITING_HUMAN':'待個別人工審核','CONFIRMED':'已個別確認','VERIFIED_ABSENT':'依來源證據確認不存在','NO_CANDIDATE_RETAINED':'本次未形成版型候選'}
 
 
 class CoverageClosurePanel(QWidget):
@@ -104,12 +105,14 @@ class CoverageClosurePanel(QWidget):
     def show_detail(self,value):
         self.detail=value;self.work_combo.clear();self.rules.clear();rules=set()
         for index,work in enumerate(value['works']):self.work_combo.addItem(f"作品{index+1}／{work['work_id'][:10]}",work['work_id'])
-        lines=[f"來源頁{value['source_page_count']}；已存作品紀錄{value['recorded_work_count']}；核對後真實作品總數{value['actual_work_count'] if value['actual_work_count'] is not None else '未知'}",f"處置：{value['disposition']}；待處理原因{len(value['blockers'])}項"]
-        for key,counts in value['layer_counts'].items():lines.append(f"{LAYER_LABELS[key]}：當前已審{counts['current_reviewed']}／必要{counts['required']}（排除不計審核通過）")
+        lines=[f"來源頁{value['source_page_count']}；已存作品紀錄{value['recorded_work_count']}；核對後真實作品總數{value['actual_work_count'] if value['actual_work_count'] is not None else '未知'}",f"處置：{DISPOSITION_LABELS[value['disposition']]}；待處理原因{len(value['blockers'])}項"]
+        for key,counts in value['layer_counts'].items():
+            rate=value['layer_rates'][key]['review_rate'];percent='未知（全部作品分母尚未核實）' if rate is None else f'{rate:.1%}'
+            lines.append(f"{LAYER_LABELS[key]}：當前已審{counts['current_reviewed']}／已登錄作品必要項{counts['required']}；完成率{percent}（排除不計審核通過）")
         for blocker in value['blockers'][:50]:lines.append(blocker.get('reason','待審')+' '+LAYER_LABELS.get(blocker.get('layer'),''))
         for work in value['works']:
             lines += [f"作品ID：{work['work_id']}；來源頁ID：{work['source_id']}；內容識別：{work['context']['context']['pins']['source_hash']}"]
-            for observation in work['observation_verification']:lines.append(f"觀察{observation['observation_id']}：{observation['state']}；受保護{observation['protected']}")
+            for observation in work['observation_verification']:lines.append(f"觀察{observation['observation_id']}：{DISPOSITION_LABELS[observation['state']]}；{'真實欄位／Logo／未知等受保護內容，需個別審核' if observation['protected'] else '低風險註記條件另行核對'}")
             for ref in work['context']['context']['style_version_refs']:lines.append('版型來源版本：'+str(ref))
             for eligible in work['low_risk_rules']:
                 for rule in eligible['rules']:rules.add((rule['id'],rule['revision']))
@@ -135,17 +138,27 @@ class CoverageClosurePanel(QWidget):
         self.guarded(run)
     def plan_close(self):self.guarded(lambda:self.request('PLAN_CLOSE',dict(batch_id=self.batch['id']),lambda plan:self.preview('CLOSE',plan)))
     def plan_reopen(self):self.guarded(lambda:self.request('PLAN_REOPEN',dict(batch_id=self.batch['id'],reason=self.reason.text(),selected_source_ids=self.selected_versions()),lambda plan:self.preview('REOPEN',plan)))
-    def check_closure(self):self.guarded(lambda:self.request('CLOSURE_STATUS',dict(batch_id=self.batch['id']),lambda value:self.details.setPlainText('當前有效結案：'+str(value['current_complete'])+'\n'+value['reason']+'\n'+str(value.get('failures',[]))[:12000])))
+    def check_closure(self):self.guarded(lambda:self.request('CLOSURE_STATUS',dict(batch_id=self.batch['id']),self.show_closure))
+    def show_closure(self,value):
+        current=value['current_complete'];lines=['當前結案核對：'+('有效' if current else '未通過／舊結論已失效'),value['reason']]
+        if value['receipt_id']:lines.append('保留的結案收據：'+value['receipt_id'])
+        for failure in value.get('failures',[])[:30]:lines.append(failure.get('reason') or failure.get('scope_error') or '來源依賴已改變，請核對明列成員')
+        self.details.setPlainText('\n'.join(lines));self.status.setText('已讀回正式結案收據並重新核對目前依賴；僅適用此指定批次。' if current else '目前沒有有效結案；先修復未解項目，再明確重開新版本，舊證據保留。')
+        index=self.batches.findData(self.batch['id'])
+        if index>=0:self.batches.setItemText(index,('本次核對有效結案' if current else '未有有效結案／需核對')+'／'+str(self.batch['file_count'])+'檔／'+self.batch['id'][:10])
     def preview(self,action,plan):
         self.pending=(action,plan);self.approved.setChecked(False);allowed=action!='CLOSE' or plan['closure_allowed'];self.confirm_button.setEnabled(allowed)
         labels={'CREATE':'建立確切來源範圍','SEGMENTATION':'僅確認此檔全部作品切分','LAYER':'僅確認此作品此層','EXCLUSION':'明確排除此檔，不當學習／版型通過','CLOSE':'儲存本次範圍審核結案，不授權發布／輸出','REOPEN':'保留舊證據並建立新批次版本','GROUP_RULE':'依相同正式核准規則驗證低風險註記；不冒稱人工確認'}
         scope=plan.get('new_scope_plan',plan);lines=[labels[action],f"來源檔案：{scope.get('file_count','此檔')}；來源頁：{scope.get('source_page_count','此檔明列頁')}；未解決檔案：{scope.get('unresolved_files','待逐檔核對')}"]
         if action=='LAYER':
-            context=plan['context'];lines += [LAYER_LABELS[plan['layer']],plan['decision'],plan['reason'],plan['evidence'],f"此作品觀察{context['observation_count']}；未確認{len(context['unconfirmed_observation_ids'])}；人物ROOT候選{len(context['person_root_candidates'])}；公司候選{len(context['company_candidates'])}；完整Logo候選{context['whole_logo_candidates']}；客戶關聯{context['association_count']}；版型版本{context['style_version_count']}"]
+            context=plan['context'];lines += [LAYER_LABELS[plan['layer']],DISPOSITION_LABELS[plan['decision']],plan['reason'],plan['evidence'],f"此作品觀察{context['observation_count']}；未確認{len(context['unconfirmed_observation_ids'])}；人物ROOT候選{len(context['person_root_candidates'])}；公司候選{len(context['company_candidates'])}；完整Logo候選{context['whole_logo_candidates']}；客戶關聯{context['association_count']}；版型版本{context['style_version_count']}"]
         if action in ('CREATE','REOPEN'):lines += [m['original_path'] for m in scope['members'][:50]]
-        if action=='CLOSE':lines += [scope['scope_notice']]+[str(b) for b in scope['blockers'][:20]]+scope['scope_blockers']
+        if action=='CLOSE':
+            rate=scope['file_disposition_rate'];lines += [scope['scope_notice'],f"檔案處置率：{rate:.1%}" if rate is not None else '檔案處置率未知；根目錄仍有範圍缺口',f"已人審{scope['individually_reviewed_files']}檔；明確排除{scope['approved_excluded_files']}檔，排除不當成功學習"]+scope['scope_blockers']
+            for member in scope['blockers'][:20]:
+                for blocker in member['blockers'][:20]:lines.append('來源'+member['member_id'][:10]+'／'+LAYER_LABELS.get(blocker.get('layer'),'來源邊界')+'：'+DISPOSITION_LABELS.get(blocker['reason'],blocker['reason']))
         if action in ('SEGMENTATION','EXCLUSION'):lines += [plan['reason'],str(plan.get('impact',{})),f"明列作品數：{plan.get('actual_work_count',plan.get('impact',{}).get('recorded_work_count','未知'))}"]
-        if action=='GROUP_RULE':lines += [f"正式核准版本{plan['rule_revision']}；影響{plan['impact']['files']}檔／{plan['impact']['observations']}註記；高風險0項；不適用{len(plan['skipped_members'])}檔未列成功"]+[str(item) for item in plan['items'][:50]]
+        if action=='GROUP_RULE':lines += [f"正式核准版本{plan['rule_revision']}；影響{plan['impact']['files']}檔／{plan['impact']['observations']}註記；高風險0項；不適用{len(plan['skipped_members'])}檔未列成功"]+[f"來源{item['member_id'][:10]}／作品{item['work_id'][:10]}／註記{item['observation_id']}" for item in plan['items'][:50]]
         self.details.setPlainText('\n'.join(lines));self.status.setText('預覽已準備，尚未儲存。'+('核對後勾選本次明確同意。' if allowed else '仍有漏審／未知／衝突，不能結案。'))
     def confirm(self):
         def run():

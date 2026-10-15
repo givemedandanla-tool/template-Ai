@@ -907,3 +907,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-15 23:25 UTC UI052 controlled-rule/facets WIP
 - 49 unique combined target PASS;600-file actualQt pages/globalsearch,FG resourceHOLD cancel nochild, realownedchild timeout/stop, exactapprovedrule group nohighrisk/facts/stylewrites, groupdiskfailure/rulerollback failclosed, indexed descriptive facets and failedanalysis/duplicatequalitygates.
 - Preserve local-priority fixture failure2errors; use independently confirmed future source for true approved-rule reuse. Last review also pins exclusion work contexts/customer-candidate versions; bounded_rows streams <=4MiB instead of fetchall. Original10 still pending fullcapture/formal, no parent claim changed.
+
+### 2026-10-15 23:34 UTC UI052 original10 formal-ready
+- 原10全文/SHA與36backend+8GUI+5rule/facet+7oldquality對照，55 combined +1 new GUI PASS。新增samebytes independent7layers、排除0humanrate/modelstale、crosswork overlap、actualrelink、restart2connCAS、unresolvedcustomer blocks；未知分母rate None。
+- actualcoverage capture002及fullremaining28 six-parent capture PASS/0Qt；media local only，metadata sourcebound。Visual review修正background-status錯字義與raw blocker details；complete status真SQLite讀回，未知/失效明列。
+- 準備新source正式驗證，不以targets/capture替代full formal。全28仍5已驗里程碑/23待完成。

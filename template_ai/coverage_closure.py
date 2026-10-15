@@ -32,7 +32,10 @@ class CoverageClosureMixin:
                 for layer in LAYERS:
                     for key in layers[layer]:layers[layer][key]+=evidence['layer_counts'][layer][key]
         if len(members)!=batch['file_count'] or not members:raise ValueError('批次成員數異常／空集合，不能當100%結案')
+        rate_denominator_verified=not unknown_works and not scope_blockers
+        layer_rates={layer:dict(denominator_verified=rate_denominator_verified,review_rate=counts['current_reviewed']/counts['required'] if rate_denominator_verified and counts['required'] else None) for layer,counts in layers.items()}
         result=dict(batch_id=batch_id,batch_revision=batch['revision'],scope_digest=batch['scope_digest'],file_count=batch['file_count'],source_page_count=batch['source_page_count'],actual_work_count=None if unknown_works else works,individually_reviewed_files=reviewed,approved_excluded_files=excluded,unresolved_files=len(unresolved),layer_counts=layers,members=members,blockers=unresolved,scope_blockers=scope_blockers,closure_allowed=not unresolved and not scope_blockers,whole_directory_complete=False,successful_learning_claim=False,style_publication_claim=False,print_or_output_approval=False,scope_notice='僅指定來源批次；排除另列，不能宣稱全庫／整目錄成功學習或模板已核准')
+        result.update(layer_rates=layer_rates,file_disposition_rate=(reviewed+excluded)/batch['file_count'] if not scope_blockers else None,file_human_review_rate=reviewed/batch['file_count'] if not scope_blockers else None)
         # This is bounded metadata, not image/source content or an eager model catalog.
         import json
         if len(json.dumps(result,ensure_ascii=False).encode())>32*1024*1024:raise ValueError('結案預覽超過32MiB，需明確分組；未截斷待審項')
@@ -70,7 +73,7 @@ class CoverageClosureMixin:
         for pin in receipt['plan']['members']:
             try:
                 evidence=self.member_evidence(pin['member_id'])
-                if not evidence['closure_allowed'] or evidence_digest(evidence)!=pin['evidence_digest']:failures.append(pin['member_id'])
+                if not evidence['closure_allowed'] or evidence_digest(evidence)!=pin['evidence_digest']:failures.append(dict(member_id=pin['member_id'],reason='；'.join(b['reason'] for b in evidence['blockers'][:20]) or '來源／事實／規則／模型／審核／版型版本已改變'))
             except (OSError,ValueError,KeyError) as error:failures.append(dict(member_id=pin['member_id'],reason=str(error)))
         current=not failures and batch['state']=='CLOSED'
         return dict(state='CURRENT_AFTER_RECHECK' if current else 'STALE_REOPEN_REQUIRED',current_complete=current,receipt_id=receipt['id'],failures=failures,reason='只核對此明列批次；不聲稱新增來源或全目錄已處理',whole_directory_complete=False,publication_authorized=False)

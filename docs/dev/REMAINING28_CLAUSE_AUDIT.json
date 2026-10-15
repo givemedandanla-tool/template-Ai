@@ -641,13 +641,138 @@
       ],
       "evidence_run": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json",
       "source_commit": "8f8f638a1096f0aeb8aebe2231d6d49b96970c05"
+    },
+    {
+      "id": "UI-052",
+      "source_clauses_sha256": "34b1d3c6e232687e2a3f14bf611ea14c8a8718ac456b0e22ee33572a896e8a93",
+      "implementation": [
+        "template_ai/coverage_batches.py",
+        "template_ai/coverage_scope.py",
+        "template_ai/coverage_evidence.py",
+        "template_ai/coverage_review.py",
+        "template_ai/coverage_rules.py",
+        "template_ai/coverage_closure.py",
+        "template_ai/coverage_command.py",
+        "template_ai/coverage_closure_panel.py",
+        "template_ai/training_quality_dialog.py"
+      ],
+      "clauses": [
+        {
+          "id": "UI-052-CLAUSE-1",
+          "expected": "**使用者正式選擇 D｜全來源覆蓋率＋風險分級審核＋漏審阻擋＋安全批次結案**。UI-051 已確定每份來源及其所有作品都必須具有可核對的審核狀態；UI-052 進一步定義**整批資料是否真正全數得到適當處置**的 GUI 與結案門檻。**資料已被 AI 分析，不等於必要審核已完成；覆蓋率百分比高，也不等於可以結案**。",
+          "tests": [
+            "test_coverage_batches.CoverageBatchTests.test_closed_receipt_requires_all_layers_and_does_not_publish",
+            "test_coverage_closure_gui.CoverageClosureGuiTests.test_panel_is_lazy_and_unreviewed_layers_block_close_without_freezing_gui"
+          ]
+        },
+        {
+          "id": "UI-052-CLAUSE-2",
+          "expected": "**分層覆蓋率與分母不可漏失**：總覽同時列出 ①已納入此次核實清單的來源檔案數／仍未掃描或不可讀來源；②可核實切分出的獨立作品數及**尚無法切分的來源**；③每件作品的原生文字／OCR 候選、人物 ROOT、公司與完整 Logo、欄位標記及來源的核實狀態；④經確認的版型候選／版次及其待審問題。各層**各有獨立分母、狀態與完成率**，不能用已切分作品作唯一分母、讓無法解析的檔案消失；同一 `.ai` 多張作品按可核實的真實作品計數，不用畫板數取代作品數。來源清單須有批次邊界與快照／版本，防止來源資料夾在結案前變動時偷偷改變分母。",
+          "tests": [
+            "test_coverage_batches.CoverageBatchTests.test_file_page_and_equal_content_aliases_are_independent",
+            "test_coverage_batches.CoverageBatchTests.test_explicit_unregistered_files_stay_in_denominator_and_block_closure",
+            "test_coverage_batches.CoverageBatchTests.test_missing_source_pages_block_complete_source_segmentation",
+            "test_coverage_batches.CoverageBatchTests.test_same_page_overlapping_work_crops_cannot_be_confirmed_as_independent_works",
+            "test_coverage_batches.CoverageBatchTests.test_same_bytes_alias_keeps_independent_seven_layer_and_customer_obligations"
+          ]
+        },
+        {
+          "id": "UI-052-CLAUSE-3",
+          "expected": "**每筆來源及作品可追溯到結論**：從總覽可向下展開「來源檔 → `source_file_id`／`content_id` → `artwork_id` → 候選框／人物公司語意與審核 → 候選 `style_version_id`」，每筆顯示**尚未分析、分析中、來源缺失／不能切分、AI 已分析待驗證、已由核准規則完成必要驗證、需人工審核、已人工確認、已明確核准排除、失敗／衝突待處理**。點選可回到 UI-038／UI-039 畫布、UI-040／UI-041 漏標與雜訊事件、UI-043 客戶來源審查及 UI-004／UI-005 例外中心；保持原始檔、內容雜湊、審核者／規則版本及確切處置證據。",
+          "tests": [
+            "test_coverage_closure_gui.CoverageClosureGuiTests.test_one_layer_explicit_preview_and_approval_never_approves_other_layers",
+            "test_coverage_rules.CoverageRuleTests.test_persisted_assessment_facets_are_searchable_and_explicitly_not_current_closure",
+            "test_coverage_batches.CoverageBatchTests.test_segmentation_does_not_complete_seven_semantic_layers"
+          ]
+        },
+        {
+          "id": "UI-052-CLAUSE-4",
+          "expected": "**已核准規則與人工風險分流**：已具有效來源證據、符合已**正式核准版本的明確適用條件**且完成必要一致性檢查的低風險資料，可由系統標註「**依核准規則自動驗證完成**」，**不要求每張都重複點人工確認**。這不等於冒充「人工已核准」或自動把一次性修正升級為永久規則；AI 推定或僅高信心但無適用核准條件，不得直接算已審。遇人物／公司歸屬、單檔多作品邊界、客戶編號、完整複合 Logo、尺寸專用資產、漏標、重複框、跨作品混用、規則衝突或來源缺證時，必須在**人工待審／無法自動結案**清單，逐項提供證據、差異、建議修正和明確確認／拒絕操作。",
+          "tests": [
+            "test_coverage_rules.CoverageRuleTests.test_only_formally_approved_rule_can_verify_group",
+            "test_coverage_rules.CoverageRuleTests.test_group_checks_annotation_only_and_never_confirms_protected_fields",
+            "test_coverage_rules.CoverageRuleTests.test_failed_analysis_and_duplicate_label_are_real_blockers",
+            "test_coverage_batches.CoverageBatchTests.test_pending_source_observation_blocks_semantic_layer_confirmation",
+            "test_coverage_batches.CoverageBatchTests.test_unresolved_customer_candidate_blocks_layer_closure_and_exclusion",
+            "test_coverage_closure_gui.CoverageClosureGuiTests.test_actual_approved_rule_group_gui_labels_automatic_origin_without_human_layer_approval"
+          ]
+        },
+        {
+          "id": "UI-052-CLAUSE-5",
+          "expected": "**未審、阻斷及明確排除的不同意義**：GUI 以分組及可搜尋清單區分「需處理」「處理中」「來源無法解析／不可讀」「待人工」「已通過必要驗證」「已確認排除不適用」等；後者只有來源與不適用原因核實、使用者明確批准並保留版本證據時，才視為**已處置**，但**不計為成功學習或已核准版型**。不可用「略過」「不顯示」「檔案重複」「無法讀取」靜默減少分母或偽造 100% 完成。真正失聯、讀取失敗或歸屬未決時必須留在未解狀態；若使用者需要排除某範圍，明確顯示結案範圍、被排除的來源及對完整性結論的影響，不能將部分範圍結案誤標為所有來源完成。",
+          "tests": [
+            "test_coverage_batches.CoverageBatchTests.test_exclusion_is_separate_from_review_learning_and_style_approval",
+            "test_coverage_batches.CoverageBatchTests.test_unparsed_source_cannot_be_excluded_even_when_bytes_are_readable",
+            "test_coverage_batches.CoverageBatchTests.test_unreadable_source_cannot_be_hidden_by_exclusion",
+            "test_coverage_batches.CoverageBatchTests.test_excluded_files_have_separate_disposition_and_zero_human_review_rate",
+            "test_coverage_batches.CoverageBatchTests.test_changed_and_missing_files_remain_in_denominator"
+          ]
+        },
+        {
+          "id": "UI-052-CLAUSE-6",
+          "expected": "**重複位元內容與不同客戶審核**：依 UI-042／UI-049／UI-050，異名同位元內容可沿用單次解析與已核准的內容層證據，但 `source_files` 各自的客戶編號、人物／公司歸屬、來源－版型連結仍是**不同的必須核對項目**。不能因共享 `content_blobs`、一份名片已通過，就把另一檔名的客戶主檔／聯絡資訊關聯宣稱已審。重複候選及合併維持 UI-046 的人工確認。",
+          "tests": [
+            "test_coverage_batches.CoverageBatchTests.test_same_bytes_alias_keeps_independent_seven_layer_and_customer_obligations",
+            "test_coverage_batches.CoverageBatchTests.test_exact_review_cannot_apply_to_another_alias_work",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets"
+          ]
+        },
+        {
+          "id": "UI-052-CLAUSE-7",
+          "expected": "**安全的逐項／分組處置及批次結案**：面板可按來源目錄、來源檔、實際作品、風險、審核方式、阻擋原因及版型版本切換；對同類且已核實符合相同核准規則的項目可**顯示影響數量與來源範圍後受控批次處置**，但高風險語意、客戶身分、跨作品歸屬與 Logo 仍須個別審查。按「整批結案」前，需對指定的**exact 來源清單／雜湊與審核規則、模型、標記和相關版型版本**重新核實；若存在任何不明來源、未切分作品、待人工、失敗、未處置的例外或缺乏必要憑證，**Fail-Closed，不允許整批標記已完成**，明確列出阻斷清單及修復入口。結案應保留可驗證的批次快照、各分母、處置清單、例外排除及規則／人工確認版本。",
+          "tests": [
+            "test_coverage_rules.CoverageRuleTests.test_rule_version_change_and_audit_failure_rollback_group",
+            "test_coverage_batches.CoverageBatchTests.test_closure_disk_failure_rolls_back_receipt_and_closed_state",
+            "test_coverage_batches.CoverageBatchTests.test_concurrent_review_update_invalidates_closure_preview",
+            "test_coverage_batches.CoverageBatchTests.test_missing_receipt_fails_closed_and_does_not_auto_reanalyse",
+            "test_coverage_batches.CoverageBatchTests.test_restart_reads_actual_committed_closure_and_second_connection_cannot_overwrite"
+          ]
+        },
+        {
+          "id": "UI-052-CLAUSE-8",
+          "expected": "**來源變更時版本失效與安全重開**：結案預覽後若 UI-050 新檔加入、原檔內容改變、UI-049 重連來源、UI-041 已核准規則被回滾，或人工確認被修訂，**不得沿用過期的 100% 完成快照直接結案**。重新計算受影響項、標註舊版結論已失效及需增量再審；保留舊次結案的證據，不擅改原本已發布模板、原稿或已有客戶資料。程式中斷、磁碟不足或保存失敗時沿用 UI-042／UI-051 的持久檢查點與故障保護，不得僅因畫面進度 100% 宣稱正式完成。",
+          "tests": [
+            "test_coverage_batches.CoverageBatchTests.test_changed_bytes_stale_closure_and_explicit_reopen_preserves_old_receipt",
+            "test_coverage_batches.CoverageBatchTests.test_model_or_rule_version_change_invalidates_prior_review_without_deleting_it",
+            "test_coverage_batches.CoverageBatchTests.test_actual_relink_after_closure_preview_invalidates_old_scope",
+            "test_coverage_batches.CoverageBatchTests.test_root_snapshot_new_file_invalidates_closed_receipt_without_mutating_it",
+            "test_coverage_rules.CoverageRuleTests.test_rule_version_change_and_audit_failure_rollback_group",
+            "test_coverage_closure_gui.CoverageClosureGuiTests.test_subprocess_timeout_stops_owned_child_and_keeps_no_success_receipt"
+          ]
+        },
+        {
+          "id": "UI-052-CLAUSE-9",
+          "expected": "**低配置電腦友善**：分層統計與待審清單採可增量核對、分頁顯示或延遲載入，避免開啟 500+ 來源即載入所有原始 Illustrator 作品／AI 模型導致卡頓；依 UI-051 保持 GUI 可用、資源不足安全降載及可靠續跑。結果只呈現有來源支持的數值；示例 500 檔／620 作品／540 審核為**設計示意而非真實測量**。",
+          "tests": [
+            "test_coverage_batches.CoverageBatchTests.test_600_files_paged_and_global_search_before_limit",
+            "test_coverage_closure_gui.CoverageClosureGuiTests.test_600_file_gui_pages_search_globally_without_opening_source_models",
+            "test_coverage_closure_gui.CoverageClosureGuiTests.test_resource_wait_can_be_cancelled_without_launching_child_or_claiming_saved"
+          ]
+        },
+        {
+          "id": "UI-052-CLAUSE-10",
+          "expected": "**結案不等於發布或印刷通過**：此處「全部來源得到審核／處置」僅表示**指定批次的來源與語意審核覆蓋已達核准標準**，不自動授權 UI-008 永久規則發布、UI-010 模板發布、UI-013 固定字級調整、UI-023 跨尺寸 Logo 借用或 UI-019／UI-027～UI-030 正式輸出 Gate；也不增加 UI-043 已否定的「曾設計／已確認購買」狀態。UI-048 完整權限 GUI 仍按使用者命令留到最後功能實作，現階段開發範圍仍僅限規格。",
+          "tests": [
+            "test_coverage_closure_gui.CoverageClosureGuiTests.test_gui_closure_persists_actual_receipt_without_rules_styles_or_output",
+            "test_coverage_rules.CoverageRuleTests.test_group_checks_annotation_only_and_never_confirms_protected_fields",
+            "test_coverage_batches.CoverageBatchTests.test_excluded_files_have_separate_disposition_and_zero_human_review_rate"
+          ]
+        }
+      ],
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "limits": [
+        "Synthetic selfcheck and actual current Linux host measurements;not Windows/reference16GB/RTX5050/VivoBook performance,production customer data or independent review",
+        "Exact explicit registered pages/files or root snapshot with explicit supported-extension policy,whole-directory/all-source learning claim always false;partial root unknown remains blocked",
+        "Human evidence is explicit source-boundary and per-work/per-layer attestation;content equality and AI hypotheses never assign customer or publish rules/templates/output",
+        "Low-risk automatic validation only existing formally approved/version-current EXCLUDED_RULE annotation conditions;protected and ambiguous data remain individual review;old LOCAL priority is preserved",
+        "Bounded metadata:10000source pages,2000works/source,4MiB evidence query budget,32MiB command/plan,50GUI page;oversize fails visibly without truncation"
+      ]
     }
   ],
   "unregistered_parent_ids": [
     "UI-019",
     "UI-031",
     "UI-032",
-    "UI-052",
     "UI-053",
     "UI-054",
     "UI-055",

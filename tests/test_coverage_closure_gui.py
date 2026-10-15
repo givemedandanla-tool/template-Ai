@@ -98,3 +98,13 @@ class CoverageClosureGuiTests(unittest.TestCase):
         with patch.object(commands.subprocess,'Popen',side_effect=start):
             with self.assertRaisesRegex(ValueError,'隔離停止'):run_command(self.library.root,'BATCHES',{},timeout=0)
         self.assertTrue(processes);self.assertFalse(psutil.pid_exists(processes[0].pid));self.assertEqual(self.store.count('COVERAGE_CLOSURE'),0)
+
+    def test_actual_approved_rule_group_gui_labels_automatic_origin_without_human_layer_approval(self):
+        import test_coverage_rules as rule_fixture
+        source,work,rule,batch,member=rule_fixture.CoverageRuleTests.seed(self)
+        self.load(batch);self.assertGreater(self.panel.rules.count(),0)
+        self.panel.actor.setText('Synthetic batch operator');self.panel.plan_group_rule();self.wait(lambda:not self.panel.loading)
+        self.assertEqual(self.panel.pending[0],'GROUP_RULE');self.assertEqual(self.panel.pending[1]['impact']['high_risk_items'],0)
+        self.panel.approved.setChecked(True);self.panel.confirm();self.wait(lambda:not self.panel.loading)
+        self.assertEqual(self.store.count('COVERAGE_RULE_CHECK'),1);self.assertEqual(self.store.count('COVERAGE_REVIEW'),0)
+        self.assertIn('依正式核准規則自動驗證完成',self.panel.details.toPlainText());self.assertFalse(self.service.member_evidence(member['id'])['closure_allowed'])

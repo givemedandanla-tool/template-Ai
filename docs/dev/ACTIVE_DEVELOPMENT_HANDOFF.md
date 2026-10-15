@@ -36,3 +36,9 @@
 - GUI可切換目錄/檔案/作品/風險/方法/原因/版型版本，上次assessment cache明示非當前有效總數，全局搜尋再分頁；來源事實/雜訊/客戶/例外工具入口。原品質analyse_work重用阻擋重複框等、AUTO_UNIT FAILED及客戶候選未處置不可結案/以排除繞過；排除釘選workcontext並隨facts/model/style changes失效。
 - 600檔實際Qt分頁/全局搜尋、資源HOLD取消不啟child、真timeout停止owned process、審核收據持久化均PASS。最初groupfixture LOCAL優先導致2 error，原log保留；改獨立新來源正式規則重用後通過，未放寬predicate。
 - 待做：原10逐條trace/code審核、來源/歸屬/排除變更補充counterexamples、實際GUI captures與fullsource formalregression；不可只用49PASS關父題。仍5/28，143current claims pending。
+
+### UI052 original10 registered, pending frozen-source formal
+- 原10全文不縮減，machine REQUIREMENTS/contract/clause audit已註冊6父題62原條；UI052仍pending不算完成。55 combined targets+1 actualapprovedrule GUI target PASS，當前known798。
+- Actual coverage capture PASS：2source/2work/samebytes independent50% blocks、all7layers UI close actualreceipt、sourcechange stale oldreceipt preserved、600file50page/globalsearch；當前host/GUI heartbeat/RSS測量見ui052-capture-smoke-002-measurement，非reference hardware。
+- Fullcapture_remaining28六父題全部PASS，0unhandledQt；新120s bounded aggregate capturebudget（原60s，加入第六父題），個別runtime120s timeout不變。截圖已視覺檢查，修正核對完成後仍顯示背景中及raw blocker dictionaries，第二次實際capture PASS。
+- 下一固定source+Git讀回，RUN-REMAINING28-COVERAGE-001正式全量；143歷史claims+UI052仍pending，正式PASS與publication-scope實查前不升6/28。其後UI053。

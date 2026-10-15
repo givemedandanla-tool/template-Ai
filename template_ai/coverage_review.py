@@ -53,6 +53,13 @@ class CoverageReviewMixin:
         page_count = next(iter(page_counts))
         if type(page_count) is not int or page_count<1 or len(pins)!=page_count or {pin['page'] for pin in pins}!=set(range(1,page_count+1)) or any(not pin['works'] for pin in pins):
             raise ValueError('缺少原稿頁面或尚未切分頁；保持待審')
+        from .model import Rect
+        for pin in pins:
+            boxes=[]
+            for work in pin['works']:
+                box=Rect(**self.library.artwork(work['id'])['payload']['crop'])
+                if any(box.intersects(previous) for previous in boxes):raise ValueError('同頁作品切分框重複／互相跨界；先到畫布修正，不能以作品紀錄數冒充真實作品數')
+                boxes.append(box)
         plan = dict(member_id=member_id, member_revision=member['revision'], batch_id=batch['id'], batch_revision=batch['revision'], member_scope_digest=frozen['member_scope_digest'], work_ids=expected, actual_work_count=len(expected), page_count=page_count, reason=reason, source_proofs=self.current_member_proofs(member), prior_revision=(self.store.get(SEGMENTATION,member_id) or {}).get('revision',0))
         plan['plan_digest'] = digest(plan); return plan
 
@@ -164,4 +171,6 @@ class CoverageReviewMixin:
                     verification.append(dict(observation_id=decision['observation_id'],state='AUTO_VERIFIED_BY_APPROVED_RULE' if automatic else 'RULE_ELIGIBLE_AWAITING_CONTROLLED_GROUP' if decision['state']=='EXCLUDED_RULE' and not decision['protected'] else 'MANUAL_FACT_CONFIRMED' if decision['state'] in ('KEPT_PROTECTED','INCLUDED','KEPT_LOCAL','KEPT_WHITELIST','EXCLUDED_LOCAL') else 'WAITING_HUMAN',rule_versions=decision['rule_matches'],protected=decision['protected']))
                 works.append(dict(work_id=work['id'],source_id=pin['source_id'],context_digest=context['context_digest'],context=context,layers=layers,low_risk_rules=low_risk_rule_evidence(self,work['id']),observation_verification=verification,excluded=excluded))
         if not works and not excluded:blockers.append(dict(code='WORK_COUNT_UNKNOWN',reason='未解析／未切分來源留在檔案分母，作品總數未知'))
-        return dict(member_id=member_id,member_revision=member['revision'],file_count=1,source_page_count=frozen['source_page_count'],recorded_work_count=frozen['recorded_work_count'],actual_work_count=segmentation['actual_work_count'] if segmentation else None,layer_counts=layer_counts,works=works,source_proofs=proofs,segmentation_revision=segmentation['revision'] if segmentation else 0,exclusion_revision=exclusion['revision'] if exclusion else 0,review_pins=review_pins,disposition='APPROVED_EXCLUSION' if excluded else 'ALL_REQUIRED_LAYERS_REVIEWED' if not blockers else 'UNRESOLVED',closure_allowed=not blockers,blockers=blockers)
+        denominator_verified=bool(segmentation and segmentation['member_scope_digest']==frozen['member_scope_digest'] and not any(b['code']=='SOURCE_UNRESOLVED' for b in blockers))
+        rates={layer:dict(denominator_basis='CURRENT_VERIFIED_ACTUAL_WORKS' if denominator_verified else 'REGISTERED_WORK_RECORDS_ONLY_ALL_SOURCE_DENOMINATOR_UNKNOWN',denominator_verified=denominator_verified,review_rate=counts['current_reviewed']/counts['required'] if denominator_verified and counts['required'] else None,approved_excluded_work_count=counts['required'] if excluded else 0) for layer,counts in layer_counts.items()}
+        return dict(member_id=member_id,member_revision=member['revision'],file_count=1,source_page_count=frozen['source_page_count'],recorded_work_count=frozen['recorded_work_count'],actual_work_count=segmentation['actual_work_count'] if denominator_verified else None,layer_counts=layer_counts,layer_rates=rates,works=works,source_proofs=proofs,segmentation_revision=segmentation['revision'] if segmentation else 0,exclusion_revision=exclusion['revision'] if exclusion else 0,review_pins=review_pins,disposition='APPROVED_EXCLUSION' if excluded else 'ALL_REQUIRED_LAYERS_REVIEWED' if not blockers else 'UNRESOLVED',closure_allowed=not blockers,blockers=blockers)

@@ -277,3 +277,53 @@ class CoverageBatchTests(unittest.TestCase):
         observation=dict(id='note',slot_id=None,text='已校稿',object_type='ANNOTATION',classification='ANNOTATION',region=dict(x=0,y=0,w=1,h=1))
         self.store.save_facts(work['id'],[observation],0,work['revision'])
         with self.assertRaisesRegex(ValueError,'未確認／過期'):self.service.layer_plan(member['id'],work['id'],'fields','CONFIRMED','Not a substitute for facts review','Page1')
+
+    def test_same_bytes_alias_keeps_independent_seven_layer_and_customer_obligations(self):
+        source,work,old_batch,old_member=self.work_member();alias_path=self.root/'another-customer.svg';alias_path.write_bytes(Path(source['original_path']).read_bytes())
+        alias=self.library.add_source(alias_path,self.library.source(source['id']));alias_work=self.library.create_artwork(alias['id'],'Independent alias work',work['payload'])
+        batch=self.batch([source,alias]);members=self.service.members(batch['id'])['rows'];first=next(m for m in members if any(p['source_id']==source['id'] for p in m['frozen']['source_pins']))
+        self.review_all(first,work);plan=self.service.closure_plan(batch['id'])
+        self.assertEqual((plan['file_count'],plan['individually_reviewed_files'],plan['unresolved_files']),(2,1,1))
+        self.assertEqual(plan['file_disposition_rate'],.5);self.assertFalse(plan['closure_allowed']);self.assertIsNone(plan['layer_rates']['customer']['review_rate'])
+        other=next(m for m in members if m['id']!=first['id']);self.assertEqual(self.service.member_evidence(other['id'])['layer_counts']['customer']['current_reviewed'],0)
+
+    def test_excluded_files_have_separate_disposition_and_zero_human_review_rate(self):
+        source,work,batch,member=self.work_member();self.service.confirm_segmentation(self.service.segmentation_plan(member['id'],[work['id']],'Full source reviewed'),'Reviewer',True)
+        self.service.confirm_exclusion(self.service.exclusion_plan(member['id'],'Not applicable to this learning scope','Full page inspected'),'Reviewer',True)
+        plan=self.service.closure_plan(batch['id']);self.assertEqual(plan['file_disposition_rate'],1);self.assertEqual(plan['file_human_review_rate'],0)
+        self.assertEqual(plan['approved_excluded_files'],1);self.assertEqual(plan['layer_rates']['styles']['review_rate'],0)
+        with self.store.transaction():self.store._write('SEMANTIC_ACTIVE','local-text',dict(model_id='changed'),0,'test_changed_dependency')
+        self.assertFalse(self.service.member_evidence(member['id'])['closure_allowed'])
+
+    def test_same_page_overlapping_work_crops_cannot_be_confirmed_as_independent_works(self):
+        source,work,batch,member=self.work_member();other=self.library.create_artwork(source['id'],'Overlapping alternative',work['payload'])
+        fresh=self.batch([source]);member=self.service.members(fresh['id'])['rows'][0]
+        with self.assertRaisesRegex(ValueError,'切分框重複'):self.service.segmentation_plan(member['id'],[work['id'],other['id']],'Cannot assert duplicated full-page crops')
+
+    def test_actual_relink_after_closure_preview_invalidates_old_scope(self):
+        from template_ai.source_links import verify_source
+        source,work,batch,member=self.work_member();self.review_all(member,work);plan=self.service.closure_plan(batch['id'])
+        target=self.root/'relocated.svg';target.write_bytes(Path(source['original_path']).read_bytes())
+        self.library.relink_source(source['id'],verify_source(target,source['hash']),0)
+        with self.assertRaises(ValueError):self.service.close(plan,'Reviewer',True)
+        self.assertFalse(self.service.closure_plan(batch['id'])['closure_allowed']);self.assertEqual(self.store.count('COVERAGE_CLOSURE'),0)
+
+    def test_restart_reads_actual_committed_closure_and_second_connection_cannot_overwrite(self):
+        source,work,batch,member=self.work_member();self.review_all(member,work);plan=self.service.closure_plan(batch['id'])
+        other=Library(self.library.root)
+        try:
+            TrainingStore(other);service=CoverageBatches(other);second=service.closure_plan(batch['id'])
+            receipt=self.service.close(plan,'Reviewer',True)
+            with self.assertRaises(ValueError):service.close(second,'Other reviewer',True)
+            self.assertTrue(service.closure_status(batch['id'])['current_complete']);self.assertEqual(service.store.get('COVERAGE_CLOSURE',receipt['id']),receipt)
+        finally:other.close()
+
+    def test_unresolved_customer_candidate_blocks_layer_closure_and_exclusion(self):
+        from template_ai.customers import CustomerStore
+        from template_ai.customer_candidates import CustomerCandidates
+        source,work,batch,member=self.work_member();candidates=CustomerCandidates(CustomerStore(self.library))
+        with self.library.db:candidates._save('synthetic-customer-candidate',dict(pins=dict(artwork_id=work['id'],source_id=source['id']),issues=['ambiguous identity']), 'PENDING_REVIEW',0)
+        with self.assertRaisesRegex(ValueError,'客戶來源候選'):self.service.layer_plan(member['id'],work['id'],'customer','CONFIRMED','Cannot bypass identity review','Page1')
+        self.service.confirm_segmentation(self.service.segmentation_plan(member['id'],[work['id']],'Full source inspected'),'Reviewer',True)
+        with self.assertRaisesRegex(ValueError,'客戶歸屬'):self.service.exclusion_plan(member['id'],'Cannot hide unresolved identity','Source proof')
+        self.assertIn('CUSTOMER_IDENTITY_UNRESOLVED',{b['code'] for b in self.service.member_evidence(member['id'])['blockers']})
