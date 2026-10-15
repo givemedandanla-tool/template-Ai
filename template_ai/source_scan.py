@@ -131,6 +131,7 @@ def candidate_id(root,path,content_hash):return digest(['SCAN_CANDIDATE',root['i
 
 
 def save_scan(store,root,result,*,automatic=False,cancel=lambda:False):
+    if cancel():raise ScanCancelled()
     with store.transaction():
         now=store.get('SCAN_ROOT',root['id'])
         if now!=root or now.get('archived'):raise ValueError('根目錄版本已變更，結果不套用')
@@ -160,6 +161,7 @@ def save_scan(store,root,result,*,automatic=False,cancel=lambda:False):
                 payload=dict(root_id=root['id'],root_revision=root['revision'],path=entry['path'],source_hash=entry['verified_hash'],bytes=entry['bytes'],verified_stat=entry['verified_stat'],state=state,
                              classification=entry['state'],previous_hash=entry.get('previous_hash'),created=time.time(),original_filename=Path(entry['path']).name,customer_code_candidate=entry.get('customer_code_candidate',Path(entry['path']).stem),source_ids=[],affected_source_ids=entry.get('affected_source_ids',[]),artwork_count='UNKNOWN_UNTIL_PARSED',customer_ownership='UNREVIEWED',training_started=False)
                 store._write('SCAN_CANDIDATE',identity,payload,0,'source_candidate_indexed_without_training')
+        if cancel():raise ScanCancelled()
         return store._write('SCAN_ROOT',now['id'],now,now['revision'],'source_automatic_scan_recorded' if automatic else 'source_manual_scan_recorded')
 
 

@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI050-CLOSE-LIFECYCLE-FIX",
+  "active_task": "REMAINING28-UI050-SOURCE2-FORMAL",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-WATCH-FAILED001.receipt.json",
   "last_confirmed_commit": "d8ab2a9846506c20e4b490e57e727b2afc2f9cfa",
   "latest_evidence_run": null,
@@ -18,9 +18,9 @@
   ],
   "next_tasks": [
     {
-      "id": "UI050-CLOSE-LIFECYCLE",
+      "id": "UI050-WATCH-FORMAL002",
       "status": "IN_PROGRESS",
-      "next": "WATCH001來源22717fca1746864f173dd3764d9193ecf06d74d6，687/687PASS但1未處理Qt錯誤：Library已關閉→SourceWatch.tick→status.emit→SourceScanDialog.render_current再讀closed DB。整runFAIL，capture未執行；保留全部14文字證據先GitHub。修close listener/服務停用與頁面context guard，加專用真Qt測試後SOURCE2/全687plus正式002。141歷史及UI050未結案。"
+      "next": "Library弱close observers先停SourceWatch/Backup排程及清key/cancel，再關SQLite；stale SourceScanDialog閉鎖讀寫、原始db.close與專案變更守衛。新增5生命週期測試，71相關PASS。保留001 FAIL，SOURCE2固定後全692+capture正式002；不先結案。"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-WATCH-SOURCE2"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-RELINK.json",

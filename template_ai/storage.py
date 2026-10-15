@@ -22,6 +22,8 @@ class Library:
         self.assets = self.root / "assets"
         self.assets.mkdir(exist_ok=True)
         self.db = sqlite3.connect(self.root / "library.sqlite3")
+        self.closed=False
+        self._close_listeners=[]
         self.db.execute("PRAGMA foreign_keys=ON")
         self.db.execute("PRAGMA journal_mode=WAL")
         self.db.executescript("""
@@ -594,7 +596,25 @@ class Library:
         with sqlite3.connect(target) as other:
             self.db.backup(other)
 
+    def observe_close(self,callback):
+        """Weak lifecycle subscription; listeners stop producers before SQLite is closed."""
+        import weakref
+        if self.closed:raise ValueError('資料庫已關閉，不能登錄背景工作')
+        try:reference=weakref.WeakMethod(callback)
+        except TypeError:reference=weakref.ref(callback)
+        self._close_listeners.append(reference)
+        return reference
+
     def close(self) -> None:
+        if getattr(self,'closed',False):return
+        self.closed=True;errors=[]
+        for reference in getattr(self,'_close_listeners',[]):
+            callback=reference()
+            if callback is not None:
+                try:callback()
+                except Exception as error:errors.append(error)
+        self._close_listeners=[]
         from .batch_import import end_session
-        end_session(self)
-        self.db.close()
+        try:end_session(self)
+        finally:self.db.close()
+        if errors:raise errors[0]

@@ -98,3 +98,11 @@ class SourceWatchCenterTests(unittest.TestCase):
         self.scan();self.assertEqual(len(self.store.get('SCAN_ROOT',self.watch['id'])['last_scan']['entries']),53);self.assertEqual(self.dialog.scan_items.count(),50);self.assertEqual(self.dialog.candidates.topLevelItemCount(),50)
         first=self.dialog.candidates.topLevelItem(0).data(0,Qt.UserRole)['id'];selected=self.select(lambda c:c['id']==first);self.assertEqual(len(selected),1);self.dialog.only_changed.setChecked(True);self.assertEqual([c['id'] for c in self.dialog.selected()],[selected[0]['id']])
         self.dialog.scan_page(1);self.assertEqual(self.dialog.scan_items.count(),3);self.dialog.page(1);self.assertEqual(self.dialog.candidates.topLevelItemCount(),3);self.assertEqual(len(candidate_page(self.store,self.watch['id'],limit=100)),53)
+
+    def test_stale_project_dialog_never_rebinds_or_writes_another_library(self):
+        from template_ai.storage import Library
+        self.scan();before=candidate_page(self.store);original=self.window.library;other=Library(self.root/'another-project');TrainingStore(other)
+        try:
+            self.window.library=other;self.window.source_watch.tick();self.dialog.service_updated(dict(root_id='SERVICE',state='FAILED',message='scope changed'));self.dialog.scan();self.dialog.launch();self.dialog.reload()
+            self.assertIn('環境已切換',self.dialog.status.text());self.assertFalse(self.dialog.running);self.assertEqual(candidate_page(TrainingStore(other)),[]);self.assertEqual(candidate_page(self.store),before)
+        finally:self.window.library=original;other.close()

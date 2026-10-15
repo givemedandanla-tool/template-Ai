@@ -1,5 +1,7 @@
 """Shared watcher workbench; explicit root permissions and candidate-to-UI003 handoff."""
 from pathlib import Path
+import sqlite3
+from shiboken6 import isValid
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QLabel,QPushButton,QComboBox,QPlainTextEdit,QFileDialog,QCheckBox,QLineEdit,QTreeWidget,QTreeWidgetItem,QMessageBox,QDialogButtonBox,QInputDialog,QWidget,QTabWidget)
 from .training_store import TrainingStore,digest
@@ -12,7 +14,7 @@ CONFIG_KEYS=['path','recursive','extensions','excludes','mode','archived','requi
 
 class SourceScanDialog(QDialog):
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.store=TrainingStore.bind(window.library);self.service=window.source_watch;self.running=False;self.offset=0;self.scan_offset=0;self.dirty=False;self.loading=True;self.root_snapshot=None;self.training_dialog=None;self.dispatch_context=None
+        super().__init__(window);self.window=window;self.store=TrainingStore.bind(window.library);self.service=window.source_watch;self.running=False;self.offset=0;self.scan_offset=0;self.dirty=False;self.loading=True;self.root_snapshot=None;self.training_dialog=None;self.dispatch_context=None;self._context_error=None
         self.setWindowTitle('來源監看／安全增量候選');self.resize(1120,740);layout=QVBoxLayout(self)
         note=QLabel('僅明列本機範圍。事件只是提示，程式開啟時600ms去抖、30秒與重啟補掃；最多128個即時提示點。單次500項／雙讀取256MiB，超額明示部分。候選持久保存，真正訓練仍須既有一鍵預檢確認；每頁50筆，只交接本頁明列勾選。');note.setWordWrap(True);layout.addWidget(note)
         self.status=QLabel('選取來源根目錄；掃描只讀原稿，離線不當作刪除。');self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status)
@@ -36,7 +38,7 @@ class SourceScanDialog(QDialog):
         self.tabs.addTab(scan_widget,'掃描／候選／交接');self.tabs.addTab(settings_widget,'根目錄／格式／排除')
         close=QDialogButtonBox(QDialogButtonBox.Close);close.button(QDialogButtonBox.Close).setText('關閉');close.rejected.connect(self.reject);layout.addWidget(close)
         for signal in [self.mode.currentIndexChanged,self.recursive.toggled,self.formats.textEdited,self.excludes.textChanged]:signal.connect(self.changed)
-        self.service.updated.connect(self.service_updated);self.loading=False;self.reload()
+        self.service.updated.connect(self.service_updated);self.store.library.observe_close(self.context_closed);self.loading=False;self.reload()
 
     def button(self,row,label,callback):
         button=QPushButton(label);button.clicked.connect(callback);row.addWidget(button);return button
@@ -45,12 +47,14 @@ class SourceScanDialog(QDialog):
         if not self.loading:self.dirty=True
 
     def reload(self):
+        if not self.valid_context():return
         selected=self.roots.currentData();self.loading=True;self.roots.blockSignals(True);self.roots.clear()
         for root in active_roots(self.store):self.roots.addItem(root['path']+'／'+('監看中' if root.get('enabled') else '暫停／手動'),root['id'])
         index=self.roots.findData(selected);self.roots.setCurrentIndex(index if index>=0 else 0);self.roots.blockSignals(False);self.loading=False
         self.load_root(force=True)
 
     def load_root(self,*args,force=False):
+        if not self.valid_context():return
         identity=self.roots.currentData();root=self.store.get('SCAN_ROOT',identity) if identity else None
         if self.dirty and self.root_snapshot and identity!=self.root_snapshot['id'] and not force:
             if QMessageBox.question(self,'切換來源設定','目前設定尚未保存。明確捨棄這些輸入並切換？')!=QMessageBox.Yes:
@@ -63,6 +67,7 @@ class SourceScanDialog(QDialog):
     def form_options(self):return dict(recursive=self.recursive.isChecked(),extensions=[s.strip().lower() for s in self.formats.text().split(',') if s.strip()],excludes=[s.strip() for s in self.excludes.toPlainText().splitlines() if s.strip()])
 
     def add(self):
+        if not self.valid_context():return
         if self.window.busy:self.status.setText('背景工作中；原設定保留，稍後新增');return
         try:
             path=QFileDialog.getExistingDirectory(self,'明確選擇已授權本機來源根目錄')
@@ -71,6 +76,7 @@ class SourceScanDialog(QDialog):
         except Exception as error:self.status.setText('未新增：'+str(error))
 
     def commit_settings(self,start=False):
+        if not self.valid_context():return
         if self.window.busy:self.status.setText('請先安全暫停目前背景工作，再保存設定；輸入保留');return
         try:
             root=self.store.get('SCAN_ROOT',self.roots.currentData())
@@ -91,22 +97,28 @@ class SourceScanDialog(QDialog):
             try:self.service.remove(identity);self.dirty=False;self.reload()
             except Exception as error:self.status.setText('未移除：'+str(error))
     def scan(self):
+        if not self.valid_context():return
         try:
             self.running=True;self.scan_button.setEnabled(False);self.status.setText('已排入本次安全補掃；等待共用背景工作空檔');self.service.request_manual(self.roots.currentData())
         except Exception as error:self.running=False;self.status.setText('未排入掃描：'+str(error))
     def cancel(self):self.service.cancel_root(self.roots.currentData())
 
     def service_updated(self,payload):
+        if not self.valid_context():return
         if payload['root_id'] not in (self.roots.currentData(),'SERVICE','WATCH_CAPACITY'):return
         self.status.setText(payload['message'])
-        if payload['state'] in ('REMOVED','PAUSED'):
-            if payload['state']=='REMOVED':self.dirty=False
-            self.reload()
-        if payload['state'] not in ('SCANNING','WAITING_BACKGROUND_SLOT','PAUSING'):
-            self.running=False;self.render_current()
-        self.scan_button.setEnabled(not self.running)
+        try:
+            if payload['state'] in ('REMOVED','PAUSED'):
+                if payload['state']=='REMOVED':self.dirty=False
+                self.reload()
+            if payload['state'] not in ('SCANNING','WAITING_BACKGROUND_SLOT','PAUSING'):
+                self.running=False;self.render_current()
+            self.scan_button.setEnabled(not self.running)
+        except sqlite3.Error as error:
+            self._context_error='資料庫暫不能安全讀寫：'+str(error);self.valid_context()
 
     def render_current(self,*args):
+        if not self.valid_context():return
         identity=self.roots.currentData();root=self.store.get('SCAN_ROOT',identity) if identity else None
         checked={(c['id'],c['revision'],c['source_hash'],c['state']) for c in self.selected()};self.candidates.clear()
         if not root:self.details.setPlainText('尚無有效來源根目錄');return
@@ -136,6 +148,7 @@ class SourceScanDialog(QDialog):
     def selected(self):return [self.candidates.topLevelItem(i).data(0,Qt.UserRole) for i in range(self.candidates.topLevelItemCount()) if self.candidates.topLevelItem(i).checkState(0)==Qt.Checked]
 
     def inspect_source(self):
+        if not self.valid_context():return
         row=self.scan_items.currentData()
         if self.window.busy or not row:self.status.setText('先選取本頁來源，並等待背景空閒');return
         ids=row.get('affected_source_ids',[]) or row.get('registered_source_ids',[])
@@ -150,6 +163,7 @@ class SourceScanDialog(QDialog):
             try:return dict(source=snapshot_contexts(data_root,[identity])[0])
             except Exception as error:return dict(error=str(error))
         def done(payload):
+            if not self.valid_context():return
             if payload.get('error'):self.status.setText('影響查詢未完成：'+payload['error']);return
             from .source_dialog import SourceRelinkDialog
             from .source_discovery import availability
@@ -160,6 +174,7 @@ class SourceScanDialog(QDialog):
         except Exception as error:self.status.setText('未開始影響查詢：'+str(error))
 
     def recheck_existing(self):
+        if not self.valid_context():return
         row=self.scan_items.currentData()
         if self.window.busy or not row or not row.get('registered') or row['state']!='UNCHANGED':self.status.setText('只對已核驗且未變的既有來源重核；修改版請先人工核對新候選');return
         from .automatic_training_dialog import AutomaticTrainingDialog
@@ -167,6 +182,7 @@ class SourceScanDialog(QDialog):
         self.status.setText('已交既有管線重核解析／規則／模型／作品依賴；只重算失效單元，是否重用以實際預檢為準')
 
     def review(self):
+        if not self.valid_context():return
         values=self.selected()
         if self.window.busy or len(values)!=1 or values[0]['state']!='REVIEW_REQUIRED':self.status.setText('請只勾選一筆修改版待審，並等待背景空閒');return
         candidate=values[0]
@@ -185,6 +201,7 @@ class SourceScanDialog(QDialog):
         except Exception as error:self.running=False;self.status.setText('未開始候選核對：'+str(error))
 
     def launch(self):
+        if not self.valid_context():return
         values=self.selected()
         if self.window.busy or not values:self.status.setText('先明列勾選候選，並等待背景空閒');return
         from .automatic_training_dialog import AutomaticTrainingDialog
@@ -208,6 +225,22 @@ class SourceScanDialog(QDialog):
         if self.dispatch_context is None:return
         try:record_dispatch(self.store,self.dispatch_context,job['id']);self.render_current();self.status.setText('已交接實際持久工作；進度與成果以一鍵管線實際結果為準')
         except Exception as error:self.status.setText('實際工作已建立；候選交接憑證未保存：'+str(error))
+
+    def context_closed(self):
+        self._context_error='資料庫已關閉；本頁已停止讀寫，請重新開啟專案環境'
+        if isValid(self):
+            self.running=False;self.scan_button.setEnabled(False);self.status.setText(self._context_error)
+
+    def valid_context(self):
+        if not isValid(self):return False
+        if self.store.library is not self.window.library:self._context_error='專案環境已切換，保留本頁輸入但停止舊作用範圍讀寫；請重新開啟'
+        if getattr(self.store.library,'closed',False):self._context_error='資料庫已關閉；本頁已停止讀寫，請重新開啟專案環境'
+        if not self._context_error:
+            try:self.store.db.in_transaction
+            except sqlite3.ProgrammingError:self._context_error='資料庫連線已關閉，本頁停止讀寫'
+        if self._context_error:
+            self.running=False;self.scan_button.setEnabled(False);self.status.setText(self._context_error);return False
+        return True
 
     def reject(self):
         if self.running or self.window.busy:self.status.setText('背景工作中，請安全取消或等待完成後關閉');return

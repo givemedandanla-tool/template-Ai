@@ -32,3 +32,5 @@
 - 下一RUN-REMAINING28-WATCH-001凍結來源及治理直到全687與capture完成；只讀盤點UI051。141歷史完成仍pending，UI050也pending未結案。失敗107目標run為測試誤信A001在首50，已保留log/hash並改按實際首項id驗53總數/分頁/同版勾選；下一107全PASS。
 
 - 重要：RUN-REMAINING28-WATCH-001正式FAIL：687/687 tests PASS，source22717fca1746864f173dd3764d9193ecf06d74d6未改，但1 Qt未處理ProgrammingError；Library已關閉後SourceWatch.tick status通知使SourceScanDialog.render_current再次讀closed DB。capture因此未執行，不把687PASS當整runPASS。全部14文字metadata/log保留GitHub，無媒體例外新增。下一修Library.close lifecycle與service/context guards＋真Qt回歸，002新source重跑，不改001。
+
+- SOURCE2生命週期修正：Library.closed＋weak close observers（任一通知失敗仍通知其他且finally關DB並回報錯）；SourceWatch與BackupScheduler於close同步停timer/watch/清key/cancel，SourceScanDialog關閉/連線直接關閉/跨專案ctx guard與通知錯誤FailClosed，不再late render讀closed DB。新增5專用實際Qt/callback/worker測試；71相關PASS。下一固定SOURCE2後RUN-REMAINING28-WATCH-002全692；001原FAIL不可更改。

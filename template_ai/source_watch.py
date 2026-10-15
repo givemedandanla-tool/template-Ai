@@ -2,6 +2,8 @@
 from collections import deque
 from pathlib import Path
 import threading,time
+import sqlite3
+from shiboken6 import isValid
 from PySide6.QtCore import QObject,QFileSystemWatcher,QTimer,Signal
 from .training_store import TrainingStore,digest
 from .source_scan import active_roots,known_sources,scan_files,save_scan,configure_root
@@ -13,6 +15,7 @@ class SourceWatchService(QObject):
 
     def __init__(self,window):
         super().__init__(window);self.window=window;self.closed=False;self.running=False;self.current_root=None;self.last_result=None;self.last_status='尚未掃描'
+        self.library=window.library;self.library.observe_close(self.shutdown)
         self.pending=deque();self.reasons={};self.roots={};self.configs={};self.pause_pending=set();self.remove_pending=set();self.cancel_event=threading.Event();self.statuses={}
         self.watcher=QFileSystemWatcher(self);self.watcher.directoryChanged.connect(self.hint);self.watcher.fileChanged.connect(self.hint)
         self.debounce=QTimer(self);self.debounce.setSingleShot(True);self.debounce.setInterval(600);self.debounce.timeout.connect(self.dispatch)
@@ -23,7 +26,7 @@ class SourceWatchService(QObject):
         self.last_status=message;self.statuses[identity]=dict(root_id=identity,state=state,message=message,time=time.time());self.updated.emit(self.statuses[identity])
 
     def sync(self):
-        if self.closed:return
+        if not self.context_open():return
         store=TrainingStore.bind(self.window.library);roots=active_roots(store);self.roots={r['id']:r for r in roots};wanted=set()
         for root in roots:
             identity=root['id'];config=digest({k:root.get(k) for k in ['path','recursive','extensions','excludes','mode','enabled','requires_reconnect']})
@@ -58,7 +61,7 @@ class SourceWatchService(QObject):
             if root.get('enabled') and root.get('mode')=='AUTO_PRECHECK' and Path(path).is_relative_to(Path(root['path'])):self.mark(identity,'FILESYSTEM_HINT')
 
     def tick(self):
-        if self.closed:return
+        if not self.context_open():return
         try:
             self.sync()
             for identity,root in self.roots.items():
@@ -84,7 +87,7 @@ class SourceWatchService(QObject):
         configure_root(store,root,archive=True);self.reasons.pop(identity,None);self.pending=deque(i for i in self.pending if i!=identity);self.sync();self.status(identity,'REMOVED','已停止此根目錄後續掃描；原來源、客戶、模板、訓練及候選歷史均保留')
 
     def dispatch(self):
-        if self.closed or self.running or not self.pending:return
+        if not self.context_open() or self.running or not self.pending:return
         if self.window.busy:
             self.status('SERVICE','WAITING_BACKGROUND_SLOT','其他背景工作執行中；保留先進先出待掃根目錄');self.debounce.start(1000);return
         self.debounce.stop()
@@ -111,7 +114,7 @@ class SourceWatchService(QObject):
                 if library:library.close()
         def done(payload):
             self.running=False;self.current_root=None;self.last_result=payload
-            if self.closed:return
+            if not self.context_open():return
             if identity in self.pause_pending:
                 self.pause_pending.remove(identity)
                 try:
@@ -139,6 +142,19 @@ class SourceWatchService(QObject):
             self.reasons.pop(identity,None);self.pending=deque(i for i in self.pending if i!=identity);self.status(identity,'CANCELLED','已取消待掃請求，監看設定維持')
 
     def shutdown(self):
-        self.closed=True;self.cancel_event.set();self.timer.stop();self.debounce.stop();paths=self.watcher.directories()+self.watcher.files()
+        if self.closed:return
+        self.closed=True;self.cancel_event.set()
+        if not isValid(self):return
+        self.timer.stop();self.debounce.stop();paths=self.watcher.directories()+self.watcher.files()
         if paths:self.watcher.removePaths(paths)
         self.pending.clear();self.reasons.clear()
+
+    def context_open(self):
+        if self.closed:return False
+        if not isValid(self):self.shutdown();return False
+        if self.library is not self.window.library or self.library.closed:
+            self.shutdown();return False
+        try:self.library.db.in_transaction
+        except sqlite3.ProgrammingError:
+            self.shutdown();return False
+        return True

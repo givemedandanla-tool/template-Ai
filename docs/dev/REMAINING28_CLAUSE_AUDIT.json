@@ -466,7 +466,10 @@
             "test_source_watch_center.SourceWatchCenterTests.test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection",
             "test_source_watch_center.SourceWatchCenterTests.test_unsaved_root_input_survives_reconciliation_and_concurrent_config_is_not_overwritten",
             "test_source_watch_center.SourceWatchCenterTests.test_review_worker_launch_failure_releases_gui_without_losing_review_or_source_data",
-            "test_source_watch_service.SourceWatchServiceTests.test_shutdown_stops_qt_watchers_and_timers_before_library_close"
+            "test_source_watch_service.SourceWatchServiceTests.test_shutdown_stops_qt_watchers_and_timers_before_library_close",
+            "test_source_watch_service.SourceWatchServiceTests.test_library_close_stops_services_and_queued_qt_notifications_never_read_closed_database",
+            "test_source_watch_service.SourceWatchServiceTests.test_raw_connection_close_is_detected_without_recursive_status_database_reads",
+            "test_source_watch_center.SourceWatchCenterTests.test_stale_project_dialog_never_rebinds_or_writes_another_library"
           ]
         },
         {
@@ -477,7 +480,9 @@
             "test_source_watch_index.SourceWatchIndexTests.test_root_pause_or_audit_failure_cannot_partially_commit_candidates_or_a_fake_success",
             "test_source_watch_service.SourceWatchServiceTests.test_pause_during_real_worker_cancels_before_candidate_commit_then_disables_future_work",
             "test_source_watch_service.SourceWatchServiceTests.test_remove_during_actual_worker_stops_future_watch_and_preserves_all_raw_files",
-            "test_source_watch_index.SourceWatchIndexTests.test_offline_and_missing_are_unresolved_and_keep_last_effective_index"
+            "test_source_watch_index.SourceWatchIndexTests.test_offline_and_missing_are_unresolved_and_keep_last_effective_index",
+            "test_source_watch_service.SourceWatchServiceTests.test_close_during_actual_worker_cancels_before_writing_old_project_candidates",
+            "test_source_watch_service.SourceWatchServiceTests.test_close_listener_failure_still_notifies_other_consumers_and_closes_sqlite"
           ]
         },
         {

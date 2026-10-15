@@ -14,6 +14,7 @@ from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QWidg
 
 from .storage import Library
 from .model import new_id
+from shiboken6 import isValid
 from . import relational_backup as bundle,backup_policy as policy,backup_service as service
 
 
@@ -34,6 +35,7 @@ class BackupScheduler(QObject):
         super().__init__(window);self.window=window;self.running=False;self.closed=False
         self._password=None;self.cancel_event=threading.Event();self.last_output=None;self.status='排程未啟用'
         self.timer=QTimer(self);self.timer.setInterval(30000);self.timer.timeout.connect(self.tick)
+        self.window.library.observe_close(self.shutdown)
         self.refresh()
 
     def refresh(self):
@@ -76,6 +78,7 @@ class BackupScheduler(QObject):
                 if library:library.close()
         def done(payload):
             self.running=False;self.last_output=payload
+            if self.closed:return
             try:
                 result=payload.get('value',{}).get('backup')
                 policy.update_attempt(self.window.library,snapshot,result,payload.get('error'))
@@ -90,7 +93,9 @@ class BackupScheduler(QObject):
         except Exception:self.running=False;raise
 
     def shutdown(self):
-        self.closed=True;self.timer.stop();self.cancel_event.set();self._password=None
+        if self.closed:return
+        self.closed=True;self.cancel_event.set();self._password=None
+        if isValid(self):self.timer.stop()
 
 
 class BackupManagerDialog(QDialog):

@@ -81,3 +81,49 @@ class SourceWatchServiceTests(unittest.TestCase):
         with patch('template_ai.source_watch.scan_files',side_effect=gated):
             self.service.sync();self.service.dispatch();self.wait(started.is_set);self.service.remove(self.watch['id']);release.set();self.wait(lambda:not self.service.running and not self.window.busy)
         self.assertTrue(self.store.get('SCAN_ROOT',self.watch['id'])['archived']);self.assertEqual(self.service.watcher.directories(),[]);self.assertEqual((self.directory/'A001.svg').read_bytes(),before);self.assertEqual(candidate_page(self.store),[])
+
+    def test_library_close_stops_services_and_queued_qt_notifications_never_read_closed_database(self):
+        import sys
+        from PySide6.QtCore import QTimer
+        from template_ai.source_scan_dialog import SourceScanDialog
+        self.enable();dialog=SourceScanDialog(self.window);self.addCleanup(dialog.close);self.service.timer.start();self.window.backup_scheduler.set_session_password('synthetic in-memory secret')
+        errors=[];old=sys.excepthook;sys.excepthook=lambda kind,value,tb:errors.append((kind,str(value)))
+        try:
+            self.window.library.close()
+            QTimer.singleShot(0,self.service.tick);QTimer.singleShot(0,lambda:dialog.service_updated(dict(root_id='SERVICE',state='FAILED',message='late prior notification')))
+            APP.processEvents();QTest.qWait(30);APP.processEvents()
+        finally:sys.excepthook=old;self.window.source=None;self.window.template=None
+        self.assertEqual(errors,[]);self.assertTrue(self.service.closed);self.assertFalse(self.service.timer.isActive());self.assertFalse(self.service.debounce.isActive());self.assertEqual(self.service.watcher.directories(),[])
+        self.assertTrue(self.window.backup_scheduler.closed);self.assertIsNone(self.window.backup_scheduler._password);self.assertFalse(dialog.scan_button.isEnabled());self.assertIn('已關閉',dialog.status.text())
+
+    def test_raw_connection_close_is_detected_without_recursive_status_database_reads(self):
+        import sys
+        from PySide6.QtCore import QTimer
+        from template_ai.source_scan_dialog import SourceScanDialog
+        self.enable();dialog=SourceScanDialog(self.window);self.addCleanup(dialog.close);errors=[];old=sys.excepthook;sys.excepthook=lambda kind,value,tb:errors.append((kind,str(value)))
+        try:
+            self.window.library.db.close();QTimer.singleShot(0,self.service.tick);QTimer.singleShot(0,lambda:dialog.service_updated(dict(root_id='SERVICE',state='FAILED',message='late failure')));APP.processEvents();QTest.qWait(30)
+        finally:sys.excepthook=old;self.window.source=None;self.window.template=None
+        self.assertTrue(self.service.closed);self.assertEqual(errors,[]);self.assertIn('已關閉',dialog.status.text());self.assertFalse(dialog.running)
+
+    def test_close_during_actual_worker_cancels_before_writing_old_project_candidates(self):
+        started=threading.Event();release=threading.Event()
+        def gated(*args,**kwargs):started.set();release.wait(2);return scan_files(*args,**kwargs)
+        self.watch=configure_root(self.store,self.watch,mode='AUTO_PRECHECK',enabled=True)
+        with patch('template_ai.source_watch.scan_files',side_effect=gated):
+            self.service.sync();self.service.dispatch();self.wait(started.is_set);self.window.library.close();release.set();self.wait(lambda:not self.service.running and not self.window.busy)
+        self.window.source=None;self.window.template=None;library=Library(self.root/'data')
+        try:self.assertEqual(candidate_page(TrainingStore(library)),[])
+        finally:library.close()
+        self.assertTrue(self.service.closed);self.assertTrue(self.service.last_result.get('cancelled'));self.assertEqual((self.directory/'A001.svg').read_bytes(),SVG)
+
+    def test_close_listener_failure_still_notifies_other_consumers_and_closes_sqlite(self):
+        import sqlite3
+        library=Library(self.root/'observer-fault');events=[]
+        def broken():events.append('first');raise RuntimeError('injected close observer failure')
+        def remaining():events.append('second')
+        library.observe_close(broken);library.observe_close(remaining)
+        with self.assertRaisesRegex(RuntimeError,'observer failure'):library.close()
+        self.assertEqual(events,['first','second']);self.assertTrue(library.closed)
+        with self.assertRaises(sqlite3.ProgrammingError):library.db.execute('SELECT 1')
+        library.close()

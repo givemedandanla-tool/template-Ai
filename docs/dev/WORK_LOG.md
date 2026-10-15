@@ -819,3 +819,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 來源22717fca1746864f173dd3764d9193ecf06d74d6，687/687單元測試PASS、0skip/sourceunchanged；但excepthook記1未處理Qt ProgrammingError（closed SQLite），完整run FAIL/capture1（未執行）。
 - 調用鏈：Library關閉但watch timer存活→tick.sync查closed DB→錯誤status通知→已保留SourceScanDialog.render_current二次讀closed DB。不能用catch status掩蓋，要綁close lifecycle停service/取消worker並保護stale dialog context。
 - 全14文字附件/claims/junit/runtimeerrors/log保持原樣，先checkpoint GitHub再修；原父題/CORE/GOV仍pending，新正式002待修後執行。
+
+### WATCH001 actual lifecycle fix / SOURCE2
+- 新Library.close弱觀察通知先停止producer，明示closed、冪等；通知失敗仍關SQL且回報，沒有隱藏例外。SourceWatch/BackupScheduler close取消/停timer/清key，後到callback不讀閉庫。SourceScanDialog保留但禁舊連線與跨專案讀寫。
+- 新5測試含真Qt延後tick/status、raw SQLite.close、進行中worker取消不存舊候選、觀察通知失敗仍關DB、跨專案頁面不重綁；加舊掃描/還原/排程共71 PASS。來源修正後scope綁新測試，下一SOURCE2正式692，001687PASS但runtime1的FAIL完整保留。
