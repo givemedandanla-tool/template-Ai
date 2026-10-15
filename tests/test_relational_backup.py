@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
-import sys
+import os,io,zipfile,hashlib,sqlite3,stat
 
 from template_ai import relational_backup as backup
 from template_ai.storage import Library
@@ -61,6 +61,137 @@ class RelationalBackupTests(unittest.TestCase):
         prefill=store.reorder(customer['id'],customer['styles'][0]['id'],True)
         self.assertEqual(prefill['status'],'PREFILL_PENDING_VALIDATION')
         self.assertEqual(library.db.execute('PRAGMA foreign_key_check').fetchall(),[])
+
+    def test_new_machine_restore_succeeds_when_original_library_and_raw_source_paths_are_completely_offline(self):
+        source,_,_,customer=self.fixture();self.create(include_sources=True,include_fonts=True)
+        original=Path(self.library.source(source['id'])['current_path'])
+        self.library.close();self.library.root.rename(self.root/'old-machine-offline');original.rename(self.root/'raw-offline.svg')
+        restored=backup.restore_bundle(self.target,self.root/'new-machine',PASSWORD,True)
+        library=Library(restored['library_root']);self.addCleanup(library.close)
+        actual=library.source(source['id'])
+        self.assertTrue(Path(actual['current_path']).is_file());self.assertEqual(backup.file_digest(actual['current_path']),source['hash'])
+        store=CustomerStore(library);prefill=store.reorder(customer['id'],customer['styles'][0]['id'],True)
+        self.assertEqual(prefill['status'],'PREFILL_PENDING_VALIDATION')
+        self.assertEqual(restored['unresolved_references'],[])
+
+    def rewrap(self,mutate,filename):
+        package,manifest=backup.read_bundle(self.target,PASSWORD)
+        data={name:package.read(name) for name in package.namelist()};package.close()
+        special=mutate(data,manifest) or {}
+        data['manifest.json']=backup._json(manifest)
+        stream=io.BytesIO()
+        with zipfile.ZipFile(stream,'w',compression=zipfile.ZIP_STORED) as archive:
+            for name,value in data.items():
+                info=zipfile.ZipInfo(name);info.compress_type=zipfile.ZIP_STORED
+                if name in special:info.external_attr=special[name]
+                archive.writestr(info,value)
+        salt=os.urandom(16);nonce=os.urandom(12)
+        blob=backup.MAGIC+salt+nonce+backup.AESGCM(backup.key(PASSWORD,salt)).encrypt(nonce,stream.getvalue(),backup.MAGIC)
+        path=self.root/filename;path.write_bytes(blob);return path
+
+    def test_authenticated_but_malformed_paths_windows_case_collisions_and_symlinks_are_rejected(self):
+        (self.library.assets/'allowed.bin').write_bytes(b'synthetic asset');self.create()
+        def traversal(data,manifest):
+            entry=manifest['entries'][0];old=entry['member'];entry['member']='assets/../outside.bin';data[entry['member']]=data.pop(old)
+        def collision(data,manifest):
+            entry=dict(manifest['entries'][0]);entry['member']=entry['member'].upper();manifest['entries'].append(entry);data[entry['member']]=b'synthetic asset'
+        def symlink(data,manifest):return {manifest['entries'][0]['member']:(stat.S_IFLNK|0o777)<<16}
+        for i,mutate in enumerate((traversal,collision,symlink)):
+            forged=self.rewrap(mutate,f'hostile{i}.tabi')
+            with self.assertRaises(ValueError):backup.restore_bundle(forged,self.root/f'reject{i}',PASSWORD,True)
+            self.assertFalse((self.root/f'reject{i}').exists())
+        self.assertFalse((self.root/'outside.bin').exists())
+
+    def test_authenticated_unknown_schema_is_blocked_and_incomplete_restore_cannot_open_as_library(self):
+        self.create()
+        def unsupported(data,manifest):
+            probe=self.root/'alter.sqlite3';probe.write_bytes(data['library.sqlite3'])
+            with sqlite3.connect(probe) as db:db.execute('CREATE VIEW future_view AS SELECT 1')
+            db.close()  # Commit context does not close/checkpoint the WAL connection.
+            data['library.sqlite3']=probe.read_bytes();manifest['database_bytes']=len(data['library.sqlite3']);manifest['database_sha256']=hashlib.sha256(data['library.sqlite3']).hexdigest()
+        forged=self.rewrap(unsupported,'unsupported.tabi')
+        with self.assertRaisesRegex(ValueError,'trigger/view'):backup.restore_bundle(forged,self.root/'unsupported',PASSWORD,True)
+        self.assertFalse((self.root/'unsupported').exists())
+        incomplete=self.root/'incomplete';incomplete.mkdir();(incomplete/'RESTORE_STAGING_NOT_ACTIVE').write_text('not active')
+        with self.assertRaisesRegex(ValueError,'尚未完成'):Library(incomplete/'restored-library')
+        self.assertFalse((incomplete/'restored-library/library.sqlite3').exists())
+
+    def test_restore_interrupts_old_workers_preserves_completed_units_and_disables_watch_roots(self):
+        from template_ai.training_store import TrainingStore
+        from template_ai.source_scan import register_root
+        self.fixture();store=TrainingStore(self.library);root=register_root(store,self.root)
+        with store.transaction():
+            store._write('WORKER','automatic-worker',dict(active=True,owner=dict(pid=123456,token='old')),0,'synthetic')
+            store._write('AUTO_JOB','restore-job',dict(phase='RUNNING',owner=dict(pid=123456),items=[dict(state='RUNNING'),dict(state='COMPLETED')]),0,'synthetic')
+        self.create(include_sources=True,include_fonts=True)
+        restored=backup.restore_bundle(self.target,self.root/'workers',PASSWORD,True)
+        library=Library(restored['library_root']);self.addCleanup(library.close);new=TrainingStore(library)
+        self.assertFalse(new.get('WORKER','automatic-worker')['active'])
+        job=new.get('AUTO_JOB','restore-job');self.assertEqual(job['phase'],'INTERRUPTED');self.assertIsNone(job['owner'])
+        self.assertEqual([item['state'] for item in job['items']],['INTERRUPTED','COMPLETED'])
+        self.assertFalse(new.get('SCAN_ROOT',root['id'])['enabled']);self.assertEqual(new.get('SCAN_ROOT',root['id'])['restore_state'],'RECONNECT_REQUIRED')
+        self.assertTrue(store.get('WORKER','automatic-worker')['active'])
+
+    def test_disk_preflight_and_write_failure_leave_no_success_or_damaged_existing_file(self):
+        plan=backup.plan_backup(self.library)
+        with patch.object(backup.shutil,'disk_usage',return_value=type('Usage',(),dict(free=0))()):
+            with self.assertRaisesRegex(ValueError,'空間'):backup.create_backup(self.library,self.target,PASSWORD,plan,True)
+        with patch.object(backup,'publish_complete',side_effect=PermissionError('synthetic disk denial')):
+            with self.assertRaises(PermissionError):backup.create_backup(self.library,self.target,PASSWORD,plan,True)
+        self.assertFalse(self.target.exists());self.assertFalse(list(self.root.glob('.backup-complete-*')))
+
+    def test_cancelled_real_pack_and_isolated_extract_leave_current_data_and_no_completed_target(self):
+        (self.library.assets/'small.bin').write_bytes(b'synthetic asset');plan=backup.plan_backup(self.library)
+        cancelled=[False];events=[]
+        def progress(event):
+            events.append(event)
+            if event['phase']=='PACK_ASSETS':cancelled[0]=True
+        with self.assertRaisesRegex(ValueError,'取消'):
+            backup.create_backup(self.library,self.target,PASSWORD,plan,True,cancel=lambda:cancelled[0],progress=progress)
+        self.assertFalse(self.target.exists());self.assertTrue(any(e.get('completed')==1 for e in events))
+        backup.create_backup(self.library,self.target,PASSWORD,plan,True)
+        cancelled[0]=False
+        def stop_extract(event):
+            if event['phase']=='RESTORE_EXTRACT':cancelled[0]=True
+        with self.assertRaisesRegex(ValueError,'取消'):
+            backup.restore_bundle(self.target,self.root/'cancelled-restore',PASSWORD,True,cancel=lambda:cancelled[0],progress=stop_extract)
+        self.assertFalse((self.root/'cancelled-restore').exists());self.assertEqual((self.library.assets/'small.bin').read_bytes(),b'synthetic asset')
+
+    def test_changed_published_archive_is_retained_unverified_instead_of_claiming_success(self):
+        plan=backup.plan_backup(self.library);original=backup.publish_complete
+        def change(staged,target,check):
+            original(staged,target,check);Path(target).write_bytes(b'external concurrent modification')
+        with patch.object(backup,'publish_complete',side_effect=change):
+            with self.assertRaisesRegex(ValueError,'發布後檔案已變更'):backup.create_backup(self.library,self.target,PASSWORD,plan,True)
+        self.assertEqual(self.target.read_bytes(),b'external concurrent modification')
+
+    def test_source_facts_survive_restoration_but_old_host_stat_confirmation_is_not_a_new_quality_pass(self):
+        from template_ai.training_store import TrainingStore
+        source,work,_,_=self.fixture();store=TrainingStore(self.library);facts=store.facts(work['id'])
+        self.assertEqual(store.facts_state(work['id']),'CONFIRMED')
+        self.create(include_sources=True,include_fonts=True)
+        result=backup.restore_bundle(self.target,self.root/'facts',PASSWORD,True)
+        library=Library(result['library_root']);self.addCleanup(library.close);new=TrainingStore(library)
+        self.assertEqual(new.facts(work['id'])['observations'],facts['observations'])
+        self.assertEqual(new.facts_state(work['id']),'STALE')
+        self.assertTrue(result['old_host_source_stat_not_adopted'])
+        self.assertEqual(store.facts_state(work['id']),'CONFIRMED')
+
+    def test_existing_environment_preview_finds_newer_real_rows_without_writes_and_restores_to_separate_copy(self):
+        source,work,template,customer=self.fixture();self.create(include_sources=True,include_fonts=True)
+        store=CustomerStore(self.library);field=next(f for f in customer['fields'] if f['kind']=='name')['id']
+        updated=store.writeback(customer,{field:'Newer legitimate customer name'},[field],True)
+        preview=backup.inspect_restore(self.target,PASSWORD,True,self.library.root)
+        self.assertFalse(preview['existing_environment_modified']);self.assertFalse(preview['automatic_merge'])
+        table=next(r for r in preview['database_rows'] if r['category']=='customer_fields')
+        self.assertGreaterEqual(table['different_rows'],1);self.assertEqual(store.get(customer['id']),updated)
+        with self.assertRaisesRegex(ValueError,'預覽不同'):
+            backup.restore_bundle(self.target,self.root/'wrong-pin',PASSWORD,True,expected_archive_sha256='0'*64)
+        self.assertFalse((self.root/'wrong-pin').exists())
+        result=backup.restore_bundle(self.target,self.root/'older-copy',PASSWORD,True,expected_archive_sha256=preview['archive_sha256'])
+        separate=Library(result['library_root']);self.addCleanup(separate.close)
+        old=CustomerStore(separate).get(customer['id'])
+        self.assertNotEqual(old['fields'],updated['fields']);self.assertEqual(store.get(customer['id']),updated)
 
     def test_sources_and_fonts_require_separate_backup_rights_and_missing_references_are_partial(self):
         source,_,_,_=self.fixture()

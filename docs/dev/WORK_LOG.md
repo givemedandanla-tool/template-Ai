@@ -740,3 +740,9 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - UI046 milestone已GitHub a308c536cdad390a1626b3fe05d5cfba7846fe48保存與fresh讀回，publication-scope Gate PASS。
 - 已接入relational_backup.py與8項實際SQLite/字型/來源測試：一致性backup+DB/資產SHA pins、AESGCM+scrypt、自驗證再排他發布、字型/原來源權利分開、缺資產/分類依賴/預算拒絕、新目錄隔離restore、path移轉、異名同內容來源保留、錯密碼/毀損/既有目標保護。
 - 8/8目標測試PASS，仍WIP未接GUI；未結案UI047。下一補原位置完全離線、惡意封裝/schema、worker/監看root還原狀態、排程/保留與現有環境差異預覽。139已完成要求待此新source正式重驗，latest_evidence_run已清空，不以舊620PASS宣稱新source已驗證。
+
+### UI047 restore/policy WIP checkpoint
+- 搬遷測試已讓原庫與原始來源實際離線，完整包仍能還原客户/欄位/确切版型和原來源；相同bytes異名source IDs保持獨立。新庫source facts保留但舊host stat不冒充新品質PASS。
+- 新增Windows可攜檔名/大小寫/保留名、symlink/路徑穿越、未知schema拒絕，隔離半成品不能被Library啟用；中斷worker保留已完成unit、監看根需重新連結。新增真取消/磁碟拒絕/發布後異動測試。
+- 同preferences保存備份憑證與app-open排程，不保存密碼；未開app無OS排程不冒稱運行。保留政策取最新N與期限聯集，至少驗證一份完整包；只處理精確記錄sha，移轉競爭或最後完整包失聯保留恢復區。
+- 24本機目標測試PASS（17 bundle+7policy），尚無管理GUI/排程執行器，UI047仍PARTIAL。其餘27父題未結案；139舊要求仍待新來源正式回歸。

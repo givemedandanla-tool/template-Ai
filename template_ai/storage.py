@@ -14,6 +14,8 @@ from .model import Template, new_id, template_errors
 class Library:
     def __init__(self, root: str | Path):
         self.root = Path(root).resolve()
+        if self.root.name=='restored-library' and (self.root.parent/'RESTORE_STAGING_NOT_ACTIVE').exists():
+            raise ValueError('隔離還原尚未完成，保留現行環境；請檢查還原狀態後重新還原至新目錄')
         self.root.mkdir(parents=True, exist_ok=True)
         self.assets = self.root / "assets"
         self.assets.mkdir(exist_ok=True)
