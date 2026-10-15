@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "RESUME-TEN-PARENTS-AUDIT",
+  "active_task": "RESUME-TEN-PARENTS-PRIORITY-RECONCILIATION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-CATALOG-SOURCE.receipt.json",
   "last_confirmed_commit": "459dc8cafe4490495eef98096388f8f308c1d23f",
   "latest_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
@@ -32,7 +32,7 @@
   ],
   "pending_remote": [
     "CP-20261015-CATALOG-VERIFIED",
-    "CP-20261015-RESUME-TEN-PARENTS-BEGIN"
+    "CP-20261015-RESUME-TEN-CONTRACT"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",
@@ -125,6 +125,10 @@
     {
       "id": "CP-20261015-SEVENTY-LOCK-SOURCE",
       "reason": "Automatic review rejected raw owner.token in new audit metadata. Raw001 local-only; sanitized substitute/new safe producer. Immutable CP not acknowledged; no rejected partial tree reused."
+    },
+    {
+      "id": "CP-20261015-RESUME-TEN-PARENTS-BEGIN",
+      "reason": "Environment pre-change checkpoint is preserved; explicit parent scope and baseline were finalized afterwards. New contract checkpoint supersedes it without rewriting the old record."
     }
   ],
   "evidence_publication": {
