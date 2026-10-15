@@ -77,8 +77,24 @@ def inspect_report(library,report,cancel=None,progress=None):
         if facts:payload=dict(payload,observations=facts.get('observations',[]))
         # Existing work geometry remains comparable even if no semantic truth exists.
         try:
-            d=work_descriptor(payload,QImage(source['image']),source);d.update(id=row[0],source_hash=source['hash']);works.append(d)
+            d=work_descriptor(payload,QImage(source['image']),source);d.update(id=row[0],source_hash=source['hash'],path=source['current_path'],region=payload['crop']);works.append(d)
         except (ValueError,KeyError,TypeError):unknown.append(dict(scope=row[0],reason='作品描述不足，未作相同判定'))
+    referenced=set()
+    registered=list(library.db.execute('SELECT id FROM sources ORDER BY id LIMIT 201'))
+    if len(registered)>200:unknown.append(dict(scope='registered_sources',reason='超過200既有來源比較預算，尚未全庫核實'))
+    for (identity,) in registered[:200]:
+        source=source_cache.get(identity)
+        if source is None:
+            source=library.source(identity);read_bytes+=source.get('byte_size',0)
+            if read_bytes>100*1024*1024 or not healthy_source(source):source=False
+        if not source:
+            unknown.append(dict(scope=identity,reason='既有來源超出讀取預算或未核實，不判定無近似'));continue
+        key=(source['hash'],source['page'])
+        if key in referenced:continue
+        referenced.add(key)
+        try:
+            sig=image_signature(QImage(source['image']));pages.append(dict(path=source['current_path'],hash=source['hash'],width=source['width_mm'],height=source['height_mm'],**sig))
+        except ValueError as error:unknown.append(dict(scope=identity,reason=str(error)))
     with tempfile.TemporaryDirectory(prefix='template-preflight-') as temp:
         for index,item in enumerate(report['items']):
             if cancel and cancel.is_set():
@@ -106,10 +122,13 @@ def inspect_report(library,report,cancel=None,progress=None):
                 for p in predictions:
                     if len(works)>=MAX_WORKS or comparisons>=MAX_COMPARISONS:
                         unknown.append(dict(scope=item['path'],reason='作品比較預算已滿，未檢查其餘作品'));break
-                    d=work_descriptor(p,image,source);d.update(id=p['key'],source_hash=source['hash'],path=item['path'])
+                    d=work_descriptor(p,image,source)
+                    if not d['structure']:unknown.append(dict(scope=p['key'],reason='無可靠欄位／Logo結構，模板相似未核實'))
+                    d.update(id=p['key'],source_hash=source['hash'],path=item['path'],region=p['crop'])
                     for old in works:
                         if comparisons>=MAX_COMPARISONS:raise ValueError('比較預算已滿，剩餘作品未核實')
                         comparisons+=1
+                        if old.get('path')==d['path'] and old.get('region')==d['region']:continue
                         if old['design']==d['design']:duplicates.append(dict(left=old['id'],right=d['id'],source_path=item['path'],classification='EXACT_RENDERED_WORK_CANDIDATE',warning='衍生圖與內容相同；非原生AI物件或客戶身分證明'))
                     for tid,shape in templates:
                         if comparisons>=MAX_COMPARISONS:raise ValueError('比較預算已滿，剩餘模板未核實')

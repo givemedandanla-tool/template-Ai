@@ -73,6 +73,7 @@ class ComparisonCanvas(QGraphicsView):
 
 
 class CanvasCompareDialog(QDialog):
+    selection_changed=Signal(str)
     def __init__(self,data,parent=None):
         super().__init__(parent);self.data=data;self.selected_id=None;self.setWindowTitle(data.get('window_title','原稿／原模板／替代草稿 · 同步唯讀對照'));self.resize(1400,790)
         layout=QVBoxLayout(self)
@@ -140,6 +141,7 @@ class CanvasCompareDialog(QDialog):
         # Label is created after views / object list during construction.
         if hasattr(self,'position'):self.position.setText(text)
         self._position_text=text
+        self.selection_changed.emit(slot_id)
         if hasattr(self,'center'):
             self.synchronize(QPointF(r['x']+r['w']/2,r['y']+r['h']/2),self.zoom_value)
         return True

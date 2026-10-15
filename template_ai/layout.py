@@ -46,7 +46,7 @@ def text_geometry(font_family: str, size_pt: float, text: str, style: str = "", 
         row={"kind":"ASSET","asset":asset} if asset else {"kind":"QT","families":[font_family],"styles":[style]}
         result=analyze_font(row,text,size_pt,2000,.05,style or None,tracking_mm=tracking_mm)
         if result.get("measurement_verified") and result.get("family")==font_family:
-            return result["width_mm"],result["height_mm"],[]
+            return result.get("fit_width_mm",result["width_mm"]),result["height_mm"],[]
         return 0,0,result["issues"] or ["指定家族與實際核驗字面不符"]
     if font_family not in QFontDatabase.families():
         return 0, 0, ["指定字型未安裝：" + font_family]
@@ -60,7 +60,9 @@ def text_geometry(font_family: str, size_pt: float, text: str, style: str = "", 
     if any(ch in text for ch in ("\n", "\r", "\t")):
         issues.append("本版單行欄位不接受換行或 Tab")
     factor = size_pt * MM_PER_POINT / 1000.0
-    return metrics.horizontalAdvance(text) * factor, metrics.height() * factor, issues
+    from .text_metrics import ink_metrics
+    measured=ink_metrics(font,text)
+    return measured["width"]*factor,measured["height"]*factor,issues
 
 
 def layout_dependency(t, logos):

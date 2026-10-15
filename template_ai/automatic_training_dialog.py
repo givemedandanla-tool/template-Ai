@@ -59,7 +59,7 @@ class AutomaticTrainingDialog(QDialog):
         def finished(result):
             self.running=False;self.cancel_button.setEnabled(False)
             if result.get('error'):self.status.setText('預檢未完成：'+result['error']);return
-            self.report=result['report'];self.start_button.setEnabled(True);self.render(dict(items=self.report['items'],phase='PREFLIGHT'))
+            self.report=result['report'];self.start_button.setEnabled(any(i['status'] in ('READY','SKIPPED') for i in self.report['items']));self.render(dict(items=self.report['items'],phase='PREFLIGHT'));self.status.setText(f"預檢完成：{len(self.report['items'])}來源，失敗{sum(i['status']=='FAILED' for i in self.report['items'])}；開始仍需明確確認，近似僅候選。")
             import json
             r=self.report
             self.details.setPlainText(f"檔案位元重複{r['file_duplicates']}；健康快取可重用{r['reuse_candidates']}；近似檔案候選{r['near_file_candidates']}；作品重複候選{r['artwork_duplicates']}；模板結構相似{r['template_similarity']}；未核實{r['similarity_unknown']}。\n近似不等於相同；不刪除來源或合併客戶。\n"+json.dumps(r['similarity'],ensure_ascii=False,indent=2))

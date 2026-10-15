@@ -28,16 +28,20 @@ def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scal
     font.setLetterSpacing(QFont.AbsoluteSpacing,tracking_mm/(pt*MM_PER_POINT/1000))
     metrics = QFontMetricsF(font)
     factor = pt * MM_PER_POINT / 1000
-    text_w = metrics.horizontalAdvance(text) * factor * scale
-    text_h = metrics.height() * factor
+    from .text_metrics import ink_metrics
+    ink=ink_metrics(font,text)
+    text_w=ink["width"]*factor*scale
+    text_h=ink["height"]*factor
     x = rect.x()
     if align == "center":
         x += (rect.width() - text_w) / 2
     elif align == "right":
         x += rect.width() - text_w
     p.save()
-    p.setClipRect(rect)
-    p.translate(x, rect.y() + (rect.height() - text_h) / 2 + metrics.ascent() * factor)
+    # A fitting glyph envelope needs no per-field clip. Raster clip rounding can
+    # otherwise remove a partially covered edge pixel despite valid geometry.
+    if text_w>rect.width()+1e-6 or text_h>rect.height()+1e-6:p.setClipRect(rect)
+    p.translate(x-ink["left"]*factor*scale, rect.y() + (rect.height() - text_h) / 2 + ink["ascent"] * factor)
     p.scale(factor * scale, factor)
     p.setFont(font)
     p.setPen(QColor(color))

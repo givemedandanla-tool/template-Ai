@@ -1743,6 +1743,7 @@ class MainWindow(QMainWindow):
             current = c.generation == self.generation
             self.export_button.setEnabled(c.valid and current)
             self.preview_button.setEnabled(current)
+            self.input_state.setText(('目前所選候選已驗證合格；輸出前仍需重核有效版本。' if c.valid else '目前所選候選已驗證不合格：禁止正式輸出。可修正輸入或授權範圍內特製草稿；不推論所有設計都無解。') if current else '輸入／候選已變更，待重新驗證。')
             self.issues.setText(("數位排版檢查通過；尚未做實體印刷分析。" if c.valid else "正式輸出阻擋：\n" + "\n".join(c.issues[:8])) + "\n" + "；".join(c.reasons))
         except Exception as e:
             self.export_button.setEnabled(False)

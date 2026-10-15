@@ -211,7 +211,7 @@ class AnnotationDialog(QDialog):
             from .annotation_compare import build_annotation_comparison
             from .comparison_view import CanvasCompareDialog
             self.comparison=CanvasCompareDialog(build_annotation_comparison(self.session),self)
-            for view in self.comparison.views:view.picked.connect(lambda identity:self.select([identity]))
+            self.comparison.selection_changed.connect(lambda identity:self.select([identity]))
             self.comparison.open()
             if self.ids:self.comparison.select_slot(self.ids[0])
         self.guarded(action)

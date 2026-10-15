@@ -184,7 +184,10 @@ def analyze_font(row, text, size_pt=10.0, width_mm=80.0, min_scale=0.85, style=N
     height = line.height()*size_pt*MM_PER_POINT/1000
     if not math.isfinite(width) or not width>0:
         result["issues"]=["實際文字寬度無法驗證"]; return result
-    scale = min(1.0,width_mm/width)
+    from .text_metrics import ink_metrics
+    ink=ink_metrics(font,text);fit_width=ink['width']*size_pt*MM_PER_POINT/1000;height=max(height,ink['height']*size_pt*MM_PER_POINT/1000)
+    result.update(fit_width_mm=fit_width,advance_width_mm=width,ink_left_mm=ink['left']*size_pt*MM_PER_POINT/1000)
+    scale = min(1.0,width_mm/fit_width)
     result.update(width_mm=width, height_mm=height, scale=scale)
     if row["kind"]=="ASSET":
         status,issues=asset_health(row["asset"])

@@ -25,6 +25,8 @@ class ViewportWorkbenchTests(unittest.TestCase):
         for raw in [view.data[k] for k in ('source_png','before_png','after_png')]:
             image=QImage();self.assertTrue(image.loadFromData(raw,'PNG'));self.assertLessEqual(image.width()*image.height(),1600*1600)
         view.views[2].picked.emit(slot['id']);self.assertEqual(d.ids,[slot['id']]);self.assertEqual(view.selected_id,slot['id'])
+        if view.objects.count()>1:
+            view.objects.setCurrentRow(1);self.assertEqual(d.ids,[view.objects.item(1).data(Qt.UserRole)])
         self.assertEqual(d.session.base,old);self.assertEqual(window.library.db.total_changes,changes);self.assertEqual(self.path.read_bytes(),self.original_bytes);view.reject()
 
     def test_unlinked_views_pan_independently_then_relink_to_source_anchor(self):

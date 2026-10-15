@@ -45,3 +45,8 @@ class SimilarityPreflightTests(unittest.TestCase):
         report=self.service.preflight([self.path]);self.path.write_text(self.path.read_text().replace('alex@','other@'))
         with self.assertRaisesRegex(ValueError,'預檢來源已變更'):self.service.create(report,'SYNTHETIC',True)
         self.assertEqual(self.service.store.records('AUTO_JOB'),[])
+
+    def test_new_file_is_compared_with_registered_source_even_without_registered_works(self):
+        from template_ai.importer import import_file
+        self.library.add_source(self.path,import_file(self.path,self.library.assets));near=self.root/'10004.svg';near.write_text(self.path.read_text().replace('alex@','a1ex@'))
+        report=self.service.preflight([near]);self.assertGreaterEqual(report['near_file_candidates'],1);self.assertTrue(any(row['left']==str(self.path) for row in report['similarity']['near_files']));self.assertEqual(len(self.library.list_sources()),1)

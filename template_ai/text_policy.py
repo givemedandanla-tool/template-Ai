@@ -45,7 +45,7 @@ def analyse_slot_font(row,slot,text,style=None,analyzer=None):
     def measure(family,pt,value,old_style,asset,tracking):
         result=analyze_font(row,value,pt,2000,.05,style,tracking_mm=tracking)
         measured_results.append(result)
-        return result.get('width_mm') or 0,result.get('height_mm') or 0,[] if result.get('measurement_verified') else (result['issues'] or ['字面未核實，不能判定可用'])
+        return result.get('fit_width_mm',result.get('width_mm')) or 0,result.get('height_mm') or 0,[] if result.get('measurement_verified') else (result['issues'] or ['字面未核實，不能判定可用'])
     width,height,errors,tracking,strategy=tracking_geometry(slot,text,measure)
     if errors:
         result=dict(measured_results[-1]) if measured_results else {}

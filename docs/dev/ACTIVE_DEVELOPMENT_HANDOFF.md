@@ -1,13 +1,13 @@
 # 當前精簡接手
 
-- 核心：CONTEXT_AND_PERSISTENCE_RULES.md；零例行問答、GitHub持久化。先rg搜尋再分段讀；一般工具輸出≤1600tokens；新對話只帶倉庫／提交／本檔。大型媒體按頁／區域用檔案工具，不貼整串聊天或base64。
-- 工作樹/workspace/template-Ai，分支dev/v0.1-first-version／PR2，未merge main。先執行`.venv/bin/python tools/resume_status.py`取精確HEAD／變更／收據。
-- 最新目標為28個原父功能，契約FIXED70_NEXT_TWENTYEIGHT_CONTRACT.json；原20保留，新增UI013/014/015/018/028/029/030/037。先UI003/004/005/007/008/038/039/040/041/042，再UI001/002/006/010/011/012/033/034/035/036；本輪新結案0，不把子項或測試總數算完整父題。
-- 原75：16 SELF_VERIFIED／56部分／3延後；固定70完成14／剩56；CORE87／GOV7另計。既有110驗證列已用本輪正式來源重驗恢復，沒有刪除歷史。
-- 最新正式run：RUN-TWENTY-INTERIM-001；來源46d367bee0c642437d13de7202b8ac611f7ae08c；553/553 PASS、0跳過、capture0、來源未改。新增7個實際Qt畫面；模型14目標PASS。僅Linux合成資料SELF驗證，非真實AI全面或獨立覆核。
-- 本批實作：可恢復自動候選管線／精確重試、來源作品總覽、畫布標記／區域拆分合併、風險分級確認、修正規則線索、語意／衍生SVG同步樹、模式保留未套用屬性、縮放／毫米微調／吸附、安全區原子歷史與發布Gate、版本差異／回退新草稿。
-- 字串語意：phonenumbers9.0.16＋有界內容判讀；Tesseract5.5 eng/chi_tra僅OCR；另有可授權本機Character Naive Bayes訓練／留出／版本／獨立啟用。未替使用者真實資料訓練啟用；沒有GPT/Claude API。詳見SEMANTIC_MODEL_DESIGN.md、SEMANTIC_FIELD_CONTRACT.json；工程依據TWENTY_ENGINEERING_BASIS.json。
-- 下一步：UI003近似檔案／作品重複／模板結構預檢仍UNKNOWN，需實作；再逐條對照20題完整原條款與具名測試／畫面。不能從目前553PASS直接結案。Windows／原生Illustrator全面／私人樣本／印刷／獨立覆核未驗證。
-- 證據：24件文字metadata保存GitHub；86件新PNG/JPG/PDF依FULL70_PUBLICATION.json精確來源／檔名／bytes／hash留本機.checkpoints/formal-media/RUN-TWENTY-INTERIM-001，不重試媒體上傳；未宣稱全附件公開Gate。
-- 環境：.venv可用；Qt離屏用QT_QPA_PLATFORM=offscreen、XDG_CACHE_HOME=/workspace/.cache；OCR預設local-data/tessdata。Git讀取／推送成功；runtime network_state曾回報unknown，不冒稱政策ready。雲端設定稿已存但未宣稱已發布。
-- 保存每可恢復階段及每10分鐘checkpoint→push→fresh fetch逐檔讀回，收據下一提交保存。無多代理、不建EXE、不merge main、提交含[skip ci]；真資料不上傳、保留ignored與local-only。UI048最後，REV03／UI056D按既定延後。詳細歷史只按需讀WORK_LOG／HANDOFF。
+- 核心：CONTEXT_AND_PERSISTENCE_RULES.md；零例行問答、按需rg與段落讀取、一般工具總輸出≤1600tokens。換對話只帶倉庫／提交／本檔。每可恢復工作包及10分鐘checkpoint→push→fresh Git讀回；收據下一提交保存。
+- /workspace/template-Ai，dev/v0.1-first-version／PR2。無多代理、不merge main、不建EXE、[skip ci]避免自動Actions。先resume_status取實際HEAD與變更。
+- 最新目標28原父題，FIXED70_NEXT_TWENTYEIGHT_CONTRACT.json完整條款。原20加UI013/014/015/018/028/029/030/037。基準16完整／56部分／3延後；固定70完成14／剩56。本批尚未正式結案，不能從測試數推父題數。
+- 上輪正式RUN-TWENTY-INTERIM-001來源46d367bee0c642437d13de7202b8ac611f7ae08c：553PASS、0跳過、7新Qt。現在原110完成列全暫IMPLEMENTED_PENDING_VERIFICATION，STATE.pending_revalidation_ids保留；previous_evidence_run保存原來源，latest_evidence_run=None待新正式run。
+- 本批已保存：三層只讀近似預檢（SHA256/dHash/作品裁切/結構Jaccard）、實際掃描進度／取消／持久job分頁；標記前後視覺對照、解除／恢復同步、倍率數值／滑桿；拒絕／隔離／恢復候選與真值阻擋；全庫作品狀態/來源/頁/尺寸分頁前篩選。
+- 主模板畫布重用ObjectCanvas及propose，三向語意樹／屬性、縮放／微調／吸附；字距固定字級區間、語意分散逐欄核准；Qt shaping同渲染參數。新ink envelope修斜體AV/j/f overhang與截邊像素。
+- 輸入卡片180ms即時欄位旁警告／頂部預估狀態／右側精確ID定位，不奪焦點或改未採用資料；公司欄位也量測。舊表格delegate可見警告。回呼關庫安全停止。
+- 多尺寸新增OutputBatch逐檔更名／略過／明確覆寫（原檔保留恢復，移動後驗證、排他完整發布，非全交易原子replace）；真實進度、成功保護、精確失敗重試≤3、明確暫存清理。PREVIEW預設PNG，FINAL/PREVIEW分流。9新檔案故障／Qt測試及10既有PASS。
+- 依賴新增kiwisolver1.4.9鎖requirements與lock。Cassowary只在無合格現成模板時，以核准基準及明定位移／擴框／間距求特製草稿；固定字級／歸屬／Logo、原拓撲不變；原TemplateVersions CAS交易存同family新版，發布獨立。6新測試及80字型／版本PASS。工程來源／hash見TWENTYEIGHT_ENGINEERING_BASIS.json（Qt/ImageHash/Python/Kiwi/Figma公開typings），不呼叫付費服務。
+- 下一步：UI005全球排序是否隨新模板更新實際影響數；之後28逐條acceptance/tests/Qt映射（尚未註冊），補必要缺口；擴充capture，凍結code到GitHub、正式run_evidence全回歸，才恢復110舊列及結案通過的父題。更新progress/roadmap/fixed70/契約/精簡接手並保存收據。所有新失敗attempt保留，沒有削弱斷言。
+- 環境.venv Python3.12/Qt6.8.3/SQLite3.53.1，XDG_CACHE_HOME=/workspace/.cache QT_QPA_PLATFORM=offscreen；OCR local-data/tessdata。舊正式86媒體依FULL70_PUBLICATION精確metadata留本機，不重傳；新正式媒體同政策，code/tests/text全保存。真實私人AI全面／原生Illustrator／Windows／實體印刷／獨立覆核未驗證，UI048最後，REV03/UI056D按既定延後。
