@@ -731,3 +731,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 來源33783b9812b05bab837492709b18fde045f07a9f，619測試617PASS/1FAIL/1ERROR，0未處理Qt回呼，source未改；capture未執行。整體FAIL，全部claims NOT_VERIFIED，不結案。
 - 補原GUI詳細區的UNKNOWN可見狀態；字型修復測試先明確記錄合成fixture輸出用途再建立發布版，保留全部修復/輸出/已發布pin斷言。新增真PNG/PDF：未知授權阻擋、帶標記preview可用、只有新草稿明確adopt才用新授權，混合已/未核對綁定也阻擋。PDF重新讀實際OS2，不信可偽造metadata。
 - 次輪正式固定來源回歸前，37相關測試重驗；仍不宣稱全28完成。
+
+### REMAINING28 UI046 formal milestone
+- RUN002 source a283709672af5c3cf5cac41081971035ad44d259：620/620 PASS、0skip、0unhandled Qt、capture0、source unchanged；UI046 11/11原軟體條款具名PASS。恢復138舊完成要求並結案UI046。原75=45/27/3、固定70=43/27，CORE87/GOV7另計，新增0/修訂並完成1。
+- 127附件逐檔bytes/SHA驗證；97媒體按精確metadata-first policy留ignored，30文字與全部code/tests持久化。NEXT UI047原型8PASS尚未接入source，不當完整功能。

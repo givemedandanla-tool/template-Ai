@@ -4889,7 +4889,7 @@
     {
       "id": "UI-046",
       "title": "疑似重複客戶比對、受控合併與可追溯拆分恢復",
-      "current_status": "PARTIAL",
+      "current_status": "VERIFIED",
       "original_phase": "P6",
       "order_group": 4,
       "scope": "合併須確認、別名可查，拆分不覆蓋後續新值",
@@ -4903,12 +4903,14 @@
           "tests": []
         }
       ],
-      "next_step": "補合併前全影響預覽與雙方CAS、別名及拆分；測後續新值不被歷史拆分覆蓋；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
+      "next_step": "完整11條原軟體驗收已自我驗證，Windows/真實個資生產/獨立覆核未驗證。",
       "completed_core_children": [
         "CORE-071"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題",
-      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-046"
+      "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#UI-046",
+      "software_evidence": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "review_level": "SELF_VERIFIED"
     },
     {
       "id": "UI-047",
@@ -5737,15 +5739,15 @@
       "registered_acceptance_reference": "docs/dev/REQUIREMENTS.json#REV-04"
     }
   ],
-  "latest_status_note": "本輪28完整原軟體父題239條驗收通過，601/601 PASS，Qt錯誤0，來源未改；累計44完整／28部分／3延後。",
+  "latest_status_note": "剩餘28本輪完成UI046一題；620/620 PASS，仍27部分與3延後。",
   "current_full70_progress": {
     "closed": 42,
     "remaining": 28,
     "report": "docs/dev/FULL70_PROGRESS.md"
   },
   "current_parent_counts": {
-    "VERIFIED": 44,
-    "PARTIAL": 28,
-    "DEFERRED": 3
+    "verified": 45,
+    "partial": 27,
+    "deferred": 3
   }
 }

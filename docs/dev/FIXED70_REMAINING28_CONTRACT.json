@@ -255,7 +255,7 @@
     },
     {
       "parent": "UI-046",
-      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_customer_candidates.CustomerCandidateTests.test_same_content_different_source_codes_keep_two_customers_and_independent_entities",
         "test_customer_candidates.CustomerCandidateTests.test_shared_contact_conflicts_show_both_people_without_merging_and_late_conflict_blocks",
@@ -273,7 +273,9 @@
         "test_customer_identity.CustomerIdentityTests.test_swapped_primary_display_code_splits_back_and_stale_split_cannot_overwrite"
       ],
       "unresolved": [],
-      "clause_count": 11
+      "clause_count": 11,
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
+      "source_commit": "a283709672af5c3cf5cac41081971035ad44d259"
     },
     {
       "parent": "UI-047",
@@ -419,5 +421,7 @@
       "tests": [],
       "unresolved": []
     }
-  ]
+  ],
+  "verified_parent_count": 1,
+  "remaining_parent_count": 27
 }

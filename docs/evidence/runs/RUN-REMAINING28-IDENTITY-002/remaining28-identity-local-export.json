@@ -1,0 +1,310 @@
+{
+  "id": "54be8da8dee946f2b8dea1c48c57b929",
+  "primary_id": "85262249bdb44e1dbe77e6e39ae240d8",
+  "secondary_id": "84112ec8a5dd463294ee44d645447bdd",
+  "state": "MERGED",
+  "payload": {
+    "plan": {
+      "operation": "MERGE",
+      "primary_id": "85262249bdb44e1dbe77e6e39ae240d8",
+      "secondary_id": "84112ec8a5dd463294ee44d645447bdd",
+      "primary_code": "000A",
+      "before": [
+        {
+          "customer": {
+            "id": "85262249bdb44e1dbe77e6e39ae240d8",
+            "code": "000A",
+            "name": "Alex Example",
+            "revision": 1,
+            "fields": [
+              {
+                "id": "a773d2a57d154cd9b69336406e24e041",
+                "owner": "p1",
+                "kind": "name",
+                "value": "Alex Example"
+              },
+              {
+                "id": "0b0082bdb9034ee7974ab8bbd5b243be",
+                "owner": "p1",
+                "kind": "phone",
+                "value": "0100"
+              },
+              {
+                "id": "6945870201b143fb8d1a0d9929a22c02",
+                "owner": "c1",
+                "kind": "name",
+                "value": "Shared Company"
+              }
+            ],
+            "styles": [
+              {
+                "id": "d28bf45b69ea446d97e0e9c46ae1bcdf",
+                "template_id": "c1c65dbbd8f4492e901dadfafc9f031f",
+                "template_hash": "722bcb793fd97732dad43c33a68422d473e98d70dc55c50397d9fb080772b9c3",
+                "width_mm": 90.0,
+                "height_mm": 54.0
+              }
+            ],
+            "graph": {
+              "schema": 1,
+              "revision": 1,
+              "people": [
+                {
+                  "id": "8d07842bceff4fdbae75857e3bb911db"
+                }
+              ],
+              "companies": [
+                {
+                  "id": "c46a2b9dc5724e198557ce1bcebd70fa",
+                  "logo_id": ""
+                }
+              ],
+              "fields": [
+                {
+                  "id": "a773d2a57d154cd9b69336406e24e041",
+                  "owner_id": "8d07842bceff4fdbae75857e3bb911db",
+                  "kind": "name",
+                  "value": "Alex Example",
+                  "users": [
+                    "8d07842bceff4fdbae75857e3bb911db"
+                  ]
+                },
+                {
+                  "id": "0b0082bdb9034ee7974ab8bbd5b243be",
+                  "owner_id": "8d07842bceff4fdbae75857e3bb911db",
+                  "kind": "phone",
+                  "value": "0100",
+                  "users": [
+                    "8d07842bceff4fdbae75857e3bb911db"
+                  ]
+                },
+                {
+                  "id": "6945870201b143fb8d1a0d9929a22c02",
+                  "owner_id": "c46a2b9dc5724e198557ce1bcebd70fa",
+                  "kind": "name",
+                  "value": "Shared Company",
+                  "users": [
+                    "c46a2b9dc5724e198557ce1bcebd70fa"
+                  ]
+                }
+              ],
+              "links": [
+                [
+                  "8d07842bceff4fdbae75857e3bb911db",
+                  "c46a2b9dc5724e198557ce1bcebd70fa"
+                ]
+              ]
+            },
+            "ownership_state": "HUMAN_CONFIRMED",
+            "identity_aliases": []
+          },
+          "associations": [],
+          "scopes": []
+        },
+        {
+          "customer": {
+            "id": "84112ec8a5dd463294ee44d645447bdd",
+            "code": "000B",
+            "name": "Blair Example",
+            "revision": 1,
+            "fields": [
+              {
+                "id": "8082b16c88bd48e0a53e96e5e125a03b",
+                "owner": "p1",
+                "kind": "name",
+                "value": "Blair Example"
+              },
+              {
+                "id": "4bef70cd8d5f4f7c9ec69b0a0c9c9713",
+                "owner": "p1",
+                "kind": "phone",
+                "value": "0200"
+              },
+              {
+                "id": "3cbf5da8b7784642becc592ca1674675",
+                "owner": "c1",
+                "kind": "name",
+                "value": "Shared Company"
+              }
+            ],
+            "styles": [
+              {
+                "id": "935abad79f8948adb7bbc4ae07a7ad43",
+                "template_id": "c1c65dbbd8f4492e901dadfafc9f031f",
+                "template_hash": "722bcb793fd97732dad43c33a68422d473e98d70dc55c50397d9fb080772b9c3",
+                "width_mm": 90.0,
+                "height_mm": 54.0
+              }
+            ],
+            "graph": {
+              "schema": 1,
+              "revision": 1,
+              "people": [
+                {
+                  "id": "ee7f5dcc835343d8af229e7752369d2c"
+                }
+              ],
+              "companies": [
+                {
+                  "id": "fb961f78c2d14b8da326b4641ddb0cc4",
+                  "logo_id": ""
+                }
+              ],
+              "fields": [
+                {
+                  "id": "8082b16c88bd48e0a53e96e5e125a03b",
+                  "owner_id": "ee7f5dcc835343d8af229e7752369d2c",
+                  "kind": "name",
+                  "value": "Blair Example",
+                  "users": [
+                    "ee7f5dcc835343d8af229e7752369d2c"
+                  ]
+                },
+                {
+                  "id": "4bef70cd8d5f4f7c9ec69b0a0c9c9713",
+                  "owner_id": "ee7f5dcc835343d8af229e7752369d2c",
+                  "kind": "phone",
+                  "value": "0200",
+                  "users": [
+                    "ee7f5dcc835343d8af229e7752369d2c"
+                  ]
+                },
+                {
+                  "id": "3cbf5da8b7784642becc592ca1674675",
+                  "owner_id": "fb961f78c2d14b8da326b4641ddb0cc4",
+                  "kind": "name",
+                  "value": "Shared Company",
+                  "users": [
+                    "fb961f78c2d14b8da326b4641ddb0cc4"
+                  ]
+                }
+              ],
+              "links": [
+                [
+                  "ee7f5dcc835343d8af229e7752369d2c",
+                  "fb961f78c2d14b8da326b4641ddb0cc4"
+                ]
+              ]
+            },
+            "ownership_state": "HUMAN_CONFIRMED",
+            "identity_aliases": []
+          },
+          "associations": [],
+          "scopes": []
+        }
+      ],
+      "combined_graph": {
+        "schema": 1,
+        "revision": 1,
+        "people": [
+          {
+            "id": "8d07842bceff4fdbae75857e3bb911db"
+          },
+          {
+            "id": "ee7f5dcc835343d8af229e7752369d2c"
+          }
+        ],
+        "companies": [
+          {
+            "id": "c46a2b9dc5724e198557ce1bcebd70fa",
+            "logo_id": ""
+          },
+          {
+            "id": "fb961f78c2d14b8da326b4641ddb0cc4",
+            "logo_id": ""
+          }
+        ],
+        "fields": [
+          {
+            "id": "a773d2a57d154cd9b69336406e24e041",
+            "owner_id": "8d07842bceff4fdbae75857e3bb911db",
+            "kind": "name",
+            "value": "Alex Example",
+            "users": [
+              "8d07842bceff4fdbae75857e3bb911db"
+            ]
+          },
+          {
+            "id": "0b0082bdb9034ee7974ab8bbd5b243be",
+            "owner_id": "8d07842bceff4fdbae75857e3bb911db",
+            "kind": "phone",
+            "value": "0100",
+            "users": [
+              "8d07842bceff4fdbae75857e3bb911db"
+            ]
+          },
+          {
+            "id": "6945870201b143fb8d1a0d9929a22c02",
+            "owner_id": "c46a2b9dc5724e198557ce1bcebd70fa",
+            "kind": "name",
+            "value": "Shared Company",
+            "users": [
+              "c46a2b9dc5724e198557ce1bcebd70fa"
+            ]
+          },
+          {
+            "id": "8082b16c88bd48e0a53e96e5e125a03b",
+            "owner_id": "ee7f5dcc835343d8af229e7752369d2c",
+            "kind": "name",
+            "value": "Blair Example",
+            "users": [
+              "ee7f5dcc835343d8af229e7752369d2c"
+            ]
+          },
+          {
+            "id": "4bef70cd8d5f4f7c9ec69b0a0c9c9713",
+            "owner_id": "ee7f5dcc835343d8af229e7752369d2c",
+            "kind": "phone",
+            "value": "0200",
+            "users": [
+              "ee7f5dcc835343d8af229e7752369d2c"
+            ]
+          },
+          {
+            "id": "3cbf5da8b7784642becc592ca1674675",
+            "owner_id": "fb961f78c2d14b8da326b4641ddb0cc4",
+            "kind": "name",
+            "value": "Shared Company",
+            "users": [
+              "fb961f78c2d14b8da326b4641ddb0cc4"
+            ]
+          }
+        ],
+        "links": [
+          [
+            "8d07842bceff4fdbae75857e3bb911db",
+            "c46a2b9dc5724e198557ce1bcebd70fa"
+          ],
+          [
+            "ee7f5dcc835343d8af229e7752369d2c",
+            "fb961f78c2d14b8da326b4641ddb0cc4"
+          ]
+        ]
+      },
+      "asset_pins": {},
+      "identity": "HUMAN_CONFIRMATION_REQUIRED",
+      "automatic_merge": false,
+      "effects": {
+        "people": 2,
+        "companies": 2,
+        "fields": 6,
+        "style_ids": [
+          "d28bf45b69ea446d97e0e9c46ae1bcdf",
+          "935abad79f8948adb7bbc4ae07a7ad43"
+        ],
+        "source_associations": [],
+        "retained_aliases": [
+          "000A",
+          "000B"
+        ],
+        "original_assets_modified": false,
+        "published_templates_modified": false
+      },
+      "sha256": "297fb845a3f36e04e115ccc988315a0f676e7f3acd4db3c28b8a7b8059d888e0"
+    },
+    "actor": "SYNTHETIC_CAPTURE",
+    "reason": "Synthetic confirmed identity fixture",
+    "created": 1792082756.1893165
+  },
+  "privacy": "LOCAL_PERSONAL_DATA_DO_NOT_UPLOAD"
+}

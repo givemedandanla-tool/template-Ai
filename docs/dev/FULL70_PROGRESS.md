@@ -1,61 +1,61 @@
 # 固定70父題當前進度
 
-基準：4238ebc24ae62a2ef90051a86685a4c13bfca94b；70個原父題不增刪。
+基準4238ebc24ae62a2ef90051a86685a4c13bfca94b；70個原父題不增刪。
 
-固定70：**42完整軟體條款自我驗證／28仍部分**。全75：44 VERIFIED／28 PARTIAL／3 DEFERRED；CORE87與GOV7另計。
+固定70：**43完整軟體條款自我驗證／27仍部分**。全75：45 VERIFIED／27 PARTIAL／3 DEFERRED；CORE87／GOV7另計。
 
-本輪28原父題／239條驗收全部通過；來源 `81f73e03449bbe2abb79251d2ec8919662b5ab2c`；[RUN-TWENTYEIGHT-FULL-002](../evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json)：601/601 PASS、0跳過、0未處理Qt錯誤、擷取成功、來源未變。
+剩餘28本輪完成UI046／11原條款；RUN-REMAINING28-IDENTITY-002，620/620 PASS、Qt錯誤0、擷取成功、來源未變。97媒體依既定metadata-first留本機，30文字metadata與全部程式測試保存GitHub。
 
-驗證限Linux合成資料及實際Qt／數位檔；未宣稱Windows、真實私人AI全面、原生未知細節、外部磁碟崩潰耐久、實體印刷或獨立覆核通過。95件媒體依既定例外留本機，27件文字metadata與全部code/tests保存GitHub。
+Linux合成與實際Qt/數位檔SELF，未宣稱Windows、真AI全面、參考硬體、實體印刷與獨立覆核。
 
-|父題|狀態|驗收／剩餘工作|
+|原父題|狀態|完整化要求／證據|
 |---|---|---|
-|UI-001|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-002|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-003|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-004|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-005|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-006|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-007|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-008|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-009|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-010|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-011|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-012|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-013|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-014|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-015|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-016|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-017|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-018|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-001|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-002|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-003|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-004|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-005|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-006|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-007|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-008|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-009|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-010|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-011|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-012|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-013|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-014|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-015|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-016|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-017|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-018|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
 |UI-019|PARTIAL|補安全區／裁切等已核准數位檢查與高保真參考；實體設備／材料印刷依REV03後移，不作本期阻塞|
-|UI-020|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-021|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-022|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-023|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-024|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-025|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-026|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-027|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-028|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-029|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-030|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
+|UI-020|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-021|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-022|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-023|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-024|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-025|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-026|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-027|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-028|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-029|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-030|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
 |UI-031|PARTIAL|以合法匿名真AI逐例核對字形／遮罩／Logo並實際學習；完整私有原生結構不是共同必要條件|
 |UI-032|PARTIAL|補Windows能力探測及明確安裝授權，驗證載入不等於安裝、缺字／失聯／異動不借字型通過|
-|UI-033|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-034|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-035|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-036|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-037|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-038|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-039|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-040|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-041|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-042|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-043|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-044|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-045|VERIFIED|原完整軟體條款通過；逐條證據見REQUIREMENTS與本輪run|
-|UI-046|PARTIAL|補合併前全影響預覽與雙方CAS、別名及拆分；測後續新值不被歷史拆分覆蓋|
+|UI-033|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-034|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-035|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-036|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-037|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-038|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-039|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-040|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-041|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-042|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-043|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-044|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-045|VERIFIED|docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json|
+|UI-046|CLOSED_FULL_SOFTWARE_SELF_VERIFIED|docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json|
 |UI-047|PARTIAL|補可選範圍與完整依賴Manifest、排程／保留政策及隔離還原驗證；缺資產必須報不完整|
 |UI-049|PARTIAL|補多根搜尋／歧義選擇及完整影響摘要，測不同內容同名不重連、映射與原稿不改|
 |UI-050|PARTIAL|補事件只是提示的監看器及有界匯入佇列，測暫存檔、寫入中、漏事件／離線／改名均重新核實|
