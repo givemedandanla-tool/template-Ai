@@ -391,6 +391,18 @@ def restore_bundle(archive,target,password,trusted=False,allow_partial=False,can
                             db.execute('INSERT INTO training_history VALUES(?,?,?,?,?,?,?)',(kind,record_id,revision+1,'restore_isolated_revalidation_required',payload,_json(new).decode(),time.time()))
                         else:db.execute('UPDATE '+table+' SET payload=? WHERE rowid=?',(_json(new).decode(),identity))
             if training_changed and 'training_meta' in tables:db.execute('UPDATE training_meta SET epoch=epoch+1 WHERE id=1')
+            # Imported operational receipts do not authorize deleting files on the
+            # old machine. A new host must explicitly configure its own schedule.
+            from .backup_policy import SCHEDULE,HISTORY
+            record=db.execute('SELECT value FROM preferences WHERE key=?',(SCHEDULE,)).fetchone()
+            if record:
+                value=json.loads(record[0]);value.update(enabled=False,state='RESTORE_RECONFIGURATION_REQUIRED',revision=value.get('revision',0)+1)
+                db.execute('UPDATE preferences SET value=? WHERE key=?',(_json(value).decode(),SCHEDULE))
+            record=db.execute('SELECT value FROM preferences WHERE key=?',(HISTORY,)).fetchone()
+            if record:
+                values=json.loads(record[0])
+                for value in values:value.update(owned_by_app=False,restore_receipt_only=True)
+                db.execute('UPDATE preferences SET value=? WHERE key=?',(_json(values).decode(),HISTORY))
             for sid,path in current_sources.items():
                 db.execute('INSERT INTO source_links VALUES(?,?,1) ON CONFLICT(source_id) DO UPDATE SET current_path=excluded.current_path,revision=revision+1',(sid,path))
             for table in ('customer_styles','customer_source_associations'):

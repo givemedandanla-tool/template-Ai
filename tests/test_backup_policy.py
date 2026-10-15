@@ -92,3 +92,15 @@ class BackupPolicyTests(unittest.TestCase):
             result=policy.retention(self.library,self.root,PASSWORD,1,approved=True)
         self.assertEqual(result['items'][0]['state'],'RETENTION_RECOVERY')
         self.assertTrue(Path(result['items'][0]['recovery_path']).is_file())
+
+    def test_migration_retains_receipts_but_disables_schedule_and_cannot_prune_old_machine_files(self):
+        first=self.archive(1)
+        configured=policy.configure(self.library,self.root,60,retain_count=1,now=100)
+        second=self.archive(2)
+        result=bundle.restore_bundle(second['path'],self.root/'migrated',PASSWORD,True)
+        library=Library(result['library_root']);self.addCleanup(library.close)
+        self.assertFalse(policy.schedule(library)['enabled'])
+        self.assertEqual(policy.schedule(library)['state'],'RESTORE_RECONFIGURATION_REQUIRED')
+        self.assertTrue(all(not r['owned_by_app'] for r in policy.history(library)))
+        self.assertEqual(policy.retention(library,self.root,PASSWORD,1,approved=True)['items'],[])
+        self.assertTrue(Path(first['path']).exists());self.assertTrue(policy.schedule(self.library)['enabled'])

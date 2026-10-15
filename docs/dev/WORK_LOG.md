@@ -746,3 +746,5 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 新增Windows可攜檔名/大小寫/保留名、symlink/路徑穿越、未知schema拒絕，隔離半成品不能被Library啟用；中斷worker保留已完成unit、監看根需重新連結。新增真取消/磁碟拒絕/發布後異動測試。
 - 同preferences保存備份憑證與app-open排程，不保存密碼；未開app無OS排程不冒稱運行。保留政策取最新N與期限聯集，至少驗證一份完整包；只處理精確記錄sha，移轉競爭或最後完整包失聯保留恢復區。
 - 24本機目標測試PASS（17 bundle+7policy），尚無管理GUI/排程執行器，UI047仍PARTIAL。其餘27父題未結案；139舊要求仍待新來源正式回歸。
+
+- BACKUP-POLICY checkpoint c4fa502801b22a854f598842819caf0e4be4cb7d已fresh讀回。補搬遷後停用舊排程、歷史備份僅憑證不自動繼承刪檔ownership；25相關測試PASS。下一接BackupManager/BackupScheduler，共用run_job與本機preferences。
