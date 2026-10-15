@@ -145,10 +145,13 @@ class AutomaticTraining:
             works=[w for w in works if w['id'] in item['work_scope']]
             if {w['id'] for w in works}!=set(item['work_scope']):raise ValueError('作品不屬確認來源')
         if not item.get('work_scope') and (not works or all(w['payload'].get('analysis_key') for w in works)):
-            hypotheses=analyse_source(source,self.library.assets)
+            from .semantic_learning import SemanticLearning
+            model,model_context=SemanticLearning(self.library).active()
+            hypotheses=analyse_source(source,self.library.assets,model,model_context)
             for number,hypothesis in enumerate(hypotheses,1):
                 if cancel and cancel.is_set():break
-                if any(w['payload'].get('analysis_key')==hypothesis['key'] for w in works):continue
+                if any(w['payload'].get('analysis_key')==hypothesis['key'] or
+                    w['payload'].get('crop')==hypothesis['crop'] for w in works):continue
                 # Atomically save the source-derived work and unconfirmed observations.
                 with self.store.transaction():
                     payload={k:deepcopy(hypothesis[k]) for k in ('crop','work_width','work_height','slots','visual_confirmed','company_bindings')}

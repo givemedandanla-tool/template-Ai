@@ -379,6 +379,7 @@ class MainWindow(QMainWindow):
         self.button("批次匯入／取消與續跑", self.batch_import, links_row)
         self.button("來源匯入例外中心", self.import_exceptions, links_row)
         self.button("預檢後一鍵自動訓練", self.automatic_training, links_row)
+        self.button("本機字串語意模型", self.semantic_learning, links_row)
         links_row.addStretch()
         layout.addLayout(links_row)
         works_row = QHBoxLayout()
@@ -720,6 +721,18 @@ class MainWindow(QMainWindow):
         if self.busy:return
         from .automatic_training_dialog import AutomaticTrainingDialog
         dialog=AutomaticTrainingDialog(self);dialog.exec();dialog.deleteLater()
+
+    def semantic_learning(self):
+        if self.busy:return
+        from .semantic_learning_dialog import SemanticLearningDialog
+        dialog=SemanticLearningDialog(self);dialog.exec();dialog.deleteLater()
+
+    def schedule_affected_work(self,work_id):
+        from .automatic_training import AutomaticTraining
+        from .automatic_training_dialog import AutomaticTrainingDialog
+        service=AutomaticTraining(self.library);plan=service.retry_plan([work_id]);job=service.create_retry(plan,'CONFIRMED_WORK_INCREMENTAL',True)
+        dialog=AutomaticTrainingDialog(self);dialog.setAttribute(Qt.WA_DeleteOnClose);dialog.show();dialog.start_job(job)
+        self.statusBar().showMessage('已排入確切作品增量重分析：'+work_id+'；主編輯草稿保留，引用模板依原版次重新核驗。')
 
     def batch_import(self):
         if self.busy:return

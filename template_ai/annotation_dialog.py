@@ -82,7 +82,20 @@ class AnnotationDialog(QDialog):
         if not observation:return '待補來源觀察'
         from .semantic_fields import recognize
         row=recognize(observation['text'])
-        return observation['text']+'\n語意候選：'+row['semantic_type']+'／平台：'+str(row['platform'])+'\n正規化：'+row['normalized']+'\n判斷依據：'+'；'.join(row['signals'])+'\n'+row['confidence']+'／'+row['version']
+        prior=self.session.base['payload'].get('analysis_evidence',{});candidate=prior.get('semantic_candidates',{}).get(observation['id'])
+        history=''
+        if candidate:history='\n來源分析時的AI候選：'+candidate['semantic_type']+'；模型：'+str(prior.get('semantic_model',{}))+'；依據：'+'；'.join(candidate['signals'])
+        return observation['text']+'\n目前內容語意候選：'+row['semantic_type']+'／平台：'+str(row['platform'])+'\n正規化：'+row['normalized']+'\n判斷依據：'+'；'.join(row['signals'])+'\n'+row['confidence']+'／'+row['version']+history
+
+    def reject(self):
+        changed=self.session.payload!=self.session.base['payload'] or self.session.observations!=self.session.facts['observations'] or self.visual.isChecked()!=bool(self.session.payload.get('visual_confirmed'))
+        if changed:
+            answer=QMessageBox.question(self,'保留標記草稿','目前有未保存的標記校正。',QMessageBox.Save|QMessageBox.Discard|QMessageBox.Cancel,QMessageBox.Cancel)
+            if answer==QMessageBox.Cancel:return
+            if answer==QMessageBox.Save:
+                try:self.save_or_raise()
+                except Exception as error:self.status.setText('未關閉：'+str(error));return
+        super().reject()
 
     def bind_observation(self):
         def action():

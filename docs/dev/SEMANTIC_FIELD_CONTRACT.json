@@ -1,6 +1,6 @@
 {
   "id": "SEMANTIC-FIELD-MEANING",
-  "status": "IN_PROGRESS",
+  "status": "IMPLEMENTED_PENDING_SOURCE_REGRESSION",
   "parents": [
     "UI-007",
     "UI-008",
@@ -23,5 +23,22 @@
     "未知／矛盾標籤待審，姓名公司不靠位置當真值",
     "持久化語意證據、使用者修正、來源不變、Qt顯示",
     "確認樣本分類器訓練／留出與未確認樣本排除"
-  ]
+  ],
+  "implementation": [
+    "template_ai/semantic_fields.py",
+    "template_ai/semantic_learning.py",
+    "template_ai/semantic_learning_dialog.py",
+    "template_ai/source_analysis.py"
+  ],
+  "targeted_validation": {
+    "semantic_fields": {
+      "passed": 7,
+      "seconds": 0.012
+    },
+    "semantic_learning_including_real_qt_and_inkscape": {
+      "passed": 7,
+      "seconds": 8.017
+    },
+    "scope": "本機合成來源與SELF驗證，尚非真實部署正確率或20父題完整結案"
+  }
 }

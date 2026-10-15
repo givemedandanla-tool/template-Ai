@@ -52,7 +52,7 @@ def classify(value):
     return recognize(value)['slot_kind']
 
 
-def analyse_source(source,assets):
+def analyse_source(source,assets,semantic_model=None,model_context=None):
     root,elements,bounds=vector_objects(source,assets)
     page=Rect(0,0,source['width_mm'],source['height_mm']);byid={e.get('id'):e for e in elements if e.get('id')}
     candidate_rects=[]
@@ -83,7 +83,7 @@ def analyse_source(source,assets):
         if len(local)+len(logos)>200:raise ValueError('單作品標記超過200，需人工縮小作品')
         name_used=False
         for native,value,rect in local:
-            semantic=recognize(value);kind=semantic['slot_kind']
+            semantic=recognize(value,model=semantic_model);kind=semantic['slot_kind']
             identity='box-'+digest([source['hash'],key,native])[:28]
             if kind is None:
                 clues.append('文字語意或平台欄位待確認；未從位置猜人名／職稱')
@@ -112,5 +112,7 @@ def analyse_source(source,assets):
             evidence=dict(method='INKSCAPE_TRANSFORMED_BOUNDS_AND_SOURCE_LABELS',native_illustrator_mapping='UNKNOWN',
                 physical_size='SOURCE_GEOMETRY_HYPOTHESIS_REQUIRES_CONFIRMATION',font_size='DEFAULT_REQUIRES_SOURCE_REVIEW',
                 confidence='UNVALIDATED_HEURISTIC',issues=sorted(set(clues)),
-                object_ids=[row[0] for row in local],source_unchanged=True)))
+                object_ids=[row[0] for row in local],source_unchanged=True,
+                semantic_model=model_context or dict(state='NONE'),
+                semantic_candidates={o['id']:o['semantic'] for o in observations if o.get('semantic')})))
     return result

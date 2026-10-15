@@ -37,12 +37,15 @@ class CharacterModel:
     def __init__(self,examples):
         self.counts=defaultdict(Counter);self.documents=Counter();self.vocabulary=set();self.sample_ids=[]
         if len(examples)>2000:raise ValueError('字串模型每版至多2000個明確樣本')
-        seen=set()
+        seen=set();characters=0
         for row in examples:
             if row.get('confirmed') is not True or row.get('use')!='SEMANTIC_CLASSIFICATION_LOCAL':continue
             kind=row.get('semantic_type');identity=row.get('sample_id')
             if kind not in TYPES or not isinstance(identity,str) or not identity or identity in seen:raise ValueError('語意樣本類型／stable ID不合法或重複')
+            characters+=len(row['text'])
+            if characters>250000:raise ValueError('本次語意訓練文字超過25萬字，請縮小範圍')
             seen.add(identity);tokens=features(row['text']);self.counts[kind].update(tokens);self.documents[kind]+=1;self.vocabulary.update(tokens);self.sample_ids.append(identity)
+            if len(self.vocabulary)>50000:raise ValueError('語意詞彙特徵超過5萬，本版需縮小訓練範圍')
 
     def predict(self,value):
         tokens=features(value);known=sum(n for t,n in tokens.items() if t in self.vocabulary);total=sum(tokens.values())
