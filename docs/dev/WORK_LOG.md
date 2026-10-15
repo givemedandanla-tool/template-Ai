@@ -607,3 +607,7 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 
 ## 2026-10-15T10:09:32.941221+00:00 RESUME-TEN-PARENTS 盤點
 本對話先前僅檢查main，現由原生Git找回dev分支990d4a7。治理check PASS、428具名測試已登錄；本機新回歸執行中。舊local對話無直接讀取能力，不宣稱爬取成功。依STATE下一UI045，再依GUI包順序選取契約十父題；本輪起點6完整／66部分／3延後，固定70已4，不重算舊十工作包。產品程式尚未修改。Python3.12環境已按原鎖檔安裝。
+
+
+## 固定70報告優先序及演算法／重用要求
+已完整讀取使用者指定4238ebc版本報告，29759 bytes，SHA256 fd57747f9efeebcfc2d9875a6f97a643b8abe103b74ec090882389d5748758a2。原GUI-first接續選擇由新契約取代，尚未改產品程式，保留舊契約與checkpoint。新十父題UI043/045/020至027；428基準測試113.989秒通過，0skip。使用者要求參考數學、開源／商用思路及GitHub checkpoint，納入工程依據；不觸發Actions、無代理、EXE及main合併。

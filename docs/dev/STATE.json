@@ -5,16 +5,15 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "RESUME-TEN-PARENTS-PRIORITY-RECONCILIATION",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-CATALOG-SOURCE.receipt.json",
-  "last_confirmed_commit": "459dc8cafe4490495eef98096388f8f308c1d23f",
+  "active_task": "FIXED70-NEXT-TEN-IN-PROGRESS",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-RESUME-TEN-CONTRACT.receipt.json",
+  "last_confirmed_commit": "727cc0f7a833ba98b21cfa045649d6d141de2193",
   "latest_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
-    "docs/dev/CATALOG_CONTRACT.json",
+    "docs/dev/FIXED70_NEXT_TEN_CONTRACT.json",
     "docs/dev/FULL70_PROGRESS.md",
-    "docs/dev/FULL_70_COMPLETION_PLAN.json",
     "docs/dev/REQUIREMENTS.json"
   ],
   "next_tasks": [
@@ -32,7 +31,7 @@
   ],
   "pending_remote": [
     "CP-20261015-CATALOG-VERIFIED",
-    "CP-20261015-RESUME-TEN-CONTRACT"
+    "CP-20261015-FIXED70-NEXT-TEN-BEGIN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",
@@ -48,7 +47,7 @@
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
-  "active_contract": "docs/dev/RESUME_TEN_PARENTS_CONTRACT.json",
+  "active_contract": "docs/dev/FIXED70_NEXT_TEN_CONTRACT.json",
   "next_work_package": "docs/dev/CATALOG_CONTRACT.json",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
@@ -380,18 +379,18 @@
     "status": "AWAITING_INFORMATION_NOT_GLOBAL_BLOCKER"
   },
   "resumed_ten_parent_target": {
-    "contract": "docs/dev/RESUME_TEN_PARENTS_CONTRACT.json",
+    "contract": "docs/dev/FIXED70_NEXT_TEN_CONTRACT.json",
     "target_ids": [
+      "UI-043",
       "UI-045",
-      "UI-001",
-      "UI-002",
-      "UI-006",
-      "UI-010",
-      "UI-011",
-      "UI-012",
-      "UI-034",
-      "UI-035",
-      "UI-036"
+      "UI-020",
+      "UI-021",
+      "UI-022",
+      "UI-023",
+      "UI-024",
+      "UI-025",
+      "UI-026",
+      "UI-027"
     ],
     "completed": []
   }
