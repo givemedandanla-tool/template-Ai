@@ -912,3 +912,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 原10全文/SHA與36backend+8GUI+5rule/facet+7oldquality對照，55 combined +1 new GUI PASS。新增samebytes independent7layers、排除0humanrate/modelstale、crosswork overlap、actualrelink、restart2connCAS、unresolvedcustomer blocks；未知分母rate None。
 - actualcoverage capture002及fullremaining28 six-parent capture PASS/0Qt；media local only，metadata sourcebound。Visual review修正background-status錯字義與raw blocker details；complete status真SQLite讀回，未知/失效明列。
 - 準備新source正式驗證，不以targets/capture替代full formal。全28仍5已驗里程碑/23待完成。
+
+### UI052 full original10 self-verified milestone
+- 本輪剩餘28已完成UI046/UI047/UI049/UI050/UI051/UI052六題，共62原條款；798/798正式PASS、0skip/0Qt錯誤、capture0、source unchanged。全75：50 VERIFIED／22 PARTIAL／3 DEFERRED；固定70：48閉合／22仍部分。CORE87／GOV7另計。
+- 38 text metadata/117 local media，actualsixparent Qt/SQLite/process/current-host capture，144 claims digest吻合；publication gate待readback實查。下一UI053，非全28完成。
