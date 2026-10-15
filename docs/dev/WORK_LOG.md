@@ -659,3 +659,6 @@ CP-20261015-TEN-PARENTS-VERIFIED已push並重新fetch逐檔確認，保存範圍
 
 ## 2026-10-15（Asia/Taipei）使用者核心規則持久化
 按需讀取（先rg搜尋、相關段落、輸出一般≤1600tokens）、倉庫存狀態（精簡接手與詳細決策分離）、新對話只用版本及交接、大型媒體由檔案工具按頁／區域處理，四項寫入CONTEXT_AND_PERSISTENCE_RULES／AGENTS／DEVELOPMENT_PROTOCOL。新增只讀resume_status入口；本輪20父題目標不變，尚未新增結案，不以文檔當功能完成。
+
+## 2026-10-15（Asia/Taipei）自動分析核心＋Qt可恢復階段
+新14項測試8.760s PASS：真實Inkscape雙作品及完整Logo不拆字、同內容異名仍獨立來源、預檢／工作CAS、單來源／單作品失敗隔離、取消／續跑／依賴指紋重用、有效TRAIN幾何草稿、SQLite系統錯誤停worker、互斥lease、精確作品重試、實際Qt一鍵與取消／啟動失敗恢復。未自動確認事實／發布；20父題待原條款完整驗收。

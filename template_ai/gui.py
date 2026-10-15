@@ -371,6 +371,7 @@ class MainWindow(QMainWindow):
         self.button("批次來源定位／復原", self.batch_source_links, links_row)
         self.button("批次匯入／取消與續跑", self.batch_import, links_row)
         self.button("來源匯入例外中心", self.import_exceptions, links_row)
+        self.button("預檢後一鍵自動訓練", self.automatic_training, links_row)
         links_row.addStretch()
         layout.addLayout(links_row)
         works_row = QHBoxLayout()
@@ -707,6 +708,11 @@ class MainWindow(QMainWindow):
         source = self.library.add_source(Path(path), result)
         self.refresh_sources(source["id"])
         self.statusBar().showMessage("來源已保存；" + ("重用同內容解析，保留本次來源登錄" if result.get("reused") else "視覺一致性仍待原稿核對"))
+
+    def automatic_training(self):
+        if self.busy:return
+        from .automatic_training_dialog import AutomaticTrainingDialog
+        dialog=AutomaticTrainingDialog(self);dialog.exec();dialog.deleteLater()
 
     def batch_import(self):
         if self.busy:return

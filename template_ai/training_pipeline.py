@@ -58,6 +58,8 @@ class TrainingQueueMixin:
         try:
             with self.transaction():
                 job=self.get('JOB',job_id);lease=self.get('WORKER','geometry-worker')
+                automatic=self.get('WORKER','automatic-worker')
+                if automatic and automatic.get('active') and owner_alive(automatic.get('owner')):raise ValueError('自動分析worker仍在執行，不能重複啟動訓練')
                 if not job or job['revision']!=expected_revision:raise ValueError('工作版次已變更')
                 if lease and lease.get('active') and owner_alive(lease.get('owner')):raise ValueError('本資料庫已有單一活動worker，不能跨視窗接管')
                 if job['phase']=='RUNNING' and owner_alive(job['owner']):raise ValueError('原工作階段仍活動')

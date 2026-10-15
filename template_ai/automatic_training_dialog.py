@@ -1,0 +1,112 @@
+"""One preflight/start action with persistent, independently reviewed work units."""
+import threading
+from pathlib import Path
+from PySide6.QtCore import QObject,Signal,Qt
+from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QComboBox,QTableWidget,QTableWidgetItem,QPlainTextEdit,QFileDialog,QMessageBox,QLineEdit,QCheckBox)
+from .automatic_training import AutomaticTraining,run_automatic
+from .training_pipeline import LIVE_OWNERS
+
+
+class Progress(QObject):
+    updated=Signal(object)
+
+
+class AutomaticTrainingDialog(QDialog):
+    def __init__(self,window):
+        super().__init__(window);self.window=window;self.service=AutomaticTraining(window.library)
+        self.report=None;self.running=False;self.cancel_event=threading.Event();self.progress_signal=Progress(self)
+        self.progress_signal.updated.connect(self.render,Qt.QueuedConnection)
+        self.setWindowTitle('預檢後一鍵自動訓練／來源與作品持久進度');self.resize(1150,760)
+        layout=QVBoxLayout(self);self.status=QLabel('一次核對後自動分析；未確認的作品／標記留待審，正式規則與模板仍需獨立核准。');self.status.setWordWrap(True);layout.addWidget(self.status)
+        bar=QHBoxLayout();self.button(bar,'選多個來源檔',self.pick_files);self.button(bar,'選來源資料夾',self.pick_folder)
+        self.actor=QLineEdit('LOCAL_OPERATOR');self.actor.setMaxLength(120);bar.addWidget(self.actor)
+        self.start_button=self.button(bar,'確認預檢並開始訓練',self.start);self.start_button.setEnabled(False);layout.addLayout(bar)
+        self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['來源檔','頁次','實際狀態','已分析作品','重用作品','問題／待核對']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);layout.addWidget(self.table,2)
+        self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
+        bar=QHBoxLayout();self.jobs=QComboBox();bar.addWidget(self.jobs,1);self.retry=QCheckBox('明確重試失敗項');bar.addWidget(self.retry)
+        self.button(bar,'讀回持久工作',self.reload);self.resume_button=self.button(bar,'繼續選定工作',self.resume)
+        self.cancel_button=self.button(bar,'安全取消',self.cancel_event.set);self.cancel_button.setEnabled(False)
+        self.button(bar,'開啟作品例外／品質中心',window.training_center);layout.addLayout(bar);self.reload()
+
+    def button(self,bar,label,fn):
+        button=QPushButton(label);button.clicked.connect(fn);bar.addWidget(button);return button
+
+    def pick_files(self):
+        if self.running or self.window.busy:return
+        paths,_=QFileDialog.getOpenFileNames(self,'選來源檔','','設計來源 (*.ai *.eps *.pdf *.svg *.png *.jpg *.jpeg)')
+        if paths:self.preflight(paths)
+
+    def pick_folder(self):
+        if self.running or self.window.busy:return
+        path=QFileDialog.getExistingDirectory(self,'選來源資料夾')
+        if path:self.preflight([path])
+
+    def preflight(self,paths):
+        if self.running or self.window.busy:return
+        root=self.window.library.root;self.start_button.setEnabled(False);self.report=None
+        def worker():
+            from .storage import Library
+            library=None
+            try:
+                library=Library(root);return dict(report=AutomaticTraining(library).preflight(paths))
+            except Exception as error:return dict(error=str(error))
+            finally:
+                if library:library.close()
+        def finished(result):
+            if result.get('error'):self.status.setText('預檢未完成：'+result['error']);return
+            self.report=result['report'];self.start_button.setEnabled(True);self.render(dict(items=self.report['items'],phase='PREFLIGHT'))
+            self.details.setPlainText(f"檔案位元重複{self.report['file_duplicates']}；健康快取可重用{self.report['reuse_candidates']}。\n作品重複與模板結構近似尚未核實，不刪除來源或合併客戶。\n完整檔名／來源身分保留；文字、歸屬與作品邊界為待審候選。")
+        try:self.window.run_job('掃描及來源預檢',worker,finished)
+        except Exception as error:self.status.setText('預檢無法啟動：'+str(error))
+
+    def reload(self):
+        if self.running:return
+        identity=self.jobs.currentData();self.jobs.clear()
+        for job in self.service.store.records('AUTO_JOB'):self.jobs.addItem(self.service.phase(job)+'／'+job['id'],job['id'])
+        index=self.jobs.findData(identity)
+        if index>=0:self.jobs.setCurrentIndex(index)
+
+    def render(self,job):
+        items=job['items'];self.table.setRowCount(len(items))
+        for row,item in enumerate(items):
+            values=(Path(item['path']).name,str(item['page']),item.get('state',item.get('status','UNKNOWN')),str(item.get('analysed_units','尚未分析')),str(item.get('reused_units','尚未分析')),item.get('error') or item.get('reason') or ('作品資料待核對' if item.get('state')=='WAITING_REVIEW' else ''))
+            for col,value in enumerate(values):
+                cell=QTableWidgetItem(value);cell.setToolTip(item['path'] if col==0 else value);self.table.setItem(row,col,cell)
+        if job['phase']!='PREFLIGHT':self.status.setText(job['phase']+f"；來源{len(items)}，成功{sum(i.get('state')=='SUCCESS' for i in items)}，待核對{sum(i.get('state')=='WAITING_REVIEW' for i in items)}，失敗{sum(i.get('state')=='FAILED' for i in items)}。未自動發布。")
+
+    def start(self):
+        if not self.report or self.running or self.window.busy:return
+        try:
+            if QMessageBox.question(self,'確認預檢並一鍵開始',f"來源{len(self.report['items'])}，位元重複{self.report['file_duplicates']}。\n自動作品候選、標記、品質與已授權幾何學習；不核准新事實、不建立真實客戶、不發布。")==QMessageBox.Yes:self.start_job(self.service.create(self.report,self.actor.text(),True))
+        except Exception as error:self.status.setText('未開始：'+str(error))
+
+    def resume(self):
+        if self.running or self.window.busy or not self.jobs.currentData():return
+        job=self.service.get(self.jobs.currentData())
+        if QMessageBox.question(self,'接續確切持久工作',job['id']+'\n保留既有成果，只重分析變更單元；失敗項依勾選重試。')==QMessageBox.Yes:self.start_job(job)
+
+    def start_job(self,job):
+        if self.running or self.window.busy:return
+        claimed=None
+        try:
+            claimed=self.service.claim(job['id'],job['revision'],True,self.retry.isChecked());self.running=True;self.cancel_event.clear()
+            self.start_button.setEnabled(False);self.resume_button.setEnabled(False);self.cancel_button.setEnabled(True)
+            root=self.window.library.root;identity=claimed['id'];token=claimed['owner']['token'];cancel=self.cancel_event;signal=self.progress_signal.updated
+            def worker():
+                try:return dict(job=run_automatic(root,identity,token,cancel,signal.emit))
+                except Exception as error:return dict(error=str(error))
+            def finished(result):
+                self.running=False;self.cancel_button.setEnabled(False);self.resume_button.setEnabled(True);self.start_button.setEnabled(self.report is not None)
+                if result.get('job'):self.render(result['job'])
+                else:self.status.setText('工作未完成：'+result['error']+'；依持久狀態接續')
+                self.reload();self.window.refresh_sources();self.window.refresh_templates(preserve_editor=True)
+            self.window.run_job('來源→作品→標記→品質→學習候選',worker,finished)
+        except Exception as error:
+            if claimed:
+                try:self.service.finish(claimed['id'],claimed['owner']['token'],'FAILED_SYSTEM',str(error))
+                finally:LIVE_OWNERS.discard(claimed['owner']['token'])
+            self.running=False;self.cancel_button.setEnabled(False);self.resume_button.setEnabled(True);self.start_button.setEnabled(self.report is not None);self.status.setText('啟動失敗：'+str(error))
+
+    def closeEvent(self,event):
+        if self.running:self.cancel_event.set();self.status.setText('安全取消中，當前原子步驟完成後可關閉。');event.ignore()
+        else:super().closeEvent(event)
