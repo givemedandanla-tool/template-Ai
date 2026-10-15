@@ -59,7 +59,7 @@ def analyse_work(work, source=None):
             add('KIND', 'BLOCK', '未知欄位種類；行政註記應走來源觀察與雜訊候選', [sid])
         if not all(type(v) in (int, float) for v in (slot.rect.x, slot.rect.y, slot.rect.w, slot.rect.h)) or not slot.rect.inside(width, height):
             add('BOUNDS', 'BLOCK', '欄位超出作品或框位無效', [sid])
-        prefix = 'c' if slot.kind in ('company', 'logo') else 'p'
+        prefix = 'c' if slot.kind in ('company', 'logo') or (slot.kind in ('phone','email','line','ig','address') and isinstance(slot.owner,str) and slot.owner.startswith('c')) else 'p'
         owner = re.fullmatch(prefix + r'([1-9][0-9]*)', slot.owner) if isinstance(slot.owner, str) else None
         if not owner or (prefix == 'p' and int(owner[1]) > 20):
             add('OWNER', 'BLOCK', '人物／公司歸屬與欄位類型不相容', [sid])
@@ -85,13 +85,9 @@ def analyse_work(work, source=None):
     bindings = payload.get('company_bindings', {})
     if not isinstance(bindings, dict):
         add('BINDING_SCHEMA', 'BLOCK', '公司關聯資料格式不合法'); bindings = {}
-    if companies:
-        for person in sorted(people):
-            if bindings.get(person) not in companies:
-                add('COMPANY_BINDING', 'REVIEW', person + '的公司關聯未確認；不由框位猜測')
-        for company in sorted(companies):
-            if company not in bindings.values():
-                add('UNBOUND_COMPANY', 'REVIEW', company + '沒有已確認人物關聯')
+    from .model import binding_errors
+    for error in binding_errors(bindings, people, companies):
+        add('COMPANY_BINDING', 'REVIEW', error)
     ordered = sorted(slots, key=lambda s: (s.id, s.owner, s.kind, s.index if type(s.index) is int else -1))
     for index, a in enumerate(ordered):
         for b in ordered[index + 1:]:

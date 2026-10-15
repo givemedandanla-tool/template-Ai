@@ -237,8 +237,9 @@ class ObjectToolsDialog(QDialog):
                 else:editor.setTristate(value is None);editor.setCheckState(Qt.PartiallyChecked if value is None else Qt.Checked if value else Qt.Unchecked)
             self.font_choice.setCurrentIndex(0);self.font_choice.setEnabled(text_only and not self.canvas.readonly)
             payload=self.snapshot['payload'];links=payload.get('company_bindings',{})
+            from .model import company_ports
             def association(s):
-                return '公司關聯 '+str(links.get(s['owner'],'未確認')) if s['owner'].startswith('p') else '共享人物 '+(', '.join(p for p,c in links.items() if c==s['owner']) or '未確認')
+                return '公司關聯 '+str(links.get(s['owner'],'未確認')) if s['owner'].startswith('p') else '共享人物 '+(', '.join(p for p,c in links.items() if s['owner'] in company_ports(c)) or '未確認')
             detail='\n'.join(f"{s['owner']}/{s['kind']}／{s['id']} · {'鎖定' if s.get('locked',False) else '未鎖定'} · {s['font']}/{s.get('font_style') or '原生款式未知'} · {association(s)}" for s in rows)
             size=(payload['width_mm'],payload['height_mm']) if self.kind=='TEMPLATE' else (payload['work_width'],payload['work_height'])
             detail=f"矩形 {size[0]:g}×{size[1]:g} mm／{self.kind} {self.entity_id}／来源作品 {payload.get('source_work_id') or (self.entity_id if self.kind=='ARTWORK' else '未知')}\n"+detail

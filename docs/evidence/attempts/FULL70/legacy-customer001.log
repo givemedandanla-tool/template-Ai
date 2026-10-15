@@ -1,0 +1,24 @@
+test_customers (unittest.loader._FailedTest.test_customers) ... ERROR
+
+======================================================================
+ERROR: test_customers (unittest.loader._FailedTest.test_customers)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_customers
+Traceback (most recent call last):
+  File "/workspace/bcoe-python/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/unittest/loader.py", line 419, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/bcoe-python/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/unittest/loader.py", line 362, in _get_module_from_name
+    __import__(name)
+  File "/workspace/template-Ai/tests/test_customers.py", line 9, in <module>
+    from template_ai.gui import MainWindow
+  File "/workspace/template-Ai/template_ai/gui.py", line 1421
+    self.graph_status.setText(f"人物卡片模式：{len(people)}人物／{len(companies)}公司／{len(graph.data["fields"])}穩定欄位；下表唯讀摘要，所有編輯請開人物卡片。資料僅當次，客戶主檔未回寫。")
+                                                                                           ^^^^^^
+SyntaxError: f-string: unmatched '['
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

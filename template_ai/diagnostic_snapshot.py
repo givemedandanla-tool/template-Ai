@@ -62,6 +62,7 @@ def context(window,kind,work_id=None,session=None):
         if values['source']:paths_in(values['source'])
         paths_in(work['payload'])
     if kind in ('input','candidate','session'):
+        values['input_graph']=getattr(getattr(window,'active_input_graph',None),'data',None)
         values.update(generation=window.generation,people=table_data(window.people),companies=table_data(window.companies),size=[window.out_w.value(),window.out_h.value()],filter=getattr(window,'reorder_template_id',None))
         templates=selected_templates(window)
         eligible=[t for t in templates if (t.width_mm,t.height_mm)==tuple(values['size'])]

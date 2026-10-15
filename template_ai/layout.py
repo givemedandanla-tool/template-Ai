@@ -102,18 +102,20 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
         add(f"人物容量需精確匹配：模板 {t.capacity}，輸入 {len(people)}", "CAPACITY", capacity=t.capacity, people=len(people))
     persons = {f"p{i+1}": p for i, p in enumerate(people)}
     company_map = {f"c{i+1}": p for i, p in enumerate(companies)}
+    from .model import company_ports, input_company_ports
     for owner, company in t.company_bindings.items():
-        if persons.get(owner, {}).get("company") != company:
+        if set(input_company_ports(persons.get(owner, {}))) != set(company_ports(company)):
             add(owner + "：輸入公司與模板已確認歸屬不符，不能混配人物／Logo", "COMPANY_BINDING")
     items = []
     used = set()
     for s in t.slots:
         label = KINDS[s.kind] + "／" + s.owner
         if s.owner.startswith("c"):
-            person_indexes = [p.get("company") for p in people]
+            person_indexes = [c for p in people for c in input_company_ports(p)]
             if s.owner not in person_indexes:
                 add(label + "：沒有任何人物關聯此公司", "UNBOUND_COMPANY", s)
         if s.kind == "logo":
+            used.add((s.owner, "name", 0))  # 公司識別已由完整Logo欄位承載。
             asset = logos.get(s.owner)
             company = company_map.get(s.owner, {}).get("name", "")
             if not asset or not asset.get("approved"):
@@ -124,7 +126,7 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
                 asset = None
             items.append(Placed(s, company, logo=asset))
             continue
-        data = company_map.get(s.owner, {}) if s.kind == "company" else persons.get(s.owner, {})
+        data = company_map.get(s.owner, {}) if s.owner.startswith("c") else persons.get(s.owner, {})
         key = "name" if s.kind == "company" else s.kind
         values = data.get(key, [])
         values = values if isinstance(values, list) else [values]
@@ -150,7 +152,7 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
             add(label + "：固定字級的完整字形高度超出框位", "HEIGHT", s, **parameters)
         items.append(Placed(s, text, max(scale, s.min_scale)))
     # 不允許輸入的聯絡資料無聲消失。
-    for owner, data in persons.items():
+    for owner, data in list(persons.items())+list(company_map.items()):
         for kind, values in data.items():
             if kind not in KINDS or kind in ("logo", "company"):
                 continue
@@ -158,12 +160,12 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
             for index, value in enumerate(values):
                 if value and (owner, kind, index) not in used:
                     add(f"{owner}／{KINDS[kind]} 第 {index+1} 筆沒有可用模板框位", "NO_SLOT", index=index)
-        if data.get("company") and data["company"] not in company_map:
+        if any(c not in company_map for c in input_company_ports(data)):
             add(owner + "：關聯公司不存在", "UNKNOWN_COMPANY")
-        if data.get("company") and owner not in t.company_bindings:
+        if input_company_ports(data) and owner not in t.company_bindings:
             add(owner + "：模板未提供此人物公司的已確認映射", "COMPANY_BINDING")
     for owner, data in company_map.items():
-        if data.get("name") and owner not in t.company_bindings.values():
+        if data.get("name") and not any(owner in company_ports(v) for v in t.company_bindings.values()):
             add(owner + "：公司資料沒有可用模板映射，不可無聲略去", "UNBOUND_COMPANY")
     if layout_dependency(t, logos) != dependency:
         add("依賴檔案在排版期間異動，需重新產生", "DEPENDENCY_CHANGED")

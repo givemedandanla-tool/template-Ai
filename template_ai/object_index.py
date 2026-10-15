@@ -2,7 +2,7 @@
 import hashlib
 from pathlib import Path
 import xml.etree.ElementTree as ET
-from .model import KINDS
+from .model import KINDS, company_ports
 from .object_tools import slots_of
 
 MAX_XML_BYTES = 2 * 1024 * 1024
@@ -24,14 +24,15 @@ def semantic_index(payload):
     roots = []
     for p in people:
         children = [leaf(s) for s in by_owner.get(p, [])]
-        c = links.get(p)
-        if c and c in by_owner and c.startswith('c'):
-            children.append({'label': f'引用公司 {c}（同一資產／共享）', 'ids': [s.id for s in by_owner[c]], 'children': [leaf(s) for s in by_owner[c]]})
-        else:
-            children.append({'label': '公司關聯 UNKNOWN／未確認', 'ids': [], 'children': []})
+        bound=company_ports(links.get(p))
+        for c in bound:
+            if c in by_owner and c.startswith('c'):
+                children.append({'label': f'引用公司 {c}（同一資產／共享）', 'ids': [s.id for s in by_owner[c]], 'children': [leaf(s) for s in by_owner[c]]})
+        if not bound:
+            children.append({'label': '無公司／關聯未確認', 'ids': [], 'children': []})
         roots.append({'label': f'人物 ROOT {p}', 'ids': sorted({i for n in children for i in n['ids']}), 'children': children})
     for owner in sorted(o for o in by_owner if not o.startswith('p')):
-        refs = sorted(p for p, c in links.items() if c == owner)
+        refs = sorted(p for p, c in links.items() if owner in company_ports(c))
         roots.append({'label': f'公司實體 {owner} · 共享引用 '+(', '.join(refs) or 'UNKNOWN'), 'ids': [s.id for s in by_owner[owner]], 'children': [leaf(s) for s in by_owner[owner]]})
     return roots
 
@@ -42,7 +43,7 @@ def matching_ids(payload, query='', state='ALL', structure=None):
     tokens = query.casefold().split()
     result = []
     for s in sorted(slots, key=lambda s: (s.owner, s.kind, s.index, s.id)):
-        shared = s.owner.startswith('c') and sum(c == s.owner for c in links.values()) > 1
+        shared = s.owner.startswith('c') and sum(s.owner in company_ports(c) for c in links.values()) > 1
         problem = not s.rect.inside(payload.get('width_mm',payload.get('work_width',0)),payload.get('height_mm',payload.get('work_height',0)))
         words = ' '.join([s.id,s.owner,s.kind,KINDS.get(s.kind,s.kind),s.font,s.font_style, 'locked 鎖定' if s.locked else 'unlocked 未鎖定', 'shared 共享' if shared else '', 'problem 問題' if problem else '', '來源對應 UNKNOWN']).casefold()
         if state == 'LOCKED' and not s.locked or state == 'SHARED' and not shared or state == 'PROBLEM' and not problem:

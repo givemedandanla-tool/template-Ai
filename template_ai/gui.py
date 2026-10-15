@@ -212,6 +212,8 @@ class MainWindow(QMainWindow):
         self.template_base_payload=None
         self.current_slot = None
         self.candidates = []
+        self.active_input_graph = None
+        self.reorder_customer_snapshot = None
         self.generation = 0
         self.undo_stack, self.redo_stack = [], []
         self.busy = False
@@ -454,6 +456,13 @@ class MainWindow(QMainWindow):
         self.button("解除重訂版型限定", self.clear_reorder_filter, size_row)
         self.button("當次候選局部修改", self.candidate_editor, size_row)
         layout.addLayout(size_row)
+        self.graph_status = QLabel("當次輸入：可開人物卡片建立共享公司與多筆聯絡資料；下方為相容簡易表格。")
+        self.graph_status.setWordWrap(True)
+        layout.addWidget(self.graph_status)
+        graph_bar = QHBoxLayout()
+        self.graph_button = self.button("人物ROOT卡片／共享公司與聯絡資料", self.edit_input_graph, graph_bar)
+        self.button("清除當次輸入並回到簡易表格", self.clear_input_graph, graph_bar)
+        layout.addLayout(graph_bar)
         self.people = QTableWidget(1, 8)
         self.people.setHorizontalHeaderLabels(["姓名", "職稱", "電話", "Email", "LINE", "IG", "地址", "公司序號"])
         self.people.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
@@ -1291,14 +1300,16 @@ class MainWindow(QMainWindow):
         self.invalidate()
 
     def ask_bindings(self, slots):
-        companies = sorted({s.owner for s in slots if s.kind in ("company", "logo")})
+        companies = sorted({s.owner for s in slots if s.owner.startswith("c")})
         people = sorted({s.owner for s in slots if s.kind == "name"})
         bindings = {}
         for person in people if companies else []:
-            company, ok = QInputDialog.getItem(self, "確認人物公司歸屬", f"{person} 關聯哪一家公司？本版每人物支援一家公司。", companies, 0, False)
-            if not ok:
-                return None
-            bindings[person] = company
+            text, ok = QInputDialog.getText(self, "確認人物公司歸屬", f"{person} 的公司埠（逗號分隔，可多家公司；空白表示無公司）："+", ".join(companies))
+            if not ok:return None
+            chosen=[v.strip() for v in text.replace('，',',').split(',') if v.strip()]
+            if len(set(chosen))!=len(chosen) or any(c not in companies for c in chosen):
+                self.error("請輸入清單中的公司埠，不猜測歸屬");return None
+            bindings[person]=chosen[0] if len(chosen)==1 else chosen
         return bindings
 
     def capture_logo(self):
@@ -1357,6 +1368,8 @@ class MainWindow(QMainWindow):
         self.invalidate()
 
     def add_row(self, table):
+        if self.active_input_graph is not None:
+            self.edit_input_graph();return
         if table.rowCount() >= 20:
             self.error("本版最多 20 筆人物或公司")
             return
@@ -1368,12 +1381,57 @@ class MainWindow(QMainWindow):
         self.refresh_logos()
 
     def remove_row(self, table):
+        if self.active_input_graph is not None:
+            self.edit_input_graph();return
         if table.currentRow() >= 0 and table.rowCount() > 1:
             if QMessageBox.question(self, "移除資料", "移除後序號可能變動，請重新核對人物公司關聯。繼續？") == QMessageBox.Yes:
                 table.removeRow(table.currentRow())
                 self.invalidate()
 
+    def edit_input_graph(self):
+        if self.busy:
+            self.error("背景工作中，待完成後編輯當次輸入");return
+        from .input_graph_dialog import InputGraphDialog
+        try:
+            dialog=InputGraphDialog(self)
+            if dialog.exec()==QDialog.Accepted:self.adopt_input_graph(dialog.graph.data)
+        except (ValueError,TypeError) as error:self.error(str(error))
+
+    def adopt_input_graph(self, data, snapshot=None):
+        from .input_graph import InputGraph
+        graph=InputGraph(data);people,companies,logos=graph.compile(self.library.logos())
+        self.active_input_graph=graph
+        if snapshot is not None:self.reorder_customer_snapshot=copy.deepcopy(snapshot)
+        for table in (self.people,self.companies):table.blockSignals(True)
+        try:
+            self.people.setRowCount(len(people))
+            for i,p in enumerate(people):
+                for j,k in enumerate(("name","title","phone","email","line","ig","address")):
+                    self.people.setItem(i,j,QTableWidgetItem("；".join(p.get(k,[]))))
+                self.people.setItem(i,7,QTableWidgetItem(",".join(c[1:] for c in p["companies"])))
+            self.companies.setRowCount(len(companies))
+            for i,c in enumerate(companies):self.companies.setItem(i,0,QTableWidgetItem(c["name"]))
+            self.people.setEditTriggers(QTableWidget.NoEditTriggers);self.companies.setEditTriggers(QTableWidget.NoEditTriggers)
+            self.refresh_logos()
+            for i,c in enumerate(graph.data["companies"]):
+                combo=self.companies.cellWidget(i,1);idx=combo.findData(c["logo_id"])
+                combo.setCurrentIndex(max(0,idx));combo.setEnabled(False)
+        finally:
+            for table in (self.people,self.companies):table.blockSignals(False)
+        self.graph_status.setText(f"人物卡片模式：{len(people)}人物／{len(companies)}公司／{len(graph.data['fields'])}穩定欄位；下表唯讀摘要，所有編輯請開人物卡片。資料僅當次，客戶主檔未回寫。")
+        self.invalidate()
+
+    def clear_input_graph(self):
+        if QMessageBox.question(self,"清除當次輸入","清除目前人物／公司／聯絡資料與重訂來源，保留客戶主檔及模板。確認？")!=QMessageBox.Yes:return
+        self.active_input_graph=None;self.reorder_customer_snapshot=None
+        self.reorder_template_id=None
+        self.people.clearContents();self.people.setRowCount(1);self.companies.clearContents();self.companies.setRowCount(1)
+        for table in (self.people,self.companies):table.setEditTriggers(QTableWidget.DoubleClicked|QTableWidget.EditKeyPressed|QTableWidget.AnyKeyPressed)
+        self.graph_status.setText("簡易表格模式；可隨時轉入人物ROOT卡片。")
+        self.refresh_logos();self.invalidate()
+
     def input_data(self):
+        if self.active_input_graph is not None:return self.active_input_graph.compile(self.library.logos())
         def cell(table, row, col):
             item = table.item(row, col)
             return item.text().strip() if item else ""
@@ -1425,6 +1483,8 @@ class MainWindow(QMainWindow):
         self.input_state.setText(f"{len(report['issues'])}項輸入提示／待版面驗證；非全域無解，正式輸出依當前候選Gate")
 
     def locate_input_problem(self, item):
+        if self.active_input_graph is not None:
+            self.edit_input_graph();return
         issue=item.data(Qt.UserRole);table=getattr(self,issue['table']);table.setCurrentCell(issue['row'],issue['col']);table.setFocus()
 
     def generate(self):
@@ -1489,6 +1549,10 @@ class MainWindow(QMainWindow):
             self.error(str(e))
 
     def demo_input(self):
+        if self.active_input_graph is not None:
+            if QMessageBox.question(self,"替換當次輸入","示範資料將替換目前卡片，客戶主檔保留。繼續？")!=QMessageBox.Yes:return
+            from .input_graph import InputGraph
+            self.adopt_input_graph(InputGraph.from_legacy([{"name":["林小明"],"title":["設計顧問"],"phone":["0900-123-456"],"email":["hello@example.test"]}],[]).data);return
         self.people.setRowCount(1)
         for i, value in enumerate(["林小明", "設計顧問", "0900-123-456", "hello@example.test", "", "", "", ""]):
             self.people.setItem(0, i, QTableWidgetItem(value))

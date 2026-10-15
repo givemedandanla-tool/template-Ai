@@ -154,7 +154,7 @@ def main():
     registry = read_json(ROOT / "docs/dev/REQUIREMENTS.json")
     claims = []
     for row in registry["requirements"]:
-        if row["kind"] == "topic" and row["id"] not in ("UI-066-R1","UI-066-R2"):
+        if row["kind"] == "topic" and (not row.get("full_acceptance_registered",False) and row["id"] not in ("UI-066-R1","UI-066-R2")):
             continue
         for acceptance in row["acceptance"]:
             passed = status == "PASS" and bool(acceptance["tests"]) and all(tests_lookup.get(test) == "PASS" for test in acceptance["tests"])

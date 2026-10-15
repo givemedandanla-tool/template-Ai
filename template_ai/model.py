@@ -14,6 +14,31 @@ def new_id() -> str:
     return uuid.uuid4().hex
 
 
+def company_ports(value):
+    """Legacy single binding and explicit many bindings share one representation."""
+    if isinstance(value,str): return [value] if value else []
+    if isinstance(value,list) and all(isinstance(v,str) for v in value): return list(value)
+    return []
+
+
+def input_company_ports(person):
+    return company_ports(person.get('companies',person.get('company','')))
+
+
+def binding_errors(bindings, people, companies):
+    errors=[]
+    if not isinstance(bindings,dict):return ['公司關聯格式不合法']
+    for person,value in bindings.items():
+        ports=company_ports(value)
+        if person not in people or not isinstance(value,(str,list)) or (isinstance(value,list) and not all(isinstance(v,str) for v in value)) or len(set(ports))!=len(ports) or any(c not in companies for c in ports):
+            errors.append(str(person)+'：人物公司關聯不合法')
+    for person in people:
+        if companies and person not in bindings:errors.append(person+' 的模板公司歸屬尚未確認（無公司亦需明確空集合）')
+    for company in companies:
+        if not any(company in company_ports(v) for v in bindings.values()):errors.append(company+' 沒有已確認的人物關聯')
+    return errors
+
+
 @dataclass
 class Rect:
     x: float
@@ -63,7 +88,7 @@ class Template:
     version: int = 1
     state: str = "draft"
     reasons: list[str] = field(default_factory=list)
-    company_bindings: dict[str, str] = field(default_factory=dict)
+    company_bindings: dict[str, str | list[str]] = field(default_factory=dict)
     background: dict | None = None
     source_work_id: str = ""
     source_work_revision: int = 0
@@ -101,7 +126,7 @@ def template_errors(t: Template) -> list[str]:
             errors.append(label + "：鎖定狀態不合法")
         if s.kind not in KINDS or not s.rect.inside(t.width_mm, t.height_mm):
             errors.append(label + "：欄位類型或矩形邊界不合法")
-        prefix = "c" if s.kind in ("company", "logo") else "p"
+        prefix = "c" if s.kind in ("company", "logo") or (s.kind in ("phone","email","line","ig","address") and s.owner.startswith("c")) else "p"
         try:
             owner_n = int(s.owner[1:])
             if not s.owner.startswith(prefix) or owner_n < 1 or (prefix == "p" and owner_n > t.capacity):
@@ -123,14 +148,8 @@ def template_errors(t: Template) -> list[str]:
     for n in range(1, t.capacity + 1):
         if (f"p{n}", "name", 0) not in keys:
             errors.append(f"人物 {n} 缺少姓名欄位")
-    companies = {s.owner for s in t.slots if s.kind in ("company", "logo")}
-    if companies:
-        for n in range(1, t.capacity + 1):
-            if t.company_bindings.get(f"p{n}") not in companies:
-                errors.append(f"人物 {n} 的模板公司歸屬尚未確認")
-        for company in companies:
-            if company not in t.company_bindings.values():
-                errors.append(company + " 沒有已確認的人物關聯")
+    companies = {s.owner for s in t.slots if s.owner.startswith("c")}
+    errors.extend(binding_errors(t.company_bindings, {f"p{i+1}" for i in range(t.capacity)}, companies))
     for i, s in enumerate(t.slots):
         for other in t.slots[i + 1:]:
             if s.rect.intersects(other.rect):

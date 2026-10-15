@@ -1,3 +1,7 @@
+# 人物公司主幹第一階段
+
+InputGraph明確stableID與真引用、受控preview/apply、100步Undo/Redo、人物ROOT卡片、共享公司與聯絡資料，以及模板多公司port與公司聯絡欄位已接通。舊客戶8項回歸PASS；新12項第一輪11PASS/1ERROR為測試使用Qt實例未提供的class enum，修正後重跑。首次compile引號錯誤與失敗測試保留attempts。尚未完成客戶正規化及正式全回歸，不升父需求。準備資料結構修改前checkpoint。
+
 # 2026-10-15：接受全70固定缺口工作目標
 
 GitHub工作branch4238ebc、main436ca2d7；治理PASS165/92/378。保存FULL_70_COMPLETION_PLAN與ENTITY_RELATIONS_CONTRACT及BEGIN。先人物ROOT/stable關聯，原full條款不降低；後續按依賴持續。無新素材／權限需求，不重問確認。
