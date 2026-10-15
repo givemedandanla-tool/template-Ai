@@ -46,6 +46,8 @@ class LogoReviewDialog(QDialog):
         self.save_crop = QPushButton('保存邊界合併／拆分校正')
         self.save_crop.clicked.connect(self.correct)
         bar.addWidget(self.save_crop)
+        drag=QPushButton('在完整原來源拖曳框選邊界')
+        drag.clicked.connect(self.drag_crop);bar.addWidget(drag)
         layout.addLayout(bar)
         bar = QHBoxLayout()
         self.frame_width, self.frame_height = QDoubleSpinBox(), QDoubleSpinBox()
@@ -90,6 +92,33 @@ class LogoReviewDialog(QDialog):
 
     def crop(self):
         return {name: spin.value() for name, spin in zip(('x', 'y', 'w', 'h'), self.coords)}
+
+    def crop_canvas(self):
+        from .gui import Canvas
+        from .logo_compare import preview_png
+        from PySide6.QtGui import QImage
+        from .model import Rect
+        asset=self.proposal['asset'];image=QImage()
+        if not image.loadFromData(preview_png(asset,1,1,True),'PNG'):raise ValueError('完整來源圖不可讀')
+        canvas=Canvas();canvas.set_content(asset['source_width_mm'],asset['source_height_mm'],image,crop=Rect(**self.crop()))
+        canvas.set_mode('crop');return canvas
+
+    def adopt_crop(self,rect):
+        asset=self.proposal['asset']
+        if not rect.valid() or rect.x<0 or rect.y<0 or rect.x+rect.w>asset['source_width_mm']+1e-5 or rect.y+rect.h>asset['source_height_mm']+1e-5:
+            raise ValueError('框選需完整位於原來源；來源作品邊界另於保存時核對')
+        for spin,value in zip(self.coords,(rect.x,rect.y,rect.w,rect.h)):spin.setValue(value)
+        self.invalidate_review();self.preview()
+
+    def drag_crop(self):
+        try:
+            dialog=QDialog(self);dialog.setWindowTitle('原來源完整圖文：拖曳新邊界，仍需保存校正');dialog.resize(1000,650)
+            layout=QVBoxLayout(dialog);canvas=self.crop_canvas();layout.addWidget(canvas)
+            def chosen(rect):
+                try:self.adopt_crop(rect);dialog.accept()
+                except ValueError as error:self.status.setText(str(error))
+            canvas.rectangle.connect(chosen);dialog.show();canvas.fit();dialog.exec()
+        except (ValueError,OSError) as error:self.status.setText('無法框選：'+str(error))
 
     def preview(self):
         asset = deepcopy(self.proposal['asset'])

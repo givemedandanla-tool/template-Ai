@@ -225,10 +225,12 @@ class CustomerCandidatesDialog(QDialog):
                 '請記錄來源、身分及關聯核對結果；不要重複抄寫私人聯絡資料')
             if not ok:
                 return
+            conflicts=self.candidates.conflicts(graph,code,candidate['pins']['source_id']) if decision in ('NEW_SEPARATE','LINK_EXISTING') else candidate.get('conflicts',[])
+            self.details.setPlainText(json.dumps(conflicts,ensure_ascii=False,indent=2))
             if QMessageBox.question(self, '保存審核，尚未入庫',
                     label + '／客戶編號 ' + code + '\n來源：' + candidate['filename'] +
                     '\n尺寸／版型：' + str(candidate['size_mm']) + '／' + candidate['pins']['template_id'] +
-                    '\n已核對以下問題？\n' + '\n'.join(candidate['issues'])) != QMessageBox.Yes:
+                    '\n已核對以下問題？\n' + '\n'.join(candidate['issues'])+'\n逐筆來源／身分差異：\n'+json.dumps(conflicts,ensure_ascii=False,indent=2)) != QMessageBox.Yes:
                 return
             self.candidates.review(candidate['id'], candidate['revision'], graph, code, decision,
                 'LOCAL_OPERATOR', note, target, scope, approved=True)

@@ -5,7 +5,7 @@ import threading
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTableWidget,
-    QTableWidgetItem,QComboBox,QCheckBox,QDoubleSpinBox,QPlainTextEdit,QFileDialog,QMessageBox)
+    QTableWidgetItem,QComboBox,QCheckBox,QDoubleSpinBox,QPlainTextEdit,QFileDialog,QMessageBox,QHeaderView)
 
 from .customers import digest
 from .input_graph import InputGraph
@@ -23,6 +23,7 @@ class MultiSizeDialog(QDialog):
             spin.setRange(1,2000);spin.setDecimals(4);spin.setValue(value);spin.setSuffix(' mm');bar.addWidget(spin)
         self.button(bar,'加入尺寸',self.add_size);self.button(bar,'計算所選尺寸',self.start);self.button(bar,'安全取消計算',self.stop.set);layout.addLayout(bar)
         self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['計算尺寸','實體尺寸 mm','確切模板／版本','最後驗證狀態','Logo狀態','輸出類別（預設不選）']);layout.addWidget(self.table,2)
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         bar=QHBoxLayout();self.button(bar,'預覽目前尺寸與全部問題',self.preview);self.button(bar,'選此尺寸公司的確切Logo',self.choose_logo)
         self.formats={}
         for name in ('pdf','png','jpg'):
@@ -101,9 +102,22 @@ class MultiSizeDialog(QDialog):
             combo=QComboBox()
             for candidate in entry['candidates']:combo.addItem(f'{candidate.template.name}／v{candidate.template.version}／{candidate.template.id}',candidate.template.id)
             combo.activated.connect(lambda _,key=entry['key'],control=combo:self.select_candidate(key,control.currentData()))
-            self.table.setCellWidget(row,2,combo);self.table.item(row,3).setText(entry['state']);self.table.item(row,4).setText(str(entry['logo_states']))
+            states=dict(VALID='數位檢查通過',BLOCKED='有問題／禁止正式輸出',FAILED='驗證失敗',NO_TEMPLATE='無適用模板',CANCELLED='已取消',NOT_CHECKED='尚未檢查')
+            self.table.setCellWidget(row,2,combo);self.table.item(row,3).setText(states.get(entry['state'],entry['state']))
+            logo_states=dict(MISSING='缺少此尺寸已核准Logo',SINGLE_PREVIEW='單一版本待輸出驗證',MULTIPLE_REVIEW_REQUIRED='多版本需明確選擇',IDENTITY_REVIEW_REQUIRED='公司身分待核對',EXACT_VERSION_PENDING_OUTPUT='已選確切版本待輸出驗證',SELECTION_INVALID_NO_REPLACEMENT='原選擇已失效，未替換')
+            self.table.item(row,4).setText('；'.join(port+'：'+logo_states.get(state,state) for port,state in entry['logo_states'].items()) or '此輸入無公司Logo')
+            for col in (3,4):self.table.item(row,col).setToolTip(self.table.item(row,col).text())
             mode=self.table.cellWidget(row,5);mode.setCurrentIndex(0);mode.model().item(1).setEnabled(bool(self.service.selected(entry) and self.service.selected(entry).valid))
-        self.details.setPlainText(json.dumps([dict(size_mm=e['size_mm'],state=e['state'],failures=e['failures'],issues=list(self.service.selected(e).issues) if self.service.selected(e) else []) for e in self.service.entries],ensure_ascii=False,indent=2))
+        lines=[]
+        for e in self.service.entries:
+            c=self.service.selected(e);lines.append(f"{e['size_mm'][0]:g}×{e['size_mm'][1]:g} mm：{e['state']}")
+            if c:
+                lines.append(f'{c.template.name}／v{c.template.version}／人物容量{c.template.capacity}')
+                lines.extend('需處理：'+issue for issue in c.issues)
+                if not c.issues:lines.append('本次數位必要檢查通過；實體印刷條件需另行驗收。')
+            lines.extend('模板驗證失敗：'+r['reason'] for r in e['failures'])
+            lines.append('')
+        self.details.setPlainText('\n'.join(lines))
 
     def select_candidate(self,key,identity):
         if self.running or not self.service:return
@@ -159,9 +173,9 @@ class MultiSizeDialog(QDialog):
             lines=['請核對以下尺寸與輸出類別；占位預覽不能作正式成品。']
             for item in plan['items']:
                 lines.append(item['mode']+'：'+item['path'])
-                lines.extend('  待解問題：'+issue for issue in item['issues'])
+                lines.extend('  待解問題：'+str(issue) for issue in item['issues'])
             for item in plan['omitted']:
-                lines.append('不輸出 '+str(item['size_mm'])+' mm：'+('；'.join(item['issues']) or item['state']))
+                lines.append('不輸出 '+str(item['size_mm'])+' mm：'+('；'.join(map(str,item['issues'])) or item['state']))
             if plan['partial']:lines.append('本次為部分輸出。確認表示只輸出上述檔案，其他尺寸仍未完成。')
             if QMessageBox.question(self,'確認每尺寸類別、未輸出原因與實際檔案','\n'.join(lines))!=QMessageBox.Yes:return
             if not self.is_current():raise ValueError('確認期間輸入已變更，未輸出')
@@ -170,7 +184,7 @@ class MultiSizeDialog(QDialog):
                 workflow=MultiSizeWorkflow(library,inputs,graph,generation);workflow.entries=entries
                 return workflow.execute(plan,True,acknowledge_partial=plan['partial'],current_check=lambda:not stale.is_set() and not stop.is_set())
             def finished(results):
-                self.details.setPlainText(json.dumps(results,ensure_ascii=False,indent=2));passed=sum(r['status']=='SUCCESS' for r in results)
+                self.details.setPlainText('\n'.join(r['mode']+'／'+r['status']+'：'+r['path']+('\n原因：'+r['reason'] if r.get('reason') else '') for r in results));passed=sum(r['status']=='SUCCESS' for r in results)
                 self.status.setText(f'成功{passed}／實際{len(results)}檔；各尺寸FINAL／PREVIEW及失敗分開記錄，沒有假稱全批成功。')
             self.background('安全逐檔輸出',operation,finished)
         except (ValueError,KeyError,OSError) as error:self.status.setText('未輸出：'+str(error))

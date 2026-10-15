@@ -30,6 +30,8 @@ class CustomerCandidates:
             template_id TEXT NOT NULL REFERENCES templates(id), source_hash TEXT NOT NULL,
             artwork_revision INTEGER NOT NULL, template_hash TEXT NOT NULL, person_scope TEXT NOT NULL,
             candidate_id TEXT NOT NULL UNIQUE REFERENCES customer_import_candidates(id));
+        CREATE TABLE IF NOT EXISTS customer_association_events(
+            id TEXT PRIMARY KEY, customer_id TEXT NOT NULL REFERENCES customers(id), payload TEXT NOT NULL);
         ''')
         self.db.commit()
 
@@ -95,6 +97,31 @@ class CustomerCandidates:
             issues.append('人物／公司名稱需依來源人工核對，不從 Logo OCR 猜定')
         return graph, facts, issues
 
+    def conflicts(self, graph, code, source_id):
+        """相同聯絡方式與編號只是需核對的線索，保留兩邊實體和來源。"""
+        from .customer_search import fold, phone_key
+        g=InputGraph(graph);rows=[]
+        for field in graph['fields']:
+            if field['kind'] not in ('phone','line','ig','email') or not field['value'].strip():continue
+            key=phone_key(field['value']) if field['kind']=='phone' else fold(field['value'])
+            if not key:continue
+            for customer in self.store.search(field['value'],field='PHONE' if field['kind']=='phone' else field['kind'].upper()):
+                master=InputGraph(customer['graph']) if customer.get('graph') else None
+                for other in (customer.get('graph') or {}).get('fields',[]):
+                    other_key=phone_key(other['value']) if other['kind']=='phone' else fold(other['value'])
+                    if other['kind']==field['kind'] and other_key==key:
+                        rows.append(dict(kind='SHARED_CONTACT_IDENTITY_UNKNOWN',customer_id=customer['id'],
+                            code=customer['code'],candidate_owner=g.label(field['owner_id']),
+                            current_owner=master.label(other['owner_id']),field_id=other['id'],
+                            candidate_value=field['value'],current_value=other['value'],
+                            associations=[dict(template_id=s['template_id'],size_mm=[s['width_mm'],s['height_mm']]) for s in customer['styles']]))
+        for cid, in self.db.execute('SELECT id FROM customers WHERE code=?',(code,)):
+            c=self.store.get(cid);rows.append(dict(kind='CODE_ALREADY_EXISTS',customer_id=cid,code=code,
+                current_graph=c['graph'],candidate_graph=graph,styles=c['styles']))
+        works=self.library.artworks(source_id)
+        if len(works)>1:rows.append(dict(kind='SOURCE_MULTIPLE_ARTWORKS',artwork_ids=[w['id'] for w in works]))
+        return rows
+
     def propose(self, source_id, pattern=r'(?P<code>.+)'):
         """預設明示規則＝完整檔名去副檔名；正則需完整匹配與具名 code 群。"""
         if pattern not in (r'(?P<code>.+)', r'(?P<code>[0-9]+)',
@@ -128,6 +155,8 @@ class CustomerCandidates:
                     (source['hash'], source_id))]
                 if same_content:
                     issues.append('異名同內容來源：需獨立核對各來源客戶身分')
+                conflicts=self.conflicts(graph,code,source_id)
+                if conflicts:issues.append('編號／同聯絡方式／多作品有需逐筆核對的身分關聯線索')
                 pins = dict(source_id=source_id, source_hash=source['hash'],
                     source_link_revision=source['link_revision'], artwork_id=work['id'],
                     artwork_revision=work['revision'], artwork_digest=digest(work['payload']),
@@ -141,7 +170,7 @@ class CustomerCandidates:
                 payload = dict(code_candidate=code, filename=Path(source['original_path']).name,
                     naming_rule=pattern, graph=graph, pins=pins, size_mm=[template.width_mm, template.height_mm],
                     source_page=source.get('page', 1), same_content_sources=same_content,
-                    issues=issues, existing_code_ids=collisions, review=None)
+                    issues=issues, conflicts=conflicts, existing_code_ids=collisions, review=None)
                 with self.db:
                     rows.append(self._save(identity, payload, 'PENDING_REVIEW', old[0] if old else 0))
         return rows
@@ -203,6 +232,7 @@ class CustomerCandidates:
                 target_digest = digest(target_snapshot)
             payload = {k: deepcopy(v) for k, v in candidate.items() if k not in ('id', 'revision', 'state')}
             payload['review'] = dict(code=code, decision=decision, actor=actor, note=note,
+                reviewed_conflicts=self.conflicts(graph,code,candidate['pins']['source_id']),
                 graph=deepcopy(graph), reviewed_source_pins=deepcopy(candidate['pins']),
                 target_customer_id=target_snapshot['id'] if target_snapshot else None,
                 target_digest=target_digest, person_scope=list(person_scope or []),
@@ -215,6 +245,36 @@ class CustomerCandidates:
         except BaseException:
             self.db.rollback()
             raise
+
+    def associations(self,customer_id):
+        keys=('id','customer_id','source_id','artwork_id','template_id','source_hash',
+              'artwork_revision','template_hash','person_scope','candidate_id')
+        return [dict(zip(keys,row)) for row in self.db.execute(
+            'SELECT * FROM customer_source_associations WHERE customer_id=? ORDER BY id',(customer_id,))]
+
+    def revoke_association(self,snapshot,association_id,actor,note,approved=False,remove_style=False):
+        if not approved or not actor.strip() or not note.strip() or max(len(actor),len(note))>512:
+            raise ValueError('需明確確認關聯、核對者及撤銷原因')
+        self.db.execute('BEGIN IMMEDIATE')
+        try:
+            if digest(self.store.get(snapshot['id']))!=digest(snapshot):raise ValueError('客戶版本已更新，重新核對撤銷範圍')
+            row=next((r for r in self.associations(snapshot['id']) if r['id']==association_id),None)
+            if row is None:raise ValueError('此關聯不屬所選客戶或已撤銷')
+            self.db.execute('DELETE FROM customer_source_associations WHERE id=?',(association_id,))
+            if remove_style:
+                if self.db.execute('SELECT 1 FROM customer_source_associations WHERE customer_id=? AND template_id=?',(snapshot['id'],row['template_id'])).fetchone():
+                    raise ValueError('仍有其他已確認來源引用此版型，未移除關聯')
+                self.db.execute('DELETE FROM customer_styles WHERE customer_id=? AND template_id=?',(snapshot['id'],row['template_id']))
+            candidate=self.get(row['candidate_id']);payload={k:deepcopy(v) for k,v in candidate.items() if k not in ('id','revision','state')}
+            payload['revocation']=dict(actor=actor,note=note,remove_style=remove_style,created_utc=datetime.now(timezone.utc).isoformat())
+            self._save(candidate['id'],payload,'REVOKED',candidate['revision'])
+            event=dict(association_id=association_id,source_id=row['source_id'],template_id=row['template_id'],
+                actor=actor,note=note,remove_style=remove_style,created_utc=datetime.now(timezone.utc).isoformat())
+            self.db.execute('INSERT INTO customer_association_events VALUES(?,?,?)',(new_id(),snapshot['id'],json.dumps(event,ensure_ascii=False)))
+            self.db.execute('UPDATE customers SET revision=revision+1 WHERE id=?',(snapshot['id'],))
+            self.library.event(snapshot['id'],'customer_source_association_revoked')
+            self.db.commit();return self.store.get(snapshot['id'])
+        except BaseException:self.db.rollback();raise
 
     def commit(self, selections, approved=False):
         if not approved or not selections or len(selections) > 100 or len({x['id'] for x in selections}) != len(selections):
@@ -229,6 +289,8 @@ class CustomerCandidates:
                     raise ValueError('候選未完成審核／過期／已入庫，整批未套用')
                 self._fresh(candidate)
                 review = candidate['review']
+                if digest(self.conflicts(review['graph'],review['code'],candidate['pins']['source_id']))!=digest(review['reviewed_conflicts']):
+                    raise ValueError('身分／聯絡衝突線索已變更，整批需重新逐筆核對')
                 if review['decision'] == 'LINK_EXISTING':
                     cid = review['target_customer_id']
                     current_digest = digest(self.store.get(cid))

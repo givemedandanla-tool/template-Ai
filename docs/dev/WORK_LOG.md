@@ -636,3 +636,6 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 - 新增獨立尺寸workflow／Qt矩陣；各尺寸確切模板、公司Logo、最後驗證、顯式部分輸出、逐檔失敗與既有成果保護。
 - 實際PDF/PNG/JPG正式與PREVIEW輸出，問題附註完整換行於卡片外。修復Qt CJK TTC跨段落PDF數字ToUnicode問題，Latin主字型＋CJK fallback可讀回。
 - 目標10測試PASS（4.651s）；父題仍待逐條完整對帳與source-bound回歸。
+
+## 2026-10-15 十父題逐條修補checkpoint
+客戶同聯絡／編號／多作品線索、審核後衝突變更CAS、來源及選定版型關聯事務撤銷、最小稽核，10項目標PASS；sync9PASS。重用Canvas原來源拖曳完整邊界、僅不確定／待修復Logo進例外入口，Logo GUI16PASS。新增真實Qt五畫面與六實際輸出擷取，已本機執行且目視檢查，修正初始畫布適應及矩陣可讀性；後續修改仍待正式凍結回歸。

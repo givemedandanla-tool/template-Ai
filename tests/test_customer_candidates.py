@@ -187,3 +187,29 @@ class CustomerCandidateTests(unittest.TestCase):
         finally:
             window.library.close()
             window.deleteLater()
+
+    def test_shared_contact_conflicts_show_both_people_without_merging_and_late_conflict_blocks(self):
+        first=self.reviewed(self.candidates.propose(self.source['id'])[0]);cid=self.commit([first])[0]['customer_id']
+        other,_,_=self.make_source('00999.svg');row=self.candidates.propose(other['id'])[0]
+        clues=[c for c in row['conflicts'] if c['kind']=='SHARED_CONTACT_IDENTITY_UNKNOWN']
+        self.assertTrue(clues);self.assertEqual(clues[0]['customer_id'],cid)
+        self.assertIn('candidate_owner',clues[0]);self.assertIn('current_owner',clues[0])
+        reviewed=self.reviewed(row);old=self.store.get(cid)
+        phone=next(f for f in old['fields'] if f['kind']=='phone')
+        self.store.writeback(old,{phone['id']:'0999999999'},[phone['id']],True)
+        with self.assertRaisesRegex(ValueError,'衝突線索'):self.commit([reviewed])
+        self.assertEqual(self.library.db.execute('SELECT count(*) FROM customers').fetchone()[0],1)
+
+    def test_association_revocation_requires_exact_customer_cas_and_late_failure_rolls_back(self):
+        candidate=self.reviewed(self.candidates.propose(self.source['id'])[0]);cid=self.commit([candidate])[0]['customer_id']
+        snapshot=self.store.get(cid);row=self.candidates.associations(cid)[0]
+        with self.assertRaises(ValueError):self.candidates.revoke_association(snapshot,row['id'],'TEST','Synthetic withdrawal')
+        with patch.object(self.library,'event',side_effect=OSError('synthetic late write')):
+            with self.assertRaises(OSError):self.candidates.revoke_association(snapshot,row['id'],'TEST','Synthetic withdrawal',True,True)
+        self.assertEqual(self.store.get(cid),snapshot);self.assertEqual(self.candidates.associations(cid),[row])
+        updated=self.candidates.revoke_association(snapshot,row['id'],'TEST','Synthetic withdrawal',True,True)
+        self.assertEqual(updated['fields'],snapshot['fields']);self.assertFalse(updated['styles'])
+        self.assertFalse(self.candidates.associations(cid));self.assertEqual(self.candidates.get(candidate['id'])['state'],'REVOKED')
+        self.assertEqual(self.library.db.execute('PRAGMA foreign_key_check').fetchall(),[])
+        with self.assertRaisesRegex(ValueError,'版本'):self.candidates.revoke_association(snapshot,row['id'],'TEST','Again',True)
+        self.assertTrue(self.library.source(self.source['id']))

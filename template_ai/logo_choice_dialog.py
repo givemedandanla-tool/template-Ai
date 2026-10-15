@@ -17,6 +17,12 @@ class LogoChoiceDialog(QDialog):
         self.graph_signature=fingerprint(graph.data)
         self.uses_window_size=width is None and height is None
         self.width,self.height=(window.out_w.value(),window.out_h.value()) if self.uses_window_size else (width,height)
+        self.frame_width,self.frame_height=30,15
+        template=getattr(window,'template',None)
+        port='c'+str(next(i for i,c in enumerate(graph.data['companies']) if c['id']==company_id)+1)
+        if template and [template.width_mm,template.height_mm]==[self.width,self.height]:
+            frame=next((s.rect for s in template.slots if s.kind=='logo' and s.owner==port),None)
+            if frame:self.frame_width,self.frame_height=frame.w,frame.h
         self.store=LogoStore(window.library);self.selected_asset=None
         self.setWindowTitle('此公司／此卡片尺寸的完整 Logo 選擇');self.resize(1190,760)
         layout=QVBoxLayout(self);self.status=QLabel();self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);layout.addWidget(self.status)
@@ -57,7 +63,10 @@ class LogoChoiceDialog(QDialog):
     def preview(self,*_):
         if not hasattr(self,'compare'):return
         index=self.table.currentRow()
-        if 0<=index<len(self.rows):self.compare.show_assets(self.rows[index],width=30,height=15)
+        if 0<=index<len(self.rows):
+            current_id=self.graph.entity(self.entity_id)['logo_id']
+            current=next((a for a in self.rows if a['id']==current_id),None)
+            self.compare.show_assets(self.rows[index],original=current,width=self.frame_width,height=self.frame_height)
         else:
             # 清除先前選取圖像，不讓空選取仍看見另一個公司的商標。
             self.compare.show_assets({},width=30,height=15)

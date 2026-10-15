@@ -109,3 +109,8 @@ class LogoCompareWidget(QWidget):
 
     def zoom(self, factor):
         self.synchronize(self.center, self.zoom_value*factor)
+
+    def showEvent(self,event):
+        super().showEvent(event)
+        from PySide6.QtCore import QTimer
+        QTimer.singleShot(0,self.fit)

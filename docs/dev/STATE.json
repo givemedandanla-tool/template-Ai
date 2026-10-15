@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "FIXED70-TEN-PARENT-CLAUSE-AUDIT",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-LOGO-OCR-SOURCE.receipt.json",
-  "last_confirmed_commit": "44aba4af887736f5c61b0c5dba1bd50bc5b6a7f4",
+  "active_task": "FIXED70-TEN-CLAUSE-REPAIR-WIP",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-MULTISIZE-WIP.receipt.json",
+  "last_confirmed_commit": "d42462824929de8d275fa9fdb14f48e368e1713b",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -20,7 +20,7 @@
     {
       "id": "FIXED70-NEXT-TEN",
       "status": "IN_PROGRESS",
-      "next": "多尺寸10項PASS；補客戶衝突／關聯撤銷與Logo邊界拖曳、例外入口，再逐條對帳及正式source-bound驗證，不宣稱10/10"
+      "next": "衝突線索與撤銷10測試PASS、Logo審核GUI16測試PASS、sync9PASS；補實際數位品質proof與逐條登錄，凍結來源正式回歸"
     }
   ],
   "blocked": [],
@@ -31,7 +31,7 @@
   ],
   "pending_remote": [
     "CP-20261015-CATALOG-VERIFIED",
-    "CP-20261015-MULTISIZE-WIP"
+    "CP-20261015-TEN-CLAUSE-REPAIR"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",

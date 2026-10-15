@@ -153,8 +153,13 @@ def delete_history(store, snapshot, change_id, approved=False):
     """不把舊私人電話自動建成搜尋別名；允許明確清理不再需要的修訂。"""
     if not approved:
         raise ValueError('清理修訂紀錄需明確確認')
-    with store.db:
+    store.db.execute('BEGIN IMMEDIATE')
+    try:
         if digest(store.get(snapshot['id'])) != digest(snapshot):
             raise ValueError('主檔已更新，重新確認清理範圍')
         store.db.execute('DELETE FROM customer_changes WHERE id=? AND customer_id=?',
                          (change_id, snapshot['id']))
+        store.db.commit()
+    except BaseException:
+        store.db.rollback()
+        raise

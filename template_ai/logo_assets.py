@@ -50,6 +50,14 @@ def errors(asset, require_approved=True):
             if not path.is_file() or path.is_symlink() or path.stat().st_size > 200_000_000 \
                     or file_digest(path) != expected:
                 raise ValueError('Logo 來源失聯／變更，不能替代原版通過')
+        if asset.get('svg'):
+            from PySide6.QtSvg import QSvgRenderer
+            if not QSvgRenderer(asset['svg']).isValid():raise ValueError('Logo向量來源無法解碼，不可用預覽勾選取代來源檢查')
+        elif asset.get('image'):
+            from PySide6.QtGui import QImageReader
+            reader=QImageReader(asset['image']);size=reader.size()
+            if not reader.canRead() or not size.isValid() or size.width()*size.height()>24_000_000:
+                raise ValueError('Logo點陣來源無法解碼或超過像素預算')
         if require_approved:
             path = Path(asset['approval_file'])
             if path.is_symlink() or not path.is_file() or path.stat().st_size > 16_384:

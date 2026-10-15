@@ -18,6 +18,27 @@ class CustomerDialog(QDialog):
         bar=QHBoxLayout();self.add_button(bar,'核對身份／瀏覽尺寸版型',self.browse_styles);self.add_button(bar,'快速文字選exact版型',self.prefill);self.add_button(bar,'比較選中欄位差異',self.preview);self.add_button(bar,'確認選中差異回寫',self.write);self.add_button(bar,'比較兩個客戶（不合併）',self.compare);layout.addLayout(bar)
         bar=QHBoxLayout();self.add_button(bar,'關聯另一確切尺寸／版型',self.link_style);self.add_button(bar,'查看並恢復已選欄位的歷史值',self.restore_history);self.add_button(bar,'完整圖差異／新增刪除共享同步',self.sync_graph);self.add_button(bar,'來源客戶候選／批次審核',self.source_candidates);layout.addLayout(bar)
         bar=QHBoxLayout();self.add_button(bar,'加密資料庫部分備份',self.backup);self.add_button(bar,'隔離還原到新目錄',self.restore);self.add_button(bar,'關閉',self.accept);layout.addLayout(bar)
+        bar=QHBoxLayout();self.add_button(bar,'核對並撤銷來源／版型關聯',self.revoke_association);layout.addLayout(bar)
+
+    def revoke_association(self):
+        def action():
+            if not self.snapshot:raise ValueError('先選取客戶')
+            from .customer_candidates import CustomerCandidates
+            service=CustomerCandidates(self.store);rows=service.associations(self.snapshot['id'])
+            if not rows:raise ValueError('所選客戶無來源建檔關聯')
+            labels=[r['source_id']+'／作品'+r['artwork_id']+'／版型'+r['template_id'] for r in rows]
+            label,ok=QInputDialog.getItem(self,'撤銷確切來源關聯','人物／聯絡資料保留，來源原稿不變',labels,0,False)
+            if not ok:return
+            choice,ok=QInputDialog.getItem(self,'撤銷範圍','確切版型關聯若仍有其他來源引用則阻擋',['只撤銷此來源關聯','同時移除此客戶的該版型關聯'],0,False)
+            if not ok:return
+            note,ok=QInputDialog.getText(self,'撤銷原因','保存必要最小稽核，不輸入多餘個資')
+            if not ok:return
+            if QMessageBox.question(self,'確認撤銷',self.snapshot['code']+'\n'+label+'\n'+choice+'\n'+note)!=QMessageBox.Yes:return
+            self.snapshot=service.revoke_association(self.snapshot,rows[labels.index(label)]['id'],'LOCAL_OPERATOR',note,True,choice.startswith('同時'))
+            if getattr(self.window,'reorder_customer_snapshot',None) and self.window.reorder_customer_snapshot['id']==self.snapshot['id']:
+                self.window.reorder_customer_snapshot=self.snapshot;self.window.invalidate()
+            self.query.setText(self.snapshot['code']);self.search();self.status.setText('確切關聯已撤銷並留最小稽核；當次新稿未修改，重新開啟重訂需核對現行關聯。')
+        self.guarded(action)
     def add_button(self,bar,text,fn):
         b=QPushButton(text);b.clicked.connect(fn);bar.addWidget(b);return b
     def guarded(self,fn):

@@ -221,3 +221,22 @@ class LogoWorkflowGuiTests(unittest.TestCase):
         self.assertEqual(self.window.template.state,'draft');self.assertNotEqual(self.window.template.id,template.id)
         self.assertEqual(self.window.template.family_id,template.family_id)
         self.assertEqual(next(t for t in self.window.library.templates() if t.id==template.id).to_dict(),before)
+
+    def test_actual_qt_source_drag_selects_full_crop_then_requires_saved_review(self):
+        from PySide6.QtCore import QPointF
+        proposal=self.proposal();dialog=LogoReviewDialog(self.store,proposal);self.addCleanup(dialog.deleteLater)
+        canvas=dialog.crop_canvas();canvas.rectangle.connect(dialog.adopt_crop);canvas.resize(800,500);canvas.show();canvas.fit();APP.processEvents()
+        start=canvas.mapFromScene(QPointF(1,1));end=canvas.mapFromScene(QPointF(17,8))
+        QTest.mousePress(canvas.viewport(),Qt.LeftButton,pos=start)
+        QTest.mouseMove(canvas.viewport(),end);QTest.mouseRelease(canvas.viewport(),Qt.LeftButton,pos=end)
+        self.assertAlmostEqual(dialog.crop()['x'],1,delta=.1);self.assertAlmostEqual(dialog.crop()['w'],16,delta=.1)
+        self.assertTrue(all(not c.isChecked() for c in dialog.flags.values()))
+        self.assertEqual(self.store.proposal(proposal['id'])['asset']['crop'],proposal['asset']['crop'])
+        canvas.close();canvas.deleteLater()
+
+    def test_exception_view_only_routes_uncertain_conflicted_or_repair_not_normal_high_confidence(self):
+        ordinary=self.proposal();uncertain=self.store.propose(self.payload,90,54,company_id=self.company['id'],evidence={'uncertainty':'Synthetic boundary conflict'})
+        repair=self.proposal();self.store.reject(repair['id'],repair['revision'],'Synthetic source repair',True,True)
+        dialog=LogoLibraryDialog(self.window,exceptions_only=True);self.addCleanup(dialog.deleteLater);dialog.views.setCurrentIndex(1)
+        self.assertEqual({r['id'] for r in dialog.rows},{uncertain['id'],repair['id']})
+        self.assertNotIn(ordinary['id'],{r['id'] for r in dialog.rows});self.assertFalse(self.window.library.logos())

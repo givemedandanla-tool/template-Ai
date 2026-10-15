@@ -15,10 +15,11 @@ from .logo_assets import errors
 
 
 class LogoLibraryDialog(QDialog):
-    def __init__(self,window):
+    def __init__(self,window,exceptions_only=False):
         super().__init__(window)
         self.window=window;self.store=LogoStore(window.library);self.running=False;self.changed=False
         self.offset=0;self._reloading=False
+        self.exceptions_only=exceptions_only
         self.setWindowTitle('尺寸獨立 Logo 庫／候選審核／新尺寸預測');self.resize(1220,850)
         layout=QVBoxLayout(self);self.status=QLabel();self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);layout.addWidget(self.status)
         self.reference=QCheckBox('進入新尺寸預測專區（跨庫僅作候選，必須另核准目標尺寸）')
@@ -93,9 +94,12 @@ class LogoLibraryDialog(QDialog):
         else:
             rows=[]
             for proposal in self.store.proposals(*size,self.offset):
-                if (view==2)==(proposal['origin']=='MANUAL'):
+                if self.exceptions_only or (view==2)==(proposal['origin']=='MANUAL'):
                     company=next((c for c in self.store.companies() if c['id']==proposal.get('company_id')),None)
                     rows.append(dict(proposal,_kind='PROPOSAL',company=company['name'] if company else '身分待核對'))
+        if self.exceptions_only:
+            rows=[r for r in rows if r['_kind']=='PROPOSAL' and r['state'] in ('PENDING','NEEDS_REPAIR') and
+                  (r['state']=='NEEDS_REPAIR' or not r.get('company_id') or r.get('evidence',{}).get('uncertainty') or r.get('evidence',{}).get('conflicts'))]
         self.rows=[r for r in rows if query in (r.get('company','')+' '+r['id']+' '+str(r.get('origin',''))+' '+str(r.get('state',r.get('status','')))+' '+str(r.get('evidence',{}))).casefold()]
         self.table.blockSignals(True);self.table.setRowCount(len(self.rows))
         for i,row in enumerate(self.rows):
@@ -112,6 +116,7 @@ class LogoLibraryDialog(QDialog):
         index=next((i for i,r in enumerate(self.rows) if r['id']==exact),0 if self.rows else -1)
         self.table.setCurrentCell(index,0);self.table.blockSignals(False);self.show_details()
         self.status.setText(('新尺寸預測專區：跨庫內容只作參考，目標未核准；退出後恢復尺寸隔離。' if reference else f'目前卡片尺寸庫 {size} mm；已核准／待審／人工匯入共用同一資產庫。')+' 瀏覽不核准、不自動替換當次 Logo。')
+        if self.exceptions_only:self.status.setText('Logo例外中心：只顯示本尺寸身分／來源不確定、衝突或待修復候選；其他待審仍在一般審核佇列。')
 
     def current(self):
         index=self.table.currentRow()
