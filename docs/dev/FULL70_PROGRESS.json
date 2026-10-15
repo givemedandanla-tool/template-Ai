@@ -2,9 +2,9 @@
   "id": "FULL70-PROGRESS",
   "baseline_commit": "4238ebc24ae62a2ef90051a86685a4c13bfca94b",
   "baseline_target_count": 70,
-  "closed": 4,
-  "remaining": 66,
-  "latest_evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+  "closed": 14,
+  "remaining": 56,
+  "latest_evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json",
   "rows": [
     {
       "id": "UI-001",
@@ -121,7 +121,7 @@
       ],
       "required": "補雙檢視共用同一索引；測切換不丟搜尋或選取、預覽不直接進編輯",
       "state": "VERIFIED",
-      "evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json",
       "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json"
     },
     {
@@ -213,7 +213,7 @@
       ],
       "required": "先做人物／公司／聯絡資料穩定ID及關聯模型，再驗證共享與獨立複本不混用",
       "state": "VERIFIED",
-      "evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json",
       "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json"
     },
     {
@@ -227,7 +227,7 @@
       ],
       "required": "補可追溯共享關聯與差異／撤銷，測解除一人關聯不刪其他人公司或私人聯絡資料",
       "state": "VERIFIED",
-      "evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json",
       "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json"
     },
     {
@@ -266,8 +266,8 @@
         }
       ],
       "required": "建立整體Logo來源候選與人工核對，測Logo內公司文字不被拆成可變文字且圖文完整",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-021",
@@ -279,8 +279,8 @@
         }
       ],
       "required": "補來源候選與包含內容／歸屬比較；測拒絕、撤銷或缺圖都不能冒充正式Logo",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-022",
@@ -292,8 +292,8 @@
         }
       ],
       "required": "完成同庫管理、來源細節與風險審核，驗證更新不靜默改變已選Logo或其他公司",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-023",
@@ -305,8 +305,8 @@
         }
       ],
       "required": "補單版／多版狀態和版本變動失效，測正常已知尺寸絕不跨庫借用",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-024",
@@ -318,8 +318,8 @@
         }
       ],
       "required": "完成獨立預測專區及入庫流程，驗證返回一般模式後恢復嚴格尺寸隔離",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-025",
@@ -331,8 +331,8 @@
         }
       ],
       "required": "補原框與實際占用疊圖及版本比較，測留白不等於失敗、無方案不裁切拉伸商標",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-026",
@@ -344,8 +344,8 @@
         }
       ],
       "required": "補公司卡片狀態與人工選擇，驗證無合格Logo保留占位而非借用其他尺寸或品牌",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-027",
@@ -357,8 +357,8 @@
         }
       ],
       "required": "完成多尺寸矩陣與部分成功確認，測A尺寸正式成功、B缺Logo僅能預覽且互不放行",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-028",
@@ -565,8 +565,8 @@
         }
       ],
       "required": "補智慧候選及人工確認，測多作品、多尺寸與重複客戶碼不錯綁、不建立購買分類",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-044",
@@ -579,7 +579,7 @@
       ],
       "required": "補可解釋匹配及各尺寸版型選取，測同名同電話不推定同人，過期版型不能沿用為合格",
       "state": "VERIFIED",
-      "evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json",
       "first_completion_evidence": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json"
     },
     {
@@ -592,8 +592,8 @@
         }
       ],
       "required": "接上人物公司模型，測只用本次不改主檔、過期或晚期失敗全交易不部分回寫",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json"
     },
     {
       "id": "UI-046",

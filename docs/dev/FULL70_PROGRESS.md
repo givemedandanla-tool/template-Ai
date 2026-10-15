@@ -1,10 +1,10 @@
 # 固定70題完整化進度
 
-原75父題：16軟體條款自我驗證完成／56部分／0受阻／3依既定順序延後。固定70完成14題，剩56題；本輪新增完整10題：UI043、045、020～027。CORE87、GOV7各自維持，不加入父題完成率。
+原75父題：16軟體條款自我驗證完成／56部分／3延後。固定70完成14、剩56；本輪20題尚無新增整題結案。CORE87／GOV7另計。
 
-來源 `3cd2c22dd1a4529450e62a22a62e944aac179c1c`；498/498 PASS、0跳過、87條新父題驗收PASS、實際Qt與數位檔擷取成功，source unchanged。證據：[docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json](../../docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json)。
+中繼來源 `46d367bee0c642437d13de7202b8ac611f7ae08c`；553／553 PASS、0跳過、擷取成功、來源未改。重驗既有110列；7個新Qt畫面及模型14目標測試不等於20父題完整完成。
 
-範圍為Linux／合成資料自我驗證。Windows、真實私人AI全面保真、實體印刷、指定硬體與獨立覆核尚未驗證。新媒體79件依既定metadata-first留本機及精確hash；24件文字metadata保存GitHub，不宣稱全附件公開Gate。
+86件PNG／JPG／PDF依核准metadata-first保留本機與精確hash；24件文字metadata保存GitHub。未宣稱全媒體公開Gate。run：docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json
 
 |ID|狀態|完整驗收證據／剩餘工作|
 |---|---|---|
@@ -16,25 +16,25 @@
 |UI-006|PARTIAL|完成同作品各檢視選取同步、取消／復原／確認差異，再驗證只影響選取作品|
 |UI-007|PARTIAL|補候選產生、適用條件／反例／衝突、正式人工核准與依賴重算；不要求指定深度模型架構|
 |UI-008|PARTIAL|完成風險與適用條件分組、精確選取、批准／暫緩理由，測一個高風險規則不被整批放行|
-|UI-009|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
+|UI-009|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
 |UI-010|PARTIAL|先對帳現有能力，補缺失的差異／回滾入口與跨欄位發布驗收，不重建第二套Undo|
 |UI-011|PARTIAL|與UI016／017共用穩定歸屬模型，驗證畫布／清單／屬性選取同一物件及保護發布版本|
 |UI-012|PARTIAL|補吸附與手勢的精確預覽、鎖定保護和Undo；逐一驗證關閉疊圖不關閉驗證|
 |UI-013|PARTIAL|在已定案字級不變前提補合法策略與理由，測長姓名／電話／Email不被一律分散或暗縮字級|
 |UI-014|PARTIAL|補安全候選與適用限制、空間／字距方案及跨階段一致提示；只對實際證明的搜尋範圍宣告無解|
 |UI-015|PARTIAL|完成右側問題導覽與不同風險來源，驗證輸入法、連續打字不奪焦點及刪改後即時更新|
-|UI-016|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-017|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
+|UI-016|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-017|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
 |UI-018|PARTIAL|補多方案比較與特製草案同等驗證；測部分搜尋不宣稱唯一最佳，切換不改發布模板|
 |UI-019|PARTIAL|補安全區／裁切等已核准數位檢查與高保真參考；實體設備／材料印刷依REV03後移，不作本期阻塞|
-|UI-020|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-021|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-022|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-023|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-024|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-025|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-026|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-027|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
+|UI-020|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-021|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-022|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-023|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-024|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-025|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-026|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-027|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
 |UI-028|PARTIAL|補多尺寸外側說明區及缺Logo加其他錯誤的完整標記；驗證不蓋掉作品內容、不以預覽當正式|
 |UI-029|PARTIAL|建置共用批次輸出計畫，測FINAL／PREVIEW分流、取消／略過／撞名與部分成功|
 |UI-030|PARTIAL|補逐項原因與重新驗證／更名，注入磁碟滿、占用、中斷，測成功檔不被重產或刪除|
@@ -50,9 +50,9 @@
 |UI-040|PARTIAL|補可靠來源對應與語意檢查；測行政註記排除不刪原稿、Logo合理包含不誤刪、真欄位優先|
 |UI-041|PARTIAL|逐種規則／白名單做完整對帳與回歸；測回滾不覆蓋後續人工資料、不以恢復代表已再驗證|
 |UI-042|PARTIAL|補各階段版本化檢查點與客戶候選審核，測異名同位元仍保留各客戶身份與前導零|
-|UI-043|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-044|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
-|UI-045|VERIFIED|docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json|
+|UI-043|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-044|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
+|UI-045|VERIFIED|docs/evidence/runs/RUN-TWENTY-INTERIM-001/run.json|
 |UI-046|PARTIAL|補合併前全影響預覽與雙方CAS、別名及拆分；測後續新值不被歷史拆分覆蓋|
 |UI-047|PARTIAL|補可選範圍與完整依賴Manifest、排程／保留政策及隔離還原驗證；缺資產必須報不完整|
 |UI-049|PARTIAL|補多根搜尋／歧義選擇及完整影響摘要，測不同內容同名不重連、映射與原稿不改|

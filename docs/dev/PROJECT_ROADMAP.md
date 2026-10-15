@@ -1,6 +1,6 @@
 # 全75父題開發順序與驗收缺口
 
-目前16完整軟體條款SELF_VERIFIED／56部分／3延後；固定70完成14，剩56。本輪十父題契約已完成，下一包AI_PIPELINE由UI003開始，詳見NEXT_AFTER_TEN_PARENTS。
+目前16完整軟體條款SELF_VERIFIED／56部分／3延後；固定70完成14，剩56。前輪十父題已完成；本輪20題持續開發，中繼來源553PASS，尚無新增整題結案。依FIXED70_NEXT_TWENTY_CONTRACT與精簡接手由UI003剩餘預檢缺口接續。
 
 JSON保留完整來源與驗收；CORE子項與原父題分開，Windows／私人AI全面／實體印刷／獨立覆核另列未驗證。
 

@@ -662,3 +662,7 @@ CP-20261015-TEN-PARENTS-VERIFIED已push並重新fetch逐檔確認，保存範圍
 
 ## 2026-10-15（Asia/Taipei）自動分析核心＋Qt可恢復階段
 新14項測試8.760s PASS：真實Inkscape雙作品及完整Logo不拆字、同內容異名仍獨立來源、預檢／工作CAS、單來源／單作品失敗隔離、取消／續跑／依賴指紋重用、有效TRAIN幾何草稿、SQLite系統錯誤停worker、互斥lease、精確作品重試、實際Qt一鍵與取消／啟動失敗恢復。未自動確認事實／發布；20父題待原條款完整驗收。
+
+## 2026-10-15T21:24:42.041151+08:00｜20父題中繼與模型能力
+
+新增可恢復候選管線、來源校正、局部例外、修正線索與GUI版本／安全編輯；字串判讀與本機Naive Bayes模型版本／留出／獨立啟用可用。Tesseract預訓練模型僅辨字，沒有付費LLM API；統計特徵可增、架構與類別固定，非自主神經網路擴張。553/553正式PASS、0skip、capture0、source unchanged；來源46d367bee0c642437d13de7202b8ac611f7ae08c，RUN-TWENTY-INTERIM-001。7個新Qt畫面；24件文字metadata持久化，86媒體依既定精確metadata例外留本機。重驗恢復既有110列；原75仍16完整／56部分／3延後、CORE87／GOV7、固定70完成14／剩56，本輪20題新完整0。UI003近似預檢與20題逐條驗收仍需補，不以UNKNOWN或總測試PASS結案。修正FULL70_PROGRESS.json及ROADMAP機器摘要落後於既有16／14完成數的狀態漂移，未變更需求範圍。保留fixture錯誤、Undo選取錯誤、來源SHA命令錯誤及修正／重驗記錄。
