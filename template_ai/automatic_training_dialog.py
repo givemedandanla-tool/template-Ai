@@ -9,13 +9,15 @@ from .training_pipeline import LIVE_OWNERS
 
 class Progress(QObject):
     updated=Signal(object)
+    scanned=Signal(object)
 
 
 class AutomaticTrainingDialog(QDialog):
     def __init__(self,window):
         super().__init__(window);self.window=window;self.service=AutomaticTraining(window.library)
-        self.report=None;self.running=False;self.cancel_event=threading.Event();self.progress_signal=Progress(self)
+        self.report=None;self.running=False;self.job_offset=0;self.cancel_event=threading.Event();self.progress_signal=Progress(self)
         self.progress_signal.updated.connect(self.render,Qt.QueuedConnection)
+        self.progress_signal.scanned.connect(self.scan_progress,Qt.QueuedConnection)
         self.setWindowTitle('預檢後一鍵自動訓練／來源與作品持久進度');self.resize(1150,760)
         layout=QVBoxLayout(self);self.status=QLabel('一次核對後自動分析；未確認的作品／標記留待審，正式規則與模板仍需獨立核准。');self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout();self.button(bar,'選多個來源檔',self.pick_files);self.button(bar,'選來源資料夾',self.pick_folder)
@@ -24,7 +26,7 @@ class AutomaticTrainingDialog(QDialog):
         self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['來源檔','頁次','實際狀態','已分析作品','重用作品','問題／待核對']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);layout.addWidget(self.table,2)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
         bar=QHBoxLayout();self.jobs=QComboBox();bar.addWidget(self.jobs,1);self.retry=QCheckBox('明確重試失敗項');bar.addWidget(self.retry)
-        self.button(bar,'讀回持久工作',self.reload);self.resume_button=self.button(bar,'繼續選定工作',self.resume)
+        self.button(bar,'上一頁工作',lambda:self.job_page(-200));self.button(bar,'下一頁工作',lambda:self.job_page(200));self.button(bar,'讀回持久工作',self.reload);self.resume_button=self.button(bar,'繼續選定工作',self.resume)
         self.cancel_button=self.button(bar,'安全取消',self.cancel_event.set);self.cancel_button.setEnabled(False)
         self.button(bar,'開啟作品例外／品質中心',window.training_center);layout.addLayout(bar);self.reload()
 
@@ -43,28 +45,38 @@ class AutomaticTrainingDialog(QDialog):
 
     def preflight(self,paths):
         if self.running or self.window.busy:return
-        root=self.window.library.root;self.start_button.setEnabled(False);self.report=None
+        root=self.window.library.root;self.start_button.setEnabled(False);self.report=None;self.running=True;self.cancel_event.clear();self.cancel_button.setEnabled(True);self.table.setRowCount(0);self.status.setText('掃描來源中，取消在目前檔案步驟完成後生效')
         def worker():
             from .storage import Library
             library=None
             try:
-                library=Library(root);return dict(report=AutomaticTraining(library).preflight(paths))
-            except Exception as error:return dict(error=str(error))
+                library=Library(root);return dict(report=AutomaticTraining(library).preflight(paths,cancel=self.cancel_event,progress=self.progress_signal.scanned.emit))
+            except Exception as error:
+                from .source_links import ScanCancelled
+                return dict(error='使用者已取消預檢；未建立學習工作' if isinstance(error,ScanCancelled) else str(error))
             finally:
                 if library:library.close()
         def finished(result):
+            self.running=False;self.cancel_button.setEnabled(False)
             if result.get('error'):self.status.setText('預檢未完成：'+result['error']);return
             self.report=result['report'];self.start_button.setEnabled(True);self.render(dict(items=self.report['items'],phase='PREFLIGHT'))
             import json
             r=self.report
             self.details.setPlainText(f"檔案位元重複{r['file_duplicates']}；健康快取可重用{r['reuse_candidates']}；近似檔案候選{r['near_file_candidates']}；作品重複候選{r['artwork_duplicates']}；模板結構相似{r['template_similarity']}；未核實{r['similarity_unknown']}。\n近似不等於相同；不刪除來源或合併客戶。\n"+json.dumps(r['similarity'],ensure_ascii=False,indent=2))
         try:self.window.run_job('掃描及來源預檢',worker,finished)
-        except Exception as error:self.status.setText('預檢無法啟動：'+str(error))
+        except Exception as error:self.running=False;self.cancel_button.setEnabled(False);self.status.setText('預檢無法啟動：'+str(error))
+
+    def scan_progress(self,progress):
+        self.status.setText(f"{progress['stage']}：已完成{progress['done']}／{progress['total']}檔；{Path(progress['path']).name}；尚未開始學習或發布")
+
+    def job_page(self,delta):
+        if self.running:return
+        count=self.service.store.count('AUTO_JOB');self.job_offset=max(0,min(max(0,((count-1)//200)*200),self.job_offset+delta));self.reload()
 
     def reload(self):
         if self.running:return
         identity=self.jobs.currentData();self.jobs.clear()
-        for job in self.service.store.records('AUTO_JOB'):self.jobs.addItem(self.service.phase(job)+'／'+job['id'],job['id'])
+        for job in self.service.store.records('AUTO_JOB',offset=self.job_offset):self.jobs.addItem(self.service.phase(job)+'／'+job['id'],job['id'])
         index=self.jobs.findData(identity)
         if index>=0:self.jobs.setCurrentIndex(index)
 
@@ -108,6 +120,10 @@ class AutomaticTrainingDialog(QDialog):
                 try:self.service.finish(claimed['id'],claimed['owner']['token'],'FAILED_SYSTEM',str(error))
                 finally:LIVE_OWNERS.discard(claimed['owner']['token'])
             self.running=False;self.cancel_button.setEnabled(False);self.resume_button.setEnabled(True);self.start_button.setEnabled(self.report is not None);self.status.setText('啟動失敗：'+str(error))
+
+    def reject(self):
+        if self.running:self.cancel_event.set();self.status.setText('安全取消中；等待目前檔案步驟完成再關閉。');return
+        super().reject()
 
     def closeEvent(self,event):
         if self.running:self.cancel_event.set();self.status.setText('安全取消中，當前原子步驟完成後可關閉。');event.ignore()

@@ -20,15 +20,15 @@ class AutomaticTraining:
     def __init__(self,library):
         self.library=library;self.store=TrainingStore(library);self.db=library.db
 
-    def preflight(self,paths,page=1,compare=True):
-        report=preflight(paths,self.library.list_sources(),page)
+    def preflight(self,paths,page=1,compare=True,cancel=None,progress=None):
+        report=preflight(paths,self.library.list_sources(),page,cancel,lambda done,total,path:progress(dict(stage='來源雜湊',done=done,total=total,path=path)) if progress else None)
         for item in report['items']:
             matching=[s for s in self.library.list_sources() if s['hash']==item.get('expected_hash') and s['page']==page and Path(s['current_path']).resolve()==Path(item['path']).resolve()]
             item['existing_source_id']=matching[0]['id'] if matching else None
         report['scope']='來源／作品／候選標記／品質／已授權幾何學習一鍵管線；人工事實、樣本准入及發布不自動核准'
         if compare:
             from .similarity_preflight import inspect_report
-            inspect_report(self.library,report)
+            inspect_report(self.library,report,cancel,lambda done,total,path:progress(dict(stage='作品／結構比對',done=done,total=total,path=path)) if progress else None)
         return report
 
     def create(self,report,actor,approved=False):

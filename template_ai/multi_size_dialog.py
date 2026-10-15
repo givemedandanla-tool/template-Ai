@@ -28,6 +28,9 @@ class MultiSizeDialog(QDialog):
         self.formats={}
         for name in ('pdf','png','jpg'):
             box=QCheckBox(name.upper());box.setChecked(name=='pdf');self.formats[name]=box;bar.addWidget(box)
+        layout.addLayout(bar);bar=QHBoxLayout();bar.addWidget(QLabel('非正式預覽格式（預設PNG）'));self.preview_formats={}
+        for name in ('png','jpg','pdf'):
+            box=QCheckBox(name.upper());box.setChecked(name=='png');self.preview_formats[name]=box;bar.addWidget(box)
         self.export_button=self.button(bar,'確認清單後輸出',self.export);self.export_button.setEnabled(False);layout.addLayout(bar)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
         sizes={(t.width_mm,t.height_mm) for t in window.library.templates(True)}|{(window.out_w.value(),window.out_h.value())}
@@ -166,7 +169,7 @@ class MultiSizeDialog(QDialog):
             requests=[]
             for i,size in enumerate(self.sizes):
                 mode=self.table.cellWidget(i,5).currentText()
-                if mode!='不輸出':requests.append(dict(key=size_key(*size),mode=mode,formats=[f for f,b in self.formats.items() if b.isChecked()]))
+                if mode!='不輸出':requests.append(dict(key=size_key(*size),mode=mode,formats=[f for f,b in (self.preview_formats if mode=='PREVIEW' else self.formats).items() if b.isChecked()]))
             directory=QFileDialog.getExistingDirectory(self,'選一次本機輸出資料夾；FINAL／PREVIEW分開')
             if not directory:return
             plan=self.service.plan(directory,requests)
@@ -179,14 +182,11 @@ class MultiSizeDialog(QDialog):
             if plan['partial']:lines.append('本次為部分輸出。確認表示只輸出上述檔案，其他尺寸仍未完成。')
             if QMessageBox.question(self,'確認每尺寸類別、未輸出原因與實際檔案','\n'.join(lines))!=QMessageBox.Yes:return
             if not self.is_current():raise ValueError('確認期間輸入已變更，未輸出')
-            entries=deepcopy(self.service.entries);inputs=deepcopy(self.inputs);graph=deepcopy(self.graph.data);generation=self.generation;stale=self.stale;stop=self.stop
-            def operation(library):
-                workflow=MultiSizeWorkflow(library,inputs,graph,generation);workflow.entries=entries
-                return workflow.execute(plan,True,acknowledge_partial=plan['partial'],current_check=lambda:not stale.is_set() and not stop.is_set())
-            def finished(results):
-                self.details.setPlainText('\n'.join(r['mode']+'／'+r['status']+'：'+r['path']+('\n原因：'+r['reason'] if r.get('reason') else '') for r in results));passed=sum(r['status']=='SUCCESS' for r in results)
-                self.status.setText(f'成功{passed}／實際{len(results)}檔；各尺寸FINAL／PREVIEW及失敗分開記錄，沒有假稱全批成功。')
-            self.background('安全逐檔輸出',operation,finished)
+            from .output_batch_dialog import OutputBatchDialog
+            dialog=OutputBatchDialog(self,plan);self.output_dialog=dialog;dialog.exec()
+            results=dialog.engine.items;self.last_output=results
+            self.details.setPlainText('\n'.join(r['mode']+'／'+r['status']+'：'+r['path']+('\n原因：'+r['reason'] if r.get('reason') else '') for r in results));passed=sum(r['status']=='SUCCESS' for r in results)
+            self.status.setText(f'成功{passed}／清單{len(results)}檔；失敗、略過、阻擋與未完成逐筆保留。');dialog.deleteLater()
         except (ValueError,KeyError,OSError) as error:self.status.setText('未輸出：'+str(error))
 
     def closeEvent(self,event):

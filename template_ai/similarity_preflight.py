@@ -93,6 +93,7 @@ def inspect_report(library,report,cancel=None,progress=None):
                 image=QImage(source['image']);sig=image_signature(image)
                 current=dict(path=item['path'],hash=source['hash'],width=source['width_mm'],height=source['height_mm'],**sig)
                 for other in pages:
+                    if comparisons>=MAX_COMPARISONS:raise ValueError('比較預算已滿，剩餘範圍未核實')
                     comparisons+=1
                     distance=(sig['dhash']^other['dhash']).bit_count()
                     aspect=abs(current['width']/current['height']-other['width']/other['height'])
@@ -107,9 +108,11 @@ def inspect_report(library,report,cancel=None,progress=None):
                         unknown.append(dict(scope=item['path'],reason='作品比較預算已滿，未檢查其餘作品'));break
                     d=work_descriptor(p,image,source);d.update(id=p['key'],source_hash=source['hash'],path=item['path'])
                     for old in works:
+                        if comparisons>=MAX_COMPARISONS:raise ValueError('比較預算已滿，剩餘作品未核實')
                         comparisons+=1
                         if old['design']==d['design']:duplicates.append(dict(left=old['id'],right=d['id'],source_path=item['path'],classification='EXACT_RENDERED_WORK_CANDIDATE',warning='衍生圖與內容相同；非原生AI物件或客戶身分證明'))
                     for tid,shape in templates:
+                        if comparisons>=MAX_COMPARISONS:raise ValueError('比較預算已滿，剩餘模板未核實')
                         comparisons+=1;score=structure_score(d['structure'],shape)
                         if score is not None and score>=.8:similar.append(dict(work=d['id'],template=tid,jaccard=score,classification='STRUCTURE_SIMILAR_CANDIDATE',warning='忽略文字內容；不代表同作品或可直接發布'))
                     works.append(d)

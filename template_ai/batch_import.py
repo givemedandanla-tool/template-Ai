@@ -57,11 +57,12 @@ def healthy_source(source):
     except (OSError,ValueError,KeyError,TypeError):return False
 
 
-def preflight(paths,sources,page=1,cancel=None):
+def preflight(paths,sources,page=1,cancel=None,progress=None):
     if type(page) is not int or not 1<=page<=1000:raise ValueError('頁次需1～1000')
     rows=[];seen={};known={}
     for s in sorted(sources,key=lambda s:s['id']):known.setdefault((s['hash'],s['page']),[]).append(s)
-    for p in expand_paths(paths,cancel):
+    expanded=expand_paths(paths,cancel)
+    for position,p in enumerate(expanded):
         row={'id':new_id(),'path':str(p),'page':page,'expected_hash':None,'status':'READY','reason':'待匯入；視覺／語意尚未核驗','attempts':0,'history':[],'source_id':None,'reuse_source':None}
         try:
             if p.suffix.lower() not in EXTENSIONS:raise ValueError('不支援來源格式')
@@ -76,6 +77,7 @@ def preflight(paths,sources,page=1,cancel=None):
         except ScanCancelled:raise
         except (OSError,ValueError) as error:row.update(status='FAILED',reason=str(error),error_type='PREFLIGHT')
         rows.append(row)
+        if progress:progress(position+1,len(expanded),str(p))
     if not rows:raise ValueError('選取範圍沒有支援的來源')
     return {'items':rows,'page':page,'file_duplicates':sum(r['status']=='SKIPPED' for r in rows),'reuse_candidates':sum(bool(r['reuse_source']) for r in rows),'artwork_duplicates':'UNKNOWN','template_similarity':'UNKNOWN','scope':'只讀來源匯入；尚非自动語意辨識／學習／發布'}
 

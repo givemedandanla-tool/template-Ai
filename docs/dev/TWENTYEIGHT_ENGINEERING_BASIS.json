@@ -30,5 +30,15 @@
       "sha256": "6043c6f4a19c34640b8ae359641e22f091009ad4e668c57ee6ab9302263516d5"
     },
     "reuse": "QFont AbsoluteSpacing, QTextLayout/QFontMetrics and existing renderer/versioning; no string slicing or new layout engine."
+  },
+  "safe_output": {
+    "reference": {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Doc/library/os.rst",
+      "sha256": "72ad4331b490fe71c62dca52f7ddd3fac4b24d10e5670d1a9091b87f496669c6",
+      "bytes": 192201
+    },
+    "reuse": "Existing render.export / safe_publish.publish_complete / MultiSizeWorkflow.revalidate. Explicit overwrite first retains original in unique recovery directory, verifies moved bytes, then exclusively publishes complete staged file; not an atomic replace transaction. Race conflicts preserve both versions and expose recovery paths.",
+    "validation": "7 real filesystem/fault tests + 2 actual Qt worker delivery/retry tests + 10 previous multi-size tests PASS. Linux synthetic only; Windows/external disk crash durability unverified.",
+    "scope": "Ephemeral batch state; no parallel customer database or paid service. FINAL/PREVIEW separate folders, preview default PNG; retry exact selected recoverable failures <=3 attempts."
   }
 }
