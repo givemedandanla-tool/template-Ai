@@ -35,7 +35,10 @@ MESSAGES = {
     'SOURCE_MISSING': '來源失聯，歷史標記不代表來源健康',
     'SOURCE_CHANGED': '來源異動或無法核對，需重新審核',
     'SOURCE_UNREADABLE': '來源無法讀取', 'SOURCE_OK': '指定來源內容與登錄一致',
+    'DEPENDENCY_CHANGED': '候選依賴已異動或無法核對，需重新產生',
     'WORKER_FAILED': '背景工作失敗；未檢查項不能當通過',
+    'QUALITY_EVIDENCE_INSUFFICIENT': '分類紀錄可檢視；模型推論與獨立品質仍未驗證',
+    'QUALITY_CRITICAL': '原分類紀錄有關鍵歸屬錯誤；不能放行品質',
     'UNCLASSIFIED': '未分類診斷已省略自由文字，請在本機核對',
 }
 NUMBER_KEYS = {'size_pt', 'width_mm', 'height_mm', 'text_width_mm', 'text_height_mm',
@@ -56,9 +59,11 @@ def issue(code, severity='BLOCK', *, slot=None, owner='', kind='unknown', parame
             'parameters': safe_parameters(parameters or {}), 'locatable': bool(slot)}
 
 
-def public_issue(row, target, fields):
+def public_issue(row, target, fields, stage):
     code = row.get('code') if row.get('code') in MESSAGES else 'UNCLASSIFIED'
+    origin = 'DATA_PROCESSING' if code.startswith('SOURCE_') else 'TEMPLATE_GENERATION' if code=='TEMPLATE_CHECK' else stage
     return {'code': code, 'severity': row.get('severity') if row.get('severity') in SEVERITIES else 'REVIEW',
+            'origin_stage': origin, 'impact_stage': stage,
             'target': target, 'fields': fields, 'kind': row.get('kind') if row.get('kind') in KINDS else 'unknown',
             'parameters': safe_parameters(row.get('parameters', {})),
             'locatable': bool(row.get('locatable')),

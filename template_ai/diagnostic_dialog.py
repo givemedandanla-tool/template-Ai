@@ -98,8 +98,9 @@ def open_saved_report(window):
     path,_=QFileDialog.getOpenFileName(window,'開啟歷史安全報告','','診斷報告 (*.zip)')
     if not path:return
     p=Path(path)
-    if p.stat().st_size>MAX_BYTES+65536:raise ValueError('報告檔案超出大小預算')
-    raw=p.read_bytes();read_bundle(raw)
+    if not p.is_file() or p.stat().st_size>MAX_BYTES+65536:raise ValueError('報告檔案超出大小預算')
+    with p.open('rb') as stream:raw=stream.read(MAX_BYTES+65537)
+    read_bundle(raw)
     dialog=DiagnosticReportDialog(window,loaded=raw)
     try:dialog.exec()
     finally:dialog.deleteLater()

@@ -1662,7 +1662,7 @@
       "id": "UI-066-R1",
       "kind": "topic",
       "title": "是否需要獨立報告及最小格式內容",
-      "status": "NOT_IMPLEMENTED",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節",
@@ -1679,21 +1679,81 @@
         {
           "id": "UI-066-R1-FULL",
           "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：只處理真缺口，不重問診斷和預覽",
-          "tests": []
+          "tests": [
+            "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+            "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+            "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+            "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+            "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+            "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+            "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+            "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+            "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+            "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+          ]
         },
         {
           "id": "UI-066-R1-IN-APP-SAVED",
           "expected": "問題資訊在程式內可直接閱讀，也可保存成獨立檔案供程式外閱讀；共用同次診斷及實際檢查範圍、版本、時間，不以GitHub開發文件或卡片預覽代替；待實作驗收",
-          "tests": []
+          "tests": [
+            "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+            "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+            "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+            "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+            "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+            "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+            "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+            "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+            "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+            "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+          ]
         }
       ],
-      "next_step": "依DIAGNOSTIC_REPORTS_CONTRACT完整實作與驗收；解除受阻不代表完成"
+      "next_step": "待固定來源正式全回歸、實際Qt證據與GitHub逐檔讀回"
     },
     {
       "id": "UI-066-R2",
       "kind": "topic",
       "title": "報告本機保存、去識別與人工交接",
-      "status": "NOT_IMPLEMENTED",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節",
@@ -1710,15 +1770,75 @@
         {
           "id": "UI-066-R2-FULL",
           "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：只處理真缺口，不重問診斷和預覽",
-          "tests": []
+          "tests": [
+            "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+            "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+            "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+            "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+            "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+            "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+            "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+            "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+            "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+            "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+          ]
         },
         {
           "id": "UI-066-R2-IN-APP-SAVED",
           "expected": "可預覽實際保存內容並選本機位置；保存檔與當次診斷一致，敏感內容省略需明示；取消／失敗不報成功，歷史快照不改正式輸出Gate；待實作驗收",
-          "tests": []
+          "tests": [
+            "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+            "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+            "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+            "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+            "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+            "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+            "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+            "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+            "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+            "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+          ]
         }
       ],
-      "next_step": "依DIAGNOSTIC_REPORTS_CONTRACT完整實作與驗收；解除受阻不代表完成"
+      "next_step": "待固定來源正式全回歸、實際Qt證據與GitHub逐檔讀回"
     },
     {
       "id": "REV-01",
@@ -4912,7 +5032,7 @@
       "parents": [
         "UI-066-R1"
       ],
-      "status": "NOT_IMPLEMENTED",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "共用診斷快照與離線HTML／JSON安全交接包；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍",
@@ -4927,10 +5047,40 @@
         {
           "id": "CORE-082-FULL",
           "expected": "共用診斷快照與離線HTML／JSON安全交接包；同份安全快照、檢查範圍／未知／歷史狀態、失敗恢復與不改Gate均需真Qt及故障驗收",
-          "tests": []
+          "tests": [
+            "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+            "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+            "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+            "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+            "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+            "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+            "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+            "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+            "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+            "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+          ]
         }
       ],
-      "next_step": "完整實作及正式來源回歸"
+      "next_step": "待固定來源正式全回歸、實際Qt證據與GitHub逐檔讀回"
     },
     {
       "id": "CORE-083",
@@ -4939,7 +5089,7 @@
       "parents": [
         "UI-066-R2"
       ],
-      "status": "NOT_IMPLEMENTED",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "既有GUI報告保存重開與exact版本定位；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍",
@@ -4954,10 +5104,40 @@
         {
           "id": "CORE-083-FULL",
           "expected": "既有GUI報告保存重開與exact版本定位；同份安全快照、檢查範圍／未知／歷史狀態、失敗恢復與不改Gate均需真Qt及故障驗收",
-          "tests": []
+          "tests": [
+            "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+            "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+            "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+            "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+            "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+            "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+            "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+            "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+            "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+            "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+            "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+            "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+            "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+            "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+            "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+            "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+            "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+          ]
         }
       ],
-      "next_step": "完整實作及正式來源回歸"
+      "next_step": "待固定來源正式全回歸、實際Qt證據與GitHub逐檔讀回"
     }
   ]
 }

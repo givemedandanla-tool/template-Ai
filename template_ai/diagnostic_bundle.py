@@ -45,7 +45,7 @@ def number(value, *, nullable=False, maximum=1e9):
 def validate(data):
     exact(data, {'schema_version','report_id','created_utc','app_version','historical','nonformal',
                  'stage','stages','status','source_health','model_quality','physical_print',
-                 'scope','progress','issues','measurements','omitted_issues','privacy','object_revision'})
+                 'scope','progress','issues','measurements','omitted_issues','privacy','object_revision','classification'})
     if data['schema_version'] != 1 or type(data['schema_version']) is not int:
         raise ValueError('不支援此報告版本')
     if not isinstance(data['report_id'], str) or not re.fullmatch('[0-9a-f]{32}',data['report_id']):
@@ -63,6 +63,15 @@ def validate(data):
     if any(v != 'NOT_VERIFIED' for v in (data['model_quality'],data['physical_print'])):
         raise ValueError('報告不得自行宣稱模型或印刷驗證')
     number(data['object_revision'],nullable=True)
+    if data['classification'] is not None:
+        c=data['classification']
+        exact(c,{'gold_count','predicted_count','critical_owner_errors','gate','prediction_origin','metrics','versions'})
+        if c['gate'] not in ('FAILED_CRITICAL','EVIDENCE_INSUFFICIENT') or c['prediction_origin']!='USER_SUPPLIED_RECORDS_NOT_EXECUTED_MODEL_INFERENCE' or c['versions']!='USER_SUPPLIED_LABELS_NOT_VERIFIED_LOCAL_ONLY':raise ValueError('分類紀錄不能冒稱模型品質驗證')
+        for k in ('gold_count','predicted_count','critical_owner_errors'):number(c[k])
+        exact(c['metrics'],KINDS-{'unknown'})
+        for m in c['metrics'].values():
+            exact(m,{'tp','fp','fn','precision','recall'})
+            for k,v in m.items():number(v,nullable=k in ('precision','recall'))
     exact(data['scope'],{'sources','works','candidates','fields','width_mm','height_mm'})
     for k,v in data['scope'].items():
         number(v,nullable=True)
@@ -79,7 +88,8 @@ def validate(data):
     for group in ('issues','measurements'):
         if type(data[group]) is not list or len(data[group])>MAX_ISSUES:raise ValueError('報告超出問題預算')
         for row in data[group]:
-            exact(row,{'code','severity','target','fields','kind','parameters','locatable','action'})
+            exact(row,{'code','severity','target','fields','kind','parameters','locatable','action','origin_stage','impact_stage'})
+            if row['origin_stage'] not in STAGES or row['impact_stage'] not in STAGES:raise ValueError('問題發生與影響環節不合法')
             if row['code'] not in MESSAGES or row['severity'] not in SEVERITIES or row['kind'] not in KINDS:
                 raise ValueError('未知報告問題類型')
             if not isinstance(row['target'],str) or not re.fullmatch(r'(?:人物|公司|作品|候選|模板|來源|範圍)[1-9][0-9]{0,5}',row['target']):
@@ -117,7 +127,9 @@ def build_bundle(data):
     if sum(map(len,(public,page,manifest)))>MAX_BYTES:raise ValueError('報告超過2MiB，請縮小範圍')
     out=io.BytesIO()
     with zipfile.ZipFile(out,'w',compression=zipfile.ZIP_STORED) as z:
-        for name,body in [('report.json',public),('report.html',page),('manifest.json',manifest)]:z.writestr(name,body)
+        for name,body in [('report.json',public),('report.html',page),('manifest.json',manifest)]:
+            info=zipfile.ZipInfo(name,date_time=(1980,1,1,0,0,0));info.compress_type=zipfile.ZIP_STORED;info.create_system=3;info.external_attr=0o600<<16
+            z.writestr(info,body)
     return out.getvalue()
 
 
@@ -136,6 +148,7 @@ def read_bundle(raw):
     try:
         with zipfile.ZipFile(io.BytesIO(raw)) as z:
             entries=z.infolist()
+            if z.comment or any(i.comment or i.extra for i in entries):raise ValueError('不允許報告隱藏中介資料')
             if len(entries)!=3 or {i.filename for i in entries}!=NAMES:raise ValueError('只允許三個固定報告條目')
             if sum(i.file_size for i in entries)>MAX_BYTES:raise ValueError('解壓內容超出預算')
             for i in entries:
@@ -151,6 +164,7 @@ def read_bundle(raw):
             if m['files'][n]!={'bytes':len(bodies[n]),'sha256':sha(bodies[n])}:raise ValueError('報告損壞或不一致')
         data=validate(parse_json(bodies['report.json']))
         if bodies['report.html']!=report_html(data):raise ValueError('HTML與JSON不是同份安全內容')
+        if raw!=build_bundle(data):raise ValueError('報告含非標準封裝或額外資料')
         return data
     except (zipfile.BadZipFile,UnicodeError,KeyError,TypeError,RecursionError,RuntimeError) as error:
         raise ValueError('無法驗證報告格式') from error
@@ -168,7 +182,8 @@ def save_bundle(target,raw,check=lambda:None):
         with os.fdopen(fd,'wb') as f:
             f.write(raw);f.flush();os.fsync(f.fileno())
         read_bundle(Path(name).read_bytes());check()
-        os.link(name,target)
+        from .safe_publish import publish_complete
+        publish_complete(name,target,check)
     finally:
         Path(name).unlink(missing_ok=True)
     return target

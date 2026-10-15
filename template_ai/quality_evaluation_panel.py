@@ -10,7 +10,7 @@ class EvaluationPanel(QWidget):
         super().__init__(parent);self.window=window;self.store=TrainingStore(window.library);self.plan=None;self.setMinimumWidth(600);l=QVBoxLayout(self);self.status=QLabel('分類紀錄評估；不執行模型推論／不宣稱視覺或獨立品質PASS，需真正HOLDOUT。');self.status.setWordWrap(True);l.addWidget(self.status);self.datasets=QComboBox();l.addWidget(self.datasets);bar=QHBoxLayout();self.versions={}
         for k in ('model','parser','ocr','rules'):e=QLineEdit('UNVERIFIED-'+k+'-1');e.setPlaceholderText(k+' exact version');self.versions[k]=e;bar.addWidget(e)
         l.addLayout(bar);self.predictions=QPlainTextEdit('[]');self.predictions.setPlaceholderText('[{"sample_id":"…","slot_id":"…","kind":"name","owner":"p1"}]；人工／外部預測，不填真值充當模型輸出');self.predictions.setMaximumHeight(140);l.addWidget(self.predictions);bar=QHBoxLayout()
-        for title,fn in [('刷新資料集／評估',self.reload),('計算分類分母與錯誤',self.preview),('確認保存當次評估',self.save)]:b=QPushButton(title);b.clicked.connect(fn);bar.addWidget(b)
+        for title,fn in [('刷新資料集／評估',self.reload),('計算分類分母與錯誤',self.preview),('確認保存當次評估',self.save),('選取已存評估的問題報告',self.report)]:b=QPushButton(title);b.clicked.connect(fn);bar.addWidget(b)
         l.addLayout(bar);self.details=QPlainTextEdit();self.details.setReadOnly(True);l.addWidget(self.details);bar=QHBoxLayout();self.left=QComboBox();self.right=QComboBox();bar.addWidget(self.left);bar.addWidget(self.right)
         for title,fn in [('固定集A/B比較',self.compare),('隔離根因修復待辦',self.repair),('檢查安全回退',self.rollback)]:b=QPushButton(title);b.clicked.connect(fn);bar.addWidget(b)
         l.addLayout(bar);self.reload()
@@ -35,6 +35,13 @@ class EvaluationPanel(QWidget):
             if QMessageBox.question(self,'保存評估紀錄','確認這是人工／外部提供的預測紀錄，非本工具執行模型推論？保存不代表品質PASS。')!=QMessageBox.Yes:return
             e=save_evaluation(self.store,self.plan,'Local Reviewer',True);self.reload();self.right.setCurrentIndex(self.right.findData(e['id']));self.status.setText('已保存exact版本分類紀錄；正式品質仍未驗證')
         self.guarded(action)
+    def report(self):
+        from .diagnostic_dialog import DiagnosticReportDialog
+        selected=self.right.currentData()
+        if not selected:self.status.setText('先選取已保存評估紀錄；不把未保存的文案當模型證據');return
+        d=DiagnosticReportDialog(self.window,'evaluation',selected,parent=self)
+        try:d.exec()
+        finally:d.deleteLater()
     def compare(self):
         self.guarded(lambda:self.details.setPlainText(json.dumps(compare_evaluations(self.store,self.left.currentData(),self.right.currentData()),ensure_ascii=False,indent=2)))
     def repair(self):

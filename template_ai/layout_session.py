@@ -46,7 +46,7 @@ class LayoutSessionDialog(QDialog):
             self.template_digests={t.id:digest(t.to_dict()) for t in templates};self.rows=[];self.list.clear();self.pause_event.clear();self.cancel_event.clear();self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event);self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.report_state='RUNNING';self.running=True;w.busy=True;self.controls();self.status.setText(f'已核對{len(templates)}個同尺寸同容量模板，單worker；未遍歷完成前不是全域最佳')
             try:w.pool.start(self.worker)
             except BaseException:self.running=False;w.busy=False;self.controls();raise
-        except Exception as e:self.status.setText('未開始：'+str(e));self.controls()
+        except Exception as e:self.report_state='FAILED_SYSTEM';self.rows=[];self.worker=None;self.status.setText('未開始：'+str(e));self.controls()
     def progress(self,event):
         self.status.setText(f"實際階段{event['phase']}：{event['index']}/{event['total']}；取消／暫停在候選邊界生效")
         if event['phase']=='ITEM_FINISHED':
@@ -71,7 +71,7 @@ class LayoutSessionDialog(QDialog):
                 if not t or digest(t.to_dict())!=self.template_digests[t.id]:raise ValueError('模板版本已改變；需重算')
                 w.library._template_provenance(t)
             if QMessageBox.question(self,'採用候選','使用這些已完成候選取代目前結果？未遍歷項不代表無解。')!=QMessageBox.Yes:return
-            total=len(self.worker.templates);checked=sum('template_id' in r for r in self.rows);failed=sum(r.get('candidate') is None for r in self.rows)
+            total=len(self.worker.templates);checked=sum('template_id' in r for r in self.rows);failed=sum('template_id' in r and r.get('candidate') is None for r in self.rows)
             w.last_layout_summary=dict(state=self.report_state,total=total,checked=checked,calculated=max(0,checked-failed),failed=failed,unstarted=max(0,total-checked),global_unsolvable=False)
             w.candidates=sorted(results,key=lambda c:(not c.valid,-c.score,c.template.id));w.candidate_list.clear()
             for c in w.candidates:w.candidate_list.addItem(c.template.name+' · 當次已計算／待最終輸出Gate')

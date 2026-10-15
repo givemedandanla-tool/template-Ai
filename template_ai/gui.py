@@ -194,7 +194,7 @@ class MainWindow(QMainWindow):
         self.library = Library(data_root)
         from .diagnostic_snapshot import LocatorStore
         try:LocatorStore(self.library)
-        except OSError:pass
+        except (OSError,ValueError):pass
         from .batch_import import BatchStore
         self.import_store=BatchStore(self.library)
         self.import_store.recover()

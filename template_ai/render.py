@@ -204,9 +204,8 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
             raise ValueError("輸出檔案為空")
         # 同目錄完整暫存檔以硬連結排他發布；正式檔名不暴露半寫入內容。
         # Windows NTFS／Linux 支援；不支援的磁碟明確失敗，不退回危險覆寫。
-        with temporary.open("r+b") as src:
-            os.fsync(src.fileno())
-        os.link(temporary, target)
+        from .safe_publish import publish_complete
+        publish_complete(temporary, target)
         created = True
         return target
     except BaseException:

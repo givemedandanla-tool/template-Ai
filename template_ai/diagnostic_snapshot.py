@@ -30,6 +30,13 @@ def file_stamp(path):
     except (OSError,ValueError,TypeError):return None
 
 
+def selected_templates(window):
+    rows=window.library.db.execute("SELECT payload FROM templates WHERE state='published' AND abs(json_extract(payload,'$.width_mm')-?)<0.00001 AND abs(json_extract(payload,'$.height_mm')-?)<0.00001 LIMIT 201",(window.out_w.value(),window.out_h.value())).fetchall()
+    if len(rows)>200:raise ValueError('單次報告同尺寸模板超過200件，請縮小Library範圍')
+    from .model import Template
+    return [Template.from_dict(json.loads(row[0])) for row in rows]
+
+
 def context(window,kind,work_id=None,session=None):
     """Local dependency digest, never written into the public report."""
     values={'kind':kind,'work':None,'templates':[]};paths=set()
@@ -40,7 +47,15 @@ def context(window,kind,work_id=None,session=None):
                 else:paths_in(v)
         elif isinstance(value,list):
             for v in value:paths_in(v)
-    if work_id:
+    if kind=='evaluation':
+        from .training_store import TrainingStore
+        store=TrainingStore(window.library);record=store.get('EVALUATION',work_id)
+        if not record:raise ValueError('先選取已保存的分類評估紀錄')
+        values['evaluation']=record;values['dataset_validity']=store.dataset_validity(record['dataset_id'])
+        for entry in values['dataset_validity'].get('dataset',{}).get('entries',[])[:200]:
+            sample=store.get('SAMPLE',entry['sample_id'])
+            if sample:paths_in(window.library.source(sample['pins']['source_id']))
+    if work_id and kind!='evaluation':
         work=window.library.artwork(work_id);values['work']=work
         try:values['source']=window.library.source(work['source_id'])
         except (ValueError,KeyError):values['source']=None
@@ -48,13 +63,20 @@ def context(window,kind,work_id=None,session=None):
         paths_in(work['payload'])
     if kind in ('input','candidate','session'):
         values.update(generation=window.generation,people=table_data(window.people),companies=table_data(window.companies),size=[window.out_w.value(),window.out_h.value()],filter=getattr(window,'reorder_template_id',None))
-        templates=window.library.templates(True)
+        templates=selected_templates(window)
         eligible=[t for t in templates if (t.width_mm,t.height_mm)==tuple(values['size'])]
         if len(eligible)>200:raise ValueError('報告單次最多200模板，請縮小範圍')
         values['templates']=[t.to_dict() for t in eligible]
+        selected=window.candidate_list.currentRow()
+        candidates=window.candidates[selected:selected+1] if kind=='candidate' and selected>=0 else []
+        values['selected_candidate']=selected if kind=='candidate' else None
+        values['provenance']=[]
+        for c in candidates:
+            try:window.library._template_provenance(c.template);values['provenance'].append(True)
+            except ValueError:values['provenance'].append(False)
         values['candidates']=[{'template':c.template.to_dict(),'generation':c.generation,'issues':c.issues,
                                 'diagnostics':c.diagnostics,'measurements':c.measurements,
-                                'items':[(p.slot.id,p.text,p.scale,p.logo) for p in c.items]} for c in window.candidates[:200]]
+                                'items':[(p.slot.id,p.text,p.scale,p.logo) for p in c.items]} for c in candidates]
         paths_in(values['candidates']);paths_in(values['templates'])
     if kind=='template':
         t=window.template
@@ -73,7 +95,7 @@ def context(window,kind,work_id=None,session=None):
     if len(paths)>400:raise ValueError('依賴檔案超出單次報告預算，請縮小範圍')
     values['files']={p:file_stamp(p) for p in sorted(paths)}
     values['font_environment']=[(f,list(QFontDatabase.styles(f))) for f in sorted({s.get('font','') for t in values.get('templates',[])+[values.get('template',{})] for s in t.get('slots',[])})]
-    return sha(encoded(values))
+    return sha(json.dumps(values,ensure_ascii=False,sort_keys=True,default=str).encode())
 
 
 @dataclass
@@ -91,10 +113,10 @@ class Snapshot:
 
 
 def make_snapshot(window,kind,work_id=None,session=None):
-    if kind not in ('input','candidate','training','template','session'):raise ValueError('不支援此報告範圍')
+    if kind not in ('input','candidate','training','template','session','evaluation'):raise ValueError('不支援此報告範圍')
     if kind=='training' and not work_id:raise ValueError('先選取一個確切作品')
     before=context(window,kind,work_id,session)
-    stage='DATA_PROCESSING' if kind=='training' else 'TEMPLATE_GENERATION' if kind=='template' else 'INPUT_OUTPUT'
+    stage='DATA_PROCESSING' if kind in ('training','evaluation') else 'TEMPLATE_GENERATION' if kind=='template' else 'INPUT_OUTPUT'
     data={'schema_version':1,'report_id':uuid.uuid4().hex,
           'created_utc':datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'),
           'app_version':__version__,'historical':True,'nonformal':True,'stage':stage,
@@ -102,7 +124,7 @@ def make_snapshot(window,kind,work_id=None,session=None):
           'status':'LOCAL_SCOPE_CHECKED','source_health':'NOT_CHECKED','model_quality':'NOT_VERIFIED','physical_print':'NOT_VERIFIED',
           'scope':{'sources':0,'works':0,'candidates':0,'fields':0,'width_mm':None,'height_mm':None},
           'progress':{'state':'LOCAL_SCOPE_CHECKED','total':None,'checked':None,'calculated':None,'failed':None,'unstarted':None,'global_unsolvable':False},
-          'issues':[],'measurements':[],'omitted_issues':0,'privacy':'SAFE_ALLOWLIST_NO_SOURCE_ATTACHMENTS','object_revision':None}
+          'issues':[],'measurements':[],'omitted_issues':0,'privacy':'SAFE_ALLOWLIST_NO_SOURCE_ATTACHMENTS','object_revision':None,'classification':None}
     targets=[];aliases={};field_aliases={}
     def add(row,target='範圍1',locator=None,measurement=False):
         ids=row.get('slot_ids',[])
@@ -110,7 +132,7 @@ def make_snapshot(window,kind,work_id=None,session=None):
         for sid in ids[:200]:
             if sid not in field_aliases:field_aliases[sid]='欄位'+str(len(field_aliases)+1)
             fields.append(field_aliases[sid])
-        public=public_issue(row,target,fields)
+        public=public_issue(row,target,fields,stage)
         public['locatable']=bool(locator and row.get('locatable'))
         group='measurements' if measurement else 'issues'
         if len(data[group])>=MAX_ISSUES:
@@ -129,8 +151,8 @@ def make_snapshot(window,kind,work_id=None,session=None):
         data['scope'].update(width_mm=window.out_w.value(),height_mm=window.out_h.value())
         try:
             people,companies,_=window.input_data()
-            if sum(len(v) for p in people for v in p.values() if isinstance(v,list))>2000:raise ValueError('輸入欄位超出報告預算')
-            result=diagnose(people,companies,window.library.templates(True),window.out_w.value(),window.out_h.value())
+            if sum(len(v) for p in people for v in p.values() if isinstance(v,list))>2000:raise RuntimeError('輸入欄位超出2000項報告預算，請縮小範圍，尚未檢查')
+            result=diagnose(people,companies,selected_templates(window),window.out_w.value(),window.out_h.value())
             for row in result['issues']:
                 row=dict(row);row.update(severity='REVIEW',kind=INPUT_KINDS[row['col']] if row['col']<7 else 'company',locatable=True)
                 add(row,'人物'+str(row['row']+1),{'kind':'input','table':row['table'],'row':row['row'],'col':row['col']})
@@ -148,8 +170,15 @@ def make_snapshot(window,kind,work_id=None,session=None):
             data['scope'].update(candidates=1,fields=len(c.template.slots),width_mm=c.template.width_mm,height_mm=c.template.height_mm)
             data['object_revision']=c.template.version
             data['status']='STALE_RESULT' if c.generation!=window.generation or data['source_health'] not in ('NOT_CHECKED','OK') else 'DIGITAL_VALID' if c.valid else 'BLOCKED'
+            from .layout import layout_dependency
+            _,_,logos=window.input_data()
+            dependency_changed=bool(c.dependency_stamp and c.dependency_stamp!=layout_dependency(c.template,logos))
+            try:window.library._template_provenance(c.template)
+            except ValueError:dependency_changed=True
+            if dependency_changed:data['status']='STALE_RESULT'
             typed=list(c.diagnostics)
             typed.extend(issue('UNCLASSIFIED','REVIEW') for _ in range(max(0,len(c.issues)-len(typed))))
+            if dependency_changed:typed.append(issue('DEPENDENCY_CHANGED','REVIEW'))
             for row in typed:
                 locator={'kind':'candidate','index':index,'template_id':c.template.id,'slot_ids':row.get('slot_ids',[])} if data['status']!='STALE_RESULT' else None
                 add(row,'候選1',locator)
@@ -173,10 +202,18 @@ def make_snapshot(window,kind,work_id=None,session=None):
         data['object_revision']=t.version
         for _ in template_errors(t):add(issue('TEMPLATE_CHECK'),'模板1')
         data['status']='BLOCKED' if data['issues'] and any(i['severity']=='BLOCK' for i in data['issues']) else 'LOCAL_SCOPE_CHECKED'
+    elif kind=='evaluation':
+        from .training_store import TrainingStore
+        record=TrainingStore(window.library).get('EVALUATION',work_id)
+        if not record:raise ValueError('找不到確切分類評估紀錄')
+        c={k:copy.deepcopy(record[k]) for k in ('gold_count','predicted_count','critical_owner_errors','gate','prediction_origin','metrics')}
+        c['versions']='USER_SUPPLIED_LABELS_NOT_VERIFIED_LOCAL_ONLY';data['classification']=c;data['object_revision']=record['revision']
+        data['status']='BLOCKED' if c['gate']=='FAILED_CRITICAL' else 'LOCAL_SCOPE_CHECKED'
+        add(issue('QUALITY_CRITICAL' if c['gate']=='FAILED_CRITICAL' else 'QUALITY_EVIDENCE_INSUFFICIENT','BLOCK' if c['gate']=='FAILED_CRITICAL' else 'REVIEW'))
     else:
         if session is None:raise ValueError('找不到當次背景工作')
         total=len(getattr(getattr(session,'worker',None),'templates',[]));checked=sum('template_id' in r for r in session.rows)
-        failed=sum(r.get('candidate') is None for r in session.rows)
+        failed=sum('template_id' in r and r.get('candidate') is None for r in session.rows)
         state=getattr(session,'report_state','NOT_CHECKED')
         if session.running:state='RUNNING'
         data['status']=state;data['scope']['candidates']=checked
@@ -188,6 +225,10 @@ def make_snapshot(window,kind,work_id=None,session=None):
         if getattr(session,'size',None):data['scope'].update(width_mm=session.size[0],height_mm=session.size[1])
     data['stages'][stage]=data['status']
     if data['omitted_issues']:data['progress']['state']='PARTIAL'
+    import math
+    for key in ('width_mm','height_mm'):
+        value=data['scope'][key]
+        if type(value) not in (int,float) or not math.isfinite(value) or value<0:data['scope'][key]=None
     validate(data)
     snapshot=Snapshot(data,targets,before,kind,work_id,session)
     snapshot.check(window)
@@ -255,5 +296,11 @@ def locate(window,data,index,snapshot=None):
         window.candidate_list.setCurrentRow(i);window.choose_candidate(i)
         window.export_button.setEnabled(old and window.export_button.isEnabled())
         window.preview_button.setEnabled(old_preview and window.preview_button.isEnabled())
+        if target['slot_ids']:
+            from PySide6.QtCore import QRectF,Qt
+            ids=set(target['slot_ids']);slots=[s for s in c.template.slots if s.id in ids]
+            if len(slots)!=len(ids):raise ValueError('欄位已變更')
+            if slots:
+                r=slots[0].rect;window.output_canvas.fitInView(QRectF(r.x,r.y,r.w,r.h),Qt.KeepAspectRatio)
         window.issues.setFocus()
     return target

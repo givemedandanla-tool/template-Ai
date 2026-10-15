@@ -1,5 +1,9 @@
 # 開發工作紀錄
 
+## 診斷報告完整實作／target驗證
+
+第一輪23測試22PASS／1ERROR為Qt fitInView誤用int，修正Qt.KeepAspectRatio，原FAIL留target001。第二及三輪28PASS（新增品質紀錄、失聯、索引等）；原UI11與品質9 regression PASS；新增第29項真LayoutWorker部分失敗report及新policy邊界測試待正式。實際capture先行成功：同份JSON／預覽、保存重開、過期拒絕、來源問題與原Gate／模板不改；源素材與私有索引仍本機。原shared安全發布機制已抽至safe_publish，作品輸出及報告共用。現在凍結source全回歸（預計378）與匿名Qt capture，完成前不升要求。WIP1至source checkpoint約11分鐘，超10分鐘目標如實保留，非strict承諾。
+
 ## 診斷報告第一階段WIP
 
 共用typed診斷已在原layout驗證器產生；新增安全schema、無腳本HTML／JSON／manifest ZIP、私有7天定位索引、報告reader及背景encoder，既有輸入／候選／模板／訓練品質／當次進度入口已接。compileall PASS；尚待語意／故障／實際Qt測試，不宣稱功能完成。原88個current驗收隨改碼全部轉待重驗，保留歷史證據；新source正式全回歸後再恢復。GUI對帳不再硬鎖兩項BLOCKED，改驗具名使用者採納來源；原assert對應變更，不刪除安全驗收。

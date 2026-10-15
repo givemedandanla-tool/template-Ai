@@ -123,6 +123,10 @@ def main():
         capture_code = process.returncode
         capture_log.write_text(process.stdout + process.stderr, encoding="utf-8")
         if capture_code == 0:
+            extra=subprocess.run([sys.executable,str(ROOT / "tools/capture_diagnostics.py"),"--artifacts-dir",str(generated)],cwd=ROOT,capture_output=True,text=True,encoding="utf-8",errors="replace",timeout=60)
+            with capture_log.open("a") as log:log.write(extra.stdout+extra.stderr)
+            capture_code=extra.returncode
+        if capture_code == 0:
             for name in ("output-workspace.png", "training-workspace.png", "template-workspace.png", "decorated-output-workspace.png", "multiple-artworks-workspace.png", "batch-source-preview.png", "font-center-workspace.png", "font-center-diagnostics.png",
                          "font-candidates-ranked.png", "font-candidates-preview.png", "font-candidate-line.png", "font-candidates-report.json",
                          "font-review-differences.png", "font-review-approved.png", "font-review-draft-history.png", "font-review-undone.png", "font-review-audit.json",
@@ -132,7 +136,8 @@ def main():
                          "batch-import-preflight.png", "batch-import-running.png", "batch-import-cancelled.png", "batch-import-resumed.png", "batch-import-audit.json",
                          "exception-center-ranked.png", "exception-center-excluded.png", "exception-center-restored.png", "exception-center-retry-preview.png", "exception-center-retried.png", "exception-center-audit.json",
                          "ten-quality-overview.png", "ten-facts-confirmed.png", "ten-noise-authoring.png", "ten-rule-review.png", "ten-noise-auto-hit.png", "ten-noise-recovery.png", "ten-trusted-sample.png", "ten-dataset-learned-draft.png", "ten-coverage-distribution.png", "ten-training-queue-completed.png", "ten-packages-audit.json",
-                         "synthetic-FINAL.pdf", "synthetic-FINAL.png", "synthetic-FINAL.jpg", "decorated-FINAL.pdf", "decorated-FINAL.png", "decorated-FINAL.jpg"):
+                         "synthetic-FINAL.pdf", "synthetic-FINAL.png", "synthetic-FINAL.jpg", "decorated-FINAL.pdf", "decorated-FINAL.png", "decorated-FINAL.jpg",
+                         "diagnostic-preview.png", "diagnostic-saved-reopened.png", "diagnostic-stale-refused.png", "diagnostic-work-issues.png", "diagnostic-safe-report.json", "diagnostic-gui-audit.json"):
                 if not (generated / name).is_file():
                     capture_code = 1
                     break
@@ -149,7 +154,7 @@ def main():
     registry = read_json(ROOT / "docs/dev/REQUIREMENTS.json")
     claims = []
     for row in registry["requirements"]:
-        if row["kind"] == "topic":
+        if row["kind"] == "topic" and row["id"] not in ("UI-066-R1","UI-066-R2"):
             continue
         for acceptance in row["acceptance"]:
             passed = status == "PASS" and bool(acceptance["tests"]) and all(tests_lookup.get(test) == "PASS" for test in acceptance["tests"])
@@ -160,7 +165,7 @@ def main():
     if seventy.is_file():
         contract = read_json(seventy)
         trace = [{"parent": s["parent"], "scoped_requirement": s["id"], "implemented_subset": s["acceptance"], "remaining_parent_scope": s["remaining"], "tests": [{"id": tid, "status": tests_lookup.get(tid, "MISSING")} for tid in s["tests"]], "scoped_pass": status == "PASS" and bool(s["tests"]) and all(tests_lookup.get(tid) == "PASS" for tid in s["tests"])} for s in contract["scopes"]]
-        write_json(folder / "seventy-parent-audit.json", {"evidence_kind": "DERIVED_TRACEABILITY_FROM_ACTUAL_TESTS_NOT_EXTRA_EXECUTION", "source_commit": args.source_commit, "source_unchanged": source_unchanged, "baseline_partial": 53, "target_partial": 70, "new_scopes": trace, "all_scopes_pass": all(s["scoped_pass"] for s in trace), "full_parent_completion_claim": False, "blocked_unchanged": 2, "deferred_unchanged": 3})
+        write_json(folder / "seventy-parent-audit.json", {"evidence_kind": "DERIVED_TRACEABILITY_FROM_ACTUAL_TESTS_NOT_EXTRA_EXECUTION", "source_commit": args.source_commit, "source_unchanged": source_unchanged, "baseline_partial": 53, "target_partial": 70, "new_scopes": trace, "all_scopes_pass": all(s["scoped_pass"] for s in trace), "full_parent_completion_claim": False, "historical_contract_blocked": 2, "historical_contract_deferred": 3, "current_parent_states": {state:sum(r["kind"]=="topic" and r["status"]==state for r in registry["requirements"]) for state in ("PARTIAL","BLOCKED","DEFERRED","VERIFIED","NOT_IMPLEMENTED","IMPLEMENTED_PENDING_VERIFICATION")}})
     attachments = {path.name: {"bytes": path.stat().st_size, "sha256": digest(path.read_bytes()), "mime": mimetypes.guess_type(path.name)[0] or "text/plain"}
                    for path in folder.iterdir() if path.is_file()}
     run = {"schema_version": 1, "id": args.run_id, "created_utc": datetime.now(timezone.utc).isoformat(), "source_commit": args.source_commit,

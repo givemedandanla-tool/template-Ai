@@ -1,0 +1,59 @@
+test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors (test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors) ... ok
+test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation (test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation) ... ok
+test_each_size_and_candidate_readonly_scope_never_unlocks_output (test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output) ... ERROR
+test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected (test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected) ... ok
+test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation (test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation) ... ok
+test_gui_actual_preview_save_reopen_json_and_cancel_flow (test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_gui_original_entry_points_training_template_and_candidate (test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh (test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh) ... This plugin does not support propagateSizeHints()
+ok
+test_gui_worker_start_encode_and_read_failures_restore_controls (test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_input_empty_invalid_company_no_candidate_and_unknown_not_pass (test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass) ... ok
+test_locator_expiry_keeps_report_and_rejects_changed_input (test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input) ... ok
+test_locator_saved_readback_changed_library_and_manual_clear (test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear) ... ok
+test_missing_font_width_is_unknown_not_zero_or_substitute (test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute) ... ok
+test_missing_model_or_source_does_not_prevent_safe_text_report (test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report) ... This plugin does not support propagateSizeHints()
+ok
+test_oversized_problem_set_is_explicit_partial_not_silent_success (test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success) ... ok
+test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html (test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html) ... ok
+test_safe_save_collision_permission_disk_full_and_cleanup (test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup) ... ok
+test_save_race_and_preview_change_never_overwrite_or_report_success (test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success) ... ok
+test_session_partial_cancel_failed_and_unstarted_counts_are_real (test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real) ... ok
+test_snapshot_html_json_have_same_facts_width_and_historical_scope (test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope) ... ok
+test_source_changed_and_missing_still_readable_no_wrong_location (test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location) ... ok
+test_supplied_html_scripts_with_correct_checksum_are_never_loaded (test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded) ... ok
+test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected (test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected) ... /workspace/bcoe-python/cpython-3.11.16-linux-x86_64-gnu/lib/python3.11/zipfile.py:1581: UserWarning: Duplicate name: 'report.json'
+  return self._open_to_write(zinfo, force_zip64=force_zip64)
+ok
+
+======================================================================
+ERROR: test_each_size_and_candidate_readonly_scope_never_unlocks_output (test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 146, in test_each_size_and_candidate_readonly_scope_never_unlocks_output
+    locate(self.w,s.data,i,s);self.assertFalse(self.w.export_button.isEnabled());self.assertEqual(self.w.library.templates()[0].to_dict(),before)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/diagnostic_snapshot.py", line 283, in locate
+    r=slots[0].rect;window.output_canvas.fitInView(QRectF(r.x,r.y,r.w,r.h),1)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'PySide6.QtWidgets.QGraphicsView.fitInView' called with wrong argument types:
+  PySide6.QtWidgets.QGraphicsView.fitInView(QRectF, int)
+Supported signatures:
+  PySide6.QtWidgets.QGraphicsView.fitInView(item: PySide6.QtWidgets.QGraphicsItem, /, aspectRadioMode: PySide6.QtCore.Qt.AspectRatioMode = Instance(Qt.IgnoreAspectRatio))
+  PySide6.QtWidgets.QGraphicsView.fitInView(rect: PySide6.QtCore.QRectF | PySide6.QtCore.QRect, /, aspectRadioMode: PySide6.QtCore.Qt.AspectRatioMode = Instance(Qt.IgnoreAspectRatio))
+  PySide6.QtWidgets.QGraphicsView.fitInView(x: float, y: float, w: float, h: float, /, aspectRadioMode: PySide6.QtCore.Qt.AspectRatioMode = Instance(Qt.IgnoreAspectRatio))
+
+----------------------------------------------------------------------
+Ran 23 tests in 4.340s
+
+FAILED (errors=1)

@@ -73,8 +73,8 @@
 | UI-067 | template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策） | PARTIAL | 否 | 全面對帳只問真缺口，治理不算新產品功能 | [run](../../docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json) |
 | UI-052-REVIEW | 重大共通錯誤跨歷史批次重審追加核准 | PARTIAL | 否 | 依賴追溯、暫停信任、逐項再審，保留歷史與原成品 | [run](../../docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json) |
 | UI-056-D | 進階分布失衡與系統化補樣 | DEFERRED | 否 | 正式版本完善後另行評估，不加入本期交付 | 無有效新版證據 |
-| UI-066-R1 | 是否需要獨立報告及最小格式內容 | NOT_IMPLEMENTED | 否 | 只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節 | 無有效新版證據 |
-| UI-066-R2 | 報告本機保存、去識別與人工交接 | NOT_IMPLEMENTED | 否 | 只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節 | 無有效新版證據 |
+| UI-066-R1 | 是否需要獨立報告及最小格式內容 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節 | 無有效新版證據 |
+| UI-066-R2 | 報告本機保存、去識別與人工交接 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節 | 無有效新版證據 |
 | REV-01 | 矩形區域自動排版與模板 AI；X-04 結案 | PARTIAL | 否 | 同一矩形模型，名稱不再待決；既有客戶人物公司與資產功能沿用 | 無有效新版證據 |
 | REV-02 | Inkscape 等視覺一致且可訓練的 AI 匯入 | PARTIAL | 否 | 真實參考視覺無可辨識差異且有效可訓練；完整原生結構非共同必要條件 | 無有效新版證據 |
 | REV-03 | 軟體完善後再做實體印刷分析 | DEFERRED | 否 | 前期數位輸出與幾何仍驗證，實體樣張／設備／材料條件後移 | 無有效新版證據 |
@@ -167,7 +167,7 @@
 | CORE-080 | 診斷入口路由重用既有問題與定位、版本與未知不改Gate | IMPLEMENTED_PENDING_VERIFICATION | 否 | 診斷入口路由重用既有問題與定位、版本與未知不改Gate；R1/R2仍BLOCKED，不產獨立報告；Linux匿名合成SELF範圍 | [run](../../docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json) |
 | GOV-007 | 機器GUI路由／決策去重對帳與未決分流檢查 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 機器GUI路由／決策去重對帳與未決分流檢查；純治理，不計CORE產品能力；Linux匿名合成SELF範圍 | [run](../../docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json) |
 | CORE-081 | 明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史；其他模型／Logo／客戶依賴全面掃描與解除重審後續；Linux匿名合成SELF範圍 | [run](../../docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json) |
-| CORE-082 | 共用診斷快照與離線HTML／JSON安全交接包 | NOT_IMPLEMENTED | 否 | 共用診斷快照與離線HTML／JSON安全交接包；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍 | 無有效新版證據 |
-| CORE-083 | 既有GUI報告保存重開與exact版本定位 | NOT_IMPLEMENTED | 否 | 既有GUI報告保存重開與exact版本定位；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍 | 無有效新版證據 |
+| CORE-082 | 共用診斷快照與離線HTML／JSON安全交接包 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 共用診斷快照與離線HTML／JSON安全交接包；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍 | 無有效新版證據 |
+| CORE-083 | 既有GUI報告保存重開與exact版本定位 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 既有GUI報告保存重開與exact版本定位；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

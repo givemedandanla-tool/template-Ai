@@ -3,9 +3,9 @@
   "repository": "givemedandanla-tool/template-Ai",
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
-  "product_version": "0.1.25",
+  "product_version": "0.1.26",
   "framework_status": "READY",
-  "active_task": "DIAGNOSTIC-REPORTS-IN-PROGRESS",
+  "active_task": "DIAGNOSTIC-REPORTS-SOURCE-READY",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-DIAG-WIP1.receipt.json",
   "last_confirmed_commit": "f21530c4d3d7dae3dd550c80d99fde0cb860f5a1",
   "latest_evidence_run": null,
@@ -48,7 +48,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-DIAG-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-DIAGNOSTICS-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-R1R2-VISIBILITY-END.json",
@@ -147,7 +149,7 @@
   ],
   "evidence_publication": {
     "policy": "USER_AUTHORIZED_TEXT_METADATA_FIRST",
-    "manifest": "docs/dev/SEVENTY_PARENTS_PUBLICATION.json",
+    "manifest": "docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json",
     "local_formal": "348PASS/0SKIP/72local attachments/source unchanged",
     "new_media_uploads": "NONE",
     "all_attachment_gate_claim": false,
@@ -371,7 +373,7 @@
     "decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
     "in_app_readable": true,
     "outside_app_saved_readable": true,
-    "implementation_status": "APPROVED_NOT_IMPLEMENTED",
+    "implementation_status": "IMPLEMENTED_PENDING_VERIFICATION",
     "whole_proposal_adopted": false,
     "functional_completion_delta": 0,
     "adoption_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",

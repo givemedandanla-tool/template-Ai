@@ -30,6 +30,7 @@ class Candidate:
 
     diagnostics: list[dict] = field(default_factory=list)
     measurements: list[dict] = field(default_factory=list)
+    dependency_stamp: str = ""
 
     @property
     def valid(self) -> bool:
@@ -60,8 +61,31 @@ def text_geometry(font_family: str, size_pt: float, text: str, style: str = "", 
     return metrics.horizontalAdvance(text) * factor, metrics.height() * factor, issues
 
 
+def layout_dependency(t, logos):
+    # A local freshness marker, not a signature or proof of visual equivalence.
+    import hashlib, json
+    from pathlib import Path
+    paths=set()
+    def visit(v):
+        if isinstance(v,dict):
+            for k,x in v.items():
+                if isinstance(x,str) and ('path' in k or k in ('svg','png','file')):paths.add(x)
+                else:visit(x)
+        elif isinstance(v,list):
+            for x in v:visit(x)
+    visit(t.to_dict());visit(logos)
+    stamps={}
+    for path in paths:
+        try:
+            v=Path(path).stat();stamps[path]=[v.st_dev,v.st_ino,v.st_size,v.st_mtime_ns,v.st_ctime_ns]
+        except (OSError,ValueError):stamps[path]=None
+    fonts=[(f,list(QFontDatabase.styles(f))) for f in sorted({s.font for s in t.slots})]
+    return hashlib.sha256(json.dumps([stamps,fonts],sort_keys=True).encode()).hexdigest()
+
+
 def generate(t: Template, people: list[dict], companies: list[dict], logos: dict[str, dict], generation: int = 0) -> Candidate:
     from .diagnostic_schema import issue
+    dependency = layout_dependency(t, logos)
     issues = template_errors(t)
     diagnostics = [issue("TEMPLATE_CHECK") for _ in issues]
     measurements = []
@@ -141,9 +165,11 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
     for owner, data in company_map.items():
         if data.get("name") and owner not in t.company_bindings.values():
             add(owner + "：公司資料沒有可用模板映射，不可無聲略去", "UNBOUND_COMPANY")
+    if layout_dependency(t, logos) != dependency:
+        add("依賴檔案在排版期間異動，需重新產生", "DEPENDENCY_CHANGED")
     score = sum(item.scale for item in items if item.text) / max(1, sum(bool(item.text) for item in items))
     return Candidate(t, items, list(dict.fromkeys(issues)), score, generation,
-                     ["精確匹配矩形尺寸與人物容量", "固定字級，僅在本模板允許的字寬範圍適配", "排名比較字寬保持程度；不宣稱審美模型或全域最優"], diagnostics, measurements)
+                     ["精確匹配矩形尺寸與人物容量", "固定字級，僅在本模板允許的字寬範圍適配", "排名比較字寬保持程度；不宣稱審美模型或全域最優"], diagnostics, measurements, dependency)
 
 
 def match(templates: list[Template], width: float, height: float, people: list[dict], companies: list[dict], logos: dict[str, dict], generation: int = 0) -> list[Candidate]:

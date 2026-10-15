@@ -61,3 +61,14 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(list(result),['docs/evidence/runs/RUN-X/gui.png']);self.assertEqual(policies,['docs/dev/SEVENTY_PARENTS_PUBLICATION.json'])
         self.policy['runs']['RUN-X']['source_commit']='c'*40;path.write_text(json.dumps(self.policy))
         with self.assertRaises(ValueError):waived_attachments(self.root,'docs/evidence/runs/RUN-X/run.json',self.run)
+
+    def test_diagnostic_policy_does_not_waive_json_or_unlisted_run(self):
+        self.policy['policy']='USER_AUTHORIZED_METADATA_FIRST_DIAGNOSTICS'
+        self.policy['contract']='docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json'
+        (self.root/self.policy['contract']).write_text('{}')
+        path=self.root/'docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json';path.write_text(json.dumps(self.policy))
+        result,policies=waived_attachments(self.root,'docs/evidence/runs/RUN-X/run.json',self.run)
+        self.assertEqual(list(result),['docs/evidence/runs/RUN-X/gui.png']);self.assertEqual(policies,['docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json'])
+        self.assertEqual(waived_attachments(self.root,'docs/evidence/runs/RUN-Y/run.json',self.run|{'id':'RUN-Y'}),({},[]))
+        self.policy['runs']['RUN-X']['attachments']['tests.json']={'bytes':12,'sha256':'b'*64};path.write_text(json.dumps(self.policy))
+        with self.assertRaises(ValueError):waived_attachments(self.root,'docs/evidence/runs/RUN-X/run.json',self.run)
