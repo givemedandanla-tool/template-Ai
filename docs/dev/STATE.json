@@ -5,24 +5,23 @@
   "pull_request": 2,
   "product_version": "0.1.27",
   "framework_status": "READY",
-  "active_task": "FULL70-ENTITIES-SOURCE-FREEZE",
+  "active_task": "FULL70-ENTITIES-VERIFIED-PENDING-REMOTE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-ENTITIES-SOURCE3.receipt.json",
   "last_confirmed_commit": "c354e050a86c5733d2d6bdd5e991684ba0674f9a",
-  "latest_evidence_run": null,
+  "latest_evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
+    "docs/dev/FULL70_PROGRESS.md",
     "docs/dev/FULL_70_COMPLETION_PLAN.json",
     "docs/dev/ENTITY_RELATIONS_CONTRACT.json",
-    "docs/dev/PARTIAL_70_GAP_ANALYSIS.json",
-    "docs/dev/REQUIREMENTS.json",
-    "docs/dev/PROGRESS.md"
+    "docs/dev/REQUIREMENTS.json"
   ],
   "next_tasks": [
     {
-      "id": "ENTITY-RELATIONS",
-      "status": "PENDING_VERIFICATION",
-      "next": "凍結source checkpoint與新run全回歸／Qt capture；修錯需新source/run，之後繼續其餘68題"
+      "id": "CATALOG",
+      "status": "PLANNED",
+      "next": "UI009模板庫＋UI044客戶版型瀏覽／搜尋；先完整原條款及新契約／checkpoint，再改碼"
     }
   ],
   "blocked": [],
@@ -31,17 +30,20 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-ENTITIES-VERIFIED"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-FULL70-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-DIAGNOSTICS-END.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-ENTITIES-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
   "goal_milestone": {
     "id": "FULL-70-COMPLETION",
     "status": "IN_PROGRESS",
     "target_parent_count": 70,
-    "closed": 0
+    "closed": 2,
+    "remaining": 68
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
@@ -140,7 +142,7 @@
     "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
-  "final_verification": "docs/dev/DIAGNOSTIC_REPORTS_FINAL_VERIFICATION.json",
+  "final_verification": "docs/dev/ENTITY_RELATIONS_FINAL_VERIFICATION.json",
   "checkpoint_cadence": "docs/dev/DIAGNOSTIC_REPORTS_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
