@@ -29,7 +29,7 @@ def semantic_index(payload):
             if c in by_owner and c.startswith('c'):
                 children.append({'label': f'引用公司 {c}（同一資產／共享）', 'ids': [s.id for s in by_owner[c]], 'children': [leaf(s) for s in by_owner[c]]})
         if not bound:
-            children.append({'label': '無公司／關聯未確認', 'ids': [], 'children': []})
+            children.append({'label': '無公司（明確確認）' if p in links and isinstance(links[p],list) and not links[p] else '公司關聯 UNKNOWN／未確認', 'ids': [], 'children': []})
         roots.append({'label': f'人物 ROOT {p}', 'ids': sorted({i for n in children for i in n['ids']}), 'children': children})
     for owner in sorted(o for o in by_owner if not o.startswith('p')):
         refs = sorted(p for p, c in links.items() if owner in company_ports(c))

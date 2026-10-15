@@ -88,6 +88,13 @@ class EntityGraphTests(unittest.TestCase):
         no=copy.deepcopy(t);no.slots.pop();self.assertTrue(any('沒有可用模板框位' in s for s in generate(no,p,c,l).issues))
         roots=semantic_index(t.to_dict());self.assertEqual(len([x for x in roots[0]['children'] if x['label'].startswith('引用公司')]),2)
 
+    def test_explicit_no_company_is_distinct_from_unknown_structure_mapping(self):
+        t=Template('Empty binding',90,54,[Slot('name','p1',Rect(3,3,40,7))])
+        self.assertIn('UNKNOWN',semantic_index(t.to_dict())[0]['children'][-1]['label'])
+        t.company_bindings={'p1':[]}
+        self.assertIn('明確確認',semantic_index(t.to_dict())[0]['children'][-1]['label'])
+        self.assertNotIn('UNKNOWN',semantic_index(t.to_dict())[0]['children'][-1]['label'])
+
     def test_fixed_positions_empty_contacts_and_legacy_binding_remain_compatible(self):
         g=InputGraph.from_legacy([dict(name=['Alex'],phone=['','Second'])],[]);p,c,l=g.compile();self.assertEqual(p[0]['phone'],['','Second'])
         fid=g.data['fields'][-1]['id'];self.assertEqual(p[0]['field_ids']['phone'][1],fid)
