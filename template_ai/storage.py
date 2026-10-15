@@ -83,7 +83,7 @@ class Library:
             raise
         return self.source(source_id)
 
-    def _write_source_link(self, source_id, proof, expected_revision):
+    def _write_source_link(self, source_id, proof, expected_revision, expected_context=None):
         from .source_links import check_verified
         source = self.source(source_id)
         if type(expected_revision) is not int or expected_revision < 0 or source["link_revision"] != expected_revision:
@@ -91,6 +91,9 @@ class Library:
         check_verified(proof, source["hash"])
         if proof.stat[2] != source["byte_size"]:
             raise ValueError("來源長度不符，不重新連結")
+        impact=self.source_impacts(source_id)
+        if expected_context is not None and expected_context!=impact['context_sha256']:
+            raise ValueError('來源客戶／版型／訓練／資產關聯已變更，請重新核對完整影響')
         if source["current_path"] == proof.path:
             return None
         revision = expected_revision + 1
@@ -98,7 +101,8 @@ class Library:
         self.db.execute("INSERT INTO source_relinks VALUES(?,?,?,?,?,?,?)", (new_id(), source_id, revision, source["current_path"], proof.path, source["hash"], time.time()))
         self.event(source_id, "source_relinked_same_content")
         return {"source_id": source_id, "hash": source["hash"], "previous_path": source["current_path"], "current_path": proof.path,
-                "before_revision": expected_revision, "after_revision": revision}
+                "before_revision": expected_revision, "after_revision": revision,
+                "impact_snapshot":impact['context'],"impact_sha256":impact['context_sha256']}
 
     def relink_sources(self, requests, approved=False, undo_of=None):
         if approved is not True or not requests:
@@ -117,7 +121,7 @@ class Library:
                     item = expected[request["source_id"]]
                     if request["expected_revision"] != item["after_revision"] or request["proof"].path != item["previous_path"]:
                         raise ValueError("復原位置或版次與原批次不符")
-            changes = [item for r in requests if (item := self._write_source_link(r["source_id"], r["proof"], r["expected_revision"]))]
+            changes = [item for r in requests if (item := self._write_source_link(r["source_id"], r["proof"], r["expected_revision"],r.get('expected_context')))]
             if not changes:
                 self.db.commit()
                 return {"id": None, "kind": "NO_CHANGE", "items": []}
@@ -141,11 +145,8 @@ class Library:
         return [json.loads(r[0]) for r in self.db.execute("SELECT payload FROM relink_batches ORDER BY rowid DESC")]
 
     def source_impacts(self, source_id):
-        works = self.artworks(source_id)
-        templates = [t for t in self.templates() if t.source_id == source_id]
-        logos = [l for l in self.logos() if l.get("source_id") == source_id]
-        return {"work_ids": [w["id"] for w in works], "template_ids": [t.id for t in templates], "logo_ids": [l["id"] for l in logos],
-                "summary": f"作品 {len(works)}／模板 {len(templates)}／Logo {len(logos)}；客戶關聯未知"}
+        from .source_context import source_context
+        return source_context(self,source_id)
 
     def source_link_history(self, source_id: str) -> list[dict]:
         return [dict(revision=r[0], previous_path=r[1], current_path=r[2], hash=r[3], timestamp=r[4])

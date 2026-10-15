@@ -105,3 +105,48 @@ def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256
     for row in rows:
         row["candidates"].sort(key=lambda p: p.path)
     return report
+
+
+def discover_source_roots(sources, roots, cancel=None, max_entries=5000, max_bytes=256 * 1024 * 1024):
+    """Multiple explicit roots share one budget; overlap is searched once, never chosen as identity."""
+    if not isinstance(roots, (list, tuple)) or not 1 <= len(roots) <= 16:
+        raise ValueError('請明列1～16個已授權搜尋根目錄')
+    if len(sources)>2000 or type(max_entries) is not int or max_entries<1 or type(max_bytes) is not int or max_bytes<1:
+        raise ValueError('搜尋來源或資源預算不合法／超過支援範圍')
+    valid=[];errors=[]
+    for value in roots:
+        path=Path(value)
+        try:
+            if path.is_symlink() or not path.is_dir():raise ValueError('根目錄離線／不是正常資料夾，未搜尋')
+            path=path.resolve(strict=True)
+            if path not in valid:valid.append(path)
+        except (OSError,ValueError) as error:errors.append(dict(path=str(path),reason=str(error)))
+    selected=[];overlaps=[]
+    for path in sorted(valid,key=lambda p:(len(p.parts),str(p))):
+        if any(path.is_relative_to(parent) for parent in selected):overlaps.append(str(path))
+        else:selected.append(path)
+    result=dict(root='；'.join(str(x) for x in selected),roots=[str(x) for x in selected],overlapping_roots=overlaps,
+                status='PARTIAL' if errors else 'COMPLETE',entries=0,bytes_budgeted=0,hashed_files=0,errors=errors,
+                rows=[dict(source=s,availability=availability(s),candidates=[],same_name_different=[]) for s in sources],unsearched_roots=[])
+    for index,path in enumerate(selected):
+        if cancel and cancel.is_set():result['status']='CANCELLED';result['unsearched_roots']=[str(p) for p in selected[index:]];break
+        if result['entries']>=max_entries or result['bytes_budgeted']>=max_bytes:
+            result['status']='PARTIAL';result['unsearched_roots']=[str(p) for p in selected[index:]];break
+        report=discover_sources(sources,path,cancel,max_entries-result['entries'],max_bytes-result['bytes_budgeted'])
+        for key in ('entries','bytes_budgeted','hashed_files'):result[key]+=report[key]
+        result['errors'].extend(report['errors'])
+        for output,row in zip(result['rows'],report['rows']):
+            if '不足' in row['availability']:output['availability']=row['availability']
+            seen={proof.path for proof in output['candidates']}
+            for proof in row['candidates']:
+                if proof.path not in seen and len(output['candidates'])<32:output['candidates'].append(proof);seen.add(proof.path)
+                elif proof.path not in seen:output['candidate_limit']=True;result['status']='PARTIAL'
+            output['same_name_different']=list(dict.fromkeys(output['same_name_different']+row['same_name_different']))
+            if row.get('candidate_limit'):output['candidate_limit']=True;result['status']='PARTIAL'
+            for proof in row['candidates']:
+                if proof.path==str(Path(output['source'].get('current_path',output['source']['original_path'])).resolve()):output['availability']='在場，內容指紋與長度已核驗'
+            if str(Path(output['source'].get('current_path',output['source']['original_path'])).resolve()) in row['same_name_different']:output['availability']='目前位置內容已改變，不能沿用舊來源'
+        if report['status']=='CANCELLED':result['status']='CANCELLED';result['unsearched_roots']=[str(p) for p in selected[index+1:]];break
+        if report['status']=='PARTIAL':result['status']='PARTIAL'
+    for row in result['rows']:row['candidates'].sort(key=lambda proof:proof.path)
+    return result

@@ -282,7 +282,7 @@ class BatchSourceGuiTests(unittest.TestCase):
         jobs[0][1](jobs[0][0]())
         self.assertEqual(self.dialog.report["status"], "CANCELLED")
         self.assertFalse(self.dialog.apply_button.isEnabled())
-        with patch("template_ai.source_dialog.discover_sources", side_effect=OSError("failed scan")), \
+        with patch("template_ai.source_dialog.discover_source_roots", side_effect=OSError("failed scan")), \
              patch.object(self.window, "run_job", side_effect=lambda message, fn, callback: callback(fn())): self.dialog.search()
         self.assertFalse(self.dialog.busy)
         self.assertIn("failed scan", self.dialog.status.text())

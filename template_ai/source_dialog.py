@@ -1,10 +1,10 @@
-"""單根來源搜尋、明列勾選及可核對批次復原；背景不存取 SQLite。"""
+"""多根有界來源搜尋、唯讀快照、明列勾選及可核對批次復原。"""
 import threading
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QCheckBox, QComboBox, QDialog, QDialogButtonBox, QFileDialog,
     QHBoxLayout, QLabel, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QVBoxLayout)
 
-from .source_discovery import discover_sources
+from .source_discovery import discover_source_roots
 from .source_links import verify_source
 
 
@@ -14,6 +14,7 @@ class SourceRelinkDialog(QDialog):
         self.window = window
         self.library = window.library
         self.root = ""
+        self.roots = []
         self.report = None
         self.busy = False
         self.cancel_event = threading.Event()
@@ -28,6 +29,7 @@ class SourceRelinkDialog(QDialog):
         self.choose_button = QPushButton("選擇搜尋資料夾")
         self.choose_button.clicked.connect(self.choose_root)
         controls.addWidget(self.choose_button)
+        self.clear_button=QPushButton('清除已選搜尋根目錄');self.clear_button.clicked.connect(self.clear_roots);controls.addWidget(self.clear_button)
         self.search_button = QPushButton("搜尋同內容候選")
         self.search_button.clicked.connect(self.search)
         controls.addWidget(self.search_button)
@@ -44,6 +46,7 @@ class SourceRelinkDialog(QDialog):
         self.table.setHorizontalHeaderLabels(["確認身份", "原登錄／來源識別", "目前位置／狀態", "新位置候選", "影響範圍", "内容核對"])
         self.table.setEditTriggers(QTableWidget.NoEditTriggers)
         layout.addWidget(self.table, 1)
+        self.detail_button=QPushButton('查看選取來源完整關聯／資產');self.detail_button.clicked.connect(self.show_details);layout.addWidget(self.detail_button)
         self.apply_button = QPushButton("確認勾選集合並重新連結")
         self.apply_button.clicked.connect(self.apply_selection)
         self.apply_button.setEnabled(False)
@@ -69,19 +72,27 @@ class SourceRelinkDialog(QDialog):
     def choose_root(self):
         if self.busy or self.window.busy:
             return
-        root = QFileDialog.getExistingDirectory(self, "選取已授權的單一本機搜尋根目錄")
+        root = QFileDialog.getExistingDirectory(self, "加入已授權搜尋根目錄（最多16個；重疊部分只搜尋一次）")
         if root:
+            if root not in self.roots and len(self.roots)>=16:
+                self.status.setText('最多16個根目錄，請先清除或縮小搜尋範圍');return
             self.root = root
-            self.path_label.setText(root)
+            if root not in self.roots:self.roots.append(root)
+            self.path_label.setText('已明列搜尋根目錄：'+'；'.join(self.roots))
             self.report = None
             self.table.setRowCount(0)
             self.apply_button.setEnabled(False)
+
+    def clear_roots(self):
+        if self.busy or self.window.busy:return
+        self.root='';self.roots=[];self.report=None;self.table.setRowCount(0);self.apply_button.setEnabled(False)
+        self.path_label.setText('尚未選取搜尋範圍；不搜尋整台電腦')
 
     def start(self, message, function, callback, cancellable=False):
         if self.busy or self.window.busy:
             return
         self.busy = True
-        for button in (self.choose_button, self.search_button, self.apply_button, self.undo_button): button.setEnabled(False)
+        for button in (self.choose_button, self.clear_button,self.search_button, self.apply_button, self.undo_button): button.setEnabled(False)
         self.table.setEnabled(False)
         self.cancel_event.clear()
         self.cancel_button.setEnabled(cancellable)
@@ -92,6 +103,7 @@ class SourceRelinkDialog(QDialog):
         def done(payload):
             self.busy = False
             self.choose_button.setEnabled(True)
+            self.clear_button.setEnabled(True)
             self.search_button.setEnabled(True)
             self.undo_button.setEnabled(True)
             self.table.setEnabled(True)
@@ -106,14 +118,22 @@ class SourceRelinkDialog(QDialog):
         self.window.run_job(message, work, done)
 
     def search(self):
-        if not self.root:
+        roots=list(self.roots or ([self.root] if self.root else []))
+        if not roots:
             self.status.setText("請先選取一個搜尋根目錄")
             return
         sources = self.library.list_sources()
-        for source in sources:
-            source["impacts"] = self.library.source_impacts(source["id"])
+        if len(sources)>2000:
+            self.status.setText('目前來源超過單批2000筆；請先分組核對，未省略來源或宣稱全部完成');return
         self.report = None
-        self.start("唯讀搜尋；不依檔名接受不同內容", lambda: discover_sources(sources, self.root, self.cancel_event), self.show_report, True)
+        root=self.library.root;ids=[s['id'] for s in sources]
+        def work():
+            from .source_context import snapshot_contexts
+            from .source_links import ScanCancelled
+            try:current=snapshot_contexts(root,ids,self.cancel_event)
+            except ScanCancelled:current=sources
+            return discover_source_roots(current,roots,self.cancel_event)
+        self.start("唯讀搜尋明列多根；共用5000項／256MiB預算，不依檔名接受不同內容",work,self.show_report,True)
 
     def show_report(self, report):
         self.report = report
@@ -144,8 +164,9 @@ class SourceRelinkDialog(QDialog):
         self.table.resizeRowsToContents()
         names = {"COMPLETE":"指定範圍搜尋完成", "PARTIAL":"僅完成部分搜尋，不能稱全部找齊", "CANCELLED":"已取消搜尋，未更新來源"}
         errors = "；".join(e["reason"] for e in report["errors"][:3])
-        self.status.setText(f"{names[report['status']]}；已查看 {report['entries']} 項、核對 {report['hashed_files']} 檔；略過／錯誤 {len(report['errors'])}。" + errors)
+        self.status.setText(f"{names[report['status']]}；根目錄{len(report.get('roots',[]))}，重疊略過{len(report.get('overlapping_roots',[]))}；已查看 {report['entries']} 項、核對 {report['hashed_files']} 檔；略過／錯誤 {len(report['errors'])}。" + errors)
         self.apply_button.setEnabled(report["status"] != "CANCELLED" and any(r["candidates"] for r in report["rows"]))
+        if report['rows']:self.table.setCurrentCell(0,1)
 
     def apply_selection(self):
         if self.busy or not self.report or self.report["status"] == "CANCELLED": return
@@ -162,8 +183,26 @@ class SourceRelinkDialog(QDialog):
         if QMessageBox.question(self, "確認重連集合", f"已逐筆核實這 {len(selected)} 條來源的身份與影響範圍？\n內容相同不能代替客戶映射確認。只更新位置，保留原登錄、作品與模板。") != QMessageBox.Yes:
             return
         def verify():
-            return [{"source_id": s["id"], "expected_revision": s["link_revision"], "proof": verify_source(path, s["hash"])} for s, path in selected]
+            return [{"source_id": s["id"], "expected_revision": s["link_revision"], "expected_context":s['impacts']['context_sha256'], "proof": verify_source(path, s["hash"])} for s, path in selected]
         self.start("再次核對勾選集合內容", verify, lambda requests: self.commit(requests))
+
+    def show_details(self):
+        if self.busy or not self.report:return
+        index=self.table.currentRow()
+        if not 0<=index<len(self.report['rows']):return
+        from PySide6.QtWidgets import QTreeWidget,QTreeWidgetItem
+        from .source_context import presentation_rows
+        source=self.report['rows'][index]['source'];impact=source.get('impacts')
+        if not impact:return
+        dialog=QDialog(self);dialog.setWindowTitle('來源重連影響：'+source['id']);dialog.resize(1020,700);layout=QVBoxLayout(dialog)
+        note=QLabel('僅修改同位元來源的位置；原客戶、每張版型與作品ID維持獨立。下列是已登錄依賴，資產存在不代表已通過字型／Logo／正式輸出驗證。');note.setWordWrap(True);layout.addWidget(note)
+        tree=QTreeWidget();tree.setHeaderLabels(['分類／識別','目前關聯／版本','資產位置／核對狀態']);layout.addWidget(tree,1)
+        for values in presentation_rows(impact):
+            item=QTreeWidgetItem(values)
+            for column,value in enumerate(values):item.setToolTip(column,value)
+            tree.addTopLevelItem(item)
+        for column,width in enumerate((240,300,420)):tree.setColumnWidth(column,width)
+        close=QDialogButtonBox(QDialogButtonBox.Close);close.rejected.connect(dialog.reject);layout.addWidget(close);dialog.exec()
 
     def commit(self, requests, undo_of=None):
         record = self.library.relink_sources(requests, approved=True, undo_of=undo_of)

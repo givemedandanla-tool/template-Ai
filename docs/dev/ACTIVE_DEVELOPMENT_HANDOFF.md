@@ -10,3 +10,7 @@
 - 下一UI049：既有source_discovery單根與source_dialog/relink_source雙層CAS和撤銷可重用；缺多根、完整customer/style/訓練/字型Logo依賴摘要及audit固化。不得只憑hash合併客戶，原檔不改，來源／關聯／正式Gate仍分別驗證。
 - UI031/032/REV02仍需真合法AI、Windows受控字型安裝/host font輸出權利/版本映射；REV04真16GB/RTX5050/VivoBook不可由Linux替代。UI048 LAST，UI056D/REV03既定延後。
 - 修改來源前先把140 completed標pending、保存previous_evidence/清latest、render；源凍結後正式全回歸再恢復完成。
+
+- 當前source開始UI049擴充；140歷史完成要求已標pending，latest_evidence=None，不能以先前652宣稱新source已驗證。
+
+- UI049 WIP可恢復階段：已接多根共享5000項/256MiB搜尋、只讀獨立SQLite快照、完整customer/style/person-scope/training/asset依賴、GUI逐筆詳情與context CAS稽核。8新測試+36原相關測試=44/44 PASS；UI049尚未11原條款註冊/全formal/capture，不結案。下一補全局context/audit記憶限額、單件舊入口同稽核、capture與完整11條。

@@ -762,3 +762,12 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 剩餘28本輪已完成UI046/UI047兩題，共21原條款；正式652/652 PASS、Qt錯誤0、capture成功、來源未變。全75：46 VERIFIED／26 PARTIAL／3 DEFERRED；固定70：44閉合／26仍部分。CORE87／GOV7另計。
 - 真GUI備份/隔離測試還原/現有差異capture，32新備份測試納入正式全652；全部140 claims匹配固定來源與contract digest。
 - 證據附件逐SHA/bytes核對，31文字metadata GitHub、100媒體依既定metadata-first保留本機；不改歷史失敗run、不主張獨立覆核。下一UI049完整11條。
+
+### UI049 implementation contract before modification
+- 依原11完整規範補多根搜尋、共用有界預算、逐筆歧義選擇、customer/style/訓練/字型Logo資產影響與重連audit固定；只用同位元SHA+length，不改來源、不換客戶、不放寬Gate。
+- 計畫測試：重疊/離線/取消/全局超額根、實際同內容異名獨立客戶、關聯在預覽後變更CAS、逐資產依賴缺失、GUI勾選與撤銷；沿用既有單筆/批次24測試。來源變更先標140 pending；10分鐘或可恢復階段checkpoint。
+
+### UI049 multi-root/context WIP checkpoint
+- 多根重疊只掃一次、共享資源預算、離線/取消/未搜尋根明列；同內容異名維持獨立source/customer/style/person作用域。
+- 以獨立read-only SQLite交易取完整關聯，GUI背景掃描/具名詳情，確認前context digest CAS；每筆批次固化mapping evidence。
+- 8新測試與36相關原測試共44 PASS（/tmp/remaining28-relink-scope-001.log）；未正式全驗、不結案UI049。下一全局context/audit預算與單件舊入口一致稽核後capture/原11條。
