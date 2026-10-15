@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI051-COMPLETE-NEXT-UI052",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-UI051-FORMAL003-SOURCE.receipt.json",
-  "last_confirmed_commit": "3f89aa5d6a51a6f98611ec76b33a75c5b443cbc7",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-UI051-VERIFIED.receipt.json",
+  "last_confirmed_commit": "b7d9b584556590febc7fb49e5eb10d62ac86f949",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -29,9 +29,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261015-REMAINING28-UI051-VERIFIED"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-RUNTIME.json",
@@ -409,8 +407,8 @@
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
   "publication_status": {
     "run": "RUN-REMAINING28-RUNTIME-003",
-    "text_metadata_remote_verified": false,
-    "publication_scope_gate": "PENDING_REMOTE_READBACK",
+    "text_metadata_remote_verified": true,
+    "publication_scope_gate": "PASS",
     "local_media_count": 112,
     "strict_all_attachment_publication": false
   },
@@ -492,13 +490,14 @@
   ],
   "active_work_package_plan": "docs/dev/UI051_EXECUTION_PLAN.json",
   "formal_execution_watch": {
-    "run": "RUN-REMAINING28-RUNTIME-002",
-    "source_commit": "da132107ddfbd64e65432a14f953070c7e2f1598",
-    "state": "INTERRUPTED_REGRESSION_IDENTIFIED_NOT_PASS",
-    "complete": false,
-    "partial_completed": 408,
-    "partial_passed": 408,
-    "current_test": "test_logo_workflow_gui.LogoWorkflowGuiTests.test_generic_worker_start_failure_restores_controls_and_does_not_leave_job",
-    "evidence": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-002/interrupted.json"
+    "run": "RUN-REMAINING28-RUNTIME-003",
+    "source_commit": "8f8f638a1096f0aeb8aebe2231d6d49b96970c05",
+    "state": "COMPLETED_PASS",
+    "complete": true,
+    "tests": 749,
+    "passed": 749,
+    "unhandled_runtime_errors": 0,
+    "capture_exit_code": 0,
+    "source_unchanged": true
   }
 }
