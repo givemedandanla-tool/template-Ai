@@ -1,7 +1,7 @@
 """Shared watcher workbench; explicit root permissions and candidate-to-UI003 handoff."""
 from pathlib import Path
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QLabel,QPushButton,QComboBox,QPlainTextEdit,QFileDialog,QCheckBox,QLineEdit,QTreeWidget,QTreeWidgetItem,QMessageBox,QDialogButtonBox)
+from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QLabel,QPushButton,QComboBox,QPlainTextEdit,QFileDialog,QCheckBox,QLineEdit,QTreeWidget,QTreeWidgetItem,QMessageBox,QDialogButtonBox,QInputDialog)
 from .training_store import TrainingStore,digest
 from .source_scan import (register_root,configure_root,active_roots,candidate_page,review_candidate,record_dispatch,DEFAULT_EXCLUDES,EXTENSIONS)
 from .source_links import verify_source
@@ -12,7 +12,7 @@ CONFIG_KEYS=['path','recursive','extensions','excludes','mode','enabled','archiv
 
 class SourceScanDialog(QDialog):
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.store=TrainingStore.bind(window.library);self.service=window.source_watch;self.running=False;self.offset=0;self.dirty=False;self.loading=True;self.root_snapshot=None;self.training_dialog=None
+        super().__init__(window);self.window=window;self.store=TrainingStore.bind(window.library);self.service=window.source_watch;self.running=False;self.offset=0;self.scan_offset=0;self.dirty=False;self.loading=True;self.root_snapshot=None;self.training_dialog=None
         self.setWindowTitle('來源監看／安全增量候選');self.resize(1120,850);layout=QVBoxLayout(self)
         note=QLabel('僅限明列本機根目錄。事件只是提示，程式開啟時以600ms去抖、30秒及重啟補掃核對；最多128個即時目錄提示點。每次500項／雙讀取256MiB，超額明示部分。候選會保存，真正訓練仍由既有一鍵預檢確認；不自動核准客戶、永久規則或正式模板。');note.setWordWrap(True);layout.addWidget(note)
         self.status=QLabel('選取來源根目錄；掃描只讀原稿，離線不當作刪除。');self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status)
@@ -22,8 +22,10 @@ class SourceScanDialog(QDialog):
         self.formats=QLineEdit(','.join(sorted(EXTENSIONS)));form.addRow('支援格式（逗號分隔）',self.formats)
         self.excludes=QPlainTextEdit('\n'.join(DEFAULT_EXCLUDES));self.excludes.setMaximumHeight(75);form.addRow('排除相對路徑／檔名（每行一項）',self.excludes);layout.addLayout(form)
         controls=QHBoxLayout();self.add_button=self.button(controls,'選定新來源根目錄',self.add);self.button(controls,'保存設定',self.save_settings);self.button(controls,'開始監看／套用設定',self.start_watch);self.button(controls,'暫停監看',self.pause);self.button(controls,'移除此監看來源',self.remove);self.scan_button=self.button(controls,'立即安全補掃',self.scan);self.button(controls,'取消本次／待掃',self.cancel);layout.addLayout(controls)
-        self.only_changed=QCheckBox('掃描結果只顯示變更／問題（總數保留）');self.only_changed.toggled.connect(self.render_current);layout.addWidget(self.only_changed)
+        inspect_row=QHBoxLayout();self.scan_items=QComboBox();inspect_row.addWidget(self.scan_items,1);self.button(inspect_row,'查看原來源完整影響',self.inspect_source);self.button(inspect_row,'重核未變來源／快取',self.recheck_existing);layout.addLayout(inspect_row)
+        self.only_changed=QCheckBox('掃描結果只顯示變更／問題（總數保留）');self.only_changed.toggled.connect(self.reset_scan_page);layout.addWidget(self.only_changed)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setMaximumHeight(190);layout.addWidget(self.details)
+        scan_pages=QHBoxLayout();self.button(scan_pages,'掃描摘要上一頁',lambda:self.scan_page(-1));self.button(scan_pages,'掃描摘要下一頁',lambda:self.scan_page(1));layout.addLayout(scan_pages)
         self.candidates=QTreeWidget();self.candidates.setHeaderLabels(['選取／檔名','候選狀態','內容版本／實際工作','來源位置']);layout.addWidget(self.candidates,1)
         for column,width in enumerate((190,250,280,350)):self.candidates.setColumnWidth(column,width)
         actions=QHBoxLayout();self.button(actions,'上一頁50筆',lambda:self.page(-1));self.button(actions,'下一頁50筆',lambda:self.page(1));self.button(actions,'重新載入',self.reload);self.button(actions,'核對修改版為新候選',self.review);self.button(actions,'交既有一鍵預檢／開啟工作',self.launch);layout.addLayout(actions)
@@ -52,7 +54,7 @@ class SourceScanDialog(QDialog):
         if root and (not self.dirty or not self.root_snapshot or self.root_snapshot['id']!=root['id']):
             self.loading=True;self.root_snapshot=root;self.mode.setCurrentIndex(1 if root.get('mode')=='AUTO_PRECHECK' else 0);self.recursive.setChecked(root.get('recursive',False));self.formats.setText(','.join(root.get('extensions',sorted(EXTENSIONS))));self.excludes.setPlainText('\n'.join(root.get('excludes',DEFAULT_EXCLUDES)));self.loading=False;self.dirty=False
         if not root:self.root_snapshot=None
-        self.offset=0;self.render_current()
+        self.offset=0;self.scan_offset=0;self.render_current()
 
     def form_options(self):return dict(recursive=self.recursive.isChecked(),extensions=[s.strip().lower() for s in self.formats.text().split(',') if s.strip()],excludes=[s.strip() for s in self.excludes.toPlainText().splitlines() if s.strip()])
 
@@ -85,7 +87,8 @@ class SourceScanDialog(QDialog):
             try:self.service.remove(identity);self.dirty=False;self.reload()
             except Exception as error:self.status.setText('未移除：'+str(error))
     def scan(self):
-        try:self.running=True;self.service.request_manual(self.roots.currentData())
+        try:
+            self.running=True;self.scan_button.setEnabled(False);self.status.setText('已排入本次安全補掃；等待共用背景工作空檔');self.service.request_manual(self.roots.currentData())
         except Exception as error:self.running=False;self.status.setText('未排入掃描：'+str(error))
     def cancel(self):self.service.cancel_root(self.roots.currentData())
 
@@ -100,23 +103,62 @@ class SourceScanDialog(QDialog):
         identity=self.roots.currentData();root=self.store.get('SCAN_ROOT',identity) if identity else None;self.candidates.clear()
         if not root:self.details.setPlainText('尚無有效來源根目錄');return
         attempt=root.get('latest_attempt') or root.get('last_scan') or {};rows=attempt.get('entries',[]);shown=[r for r in rows if not self.only_changed.isChecked() or r['state']!='UNCHANGED']
-        lines=[f"上次完整核對時間：{root.get('last_success') or '尚無'}；目前結果 {attempt.get('state','尚未掃描')}；本次顯示{len(shown)}／{len(rows)}檔案處置；已核對目錄項{attempt.get('scanned_entries','未知')}。",'檔案數不是作品數；未變不是已學習／已核准。']
-        for row in shown[:50]:lines.append(f"{row['path']}\n  {LABELS.get(row['state'],row['state'])} [{row['state']}]；SHA {row.get('verified_hash',row.get('hash','尚未核驗'))}；{row.get('reason','')}")
-        if len(shown)>50:lines.append('此處僅顯示前50筆掃描摘要；完整結果及候選已持久保存，並非全部處置完成。')
+        from datetime import datetime
+        last=datetime.fromtimestamp(root['last_success']).astimezone().strftime('%Y-%m-%d %H:%M:%S %Z') if root.get('last_success') else '尚無'
+        lines=[f"上次完整核對時間：{last}；目前結果 {attempt.get('state','尚未掃描')}；本次顯示{len(shown)}／{len(rows)}檔案處置；已核對目錄項{attempt.get('scanned_entries','未知')}。",'檔案數不是作品數；未變不是已學習／已核准。']
+        selected=self.scan_items.currentText();self.scan_items.clear()
+        for row in shown[self.scan_offset:self.scan_offset+50]:self.scan_items.addItem(Path(row['path']).name+'／'+LABELS.get(row['state'],row['state']),row)
+        index=self.scan_items.findText(selected)
+        if index>=0:self.scan_items.setCurrentIndex(index)
+        for row in shown[self.scan_offset:self.scan_offset+50]:lines.append(f"{row['path']}\n  {LABELS.get(row['state'],row['state'])} [{row['state']}]；SHA {row.get('verified_hash',row.get('hash','尚未核驗'))}；作品記錄{row.get('artwork_count','未知')}；原來源{','.join(row.get('affected_source_ids',[])) or '未登錄'}；{row.get('reason','')}")
+        if len(shown)>50:lines.append(f'掃描摘要本頁{self.scan_offset+1}～{min(self.scan_offset+50,len(shown))}／{len(shown)}；可翻頁核對；完整結果與候選已持久保存，不代表全部已處置。')
         self.details.setPlainText('\n'.join(lines))
         for candidate in candidate_page(self.store,identity,self.offset):
             item=QTreeWidgetItem([Path(candidate['path']).name,LABELS.get(candidate['state'],candidate['state']),candidate['source_hash']+'／'+str(candidate.get('auto_job_id','未建立訓練工作')),candidate['path']]);item.setFlags(item.flags()|Qt.ItemIsUserCheckable);item.setCheckState(0,Qt.Unchecked);item.setData(0,Qt.UserRole,candidate)
             for column in range(4):item.setToolTip(column,item.text(column))
             self.candidates.addTopLevelItem(item)
 
+    def reset_scan_page(self,*args):self.scan_offset=0;self.render_current()
+    def scan_page(self,direction):self.scan_offset=max(0,self.scan_offset+direction*50);self.render_current()
     def page(self,direction):self.offset=max(0,self.offset+direction*50);self.render_current()
     def selected(self):return [self.candidates.topLevelItem(i).data(0,Qt.UserRole) for i in range(self.candidates.topLevelItemCount()) if self.candidates.topLevelItem(i).checkState(0)==Qt.Checked]
+
+    def inspect_source(self):
+        row=self.scan_items.currentData()
+        if self.window.busy or not row:self.status.setText('先選取本頁來源，並等待背景空閒');return
+        ids=row.get('affected_source_ids',[]) or row.get('registered_source_ids',[])
+        if not ids:self.status.setText('此檔尚未登錄原來源／作品；請先由候選核對預檢');return
+        identity=ids[0]
+        if len(ids)>1:
+            identity,accepted=QInputDialog.getItem(self,'選取保留來源版本','只查看確切來源ID，不改客戶映射',ids,0,False)
+            if not accepted:return
+        data_root=self.window.library.root
+        def work():
+            from .source_context import snapshot_contexts
+            try:return dict(source=snapshot_contexts(data_root,[identity])[0])
+            except Exception as error:return dict(error=str(error))
+        def done(payload):
+            if payload.get('error'):self.status.setText('影響查詢未完成：'+payload['error']);return
+            from .source_dialog import SourceRelinkDialog
+            from .source_discovery import availability
+            source=payload['source'];preview=SourceRelinkDialog(self.window);preview.setParent(self,Qt.Dialog)
+            preview.show_report(dict(status='COMPLETE',roots=[],entries=0,hashed_files=0,errors=[],rows=[dict(source=source,availability=availability(source),candidates=[],same_name_different=[])]))
+            preview.show_details();preview.close();preview.deleteLater()
+        try:self.window.run_job('唯讀核對原來源關聯',work,done)
+        except Exception as error:self.status.setText('未開始影響查詢：'+str(error))
+
+    def recheck_existing(self):
+        row=self.scan_items.currentData()
+        if self.window.busy or not row or not row.get('registered') or row['state']!='UNCHANGED':self.status.setText('只對已核驗且未變的既有來源重核；修改版請先人工核對新候選');return
+        from .automatic_training_dialog import AutomaticTrainingDialog
+        dialog=AutomaticTrainingDialog(self.window);dialog.setParent(self,Qt.Dialog);self.training_dialog=dialog;dialog.show();dialog.preflight([row['path']],expected_hashes={row['path']:row['verified_hash']})
+        self.status.setText('已交既有管線重核解析／規則／模型／作品依賴；只重算失效單元，是否重用以實際預檢為準')
 
     def review(self):
         values=self.selected()
         if self.window.busy or len(values)!=1 or values[0]['state']!='REVIEW_REQUIRED':self.status.setText('請只勾選一筆修改版待審，並等待背景空閒');return
         candidate=values[0]
-        if QMessageBox.question(self,'核對獨立新來源候選',f"原SHA {candidate.get('previous_hash')}\n新SHA {candidate['source_hash']}\n只核准新來源候選進預檢，保留舊版型與客戶歸屬待審，沒有核准正式模板。確認？")!=QMessageBox.Yes:return
+        if QMessageBox.question(self,'核對獨立新來源候選',f"{candidate['path']}\n原SHA {candidate.get('previous_hash')}\n新SHA {candidate['source_hash']}\n只核准新來源候選進預檢，保留舊版型與客戶歸屬待審，沒有核准正式模板。確認？")!=QMessageBox.Yes:return
         actor=self.actor.text();self.running=True
         def work():
             try:return dict(proof=verify_source(candidate['path'],candidate['source_hash']))
@@ -127,7 +169,8 @@ class SourceScanDialog(QDialog):
                 if payload.get('error'):raise ValueError(payload['error'])
                 review_candidate(self.store,candidate,payload['proof'],actor,True);self.render_current();self.status.setText('修改版已核對為新來源候選；請交既有預檢，客戶／模板仍未批准')
             except Exception as error:self.status.setText('未核准候選：'+str(error))
-        self.window.run_job('核對修改版實際內容',work,done)
+        try:self.window.run_job('核對修改版實際內容',work,done)
+        except Exception as error:self.running=False;self.status.setText('未開始候選核對：'+str(error))
 
     def launch(self):
         values=self.selected()
@@ -137,7 +180,10 @@ class SourceScanDialog(QDialog):
         existing={v.get('auto_job_id') for v in values if v['state']=='DISPATCHED'}
         if any(v['state'] not in allowed|{'DISPATCHED'} for v in values) or (existing and (len(existing)!=1 or any(v['state']!='DISPATCHED' for v in values))):self.status.setText('修改版先個別核對；失效／已登錄來源請依原審核流程，既有工作與新候選分開選取');return
         dialog=AutomaticTrainingDialog(self.window);dialog.setParent(self,Qt.Dialog);self.training_dialog=dialog;dialog.show()
-        if existing:dialog.reload(next(iter(existing)));self.status.setText('已開啟確切既有工作，成果與續跑以該介面為準');return
+        if existing:
+            identity=next(iter(existing))
+            if not identity or not self.store.get('AUTO_JOB',identity):dialog.close();self.status.setText('交接憑證找不到實際工作，請重新核對');return
+            dialog.reload(identity);self.status.setText('已開啟確切既有工作，成果與續跑以該介面為準');return
         def created(job):
             try:record_dispatch(self.store,values,job['id']);self.render_current();self.status.setText('已交接實際持久工作；進度與成果以一鍵管線實際結果為準')
             except Exception as error:self.status.setText('實際工作已建立；候選交接憑證未保存：'+str(error))

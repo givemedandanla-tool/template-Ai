@@ -1,5 +1,5 @@
 """Bounded reconciliation, versioned root configuration and candidate index in the existing SQLite."""
-import fnmatch,time
+import fnmatch,time,json
 from pathlib import Path
 from .source_links import hash_source,ScanCancelled
 from .source_discovery import discover_sources
@@ -57,14 +57,17 @@ def configure_root(store,root,*,mode=None,enabled=None,recursive=None,extensions
 
 def known_sources(library,root):
     prefix=str(Path(root['path']).resolve())+__import__('os').sep
-    rows=library.db.execute("SELECT s.id,COALESCE(l.current_path,s.original_path),s.hash,json_extract(s.payload,'$.page') FROM sources s LEFT JOIN source_links l ON l.source_id=s.id WHERE substr(COALESCE(l.current_path,s.original_path),1,?)=? ORDER BY s.id LIMIT 2001",(len(prefix),prefix)).fetchall()
+    rows=library.db.execute("SELECT s.id,COALESCE(l.current_path,s.original_path),s.hash,json_extract(s.payload,'$.page'),COALESCE(l.revision,0) FROM sources s LEFT JOIN source_links l ON l.source_id=s.id WHERE substr(COALESCE(l.current_path,s.original_path),1,?)=? ORDER BY s.id LIMIT 2001",(len(prefix),prefix)).fetchall()
     if len(rows)>2000:raise ValueError('單一來源根目錄登錄超過2000筆；請分組核對，未省略舊來源')
     known={}
-    for sid,path,content,page in rows:
+    for sid,path,content,page,link_revision in rows:
         item=known.setdefault(path,dict(hashes=[],sources=[]))
         if content not in item['hashes']:item['hashes'].append(content)
-        item['sources'].append(dict(id=sid,hash=content,page=page))
-    return known,digest(rows)
+        item['sources'].append(dict(id=sid,hash=content,page=page,link_revision=link_revision))
+    counts=dict(library.db.execute('SELECT source_id,count(*) FROM artworks WHERE source_id IN (SELECT value FROM json_each(?)) GROUP BY source_id',(json.dumps([r[0] for r in rows]),)))
+    for value in known.values():
+        for source in value['sources']:source['artwork_count']=counts.get(source['id'],0)
+    return known,digest([rows,sorted(counts.items())])
 
 
 def scan_files(root,known,cancel=lambda:False,stable_wait=.25,progress=None,content_lookup=None):
@@ -100,10 +103,12 @@ def scan_files(root,known,cancel=lambda:False,stable_wait=.25,progress=None,cont
         try:
             second=hash_source(entry['path'],cancel=signal,byte_limit=min(50_000_000,proof.stat[2]));read_bytes+=second.stat[2]
             if proof.hash!=second.hash or proof.stat!=second.stat:entry.update(state='WAIT_STABLE',reason='兩次內容／stat不同，不匯入');continue
+            source_metadata=known.get(entry['path'],{}) if isinstance(known.get(entry['path']),dict) else {}
+            matching=[v for v in source_metadata.get('sources',[]) if v['hash']==second.hash]
             old=prior.get(entry['path']);registered=known_hashes.get(entry['path'],[]);previous=(old.get('hash') if old else None) or (registered[0] if len(registered)==1 else registered or None)
             state='UNCHANGED' if second.hash in registered or previous==second.hash else 'CONTENT_CHANGED_REVIEW_REQUIRED' if previous else 'DUPLICATE_ALIAS_KEEP_IDENTITY' if second.hash in all_hashes or (content_lookup and content_lookup(second.hash)) or any(x.get('hash')==second.hash and x['path']!=entry['path'] for x in rows) else 'NEW_CANDIDATE'
             entry.update(state=state,previous_hash=previous,verified_hash=second.hash,verified_stat=list(second.stat),registered=second.hash in registered,registered_source_ids=[v['id'] for v in (known.get(entry['path'],{}).get('sources',[]) if isinstance(known.get(entry['path']),dict) else []) if v['hash']==second.hash],
-                         customer_code_candidate=Path(entry['path']).stem,artwork_count='UNKNOWN_UNTIL_PARSED')
+                         customer_code_candidate=Path(entry['path']).stem,artwork_count=sum(v['artwork_count'] for v in matching) if matching else 'UNKNOWN_UNTIL_PARSED',affected_source_ids=[v['id'] for v in source_metadata.get('sources',[])],source_link_revisions={v['id']:v['link_revision'] for v in source_metadata.get('sources',[])})
         except ScanCancelled:return dict(state='CANCELLED',entries=rows,scanned_entries=report['entries'],complete=False,originals_modified=False,deletions_inferred=False)
         except (ValueError,OSError) as error:entry.update(state='WAIT_STABLE',reason=str(error))
         if progress:progress(dict(stage='核對第二份內容',done=index+1,total=len(first),path=entry['path']))
@@ -152,7 +157,7 @@ def save_scan(store,root,result,*,automatic=False,cancel=lambda:False):
                     continue
                 state='REVIEW_REQUIRED' if entry['state']=='CONTENT_CHANGED_REVIEW_REQUIRED' else 'QUEUED_FOR_UI003_PREFLIGHT' if automatic else 'FOUND_NOT_QUEUED'
                 payload=dict(root_id=root['id'],root_revision=root['revision'],path=entry['path'],source_hash=entry['verified_hash'],bytes=entry['bytes'],verified_stat=entry['verified_stat'],state=state,
-                             classification=entry['state'],previous_hash=entry.get('previous_hash'),created=time.time(),source_ids=[],artwork_count='UNKNOWN_UNTIL_PARSED',customer_ownership='UNREVIEWED',training_started=False)
+                             classification=entry['state'],previous_hash=entry.get('previous_hash'),created=time.time(),source_ids=[],affected_source_ids=entry.get('affected_source_ids',[]),artwork_count='UNKNOWN_UNTIL_PARSED',customer_ownership='UNREVIEWED',training_started=False)
                 store._write('SCAN_CANDIDATE',identity,payload,0,'source_candidate_indexed_without_training')
         return store._write('SCAN_ROOT',now['id'],now,now['revision'],'source_automatic_scan_recorded' if automatic else 'source_manual_scan_recorded')
 
@@ -183,6 +188,7 @@ def record_dispatch(store,candidates,job_id):
         job=store.get('AUTO_JOB',job_id)
         if not job:raise ValueError('沒有實際UI003持久工作，未標成已交接')
         for candidate in candidates:
+            if candidate['state'] not in ('FOUND_NOT_QUEUED','QUEUED_FOR_UI003_PREFLIGHT','REVIEWED_NEW_VERSION_CANDIDATE'):raise ValueError('候選尚未允許交接預檢，未改寫狀態')
             if not any(item['path']==candidate['path'] and item['source_hash']==candidate['source_hash'] for item in job['items']):raise ValueError('實際工作與候選來源不符')
             current=store.get('SCAN_CANDIDATE',candidate['id'])
             if current!=candidate:raise ValueError('候選在交接期間已變更；實際工作保留，待核對')

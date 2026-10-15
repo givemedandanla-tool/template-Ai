@@ -22,3 +22,6 @@
 
 - UI050 GUI WIP（環境重啟後保留）：SourceScanDialog已重接共用service，明列格式/排除/監看開始暫停移除/手動補掃/有界候選頁，修改版人工作新候選review API；交既有AutomaticTrainingDialog預檢時expected_hashes再核對，真AUTO_JOB建立訊號才記record_dispatch。36整合測試PASS（watch/index/操作/automatic）；尚缺新GUI/交接具名測試、capture/完整12條正式回歸。
 - 最新環境19:25:52恢復，HEAD9bd8713879cf04cc8c75471bbabe63c02a960ade，本機4個source變更仍在，.venv Python3.12.14正常；先保存GUI WIP再續。下一補scan摘要分頁/可讀時間/worker launch守衛、管理GUI交接/真alias兩來源測試，避免只靠舊36就結案。
+
+- UI050 GUI專用5測試全PASS：開始/暫停/移除保護真customer graph/styles；真UI003明確啟動後A001/B002同bytes得到2獨立source IDs與同一真AUTO_JOB的各自收據；修改版No/Yes+後續bytes改變阻擋預檢；dirty設定保留與foreign config CAS；worker啟動失敗釋放。合watch/index/操作27/27 PASS。
+- 新加掃描摘要分頁/可讀時間/已登錄作品記錄數與source-link revisions/affected source IDs；可背景唯讀查看共用完整關聯；未變既有來源可交UI003重核失效依賴。下一補已訓練來源局部變更/移除途中race tests、dirty pause/removed狀態刷新，真capture後綁原12條及正式回歸。UI050仍PARTIAL，141歷史待重驗。

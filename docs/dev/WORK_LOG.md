@@ -800,3 +800,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI050 GUI/bridge WIP and environment restart checkpoint
 - 管理介面已接共用監看服務，root設定/安全暫停移除、候選分頁、修改版人工核對、UI003預檢/實際工作交接；以expected_hashes拒絕候選內容已變，job_created訊號才保存真實交接。
 - 36相關整合PASS（/tmp/remaining28-watch-gui-integration-001.log）；尚缺新增GUI專用驗收及正式全回歸。環境啟動通知後wait_for_environment ready，19:25:52核對HEAD/4未提交source/.venv/測試log均保留；即刻保存階段。UI050仍PARTIAL。
+
+### UI050 actual GUI/source identity handoff checkpoint
+- 新5實際GUI測試PASS，真UI003一鍵開始後相同bytes異名來源保持2個source IDs，候選只在真AUTO_JOB存在且path/hash匹配才DISPATCHED；未明確開始前無AUTO_JOB。
+- 修改版人工審核/取消與後續改bytes、dirty根設定並存/CAS、worker啟動失敗、root移除保留真customer graph/styles均測；加source ID/版次/實際work record counts、掃描摘要分頁與只讀影響檢視。
+- 27整合PASS，下一補既有已訓練來源改版局部失效/途中移除race/capture/原12完整正式；不把目標測試算父題結案。
