@@ -1,5 +1,7 @@
 # 雲端環境與跨對話接續
 
+設定草稿已保存且由工具讀回確認，revision2；精確收據見CLOUD_CONFIG_DRAFT_RECEIPT.json。掛載路徑template-Ai、來源c1fe2ca、安裝及啟動接手指令均吻合。草稿仍需在環境設定儲存並發佈才啟用，尚未宣稱全新任務還原已驗證。
+
 目前實際checkout為`/workspace/template-Ai`、`dev/v0.1-first-version`。開發來源、依賴鎖定、測試及checkpoints已逐段保存GitHub；main為較早文件基準，不應當成目前開發狀態。
 
 可重建指令：`bash tools/cloud_setup.sh`。已在本環境真實執行，使用固定Python依賴、Inkscape、Qt、SQLite及本機Tesseract／官方固定繁中英文模型。pypdf5.9.0只校正PDF毫米頁面盒，不重繪內容。保留現有HTTPS proxy、TLS驗證與受限網域政策；沒有新增token或使用付費推論API。GitHub保存提交帶`[skip ci]`，未啟動Actions或EXE。

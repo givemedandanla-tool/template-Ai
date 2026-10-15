@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "FIXED70-NEXT-TEN-COMPLETED-SELF-VERIFIED",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-TEN-FORMAL-SOURCE.receipt.json",
-  "last_confirmed_commit": "3cd2c22dd1a4529450e62a22a62e944aac179c1c",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-TEN-PARENTS-VERIFIED.receipt.json",
+  "last_confirmed_commit": "c1fe2cab10d4e30de41ccc34e431fc39c0039c4d",
   "latest_evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -29,9 +29,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261015-TEN-PARENTS-VERIFIED"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-RESUME-TEN-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-FIXED70-TEN-END.json",
@@ -407,8 +405,14 @@
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
   "publication_status": {
     "policy": "docs/dev/FULL70_PUBLICATION.json",
-    "text_metadata_persisting": true,
+    "text_metadata_persisting": false,
     "local_media_count": 79,
-    "strict_all_attachment_publication": false
+    "strict_all_attachment_publication": false,
+    "text_metadata_remote_verified": true
+  },
+  "cloud_environment_configuration": {
+    "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
+    "receipt": "docs/dev/CLOUD_CONFIG_DRAFT_RECEIPT.json",
+    "fresh_task_restore_verified": false
   }
 }
