@@ -735,3 +735,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### REMAINING28 UI046 formal milestone
 - RUN002 source a283709672af5c3cf5cac41081971035ad44d259：620/620 PASS、0skip、0unhandled Qt、capture0、source unchanged；UI046 11/11原軟體條款具名PASS。恢復138舊完成要求並結案UI046。原75=45/27/3、固定70=43/27，CORE87/GOV7另計，新增0/修訂並完成1。
 - 127附件逐檔bytes/SHA驗證；97媒體按精確metadata-first policy留ignored，30文字與全部code/tests持久化。NEXT UI047原型8PASS尚未接入source，不當完整功能。
+
+### UI047 relational backup core WIP
+- UI046 milestone已GitHub a308c536cdad390a1626b3fe05d5cfba7846fe48保存與fresh讀回，publication-scope Gate PASS。
+- 已接入relational_backup.py與8項實際SQLite/字型/來源測試：一致性backup+DB/資產SHA pins、AESGCM+scrypt、自驗證再排他發布、字型/原來源權利分開、缺資產/分類依賴/預算拒絕、新目錄隔離restore、path移轉、異名同內容來源保留、錯密碼/毀損/既有目標保護。
+- 8/8目標測試PASS，仍WIP未接GUI；未結案UI047。下一補原位置完全離線、惡意封裝/schema、worker/監看root還原狀態、排程/保留與現有環境差異預覽。139已完成要求待此新source正式重驗，latest_evidence_run已清空，不以舊620PASS宣稱新source已驗證。

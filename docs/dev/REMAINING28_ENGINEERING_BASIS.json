@@ -15,13 +15,30 @@
       "sha256": "9ba13c66be22c0379be760b9643fa8272b35db9288eb84f4038ca6f6788273f3",
       "inspected": "Merge Target/Subordinate, preserve target data, deactivate subordinate, verify access and parenting relationships",
       "reuse": "Design reference only; local SQLite/normalized graphs reused, no Dataverse dependency or service call"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Doc/library/sqlite3.rst",
+      "sha256": "ae534aa61fb6ab8d7bff2e7d33ac3f79e3b06e18acf4ec8081250ef7ff542d76",
+      "inspected": "Connection.backup works with concurrent clients; snapshot then verify integrity/FKs, never raw-copy a live WAL database"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/pyca/cryptography/46.0.3/docs/hazmat/primitives/aead.rst",
+      "sha256": "73a17ff5e8c4fc824a1ef31c789a530109f74c491c04c1f23db2ca9cc29bee16",
+      "inspected": "AESGCM authenticated encryption, independent random salt and 12-byte nonce, verify tag before unpacking; mature AESGCM/Scrypt reused"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/MicrosoftDocs/sql-docs/live/docs/relational-databases/backup-restore/restore-a-database-backup-using-ssms.md",
+      "sha256": "03b5d37793215c56ae2690bfee3ddace118032a4d1b4a340fa693332a258883b",
+      "inspected": "Section C restores Sales to a distinct SalesTest while Sales remains; use isolated destination and compare rather than overwriting newer active data"
     }
   ],
   "mathematical_basis": [
     "SHA256 byte identity is distinct from font name / visual similarity; exact equality cannot infer human/customer identity",
     "Three-valued evidence: observed derivative attributes / unknown native semantics / explicit user attestation; missing evidence cannot become PASS",
     "Disjoint graph union preserves stable people/company/field IDs; style scopes preserve the original subset",
-    "Compare-and-swap exact snapshot digests within BEGIN IMMEDIATE; on split partition CURRENT graph rather than replay stale historical values"
+    "Compare-and-swap exact snapshot digests within BEGIN IMMEDIATE; on split partition CURRENT graph rather than replay stale historical values",
+    "Dependency closure: SQLite consistent whole DB plus actual referenced asset bytes; missing or unauthorized references make the bundle PARTIAL",
+    "SHA256 per member and whole encrypted file distinguish data integrity from successful isolated restoration; AEAD tag binds content before extraction"
   ],
   "commercial_approach": [
     "Separate font activation from OS installation, per-face identity and technical embedding constraints from user licence attestation; no download or licence acceptance on behalf of user"

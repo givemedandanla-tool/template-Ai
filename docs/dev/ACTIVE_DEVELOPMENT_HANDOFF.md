@@ -8,6 +8,6 @@
 - RUN-REMAINING28-IDENTITY-002來源a283709672af5c3cf5cac41081971035ad44d259：620/620 PASS、0跳過、Qt未處理0、capture0、source未改。127附件=30文字metadata/97PNG/JPG/PDF（後者按精確policy留.checkpoints/formal-media，勿重試上傳）。RUN001保留FAIL：617/619，GUI UNKNOWN可見狀態與font-repair fixture授權前提已補正。
 - 累計原75=45 SELF_VERIFIED/27 PARTIAL/3 DEFERRED；固定70完成43剩27，CORE87/GOV7另計。本輪原父題新增0/修訂並完成1；不可把620測試當完成28題。
 - UI031/032/REV02仍部分：已增fontTools4.60.1、TTC明確字面、實際OS2重查與獨立輸出用途授權、原稿衍生SVG字型/效果直接證據；未知原生可編輯性/真轉曲/原稿字級保持UNKNOWN。Host字型授權、Windows安裝/版本及真AI閉環等其餘條款未結案。
-- 下一UI047：完整關聯備份原型/tmp/relational_backup.py、/tmp/test_relational_backup.py（8PASS）尚未接入source/GUI。用SQLite online backup、AESGCM+scrypt、逐檔SHA manifest、原始來源/字型獨立權利、new-target隔離還原與path遷移；仍需惡意封裝/schema、排程/保留、完整GUI與新machine離線測試。先保存此里程碑與讀回，再改source；改source時把139已完成要求標待新來源重驗且latest_evidence_run清空。
+- 進行UI047：template_ai/relational_backup.py與tests/test_relational_backup.py（原型8PASS）已接入source，尚無GUI。139既有完成要求現為待新來源正式重驗，latest_evidence_run已清空，620PASS/45父題是上一milestone。用SQLite online backup、AESGCM+scrypt、逐檔SHA manifest、原始來源/字型獨立權利、new-target隔離還原與path遷移；仍需惡意封裝/schema、排程/保留、完整GUI與新machine離線測試。先保存此里程碑與讀回，再改source；改source時把139已完成要求標待新來源重驗且latest_evidence_run清空。
 - 同庫重用Library/TrainingStore/InputGraph/Qt/Inkscape，不建平行資料庫；REMAINING28_ENGINEERING_BASIS保存fontTools實檔hash與Dataverse公開merge思路、圖聯集/CAS/目前圖拆分。模型是離線規則+本機NB，無付費AI API。
 - 只Linux合成SELF與真Qt/數位檔；Windows/真實私人AI全面/參考VivoBook與RTX5050/實體印刷/獨立覆核未驗證。UI048最後、REV03/UI056D延後。雲端Python3.12/Qt6.8.3/fontTools4.60.1；XDG_CACHE_HOME=/workspace/.cache QT_QPA_PLATFORM=offscreen TEMPLATE_AI_TESSDATA=.../local-data/tessdata。
