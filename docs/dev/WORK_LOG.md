@@ -860,3 +860,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - UI051逐項超時與safe receipt recovery完成可恢復階段：16專用PASS、69廣PASS、22startup/resources PASS；007式錯誤不覆蓋歷史log。新source/work RUNNING先落盤、唯一timeout項隔離後繼續其他已准範圍，FAILED不自動重試、retry一次消耗，已提交完成但receipt失敗可核對補收據不重做。反例/數學/界線見UI051_TIMEOUT_RECOVERY.md。原8未formal尚不標整父題VERIFIED，後續capture/全回歸。
 
 - UI051 formal source staging：原8全文原封綁定，5registered52原條但未把UI051算完成。21GUI及完整allcapture PASS，觀察PNG後修label/column/tooltip及WORK細節更新；capture實測host明示reference未驗。source registration+JOB link加same transaction及owner guard，新11個atomic/supervisor在跑；formal全746待ACK後。
+
+### Formal runtime001 incomplete attempt / diagnostic observability
+- source6a7ded4全746正式runner約12分鐘沒有終報，SIGINT未讓C/Qt等待返回，22:08:09 SIGTERM；無已收集單項結果/無capture，不宣稱pass或測試0失敗。停止前code manifest未變，原log及3source proof保持，另建INTERRUPTED attempt metadata，不偽造正式run.json。
+- 臨時read-only py-spy0.4.1診斷工具在workspace uv工具cache下載，app .venv/lock未改；OS拒絕附加既有process，未申請提權，採標準庫faulthandler。新runner每test原子local progress＋append結果（ignored .checkpoints/formal-live），60秒C watchdog dump各thread堆疊，最終原QA仍由實際TestResult/來源/traceability判定。7個現有supervisor Smoke PASS，正式002待新source ACK。

@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI051-FORMAL-STAGED",
+  "active_task": "REMAINING28-UI051-FORMAL001-INTERRUPTED-DIAGNOSTICS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-RUNTIME001-IN-PROGRESS.receipt.json",
   "last_confirmed_commit": "b52d55399ae71696c6a1de7feabbabf6b034960d",
   "latest_evidence_run": null,
@@ -20,7 +20,7 @@
     {
       "id": "UI051-LOW-LOAD-FAIR-QUEUE",
       "status": "IN_PROGRESS",
-      "next": "先保存原8條工作包/依據；pin已安裝psutil7.2.2並保持lock，再資源探測/背壓、bounded startup catalogs、同DB FIFO requests和GUI。142歷史完成待新source重驗，UI051仍PARTIAL。"
+      "next": "RUN001約12分鐘無終報且SIGINT無效後SIGTERM，僅partial source proof/原log，未PASS。新增EvidenceResult逐測試ignored journal與stdlib faulthandler60s dump，7 smokePASS。ACK此新source，freshreadback後RUN-RUNTIME002，用live/test-progress.json和timeout-stacks.log定位，不改歷史run。"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-RUNTIME001-INTERRUPTED-DIAGNOSTICS"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-WATCH.json",
@@ -562,7 +564,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": null,
+  "planned_evidence_run": "RUN-REMAINING28-RUNTIME-002",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -634,10 +636,12 @@
   "formal_execution_watch": {
     "run": "RUN-REMAINING28-RUNTIME-001",
     "source_commit": "6a7ded47b1668be7fc9df98e8ea9f1b74aedc61b",
-    "state": "RUNNING_NO_FINAL_RESULT",
+    "state": "INTERRUPTED_NO_FINAL_RESULT",
     "code_and_acceptance_unchanged": true,
     "complete": false,
     "observed_at": "2026-10-15T22:04:38Z",
-    "note": "Periodic persistence metadata only;formal runner has not emitted final result;checking possible GUI wait"
+    "note": "Periodic persistence metadata only;formal runner has not emitted final result;checking possible GUI wait",
+    "attempt": "docs/evidence/attempts/REMAINING28/runtime-formal001-interrupted.json",
+    "stopped_at": "2026-10-15T22:08:09Z"
   }
 }

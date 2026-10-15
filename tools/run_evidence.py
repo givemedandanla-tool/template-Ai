@@ -13,6 +13,7 @@ import sys
 import time
 import traceback
 import unittest
+import faulthandler
 import xml.etree.ElementTree as ET
 
 from dev_common import ROOT, contract_digest, digest, manifest, manifest_digest, read_json, valid_id, write_json
@@ -22,13 +23,21 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 
 class EvidenceResult(unittest.TextTestResult):
-    def __init__(self, *args):
+    def __init__(self, *args, progress_path=None):
         super().__init__(*args)
         self.records = {}
+        self.progress_path=progress_path
+
+    def progress(self,test,phase):
+        if self.progress_path is None:return
+        completed=[record for record in self.records.values() if 'seconds' in record]
+        value=dict(phase=phase,current_test=test.id() if test else None,started=len(self.records),completed=len(completed),passed=sum(record['status']=='PASS' for record in completed),failed_ids=[record['id'] for record in completed if record['status'] in ('FAIL','ERROR','UNEXPECTED_SUCCESS')][:20],formal_complete=False,updated_at=datetime.now(timezone.utc).isoformat())
+        temporary=self.progress_path.with_suffix('.tmp');write_json(temporary,value);os.replace(temporary,self.progress_path)
 
     def startTest(self, test):
         super().startTest(test)
         self.records[test.id()] = {"id": test.id(), "status": "RUNNING", "started": time.perf_counter(), "details": []}
+        self.progress(test,'RUNNING_TEST')
 
     def addSuccess(self, test):
         super().addSuccess(test)
@@ -67,6 +76,9 @@ class EvidenceResult(unittest.TextTestResult):
         record = self.records[test.id()]
         record["seconds"] = round(time.perf_counter() - record.pop("started"), 6)
         super().stopTest(test)
+        if self.progress_path is not None:
+            with self.progress_path.with_suffix('.jsonl').open('a',encoding='utf-8') as journal:journal.write(json.dumps(record,ensure_ascii=False)+'\n')
+        self.progress(test,'TEST_FINISHED')
 
 
 def junit(records, path):
@@ -108,18 +120,25 @@ def main():
     write_json(folder / "tree.json", tree)
     write_json(folder / "source-manifest.json", before)
     log = io.StringIO()
-    runner = unittest.TextTestRunner(stream=log, verbosity=2, resultclass=EvidenceResult)
+    live=ROOT/'.checkpoints'/'formal-live'/args.run_id;live.mkdir(parents=True,exist_ok=False)
+    progress_path=live/'test-progress.json';stack_log=(live/'timeout-stacks.log').open('w',encoding='utf-8')
+    runner = unittest.TextTestRunner(stream=log, verbosity=2, resultclass=lambda *values:EvidenceResult(*values,progress_path=progress_path))
     runtime_errors=[];previous_hook=sys.excepthook
     def runtime_hook(kind,value,tb):
         runtime_errors.append(dict(type=kind.__name__,message=str(value),traceback=''.join(traceback.format_exception(kind,value,tb))))
         previous_hook(kind,value,tb)
     sys.excepthook=runtime_hook
+    faulthandler.enable(file=stack_log,all_threads=True);faulthandler.dump_traceback_later(60,repeat=True,file=stack_log)
     try:
         result = runner.run(unittest.defaultTestLoader.discover(str(ROOT / "tests")))
+        result.progress(None,'FLUSHING_QT_EVENTS')
         from PySide6.QtWidgets import QApplication
         from PySide6.QtCore import QCoreApplication,QEvent
         if QApplication.instance():QApplication.instance().processEvents();QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete)
-    finally:sys.excepthook=previous_hook
+    finally:
+        sys.excepthook=previous_hook;faulthandler.cancel_dump_traceback_later();faulthandler.disable();stack_log.close()
+    for diagnostic in live.iterdir():
+        if diagnostic.is_file():shutil.copy2(diagnostic,folder/diagnostic.name)
     write_json(folder/'runtime-errors.json',runtime_errors)
     records = list(result.records.values())
     write_json(folder / "tests.json", records)

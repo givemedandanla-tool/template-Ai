@@ -1,3 +1,5 @@
+> 最新正式狀態：RUN-REMAINING28-RUNTIME-001未結束，約12分鐘後停止；不是PASS，不可執行close_runtime_milestone.py。原證據docs/evidence/attempts/REMAINING28/runtime-formal001-interrupted.json及partial run folder。原8已綁仍4/28歷史完成。新增逐測試live journal與faulthandler60s堆疊（.checkpoints/formal-live/RUN-...），7smokePASS；新source ACK後跑002定位停滯。
+
 # 當前精簡接手
 
 - 核心：零例行問答、按需rg/小段讀，一般輸出≤1600tokens；每可恢復階段及10分鐘checkpoint。無多代理/EXE/main merge，提交[skip ci]。
