@@ -19,3 +19,6 @@
 
 - UI050 service WIP：source_watch SourceWatchService已接MainWindow，Qt QFileSystemWatcher根/最多128提示點、600ms去抖、30秒補掃/啟動補掃、FIFO共享run_job、實際worker獨立SQLite、root與來源索引digest CAS、途中取消/延後安全pause及close守衛。6新真Qt事件測試+7index+9操作=22PASS；前62相關也PASS。
 - source_scan known_sources局部SQL最多2000登錄（同路徑多版本hash保留），內容全庫查索引判alias只當線索；候選不自動訓練，已實際登錄仍標需歸屬審核。下一重寫SourceScanDialog接共用service及根控制/候選分頁/UI003交接，現舊GUI仍手動，勿結案UI050。
+
+- UI050 GUI WIP（環境重啟後保留）：SourceScanDialog已重接共用service，明列格式/排除/監看開始暫停移除/手動補掃/有界候選頁，修改版人工作新候選review API；交既有AutomaticTrainingDialog預檢時expected_hashes再核對，真AUTO_JOB建立訊號才記record_dispatch。36整合測試PASS（watch/index/操作/automatic）；尚缺新GUI/交接具名測試、capture/完整12條正式回歸。
+- 最新環境19:25:52恢復，HEAD9bd8713879cf04cc8c75471bbabe63c02a960ade，本機4個source變更仍在，.venv Python3.12.14正常；先保存GUI WIP再續。下一補scan摘要分頁/可讀時間/worker launch守衛、管理GUI交接/真alias兩來源測試，避免只靠舊36就結案。

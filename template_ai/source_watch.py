@@ -13,7 +13,7 @@ class SourceWatchService(QObject):
 
     def __init__(self,window):
         super().__init__(window);self.window=window;self.closed=False;self.running=False;self.current_root=None;self.last_result=None;self.last_status='尚未掃描'
-        self.pending=deque();self.reasons={};self.roots={};self.configs={};self.pause_pending=set();self.cancel_event=threading.Event();self.statuses={}
+        self.pending=deque();self.reasons={};self.roots={};self.configs={};self.pause_pending=set();self.remove_pending=set();self.cancel_event=threading.Event();self.statuses={}
         self.watcher=QFileSystemWatcher(self);self.watcher.directoryChanged.connect(self.hint);self.watcher.fileChanged.connect(self.hint)
         self.debounce=QTimer(self);self.debounce.setSingleShot(True);self.debounce.setInterval(600);self.debounce.timeout.connect(self.dispatch)
         self.timer=QTimer(self);self.timer.setInterval(30_000);self.timer.timeout.connect(self.tick);self.timer.start()
@@ -77,6 +77,12 @@ class SourceWatchService(QObject):
         root=TrainingStore.bind(self.window.library).get('SCAN_ROOT',identity)
         configure_root(TrainingStore.bind(self.window.library),root,enabled=False);self.reasons.pop(identity,None);self.pending=deque(i for i in self.pending if i!=identity);self.sync();self.status(identity,'PAUSED','已暫停監看；來源、客戶、既有訓練與候選保留')
 
+    def remove(self,identity):
+        if self.running and self.current_root==identity:
+            self.remove_pending.add(identity);self.pause(identity);return
+        store=TrainingStore.bind(self.window.library);root=store.get('SCAN_ROOT',identity)
+        configure_root(store,root,archive=True);self.reasons.pop(identity,None);self.pending=deque(i for i in self.pending if i!=identity);self.sync();self.status(identity,'REMOVED','已停止此根目錄後續掃描；原來源、客戶、模板、訓練及候選歷史均保留')
+
     def dispatch(self):
         if self.closed or self.running or not self.pending:return
         if self.window.busy:
@@ -107,7 +113,9 @@ class SourceWatchService(QObject):
             if self.closed:return
             if identity in self.pause_pending:
                 self.pause_pending.remove(identity)
-                try:self.pause(identity)
+                try:
+                    if identity in self.remove_pending:self.remove_pending.remove(identity);self.remove(identity)
+                    else:self.pause(identity)
                 except Exception as error:self.status(identity,'PAUSE_FAILED','本次已取消；停用設定未保存：'+str(error))
             elif payload.get('cancelled'):self.status(identity,'CANCELLED','本次已取消；原資料保留，監看設定維持，可暫停後續工作')
             elif payload.get('error'):self.status(identity,'FAILED','掃描／候選保存失敗：'+payload['error'])
@@ -123,6 +131,11 @@ class SourceWatchService(QObject):
             self.running=False;self.current_root=None;self.mark(identity,'WORKER_START_RETRY');raise
 
     def cancel(self):self.cancel_event.set()
+
+    def cancel_root(self,identity):
+        if self.running and self.current_root==identity:self.cancel()
+        else:
+            self.reasons.pop(identity,None);self.pending=deque(i for i in self.pending if i!=identity);self.status(identity,'CANCELLED','已取消待掃請求，監看設定維持')
 
     def shutdown(self):
         self.closed=True;self.cancel_event.set();self.timer.stop();self.debounce.stop();paths=self.watcher.directories()+self.watcher.files()

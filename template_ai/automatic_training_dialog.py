@@ -14,6 +14,7 @@ class Progress(QObject):
 
 
 class AutomaticTrainingDialog(QDialog):
+    job_created=Signal(object)
     def __init__(self,window):
         super().__init__(window);self.window=window;self.service=AutomaticTraining(window.library)
         self.report=None;self.running=False;self.job_offset=0;self.cancel_event=threading.Event();self.progress_signal=Progress(self)
@@ -44,14 +45,16 @@ class AutomaticTrainingDialog(QDialog):
         path=QFileDialog.getExistingDirectory(self,'選來源資料夾')
         if path:self.preflight([path])
 
-    def preflight(self,paths):
+    def preflight(self,paths,expected_hashes=None):
         if self.running or self.window.busy:return
         root=self.window.library.root;self.start_button.setEnabled(False);self.report=None;self.running=True;self.cancel_event.clear();self.cancel_button.setEnabled(True);self.table.setRowCount(0);self.status.setText('掃描來源中，取消在目前檔案步驟完成後生效')
         def worker():
             from .storage import Library
             library=None
             try:
-                library=Library(root);return dict(report=AutomaticTraining(library).preflight(paths,cancel=self.cancel_event,progress=self.progress_signal.scanned.emit))
+                library=Library(root);report=AutomaticTraining(library).preflight(paths,cancel=self.cancel_event,progress=self.progress_signal.scanned.emit)
+                if expected_hashes is not None and any(expected_hashes.get(i['path'])!=i.get('expected_hash') for i in report['items']):raise ValueError('SOURCE_CHANGED：監看候選來源／清單已變更，請返回重新掃描核對')
+                return dict(report=report)
             except Exception as error:
                 from .source_links import ScanCancelled
                 return dict(error='使用者已取消預檢；未建立學習工作' if isinstance(error,ScanCancelled) else str(error))
@@ -109,6 +112,7 @@ class AutomaticTrainingDialog(QDialog):
         def finished(result):
             self.running=False;self.cancel_button.setEnabled(False)
             if result.get('error'):self.status.setText('未開始：'+result['error']);self.start_button.setEnabled(self.report is not None);return
+            self.job_created.emit(self.service.get(result['job_id']))
             if self.cancel_event.is_set():self.status.setText('啟動已取消；已保存READY工作未執行，可稍後明確續跑');self.reload();self.start_button.setEnabled(self.report is not None);return
             self.start_job(self.service.get(result['job_id']))
         try:self.window.run_job('背景核對完整來源／頁次清單',worker,finished)

@@ -163,3 +163,28 @@ def candidate_page(store,root_id=None,offset=0,limit=50):
     if root_id:where+=" AND json_extract(payload,'$.root_id')=?";args.append(root_id)
     ids=[r[0] for r in store.db.execute('SELECT id FROM training_records WHERE '+where+' ORDER BY rowid LIMIT ? OFFSET ?',(*args,limit,offset))]
     return [store.get('SCAN_CANDIDATE',identity) for identity in ids]
+
+
+def review_candidate(store,candidate,proof,actor,approved=False):
+    from .source_links import check_verified
+    from .training_store import text
+    if approved is not True or candidate['state']!='REVIEW_REQUIRED':raise ValueError('僅明確核對的內容修改版可轉交新來源預檢')
+    text(actor,'核對人',120);check_verified(proof,candidate['source_hash'])
+    root=store.get('SCAN_ROOT',candidate['root_id'])
+    if not root or root.get('archived') or not Path(proof.path).is_relative_to(Path(root['path'])) or Path(proof.path)!=Path(candidate['path']).resolve():raise ValueError('候選已離開有效明列來源範圍')
+    with store.transaction():
+        if store.get('SCAN_CANDIDATE',candidate['id'])!=candidate:raise ValueError('候選版本已變更，請重新核對')
+        value=dict(candidate,state='REVIEWED_NEW_VERSION_CANDIDATE',review=dict(actor=actor,time=time.time(),old_hash=candidate['previous_hash'],new_hash=proof.hash,purpose='只批准獨立新來源候選預檢；不批准舊模板、客戶歸屬或正式輸出'))
+        return store._write('SCAN_CANDIDATE',value['id'],value,value['revision'],'changed_content_new_candidate_explicitly_reviewed')
+
+
+def record_dispatch(store,candidates,job_id):
+    with store.transaction():
+        job=store.get('AUTO_JOB',job_id)
+        if not job:raise ValueError('沒有實際UI003持久工作，未標成已交接')
+        for candidate in candidates:
+            if not any(item['path']==candidate['path'] and item['source_hash']==candidate['source_hash'] for item in job['items']):raise ValueError('實際工作與候選來源不符')
+            current=store.get('SCAN_CANDIDATE',candidate['id'])
+            if current!=candidate:raise ValueError('候選在交接期間已變更；實際工作保留，待核對')
+            current.update(state='DISPATCHED',auto_job_id=job_id,training_started=None,dispatch_meaning='已建立確切工作；進度與成果以UI003實際狀態為準')
+            store._write('SCAN_CANDIDATE',current['id'],current,current['revision'],'candidate_linked_to_actual_ui003_job')

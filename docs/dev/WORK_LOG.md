@@ -796,3 +796,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI050 Qt service recoverable checkpoint
 - Qt真目錄訊號、漏事件週期與重啟補掃、重複hint有界FIFO、共享worker busy等待、途中pause取消、來源索引競爭與關閉前shutdown均已實作。root/來源索引CAS保護候選transaction；目錄提示最多128，其餘明示補掃fallback。
 - 新6個實際Qt/SQLite測試PASS；合index7+操作9共22/22 PASS。source自上milestone141完成仍pending；UI050未全12條/新GUI/全formal，不結案。下一管理介面及既有UI003交接。
+
+### UI050 GUI/bridge WIP and environment restart checkpoint
+- 管理介面已接共用監看服務，root設定/安全暫停移除、候選分頁、修改版人工核對、UI003預檢/實際工作交接；以expected_hashes拒絕候選內容已變，job_created訊號才保存真實交接。
+- 36相關整合PASS（/tmp/remaining28-watch-gui-integration-001.log）；尚缺新增GUI專用驗收及正式全回歸。環境啟動通知後wait_for_environment ready，19:25:52核對HEAD/4未提交source/.venv/測試log均保留；即刻保存階段。UI050仍PARTIAL。
