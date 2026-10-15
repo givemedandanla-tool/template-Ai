@@ -1902,10 +1902,19 @@
         {
           "id": "UI-043-FULL",
           "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：客戶關聯尺寸版型，不設購買分類，編號保留前導零",
-          "tests": []
+          "tests": [
+            "test_customer_candidates.CustomerCandidateTests.test_filename_full_rule_and_actual_facts_propose_only_without_master_writes",
+            "test_customer_candidates.CustomerCandidateTests.test_review_and_commit_keep_leading_zeros_exact_versions_and_source_scope",
+            "test_customer_candidates.CustomerCandidateTests.test_pending_rejected_deferred_and_duplicate_selection_cannot_enter_master",
+            "test_customer_candidates.CustomerCandidateTests.test_same_content_different_source_codes_keep_two_customers_and_independent_entities",
+            "test_customer_candidates.CustomerCandidateTests.test_code_collision_and_late_database_failure_roll_back_entire_batch",
+            "test_customer_candidates.CustomerCandidateTests.test_source_bytes_work_revision_facts_and_template_mutations_invalidate_review",
+            "test_customer_candidates.CustomerCandidateTests.test_existing_customer_link_requires_explicit_identity_scope_and_cas_without_overwriting",
+            "test_customer_candidates.CustomerCandidateTests.test_actual_qt_background_proposal_and_cancelled_batch_do_not_create_customer"
+          ]
         }
       ],
-      "next_step": "CORE085完成stable人物公司／當次資料整合；完整原條款剩餘仍見FULL70_PROGRESS與原70報告，不是父題full"
+      "next_step": "來源／作品／確切版型候選、衝突處置與交易批次入庫已實作，8項目標PASS；待原FULL逐條及正式整合驗收。"
     },
     {
       "id": "UI-044",

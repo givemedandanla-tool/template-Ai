@@ -16,7 +16,7 @@ class CustomerDialog(QDialog):
         self.fields=QTableWidget(0,7);self.fields.setHorizontalHeaderLabels(['回寫（預設不選）','人物／公司／類型','快照原值','本次值（可編輯／清空）','stable欄位ID','目前主檔值','共享影響']);self.fields.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch);self.fields.setColumnHidden(4,True);layout.addWidget(self.fields,2)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details)
         bar=QHBoxLayout();self.add_button(bar,'核對身份／瀏覽尺寸版型',self.browse_styles);self.add_button(bar,'快速文字選exact版型',self.prefill);self.add_button(bar,'比較選中欄位差異',self.preview);self.add_button(bar,'確認選中差異回寫',self.write);self.add_button(bar,'比較兩個客戶（不合併）',self.compare);layout.addLayout(bar)
-        bar=QHBoxLayout();self.add_button(bar,'關聯另一確切尺寸／版型',self.link_style);self.add_button(bar,'查看並恢復已選欄位的歷史值',self.restore_history);self.add_button(bar,'完整圖差異／新增刪除共享同步',self.sync_graph);layout.addLayout(bar)
+        bar=QHBoxLayout();self.add_button(bar,'關聯另一確切尺寸／版型',self.link_style);self.add_button(bar,'查看並恢復已選欄位的歷史值',self.restore_history);self.add_button(bar,'完整圖差異／新增刪除共享同步',self.sync_graph);self.add_button(bar,'來源客戶候選／批次審核',self.source_candidates);layout.addLayout(bar)
         bar=QHBoxLayout();self.add_button(bar,'加密資料庫部分備份',self.backup);self.add_button(bar,'隔離還原到新目錄',self.restore);self.add_button(bar,'關閉',self.accept);layout.addLayout(bar)
     def add_button(self,bar,text,fn):
         b=QPushButton(text);b.clicked.connect(fn);bar.addWidget(b);return b
@@ -169,4 +169,12 @@ class CustomerDialog(QDialog):
             dialog=CustomerSyncDialog(self.window,self.store,self.snapshot,self)
             dialog.exec()
             self.select()
+        self.guarded(action)
+
+    def source_candidates(self):
+        def action():
+            from .customer_candidates_dialog import CustomerCandidatesDialog
+            dialog=CustomerCandidatesDialog(self.window,self)
+            dialog.exec()
+            self.search()
         self.guarded(action)

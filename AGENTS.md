@@ -36,3 +36,6 @@ GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須�
 ## 本輪使用者核准的證明附件保存例外
 
 2026-10-14使用者後續指令以開發速度優先，9件證明附件略過上傳，精確決策與清單在STATE／EVIDENCE_PUBLICATION_EXCEPTIONS。乾淨checkout的原check若只因該9件附件失聯，先執行docs/dev/EVIDENCE_PUBLICATION_SCOPE_CHECK.md的只讀核對，再按STATE直接下一包；不重複要求授權或上傳證明附件。其他程式／測試／metadata缺失、hash不符或功能失敗仍需先修。此例外不宣稱全附件require-evidence Gate已PASS，不更動原run／失败测试或父需求完成判定。新來源仍要正式回歸，EXE規則不變。
+
+## 目前使用者持續開發指令
+本輪零例行問答與跨對話接續目標見 `docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md`。以 STATE.active_contract 最新契約為準；每個可恢復階段及每10分鐘保存GitHub checkpoint，不把子包或目標測試PASS當完整父題。

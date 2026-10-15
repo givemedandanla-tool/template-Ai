@@ -615,3 +615,7 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 
 ## 2026-10-15T10:18:43.162833+00:00 UI045 GRAPH-SYNC WIP
 新增穩定ID圖差異、增修刪／共享影響、精確勾選與三方CAS、單一SQLite事務、受控恢復與清理歷史、實際Qt工作台；不改當次輸入／原稿／模板。目標9PASS，原父題保持PARTIAL等待完整驗收。原生Git讀回合法保存checkpoint，與API來源區分。使用者再次明確要求零對話與持久化，後續自主接續。
+
+
+## 2026-10-15T10:26:57.227972+00:00 UI043 CANDIDATES WIP
+沿既有SQLite／TrainingStore事實與來源指紋建立候選；完整檔名命名規則、前導0、獨立來源、確切作品／版型、人工校正／衝突處置／拒絕暫緩、明確人物範圍及客戶CAS、批次原子入庫、真實Qt背景入口已實作。8項目標PASS，0skip；未改父題完成。零對話與跨對話接續指令已持久化至AGENTS／ACTIVE_DEVELOPMENT_HANDOFF。下步Logo生命周期。
