@@ -69,7 +69,9 @@
         "CORE-008",
         "CORE-030",
         "CORE-042",
-        "CORE-043"
+        "CORE-043",
+        "CORE-064",
+        "CORE-065"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
@@ -147,7 +149,7 @@
     {
       "id": "UI-007",
       "title": "修正套用與 AI 學習確認",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P4",
       "order_group": 2,
       "scope": "確認作品事實不自動發布跨作品規則",
@@ -164,14 +166,22 @@
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
       "completed_core_children": [
         "CORE-009",
-        "CORE-019"
+        "CORE-019",
+        "CORE-048",
+        "CORE-049",
+        "CORE-050",
+        "CORE-051",
+        "CORE-060",
+        "CORE-061",
+        "CORE-064",
+        "CORE-065"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-008",
       "title": "待審核規則中心",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P4",
       "order_group": 2,
       "scope": "低風險批次、高風險逐條，啟用均有人為核准",
@@ -186,7 +196,10 @@
         }
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "completed_core_children": [
+        "CORE-052",
+        "CORE-053"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -329,7 +342,7 @@
     {
       "id": "UI-015",
       "title": "使用者資料輸入警告介面",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P3、P5",
       "order_group": 3,
       "scope": "欄位提醒、整體狀態與問題定位判定一致",
@@ -343,9 +356,10 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
+      "next_step": "未宣稱估計為無解，正式輸出仍既有Gate；原FULL全部條款保留，不代表完整實作",
       "completed_core_children": [
-        "CORE-002"
+        "CORE-002",
+        "CORE-066"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
@@ -529,7 +543,7 @@
     {
       "id": "UI-024",
       "title": "各尺寸 Logo 庫管理與新尺寸預測專區",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P3、P4",
       "order_group": 3,
       "scope": "新尺寸預測專區與正常尺寸庫隔離",
@@ -543,8 +557,10 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "新尺寸參考不入庫／不核准；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-067"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -903,13 +919,16 @@
         }
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "completed_core_children": [
+        "CORE-048",
+        "CORE-049"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-040",
       "title": "智慧標記完整性衝突檢查與可重用雜訊剔除規則",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P4",
       "order_group": 2,
       "scope": "核准雜訊條件後自動排除，不反覆問也不刪原稿",
@@ -924,13 +943,20 @@
         }
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "completed_core_children": [
+        "CORE-046",
+        "CORE-047",
+        "CORE-050",
+        "CORE-051",
+        "CORE-054",
+        "CORE-055"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-041",
       "title": "雜訊規則庫、命中追溯、例外白名單與安全回滾",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P4",
       "order_group": 2,
       "scope": "命中追溯、單項恢復、白名單及規則回滾可核對",
@@ -945,7 +971,12 @@
         }
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "completed_core_children": [
+        "CORE-054",
+        "CORE-055",
+        "CORE-056",
+        "CORE-057"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -971,14 +1002,16 @@
         "CORE-018",
         "CORE-023",
         "CORE-042",
-        "CORE-043"
+        "CORE-043",
+        "CORE-064",
+        "CORE-065"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-043",
       "title": "智慧客戶建檔、版型關聯與正式資料結構方案",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P6",
       "order_group": 4,
       "scope": "客戶關聯尺寸版型，不設購買分類，編號保留前導零",
@@ -992,14 +1025,16 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "AI擷取／安全批次建檔仍後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-068"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-044",
       "title": "舊客戶多條件搜尋、多尺寸版型比較與安全沿用重訂",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P6",
       "order_group": 4,
       "scope": "搜尋核對身份，沿用確切版型開新稿並重驗",
@@ -1013,14 +1048,16 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "縮圖比較及完整重訂擴充仍後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-069"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-045",
       "title": "客戶主檔與當次製作逐欄差異、選擇性回寫與版本保護",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P6",
       "order_group": 4,
       "scope": "只回寫明確勾選欄位，過期主檔版本阻擋",
@@ -1034,14 +1071,16 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "共享公司及跨實體回復後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-070"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-046",
       "title": "疑似重複客戶比對、受控合併與可追溯拆分恢復",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P6",
       "order_group": 4,
       "scope": "合併須確認、別名可查，拆分不覆蓋後續新值",
@@ -1055,14 +1094,16 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "合併／別名／拆分尚未實作；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-071"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-047",
       "title": "本機關聯資料智慧備份、加密驗證與安全還原移轉",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P6",
       "order_group": 4,
       "scope": "加密完整性及隔離還原，缺資產不宣稱完整可用",
@@ -1076,8 +1117,10 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "排程／完整資產可攜備份／活躍庫合併後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-072"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -1130,7 +1173,7 @@
     {
       "id": "UI-050",
       "title": "AI 來源資料夾智慧監看、安全增量匯入與版本衝突審核",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P6",
       "order_group": 4,
       "scope": "監看事件需重掃核實，寫入未穩定不分析",
@@ -1144,8 +1187,10 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "事件自動監看／自動增量匯入後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-073"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -1169,14 +1214,16 @@
       "completed_core_children": [
         "CORE-012",
         "CORE-030",
-        "CORE-043"
+        "CORE-043",
+        "CORE-064",
+        "CORE-065"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-052",
       "title": "全來源與作品審核覆蓋率、風險分級與安全批次結案",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P7",
       "order_group": 5,
       "scope": "分母不漏來源，未審不可結案，重大错誤可重審歷史批次",
@@ -1191,13 +1238,16 @@
         }
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "completed_core_children": [
+        "CORE-062",
+        "CORE-063"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-053",
       "title": "獨立樣本品質驗收、分類誤判診斷、版本比較與品質阻擋",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P7",
       "order_group": 5,
       "scope": "獨立資料分類品質保留；解析品質依視覺一致、訓練有效性及已取得證據判定",
@@ -1211,14 +1261,16 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "原生AI模型／正式門檻與品質合格發布後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-074"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-054",
       "title": "品質失敗根因分析、受控局部修復、獨立再驗收與安全回退",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P7",
       "order_group": 5,
       "scope": "根因候選隔離、回歸及獨立再驗收，兩版有問題不假退回安全",
@@ -1232,14 +1284,16 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "自動模型修復／訓練／部署後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-075"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-055",
       "title": "人工修正可信訓練樣本池、標記版本與資料污染防護",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P1、P4",
       "order_group": 2,
       "scope": "樣本准入與訓練分離，污染可追查 exact 資料集與模型",
@@ -1255,14 +1309,18 @@
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
       "completed_core_children": [
-        "CORE-019"
+        "CORE-019",
+        "CORE-058",
+        "CORE-059",
+        "CORE-060",
+        "CORE-061"
       ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-056",
       "title": "訓練樣本類別覆蓋儀表板、缺口提醒與資料分布透明化",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P7",
       "order_group": 5,
       "scope": "C 分布與缺口提醒；D 系統補樣不得提前做",
@@ -1277,7 +1335,10 @@
         }
       ],
       "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "completed_core_children": [
+        "CORE-062",
+        "CORE-063"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -1304,7 +1365,7 @@
     {
       "id": "UI-058",
       "title": "當次自動排版的真實進度、低負載執行、安全取消與候選恢復",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P5、P9",
       "order_group": 3,
       "scope": "真實進度、短期恢復；按指定參考機實測 RAM、VRAM 與 CPU／GPU 路徑；既有標記歷史是 UI-038 子能力，不能充當當次排版候選恢復已完成",
@@ -1318,8 +1379,10 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "跨啟動敏感恢復／硬體實測後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-076"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -1369,7 +1432,7 @@
     {
       "id": "UI-061",
       "title": "UI-061｜多候選與多尺寸修改同步、套用範圍及局部回復（正式決策）",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P5",
       "order_group": 3,
       "scope": "來源內容依 ID 同步，幾何分候選尺寸，跨目標先比對",
@@ -1383,8 +1446,10 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "共享語意ID跨尺寸同步與局部回復後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-077"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -1411,7 +1476,7 @@
     {
       "id": "UI-063",
       "title": "template-Ai｜UI-063 右側工作面板：智慧自適應、常用工具固定與問題提示（正式決策）",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P7",
       "order_group": 1,
       "scope": "上下文工具可釘選，不適用對象不能錯用舊值",
@@ -1425,8 +1490,10 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "完整MainWindow右面板自適應後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-078"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
@@ -1453,7 +1520,7 @@
     {
       "id": "UI-065",
       "title": "template-Ai｜UI-065 多物件／多候選／多作品批次修正：風險分級、差異預覽與安全回復（正式決策）",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P7",
       "order_group": 3,
       "scope": "精確範圍預覽、部分成功、冪等重試與安全回復",
@@ -1467,14 +1534,16 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "統一跨候選修復及跨尺寸幾何轉換後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-079"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-066",
       "title": "template-Ai｜UI-066 去重決策 A：重用既有診斷 GUI，僅保留獨立報告格式與安全交接補充規格",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P0／待決",
       "order_group": 5,
       "scope": "既有診斷重用；獨立報告必要性格式交接尚 OPEN",
@@ -1488,14 +1557,16 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "R1/R2仍BLOCKED，不產獨立報告；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-080"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-067",
       "title": "template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策）",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P0",
       "order_group": 5,
       "scope": "全面對帳只問真缺口，治理不算新產品功能",
@@ -1509,14 +1580,14 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
+      "next_step": "純治理，不計CORE產品能力；原FULL全部條款保留，不代表完整實作",
       "completed_core_children": [],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {
       "id": "UI-052-REVIEW",
       "title": "重大共通錯誤跨歷史批次重審追加核准",
-      "current_status": "NOT_IMPLEMENTED",
+      "current_status": "PARTIAL",
       "original_phase": "P7",
       "order_group": 5,
       "scope": "依賴追溯、暫停信任、逐項再審，保留歷史與原成品",
@@ -1530,8 +1601,10 @@
           "tests": []
         }
       ],
-      "next_step": "依來源拆分尚未完成的驗收子條件；不得用已做子集標完整主題完成",
-      "completed_core_children": [],
+      "next_step": "其他模型／Logo／客戶依賴全面掃描與解除重審後續；原FULL全部條款保留，不代表完整實作",
+      "completed_core_children": [
+        "CORE-081"
+      ],
       "completion_gate": "所有原始scope及來源條款有實作／具名驗收／永久讀回證據，不能以CORE子項替代父題"
     },
     {

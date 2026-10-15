@@ -1,3 +1,13 @@
+# 最新：70父需求部分實作正式通過，等待最終保存範圍讀回
+
+v0.1.25／RUN-SEVENTY-PARENTS-002／source 8903e260fa2043db584dcef83a362e22b35712b6：348PASS、0SKIP、72本機附件、actual Qt與真worker、source unchanged。原75＝0完整／70部分／0未做／2受阻／3延後；CORE81（本輪+16）、GOV7（+1），16子功能+1治理不當17完整父題。SEVENTY_FINAL_VERIFICATION、REVIEW與USER_GUIDE含每條未做邊界。父題FULL條款不刪。
+
+依STATE最新receipt恢復，先最終GitHub readback；之後NEXT_AFTER_SEVENTY。禁止重跑EXE／mainmerge／代理；UI048最後／印刷及UI056D後置。兩個BLOCKED是UI066-R1/R2；REV02/04為外部待驗證條件，仍PARTIAL。
+
+事件007：自動審查拒絕新raw owner.token，未移分支；001 raw與原CP ZIP本機保留，公開tests/JUnit/claims及sanitized替代，CP-LOCK未ACK並superseded。002 producer公開view去除lease值，private工作狀態不變，新增GOV005-REDACTION真驗收；不重試被拒值。新媒體只本機+hash，GitHub全code/tests/文字metadata；完整media Gate不冒稱PASS。
+
+以下保留歷史接續，最新以STATE與SEVENTY_FINAL_VERIFICATION為準。
+
 # 最新：十個新工作包10／10完整實作與保存（v0.1.24）
 
 最終RUN-TEN-TRAINING-QUEUE-001 source1278fd2b，318PASS／0SKIP／71本機附件／source unchanged，十流程actual Qt＋真worker audit。CORE45→65新增完成20、本輪未做0，GOV6；原75父題0完整／53部分／17未做／2阻塞／3延後，非全產品完成。P10純文字snapshot df60e209與857檔官方收據已Git readback，所有current CORE/GOV具名重驗。GIT仍dev/v0.1-first-version／PR2 open，main436ca2d7不改。

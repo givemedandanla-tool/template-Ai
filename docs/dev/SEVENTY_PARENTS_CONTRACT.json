@@ -14,7 +14,7 @@
       "id": "CORE-066",
       "acceptance": "逐欄輸入問題、整體待驗狀態與exact儲存格定位",
       "remaining": "未宣稱估計為無解，正式輸出仍既有Gate",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
         "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
@@ -27,14 +27,16 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-024",
       "id": "CORE-067",
       "acceptance": "依實體尺寸樹隔離既有核准Logo及唯讀跨尺寸參考區",
       "remaining": "新尺寸參考不入庫／不核准",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
         "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
@@ -47,14 +49,16 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-043",
       "id": "CORE-068",
       "acceptance": "單一Library內人工客戶建檔、stable人物與欄位ID、前導零及確切模板關聯",
       "remaining": "AI擷取／安全批次建檔仍後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
         "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
@@ -64,14 +68,16 @@
         "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
         "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
         "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-044",
       "id": "CORE-069",
       "acceptance": "受控多條件搜尋、身份確認後引用確切版本預填當次資料",
       "remaining": "縮圖比較及完整重訂擴充仍後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
         "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
@@ -81,14 +87,16 @@
         "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
         "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
         "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-045",
       "id": "CORE-070",
       "acceptance": "逐欄勾選差異確認與客戶revision CAS原子回寫",
       "remaining": "共享公司及跨實體回復後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
         "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
@@ -98,14 +106,16 @@
         "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
         "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
         "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-046",
       "id": "CORE-071",
       "acceptance": "疑似重複只讀雙方比對與線索，不自動合併",
       "remaining": "合併／別名／拆分尚未實作",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
         "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
@@ -115,14 +125,16 @@
         "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
         "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
         "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-047",
       "id": "CORE-072",
       "acceptance": "一致SQLite快照、驗證加密檔與新目錄隔離還原、外部資產明示缺失",
       "remaining": "排程／完整資產可攜備份／活躍庫合併後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
         "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
@@ -132,14 +144,16 @@
         "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
         "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
         "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-050",
       "id": "CORE-073",
       "acceptance": "明確根目錄人工重掃、雙次穩定內容核對、增量分類與只讀來源",
       "remaining": "事件自動監看／自動增量匯入後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
         "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
@@ -150,14 +164,16 @@
         "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
         "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
         "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-053",
       "id": "CORE-074",
       "acceptance": "固定HOLDOUT資料集版本的分類預測與人工真值比對、混淆計數及不足Gate",
       "remaining": "原生AI模型／正式門檻與品質合格發布後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
         "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
@@ -168,14 +184,16 @@
         "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
         "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
         "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-054",
       "id": "CORE-075",
       "acceptance": "exact失敗評估建立隔離根因修復待辦、候選版本對照與無證據回退阻擋",
       "remaining": "自動模型修復／訓練／部署後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
         "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
@@ -186,14 +204,16 @@
         "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
         "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
         "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-058",
       "id": "CORE-076",
       "acceptance": "當次候選逐模板單worker真進度、邊界暫停／續跑／取消及generation過期防護",
       "remaining": "跨啟動敏感恢復／硬體實測後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
         "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
@@ -206,14 +226,16 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-061",
       "id": "CORE-077",
       "acceptance": "當次exact候選／尺寸的局部幾何變更隔離、明確範圍差異與版本保護",
       "remaining": "共享語意ID跨尺寸同步與局部回復後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
         "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
@@ -226,14 +248,16 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-063",
       "id": "CORE-078",
       "acceptance": "既有右側物件工具上下文與釘選可見性、不適用與stale清空",
       "remaining": "完整MainWindow右面板自適應後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
         "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
@@ -246,14 +270,16 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-065",
       "id": "CORE-079",
       "acceptance": "重用既有object_edit具名目標的跨作品低風險差異／逐項結果與冪等防重",
       "remaining": "統一跨候選修復及跨尺寸幾何轉換後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
         "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
@@ -266,14 +292,16 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-066",
       "id": "CORE-080",
       "acceptance": "診斷入口路由重用既有問題與定位、版本與未知不改Gate",
       "remaining": "R1/R2仍BLOCKED，不產獨立報告",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
         "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
@@ -286,14 +314,16 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-067",
       "id": "GOV-007",
       "acceptance": "機器GUI路由／決策去重對帳與未決分流檢查",
       "remaining": "純治理，不計CORE產品能力",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
         "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
@@ -306,14 +336,16 @@
         "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
         "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
         "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     },
     {
       "parent": "UI-052-REVIEW",
       "id": "CORE-081",
       "acceptance": "明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史",
       "remaining": "其他模型／Logo／客戶依賴全面掃描與解除重審後續",
-      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "status": "SCOPED_SELF_VERIFIED",
       "tests": [
         "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
         "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
@@ -324,7 +356,9 @@
         "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
         "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
         "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
-      ]
+      ],
+      "source_commit": "8903e260fa2043db584dcef83a362e22b35712b6",
+      "evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json"
     }
   ],
   "rules": [
