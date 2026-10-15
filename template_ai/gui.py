@@ -258,6 +258,16 @@ class MainWindow(QMainWindow):
         rail=QWidget();rail.setMaximumWidth(185);rail_layout=QVBoxLayout(rail)
         for label,index in [('訓練與原稿',0),('模板／Logo',1),('排版與輸出',2)]:
             button=QPushButton(label);button.clicked.connect(lambda _,i=index:self.tabs.setCurrentIndex(i));rail_layout.addWidget(button)
+        self.function_stack=QStackedWidget()
+        groups=[ [('一鍵來源分析',self.automatic_training),('來源／作品總覽',self.work_overview),('品質／規則／學習',self.training_center)],
+                 [('模板瀏覽',self.return_catalog),('新版本草稿',self.new_version),('物件／精確對齊',self.object_tools),('版本差異／回退',self.template_versions),('尺寸Logo庫',self.logo_center)],
+                 [('人物／公司輸入',self.edit_input_graph),('產生排版候選',self.generate),('預覽數位輸出',lambda:self.export_current(True)),('正式數位輸出',lambda:self.export_current(False))] ]
+        for group in groups:
+            panel=QWidget();panel_layout=QVBoxLayout(panel)
+            for label,fn in group:self.button(label,fn,panel_layout)
+            panel_layout.addStretch();self.function_stack.addWidget(panel)
+        rail_layout.addWidget(self.function_stack,1)
+        for label,fn in [('共用字型管理',self.font_center),('共用畫布設定',self.editor_settings),('目前問題診斷',self.shared_diagnostic)]:self.button(label,fn,rail_layout)
         rail_layout.addStretch();self.function_rail=rail;splitter.addWidget(rail)
         self.tabs = QTabWidget()
         self.tabs.addTab(self.build_training(), "① 訓練與原稿標記")
@@ -291,6 +301,7 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("匯入合法本機字型", self.import_font)
         self.menuBar().addAction("修復既有本機字型", self.repair_font)
         self.menuBar().addAction("共用字型管理中心", self.font_center)
+        self.menuBar().addAction("共用畫布設定",self.editor_settings)
         self.menuBar().addAction("字型替代審核歷史", self.font_review_history)
         self.menuBar().addAction("本機客戶／版型與備份", self.customer_center)
         self.menuBar().addAction("尺寸獨立 Logo 庫", self.logo_center)
@@ -309,6 +320,15 @@ class MainWindow(QMainWindow):
         dialog=DiagnosticReportDialog(self,kind,work_id)
         try:dialog.exec()
         finally:dialog.deleteLater()
+
+    def editor_settings(self):
+        from .editor_settings import EditorSettingsDialog
+        dialog=EditorSettingsDialog(self);dialog.exec();dialog.deleteLater()
+
+    def shared_diagnostic(self):
+        try:
+            index=self.tabs.currentIndex();self.diagnostic_report('training' if index==0 else 'template' if index==1 else 'input',self.work['id'] if index==0 and self.work else None)
+        except Exception as error:self.error(str(error))
 
     def open_report_file(self):
         from .diagnostic_dialog import open_saved_report
@@ -1007,6 +1027,14 @@ class MainWindow(QMainWindow):
         self.align.setCurrentIndex(self.align.findData(s.align))
         self.required.setChecked(s.required)
         self.selected_info.setText(f"{KINDS[s.kind]} · {s.owner} · {'已鎖定；須明確解鎖' if s.locked else '未鎖定'}\n款式：{s.font_style or '預設／待核驗'}；改幾何／色彩不重設已選款式。\n已選取框位以作品毫米表示。\n原始字型／可編輯性未知時，不將本模板設計值冒稱原稿屬性。")
+        if self.tabs.currentIndex()==0 and self.work:
+            from .training_store import TrainingStore
+            from .semantic_fields import TYPE_LABELS
+            facts=TrainingStore.bind(self.library).facts(self.work['id']);observation=next((o for o in facts['observations'] if o.get('slot_id')==s.id),None)
+            if observation:
+                semantic=observation.get('semantic') or {};self.selected_info.setText(self.selected_info.text()+'\n來源文字：'+observation['text'][:512]+'\n語意候選：'+TYPE_LABELS.get(semantic.get('semantic_type'),'待確認')+'／'+str(semantic.get('confidence','UNKNOWN'))+'\n依據：'+'；'.join(semantic.get('signals',[]))+'\n作品事實保存狀態：'+facts['state']+'；確認範圍以逐項核對紀錄為準。')
+        elif self.tabs.currentIndex()==1 and self.template:
+            errors=template_errors(self.template);self.selected_info.setText(self.selected_info.text()+'\n設計安全邊距：'+str(self.template.safe_margin_mm)+'mm\n'+('驗證待修復：'+'；'.join(errors[:8]) if errors else '幾何／語意檢查通過；仍依實際資料驗證字形及輸出。'))
 
     def list_selection(self, row):
         if 0 <= row < len(self.slots):
@@ -1683,6 +1711,7 @@ class MainWindow(QMainWindow):
         form=dict(kind=self.kind.currentData(),owner=self.owner.currentData(),index=self.index.value(),coords=[s.value() for s in self.coords],font=self.font.currentFont(),pt=self.pt.value(),color=self.text_color.text(),scale=self.scale.value(),align=self.align.currentData(),required=self.required.isChecked(),font_display=copy.deepcopy(getattr(self,'_selected_font_display',None)))
         self._mode_memory[self._active_mode]=(self.current_slot.id if self.current_slot else None,self.undo_stack,self.redo_stack,form)
         self._active_mode=index
+        self.function_stack.setCurrentIndex(index)
         selected,self.undo_stack,self.redo_stack,form=self._mode_memory.get(index,(None,[],[],None))
         self.select_slot(next((s for s in self.current_slots() if s.id==selected),None))
         if form and self.current_slot:

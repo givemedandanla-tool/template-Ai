@@ -28,3 +28,15 @@ class CanvasControlTests(unittest.TestCase):
         self.d.select_ids([self.ids[0]]);canvas=self.d.canvas;canvas.snap_enabled=True;dx,dy=canvas.snap(-7.9,0);self.assertAlmostEqual(dx,-8);self.assertTrue(canvas.snap_lines)
         canvas.snap_enabled=False;self.assertEqual(canvas.snap(-7.9,0),(-7.9,0));canvas.safety_visible=False
         self.d.preview_request(dict(operation='MOVE',ids=[self.ids[0]],dx=200,dy=0));self.assertIsNotNone(self.d.plan);self.assertTrue(any('邊界' in warning for warning in self.d.plan['warnings']));self.assertFalse(canvas.safety_visible)
+
+    def test_design_safety_zone_is_versioned_undoable_and_publish_gate_ignores_overlay_visibility(self):
+        from template_ai.model import Template
+        before=self.w.library.object_snapshot('TEMPLATE',self.t.id);self.d.margin.setValue(10);self.d.preview_margin();self.assertIsNotNone(self.d.plan,self.d.status.text());self.assertEqual(self.d.plan['after']['slots'],before['payload']['slots']);self.assertTrue(any('安全區' in warning for warning in self.d.plan['warnings']))
+        self.d.apply();current=self.w.library.object_snapshot('TEMPLATE',self.t.id);self.assertEqual(current['payload']['safe_margin_mm'],10);self.d.canvas.safety_visible=False
+        with self.assertRaisesRegex(ValueError,'安全區'):self.w.library.publish(Template.from_dict(current['payload']))
+        record=self.d.records[0];self.w.library.object_history_action(record['id'],'UNDO',True);restored=self.w.library.object_snapshot('TEMPLATE',self.t.id);self.assertEqual(restored['payload']['safe_margin_mm'],0);self.assertEqual(restored['payload']['slots'],before['payload']['slots'])
+
+    def test_shared_settings_persist_view_defaults_and_sync_controls_without_changing_template(self):
+        from template_ai.editor_settings import EditorSettingsDialog,load
+        before=self.w.library.object_snapshot('TEMPLATE',self.t.id);dialog=EditorSettingsDialog(self.w);self.addCleanup(dialog.deleteLater);dialog.fields['snap_enabled'].setChecked(True);dialog.step.setValue(.25);dialog.save()
+        self.assertTrue(load(self.w.library)['snap_enabled']);self.assertEqual(load(self.w.library)['nudge_mm'],.25);self.assertTrue(self.d.canvas.snap_enabled);self.assertTrue(self.d.canvas.preference_widgets['snap_enabled'].isChecked());self.assertEqual(self.d.canvas.nudge_mm,.25);self.assertEqual(self.w.library.object_snapshot('TEMPLATE',self.t.id),before);self.assertEqual(self.w.tabs.count(),3);self.assertEqual(self.w.function_stack.count(),3)

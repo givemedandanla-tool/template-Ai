@@ -46,6 +46,9 @@ class AutomaticTraining:
 
     def retry_plan(self,work_ids):
         if not work_ids or len(work_ids)>200 or len(set(work_ids))!=len(work_ids):raise ValueError('請明確選取1～200個不同作品')
+        for wid in work_ids:
+            identity,unit=self.work_unit(wid)
+            if unit and unit['state']=='EXCLUDED':raise ValueError('作品仍明確排除；先以理由恢復待審，再建立重分析範圍')
         return dict(items=[dict(work_id=wid,pins=self.store.pins(wid),signature=self.work_signature(self.library.artwork(wid))) for wid in sorted(work_ids)])
 
     def create_retry(self,plan,actor,approved=False):
@@ -93,13 +96,21 @@ class AutomaticTraining:
             return result
 
     def work_signature(self,work):
+        from .source_analysis import ANALYSER_VERSION
         facts=self.store.facts(work['id']);source=self.library.source(work['source_id'])
         samples=list(self.db.execute("SELECT id,revision FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id",(work['id'],)))
-        return digest([self.store.pins(work['id']),facts,self.store.noise_signature(work['id']),samples,source['file_hashes']])
+        return digest([ANALYSER_VERSION,self.store.pins(work['id']),facts,self.store.noise_signature(work['id']),samples,source['file_hashes']])
+
+    def work_unit(self,work_id):
+        identity=digest(['automatic-work-unit',work_id]);row=self.store.get('AUTO_UNIT',identity)
+        if row:return identity,row
+        legacy=self.db.execute("SELECT id FROM training_records WHERE kind='AUTO_UNIT' AND json_extract(payload,'$.work_id')=? ORDER BY (json_extract(payload,'$.state')='EXCLUDED') DESC,json_extract(payload,'$.created') DESC,id LIMIT 1",(work_id,)).fetchone()
+        if legacy:return legacy[0],self.store.get('AUTO_UNIT',legacy[0])
+        return identity,None
 
     def process_work(self,work,job):
         from .source_analysis import ANALYSER_VERSION
-        identity=digest([work['id'],ANALYSER_VERSION]);before=self.store.get('AUTO_UNIT',identity);signature=self.work_signature(work)
+        identity,before=self.work_unit(work['id']);signature=self.work_signature(work)
         if before and (before['state']=='EXCLUDED' or before['input_signature']==signature and before['state'] in ('WAITING_REVIEW','DRAFT_READY')):
             return before,True
         proof=self.store.source_proof(work['id']);self.store.checked(work['id'],proof)
@@ -123,6 +134,7 @@ class AutomaticTraining:
         if templates:state='DRAFT_READY'
         payload=dict(work_id=work['id'],source_id=work['source_id'],input_signature=self.work_signature(work),state=state,
             pins=self.store.pins(work['id']),facts_state=self.store.facts_state(work['id']),issues=issues,
+            confirmed_observations=len((facts.get('confirmation') or {}).get('observation_ids',[])),total_observations=len(facts['observations']),
             noise=noise,template_ids=sorted(set(templates)),analysis_version=ANALYSER_VERSION,
             stages=dict(geometry='CHECKED',facts='CONFIRMED' if self.store.facts_state(work['id'])=='CONFIRMED' else 'NEEDS_REVIEW',noise='EVALUATED',learning='DRAFT_ONLY' if templates else 'WAITING_SAMPLE_AND_TRAIN_AUTHORIZATION'),
             reason='只使用有效已准入TRAIN與已核對事實；候選結果從不自動發布',created=time.time())
@@ -175,10 +187,10 @@ class AutomaticTraining:
             try:
                 unit,was_reused=self.process_work(work,job);units.append(unit);reused+=int(was_reused)
             except (ValueError,OSError) as error:
-                identity=digest([work['id'],'source-hypotheses-1']);old=self.store.get('AUTO_UNIT',identity)
+                identity,old=self.work_unit(work['id'])
                 with self.store.transaction():unit=self.store._write('AUTO_UNIT',identity,dict(work_id=work['id'],source_id=source['id'],state='FAILED',issues=[dict(severity='BLOCK',code='WORK_ANALYSIS',reason=str(error),slot_ids=[],work_id=work['id'])],input_signature=None,template_ids=[],pins=self.store.pins(work['id'])),old['revision'] if old else 0,'automatic_work_isolated')
                 units.append(unit)
-        return dict(source_id=source['id'],unit_ids=[u['id'] for u in units],state='WAITING_REVIEW' if not units or any(u['state'] in ('FAILED','WAITING_REVIEW') for u in units) else 'SUCCESS',
+        return dict(source_id=source['id'],unit_ids=[u['id'] for u in units],state='WAITING_REVIEW' if not units or any(u['state'] in ('FAILED','WAITING_REVIEW','EXCLUDED') for u in units) else 'SUCCESS',
             analysed_units=len(units)-reused,reused_units=reused,stages_complete=not(cancel and cancel.is_set()))
 
 

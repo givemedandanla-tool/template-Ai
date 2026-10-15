@@ -64,6 +64,11 @@
       "method": "字元Multinomial Naive Bayes",
       "formula": "log P(c)+sum count(t)*log((count(t,c)+1)/(total(c)+|V|))",
       "validation": "只收confirmed且SEMANTIC_CLASSIFICATION_LOCAL樣本；多類、多筆、特徵覆蓋與margin門檻；非校準機率，未知可拒答"
+    },
+    {
+      "method": "可配置設計安全區",
+      "formula": "m>=0且m<min(W,H)/2；所有框x>=m,y>=m,x+w<=W-m,y+h<=H-m",
+      "validation": "預設0為作品邊界，不假設印刷標準；同一object_edits原子差異／Undo／Redo；發布與數位輸出共用template_errors，不受疊圖開關影響"
     }
   ],
   "reuse_map": [

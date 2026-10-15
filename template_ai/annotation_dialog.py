@@ -4,7 +4,7 @@ from dataclasses import asdict
 from PySide6.QtCore import Qt,QRectF
 from PySide6.QtGui import QImage
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QSplitter,QWidget,QLabel,QPushButton,QComboBox,
-    QTableWidget,QTableWidgetItem,QPlainTextEdit,QLineEdit,QDoubleSpinBox,QCheckBox,QMessageBox,QInputDialog,QListWidget,QListWidgetItem)
+    QTableWidget,QTableWidgetItem,QPlainTextEdit,QLineEdit,QDoubleSpinBox,QCheckBox,QMessageBox,QInputDialog,QListWidget,QListWidgetItem,QTreeWidget,QTreeWidgetItem)
 from .annotations import AnnotationSession,resegment
 from .object_dialog import ObjectCanvas,canvas_controls
 from .gui import Box,Canvas
@@ -20,9 +20,10 @@ class AnnotationDialog(QDialog):
         layout=QVBoxLayout(self);self.status=QLabel('作品邊界與欄位框不同；拖曳／改類型只存候選，明確確認才成作品事實。');self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout()
         for label,fn in [('框選新增標記',lambda:self.canvas.set_mode('slot')),('選取／校正',lambda:self.canvas.set_mode('edit')),('視角平移',lambda:self.canvas.set_mode('pan')),('原稿／疊圖切換',self.toggle_overlay),('改前／改後比較',self.compare),('復原',self.undo),('重做',self.redo)]:self.button(bar,label,fn)
-        layout.addLayout(bar);body=QSplitter();self.objects=QListWidget();self.objects.setSelectionMode(QListWidget.ExtendedSelection);self.objects.itemSelectionChanged.connect(self.from_list);body.addWidget(self.objects)
+        layout.addLayout(bar);body=QSplitter();left=QWidget();left_layout=QVBoxLayout(left);self.index_mode=QComboBox();self.index_mode.addItems(['人物／公司語意樹','衍生來源結構（原生圖層未知）']);self.index_mode.currentIndexChanged.connect(self.rebuild_index);left_layout.addWidget(self.index_mode);self.index_tree=QTreeWidget();self.index_tree.setHeaderLabel('同一作品穩定物件／共享關聯');self.index_tree.setSelectionMode(QTreeWidget.ExtendedSelection);self.index_tree.itemSelectionChanged.connect(self.from_tree);left_layout.addWidget(self.index_tree,2);self.tree_nodes=[]
+        self.objects=QListWidget();self.objects.setSelectionMode(QListWidget.ExtendedSelection);self.objects.itemSelectionChanged.connect(self.from_list);left_layout.addWidget(self.objects,1);body.addWidget(left)
         self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select);self.canvas.drag_proposal.connect(self.move);self.canvas.rectangle.connect(self.add);body.addWidget(self.canvas)
-        self.canvas.preview_proposal.connect(self.preview_move);layout.addWidget(canvas_controls(self.canvas))
+        self.canvas.preview_proposal.connect(self.preview_move);layout.addWidget(canvas_controls(self.canvas,self.library))
         panel=QWidget();form=QVBoxLayout(panel);self.kind=QComboBox()
         for key,value in KINDS.items():self.kind.addItem(value,key)
         self.owner=QLineEdit('p1');self.owner.setPlaceholderText('人物p1／公司c1，需核對真實歸屬');self.value=QLineEdit();self.value.setMaxLength(512)
@@ -45,6 +46,7 @@ class AnnotationDialog(QDialog):
         except Exception as error:self.status.setText('未套用：'+str(error))
 
     def refresh(self):
+        selection=list(self.ids)+(['observation:'+self.observation_id] if getattr(self,'observation_id',None) else [])
         self.loading=True;payload=self.session.payload;source=self.library.source(self.session.base['source_id']);image=None
         if healthy_source(source):
             original=QImage(source['image']);crop=payload['crop'];image=original.copy(QRectF(crop['x']*original.width()/source['width_mm'],crop['y']*original.height()/source['height_mm'],crop['w']*original.width()/source['width_mm'],crop['h']*original.height()/source['height_mm']).toAlignedRect())
@@ -57,18 +59,40 @@ class AnnotationDialog(QDialog):
             if observation.get('slot_id') is None:
                 item=QListWidgetItem('待審文字／'+observation['text'][:60]);item.setData(Qt.UserRole,'observation:'+observation['id']);self.objects.addItem(item)
         self.canvas.set_content(payload['work_width'],payload['work_height'],image,slots,crop=Rect(0,0,payload['work_width'],payload['work_height']));self.canvas.set_mode('edit')
-        self.visual.setChecked(bool(payload.get('visual_confirmed')));self.loading=False;self.select([i for i in self.ids if any(s.id==i for s in slots)])
+        self.visual.setChecked(bool(payload.get('visual_confirmed')));self.loading=False;self.rebuild_index();valid={s.id for s in slots}|{'observation:'+o['id'] for o in self.session.observations if o.get('slot_id') is None};self.select([i for i in selection if i in valid])
 
     def showEvent(self,event):super().showEvent(event);self.canvas.fit()
 
     def from_list(self):
         if not self.loading:self.select([item.data(Qt.UserRole) for item in self.objects.selectedItems()])
 
+    def rebuild_index(self,*_):
+        from .object_index import semantic_index,source_structure
+        selected=list(self.ids)+(['observation:'+self.observation_id] if getattr(self,'observation_id',None) else [])
+        was_loading=self.loading;self.loading=True;self.index_tree.clear();self.tree_nodes=[]
+        nodes=semantic_index(self.session.payload) if self.index_mode.currentIndex()==0 else source_structure(self.library.source(self.session.base['source_id']),self.session.payload)['nodes']
+        nodes=list(nodes)+[dict(label='待審來源文字（不猜身分）',ids=[],children=[dict(label=o['text'][:80],ids=['observation:'+o['id']],children=[]) for o in self.session.observations if o.get('slot_id') is None])]
+        def add(node,parent=None):
+            item=QTreeWidgetItem([node['label']]);ids=set(node.get('ids',[]))
+            for child in node.get('children',[]):ids.update(add(child,item))
+            item.setData(0,Qt.UserRole,sorted(ids));self.tree_nodes.append(item)
+            if parent is None:self.index_tree.addTopLevelItem(item)
+            else:parent.addChild(item)
+            return ids
+        for node in nodes:add(node)
+        self.index_tree.expandToDepth(1);self.loading=was_loading
+        if not self.loading:self.select(selected)
+
+    def from_tree(self):
+        if not self.loading:self.select(sorted({identity for item in self.index_tree.selectedItems() for identity in item.data(0,Qt.UserRole) or []}))
+
     def select(self,ids):
         if self.loading:return
         self.observation_id=next((i.split(':',1)[1] for i in ids if i.startswith('observation:')),None)
         self.ids=[i for i in ids if not i.startswith('observation:')];self.loading=True;self.canvas.select_ids(self.ids)
         for i in range(self.objects.count()):self.objects.item(i).setSelected(self.objects.item(i).data(Qt.UserRole) in ids)
+        for item in self.tree_nodes:
+            node_ids=item.data(0,Qt.UserRole) or [];item.setSelected(bool(node_ids) and set(node_ids)<=set(ids))
         self.loading=False
         if self.observation_id:
             observation=next(o for o in self.session.observations if o['id']==self.observation_id);self.value.setText(observation['text']);self.details.setPlainText('來源文字尚無可靠欄位映射；請選類型與歸屬再建立框。\n'+self.semantic_details(observation));return
@@ -153,11 +177,15 @@ class AnnotationDialog(QDialog):
     def confirm(self):
         def action():
             if not self.ids:raise ValueError('先選確切標記')
+            if self.observation_id:raise ValueError('選取包含未映射文字，先逐筆核對，不能靜默略過')
             self.save_or_raise();work=self.session.base;problems=analyse_work(work,self.library.source(work['source_id']))
             if any(p['severity']=='BLOCK' for p in problems):raise ValueError('作品仍有硬性標記問題：'+'；'.join(p['reason'] for p in problems if p['severity']=='BLOCK'))
             selected=[o for o in self.session.observations if o.get('slot_id') in self.ids]
-            high=any(o['classification']=='LOGO' or (o.get('prior_prediction') and next(s for s in work['payload']['slots'] if s['id']==o['slot_id'])['kind'] in ('name','company')) for o in selected)
+            from .semantic_fields import recognize
+            slots={s['id']:s for s in work['payload']['slots']};kinds={slots[o['slot_id']]['kind'] for o in selected};owners={slots[o['slot_id']]['owner'] for o in selected}
+            high=any(o['classification']=='LOGO' or slots[o['slot_id']]['kind'] in ('name','company') or recognize(o['text'])['semantic_type']=='unknown' or any('矛盾' in s for s in recognize(o['text'])['signals']) for o in selected)
             if high and len(selected)>1:raise ValueError('來源身分／完整Logo等高風險標記需逐筆核對，先選單一框')
+            if len(selected)>1 and (len(kinds)!=1 or len(owners)!=1):raise ValueError('低風險批次限同類型、相同明確歸屬與來源；混合條件需逐筆核對')
             if not self.visual.isChecked():raise ValueError('先核對原作品、物理尺寸與完整圖文')
             if QMessageBox.question(self,'只確認目前作品所選事實','\n'.join(o['text'] for o in selected)+'\n保留本版本先前已確認項目；不核准通用規則或發布。')!=QMessageBox.Yes:return
             record=self.session.store.facts(work['id']);self.session.store.confirm_facts(work['id'],[o['id'] for o in selected],record['revision'],record['pins'],self.session.store.source_proof(work['id']),'LOCAL_OPERATOR',True)

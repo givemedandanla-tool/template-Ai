@@ -93,6 +93,7 @@ class Template:
     source_work_id: str = ""
     source_work_revision: int = 0
     training_reference: dict | None = None
+    safe_margin_mm: float = 0.0
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -115,6 +116,9 @@ def template_errors(t: Template) -> list[str]:
     errors.extend(font_asset_errors(t.slots))
     if not all(math.isfinite(v) and 0 < v <= 2000 for v in (t.width_mm, t.height_mm)):
         errors.append("矩形尺寸必須大於 0，且不超過本版 2000 mm 支援範圍")
+    margin=t.safe_margin_mm
+    valid_margin=type(margin) in (float,int) and math.isfinite(margin) and 0<=margin<min(t.width_mm,t.height_mm)/2
+    if not valid_margin:errors.append('設計安全邊距需為有效毫米，且小於短邊的一半')
     if not 1 <= t.capacity <= 20:
         errors.append("本版人物容量支援 1～20 人")
     keys = set()
@@ -122,6 +126,8 @@ def template_errors(t: Template) -> list[str]:
         errors.append("模板沒有欄位")
     for s in t.slots:
         label = KINDS.get(s.kind, s.kind) + "／" + s.owner
+        if valid_margin and margin>0 and s.rect.valid() and not Rect(s.rect.x-margin,s.rect.y-margin,s.rect.w,s.rect.h).inside(t.width_mm-2*margin,t.height_mm-2*margin):
+            errors.append(label+'：物件 '+s.id+' 超出設計安全區（'+str(margin)+' mm）')
         if type(s.locked) is not bool:
             errors.append(label + "：鎖定狀態不合法")
         if s.kind not in KINDS or not s.rect.inside(t.width_mm, t.height_mm):

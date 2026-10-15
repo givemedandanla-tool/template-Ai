@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox,QInputDialog)
 from .automatic_training import AutomaticTraining
-from .training_exceptions import exception_rows,exclude_work
+from .training_exceptions import exception_rows,exclude_work,restore_work
 
 
 class TrainingExceptionsPanel(QWidget):
@@ -11,12 +11,12 @@ class TrainingExceptionsPanel(QWidget):
         bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('來源／作品／類型／原因');bar.addWidget(self.query)
         self.order=QComboBox()
         for label,key in [('智慧建議：嚴重度與實際影響','SMART'),('依來源','SOURCE'),('依類型','TYPE')]:self.order.addItem(label,key)
-        bar.addWidget(self.order);self.severity=QComboBox();self.severity.addItems(['ALL','BLOCK','REVIEW']);bar.addWidget(self.severity)
+        bar.addWidget(self.order);self.severity=QComboBox();self.severity.addItems(['ALL','BLOCK','REVIEW','EXCLUDED']);bar.addWidget(self.severity)
         button=QPushButton('重新核對');button.clicked.connect(self.reload);bar.addWidget(button);layout.addLayout(bar)
         self.table=QTableWidget(0,5);self.table.setHorizontalHeaderLabels(['嚴重程度','作品／來源','問題','實際影響','排序依據']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.ExtendedSelection);layout.addWidget(self.table,2)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details)
         bar=QHBoxLayout()
-        for label,fn in [('定位作品／欄位',self.locate),('校正所選作品',self.edit),('只重分析所選作品',self.retry),('明確排除此作品',self.exclude),('上一頁',lambda:self.page(-100)),('下一頁',lambda:self.page(100))]:
+        for label,fn in [('定位作品／欄位',self.locate),('校正所選作品',self.edit),('只重分析所選作品',self.retry),('明確排除此作品',self.exclude),('恢復排除為待審',self.restore),('上一頁',lambda:self.page(-100)),('下一頁',lambda:self.page(100))]:
             b=QPushButton(label);b.clicked.connect(fn);bar.addWidget(b)
         layout.addLayout(bar);self.query.textChanged.connect(self.reload);self.order.currentIndexChanged.connect(self.reload);self.severity.currentIndexChanged.connect(self.reload);self.table.itemSelectionChanged.connect(self.selected);self.reload()
 
@@ -68,3 +68,9 @@ class TrainingExceptionsPanel(QWidget):
             row=self.current();reason,ok=QInputDialog.getText(self,'排除確切作品','不刪除來源、不當作成功或訓練真值，請輸入原因')
             if ok and QMessageBox.question(self,'確認排除',row['work_name']+'\n'+reason)==QMessageBox.Yes:exclude_work(self.service,row['unit_id'],row['unit_revision'],reason,True);self.reload()
         except Exception as error:self.status.setText('未排除：'+str(error))
+
+    def restore(self):
+        try:
+            row=self.current();reason,ok=QInputDialog.getText(self,'恢復確切排除作品','只恢復待審，不當作已確認或啟用訓練真值')
+            if ok and QMessageBox.question(self,'確認恢復待審',row['work_name']+'\n'+reason)==QMessageBox.Yes:restore_work(self.service,row['unit_id'],row['unit_revision'],reason,True);self.reload()
+        except Exception as error:self.status.setText('未恢復：'+str(error))

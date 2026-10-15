@@ -82,3 +82,26 @@ class AnnotationGuiTests(unittest.TestCase):
         window,dialog=self.ready();work=dialog.session.base;source=window.library.source(work['source_id']);structure=source_structure(source,work['payload']);self.assertEqual(structure['mapping'],'VERIFIED_SVG_LINKS');self.assertEqual(structure['linked_slot_ids'],sorted(s['id'] for s in work['payload']['slots']))
         source_id=next(iter(work['payload']['analysis_evidence']['slot_source_map'].values()))['svg_object_id'];self.assertTrue(matching_ids(work['payload'],source_id,structure=structure));self.assertEqual(structure['provenance'],'衍生 SVG／非 Illustrator 原生圖層')
         tampered=deepcopy(work['payload']);next(iter(tampered['analysis_evidence']['slot_source_map'].values()))['svg_hash']='0'*64;invalid=source_structure(source,tampered);self.assertLess(len(invalid['linked_slot_ids']),len(structure['linked_slot_ids']))
+        slot=work['payload']['slots'][0];dialog.select([slot['id']]);self.assertTrue(any(item.isSelected() and item.data(0,Qt.UserRole)==[slot['id']] for item in dialog.tree_nodes));dialog.index_mode.setCurrentIndex(1);self.assertEqual(dialog.ids,[slot['id']]);self.assertTrue(any(item.isSelected() and item.data(0,Qt.UserRole)==[slot['id']] for item in dialog.tree_nodes))
+
+    def test_exclusion_survives_analyser_version_change_and_explicit_restore_is_revision_checked(self):
+        from template_ai.training_exceptions import restore_work
+        self.run_job(self.job());row=exception_rows(self.library)[0];unit=exclude_work(self.service,row['unit_id'],row['unit_revision'],'Synthetic explicit exclusion',True)
+        with patch('template_ai.source_analysis.ANALYSER_VERSION','synthetic-new-version'):
+            current,reused=self.service.process_work(self.library.artwork(row['work_id']),{'actor':'TEST'});self.assertEqual(current['id'],unit['id']);self.assertEqual(current['state'],'EXCLUDED')
+        with self.assertRaisesRegex(ValueError,'排除'):self.service.retry_plan([row['work_id']])
+        excluded=exception_rows(self.library,severity='EXCLUDED');self.assertEqual(excluded[0]['code'],'WORK_EXCLUDED')
+        with self.assertRaises(ValueError):restore_work(self.service,unit['id'],unit['revision']-1,'Synthetic stale restore',True)
+        restored=restore_work(self.service,unit['id'],unit['revision'],'Synthetic restored for review',True);self.assertEqual(restored['state'],'WAITING_REVIEW');self.assertIsNone(restored['input_signature']);self.assertEqual(self.service.retry_plan([row['work_id']])['items'][0]['work_id'],row['work_id'])
+
+    def test_high_risk_mixed_markings_cannot_be_confirmed_as_low_risk_batch(self):
+        window,dialog=self.ready();dialog.select([s['id'] for s in dialog.session.payload['slots']]);dialog.visual.setChecked(True)
+        with patch.object(QMessageBox,'question') as question:dialog.confirm();question.assert_not_called()
+        self.assertIn('逐筆',dialog.status.text());self.assertIsNone(dialog.session.store.facts(dialog.session.base['id'])['confirmation'])
+
+    def test_low_risk_exact_phone_batch_confirms_only_selected_and_schedules_one_work(self):
+        self.path.write_text(self.path.read_text().replace('020-000-0100','0912-345-678').replace('<g id="logoA">','<text id="phoneA2" x="5" y="28" font-size="3">0923-456-789</text><g id="logoA">'))
+        window,dialog=self.ready();phones=[s['id'] for s in dialog.session.payload['slots'] if s['kind']=='phone'];self.assertEqual(len(phones),2);dialog.select(phones);dialog.visual.setChecked(True)
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes),patch.object(window,'schedule_affected_work') as schedule:
+            dialog.confirm();schedule.assert_called_once_with(dialog.session.base['id'])
+        facts=dialog.session.store.facts(dialog.session.base['id']);selected={o['id'] for o in facts['observations'] if o.get('slot_id') in phones};self.assertEqual(set(facts['confirmation']['observation_ids']),selected);self.assertFalse(window.library.templates());self.assertEqual(self.path.read_bytes(),self.original_bytes)

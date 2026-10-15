@@ -65,6 +65,16 @@ def propose(payload,kind,request):
     dimensions(payload,kind)
     if kind=='TEMPLATE' and payload['state']!='draft':raise ValueError('已發布模板唯讀；請建立新版本草稿')
     request=copy.deepcopy(request);selected=select_slots(payload,request.get('ids'));operation=request.get('operation')
+    if operation=='SAFETY_ZONE':
+        if kind!='TEMPLATE' or set(request['ids'])!={s['id'] for s in payload['slots']}:raise ValueError('設計安全區需明確涵蓋此模板全部物件；來源標記不改此條件')
+        if len({s.owner for s in selected})>1 and request.get('cross_owner') is not True:raise ValueError('全模板安全區跨歸屬，需明確核對全部物件範圍')
+        margin=request.get('margin_mm');_number(margin);w,h=dimensions(payload,kind)
+        if not 0<=margin<min(w,h)/2:raise ValueError('設計安全邊距需大於等於0且小於短邊一半')
+        old=payload.get('safe_margin_mm',0)
+        if margin==old:raise ValueError('沒有實際安全區差異')
+        after=copy.deepcopy(payload);after['safe_margin_mm']=margin
+        def zone(value):return dict(id='design-safe-zone',kind='SAFETY_ZONE',owner='ALL',margin_mm=value,rect=dict(x=value,y=value,w=w-2*value,h=h-2*value))
+        return dict(before_hash=fingerprint(payload),after=after,request=request,changes=[dict(id='design-safe-zone',kind='SAFETY_ZONE',owner='ALL',before=zone(old),after=zone(margin),dx=margin-old,dy=margin-old)],warnings=warnings_for(after,kind),gap_mm=None,reference_rect=None,scope=dict(ids=request['ids'],owners=sorted({s.owner for s in selected}),locked=[s.id for s in selected if s.locked]))
     if len({s.owner for s in selected})>1 and request.get('cross_owner') is not True:raise ValueError('跨人物／公司或共享關聯需明確核對範圍')
     if operation!='LOCK' and any(s.locked for s in selected):raise ValueError('範圍包含鎖定物件；整組拒絕，不自動排除')
     by_id={s.id:copy.deepcopy(s) for s in selected};gap=None;reference=None

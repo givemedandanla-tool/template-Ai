@@ -16,13 +16,14 @@ class ObjectCanvas(Canvas):
     preview_proposal=Signal(object)
     def __init__(self):
         self.resetting=True;super().__init__();self.allow_multi_drag=True;self.resetting=False;self.base_positions={};self.overlays=[];self.selection_intent=set()
-        self.snap_enabled=False;self.guides_enabled=True;self.safety_visible=True;self.resize_enabled=True;self.nudge_mm=.1;self.resize_state=None;self.snap_lines=[];self.pan_restore=None
+        self.snap_enabled=False;self.guides_enabled=True;self.safety_visible=True;self.safe_margin_mm=0.;self.resize_enabled=True;self.nudge_mm=.1;self.resize_state=None;self.snap_lines=[];self.pan_restore=None
     def selection_changed(self):
         if self.resetting:return
         self.selection_ids.emit(sorted(i.slot.id for i in self.scene().selectedItems() if isinstance(i,Box)))
     def set_content(self,*args,**kw):
         self.resetting=True;self.selection_intent=set()
         self.resize_state=None;self.snap_lines=[]
+        self.safe_margin_mm=kw.pop('safe_margin_mm',0.)
         try:
             super().set_content(*args,**kw)
             self.base_positions={i.slot.id:(i.pos().x(),i.pos().y()) for i in self.scene().items() if isinstance(i,Box)}
@@ -136,7 +137,7 @@ class ObjectCanvas(Canvas):
     def drawForeground(self,painter,rect):
         super().drawForeground(painter,rect);painter.save()
         if self.safety_visible:
-            pen=QPen(QColor('#dc2626'),1,Qt.DashLine);pen.setCosmetic(True);painter.setPen(pen);painter.drawRect(QRectF(0,0,self.width_mm,self.height_mm))
+            pen=QPen(QColor('#dc2626'),1,Qt.DashLine);pen.setCosmetic(True);painter.setPen(pen);margin=self.safe_margin_mm;painter.drawRect(QRectF(margin,margin,self.width_mm-2*margin,self.height_mm-2*margin))
         if self.guides_enabled:
             pen=QPen(QColor('#9333ea'),1,Qt.DashLine);pen.setCosmetic(True);painter.setPen(pen)
             painter.drawLine(QPointF(self.width_mm/2,0),QPointF(self.width_mm/2,self.height_mm));painter.drawLine(QPointF(0,self.height_mm/2),QPointF(self.width_mm,self.height_mm/2))
@@ -159,11 +160,14 @@ class ObjectCanvas(Canvas):
             item=self.scene().addRect(QRectF(r['x'],r['y'],r['w'],r['h']),pen);item.setZValue(9);item.setAcceptedMouseButtons(Qt.NoButton);self.overlays.append(item)
 
 
-def canvas_controls(canvas):
-    widget=QWidget();bar=QHBoxLayout(widget);bar.setContentsMargins(0,0,0,0)
+def canvas_controls(canvas,library=None):
+    if library is not None:
+        from .editor_settings import load
+        for key,value in load(library).items():setattr(canvas,key,value)
+    widget=QWidget();bar=QHBoxLayout(widget);bar.setContentsMargins(0,0,0,0);canvas.preference_widgets={}
     for label,attribute in [('邊界／中心吸附','snap_enabled'),('對齊參考線','guides_enabled'),('作品邊界疊圖','safety_visible'),('單框縮放控制點','resize_enabled')]:
-        checkbox=QCheckBox(label);checkbox.setChecked(getattr(canvas,attribute));checkbox.toggled.connect(lambda value,key=attribute:(setattr(canvas,key,value),canvas.viewport().update()));bar.addWidget(checkbox)
-    bar.addWidget(QLabel('微調mm（Shift×10）'));step=QDoubleSpinBox();step.setRange(.01,10);step.setDecimals(2);step.setValue(canvas.nudge_mm);step.valueChanged.connect(lambda value:setattr(canvas,'nudge_mm',value));bar.addWidget(step);bar.addWidget(QLabel('Space暫時平移；疊圖開關不改驗證'));return widget
+        checkbox=QCheckBox(label);checkbox.setChecked(getattr(canvas,attribute));checkbox.toggled.connect(lambda value,key=attribute:(setattr(canvas,key,value),canvas.viewport().update()));bar.addWidget(checkbox);canvas.preference_widgets[attribute]=checkbox
+    bar.addWidget(QLabel('微調mm（Shift×10）'));step=QDoubleSpinBox();step.setRange(.01,10);step.setDecimals(2);step.setValue(canvas.nudge_mm);step.valueChanged.connect(lambda value:setattr(canvas,'nudge_mm',value));bar.addWidget(step);canvas.preference_widgets['nudge_mm']=step;bar.addWidget(QLabel('Space暫時平移；疊圖開關不改驗證'));return widget
 
 
 class ObjectToolsDialog(QDialog):
@@ -173,6 +177,7 @@ class ObjectToolsDialog(QDialog):
         self.hidden_ids=set();self.dim_ids=set();self.structure={'status':'UNKNOWN','nodes':[]};self.tree_nodes=[]
         self.setWindowTitle('安全多選／精確對齊 · 候選、鎖定與持久歷史');self.resize(1450,1000)
         layout=QVBoxLayout(self);self.status=QLabel();self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status)
+        zone=QHBoxLayout();zone.addWidget(QLabel('全模板設計安全邊距 mm（0=作品邊界；不預設印刷標準）'));self.margin=QDoubleSpinBox();self.margin.setRange(0,999);self.margin.setDecimals(3);self.margin.valueChanged.connect(self.invalidate);zone.addWidget(self.margin);self.margin_button=QPushButton('預覽全模板安全區差異');self.margin_button.clicked.connect(self.preview_margin);zone.addWidget(self.margin_button);layout.addLayout(zone)
         bar=QHBoxLayout()
         for title,fn in (('重新載入',self.reload),('全矩形',lambda:self.canvas.fit()),('定位選取',self.focus_selection),('鎖定選取',lambda:self.preview_lock(True)),('明確解鎖選取',lambda:self.preview_lock(False)),('刪除選取候選',lambda:self.preview_request({'operation':'DELETE','ids':self.ids}))):
             b=QPushButton(title);b.clicked.connect(fn);bar.addWidget(b)
@@ -190,7 +195,7 @@ class ObjectToolsDialog(QDialog):
             b=QPushButton(title);b.clicked.connect(lambda _,a=action:self.viewport_action(a));index_layout.addWidget(b)
         body.addWidget(left)
         self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select_ids);self.canvas.drag_proposal.connect(self.preview_request);self.canvas.preview_proposal.connect(self.preview_request);body.addWidget(self.canvas)
-        layout.addWidget(canvas_controls(self.canvas))
+        layout.addWidget(canvas_controls(self.canvas,self.library))
         right=QWidget();form=QFormLayout(right);self.context_form=form;self.editors={}
         self.context_status=QLabel('未選取／未知上下文');self.context_status.setWordWrap(True);form.addRow(self.context_status)
         self.pin_text=QCheckBox('釘選文字工具（不適用仍禁止操作）');self.pin_text.toggled.connect(self.update_context);form.addRow(self.pin_text)
@@ -259,7 +264,7 @@ class ObjectToolsDialog(QDialog):
                 if not original.isNull():image=original.copy(QRectF(c['x']*original.width()/source['width_mm'],c['y']*original.height()/source['height_mm'],c['w']*original.width()/source['width_mm'],c['h']*original.height()/source['height_mm']).toAlignedRect())
             for s in slots:
                 item=QListWidgetItem(f"{'🔒 ' if s.locked else ''}{s.owner}／{KINDS.get(s.kind,s.kind)} 第{s.index+1}欄");item.setData(Qt.UserRole,s.id);item.setToolTip(s.id);self.objects.addItem(item)
-            self.canvas.set_content(w,h,image=image,slots=slots);self.ids=[];self.hidden_ids.clear();self.dim_ids.clear();self.dirty.clear()
+            self.canvas.set_content(w,h,image=image,slots=slots,safe_margin_mm=payload.get('safe_margin_mm',0));self.margin.setValue(payload.get('safe_margin_mm',0));self.margin.setEnabled(self.kind=='TEMPLATE' and payload.get('state')=='draft');self.margin_button.setEnabled(self.margin.isEnabled());self.ids=[];self.hidden_ids.clear();self.dim_ids.clear();self.dirty.clear()
             from .object_index import source_structure
             source_id=payload.get('source_id') if self.kind=='TEMPLATE' else self.library.artwork(self.entity_id)['source_id']
             self.structure=source_structure(self.library.source(source_id) if source_id else None,payload)
@@ -377,6 +382,7 @@ class ObjectToolsDialog(QDialog):
             for i in items[1:]:rect=rect.united(i.sceneBoundingRect())
             self.canvas.fitInView(rect.adjusted(-2,-2,2,2),Qt.KeepAspectRatio)
     def preview_lock(self,locked):self.preview_request({'operation':'LOCK','ids':self.ids,'locked':locked})
+    def preview_margin(self):self.preview_request(dict(operation='SAFETY_ZONE',ids=[s['id'] for s in self.snapshot['payload']['slots']],margin_mm=self.margin.value()))
     def preview_patch(self):
         patch={}
         for key in self.dirty:
