@@ -926,3 +926,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-15 23:46 UTC UI053 environment checkpoint
 - NetworkX3.5 pinned/actual projectvenv installed, connected components and weighted matching max-cardinality anti-greedy smoke PASS；no transitive dependencies, no AWS install/service。cloudsetup reusable import updated，完整環境重建未重跑。
 - 144 current claims pending，新source需正式回歸；前6/28完整證據Coverage001保留，不將dependency smoke算父題完成。
+
+### 2026-10-15 23:55 UTC UI053 correlation groups and mathematical metrics WIP
+- 25 combined group/metric/legacydataset PASS，另8 target真dataset近重複角色洩漏集成+數學counterexamples PASS。類別盲最佳配對避免貪婪漏切與挑對label偏差；ROOT交換合法但contact誤歸屬critical，無anchor ownerunknown；Wilson n=獨立群組、空分母None。
+- 同DB新增關聯+holdout失效原子/auditdiskrollback/staleCAS、撤回仍保歷史、不改identity或gold；資料集API接已知相關群組role guard。尚未完成UI053原9，144待fullsource回歸。

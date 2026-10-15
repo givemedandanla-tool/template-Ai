@@ -16,3 +16,9 @@
 - UI053原9規範全文/上游parent SHA、5工作包及4實際開源/商用publicsource references已存UI053_EXECUTION_PLAN，未開始實作；下一NetworkX3.5依賴及graph role/protocol；環境/code變更前先144完成pending保留previous證據，後續新source正式回歸。品質門檻預設UNCONFIGURED，無研究授權值不硬編，資料不足不PASS，不啟AWS服務。
 
 - UI053環境增量：NetworkX3.5已安裝專案venv且兩種graph/matching smoke PASS；requirements/lock/cloudsetup import持久化。144 current claims已pending，previous Coverage001證據保留；下一sameSQLite independence/protocol，尚未實作或驗證UI053完整父題。
+
+### UI053 P1 correlation groups / defined metrics WIP
+- quality_groups同TrainingStore version/audit，NetworkX連通分量：content/source/allworks、模板家族、已確認customer關聯及redirect、人工near-design edges。跨TRAIN/VALIDATION/HOLDOUT阻擋已接dataset_plan/dataset_validity；新發現關聯即使揭露既有衝突也保存並invalid HOLDOUT_EXPOSED，撤回不抹歷史洩漏，不合併source/customer/truth。bounded10000rows/8MiB query/50000nodes，未知不PASS。
+- quality_metrics NetworkX Edmonds maxcardinality+int12 maxIoU，class-agnostic避免semantic label挑對配對；TP/FP/FN/PRF分層zero-denominator None、anchor-basedROOT映射與critical/unknown owner另列，Wilson明列independent group數及user confidence，no production thresholds。
+- 25 combined target PASS含9既有dataset，另8 target含真SVG同設計異bytes TRAIN/HOLDOUT新關聯使舊holdout與newdataset API failclosed。尚無quality protocol/gold-rights/actual inference/job/GUI/AB/policy或fullsourceformal；不可當UI053父題完成。
+- latest current144claims pending，前6/28 Coverage001自驗里程碑保留；next quality gold explicit evaluation rights及predeclared protocol/approved policy、source-only inference/metrics、既有FIFO與GUI。

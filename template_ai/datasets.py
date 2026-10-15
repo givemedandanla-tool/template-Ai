@@ -31,6 +31,10 @@ class DatasetMixin:
             signature=exact_label_signature(sample);dedup.setdefault(signature,[]).append(sid)
             entries.append({'sample_id':sid,'sample_revision':sample['revision'],'scope_digest':sample['scope_digest'],'facts_revision':sample['facts_revision'],'source_id':sample['pins']['source_id'],'source_hash':group,'source_group':group,'page':sample['pins']['page'],'crop':sample['crop'],'width_mm':sample['width_mm'],'height_mm':sample['height_mm'],'role':role,'exact_label_signature':signature,'rule_dependencies':sample['rule_dependencies'],'noise_signature':sample['noise_signature'],'use':sample['rights']['use']})
         if any(len(roles)>1 for roles in groups.values()):errors.append('同源不同作品／同內容異名不能跨TRAIN/VALIDATION/HOLDOUT')
+        from .quality_groups import QualityGroups
+        try:
+            errors += [row['reason'] for row in QualityGroups(self.library).role_conflicts([(entry['source_hash'],entry['role']) for entry in entries])]
+        except ValueError as error:errors.append('群組獨立性尚未核實：'+str(error))
         manifest={'schema_version':1,'name':name,'entries':entries,'purpose':'GEOMETRY_TRAINING_LOCAL','whole_source_groups':sorted(groups),'exact_duplicates':{sig:ids for sig,ids in sorted(dedup.items()) if len(ids)>1},'near_similarity':'UNKNOWN','customer_identity':'UNKNOWN','source_identities_merged':False}
         plan={'epoch':self.epoch,'manifest':manifest,'manifest_digest':digest(manifest),'errors':sorted(set(errors))};plan['digest']=digest(plan);return plan
 
@@ -51,6 +55,10 @@ class DatasetMixin:
         from .training_store import digest
         dataset=self.get('DATASET',dataset_id);errors=[]
         if not dataset:return {'valid':False,'errors':['資料集不存在']}
+        from .quality_groups import QualityGroups
+        try:
+            errors += [row['reason'] for row in QualityGroups(self.library).role_conflicts([(entry['source_hash'],entry['role']) for entry in dataset.get('entries',[])])]
+        except ValueError as error:errors.append('群組獨立性尚未核實：'+str(error))
         if digest(dataset.get('manifest'))!=dataset.get('manifest_digest') or dataset.get('entries')!=dataset.get('manifest',{}).get('entries'):errors.append('資料集不可變manifest不符')
         for entry in dataset.get('entries',[]):
             sample=self.get('SAMPLE',entry['sample_id'])
