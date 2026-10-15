@@ -124,6 +124,12 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
             elif asset.get("company") != company or abs(asset.get("width_mm", 0) - t.width_mm) > 1e-5 or abs(asset.get("height_mm", 0) - t.height_mm) > 1e-5:
                 add(label + "：公司或矩形尺寸不符，不可跨尺寸借用 Logo", "LOGO_MISMATCH", s)
                 asset = None
+            elif asset.get('managed_logo'):
+                from .logo_assets import errors as logo_errors
+                health = logo_errors(asset)
+                if health:
+                    add(label + '：' + '；'.join(health), 'LOGO_MISSING', s)
+                    asset = None
             items.append(Placed(s, company, logo=asset))
             continue
         data = company_map.get(s.owner, {}) if s.owner.startswith("c") else persons.get(s.owner, {})

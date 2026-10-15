@@ -619,3 +619,7 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 
 ## 2026-10-15T10:26:57.227972+00:00 UI043 CANDIDATES WIP
 沿既有SQLite／TrainingStore事實與來源指紋建立候選；完整檔名命名規則、前導0、獨立來源、確切作品／版型、人工校正／衝突處置／拒絕暫緩、明確人物範圍及客戶CAS、批次原子入庫、真實Qt背景入口已實作。8項目標PASS，0skip；未改父題完成。零對話與跨對話接續指令已持久化至AGENTS／ACTIVE_DEVELOPMENT_HANDOFF。下步Logo生命周期。
+
+
+## 2026-10-15T10:39:28.720181+00:00 LOGO-CORE WIP
+14項Logo目標測試6.138秒PASS，包含實際Inkscape變換後mm幾何、圖文整體、透明、三格式、來源hash、撤銷使舊候選失效、尺寸隔離與新尺寸獨立審核。尚未串完GUI與多尺寸，不能算父題full。31新目標測試分別9+8+14PASS。舊證據隨來源改變已過期，100項歷史已驗範圍保留previous_verified_source並改IMPLEMENTED_PENDING_VERIFICATION，正式回歸後才恢復當前VERIFIED，不減原驗收。查閱Adobe官方範例README與Qt6.8.3來源文件、InkscapeCLI並保存URL/hash及重用／數學依據；沒有呼叫商用API。checkpoint實際間隔超過10分，原因為較大程式／測試批次，已記錄而不宣稱嚴格達標；後續縮短。

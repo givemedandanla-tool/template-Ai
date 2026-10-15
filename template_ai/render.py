@@ -45,6 +45,10 @@ def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scal
 
 
 def draw_logo(p: QPainter, target: QRectF, asset: dict) -> None:
+    from .logo_assets import errors as logo_errors
+    health = logo_errors(asset, require_approved=False)
+    if health:
+        raise ValueError('；'.join(health))
     crop = asset.get("crop")
     full_w, full_h = asset["source_width_mm"], asset["source_height_mm"]
     x, y, w, h = (crop[k] for k in ("x", "y", "w", "h")) if crop else (0, 0, full_w, full_h)
@@ -109,9 +113,13 @@ def paint_candidate(p: QPainter, candidate: Candidate, preview: bool = False) ->
         rect = QRectF(s.rect.x, s.rect.y, s.rect.w, s.rect.h)
         if s.kind == "logo":
             if item.logo:
+                from .logo_assets import errors as logo_errors
+                health = logo_errors(item.logo)
+                if health:
+                    raise ValueError('；'.join(health))
                 draw_logo(p, rect, item.logo)
             else:
-                p.fillRect(rect, QColor("#111827"))
+                p.fillRect(rect, Qt.black)
                 p.save()
                 p.translate(rect.x(), rect.y())
                 p.setPen(Qt.white)
@@ -202,6 +210,13 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
                 raise ValueError("影像編碼失敗")
         if temporary.stat().st_size == 0:
             raise ValueError("輸出檔案為空")
+        # 核准／來源在編碼途中變動也不能發布；舊候選必須重新產生。
+        from .logo_assets import errors as logo_errors
+        for item in candidate.items:
+            if item.logo:
+                health = logo_errors(item.logo)
+                if health:
+                    raise ValueError('；'.join(health))
         # 同目錄完整暫存檔以硬連結排他發布；正式檔名不暴露半寫入內容。
         # Windows NTFS／Linux 支援；不支援的磁碟明確失敗，不退回危險覆寫。
         from .safe_publish import publish_complete

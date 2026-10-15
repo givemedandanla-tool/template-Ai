@@ -1,0 +1,28 @@
+{
+  "sources": [
+    {
+      "name": "adobe-pdf-services-workflow",
+      "url": "https://raw.githubusercontent.com/adobe/pdfservices-python-sdk-samples/master/README.md",
+      "bytes": 26001,
+      "sha256": "8aed35f9e78e08c251bc0f4c3ed941f7294b89ed9e9c8554fe88fcfc52b9a5ed",
+      "usage": "只研究公開流程與介面，不複製原始碼或安裝／呼叫商用SDK"
+    },
+    {
+      "name": "qt-graphics-view",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/widgets/graphicsview/qgraphicsview.cpp",
+      "bytes": 135658,
+      "sha256": "b9e4b0fae39acc7d807bc3ada021e544f53f8bd2c4424cb5334319fbf2f74033",
+      "usage": "只研究公開流程與介面，不複製原始碼或安裝／呼叫商用SDK"
+    }
+  ],
+  "local_official_interface": "Inkscape --help query-all/export-area，真實合成mm/viewBox/translate實測query-all為CSS px",
+  "math": {
+    "units": "mm = CSS px * 25.4 / 96",
+    "contain": "s=min(frame_w/source_w,frame_h/source_h); 中央留白，不裁切／不拉伸",
+    "identity": "stable UUID與SHA256 exact identity；同名字串只作線索",
+    "transactions": "SQLite BEGIN IMMEDIATE + revision/CAS；FK子資料先刪，失敗整體rollback"
+  },
+  "reuse": "Qt 6.8.3渲染及圖像解碼，Inkscape既有變換後幾何，sqlite3/SQLite 3.53.1；沒有新增商用服務或套件",
+  "commercial_reference_scope": "Adobe官方PDF Services範例的輸入資產→明確操作→結果／失敗檢查流程；只查閱文件，沒有呼叫API或上傳設計檔",
+  "limitations": "未複製Inkscape／Qt／Adobe原碼；商用私有演算法未知，不假稱已採用。字型／實體印刷品質仍依既定Gate與後置安排。"
+}
