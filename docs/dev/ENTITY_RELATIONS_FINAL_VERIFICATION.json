@@ -1,6 +1,6 @@
 {
   "id": "ENTITY-RELATIONS-FINAL",
-  "status": "VERIFIED_PENDING_REMOTE",
+  "status": "COMPLETED_SAVED_SCOPE",
   "product_version": "0.1.27",
   "source_commit": "1d2d69ee8701da50b48367f2a31707bbcdec38ec",
   "evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
@@ -36,5 +36,10 @@
     "docs/evidence/attempts/FULL70/entities003.log",
     "docs/evidence/attempts/FULL70/customer-integration001.log"
   ],
-  "next": "CATALOG/UI009+UI044"
+  "next": "CATALOG/UI009+UI044",
+  "checkpoint": "docs/checkpoints/CP-20261015-ENTITIES-VERIFIED.receipt.json",
+  "snapshot_commit": "96d49faf485c048098da3fe3b0f8e6c3b7e57234",
+  "publication_scope_gate": "PASS",
+  "clean_text_gate": "PASS",
+  "checkpoint_cadence": "docs/dev/ENTITY_RELATIONS_CHECKPOINT_CADENCE.json"
 }

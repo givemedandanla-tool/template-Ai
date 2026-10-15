@@ -1,6 +1,6 @@
 {
   "id": "ENTITY-RELATIONS",
-  "status": "VERIFIED_PENDING_REMOTE",
+  "status": "COMPLETED_SAVED_SCOPE",
   "goal": "docs/dev/FULL_70_COMPLETION_PLAN.json",
   "parents": [
     "UI-016",
@@ -583,7 +583,7 @@
   ],
   "validation_scope": "Linux/Qt匿名SELF；非Windows／硬體／真AI／獨立覆核",
   "publication": "code/tests/text保存GitHub，新PNG/JPG/PDF只本機＋精確hash",
-  "checkpoint": "修改前及每個可恢復階段；目標600秒，逾時如實記錄",
+  "checkpoint": "docs/checkpoints/CP-20261015-ENTITIES-VERIFIED.receipt.json",
   "full_original_clauses": {
     "UI-016": [
       "使用者選擇 **D｜人物卡片＋情境新增按鈕＋結構導覽**。",
@@ -671,5 +671,9 @@
   "full_parent_completed": [
     "UI-016",
     "UI-017"
-  ]
+  ],
+  "snapshot_commit": "96d49faf485c048098da3fe3b0f8e6c3b7e57234",
+  "publication_scope_gate": "PASS",
+  "clean_text_gate": "PASS",
+  "checkpoint_cadence": "docs/dev/ENTITY_RELATIONS_CHECKPOINT_CADENCE.json"
 }

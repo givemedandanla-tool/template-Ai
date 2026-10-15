@@ -1,3 +1,7 @@
+# 當前：CATALOG，修改前契約已保存
+
+人物公司包已完成GitHub官方讀回／乾淨text Gate，固定70剩68；現在UI009＋UI044共用模板／客戶版型目錄。先CATALOG_CONTRACT及新BEGIN，checkpoint後再code。來源縮圖不得以示意圖冒充，身份／exact版本和當次輸入／主檔邊界保持。
+
 # 全70接續：人物公司包驗收通過，保存後直接下一包
 
 source 1d2d69ee8701da50b48367f2a31707bbcdec38ec，RUN-FULL70-ENTITIES-002 409/409 PASS，0SKIP，capture0/source unchanged，82本機附件。UI016/017原完整條款完成；CORE084/085完成，CORE85/GOV7。75父題4完整68部分3延後；固定70目標完成2／剩68。UI043/044/045不能因此一併稱full。當次穩定圖與卡片、共享／獨立／解除／刪除、跨採用Undo、多公司模板port、單庫正規化、舊ID保護、三方回寫／CAS／歷史恢復已做。失敗001唯一UNKNOWN標籤回歸已修，證據保留。

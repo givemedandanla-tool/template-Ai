@@ -1,0 +1,71 @@
+{
+  "official_checkpoints": [
+    {
+      "id": "CP-20261015-FULL70-START",
+      "snapshot_commit": "dd6235bc63efc047b8d37f49bbe1d32aa10f7d62",
+      "verified_utc": "2026-10-15T07:57:21.895922+00:00"
+    },
+    {
+      "id": "CP-20261015-ENTITIES-GRAPH",
+      "snapshot_commit": "5bcb5502f7fdd30186d1f725a9eae2d4d03f88d5",
+      "verified_utc": "2026-10-15T08:07:02.622451+00:00"
+    },
+    {
+      "id": "CP-20261015-ENTITIES-SOURCE",
+      "snapshot_commit": "1d5ac0eb1acadd04d24fbbf283c99fd0b3c13d5c",
+      "verified_utc": "2026-10-15T08:19:09.710751+00:00"
+    },
+    {
+      "id": "CP-20261015-ENTITIES-SOURCE2",
+      "snapshot_commit": "9ed7ae859f4bfae322638109057a84bae0357dce",
+      "verified_utc": "2026-10-15T08:22:49.441073+00:00"
+    },
+    {
+      "id": "CP-20261015-ENTITIES-SOURCE3",
+      "snapshot_commit": "c354e050a86c5733d2d6bdd5e991684ba0674f9a",
+      "verified_utc": "2026-10-15T08:31:23.621082+00:00"
+    },
+    {
+      "id": "CP-20261015-ENTITIES-VERIFIED",
+      "snapshot_commit": "96d49faf485c048098da3fe3b0f8e6c3b7e57234",
+      "verified_utc": "2026-10-15T08:45:04.107724+00:00"
+    }
+  ],
+  "target_seconds": 600,
+  "strict_target_met": false,
+  "intervals": [
+    {
+      "from": "CP-20261015-FULL70-START",
+      "to": "CP-20261015-ENTITIES-GRAPH",
+      "seconds": 580.726529
+    },
+    {
+      "from": "CP-20261015-ENTITIES-GRAPH",
+      "to": "CP-20261015-ENTITIES-SOURCE",
+      "seconds": 727.0883
+    },
+    {
+      "from": "CP-20261015-ENTITIES-SOURCE",
+      "to": "CP-20261015-ENTITIES-SOURCE2",
+      "seconds": 219.730322
+    },
+    {
+      "from": "CP-20261015-ENTITIES-SOURCE2",
+      "to": "CP-20261015-ENTITIES-SOURCE3",
+      "seconds": 514.180009
+    },
+    {
+      "from": "CP-20261015-ENTITIES-SOURCE3",
+      "to": "CP-20261015-ENTITIES-VERIFIED",
+      "seconds": 820.486642
+    }
+  ],
+  "max_seconds": 820.486642,
+  "additional_source_readback": {
+    "commit": "1d2d69ee8701da50b48367f2a31707bbcdec38ec",
+    "commit_utc": "2026-10-15T08:36:40Z",
+    "source_all_files_readback_verified": true,
+    "not_an_official_cp_receipt": true
+  },
+  "reason": "正式測試與多批GitHub metadata上傳使部分官方receipt間隔超目標；未冒稱strict達成，最後程式source在正式測試前已另行完整讀回。縮短本地工作段並提高有界文字批次以減少網路成本。"
+}

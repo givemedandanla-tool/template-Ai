@@ -5,23 +5,23 @@
   "pull_request": 2,
   "product_version": "0.1.27",
   "framework_status": "READY",
-  "active_task": "FULL70-ENTITIES-VERIFIED-PENDING-REMOTE",
+  "active_task": "FULL70-CATALOG-PLANNED",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-ENTITIES-VERIFIED.receipt.json",
   "last_confirmed_commit": "96d49faf485c048098da3fe3b0f8e6c3b7e57234",
   "latest_evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
+    "docs/dev/CATALOG_CONTRACT.json",
     "docs/dev/FULL70_PROGRESS.md",
     "docs/dev/FULL_70_COMPLETION_PLAN.json",
-    "docs/dev/ENTITY_RELATIONS_CONTRACT.json",
     "docs/dev/REQUIREMENTS.json"
   ],
   "next_tasks": [
     {
       "id": "CATALOG",
       "status": "PLANNED",
-      "next": "UI009模板庫＋UI044客戶版型瀏覽／搜尋；先完整原條款及新契約／checkpoint，再改碼"
+      "next": "修改前checkpoint，然後索引／安全來源預覽worker／實際目錄與客戶入口，逐full條款測試"
     }
   ],
   "blocked": [],
@@ -30,9 +30,11 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-CATALOG-START"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261015-FULL70-BEGIN.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-ENTITIES-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
@@ -45,8 +47,8 @@
   },
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
-  "active_contract": "docs/dev/ENTITY_RELATIONS_CONTRACT.json",
-  "next_work_package": "docs/dev/ENTITY_RELATIONS_CONTRACT.json",
+  "active_contract": "docs/dev/CATALOG_CONTRACT.json",
+  "next_work_package": "docs/dev/CATALOG_CONTRACT.json",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -141,7 +143,7 @@
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
   "final_verification": "docs/dev/ENTITY_RELATIONS_FINAL_VERIFICATION.json",
-  "checkpoint_cadence": "docs/dev/DIAGNOSTIC_REPORTS_CHECKPOINT_CADENCE.json",
+  "checkpoint_cadence": "docs/dev/ENTITY_RELATIONS_CHECKPOINT_CADENCE.json",
   "ten_packages": {
     "target": 10,
     "completed": 10,

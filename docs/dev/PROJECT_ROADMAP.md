@@ -1,3 +1,5 @@
+> 當前v0.1.27：4父題完整／68部分／3延後；固定70完成2，剩68。最新進度FULL70_PROGRESS，當前契約CATALOG；下列舊表為歷史。
+
 > 最新：v0.1.26／R1及R2已完整驗收；70個PARTIAL仍須依[逐項缺口報告](PARTIAL_70_GAP_REPORT.md)完成。原75目前2完整／70部分／0受阻／3延後；下表為原路線圖歷史基準，現況以REQUIREMENTS與PROJECT_ROADMAP.json為準。
 
 # 全75父題開發順序與驗收缺口
