@@ -823,3 +823,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### WATCH001 actual lifecycle fix / SOURCE2
 - 新Library.close弱觀察通知先停止producer，明示closed、冪等；通知失敗仍關SQL且回報，沒有隱藏例外。SourceWatch/BackupScheduler close取消/停timer/清key，後到callback不讀閉庫。SourceScanDialog保留但禁舊連線與跨專案讀寫。
 - 新5測試含真Qt延後tick/status、raw SQLite.close、進行中worker取消不存舊候選、觀察通知失敗仍關DB、跨專案頁面不重綁；加舊掃描/還原/排程共71 PASS。來源修正後scope綁新測試，下一SOURCE2正式692，001687PASS但runtime1的FAIL完整保留。
+
+### UI049 complete original11 / formal relink milestone
+- 剩餘28本輪已完成UI046/UI047/UI049/UI050四題，共44原條款；正式692/692 PASS、Qt錯誤0、capture成功、來源未變。全75：48 VERIFIED／24 PARTIAL／3 DEFERRED；固定70：46閉合／24仍部分。CORE87／GOV7另計。
+- 真Qt多根/完整依賴/明確套用/撤銷原位置capture，10新scope測試納入正式692全回歸；141claims契約digest匹配。
+- 33文字metadata GitHub、108媒體精確例外留本機；來源與客戶/版型未破壞，不改失敗run。下一UI051真watch/安全增量。

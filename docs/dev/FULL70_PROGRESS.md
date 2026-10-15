@@ -2,9 +2,9 @@
 
 基準4238ebc24ae62a2ef90051a86685a4c13bfca94b；70個原父題不增刪。
 
-剩餘28本輪已完成UI046/UI047/UI049三題，共32原條款；正式662/662 PASS、Qt錯誤0、capture成功、來源未變。全75：47 VERIFIED／25 PARTIAL／3 DEFERRED；固定70：45閉合／25仍部分。CORE87／GOV7另計。
+剩餘28本輪已完成UI046/UI047/UI049/UI050四題，共44原條款；正式692/692 PASS、Qt錯誤0、capture成功、來源未變。全75：48 VERIFIED／24 PARTIAL／3 DEFERRED；固定70：46閉合／24仍部分。CORE87／GOV7另計。
 
-32文字metadata/程式/測試GitHub；103媒體依既定metadata-first精確清單留本機；strict全附件上傳Gate未宣稱。
+33文字metadata/程式/測試GitHub；108媒體依既定metadata-first精確清單留本機；strict全附件上傳Gate未宣稱。
 
 |原父題|狀態|完整化要求／證據|
 |---|---|---|
@@ -54,9 +54,9 @@
 |UI-044|VERIFIED|docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json|
 |UI-045|VERIFIED|docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json|
 |UI-046|VERIFIED|docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json|
-|UI-047|CLOSED_FULL_SOFTWARE_SELF_VERIFIED|docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json|
-|UI-049|CLOSED_FULL_SOFTWARE_SELF_VERIFIED|docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json|
-|UI-050|PARTIAL|補事件只是提示的監看器及有界匯入佇列，測暫存檔、寫入中、漏事件／離線／改名均重新核實|
+|UI-047|CLOSED_FULL_SOFTWARE_SELF_VERIFIED|docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json|
+|UI-049|CLOSED_FULL_SOFTWARE_SELF_VERIFIED|docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json|
+|UI-050|CLOSED_FULL_SOFTWARE_SELF_VERIFIED|docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json|
 |UI-051|PARTIAL|補保守資源預算和不飢餓佇列；逐來源逐作品審核，測重啟／磁碟失敗；不新增急件分類|
 |UI-052|PARTIAL|補未審／排除／失聯／待人工區分和版本化結案，測無作品來源與異名客戶不得漏掉|
 |UI-053|PARTIAL|補真實推論與獨立有權樣本、各類門檻／樣本量依據；測關鍵歸屬錯誤與分類退步不得用平均分掩蓋|

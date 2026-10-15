@@ -1,36 +1,13 @@
 # 當前精簡接手
 
-- 核心：零例行問答、按需rg/小段讀、一般總輸出≤1600tokens，每可恢復階段與10分鐘checkpoint。無多代理/EXE/main merge，提交[skip ci]。
-- /workspace/template-Ai；dev/v0.1-first-version／PR2。先resume_status、STATE/receipt、governance check。active_contract FIXED70_REMAINING28_CONTRACT；原前輪28完成與本輪剩餘28不可混淆。
-- 剩餘28本輪已完成UI046/UI047/UI049三題，共32原條款；正式662/662 PASS、Qt錯誤0、capture成功、來源未變。全75：47 VERIFIED／25 PARTIAL／3 DEFERRED；固定70：45閉合／25仍部分。CORE87／GOV7另計。
-- 最新run docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json；正式source 8193dc2257a31ec6092d1e6bafb941ddc46329c8；0skip/0runtime/capture0/sourceunchanged，141 completed要求/claims匹配。
-- UI049：沿用SHA256+length/source_links/SQLite；16明列根重疊不重掃、全局5000項/256MiB，32候選/異內容位置顯示並保留實數；完整customer/style/person-scope/training/font/Logo資產關聯背景快照與詳情，來源版次/context CAS；單件也先共用未勾選GUI，單件/批次映射稽核與可核驗撤銷；原檔/客戶不改。
-- context每件1MiB/2000筆、整批預覽/稽核8MiB、只讀查詢30秒，超額整批停止。共用asset_references排除file_hashes值；資產存在不等於品質/權利Gate已過。
-- UI047全關聯加密/隔離副本/實際測試還原/現有差異/app-open排程已全10原條驗證，移轉source facts/Logo/BG正式Gate仍需重驗；UI046全11條身份合併/保後續合法新值拆分已驗。
-- 32文字metadata GitHub，103媒體.checkpoints/formal-media/RUN-REMAINING28-RELINK-001，FULL70_PUBLICATION精確source/sha/bytes；strict全附件未宣稱。
-- 下一UI050：現source_scan只手動雙hash；source_scan_dialog明示無watch。重用Qt QFileSystemWatcher(提示)+debounce/週期/重啟補掃，明列根/排除/暫停、低量有界掃描、舊索引不因離線刪除；沿用import_batches候選，不另建影子庫。檢查BatchStore目前異名同hash會重用同source ID風險，需保存獨立來源/客戶審核；同名內容變更保舊ID版型進人工例外。
-- UI031/032/REV02仍需合法真AI、Windows字型受控安裝/host output rights/版本映射；REV04真16GB/RTX5050/VivoBook未實測。UI048 LAST；UI056D/REV03延後。
-- 下一來源修改先把141完成標pending、保存previous_evidence/清latest、render；正式凍結後全回歸再恢復。
-
-- 現開始UI050來源擴充；141歷史完成已標pending、latest=None。下一watch/scan/queue/alias原12條，非正式通過前不可宣稱目前source全驗。
-
-- UI050 core WIP：source_scan重用source_discovery有界scandir visitor，不另造walker。根/格式/排除/暫停/移除CAS，雙hash按size配額，失聯/等穩定/部分不稱成功；同TrainingStore SCAN_CANDIDATE穩定ID，異名獨立、同名新bytes舊候選stale、manual後auto才入隊，未建立AUTO_JOB。7新+55相關=62PASS。
-- 下一SourceWatchService(Qt事件僅hint/debounce/開啟與週期補掃/共享worker/stop)及新版SourceScanDialog；候選交既有AutomaticTrainingDialog，該管線已保異名source獨立，無需改一般BatchStore重用行為。尚未真watch/GUI/原12完整註冊/全formal；UI050仍PARTIAL，141歷史要求待重驗。
-
-- UI050 service WIP：source_watch SourceWatchService已接MainWindow，Qt QFileSystemWatcher根/最多128提示點、600ms去抖、30秒補掃/啟動補掃、FIFO共享run_job、實際worker獨立SQLite、root與來源索引digest CAS、途中取消/延後安全pause及close守衛。6新真Qt事件測試+7index+9操作=22PASS；前62相關也PASS。
-- source_scan known_sources局部SQL最多2000登錄（同路徑多版本hash保留），內容全庫查索引判alias只當線索；候選不自動訓練，已實際登錄仍標需歸屬審核。下一重寫SourceScanDialog接共用service及根控制/候選分頁/UI003交接，現舊GUI仍手動，勿結案UI050。
-
-- UI050 GUI WIP（環境重啟後保留）：SourceScanDialog已重接共用service，明列格式/排除/監看開始暫停移除/手動補掃/有界候選頁，修改版人工作新候選review API；交既有AutomaticTrainingDialog預檢時expected_hashes再核對，真AUTO_JOB建立訊號才記record_dispatch。36整合測試PASS（watch/index/操作/automatic）；尚缺新GUI/交接具名測試、capture/完整12條正式回歸。
-- 最新環境19:25:52恢復，HEAD9bd8713879cf04cc8c75471bbabe63c02a960ade，本機4個source變更仍在，.venv Python3.12.14正常；先保存GUI WIP再續。下一補scan摘要分頁/可讀時間/worker launch守衛、管理GUI交接/真alias兩來源測試，避免只靠舊36就結案。
-
-- UI050 GUI專用5測試全PASS：開始/暫停/移除保護真customer graph/styles；真UI003明確啟動後A001/B002同bytes得到2獨立source IDs與同一真AUTO_JOB的各自收據；修改版No/Yes+後續bytes改變阻擋預檢；dirty設定保留與foreign config CAS；worker啟動失敗釋放。合watch/index/操作27/27 PASS。
-- 新加掃描摘要分頁/可讀時間/已登錄作品記錄數與source-link revisions/affected source IDs；可背景唯讀查看共用完整關聯；未變既有來源可交UI003重核失效依賴。下一補已訓練來源局部變更/移除途中race tests、dirty pause/removed狀態刷新，真capture後綁原12條及正式回歸。UI050仍PARTIAL，141歷史待重驗。
-
-- UI050 current UI checkpoint：兩分頁1120×740，掃描摘要/候選各自分頁，勾選僅保留相同id/revision/hash/state；共用單一UI003視窗，避免累積交接handler；root/backup配置目錄只作context metadata不當必備檔案。前次31測試PASS；最新004重驗狀態：31/31 PASS。下一真capture＋SQLite FULL/短暫讀取錯誤版次測試，再綁原12正式回歸，未結案。
-
-- UI050 SOURCE FREEZE：原12條完整註冊，新增25測試（index11/service7/center7）；107相關整合PASS，5張capture smoke與實際FS事件/UI003明確開始2alias來源/新版本保舊證據PASS。後續展示修正編號線索/未知作品中文/來源歸屬依原審核/共用解析保留身份；正式全687尚未執行，不用目標PASS當整父題。
-- 下一RUN-REMAINING28-WATCH-001凍結來源及治理直到全687與capture完成；只讀盤點UI051。141歷史完成仍pending，UI050也pending未結案。失敗107目標run為測試誤信A001在首50，已保留log/hash並改按實際首項id驗53總數/分頁/同版勾選；下一107全PASS。
-
-- 重要：RUN-REMAINING28-WATCH-001正式FAIL：687/687 tests PASS，source22717fca1746864f173dd3764d9193ecf06d74d6未改，但1 Qt未處理ProgrammingError；Library已關閉後SourceWatch.tick status通知使SourceScanDialog.render_current再次讀closed DB。capture因此未執行，不把687PASS當整runPASS。全部14文字metadata/log保留GitHub，無媒體例外新增。下一修Library.close lifecycle與service/context guards＋真Qt回歸，002新source重跑，不改001。
-
-- SOURCE2生命週期修正：Library.closed＋weak close observers（任一通知失敗仍通知其他且finally關DB並回報錯）；SourceWatch與BackupScheduler於close同步停timer/watch/清key/cancel，SourceScanDialog關閉/連線直接關閉/跨專案ctx guard與通知錯誤FailClosed，不再late render讀closed DB。新增5專用實際Qt/callback/worker測試；71相關PASS。下一固定SOURCE2後RUN-REMAINING28-WATCH-002全692；001原FAIL不可更改。
+- 核心：零例行問答、按需rg/小段讀，一般輸出≤1600tokens；每可恢復階段及10分鐘checkpoint。無多代理/EXE/main merge，提交[skip ci]。
+- /workspace/template-Ai；dev/v0.1-first-version／PR2。先resume_status/STATE/receipt/check；active_contract FIXED70_REMAINING28_CONTRACT，前輪28與本輪剩餘28不混淆。
+- 剩餘28本輪已完成UI046/UI047/UI049/UI050四題，共44原條款；正式692/692 PASS、Qt錯誤0、capture成功、來源未變。全75：48 VERIFIED／24 PARTIAL／3 DEFERRED；固定70：46閉合／24仍部分。CORE87／GOV7另計。
+- 最新docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json source 9602f8d74c304f2e9ea91ac01118865e7dca0621；692/692PASS、0skip/0runtime/capture0/sourceunchanged；142 completed要求/claims皆契約digest匹配。剩24原題未結案，goal_complete=False。
+- UI050完整12：明列20根/格式/排除/開始暫停移除，Qt事件只hint/600ms去抖/30秒及重啟補掃，128即時提示點/500項及雙讀取256MiB，超額明示PARTIAL，不減分母；同SQLite候選idempotent，異名同bytes真UI003後2獨立source IDs，修改版保舊customer/styles/facts，人工核對才交預檢，不自動訓練/核准歸屬/發布。
+- 兩分頁GUI/每頁50/同版勾選保留、作品未知明示、已解析work記錄數與source IDs/影響只讀可查；實際AUTO_JOB建立才記dispatch；重核未變來源走既有unit signature依賴，不整批重訓。
+- WATCH001不可改：687testsPASS但1Qt closedDB未處理，整runFAIL/capture未執行。Library弱close observers同步停timer/watch/清key/cancel、原始conn.close及跨專案頁面閉鎖，新增5測試後002正式PASS；無隱藏舊失敗。
+- UI046全11、UI047全10、UI049全11已在本run重驗；加UI050共44原條。Windows/真AI全面/真個資生產/參考硬體/獨立覆核未宣稱。UI048 LAST，UI056D/REV03既定延後。
+- 33文字metadata GitHub；108媒體.checkpoints/formal-media/RUN-REMAINING28-WATCH-002，FULL70_PUBLICATION精確source/sha/bytes，strict全附件上傳未宣稱。
+- 下一UI051：既有training_pipeline/automatic_training共用跨窗口WORKER鎖、逐unit CAS/checkpoint及paged panel，缺資源探測/背壓、跨job公平排程、啟動不整批載入。psutil7.2.2 runtime已可用，尚未pin；實讀actual host/cgroup僅開發環境，非16GB/RTX5050/VivoBook基準。重用SQLite/Qt/psutil/stdlib FIFO，避免平行模型客戶庫。
+- UI031/032/REV02合法真AI/Windows字型與版本映射、REV04實機硬體仍待完整驗收；其餘按active_contract。修改來源先把142已完成標pending、保存previous_evidence/清latest，再新source正式回歸。
