@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-RUNTIME001-IN-PROGRESS"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-WATCH.json",
@@ -630,5 +632,14 @@
   "failed_evidence_runs": [
     "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json"
   ],
-  "active_work_package_plan": "docs/dev/UI051_EXECUTION_PLAN.json"
+  "active_work_package_plan": "docs/dev/UI051_EXECUTION_PLAN.json",
+  "formal_execution_watch": {
+    "run": "RUN-REMAINING28-RUNTIME-001",
+    "source_commit": "6a7ded47b1668be7fc9df98e8ea9f1b74aedc61b",
+    "state": "RUNNING_NO_FINAL_RESULT",
+    "code_and_acceptance_unchanged": true,
+    "complete": false,
+    "observed_at": "2026-10-15T22:04:38Z",
+    "note": "Periodic persistence metadata only;formal runner has not emitted final result;checking possible GUI wait"
+  }
 }
