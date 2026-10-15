@@ -150,5 +150,22 @@
 | CORE-063 | 樣本分布／未知分類與中性缺口提示 | VERIFIED | 是 | TEN_PACKAGES_DESIGN 包9的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | [run](../../docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json) |
 | CORE-064 | 受控幾何學習單worker與持久結果 | VERIFIED | 是 | TEN_PACKAGES_DESIGN 包10的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | [run](../../docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json) |
 | CORE-065 | 合作取消／中斷恢复與精確續跑 | VERIFIED | 是 | TEN_PACKAGES_DESIGN 包10的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告 | [run](../../docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json) |
+| CORE-066 | 逐欄輸入問題、整體待驗狀態與exact儲存格定位 | NOT_IMPLEMENTED | 否 | 逐欄輸入問題、整體待驗狀態與exact儲存格定位；未宣稱估計為無解，正式輸出仍既有Gate；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-067 | 依實體尺寸樹隔離既有核准Logo及唯讀跨尺寸參考區 | NOT_IMPLEMENTED | 否 | 依實體尺寸樹隔離既有核准Logo及唯讀跨尺寸參考區；新尺寸參考不入庫／不核准；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-068 | 單一Library內人工客戶建檔、stable人物與欄位ID、前導零及確切模板關聯 | NOT_IMPLEMENTED | 否 | 單一Library內人工客戶建檔、stable人物與欄位ID、前導零及確切模板關聯；AI擷取／安全批次建檔仍後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-069 | 受控多條件搜尋、身份確認後引用確切版本預填當次資料 | NOT_IMPLEMENTED | 否 | 受控多條件搜尋、身份確認後引用確切版本預填當次資料；縮圖比較及完整重訂擴充仍後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-070 | 逐欄勾選差異確認與客戶revision CAS原子回寫 | NOT_IMPLEMENTED | 否 | 逐欄勾選差異確認與客戶revision CAS原子回寫；共享公司及跨實體回復後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-071 | 疑似重複只讀雙方比對與線索，不自動合併 | NOT_IMPLEMENTED | 否 | 疑似重複只讀雙方比對與線索，不自動合併；合併／別名／拆分尚未實作；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-072 | 一致SQLite快照、驗證加密檔與新目錄隔離還原、外部資產明示缺失 | NOT_IMPLEMENTED | 否 | 一致SQLite快照、驗證加密檔與新目錄隔離還原、外部資產明示缺失；排程／完整資產可攜備份／活躍庫合併後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-073 | 明確根目錄人工重掃、雙次穩定內容核對、增量分類與只讀來源 | NOT_IMPLEMENTED | 否 | 明確根目錄人工重掃、雙次穩定內容核對、增量分類與只讀來源；事件自動監看／自動增量匯入後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-074 | 固定HOLDOUT資料集版本的分類預測與人工真值比對、混淆計數及不足Gate | NOT_IMPLEMENTED | 否 | 固定HOLDOUT資料集版本的分類預測與人工真值比對、混淆計數及不足Gate；原生AI模型／正式門檻與品質合格發布後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-075 | exact失敗評估建立隔離根因修復待辦、候選版本對照與無證據回退阻擋 | NOT_IMPLEMENTED | 否 | exact失敗評估建立隔離根因修復待辦、候選版本對照與無證據回退阻擋；自動模型修復／訓練／部署後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-076 | 當次候選逐模板單worker真進度、邊界暫停／續跑／取消及generation過期防護 | NOT_IMPLEMENTED | 否 | 當次候選逐模板單worker真進度、邊界暫停／續跑／取消及generation過期防護；跨啟動敏感恢復／硬體實測後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-077 | 當次exact候選／尺寸的局部幾何變更隔離、明確範圍差異與版本保護 | NOT_IMPLEMENTED | 否 | 當次exact候選／尺寸的局部幾何變更隔離、明確範圍差異與版本保護；共享語意ID跨尺寸同步與局部回復後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-078 | 既有右側物件工具上下文與釘選可見性、不適用與stale清空 | NOT_IMPLEMENTED | 否 | 既有右側物件工具上下文與釘選可見性、不適用與stale清空；完整MainWindow右面板自適應後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-079 | 重用既有object_edit具名目標的跨作品低風險差異／逐項結果與冪等防重 | NOT_IMPLEMENTED | 否 | 重用既有object_edit具名目標的跨作品低風險差異／逐項結果與冪等防重；統一跨候選修復及跨尺寸幾何轉換後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-080 | 診斷入口路由重用既有問題與定位、版本與未知不改Gate | NOT_IMPLEMENTED | 否 | 診斷入口路由重用既有問題與定位、版本與未知不改Gate；R1/R2仍BLOCKED，不產獨立報告；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| GOV-007 | 機器GUI路由／決策去重對帳與未決分流檢查 | NOT_IMPLEMENTED | 否 | 機器GUI路由／決策去重對帳與未決分流檢查；純治理，不計CORE產品能力；Linux匿名合成SELF範圍 | 無有效新版證據 |
+| CORE-081 | 明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史 | NOT_IMPLEMENTED | 否 | 明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史；其他模型／Logo／客戶依賴全面掃描與解除重審後續；Linux匿名合成SELF範圍 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 2026-10-15：70父需求部分實作開始
+
+原75為0完整／53部分／17未做／2受阻／3延後。精讀17原條款、保存17精確scope與剩餘範圍，新增16待做CORE066..081與GOV007（治理不算軟體）；無父題拆分／刪除。治理318已知PASS。先BEGIN GitHub readback再code。
+
+
 ## 十包最終對帳與乾淨文字checkout
 
 10新包全部實作，CORE046..065具名PASS；最終318PASS/0SKIP、71本機附件、source unchanged、actual Qt十流程与single worker完全整合。現CORE65/GOV6，原75為0/53/17/2/3；與基準CORE45/229PASS相比+20子項/+89 tests，未新增父题/删原scope。P10snapshot df60e209/857官方scope文件核對，收據已保存；臨時純文字乾淨view publication-scope PASS，缺媒體只容许source-bound既定例外，其他code/meta/test缺失不略過。
