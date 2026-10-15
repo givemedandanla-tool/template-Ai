@@ -2279,10 +2279,20 @@
         {
           "id": "UI-045-FULL",
           "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：只回寫明確勾選欄位，過期主檔版本阻擋",
-          "tests": []
+          "tests": [
+            "test_customer_graph_sync.CustomerGraphSyncTests.test_selective_values_use_stable_ids_and_never_change_work_or_templates",
+            "test_customer_graph_sync.CustomerGraphSyncTests.test_add_delete_clear_and_absent_are_distinct_and_names_protected",
+            "test_customer_graph_sync.CustomerGraphSyncTests.test_shared_company_and_contacts_preview_all_actual_owners",
+            "test_customer_graph_sync.CustomerGraphSyncTests.test_partial_dependent_set_is_rejected_without_implicit_selection",
+            "test_customer_graph_sync.CustomerGraphSyncTests.test_stale_snapshot_has_three_values_and_never_overwrites_later_write",
+            "test_customer_graph_sync.CustomerGraphSyncTests.test_late_event_failure_rolls_back_entities_contacts_links_history_and_revision",
+            "test_customer_graph_sync.CustomerGraphSyncTests.test_logo_and_cross_customer_operations_cannot_use_generic_sync",
+            "test_customer_graph_sync.CustomerGraphSyncTests.test_restore_is_new_revision_then_preserves_later_values_and_history_can_be_deleted",
+            "test_customer_graph_sync.CustomerGraphSyncTests.test_actual_dialog_default_work_only_cancel_confirmation_and_commit"
+          ]
         }
       ],
-      "next_step": "CORE085完成stable人物公司／當次資料整合；完整原條款剩餘仍見FULL70_PROGRESS與原70報告，不是父題full"
+      "next_step": "完整圖差異／選擇同步及9項目標測試已實作；待原FULL逐條對帳與正式source-bound整合驗收，仍PARTIAL。"
     },
     {
       "id": "UI-046",

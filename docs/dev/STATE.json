@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "FIXED70-NEXT-TEN-IN-PROGRESS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-RESUME-TEN-CONTRACT.receipt.json",
-  "last_confirmed_commit": "727cc0f7a833ba98b21cfa045649d6d141de2193",
+  "active_task": "FIXED70-UI045-GRAPH-SYNC-WIP",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-FIXED70-NEXT-TEN-BEGIN.receipt.json",
+  "last_confirmed_commit": "19f6f4654d5265fcf2c13d2a9bb74c4a82798792",
   "latest_evidence_run": "docs/evidence/runs/RUN-FULL70-CATALOG-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -18,9 +18,9 @@
   ],
   "next_tasks": [
     {
-      "id": "CUSTOMER-GRAPH-SYNC",
+      "id": "UI-043",
       "status": "PLANNED",
-      "next": "UI045完整圖差異／當次與主檔選擇同步，含新增刪除及person-scope保護；先新契約及BEGIN再code"
+      "next": "來源／作品／確切版型客戶候選、衝突審核與安全批次入庫"
     }
   ],
   "blocked": [],
@@ -31,7 +31,7 @@
   ],
   "pending_remote": [
     "CP-20261015-CATALOG-VERIFIED",
-    "CP-20261015-FIXED70-NEXT-TEN-BEGIN"
+    "CP-20261015-UI045-GRAPH-SYNC-WIP"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FULL70-ENTITIES-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-CATALOG-BEGIN.json",
@@ -147,7 +147,7 @@
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
   "final_verification": "docs/dev/CATALOG_FINAL_VERIFICATION.json",
-  "checkpoint_cadence": "docs/dev/ENTITY_RELATIONS_CHECKPOINT_CADENCE.json",
+  "checkpoint_cadence": "每個可恢復工作包及每10分鐘；如受工具等待影響，記錄實際間隔，不虛報達標。",
   "ten_packages": {
     "target": 10,
     "completed": 10,

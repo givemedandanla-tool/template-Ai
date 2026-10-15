@@ -611,3 +611,7 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 
 ## 固定70報告優先序及演算法／重用要求
 已完整讀取使用者指定4238ebc版本報告，29759 bytes，SHA256 fd57747f9efeebcfc2d9875a6f97a643b8abe103b74ec090882389d5748758a2。原GUI-first接續選擇由新契約取代，尚未改產品程式，保留舊契約與checkpoint。新十父題UI043/045/020至027；428基準測試113.989秒通過，0skip。使用者要求參考數學、開源／商用思路及GitHub checkpoint，納入工程依據；不觸發Actions、無代理、EXE及main合併。
+
+
+## 2026-10-15T10:18:43.162833+00:00 UI045 GRAPH-SYNC WIP
+新增穩定ID圖差異、增修刪／共享影響、精確勾選與三方CAS、單一SQLite事務、受控恢復與清理歷史、實際Qt工作台；不改當次輸入／原稿／模板。目標9PASS，原父題保持PARTIAL等待完整驗收。原生Git讀回合法保存checkpoint，與API來源區分。使用者再次明確要求零對話與持久化，後續自主接續。

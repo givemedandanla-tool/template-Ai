@@ -1,3 +1,9 @@
+# 當前接續：固定70下一批十個完整父題
+
+入口 STATE.active_contract＝FIXED70_NEXT_TEN_CONTRACT。使用者要求零例行問答、每10分鐘及可恢復階段checkpoint並GitHub讀回。先UI043/045，再UI020～027，共十父題；原GUI-first契約已被使用者指定的4238ebc報告優先序取代，未開始GUI-first實作。不可只讀main或重做舊十工作包。
+
+UI045圖差異引擎與真實Qt入口已實作，9個目標測試PASS，原428基準PASS；尚未正式source-bound整合驗收，不提前改父題完成。下步UI043來源客戶候選。程式工作使用.venv/bin/python；XDG_CACHE_HOME=/workspace/.cache、QT_QPA_PLATFORM=offscreen。保存提交帶[skip ci]，不啟動Actions。GitHub讀回使用正常原生Git fetch＋tree/blob逐檔比對，不假稱REST API；本機helper /tmp/template_ai_git_readback.py 不是唯一恢復依據，正式收據保存於docs/checkpoints。
+
 # 全70接續：目錄包驗收完成，保存後下一包
 
 source 6fa3b900817c73c20269fd33f11ff54b0c007808，RUN-FULL70-CATALOG-001 428/428 PASS、0SKIP、capture0/source unchanged，89本機附件。UI009/044完整原條款完成，新CORE086/087；CORE87/GOV7。原75＝6完整66部分3延後，固定70完成4／剩66。圖示／列表同索引、穩定多選分頁、唯讀詳情明確編輯、客戶身份與exact款式、真來源裁切／未知、同客戶多尺寸並排／預填、確認前後CAS及來源新鮮度均實作。
