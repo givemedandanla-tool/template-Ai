@@ -10,6 +10,14 @@ HOLD=ResourceDecision(False,'PAUSED_RESOURCES',('SYNTHETIC_MEMORY_PRESSURE',),0,
 
 
 class RuntimeAutomaticExecutionTests(unittest.TestCase):
+    def test_source_registration_and_job_pointer_roll_back_together_on_audit_failure(self):
+        from template_ai.storage import Library
+        job=self.job();original=Library.event
+        def fail(library,entity,action):
+            if action=='training_automatic_source_registered_before_work_analysis':raise OSError('SYNTHETIC source-link disk full')
+            return original(library,entity,action)
+        with patch.object(Library,'event',fail),self.assertRaisesRegex(RuntimeError,'未一起提交'):self.execute(job,lambda:ALLOW)
+        self.assertEqual(self.library.list_sources(),[]);self.assertEqual(self.service.store.count('AUTO_UNIT'),0);saved=self.service.get(job['id']);self.assertEqual(saved['phase'],'FAILED_SYSTEM');self.assertIsNone(saved['items'][0]['source_id']);self.assertFalse(self.service.store.get('WORKER','automatic-worker')['active'])
     setUp=fixtures.AutomaticTrainingTests.setUp
     tearDown=fixtures.AutomaticTrainingTests.tearDown
     job=fixtures.AutomaticTrainingTests.job

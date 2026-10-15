@@ -45,6 +45,7 @@ class RuntimeSupervisor(QObject):
         now=self.clock();late=max(0,now-self.last_pulse-.25);self.last_pulse=now;self.lag_samples.append(late);self.lag_ewma=.2*late+.8*self.lag_ewma
         if now-self.last_policy_check>=1:
             try:self.refresh_policy();self.last_policy_check=now
+            except sqlite3.ProgrammingError as error:self.policy_error=str(error);self.shutdown()
             except (sqlite3.Error,ValueError,TypeError) as error:self.policy_error=str(error);self.pause_event.set()
 
     def gui_lag(self):

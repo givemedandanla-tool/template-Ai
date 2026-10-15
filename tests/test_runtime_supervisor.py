@@ -17,6 +17,8 @@ class Monitor:
 
 
 class RuntimeSupervisorTests(unittest.TestCase):
+    def test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors(self):
+        self.window.library.db.close();self.clock[0]+=.25;self.service.pulse();self.assertTrue(self.service.closed_event.is_set());self.assertFalse(self.service.timer.isActive());self.assertFalse(self.service.admit().allowed)
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=QWidget();self.window.library=Library(self.root);self.addCleanup(self.window.library.close);self.addCleanup(self.window.close);self.clock=[100.0];self.monitor=Monitor(self.clock);self.service=RuntimeSupervisor(self.window,self.monitor,lambda:self.clock[0],start=False);self.addCleanup(self.service.shutdown)
 

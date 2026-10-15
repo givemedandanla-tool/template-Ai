@@ -166,6 +166,10 @@ class AutomaticTraining:
         require_resources(admission)
         from .source_analysis import analyse_source
         path=Path(item['path']);verify_source(path,item['source_hash'])
+        def link_registered(value):
+            current=self.owned(job['id'],job['owner']['token'])
+            index=next(i for i,row in enumerate(current['items']) if row['path']==item['path'] and row['page']==item['page'])
+            current['items'][index]['source_id']=value['id'];self.store._write('AUTO_JOB',current['id'],current,current['revision'],'automatic_source_registered_before_work_analysis')
         source=self.library.source(item['source_id']) if item.get('source_id') else None
         if source is None:
             matching=self.library.sources_for_content(item['source_hash'],item['page'],path,limit=1);source=matching[0] if matching else None
@@ -173,13 +177,10 @@ class AutomaticTraining:
             reuse=next((s for s in self.library.sources_for_content(item['source_hash'],item['page']) if healthy_source(s)),None)
             result=convert_item(dict(path=str(path),page=item['page'],expected_hash=item['source_hash'],reuse_source=reuse),self.library.assets)
             if item.get('expected_page_count') and result['payload']['page_count']!=item['expected_page_count']:raise ValueError('可讀頁次數與預檢不符，未登錄部分來源')
-            source=self.library.add_source(path,result['payload']);source=self.library.source(source['id'])
+            source=self.library.add_source(path,result['payload'],before_write=lambda:self.owned(job['id'],job['owner']['token']),commit_hook=link_registered);item['source_id']=source['id'];source=self.library.source(source['id'])
         if not healthy_source(source):raise ValueError('來源或衍生快取失效，需重新核對')
         if not item.get('source_id'):
-            with self.store.transaction():
-                current=self.owned(job['id'],job['owner']['token'])
-                index=next(i for i,row in enumerate(current['items']) if row['path']==item['path'] and row['page']==item['page'])
-                current['items'][index]['source_id']=source['id'];self.store._write('AUTO_JOB',current['id'],current,current['revision'],'automatic_source_registered_before_work_analysis')
+            with self.store.transaction():link_registered(source)
         if item.get('expected_page_count') and source['page_count']!=item['expected_page_count']:raise ValueError('可讀頁次數與預檢不符，不能聲稱全來源已完成')
         works=self.library.artworks(source['id'])
         works=[w for w in works if w['payload'].get('segmentation_state')!='SUPERSEDED']

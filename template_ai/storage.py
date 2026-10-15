@@ -54,14 +54,23 @@ class Library:
     def event(self, entity: str, action: str) -> None:
         self.db.execute("INSERT INTO reviews VALUES(?,?,?,?)", (new_id(), entity, action, time.time()))
 
-    def add_source(self, original: Path, payload: dict) -> dict:
+    def add_source(self, original: Path, payload: dict, *, before_write=None, commit_hook=None) -> dict:
         """同內容共用分析資產，但每條原名／路徑登錄獨立保留。"""
         sha = payload["hash"]
         source_id = new_id()
-        data = {**payload, "id": source_id, "original_path": str(original.resolve())}
-        with self.db:
-            self.db.execute("INSERT OR IGNORE INTO contents VALUES(?,?)", (sha, original.stat().st_size))
-            self.db.execute("INSERT INTO sources VALUES(?,?,?,?)", (source_id, sha, str(original.resolve()), json.dumps(data, ensure_ascii=False)))
+        original_path=str(original.resolve());byte_size=original.stat().st_size
+        data = {**payload, "id": source_id, "original_path": original_path}
+        try:
+            with self.db:
+                if before_write or commit_hook:
+                    self.db.execute('BEGIN IMMEDIATE')
+                    if before_write:before_write()
+                self.db.execute("INSERT OR IGNORE INTO contents VALUES(?,?)", (sha, byte_size))
+                self.db.execute("INSERT INTO sources VALUES(?,?,?,?)", (source_id, sha, original_path, json.dumps(data, ensure_ascii=False)))
+                if commit_hook:commit_hook(data)
+        except Exception as error:
+            if before_write or commit_hook:raise RuntimeError('來源登錄與工作連結未一起提交，已停止：'+str(error)) from error
+            raise
         return data
 
     def list_sources(self) -> list[dict]:

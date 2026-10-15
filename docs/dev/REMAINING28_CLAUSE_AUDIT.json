@@ -506,13 +506,141 @@
       ],
       "evidence_run": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
       "source_commit": "9602f8d74c304f2e9ea91ac01118865e7dca0621"
+    },
+    {
+      "id": "UI-051",
+      "source_clauses_sha256": "16514fdbf129d127ed027892f0102c52d402e7a8c011e41046dffcec3882be56",
+      "implementation": [
+        "template_ai/runtime_resources.py",
+        "template_ai/runtime_supervisor.py",
+        "template_ai/runtime_queue.py",
+        "template_ai/runtime_dispatch.py",
+        "template_ai/runtime_worker.py",
+        "template_ai/runtime_panel.py",
+        "template_ai/runtime_labels.py",
+        "template_ai/startup_catalog.py",
+        "template_ai/review_ledger.py",
+        "template_ai/review_ledger_dialog.py",
+        "template_ai/training_pipeline.py",
+        "template_ai/automatic_training.py",
+        "template_ai/gui.py"
+      ],
+      "clauses": [
+        {
+          "id": "UI-051-CLAUSE-1",
+          "expected": "**決策 D，依使用者補充正式修訂**：「通常沒有急件／非急件」，**不要把急件優先當核心功能**；主要目標是**每份檔案及檔內每件作品都不漏審、低配置 Windows 電腦穩定運行、不因過載造成進度丟失、程式無法啟動或嚴重卡頓無法操作**。原 UI-051 問卷「急件優先」文案由本決策取代；可選手動調整順序，但不要求標記急件、不允許工作永久飢餓。",
+          "tests": [
+            "test_runtime_queue.RuntimeQueueTests.test_fifo_does_not_follow_wall_clock_and_atomic_claim_cannot_bypass_older_live_scope",
+            "test_review_ledger.ReviewLedgerTests.test_identical_bytes_different_filenames_keep_all_sources_works_and_independent_human_reviews",
+            "test_startup_catalog.StartupCatalogTests.test_thousand_template_startup_never_calls_unbounded_catalog_and_global_unicode_search_opens_exact_id"
+          ]
+        },
+        {
+          "id": "UI-051-CLAUSE-2",
+          "expected": "**逐來源／作品完整審核追蹤**：重用 UI-038 單檔多作品、UI-042 來源及斷點、UI-043 跨客戶來源關聯、UI-050 新檔增量索引。建立可持久的「來源檔→實際作品→分析／標記／來源歸屬→審核狀態」清單：待分析、分析中、可重用已核實快取、待人工審核、已核准、已明確排除、失敗／例外等待處理。**分析成功不等於人工審核完成；位元內容完全相同只允許重用分析，不得遺漏不同檔名／客戶編號的來源審核**。不得藉忽略、去重或錯誤排除讓每份資料從待辦消失。",
+          "tests": [
+            "test_review_ledger.ReviewLedgerTests.test_identical_bytes_different_filenames_keep_all_sources_works_and_independent_human_reviews",
+            "test_review_ledger.ReviewLedgerTests.test_actual_source_change_keeps_approval_history_but_is_not_counted_as_current_review",
+            "test_review_ledger.ReviewLedgerTests.test_explicit_human_exclusion_is_a_separate_visible_state_and_not_reviewed_or_deleted",
+            "test_review_ledger.ReviewLedgerTests.test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files",
+            "test_review_ledger.ReviewLedgerGuiTests.test_actual_asynchronous_gui_reads_source_then_works_without_changing_review_or_ownership"
+          ]
+        },
+        {
+          "id": "UI-051-CLAUSE-3",
+          "expected": "**公平且不無限阻塞的佇列**：預設採易理解的先入先處理與避免長期待辦飢餓的公平性管理，故障或等待人工審核的項目移至明確例外待辦、不堵死其他合法檔案；新檔持續增加亦不能讓舊檔永遠無法處理。所有可讀來源及作品都可查詢目前狀態、理由、下一步及來源證據；**不需要每張都重複手動確認符合已核准、可自動重用規則的低風險項目，但不得把未核對的客戶歸屬宣稱已確認**。",
+          "tests": [
+            "test_runtime_queue.RuntimeQueueTests.test_fifo_does_not_follow_wall_clock_and_atomic_claim_cannot_bypass_older_live_scope",
+            "test_runtime_queue.RuntimeQueueTests.test_scope_changed_request_is_blocked_and_next_eligible_is_not_starved",
+            "test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure",
+            "test_runtime_queue.RuntimeQueueTests.test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims"
+          ]
+        },
+        {
+          "id": "UI-051-CLAUSE-4",
+          "expected": "**低配預設與資源背壓**：預設保守低負載。未來依實測可用 RAM、CPU、I/O、磁碟空間控制**同時處理工作數、單次分析資料量、來源掃描與模型載入**；有限活躍佇列／分頁顯示，等待任務持久保存，避免一次載入數百大型 `.ai` 或無界並行。當電腦資源壓力上升、主介面卡頓或空間／安全寫入不足，應**自動降載、停止領取新工作、必要時安全暫停**；具體硬體門檻與性能數值留待未來實機量測，不能現在保證任意低配設備均可運行。",
+          "tests": [
+            "test_runtime_resources.RuntimeResourcesTests.test_host_and_container_memory_cpu_affinity_are_clamped_and_first_cpu_is_unknown",
+            "test_runtime_resources.RuntimeResourcesTests.test_applicable_unknown_container_limits_do_not_borrow_host_available_memory",
+            "test_runtime_resources.RuntimeResourcesTests.test_first_cpu_sample_can_only_admit_one_bounded_worker_with_known_memory_and_disk",
+            "test_runtime_resources.RuntimeResourcesTests.test_io_rates_are_measured_deltas_and_high_io_wait_pauses_new_work",
+            "test_runtime_resources.RuntimeResourcesTests.test_hysteresis_counts_fresh_samples_not_repeated_checks_and_is_per_workload",
+            "test_runtime_resources.RuntimeResourcesTests.test_disk_cpu_gui_interaction_stale_and_unknown_resources_pause_instead_of_fake_completion",
+            "test_runtime_resources.RuntimeResourcesTests.test_actual_runtime_probe_returns_finite_metrics_without_claiming_reference_hardware",
+            "test_startup_catalog.StartupCatalogTests.test_explicit_source_preflight_and_registration_lookup_never_expand_all_other_source_records"
+          ]
+        },
+        {
+          "id": "UI-051-CLAUSE-5",
+          "expected": "**正常啟動與 GUI 優先**：程式啟動**不可立即載入所有模型、原稿與待辦並啟動大量訓練而卡死**；先讓主視窗、基本功能及診斷／恢復入口可用，再以受限工作數逐步核實檢查點。提供「低負載啟動／暫停背景訓練／安全恢復」入口，反覆崩潰時不要無限自動重試同一高負載工作。掃描、解析與訓練不得長時間阻塞 GUI 主執行緒；使用者做排版、客戶查詢、畫布操作及印前輸出時優先保障互動，背景工作可降載或暫停。",
+          "tests": [
+            "test_startup_catalog.StartupCatalogTests.test_lazy_fonts_and_models_are_not_loaded_or_parsed_at_normal_startup",
+            "test_startup_catalog.StartupCatalogTests.test_source_page_denominator_and_selected_id_work_across_pages_without_unbounded_read",
+            "test_startup_catalog.StartupCatalogTests.test_invalid_resource_policy_still_opens_gui_and_diagnostic_entry_with_background_fail_closed",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_gui_heartbeat_and_foreground_priority_are_measured_without_reading_key_text",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_waiting_foreground_launch_can_be_cancelled_without_running_or_losing_the_gui",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop"
+          ]
+        },
+        {
+          "id": "UI-051-CLAUSE-6",
+          "expected": "**持久斷點與防毀損**：沿用 UI-042 `training_checkpoints`、來源版本／規則／模型依賴及操作憑證；工作**經安全落盤並經核實**才顯示某階段已完成。關機、程式崩潰、強制停止、硬碟空間不足時，已核實成功階段不能因另一工作失敗而丟失；未落盤的部分進度必須標成中斷／待重試，不得謊報成功。重新啟動重建持久佇列並檢查有效性，避免無端整批重訓或重複提交造成資料版本競爭。資料庫無法安全寫入時**Fail-Closed**並說明故障，不可繼續只在記憶體累積「已保存」的假進度。",
+          "tests": [
+            "test_runtime_worker.RuntimeWorkerTests.test_actual_stalled_process_is_killed_and_uncommitted_sqlite_write_rolls_back",
+            "test_runtime_worker.RuntimeWorkerTests.test_truncated_or_unbound_success_protocol_never_marks_real_job_completed",
+            "test_runtime_queue.RuntimeQueueTests.test_queue_audit_failure_rolls_back_backend_claim_worker_lease_and_request",
+            "test_runtime_queue.RuntimeQueueTests.test_dead_session_does_not_auto_resume_and_explicit_resume_keeps_original_arrival_rank",
+            "test_runtime_queue.RuntimeQueueTests.test_other_window_cannot_duplicate_worker_and_stale_request_cas_rolls_back",
+            "test_runtime_execution.RuntimeAutomaticExecutionTests.test_pause_commit_audit_failure_is_failure_and_keeps_recoverable_running_state",
+            "test_training_pipeline.PipelineTests.test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_committed_backend_result_with_failed_queue_receipt_is_recovered_without_repeating_any_analysis",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_recovery_requires_real_successful_audit_commit_and_never_clears_fault_on_write_failure",
+            "test_runtime_execution.RuntimeAutomaticExecutionTests.test_source_registration_and_job_pointer_roll_back_together_on_audit_failure"
+          ]
+        },
+        {
+          "id": "UI-051-CLAUSE-7",
+          "expected": "**錯誤隔離、受控重試與操作面板**：單檔解析失敗、人工歧義、字型／Logo 缺失和長期無回應須逐件隔離、顯示原因與下一步，不可拖垮主程式或阻塞全批。重試需有上限／退避、可只重試失敗、暫停／繼續／安全退出。GUI 區分來源檔數、實際作品數、待分析、正在處理、已核實分析、**待人工審核、已審核、例外阻擋及明確核准排除**；分母與狀態須正確，**不把待審／排除／失聯算成已審核**，可搜尋每個檔案／作品並追溯審核結果。",
+          "tests": [
+            "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
+            "test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure",
+            "test_review_ledger.ReviewLedgerTests.test_large_source_scope_pages_before_payload_read_and_preserves_full_denominator",
+            "test_review_ledger.ReviewLedgerTests.test_explicit_human_exclusion_is_a_separate_visible_state_and_not_reviewed_or_deleted",
+            "test_review_ledger.ReviewLedgerTests.test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files",
+            "test_review_ledger.ReviewLedgerGuiTests.test_closing_project_stops_pending_ledger_query_and_disables_original_context"
+          ]
+        },
+        {
+          "id": "UI-051-CLAUSE-8",
+          "expected": "**既有流程不越權**：訓練仍依 UI-003 預檢後一鍵啟動；UI-004／UI-005 例外、UI-040／UI-041 雜訊規則、UI-010 模板核准不因佇列自動變更。UI-048 完整登入權限依核准安排在最後功能，前期只能用模擬／去識別資料除錯。不變更 UI-043「曾設計／已購買不分類」或任何印前 Gate，亦不新增平行訓練／客戶資料庫。",
+          "tests": [
+            "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+            "test_training_pipeline.PipelineTests.test_holdout_revoke_wrong_role_and_caller_after_do_not_train",
+            "test_review_ledger.ReviewLedgerGuiTests.test_actual_asynchronous_gui_reads_source_then_works_without_changing_review_or_ownership",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes"
+          ]
+        }
+      ],
+      "historical_context": [
+        "**狀態**：僅為 GUI、低配穩定性、逐份審核與持久性驗收規劃；**未建立佇列、測試低配硬體、啟動 AI 訓練、實作限流或編寫程式**。"
+      ],
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "limits": [
+        "Actual Qt/SQLite/process termination and current-host probe on Linux with synthetic files;reference16GB/RTX5050/VivoBook and native Windows low-end performance unverified,thresholds are conservative defaults pending real measurement",
+        "Ledger counts registered source pages/recorded works/indexed and preflight scopes separately;unparsed actual source coverage/current global reviewed validity remain unknown until checked,never silently deduplicate by bytes",
+        "No classifier priority,no implicit customer ownership/facts/sample/publication approval,no new parallel model/customer database;UI048 remains LAST",
+        "Automatic retries of FAILED are zero;explicit retry permission consumed once on claim;resource pauses and other READY units retain scope in the same live consent session;restart requires explicit scope resume"
+      ]
     }
   ],
   "unregistered_parent_ids": [
     "UI-019",
     "UI-031",
     "UI-032",
-    "UI-051",
     "UI-052",
     "UI-053",
     "UI-054",

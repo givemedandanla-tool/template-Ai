@@ -1,7 +1,8 @@
 """Measured runtime state; pausing background work never approves analysis results."""
 import json
 from PySide6.QtCore import QTimer,Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPlainTextEdit,QPushButton,QTableWidget,QTableWidgetItem,QLineEdit,QCheckBox,QMessageBox
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPlainTextEdit,QPushButton,QTableWidget,QTableWidgetItem,QLineEdit,QCheckBox,QMessageBox,QHeaderView
+from .runtime_labels import label
 from shiboken6 import isValid
 
 
@@ -15,11 +16,13 @@ class RuntimePanel(QDialog):
         self.cancel_foreground=QPushButton('取消尚未啟動的前景工作');self.cancel_foreground.clicked.connect(window.cancel_waiting_jobs);bar.addWidget(self.cancel_foreground)
         self.ledger=QPushButton('逐來源／作品審核清單');self.ledger.clicked.connect(self.open_ledger);bar.addWidget(self.ledger)
         self.recover=QPushButton('核對寫入後恢復排程');self.recover.clicked.connect(self.recover_scheduler);bar.addWidget(self.recover)
+        metrics=QHBoxLayout();self.measurements=QLabel();self.measurements.setWordWrap(True);metrics.addWidget(self.measurements,1);toggle=QPushButton('展開／收合診斷數據');toggle.clicked.connect(lambda:self.details.setVisible(not self.details.isVisible()));metrics.addWidget(toggle);layout.insertLayout(3,metrics);self.details.setVisible(False);self.details.setMaximumHeight(200)
         self.summary=QLabel();self.summary.setWordWrap(True);layout.addWidget(self.summary);self.queue_table=QTableWidget(0,5);self.queue_table.setHorizontalHeaderLabels(['到達序','執行狀態／結果','工作種類／ID','確認範圍','訊息']);self.queue_table.setEditTriggers(QTableWidget.NoEditTriggers);self.queue_table.setSelectionBehavior(QTableWidget.SelectRows);self.queue_table.setSelectionMode(QTableWidget.SingleSelection);layout.addWidget(self.queue_table,2)
         bar=QHBoxLayout();self.actor=QLineEdit();self.actor.setMaxLength(120);self.actor.setPlaceholderText('本次恢復操作者');bar.addWidget(self.actor);self.retry=QCheckBox('明確重試FAILED');bar.addWidget(self.retry)
         self.previous=QPushButton('上頁請求');self.next=QPushButton('下頁請求');self.restore=QPushButton('核對後恢復選中範圍');self.cancel=QPushButton('安全取消選中請求')
         for button in (self.previous,self.next,self.restore,self.cancel):bar.addWidget(button)
         self.previous.clicked.connect(lambda:self.page(-50));self.next.clicked.connect(lambda:self.page(50));self.restore.clicked.connect(self.resume_selected);self.cancel.clicked.connect(self.cancel_selected);layout.addLayout(bar)
+        self.queue_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.timer=QTimer(self);self.timer.setInterval(500);self.timer.timeout.connect(self.refresh);self.timer.start();self.refresh()
         window.library.observe_close(self.context_closed)
 
@@ -39,6 +42,12 @@ class RuntimePanel(QDialog):
 
     def refresh(self):
         state=self.supervisor.state();self.details.setPlainText(json.dumps(state,ensure_ascii=False,indent=2))
+        sample=state['snapshot']
+        if sample:
+            def amount(value,unit=1,suffix=''):return f'{value/unit:.1f}{suffix}' if value is not None else '未知'
+            basis='測試情境數值' if sample['basis'].startswith('SYNTHETIC') else '目前環境取樣'
+            self.measurements.setText(basis+'：記憶體可用 '+amount(sample['memory_available'],1024**3,' GiB')+'／'+amount(sample['memory_total'],1024**3,' GiB')+'；CPU '+amount(sample['cpu_percent'],1,'%')+'；I/O等待 '+amount(sample.get('io_wait_percent'),1,'%')+'；磁碟可用 '+amount(sample['disk_free'],1024**3,' GiB')+f"；介面延遲 {state['gui_lag_seconds']*1000:.0f} ms。參考硬體驗證：未執行。")
+        else:self.measurements.setText('資源尚待取樣；保留待辦，尚未領取新背景工作')
         self.pause.setEnabled(not state['closed']);self.resume.setEnabled(not state['closed'] and not state['policy_error'])
         if state['closed']:self.context_closed();return
         if self.dispatcher.library is not self.supervisor.library:self.context_closed();return
@@ -47,9 +56,11 @@ class RuntimePanel(QDialog):
             total=self.dispatcher.library.db.execute('SELECT count(*) FROM runtime_requests').fetchone()[0];self.queue_table.setRowCount(len(self.rows))
             for index,row in enumerate(self.rows):
                 consent='本次範圍已確認' if row['consent_session']==self.dispatcher.session else '重啟／其他作用域：需明確恢復' if row['state'] in ('WAITING','PAUSED_RESOURCES','INTERRUPTED') else '此請求已結束／人工處理'
-                for column,value in enumerate((row['seq'],row['state']+' / '+row.get('result_phase',''),row['kind']+' / '+row['job_id'],consent,row.get('message') or '')):self.queue_table.setItem(index,column,QTableWidgetItem(str(value)))
+                for column,value in enumerate((row['seq'],label(row['state'])+' / '+label(row.get('result_phase','')),('幾何學習' if row['kind']=='JOB' else '來源分析')+' / '+row['job_id'],consent,row.get('message') or '')):
+                    item=QTableWidgetItem(str(value));item.setToolTip(str(value));self.queue_table.setItem(index,column,item)
+                self.queue_table.setRowHeight(index,54)
                 if row['id']==selected_id:self.queue_table.selectRow(index)
-            self.previous.setEnabled(self.offset>0);self.next.setEnabled(self.offset+50<total);self.summary.setText(f'執行請求 {self.offset+1 if total else 0}–{self.offset+len(self.rows)}／{total}；單一worker；等待人工審核與失敗不占執行權。'+(self.dispatcher.error or self.dispatcher.last_wait or ''))
+            self.previous.setEnabled(self.offset>0);self.next.setEnabled(self.offset+50<total);self.summary.setText(f'執行請求 {self.offset+1 if total else 0}–{self.offset+len(self.rows)}／{total}；單一重型工作；等待人工審核與失敗不占執行權。'+label(self.dispatcher.error or self.dispatcher.last_wait or ''))
         except Exception as error:self.status.setText('佇列未能讀取，未宣稱工作成功：'+str(error))
 
     def selected(self):
