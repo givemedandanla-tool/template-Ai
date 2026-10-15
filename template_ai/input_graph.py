@@ -151,10 +151,12 @@ class InputGraph:
                      for fid in sorted(old.keys()|new.keys()) if old.get(fid)!=new.get(fid)]
         links={'removed':[x for x in self.data['links'] if x not in g.data['links']],
                'added':[x for x in g.data['links'] if x not in self.data['links']]}
+        prior={e['id']:e for e in self.data['people']+self.data['companies']};later={e['id']:e for e in g.data['people']+g.data['companies']}
+        entity_differences=[{'id':eid,'before':deepcopy(prior.get(eid)),'after':deepcopy(later.get(eid))} for eid in sorted(prior.keys()|later.keys()) if prior.get(eid)!=later.get(eid)]
         return dict(action=action,params=deepcopy(params),base=fingerprint(self.data),after=g.data,
                     affected=sorted(set(affected)),requires_confirmation=destructive or len(set(affected))>1,
                     labels=[self.label(x) for x in sorted(set(affected)) if x in {e['id'] for e in self.data['people']+self.data['companies']}],
-                    differences=differences,link_changes=links,
+                    differences=differences,entity_differences=entity_differences,link_changes=links,
                     result_counts={k:len(g.data[k]) for k in ('people','companies','fields','links')})
 
     def apply(self, plan, approved=False):

@@ -34,6 +34,7 @@ def from_legacy_fields(rows):
     """No string deduplication. Preserve every existing field ID; ambiguity blocks."""
     owners=sorted({r['owner'] for r in rows},key=lambda x:int(x[1:]))
     if any(not o.startswith('p') or not o[1:].isdigit() for o in owners):raise ValueError('舊欄位歸屬需人工核對')
+    if owners!=[f'p{i+1}' for i in range(len(owners))] or len(owners)>20:raise ValueError('舊ROOT不連續／超出範圍，保留原值待人工核對')
     ids={o:new_id() for o in owners}
     data=dict(schema=1,revision=0,people=[{'id':ids[o]} for o in owners],companies=[],links=[],fields=[])
     for f in rows:data['fields'].append(dict(id=f['id'],owner_id=ids[f['owner']],kind=f['kind'],value=f['value'],users=[ids[f['owner']]]))

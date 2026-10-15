@@ -220,6 +220,17 @@ class EntityBoundaryTests(unittest.TestCase):
         for company,w,h in [('Example Company',54,90),('Another Company',90,54)]:
             bad={'company':company,'width_mm':w,'height_mm':h,'approved':True};candidate=generate(t,p,c,{'c1':bad});self.assertFalse(candidate.valid);self.assertTrue(any('公司或矩形尺寸不符' in r for r in candidate.issues))
         self.assertFalse(generate(t,p,c,{}).valid);self.assertEqual(t.slots[0].size_pt,10)
+    def test_shared_logo_preview_lists_exact_ids_and_undo_keeps_asset_reference(self):
+        g=fixture();cid=g.data['companies'][0]['id'];g.command('edit_logo',company_id=cid,logo_id='approved-size-asset-A',approved=True)
+        p=g.make_plan('edit_logo',company_id=cid,logo_id='approved-size-asset-B')
+        self.assertEqual(p['entity_differences'][0]['before']['logo_id'],'approved-size-asset-A');self.assertEqual(p['entity_differences'][0]['after']['logo_id'],'approved-size-asset-B');self.assertEqual(len(p['affected']),3)
+        g.apply(p,True);g.undo();self.assertEqual(g.entity(cid)['logo_id'],'approved-size-asset-A')
+
+    def test_legacy_ambiguous_root_is_not_silently_renumbered(self):
+        from template_ai.customer_entities import from_legacy_fields
+        for owner in ('p0','p2','p01'):
+            with self.assertRaises(ValueError):from_legacy_fields([dict(id='legacy-field',owner=owner,kind='name',value='Alex Example')])
+
     def test_limits_and_empty_graph_fail_without_partial_mutation(self):
         g=InputGraph.from_legacy([dict(name=['']) for i in range(20)],[]);before=copy.deepcopy(g.data)
         with self.assertRaisesRegex(ValueError,'20人物'):g.command('add_person')

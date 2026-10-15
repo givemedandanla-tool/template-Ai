@@ -1,3 +1,7 @@
+# 最終邊界覆核完成
+
+在002正式執行前補足共享Logo確認的舊／新資產ID差異，以及非法舊ROOT不得默默重新編號的保守遷移。30項新測試PASS，原UNKNOWN回歸PASS。這是新source，需要GitHub再讀回，不沿用source3。SOURCE3已可恢復，當前修正以獨立commit讀回凍結；全回歸002結束立即建立完整checkpoint。
+
 # 正式全回歸001：405/406，保留失敗並修正
 
 唯一FAIL為語意樹在新增多公司相容時，把舊有缺映射的UNKNOWN標籤合併成無公司文字。修正為「未有明確binding＝UNKNOWN」和「明確空集合＝無公司已確認」兩種不同事實，新增對照測試，未改原失敗測試。001來源b729755、source unchanged、GUI capture因測試失敗未作完成證據。新來源重新checkpoint後跑002全回歸，全部current仍pending。

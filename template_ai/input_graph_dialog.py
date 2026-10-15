@@ -43,7 +43,7 @@ class InputGraphDialog(QDialog):
                 for delta in plan['differences']:
                     old,new=delta['before'],delta['after'];field=new or old
                     detail+='\n'+KINDS[field['kind']]+'／'+field['owner_id']+'：'+('未有此欄位' if old is None else old['value'])+' → '+('刪除此欄位' if new is None else new['value'])
-                detail+='\n關聯變化：'+str(plan['link_changes'])+'\n操作後（人物／公司／欄位／關聯）：'+str(plan['result_counts'])
+                detail+='\n實體／Logo引用變化：'+str(plan['entity_differences'])+'\n關聯變化：'+str(plan['link_changes'])+'\n操作後（人物／公司／欄位／關聯）：'+str(plan['result_counts'])
                 if action=='edit_field':
                     old=self.graph.field(params['field_id']);detail+='\n舊值：'+old['value']+'\n新值：'+params['value']
                 if action=='copy_person':detail+='\n私人欄位：獨立複本；公司：'+('連結既有共享實體' if params['company_mode']=='SHARED' else '公司與聯絡欄位建立獨立複本；Logo引用既有核准資產')
