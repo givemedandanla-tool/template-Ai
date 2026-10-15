@@ -1,8 +1,8 @@
 """人物 ROOT 卡片與共享資料；只有採用才修改當次輸入。"""
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt,QTimer
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QSplitter,
     QTreeWidget,QTreeWidgetItem,QScrollArea,QWidget,QGroupBox,QLineEdit,QComboBox,
-    QInputDialog,QMessageBox,QDialogButtonBox)
+    QInputDialog,QMessageBox,QDialogButtonBox,QListWidget,QListWidgetItem)
 from .input_graph import InputGraph, CONTACT_KINDS
 from .model import KINDS
 
@@ -27,7 +27,9 @@ class InputGraphDialog(QDialog):
         bar=QHBoxLayout();self.add_button(bar,'＋新增人物',lambda:self.execute('add_person'));self.undo_button=self.add_button(bar,'復原',self.undo);self.redo_button=self.add_button(bar,'重做',self.redo);layout.addLayout(bar)
         split=QSplitter();self.tree=QTreeWidget();self.tree.setHeaderLabels(['結構導覽／真實引用']);self.tree.currentItemChanged.connect(self.navigate);split.addWidget(self.tree)
         self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);split.addWidget(self.scroll);split.setStretchFactor(1,3);layout.addWidget(split,1)
-        self.summary=QLabel();self.summary.setWordWrap(True);layout.addWidget(self.summary)
+        self.summary=QLabel();self.summary.setWordWrap(True);layout.insertWidget(1,self.summary)
+        self.problems=QListWidget();self.problems.setMaximumWidth(330);self.problems.itemClicked.connect(self.locate_warning);split.addWidget(self.problems)
+        self.pending_input={};self.field_warnings={};self.field_locations={};self.warning_timer=QTimer(self);self.warning_timer.setSingleShot(True);self.warning_timer.timeout.connect(self.refresh_warnings)
         buttons=QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel);buttons.button(QDialogButtonBox.Ok).setText('採用到當次輸入（須重新排版）');buttons.button(QDialogButtonBox.Cancel).setText('取消全部未採用修改');buttons.accepted.connect(self.accept);buttons.rejected.connect(self.reject);layout.addWidget(buttons)
         self.field_editors={};self.cards={};self.rebuild()
 
@@ -101,7 +103,8 @@ class InputGraphDialog(QDialog):
         def commit():
             if not self.rebuilding and editor.text()!=self.graph.field(f['id'])['value']:
                 self.execute('edit_field',field_id=f['id'],value=editor.text())
-        editor.editingFinished.connect(commit);self.field_editors.setdefault(f['id'],editor)
+        editor.editingFinished.connect(commit);self.field_editors.setdefault(f['id'],editor);self.field_locations[(f['id'],eid)]=editor
+        editor.textEdited.connect(lambda value,fid=f['id']:(self.pending_input.__setitem__(fid,value),self.warning_timer.start(180)))
         impact=self.graph.field_impact(f['id'])
         shared=len(impact)>1
         marker=QLabel(('共享：'+'／'.join(self.graph.label(x) for x in impact)) if shared else '獨立');marker.setTextFormat(Qt.PlainText);row.addWidget(marker)
@@ -111,6 +114,7 @@ class InputGraphDialog(QDialog):
         if f['kind'] in CONTACT_KINDS:self.add_button(row,'複製獨立欄位',lambda:self.execute('copy_field',field_id=f['id'],owner_id=eid))
         if f['owner_id']==eid and f['kind']!='name':self.add_button(row,'刪除此欄位實體',lambda:self.execute('delete_field',field_id=f['id']))
         layout.addLayout(row)
+        warning=QLabel();warning.setWordWrap(True);warning.setStyleSheet('color:#9a3412');layout.addWidget(warning);self.field_warnings.setdefault(f['id'],[]).append(warning)
 
     def entity_fields(self,layout,eid):
         for f in self.graph.data['fields']:
@@ -159,10 +163,33 @@ class InputGraphDialog(QDialog):
         if import_new:dialog.manual_import()
         dialog.exec();self.rebuild()
 
+    def refresh_warnings(self):
+        import sqlite3
+        try:self.window.library.db.execute('SELECT 1')
+        except sqlite3.ProgrammingError:self.warning_timer.stop();self.summary.setText('本機資料庫已關閉，輸入檢查已停止；未宣稱通過');return
+        try:
+            from .input_diagnostics import diagnose
+            preview=InputGraph(self.graph.data)
+            for field in preview.data['fields']:
+                if field['id'] in self.pending_input:field['value']=self.pending_input[field['id']]
+            people,companies,_=preview.compile(self.window.library.logos());report=diagnose(people,companies,self.window.library.templates(True),self.window.out_w.value(),self.window.out_h.value());self.warning_report=report
+            self.summary.setText(('警告：印刷效果可能不佳；預估風險／待驗證' if report['issues'] else '目前未發現輸入風險；尚待版面驗證')+f"；{len(people)}人物／{len(companies)}公司／{len(report['issues'])}問題。固定字級，未試排不宣稱無解或印前PASS。")
+            self.problems.clear()
+            for issue in report['issues']:
+                item=QListWidgetItem(issue['owner']+'／'+str(issue.get('field_id') or '關聯')+'：'+issue['reason']);item.setData(Qt.UserRole,issue);self.problems.addItem(item)
+            for fid,labels in self.field_warnings.items():
+                text='\n'.join(issue['reason'] for issue in report['issues'] if issue.get('field_id')==fid)
+                for label in labels:label.setText(text);label.setVisible(bool(text))
+        except (ValueError,TypeError) as error:self.summary.setText('尚未完成輸入檢查：'+str(error))
+
+    def locate_warning(self,item):
+        issue=item.data(Qt.UserRole);editor=self.field_locations.get((issue.get('field_id'),issue.get('entity_id'))) or self.field_editors.get(issue.get('field_id'))
+        if editor:self.scroll.ensureWidgetVisible(editor);editor.setFocus()
+
     def rebuild(self):
         self.rebuilding=True;self.tree.blockSignals(True)
         try:
-            self.tree.clear();self.field_editors={};self.cards={}
+            self.warning_timer.stop();self.pending_input={};self.field_warnings={};self.field_locations={};self.tree.clear();self.field_editors={};self.cards={}
             old=self.scroll.takeWidget()
             if old:
                 for editor in old.findChildren(QLineEdit):editor.blockSignals(True)
@@ -187,9 +214,8 @@ class InputGraphDialog(QDialog):
             for c in self.graph.data['companies']:
                 if not any(cid==c['id'] for _,cid in self.graph.data['links']):self.company_card(v,c['id'])
             v.addStretch(1);self.scroll.setWidget(content);self.tree.expandAll();self.undo_button.setEnabled(bool(self.graph.undo_stack));self.redo_button.setEnabled(bool(self.graph.redo_stack))
-            try:
-                from .input_diagnostics import diagnose
-                p,c,l=self.graph.compile(self.window.library.logos());result=diagnose(p,c,self.window.library.templates(True),self.window.out_w.value(),self.window.out_h.value())
-                self.summary.setText(f"{len(p)}人物／{len(c)}公司／{len(self.graph.data['fields'])}穩定欄位；{len(result['issues'])}項輸入風險提示，尚待實際排版與字型／Logo／尺寸Gate。\n"+'；'.join(x['reason'] for x in result['issues'][:4]))
-            except (ValueError,TypeError) as error:self.summary.setText('尚未完成輸入檢查：'+str(error))
+            self.refresh_warnings()
         finally:self.rebuilding=False;self.tree.blockSignals(False)
+
+    def hideEvent(self,event):
+        self.warning_timer.stop();super().hideEvent(event)

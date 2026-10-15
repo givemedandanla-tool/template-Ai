@@ -579,8 +579,10 @@ class MainWindow(QMainWindow):
         self.companies.setMaximumHeight(75)
         self.companies.itemChanged.connect(self.invalidate)
         layout.addWidget(self.companies)
+        from .input_warning_delegate import InputWarningDelegate
+        self.people.setItemDelegate(InputWarningDelegate(self.people));self.companies.setItemDelegate(InputWarningDelegate(self.companies))
         self.input_state = QLabel('輸入待驗證；欄位提示不代表印前通過')
-        layout.addWidget(self.input_state)
+        layout.insertWidget(1,self.input_state)
         self.input_problems = QListWidget()
         self.input_problems.setMaximumHeight(100)
         self.input_problems.itemClicked.connect(self.locate_input_problem)
@@ -1684,7 +1686,11 @@ class MainWindow(QMainWindow):
             for row in range(table.rowCount()):
                 for col in range(table.columnCount()):
                     item=table.item(row,col)
-                    if item: item.setToolTip('\n'.join(i['reason'] for i in report['issues'] if i['table']==('people' if table is self.people else 'companies') and i['row']==row and i['col']==col))
+                    if item:
+                        from .input_warning_delegate import WARNING_ROLE
+                        warning='\n'.join(i['reason'] for i in report['issues'] if i['table']==('people' if table is self.people else 'companies') and i['row']==row and i['col']==col)
+                        item.setToolTip(warning);item.setData(WARNING_ROLE,warning)
+                table.setRowHeight(row,48 if any(i['row']==row and i['table']==('people' if table is self.people else 'companies') for i in report['issues']) else 28)
             del blocker
         self.input_state.setText(f"{len(report['issues'])}項輸入提示／待版面驗證；非全域無解，正式輸出依當前候選Gate")
 

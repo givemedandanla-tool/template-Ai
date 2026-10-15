@@ -1,0 +1,28 @@
+.This plugin does not support propagateSizeHints()
+.......This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/template_ai/input_graph_dialog.py", line 105, in commit
+    self.execute('edit_field',field_id=f['id'],value=editor.text())
+  File "/workspace/template-Ai/template_ai/input_graph_dialog.py", line 58, in execute
+    self.rebuild();return True
+    ^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/input_graph_dialog.py", line 214, in rebuild
+    self.refresh_warnings()
+  File "/workspace/template-Ai/template_ai/input_graph_dialog.py", line 172, in refresh_warnings
+    people,companies,_=preview.compile(self.window.library.logos());report=diagnose(people,companies,self.window.library.templates(True),self.window.out_w.value(),self.window.out_h.value());self.warning_report=report
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/storage.py", line 535, in logos
+    return [json.loads(r[0]) for r in self.db.execute("SELECT payload FROM logos ORDER BY rowid DESC")]
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.ProgrammingError: Cannot operate on a closed database.
+.This plugin does not support propagateSizeHints()
+..This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+..................This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+...........This plugin does not support propagateSizeHints()
+...
+----------------------------------------------------------------------
+Ran 43 tests in 4.927s
+
+OK
