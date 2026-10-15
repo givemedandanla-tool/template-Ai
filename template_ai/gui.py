@@ -13,7 +13,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBo
     QDialog, QDialogButtonBox, QFontComboBox, QFormLayout, QGraphicsItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView,
     QGroupBox, QHBoxLayout, QHeaderView, QInputDialog, QLabel, QLineEdit, QListWidget,
     QMainWindow, QMessageBox, QPushButton, QSpinBox, QSplitter, QTabWidget, QTableWidget,
-    QTableWidgetItem, QVBoxLayout, QWidget)
+    QTableWidgetItem, QVBoxLayout, QWidget, QStackedWidget)
 
 from . import __version__
 from .importer import import_file, inkscape_path
@@ -395,9 +395,34 @@ class MainWindow(QMainWindow):
         return widget
 
     def build_templates(self):
+        from .catalog_widget import CatalogWidget
+        self.template_stack=QStackedWidget()
+        editor=self.build_template_editor()
+        self.template_catalog=CatalogWidget(self)
+        self.template_stack.addWidget(self.template_catalog);self.template_stack.addWidget(editor)
+        return self.template_stack
+
+    def open_catalog_editor(self,template_id):
+        from .training_navigation import require_clean_navigation
+        require_clean_navigation(self)
+        index=next((i for i,t in enumerate(self.templates) if t.id==template_id),None)
+        if index is None:raise ValueError('模板已失聯，未開啟其他版本')
+        self.template_list.setCurrentRow(index)
+        if not self.template or self.template.id!=template_id:self.choose_template(index)
+        self.template_stack.setCurrentIndex(1);self.tabs.setCurrentIndex(1)
+        self.statusBar().showMessage('明確進入模板編輯區；已發布版本唯讀，另建新版草稿才可修改')
+
+    def return_catalog(self):
+        from .training_navigation import require_clean_navigation
+        try:
+            require_clean_navigation(self);self.template_catalog.reload();self.template_stack.setCurrentIndex(0)
+        except ValueError as error:self.error(str(error))
+
+    def build_template_editor(self):
         widget = QWidget()
         layout = QVBoxLayout(widget)
         row = QHBoxLayout()
+        self.button("返回唯讀模板瀏覽", self.return_catalog, row)
         self.button("新增空白矩形模板", self.new_template, row)
         self.button("加入合成示範模板", self.add_demo, row)
         self.button("建立新版本草稿", self.new_version, row)
@@ -1134,6 +1159,7 @@ class MainWindow(QMainWindow):
 
     def refresh_templates(self, select=None, preserve_editor=False):
         self.templates = self.library.templates()
+        if hasattr(self,"template_catalog"):self.template_catalog.reload()
         self.template_list.blockSignals(True)
         self.template_list.clear()
         for t in self.templates:

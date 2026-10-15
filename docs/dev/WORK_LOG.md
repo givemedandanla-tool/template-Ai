@@ -1,3 +1,7 @@
+# CATALOG第一階段WIP
+
+共用尺寸→capacity索引、單一縮圖／列表選取狀態、分頁、來源雜湊與裁切驗證的純DTO worker、明確編輯工作區、客戶身份核對及exact版型目錄入口已接。電話正規化僅搜尋，不改原資料。來源圖未知不以示意圖替代，主檔／新稿分離。compile PASS；尚需新功能測試、完整GUI／失敗與回歸，所有current要求隨code轉pending，不宣稱父題完成。先保存WIP，再進行具名測試修正。
+
 # 人物公司保存完成，直接接續CATALOG
 
 CP-ENTITIES-VERIFIED snapshot96d49faf／1110檔官方驗證，receipt c47a08b5已保存。1111檔乾淨文字Gate PASS；6官方checkpoint最大間隔820.486642秒，超600秒目標，如實存cadence，另有正式測試前source1d2d完整讀回恢復點。PR2已更新v0.1.27/open/unmerged，main436ca2d7未動。先寫CATALOG UI009/044完整條款契約與BEGIN，再改碼；不等待human，無新增需求詢問。

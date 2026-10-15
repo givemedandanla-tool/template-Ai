@@ -1,7 +1,7 @@
 """One customer entry backed by the existing Library connection."""
 import json
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLineEdit,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox,QFileDialog,QInputDialog,QHeaderView
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLineEdit,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox,QFileDialog,QInputDialog,QHeaderView,QComboBox
 from .customers import CustomerStore
 
 class CustomerDialog(QDialog):
@@ -9,11 +9,13 @@ class CustomerDialog(QDialog):
         super().__init__(window);self.window=window;self.store=CustomerStore(window.library);self.snapshot=None;self.results=[]
         self.setWindowTitle('本機客戶／版型關聯與逐欄比對');self.resize(1000,720);layout=QVBoxLayout(self)
         self.status=QLabel('僅匿名研究資料；查詢不合併、不回寫；完整個資權限尚未完成。');self.status.setWordWrap(True);layout.addWidget(self.status)
-        bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('客戶編號／姓名／聯絡資訊（空查詢不載全庫）');bar.addWidget(self.query);self.add_button(bar,'搜尋',self.search);self.add_button(bar,'將目前人物資料人工建檔',self.create);layout.addLayout(bar)
+        bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('客戶編號／姓名／聯絡資訊（空查詢不載全庫）');bar.addWidget(self.query);self.query_kind=QComboBox()
+        for label,value in [('全部欄位','ANY'),('客戶編號','CODE'),('人物／顯示名稱','NAME'),('電話（手機／私人）','PHONE'),('LINE','LINE'),('IG','IG'),('Email','EMAIL'),('公司','COMPANY')]:self.query_kind.addItem(label,value)
+        bar.addWidget(self.query_kind);self.add_button(bar,'搜尋',self.search);self.add_button(bar,'將目前人物資料人工建檔',self.create);layout.addLayout(bar)
         self.customers=QTableWidget(0,3);self.customers.setMaximumHeight(135);self.customers.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch);self.customers.setHorizontalHeaderLabels(['客戶編號','名稱','內部ID／版型數']);self.customers.setEditTriggers(QTableWidget.NoEditTriggers);self.customers.setSelectionBehavior(QTableWidget.SelectRows);self.customers.itemSelectionChanged.connect(self.select);layout.addWidget(self.customers)
         self.fields=QTableWidget(0,7);self.fields.setHorizontalHeaderLabels(['回寫（預設不選）','人物／公司／類型','快照原值','本次值（可編輯／清空）','stable欄位ID','目前主檔值','共享影響']);self.fields.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch);self.fields.setColumnHidden(4,True);layout.addWidget(self.fields,2)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details)
-        bar=QHBoxLayout();self.add_button(bar,'確認身份／選版型預填當次',self.prefill);self.add_button(bar,'比較選中欄位差異',self.preview);self.add_button(bar,'確認選中差異回寫',self.write);self.add_button(bar,'比較兩個客戶（不合併）',self.compare);layout.addLayout(bar)
+        bar=QHBoxLayout();self.add_button(bar,'核對身份／瀏覽尺寸版型',self.browse_styles);self.add_button(bar,'快速文字選exact版型',self.prefill);self.add_button(bar,'比較選中欄位差異',self.preview);self.add_button(bar,'確認選中差異回寫',self.write);self.add_button(bar,'比較兩個客戶（不合併）',self.compare);layout.addLayout(bar)
         bar=QHBoxLayout();self.add_button(bar,'關聯另一確切尺寸／版型',self.link_style);self.add_button(bar,'查看並恢復已選欄位的歷史值',self.restore_history);layout.addLayout(bar)
         bar=QHBoxLayout();self.add_button(bar,'加密資料庫部分備份',self.backup);self.add_button(bar,'隔離還原到新目錄',self.restore);self.add_button(bar,'關閉',self.accept);layout.addLayout(bar)
     def add_button(self,bar,text,fn):
@@ -23,10 +25,11 @@ class CustomerDialog(QDialog):
         except Exception as e:self.status.setText('未完成：'+str(e))
     def search(self):
         def action():
-            self.results=self.store.search(self.query.text());self.customers.setRowCount(min(100,len(self.results)))
+            self.snapshot=None;self.fields.setRowCount(0);self.details.clear();self.customers.clearSelection()
+            self.results=self.store.search(self.query.text(),field=self.query_kind.currentData());self.customers.setRowCount(min(100,len(self.results)))
             for i,c in enumerate(self.results[:100]):
                 for j,v in enumerate((c['code'],c['name'],c['id']+'／'+str(len(c['styles'])))):self.customers.setItem(i,j,QTableWidgetItem(v))
-            self.status.setText(f'顯示{min(100,len(self.results))}筆；'+('仍有更多，請縮小條件' if len(self.results)>100 else '相同聯絡方式仍保留獨立身份'))
+            self.status.setText(f'顯示{min(100,len(self.results))}筆；'+('仍有更多，請縮小條件' if len(self.results)>100 else '相同聯絡方式仍保留獨立身份；電話只去可說明格式，不猜國碼或修改原值'))
         self.guarded(action)
     def select(self):
         row=self.customers.currentRow();self.snapshot=self.store.get(self.results[row]['id']) if 0<=row<len(self.results) else None;self.fields.setRowCount(0)
@@ -144,4 +147,15 @@ class CustomerDialog(QDialog):
             updated=self.store.restore_change(self.snapshot,change['id'],selected,True)
             if getattr(self.window,'reorder_customer_snapshot',None) and self.window.reorder_customer_snapshot['id']==updated['id']:self.window.reorder_customer_snapshot=updated
             self.select();self.status.setText('已以新版本恢復選中欄位；當次製作未被自動覆寫')
+        self.guarded(action)
+
+    def browse_styles(self):
+        def action():
+            if not self.snapshot:raise ValueError('先選取並核對客戶')
+            current=self.store.get(self.snapshot['id'])
+            if QMessageBox.question(self,'核對客戶身份',current['code']+'／'+current['name']+'／ID '+current['id']+'\n相同姓名／電話不是同一身份證明；確認後只開此客戶已確認關聯版型？')!=QMessageBox.Yes:return
+            from .customer_catalog import CustomerStyleDialog
+            dialog=CustomerStyleDialog(self.window,current,self)
+            try:dialog.exec()
+            finally:dialog.catalog.close_previews();dialog.deleteLater()
         self.guarded(action)

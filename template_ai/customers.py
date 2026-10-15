@@ -53,13 +53,9 @@ class CustomerStore:
         graph=read_graph(self.db,cid,r[3])
         state=self.db.execute('SELECT status FROM customer_graph_states WHERE customer_id=?',(cid,)).fetchone()
         return dict(zip(('id','code','name','revision'),r),fields=fields,styles=styles,graph=graph,ownership_state=state[0] if state else 'NOT_MIGRATED')
-    def search(self,query,offset=0):
-        q=query.strip().casefold()
-        if not q:return []
-        if offset<0:raise ValueError('分頁不合法')
-        # instr is literal: user %/_ are not SQL wildcard expressions.
-        rows=self.db.execute('SELECT DISTINCT c.id FROM customers c LEFT JOIN customer_fields f ON f.customer_id=c.id WHERE instr(lower(c.code),?) OR instr(lower(c.name),?) OR instr(lower(f.value),?) ORDER BY c.code LIMIT 101 OFFSET ?',(q,q,q,offset)).fetchall()
-        return [self.get(r[0]) for r in rows]
+    def search(self,query,offset=0,field='ANY'):
+        from .customer_search import search
+        return search(self,query,offset,field)
     def differences(self,snapshot,values):
         current=self.get(snapshot['id']);byid={f['id']:f for f in snapshot['fields']}
         if set(values)-byid.keys():raise ValueError('不能按位置新增或跨客戶更新欄位')
