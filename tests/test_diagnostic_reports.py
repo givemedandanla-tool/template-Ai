@@ -46,7 +46,9 @@ class DiagnosticReportTests(unittest.TestCase):
         s=make_snapshot(self.w,'candidate');self.assertEqual(s.data['status'],'BLOCKED')
         row=next(r for r in s.data['issues'] if r['code']=='WIDTH');p=row['parameters']
         self.assertAlmostEqual(p['required_scale'],p['width_mm']/p['text_width_mm']);self.assertEqual(p['size_pt'],18)
-        self.assertEqual(read_bundle(build_bundle(s.data)),s.data);self.assertIn(encoded(s.data).decode().replace('&','&amp;').splitlines()[0],report_html(s.data).decode())
+        self.assertEqual(read_bundle(build_bundle(s.data)),s.data);page=report_html(s.data).decode()
+        self.assertIn('固定字級（pt）',page);self.assertIn('實測字寬（mm）',page);self.assertIn('所需水平比例',page)
+        self.assertIn(f"{p['required_scale']:.2%}",page);self.assertNotIn('<pre>',page);self.assertIn('UTC+8',page)
         self.assertEqual(c,before);self.assertEqual(s.data['physical_print'],'NOT_VERIFIED');self.assertFalse(s.data['progress']['global_unsolvable'])
     def test_input_empty_invalid_company_no_candidate_and_unknown_not_pass(self):
         self.w.people.item(0,0).setText('');s=make_snapshot(self.w,'input')

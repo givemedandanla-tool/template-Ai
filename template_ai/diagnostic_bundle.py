@@ -106,18 +106,62 @@ def validate(data):
 
 def report_html(data):
     validate(data)
+    # HTML order must be stable before and after JSON round trips, including every numeric table.
+    data=json.loads(encoded(data))
+    from datetime import datetime,timedelta,timezone
+    from .model import KINDS as kind_titles
     titles={'DATA_PROCESSING':'資料處理','TEMPLATE_GENERATION':'模板生成','INPUT_OUTPUT':'輸入／產出作品'}
-    rows=''.join('<tr><td>'+html.escape(str(i+1))+'</td><td>'+html.escape(r['target']+' '+','.join(r['fields']))+
-                 '</td><td>'+html.escape(r['severity']+'／'+r['code'])+'</td><td>'+html.escape(MESSAGES[r['code']])+
-                 '</td><td>回到原問題核對後重新驗證</td></tr>' for i,r in enumerate(data['issues']))
+    states={'NOT_CHECKED':'未檢查','LOCAL_SCOPE_CHECKED':'指定範圍已檢查','PENDING_LAYOUT':'待試排驗證',
+            'BLOCKED':'有阻擋問題','DIGITAL_VALID':'原候選數位檢查通過，正式輸出仍須重新核對',
+            'STALE_RESULT':'結果已過期','PARTIAL':'僅部分檢查','RUNNING':'計算中',
+            'COMPLETED':'候選集合計算結束，不代表全部合格','CANCELLED':'已取消',
+            'FAILED':'工作失敗','FAILED_SYSTEM':'背景系統失敗'}
+    source_states={'NOT_CHECKED':'未檢查','OK':'指定來源內容與登錄一致','MISSING':'來源失聯','CHANGED':'來源異動或無法驗證','UNREADABLE':'來源無法讀取'}
+    severity={'BLOCK':'阻擋','REVIEW':'需核對','INFO':'資訊'}
+    labels={'size_pt':'固定字級（pt）','width_mm':'可用框寬（mm）','height_mm':'可用框高（mm）',
+            'text_width_mm':'實測字寬（mm）','text_height_mm':'實測字高（mm）','required_scale':'所需水平比例',
+            'min_scale':'允許比例下限','x':'X座標（mm）','y':'Y座標（mm）','w':'框寬（mm）','h':'框高（mm）',
+            'index':'映射序號','capacity':'模板人物容量','people':'實際人物數'}
+    def esc(value):return html.escape(str(value))
+    def numeric(key,value):
+        if value is None:return '未知／未能量測'
+        return f'{value:.2%}' if key in ('required_scale','min_scale','precision','recall') else f'{value:g}'
+    def table(headers,rows):
+        return '<table border="1" cellpadding="5" width="100%"><tr>'+''.join('<th>'+esc(h)+'</th>' for h in headers)+'</tr>'+''.join('<tr>'+''.join('<td>'+esc(v).replace('\n','<br>')+'</td>' for v in row)+'</tr>' for row in rows)+'</table>'
+    def issue_rows(rows):
+        return [(i+1,r['target']+' '+','.join(r['fields'])+'／'+kind_titles.get(r['kind'],'未分類'),
+                 severity[r['severity']],MESSAGES[r['code']]+'（'+r['code']+'）',
+                 '\n'.join(labels[k]+'：'+numeric(k,v) for k,v in r['parameters'].items()) or '沒有已核實數值',
+                 titles[r['origin_stage']]+' → '+titles[r['impact_stage']],
+                 '回到原問題核對後重新驗證；'+('原快照有定位識別，仍須本機核對版本' if r['locatable'] else '無可靠定位，需人工核對')) for i,r in enumerate(rows)]
+    local_time=datetime.fromisoformat(data['created_utc'].replace('Z','+00:00')).astimezone(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S（UTC+8）')
+    summary=table(['報告項目','內容'],[
+        ('檢查環節',titles[data['stage']]),('當時狀態',states[data['status']]),('產生時間',local_time),
+        ('來源健康',source_states[data['source_health']]),('模型品質','未驗證'),('實體印刷','未驗證'),
+        ('程式／格式版本',data['app_version']+'／'+str(data['schema_version'])),('對象版次',data['object_revision'] if data['object_revision'] is not None else '不適用或未知'),
+        ('報告代號',data['report_id']),('省略問題數',data['omitted_issues'])])
+    scope_labels={'sources':'來源檔案數','works':'作品數','candidates':'已納入候選數','fields':'欄位數','width_mm':'矩形寬（mm）','height_mm':'矩形高（mm）'}
+    scope=table(['實際範圍','數值'],[(scope_labels[k],numeric(k,v)) for k,v in data['scope'].items()])
+    p=data['progress'];progress=table(['進度項目','數值'], [('當時工作狀態',states[p['state']])]+[(label,p[k] if p[k] is not None else '未知／未計數') for k,label in [('total','已知候選總數'),('checked','已處理'),('calculated','已計算候選'),('failed','失敗候選'),('unstarted','未開始')]]+[('全域無解','未宣稱已證明全域無解')])
+    headers=['序號','對象／欄位','判定','原因','已核實證據','發生與影響環節','下一步']
+    issues=table(headers,issue_rows(data['issues'])) if data['issues'] else '<p>本次指定範圍未列出問題；不代表未檢查項已通過。</p>'
+    measurements=table(headers,issue_rows(data['measurements'])) if data['measurements'] else '<p>本次未取得可列出的字型量測。</p>'
+    classification=''
+    if data['classification'] is not None:
+        c=data['classification']
+        classification='<h2>既有分類紀錄</h2>'+table(['項目','值'],[('真值數',c['gold_count']),('預測數',c['predicted_count']),('關鍵歸屬錯誤',c['critical_owner_errors']),('原判定','關鍵錯誤阻擋' if c['gate']=='FAILED_CRITICAL' else '品質證據不足')])
+        classification+=table(['類別','正確TP','誤判FP','漏判FN','精確率','召回率'],[(kind_titles[k],m['tp'],m['fp'],m['fn'],numeric('precision',m['precision']),numeric('recall',m['recall'])) for k,m in c['metrics'].items()])
+        classification+='<p>預測來自人工／外部提供的紀錄，本工具未執行模型推論。實際版本標籤保留本機，並未驗證其代表的模型。</p>'
     return ('<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8">'
             '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; base-uri \'none\'; form-action \'none\'">'
             '<title>診斷報告</title></head><body><h1>診斷報告 · 歷史快照 · 非正式</h1>'
-            '<p>環節：'+titles[data['stage']]+'；狀態：'+data['status']+'；時間：'+data['created_utc']+'</p>'
             '<p>只代表列明的檢查範圍；不是當前驗證、模型品質、視覺一致或正式印刷可用證明。'
             '安全交接版省略原始文字、路徑與原稿。匿名代號僅限此報告；校驗碼不保證作者或內容真實。</p>'
-            '<table border="1"><tr><th>序號</th><th>對象</th><th>類型</th><th>原因</th><th>處理</th></tr>'+rows+'</table>'
-            '<h2>完整檢查範圍、數值、版本與未驗證項</h2><pre>'+html.escape(encoded(data).decode())+'</pre></body></html>').encode()
+            +'<p>環節：'+titles[data['stage']]+'；當時狀態：'+states[data['status']]+'；時間：'+local_time+'</p>'+'<h2>問題與處理方向</h2>'+issues+'<h2>指定字型的實際量測</h2>'+measurements+'<h2>報告摘要</h2>'+summary+
+            '<h2>本次檢查範圍</h2>'+scope+'<h2>工作進度</h2>'+progress+
+            '<h2>三個環節的檢查狀態</h2>'+table(['環節','狀態'],[(titles[k],states[v]) for k,v in data['stages'].items()])+classification+
+            '<p>安全交接版不含原始姓名／電話／Email／公司名稱／來源路徑／原圖／字型／自由備註。'
+            '修改問題後須重新驗證；報告不會修改主檔、模板、學習資料或解除正式輸出阻擋。</p></body></html>').encode()
 
 
 def build_bundle(data):

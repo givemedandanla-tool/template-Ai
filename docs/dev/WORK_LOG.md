@@ -1,5 +1,9 @@
 # 開發工作紀錄
 
+## 第一輪全378PASS後的人類閱讀改善
+
+RUN-DIAGNOSTIC-REPORTS-001 source d9593f2f 378/378 PASS、0SKIP、78附件、capture0/source unchanged，作歷史有效證據。逐張檢視新GUI發現數值仍藏JSON，改中文摘要／問題／量測／分母／三階段表及UTC+8，人類頁不再堆原始JSON；第二頁JSON保留同份資料。target004的HTML因dict鍵排序在roundtrip改變而5FAIL/13ERROR，保留原記錄；改canonical排序後target005全29PASS。新匿名capture完整流程再次PASS，畫面已檢視，無個資／原稿。此source改動使001不再是current驗收，重凍READABLE-SOURCE後重跑002全378；不沿用舊PASS假稱新版完成。
+
 ## 診斷報告完整實作／target驗證
 
 第一輪23測試22PASS／1ERROR為Qt fitInView誤用int，修正Qt.KeepAspectRatio，原FAIL留target001。第二及三輪28PASS（新增品質紀錄、失聯、索引等）；原UI11與品質9 regression PASS；新增第29項真LayoutWorker部分失敗report及新policy邊界測試待正式。實際capture先行成功：同份JSON／預覽、保存重開、過期拒絕、來源問題與原Gate／模板不改；源素材與私有索引仍本機。原shared安全發布機制已抽至safe_publish，作品輸出及報告共用。現在凍結source全回歸（預計378）與匿名Qt capture，完成前不升要求。WIP1至source checkpoint約11分鐘，超10分鐘目標如實保留，非strict承諾。
