@@ -1,6 +1,6 @@
 {
   "id": "FIXED70-NEXT-TEN-PARENTS",
-  "status": "IN_PROGRESS",
+  "status": "COMPLETED_SELF_VERIFIED",
   "baseline_commit": "990d4a7515776e2565a2c52f9ccfe5cb19be14cd",
   "target_parent_count": 10,
   "target_parent_ids": [
@@ -48,7 +48,7 @@
   "acceptance": [
     {
       "parent": "UI-043",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_customer_candidates.CustomerCandidateTests.test_filename_full_rule_and_actual_facts_propose_only_without_master_writes",
         "test_customer_candidates.CustomerCandidateTests.test_review_and_commit_keep_leading_zeros_exact_versions_and_source_scope",
@@ -60,11 +60,12 @@
         "test_customer_candidates.CustomerCandidateTests.test_actual_qt_background_proposal_and_cancelled_batch_do_not_create_customer",
         "test_customer_candidates.CustomerCandidateTests.test_shared_contact_conflicts_show_both_people_without_merging_and_late_conflict_blocks",
         "test_customer_candidates.CustomerCandidateTests.test_association_revocation_requires_exact_customer_cas_and_late_failure_rolls_back"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     },
     {
       "parent": "UI-045",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_customer_graph_sync.CustomerGraphSyncTests.test_selective_values_use_stable_ids_and_never_change_work_or_templates",
         "test_customer_graph_sync.CustomerGraphSyncTests.test_add_delete_clear_and_absent_are_distinct_and_names_protected",
@@ -75,11 +76,12 @@
         "test_customer_graph_sync.CustomerGraphSyncTests.test_logo_and_cross_customer_operations_cannot_use_generic_sync",
         "test_customer_graph_sync.CustomerGraphSyncTests.test_restore_is_new_revision_then_preserves_later_values_and_history_can_be_deleted",
         "test_customer_graph_sync.CustomerGraphSyncTests.test_actual_dialog_default_work_only_cancel_confirmation_and_commit"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     },
     {
       "parent": "UI-020",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints",
         "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
@@ -128,11 +130,12 @@
         "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
         "test_multi_size.MultiSizeTests.test_cancel_and_missing_template_are_explicit_not_zero_test_success",
         "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     },
     {
       "parent": "UI-021",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints",
         "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
@@ -181,11 +184,12 @@
         "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
         "test_multi_size.MultiSizeTests.test_cancel_and_missing_template_are_explicit_not_zero_test_success",
         "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     },
     {
       "parent": "UI-022",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints",
         "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
@@ -224,11 +228,12 @@
         "test_logo_lifecycle.LogoLifecycleTests.test_nan_size_and_corrupt_approval_record_fail_closed",
         "test_logo_output_proof.LogoOutputProofTests.test_actual_three_formats_readback_physical_dimensions_transparency_and_no_approval",
         "test_logo_output_proof.LogoOutputProofTests.test_undecodable_logo_source_and_large_output_cannot_bypass_quality_with_flags"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     },
     {
       "parent": "UI-023",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints",
         "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
@@ -277,11 +282,12 @@
         "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
         "test_multi_size.MultiSizeTests.test_cancel_and_missing_template_are_explicit_not_zero_test_success",
         "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     },
     {
       "parent": "UI-024",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints",
         "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
@@ -320,11 +326,12 @@
         "test_logo_lifecycle.LogoLifecycleTests.test_nan_size_and_corrupt_approval_record_fail_closed",
         "test_logo_output_proof.LogoOutputProofTests.test_actual_three_formats_readback_physical_dimensions_transparency_and_no_approval",
         "test_logo_output_proof.LogoOutputProofTests.test_undecodable_logo_source_and_large_output_cannot_bypass_quality_with_flags"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     },
     {
       "parent": "UI-025",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints",
         "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
@@ -373,11 +380,12 @@
         "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
         "test_multi_size.MultiSizeTests.test_cancel_and_missing_template_are_explicit_not_zero_test_success",
         "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     },
     {
       "parent": "UI-026",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints",
         "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
@@ -426,11 +434,12 @@
         "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
         "test_multi_size.MultiSizeTests.test_cancel_and_missing_template_are_explicit_not_zero_test_success",
         "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     },
     {
       "parent": "UI-027",
-      "status": "IMPLEMENTED_PENDING_SOURCE_BOUND_FULL_VALIDATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints",
         "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
@@ -479,7 +488,8 @@
         "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
         "test_multi_size.MultiSizeTests.test_cancel_and_missing_template_are_explicit_not_zero_test_success",
         "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files"
-      ]
+      ],
+      "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json"
     }
   ],
   "fixed_gap_report": {
@@ -501,5 +511,10 @@
       "Adobe Acrobat Preflight逐問題定位及分尺寸驗證的流程思路；不宣稱取得其私有演算法"
     ],
     "licensing": "不複製授權未知或商用原始碼；引用思路與公開介面，沿用THIRD_PARTY版本／授權記錄。"
-  }
+  },
+  "completed_parent_count": 10,
+  "evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
+  "source_commit": "3cd2c22dd1a4529450e62a22a62e944aac179c1c",
+  "verification_scope": "完整原軟體條款87項／498實際測試、Qt畫面與三格式；實體印刷、私人AI全面、Windows、獨立覆核未驗證。",
+  "publication_policy": "docs/dev/FULL70_PUBLICATION.json"
 }

@@ -1,13 +1,15 @@
-# 持久化接續入口
+# 零例行對話、持久化接續入口
 
-使用者本輪明確要求：按計畫自主開發，完成十個完整父功能；參考數學演算法、成熟開源與商用方案的思路；零例行問答、持久化優先，即使換對話也能直接接續。
+使用者要求：依規劃自主推進，參照數學、成熟開源及商用方案思路；每階段checkpoint保存GitHub；新對話可直接接續，不重問是否繼續或保存。
 
-1. 使用既有 checkout；先讀 AGENTS.md、STATE.json、STATE.active_contract、本檔、HANDOFF 最新段與 WORK_LOG 最新記錄。不要把main的歷史文件狀態當開發現況；工作在dev/v0.1-first-version／PR2，尚未合併。
-2. 固定來源為使用者指定4238ebc24ae62a2ef90051a86685a4c13bfca94b的PARTIAL_70_GAP_REPORT；目標UI043、045、020～027，共10原父題。新契約覆蓋初始GUI-first選擇，但保留原契約與checkpoint；不重算舊十工作包或既有4個固定70完整父題。
-3. UI045圖差異引擎／Qt入口9項目標PASS；UI043來源客戶候選／審核／交易入庫8項目標PASS。原基準428PASS。兩父題尚待完整source-bound回歸／逐條對帳，仍PARTIAL；接著做Logo閉環與多尺寸輸出。
-4. 不重問是否繼續、是否保存或已核准選型。真正缺少的外部資源記明相依條件，只阻塞相依驗證，先做其他工作。不得宣稱讀到無法取得的/local完整對話；已找回的GitHub決策是現有依據。
-5. 每個可恢復階段及每10分鐘建立唯一checkpoint並推送；原生Git重新fetch確認commit/tree/blob才寫REMOTE_VERIFIED，收據下一個提交保存。記錄真實間隔；不能以本機ZIP冒稱GitHub保存。
-6. 不啟動多代理、不合併main、不建EXE；[skip ci]保存以免自動觸發Actions。合成資料本機測試，新媒體依原政策留本機、code/tests/text保存。
-7. 環境：.venv/bin/python；XDG_CACHE_HOME=/workspace/.cache、QT_QPA_PLATFORM=offscreen。依requirements-lock.txt重建；SQLite、Qt與Inkscape已有真實基準。
+目前UI043、045、020～027共10原父題的軟體條款SELF_VERIFIED：87條驗收、498/498測試PASS、實際Qt與三格式數位檔。固定70累計14完整／56剩餘；原75為16完整／56部分／3延後，CORE87／GOV7分開。來源、證據、收據及未驗證外部條件見STATE。不宣稱全產品完成、實體印刷／Windows／私人AI全面保真或獨立覆核。
 
-每輪離開前更新STATE下一步、完整父題完成／剩餘、具名驗收與未驗證條款。持續目標不因checkpoint或聊天換頁而取消；未完成不得報10/10。
+恢復順序：AGENTS→STATE→本檔→最新HANDOFF段→STATE.active_contract及REQUIREMENTS→最新WORK_LOG／收據。開發在dev/v0.1-first-version／PR2，main是較早文件狀態。舊/local完整聊天無法取得，已找回的GitHub決策與版本是可核對依據。
+
+下一項UI003自動管線，接UI004/005/007/008，詳見NEXT_AFTER_TEN_PARENTS。先寫原條款、具名驗收及BEGIN checkpoint，再改碼。真正缺外部條件只阻塞相依驗證，先做其他已授權工作。
+
+環境：.venv/bin/python；重建bash tools/cloud_setup.sh；測試使用XDG_CACHE_HOME=/workspace/.cache、QT_QPA_PLATFORM=offscreen。雲端設定與大型檔案按區域讀取策略見CLOUD_ENVIRONMENT_SETUP；不把整倉庫或base64附件塞入對話。
+
+每10分鐘及可恢復階段prepare→commit/push→fresh fetch→commit/tree/blob讀回；收據下一提交保存。本機ZIP不能冒稱GitHub保存。新證明媒體依既定metadata-first留本機與精確hash，程式／tests／text全保存，不宣稱全附件公開Gate。保留未提交、ignored與local-only提交，不reset或force checkout。
+
+不啟動多代理、不合併main、不建EXE；[skip ci]避免Actions自動啟動。不需要付費API或新token。零對話表示免例行問答，必要狀態仍依較高指令回報；沒有啟動agent時不會全天候背景執行。

@@ -1,3 +1,10 @@
+## 2026-10-15 十個完整父功能軟體驗收完成
+本輪UI043、UI045、UI020～027共10原父題，87條已登錄驗收均PASS；來源3cd2c22dd1a4529450e62a22a62e944aac179c1c正式run：docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json，498/498 PASS、0跳過、capture0、source unchanged。原100已驗證列全部重驗恢復，另新增10原父題完成；原75目前16完整／56部分／3延後，固定70完成14／剩56，CORE87/GOV7不變。
+
+本機Tesseract chi_tra+eng固定官方模型、Inkscape幾何、Qt圖文／PDF與pypdf精確毫米盒；客戶候選、圖差分CAS／受控撤銷、複合Logo尺寸庫、三類審核／拖曳／例外／新尺寸預測、公司卡片確切版本、多尺寸部分FINAL／PREVIEW均有實際Qt及數位檔測試。新媒體79件留.checkpoints/formal-media/RUN-FIXED70-TEN-PARENTS-001，24件文字及exact media metadata保存GitHub（既有FULL70_PUBLICATION規則）；不宣稱媒體已公開或獨立覆核。
+
+零例行問答／跨對話入口仍AGENTS→STATE→ACTIVE_DEVELOPMENT_HANDOFF；環境重建bash tools/cloud_setup.sh已PASS。原main非開發狀態。已補990d4a7歷史catalog checkpoint原生Git祖先／tree/blob讀回收據，沒有把舊source當新驗證。下一包已定UI003→004/005/007/008，先讀原條款寫BEGIN契約再改碼，詳見NEXT_AFTER_TEN_PARENTS。未建EXE、未merge main、未觸發Actions／付費API。
+
 ## 2026-10-15 十父題凍結來源／正式驗證前
 UI043、045、020～027的原文87條軟體驗收已登錄TEN_PARENT_TRACEABILITY及REQUIREMENTS；498具名測試，目標修補已PASS，正式全回歸尚未開始。新增目標框位三格式真實proof與讀回、Qt整點PDF盒問題由BSD-3-Clause pypdf5.9.0設定精確毫米盒（內容不縮放／重繪）、雲端重建script已實際PASS。下一步使用此CP來源執行run_evidence，未完整PASS不得標10/10。新證明媒體依既有metadata-first留本機及exact hashes，文字／程式／測試／audit保存GitHub。
 

@@ -645,3 +645,8 @@ RUN-TEN-QUALITY-002 source9bf8479aec0f8ca1557e53e8caaa7506707f2637：243PASS／0
 - Logo實際PDF/PNG/JPG proof讀回尺寸／解碼／透明；Logo全37測試PASS，matrix10PASS。Qt整點MediaBox量化由成熟BSD-3-Clause pypdf5.9.0修復為精確毫米，保留內容原座標。
 - cloud_setup.sh使用固定依賴、本機OCR固定官方模型，已實際PASS；沒有付費API或Actions觸發。
 - Windows／私人AI全面／實體印刷／獨立覆核仍未驗證，既定功能順序不變。
+
+## 2026-10-15 十父題正式結案（SELF_VERIFIED軟體範圍）
+來源3cd2c22dd1a4529450e62a22a62e944aac179c1c，RUN-FIXED70-TEN-PARENTS-001：498/498 PASS、0SKIP、source unchanged、capture0、102附件；新父題87條claims全部PASS。24文字檔保存，79GUI/數位媒體依既定FULL70_PUBLICATION metadata-first精確登錄留本機，未冒稱公開。恢復原100已驗證列（100原條款／子範圍，不算新增），新增原父題10；原75=16完整/56部分/3延後，固定70=14完整/56剩餘，CORE87/GOV7不變。
+短暫exec transport斷線後連線恢復，原正式程序持續運行並成功，未用中斷訊息假稱PASS；已實際讀回結果。原歷史catalog CP1164檔祖先commit/tree/blob吻合，補合法收據且不倒退當前來源。
+下一項UI003一鍵管線，依指定報告繼續自動學習／例外及GUI；跨對話由STATE及NEXT_AFTER_TEN_PARENTS接續。
