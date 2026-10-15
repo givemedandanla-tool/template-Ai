@@ -140,16 +140,17 @@ class BatchSourceTests(unittest.TestCase):
         requests = self.requests()
         self.library.relink_source(self.sources[1]["id"], requests[1]["proof"], 0)
         before = self.library.list_sources()
+        prior_audit=self.library.relink_batches();self.assertEqual(len(prior_audit),1)
         with self.assertRaisesRegex(ValueError, "另一工作階段"):
             self.library.relink_sources(requests, approved=True)
         self.assertEqual(self.library.list_sources(), before)
         self.assertEqual(self.library.source_link_history(self.sources[0]["id"]), [])
-        self.assertEqual(self.library.relink_batches(), [])
+        self.assertEqual(self.library.relink_batches(), prior_audit)
         requests[1]["expected_revision"] = 1
         with patch.object(self.library, "event", side_effect=sqlite3.OperationalError("audit fail")):
             with self.assertRaises(sqlite3.OperationalError): self.library.relink_sources(requests, approved=True)
         self.assertEqual(self.library.list_sources(), before)
-        self.assertEqual(self.library.relink_batches(), [])
+        self.assertEqual(self.library.relink_batches(), prior_audit)
 
     def test_candidate_changed_after_background_verify_does_not_partially_commit(self):
         requests = self.requests()
@@ -207,11 +208,12 @@ class BatchSourceTests(unittest.TestCase):
         later = self.search / "later.png"; shutil.copyfile(self.candidate, later)
         self.library.relink_source(self.sources[0]["id"], verify_source(later, self.sources[0]["hash"]), 1)
         before = self.library.list_sources()
+        prior_audit=self.library.relink_batches();self.assertEqual(len(prior_audit),2)
         requests = [dict(source_id=i["source_id"], expected_revision=i["after_revision"], proof=verify_source(i["previous_path"], i["hash"])) for i in batch["items"]]
         with self.assertRaisesRegex(ValueError, "另一工作階段"):
             self.library.relink_sources(requests, approved=True, undo_of=batch["id"])
         self.assertEqual(self.library.list_sources(), before)
-        self.assertEqual(len(self.library.relink_batches()), 1)
+        self.assertEqual(self.library.relink_batches(),prior_audit)
 
     def test_final_batch_audit_failure_rolls_back_links_histories_and_reviews(self):
         original_event = self.library.event

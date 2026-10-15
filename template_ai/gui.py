@@ -861,12 +861,23 @@ class MainWindow(QMainWindow):
         if not path:
             return
         from .source_links import verify_source
-        def finished(proof):
-            self.library.relink_source(source["id"], proof, source.get("link_revision", 0))
-            selected = self.source["id"] if self.source else source["id"]
-            self.refresh_sources(selected)
-            self.statusBar().showMessage("原稿已重新連結；內容一致，原登錄、作品與模板版次保留")
-        self.run_job("核對原稿內容後重連", lambda: verify_source(path, source["hash"]), finished)
+        root=self.library.root
+        def work():
+            from .source_context import snapshot_contexts
+            current=snapshot_contexts(root,[source['id']])[0]
+            return current,verify_source(path,current['hash'])
+        def finished(payload):
+            from .source_dialog import SourceRelinkDialog
+            from .source_discovery import availability
+            current,proof=payload
+            prior=getattr(self,'_source_relink_preview',None)
+            if prior:prior.close()
+            dialog=SourceRelinkDialog(self);self._source_relink_preview=dialog
+            dialog.show_report(dict(status='COMPLETE',root='',roots=[],entries=1,bytes_budgeted=proof.stat[2],hashed_files=1,errors=[],manual_candidate=True,
+                                    rows=[dict(source=current,availability=availability(current),candidates=[proof],same_name_different=[])]))
+            dialog.show()
+            self.statusBar().showMessage('同位元候選已核對；請在來源管理預覽關聯、勾選來源與位置後明確確認')
+        self.run_job("核對原稿內容與完整關聯，尚不改位置",work,finished)
 
     def refresh_sources(self, select=None, preserve_editor=False):
         retained=self.source['id'] if preserve_editor and self.source else None

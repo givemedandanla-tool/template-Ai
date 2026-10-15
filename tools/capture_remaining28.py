@@ -15,6 +15,55 @@ import test_backup_center as backup_fixture
 from template_ai import backup_policy
 
 
+
+def capture_relink(folder):
+    import hashlib,shutil,time
+    from unittest.mock import patch
+    from PySide6.QtTest import QTest
+    from PySide6.QtWidgets import QMessageBox
+    from template_ai.source_dialog import SourceRelinkDialog
+    import test_customer_candidates as fixture
+    case=fixture.CustomerCandidateTests('test_filename_full_rule_and_actual_facts_propose_only_without_master_writes');case.setUp();window=None;dialog=None
+    try:
+        candidate=case.reviewed(case.candidates.propose(case.source['id'])[0]);customer=case.commit([candidate])[0]
+        window=MainWindow(case.library.root);window.refresh_sources(case.source['id']);dialog=SourceRelinkDialog(window)
+        original=Path(case.source['original_path']);before=hashlib.sha256(original.read_bytes()).hexdigest();roots=[]
+        for label in ['new-root-A','new-root-B']:
+            root=case.root/label;root.mkdir();shutil.copyfile(original,root/('moved-'+original.name));roots.append(root)
+        dialog.roots=[str(r) for r in roots];dialog.root=str(roots[0]);dialog.path_label.setText('已明列搜尋根目錄：'+'；'.join(dialog.roots))
+        def wait():
+            deadline=time.monotonic()+15
+            while dialog.busy or window.busy:
+                QApplication.processEvents();QTest.qWait(10)
+                if time.monotonic()>deadline:raise RuntimeError('relink Qt worker timeout')
+        dialog.search();wait();dialog.show();QApplication.processEvents()
+        report=dialog.report
+        if report['status']!='COMPLETE' or len(report['roots'])!=2 or dialog.table.cellWidget(0,0).isChecked() or dialog.table.cellWidget(0,3).currentData() is not None:raise RuntimeError('relink explicit multi-root preview invariant failed')
+        if not dialog.grab().save(str(folder/'remaining28-relink-multi-root.png')):raise RuntimeError('relink preview screenshot failed')
+        def details(preview):
+            preview.show();QApplication.processEvents()
+            if not preview.grab().save(str(folder/'remaining28-relink-dependency-details.png')):raise RuntimeError('relink dependency screenshot failed')
+            preview.close();return 0
+        with patch('template_ai.source_dialog.QDialog.exec',details):dialog.show_details()
+        dialog.table.cellWidget(0,0).setChecked(True);dialog.table.cellWidget(0,3).setCurrentIndex(2)
+        with patch('template_ai.source_dialog.QMessageBox.question',return_value=QMessageBox.Yes):dialog.apply_selection();wait()
+        batch=window.library.relink_batches()[0]
+        with patch('template_ai.source_dialog.QMessageBox.question',return_value=QMessageBox.Yes):dialog.undo_batch();wait()
+        if window.library.source(case.source['id'])['current_path']!=str(original) or hashlib.sha256(original.read_bytes()).hexdigest()!=before:raise RuntimeError('relink actual apply/undo/original protection failed')
+        QApplication.processEvents()
+        if not dialog.grab().save(str(folder/'remaining28-relink-history-restored.png')):raise RuntimeError('relink history screenshot failed')
+        result=dict(status='PASS',parent='UI-049',kind='ACTUAL_QT_READONLY_SNAPSHOT_MULTIPLE_ROOTS_AND_SQLITE_APPLY_UNDO_SYNTHETIC',
+                    source_id=case.source['id'],customer_id=customer['customer_id'],roots=[str(r) for r in roots],
+                    explicit_unselected_preview=True,independent_candidate_positions=2,applied_batch_id=batch['id'],
+                    mapping_context_sha256=batch['items'][0]['impact_sha256'],source_original_bytes_unchanged=True,
+                    exact_original_location_restored=True,history_revisions_preserved=True,windows_verified=False,independent_review=False)
+        (folder/'remaining28-relink-capture.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
+    finally:
+        if dialog:dialog.close();dialog.deleteLater()
+        if window:window.close();window.deleteLater()
+        QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete);QApplication.processEvents();case.tearDown()
+
+
 def capture_backup(folder):
     case=backup_fixture.BackupCenterTests();case.setUp();folder=Path(folder)
     try:
@@ -70,10 +119,11 @@ def capture(folder):
         QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete);app.processEvents()
         if errors:raise RuntimeError('Unhandled Qt capture error: '+str(errors))
         backup=capture_backup(folder)
+        relink=capture_relink(folder)
         report=dict(status='PASS',kind='ACTUAL_QT_AND_SQLITE_SYNTHETIC_CAPTURE',
                     parent='UI-046',merged=True,split=True,original_template_payload_unchanged=True,
                     foreign_keys='PASS',runtime_errors=errors,local_export_has_only_synthetic_people=True,
-                    windows_verified=False,independent_review=False,backup_parent_self_capture=backup['status'])
+                    windows_verified=False,independent_review=False,backup_parent_self_capture=backup['status'],relink_parent_self_capture=relink['status'])
         (folder/'remaining28-identity-capture.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
         return report
     finally:

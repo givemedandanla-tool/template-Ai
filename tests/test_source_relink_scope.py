@@ -53,6 +53,8 @@ class SourceRelinkScopeTests(unittest.TestCase):
         self.assertTrue(a['customer_ids']);self.assertTrue(b['customer_ids']);self.assertTrue(set(a['customer_ids']).isdisjoint(b['customer_ids']))
         self.assertTrue(set(a['style_ids']).isdisjoint(b['style_ids']));self.assertEqual(a['work_ids'],[c.work['id']]);self.assertEqual(b['work_ids'],[work['id']])
         self.assertTrue(a['training_ids']);self.assertTrue(a['context']['customer_style_scopes']);self.assertTrue(a['context']['customer_associations'])
+        self.assertTrue(all(Path(asset['path']).is_absolute() for value in [a,b] for asset in value['context']['assets']))
+        self.assertEqual({asset['path'] for asset in a['context']['assets'] if asset['declared_by'].startswith('SOURCE:')},{values[0]['image'],values[0]['svg'],values[0]['current_path']})
         self.assertIn('版型',a['summary']);self.assertTrue(presentation_rows(a));self.assertEqual(c.library.relink_batches(),[])
 
     def test_context_cas_rejects_changed_customer_then_persists_exact_mapping_without_changing_original_bytes(self):
@@ -95,3 +97,20 @@ class SourceRelinkScopeTests(unittest.TestCase):
         combo=c.dialog.table.cellWidget(0,3);chosen=str(other/'choice.png');index=next(i for i in range(1,combo.count()) if combo.itemData(i).path==chosen);combo.setCurrentIndex(index);c.dialog.table.cellWidget(0,0).setChecked(True)
         with patch('template_ai.source_dialog.QMessageBox.question',return_value=QMessageBox.Yes):c.dialog.apply_selection();wait()
         source=c.window.library.list_sources()[0];self.assertEqual(source['current_path'],chosen);self.assertEqual(Path(source['original_path']).read_bytes(),original);self.assertEqual(len(c.window.library.relink_batches()),1)
+
+    def test_aggregate_context_and_audit_limits_rollback_all_paths_and_leave_no_fake_success(self):
+        c=self.batch();before=c.library.list_sources()
+        with patch('template_ai.source_context.MAX_SNAPSHOT_CONTEXT_BYTES',128):
+            with self.assertRaisesRegex(ValueError,'整批來源關聯'):snapshot_contexts(c.library.root,[s['id'] for s in c.sources])
+        with patch('template_ai.storage.MAX_RELINK_AUDIT_BYTES',128):
+            with self.assertRaisesRegex(ValueError,'整批重連稽核'):c.library.relink_sources(c.requests(),approved=True)
+        self.assertEqual(c.library.list_sources(),before);self.assertEqual(c.library.relink_batches(),[])
+        self.assertEqual(c.library.db.execute('SELECT count(*) FROM source_relinks').fetchone()[0],0)
+
+    def test_many_same_name_different_content_paths_have_exact_count_and_bounded_display(self):
+        c=self.batch();original=c.originals[0].read_bytes();different=bytes([original[0]^1])+original[1:]
+        for index in range(35):
+            folder=c.search/str(index);folder.mkdir();(folder/c.originals[0].name).write_bytes(different)
+        report=discover_source_roots(c.sources,[c.search]);row=next(r for r in report['rows'] if r['source']['original_path']==str(c.originals[0]))
+        self.assertEqual(row['same_name_different_count'],35);self.assertEqual(len(row['same_name_different']),32);self.assertTrue(row['different_limit'])
+        self.assertEqual(len(row['candidates']),1);self.assertEqual(c.library.relink_batches(),[])

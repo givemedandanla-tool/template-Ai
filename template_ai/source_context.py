@@ -5,7 +5,8 @@ import json
 from pathlib import Path
 
 MAX_CONTEXT_ROWS=2000
-PATH_KEYS={'path','svg','preview','image','approval_file','vector','raster','thumbnail','model_file','checkpoint_file'}
+MAX_SNAPSHOT_CONTEXT_BYTES=8*1024*1024
+from .asset_references import is_asset_path
 
 
 def digest(value):
@@ -46,8 +47,8 @@ def source_context(library, source_id):
     def walk(value,origin):
         if isinstance(value,dict):
             for key,item in value.items():
-                if key in PATH_KEYS and isinstance(item,str) and item:
-                    record=dict(path=item,expected_sha256=value.get('sha256',value.get('hash')),declared_by=origin)
+                if is_asset_path(key,item):
+                    record=dict(path=item,expected_sha256=value.get('file_hashes',{}).get(key) or value.get('sha256',value.get('hash')),declared_by=origin)
                     assets[(item,origin)]=record
                     if len(assets)>MAX_CONTEXT_ROWS:raise ValueError('單一來源資產依賴超過2000件；未建立完整影響預覽')
                 else:walk(item,origin)
@@ -81,12 +82,15 @@ def snapshot_contexts(root, source_ids, cancel=None):
     def stopped():return bool(cancel and cancel.is_set())
     with closing(sqlite3.connect((Path(root)/'library.sqlite3').resolve().as_uri()+'?mode=ro',uri=True)) as db:
         db.set_progress_handler(lambda:int(stopped() or time.monotonic()>deadline),1000)
-        view=object.__new__(Library);view.db=db;view.root=Path(root);view.assets=view.root/'assets';sources=[]
+        view=object.__new__(Library);view.db=db;view.root=Path(root);view.assets=view.root/'assets';sources=[];context_bytes=0
         try:
             db.execute('BEGIN')
             for identity in source_ids:
                 if stopped():raise ScanCancelled()
-                source=view.source(identity);source['impacts']=source_context(view,identity);sources.append(source)
+                source=view.source(identity);source['impacts']=source_context(view,identity)
+                context_bytes+=len(json.dumps(source,ensure_ascii=False).encode())
+                if context_bytes>MAX_SNAPSHOT_CONTEXT_BYTES:raise ValueError('整批來源關聯預覽超過8MiB；請分組核對，未省略來源')
+                sources.append(source)
         except sqlite3.OperationalError as error:
             if stopped():raise ScanCancelled() from error
             raise ValueError('完整來源關聯查詢未完成／超過30秒；未省略資料') from error

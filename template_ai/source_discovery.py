@@ -32,7 +32,7 @@ def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256
     root_device = root.stat().st_dev
     rows, by_content, by_name = [], defaultdict(list), defaultdict(list)
     for source in sources:
-        row = {"source": source, "availability": availability(source), "candidates": [], "same_name_different": []}
+        row = {"source": source, "availability": availability(source), "candidates": [], "same_name_different": [],"same_name_different_count":0}
         rows.append(row)
         length = source.get("byte_size")
         if type(length) is int and 0 <= length <= MAX_SOURCE_BYTES and re.fullmatch(r"[0-9a-f]{64}", source.get("hash", "")):
@@ -42,6 +42,11 @@ def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256
             row["availability"] = "內容指紋資料不足，待審"
     lengths = {key[1] for key in by_content}
     report = {"root": str(root), "status": "COMPLETE", "entries": 0, "bytes_budgeted": 0, "hashed_files": 0, "errors": [], "rows": rows}
+    def different(row,path):
+        row['same_name_different_count']+=1
+        if len(row['same_name_different'])<32:row['same_name_different'].append(str(path))
+        else:row['different_limit']=True
+        if path.resolve()==Path(row['source'].get('current_path',row['source']['original_path'])).resolve():row['availability']='目前位置內容已改變，不能沿用舊來源'
     # Depth-first iterators keep directory memory bounded by entries; do not follow links/mounts.
     stack = []
     try:
@@ -73,7 +78,7 @@ def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256
                     continue
                 names = by_name.get(path.name.casefold(), [])
                 if value.st_size not in lengths:
-                    for row in names: row["same_name_different"].append(str(path))
+                    for row in names:different(row,path)
                     continue
                 remaining = max_bytes - report["bytes_budgeted"]
                 if value.st_size > remaining:
@@ -88,7 +93,7 @@ def discover_sources(sources, root, cancel=None, max_entries=5000, max_bytes=256
                     if len(row["candidates"]) < 32: row["candidates"].append(proof)
                     else: row["candidate_limit"] = True; report["status"] = "PARTIAL"
                 for row in names:
-                    if row not in matching: row["same_name_different"].append(str(path))
+                    if row not in matching:different(row,path)
             except ScanCancelled:
                 report["status"] = "CANCELLED"; break
             except (OSError, ValueError) as error:
@@ -127,7 +132,7 @@ def discover_source_roots(sources, roots, cancel=None, max_entries=5000, max_byt
         else:selected.append(path)
     result=dict(root='；'.join(str(x) for x in selected),roots=[str(x) for x in selected],overlapping_roots=overlaps,
                 status='PARTIAL' if errors else 'COMPLETE',entries=0,bytes_budgeted=0,hashed_files=0,errors=errors,
-                rows=[dict(source=s,availability=availability(s),candidates=[],same_name_different=[]) for s in sources],unsearched_roots=[])
+                rows=[dict(source=s,availability=availability(s),candidates=[],same_name_different=[],same_name_different_count=0) for s in sources],unsearched_roots=[])
     for index,path in enumerate(selected):
         if cancel and cancel.is_set():result['status']='CANCELLED';result['unsearched_roots']=[str(p) for p in selected[index:]];break
         if result['entries']>=max_entries or result['bytes_budgeted']>=max_bytes:
@@ -136,12 +141,15 @@ def discover_source_roots(sources, roots, cancel=None, max_entries=5000, max_byt
         for key in ('entries','bytes_budgeted','hashed_files'):result[key]+=report[key]
         result['errors'].extend(report['errors'])
         for output,row in zip(result['rows'],report['rows']):
-            if '不足' in row['availability']:output['availability']=row['availability']
+            if '不足' in row['availability'] or '內容已改變' in row['availability']:output['availability']=row['availability']
             seen={proof.path for proof in output['candidates']}
             for proof in row['candidates']:
                 if proof.path not in seen and len(output['candidates'])<32:output['candidates'].append(proof);seen.add(proof.path)
                 elif proof.path not in seen:output['candidate_limit']=True;result['status']='PARTIAL'
-            output['same_name_different']=list(dict.fromkeys(output['same_name_different']+row['same_name_different']))
+            output['same_name_different_count']+=row['same_name_different_count']
+            differences=list(dict.fromkeys(output['same_name_different']+row['same_name_different']))
+            output['same_name_different']=differences[:32]
+            if row.get('different_limit') or len(differences)>32:output['different_limit']=True
             if row.get('candidate_limit'):output['candidate_limit']=True;result['status']='PARTIAL'
             for proof in row['candidates']:
                 if proof.path==str(Path(output['source'].get('current_path',output['source']['original_path'])).resolve()):output['availability']='在場，內容指紋與長度已核驗'

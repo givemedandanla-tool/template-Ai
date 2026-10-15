@@ -52,7 +52,7 @@
 | UI-046 | 疑似重複客戶比對、受控合併與可追溯拆分恢復 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。 | [run](../../docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json) |
 | UI-047 | 本機關聯資料智慧備份、加密驗證與安全還原移轉 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。 | [run](../../docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json) |
 | UI-048 | 客戶個資存取權限、遮罩與稽核：最後完成功能 | DEFERRED | 否 | 核心功能完善後最後接入；正式真實個資使用前必須完成 | 無有效新版證據 |
-| UI-049 | Illustrator 來源搬移失聯、內容驗證與受控批次重新連結 | PARTIAL | 否 | 來源重連以內容驗證，不憑同名，原檔不修改 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-049 | Illustrator 來源搬移失聯、內容驗證與受控批次重新連結 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-050 | AI 來源資料夾智慧監看、安全增量匯入與版本衝突審核 | PARTIAL | 否 | 監看事件需重掃核實，寫入未穩定不分析 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-051 | 低配置友善、公平審核佇列與安全續跑 | PARTIAL | 否 | 參考 16 GB 整機 RAM＋RTX 5050 與待補規格 VivoBook；CPU 核心、限流及檢查點 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-052 | 全來源與作品審核覆蓋率、風險分級與安全批次結案 | PARTIAL | 否 | 分母不漏來源，未審不可結案，重大错誤可重審歷史批次 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |

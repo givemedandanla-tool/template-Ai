@@ -10,6 +10,8 @@ import time
 
 from .model import Template, new_id, template_errors
 
+MAX_RELINK_AUDIT_BYTES=8*1024*1024
+
 
 class Library:
     def __init__(self, root: str | Path):
@@ -73,14 +75,8 @@ class Library:
         from .source_links import check_verified
         if type(expected_revision) is not int or expected_revision < 0:
             raise ValueError("來源位置版次不合法")
-        # 寫入鎖內檢查，兩個工作階段不能同時從 r0 建立重連。
-        self.db.execute("BEGIN IMMEDIATE")
-        try:
-            self._write_source_link(source_id, proof, expected_revision)
-            self.db.commit()
-        except BaseException:
-            self.db.rollback()
-            raise
+        # The legacy single-source API shares the same transaction and mapping audit.
+        self.relink_sources([dict(source_id=source_id,proof=proof,expected_revision=expected_revision)],approved=True)
         return self.source(source_id)
 
     def _write_source_link(self, source_id, proof, expected_revision, expected_context=None):
@@ -102,7 +98,8 @@ class Library:
         self.event(source_id, "source_relinked_same_content")
         return {"source_id": source_id, "hash": source["hash"], "previous_path": source["current_path"], "current_path": proof.path,
                 "before_revision": expected_revision, "after_revision": revision,
-                "impact_snapshot":impact['context'],"impact_sha256":impact['context_sha256']}
+                "impact_snapshot":impact['context'],"impact_sha256":impact['context_sha256'],
+                "verified_source_stat":list(proof.stat),"verification":"EXACT_SHA256_AND_BYTE_LENGTH"}
 
     def relink_sources(self, requests, approved=False, undo_of=None):
         if approved is not True or not requests:
@@ -121,7 +118,13 @@ class Library:
                     item = expected[request["source_id"]]
                     if request["expected_revision"] != item["after_revision"] or request["proof"].path != item["previous_path"]:
                         raise ValueError("復原位置或版次與原批次不符")
-            changes = [item for r in requests if (item := self._write_source_link(r["source_id"], r["proof"], r["expected_revision"],r.get('expected_context')))]
+            changes=[];audit_bytes=0
+            for request in requests:
+                item=self._write_source_link(request['source_id'],request['proof'],request['expected_revision'],request.get('expected_context'))
+                if item:
+                    audit_bytes+=len(json.dumps(item,ensure_ascii=False).encode())
+                    if audit_bytes>MAX_RELINK_AUDIT_BYTES:raise ValueError('整批重連稽核超過8MiB；本批未套用，請分組核對')
+                    changes.append(item)
             if not changes:
                 self.db.commit()
                 return {"id": None, "kind": "NO_CHANGE", "items": []}

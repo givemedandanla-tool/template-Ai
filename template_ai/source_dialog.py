@@ -153,7 +153,8 @@ class SourceRelinkDialog(QDialog):
                 combo.setItemData(combo.count() - 1, proof.path, Qt.ToolTipRole)
             self.table.setCellWidget(i, 3, combo)
             self.table.setItem(i, 4, QTableWidgetItem(source.get("impacts", {}).get("summary", "關聯未知")))
-            note = f"{source['hash']}\n{source.get('byte_size', '未知')} bytes；同內容副本 {len(row['candidates'])}；同名異內容 {len(row['same_name_different'])}"
+            note = f"{source['hash']}\n{source.get('byte_size', '未知')} bytes；同內容副本 {len(row['candidates'])}；同名異內容 {row.get('same_name_different_count',len(row['same_name_different']))}"
+            if row.get('different_limit'):note+='（差異位置僅列前32筆，未當作可重連）'
             if row.get("candidate_limit"): note += "；候選超額，請縮小範圍"
             self.table.setItem(i, 5, QTableWidgetItem(note))
             for column in (1, 2, 4, 5):
@@ -165,6 +166,7 @@ class SourceRelinkDialog(QDialog):
         names = {"COMPLETE":"指定範圍搜尋完成", "PARTIAL":"僅完成部分搜尋，不能稱全部找齊", "CANCELLED":"已取消搜尋，未更新來源"}
         errors = "；".join(e["reason"] for e in report["errors"][:3])
         self.status.setText(f"{names[report['status']]}；根目錄{len(report.get('roots',[]))}，重疊略過{len(report.get('overlapping_roots',[]))}；已查看 {report['entries']} 項、核對 {report['hashed_files']} 檔；略過／錯誤 {len(report['errors'])}。" + errors)
+        if report.get('manual_candidate'):self.status.setText('已核對使用者指定的一份同位元候選，未搜尋其他來源；請檢視完整關聯並明確選取位置，尚未更新來源。')
         self.apply_button.setEnabled(report["status"] != "CANCELLED" and any(r["candidates"] for r in report["rows"]))
         if report['rows']:self.table.setCurrentCell(0,1)
 
@@ -202,7 +204,7 @@ class SourceRelinkDialog(QDialog):
             for column,value in enumerate(values):item.setToolTip(column,value)
             tree.addTopLevelItem(item)
         for column,width in enumerate((240,300,420)):tree.setColumnWidth(column,width)
-        close=QDialogButtonBox(QDialogButtonBox.Close);close.rejected.connect(dialog.reject);layout.addWidget(close);dialog.exec()
+        close=QDialogButtonBox(QDialogButtonBox.Close);close.button(QDialogButtonBox.Close).setText('關閉');close.rejected.connect(dialog.reject);layout.addWidget(close);dialog.exec()
 
     def commit(self, requests, undo_of=None):
         record = self.library.relink_sources(requests, approved=True, undo_of=undo_of)

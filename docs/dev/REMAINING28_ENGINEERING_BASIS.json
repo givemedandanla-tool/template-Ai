@@ -35,6 +35,16 @@
       "url": "https://raw.githubusercontent.com/restic/restic/v0.18.0/doc/060_forget.rst",
       "sha256": "57cb471b45b3a528d2a9a832ace3eb8014241783bd0825a405bfd8a505708e0d",
       "inspected": "Retention latest-count and within-window use union rather than intersection; preserve last verified complete backup. Our age anchor is wall-clock now, distinct from restic latest-snapshot anchor; reference only, restic executable is not invoked."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/BurntSushi/ripgrep/14.1.1/crates/ignore/src/walk.rs",
+      "sha256": "91e6c323ad22ce7e8a24e31e6b8f42fa410dd034c1f341cf5da535e77f1f15a6",
+      "inspected": "WalkBuilder multiple roots, follow_links/max_filesize/same_file_system controls; adopt explicit scope and traversal bounds via existing stdlib os.scandir rather than adding another scanner engine."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/vscode-docs/main/docs/editing/workspaces/multi-root-workspaces.md",
+      "sha256": "f9a39d1eb62d88355c1e3e38c0e657babf337e0871c81c5b44cfb3be42cb0431",
+      "inspected": "Add Folder to Workspace and Search sections: explicitly selected multiple roots, combined search with per-folder scope. Design reference, not VSCode execution or source-identity approval."
     }
   ],
   "mathematical_basis": [
@@ -43,7 +53,8 @@
     "Disjoint graph union preserves stable people/company/field IDs; style scopes preserve the original subset",
     "Compare-and-swap exact snapshot digests within BEGIN IMMEDIATE; on split partition CURRENT graph rather than replay stale historical values",
     "Dependency closure: SQLite consistent whole DB plus actual referenced asset bytes; missing or unauthorized references make the bundle PARTIAL",
-    "SHA256 per member and whole encrypted file distinguish data integrity from successful isolated restoration; AEAD tag binds content before extraction"
+    "SHA256 per member and whole encrypted file distinguish data integrity from successful isolated restoration; AEAD tag binds content before extraction",
+    "UI049: streaming SHA256+length matches physical content, never customer identity; bounded root-union removes nested traversals; disjoint persisted source/customer/style IDs stay independent; snapshot-digest and source-revision CAS plus SQLite transaction make stale context or audit failure roll back all location changes."
   ],
   "commercial_approach": [
     "Separate font activation from OS installation, per-face identity and technical embedding constraints from user licence attestation; no download or licence acceptance on behalf of user"

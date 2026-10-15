@@ -28,7 +28,7 @@ from .background import file_digest
 MAGIC=b'TABI2'
 MAX_BYTES=256*1024*1024
 MAX_FILES=5000
-PATH_KEYS={'path','preview','svg','pdf','png','jpg','image','vector','raster','thumbnail','approval_file','model_file','checkpoint_file','current_path','cache_path','font_path','model_path','source_path','directory'}
+from .asset_references import PATH_KEYS,is_asset_path
 ACTIVE_JSON={'sources','templates','logos','font_assets','artworks','training_records'}
 REQUIRED_TABLES={'sources','contents','templates','logos','font_assets','source_links'}
 
@@ -93,7 +93,7 @@ def _references(value,key_name=''):
         for k,v in value.items():yield from _references(v,k)
     elif isinstance(value,list):
         for v in value:yield from _references(v,key_name)
-    elif isinstance(value,str) and value and key_name!='original_path' and (key_name in PATH_KEYS or key_name.endswith('_path')) and (Path(value).is_absolute() or PureWindowsPath(value).is_absolute()):yield value
+    elif is_asset_path(key_name,value):yield value
 
 
 def _snapshot(library,path):

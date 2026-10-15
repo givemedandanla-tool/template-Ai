@@ -771,3 +771,9 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 多根重疊只掃一次、共享資源預算、離線/取消/未搜尋根明列；同內容異名維持獨立source/customer/style/person作用域。
 - 以獨立read-only SQLite交易取完整關聯，GUI背景掃描/具名詳情，確認前context digest CAS；每筆批次固化mapping evidence。
 - 8新測試與36相關原測試共44 PASS（/tmp/remaining28-relink-scope-001.log）；未正式全驗、不結案UI049。下一全局context/audit預算與單件舊入口一致稽核後capture/原11條。
+
+### UI049 full source freeze
+- 全11原條款未縮減，10新測試及84相關整合PASS；真Qt/SQLite多根候選、完整依賴、套用/撤銷capture PASS。
+- 單件/批次共用顯式確認與確切mapping稽核，context/revision CAS、8MiB整批預覽/稽核和30秒只讀查詢限額；同名異內容計數精確、展示32個路徑，不稱可重連。共享typed asset references排除hash metadata。
+- 保留兩次非formal失敗目標run（單件新稽核基準與缺測試import；路徑數fixture），改正測試前提且仍核對完整原有效source/稽核基準未變。
+- source checkpoint後全662正式回歸，UI049未先結案。

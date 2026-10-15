@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 from PySide6.QtGui import QImage
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication,QMessageBox
 from template_ai.demo import demo_template
 from template_ai.gui import MainWindow
 from template_ai.importer import import_file
@@ -150,10 +150,19 @@ class SourceRelinkTests(unittest.TestCase):
         self.assertEqual(window.source["link_revision"], 0)
         self.assertEqual(len(jobs), 1)
         jobs[0][1](jobs[0][0]())
+        self.assertEqual(window.source['link_revision'],0)
+        preview=window._source_relink_preview
+        self.assertFalse(preview.table.cellWidget(0,0).isChecked())
+        self.assertIsNone(preview.table.cellWidget(0,3).currentData())
+        preview.table.cellWidget(0,0).setChecked(True);preview.table.cellWidget(0,3).setCurrentIndex(1)
+        with patch('template_ai.source_dialog.QMessageBox.question',return_value=QMessageBox.Yes),patch.object(window,'run_job',side_effect=lambda message,fn,callback:callback(fn())):
+            preview.apply_selection()
         self.assertEqual(window.source["current_path"], str(self.moved))
         self.assertEqual(window.work["id"], work_id)
         self.assertEqual(window.source_combo.currentText().split(" · ")[0], "renamed.png")
         self.assertIn(str(self.original), window.source_combo.itemData(0, 3))
+        self.assertTrue(window.library.relink_batches()[0]['items'][0]['impact_snapshot'])
+        preview.close()
         window.close()
         reopened = MainWindow(self.root / "gui")
         try:

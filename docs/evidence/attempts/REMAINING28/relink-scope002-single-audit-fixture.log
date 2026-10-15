@@ -1,0 +1,47 @@
+.........This plugin does not support propagateSizeHints()
+E.............FF.......This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+........
+======================================================================
+ERROR: test_gui_background_relink_keeps_selected_work_and_reopens (test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_relink.py", line 158, in test_gui_background_relink_keeps_selected_work_and_reopens
+    with patch('template_ai.source_dialog.QMessageBox.question',return_value=QMessageBox.Yes),patch.object(window,'run_job',side_effect=lambda message,fn,callback:callback(fn())):
+                                                                             ^^^^^^^^^^^
+NameError: name 'QMessageBox' is not defined
+
+======================================================================
+FAIL: test_late_revision_conflict_and_event_failure_roll_back_entire_batch (test_batch_source_relink.BatchSourceTests.test_late_revision_conflict_and_event_failure_roll_back_entire_batch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_batch_source_relink.py", line 147, in test_late_revision_conflict_and_event_failure_roll_back_entire_batch
+    self.assertEqual(self.library.relink_batches(), [])
+AssertionError: Lists differ: [{'id': 'f2ab4ce9a565440db286ba8edafeb773'[1762 chars]527}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'id': 'f2ab4ce9a565440db286ba8edafeb773', 'kind': 'APPLY', 'undo_of': None, 'items': [{'source_id': '97e70cb11fcc4ddebdf982092ed98b3a', 'hash': '0a07610501b51204fd1fc19b2f31d8e2dc37ad2db5a5a65362171d75bac64448', 'previous_path': '/tmp/tmpgdjztqm4/A001.png', 'current_path': '/tmp/tmpgdjztqm4/search/new-name.png', 'before_revision': 0, 'after_revision': 1, 'impact_snapshot': {'source': {'id': '97e70cb11fcc4ddebdf982092ed98b3a', 'hash': '0a07610501b51204fd1fc19b2f31d8e2dc37ad2db5a5a65362171d75bac64448', 'byte_size': 3144, 'original_path': '/tmp/tmpgdjztqm4/A001.png', 'current_path': '/tmp/tmpgdjztqm4/A001.png', 'link_revision': 0}, 'records': {'works': [], 'templates': [], 'logos': [], 'training': [], 'candidates': []}, 'customers': [], 'customer_aliases': [], 'customer_redirects': [], 'customer_associations': [], 'customer_styles': [], 'customer_style_scopes': [], 'assets': [{'path': '/tmp/tmpgdjztqm4/data/assets/0a07610501b51204fd1fc19b2f31d8e2dc37ad2db5a5a65362171d75bac64448-p1-visual-import-0.1.3/preview.png', 'expected_sha256': '0a07610501b51204fd1fc19b2f31d8e2dc37ad2db5a5a65362171d75bac64448', 'declared_by': 'SOURCE:97e70cb11fcc4ddebdf982092ed98b3a'}, {'path': '0a07610501b51204fd1fc19b2f31d8e2dc37ad2db5a5a65362171d75bac64448', 'expected_sha256': None, 'declared_by': 'SOURCE:97e70cb11fcc4ddebdf982092ed98b3a'}], 'dependency_basis': 'Exact persisted source/work/template IDs and declared references; missing or changed dependencies still require their own validation; no automatic customer or quality approval'}, 'impact_sha256': 'c5b91564d33a0565ae915ebe7ce185c00aec7c64e52649a6cb022a7ad9331eae', 'verified_source_stat': [34, 186289, 3144, 1792090067936787829, 1792090067936787829], 'verification': 'EXACT_SHA256_AND_BYTE_LENGTH'}], 'approved': True, 'timestamp': 1792090067.9373527}
+
+Diff is 3563 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_later_relink_revision_is_not_overwritten_by_old_batch_undo (test_batch_source_relink.BatchSourceTests.test_later_relink_revision_is_not_overwritten_by_old_batch_undo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_batch_source_relink.py", line 214, in test_later_relink_revision_is_not_overwritten_by_old_batch_undo
+    self.assertEqual(len(self.library.relink_batches()), 1)
+AssertionError: 2 != 1
+
+----------------------------------------------------------------------
+Ran 44 tests in 6.412s
+
+FAILED (failures=2, errors=1)

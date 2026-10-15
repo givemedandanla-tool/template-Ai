@@ -237,13 +237,138 @@
       "status": "SELF_VERIFIED_SOFTWARE",
       "evidence_run": "docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json",
       "source_commit": "5a9969b33741c74e279dcffc443ecb33fb0ad05b"
+    },
+    {
+      "id": "UI-049",
+      "source_clauses_sha256": "3ec25ad750ac6f35d0346313a6949afe40946db9774da012d8a2b0471b19c12d",
+      "implementation": [
+        "template_ai/source_discovery.py",
+        "template_ai/source_context.py",
+        "template_ai/asset_references.py",
+        "template_ai/source_dialog.py",
+        "template_ai/storage.py",
+        "template_ai/gui.py"
+      ],
+      "clauses": [
+        {
+          "id": "UI-049-CLAUSE-1",
+          "expected": "使用者選擇 **D｜智慧來源定位＋內容指紋驗證＋安全批次重新連結**。針對 UI-042 已建立的來源登錄／同檔精確去重、UI-043 客戶編號與版型來源、UI-047 備份換機及 UI-048 最後實作的正式權限機制，規劃在既有「來源檔案管理」入口提供**失聯來源總覽、使用者指定搜尋範圍、可驗證內容比對、批次重新連結和復原**。本項是 GUI 設計決策，不涉及目前真的搜尋使用者磁碟或修改路徑。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_real_gui_worker_multi_root_preview_details_and_explicit_alternative_selection",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_same_content_customer_registrations_keep_distinct_actual_style_person_and_training_dependencies"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-2",
+          "expected": "**失聯與風險總覽**：顯示已核准來源索引中無法存取的 `.ai`、相關圖片及合法外部素材（含適用時的字型引用），逐筆列出 `source_file_id`、保留的原名與舊路徑、當初的內容 SHA-256／位元組長度／來源版本、推定或已核准的客戶編號、來源 `artwork_id`、對應 `style_version_id`、訓練檢查點及受影響之模板、Logo 或當次工作。區分「**檔案真的失聯／路徑已移動／無讀取權限／內容改變／外部來源未納入備份／關聯待確認**」，避免一律顯示已遺失或因索引存在便宣稱來源可用。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_declared_missing_assets_and_context_budget_are_explicit_and_snapshot_does_not_write",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_same_length_changed_original_is_distinguished_from_same_content_relocation",
+            "test_source_relink.SourceRelinkTests.test_status_distinguishes_missing_changed_unreadable_and_ok"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-3",
+          "expected": "**使用者受控指定搜尋範圍**：可單次選擇新的根資料夾、外接磁碟或多個本機目錄，支援整個來源根目錄從 `D:\\客戶資料\\` 搬到 `E:\\歷史名片\\` 後的**一次選新根目錄、多筆候選配對**。不預設掃描整台電腦、無授權的網路共享目錄或上傳私有圖稿至外部；Windows 路徑大小寫／長路徑／Unicode、檔案被占用、不可讀、同名多候選等須明示。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_disjoint_and_overlapping_explicit_roots_share_candidates_without_rehashing_nested_root",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_entry_and_byte_budgets_are_global_and_leave_other_roots_explicitly_unsearched",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_offline_roots_and_real_cancel_never_report_all_found_or_modify_source_indexes",
+            "test_batch_source_relink.BatchSourceTests.test_search_does_not_follow_symlink_outside_selected_root"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-4",
+          "expected": "**精確驗證優先於相同檔名**：使用既有 UI-042 `content_blobs`／`source_files`，以**來源實際位元內容 SHA-256＋長度（必要時再用逐位元比對／碰撞防護）**檢查候選，明確區分「**位元完全一致，可重設位置**」「**只檔名一致但內容不同，不能視為原檔搬移**」「**指紋資料不足或不一致，待審**」「**多個完全相同內容副本**」。AI 可利用檔名、客戶編號、作品邊界、畫板及版型版次提出輔助線索，但不能用相似度／名稱代替原位元一致的證據，也不能自動將不同客戶編號合併。指紋相同只能證實內容，不證明客戶、來源權利、檔名身分或作品版次歸屬完全相同。",
+          "tests": [
+            "test_batch_source_relink.BatchSourceTests.test_size_prefilter_same_name_different_bytes_and_ambiguous_copies",
+            "test_source_relink.SourceRelinkTests.test_same_name_different_bytes_and_missing_candidate_rejected",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_many_same_name_different_content_paths_have_exact_count_and_bounded_display"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-5",
+          "expected": "**精確匹配的批次重新連結**：使用者可檢視「舊來源→新檔案→受影響客戶／作品／版型」比對清單，明確勾選相容且已核實**來源身分與內容／客戶映射**的候選集合後一次確認更新路徑／來源定位資訊；**原始來源檔本身不移動、改名或刪除**。若一個位元內容在 A001.ai 與 B002.ai 下各有獨立來源紀錄，即使新位置只有一份內容副本，也須**分別維持每條 `source_file_id`／原始名稱／原客戶編號及各自核准關聯**；不得用內容相同作為暗中重綁客戶的許可。多人共享及作品內版型版本混配風險要進入人工核對而非直接批次過關。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_context_cas_rejects_changed_customer_then_persists_exact_mapping_without_changing_original_bytes",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_same_content_customer_registrations_keep_distinct_actual_style_person_and_training_dependencies",
+            "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-6",
+          "expected": "**內容不同時不是重新連結舊來源**：若新位置檔案名稱一致而 SHA-256／位元不同，應明確顯示「**疑似修改版／另一份來源檔**」，提出作為**新來源／版型候選**或待確認變更，須走 UI-010 模板版本管理、UI-042 來源／內容指紋登錄及 UI-043 客戶身份核對的原流程；**不得默默覆蓋舊 content_id、舊畫板作品標記、已核准版型或有效訓練快取**。屬於不同版本／受污染的候選需停止舊檔批次重新連結，不能為達到 100% 完成率而亂接。",
+          "tests": [
+            "test_source_relink.SourceRelinkTests.test_same_name_different_bytes_and_missing_candidate_rejected",
+            "test_batch_source_relink.BatchSourceTests.test_candidate_changed_after_background_verify_does_not_partially_commit"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-7",
+          "expected": "**多候選與完全相同副本**：同一路徑下多個檔名、不同路徑存在相同位元內容時，可顯示候選各自位置及可用性，由使用者決定優先位置或保留多個可用定位；避免以檔名排序、搜尋時間或其他不可靠線索直接宣稱某個是「原始客戶來源」。完全相同的內容快取依 UI-042 可共用，但每份來源路徑與客戶映射的稽核證據需獨立。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_real_gui_worker_multi_root_preview_details_and_explicit_alternative_selection",
+            "test_batch_source_relink.BatchSourceTests.test_size_prefilter_same_name_different_bytes_and_ambiguous_copies",
+            "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-8",
+          "expected": "**更新影響預覽與失效控制**：確定只搬移了**同位元內容**時，若解析器／規則／模型版本和原先訓練快取依賴仍一致，可以**沿用已驗證的內容分析結果**，僅更新受影響的來源定位與需核對的檔案存在性。遇來源內容改變、字型／依賴缺漏或版本失效，僅重新分析**受影響作品與依賴項**，不得直接宣告全部訓練重新 PASS 或在正式印刷時略過來源／字型／Logo／實體尺寸驗證。",
+          "tests": [
+            "test_source_cache.SourceCacheTests.test_valid_cache_reused_without_rewriting",
+            "test_source_cache.SourceCacheTests.test_changed_preview_regenerated_original_unchanged",
+            "test_source_cache.SourceCacheTests.test_changed_vector_asset_regenerated",
+            "test_source_cache.SourceCacheTests.test_failed_regeneration_does_not_restore_corrupt_cache_as_success",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_declared_missing_assets_and_context_budget_are_explicit_and_snapshot_does_not_write"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-9",
+          "expected": "**確認、版本稽核與可撤銷**：保存每筆重新連結的舊路徑／新路徑、核實的內容指紋、原客戶／作品／版型映射、使用者確認與檢查結果、索引修訂版本及時間；支援 GUI 查詢、撤銷錯誤重綁或修復原路徑，**回復須重新檢查來源當下是否仍存在與內容是否一致**，不能把已不存在的路徑當作可復原成功。寫入前再核對來源索引版本以防另一視窗已改路徑；中斷或局部失敗須標示**已更新／未更新／衝突／待人工**的實際狀態，不偽稱全批完成。",
+          "tests": [
+            "test_batch_source_relink.BatchSourceTests.test_undo_verifies_old_paths_creates_new_revisions_and_keeps_history",
+            "test_batch_source_relink.BatchSourceTests.test_undo_missing_original_wrong_position_or_later_revision_rejected",
+            "test_batch_source_relink.BatchSourceTests.test_late_revision_conflict_and_event_failure_roll_back_entire_batch",
+            "test_batch_source_relink.BatchSourceTests.test_final_batch_audit_failure_rolls_back_links_histories_and_reviews",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_aggregate_context_and_audit_limits_rollback_all_paths_and_leave_no_fake_success",
+            "test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-10",
+          "expected": "**源文件與個資保護**：搜尋或重新連結僅作用於已有授權可讀取的本機目錄；不修改原 `.ai`、不重新命名、不中途取代其他人的檔案，不對外上傳來源圖稿或姓名／手機／LINE／IG。正式權限限制按 UI-048 **最後功能實作階段**才整合，但早期開發仍只能以合成資料測試並保留資料存取設計邊界，不以此作真實個資庫無限制存取的藉口。",
+          "tests": [
+            "test_batch_source_relink.BatchSourceTests.test_resolved_directory_outside_root_not_entered_even_without_symlink_flag",
+            "test_batch_source_relink.BatchSourceTests.test_search_does_not_follow_symlink_outside_selected_root",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_context_cas_rejects_changed_customer_then_persists_exact_mapping_without_changing_original_bytes"
+          ]
+        },
+        {
+          "id": "UI-049-CLAUSE-11",
+          "expected": "**既有系統重用**：直接延伸 UI-042 的 `source_files`、`content_blobs`、`artworks`、`training_checkpoints` 與 UI-043 `customers`／`customer_card_styles`，利用 UI-047 還原後的缺來源檔報告；不另創第二套檔案指紋演算法或獨立影子訓練庫。UI-043 **不區分「曾設計／已確認購買」**仍適用。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_same_content_customer_registrations_keep_distinct_actual_style_person_and_training_dependencies",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_declared_missing_assets_and_context_budget_are_explicit_and_snapshot_does_not_write"
+          ]
+        }
+      ],
+      "historical_context": [
+        "**目前狀態**：本項僅為已核准的 GUI 設計及未來驗收規格，**尚未掃描任何資料夾、重新定位或改寫真實來源索引、執行檔案指紋比對、訓練或程式開發**。"
+      ],
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "limits": [
+        "Linux synthetic SELF; actual Windows long paths/account permissions/real private Illustrator unverified",
+        "Explicit roots only;16 roots,2000 sources,5000entries/256MiB aggregate scan,32 displayed candidate/different paths with truthful counts;overbudget never all-found",
+        "One context max1MiB/2000 records;aggregate preview/audit8MiB,30s read-only snapshot query;no silent truncation",
+        "Asset path presence is not content/font license/Logo/source quality approval; existing specific repair and output gates still apply"
+      ]
     }
   ],
   "unregistered_parent_ids": [
     "UI-019",
     "UI-031",
     "UI-032",
-    "UI-049",
     "UI-050",
     "UI-051",
     "UI-052",

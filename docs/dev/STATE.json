@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI049-MULTIROOT-WIP",
+  "active_task": "REMAINING28-UI049-FULL-FORMAL",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-RELINK-CONTEXT-WIP.receipt.json",
   "last_confirmed_commit": "4cf986019d92f3145ba39f86722ac5f6b20790eb",
   "latest_evidence_run": null,
@@ -18,9 +18,9 @@
   ],
   "next_tasks": [
     {
-      "id": "UI049-MULTIROOT-DEPENDENCY-RELINK",
+      "id": "UI049-FULL-CLAUSE-FORMAL",
       "status": "IN_PROGRESS",
-      "next": "沿用SHA256/SQLite/source_links；多根共用預算及明確歧義選擇，完整customer/style/training/asset依賴預覽與CAS稽核。原11條需具名驗收及新source正式回歸，140歷史完成要求待重驗。"
+      "next": "完整原11條已註冊；10新測試+相關完整整合84PASS，capture多根/依賴/套用撤銷PASS。凍結source後RUN-REMAINING28-RELINK-001全662回歸及capture，不先恢復140歷史完成或結案UI049。"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-RELINK-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BACKUP.json",
