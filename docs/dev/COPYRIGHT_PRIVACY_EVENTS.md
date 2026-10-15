@@ -50,3 +50,12 @@
 事件：第六包283PASS後，create_tree的既有approved圖片/PDF/JPG blob在新run路徑引用被自動審查拒絕；理由為大量證明媒體重新發布與使用者較新「略過binary，持久化文件」不一致，具體外傳範圍未核准。沒有宣稱新的媒体發布成功。
 
 解法：不重試被拒blob、不改傳輸通道、不包進其他payload；全部新run媒體（含既有相同blob的新路徑）略過。程式／tests／JUnit／claims／machine GUI audit／metadata與事件完整保存，原本機media及exact manifest留存。舊P06完整scope PREPARED/ZIP保留與superseded，新TEXT checkpoint僅包含已存在同路徑同SHA的媒體與全部文字文件。現存遠端歷史媒體不刪。功能標準未變、全附件Gate仍不宣称滿足。後續新run沿用此更窄安全保存方式，不反覆询问圖片授權。
+
+
+## SEVENTY-PRIVACY-007：worker owner.token metadata 審查阻擋與安全替代
+
+2026-10-15，上傳新001 audit的GitHub create_tree被自動審查拒絕：owner.token可能是session／授權材料，未授權發布憑證。工具拒絕前僅建立部分tree物件，未create commit／update ref；分支仍0b0d477c。不重試被拒原值、不改通道、不沿用partial tree。
+
+原程式training_pipeline以new_id生成本機worker lease識別，僅供SQLite與LIVE_OWNERS/CAS比對；仍採更保守替代，**不發布該值**。完整001移至本機.checkpoints/private-evidence/RUN-SEVENTY-PARENTS-001，原run/hash不改；GitHub改存formal001-sanitized完整tests/JUnit/claims/source及移除lease識別的audit與明確PUBLICATION證明，不能冒稱完整raw run永久發布。CP-LOCK-SOURCE保留PREPARED、標superseded，不虛構ack。
+
+新capture producer只對公開view遞迴移除token值；真worker執行／DB歷史不改，原audit留evidence-workspace/.private。新增回歸確認巢狀移除、不變原job與結果，再凍結新source執行正式002。這是使用者「版權／隱私受阻可自行替代」的等效證明方案，不降低功能驗收。新圖片仍按原指示不發布；沒有要求重複授權。

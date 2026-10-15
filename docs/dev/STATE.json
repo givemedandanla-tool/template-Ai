@@ -28,9 +28,9 @@
   ],
   "next_tasks": [
     {
-      "id": "SEVENTY-FORMAL",
+      "id": "SEVENTY-FINAL",
       "status": "IN_PROGRESS",
-      "action": "17scope已編碼，28 target PASS；固定來源全回歸、actual Qt及API逐檔讀回後才父升PARTIAL"
+      "action": "新公開audit移除local lease值，凍結SAFE來源348全回歸，保持功能驗收"
     }
   ],
   "blocked": [
@@ -51,7 +51,9 @@
     "UI-048 最後權限接入",
     "UI-056-D 未來補樣"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-SEVENTY-SAFE-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-SEVENTY-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261014-TEN-P10-END.json",
@@ -140,6 +142,10 @@
     {
       "id": "CP-20261014-TEN-P06-VERIFIED",
       "reason": "自動審查拒絕新路徑引用舊PNG/PDF/JPG blob；使用者明確略過證明媒体，採新text保存範圍；原PREPARED/ZIP不覆寫、未宣稱ACK。"
+    },
+    {
+      "id": "CP-20261015-SEVENTY-LOCK-SOURCE",
+      "reason": "Automatic review rejected raw owner.token in new audit metadata. Raw001 local-only; sanitized substitute/new safe producer. Immutable CP not acknowledged; no rejected partial tree reused."
     }
   ],
   "evidence_publication": {

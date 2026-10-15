@@ -6,11 +6,11 @@
 
 **開發以零例行問答、checkpoint 與 GitHub 持久化為核心。EXE 已延後，不再自動打包或重試；先完成清單要求及其證據。**
 
-**v0.1.14 完成語意搜尋與檢視、批次只讀匯入與持久續跑、來源匯入例外中心三包；229項測試PASS、0 SKIP。9件證明附件依使用者指令略過上傳，紀錄與其餘證據保存。** 三模式桌面工作台：來源標記、模板與 Logo、排版與數位輸出。本版包含多作品標記與歷史恢復、固定學習來源版次、本機持久字型、發布交易及來源快取完整性，新增同內容原稿重連與字型複本修復，受控批次來源定位／全批交易／內容驗證復原，共用字型管理、Unicode字形覆蓋與固定字級毫米字寬診斷，真實背景工作GUI交接。第一版學習為人工確認標記的幾何與語意規則內化；完整自動辨識／深度模型、客戶重訂、完整權限與實體印刷分析留後續計畫。
+**v0.1.25：擴充客戶建檔／搜尋與逐欄回寫、加密資料庫部分備份、尺寸Logo只讀管理、當次排版單worker控制、候選局部修改、多作品安全批次、來源重掃、分類評估／隔離修復與重大規則重審。** 操作與每項未做範圍見 [使用指南](docs/dev/SEVENTY_USER_GUIDE.md)，最新驗收與父需求數量以 STATE／PROGRESS 為準。這些是明列範圍實作，仍不是全部父需求完整完成。幾何學習不是完整自動辨識或深度模型；分類評估不冒稱模型推論／獨立品質PASS；完整個資權限、指定設備及印刷仍待後續。
 
 ## 開啟與快速試用
 
-目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新可重現測試見 [RUN-EXCEPTION-CENTER-002](docs/evidence/runs/RUN-EXCEPTION-CENTER-002/run.json)，保存例外見 [清單](docs/dev/EVIDENCE_PUBLICATION_EXCEPTIONS.json)；驗收與原附件manifest保留。
+目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新來源綁定驗收見 [STATE](docs/dev/STATE.json) 與 [進度](docs/dev/PROGRESS.md)，證明媒體保存例外見 [本輪清單](docs/dev/SEVENTY_PARENTS_PUBLICATION.json)；程式／測試／文字證據完整保存，原附件及hash清單保留。
 
 原始碼：安裝 Python 3.11 後，Windows 雙擊 `START_WINDOWS.bat`；或安裝 `requirements-lock.txt`，執行 `python app.py`。
 

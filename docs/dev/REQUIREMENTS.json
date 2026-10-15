@@ -2650,6 +2650,13 @@
           "tests": [
             "test_dev_framework.DevFrameworkTests.test_automatic_exe_trigger_is_rejected"
           ]
+        },
+        {
+          "id": "GOV-005-REDACTION",
+          "expected": "公開證據移除巢狀本機worker lease識別；原job與結果不可變，未將原始敏感metadata改通道發布",
+          "tests": [
+            "test_evidence_redaction.RedactionTests.test_public_view_removes_nested_lease_values_without_mutating_private_job_or_results"
+          ]
         }
       ],
       "next_step": "本輪框架實際驗證後才能開下一產品工作包",

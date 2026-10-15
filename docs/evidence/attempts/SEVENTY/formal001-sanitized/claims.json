@@ -1,0 +1,1509 @@
+[
+  {
+    "requirement_id": "CORE-001",
+    "acceptance_id": "CORE-001-A1",
+    "expected": "不改字級／不截斷長文字，無解時阻擋正式輸出",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "dfefb7b485e2b26542a53131b078016adcd58b9653428502f37a9e6bd438c020"
+  },
+  {
+    "requirement_id": "CORE-002",
+    "acceptance_id": "CORE-002-A1",
+    "expected": "多筆聯絡或人物容量不符時明確阻擋，不默默略去",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_unused_contact_and_wrong_capacity_block"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "188f61094e2f97ed584a13670ed28098b3431ee526f8abf2f3c680c0b5dc9b48"
+  },
+  {
+    "requirement_id": "CORE-003",
+    "acceptance_id": "CORE-003-A1",
+    "expected": "指定字型缺失、超界及重疊不能通過正式發布／輸出",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_missing_font_does_not_use_silent_fallback",
+      "test_first_version.FirstVersionTests.test_geometric_overlap_and_outside_block_publication"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "1a399ef3e797ed9d5ea02569aaa1279c2407d8c0ae94ff415839c0cbfa3491ce"
+  },
+  {
+    "requirement_id": "CORE-004",
+    "acceptance_id": "CORE-004-A1",
+    "expected": "公司歸屬明確；缺 Logo 或不同公司／尺寸不得借用正式輸出",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_missing_logo_and_wrong_size_or_company_do_not_pass",
+      "test_first_version.FirstVersionTests.test_person_company_binding_is_not_inferred_from_strings"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "3e5f69a444d653cf9f821834cd7479a7fe9c37811f4ab9e743f79751e0cf2092"
+  },
+  {
+    "requirement_id": "CORE-005",
+    "acceptance_id": "CORE-005-A1",
+    "expected": "實際 PDF／PNG／JPG 可讀，PDF 毫米正確，既有檔及失敗清理保護",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_export_all_formats_real_pdf_dimensions_and_no_overwrite",
+      "test_first_version.FirstVersionTests.test_atomic_publish_failure_preserves_existing_file_and_cleans_temp"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "9155b39b98c68bde72ee20250ee9995a2efc8a19f1ab59f29446bc271bb183bf"
+  },
+  {
+    "requirement_id": "CORE-006",
+    "acceptance_id": "CORE-006-A1",
+    "expected": "修改資料使舊候選失效；PREVIEW 有檔名及畫面附註",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_stale_generation_and_unmarked_preview_block",
+      "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "3ca335d17996fa5773f95f94ff3cea7398c4ecd087eae36188d02672b51afbde"
+  },
+  {
+    "requirement_id": "CORE-007",
+    "acceptance_id": "CORE-007-A1",
+    "expected": "已發布版本唯讀，新版本不占用已存在的 family/version",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_published_templates_are_immutable_and_family_versions_safe"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "56f2b667337ce6dc163fadcaa0097f50acce2f5c84d0b524287b007f9da91791"
+  },
+  {
+    "requirement_id": "CORE-008",
+    "acceptance_id": "CORE-008-A1",
+    "expected": "同內容共用解析，異名登錄及標記不混配，重開恢復",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_source_dedupe_preserves_independent_registrations_and_reopen"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "82e94546ef9cdc69130fe87cc25f0ff1f52dda558f733531c067de572f638ec4"
+  },
+  {
+    "requirement_id": "CORE-009",
+    "acceptance_id": "CORE-009-A1",
+    "expected": "標記形成有來源規則模板，發布、同尺寸配對與數位輸出可完成",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_source_labels_to_learned_template_to_output"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "0c21a031039156f62f0f2167e0d5bfbd638ac85795ecb7ecb691d5784013ac43"
+  },
+  {
+    "requirement_id": "CORE-010",
+    "acceptance_id": "CORE-010-A1",
+    "expected": "實際 SVG 轉換與合成 PDF 更名 AI 可匯入；不代表私人原生 AI 全面驗收",
+    "tests": [
+      "test_first_version.FirstVersionTests.test_actual_inkscape_svg_and_pdf_compatible_ai"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "59405f99828568411839f2947d0dd409b832946127686ad1bf03042ff64e10b6"
+  },
+  {
+    "requirement_id": "CORE-011",
+    "acceptance_id": "CORE-011-A1",
+    "expected": "雙色頁實際取到指定頁、快取不混頁；非法頁碼在轉換前失敗",
+    "tests": [
+      "test_import_pages.ImportPageTests.test_actual_second_page_and_cache_stay_distinct",
+      "test_import_pages.ImportPageTests.test_bad_pdf_page_is_rejected_before_converter_runs",
+      "test_import_pages.ImportPageTests.test_qt_fallback_really_selects_second_page",
+      "test_import_pages.ImportPageTests.test_non_pdf_page_is_explicitly_rejected"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "6b6b3929e4cd09e894cba74ccdb01088fac06cb3be95ceff03bc645fafbc87c1"
+  },
+  {
+    "requirement_id": "CORE-012",
+    "acceptance_id": "CORE-012-A1",
+    "expected": "極端比例／超大圖片先被阻擋，再配置畫面或解碼",
+    "tests": [
+      "test_import_pages.ImportPageTests.test_extreme_svg_is_blocked_before_large_preview",
+      "test_import_pages.ImportPageTests.test_raster_budget_checks_header_before_decoding"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "f81341d3d778f822b692d252080436b2279644af6f18f60107c26d2c98838a2e"
+  },
+  {
+    "requirement_id": "CORE-013",
+    "acceptance_id": "CORE-013-A1",
+    "expected": "預覽及三格式讀回有裝飾，向量／圖像模式均生效",
+    "tests": [
+      "test_visual_background.VisualBackgroundTests.test_decoration_in_preview_and_all_actual_exports",
+      "test_visual_background.VisualBackgroundTests.test_raster_choice_uses_approved_imported_pixels"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "59a365d5927966a11b72836f6594e3e63df833d18c075f0050c5b4a6faa39ca4"
+  },
+  {
+    "requirement_id": "CORE-014",
+    "acceptance_id": "CORE-014-A1",
+    "expected": "未核准／錯尺寸／異動／失聯／外連資源不可冒稱有效背景",
+    "tests": [
+      "test_visual_background.VisualBackgroundTests.test_unapproved_and_wrong_size_background_block_publication",
+      "test_visual_background.VisualBackgroundTests.test_changed_background_after_candidate_blocks_and_cleans_export",
+      "test_visual_background.VisualBackgroundTests.test_missing_background_is_not_silently_rendered_white",
+      "test_visual_background.VisualBackgroundTests.test_external_svg_resource_is_rejected_before_approval"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "4a2e0eca996b3f36e6b3e7e8ee9e55dfa9eba4007ad613da4489ea144c4d606a"
+  },
+  {
+    "requirement_id": "CORE-015",
+    "acceptance_id": "CORE-015-A1",
+    "expected": "真實核准對話框保存呈現方式，發布背景版本唯讀，舊格式相容",
+    "tests": [
+      "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+      "test_visual_background.VisualBackgroundTests.test_real_background_review_dialog_saves_chosen_mode",
+      "test_visual_background.VisualBackgroundTests.test_reopen_version_and_old_schema_preserve_background"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "6d244d8dfb4794aa13b92b89c66f53459d935622fea3b0ce885d6287e6f39e76"
+  },
+  {
+    "requirement_id": "CORE-016",
+    "acceptance_id": "CORE-016-A1",
+    "expected": "指定文字色彩確實渲染；非法色彩阻擋",
+    "tests": [
+      "test_visual_background.VisualBackgroundTests.test_text_color_is_real_rendered_and_invalid_color_blocks"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "ec088fb574a7f8d3a50e1d9f95b3feca485c906b2c8298766bf390f6e65052e8"
+  },
+  {
+    "requirement_id": "CORE-017",
+    "acceptance_id": "CORE-017-A1",
+    "expected": "多作品獨立保存，切換／重開回到確切來源與作品",
+    "tests": [
+      "test_artwork_recovery.ArtworkRecoveryTests.test_two_works_reopen_active_selection_and_marks",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_gui_new_crop_keeps_previous_work_and_reopens_latest",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_gui_reopens_last_selected_source_not_latest_import"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "f6e32b92e36e05aaa97ef50796e05b1453d86dd5477ae76a31523edd159b4a51"
+  },
+  {
+    "requirement_id": "CORE-018",
+    "acceptance_id": "CORE-018-A1",
+    "expected": "恢復加新版本、不改歷史，舊資料保留，過期及跨來源寫入阻擋",
+    "tests": [
+      "test_artwork_recovery.ArtworkRecoveryTests.test_history_restore_adds_revision_and_stale_update_blocks",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_old_labels_migrate_once_without_deleting_legacy",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_cross_source_selection_and_invalid_geometry_do_not_mutate",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_gui_restore_history_preserves_published_template"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "7cc2676defb4103b42294ba2b28f215b5b1bb44c42393d43738744ba35da6baf"
+  },
+  {
+    "requirement_id": "CORE-019",
+    "acceptance_id": "CORE-019-A1",
+    "expected": "來源作品／版次固定，後改標記不改來源，不混配來源 ID",
+    "tests": [
+      "test_artwork_recovery.ArtworkRecoveryTests.test_learned_template_pins_work_revision_and_rejects_wrong_source",
+      "test_artwork_recovery.ArtworkRecoveryTests.test_gui_learning_saves_exact_current_mark_revision"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "2edc81cfb6f26b58cfba9289c12870bd096ae17e324c8b242781c3592adcc001"
+  },
+  {
+    "requirement_id": "CORE-020",
+    "acceptance_id": "CORE-020-A1",
+    "expected": "模擬審核寫入失敗，資料庫與畫面仍是草稿",
+    "tests": [
+      "test_artwork_recovery.ArtworkRecoveryTests.test_publish_event_failure_rolls_back_database_and_memory"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "bf06f7e89c73c664890bdc52a79cfa030dcdbb01636c7d431034fa0e26991d0d"
+  },
+  {
+    "requirement_id": "CORE-021",
+    "acceptance_id": "CORE-021-A1",
+    "expected": "本機複本可在新 Python 程序載入，欄位綁定資產持久保存",
+    "tests": [
+      "test_persistent_fonts.PersistentFontTests.test_copy_reopen_and_original_removal_do_not_lose_font",
+      "test_persistent_fonts.PersistentFontTests.test_new_python_process_loads_persisted_font",
+      "test_persistent_fonts.PersistentFontTests.test_gui_import_binds_file_and_reopens_without_dialog"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "69c8b684d420339eac8592b9067c5dc5fe62f1abeeb3a5bad82da0e960c7c598"
+  },
+  {
+    "requirement_id": "CORE-022",
+    "acceptance_id": "CORE-022-A1",
+    "expected": "未核准、損壞、異動、同名不同檔明確阻擋，登錄失敗不留假資產",
+    "tests": [
+      "test_persistent_fonts.PersistentFontTests.test_unapproved_invalid_and_duplicate_font_protect_catalog",
+      "test_persistent_fonts.PersistentFontTests.test_changed_or_missing_asset_blocks_even_if_system_font_exists",
+      "test_persistent_fonts.PersistentFontTests.test_same_family_different_file_is_not_silently_replaced",
+      "test_persistent_fonts.PersistentFontTests.test_catalog_failure_removes_only_new_asset"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成或環境字型的明列子範圍；完整父要求仍待續",
+    "contract_sha256": "e98a67eaccad57331f9ad14541abe23fe2cec13a92a685961346dd46d5d7f5af"
+  },
+  {
+    "requirement_id": "CORE-023",
+    "acceptance_id": "CORE-023-A1",
+    "expected": "同來源快取經 hash 核對；異動／損壞 metadata 不可當成功重用；保持原檔只讀並可重新轉換",
+    "tests": [
+      "test_source_cache.SourceCacheTests.test_valid_cache_reused_without_rewriting",
+      "test_source_cache.SourceCacheTests.test_changed_preview_regenerated_original_unchanged",
+      "test_source_cache.SourceCacheTests.test_invalid_metadata_and_foreign_paths_are_not_reused",
+      "test_source_cache.SourceCacheTests.test_changed_vector_asset_regenerated",
+      "test_source_cache.SourceCacheTests.test_failed_regeneration_does_not_restore_corrupt_cache_as_success",
+      "test_source_cache.SourceCacheTests.test_symlink_cache_does_not_overwrite_original"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成來源衍生快取完整性，非完整批次來源重連；checksum非安全簽章",
+    "contract_sha256": "6357a50d6ae5c79a607b10107624d67c172a16714995d6069524f0c731be055b"
+  },
+  {
+    "requirement_id": "GOV-001",
+    "acceptance_id": "GOV-001-A1",
+    "expected": "開發 checkpoint 與安全恢復的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_checkpoint_restore_and_remote_ack",
+      "test_dev_framework.DevFrameworkTests.test_checkpoint_rejects_mismatched_remote_and_existing_id",
+      "test_dev_framework.DevFrameworkTests.test_checkpoint_records_pending_and_clears_after_ack"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "66db1a963b43f428d208cbbccef71f800e2ac9bed39155cc9d83e8d343ef1a41"
+  },
+  {
+    "requirement_id": "GOV-002",
+    "acceptance_id": "GOV-002-A1",
+    "expected": "Human／GPT 開工交接與下一步的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_missing_entry_blocks_work"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "4991a74fd3ac28a5e48a8d229bba3a461957387c9080837754acd1833b5bbfe3"
+  },
+  {
+    "requirement_id": "GOV-003",
+    "acceptance_id": "GOV-003-A1",
+    "expected": "要求與個別證據完成 Gate的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_skipped_or_missing_test_cannot_complete",
+      "test_dev_framework.DevFrameworkTests.test_changed_source_and_attachment_invalidate_evidence",
+      "test_dev_framework.DevFrameworkTests.test_changed_acceptance_cannot_reuse_old_pass"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "a5bae6eaa370647bd14abb665e50c8ac3d4e3871fa9b189a0a38a8f023b9492d"
+  },
+  {
+    "requirement_id": "GOV-004",
+    "acceptance_id": "GOV-004-A1",
+    "expected": "持久 AI 入口与零例行問答的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_missing_entry_blocks_work"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "fd7f805487572524f7715bdfda756a1eda1c8ea1c9432e22183fa71a29748c07"
+  },
+  {
+    "requirement_id": "GOV-005",
+    "acceptance_id": "GOV-005-A1",
+    "expected": "EXE 延後且不自動打包的約定與有效性檢查通過",
+    "tests": [
+      "test_dev_framework.DevFrameworkTests.test_automatic_exe_trigger_is_rejected"
+    ],
+    "status": "PASS",
+    "scope": "本輪五點開發框架；不保證最後未保存操作零風險或離線 GPT 自動讀檔",
+    "contract_sha256": "2c3a3834882cab4ad4afdd7338fe2b2c126a5d6a267a2fca3d678b740de96aee"
+  },
+  {
+    "requirement_id": "CORE-024",
+    "acceptance_id": "CORE-024-A1",
+    "expected": "只接受同SHA-256來源，保留原登錄與作品模板，重開仍保留新位置；拒絕異動和過期寫入，交易失敗無半完成",
+    "tests": [
+      "test_source_relink.SourceRelinkTests.test_moved_source_reopens_with_original_identity_and_history",
+      "test_source_relink.SourceRelinkTests.test_same_name_different_bytes_and_missing_candidate_rejected",
+      "test_source_relink.SourceRelinkTests.test_stale_revision_and_candidate_changed_after_verification_rejected",
+      "test_source_relink.SourceRelinkTests.test_event_failure_rolls_back_link_and_history",
+      "test_source_relink.SourceRelinkTests.test_status_distinguishes_missing_changed_unreadable_and_ok",
+      "test_source_relink.SourceRelinkTests.test_repeated_current_path_is_idempotent_and_wrong_source_proof_rejected",
+      "test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成來源單件重連與歷史保留；非完整批次重連或來源內容替換",
+    "contract_sha256": "e00f77a96b21275145fa88735d3b2b6c57715db6ea10d1c3b9037d087df3c456"
+  },
+  {
+    "requirement_id": "CORE-025",
+    "acceptance_id": "CORE-025-A1",
+    "expected": "核准同 hash 才恢復字型複本；不改 catalog／發布模板 pin，損壞留隔離證據，例外回滾及中斷重開核對",
+    "tests": [
+      "test_font_repair.FontRepairTests.test_missing_copy_restored_and_reopened_without_changing_published_pin",
+      "test_font_repair.FontRepairTests.test_corrupted_copy_retained_in_quarantine_and_reference_unchanged",
+      "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes",
+      "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+      "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+      "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+      "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+      "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+      "test_font_repair.FontRepairTests.test_healthy_copy_repair_is_idempotent",
+      "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+      "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+      "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate"
+    ],
+    "status": "PASS",
+    "scope": "Linux／環境既有字型與匿名模板；非完整字重版本或 Windows 安裝",
+    "contract_sha256": "e1801462371faef477453e24a15e1acca108ac6cca8ecf9653a559fa1a5302f4"
+  },
+  {
+    "requirement_id": "CORE-026",
+    "acceptance_id": "CORE-026-A1",
+    "expected": "受控範圍背景來源定位與候選影響預覽；詳見明列設計與具名測試",
+    "tests": [
+      "test_batch_source_relink.BatchSourceTests.test_one_candidate_hashed_once_for_independent_same_content_registrations",
+      "test_batch_source_relink.BatchSourceTests.test_size_prefilter_same_name_different_bytes_and_ambiguous_copies",
+      "test_batch_source_relink.BatchSourceTests.test_limits_cancel_unreadable_and_missing_fingerprint_are_explicit",
+      "test_batch_source_relink.BatchSourceTests.test_search_does_not_follow_symlink_outside_selected_root",
+      "test_batch_source_relink.BatchSourceTests.test_candidate_count_is_bounded_and_partial_not_all_found",
+      "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
+      "test_batch_source_relink.BatchSourceGuiTests.test_cancelled_scan_or_worker_error_never_enables_commit",
+      "test_batch_source_relink.BatchSourceTests.test_resolved_directory_outside_root_not_entered_even_without_symlink_flag"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成來源；單根受限掃描與人工勾選，不代表完整跨設備資產管理",
+    "contract_sha256": "f3885d3c8454d29b2f99f979b8bb698f8eaf5762c64dfc4c6798e1b3ad0dc942"
+  },
+  {
+    "requirement_id": "CORE-027",
+    "acceptance_id": "CORE-027-A1",
+    "expected": "批次來源重連交易、歷史與安全復原；詳見明列設計與具名測試",
+    "tests": [
+      "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids",
+      "test_batch_source_relink.BatchSourceTests.test_late_revision_conflict_and_event_failure_roll_back_entire_batch",
+      "test_batch_source_relink.BatchSourceTests.test_candidate_changed_after_background_verify_does_not_partially_commit",
+      "test_batch_source_relink.BatchSourceTests.test_undo_verifies_old_paths_creates_new_revisions_and_keeps_history",
+      "test_batch_source_relink.BatchSourceTests.test_undo_missing_original_wrong_position_or_later_revision_rejected",
+      "test_batch_source_relink.BatchSourceTests.test_empty_duplicate_and_same_current_location_are_not_fake_updates",
+      "test_batch_source_relink.BatchSourceTests.test_later_relink_revision_is_not_overwritten_by_old_batch_undo",
+      "test_batch_source_relink.BatchSourceTests.test_final_batch_audit_failure_rolls_back_links_histories_and_reviews",
+      "test_batch_source_relink.BatchSourceGuiTests.test_selected_batch_apply_and_gui_undo_preserve_work"
+    ],
+    "status": "PASS",
+    "scope": "Linux／合成來源批次位置交易與當前內容驗證，不更改客戶映射或源檔",
+    "contract_sha256": "e12e8694a8eeb1c50ad4270f190296ef2f27d48c1834ec14b0fb4f1bad3d1522"
+  },
+  {
+    "requirement_id": "GOV-006",
+    "acceptance_id": "GOV-006-A1",
+    "expected": "每輪功能清單統計、基準與需求差異回報；詳見明列設計與具名測試",
+    "tests": [
+      "test_dev_progress.DevProgressTests.test_groups_conserve_counts_without_parent_completion",
+      "test_dev_progress.DevProgressTests.test_added_scope_and_status_changes_are_distinct",
+      "test_dev_progress.DevProgressTests.test_snapshots_immutable_and_current_report_detects_drift",
+      "test_dev_progress.DevProgressTests.test_invalid_or_duplicate_status_cannot_hide_unfinished_work"
+    ],
+    "status": "PASS",
+    "scope": "Human／GPT 開發治理報告，非 UI-066 產品報告",
+    "contract_sha256": "c6bf8bb7ceb687cc4b82b0ac3047c56c58f09c5fd0f67f15c67d847389f943f4"
+  },
+  {
+    "requirement_id": "CORE-028",
+    "acceptance_id": "CORE-028-A1",
+    "expected": "背景只讀檢查本機資產健康／可解析家族款式，主機候選不冒稱來源確證；模板身份／影響、搜尋篩選與未知引用可查，不自動改模板／安裝系統",
+    "tests": [
+      "test_font_center.FontCatalogTests.test_asset_identity_and_draft_published_template_impacts_preserved",
+      "test_font_center.FontCatalogTests.test_missing_modified_unapproved_invalid_and_unparseable_are_distinct",
+      "test_font_center.FontCatalogTests.test_unregistered_template_path_never_borrows_same_family_catalog_asset",
+      "test_font_center.FontCatalogTests.test_qt_candidates_not_claimed_as_verified_original_or_installed_file",
+      "test_font_center.FontCatalogTests.test_filters_and_limits_do_not_hide_unverified_assets_as_healthy",
+      "test_font_center.FontCenterGuiTests.test_background_snapshot_and_selection_show_references_without_mutating_templates",
+      "test_font_center.FontCenterGuiTests.test_failed_worker_releases_ui_and_repair_refreshes_health",
+      "test_font_center.FontCenterGuiTests.test_real_background_inventory_and_diagnosis_return_plain_data"
+    ],
+    "status": "PASS",
+    "scope": "Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權",
+    "contract_sha256": "2bb9ccfe414c6161ede72aca0fb8bf6cbf3640f8e12d7a912c16fe073a36db10"
+  },
+  {
+    "requirement_id": "CORE-029",
+    "acceptance_id": "CORE-029-A1",
+    "expected": "以實際Unicode glyph映射及無fallback shaping量測，核對資產hash／字面，覆蓋／毫米／最小水平比例與非法資料如實診斷，不暗改字級或核准整體輸出",
+    "tests": [
+      "test_font_center.FontCatalogTests.test_coverage_counts_unique_codepoints_and_missing_nonbmp_without_fallback",
+      "test_font_center.FontCatalogTests.test_real_shaping_mm_scales_linearly_and_matches_independent_font_metrics",
+      "test_font_center.FontCatalogTests.test_horizontal_fit_boundary_does_not_change_size_or_drop_text",
+      "test_font_center.FontCatalogTests.test_changed_asset_and_different_shaping_face_block_even_if_system_family_exists",
+      "test_font_center.FontCatalogTests.test_empty_invalid_controls_multiline_and_out_of_range_inputs_rejected",
+      "test_font_center.FontCenterGuiTests.test_diagnosis_stale_input_does_not_publish_old_feasibility",
+      "test_font_center.FontCenterGuiTests.test_gui_measures_selected_asset_without_modifying_published_pin",
+      "test_font_center.FontCenterGuiTests.test_real_background_inventory_and_diagnosis_return_plain_data"
+    ],
+    "status": "PASS",
+    "scope": "Linux／環境既有字型、合成模板及匿名診斷文字；非完整Windows／TTC／字重版本／替代與嵌入授權",
+    "contract_sha256": "74a7bd0aab430fee83d8a91d759655e44403b77068d81b549dfd10fb733db778"
+  },
+  {
+    "requirement_id": "CORE-030",
+    "acceptance_id": "CORE-030-A1",
+    "expected": "真實背景工作成功及錯誤回到GUI執行緒，worker完工後不遺失busy／完成通知，訊號和worker生命週期持有與清理",
+    "tests": [
+      "test_font_center.BackgroundJobTests.test_real_success_holds_job_until_gui_callback_then_releases",
+      "test_font_center.BackgroundJobTests.test_real_worker_failure_returns_to_gui_and_can_run_next_job",
+      "test_font_center.BackgroundJobTests.test_gui_callback_failure_still_releases_job_and_busy_state"
+    ],
+    "status": "PASS",
+    "scope": "Linux Qt 真實worker訊號持有／GUI queued交接與busy恢復；非完整公平佇列／當次候選恢復或斷電续跑",
+    "contract_sha256": "fbb7e73d55a56f0ba12e22fd7ca48c533d913a6e32c3ce52b139787a6ea183f5"
+  },
+  {
+    "requirement_id": "CORE-031",
+    "acceptance_id": "CORE-031-A1",
+    "expected": "固定字級、實際字形及健康／字面／尺寸硬篩，空非法輸入與逐條排除原因，不fallback",
+    "tests": [
+      "test_font_candidates.FontCandidateTests.test_hard_filter_missing_glyph_never_produces_fallback_width",
+      "test_font_candidates.FontCandidateTests.test_unapproved_missing_modified_unknown_are_excluded_with_reasons",
+      "test_font_candidates.FontCandidateTests.test_exact_horizontal_boundary_preserves_size_and_full_text",
+      "test_font_candidates.FontCandidateTests.test_empty_invalid_and_over_budget_requests_do_not_claim_success",
+      "test_font_candidates.FontCandidateTests.test_changed_shaping_identity_blocks_candidate_and_preview"
+    ],
+    "status": "PASS",
+    "scope": "候選只讀端到端功能；Linux環境字型／匿名文字單行診斷，不代表完整UI-032、Windows、原稿一致或UI-033套用",
+    "contract_sha256": "cc6ed51970d8132427de2f3610c5768690832a5b463fa08e56c872759d748b4e"
+  },
+  {
+    "requirement_id": "CORE-031",
+    "acceptance_id": "CORE-031-A2",
+    "expected": "按來源身份、可驗證比較字寬、壓縮與穩定identity排序，未知參考不造數字；候選去重與預算PARTIAL",
+    "tests": [
+      "test_font_candidates.FontCandidateTests.test_source_identity_precedes_width_rank_and_unknown_reference_has_no_score",
+      "test_font_candidates.FontCandidateTests.test_reference_width_is_measured_and_missing_reference_stays_unknown",
+      "test_font_candidates.FontCandidateTests.test_reference_delta_orders_actual_different_widths",
+      "test_font_candidates.FontCandidateTests.test_permutation_and_duplicate_identity_do_not_change_rank_or_measure_twice",
+      "test_font_candidates.FontCandidateTests.test_face_bytes_and_inventory_limits_are_explicit_partial",
+      "test_font_candidates.FontCandidateTests.test_reference_modified_during_measurement_does_not_publish_width",
+      "test_font_candidates.FontCandidateTests.test_reference_can_measure_width_even_if_frame_fit_fails"
+    ],
+    "status": "PASS",
+    "scope": "候選只讀端到端功能；Linux環境字型／匿名文字單行診斷，不代表完整UI-032、Windows、原稿一致或UI-033套用",
+    "contract_sha256": "cc6ed51970d8132427de2f3610c5768690832a5b463fa08e56c872759d748b4e"
+  },
+  {
+    "requirement_id": "CORE-031",
+    "acceptance_id": "CORE-031-A3",
+    "expected": "實際共用GUI候選及唯讀PNG預覽，重新核對hash／字面／量測與stale，文字與pt不暗改",
+    "tests": [
+      "test_font_candidates.FontCandidateTests.test_preview_real_png_fixed_point_size_and_bounded_frame",
+      "test_font_candidates.FontCandidateTests.test_preview_rejects_modified_file_and_same_width_changed_text",
+      "test_font_candidates.FontCandidateGuiTests.test_shared_center_entry_has_explicit_unchecked_reference_and_no_auto_selection",
+      "test_font_candidates.FontCandidateGuiTests.test_input_changes_reject_late_search_and_preview_results",
+      "test_font_candidates.FontCandidateGuiTests.test_modified_preview_clears_old_image_and_can_requery",
+      "test_font_candidates.FontCandidateGuiTests.test_partial_search_warning_remains_visible_after_preview"
+    ],
+    "status": "PASS",
+    "scope": "候選只讀端到端功能；Linux環境字型／匿名文字單行診斷，不代表完整UI-032、Windows、原稿一致或UI-033套用",
+    "contract_sha256": "cc6ed51970d8132427de2f3610c5768690832a5b463fa08e56c872759d748b4e"
+  },
+  {
+    "requirement_id": "CORE-031",
+    "acceptance_id": "CORE-031-A4",
+    "expected": "真實worker成功／錯誤／重試恢復，模板及資產／來源不變，逐條證據與完整GitHub讀回",
+    "tests": [
+      "test_font_candidates.FontCandidateTests.test_search_preview_leave_published_pin_registry_and_source_bytes_unchanged",
+      "test_font_candidates.FontCandidateGuiTests.test_real_worker_search_selection_preview_and_readonly_state",
+      "test_font_candidates.FontCandidateGuiTests.test_real_worker_failure_restores_controls_and_retry_succeeds",
+      "test_font_candidates.FontCandidateGuiTests.test_empty_missing_glyph_and_no_candidate_are_visible_not_success",
+      "test_font_candidates.FontCandidateGuiTests.test_callback_error_still_restores_dialog_controls"
+    ],
+    "status": "PASS",
+    "scope": "候選只讀端到端功能；Linux環境字型／匿名文字單行診斷，不代表完整UI-032、Windows、原稿一致或UI-033套用",
+    "contract_sha256": "cc6ed51970d8132427de2f3610c5768690832a5b463fa08e56c872759d748b4e"
+  },
+  {
+    "requirement_id": "CORE-032",
+    "acceptance_id": "CORE-032-A1",
+    "expected": "實際影響／前後尺寸、未知與BLOCKED／HIGH／LOW分組、無預選及逐欄核准，有界背景且stale失效",
+    "tests": [
+      "test_font_review.FontReviewTests.test_actual_impact_dimensions_owner_source_and_unknown_reference",
+      "test_font_review.FontReviewTests.test_empty_missing_glyph_height_and_geometry_block_individual_field",
+      "test_font_review.FontReviewTests.test_unverified_qt_modified_target_and_logo_never_eligible",
+      "test_font_review.FontReviewTests.test_limits_and_same_binding_low_noop_are_visible",
+      "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
+      "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry",
+      "test_font_review.FontReviewTests.test_low_risk_identical_face_rebinding_does_not_require_high_review"
+    ],
+    "status": "PASS",
+    "scope": "完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權",
+    "contract_sha256": "8c21b0dd3987b322f57f6f1a9b809300293c0db47caac65112c9928877d95edf"
+  },
+  {
+    "requirement_id": "CORE-033",
+    "acceptance_id": "CORE-033-A1",
+    "expected": "選中欄位建立新草稿，hash＋單調clock CAS、全批rollback與不可偽造票據，重開歷史Undo／Redo且不覆蓋後續編輯或發布",
+    "tests": [
+      "test_font_review.FontReviewTests.test_high_risk_unreviewed_unselected_duplicate_and_forged_ticket_rejected",
+      "test_font_review.FontReviewTests.test_selected_only_new_draft_preserves_publication_geometry_and_no_raw_text",
+      "test_font_review.FontReviewTests.test_base_change_aba_and_target_registration_race_block_commit",
+      "test_font_review.FontReviewTests.test_multi_template_late_audit_failure_rolls_back_every_draft_and_clock",
+      "test_font_review.FontReviewTests.test_undo_redo_persist_after_reopen_and_reject_later_editor_change",
+      "test_font_review.FontReviewTests.test_undo_publish_aba_and_late_failure_do_not_overwrite",
+      "test_font_review.FontReviewTests.test_modified_target_blocks_prepare_and_redo_while_undo_keeps_draft_gate",
+      "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
+      "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
+      "test_font_review.FontReviewGuiTests.test_history_menu_reopens_without_a_candidate",
+      "test_font_review.FontReviewTests.test_ticket_expiry_confirmation_and_single_use_do_not_create_extra_drafts",
+      "test_font_review.FontReviewTests.test_missing_character_details_not_persisted_in_audit",
+      "test_font_review.FontReviewTests.test_multi_draft_undo_late_failure_rolls_back_scope_and_can_retry"
+    ],
+    "status": "PASS",
+    "scope": "完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權",
+    "contract_sha256": "35ad5ebbc10d9f96b44e8d1c098687e222183f5ec2167201f86d83e644ede0c5"
+  },
+  {
+    "requirement_id": "CORE-034",
+    "acceptance_id": "CORE-034-A1",
+    "expected": "舊模板相容；實際款式pin，固定字級與原幾何語意不改，實際無fallback量測／渲染拒絕字面不符",
+    "tests": [
+      "test_font_review.FontReviewTests.test_legacy_schema_migration_clock_noop_and_binding_styles_compatible",
+      "test_font_review.FontReviewTests.test_persistent_actual_style_matches_layout_and_real_export",
+      "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style"
+    ],
+    "status": "PASS",
+    "scope": "完整受控草稿替代端到端工作包；Linux／匿名樣本，不代表原稿一致、全UI-033／Windows或正式輸出授權",
+    "contract_sha256": "10601e60b2b45c8a800cf3b9a3f5318045e03d4783258a3106333356c3058465"
+  },
+  {
+    "requirement_id": "CORE-035",
+    "acceptance_id": "CORE-035-A1",
+    "expected": "實際來源與前後矩形渲染；具名驗收細節見不可降低的CANVAS_COMPARE_DESIGN.md",
+    "tests": [
+      "test_canvas_compare.CanvasCompareTests.test_mapping_inverse_pixel_units_and_exact_historical_crop",
+      "test_canvas_compare.CanvasCompareTests.test_full_rectangles_only_selected_text_style_color_and_unknown_before",
+      "test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation",
+      "test_canvas_compare.CanvasCompareTests.test_italic_actual_face_full_rectangles_and_affine_scene_alignment"
+    ],
+    "status": "PASS",
+    "scope": "Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題",
+    "contract_sha256": "aba3d03e10cc05b929ae687093b981b093d6c442042c2e134f54acd1019086fa"
+  },
+  {
+    "requirement_id": "CORE-036",
+    "acceptance_id": "CORE-036-A1",
+    "expected": "唯讀同步視圖、欄位定位與字型審核整合；具名驗收細節見不可降低的CANVAS_COMPARE_DESIGN.md",
+    "tests": [
+      "test_canvas_compare.CanvasCompareTests.test_synchronized_fit_pan_zoom_selection_and_readonly",
+      "test_canvas_compare.CanvasCompareTests.test_real_review_entry_worker_failure_retry_stale_and_no_writes",
+      "test_canvas_compare.CanvasCompareTests.test_live_file_and_clock_change_prevents_approval",
+      "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
+      "test_canvas_compare.CanvasCompareTests.test_resize_after_zoom_keeps_actual_center_and_per_field_selection"
+    ],
+    "status": "PASS",
+    "scope": "Linux／匿名合成來源；精確歷史crop映射與完整矩形唯讀對照，不代表原生AI字型識別、真實視覺一致或完整父題",
+    "contract_sha256": "321adb765933ca2e502ccdc93b959537029fd501f5223864f136748923a1b831"
+  },
+  {
+    "requirement_id": "CORE-037",
+    "acceptance_id": "CORE-037-A1",
+    "expected": "三向安全多選與混合共同屬性；OBJECT_TOOLS_DESIGN.md列出的全部具體條件與正式證據",
+    "tests": [
+      "test_object_tools.ObjectToolsTests.test_mixed_dirty_patch_owner_scope_and_logo_aspect",
+      "test_object_tools.ObjectToolsGuiTests.test_real_three_way_click_modifier_list_and_rubber_selection",
+      "test_object_tools.ObjectToolsGuiTests.test_mixed_dirty_only_panel_preserves_other_values_and_cancel",
+      "test_object_tools.ObjectToolsGuiTests.test_explicit_font_pin_style_patch_and_cross_owner_gui_gate",
+      "test_object_tools.ObjectToolsGuiTests.test_both_mode_entries_source_history_and_unsaved_editor_protection"
+    ],
+    "status": "PASS",
+    "scope": "Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質",
+    "contract_sha256": "a0c00e8b40668cdaf98854ec23387d5253d99929b6f560b63c9ae2171a73eda2"
+  },
+  {
+    "requirement_id": "CORE-038",
+    "acceptance_id": "CORE-038-A1",
+    "expected": "持久物件鎖定與全編輯途徑保護；OBJECT_TOOLS_DESIGN.md列出的全部具體條件與正式證據",
+    "tests": [
+      "test_object_tools.ObjectToolsTests.test_legacy_lock_policy_empty_invalid_and_noop_requests",
+      "test_object_tools.ObjectToolsTests.test_general_save_delete_and_font_transaction_cannot_bypass_lock",
+      "test_object_tools.ObjectToolsGuiTests.test_real_drag_only_candidate_group_and_locked_main_paths",
+      "test_object_tools.ObjectToolsGuiTests.test_late_failure_retry_publication_and_no_selection_do_not_write"
+    ],
+    "status": "PASS",
+    "scope": "Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質",
+    "contract_sha256": "142972e9288a6fce891ecb766f745ad3cef8340b172f0ddc5faede4142700b2a"
+  },
+  {
+    "requirement_id": "CORE-039",
+    "acceptance_id": "CORE-039-A1",
+    "expected": "精確幾何差異、原子套用與持久UndoRedo；OBJECT_TOOLS_DESIGN.md列出的全部具體條件與正式證據",
+    "tests": [
+      "test_object_tools.ObjectToolsTests.test_six_alignments_independent_math_and_protected_fields",
+      "test_object_tools.ObjectToolsTests.test_spacing_both_axes_stable_ties_and_group_displacement",
+      "test_object_tools.ObjectToolsTests.test_persistent_apply_undo_redo_reopen_and_unselected_identity",
+      "test_object_tools.ObjectToolsTests.test_cas_aba_publication_and_late_audit_atomic_rollback",
+      "test_object_tools.ObjectToolsTests.test_source_revision_visual_revalidation_and_transaction_rollback",
+      "test_object_tools.ObjectToolsGuiTests.test_actual_apply_history_reopen_undo_redo_and_stale_controls",
+      "test_object_tools.ObjectToolsGuiTests.test_legacy_undo_and_save_reject_external_aba_without_losing_manual_slots",
+      "test_object_tools.ObjectToolsGuiTests.test_main_manual_mutation_during_confirmation_preserved_and_refresh_retry"
+    ],
+    "status": "PASS",
+    "scope": "Linux／匿名；既有來源標記或保存草稿的進階物件編輯器整包，兩模式入口及既有編輯鎖定policy；未驗原生AI／完整父題／Windows／hardware／獨立品質",
+    "contract_sha256": "bb31b344fe93b0a8b32978e3715302bb3ad2baff9c6c365a6efaece72502f8f2"
+  },
+  {
+    "requirement_id": "CORE-040",
+    "acceptance_id": "CORE-040-A1",
+    "expected": "人物 ROOT 語意引用、搜尋及 viewport 安全檢視；THREE_PACKAGES_DESIGN 對應全部條件、真 GUI 与正式逐項證據",
+    "tests": [
+      "test_object_index.ObjectIndexTests.test_shared_reference_graph_same_ids_stable_and_unknown",
+      "test_object_index.ObjectIndexTests.test_search_intersection_locked_shared_problem_and_all_scope",
+      "test_object_index.ObjectIndexTests.test_ordered_derivative_no_native_or_inferred_mapping",
+      "test_object_index.ObjectIndexTests.test_changed_ambiguous_xml_limits_and_unknown_refuse",
+      "test_object_index.ObjectIndexGuiTests.test_actual_shared_tree_click_list_and_view_filter_selection",
+      "test_object_index.ObjectIndexGuiTests.test_viewport_no_db_or_gate_change_locked_hidden_still_blocked",
+      "test_object_index.ObjectIndexGuiTests.test_both_entries_real_source_unknown_and_derivative_selection",
+      "test_object_index.ObjectIndexGuiTests.test_hidden_locked_intended_member_blocks_visible_group_drag"
+    ],
+    "status": "PASS",
+    "scope": "THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核",
+    "contract_sha256": "a0bcd6123f1100514a709755842c07153ff1b69d3a7aeefbc9efff2904884995"
+  },
+  {
+    "requirement_id": "CORE-041",
+    "acceptance_id": "CORE-041-A1",
+    "expected": "衍生 SVG 結構唯讀索引與未知映射保護；THREE_PACKAGES_DESIGN 對應全部條件、真 GUI 与正式逐項證據",
+    "tests": [
+      "test_object_index.ObjectIndexTests.test_shared_reference_graph_same_ids_stable_and_unknown",
+      "test_object_index.ObjectIndexTests.test_search_intersection_locked_shared_problem_and_all_scope",
+      "test_object_index.ObjectIndexTests.test_ordered_derivative_no_native_or_inferred_mapping",
+      "test_object_index.ObjectIndexTests.test_changed_ambiguous_xml_limits_and_unknown_refuse",
+      "test_object_index.ObjectIndexGuiTests.test_actual_shared_tree_click_list_and_view_filter_selection",
+      "test_object_index.ObjectIndexGuiTests.test_viewport_no_db_or_gate_change_locked_hidden_still_blocked",
+      "test_object_index.ObjectIndexGuiTests.test_both_entries_real_source_unknown_and_derivative_selection",
+      "test_object_index.ObjectIndexGuiTests.test_hidden_locked_intended_member_blocks_visible_group_drag"
+    ],
+    "status": "PASS",
+    "scope": "THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核",
+    "contract_sha256": "658878efb602ff774405fd3d82f6edafe19637ba8124cb9aac6dc55d13f8a480"
+  },
+  {
+    "requirement_id": "CORE-042",
+    "acceptance_id": "CORE-042-A1",
+    "expected": "批次來源唯讀預檢、exact 去重及啟動確認；THREE_PACKAGES_DESIGN 對應全部條件、真 GUI 与正式逐項證據",
+    "tests": [
+      "test_batch_import.BatchImportTests.test_preflight_exact_duplicates_keep_paths_and_no_visual_guess",
+      "test_batch_import.BatchImportTests.test_health_reuse_recheck_and_no_duplicate_registration",
+      "test_batch_import.BatchImportTests.test_source_changed_before_and_during_conversion_never_committed",
+      "test_batch_import.BatchImportTests.test_cancel_resume_reopen_successes_preserved_once",
+      "test_batch_import.BatchImportTests.test_individual_failure_isolation_and_real_counts",
+      "test_batch_import.BatchImportTests.test_cas_owner_live_recovery_and_dead_session",
+      "test_batch_import.BatchImportTests.test_late_audit_rolls_back_source_and_result_then_can_recover",
+      "test_batch_import.BatchImportTests.test_other_live_session_cannot_take_over_between_items",
+      "test_batch_import.BatchImportTests.test_bounded_folder_files_cancel_page_and_final_cache_changed",
+      "test_batch_import.BatchImportGuiTests.test_real_preflight_confirmation_background_progress_and_source_locate",
+      "test_batch_import.BatchImportGuiTests.test_actual_cooperative_cancel_history_reopen_resume_and_close_guard",
+      "test_batch_import.BatchImportGuiTests.test_background_failure_isolated_and_preflight_failure_controls_recover",
+      "test_batch_import.BatchImportGuiTests.test_late_result_transaction_failure_stops_and_reenables_gui",
+      "test_batch_import.BatchImportGuiTests.test_page_change_invalidates_preview_and_worker_launch_failure_recovers",
+      "test_batch_import.BatchImportGuiTests.test_modal_preflight_scope_mutation_and_dirty_navigation_are_blocked"
+    ],
+    "status": "PASS",
+    "scope": "THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核",
+    "contract_sha256": "b0c4978c392ed97f4443e7f94d9480d79051926dc346d857654bc2589beee0e2"
+  },
+  {
+    "requirement_id": "CORE-043",
+    "acceptance_id": "CORE-043-A1",
+    "expected": "單 worker 持久匯入佇列、取消及續跑；THREE_PACKAGES_DESIGN 對應全部條件、真 GUI 与正式逐項證據",
+    "tests": [
+      "test_batch_import.BatchImportTests.test_preflight_exact_duplicates_keep_paths_and_no_visual_guess",
+      "test_batch_import.BatchImportTests.test_health_reuse_recheck_and_no_duplicate_registration",
+      "test_batch_import.BatchImportTests.test_source_changed_before_and_during_conversion_never_committed",
+      "test_batch_import.BatchImportTests.test_cancel_resume_reopen_successes_preserved_once",
+      "test_batch_import.BatchImportTests.test_individual_failure_isolation_and_real_counts",
+      "test_batch_import.BatchImportTests.test_cas_owner_live_recovery_and_dead_session",
+      "test_batch_import.BatchImportTests.test_late_audit_rolls_back_source_and_result_then_can_recover",
+      "test_batch_import.BatchImportTests.test_other_live_session_cannot_take_over_between_items",
+      "test_batch_import.BatchImportTests.test_bounded_folder_files_cancel_page_and_final_cache_changed",
+      "test_batch_import.BatchImportGuiTests.test_real_preflight_confirmation_background_progress_and_source_locate",
+      "test_batch_import.BatchImportGuiTests.test_actual_cooperative_cancel_history_reopen_resume_and_close_guard",
+      "test_batch_import.BatchImportGuiTests.test_background_failure_isolated_and_preflight_failure_controls_recover",
+      "test_batch_import.BatchImportGuiTests.test_late_result_transaction_failure_stops_and_reenables_gui",
+      "test_batch_import.BatchImportGuiTests.test_page_change_invalidates_preview_and_worker_launch_failure_recovers",
+      "test_batch_import.BatchImportGuiTests.test_modal_preflight_scope_mutation_and_dirty_navigation_are_blocked"
+    ],
+    "status": "PASS",
+    "scope": "THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核",
+    "contract_sha256": "8567e31b2776c584cc0d5a5eeb0b344081fd6615131e2c65153d154eb1720e18"
+  },
+  {
+    "requirement_id": "CORE-044",
+    "acceptance_id": "CORE-044-A1",
+    "expected": "可解釋例外排序、exact 影響及來源定位；THREE_PACKAGES_DESIGN 對應全部條件、真 GUI 与正式逐項證據",
+    "tests": [
+      "test_import_exceptions.ImportExceptionTests.test_exact_registered_dependencies_stable_ranking_and_filters",
+      "test_import_exceptions.ImportExceptionTests.test_exclude_restore_reopen_never_success_or_modify_source",
+      "test_import_exceptions.ImportExceptionTests.test_retry_changed_hash_selected_only_preserves_ready_and_attempt_history",
+      "test_import_exceptions.ImportExceptionTests.test_cas_invalid_scope_proof_mutation_and_running_batch_rejected",
+      "test_import_exceptions.ImportExceptionTests.test_action_late_audit_atomic_rollback_and_forged_plan_no_partial",
+      "test_import_exceptions.ImportExceptionTests.test_cross_batch_and_excluded_not_silently_retried",
+      "test_import_exceptions.ImportExceptionTests.test_integrity_corruption_blocks_exclusion_without_discarding_audit",
+      "test_import_exceptions.ImportExceptionGuiTests.test_real_search_sort_filter_and_exact_source_navigation",
+      "test_import_exceptions.ImportExceptionGuiTests.test_gui_exclude_decline_reason_restore_and_reopen_history",
+      "test_import_exceptions.ImportExceptionGuiTests.test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched",
+      "test_import_exceptions.ImportExceptionGuiTests.test_background_failure_and_late_apply_failure_controls_recover",
+      "test_import_exceptions.ImportExceptionGuiTests.test_stale_source_modal_selection_and_plan_mutation_rejected"
+    ],
+    "status": "PASS",
+    "scope": "THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核",
+    "contract_sha256": "33ef3dae074578e001e392cec6112a084db41a908e2f9bbf2d0317800765be36"
+  },
+  {
+    "requirement_id": "CORE-045",
+    "acceptance_id": "CORE-045-A1",
+    "expected": "例外單件重試、排除與恢復的 CAS 歷史；THREE_PACKAGES_DESIGN 對應全部條件、真 GUI 与正式逐項證據",
+    "tests": [
+      "test_import_exceptions.ImportExceptionTests.test_exact_registered_dependencies_stable_ranking_and_filters",
+      "test_import_exceptions.ImportExceptionTests.test_exclude_restore_reopen_never_success_or_modify_source",
+      "test_import_exceptions.ImportExceptionTests.test_retry_changed_hash_selected_only_preserves_ready_and_attempt_history",
+      "test_import_exceptions.ImportExceptionTests.test_cas_invalid_scope_proof_mutation_and_running_batch_rejected",
+      "test_import_exceptions.ImportExceptionTests.test_action_late_audit_atomic_rollback_and_forged_plan_no_partial",
+      "test_import_exceptions.ImportExceptionTests.test_cross_batch_and_excluded_not_silently_retried",
+      "test_import_exceptions.ImportExceptionTests.test_integrity_corruption_blocks_exclusion_without_discarding_audit",
+      "test_import_exceptions.ImportExceptionGuiTests.test_real_search_sort_filter_and_exact_source_navigation",
+      "test_import_exceptions.ImportExceptionGuiTests.test_gui_exclude_decline_reason_restore_and_reopen_history",
+      "test_import_exceptions.ImportExceptionGuiTests.test_actual_changed_hash_preview_confirm_retry_only_selected_ready_untouched",
+      "test_import_exceptions.ImportExceptionGuiTests.test_background_failure_and_late_apply_failure_controls_recover",
+      "test_import_exceptions.ImportExceptionGuiTests.test_stale_source_modal_selection_and_plan_mutation_rejected"
+    ],
+    "status": "PASS",
+    "scope": "THREE_PACKAGES_DESIGN 的完整具體包；Linux／匿名合成；不等於全部父題／原生AI／自動辨識學習／Windows／hardware／獨立覆核",
+    "contract_sha256": "25bbe325ce497fdd9012b17d45f7cb34d83d48a9c56e4151224e151374fac3e1"
+  },
+  {
+    "requirement_id": "CORE-046",
+    "acceptance_id": "CORE-046-A1",
+    "expected": "標記完整性與有界幾何語意診斷；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_training_quality.TrainingQualityTests.test_known_semantics_do_not_invent_optional_email_or_claim_visual",
+      "test_training_quality.TrainingQualityTests.test_duplicate_identity_mapping_bounds_and_bad_schema_explained",
+      "test_training_quality.TrainingQualityTests.test_logo_containment_is_uncertain_not_automatic_deletion",
+      "test_training_quality.TrainingQualityTests.test_invalid_dimensions_budget_owner_and_missing_person_name",
+      "test_training_quality.TrainingQualityTests.test_stable_sort_independent_of_slot_order_and_source_bounds",
+      "test_training_quality.TrainingQualityTests.test_large_overlap_set_is_bounded_and_invalid_coordinate_not_crash",
+      "test_training_quality.TrainingQualityGuiTests.test_actual_readonly_search_filter_navigation_and_stale_recovery",
+      "test_training_quality.TrainingQualityGuiTests.test_dirty_main_edit_and_backend_failure_preserve_content",
+      "test_training_quality.TrainingQualityGuiTests.test_unapplied_coordinate_panel_is_not_saved_by_navigation",
+      "test_training_quality.TrainingQualityGuiTests.test_paginated_report_and_source_entry_actual_dialog"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包1的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "2c64964eb6bff30d427c47b614bd7dc6eeec40d990d73a2f0b82d7460e594a7c"
+  },
+  {
+    "requirement_id": "CORE-047",
+    "acceptance_id": "CORE-047-A1",
+    "expected": "診斷搜尋排序與精確來源框定位；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_training_quality.TrainingQualityTests.test_known_semantics_do_not_invent_optional_email_or_claim_visual",
+      "test_training_quality.TrainingQualityTests.test_duplicate_identity_mapping_bounds_and_bad_schema_explained",
+      "test_training_quality.TrainingQualityTests.test_logo_containment_is_uncertain_not_automatic_deletion",
+      "test_training_quality.TrainingQualityTests.test_invalid_dimensions_budget_owner_and_missing_person_name",
+      "test_training_quality.TrainingQualityTests.test_stable_sort_independent_of_slot_order_and_source_bounds",
+      "test_training_quality.TrainingQualityTests.test_large_overlap_set_is_bounded_and_invalid_coordinate_not_crash",
+      "test_training_quality.TrainingQualityGuiTests.test_actual_readonly_search_filter_navigation_and_stale_recovery",
+      "test_training_quality.TrainingQualityGuiTests.test_dirty_main_edit_and_backend_failure_preserve_content",
+      "test_training_quality.TrainingQualityGuiTests.test_unapplied_coordinate_panel_is_not_saved_by_navigation",
+      "test_training_quality.TrainingQualityGuiTests.test_paginated_report_and_source_entry_actual_dialog"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包1的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "936454d3b22ab2626f0e572ec925b0991d92fa24d7b7c1b47249627c90712bd4"
+  },
+  {
+    "requirement_id": "CORE-048",
+    "acceptance_id": "CORE-048-A1",
+    "expected": "人工來源觀察與作品事實確認；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_training_facts.FactsGuiTests.test_actual_add_confirm_cancel_revoke_and_entry",
+      "test_training_facts.FactsGuiTests.test_stale_scope_during_confirmation_and_failed_worker_controls_recover",
+      "test_training_facts.FactsTests.test_confirmation_subset_and_unapproved_scope_are_separate",
+      "test_training_facts.FactsTests.test_full_manual_text_unknown_native_and_reopen_history",
+      "test_training_facts.FactsTests.test_invalid_empty_duplicate_slot_region_and_prediction_fail_closed",
+      "test_training_facts.FactsTests.test_late_audit_failure_atomic_and_revocation_monotonic",
+      "test_training_facts.FactsTests.test_source_changed_after_proof_and_record_CAS_rejected",
+      "test_training_facts.FactsTests.test_work_and_source_change_invalidate_confirmation"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包2的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "be625f77310efb10f9e950562a78357e3ef4c3af6b6380e64a0bc0503e0e7bd6"
+  },
+  {
+    "requirement_id": "CORE-049",
+    "acceptance_id": "CORE-049-A1",
+    "expected": "事實revision差異與確認撤銷；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_training_facts.FactsGuiTests.test_actual_add_confirm_cancel_revoke_and_entry",
+      "test_training_facts.FactsGuiTests.test_stale_scope_during_confirmation_and_failed_worker_controls_recover",
+      "test_training_facts.FactsTests.test_confirmation_subset_and_unapproved_scope_are_separate",
+      "test_training_facts.FactsTests.test_full_manual_text_unknown_native_and_reopen_history",
+      "test_training_facts.FactsTests.test_invalid_empty_duplicate_slot_region_and_prediction_fail_closed",
+      "test_training_facts.FactsTests.test_late_audit_failure_atomic_and_revocation_monotonic",
+      "test_training_facts.FactsTests.test_source_changed_after_proof_and_record_CAS_rejected",
+      "test_training_facts.FactsTests.test_work_and_source_change_invalidate_confirmation"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包2的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "3db35ed56c37b5bb0f2ed3fb15437f5a9748131b0848528f3b682ed9ccb4f45a"
+  },
+  {
+    "requirement_id": "CORE-050",
+    "acceptance_id": "CORE-050-A1",
+    "expected": "單作品雜訊排除與精確作用範圍；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_noise_authoring.NoiseAuthorGuiTests.test_actual_local_confirm_cancel_and_rule_authoring",
+      "test_noise_authoring.NoiseAuthorGuiTests.test_actual_stale_wizard_and_entry_recover_without_loss",
+      "test_noise_authoring.NoiseAuthorTests.test_full_unicode_normalization_explicit_zone_and_counterexamples",
+      "test_noise_authoring.NoiseAuthorTests.test_local_and_remember_have_different_effects_preserve_source_and_slots",
+      "test_noise_authoring.NoiseAuthorTests.test_local_undo_retains_history_and_does_not_activate_pending_rule",
+      "test_noise_authoring.NoiseAuthorTests.test_real_fields_logo_unknown_or_missing_confirmation_cannot_be_excluded",
+      "test_noise_authoring.NoiseAuthorTests.test_rule_plus_local_late_audit_failure_rolls_back_both",
+      "test_noise_authoring.NoiseAuthorTests.test_stale_preview_source_and_local_revision_fail_closed"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包3的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "1be3de3c64d952f5169dc601692303be041ee117ac77c15e23f9e3e464a4a60d"
+  },
+  {
+    "requirement_id": "CORE-051",
+    "acceptance_id": "CORE-051-A1",
+    "expected": "有正反例的可重用雜訊候選；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_noise_authoring.NoiseAuthorGuiTests.test_actual_local_confirm_cancel_and_rule_authoring",
+      "test_noise_authoring.NoiseAuthorGuiTests.test_actual_stale_wizard_and_entry_recover_without_loss",
+      "test_noise_authoring.NoiseAuthorTests.test_full_unicode_normalization_explicit_zone_and_counterexamples",
+      "test_noise_authoring.NoiseAuthorTests.test_local_and_remember_have_different_effects_preserve_source_and_slots",
+      "test_noise_authoring.NoiseAuthorTests.test_local_undo_retains_history_and_does_not_activate_pending_rule",
+      "test_noise_authoring.NoiseAuthorTests.test_real_fields_logo_unknown_or_missing_confirmation_cannot_be_excluded",
+      "test_noise_authoring.NoiseAuthorTests.test_rule_plus_local_late_audit_failure_rolls_back_both",
+      "test_noise_authoring.NoiseAuthorTests.test_stale_preview_source_and_local_revision_fail_closed"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包3的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "5b561dc3b860faa4d09acf93b1606ee90f8292e15300eaead485bd80d79e0588"
+  },
+  {
+    "requirement_id": "CORE-052",
+    "acceptance_id": "CORE-052-A1",
+    "expected": "可解釋規則分組與審核詳情；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_rule_review.RuleReviewGuiTests.test_actual_filter_details_cancel_approve_and_history",
+      "test_rule_review.RuleReviewGuiTests.test_stale_confirm_and_backend_failure_recover_controls",
+      "test_rule_review.RuleReviewTests.test_batch_late_audit_failure_rolls_back_all_and_CAS",
+      "test_rule_review.RuleReviewTests.test_cross_scope_and_high_batch_cannot_bypass",
+      "test_rule_review.RuleReviewTests.test_known_impact_low_scope_and_explicit_approval_immutable_history",
+      "test_rule_review.RuleReviewTests.test_reject_defer_and_reopen_preserve_current_versions",
+      "test_rule_review.RuleReviewTests.test_same_scope_low_batch_and_high_requires_individual_details",
+      "test_rule_review.RuleReviewTests.test_stale_source_missing_evidence_and_bounded_impact_block_approval"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包4的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "cf1070eb7d6ed4ce74206c903d69e891214509fa9de582f2ef0315333accb1f4"
+  },
+  {
+    "requirement_id": "CORE-053",
+    "acceptance_id": "CORE-053-A1",
+    "expected": "低風險批准／逐條詳審與版本CAS；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_rule_review.RuleReviewGuiTests.test_actual_filter_details_cancel_approve_and_history",
+      "test_rule_review.RuleReviewGuiTests.test_stale_confirm_and_backend_failure_recover_controls",
+      "test_rule_review.RuleReviewTests.test_batch_late_audit_failure_rolls_back_all_and_CAS",
+      "test_rule_review.RuleReviewTests.test_cross_scope_and_high_batch_cannot_bypass",
+      "test_rule_review.RuleReviewTests.test_known_impact_low_scope_and_explicit_approval_immutable_history",
+      "test_rule_review.RuleReviewTests.test_reject_defer_and_reopen_preserve_current_versions",
+      "test_rule_review.RuleReviewTests.test_same_scope_low_batch_and_high_requires_individual_details",
+      "test_rule_review.RuleReviewTests.test_stale_source_missing_evidence_and_bounded_impact_block_approval"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包4的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "3f77161dafad7dbdabdf693576a0f13f063a5626d3158d3f0d4dfe0ef1937812"
+  },
+  {
+    "requirement_id": "CORE-054",
+    "acceptance_id": "CORE-054-A1",
+    "expected": "核准後後續精確命中自動排除；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_noise_hits.NoiseHitsGuiTests.test_actual_current_unknown_counts_and_failed_refresh_controls",
+      "test_noise_hits.NoiseHitsGuiTests.test_actual_future_confirm_one_fact_prompt_no_rule_reapproval_and_hits_navigation",
+      "test_noise_hits.NoiseHitsTests.test_exact_literal_type_region_real_fields_logo_unknown_never_broad_exclude",
+      "test_noise_hits.NoiseHitsTests.test_idempotent_refresh_and_late_hit_audit_roll_back_fact_confirmation",
+      "test_noise_hits.NoiseHitsTests.test_multiple_active_matching_rules_conflict_keeps_candidate",
+      "test_noise_hits.NoiseHitsTests.test_once_approved_future_matches_automatically_exclude_and_reopen",
+      "test_noise_hits.NoiseHitsTests.test_source_changed_or_support_revoked_keeps_and_stale_trace_is_not_current",
+      "test_noise_hits.NoiseHitsTests.test_unlinked_annotation_overlapping_confirmed_name_cannot_evade_protection"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包5的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "73ed40922a13b96210f80dc6e20dbfd03abd89eb48a982f5977094354d8a89ae"
+  },
+  {
+    "requirement_id": "CORE-055",
+    "acceptance_id": "CORE-055-A1",
+    "expected": "持久命中追溯與疑義保留；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_noise_hits.NoiseHitsGuiTests.test_actual_current_unknown_counts_and_failed_refresh_controls",
+      "test_noise_hits.NoiseHitsGuiTests.test_actual_future_confirm_one_fact_prompt_no_rule_reapproval_and_hits_navigation",
+      "test_noise_hits.NoiseHitsTests.test_exact_literal_type_region_real_fields_logo_unknown_never_broad_exclude",
+      "test_noise_hits.NoiseHitsTests.test_idempotent_refresh_and_late_hit_audit_roll_back_fact_confirmation",
+      "test_noise_hits.NoiseHitsTests.test_multiple_active_matching_rules_conflict_keeps_candidate",
+      "test_noise_hits.NoiseHitsTests.test_once_approved_future_matches_automatically_exclude_and_reopen",
+      "test_noise_hits.NoiseHitsTests.test_source_changed_or_support_revoked_keeps_and_stale_trace_is_not_current",
+      "test_noise_hits.NoiseHitsTests.test_unlinked_annotation_overlapping_confirmed_name_cannot_evade_protection"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包5的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "59e2b56d152d916213498d8a5e52d19c3490b7509f561db7271e3a970c696a17"
+  },
+  {
+    "requirement_id": "CORE-056",
+    "acceptance_id": "CORE-056-A1",
+    "expected": "局部誤判恢复與可重用白名單；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_noise_recovery.NoiseRecoveryGuiTests.test_actual_changed_candidate_preview_and_cancel_source_epoch_stale",
+      "test_noise_recovery.NoiseRecoveryGuiTests.test_actual_keep_whitelist_approve_and_disabled_rollback_controls",
+      "test_noise_recovery.NoiseRecoveryTests.test_change_from_current_manual_source_has_exact_preview_and_pending_activation",
+      "test_noise_recovery.NoiseRecoveryTests.test_disable_rollback_new_candidate_and_reapproval_keep_history_monotonic",
+      "test_noise_recovery.NoiseRecoveryTests.test_exact_sample_dependency_invalidation_no_other_sample_or_source_changed",
+      "test_noise_recovery.NoiseRecoveryTests.test_local_keep_and_pending_whitelist_are_different_from_global_approved_keep",
+      "test_noise_recovery.NoiseRecoveryTests.test_stale_plan_tampered_after_and_late_audit_rollback_do_not_partial_apply",
+      "test_noise_recovery.NoiseRecoveryTests.test_whitelist_requires_noncontradictory_real_refs_and_source_freshness"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包6的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "86a8d98103436df852c67c92f7dcd66b0a8bd46900aaa090822699c6ce588f61"
+  },
+  {
+    "requirement_id": "CORE-057",
+    "acceptance_id": "CORE-057-A1",
+    "expected": "規則停用回滾與exact依賴影響；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_noise_recovery.NoiseRecoveryGuiTests.test_actual_changed_candidate_preview_and_cancel_source_epoch_stale",
+      "test_noise_recovery.NoiseRecoveryGuiTests.test_actual_keep_whitelist_approve_and_disabled_rollback_controls",
+      "test_noise_recovery.NoiseRecoveryTests.test_change_from_current_manual_source_has_exact_preview_and_pending_activation",
+      "test_noise_recovery.NoiseRecoveryTests.test_disable_rollback_new_candidate_and_reapproval_keep_history_monotonic",
+      "test_noise_recovery.NoiseRecoveryTests.test_exact_sample_dependency_invalidation_no_other_sample_or_source_changed",
+      "test_noise_recovery.NoiseRecoveryTests.test_local_keep_and_pending_whitelist_are_different_from_global_approved_keep",
+      "test_noise_recovery.NoiseRecoveryTests.test_stale_plan_tampered_after_and_late_audit_rollback_do_not_partial_apply",
+      "test_noise_recovery.NoiseRecoveryTests.test_whitelist_requires_noncontradictory_real_refs_and_source_freshness"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包6的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "38565cf2ba0b2f2262bc4a72421171a58f6699ad48b4bec34900b9a9a33f5514"
+  },
+  {
+    "requirement_id": "CORE-058",
+    "acceptance_id": "CORE-058-A1",
+    "expected": "來源與用途核對的可信樣本准入；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_trusted_samples.TrustedSamplesGuiTests.test_actual_failed_worker_and_scope_changed_during_confirmation_controls_recover",
+      "test_trusted_samples.TrustedSamplesGuiTests.test_actual_preview_cancel_admit_and_revoke_without_training",
+      "test_trusted_samples.TrustedSamplesTests.test_admission_preserves_labels_does_not_train_and_reopen_positive_negative_separation",
+      "test_trusted_samples.TrustedSamplesTests.test_current_admission_dedup_stale_scope_and_late_audit_rollback",
+      "test_trusted_samples.TrustedSamplesTests.test_quarantine_revoke_exact_usage_impact_preserves_history_and_templates",
+      "test_trusted_samples.TrustedSamplesTests.test_rights_visual_unknown_missing_coverage_and_unapproved_admission_blocked",
+      "test_trusted_samples.TrustedSamplesTests.test_source_work_facts_and_cache_changes_invalidate_approved_sample"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包7的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "556386b05aef1e7bffeb637e3c3292dd126c4612bac497dd169951ec86cc5f62"
+  },
+  {
+    "requirement_id": "CORE-059",
+    "acceptance_id": "CORE-059-A1",
+    "expected": "污染隔離撤銷與exact使用追溯；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_trusted_samples.TrustedSamplesGuiTests.test_actual_failed_worker_and_scope_changed_during_confirmation_controls_recover",
+      "test_trusted_samples.TrustedSamplesGuiTests.test_actual_preview_cancel_admit_and_revoke_without_training",
+      "test_trusted_samples.TrustedSamplesTests.test_admission_preserves_labels_does_not_train_and_reopen_positive_negative_separation",
+      "test_trusted_samples.TrustedSamplesTests.test_current_admission_dedup_stale_scope_and_late_audit_rollback",
+      "test_trusted_samples.TrustedSamplesTests.test_quarantine_revoke_exact_usage_impact_preserves_history_and_templates",
+      "test_trusted_samples.TrustedSamplesTests.test_rights_visual_unknown_missing_coverage_and_unapproved_admission_blocked",
+      "test_trusted_samples.TrustedSamplesTests.test_source_work_facts_and_cache_changes_invalidate_approved_sample"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包7的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "dccc8d6ed03cf27831d4956ccb8b7aa711ce3f2455fb070c325b17a458a8f12f"
+  },
+  {
+    "requirement_id": "CORE-060",
+    "acceptance_id": "CORE-060-A1",
+    "expected": "exact資料集manifest與同源角色隔離；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_dataset_learning.DatasetLearningGuiTests.test_actual_changed_scope_confirmation_and_failed_source_controls_recover",
+      "test_dataset_learning.DatasetLearningGuiTests.test_actual_manifest_cancel_create_explicit_learning_draft_and_usage",
+      "test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor",
+      "test_dataset_learning.DatasetLearningTests.test_false_source_proof_cannot_confirm_modified_source",
+      "test_dataset_learning.DatasetLearningTests.test_global_whole_source_role_lock_holdout_and_unassigned_not_learned",
+      "test_dataset_learning.DatasetLearningTests.test_late_use_audit_failure_atomic_template_clock_usage_rollback",
+      "test_dataset_learning.DatasetLearningTests.test_manifest_reproducible_reopen_and_actual_geometry_draft_no_overwrite",
+      "test_dataset_learning.DatasetLearningTests.test_revocation_blocks_new_learning_draft_publish_and_existing_reference",
+      "test_dataset_learning.DatasetLearningTests.test_same_content_alias_identity_exact_dedup_and_group_split_prevented"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包8的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "ed400da54018faac669155e9b22881fdf23a5c82dde9ce92e8e9e86a55ebd003"
+  },
+  {
+    "requirement_id": "CORE-061",
+    "acceptance_id": "CORE-061-A1",
+    "expected": "可信TRAIN樣本幾何草稿學習；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_dataset_learning.DatasetLearningGuiTests.test_actual_changed_scope_confirmation_and_failed_source_controls_recover",
+      "test_dataset_learning.DatasetLearningGuiTests.test_actual_manifest_cancel_create_explicit_learning_draft_and_usage",
+      "test_dataset_learning.DatasetLearningGuiTests.test_learning_result_does_not_save_or_reset_unrelated_dirty_editor",
+      "test_dataset_learning.DatasetLearningTests.test_false_source_proof_cannot_confirm_modified_source",
+      "test_dataset_learning.DatasetLearningTests.test_global_whole_source_role_lock_holdout_and_unassigned_not_learned",
+      "test_dataset_learning.DatasetLearningTests.test_late_use_audit_failure_atomic_template_clock_usage_rollback",
+      "test_dataset_learning.DatasetLearningTests.test_manifest_reproducible_reopen_and_actual_geometry_draft_no_overwrite",
+      "test_dataset_learning.DatasetLearningTests.test_revocation_blocks_new_learning_draft_publish_and_existing_reference",
+      "test_dataset_learning.DatasetLearningTests.test_same_content_alias_identity_exact_dedup_and_group_split_prevented"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包8的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "25ca9f739907999ea70a0686c8569fc8f1de12696394b4ffb2a66f1fc5a60e93"
+  },
+  {
+    "requirement_id": "CORE-062",
+    "acceptance_id": "CORE-062-A1",
+    "expected": "審核覆蓋分母與分頁定位；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_quality_coverage.CoverageGuiTests.test_actual_drilldown_source_locate_readonly_and_stale_guard",
+      "test_quality_coverage.CoverageGuiTests.test_actual_failed_statistics_recovery_and_neutral_unknown_detail",
+      "test_quality_coverage.CoverageTests.test_bounded_scan_no_images_readonly_reproducible_and_bad_limit",
+      "test_quality_coverage.CoverageTests.test_empty_inventory_neutral_no_quality_or_supplementation",
+      "test_quality_coverage.CoverageTests.test_file_missing_and_native_logo_unknown_are_not_false_quality_pass",
+      "test_quality_coverage.CoverageTests.test_holdout_pending_roles_and_revocation_update_current_counts_keep_saved_history",
+      "test_quality_coverage.CoverageTests.test_source_without_artwork_aliases_denominators_and_overlapping_facets"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包9的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "49d7c7801046d9bdbb3b683e3cc03bdd3c1060e44dc7e68d6ee4469627cc7de7"
+  },
+  {
+    "requirement_id": "CORE-063",
+    "acceptance_id": "CORE-063-A1",
+    "expected": "樣本分布／未知分類與中性缺口提示；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_quality_coverage.CoverageGuiTests.test_actual_drilldown_source_locate_readonly_and_stale_guard",
+      "test_quality_coverage.CoverageGuiTests.test_actual_failed_statistics_recovery_and_neutral_unknown_detail",
+      "test_quality_coverage.CoverageTests.test_bounded_scan_no_images_readonly_reproducible_and_bad_limit",
+      "test_quality_coverage.CoverageTests.test_empty_inventory_neutral_no_quality_or_supplementation",
+      "test_quality_coverage.CoverageTests.test_file_missing_and_native_logo_unknown_are_not_false_quality_pass",
+      "test_quality_coverage.CoverageTests.test_holdout_pending_roles_and_revocation_update_current_counts_keep_saved_history",
+      "test_quality_coverage.CoverageTests.test_source_without_artwork_aliases_denominators_and_overlapping_facets"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包9的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "197b372c472823e2227908c9ebc7d3033174c1d4fb1c68af96aee8779a061e2f"
+  },
+  {
+    "requirement_id": "CORE-064",
+    "acceptance_id": "CORE-064-A1",
+    "expected": "受控幾何學習單worker與持久結果；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_training_pipeline.PipelineGuiTests.test_actual_cancel_during_worker_then_resume_without_duplicate_success",
+      "test_training_pipeline.PipelineGuiTests.test_actual_preflight_confirm_worker_progress_and_controls_restored",
+      "test_training_pipeline.PipelineGuiTests.test_actual_stale_confirmation_worker_error_and_close_guard_preserve_results",
+      "test_training_pipeline.PipelineGuiTests.test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume",
+      "test_training_pipeline.PipelineTests.test_cooperative_cancel_after_actual_item_then_reopen_resume_no_success_rerun",
+      "test_training_pipeline.PipelineTests.test_dead_owner_is_interrupted_manual_resume_only_preserves_scope",
+      "test_training_pipeline.PipelineTests.test_existing_geometric_result_reused_no_duplicate_output_or_use",
+      "test_training_pipeline.PipelineTests.test_holdout_revoke_wrong_role_and_caller_after_do_not_train",
+      "test_training_pipeline.PipelineTests.test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system",
+      "test_training_pipeline.PipelineTests.test_live_owner_cross_window_double_claim_CAS_and_stale_worker_rejected",
+      "test_training_pipeline.PipelineTests.test_real_worker_connection_durable_success_exact_use_source_unchanged",
+      "test_training_pipeline.PipelineTests.test_source_failure_isolated_other_valid_item_completes_and_failed_retry_explicit"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包10的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "72a8dfeb1b05ff9d1c82bcb7e3fa52fbc7f5c8df73eecbf4ed8d2baa6d53a73b"
+  },
+  {
+    "requirement_id": "CORE-065",
+    "acceptance_id": "CORE-065-A1",
+    "expected": "合作取消／中斷恢复與精確續跑；TEN_PACKAGES_DESIGN對應全部條件、真Qt與版本／失败恢復、正式逐項PASS",
+    "tests": [
+      "test_training_pipeline.PipelineGuiTests.test_actual_cancel_during_worker_then_resume_without_duplicate_success",
+      "test_training_pipeline.PipelineGuiTests.test_actual_preflight_confirm_worker_progress_and_controls_restored",
+      "test_training_pipeline.PipelineGuiTests.test_actual_stale_confirmation_worker_error_and_close_guard_preserve_results",
+      "test_training_pipeline.PipelineGuiTests.test_actual_worker_start_failure_is_interrupted_and_controls_recover_for_resume",
+      "test_training_pipeline.PipelineTests.test_cooperative_cancel_after_actual_item_then_reopen_resume_no_success_rerun",
+      "test_training_pipeline.PipelineTests.test_dead_owner_is_interrupted_manual_resume_only_preserves_scope",
+      "test_training_pipeline.PipelineTests.test_existing_geometric_result_reused_no_duplicate_output_or_use",
+      "test_training_pipeline.PipelineTests.test_holdout_revoke_wrong_role_and_caller_after_do_not_train",
+      "test_training_pipeline.PipelineTests.test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system",
+      "test_training_pipeline.PipelineTests.test_live_owner_cross_window_double_claim_CAS_and_stale_worker_rejected",
+      "test_training_pipeline.PipelineTests.test_real_worker_connection_durable_success_exact_use_source_unchanged",
+      "test_training_pipeline.PipelineTests.test_source_failure_isolated_other_valid_item_completes_and_failed_retry_explicit"
+    ],
+    "status": "PASS",
+    "scope": "TEN_PACKAGES_DESIGN 包10的完整具體流程；Linux／匿名合成；原父題、OCR／原生AI、深度模型、Windows／hardware／独立品質非本子項完成宣告",
+    "contract_sha256": "e2b9a988ba8575e45ae449b0adf731c7957fd457835b3b7143c1c4d6ea99cc43"
+  },
+  {
+    "requirement_id": "CORE-066",
+    "acceptance_id": "CORE-066-A1",
+    "expected": "逐欄輸入問題、整體待驗狀態與exact儲存格定位；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
+      "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+      "test_seventy_ui.SeventyUiTests.test_batch_partial_failure_idempotency_old_history_undo_and_protected_owner",
+      "test_seventy_ui.SeventyUiTests.test_candidate_exact_local_geometry_isolation_fixed_font_template_readonly_stale",
+      "test_seventy_ui.SeventyUiTests.test_diagnostic_reuse_same_data_no_report_no_gate_mutation_and_convergence_75",
+      "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+      "test_seventy_ui.SeventyUiTests.test_logo_tree_normal_size_isolation_and_reference_does_not_create_approval",
+      "test_seventy_ui.SeventyUiTests.test_object_context_pinned_text_disabled_on_logo_and_empty_selection_clears_values",
+      "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
+      "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+      "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
+    ],
+    "status": "PASS",
+    "scope": "逐欄輸入問題、整體待驗狀態與exact儲存格定位；未宣稱估計為無解，正式輸出仍既有Gate；Linux匿名合成SELF範圍",
+    "contract_sha256": "44c5dcc7d39f5d3c964198e71ad21e2292ea6f92767ff5311600b31d615f0e7e"
+  },
+  {
+    "requirement_id": "CORE-067",
+    "acceptance_id": "CORE-067-A1",
+    "expected": "依實體尺寸樹隔離既有核准Logo及唯讀跨尺寸參考區；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
+      "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+      "test_seventy_ui.SeventyUiTests.test_batch_partial_failure_idempotency_old_history_undo_and_protected_owner",
+      "test_seventy_ui.SeventyUiTests.test_candidate_exact_local_geometry_isolation_fixed_font_template_readonly_stale",
+      "test_seventy_ui.SeventyUiTests.test_diagnostic_reuse_same_data_no_report_no_gate_mutation_and_convergence_75",
+      "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+      "test_seventy_ui.SeventyUiTests.test_logo_tree_normal_size_isolation_and_reference_does_not_create_approval",
+      "test_seventy_ui.SeventyUiTests.test_object_context_pinned_text_disabled_on_logo_and_empty_selection_clears_values",
+      "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
+      "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+      "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
+    ],
+    "status": "PASS",
+    "scope": "依實體尺寸樹隔離既有核准Logo及唯讀跨尺寸參考區；新尺寸參考不入庫／不核准；Linux匿名合成SELF範圍",
+    "contract_sha256": "83b024722f691b4de199c60a6796cb02fe94ed437a4a3382dd1a485f71c6b9aa"
+  },
+  {
+    "requirement_id": "CORE-068",
+    "acceptance_id": "CORE-068-A1",
+    "expected": "單一Library內人工客戶建檔、stable人物與欄位ID、前導零及確切模板關聯；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+      "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+      "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+      "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+      "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+      "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+      "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+      "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+    ],
+    "status": "PASS",
+    "scope": "單一Library內人工客戶建檔、stable人物與欄位ID、前導零及確切模板關聯；AI擷取／安全批次建檔仍後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "8f60c3959d590fd09088464cbdbb8c173cf2737542bdbc85edb32210a67eeecd"
+  },
+  {
+    "requirement_id": "CORE-069",
+    "acceptance_id": "CORE-069-A1",
+    "expected": "受控多條件搜尋、身份確認後引用確切版本預填當次資料；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+      "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+      "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+      "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+      "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+      "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+      "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+      "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+    ],
+    "status": "PASS",
+    "scope": "受控多條件搜尋、身份確認後引用確切版本預填當次資料；縮圖比較及完整重訂擴充仍後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "78b62063f4abe7b4c715803e6363da4bdceda6b3a77f42f843b3df5eb3a464ee"
+  },
+  {
+    "requirement_id": "CORE-070",
+    "acceptance_id": "CORE-070-A1",
+    "expected": "逐欄勾選差異確認與客戶revision CAS原子回寫；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+      "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+      "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+      "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+      "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+      "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+      "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+      "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+    ],
+    "status": "PASS",
+    "scope": "逐欄勾選差異確認與客戶revision CAS原子回寫；共享公司及跨實體回復後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "b2a12ce849ca047d35e584b6b7eed68276cc129c5f6df38a94c1dbbfd6ba7031"
+  },
+  {
+    "requirement_id": "CORE-071",
+    "acceptance_id": "CORE-071-A1",
+    "expected": "疑似重複只讀雙方比對與線索，不自動合併；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+      "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+      "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+      "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+      "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+      "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+      "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+      "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+    ],
+    "status": "PASS",
+    "scope": "疑似重複只讀雙方比對與線索，不自動合併；合併／別名／拆分尚未實作；Linux匿名合成SELF範圍",
+    "contract_sha256": "1c69f203a855bdf2ec6d99f0bc2a4ac18de8f80a59aa7039bed5224f12e01733"
+  },
+  {
+    "requirement_id": "CORE-072",
+    "acceptance_id": "CORE-072-A1",
+    "expected": "一致SQLite快照、驗證加密檔與新目錄隔離還原、外部資產明示缺失；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+      "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+      "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+      "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+      "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+      "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+      "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+      "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+    ],
+    "status": "PASS",
+    "scope": "一致SQLite快照、驗證加密檔與新目錄隔離還原、外部資產明示缺失；排程／完整資產可攜備份／活躍庫合併後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "deee5689644a51d3a46db201d5284cc912ed3a7cc4ab28f323b954cd1bd39201"
+  },
+  {
+    "requirement_id": "CORE-073",
+    "acceptance_id": "CORE-073-A1",
+    "expected": "明確根目錄人工重掃、雙次穩定內容核對、增量分類與只讀來源；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+      "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
+      "test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe",
+      "test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners",
+      "test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate",
+      "test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope",
+      "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+      "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
+      "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
+    ],
+    "status": "PASS",
+    "scope": "明確根目錄人工重掃、雙次穩定內容核對、增量分類與只讀來源；事件自動監看／自動增量匯入後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "994d15ebca3f96f299139a4b8304fb7641a182763d84232ae32a5faebc0dfee5"
+  },
+  {
+    "requirement_id": "CORE-074",
+    "acceptance_id": "CORE-074-A1",
+    "expected": "固定HOLDOUT資料集版本的分類預測與人工真值比對、混淆計數及不足Gate；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+      "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
+      "test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe",
+      "test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners",
+      "test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate",
+      "test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope",
+      "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+      "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
+      "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
+    ],
+    "status": "PASS",
+    "scope": "固定HOLDOUT資料集版本的分類預測與人工真值比對、混淆計數及不足Gate；原生AI模型／正式門檻與品質合格發布後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "893bccececcd5a013720e841489b9df2a04dfa6d9cb5bd894eba901db227b965"
+  },
+  {
+    "requirement_id": "CORE-075",
+    "acceptance_id": "CORE-075-A1",
+    "expected": "exact失敗評估建立隔離根因修復待辦、候選版本對照與無證據回退阻擋；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+      "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
+      "test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe",
+      "test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners",
+      "test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate",
+      "test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope",
+      "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+      "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
+      "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
+    ],
+    "status": "PASS",
+    "scope": "exact失敗評估建立隔離根因修復待辦、候選版本對照與無證據回退阻擋；自動模型修復／訓練／部署後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "8c4af7ade307ce4d82828cb399f0524aacb1debf517e1da42e01f0b891d6626f"
+  },
+  {
+    "requirement_id": "CORE-076",
+    "acceptance_id": "CORE-076-A1",
+    "expected": "當次候選逐模板單worker真進度、邊界暫停／續跑／取消及generation過期防護；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
+      "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+      "test_seventy_ui.SeventyUiTests.test_batch_partial_failure_idempotency_old_history_undo_and_protected_owner",
+      "test_seventy_ui.SeventyUiTests.test_candidate_exact_local_geometry_isolation_fixed_font_template_readonly_stale",
+      "test_seventy_ui.SeventyUiTests.test_diagnostic_reuse_same_data_no_report_no_gate_mutation_and_convergence_75",
+      "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+      "test_seventy_ui.SeventyUiTests.test_logo_tree_normal_size_isolation_and_reference_does_not_create_approval",
+      "test_seventy_ui.SeventyUiTests.test_object_context_pinned_text_disabled_on_logo_and_empty_selection_clears_values",
+      "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
+      "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+      "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
+    ],
+    "status": "PASS",
+    "scope": "當次候選逐模板單worker真進度、邊界暫停／續跑／取消及generation過期防護；跨啟動敏感恢復／硬體實測後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "751860b3096a53ce2407ed267465c81de0c86c6d7a8ba1dde4852c70b228298a"
+  },
+  {
+    "requirement_id": "CORE-077",
+    "acceptance_id": "CORE-077-A1",
+    "expected": "當次exact候選／尺寸的局部幾何變更隔離、明確範圍差異與版本保護；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
+      "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+      "test_seventy_ui.SeventyUiTests.test_batch_partial_failure_idempotency_old_history_undo_and_protected_owner",
+      "test_seventy_ui.SeventyUiTests.test_candidate_exact_local_geometry_isolation_fixed_font_template_readonly_stale",
+      "test_seventy_ui.SeventyUiTests.test_diagnostic_reuse_same_data_no_report_no_gate_mutation_and_convergence_75",
+      "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+      "test_seventy_ui.SeventyUiTests.test_logo_tree_normal_size_isolation_and_reference_does_not_create_approval",
+      "test_seventy_ui.SeventyUiTests.test_object_context_pinned_text_disabled_on_logo_and_empty_selection_clears_values",
+      "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
+      "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+      "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
+    ],
+    "status": "PASS",
+    "scope": "當次exact候選／尺寸的局部幾何變更隔離、明確範圍差異與版本保護；共享語意ID跨尺寸同步與局部回復後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "59c9ba779a192c9ad412b1374f96a2989a3536790fe030da3b7527fb0f57d0f7"
+  },
+  {
+    "requirement_id": "CORE-078",
+    "acceptance_id": "CORE-078-A1",
+    "expected": "既有右側物件工具上下文與釘選可見性、不適用與stale清空；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
+      "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+      "test_seventy_ui.SeventyUiTests.test_batch_partial_failure_idempotency_old_history_undo_and_protected_owner",
+      "test_seventy_ui.SeventyUiTests.test_candidate_exact_local_geometry_isolation_fixed_font_template_readonly_stale",
+      "test_seventy_ui.SeventyUiTests.test_diagnostic_reuse_same_data_no_report_no_gate_mutation_and_convergence_75",
+      "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+      "test_seventy_ui.SeventyUiTests.test_logo_tree_normal_size_isolation_and_reference_does_not_create_approval",
+      "test_seventy_ui.SeventyUiTests.test_object_context_pinned_text_disabled_on_logo_and_empty_selection_clears_values",
+      "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
+      "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+      "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
+    ],
+    "status": "PASS",
+    "scope": "既有右側物件工具上下文與釘選可見性、不適用與stale清空；完整MainWindow右面板自適應後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "7426189e9ad8336f61ec9fcc786ea119f2d5167c84d4f963a8a4c765a334facd"
+  },
+  {
+    "requirement_id": "CORE-079",
+    "acceptance_id": "CORE-079-A1",
+    "expected": "重用既有object_edit具名目標的跨作品低風險差異／逐項結果與冪等防重；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
+      "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+      "test_seventy_ui.SeventyUiTests.test_batch_partial_failure_idempotency_old_history_undo_and_protected_owner",
+      "test_seventy_ui.SeventyUiTests.test_candidate_exact_local_geometry_isolation_fixed_font_template_readonly_stale",
+      "test_seventy_ui.SeventyUiTests.test_diagnostic_reuse_same_data_no_report_no_gate_mutation_and_convergence_75",
+      "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+      "test_seventy_ui.SeventyUiTests.test_logo_tree_normal_size_isolation_and_reference_does_not_create_approval",
+      "test_seventy_ui.SeventyUiTests.test_object_context_pinned_text_disabled_on_logo_and_empty_selection_clears_values",
+      "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
+      "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+      "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
+    ],
+    "status": "PASS",
+    "scope": "重用既有object_edit具名目標的跨作品低風險差異／逐項結果與冪等防重；統一跨候選修復及跨尺寸幾何轉換後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "96b983392f9784c2750293e0d47c44a84a9bf159b2398fc0f94dee3603132223"
+  },
+  {
+    "requirement_id": "CORE-080",
+    "acceptance_id": "CORE-080-A1",
+    "expected": "診斷入口路由重用既有問題與定位、版本與未知不改Gate；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
+      "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+      "test_seventy_ui.SeventyUiTests.test_batch_partial_failure_idempotency_old_history_undo_and_protected_owner",
+      "test_seventy_ui.SeventyUiTests.test_candidate_exact_local_geometry_isolation_fixed_font_template_readonly_stale",
+      "test_seventy_ui.SeventyUiTests.test_diagnostic_reuse_same_data_no_report_no_gate_mutation_and_convergence_75",
+      "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+      "test_seventy_ui.SeventyUiTests.test_logo_tree_normal_size_isolation_and_reference_does_not_create_approval",
+      "test_seventy_ui.SeventyUiTests.test_object_context_pinned_text_disabled_on_logo_and_empty_selection_clears_values",
+      "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
+      "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+      "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
+    ],
+    "status": "PASS",
+    "scope": "診斷入口路由重用既有問題與定位、版本與未知不改Gate；R1/R2仍BLOCKED，不產獨立報告；Linux匿名合成SELF範圍",
+    "contract_sha256": "fd02f0b2fdd748bf5e5b71cde5f3aaba5dea68af9bafb7595526d3d101f40836"
+  },
+  {
+    "requirement_id": "GOV-007",
+    "acceptance_id": "GOV-007-A1",
+    "expected": "機器GUI路由／決策去重對帳與未決分流檢查；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_seventy_ui.SeventyUiTests.test_actual_candidate_dialog_preview_cancel_then_apply",
+      "test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat",
+      "test_seventy_ui.SeventyUiTests.test_batch_partial_failure_idempotency_old_history_undo_and_protected_owner",
+      "test_seventy_ui.SeventyUiTests.test_candidate_exact_local_geometry_isolation_fixed_font_template_readonly_stale",
+      "test_seventy_ui.SeventyUiTests.test_diagnostic_reuse_same_data_no_report_no_gate_mutation_and_convergence_75",
+      "test_seventy_ui.SeventyUiTests.test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location",
+      "test_seventy_ui.SeventyUiTests.test_logo_tree_normal_size_isolation_and_reference_does_not_create_approval",
+      "test_seventy_ui.SeventyUiTests.test_object_context_pinned_text_disabled_on_logo_and_empty_selection_clears_values",
+      "test_seventy_ui.SeventyUiTests.test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover",
+      "test_seventy_ui.SeventyUiTests.test_worker_actual_progress_complete_adoption_and_stale_input_refusal",
+      "test_seventy_ui.SeventyUiTests.test_worker_start_and_item_failure_recover_no_fabricated_candidate"
+    ],
+    "status": "PASS",
+    "scope": "機器GUI路由／決策去重對帳與未決分流檢查；純治理，不計CORE產品能力；Linux匿名合成SELF範圍",
+    "contract_sha256": "6fcd39f55b2fadad973791559e6d0d8b3af03803d796501545c2ff63494151b3"
+  },
+  {
+    "requirement_id": "CORE-081",
+    "acceptance_id": "CORE-081-A1",
+    "expected": "明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史；exact版本、取消/過期/失敗不得成功，actual Qt流程可操作",
+    "tests": [
+      "test_quality_operations.QualityOperationsTests.test_actual_scan_worker_and_quality_panels_cancel_save_repair_and_recheck",
+      "test_quality_operations.QualityOperationsTests.test_evaluation_and_repair_late_audit_rollback_no_partial_trust_or_exposure",
+      "test_quality_operations.QualityOperationsTests.test_fair_AB_repair_isolation_exposed_holdout_and_two_bad_versions_never_safe",
+      "test_quality_operations.QualityOperationsTests.test_fixed_holdout_confusion_denominators_zero_classes_unknown_and_critical_owners",
+      "test_quality_operations.QualityOperationsTests.test_major_recheck_exact_historical_rule_dependencies_atomic_quarantine_and_gate",
+      "test_quality_operations.QualityOperationsTests.test_major_recheck_stale_plan_and_late_audit_rollback_entire_scope",
+      "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+      "test_quality_operations.QualityOperationsTests.test_scan_two_actual_hashes_incremental_alias_and_changed_readonly_offline",
+      "test_quality_operations.QualityOperationsTests.test_wrong_role_duplicate_prediction_stale_sample_and_caller_after_rejected"
+    ],
+    "status": "PASS",
+    "scope": "明確規則依賴跨歷史樣本重審，人工確認後暫停信任且保留歷史；其他模型／Logo／客戶依賴全面掃描與解除重審後續；Linux匿名合成SELF範圍",
+    "contract_sha256": "eccdd869ff15f202946158e65951ad20b9c0859d9b090ec71e60963dce62ce92"
+  }
+]

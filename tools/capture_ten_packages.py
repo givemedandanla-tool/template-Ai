@@ -118,6 +118,9 @@ def capture_ten_packages(root):
         assert not queue.running;job=facts.store.get('JOB',queue.current_job);assert job['phase']=='COMPLETED' and job['items'][0]['state']=='SUCCESS';assert len(window.library.templates())==2 and all(t.state=='draft' for t in window.library.templates());assert window.library.artwork(extra_work['id'])==extra_work;QApplication.processEvents()
         if not dialog.grab().save(str(root/'ten-training-queue-completed.png')):raise ValueError('真worker佇列GUI未保存')
         audit['training_queue']={'actual_qt':True,'real_worker_own_sqlite_connection':True,'job':job,'history':facts.store.history('JOB',job['id']),'progress':queue.progress_label.text(),'controls_restored':queue.create_button.isEnabled() and not window.busy,'source_and_slots_unchanged':True,'all_ten_workflows_integrated':True,'only_draft_geometry':True}
-        (root / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
+        from public_evidence import public_audit
+        (root / '.private').mkdir(exist_ok=True)
+        (root / '.private' / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
+        (root / 'ten-packages-audit.json').write_text(json.dumps(public_audit(audit), ensure_ascii=False, indent=2)+'\n')
     finally:
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()

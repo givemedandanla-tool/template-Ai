@@ -1,5 +1,15 @@
 # 開發工作紀錄
 
+## 自動審查拒絕raw lease metadata：採安全替代
+
+事件SEVENTY-PRIVACY-007；CP-LOCK-SOURCE未ACK，branch未移動，partial tree不可沿用。原001完整本機保留，Git只保存不含owner.token值的等效audit及全部測試／JUnit／claims來源。公開capture producer移除該值，不改worker CAS或原DB；新增巢狀去除且原job不變測試並加入GOV005新驗收子項，屬加強標準。正式來源重凍002（348全套），仍不標父題部分直到正式PASS及讀回。一次本機狀態修復腳本將pending_remote誤當物件list而失敗，已按實際字串ID修正，未覆寫原證據。
+
+
+## 第一輪347全PASS，修正Windows依賴入口後重驗
+
+RUN-SEVENTY-PARENTS-001 source0b0d477c，347PASS/0SKIP、72本機附件、capturePASS、source unchanged。code review發現START_WINDOWS.bat實際安裝requirements-lock.txt，原只更新requirements.txt，鎖定入口未含加密庫。現補cryptography46.0.3/cffi2.1.1/pycparser3.11並更新使用指南／README；因此001只作歷史，最終新版需002全回歸。父仍未提升，不刪原PASS/FAIL，不以鎖定檔缺失交付。
+
+
 ## 70父需求：凍結正式來源前
 
 全部17scope target29項（客戶8/UI11/品質9/新發布邊界1）PASS；原publications4額外回歸亦PASS。347全回歸及原actual Qt capture待執行。新增嚴格SEVENTY source-bound具名media政策，僅媒體略過新上傳、metadata不可略過；派生seventy-parent-audit從actual個別測試結果產生，明示不是另一次操作／不等於父FULL完成。新增seventy_finish僅全PASS/17scope/契約匹配且原75狀態守恆才升部分。
