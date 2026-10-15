@@ -777,3 +777,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 單件/批次共用顯式確認與確切mapping稽核，context/revision CAS、8MiB整批預覽/稽核和30秒只讀查詢限額；同名異內容計數精確、展示32個路徑，不稱可重連。共享typed asset references排除hash metadata。
 - 保留兩次非formal失敗目標run（單件新稽核基準與缺測試import；路徑數fixture），改正測試前提且仍核對完整原有效source/稽核基準未變。
 - source checkpoint後全662正式回歸，UI049未先結案。
+
+### UI049 complete original11 / formal relink milestone
+- 剩餘28本輪已完成UI046/UI047/UI049三題，共32原條款；正式662/662 PASS、Qt錯誤0、capture成功、來源未變。全75：47 VERIFIED／25 PARTIAL／3 DEFERRED；固定70：45閉合／25仍部分。CORE87／GOV7另計。
+- 真Qt多根/完整依賴/明確套用/撤銷原位置capture，10新scope測試納入正式662全回歸；141claims契約digest匹配。
+- 32文字metadata GitHub、103媒體精確例外留本機；來源與客戶/版型未破壞，不改失敗run。下一UI050真watch/安全增量。

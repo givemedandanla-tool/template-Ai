@@ -274,8 +274,8 @@
       ],
       "unresolved": [],
       "clause_count": 11,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json",
-      "source_commit": "5a9969b33741c74e279dcffc443ecb33fb0ad05b"
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json",
+      "source_commit": "8193dc2257a31ec6092d1e6bafb941ddc46329c8"
     },
     {
       "parent": "UI-047",
@@ -316,12 +316,12 @@
       ],
       "unresolved": [],
       "clause_count": 10,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json",
-      "source_commit": "5a9969b33741c74e279dcffc443ecb33fb0ad05b"
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json",
+      "source_commit": "8193dc2257a31ec6092d1e6bafb941ddc46329c8"
     },
     {
       "parent": "UI-049",
-      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "status": "SELF_VERIFIED",
       "tests": [
         "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
         "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids",
@@ -352,7 +352,9 @@
         "test_source_relink_scope.SourceRelinkScopeTests.test_same_length_changed_original_is_distinguished_from_same_content_relocation"
       ],
       "unresolved": [],
-      "clause_count": 11
+      "clause_count": 11,
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json",
+      "source_commit": "8193dc2257a31ec6092d1e6bafb941ddc46329c8"
     },
     {
       "parent": "UI-050",
@@ -487,6 +489,6 @@
       "unresolved": []
     }
   ],
-  "verified_parent_count": 2,
-  "remaining_parent_count": 26
+  "verified_parent_count": 3,
+  "remaining_parent_count": 25
 }
