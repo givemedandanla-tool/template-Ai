@@ -45,6 +45,14 @@ class FactsPanel(QWidget):
         except Exception as error: self.status.setText('載入失敗：'+str(error))
         finally: self.work_combo.blockSignals(False); self.load()
 
+    def focus(self,work_id,observation_ids):
+        from PySide6.QtWidgets import QTableWidgetSelectionRange
+        self.store.library.artwork(work_id)
+        rank=self.store.db.execute('SELECT count(*) FROM artworks WHERE id<?',(work_id,)).fetchone()[0];self.offset=(rank//200)*200;self.reload();self.work_combo.setCurrentIndex(self.work_combo.findData(work_id));self.load()
+        selected=set(observation_ids)
+        for index,observation in enumerate(self.loaded['observations']):
+            if observation['id'] in selected:self.table.setRangeSelected(QTableWidgetSelectionRange(index,0,index,4),True)
+
     def load(self, *_):
         if self.running: return
         try:

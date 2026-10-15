@@ -14,6 +14,9 @@ class WorkOverviewDialog(QDialog):
         super().__init__(parent or window);self.window=window;self.store=TrainingStore(window.library);self.offset=0;self.rows=[];self.setWindowTitle('來源／作品總覽：AI候選與確認分開');self.resize(1200,780)
         layout=QVBoxLayout(self);bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('全庫搜尋作品／來源檔名／ID／尺寸，例如90.0x54.0');self.query.textChanged.connect(self.search);bar.addWidget(self.query)
         self.state=QComboBox();self.state.addItems(['ALL','PENDING','CONFIRMED','STALE','SUPERSEDED']);self.state.currentIndexChanged.connect(self.search);bar.addWidget(self.state);layout.addLayout(bar)
+        filters=QHBoxLayout();self.source_filter=QLineEdit();self.source_filter.setPlaceholderText('來源ID／檔名');self.page_filter=QLineEdit();self.page_filter.setPlaceholderText('來源頁次，例如1');self.size_filter=QLineEdit();self.size_filter.setPlaceholderText('尺寸，例如90.0x54.0');self.sort=QComboBox();self.sort.addItems(['來源／作品','作品名稱','審核狀態','尺寸'])
+        for field in (self.source_filter,self.page_filter,self.size_filter):field.textChanged.connect(self.search);filters.addWidget(field)
+        self.sort.currentIndexChanged.connect(self.search);filters.addWidget(self.sort);layout.addLayout(filters)
         self.status=QLabel();self.status.setWordWrap(True);layout.addWidget(self.status);self.table=QTableWidget(0,5);self.table.setHorizontalHeaderLabels(['來源縮圖','作品／來源／頁','物理尺寸／來源裁切','狀態／版次','來源證據']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.SingleSelection);self.table.setIconSize(QSize(110,70));self.table.cellDoubleClicked.connect(lambda *_:self.edit());layout.addWidget(self.table,1)
         bar=QHBoxLayout()
         for label,fn in [('上一頁',lambda:self.page(-100)),('下一頁',lambda:self.page(100)),('刷新',self.reload),('定位原作品',self.locate),('原作品畫布標記／校正',self.edit)]:button=QPushButton(label);button.clicked.connect(fn);bar.addWidget(button)
@@ -25,10 +28,21 @@ class WorkOverviewDialog(QDialog):
     def reload(self):
         try:
             query='%'+self.query.text().strip().casefold()+'%';self.rows=[]
-            sql="SELECT a.id FROM artworks a JOIN sources s ON s.id=a.source_id WHERE lower(a.name||' '||a.id||' '||a.source_id||' '||s.original_path||' '||round(json_extract(a.payload,'$.work_width'),1)||'x'||round(json_extract(a.payload,'$.work_height'),1)) LIKE ? ORDER BY a.source_id,a.id LIMIT 100 OFFSET ?"
-            for wid, in self.window.library.db.execute(sql,(query,self.offset)):
+            # Filtering occurs before LIMIT/OFFSET; current facts state includes pin/stat checks.
+            self.window.library.db.create_function('work_facts_state',1,self.store.facts_state)
+            state_sql="CASE WHEN json_extract(a.payload,'$.segmentation_state')='SUPERSEDED' THEN 'SUPERSEDED' ELSE work_facts_state(a.id) END"
+            clauses=["lower(a.name||' '||a.id||' '||a.source_id||' '||s.original_path||' '||round(json_extract(a.payload,'$.work_width'),1)||'x'||round(json_extract(a.payload,'$.work_height'),1)) LIKE ?"]
+            params=[query]
+            if self.source_filter.text().strip():clauses.append("lower(s.id||' '||s.original_path) LIKE ?");params.append('%'+self.source_filter.text().strip().casefold()+'%')
+            if self.page_filter.text().strip():
+                if not self.page_filter.text().isdigit() or not 1<=int(self.page_filter.text())<=1000:raise ValueError('頁次篩選需1～1000')
+                clauses.append("json_extract(s.payload,'$.page')=?");params.append(int(self.page_filter.text()))
+            if self.size_filter.text().strip():clauses.append("(round(json_extract(a.payload,'$.work_width'),1)||'x'||round(json_extract(a.payload,'$.work_height'),1)) LIKE ?");params.append('%'+self.size_filter.text().strip()+'%')
+            if self.state.currentText()!='ALL':clauses.append(state_sql+'=?');params.append(self.state.currentText())
+            order=['a.source_id,a.id','a.name,a.id',state_sql+',a.id',"json_extract(a.payload,'$.work_width'),json_extract(a.payload,'$.work_height'),a.id"][self.sort.currentIndex()]
+            sql='SELECT a.id FROM artworks a JOIN sources s ON s.id=a.source_id WHERE '+' AND '.join(clauses)+' ORDER BY '+order+' LIMIT 100 OFFSET ?'
+            for wid, in self.window.library.db.execute(sql,(*params,self.offset)):
                 work=self.window.library.artwork(wid);state='SUPERSEDED' if work['payload'].get('segmentation_state')=='SUPERSEDED' else self.store.facts_state(wid)
-                if self.state.currentText()!='ALL' and self.state.currentText()!=state:continue
                 self.rows.append((work,state,self.window.library.source(work['source_id'])))
             self.table.setRowCount(len(self.rows))
             for i,(work,state,source) in enumerate(self.rows):
@@ -37,10 +51,10 @@ class WorkOverviewDialog(QDialog):
                     reader=QImageReader(source['image']);size=reader.size();size.scale(320,240,Qt.KeepAspectRatio);reader.setScaledSize(size);image=reader.read()
                     if not image.isNull():
                         crop=payload['crop'];rect=QRectF(crop['x']*image.width()/source['width_mm'],crop['y']*image.height()/source['height_mm'],crop['w']*image.width()/source['width_mm'],crop['h']*image.height()/source['height_mm']);icon.setIcon(QIcon(QPixmap.fromImage(image.copy(rect.toAlignedRect()))))
-                values=[icon,QTableWidgetItem(work['name']+'\n'+Path(source['current_path']).name+'／頁'+str(source['page'])+'\n'+work['id']),QTableWidgetItem(f"{payload['work_width']:.3f} × {payload['work_height']:.3f} mm\n來源框：{payload['crop']}"),QTableWidgetItem(state+'／r'+str(work['revision'])),QTableWidgetItem('來源幾何候選；需視覺確認\n原生Illustrator圖層對應 UNKNOWN')]
+                values=[icon,QTableWidgetItem(work['name']+'\n'+Path(source['current_path']).name+'／頁'+str(source['page'])+'\n'+work['id']),QTableWidgetItem(f"{payload['work_width']:.3f} × {payload['work_height']:.3f} mm\n來源框：{payload['crop']}"),QTableWidgetItem(state+'／r'+str(work['revision'])),QTableWidgetItem('人物容量 '+str(len({s['owner'] for s in payload['slots'] if s['owner'].startswith('p')}))+'（標記推定）\n信心 UNVALIDATED／尺寸 '+('人工核對' if payload.get('visual_confirmed') else '待確認')+'\n原生Illustrator圖層對應 UNKNOWN')]
                 for j,value in enumerate(values):self.table.setItem(i,j,value)
                 self.table.setRowHeight(i,88)
-            self.status.setText(f'來源／檔名／尺寸先全庫搜尋；本頁讀取最多100作品，狀態篩選後{len(self.rows)}作品，頁起點{self.offset}。縮圖為衍生來源，不代表AI已確認。')
+            self.status.setText(f'來源／檔名／尺寸先全庫搜尋；本頁讀取最多100作品，篩選／排序後本頁{len(self.rows)}作品，頁起點{self.offset}。縮圖為衍生來源，不代表AI已確認。')
         except Exception as error:self.status.setText('作品總覽未完成：'+str(error))
 
     def current(self):

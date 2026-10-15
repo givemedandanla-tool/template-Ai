@@ -118,8 +118,9 @@ def review_issues(work,facts,confirmation_valid=False):
     import hashlib,json
     confirmed=set((facts.get('confirmation') or {}).get('observation_ids',[])) if confirmation_valid else set();result=[]
     for observation in facts['observations']:
-        if observation['object_type']!='TEXT' or observation['id'] in confirmed:continue
-        row=recognize(observation['text']);reasons=[]
+        review=observation.get('review',{});held=review.get('state') in ('REJECTED','QUARANTINED')
+        if (observation['object_type']!='TEXT' and not held) or (observation['id'] in confirmed and not held):continue
+        row=recognize(observation['text']);reasons=[review['state']+'：'+review['reason']] if held else []
         if row['semantic_type']=='unknown':reasons.append('字串語意證據不足，需核對類型／歸屬或註記排除')
         if row['semantic_type']=='social_id' and row['slot_kind'] is None:reasons.append('已辨識社群平台，但現有輸出欄位尚未支援，需明確映射')
         reasons.extend(s for s in row['signals'] if '矛盾' in s)

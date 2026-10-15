@@ -15,7 +15,7 @@ from .training_quality import analyse_work
 
 class AnnotationDialog(QDialog):
     def __init__(self,window,work_id,parent=None):
-        super().__init__(parent or window);self.window=window;self.library=window.library;self.session=AnnotationSession(self.library,work_id);self.ids=[];self.loading=False
+        super().__init__(parent or window);self.window=window;self.library=window.library;self.session=AnnotationSession(self.library,work_id);self.ids=[];self.loading=False;self.form_drafts={};self.form_key=None;self.form_baseline=None
         self.setWindowTitle('原作品直接標記／校正：只改學習中介資料');self.resize(1350,850)
         layout=QVBoxLayout(self);self.status=QLabel('作品邊界與欄位框不同；拖曳／改類型只存候選，明確確認才成作品事實。');self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout()
@@ -31,7 +31,7 @@ class AnnotationDialog(QDialog):
         self.coords=[]
         for key in ('x','y','w','h'):
             form.addWidget(QLabel(key+' mm'));spin=QDoubleSpinBox();spin.setRange(-2000,2000);spin.setDecimals(4);self.coords.append(spin);form.addWidget(spin)
-        for label,fn in [('將待審文字映射為所選類型',self.bind_observation),('套用此框屬性草稿',self.apply_properties),('刪除選定標記草稿',self.delete),('保存草稿（未確認）',self.save),('確認所選作品事實',self.confirm),('改正作品邊界／拆分',self.split),('合併同來源明確作品',self.merge)]:
+        for label,fn in [('將待審文字映射為所選類型',self.bind_observation),('套用此框屬性草稿',self.apply_properties),('刪除選定標記草稿',self.delete),('放棄未套用屬性',self.discard_forms),('所選來源觀察／剔除雜訊',self.noise_context),('保存草稿（未確認）',self.save),('確認所選作品事實',self.confirm),('拒絕所選候選',lambda:self.review_markers('REJECTED')),('疑義隔離所選',lambda:self.review_markers('QUARANTINED')),('恢復所選待確認',lambda:self.review_markers('HUMAN_PENDING_CONFIRMATION')),('改正作品邊界／拆分',self.split),('合併同來源明確作品',self.merge)]:
             b=QPushButton(label);b.clicked.connect(fn);form.addWidget(b)
         self.visual=QCheckBox('已核對目前原作品／完整圖文及物理尺寸');form.addWidget(self.visual)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);form.addWidget(self.details,1);body.addWidget(panel);body.setSizes([220,760,340]);layout.addWidget(body,1);self.overlay=True;self.refresh()
@@ -46,6 +46,7 @@ class AnnotationDialog(QDialog):
         except Exception as error:self.status.setText('未套用：'+str(error))
 
     def refresh(self):
+        self.cache_form()
         selection=list(self.ids)+(['observation:'+self.observation_id] if getattr(self,'observation_id',None) else [])
         self.loading=True;payload=self.session.payload;source=self.library.source(self.session.base['source_id']);image=None
         if healthy_source(source):
@@ -53,7 +54,7 @@ class AnnotationDialog(QDialog):
         self.objects.clear();slots=[Slot(**{**s,'rect':Rect(**s['rect'])}) for s in payload['slots']]
         confirmed=set((self.session.facts.get('confirmation') or {}).get('observation_ids',[]));by_slot={o.get('slot_id'):o for o in self.session.observations}
         for slot in slots:
-            observation=by_slot.get(slot.id,{});state='已確認' if observation.get('id') in confirmed else '候選／待核對'
+            observation=by_slot.get(slot.id,{});state='已確認' if observation.get('id') in confirmed else observation.get('review',{}).get('state','候選／待核對')
             item=QListWidgetItem(slot.owner+'／'+KINDS.get(slot.kind,slot.kind)+'／'+state);item.setData(Qt.UserRole,slot.id);item.setToolTip(slot.id);self.objects.addItem(item)
         for observation in self.session.observations:
             if observation.get('slot_id') is None:
@@ -88,6 +89,7 @@ class AnnotationDialog(QDialog):
 
     def select(self,ids):
         if self.loading:return
+        self.cache_form()
         valid={s['id'] for s in self.session.payload['slots']}|{'observation:'+o['id'] for o in self.session.observations if o.get('slot_id') is None}
         ids=[identity for identity in ids if identity in valid]
         self.observation_id=next((i.split(':',1)[1] for i in ids if i.startswith('observation:')),None)
@@ -97,13 +99,42 @@ class AnnotationDialog(QDialog):
             node_ids=item.data(0,Qt.UserRole) or [];item.setSelected(bool(node_ids) and set(node_ids)<=set(ids))
         self.loading=False
         if self.observation_id:
-            observation=next(o for o in self.session.observations if o['id']==self.observation_id);self.value.setText(observation['text']);self.details.setPlainText('來源文字尚無可靠欄位映射；請選類型與歸屬再建立框。\n'+self.semantic_details(observation));return
+            observation=next(o for o in self.session.observations if o['id']==self.observation_id);self.value.setText(observation['text']);self.details.setPlainText('來源文字尚無可靠欄位映射；請選類型與歸屬再建立框。\n'+self.semantic_details(observation));self.restore_form(ids);return
         if len(ids)==1:
             slot=next(s for s in self.session.payload['slots'] if s['id']==ids[0]);self.kind.setCurrentIndex(self.kind.findData(slot['kind']));self.owner.setText(slot['owner'])
             observation=next((o for o in self.session.observations if o.get('slot_id')==ids[0]),None);self.value.setText(observation['text'] if observation else '')
             for spin,key in zip(self.coords,('x','y','w','h')):spin.setValue(slot['rect'][key])
-            self.details.setPlainText(f"作品 {self.session.base['id']}／來源 {self.session.base['source_id']}\n框 {ids[0]}／{slot['owner']}\n標記字型：{slot['font']}／{slot.get('font_style') or '款式未知'}／{slot['size_pt']}pt（標記值，原稿字型仍待核對）\n原生Illustrator對應未知；AI線索不等於真值。\n"+self.semantic_details(observation))
+            self.details.setPlainText(str(observation.get('review',{}))+'\n'+f"作品 {self.session.base['id']}／來源 {self.session.base['source_id']}\n框 {ids[0]}／{slot['owner']}\n標記字型：{slot['font']}／{slot.get('font_style') or '款式未知'}／{slot['size_pt']}pt（標記值，原稿字型仍待核對）\n原生Illustrator對應未知；AI線索不等於真值。\n"+self.semantic_details(observation))
         else:self.details.setPlainText(f'明確選取{len(ids)}框。多選只允許適用操作，不以首框值覆蓋共同屬性。')
+
+        self.restore_form(ids)
+
+    def form_values(self):return dict(kind=self.kind.currentData(),owner=self.owner.text(),text=self.value.text(),coords=[spin.value() for spin in self.coords])
+
+    def cache_form(self):
+        if self.form_key is not None and self.form_baseline is not None:
+            value=self.form_values()
+            if value!=self.form_baseline:self.form_drafts[self.form_key]=value
+            else:self.form_drafts.pop(self.form_key,None)
+
+    def restore_form(self,ids):
+        self.form_key=tuple(ids) if len(ids)==1 else None;self.form_baseline=self.form_values()
+        if self.form_key in self.form_drafts:
+            value=self.form_drafts[self.form_key];self.kind.setCurrentIndex(self.kind.findData(value['kind']));self.owner.setText(value['owner']);self.value.setText(value['text'])
+            for spin,number in zip(self.coords,value['coords']):spin.setValue(number)
+
+    def discard_forms(self):
+        self.form_key=None;self.form_drafts.clear();self.refresh();self.status.setText('已放棄未套用屬性；已套用的標記草稿仍保留。')
+
+    def noise_context(self):
+        def action():
+            self.require_saved()
+            ids=[o['id'] for o in self.session.observations if o.get('slot_id') in self.ids or o['id']==self.observation_id]
+            if not ids:raise ValueError('先選明確來源觀察')
+            from .training_quality_dialog import TrainingQualityDialog
+            dialog=TrainingQualityDialog(self.window);dialog.tabs.setCurrentWidget(dialog.facts_panel);dialog.facts_panel.focus(self.session.base['id'],ids)
+            dialog.exec();dialog.deleteLater();self.session=AnnotationSession(self.library,self.session.base['id']);self.refresh()
+        self.guarded(action)
 
     def semantic_details(self,observation):
         if not observation:return '待補來源觀察'
@@ -115,7 +146,8 @@ class AnnotationDialog(QDialog):
         return observation['text']+'\n目前內容語意候選：'+TYPE_LABELS[row['semantic_type']]+'（'+row['semantic_type']+'）／平台：'+str(row['platform'])+'\n正規化：'+row['normalized']+'\n判斷依據：'+'；'.join(row['signals'])+'\n'+row['confidence']+'／'+row['version']+history
 
     def reject(self):
-        changed=self.session.payload!=self.session.base['payload'] or self.session.observations!=self.session.facts['observations'] or self.visual.isChecked()!=bool(self.session.payload.get('visual_confirmed'))
+        self.cache_form()
+        changed=bool(self.form_drafts) or self.session.payload!=self.session.base['payload'] or self.session.observations!=self.session.facts['observations'] or self.visual.isChecked()!=bool(self.session.payload.get('visual_confirmed'))
         if changed:
             answer=QMessageBox.question(self,'保留標記草稿','目前有未保存的標記校正。',QMessageBox.Save|QMessageBox.Discard|QMessageBox.Cancel,QMessageBox.Cancel)
             if answer==QMessageBox.Cancel:return
@@ -124,10 +156,18 @@ class AnnotationDialog(QDialog):
                 except Exception as error:self.status.setText('未關閉：'+str(error));return
         super().reject()
 
+    def review_markers(self,state):
+        def action():
+            selected=[o['id'] for o in self.session.observations if o.get('slot_id') in self.ids or o['id']==self.observation_id]
+            if not selected:raise ValueError('先選確切標記；不擴大到整作品或其他來源')
+            reason,ok=QInputDialog.getText(self,'標記審核草稿 '+state,'理由（保存草稿後持久化；未核准學習）：')
+            if ok:self.session.review(selected,state,reason);self.refresh()
+        self.guarded(action)
+
     def bind_observation(self):
         def action():
             if not self.observation_id:raise ValueError('先選左側待審文字')
-            self.ids=[self.session.bind_observation(self.observation_id,self.kind.currentData(),self.owner.text())];self.refresh()
+            self.ids=[self.session.bind_observation(self.observation_id,self.kind.currentData(),self.owner.text())];self.form_drafts.pop(self.form_key,None);self.form_key=None;self.refresh()
         self.guarded(action)
 
     def move(self,request):
@@ -152,7 +192,7 @@ class AnnotationDialog(QDialog):
             self.session.change(dict(operation='PATCH',ids=self.ids,patch=patch))
             for observation in self.session.observations:
                 if observation.get('slot_id')==self.ids[0]:observation['text']=self.value.text()
-            self.refresh()
+            self.form_drafts.pop(self.form_key,None);self.form_key=None;self.refresh()
         self.guarded(action)
 
     def delete(self):self.guarded(lambda:(self.session.change(dict(operation='DELETE',ids=self.ids)),self.refresh()))
@@ -177,6 +217,8 @@ class AnnotationDialog(QDialog):
         self.guarded(action)
 
     def save_or_raise(self):
+        self.cache_form()
+        if self.form_drafts:raise ValueError('仍有未套用屬性，先逐框套用或明確放棄；已保留輸入')
         if self.visual.isChecked()!=bool(self.session.payload.get('visual_confirmed')):self.session.checkpoint();self.session.payload['visual_confirmed']=self.visual.isChecked()
         self.session.save();self.refresh();self.status.setText('標記／來源觀察草稿已保存，未核准事實或發布模板。')
 
@@ -227,5 +269,7 @@ class AnnotationDialog(QDialog):
         self.guarded(action)
 
     def require_saved(self):
+        self.cache_form()
+        if self.form_drafts:raise ValueError('未套用屬性仍保留，請先套用或放棄')
         if self.session.payload!=self.session.base['payload'] or self.session.observations!=self.session.facts['observations'] or self.visual.isChecked()!=bool(self.session.payload.get('visual_confirmed')):
             raise ValueError('有未保存標記；先保存或明確撤回，不能由作品邊界校正丟棄')

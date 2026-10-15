@@ -57,6 +57,15 @@ class AnnotationSession:
         crop=self.payload['crop'];sx=crop['w']/self.payload['work_width'];sy=crop['h']/self.payload['work_height']
         return dict(x=crop['x']+rect.x*sx,y=crop['y']+rect.y*sy,w=rect.w*sx,h=rect.h*sy)
 
+    def review(self,observation_ids,state,reason,actor='LOCAL_OPERATOR'):
+        text(reason,'標記審核理由');text(actor,'審核者',120)
+        if state not in ('HUMAN_PENDING_CONFIRMATION','REJECTED','QUARANTINED'):raise ValueError('標記審核狀態不合法')
+        selected=set(observation_ids)
+        if not selected or len(selected)!=len(observation_ids) or not selected<={o['id'] for o in self.observations}:raise ValueError('請選確切有效標記')
+        self.checkpoint()
+        for observation in self.observations:
+            if observation['id'] in selected:observation['review']=dict(state=state,reason=reason,actor=actor)
+
     def sync_observations(self):
         slots={s['id']:s for s in self.payload['slots']};self.observations=[o for o in self.observations if o.get('slot_id') is None or o['slot_id'] in slots]
         for observation in self.observations:

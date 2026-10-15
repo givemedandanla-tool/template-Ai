@@ -138,6 +138,11 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
                            'prior_prediction': item.get('prior_prediction') if item.get('prior_prediction') is not None else None,
                            'semantic': recognize(item['text']) if item['object_type']=='TEXT' else None,
                            'slot_kind':by_slot.get(slot_id,{}).get('kind'),'owner':by_slot.get(slot_id,{}).get('owner')})
+            if item.get('review') is not None:
+                review=item['review']
+                if not isinstance(review,dict) or review.get('state') not in ('HUMAN_PENDING_CONFIRMATION','REJECTED','QUARANTINED'):raise ValueError('標記審核狀態不合法')
+                text(review.get('reason'),'標記審核理由');text(review.get('actor'),'標記審核者',120)
+                result[-1]['review']=copy.deepcopy(review)
             if result[-1]['prior_prediction'] is not None: text(result[-1]['prior_prediction'], '原預測')
         return sorted(result, key=lambda x: x['id'])
 
@@ -176,6 +181,7 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
             if self.pins(work_id) != expected_pins or record['pins'] != expected_pins: raise ValueError('來源或作品範圍已變更')
             ids = sorted(observation_ids)
             if not ids or len(ids) != len(set(ids)) or not set(ids) <= {o['id'] for o in record['observations']}: raise ValueError('明列有效且不重複的觀察範圍')
+            if any(o['id'] in ids and o.get('review',{}).get('state') in ('REJECTED','QUARANTINED') for o in record['observations']):raise ValueError('拒絕／疑義隔離標記不可確認；先明確恢復待確認並核對來源')
             previous=record.get('confirmation')
             if previous and previous['observations_digest']==digest(record['observations']) and previous['pins']==expected_pins:
                 ids=sorted(set(ids)|set(previous['observation_ids']))
