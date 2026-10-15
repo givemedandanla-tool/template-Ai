@@ -1,3 +1,5 @@
+> 最新：2026-10-15 使用者已採納並要求直接開發至完成，見../decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md及DIAGNOSTIC_REPORTS_CONTRACT.json。下列PROPOSED文字保留為提案歷史，不再表示等待Human確認。
+
 # R1／R2 設計提案：可定位、可安全交接的診斷快照
 
 日期：2026-10-15。狀態：**設計細節PROPOSED／未實作；「程式內可閱讀、程式外可保存」已由後續使用者訊息確認，完成數未變**。

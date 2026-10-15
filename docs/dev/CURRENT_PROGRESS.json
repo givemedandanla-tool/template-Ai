@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "registry_sha256": "6e73698c51e58ad333cc22fabc35512fff4e01ce5617315e3438367e39830699",
+  "registry_sha256": "b0c85953a7812576f0575c08fb2b29d5d2e1c883b5d337f192603b8a9945d84d",
   "groups": {
     "topic": {
       "total": 75,
@@ -8,22 +8,22 @@
       "implemented_pending": 0,
       "partial": 70,
       "in_progress": 0,
-      "not_implemented": 0,
-      "blocked": 2,
+      "not_implemented": 2,
+      "blocked": 0,
       "deferred": 3,
       "not_complete": 75,
       "has_implementation": 70
     },
     "core": {
-      "total": 81,
+      "total": 83,
       "verified": 81,
       "implemented_pending": 0,
       "partial": 0,
       "in_progress": 0,
-      "not_implemented": 0,
+      "not_implemented": 2,
       "blocked": 0,
       "deferred": 0,
-      "not_complete": 0,
+      "not_complete": 2,
       "has_implementation": 81
     },
     "governance": {
@@ -526,14 +526,14 @@
     {
       "id": "UI-066-R1",
       "kind": "topic",
-      "status": "BLOCKED",
+      "status": "NOT_IMPLEMENTED",
       "completed": false,
       "contract_sha256": "bd993ee14e62343532c75f81f705c6f0f8624a18f9e3cf893ba6fe0985cf5e11"
     },
     {
       "id": "UI-066-R2",
       "kind": "topic",
-      "status": "BLOCKED",
+      "status": "NOT_IMPLEMENTED",
       "completed": false,
       "contract_sha256": "d7955dc63a4971da2ebf0121b7d4ae2ba05a3808f65fb8e2eeea4186371c8be3"
     },
@@ -1180,6 +1180,20 @@
       "status": "VERIFIED",
       "completed": true,
       "contract_sha256": "eccdd869ff15f202946158e65951ad20b9c0859d9b090ec71e60963dce62ce92"
+    },
+    {
+      "id": "CORE-082",
+      "kind": "core",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "contract_sha256": "86056472ca64442a7162aa64f79b4ad0bb88f70a172a050dc76c704eea54b81a"
+    },
+    {
+      "id": "CORE-083",
+      "kind": "core",
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "contract_sha256": "ca65ef25ff7a46d9684d9b44dec7be84be0fc85e10ad529faa2020d5260e57fd"
     }
   ]
 }

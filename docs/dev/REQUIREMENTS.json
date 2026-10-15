@@ -1584,7 +1584,7 @@
           "tests": []
         }
       ],
-      "next_step": "R1/R2仍BLOCKED，不產獨立報告；原FULL全部條款保留，不代表完整實作"
+      "next_step": "R1/R2已採納並解除缺規格受阻，依新契約實作；其他原FULL條款保留"
     },
     {
       "id": "UI-067",
@@ -1662,15 +1662,16 @@
       "id": "UI-066-R1",
       "kind": "topic",
       "title": "是否需要獨立報告及最小格式內容",
-      "status": "BLOCKED",
+      "status": "NOT_IMPLEMENTED",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節",
-      "phase": "待決",
-      "decision_status": "程式內閱讀及程式外保存必要性已確認；其餘設計細節仍為提案，未實作",
+      "phase": "P7／已核准",
+      "decision_status": "使用者已採納設計並明確要求開發至完整驗收",
       "sources": [
         "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-066-DEDUP-REPORT-HANDOFF.md",
-        "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md"
+        "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
+        "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md"
       ],
       "parents": [],
       "evidence_run": null,
@@ -1686,21 +1687,22 @@
           "tests": []
         }
       ],
-      "next_step": "依新增決策及UI066_R1_R2_DESIGN_PROPOSAL收斂最小內容／格式與安全交接實作契約；不重問內外閱讀必要性，不以需求確認當完成功能"
+      "next_step": "依DIAGNOSTIC_REPORTS_CONTRACT完整實作與驗收；解除受阻不代表完成"
     },
     {
       "id": "UI-066-R2",
       "kind": "topic",
       "title": "報告本機保存、去識別與人工交接",
-      "status": "BLOCKED",
+      "status": "NOT_IMPLEMENTED",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節",
-      "phase": "待決",
-      "decision_status": "程式內閱讀及程式外保存必要性已確認；其餘設計細節仍為提案，未實作",
+      "phase": "P7／已核准",
+      "decision_status": "使用者已採納設計並明確要求開發至完整驗收",
       "sources": [
         "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-066-DEDUP-REPORT-HANDOFF.md",
-        "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md"
+        "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
+        "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md"
       ],
       "parents": [],
       "evidence_run": null,
@@ -1716,7 +1718,7 @@
           "tests": []
         }
       ],
-      "next_step": "依新增決策及UI066_R1_R2_DESIGN_PROPOSAL收斂最小內容／格式與安全交接實作契約；不重問內外閱讀必要性，不以需求確認當完成功能"
+      "next_step": "依DIAGNOSTIC_REPORTS_CONTRACT完整實作與驗收；解除受阻不代表完成"
     },
     {
       "id": "REV-01",
@@ -4902,6 +4904,60 @@
         }
       ],
       "next_step": "具名範圍完成；父題剩餘條款不消失，後續改碼須重驗"
+    },
+    {
+      "id": "CORE-082",
+      "kind": "core",
+      "title": "共用診斷快照與離線HTML／JSON安全交接包",
+      "parents": [
+        "UI-066-R1"
+      ],
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "共用診斷快照與離線HTML／JSON安全交接包；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍",
+      "phase": "P7",
+      "decision_status": "使用者採納設計及直接開發指令",
+      "sources": [
+        "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
+        "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-082-FULL",
+          "expected": "共用診斷快照與離線HTML／JSON安全交接包；同份安全快照、檢查範圍／未知／歷史狀態、失敗恢復與不改Gate均需真Qt及故障驗收",
+          "tests": []
+        }
+      ],
+      "next_step": "完整實作及正式來源回歸"
+    },
+    {
+      "id": "CORE-083",
+      "kind": "core",
+      "title": "既有GUI報告保存重開與exact版本定位",
+      "parents": [
+        "UI-066-R2"
+      ],
+      "status": "NOT_IMPLEMENTED",
+      "completed": false,
+      "review_level": "NOT_REVIEWED",
+      "scope": "既有GUI報告保存重開與exact版本定位；DIAGNOSTIC_REPORTS_CONTRACT十二條完整驗收／Linux匿名SELF範圍",
+      "phase": "P7",
+      "decision_status": "使用者採納設計及直接開發指令",
+      "sources": [
+        "docs/dev/DIAGNOSTIC_REPORTS_CONTRACT.json",
+        "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-083-FULL",
+          "expected": "既有GUI報告保存重開與exact版本定位；同份安全快照、檢查範圍／未知／歷史狀態、失敗恢復與不改Gate均需真Qt及故障驗收",
+          "tests": []
+        }
+      ],
+      "next_step": "完整實作及正式來源回歸"
     }
   ]
 }
