@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI050-FULL-FORMAL",
+  "active_task": "REMAINING28-UI050-CLOSE-LIFECYCLE-FIX",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-WATCH-SOURCE.receipt.json",
   "last_confirmed_commit": "4d2e34faa6d5f9a2e05f8c837a8580cd788a2169",
   "latest_evidence_run": null,
@@ -18,9 +18,9 @@
   ],
   "next_tasks": [
     {
-      "id": "UI050-FULL-CLAUSE-FORMAL",
+      "id": "UI050-CLOSE-LIFECYCLE",
       "status": "IN_PROGRESS",
-      "next": "完整原12條已註冊，25新watch/index/center測試；107相關整合PASS，5張真Qt監看/既有UI003/修改版capture smoke PASS。凍結source後全687正式回歸與capture，141歷史完成+UI050共142要求不先結案。"
+      "next": "WATCH001來源22717fca1746864f173dd3764d9193ecf06d74d6，687/687PASS但1未處理Qt錯誤：Library已關閉→SourceWatch.tick→status.emit→SourceScanDialog.render_current再讀closed DB。整runFAIL，capture未執行；保留全部14文字證據先GitHub。修close listener/服務停用與頁面context guard，加專用真Qt測試後SOURCE2/全687plus正式002。141歷史及UI050未結案。"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-WATCH-FAILED001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-RELINK.json",
@@ -561,7 +563,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-WATCH-001",
+  "planned_evidence_run": "RUN-REMAINING28-WATCH-002",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -624,5 +626,8 @@
     "latest_remote_commit": "e828c2e4ce1109b4254701c6806a3a98b85c9c4d",
     "reason": "GUI/source integration checkpoint exceeded 10 minutes; recorded actual gap, immediate WIP preservation; no claim cadence was met"
   },
-  "latest_verification": "docs/dev/REMAINING28_RELINK_VERIFICATION.json"
+  "latest_verification": "docs/dev/REMAINING28_RELINK_VERIFICATION.json",
+  "failed_evidence_runs": [
+    "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json"
+  ]
 }

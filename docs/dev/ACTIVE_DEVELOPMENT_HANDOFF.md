@@ -30,3 +30,5 @@
 
 - UI050 SOURCE FREEZE：原12條完整註冊，新增25測試（index11/service7/center7）；107相關整合PASS，5張capture smoke與實際FS事件/UI003明確開始2alias來源/新版本保舊證據PASS。後續展示修正編號線索/未知作品中文/來源歸屬依原審核/共用解析保留身份；正式全687尚未執行，不用目標PASS當整父題。
 - 下一RUN-REMAINING28-WATCH-001凍結來源及治理直到全687與capture完成；只讀盤點UI051。141歷史完成仍pending，UI050也pending未結案。失敗107目標run為測試誤信A001在首50，已保留log/hash並改按實際首項id驗53總數/分頁/同版勾選；下一107全PASS。
+
+- 重要：RUN-REMAINING28-WATCH-001正式FAIL：687/687 tests PASS，source22717fca1746864f173dd3764d9193ecf06d74d6未改，但1 Qt未處理ProgrammingError；Library已關閉後SourceWatch.tick status通知使SourceScanDialog.render_current再次讀closed DB。capture因此未執行，不把687PASS當整runPASS。全部14文字metadata/log保留GitHub，無媒體例外新增。下一修Library.close lifecycle與service/context guards＋真Qt回歸，002新source重跑，不改001。

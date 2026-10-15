@@ -814,3 +814,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 25新專用測試，107相關整合PASS；真Qt/檔案系統事件/SQLite/既有UI003明確啟動/兩alias source IDs/修改版待審共5畫面capture PASS。原12條逐字登錄具名測試，未縮scope。
 - 補實際SQLite max_page_count導致FULL完整回滾、短暫read error保last verified hash、新版本仍人工審；已訓練來源改版保customer/styles/其他來源/舊training records不改。
 - 修正paging test不依scandir順序，保留失敗log/sha；最新107PASS。顯示用語/欄寬/編號候選/未知作品與原客戶審核權威明列。source freeze後RUN-REMAINING28-WATCH-001全687，未正式前不結案UI050。
+
+### RUN-REMAINING28-WATCH-001 failed global runtime gate
+- 來源22717fca1746864f173dd3764d9193ecf06d74d6，687/687單元測試PASS、0skip/sourceunchanged；但excepthook記1未處理Qt ProgrammingError（closed SQLite），完整run FAIL/capture1（未執行）。
+- 調用鏈：Library關閉但watch timer存活→tick.sync查closed DB→錯誤status通知→已保留SourceScanDialog.render_current二次讀closed DB。不能用catch status掩蓋，要綁close lifecycle停service/取消worker並保護stale dialog context。
+- 全14文字附件/claims/junit/runtimeerrors/log保持原樣，先checkpoint GitHub再修；原父題/CORE/GOV仍pending，新正式002待修後執行。
