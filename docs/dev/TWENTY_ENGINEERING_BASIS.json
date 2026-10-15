@@ -1,0 +1,79 @@
+{
+  "created_taipei": "2026-10-15T20:10:21.586618+08:00",
+  "contract": "docs/dev/FIXED70_NEXT_TWENTY_CONTRACT.json",
+  "sources": [
+    {
+      "name": "Qt graphics scene",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/widgets/graphicsview/qgraphicsscene.cpp",
+      "status": "READ",
+      "bytes": 247764,
+      "sha256": "815c79d3ab142c20bfe25de33657c0eaa8238f07258c7ddcffbabaf31f05b015",
+      "relevant_excerpt": "erase(it);\n            } else {\n                ++it;\n            }\n        }\n    }\n\n    // Disable selectionChanged() for individual items\n    ++selectionChanging;\n    int oldSelectedItemsSize = selectedItems.size();\n\n    // Update selected & hovered item bookkeeping\n    selectedItems.remove(item);\n    hoverItems.removeAll(item);\n    cachedItemsUnderMouse.removeAll(item);\n    if (item->d_ptr->pendingPolish) {\n        const int unpolishedIndex = ",
+      "use": "僅參照設計與公開介面，不複製第三方原碼或呼叫商用API"
+    },
+    {
+      "name": "SQLite pager",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/version-3.49.1/src/pager.c",
+      "status": "READ",
+      "bytes": 301577,
+      "sha256": "5ba35a5d177c5b89153036f296b4b55bb1e2501470f9054b5d68e4ae0273cb27",
+      "relevant_excerpt": "che subsystem or \"pager\".\n**\n** The pager is used to access a database disk file.  It implements\n** atomic commit and rollback through the use of a journal file that\n** is separate from the database file.  The pager also implements file\n** locking to prevent two processes from writing the same database\n** file simultaneously, or one process from reading the database while\n** another is writing.\n*/\n#ifndef SQLITE_OMIT_DISKIO\n#include \"sqliteInt.h\"",
+      "use": "僅參照設計與公開介面，不複製第三方原碼或呼叫商用API"
+    },
+    {
+      "name": "Adobe PDF Services workflow",
+      "url": "https://raw.githubusercontent.com/adobe/pdfservices-python-sdk-samples/master/README.md",
+      "status": "READ",
+      "bytes": 26001,
+      "sha256": "8aed35f9e78e08c251bc0f4c3ed941f7294b89ed9e9c8554fe88fcfc52b9a5ed",
+      "relevant_excerpt": "ocument.\n\n```$xslt\npython src/electronicseal/electronic_seal_with_time_stamp_authority.py\n```\n\n\n### Extract PDF\n\nThese samples illustrate extracting content of PDF in a structured JSON format along with the renditions inside PDF. \nThe output of SDK extract operation is Zip package. The Zip package consists of following:\n\n* The structuredData.json file with the extracted content & PDF element structure. See the [JSON schema](https://opensource.ado",
+      "use": "僅參照設計與公開介面，不複製第三方原碼或呼叫商用API"
+    }
+  ],
+  "math": [
+    {
+      "method": "來源座標變換",
+      "formula": "source_x=crop_x+local_x*crop_w/work_width; mm=CSS_px*25.4/96",
+      "validation": "真實Inkscape雙作品與transform；CLI小數序列化採0.001mm測試容差"
+    },
+    {
+      "method": "矩形包含與唯一區域指派",
+      "formula": "每既有框完整包含於且僅屬一個新作品區域，否則阻擋拆分／合併",
+      "validation": "不遺失原框；不同來源／重複ID／跨區域均拒絕"
+    },
+    {
+      "method": "增量依賴DAG",
+      "formula": "H(source pins,facts,matched rule decisions,sample revisions,cache hashes)",
+      "validation": "只重算指紋改變單元；不按全庫epoch讓無關作品全部失效"
+    },
+    {
+      "method": "吸附與對齊",
+      "formula": "以毫米最近參考線投影，容差由視窗像素/縮放換算；等距沿用既有邊界間距",
+      "validation": "鎖定／Logo比例／固定字級／安全區保護，預覽不等於套用"
+    }
+  ],
+  "reuse_map": [
+    {
+      "feature": "來源幾何",
+      "reuse": "Inkscape query-all、既有importer/cache/source proofs",
+      "avoid": "自行重寫SVG transform與字形輪廓引擎"
+    },
+    {
+      "feature": "訓練續行／版本",
+      "reuse": "同一TrainingStore、既有SAMPLE/DATASET/USE、SQLite WAL/事務/CAS",
+      "avoid": "另一套客戶／訓練／訂單庫"
+    },
+    {
+      "feature": "畫布／物件",
+      "reuse": "Qt Graphics View、既有ObjectTools／ObjectEdit歷史／共享實體模型",
+      "avoid": "平行選取模型、原稿重繪及第二套持久Undo引擎"
+    },
+    {
+      "feature": "數位檔與商用流程",
+      "reuse": "既有Qt/pypdf輸出與Adobe公開來源→候選→檢查／明確發布思路",
+      "avoid": "商用私有演算法臆測、付費API或未授權資產外傳"
+    }
+  ],
+  "software_versions": "沿用requirements-lock及THIRD_PARTY；沒有為研究安裝新商用SDK",
+  "limitations": "研究來源是思路與介面依據，不能代替實際測試／獨立覆核。SQLite參照版本不冒充當前runtime版本。"
+}

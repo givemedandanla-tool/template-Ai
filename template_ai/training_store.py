@@ -173,6 +173,22 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
             if self.pins(work_id) != expected_pins or record['pins'] != expected_pins: raise ValueError('來源或作品範圍已變更')
             ids = sorted(observation_ids)
             if not ids or len(ids) != len(set(ids)) or not set(ids) <= {o['id'] for o in record['observations']}: raise ValueError('明列有效且不重複的觀察範圍')
+            previous=record.get('confirmation')
+            if previous and previous['observations_digest']==digest(record['observations']) and previous['pins']==expected_pins:
+                ids=sorted(set(ids)|set(previous['observation_ids']))
+            # Accumulate correction evidence without creating or enabling a global rule.
+            prior=next((h for h in self.history('FACTS',work_id) if h['after'].get('confirmation') and
+                h['after'].get('pins',{}).get('source_hash')==expected_pins['source_hash'] and
+                digest(h['after']['observations'])!=digest(record['observations'])),None)
+            if prior:
+                old={o['id']:o for o in prior['after']['observations']}
+                for observation in record['observations']:
+                    before=old.get(observation['id']);keys=('text','slot_id','classification','region')
+                    if observation['id'] in ids and before and any(before.get(k)!=observation.get(k) for k in keys):
+                        hint_id=digest([work_id,prior['revision'],record['revision'],observation['id']])
+                        if not self.get('RULE_HINT',hint_id):self._write('RULE_HINT',hint_id,dict(state='PENDING',risk='HIGH',work_id=work_id,
+                            observation_id=observation['id'],pins=expected_pins,before={k:before.get(k) for k in keys},after={k:observation.get(k) for k in keys},
+                            actor=actor,reason='單例修正證據；跨作品適用條件／反例尚待驗證，不自動啟用',created=time.time()),0,'confirmed_correction_rule_hint_proposed')
             record['confirmation'] = {'actor': actor, 'timestamp': time.time(), 'observation_ids': ids, 'observations_digest': digest(record['observations']), 'pins': expected_pins,
                                       'source_stat': list(proof.stat), 'scope': 'EXACT_WORK_FACTS_ONLY; NOT_SAMPLE_OR_RULE_APPROVAL'}
             record['state'] = 'CONFIRMED'

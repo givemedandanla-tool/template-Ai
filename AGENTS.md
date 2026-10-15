@@ -13,6 +13,8 @@
 
 ## 核心宗旨
 
+- 每個工作包需參照數學演算法、成熟開源與商用軟體公開思路；保存實際來源／版本／hash、重用選擇及驗證，不重造已有引擎或平行資料庫。本輪具體依據見`docs/dev/TWENTY_ENGINEERING_BASIS.json`。
+
 - 零例行問答、持久化優先。使用既有授權與要求自主推進，不反覆詢問是否繼續、是否保存、是否使用已定方案；必要未決資訊記為 BLOCKED，先做其他已授權工作。遵守較高優先指令要求的必要狀態訊息。
 - **每個可恢復工作包、每 10 分鐘、中斷前、環境／資料結構變更前後都建立 checkpoint**。本機 ZIP 只是 PREPARED；GitHub commit/tree 逐檔讀回後才是 REMOTE_VERIFIED，收據也要保存 GitHub。不得覆寫歷史 checkpoint。
 - 首先執行 `python tools/dev_governance.py check`；讀取下一個已核准且未完成的要求。框架或證據不完整先修治理，不把未測試功能標為完成。

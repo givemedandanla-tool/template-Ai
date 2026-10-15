@@ -137,6 +137,7 @@ class AutomaticTraining:
             source=self.library.add_source(path,result['payload']);source=self.library.source(source['id'])
         if not healthy_source(source):raise ValueError('來源或衍生快取失效，需重新核對')
         works=self.library.artworks(source['id'])
+        works=[w for w in works if w['payload'].get('segmentation_state')!='SUPERSEDED']
         if item.get('work_scope'):
             if self.store.pins(item['work_scope'][0])!=item['expected_pins']:raise ValueError('選定作品在啟動前又變更，未套用舊分析')
             works=[w for w in works if w['id'] in item['work_scope']]
