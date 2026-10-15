@@ -753,3 +753,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 4頁共用GUI、獨立SQLite worker、本次密碼排程、scope/依賴、成功憑證/隔離測試/現有SQL差異/新副本入口、取消、3次驗證限制與關閉timer守衛已接入。
 - 32新備份測試；46含Logo目標回歸PASS；真Qt capture scope/history/difference smoke PASS。補字型/兩尺寸Logo/背景/merge-alias再split搬遷，Logo/BG原核准只作歷史，不放寬此機正式Gate。
 - cadence偏離：上個checkpoint receipt 17:28:24 UTC到本次18:26+已有長間隔，GUI整合未每10分保存；如實記錄，不歸因工具。立即保存WIP，下一綁完整10原條款與source正式全回歸。
+
+### UI047 full original-clause source freeze
+- 完整10原條款逐字保留，綁定32備份測試及實作檔；沒有縮減父題範圍或把目標回歸冒充結案。成熟依據補restic v0.18.0保留聯集，明列本案wall-clock與其latest-snapshot差別。
+- 已檢查實際scope截圖並改善表格欄寬；排程結束主視窗呈現真實結果。以新來源正式全回歸及capture後再判定完成。

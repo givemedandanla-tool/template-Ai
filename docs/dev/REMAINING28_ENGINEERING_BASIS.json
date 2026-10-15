@@ -30,6 +30,11 @@
       "url": "https://raw.githubusercontent.com/MicrosoftDocs/sql-docs/live/docs/relational-databases/backup-restore/restore-a-database-backup-using-ssms.md",
       "sha256": "03b5d37793215c56ae2690bfee3ddace118032a4d1b4a340fa693332a258883b",
       "inspected": "Section C restores Sales to a distinct SalesTest while Sales remains; use isolated destination and compare rather than overwriting newer active data"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/restic/restic/v0.18.0/doc/060_forget.rst",
+      "sha256": "57cb471b45b3a528d2a9a832ace3eb8014241783bd0825a405bfd8a505708e0d",
+      "inspected": "Retention latest-count and within-window use union rather than intersection; preserve last verified complete backup. Our age anchor is wall-clock now, distinct from restic latest-snapshot anchor; reference only, restic executable is not invoked."
     }
   ],
   "mathematical_basis": [

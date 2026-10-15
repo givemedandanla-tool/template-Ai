@@ -84,6 +84,7 @@ class BackupScheduler(QObject):
                     self.set_status('排程備份實際建立且加密驗證通過'+extra)
                 else:self.set_status('排程未完成：'+payload['error']+'；上次成功紀錄保留，可手動補做')
             except Exception as error:self.set_status('已取得實際結果；排程狀態未改寫：'+str(error))
+            self.window.statusBar().showMessage(self.status)
         self.set_status('已送本機背景佇列，完成前不宣稱成功')
         try:self.window.run_job('本機排程備份',work,done)
         except Exception:self.running=False;raise
@@ -130,6 +131,7 @@ class BackupManagerDialog(QDialog):
         self.partial=QCheckBox('明確接受部分包：不能完整離線還原');bar.addWidget(self.partial);layout.addLayout(bar)
         bar=QHBoxLayout();self.button(bar,'核對範圍／依賴與實際資產',self.preview_backup);self.create_button=self.button(bar,'確認範圍並立即加密備份',self.create);self.create_button.setEnabled(False);layout.addLayout(bar)
         self.backup_tree=QTreeWidget();self.backup_tree.setHeaderLabels(['項目','實際隨包帶入','外部／缺失或原因','狀態']);layout.addWidget(self.backup_tree,1)
+        for column,width in enumerate((160,230,270,350)):self.backup_tree.setColumnWidth(column,width)
         self.tabs.addTab(widget,'立即備份')
 
     def build_restore(self):
@@ -139,6 +141,7 @@ class BackupManagerDialog(QDialog):
         self.mode=QComboBox();self.mode.addItems(['還原到新空位置','現有環境先比對，再還原到獨立新副本']);self.mode.currentIndexChanged.connect(self.invalidate_restore);layout.addWidget(self.mode)
         label=QLabel('兩種模式均保留目前較新的資料。現有版本差異只供核對，無自動合併、回寫或覆蓋；新副本需重新檢查字型／來源／學習有效性及正式輸出。');label.setWordWrap(True);layout.addWidget(label)
         self.restore_tree=QTreeWidget();self.restore_tree.setHeaderLabels(['分類','備份資料量','目前資料量','版本／缺失差異']);layout.addWidget(self.restore_tree,1)
+        for column,width in enumerate((200,130,130,550)):self.restore_tree.setColumnWidth(column,width)
         self.restore_ack=QCheckBox('已逐類核對差異；接受隔離副本及未驗證項目，保留目前環境');layout.addWidget(self.restore_ack)
         row=QHBoxLayout();self.button(row,'解密驗證與還原前差異預覽',self.preview_restore);self.restore_button=self.button(row,'確認並還原到新位置',self.restore);self.restore_button.setEnabled(False)
         self.open_button=self.button(row,'在獨立視窗檢查還原副本',self.open_copy);self.open_button.setEnabled(False);layout.addLayout(row)
@@ -160,6 +163,7 @@ class BackupManagerDialog(QDialog):
         widget=QWidget();layout=QVBoxLayout(widget)
         label=QLabel('最近最多500個成功憑證，每頁50筆；先前建立成功不等於目前檔案仍完整。移轉帶入的舊憑證不會自動取得刪檔權利。');label.setWordWrap(True);layout.addWidget(label)
         self.history_tree=QTreeWidget();self.history_tree.setHeaderLabels(['檔名／建立時間','範圍','上次狀態／還原測試','目前位置']);layout.addWidget(self.history_tree,1)
+        for column,width in enumerate((250,160,300,350)):self.history_tree.setColumnWidth(column,width)
         row=QHBoxLayout();self.button(row,'上一頁',lambda:self.page(-1));self.button(row,'下一頁',lambda:self.page(1));self.button(row,'重新讀取憑證',self.refresh_history);self.button(row,'以本次密碼重新驗證',self.verify);self.button(row,'真正隔離測試還原',self.test_restore);self.button(row,'使用所選包做還原預覽',self.use_record);self.button(row,'檢視輪替恢復區',self.show_recovery);layout.addLayout(row)
         self.tabs.addTab(widget,'備份清單／驗證')
 
