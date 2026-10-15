@@ -35,6 +35,7 @@ class FontRepairTests(unittest.TestCase):
         self.manager = FontManager(self.library)
         self.addCleanup(self.manager.close)
         self.asset = self.manager.import_font(FONT, approved=True)
+        self.asset = self.manager.record_output_rights(self.asset,'synthetic-test','Environment font fixture, test export only',True)
         self.target = Path(self.asset["path"])
 
     def test_missing_copy_restored_and_reopened_without_changing_published_pin(self):

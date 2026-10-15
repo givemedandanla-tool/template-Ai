@@ -198,8 +198,14 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
         raise ValueError("正式數位輸出被阻擋：" + "；".join(candidate.issues))
     if not preview:
         from .font_evidence import output_rights_errors
-        rights_issues = [error for item in candidate.items if item.slot.kind != 'logo'
-                        for error in output_rights_errors(item.slot.font_asset, target.suffix.lstrip('.'))]
+        rights_issues=[];checked_rights=set()
+        for item in candidate.items:
+            asset=item.slot.font_asset
+            if item.slot.kind=='logo' or asset is None:continue
+            key=(asset.get('hash'),asset.get('path'),repr(asset.get('usage_rights')))
+            if key in checked_rights:continue
+            checked_rights.add(key)
+            rights_issues.extend(output_rights_errors(asset,target.suffix.lstrip('.')))
         if rights_issues:
             raise ValueError('；'.join(dict.fromkeys(rights_issues)))
     if preview and "PREVIEW" not in target.stem.upper():

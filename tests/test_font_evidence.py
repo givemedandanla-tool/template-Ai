@@ -44,6 +44,8 @@ class FontEvidenceTests(unittest.TestCase):
         approved=self.manager.record_output_rights(asset,'synthetic-test','test-only fixture attestation',True)
         self.assertEqual(output_rights_errors(approved,'png'),[])
         self.assertTrue(output_rights_errors(approved,'pdf'))
+        forged=copy.deepcopy(approved);forged['font_evidence']['fs_type']=0
+        self.assertTrue(output_rights_errors(forged,'pdf'))  # Re-read actual OS/2, not caller metadata.
         self.assertEqual(asset['usage_rights'],{})
         with self.assertRaisesRegex(ValueError,'已改變'):
             self.manager.record_output_rights(asset,'test','stale attestation')
@@ -65,3 +67,29 @@ class FontEvidenceTests(unittest.TestCase):
         approved=self.manager.record_output_rights(asset,'test','synthetic test',True)
         Path(approved['path']).write_bytes(b'changed')
         self.assertTrue(font_errors(approved,approved['families'][0]))
+
+    def test_actual_export_blocks_unknown_rights_allows_labelled_preview_and_only_new_explicit_binding_gets_rights(self):
+        from template_ai.model import Template,Slot,Rect
+        from template_ai.layout import generate
+        from template_ai.render import export
+        asset=self.manager.import_font(SANS,approved=True)
+        template=Template('Synthetic rights',90,54,[Slot('name','p1',Rect(5,5,75,12),font=asset['families'][0],font_asset=asset,size_pt=12)])
+        self.library.save_template(template);self.library.publish(template)
+        candidate=generate(template,[{'name':'Example Person'}],[],{})
+        self.assertTrue(candidate.valid,candidate.issues)
+        with self.assertRaisesRegex(ValueError,'授權'):export(candidate,self.root/'FINAL.png',96)
+        self.assertFalse((self.root/'FINAL.png').exists())
+        self.assertGreater(export(candidate,self.root/'PREVIEW.png',96,True).stat().st_size,100)
+        approved=self.manager.record_output_rights(asset,'synthetic-test','Synthetic test fixture rights',True)
+        with self.assertRaisesRegex(ValueError,'授權'):export(candidate,self.root/'STILL-OLD-FINAL.png',96)
+        from template_ai.model import new_id
+        new=copy.deepcopy(template);new.id=new_id();new.version+=1;new.state='DRAFT';new.slots[0].font_asset=approved
+        self.library.save_template(new);self.library.publish(new)
+        fresh=generate(new,[{'name':'Example Person'}],[],{})
+        for ext in ('png','pdf'):self.assertGreater(export(fresh,self.root/('NEW-FINAL.'+ext),96).stat().st_size,100)
+        mixed=copy.deepcopy(new);mixed.id=new_id();mixed.version+=1;mixed.state='DRAFT'
+        mixed.slots.append(Slot('phone','p1',Rect(5,25,75,12),font=asset['families'][0],font_asset=asset,size_pt=12))
+        self.library.save_template(mixed);self.library.publish(mixed)
+        candidate=generate(mixed,[{'name':'Example Person','phone':['0100']}],[],{})
+        self.assertTrue(candidate.valid,candidate.issues)
+        with self.assertRaisesRegex(ValueError,'授權'):export(candidate,self.root/'MIXED-FINAL.png',96)

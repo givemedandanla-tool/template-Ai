@@ -84,12 +84,18 @@ def output_rights_errors(asset, output_format):
     if asset is None:
         return []  # Host font rights are reported separately by the inventory.
     rights = asset.get("usage_rights", {})
-    if not rights.get("print_export") or not rights.get("actor") or not rights.get("basis"):
+    if not isinstance(rights,dict) or rights.get('print_export') is not True or not all(isinstance(rights.get(k),str) and rights[k].strip() for k in ('actor','basis')):
         return ["匯入字型尚無印製／轉出授權確認，僅允許非正式預覽"]
     if output_format.lower() == "pdf":
-        evidence = asset.get("font_evidence", {})
-        if not rights.get("pdf_embedding"):
+        if rights.get("pdf_embedding") is not True:
             return ["PDF字型嵌入尚未明確授權"]
+        try:
+            actual=inspect_font(asset['path'])
+            if actual['hash']!=asset['hash'] or len(actual['faces'])!=1:
+                return ['PDF字面身份已改變／不唯一，請重新核對']
+            evidence=actual['faces'][0]
+        except (ValueError,OSError,KeyError):
+            return ['PDF實際字型嵌入證據無法重新核對']
         if evidence.get("fs_type") is None or evidence.get("fs_type", 0) & (2 | 0x100 | 0x200):
             return ["字型嵌入未知／限制／禁止子集／僅點陣；目前PDF引擎不能保證遵守，阻擋正式PDF"]
     return []

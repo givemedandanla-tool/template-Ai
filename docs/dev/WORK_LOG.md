@@ -726,3 +726,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 已補身份處置、可人工讀取雙欄預覽/逐項核對後才另行確認、目前合法新值與刪除/新增欄位/共享關係呈現，以及本機稽核匯出與已結束快照去個資。有效合併映射在拆分前不可清理。
 - 12新identity測試PASS；61相關合併回歸PASS；實際Qt preview/export/merge/split capture smoke3 PASS、0未處理回呼。原UI046 11條完整normative逐條具名綁定，歷史未開發狀態原文保留作context。
 - 下一步固定來源commit正式全回歸，未驗收前不更新completed；其餘27父題與Windows/真AI/參考硬體仍未完成。
+
+### UI046 formal attempt 001 FAIL preserved / attempt 002 preparation
+- 來源33783b9812b05bab837492709b18fde045f07a9f，619測試617PASS/1FAIL/1ERROR，0未處理Qt回呼，source未改；capture未執行。整體FAIL，全部claims NOT_VERIFIED，不結案。
+- 補原GUI詳細區的UNKNOWN可見狀態；字型修復測試先明確記錄合成fixture輸出用途再建立發布版，保留全部修復/輸出/已發布pin斷言。新增真PNG/PDF：未知授權阻擋、帶標記preview可用、只有新草稿明確adopt才用新授權，混合已/未核對綁定也阻擋。PDF重新讀實際OS2，不信可偽造metadata。
+- 次輪正式固定來源回歸前，37相關測試重驗；仍不宣稱全28完成。

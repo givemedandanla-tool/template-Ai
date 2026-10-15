@@ -228,7 +228,7 @@ class CustomerDialog(QDialog):
             from .customer_identity_dialog import IdentityPreviewDialog
             plan=self.identity_service().comparison(*(self.results[i]['id'] for i in selected))
             self.identity_comparison=IdentityPreviewDialog(self.window,self.store,plan,self);self.identity_comparison.open()
-            self.details.setPlainText('請在雙欄比對工作台核對人物／公司、來源與版型。相同值僅為線索。');self.status.setText('只讀線索比對；身份UNKNOWN、不合併')
+            self.details.setPlainText('身份UNKNOWN。請在雙欄比對工作台核對人物／公司、來源與版型。相同值僅為線索。');self.status.setText('只讀線索比對；身份UNKNOWN、不合併')
         self.guarded(action)
     def backup(self):
         def action():

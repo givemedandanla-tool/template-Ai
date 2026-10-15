@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-IDENTITY-SOURCE2"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TWENTYEIGHT-FULL-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-TWENTYEIGHT-END.json",
@@ -562,7 +564,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-IDENTITY-001",
+  "planned_evidence_run": "RUN-REMAINING28-IDENTITY-002",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -572,6 +574,14 @@
       "skipped": 0,
       "source_unchanged": true,
       "registered_parent_clauses": 87
+    },
+    {
+      "run": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-001/run.json",
+      "status": "FAIL",
+      "passed": 617,
+      "tests": 619,
+      "unhandled_runtime_errors": 0,
+      "reason": "GUI comparison UNKNOWN label; new imported-font export-rights premise missing in legacy repair fixture"
     }
   ],
   "last_completed_contract": "docs/dev/FIXED70_NEXT_TWENTYEIGHT_CONTRACT.json",
