@@ -1,5 +1,9 @@
 # 開發工作紀錄
 
+## 2026-10-15：確認問題資訊內部可讀與外部可保存
+
+使用者要求程式內可見、程式外能保存。核對現有輸入／候選／訓練品質GUI，尚未具備統一報告保存與重開；作品PDF輸出不是診斷報告。新增具名決策、原R1/R2各1個待驗收子條件及來源引用，更新STATE／交接／提案頂端以區分已確認需求與未採納細節；不改歷史決策及CORE既有驗收。開始publication-scope PASS（348已知）；只做文件與治理核對，未重跑348或宣稱報告已完成。父狀態與CORE81／GOV7保持，新增0／完成0／原topic scope修訂2，checkpoint保存GitHub讀回。
+
 ## 2026-10-15：R1／R2按現有程式設計提案（未定案）
 
 使用者要求推測實際需求並提出方案；readback branch ae1db494。分析input_diagnostics/Candidate字串issues/layout session真進度/training_quality typed issues/quality_evaluation/render安全寫檔及diagnostic_routes。提出按需安全ZIP（HTML+JSON+manifest）、共用快照與白名單轉換、本機版本定位與建議7天索引，不輸出原稿或個資包；12項驗收均PLANNED未執行。只有docs/STATE/HANDOFF變更，未更新REQUIREMENTS／source／完成數；2受阻與3延後維持，CORE81與GOV7未增加。治理publication-scope開工PASS，依原348有效source核對，未重跑程式測試或宣稱報告已實作。新提案將checkpoint保存GitHub供Human/GPT讀取。

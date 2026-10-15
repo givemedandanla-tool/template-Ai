@@ -12,6 +12,7 @@
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
+    "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
     "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md",
     "docs/dev/SEVENTY_FINAL_VERIFICATION.json",
     "docs/dev/NEXT_AFTER_SEVENTY.md",
@@ -24,7 +25,7 @@
     {
       "id": "UI-066-R1/R2-PROPOSAL",
       "status": "PROPOSED_PENDING_ADOPTION",
-      "action": "已根據現有功能完成可交接快照方案，先讀提案；尚未採納／實作。其他已核准工作可依原計畫續行。"
+      "action": "先讀新決策：程式內閱讀、程式外保存已確認，不重問必要性；由提案收斂內容／格式／安全交接契約，未實作。"
     },
     {
       "id": "UI-016/017/043/044/045",
@@ -40,15 +41,17 @@
   "blocked": [
     {
       "id": "UI-066-R1",
-      "reason": "只處理真缺口，不重問診斷和預覽",
-      "resume_when": "Human提供必要性／格式／安全交接具體資訊",
-      "design_proposal": "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md"
+      "reason": "內部閱讀與外部保存必要性已確認；最小內容／格式與安全交接實作契約仍需由既有提案收斂，並非程式功能已完成",
+      "resume_when": "依已確認決策及設計提案完成實作契約；不得重問是否需要程式內閱讀／程式外保存",
+      "design_proposal": "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md",
+      "confirmed_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md"
     },
     {
       "id": "UI-066-R2",
-      "reason": "只處理真缺口，不重問診斷和預覽",
-      "resume_when": "Human提供必要性／格式／安全交接具體資訊",
-      "design_proposal": "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md"
+      "reason": "內部閱讀與外部保存必要性已確認；最小內容／格式與安全交接實作契約仍需由既有提案收斂，並非程式功能已完成",
+      "resume_when": "依已確認決策及設計提案完成實作契約；不得重問是否需要程式內閱讀／程式外保存",
+      "design_proposal": "docs/dev/UI066_R1_R2_DESIGN_PROPOSAL.md",
+      "confirmed_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md"
     }
   ],
   "deferred": [
@@ -56,10 +59,12 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-R1R2-VISIBILITY"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEN-TRAINING-QUEUE-001/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261015-SEVENTY-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-SEVENTY-END.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261015-R1R2-VISIBILITY-BEGIN.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-R1R2-VISIBILITY-END.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
   "goal_milestone": {
@@ -361,7 +366,7 @@
   "design_proposals": [
     {
       "id": "PROPOSAL-UI066-R1R2-20261015",
-      "status": "PROPOSED_NOT_ADOPTED_NOT_IMPLEMENTED",
+      "status": "CORE_USER_NEED_CONFIRMED_DETAILS_PROPOSED_NOT_IMPLEMENTED",
       "requirements": [
         "UI-066-R1",
         "UI-066-R2"
@@ -370,7 +375,16 @@
       "base_commit": "ae1db49469f546e6b9ac7ad715304112f4ce527d",
       "source_evidence": "docs/evidence/runs/RUN-SEVENTY-PARENTS-002/run.json",
       "functional_counts_changed": false,
-      "decision_pending": "本輪僅要求根據當前程式提出設計；未當作Human已採納、未解除BLOCKED、未開始產品實作"
+      "decision_pending": "內外閱讀保存必要性已確認；未當作整份提案採納，格式／內容與安全交接仍需收斂；未實作",
+      "confirmed_decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md"
     }
-  ]
+  ],
+  "confirmed_diagnostic_requirement": {
+    "decision": "docs/decisions/2026-10-15-DIAGNOSTIC-IN-APP-AND-SAVED.md",
+    "in_app_readable": true,
+    "outside_app_saved_readable": true,
+    "implementation_status": "NOT_IMPLEMENTED_UNIFIED_REPORT",
+    "whole_proposal_adopted": false,
+    "functional_completion_delta": 0
+  }
 }
