@@ -6,6 +6,7 @@ from PySide6.QtCore import Qt,QTimer
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QPushButton,QLabel,QTableWidget,QTableWidgetItem,QComboBox,QSpinBox,QFileDialog,QMessageBox,QDialogButtonBox,QProgressBar)
 from .batch_import import preflight,convert_item
 from .font_review import fingerprint
+from .worker_callbacks import JobCallbacks
 import copy
 
 
@@ -55,22 +56,28 @@ class BatchImportDialog(QDialog):
                         b=self.store.get(self.batch['id']);self.batch=self.store.interrupt_owned(b['id'],b['revision'],error);self.render(self.batch['items']);self.refresh_history()
                     except Exception as blocked:self.status.setText(self.status.text()+'／資料完整性仍阻擋：'+str(blocked))
             finally:self.controls()
-        try:self.window.run_job(message,work,done)
-        except Exception as error:
+        def failed(error):
             self.busy=False;self.running=False;self.status.setText(str(error))
             if self.batch:
                 try:
-                    b=self.store.get(self.batch['id']);self.batch=self.store.interrupt_owned(b['id'],b['revision'],error)
+                    b=self.store.get(self.batch['id']);self.batch=self.store.interrupt_owned(b['id'],b['revision'],error);self.render(self.batch['items']);self.refresh_history()
                 except Exception as blocked:self.status.setText(str(error)+'／恢復仍阻擋：'+str(blocked))
             self.controls()
+        try:self.window.run_job(message,work,JobCallbacks(done,failed,self.cancel_event))
+        except Exception as error:failed(error)
     def scan(self):
         if self.running or self.window.busy:return
-        self.report=None;self.batch=None;self.cancel_event.clear();paths=list(self.paths);sources=self.window.library.list_sources();page=self.page.value()
+        self.report=None;self.batch=None;self.cancel_event.clear();paths=list(self.paths);root=self.window.library.root;page=self.page.value()
         def done(result):
             if 'error' in result:self.status.setText('預檢未完成：'+result['error']);return
             self.report=result['value'];self.render(self.report['items']);self.summary.setText(f"{len(self.report['items'])}件；檔案exact重複 {self.report['file_duplicates']}，健康重用 {self.report['reuse_candidates']}；作品重複 UNKNOWN，模板相似 UNKNOWN")
             self.status.setText('預檢完成；未改原檔／未學習／未發布，請核對每列摘要。')
-        self.run_background('只讀掃描與SHA-256預檢',lambda:preflight(paths,sources,page,self.cancel_event),done)
+        def inspect():
+            from .storage import Library
+            library=Library(root)
+            try:return preflight(paths,library.sources_for_content,page,self.cancel_event)
+            finally:library.close()
+        self.run_background('只讀掃描與SHA-256預檢',inspect,done)
     def render(self,items):
         self.table.setRowCount(len(items))
         for i,r in enumerate(items):

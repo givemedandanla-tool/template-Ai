@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI051-FORMAL002-BLOCKING-LAUNCH-FIX",
+  "active_task": "REMAINING28-UI051-DEFERRED-CALLBACKS-WIP",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-RUNTIME002-LAUNCH-REGRESSION.receipt.json",
   "last_confirmed_commit": "603c260ce60544f0e282b5d4104d2ae6fe2354b5",
   "latest_evidence_run": null,
@@ -20,7 +20,7 @@
     {
       "id": "UI051-LOW-LOAD-FAIR-QUEUE",
       "status": "IN_PROGRESS",
-      "next": "002固定source前408PASS，409卡在同步pool.start錯誤被run_job改成阻塞QMessageBox，已保存stack/partial test journal且TERM。已恢復legacy同步raise與deferred JobCallbacks.error/cancel介面、7舊guarded面板接入；launch-fix001在跑。先結果與batch_dialog deferred cancel/error接入、相關broad targets，ACK新source後用新003全747，禁止改002/把部分PASS當完整。"
+      "next": "24 launch/Qt PASS、106 broad中1早於QTimer step的fixture assert失敗，改等實際waiting入口後9/9 PASS（含真resource等待cancel持久INTERRUPTED與legacy SKIPPED alias可見）。所有guarded wrappers同3arg JobCallbacks(error/cancel)，source/cancel不假保存，batch定點source lookup。all-callbacks002在跑但誤列test_source_links/test_exception_center需補正用source_relink/import_exceptions；新source749正式003之前完整broad/capture/source checkpoint。"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-UI051-OWNED-CALLBACKS-WIP"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-WATCH.json",

@@ -22,6 +22,9 @@ def read_page(root,mode='SOURCE',query='',source_id=None,offset=0):
         tables={r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
         active="COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED'"
         summary=dict(registered_source_pages=db.execute('SELECT count(*) FROM sources').fetchone()[0],registered_original_paths=db.execute('SELECT count(DISTINCT original_path) FROM sources').fetchone()[0],actual_active_works=db.execute('SELECT count(*) FROM artworks WHERE '+active).fetchone()[0],superseded_work_history=db.execute("SELECT count(*) FROM artworks WHERE json_extract(payload,'$.segmentation_state')='SUPERSEDED'").fetchone()[0],indexed_candidates=store.count('SCAN_CANDIDATE'),saved_analysis_records=store.count('AUTO_UNIT'),human_confirmation_records=db.execute("SELECT count(*) FROM training_records WHERE kind='FACTS' AND json_type(payload,'$.confirmation')='object'").fetchone()[0],current_verified_reviewed_total=None)
+        pending_import=db.execute("SELECT count(*) FROM import_batches b,json_each(b.payload,'$.items') i WHERE json_extract(i.value,'$.source_id') IS NULL").fetchone()[0] if 'import_batches' in tables else 0
+        pending_auto=db.execute("SELECT count(*) FROM training_records b,json_each(b.payload,'$.items') i WHERE b.kind='AUTO_JOB' AND json_extract(i.value,'$.source_id') IS NULL").fetchone()[0]
+        summary['unregistered_preflight_scope_records']=pending_import+pending_auto
         # Global counts above are stored records; current validity is checked only for visible works.
         where=['1=1'];args=[];tokens=query.casefold().split()
         if mode=='SOURCE':
@@ -60,6 +63,7 @@ def read_page(root,mode='SOURCE',query='',source_id=None,offset=0):
         else:
             # Candidate and preflight scopes are explicit records, not extra registered files.
             sql="SELECT id,'SCAN_CANDIDATE' AS kind,json_extract(payload,'$.path') AS path,json_extract(payload,'$.source_hash') AS hash,json_extract(payload,'$.state') AS state FROM training_records WHERE kind='SCAN_CANDIDATE' UNION ALL SELECT j.id||':'||i.key,'AUTO_JOB',json_extract(i.value,'$.path'),json_extract(i.value,'$.source_hash'),json_extract(i.value,'$.state') FROM training_records j,json_each(j.payload,'$.items') i WHERE j.kind='AUTO_JOB' AND json_extract(i.value,'$.source_id') IS NULL"
+            if 'import_batches' in tables:sql+=" UNION ALL SELECT b.id||':'||i.key,'IMPORT_BATCH',json_extract(i.value,'$.path'),json_extract(i.value,'$.expected_hash'),json_extract(i.value,'$.status') FROM import_batches b,json_each(b.payload,'$.items') i WHERE json_extract(i.value,'$.source_id') IS NULL"
             text="ledger_casefold(id||' '||COALESCE(path,'')||' '||COALESCE(hash,''))"
             for token in tokens:where.append('instr('+text+',?)>0');args.append(token)
             wrapper=' FROM ('+sql+') WHERE '+' AND '.join(where);total=db.execute('SELECT count(*)'+wrapper,args).fetchone()[0]

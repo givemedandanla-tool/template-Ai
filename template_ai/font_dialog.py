@@ -2,6 +2,7 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QComboBox,QDialog,QDialogButtonBox,QDoubleSpinBox,QHBoxLayout,QLabel,QLineEdit,
     QPushButton,QTableWidget,QTableWidgetItem,QVBoxLayout)
+from .worker_callbacks import JobCallbacks
 from .font_catalog import STATUS_NAMES,analyze_font,build_inventory,filter_inventory,host_candidates
 
 
@@ -78,7 +79,7 @@ class FontCenterDialog(QDialog):
             if "error" in payload: self.status.setText("尚未完成核對："+payload["error"])
             else: done(payload["value"])
             self.analyze_button.setEnabled(self.selected() is not None)
-        self.window.run_job(message,guarded,finished)
+        self.window.run_job(message,guarded,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
 
     def refresh(self):
         if self.busy or self.window.busy: return

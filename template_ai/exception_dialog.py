@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QLineEdit,QComboBox,QTableWidget,QTableWidgetItem,QPlainTextEdit,QDialogButtonBox,QMessageBox,QInputDialog)
+from .worker_callbacks import JobCallbacks
 from .import_exceptions import exception_rows,prepare_retry,apply_action
 from .batch_dialog import BatchImportDialog,navigation_clean
 from .font_review import fingerprint
@@ -90,7 +91,7 @@ class ImportExceptionDialog(QDialog):
                 self.details.setPlainText(json.dumps(report,ensure_ascii=False,indent=2));self.status.setText('已核對舊／新hash差異；仍未解除隔離，須明確確認才只重試所選項。')
             except Exception as error:self.plan=None;self.status.setText('未完成：'+str(error))
             finally:self.controls()
-        try:self.window.run_job('例外來源重試預檢',work,done)
+        try:self.window.run_job('例外來源重試預檢',work,JobCallbacks(done,lambda error:done({'error':str(error)})))
         except Exception as error:self.busy=False;self.plan=None;self.status.setText(str(error));self.controls()
     def apply_retry(self):
         if not self.plan or self.busy or self.window.busy:return

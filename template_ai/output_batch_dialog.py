@@ -5,6 +5,7 @@ from pathlib import Path
 from PySide6.QtCore import Qt,QObject,Signal,QUrl
 from PySide6.QtGui import QDesktopServices
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QTableWidget,QTableWidgetItem,QLineEdit,QComboBox,QPushButton,QPlainTextEdit,QMessageBox
+from .worker_callbacks import JobCallbacks
 from .output_batch import OutputBatch
 from .multi_size import MultiSizeWorkflow
 
@@ -58,7 +59,7 @@ class OutputBatchDialog(QDialog):
                 self.engine.items=result['items']
                 for row in self.engine.items:self.update_row(row)
                 counts={state:sum(r['status']==state for r in self.engine.items) for state in ('SUCCESS','FAILED','BLOCKED','SKIPPED','PLANNED')};self.status.setText('逐檔實際結果 '+str(counts)+'；已成功檔案受保護，未完成者不可算成功。');self.owner.last_output=self.engine.items
-            self.window.run_job('逐檔安全輸出／精確重試',worker,finished)
+            self.window.run_job('逐檔安全輸出／精確重試',worker,JobCallbacks(finished,lambda error:finished({'error':str(error)}),self.cancel))
         except Exception as error:self.running=False;self.start.setEnabled(any(row['status']=='PLANNED' for row in self.engine.items));self.retry.setEnabled(any(row['status']=='FAILED' and row['retryable'] for row in self.engine.items));self.status.setText('未開始：'+str(error))
     def open_folder(self):
         ids=self.ids()

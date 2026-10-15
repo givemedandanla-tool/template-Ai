@@ -4,6 +4,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QCheckBox, QComboBox, QDialog, QDialogButtonBox, QFileDialog,
     QHBoxLayout, QLabel, QMessageBox, QPushButton, QTableWidget, QTableWidgetItem, QVBoxLayout)
 
+from .worker_callbacks import JobCallbacks
 from .source_discovery import discover_source_roots
 from .source_links import verify_source
 
@@ -115,7 +116,7 @@ class SourceRelinkDialog(QDialog):
                 callback(payload["value"])
             except Exception as error:
                 self.status.setText("未完成更新：" + str(error))
-        self.window.run_job(message, work, done)
+        self.window.run_job(message, work, JobCallbacks(done,lambda error:done({'error':str(error)}),self.cancel_event))
 
     def search(self):
         roots=list(self.roots or ([self.root] if self.root else []))

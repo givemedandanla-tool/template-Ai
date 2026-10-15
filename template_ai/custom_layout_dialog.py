@@ -4,6 +4,7 @@ from pathlib import Path
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QDoubleSpinBox,QLineEdit,QCheckBox,QPushButton,QPlainTextEdit,QMessageBox
+from .worker_callbacks import JobCallbacks
 from .custom_layout import CustomLayout
 from .customers import digest
 from .render import render_image
@@ -39,7 +40,7 @@ class CustomLayoutDialog(QDialog):
                 if result.get('error'):self.status.setText('未求得候選：'+result['error']);return
                 self.plan=result['plan'];self.status.setText(self.plan['status']+'：'+'；'.join(self.plan['issues']));self.details.setPlainText('明定範圍 '+str(policy)+'\n實測 '+str(self.plan['measurements'])+'\n逐框差異 '+str(self.plan['changes']))
                 image=render_image(self.plan['preview_candidate'],100,True);self.image.setPixmap(QPixmap.fromImage(image).scaled(760,320,Qt.KeepAspectRatio,Qt.SmoothTransformation))
-            self.window.run_job('Cassowary明定範圍特製候選',worker,finished)
+            self.window.run_job('Cassowary明定範圍特製候選',worker,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
         except Exception as error:self.running=False;self.preview_button.setEnabled(True);self.save_button.setEnabled(True);self.status.setText('未求解：'+str(error))
     def save(self):
         try:

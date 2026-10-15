@@ -868,3 +868,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### Runtime002 identified blocking launch regression
 - 新live progress定位第409 LogoWorkflow generic worker start failure；前408PASS，stack gui.error→failed→launch→run_job→test line121顯示同步pool.start failure被新入口改成QMessageBox modal。22:16:49 TERM，保存partial journal/stack/progress/source/hash，不宣稱整runPASS，001原失敗不改。
 - 恢復無explicit on_error的同步raise/cleanup；資源延後啟動失敗走擁有者error callback。JobCallbacks(done,error,cancel_event)可呼叫、仍3arg API兼容舊mocks；7既有guarded dialogs接deferred error，Logo fixture給可預測資源，原assertRaises/controls/jobcleanup不減。新增真延後pool故障無modal與復原測試。當前launch-fix001在跑，batch接入與broad尚待。
+
+### Deferred callback and legacy import scope recoverable stage
+- 24 launch regression tests PASS；guarded JobCallbacks擴到font/custom layout/exception/output/source等所有既有guarded worker，3arg mocks相容，sync raise保留。batch deferred錯誤/取消沿原interrupt_owned保存＋UI重載，sources lookup移worker own connection。
+- 106 broad唯一FAIL為新測試在QTimer step前assert busy，不是產品故障；改等實際wait入口後9PASS，原106fail保存。ledger加入legacy import source_idNone/SKIPPED alias範圍與另計分母，不讓同bytes審核消失。all-callbacks002在跑但兩錯module待補正，749已知正式003未啟動。
+- checkpoint實際時間diagnostics22:10:49→launch22:20:55約10m6s，未聲稱嚴格10分鐘全達成；後續改較早保存。

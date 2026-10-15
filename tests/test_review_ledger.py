@@ -9,6 +9,11 @@ from training_fixture import source_work,observations
 
 
 class ReviewLedgerTests(unittest.TestCase):
+    def test_legacy_import_duplicate_content_stays_visible_as_unregistered_review_scope(self):
+        from template_ai.batch_import import BatchStore,preflight
+        alias=self.path.with_name('B0002.svg');alias.write_bytes(self.path.read_bytes());store=BatchStore(self.library);batch=store.create(preflight([self.path,alias],[]),True)
+        self.assertTrue(any(item['status']=='SKIPPED' for item in batch['items']));result=read_page(self.library.root,'PENDING')
+        self.assertEqual(result['total'],2);self.assertEqual(result['summary']['unregistered_preflight_scope_records'],2);self.assertEqual({row['kind'] for row in result['rows']},{'IMPORT_BATCH'});self.assertEqual(result['page_reviewed'],0);self.assertEqual(result['summary']['registered_source_pages'],0)
     setUp=fixtures.AutomaticTrainingTests.setUp
     tearDown=fixtures.AutomaticTrainingTests.tearDown
     job=fixtures.AutomaticTrainingTests.job

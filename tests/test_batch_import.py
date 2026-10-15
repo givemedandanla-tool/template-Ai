@@ -86,6 +86,12 @@ class BatchImportTests(unittest.TestCase):
 
 
 class BatchImportGuiTests(unittest.TestCase):
+    def test_resource_waiting_import_can_be_cancelled_and_persisted_as_interrupted_without_registration(self):
+        import test_runtime_execution as resources
+        self.scan()
+        with patch.object(self.window.runtime,'admit',return_value=resources.HOLD),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
+            QTest.mouseClick(self.dlg.start_button,Qt.LeftButton);self.wait_for(lambda:self.dlg.busy and self.window.busy);QTest.mouseClick(self.dlg.cancel_button,Qt.LeftButton);self.wait_for(lambda:not self.dlg.busy and not self.dlg.running)
+        self.assertFalse(self.window.busy);self.assertEqual(self.window.library.list_sources(),[]);self.assertEqual(self.dlg.batch['phase'],'INTERRUPTED');self.assertTrue(self.dlg.choose_files.isEnabled());self.assertFalse(self.dlg.cancel_button.isEnabled())
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=MainWindow(self.root/'data');self.addCleanup(lambda:self.window.close());self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')];self.dlg=BatchImportDialog(self.window);self.dlg.show();APP.processEvents();self.addCleanup(lambda:self.dlg.close())
     def wait_for(self,predicate,seconds=10):

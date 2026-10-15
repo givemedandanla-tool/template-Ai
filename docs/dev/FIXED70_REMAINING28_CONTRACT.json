@@ -405,6 +405,7 @@
       "tests": [
         "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
         "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+        "test_batch_import.BatchImportGuiTests.test_resource_waiting_import_can_be_cancelled_and_persisted_as_interrupted_without_registration",
         "test_logo_workflow_gui.LogoWorkflowGuiTests.test_generic_worker_start_failure_restores_controls_and_does_not_leave_job",
         "test_review_ledger.ReviewLedgerGuiTests.test_actual_asynchronous_gui_reads_source_then_works_without_changing_review_or_ownership",
         "test_review_ledger.ReviewLedgerGuiTests.test_closing_project_stops_pending_ledger_query_and_disables_original_context",
@@ -412,6 +413,7 @@
         "test_review_ledger.ReviewLedgerTests.test_explicit_human_exclusion_is_a_separate_visible_state_and_not_reviewed_or_deleted",
         "test_review_ledger.ReviewLedgerTests.test_identical_bytes_different_filenames_keep_all_sources_works_and_independent_human_reviews",
         "test_review_ledger.ReviewLedgerTests.test_large_source_scope_pages_before_payload_read_and_preserves_full_denominator",
+        "test_review_ledger.ReviewLedgerTests.test_legacy_import_duplicate_content_stays_visible_as_unregistered_review_scope",
         "test_review_ledger.ReviewLedgerTests.test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files",
         "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending",
         "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
