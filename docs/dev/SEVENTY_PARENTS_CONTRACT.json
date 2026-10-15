@@ -30,40 +30,85 @@
       "id": "CORE-068",
       "acceptance": "單一Library內人工客戶建檔、stable人物與欄位ID、前導零及確切模板關聯",
       "remaining": "AI擷取／安全批次建檔仍後續",
-      "status": "PLANNED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "tests": [
+        "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+        "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+        "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+        "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+        "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+        "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+      ]
     },
     {
       "parent": "UI-044",
       "id": "CORE-069",
       "acceptance": "受控多條件搜尋、身份確認後引用確切版本預填當次資料",
       "remaining": "縮圖比較及完整重訂擴充仍後續",
-      "status": "PLANNED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "tests": [
+        "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+        "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+        "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+        "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+        "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+        "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+      ]
     },
     {
       "parent": "UI-045",
       "id": "CORE-070",
       "acceptance": "逐欄勾選差異確認與客戶revision CAS原子回寫",
       "remaining": "共享公司及跨實體回復後續",
-      "status": "PLANNED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "tests": [
+        "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+        "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+        "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+        "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+        "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+        "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+      ]
     },
     {
       "parent": "UI-046",
       "id": "CORE-071",
       "acceptance": "疑似重複只讀雙方比對與線索，不自動合併",
       "remaining": "合併／別名／拆分尚未實作",
-      "status": "PLANNED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "tests": [
+        "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+        "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+        "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+        "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+        "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+        "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+      ]
     },
     {
       "parent": "UI-047",
       "id": "CORE-072",
       "acceptance": "一致SQLite快照、驗證加密檔與新目錄隔離還原、外部資產明示缺失",
       "remaining": "排程／完整資產可攜備份／活躍庫合併後續",
-      "status": "PLANNED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FORMAL",
+      "tests": [
+        "test_customers.CustomerTests.test_actual_gui_explicit_reorder_fills_work_only_no_automatic_master_write",
+        "test_customers.CustomerTests.test_actual_gui_search_unchecked_diff_cancel_commit_stale_and_duplicate_compare",
+        "test_customers.CustomerTests.test_authenticated_snapshot_isolated_restore_wrong_password_corruption_and_no_overwrite",
+        "test_customers.CustomerTests.test_create_stable_fields_zero_code_unique_foreign_keys_and_no_purchase_states",
+        "test_customers.CustomerTests.test_duplicate_comparison_no_inferred_merge_or_identity_or_writes",
+        "test_customers.CustomerTests.test_late_audit_failure_rolls_back_fields_version_and_history",
+        "test_customers.CustomerTests.test_search_and_identity_confirmed_exact_reorder_readonly_stale_template",
+        "test_customers.CustomerTests.test_selected_field_atomic_CAS_clear_vs_absent_other_customer_untouched"
+      ]
     },
     {
       "parent": "UI-050",

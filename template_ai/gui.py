@@ -265,7 +265,14 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("修復既有本機字型", self.repair_font)
         self.menuBar().addAction("共用字型管理中心", self.font_center)
         self.menuBar().addAction("字型替代審核歷史", self.font_review_history)
+        self.menuBar().addAction("本機客戶／版型與備份", self.customer_center)
         self.menuBar().addAction("操作說明", self.help)
+
+    def customer_center(self):
+        from .customer_dialog import CustomerDialog
+        dialog = CustomerDialog(self)
+        try: dialog.exec()
+        finally: dialog.deleteLater()
 
     def build_training(self):
         widget = QWidget()

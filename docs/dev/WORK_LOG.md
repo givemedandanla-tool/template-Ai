@@ -1,5 +1,10 @@
 # 開發工作紀錄
 
+## 70父需求：客戶／備份可恢復實作
+
+CORE068..072真實人工建檔、exact模板關聯／搜尋預填、stable欄位CAS原子回寫、只讀雙方比對、一致SQLite快照＋Scrypt/AES-GCM完整性驗證＋新目錄隔離還原；8個具名測試含actual Qt PASS。密碼／key不入metadata，明示DATABASE_ONLY_PARTIAL外部資產未包含。新增cryptography46.0.3（Apache/BSD）與cffi2.1.0+；第一次無網sandboxpip失敗，有界重試以允許網路正常安裝46.0.3/cffi2.1.1/pycparser3.11。未上傳真實資料，未把父項先升PARTIAL，等待正式全回歸。
+
+
 ## 2026-10-15：70父需求部分實作開始
 
 原75為0完整／53部分／17未做／2受阻／3延後。精讀17原條款、保存17精確scope與剩餘範圍，新增16待做CORE066..081與GOV007（治理不算軟體）；無父題拆分／刪除。治理318已知PASS。先BEGIN GitHub readback再code。
