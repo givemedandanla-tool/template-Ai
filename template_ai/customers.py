@@ -20,6 +20,9 @@ class CustomerStore:
         ''');self.db.commit()
         from .customer_entities import migrate
         migrate(self.db)
+        from .customer_identity import SCHEMA
+        self.db.executescript(SCHEMA)
+        self.db.commit()
     def create(self,code,name,fields,template_id,approved=False):
         code=str(code).strip();name=str(name).strip()
         if not approved or not code or len(code)>64 or not name or len(name)>256:raise ValueError('需人工確認非空字串客戶編號與名稱')
@@ -45,14 +48,19 @@ class CustomerStore:
             self.library.event(cid,'customer_manual_confirmed')
         return self.get(cid)
     def get(self,cid):
+        redirect=self.db.execute('SELECT primary_id FROM customer_identity_redirects WHERE secondary_id=?',(cid,)).fetchone()
+        if redirect:cid=redirect[0]
         r=self.db.execute('SELECT id,code,name,revision FROM customers WHERE id=?',(cid,)).fetchone()
         if not r:raise ValueError('客戶不存在')
         fields=[dict(zip(('id','owner','kind','value'),x)) for x in self.db.execute('SELECT id,owner,kind,value FROM customer_fields WHERE customer_id=? ORDER BY rowid',(cid,))]
-        styles=[dict(zip(('id','template_id','template_hash','width_mm','height_mm'),x)) for x in self.db.execute('SELECT id,template_id,template_hash,width,height FROM customer_styles WHERE customer_id=? ORDER BY id',(cid,))]
+        from .customer_identity import members
+        ids=members(self.db,cid)
+        styles=[dict(zip(('id','template_id','template_hash','width_mm','height_mm'),x)) for x in self.db.execute('SELECT id,template_id,template_hash,width,height FROM customer_styles WHERE customer_id IN ('+','.join('?' for _ in ids)+') ORDER BY id',ids)]
         from .customer_entities import read_graph
         graph=read_graph(self.db,cid,r[3])
         state=self.db.execute('SELECT status FROM customer_graph_states WHERE customer_id=?',(cid,)).fetchone()
-        return dict(zip(('id','code','name','revision'),r),fields=fields,styles=styles,graph=graph,ownership_state=state[0] if state else 'NOT_MIGRATED')
+        aliases=[code[0] for code in self.db.execute('SELECT code FROM customer_code_aliases WHERE customer_id=? AND code<>? ORDER BY code',(cid,r[1]))]
+        return dict(zip(('id','code','name','revision'),r),fields=fields,styles=styles,graph=graph,ownership_state=state[0] if state else 'NOT_MIGRATED',identity_aliases=aliases)
     def search(self,query,offset=0,field='ANY'):
         from .customer_search import search
         return search(self,query,offset,field)
@@ -90,8 +98,10 @@ class CustomerStore:
         self.library._template_provenance(t)
         if c.get('graph'):
             from .input_graph import InputGraph
-            people,companies,logos=InputGraph(c['graph']).compile(self.library.logos())
-            return {'snapshot':c,'graph':c['graph'],'template_id':t.id,'people':people,'companies':companies,'logos':logos,'width_mm':t.width_mm,'height_mm':t.height_mm,'status':'PREFILL_PENDING_VALIDATION','template_state':t.state}
+            from .customer_identity import style_graph
+            scoped=style_graph(self.db,c['graph'],style_id)
+            people,companies,logos=InputGraph(scoped).compile(self.library.logos())
+            return {'snapshot':c,'graph':scoped,'template_id':t.id,'people':people,'companies':companies,'logos':logos,'width_mm':t.width_mm,'height_mm':t.height_mm,'status':'PREFILL_PENDING_VALIDATION','template_state':t.state}
         people=[]
         for owner in sorted({f['owner'] for f in c['fields']},key=lambda x:int(x[1:])):
             p={}
@@ -138,8 +148,10 @@ class CustomerStore:
         return self.get(snapshot['id'])
 
     def history(self,cid):
-        self.get(cid)
-        return [dict(id=r[0],revision=r[1],payload=json.loads(r[2])) for r in self.db.execute('SELECT id,revision,payload FROM customer_changes WHERE customer_id=? ORDER BY revision DESC',(cid,))]
+        customer=self.get(cid)
+        from .customer_identity import members
+        ids=members(self.db,customer['id'])
+        return [dict(id=r[0],revision=r[1],payload=json.loads(r[2])) for r in self.db.execute('SELECT id,revision,payload FROM customer_changes WHERE customer_id IN ('+','.join('?' for _ in ids)+') ORDER BY revision DESC',ids)]
 
     def restore_change(self,snapshot,change_id,selected,approved=False):
         change=next((r for r in self.history(snapshot['id']) if r['id']==change_id),None)

@@ -8,11 +8,20 @@
       "sha256": "691a61d8c9012b791df7e2422ea849d4437da5f7cdfe5557e965a63934dec1cf",
       "inspected": "TTCollection.__init__/save; collection face selection and sfnt extraction via mature parser",
       "reuse": "TTCollection/TTFont parse name/OS2/cmap and extract one explicit face; do not write a binary font parser"
+    },
+    {
+      "project": "Microsoft Dataverse public merge design",
+      "url": "https://raw.githubusercontent.com/MicrosoftDocs/powerapps-docs/main/powerapps-docs/developer/data-platform/webapi/merge-entity-using-web-api.md",
+      "sha256": "9ba13c66be22c0379be760b9643fa8272b35db9288eb84f4038ca6f6788273f3",
+      "inspected": "Merge Target/Subordinate, preserve target data, deactivate subordinate, verify access and parenting relationships",
+      "reuse": "Design reference only; local SQLite/normalized graphs reused, no Dataverse dependency or service call"
     }
   ],
   "mathematical_basis": [
     "SHA256 byte identity is distinct from font name / visual similarity; exact equality cannot infer human/customer identity",
-    "Three-valued evidence: observed derivative attributes / unknown native semantics / explicit user attestation; missing evidence cannot become PASS"
+    "Three-valued evidence: observed derivative attributes / unknown native semantics / explicit user attestation; missing evidence cannot become PASS",
+    "Disjoint graph union preserves stable people/company/field IDs; style scopes preserve the original subset",
+    "Compare-and-swap exact snapshot digests within BEGIN IMMEDIATE; on split partition CURRENT graph rather than replay stale historical values"
   ],
   "commercial_approach": [
     "Separate font activation from OS installation, per-face identity and technical embedding constraints from user licence attestation; no download or licence acceptance on behalf of user"
@@ -21,5 +30,11 @@
     "Windows installation or real Windows validation",
     "Real private Illustrator special-effect training equivalence",
     "Host-font licence validation is not yet implemented"
+  ],
+  "unavailable_references": [
+    {
+      "url": "https://www.sqlite.org/lang_transaction.html",
+      "result": "HTTP403; not claimed read; SQLite transaction reuse also covered by prior engineering basis"
+    }
   ]
 }

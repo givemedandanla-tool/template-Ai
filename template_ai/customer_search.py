@@ -34,5 +34,7 @@ def search(store,query,offset=0,field='ANY'):
         condition='instr(ta_fold(c.code),?) OR instr(ta_fold(c.name),?) OR instr(ta_fold(f.value),?)';args=[q,q,q]
         key=phone_key(query)
         if key:condition+=" OR (f.kind='phone' AND instr(ta_phone_key(f.value),?))";args.append(key)
-    ids=db.execute('SELECT DISTINCT c.id FROM customers c LEFT JOIN customer_fields f ON f.customer_id=c.id WHERE ('+condition+') ORDER BY c.code LIMIT 101 OFFSET ?',(*args,offset)).fetchall()
+    if field in ('ANY','CODE'):
+        condition+=' OR EXISTS (SELECT 1 FROM customer_code_aliases a WHERE a.customer_id=c.id AND instr(ta_fold(a.code),?))';args.append(q)
+    ids=db.execute('SELECT DISTINCT c.id FROM customers c LEFT JOIN customer_fields f ON f.customer_id=c.id WHERE NOT EXISTS (SELECT 1 FROM customer_identity_redirects d WHERE d.secondary_id=c.id) AND ('+condition+') ORDER BY c.code LIMIT 101 OFFSET ?',(*args,offset)).fetchall()
     return [store.get(row[0]) for row in ids]

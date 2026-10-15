@@ -19,6 +19,70 @@ class CustomerDialog(QDialog):
         bar=QHBoxLayout();self.add_button(bar,'關聯另一確切尺寸／版型',self.link_style);self.add_button(bar,'查看並恢復已選欄位的歷史值',self.restore_history);self.add_button(bar,'完整圖差異／新增刪除共享同步',self.sync_graph);self.add_button(bar,'來源客戶候選／批次審核',self.source_candidates);layout.addLayout(bar)
         bar=QHBoxLayout();self.add_button(bar,'加密資料庫部分備份',self.backup);self.add_button(bar,'隔離還原到新目錄',self.restore);self.add_button(bar,'關閉',self.accept);layout.addLayout(bar)
         bar=QHBoxLayout();self.add_button(bar,'核對並撤銷來源／版型關聯',self.revoke_association);layout.addLayout(bar)
+        self.identity_plan=None
+        bar=QHBoxLayout();self.add_button(bar,'合併前完整影響預覽',self.preview_merge);self.add_button(bar,'合併歷史／拆分預覽',self.preview_split);self.add_button(bar,'確認目前身份方案',self.commit_identity);self.add_button(bar,'保留獨立／取消方案',self.cancel_identity);layout.addLayout(bar)
+        bar=QHBoxLayout();self.add_button(bar,'記錄兩客戶保留獨立',lambda:self.review_identity('KEEP_SEPARATE'));self.add_button(bar,'記錄身份待審',lambda:self.review_identity('PENDING_REVIEW'));layout.addLayout(bar)
+
+    def review_identity(self,state):
+        def action():
+            selected=sorted({i.row() for i in self.customers.selectedItems()})
+            if len(selected)!=2:raise ValueError('Ctrl選取兩個獨立客戶')
+            actor,ok=QInputDialog.getText(self,'身份處置記錄','核對者')
+            if not ok:return
+            reason,ok=QInputDialog.getText(self,'身份處置記錄','待審／保留獨立理由')
+            if not ok:return
+            result=self.identity_service().record_review(*(self.results[i]['id'] for i in selected),state,actor,reason)
+            self.identity_plan=None;self.details.setPlainText(json.dumps(result,ensure_ascii=False));self.status.setText('身份處置已記錄；沒有合併、刪除或修改人物／來源')
+        self.guarded(action)
+
+    def identity_service(self):
+        from .customer_identity import CustomerIdentity
+        return CustomerIdentity(self.store)
+
+    def cancel_identity(self):
+        self.identity_plan=None;self.status.setText('已取消身份方案；本機主檔與來源關聯未變更')
+
+    def preview_merge(self):
+        def action():
+            selected=sorted({i.row() for i in self.customers.selectedItems()})
+            if len(selected)!=2:raise ValueError('Ctrl選取兩個獨立客戶；相同聯絡資料不代表同一身份')
+            customers=[self.results[i] for i in selected]
+            labels=[f"{c['code']} · {c['name']} · {c['id']}" for c in customers]
+            chosen,ok=QInputDialog.getItem(self,'保留的主客戶ID','逐項核實人物／公司與來源，不合併不同人物實體',labels,0,False)
+            if not ok:return
+            primary=labels.index(chosen);a,b=customers[primary],customers[1-primary]
+            code,ok=QInputDialog.getItem(self,'主要顯示編號','舊編號保留可搜尋別名',[a['code'],b['code']],0,False)
+            if not ok:return
+            self.identity_plan=self.identity_service().plan_merge(a['id'],b['id'],code)
+            self.details.setPlainText(json.dumps(self.identity_plan,ensure_ascii=False,indent=2))
+            self.status.setText('只讀合併預覽：核對全部人物／公司、欄位、來源、每尺寸版型與別名後，另按確認')
+        self.guarded(action)
+
+    def preview_split(self):
+        def action():
+            if not self.snapshot:raise ValueError('請先選目前主客戶')
+            rows=[r for r in self.identity_service().history(self.snapshot['id']) if r['state']=='MERGED']
+            if not rows:raise ValueError('沒有可拆分的合併記錄')
+            labels=[r['id'] for r in rows]
+            chosen,ok=QInputDialog.getItem(self,'合併歷史','檢查原A/B與合併後新修改；不以歷史值覆蓋新合法值',labels,0,False)
+            if not ok:return
+            self.identity_plan=self.identity_service().plan_split(chosen)
+            self.details.setPlainText(json.dumps(self.identity_plan,ensure_ascii=False,indent=2))
+            self.status.setText('只讀拆分預覽：保留目前可明確歸屬的新值；跨客戶共享或新歸屬不明時阻擋')
+        self.guarded(action)
+
+    def commit_identity(self):
+        def action():
+            if not self.identity_plan:raise ValueError('先取得完整合併／拆分影響預覽')
+            actor,ok=QInputDialog.getText(self,'身份核准','核准者')
+            if not ok:return
+            reason,ok=QInputDialog.getText(self,'身份證據','核對理由；同名、同電話、同Logo、同bytes均不能單獨證明身份')
+            if not ok:return
+            if QMessageBox.question(self,'確認明列身份方案','已核對方案中的全部身份、歸屬、來源及版型？\n只執行這份方案；任何版本競爭會阻擋，不改原稿、發布版或既有輸出。')!=QMessageBox.Yes:return
+            service=self.identity_service()
+            result=(service.merge if self.identity_plan['operation']=='MERGE' else service.split)(self.identity_plan,True,actor,reason)
+            self.identity_plan=None;self.details.setPlainText(json.dumps(result,ensure_ascii=False,indent=2));self.status.setText('身份方案已完成並通過關聯檢查；重新搜尋可核對主客戶及歷史別名')
+        self.guarded(action)
 
     def revoke_association(self):
         def action():

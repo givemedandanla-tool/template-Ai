@@ -247,6 +247,7 @@ class CustomerCandidates:
             raise
 
     def associations(self,customer_id):
+        customer_id=self.store.get(customer_id)['id']
         keys=('id','customer_id','source_id','artwork_id','template_id','source_hash',
               'artwork_revision','template_hash','person_scope','candidate_id')
         return [dict(zip(keys,row)) for row in self.db.execute(
@@ -264,7 +265,11 @@ class CustomerCandidates:
             if remove_style:
                 if self.db.execute('SELECT 1 FROM customer_source_associations WHERE customer_id=? AND template_id=?',(snapshot['id'],row['template_id'])).fetchone():
                     raise ValueError('仍有其他已確認來源引用此版型，未移除關聯')
-                self.db.execute('DELETE FROM customer_styles WHERE customer_id=? AND template_id=?',(snapshot['id'],row['template_id']))
+                from .customer_identity import scoped_style_ids
+                links=scoped_style_ids(self.store,snapshot,row['template_id'],json.loads(row['person_scope']))
+                if len(links)!=1:raise ValueError('版型人物範圍不唯一，請先逐項核對，不刪其他人物的關聯')
+                self.db.execute('DELETE FROM customer_style_scopes WHERE style_id=?',(links[0],))
+                self.db.execute('DELETE FROM customer_styles WHERE id=?',(links[0],))
             candidate=self.get(row['candidate_id']);payload={k:deepcopy(v) for k,v in candidate.items() if k not in ('id','revision','state')}
             payload['revocation']=dict(actor=actor,note=note,remove_style=remove_style,created_utc=datetime.now(timezone.utc).isoformat())
             self._save(candidate['id'],payload,'REVOKED',candidate['revision'])
@@ -315,8 +320,16 @@ class CustomerCandidates:
                     cid = review['target_customer_id']
                     scope = review['person_scope']
                 template = next(t for t in self.library.templates() if t.id == pins['template_id'])
-                self.db.execute('INSERT OR IGNORE INTO customer_styles VALUES(?,?,?,?,?,?)',
-                    (new_id(), cid, template.id, pins['template_hash'], template.width_mm, template.height_mm))
+                from .customer_identity import scoped_style_ids
+                customer=self.store.get(cid)
+                links=scoped_style_ids(self.store,customer,template.id,scope)
+                if not links:
+                    if any(s['template_id']==template.id for s in customer['styles']):
+                        raise ValueError('相同版型已有不同人物範圍，需明確重新核對，不能借用其他人物')
+                    style_id=new_id()
+                    self.db.execute('INSERT INTO customer_styles VALUES(?,?,?,?,?,?)',
+                        (style_id,cid,template.id,pins['template_hash'],template.width_mm,template.height_mm))
+                    self.db.execute('INSERT INTO customer_style_scopes VALUES(?,?)',(style_id,json.dumps(scope)))
                 self.db.execute('INSERT INTO customer_source_associations VALUES(?,?,?,?,?,?,?,?,?,?)',
                     (new_id(), cid, pins['source_id'], pins['artwork_id'], template.id,
                      pins['source_hash'], pins['artwork_revision'], pins['template_hash'],

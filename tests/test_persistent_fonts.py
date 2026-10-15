@@ -71,7 +71,8 @@ class PersistentFontTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "無法解析OpenType"):
             self.manager.import_font(bad, approved=True)
         self.assertEqual(self.library.fonts(), [])
-        self.assertEqual(list((self.library.assets / "fonts").iterdir()), [])
+        folder=self.library.assets / 'fonts'
+        self.assertEqual(list(folder.iterdir()) if folder.exists() else [], [])
         asset = self.manager.import_font(FONT, approved=True)
         self.assertEqual(self.manager.import_font(FONT, approved=True), asset)
         self.assertEqual(len(self.library.fonts()), 1)

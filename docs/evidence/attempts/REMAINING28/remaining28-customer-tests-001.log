@@ -1,0 +1,25 @@
+.E....................This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+...........This plugin does not support propagateSizeHints()
+......................
+======================================================================
+ERROR: test_each_original_style_prefills_only_its_original_stable_person_after_merge (test_customer_identity.CustomerIdentityTests.test_each_original_style_prefills_only_its_original_stable_person_after_merge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_customer_identity.py", line 49, in test_each_original_style_prefills_only_its_original_stable_person_after_merge
+    prefill=self.store.reorder(self.a['id'],c['styles'][0]['id'],approved=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customers.py", line 102, in reorder
+    scoped=style_graph(self.db,c['graph'],style_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/customer_identity.py", line 48, in style_graph
+    InputGraph.validate(scoped);return scoped
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/input_graph.py", line 73, in validate
+    raise ValueError('每個實體需要一個名稱欄位（可待補）')
+ValueError: 每個實體需要一個名稱欄位（可待補）
+
+----------------------------------------------------------------------
+Ran 55 tests in 6.607s
+
+FAILED (errors=1)
