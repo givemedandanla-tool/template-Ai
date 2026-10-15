@@ -98,6 +98,48 @@
       "source_file": "/tmp/remaining28-vscode-workingcopy.ts",
       "inspected": "correlationId,working-copy operation participants and will-run/did-run/did-fail events",
       "use": "Scoped preview/commit/failure receipts and stale working-copy handling;no VS Code dependency/code copy"
+    },
+    {
+      "id": "sklearn-group-split",
+      "url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/1.7.2/sklearn/model_selection/_split.py",
+      "bytes": 109612,
+      "sha256": "ceb7c6a8e708c15bfab021621954f2d188c29826b4556b8cb4cf8feed90f4dc5",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "project": "scikit-learn GroupKFold",
+      "version": "1.7.2",
+      "inspected": "GroupKFold._iter_test_indices groups required;unique whole groups assigned to folds,not random individual rows",
+      "reuse": "Reuse non-overlapping connected group principle with NetworkX/local SQLite;do not install sklearn/Spark"
+    },
+    {
+      "id": "sklearn-classification-metrics",
+      "url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/1.7.2/sklearn/metrics/_classification.py",
+      "bytes": 139502,
+      "sha256": "6fe88badb690ddf370f8c560a9286f60544ac50862576b33fa47576ab58d9e14",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "project": "scikit-learn classification metrics",
+      "version": "1.7.2",
+      "inspected": "precision_recall_fscore_support computes per-class sufficient counts and explicit zero_division behavior",
+      "reuse": "Reuse mathematically defined per-domain TP/FP/FN and None on undefined denominator;never one fake aggregate AI accuracy"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/aws/sagemaker-python-sdk/v2.253.1/src/sagemaker/model_monitor/model_monitoring.py",
+      "bytes": 186974,
+      "sha256": "68432bb552d89ce810799195f03affdf35051c5ca39e47cf9468e6abf4859071",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "project": "Amazon SageMaker ModelQualityMonitor public SDK",
+      "version": "2.253.1",
+      "inspected": "ModelQualityMonitor.suggest_baseline separates baseline_dataset/problem_type/predicted label/ground_truth fields and computes versioned baseline artifacts",
+      "reuse": "Design reference only:separate predictions/truth/protocol/constraints;no AWS import/SDK installation/S3/job/service"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/networkx/networkx/networkx-3.5/networkx/algorithms/matching.py",
+      "bytes": 44518,
+      "sha256": "22fdd4ab72cff786e824b11ae816841a279b756e992228249dd297c220f50bc1",
+      "project": "NetworkX maximum-weight matching",
+      "version": "3.5",
+      "inspected": "max_weight_matching maximum-cardinality option,Edmonds blossom primal-dual,O(V^3),integer weights avoid documented float precision issues",
+      "reuse": "Use mature matching and connected_components;do not implement Hungarian/union-find from scratch",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED"
     }
   ],
   "mathematical_basis": [
