@@ -870,7 +870,7 @@
       ],
       "required": "補可選範圍與完整依賴Manifest、排程／保留政策及隔離還原驗證；缺資產必須報不完整",
       "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
-      "evidence": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json",
       "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-BACKUP-001/run.json"
     },
     {
@@ -884,7 +884,7 @@
       ],
       "required": "補多根搜尋／歧義選擇及完整影響摘要，測不同內容同名不重連、映射與原稿不改",
       "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
-      "evidence": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json",
       "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-RELINK-001/run.json"
     },
     {
@@ -898,7 +898,7 @@
       ],
       "required": "補事件只是提示的監看器及有界匯入佇列，測暫存檔、寫入中、漏事件／離線／改名均重新核實",
       "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
-      "evidence": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json",
       "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json"
     },
     {
@@ -911,8 +911,9 @@
         }
       ],
       "required": "補保守資源預算和不飢餓佇列；逐來源逐作品審核，測重啟／磁碟失敗；不新增急件分類",
-      "state": "PARTIAL",
-      "evidence": null
+      "state": "CLOSED_FULL_SOFTWARE_SELF_VERIFIED",
+      "evidence": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json",
+      "first_completion_evidence": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json"
     },
     {
       "id": "UI-052",
@@ -1175,10 +1176,10 @@
       "evidence": null
     }
   ],
-  "closed_parent_count": 46,
-  "remaining_parent_count": 24,
-  "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-WATCH-002/run.json",
-  "next_package": "UI051-LOW-LOAD-FAIR-QUEUE",
+  "closed_parent_count": 47,
+  "remaining_parent_count": 23,
+  "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json",
+  "next_package": "UI052-EXACT-SCOPE-COVERAGE-CLOSURE",
   "latest_ten_contract": "docs/dev/FIXED70_NEXT_TEN_CONTRACT.json",
   "latest_twentyeight_contract": "docs/dev/FIXED70_NEXT_TWENTYEIGHT_CONTRACT.json"
 }

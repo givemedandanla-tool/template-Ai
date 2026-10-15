@@ -1,0 +1,894 @@
+{
+  "kind": "DERIVED_FROM_ACTUAL_TESTS_NOT_EXTRA_EXECUTION",
+  "source_commit": "8f8f638a1096f0aeb8aebe2231d6d49b96970c05",
+  "source_unchanged": true,
+  "target_count": 28,
+  "parents": [
+    {
+      "id": "UI-019",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-031",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-032",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-046",
+      "registered": true,
+      "clauses": [
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-1",
+          "expected": "使用者選擇 **D｜智慧重複偵測＋來源比對＋受控合併／拆分**。沿用 UI-042／UI-043 已核准的本機持久客戶主檔、客戶編號和各尺寸版型版本關聯，延伸 UI-044 的身份核對及 UI-045 的版本化主檔修訂；**AI 只能提出可能重複或錯誤歸屬的候選，不得自行合併、拆分、刪除客戶編號或修改關聯**。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-2",
+          "expected": "**偵測與證據分層**：以可核對的客戶編號、姓名、人物聯絡方式（手機、私人電話、LINE、IG）、原始來源 .ai 檔名及路徑、來源作品、公司／人物歸屬、版型與卡片尺寸關聯提出候選，標示線索、信心及不一致處。**相同姓名、同電話、共享公司、同 Logo、同 SHA-256 或近似名片外觀，任一條件皆不足以直接認定兩個客戶是同一人**；特別是 UI-042 的異名同內容檔案僅共用內容解析結果，不能因快取重用而自動合併客戶實體。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_review_decisions_persist_without_merging_and_normalized_third_party_code_conflict_blocks",
+            "test_customer_candidates.CustomerCandidateTests.test_same_content_different_source_codes_keep_two_customers_and_independent_entities",
+            "test_customer_candidates.CustomerCandidateTests.test_shared_contact_conflicts_show_both_people_without_merging_and_late_conflict_blocks"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-3",
+          "expected": "**雙欄客戶比對 GUI**：點選候選顯示客戶 A／B 的**內部穩定 customer_id、所有現用客戶編號、可合法檢視的人物／聯絡資料、來源及審核狀態、每一尺寸的版型版本及來源作品**，將相同、衝突、僅 A／僅 B、來源不足分開標示；可以從候選跳轉到 UI-038／UI-039 的原稿、智慧框與 UI-043 的客戶卡片，避免僅憑文字相同就誤判。提供**保留獨立／確認合併／標示待審／糾正原歸屬**等明確操作，衝突不清時安全保留獨立。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_actual_gui_separates_preview_cancel_and_explicit_commit"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-4",
+          "expected": "**合併前的全範圍影響預覽**：合併選擇必須由使用者指定保留的**主客戶內部 ID／主要顯示編號**，並逐項預覽舊客戶編號作為可查找的歷史別名、人物與公司、電話／LINE／IG、來源文件、尺寸及每個 `style_version_id`、其來源作品及已存在的關聯或衝突。**僅在核對人物／公司的身份及關聯後**整合，不能只把 A、B 所有姓名與電話扁平拼接或讓不同人物資料互換。合併不意味改變原 Illustrator 內容、真實 Logo、版型檔或已發布模板。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_swapped_primary_display_code_splits_back_and_stale_split_cannot_overwrite",
+            "test_customer_identity.CustomerIdentityTests.test_source_identity_unchanged_relation_moves_and_splits_with_exact_original_style_scope"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-5",
+          "expected": "**歷史編號與來源不丟失**：原本各客戶編號必須仍能用 UI-044 搜尋並清楚導向合併後唯一已確認的主客戶，同時揭露「舊編號別名／已合併」而非冒充兩條獨立主檔；有任何別名與其他主編號或其他別名衝突時需阻擋並人工解決，不能暗中覆蓋。兩份檔名不同但位元相同的 `source_files` 仍各自保留原名、路徑、原推定編號、原始關聯及重用的 `content_blobs`；合併客戶不得破壞 UI-042 的精確去重紀錄。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct",
+            "test_customer_identity.CustomerIdentityTests.test_review_decisions_persist_without_merging_and_normalized_third_party_code_conflict_blocks"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-6",
+          "expected": "**資料模型最小延伸**：重用 UI-043 的 `customers`、`people`、`contact_methods`、`companies`、`customer_card_styles`、`source_files`、`review_events`，視實際完整性需求**最小增加** `customer_code_aliases`（別名碼→保留的主客戶 ID，含原始來源與版本）及有版本的**合併／拆分來源映射與操作憑證**（可擴充 `review_events` 或最小關聯事件表）。原始 `customer_id` 不可在合併後被當作可重用新客戶 ID；保留停用來源記錄及操作前快照引用，以支持回復。**不新增另一套重複客戶資料庫、客戶身分 AI 或完整訂單系統**。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct",
+            "test_customer_identity.CustomerIdentityTests.test_source_identity_unchanged_relation_moves_and_splits_with_exact_original_style_scope"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-7",
+          "expected": "**明確核准、版本防競爭與事務安全**：合併前檢查雙方主檔、人物、聯絡資料、版型關聯及別名索引的最新版本；若預覽後已有人更新（沿用 UI-045 的並行寫入防護），須重新取得最新差異再詢問，不得直接以過期預覽執行。執行時需有必要的本機交易一致性、FK／唯一編號保護與失敗可核對狀態；**只有使用者明確確認的合併方案能修改永久資料庫**，不能因瀏覽候選、自動檢索或匯入新檔自行合併。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_stale_or_tampered_preview_cannot_merge_and_audit_failure_rolls_back_every_relation",
+            "test_customer_identity.CustomerIdentityTests.test_changed_source_after_merge_preview_blocks_all_permanent_identity_changes"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-8",
+          "expected": "**合併錯誤時的受控拆分**：提供從原合併操作記錄查看**當時 A／B 身分、舊客戶碼、原人物／聯絡方式／來源檔案／每尺寸版型版本歸屬及合併後新變動**的對照，再由使用者選擇恢復獨立客戶、重新分配明確屬於各方的資料及別名。不能只用一次「還原」就默默覆寫合併後新合法更新；後續編輯造成所有權不明時**停下並逐項要求重新核對**。恢復需保留證據、舊編號可重新導向正確客戶、不可遺失來源或已確認版型關聯。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_split_preserves_legitimate_later_values_and_restores_old_code_ownership",
+            "test_customer_identity.CustomerIdentityTests.test_ambiguous_post_merge_cross_customer_company_link_is_blocked_without_data_loss",
+            "test_customer_identity.CustomerIdentityTests.test_swapped_primary_display_code_splits_back_and_stale_split_cannot_overwrite"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-9",
+          "expected": "**相容性與外部影響**：合併、拆分、重新指派客戶關聯，不等於合併不同人物／公司或將其他客戶的 Logo 與版型發布權限併入；UI-016／UI-017 人物／公司語意、UI-020／UI-023 完整複合 Logo 與尺寸獨立庫繼續保護。已輸出的正式成品、UI-010 已發布版型及原始 .ai 不因客戶身份操作而被改寫；需要重新生成卡片必須以新作業經既定 UI-013／UI-019 印前 Gate 核實。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_each_original_style_prefills_only_its_original_stable_person_after_merge",
+            "test_customer_identity.CustomerIdentityTests.test_source_identity_unchanged_relation_moves_and_splits_with_exact_original_style_scope"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-10",
+          "expected": "**個資、審計與失敗回報**：合併或拆分的審查 GUI 僅對有權者提供必要的個人資料，比對、來源與版本操作紀錄在受控本機保存，允許校正／刪除／匯出並避免把電話、LINE、IG 原文或原圖傳至 GitHub。中斷、寫入競爭、來源缺失或來源歸屬不可證實時必須明確顯示**未完成／待審／安全阻擋**，不可偽稱合併或拆分已成功。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_local_audit_export_no_overwrite_and_closed_event_redaction_cannot_destroy_active_split_mapping",
+            "test_customer_identity.CustomerIdentityTests.test_failed_split_audit_rolls_back_aliases_fields_scopes_and_history"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        },
+        {
+          "requirement_id": "UI-046",
+          "acceptance_id": "UI-046-CLAUSE-11",
+          "expected": "**既定決策相容**：UI-043 已確認候選入庫與客戶編號唯一，UI-044 已確認客戶搜尋與版型沿用，UI-045 已確認欄位層級回寫，本 UI-046 只補足**主檔級重複候選比對、合併影響確認、歷史編號別名與安全拆分復原**。UI-043 的「不區分曾設計／已確認購買」仍然有效，客戶合併也不重新引入購買或交易分類。",
+          "tests": [
+            "test_customer_identity.CustomerIdentityTests.test_merge_aliases_are_one_search_result_and_people_companies_fields_styles_remain_distinct"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI046原軟體條款：來源分層雙欄比對、人工合併主ID與顯示碼、別名搜尋、獨立實體及版型作用域、CAS/FK交易、保留後續合法新值的受控拆分、本機稽核處置。Linux合成SELF範圍；Windows/獨立覆核/真實個資上線及既定最後UI048完整權限未驗證。",
+          "contract_sha256": "27cd6d7949e6badcf8be111d190ba9a581a6f4e44a23fceb78960b0187d12b34"
+        }
+      ],
+      "software_self_verified": true
+    },
+    {
+      "id": "UI-047",
+      "registered": true,
+      "clauses": [
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-1",
+          "expected": "使用者選擇 **D｜智慧備份＋加密＋完整性檢查＋安全還原**。保護 UI-042～UI-046 已核准的持久客戶資料庫、各尺寸門禁卡版型及版次、公司 Logo、AI 學習規則／模型與標記／訓練成果、異名同內容來源索引、檢查點、客戶編號別名／合併拆分證據與必要審核版本；備份及復原必須**以資料關聯整體可用為目標**，不是僅複製個別資料夾、只記下檔案路徑或只回覆「壓縮成功」。",
+          "tests": [
+            "test_relational_backup.RelationalBackupTests.test_real_source_customer_styles_facts_and_all_cache_bytes_restore_with_portable_paths",
+            "test_relational_backup.RelationalBackupTests.test_customer_merge_aliases_and_split_provenance_remain_usable_after_isolated_restore",
+            "test_relational_backup.RelationalBackupTests.test_restore_interrupts_old_workers_preserves_completed_units_and_disables_watch_roots"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        },
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-2",
+          "expected": "**統一備份管理中心**：提供「立即備份」「查看備份清單／檢查結果」「還原與移轉」及「設定排程」入口。備份前勾選涵蓋範圍：①客戶主檔與人物／聯絡、客戶編號別名、尺寸－版型關聯及修改憑證；②正式模板／各版本和各**實體尺寸獨立**的公司 Logo 庫與資產／核准證據；③ AI 訓練模型／已核准規則／去雜訊白名單、來源索引、同檔指紋、作品標記及可驗證訓練檢查點；④是否另納入具有合法保存權利的**原始 Illustrator .ai／其他來源資產**及允許備份的本機匯入字型。選擇可有預設完整備份與使用者定義範圍；GUI 必須標示**每個關聯資產是否實際隨包帶入、僅有外部路徑或需於復原時另行提供**，不可把路徑索引稱為原始 .ai 已備份。",
+          "tests": [
+            "test_backup_center.BackupCenterTests.test_real_gui_backup_receipt_test_restore_and_new_copy_keep_original_customer_and_template",
+            "test_backup_center.BackupCenterTests.test_partial_scope_and_shared_database_dependency_never_become_silent_full_success",
+            "test_relational_backup.RelationalBackupTests.test_same_bytes_distinct_original_names_and_source_ids_survive_backup_and_restore"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        },
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-3",
+          "expected": "**關聯依賴檢查與一致性快照**：當使用者取消某分類時，應先揭露客戶－版型－Logo－來源－訓練狀態的依賴。若備份缺少必要資產，明確標示「**部分備份／不能完整離線還原**」或停下等待選擇，不能宣稱完整備份。備份資料庫時必須規劃由成熟引擎提供的**一致性快照／合法備份機制**（例如 SQLite 的適用線上備份／快照方法，實際技術驗證前不指定為已成功）及對模板、模型、外部檔案的版本固定或完整性清單；不得在寫入中的資料庫上只拷貝單一檔案便視為一致。",
+          "tests": [
+            "test_relational_backup.RelationalBackupTests.test_preview_pins_database_and_assets_and_changed_bytes_never_publish_half_archive",
+            "test_relational_backup.RelationalBackupTests.test_mid_snapshot_database_update_is_retained_but_backup_publish_is_blocked",
+            "test_relational_backup.RelationalBackupTests.test_database_categories_cannot_be_silently_sliced_and_budget_failure_is_explicit"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        },
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-4",
+          "expected": "**手動與使用者設定的定期本機備份**：使用者可選 Windows 本機資料夾或外接硬碟，設定時間／頻率、保留份數或期限、空間預估及逾期輪替規則。自動備份須考慮**程式關閉、外接硬碟未接上、磁碟空間不足、寫入權限及電腦休眠**時能否執行，不能假設排程必然完成；若平台／排程條件不足，應顯示失敗、上次成功時間、下次計畫和可手動補做，**不默默刪除最後一份可驗證的成功備份**。排程系統、程式關閉時的執行途徑與跨 Windows 帳戶權限皆需後續研究。",
+          "tests": [
+            "test_backup_policy.BackupPolicyTests.test_schedule_cas_offline_key_busy_sleep_catchup_and_clock_rollback_never_store_password",
+            "test_backup_center.BackupCenterTests.test_schedule_waits_for_key_and_idle_runs_one_real_backup_and_stops_before_library_close",
+            "test_backup_policy.BackupPolicyTests.test_retention_requires_confirmation_preserves_newest_and_complete_last_and_never_deletes_unknown_files",
+            "test_backup_policy.BackupPolicyTests.test_age_window_is_union_with_latest_count_and_changed_file_is_never_removed",
+            "test_backup_policy.BackupPolicyTests.test_last_complete_backup_disappearing_during_rotation_cannot_delete_older_recovery"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        },
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-5",
+          "expected": "**加密、密鑰與隱私安全**：備份包含有姓名、手機、私人電話、LINE、IG 等個資時，應採經成熟安全方案驗證的**強加密與完整性保護**，備份密碼／復原金鑰與備份檔本身分開處理，提供安全的密碼／復原金鑰保存說明及合理重試限制；不在備份包、未保護日誌、預覽或 GitHub 中直接寫入解密金鑰。**忘記密碼或遺失復原金鑰可能無法還原**，GUI 必須清楚告知且不可承諾存在萬用解鎖。備份預設保留在使用者選擇的本機位置，不預設雲端或第三方上傳。",
+          "tests": [
+            "test_backup_center.BackupCenterTests.test_wrong_password_attempts_are_bounded_across_tabs_without_writes",
+            "test_relational_backup.RelationalBackupTests.test_wrong_password_corruption_existing_target_and_untrusted_source_never_touch_current_data",
+            "test_relational_backup.RelationalBackupTests.test_authenticated_but_malformed_paths_windows_case_collisions_and_symlinks_are_rejected"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        },
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-6",
+          "expected": "**真正的成功判定**：先生成暫存備份產物與**版本化清單（Manifest）**，記錄來源資料集類型與版本、資料庫 schema／應用程式版本、每個實際打包資產的內容指紋、大小、必要的依賴／外部路徑清單、加密與產物狀態；成功寫入、封裝、密碼驗證所需檢查與 checksum 驗證後才標示「**備份檔建立且完整性檢查通過**」。完整性檢查不等於已完整演練還原：另提供可行時的**隔離式測試還原／關聯驗證**並顯示「已完成測試還原」或「尚未驗證可還原」，不能以單純 SHA-256 比對假裝所有資料庫關聯都可正常使用。",
+          "tests": [
+            "test_backup_policy.BackupPolicyTests.test_history_only_records_real_complete_files_and_duplicate_receipt_is_idempotent",
+            "test_relational_backup.RelationalBackupTests.test_changed_published_archive_is_retained_unverified_instead_of_claiming_success",
+            "test_backup_center.BackupCenterTests.test_real_gui_backup_receipt_test_restore_and_new_copy_keep_original_customer_and_template"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        },
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-7",
+          "expected": "**還原前預檢與影響預覽**：在匯入備份包時先核對來源可信度、金鑰／驗證結果、Manifest、程式／資料庫 schema／模型／規則／模板／Logo 版本和必要來源檔、字型、Windows 路徑及授權限制；提供「**在新電腦／空資料庫還原**」和「**已存在資料環境的受控還原**」兩個明確模式，逐類列出可恢復、缺失、需人工補檔及既有資料版本差異。**預設禁止直接覆蓋目前較新的客戶資料、已發布模板、Logo、學習規則、已核准差異與其他合法進度**；若需要合併既有資料，重新利用 UI-045／UI-046 的主檔版本、身份／別名及關聯衝突保護，不假設所有 ID／版本都能安全自動合併。",
+          "tests": [
+            "test_relational_backup.RelationalBackupTests.test_existing_environment_preview_finds_newer_real_rows_without_writes_and_restores_to_separate_copy",
+            "test_relational_backup.RelationalBackupTests.test_authenticated_unknown_schema_is_blocked_and_incomplete_restore_cannot_open_as_library",
+            "test_backup_center.BackupCenterTests.test_real_gui_backup_receipt_test_restore_and_new_copy_keep_original_customer_and_template"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        },
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-8",
+          "expected": "**安全套用與失敗復原**：經使用者明確確認實際影響、目的地與預處置後才進入受控還原，先在獨立暫存位置重建并驗證資料，再以必要交易或可回復切換方式啟用；遇**錯密碼、資產缺失、內容損壞、schema 不支援、來源不可得、版本衝突、磁碟不足、中斷**等狀況，停在「失敗／待確認／部分還原不可啟用」等真實狀態，不得默默破壞原有有效資料。還原後要核對客戶編號與歷史別名、人物聯絡資料、公司 Logo 的**尺寸分庫**、每個 `customer_card_styles`／`style_version_id`、來源文件映射、AI 規則和檢查點的有效性；參照檔案缺失時明確提示重新連結，不能把不完整的訓練快取當成可用。",
+          "tests": [
+            "test_relational_backup.RelationalBackupTests.test_disk_preflight_and_write_failure_leave_no_success_or_damaged_existing_file",
+            "test_relational_backup.RelationalBackupTests.test_cancelled_real_pack_and_isolated_extract_leave_current_data_and_no_completed_target",
+            "test_backup_center.BackupCenterTests.test_actual_background_cancel_keeps_user_files_and_releases_shared_worker",
+            "test_backup_policy.BackupPolicyTests.test_race_after_move_retains_recovery_bytes_and_last_verified_backup",
+            "test_backup_policy.BackupPolicyTests.test_wrong_password_cancellation_and_no_verified_full_backup_stop_retention",
+            "test_relational_backup.RelationalBackupTests.test_customer_merge_aliases_and_split_provenance_remain_usable_after_isolated_restore"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        },
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-9",
+          "expected": "**搬遷電腦與字型／來源關係**：新電腦可能沒有原 Windows 字型、原 .ai 路徑、Illustrator 或相關授權軟體。還原介面應區分「資料庫與關聯已恢復」「外部來源／字型待重新定位」「模板／正式列印需重新驗證」。沒有取得合法可再分發字型授權，不因選擇備份就自動把字型納入包或安裝新電腦；亦不能以已備份模板直接放寬 UI-013 固定字級、UI-020 完整 Logo、UI-023 同尺寸 Logo 庫和實際印前 Gate。",
+          "tests": [
+            "test_relational_backup.RelationalBackupTests.test_new_machine_restore_succeeds_when_original_library_and_raw_source_paths_are_completely_offline",
+            "test_relational_backup.RelationalBackupTests.test_sources_and_fonts_require_separate_backup_rights_and_missing_references_are_partial",
+            "test_relational_backup.RelationalBackupTests.test_offline_font_and_independent_logo_sizes_keep_bytes_ids_and_require_fresh_render_approval",
+            "test_relational_backup.RelationalBackupTests.test_source_facts_survive_restoration_but_old_host_stat_confirmation_is_not_a_new_quality_pass",
+            "test_backup_policy.BackupPolicyTests.test_migration_retains_receipts_but_disables_schedule_and_cannot_prune_old_machine_files"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        },
+        {
+          "requirement_id": "UI-047",
+          "acceptance_id": "UI-047-CLAUSE-10",
+          "expected": "**現有架構重用與適用範圍**：優先延伸既有持久資料、版本證據、來源索引與 UI-042 訓練檢查點，避免另建平行客戶／Logo／模型庫；可在同一既有管理介面設一個備份還原頁，並保存必要且受保護的備份 Manifest／狀態／校驗憑證。**UI-046 單次錯誤合併拆分恢復**與 UI-047 **整批資料毀損或換機復原**是不同用途，不相互取代。UI-043 不區分「曾設計／已確認購買」仍然有效。",
+          "tests": [
+            "test_relational_backup.RelationalBackupTests.test_customer_merge_aliases_and_split_provenance_remain_usable_after_isolated_restore",
+            "test_relational_backup.RelationalBackupTests.test_empty_library_authenticated_package_and_isolated_restore_never_claim_output_ready"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI047原軟體10條：統一GUI、SQLite一致性快照與逐資產SHA、AESGCM/scrypt、明示部分範圍、程式開啟期間本機排程與安全輪替、隔離測試還原及現有資料差異預覽、新副本還原、跨機來源字型與正式輸出重新驗證。Linux合成SELF；Windows排程／跨帳戶及真實個資上線未驗證。",
+          "contract_sha256": "5daa4880ad49fe27190386eeb12af242fdf25e2ffb4b762004173d306eac25fd"
+        }
+      ],
+      "software_self_verified": true
+    },
+    {
+      "id": "UI-049",
+      "registered": true,
+      "clauses": [
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-1",
+          "expected": "使用者選擇 **D｜智慧來源定位＋內容指紋驗證＋安全批次重新連結**。針對 UI-042 已建立的來源登錄／同檔精確去重、UI-043 客戶編號與版型來源、UI-047 備份換機及 UI-048 最後實作的正式權限機制，規劃在既有「來源檔案管理」入口提供**失聯來源總覽、使用者指定搜尋範圍、可驗證內容比對、批次重新連結和復原**。本項是 GUI 設計決策，不涉及目前真的搜尋使用者磁碟或修改路徑。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_real_gui_worker_multi_root_preview_details_and_explicit_alternative_selection",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_same_content_customer_registrations_keep_distinct_actual_style_person_and_training_dependencies"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-2",
+          "expected": "**失聯與風險總覽**：顯示已核准來源索引中無法存取的 `.ai`、相關圖片及合法外部素材（含適用時的字型引用），逐筆列出 `source_file_id`、保留的原名與舊路徑、當初的內容 SHA-256／位元組長度／來源版本、推定或已核准的客戶編號、來源 `artwork_id`、對應 `style_version_id`、訓練檢查點及受影響之模板、Logo 或當次工作。區分「**檔案真的失聯／路徑已移動／無讀取權限／內容改變／外部來源未納入備份／關聯待確認**」，避免一律顯示已遺失或因索引存在便宣稱來源可用。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_declared_missing_assets_and_context_budget_are_explicit_and_snapshot_does_not_write",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_same_length_changed_original_is_distinguished_from_same_content_relocation",
+            "test_source_relink.SourceRelinkTests.test_status_distinguishes_missing_changed_unreadable_and_ok"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-3",
+          "expected": "**使用者受控指定搜尋範圍**：可單次選擇新的根資料夾、外接磁碟或多個本機目錄，支援整個來源根目錄從 `D:\\客戶資料\\` 搬到 `E:\\歷史名片\\` 後的**一次選新根目錄、多筆候選配對**。不預設掃描整台電腦、無授權的網路共享目錄或上傳私有圖稿至外部；Windows 路徑大小寫／長路徑／Unicode、檔案被占用、不可讀、同名多候選等須明示。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_disjoint_and_overlapping_explicit_roots_share_candidates_without_rehashing_nested_root",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_entry_and_byte_budgets_are_global_and_leave_other_roots_explicitly_unsearched",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_offline_roots_and_real_cancel_never_report_all_found_or_modify_source_indexes",
+            "test_batch_source_relink.BatchSourceTests.test_search_does_not_follow_symlink_outside_selected_root"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-4",
+          "expected": "**精確驗證優先於相同檔名**：使用既有 UI-042 `content_blobs`／`source_files`，以**來源實際位元內容 SHA-256＋長度（必要時再用逐位元比對／碰撞防護）**檢查候選，明確區分「**位元完全一致，可重設位置**」「**只檔名一致但內容不同，不能視為原檔搬移**」「**指紋資料不足或不一致，待審**」「**多個完全相同內容副本**」。AI 可利用檔名、客戶編號、作品邊界、畫板及版型版次提出輔助線索，但不能用相似度／名稱代替原位元一致的證據，也不能自動將不同客戶編號合併。指紋相同只能證實內容，不證明客戶、來源權利、檔名身分或作品版次歸屬完全相同。",
+          "tests": [
+            "test_batch_source_relink.BatchSourceTests.test_size_prefilter_same_name_different_bytes_and_ambiguous_copies",
+            "test_source_relink.SourceRelinkTests.test_same_name_different_bytes_and_missing_candidate_rejected",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_many_same_name_different_content_paths_have_exact_count_and_bounded_display"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-5",
+          "expected": "**精確匹配的批次重新連結**：使用者可檢視「舊來源→新檔案→受影響客戶／作品／版型」比對清單，明確勾選相容且已核實**來源身分與內容／客戶映射**的候選集合後一次確認更新路徑／來源定位資訊；**原始來源檔本身不移動、改名或刪除**。若一個位元內容在 A001.ai 與 B002.ai 下各有獨立來源紀錄，即使新位置只有一份內容副本，也須**分別維持每條 `source_file_id`／原始名稱／原客戶編號及各自核准關聯**；不得用內容相同作為暗中重綁客戶的許可。多人共享及作品內版型版本混配風險要進入人工核對而非直接批次過關。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_context_cas_rejects_changed_customer_then_persists_exact_mapping_without_changing_original_bytes",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_same_content_customer_registrations_keep_distinct_actual_style_person_and_training_dependencies",
+            "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-6",
+          "expected": "**內容不同時不是重新連結舊來源**：若新位置檔案名稱一致而 SHA-256／位元不同，應明確顯示「**疑似修改版／另一份來源檔**」，提出作為**新來源／版型候選**或待確認變更，須走 UI-010 模板版本管理、UI-042 來源／內容指紋登錄及 UI-043 客戶身份核對的原流程；**不得默默覆蓋舊 content_id、舊畫板作品標記、已核准版型或有效訓練快取**。屬於不同版本／受污染的候選需停止舊檔批次重新連結，不能為達到 100% 完成率而亂接。",
+          "tests": [
+            "test_source_relink.SourceRelinkTests.test_same_name_different_bytes_and_missing_candidate_rejected",
+            "test_batch_source_relink.BatchSourceTests.test_candidate_changed_after_background_verify_does_not_partially_commit"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-7",
+          "expected": "**多候選與完全相同副本**：同一路徑下多個檔名、不同路徑存在相同位元內容時，可顯示候選各自位置及可用性，由使用者決定優先位置或保留多個可用定位；避免以檔名排序、搜尋時間或其他不可靠線索直接宣稱某個是「原始客戶來源」。完全相同的內容快取依 UI-042 可共用，但每份來源路徑與客戶映射的稽核證據需獨立。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_real_gui_worker_multi_root_preview_details_and_explicit_alternative_selection",
+            "test_batch_source_relink.BatchSourceTests.test_size_prefilter_same_name_different_bytes_and_ambiguous_copies",
+            "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-8",
+          "expected": "**更新影響預覽與失效控制**：確定只搬移了**同位元內容**時，若解析器／規則／模型版本和原先訓練快取依賴仍一致，可以**沿用已驗證的內容分析結果**，僅更新受影響的來源定位與需核對的檔案存在性。遇來源內容改變、字型／依賴缺漏或版本失效，僅重新分析**受影響作品與依賴項**，不得直接宣告全部訓練重新 PASS 或在正式印刷時略過來源／字型／Logo／實體尺寸驗證。",
+          "tests": [
+            "test_source_cache.SourceCacheTests.test_valid_cache_reused_without_rewriting",
+            "test_source_cache.SourceCacheTests.test_changed_preview_regenerated_original_unchanged",
+            "test_source_cache.SourceCacheTests.test_changed_vector_asset_regenerated",
+            "test_source_cache.SourceCacheTests.test_failed_regeneration_does_not_restore_corrupt_cache_as_success",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_declared_missing_assets_and_context_budget_are_explicit_and_snapshot_does_not_write"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-9",
+          "expected": "**確認、版本稽核與可撤銷**：保存每筆重新連結的舊路徑／新路徑、核實的內容指紋、原客戶／作品／版型映射、使用者確認與檢查結果、索引修訂版本及時間；支援 GUI 查詢、撤銷錯誤重綁或修復原路徑，**回復須重新檢查來源當下是否仍存在與內容是否一致**，不能把已不存在的路徑當作可復原成功。寫入前再核對來源索引版本以防另一視窗已改路徑；中斷或局部失敗須標示**已更新／未更新／衝突／待人工**的實際狀態，不偽稱全批完成。",
+          "tests": [
+            "test_batch_source_relink.BatchSourceTests.test_undo_verifies_old_paths_creates_new_revisions_and_keeps_history",
+            "test_batch_source_relink.BatchSourceTests.test_undo_missing_original_wrong_position_or_later_revision_rejected",
+            "test_batch_source_relink.BatchSourceTests.test_late_revision_conflict_and_event_failure_roll_back_entire_batch",
+            "test_batch_source_relink.BatchSourceTests.test_final_batch_audit_failure_rolls_back_links_histories_and_reviews",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_aggregate_context_and_audit_limits_rollback_all_paths_and_leave_no_fake_success",
+            "test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-10",
+          "expected": "**源文件與個資保護**：搜尋或重新連結僅作用於已有授權可讀取的本機目錄；不修改原 `.ai`、不重新命名、不中途取代其他人的檔案，不對外上傳來源圖稿或姓名／手機／LINE／IG。正式權限限制按 UI-048 **最後功能實作階段**才整合，但早期開發仍只能以合成資料測試並保留資料存取設計邊界，不以此作真實個資庫無限制存取的藉口。",
+          "tests": [
+            "test_batch_source_relink.BatchSourceTests.test_resolved_directory_outside_root_not_entered_even_without_symlink_flag",
+            "test_batch_source_relink.BatchSourceTests.test_search_does_not_follow_symlink_outside_selected_root",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_context_cas_rejects_changed_customer_then_persists_exact_mapping_without_changing_original_bytes"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        },
+        {
+          "requirement_id": "UI-049",
+          "acceptance_id": "UI-049-CLAUSE-11",
+          "expected": "**既有系統重用**：直接延伸 UI-042 的 `source_files`、`content_blobs`、`artworks`、`training_checkpoints` 與 UI-043 `customers`／`customer_card_styles`，利用 UI-047 還原後的缺來源檔報告；不另創第二套檔案指紋演算法或獨立影子訓練庫。UI-043 **不區分「曾設計／已確認購買」**仍適用。",
+          "tests": [
+            "test_source_relink_scope.SourceRelinkScopeTests.test_same_content_customer_registrations_keep_distinct_actual_style_person_and_training_dependencies",
+            "test_source_relink_scope.SourceRelinkScopeTests.test_declared_missing_assets_and_context_budget_are_explicit_and_snapshot_does_not_write"
+          ],
+          "status": "PASS",
+          "scope": "完整UI049原11軟體條款：多根有界搜尋、同位元SHA256/長度與歧義人工選擇、來源/客戶/版型/人物作用域/訓練/資產完整關聯預覽、只讀一致性快照、context/source版本CAS、單件批次共同映射稽核與可核驗撤銷。Linux合成SELF；Windows真路徑/權限及私人真AI/真個資未驗證。",
+          "contract_sha256": "a15722c6d0c03e643a10f84ec9dd10659d5c7fbe6f02ef705904e3ef24bfae88"
+        }
+      ],
+      "software_self_verified": true
+    },
+    {
+      "id": "UI-050",
+      "registered": true,
+      "clauses": [
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-1",
+          "expected": "使用者選擇 **D｜智慧資料夾監看＋安全增量匯入＋版本衝突審核**。延伸 UI-003「預檢後一鍵啟動訓練」、UI-042 已核准精確內容去重及跨次啟動恢復、UI-043 客戶編號與尺寸版型來源關聯、UI-049 已核准來源搬移失聯的安全重新連結。**UI-050 決定的是新增／修改的來源發現、候選匯入、增量處理與風險分流的 GUI**，不重做 UI-049 的舊檔搬移功能，亦不因自動監看而繞過正式 AI 學習規則與模板核准。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-2",
+          "expected": "**來源監看設定工作台**：使用者可新增／移除／暫停**明確選定的 Windows 本機來源根資料夾**，設定「僅按鈕手動重新掃描／監看變動並自動進行安全預檢」，顯示個別監看來源、上次成功核對時間、目前掃描／監看狀態、可用性及最近出錯事件。新監看來源需讓使用者確認包含子資料夾、支援格式（以 `.ai` 為主及明確核准的外部素材）與排除路徑／暫存目錄。**不預設監看整個磁碟、私人任意資料夾、網路磁碟，亦不自動將原稿或客戶資料送上雲端**。可按「立即重新掃描」獨立執行，不強迫一直監看。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_real_gui_start_pause_config_and_remove_preserve_customer_styles_sources_and_candidate_history",
+            "test_source_watch_index.SourceWatchIndexTests.test_explicit_configuration_cas_formats_exclusions_and_archive_keep_all_existing_records",
+            "test_source_watch_center.SourceWatchCenterTests.test_pause_preserves_unsaved_form_and_saves_against_fresh_control_state"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-3",
+          "expected": "**監看事件不是資料來源真相**：檔案系統通知可能重複、遺漏、亂序或在系統休眠、程式關閉、檔案更名及目錄離線期間無法接收；因此**事件只是提早發現變更的提示**，實際狀態需靠重新掃描指定來源範圍、版本化索引與可核實的內容指紋核對。**程式重新開啟時應補掃描上次有效掃描以後的新增／修改候選**，但須判斷目錄未掛載與檔案真被刪除的差別，不能因外接硬碟暫離就把所有舊客戶來源標成永久刪除。",
+          "tests": [
+            "test_source_watch_service.SourceWatchServiceTests.test_real_qt_directory_notification_creates_exact_new_candidates_and_preserves_alias_identity",
+            "test_source_watch_service.SourceWatchServiceTests.test_lost_notifications_and_restart_reconcile_without_duplicate_pending_or_fake_training"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-4",
+          "expected": "**等待檔案寫入穩定才處理**：Illustrator 存檔、複製大量檔案或外部同步期間，可能先產生部分檔、暫存檔或被鎖定檔。GUI 顯示**「複製／寫入中、等待穩定」「可驗證」「讀取失敗／需重試」**等真實狀態；需以合理的穩定性檢查（如大小、修改時間、可讀性、多次一致的內容比對等，未來技術驗證）避免只看到檔案出現便讀取半成品或把 Illustrator 暫存物誤匯入。等待或失敗時不更動現有訓練快取與客戶主檔。",
+          "tests": [
+            "test_quality_operations.QualityOperationsTests.test_scan_changing_bytes_are_waiting_not_imported_and_stale_root_save_rejected",
+            "test_source_watch_index.SourceWatchIndexTests.test_temporary_read_failure_preserves_last_verified_hash_for_later_modified_version_review",
+            "test_source_watch_index.SourceWatchIndexTests.test_temporary_files_are_excluded_and_directory_work_is_bounded_without_silent_completion"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-5",
+          "expected": "**檔案變更分類的單一總覽**：按來源根目錄／檔案／作品列出**新加入且內容未知、異名但位元內容完全相同、原路徑同名但內容指紋改變、來源搬移或更名線索、來源不可讀／離線、已完成且未變動**；逐項顯示 `source_file_id`／原檔名、客戶編號候選、SHA-256／位元長度核對結果、來源版本、實際作品數（已解析時）、是否需訓練與對應例外。計數必須來自已核實結果，不可把通知次數當新檔數、將來源檔數誤當作品數或將相似外觀當作完全相同位元。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection",
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_registered_source_keeps_customer_templates_other_source_and_training_evidence",
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-6",
+          "expected": "**異名同內容避免重訓、但保留客戶關聯**：如果 `A001.ai` 和 `B002.ai` 的**實際位元內容與依賴版本一致**，只需重用可驗證的 `content_blobs`／作品解析與訓練快取；但 `source_files` 仍需分別保留實際檔名、路徑及每個**客戶編號候選與獨立已確認關聯**，且用 UI-043 審核跨客戶來源的資料歸屬。**內容重複不等於可略過新檔帶來的客戶登錄，也不代表能自動合併兩位客戶或刪除來源檔**。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+            "test_source_watch_index.SourceWatchIndexTests.test_alias_candidate_index_is_persistent_idempotent_and_never_starts_training_or_merges_customers"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-7",
+          "expected": "**同名但內容已變更是新的候選版本**：若 `00123.ai` 的實際位元內容在重新掃描後改變，顯示舊、新內容指紋及可能受影響的畫板／作品、版型版本、訓練快取與客戶來源關聯，**登錄新來源內容／候選版次**，保留舊版證據與舊 `style_version_id`，由 UI-010 模板版本核准與 UI-043 客戶來源歸屬流程判斷。**不得直接覆寫原已核准模板、已訓練來源事實或使用者已確認的客戶資料**；若只是在資料夾搬移而內容一致，則轉交 UI-049 重新連結流程，不要將之當作新的版型。",
+          "tests": [
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_registered_source_keeps_customer_templates_other_source_and_training_evidence",
+            "test_source_watch_center.SourceWatchCenterTests.test_modified_version_needs_review_and_changed_bytes_during_later_preflight_never_start_a_job",
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_version_review_requires_live_proof_and_dispatch_requires_an_actual_job"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-8",
+          "expected": "**自動安全分流與人工例外**：已設定自動監看時，可自動執行**非破壞性的檔案清單核對、穩定性確認、內容去重及合規預檢**，將安全候選納入已核准的增量候選／訓練待辦，並於 GUI 顯示**待處理、可重用已驗證結果、需人工審核、暫停／失敗／受阻**。真正的 AI 訓練啟動仍沿用 UI-003 已確認的「智慧預檢後一鍵啟動」及已經核准的訓練作業權限；未知人物公司歸屬、跨客戶編號、同名不同內容、缺字型／Logo 或規則衝突進 UI-004／UI-005 例外中心，**不得因資料夾監看開啟而自動核准永久學習規則、正式發布模板或製作成品**。",
+          "tests": [
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts",
+            "test_source_watch_index.SourceWatchIndexTests.test_manual_discovery_enters_auto_queue_only_after_explicit_enable",
+            "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-9",
+          "expected": "**增量重新分析、失效及斷點**：監看發現新位元內容時，只使其**真正依賴的解析／標記／學習快取與候選**失效；UI-039／UI-040／UI-041 的人工標記與已核准雜訊規則、UI-042 的快取版本、來源作品分割及檢查點均需納入依賴。正確且版本仍有效的其他內容不應重訓；已核准規則可按正式適用條件自動排除雜訊而不逐件重問，模糊情境仍交例外中心。程式重啟後依**本機持久索引與可核實的掃描版本**重建候選、避免重複登錄／重複工作；不能把掃描發現成功當成已學習或已完成印前驗證。",
+          "tests": [
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_registered_source_keeps_customer_templates_other_source_and_training_evidence",
+            "test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units",
+            "test_source_watch_service.SourceWatchServiceTests.test_source_index_changed_during_scan_cannot_commit_a_stale_candidate_or_overwrite_real_new_source"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-10",
+          "expected": "**操作控制與效能**：GUI 提供個別根目錄的「開始／暫停監看」「立即重新掃描」「只顯示有變更／問題檔案」「查看來源／差異及處理原因」；對資料量大、複製中、路徑不通、檔案存取拒絕、重複通知或系統睡眠提供可理解的狀態、重試及非阻塞操作。目錄巡查頻率、資源負載和實際訓練工作排程管理**留 UI-051 專門決策**；監看來源撤銷時須確認停止未來掃描，**不得偷偷刪除既有訓練資料、來源登錄、客戶資料庫或已發布模板**。",
+          "tests": [
+            "test_source_watch_service.SourceWatchServiceTests.test_busy_window_and_duplicate_hints_keep_one_fifo_root_without_counting_events_as_files",
+            "test_source_watch_center.SourceWatchCenterTests.test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection",
+            "test_source_watch_center.SourceWatchCenterTests.test_unsaved_root_input_survives_reconciliation_and_concurrent_config_is_not_overwritten",
+            "test_source_watch_center.SourceWatchCenterTests.test_review_worker_launch_failure_releases_gui_without_losing_review_or_source_data",
+            "test_source_watch_service.SourceWatchServiceTests.test_shutdown_stops_qt_watchers_and_timers_before_library_close",
+            "test_source_watch_service.SourceWatchServiceTests.test_library_close_stops_services_and_queued_qt_notifications_never_read_closed_database",
+            "test_source_watch_service.SourceWatchServiceTests.test_raw_connection_close_is_detected_without_recursive_status_database_reads",
+            "test_source_watch_center.SourceWatchCenterTests.test_stale_project_dialog_never_rebinds_or_writes_another_library"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-11",
+          "expected": "**事故與來源保護**：資料夾監看或新檔匯入**只讀原來源，不搬移／覆寫／刪除檔案**；有衝突時保存舊版和來源證據，寫入新索引前核對來源當下仍穩定、索引版本仍適用，遇到權限不足、損毀、中斷或磁碟滿要標示局部成功與失敗，不得宣稱全數增量訓練完成或把失聯誤當刪除。開發測試遵守 UI-048「權限完整介面最後實作，但以合成資料及受控目錄先保留安全邊界」。",
+          "tests": [
+            "test_source_watch_index.SourceWatchIndexTests.test_actual_sqlite_full_rolls_back_whole_candidate_index_without_losing_existing_root",
+            "test_source_watch_index.SourceWatchIndexTests.test_root_pause_or_audit_failure_cannot_partially_commit_candidates_or_a_fake_success",
+            "test_source_watch_service.SourceWatchServiceTests.test_pause_during_real_worker_cancels_before_candidate_commit_then_disables_future_work",
+            "test_source_watch_service.SourceWatchServiceTests.test_remove_during_actual_worker_stops_future_watch_and_preserves_all_raw_files",
+            "test_source_watch_index.SourceWatchIndexTests.test_offline_and_missing_are_unresolved_and_keep_last_effective_index",
+            "test_source_watch_service.SourceWatchServiceTests.test_close_during_actual_worker_cancels_before_writing_old_project_candidates",
+            "test_source_watch_service.SourceWatchServiceTests.test_close_listener_failure_still_notifies_other_consumers_and_closes_sqlite"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        },
+        {
+          "requirement_id": "UI-050",
+          "acceptance_id": "UI-050-CLAUSE-12",
+          "expected": "**相容及範圍**：持久索引和作品歸屬重用 UI-042／UI-043 的 `source_files`、`content_blobs`、`artworks`、`training_checkpoints`、`customers`、`customer_card_styles`；不另建影子客戶或訓練庫。UI-043 **沒有曾設計／已確認購買狀態分級**、UI-010 模板核准、UI-013 固定字級、UI-020／UI-023 Logo 完整與尺寸隔離、正式印前 Gate 全部維持。",
+          "tests": [
+            "test_source_watch_index.SourceWatchIndexTests.test_changed_registered_source_keeps_customer_templates_other_source_and_training_evidence",
+            "test_source_watch_center.SourceWatchCenterTests.test_real_gui_start_pause_config_and_remove_preserve_customer_styles_sources_and_candidate_history"
+          ],
+          "status": "PASS",
+          "scope": "完整已核准UI050原12軟體條款：明列根/格式/排除/監看開始暫停移除；Qt事件僅提示＋600ms有界去抖/30秒與重啟補掃，雙hash穩定與根/來源索引CAS，同SQLite候選索引/部分與離線實態、既有UI003明確預檢啟動與異名獨立source、同名新內容保舊證據人工核對、分頁/只讀影響查詢與局部失效/SQLite FULL交易保護。Linux合成SELF；Windows實機路徑/鎖檔/休眠/參考硬體與真私有AI/個資未驗證。",
+          "contract_sha256": "4ee6c75a6c34569e3e7b8ae93e9a6ce0ea4497cb4d18206f6630c3f13fdfd5fa"
+        }
+      ],
+      "software_self_verified": true
+    },
+    {
+      "id": "UI-051",
+      "registered": true,
+      "clauses": [
+        {
+          "requirement_id": "UI-051",
+          "acceptance_id": "UI-051-CLAUSE-1",
+          "expected": "**決策 D，依使用者補充正式修訂**：「通常沒有急件／非急件」，**不要把急件優先當核心功能**；主要目標是**每份檔案及檔內每件作品都不漏審、低配置 Windows 電腦穩定運行、不因過載造成進度丟失、程式無法啟動或嚴重卡頓無法操作**。原 UI-051 問卷「急件優先」文案由本決策取代；可選手動調整順序，但不要求標記急件、不允許工作永久飢餓。",
+          "tests": [
+            "test_runtime_queue.RuntimeQueueTests.test_fifo_does_not_follow_wall_clock_and_atomic_claim_cannot_bypass_older_live_scope",
+            "test_review_ledger.ReviewLedgerTests.test_identical_bytes_different_filenames_keep_all_sources_works_and_independent_human_reviews",
+            "test_startup_catalog.StartupCatalogTests.test_thousand_template_startup_never_calls_unbounded_catalog_and_global_unicode_search_opens_exact_id"
+          ],
+          "status": "PASS",
+          "scope": "完整UI051原8軟體條款：無急件分類，逐來源/作品/分析/人審/歸屬獨立；同SQLite FIFO/max200/50paged且scope/session明確恢復；psutil host+cgroup/CPU/RAM/IO/disk+Qt heartbeat/hysteresis與GUI優先；48paged startup/lazy fonts不載all originals/models/jobs；既有JOB/AUTO引擎子程序隔離/有界協定/120s單位與10s取消預設，持久BEGIN與原子結果、唯一timeout項FAILED後續合法項沿原確認續跑，FAILED不自動重試；receipt fault FailClosed/核對保存恢復、不重分析；只讀QProcess ledger核實SHA/pins/cache/人工排除，候選與來源/作品分母另列，未核實全庫已審及全來源覆蓋明示未知；所有既有客戶/模型/權限/發布/印前Gate保留。Linux合成SELF，Windows參考硬體性能實測仍REV04、原生私有AI全面能力仍REV02，未宣稱實體或獨立覆核。",
+          "contract_sha256": "b638e534f030f17039f3a22c899bbb5fc916c4a6e03cbfc3a0b0c6a5630c85b6"
+        },
+        {
+          "requirement_id": "UI-051",
+          "acceptance_id": "UI-051-CLAUSE-2",
+          "expected": "**逐來源／作品完整審核追蹤**：重用 UI-038 單檔多作品、UI-042 來源及斷點、UI-043 跨客戶來源關聯、UI-050 新檔增量索引。建立可持久的「來源檔→實際作品→分析／標記／來源歸屬→審核狀態」清單：待分析、分析中、可重用已核實快取、待人工審核、已核准、已明確排除、失敗／例外等待處理。**分析成功不等於人工審核完成；位元內容完全相同只允許重用分析，不得遺漏不同檔名／客戶編號的來源審核**。不得藉忽略、去重或錯誤排除讓每份資料從待辦消失。",
+          "tests": [
+            "test_review_ledger.ReviewLedgerTests.test_identical_bytes_different_filenames_keep_all_sources_works_and_independent_human_reviews",
+            "test_review_ledger.ReviewLedgerTests.test_actual_source_change_keeps_approval_history_but_is_not_counted_as_current_review",
+            "test_review_ledger.ReviewLedgerTests.test_explicit_human_exclusion_is_a_separate_visible_state_and_not_reviewed_or_deleted",
+            "test_review_ledger.ReviewLedgerTests.test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files",
+            "test_review_ledger.ReviewLedgerGuiTests.test_actual_asynchronous_gui_reads_source_then_works_without_changing_review_or_ownership",
+            "test_review_ledger.ReviewLedgerTests.test_legacy_import_duplicate_content_stays_visible_as_unregistered_review_scope"
+          ],
+          "status": "PASS",
+          "scope": "完整UI051原8軟體條款：無急件分類，逐來源/作品/分析/人審/歸屬獨立；同SQLite FIFO/max200/50paged且scope/session明確恢復；psutil host+cgroup/CPU/RAM/IO/disk+Qt heartbeat/hysteresis與GUI優先；48paged startup/lazy fonts不載all originals/models/jobs；既有JOB/AUTO引擎子程序隔離/有界協定/120s單位與10s取消預設，持久BEGIN與原子結果、唯一timeout項FAILED後續合法項沿原確認續跑，FAILED不自動重試；receipt fault FailClosed/核對保存恢復、不重分析；只讀QProcess ledger核實SHA/pins/cache/人工排除，候選與來源/作品分母另列，未核實全庫已審及全來源覆蓋明示未知；所有既有客戶/模型/權限/發布/印前Gate保留。Linux合成SELF，Windows參考硬體性能實測仍REV04、原生私有AI全面能力仍REV02，未宣稱實體或獨立覆核。",
+          "contract_sha256": "b638e534f030f17039f3a22c899bbb5fc916c4a6e03cbfc3a0b0c6a5630c85b6"
+        },
+        {
+          "requirement_id": "UI-051",
+          "acceptance_id": "UI-051-CLAUSE-3",
+          "expected": "**公平且不無限阻塞的佇列**：預設採易理解的先入先處理與避免長期待辦飢餓的公平性管理，故障或等待人工審核的項目移至明確例外待辦、不堵死其他合法檔案；新檔持續增加亦不能讓舊檔永遠無法處理。所有可讀來源及作品都可查詢目前狀態、理由、下一步及來源證據；**不需要每張都重複手動確認符合已核准、可自動重用規則的低風險項目，但不得把未核對的客戶歸屬宣稱已確認**。",
+          "tests": [
+            "test_runtime_queue.RuntimeQueueTests.test_fifo_does_not_follow_wall_clock_and_atomic_claim_cannot_bypass_older_live_scope",
+            "test_runtime_queue.RuntimeQueueTests.test_scope_changed_request_is_blocked_and_next_eligible_is_not_starved",
+            "test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure",
+            "test_runtime_queue.RuntimeQueueTests.test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims"
+          ],
+          "status": "PASS",
+          "scope": "完整UI051原8軟體條款：無急件分類，逐來源/作品/分析/人審/歸屬獨立；同SQLite FIFO/max200/50paged且scope/session明確恢復；psutil host+cgroup/CPU/RAM/IO/disk+Qt heartbeat/hysteresis與GUI優先；48paged startup/lazy fonts不載all originals/models/jobs；既有JOB/AUTO引擎子程序隔離/有界協定/120s單位與10s取消預設，持久BEGIN與原子結果、唯一timeout項FAILED後續合法項沿原確認續跑，FAILED不自動重試；receipt fault FailClosed/核對保存恢復、不重分析；只讀QProcess ledger核實SHA/pins/cache/人工排除，候選與來源/作品分母另列，未核實全庫已審及全來源覆蓋明示未知；所有既有客戶/模型/權限/發布/印前Gate保留。Linux合成SELF，Windows參考硬體性能實測仍REV04、原生私有AI全面能力仍REV02，未宣稱實體或獨立覆核。",
+          "contract_sha256": "b638e534f030f17039f3a22c899bbb5fc916c4a6e03cbfc3a0b0c6a5630c85b6"
+        },
+        {
+          "requirement_id": "UI-051",
+          "acceptance_id": "UI-051-CLAUSE-4",
+          "expected": "**低配預設與資源背壓**：預設保守低負載。未來依實測可用 RAM、CPU、I/O、磁碟空間控制**同時處理工作數、單次分析資料量、來源掃描與模型載入**；有限活躍佇列／分頁顯示，等待任務持久保存，避免一次載入數百大型 `.ai` 或無界並行。當電腦資源壓力上升、主介面卡頓或空間／安全寫入不足，應**自動降載、停止領取新工作、必要時安全暫停**；具體硬體門檻與性能數值留待未來實機量測，不能現在保證任意低配設備均可運行。",
+          "tests": [
+            "test_runtime_resources.RuntimeResourcesTests.test_host_and_container_memory_cpu_affinity_are_clamped_and_first_cpu_is_unknown",
+            "test_runtime_resources.RuntimeResourcesTests.test_applicable_unknown_container_limits_do_not_borrow_host_available_memory",
+            "test_runtime_resources.RuntimeResourcesTests.test_first_cpu_sample_can_only_admit_one_bounded_worker_with_known_memory_and_disk",
+            "test_runtime_resources.RuntimeResourcesTests.test_io_rates_are_measured_deltas_and_high_io_wait_pauses_new_work",
+            "test_runtime_resources.RuntimeResourcesTests.test_hysteresis_counts_fresh_samples_not_repeated_checks_and_is_per_workload",
+            "test_runtime_resources.RuntimeResourcesTests.test_disk_cpu_gui_interaction_stale_and_unknown_resources_pause_instead_of_fake_completion",
+            "test_runtime_resources.RuntimeResourcesTests.test_actual_runtime_probe_returns_finite_metrics_without_claiming_reference_hardware",
+            "test_startup_catalog.StartupCatalogTests.test_explicit_source_preflight_and_registration_lookup_never_expand_all_other_source_records"
+          ],
+          "status": "PASS",
+          "scope": "完整UI051原8軟體條款：無急件分類，逐來源/作品/分析/人審/歸屬獨立；同SQLite FIFO/max200/50paged且scope/session明確恢復；psutil host+cgroup/CPU/RAM/IO/disk+Qt heartbeat/hysteresis與GUI優先；48paged startup/lazy fonts不載all originals/models/jobs；既有JOB/AUTO引擎子程序隔離/有界協定/120s單位與10s取消預設，持久BEGIN與原子結果、唯一timeout項FAILED後續合法項沿原確認續跑，FAILED不自動重試；receipt fault FailClosed/核對保存恢復、不重分析；只讀QProcess ledger核實SHA/pins/cache/人工排除，候選與來源/作品分母另列，未核實全庫已審及全來源覆蓋明示未知；所有既有客戶/模型/權限/發布/印前Gate保留。Linux合成SELF，Windows參考硬體性能實測仍REV04、原生私有AI全面能力仍REV02，未宣稱實體或獨立覆核。",
+          "contract_sha256": "b638e534f030f17039f3a22c899bbb5fc916c4a6e03cbfc3a0b0c6a5630c85b6"
+        },
+        {
+          "requirement_id": "UI-051",
+          "acceptance_id": "UI-051-CLAUSE-5",
+          "expected": "**正常啟動與 GUI 優先**：程式啟動**不可立即載入所有模型、原稿與待辦並啟動大量訓練而卡死**；先讓主視窗、基本功能及診斷／恢復入口可用，再以受限工作數逐步核實檢查點。提供「低負載啟動／暫停背景訓練／安全恢復」入口，反覆崩潰時不要無限自動重試同一高負載工作。掃描、解析與訓練不得長時間阻塞 GUI 主執行緒；使用者做排版、客戶查詢、畫布操作及印前輸出時優先保障互動，背景工作可降載或暫停。",
+          "tests": [
+            "test_startup_catalog.StartupCatalogTests.test_lazy_fonts_and_models_are_not_loaded_or_parsed_at_normal_startup",
+            "test_startup_catalog.StartupCatalogTests.test_source_page_denominator_and_selected_id_work_across_pages_without_unbounded_read",
+            "test_startup_catalog.StartupCatalogTests.test_invalid_resource_policy_still_opens_gui_and_diagnostic_entry_with_background_fail_closed",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_gui_heartbeat_and_foreground_priority_are_measured_without_reading_key_text",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_waiting_foreground_launch_can_be_cancelled_without_running_or_losing_the_gui",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
+            "test_logo_workflow_gui.LogoWorkflowGuiTests.test_generic_worker_start_failure_restores_controls_and_does_not_leave_job",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_deferred_pool_failure_uses_owned_callback_and_restores_controls_without_a_modal"
+          ],
+          "status": "PASS",
+          "scope": "完整UI051原8軟體條款：無急件分類，逐來源/作品/分析/人審/歸屬獨立；同SQLite FIFO/max200/50paged且scope/session明確恢復；psutil host+cgroup/CPU/RAM/IO/disk+Qt heartbeat/hysteresis與GUI優先；48paged startup/lazy fonts不載all originals/models/jobs；既有JOB/AUTO引擎子程序隔離/有界協定/120s單位與10s取消預設，持久BEGIN與原子結果、唯一timeout項FAILED後續合法項沿原確認續跑，FAILED不自動重試；receipt fault FailClosed/核對保存恢復、不重分析；只讀QProcess ledger核實SHA/pins/cache/人工排除，候選與來源/作品分母另列，未核實全庫已審及全來源覆蓋明示未知；所有既有客戶/模型/權限/發布/印前Gate保留。Linux合成SELF，Windows參考硬體性能實測仍REV04、原生私有AI全面能力仍REV02，未宣稱實體或獨立覆核。",
+          "contract_sha256": "b638e534f030f17039f3a22c899bbb5fc916c4a6e03cbfc3a0b0c6a5630c85b6"
+        },
+        {
+          "requirement_id": "UI-051",
+          "acceptance_id": "UI-051-CLAUSE-6",
+          "expected": "**持久斷點與防毀損**：沿用 UI-042 `training_checkpoints`、來源版本／規則／模型依賴及操作憑證；工作**經安全落盤並經核實**才顯示某階段已完成。關機、程式崩潰、強制停止、硬碟空間不足時，已核實成功階段不能因另一工作失敗而丟失；未落盤的部分進度必須標成中斷／待重試，不得謊報成功。重新啟動重建持久佇列並檢查有效性，避免無端整批重訓或重複提交造成資料版本競爭。資料庫無法安全寫入時**Fail-Closed**並說明故障，不可繼續只在記憶體累積「已保存」的假進度。",
+          "tests": [
+            "test_runtime_worker.RuntimeWorkerTests.test_actual_stalled_process_is_killed_and_uncommitted_sqlite_write_rolls_back",
+            "test_runtime_worker.RuntimeWorkerTests.test_truncated_or_unbound_success_protocol_never_marks_real_job_completed",
+            "test_runtime_queue.RuntimeQueueTests.test_queue_audit_failure_rolls_back_backend_claim_worker_lease_and_request",
+            "test_runtime_queue.RuntimeQueueTests.test_dead_session_does_not_auto_resume_and_explicit_resume_keeps_original_arrival_rank",
+            "test_runtime_queue.RuntimeQueueTests.test_other_window_cannot_duplicate_worker_and_stale_request_cas_rolls_back",
+            "test_runtime_execution.RuntimeAutomaticExecutionTests.test_pause_commit_audit_failure_is_failure_and_keeps_recoverable_running_state",
+            "test_training_pipeline.PipelineTests.test_late_item_audit_failure_rolls_back_template_USE_result_and_stops_system",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_committed_backend_result_with_failed_queue_receipt_is_recovered_without_repeating_any_analysis",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_recovery_requires_real_successful_audit_commit_and_never_clears_fault_on_write_failure",
+            "test_runtime_execution.RuntimeAutomaticExecutionTests.test_source_registration_and_job_pointer_roll_back_together_on_audit_failure"
+          ],
+          "status": "PASS",
+          "scope": "完整UI051原8軟體條款：無急件分類，逐來源/作品/分析/人審/歸屬獨立；同SQLite FIFO/max200/50paged且scope/session明確恢復；psutil host+cgroup/CPU/RAM/IO/disk+Qt heartbeat/hysteresis與GUI優先；48paged startup/lazy fonts不載all originals/models/jobs；既有JOB/AUTO引擎子程序隔離/有界協定/120s單位與10s取消預設，持久BEGIN與原子結果、唯一timeout項FAILED後續合法項沿原確認續跑，FAILED不自動重試；receipt fault FailClosed/核對保存恢復、不重分析；只讀QProcess ledger核實SHA/pins/cache/人工排除，候選與來源/作品分母另列，未核實全庫已審及全來源覆蓋明示未知；所有既有客戶/模型/權限/發布/印前Gate保留。Linux合成SELF，Windows參考硬體性能實測仍REV04、原生私有AI全面能力仍REV02，未宣稱實體或獨立覆核。",
+          "contract_sha256": "b638e534f030f17039f3a22c899bbb5fc916c4a6e03cbfc3a0b0c6a5630c85b6"
+        },
+        {
+          "requirement_id": "UI-051",
+          "acceptance_id": "UI-051-CLAUSE-7",
+          "expected": "**錯誤隔離、受控重試與操作面板**：單檔解析失敗、人工歧義、字型／Logo 缺失和長期無回應須逐件隔離、顯示原因與下一步，不可拖垮主程式或阻塞全批。重試需有上限／退避、可只重試失敗、暫停／繼續／安全退出。GUI 區分來源檔數、實際作品數、待分析、正在處理、已核實分析、**待人工審核、已審核、例外阻擋及明確核准排除**；分母與狀態須正確，**不把待審／排除／失聯算成已審核**，可搜尋每個檔案／作品並追溯審核結果。",
+          "tests": [
+            "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending",
+            "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
+            "test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure",
+            "test_review_ledger.ReviewLedgerTests.test_large_source_scope_pages_before_payload_read_and_preserves_full_denominator",
+            "test_review_ledger.ReviewLedgerTests.test_explicit_human_exclusion_is_a_separate_visible_state_and_not_reviewed_or_deleted",
+            "test_review_ledger.ReviewLedgerTests.test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files",
+            "test_review_ledger.ReviewLedgerGuiTests.test_closing_project_stops_pending_ledger_query_and_disables_original_context",
+            "test_batch_import.BatchImportGuiTests.test_resource_waiting_import_can_be_cancelled_and_persisted_as_interrupted_without_registration"
+          ],
+          "status": "PASS",
+          "scope": "完整UI051原8軟體條款：無急件分類，逐來源/作品/分析/人審/歸屬獨立；同SQLite FIFO/max200/50paged且scope/session明確恢復；psutil host+cgroup/CPU/RAM/IO/disk+Qt heartbeat/hysteresis與GUI優先；48paged startup/lazy fonts不載all originals/models/jobs；既有JOB/AUTO引擎子程序隔離/有界協定/120s單位與10s取消預設，持久BEGIN與原子結果、唯一timeout項FAILED後續合法項沿原確認續跑，FAILED不自動重試；receipt fault FailClosed/核對保存恢復、不重分析；只讀QProcess ledger核實SHA/pins/cache/人工排除，候選與來源/作品分母另列，未核實全庫已審及全來源覆蓋明示未知；所有既有客戶/模型/權限/發布/印前Gate保留。Linux合成SELF，Windows參考硬體性能實測仍REV04、原生私有AI全面能力仍REV02，未宣稱實體或獨立覆核。",
+          "contract_sha256": "b638e534f030f17039f3a22c899bbb5fc916c4a6e03cbfc3a0b0c6a5630c85b6"
+        },
+        {
+          "requirement_id": "UI-051",
+          "acceptance_id": "UI-051-CLAUSE-8",
+          "expected": "**既有流程不越權**：訓練仍依 UI-003 預檢後一鍵啟動；UI-004／UI-005 例外、UI-040／UI-041 雜訊規則、UI-010 模板核准不因佇列自動變更。UI-048 完整登入權限依核准安排在最後功能，前期只能用模擬／去識別資料除錯。不變更 UI-043「曾設計／已購買不分類」或任何印前 Gate，亦不新增平行訓練／客戶資料庫。",
+          "tests": [
+            "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+            "test_training_pipeline.PipelineTests.test_holdout_revoke_wrong_role_and_caller_after_do_not_train",
+            "test_review_ledger.ReviewLedgerGuiTests.test_actual_asynchronous_gui_reads_source_then_works_without_changing_review_or_ownership",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes"
+          ],
+          "status": "PASS",
+          "scope": "完整UI051原8軟體條款：無急件分類，逐來源/作品/分析/人審/歸屬獨立；同SQLite FIFO/max200/50paged且scope/session明確恢復；psutil host+cgroup/CPU/RAM/IO/disk+Qt heartbeat/hysteresis與GUI優先；48paged startup/lazy fonts不載all originals/models/jobs；既有JOB/AUTO引擎子程序隔離/有界協定/120s單位與10s取消預設，持久BEGIN與原子結果、唯一timeout項FAILED後續合法項沿原確認續跑，FAILED不自動重試；receipt fault FailClosed/核對保存恢復、不重分析；只讀QProcess ledger核實SHA/pins/cache/人工排除，候選與來源/作品分母另列，未核實全庫已審及全來源覆蓋明示未知；所有既有客戶/模型/權限/發布/印前Gate保留。Linux合成SELF，Windows參考硬體性能實測仍REV04、原生私有AI全面能力仍REV02，未宣稱實體或獨立覆核。",
+          "contract_sha256": "b638e534f030f17039f3a22c899bbb5fc916c4a6e03cbfc3a0b0c6a5630c85b6"
+        }
+      ],
+      "software_self_verified": true
+    },
+    {
+      "id": "UI-052",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-053",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-054",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-055",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-056",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-057",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-058",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-059",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-060A",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-061",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-062",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-063",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-064",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-065",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-066",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-067",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "UI-052-REVIEW",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "REV-01",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "REV-02",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    },
+    {
+      "id": "REV-04",
+      "registered": false,
+      "clauses": [],
+      "software_self_verified": false
+    }
+  ],
+  "verified_count": 5,
+  "all_28_complete": false,
+  "goal_status": "IN_PROGRESS",
+  "independent_review": false,
+  "windows_reference_hardware_verified": false
+}

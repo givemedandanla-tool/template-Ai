@@ -877,3 +877,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI051 runtime003 formal source ready
 - async guarded callback擴充後broad139中137 real cases PASS，錯module loader2不列成功，補正連結/例外/輸出/watch56/56 PASS；resource-wait batch cancel真INTERUPTED/來源0及legacy skip alias pending9/9 PASS。新helper維持sync raise與3arg mocks，所有欄位/資料/Gate原assert保留。
 - capture_remaining28完整實際Qt/SQLite/source current-host probes PASS、0runtime，無Windows/reference/independent宣稱。當前749已知，原8仍pending，待新source固定與正式003。
+
+### UI051 full original8 self-verified milestone
+- 本輪剩餘28已完成UI046/UI047/UI049/UI050/UI051五題，共52原條款；749/749正式PASS、0skip/0Qt錯誤、capture0、source unchanged。全75：49 VERIFIED／23 PARTIAL／3 DEFERRED；固定70：47閉合／23仍部分。CORE87／GOV7另計。
+- source 8f8f638a1096f0aeb8aebe2231d6d49b96970c05；143契約digest/current claims吻合；實際Qt capture及source manifest一致；metadata-first 37文字／112本機media依精確manifest保存。下一UI052，不把5/28當全28完成。

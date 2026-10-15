@@ -1,16 +1,14 @@
 # 當前精簡接手
 
-- 核心零例行問答、按需rg小段讀、一般輸出≤1600tokens；每可恢復階段/10分鐘GitHub checkpoint＋receipt逐檔readback。無多代理/EXE/main merge，提交[skip ci]。/workspace/template-Ai，dev/v0.1-first-version／PR2。
-- active_contract FIXED70_REMAINING28_CONTRACT。原前輪28與本輪剩餘28分開；本輪歷史完成4/28（UI046/UI047/UI049/UI050），原75為48 VERIFIED/24 PARTIAL/3 DEFERRED，固定70為46閉合/24剩；新code全部142歷史要求待重驗，UI051原8已完整綁但未VERIFIED，不得報5/28。
-- 最新完整正式PASS仍RUN-REMAINING28-WATCH-002：692/692、0runtime/capture0/source unchanged。新UI051從資源/低負載/FIFO/逐source-work人審/子程序隔離/重試/續跑到GUI已實作，未全正式PASS。UI051_EXECUTION_PLAN/UI051_TIMEOUT_RECOVERY及REMAINING28_CLAUSE_AUDIT可查原8。
-- Runtime001 source6a7ded4，約12min未終報，SIGINT無效後SIGTERM；沒有收集單項結果/沒有capture，不是PASS。原attempt metadata/log及partial source proof保留，不能覆寫或補造run.json。
-- Runner已新增ignored .checkpoints/formal-live/RUN-.../test-progress.json＋jsonl結果，60秒faulthandler全thread stack；完整run結束才複製diagnostics進evidence。臨時py-spy attach被OS拒絕，改builtin，無申請提權/無app dependency變更。
-- Runtime002 source da132107ddfbd64e65432a14f953070c7e2f1598，前408實際PASS，409 test_logo_workflow_gui generic_worker_start_failure卡QMessageBox。stack gui.error→failed→launch→run_job→test121確認同步pool.start失敗被改成modal；22:16:49 TERM。docs/evidence/runs/RUN-REMAINING28-RUNTIME-002/interrupted.json/partial-tests.jsonl/stack保存；整run未PASS，勿close milestone。
-- 已恢復legacy無explicit on_error的同步pool.start raise/cleanup；資源延後錯誤交JobCallbacks(done,error,cancel_event)，callable仍3arg兼容舊mock。全部guarded dialog接error，batch原interrupt_owned處理deferred失敗/取消，未提交不假成功；batch preflight用worker own Library定點hash/page lookup不全載來源。
-- Legacy import SKIPPED同bytes但source_id尚無的範圍也在只讀ledger另列，AUTO/SCAN/IMPORT各自scope分母，不冒已登錄/已審；summary明示未登錄與indexed候選。原749測試已知，不把新增tests當父題完成。
-- 24 launch/Qt target PASS；106 callback broad初1FAIL是新resource-wait測試早於QTimer真正step的assert，保留原log，改等busy實際入口後9/9 PASS；不改產品邏輯/不降低源碼/控制/持久狀態斷言。
-- 最新broad：all-callbacks002共139中137真cases PASS，另2錯module loader error已保留且不算pass；補正source_relink/import_exceptions/output_batch_gui/watch共56/56 PASS，9 resource-wait batch/ledger PASS，完整capture PASS/0Qt。所有guarded wrappers已補callback/cancel與batch safe interruption。現在新source checkpoint/receipt/readback後正式RUN-REMAINING28-RUNTIME-003全749＋全部capture，讀ignored live進度/堆疊，不改code/acceptance。
-- /tmp/close_runtime_milestone.py是未執行template，目前仍指002/746，不能直接跑；只有新正式全PASS、5parent52原條/143claims合約hash/0skip/0Qt/capture0/source unchanged後才調整並結案UI051、更新5/28/49父題Verified/47固定70closed、archive媒體metadata-first exact policy、進度baseline BEGIN差異。
-- UI051真Qt capture smoke成功：runtime pause/FIFO/source ledger/human review4PNG，已視覺檢查改中文label/欄寬/詳情；metrics真目前32GiB/4CPU host，非參考機。所有媒體仍metadata-first本機，無strict全附件上傳宣稱。
-- 完成UI051後下一UI052原10條：exact批次來源快照/分層分母/未切分不減分母/正式規則低risk驗證與高risk人工/缺證結案阻擋/版本失效重開/500+低負載。現有quality_coverage僅paged inventory，不能把UI051逐筆ledger或100%畫面當結案。
-- UI031/032/REV02合法真AI/Windows字型與版本、REV04實機尚未完整驗；UI048 LAST、UI056D/REV03延後。每個新source先維持已完成pending，未通過整題不要加完成率。
+- 核心零例行問答、按需rg/小段讀、一般輸出≤1600tokens；每可恢復階段及10分鐘GitHub checkpoint/逐檔readback/receipt。無多代理、EXE、main merge，提交[skip ci]。
+- /workspace/template-Ai，dev/v0.1-first-version／PR2；active_contract FIXED70_REMAINING28_CONTRACT。原前輪28與本輪剩餘28分開。
+- 本輪剩餘28已完成UI046/UI047/UI049/UI050/UI051五題，共52原條款；749/749正式PASS、0skip/0Qt錯誤、capture0、source unchanged。全75：49 VERIFIED／23 PARTIAL／3 DEFERRED；固定70：47閉合／23仍部分。CORE87／GOV7另計。
+- 最新 docs/evidence/runs/RUN-REMAINING28-RUNTIME-003/run.json source 8f8f638a1096f0aeb8aebe2231d6d49b96970c05；143要求/claims合約digest吻合，原28已註冊5父題52全文條款；其餘23未完成，goal_complete=False。
+- UI051：同SQLite FIFO seq、scope/session/CAS/共享WORKER、max200/paged50；psutil host/cgroup/RAM/CPU/IO/disk + Qt lag/foreground/hysteresis；48paged startup/server global search/lazy font，不eager all models/originals/jobs；壞policy仍可開GUI診斷，raw/正常DB close停timer/probe。
+- 既有JOB/AUTO引擎移stdlib subprocess，bounded metadata，120s無邊界/取消10s才停子樹；SQLite item BEGIN不是DONE，真kill rollback、唯一active項FAILED後其他READY沿已確認scope繼續，retry_failed一次消耗/FAILED零auto retry。
+- source登錄/owner與job.source_id同transaction；queue receipt故障FailClosed，明確恢復讀回原job/owner/scope/終態補收據、不重分析。源碼細節UI051_TIMEOUT_RECOVERY，原失敗/修正target logs全保留。
+- read-only QProcess ledger查 source pages/作品紀錄/indexed+preflight另計，每頁50/4MiB/30s；實際SHA/stat/pins/cache核實，analysis與人審/排除/客戶歸屬分開。全庫有效已審數與原稿作品覆蓋未核實時明示未知，UI052另做真正batch closure。
+- UI04611/UI04710/UI04911/UI05012原條重驗；WATCH001曾687PASS但1Qt closedDB整runFAIL不可改，002修正692PASS保留。本run不宣稱原生真AI全面、Windows/16GB RTX5050/VivoBook性能、真個資生產、獨立覆核或印刷通過。
+- 37文字metadata保存GitHub；112媒體在.checkpoints/formal-media/RUN-REMAINING28-RUNTIME-003，FULL70_PUBLICATION精確source/sha/bytes；不宣稱strict全附件上傳。
+- 下一UI052：現有quality_coverage是查詢/facets/unknown；缺exact批次邊界/分層分母/正式規則驗證/高風險個別處置/漏審阻擋/結案快照與變更重開/500+分頁。先保存原10條計畫與參照再開發，別把UI051 ledger或進度百分比當結案。
+- UI031/032/REV02合法真AI/Windows字型版本與安裝、REV04實機仍未全驗；UI048 LAST、UI056D/REV03延後。新source變更前把143已完成標pending，保留previous evidence/清latest，再新source全量回歸。
