@@ -832,3 +832,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI051 contract before dependency/structure change
 - 原8條hash/計畫已UI051_EXECUTION_PLAN；沿現WORKER/CAS/checkpoints與Qt，實讀psutil7.2.2/VSCode1.105.1 Limiter來源hash。先保守資源背壓/分批啟動，再同SQLite FIFO操作與逐source/work狀態。
 - 692正式舊milestone已publication-scope PASS/receipt90435a3d72dfd9df81aaf928c4d2940ac2eeaae7讀回；142已完成先標pending，再改依賴/結構。無急件新需求、不宣稱參考硬體實測。
+
+### UI051 resource core / before project-venv install
+- 資源取樣與保守gate/hysteresis核心及8專用測試已實作，未接UI051整體。7PASS，實機probe1FAIL：前次查的是global python，不是project .venv，後者缺psutil；sampler實際回UNKNOWN並hold，未偽造可用RAM/磁碟數值。
+- 已保留失敗log/sha。requirements及lock固定7.2.2，正確runtime dependency無強制transitive（dev/test extras不啟用）。此checkpoint先保存源碼，再uv install到.venv與重驗；不修改全域環境。

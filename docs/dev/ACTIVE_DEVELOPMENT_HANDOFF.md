@@ -13,3 +13,5 @@
 - UI031/032/REV02合法真AI/Windows字型與版本映射、REV04實機硬體仍待完整驗收；其餘按active_contract。修改來源先把142已完成標pending、保存previous_evidence/清latest，再新source正式回歸。
 
 - 現開始UI051：原8條完整計畫UI051_EXECUTION_PLAN，psutil7.2.2/VSCode Limiter實讀hash已basis。142歷史完成先標pending/latest=None；下一先pin既有psutil與lock、資源探測/背壓，再bounded啟動catalog/既有JOB/AUTO_JOB公平request調度與GUI，不用子包PASS結案。
+
+- UI051 resources WIP：runtime_resources.py已作psutil/cgroup夾限、CPU首次未知、daemon單取樣thread（阻塞volume不堵GUI/關閉）、per-kind fresh-sample hysteresis/age/CPU/RAM/disk/GUI與互動背壓判斷；尚未接排程/GUI。8新測試7PASS1FAIL，真正venv probe揭示psutil只在global python而.venv尚無。requirements/lock已pin7.2.2，下一先uv pip --python .venv/bin/python install同版再重驗；此次before-env checkpoint，不把7PASS當父題完成。
