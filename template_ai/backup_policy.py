@@ -42,9 +42,9 @@ def history(library):return _read(library,HISTORY,[])
 def schedule(library):return _read(library,SCHEDULE,None)
 
 
-def configure(library,directory,interval_seconds,retain_count=3,retain_days=0,options=None,enabled=True,expected_revision=0,now=None):
+def configure(library,directory,interval_seconds,retain_count=3,retain_days=0,options=None,enabled=True,expected_revision=0,now=None,allow_partial=False):
     directory=Path(directory)
-    if not directory.is_absolute() or type(enabled) is not bool:raise ValueError('需明確本機絕對位置與啟用選擇')
+    if not directory.is_absolute() or type(enabled) is not bool or type(allow_partial) is not bool:raise ValueError('需明確本機絕對位置與啟用選擇')
     if type(interval_seconds) is not int or not 60<=interval_seconds<=365*86400:raise ValueError('排程間隔需1分鐘至365天')
     if type(retain_count) is not int or not 1<=retain_count<=100 or type(retain_days) is not int or not 0<=retain_days<=36500:raise ValueError('保留需1至100份；天數0至36500')
     options=dict(options or {})
@@ -57,6 +57,7 @@ def configure(library,directory,interval_seconds,retain_count=3,retain_days=0,op
     now=time.time() if now is None else now
     value=dict(revision=expected_revision+1,directory=str(directory),interval_seconds=interval_seconds,
                retain_count=retain_count,retain_days=retain_days,options=options,enabled=enabled,
+               allow_partial=allow_partial,
                next_due=now+interval_seconds,last_success=(old or {}).get('last_success'),last_attempt=None,
                state='WAITING_SESSION_KEY' if enabled else 'DISABLED',password_stored=False,
                execution_scope='APPLICATION_OPEN_SESSION_ONLY',closed_application_execution='UNAVAILABLE',

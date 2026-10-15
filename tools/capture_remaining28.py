@@ -11,6 +11,36 @@ from PySide6.QtWidgets import QApplication
 from template_ai.gui import MainWindow
 from template_ai.customer_dialog import CustomerDialog
 from test_customer_identity import CustomerIdentityTests
+import test_backup_center as backup_fixture
+from template_ai import backup_policy
+
+
+def capture_backup(folder):
+    case=backup_fixture.BackupCenterTests();case.setUp();folder=Path(folder)
+    try:
+        customer=case.data();dialog=case.dialog
+        dialog.sources.setChecked(True);dialog.fonts.setChecked(True);dialog.password.setText(backup_fixture.PASSWORD)
+        dialog.preview_backup();case.wait();dialog.show();QApplication.processEvents()
+        if not dialog.grab().save(str(folder/'remaining28-backup-scope.png')):raise RuntimeError('backup Qt scope capture failed')
+        archive=case.create();receipt=backup_policy.history(case.window.library)[0]
+        dialog.tabs.setCurrentIndex(3);dialog.history_tree.setCurrentItem(dialog.history_tree.topLevelItem(0));dialog.password.setText(backup_fixture.PASSWORD)
+        dialog.test_restore();case.wait();QApplication.processEvents()
+        if not dialog.grab().save(str(folder/'remaining28-backup-tested-restore.png')):raise RuntimeError('backup Qt history capture failed')
+        dialog.archive.setText(str(archive));dialog.trusted.setChecked(True);dialog.mode.setCurrentIndex(1);dialog.password.setText(backup_fixture.PASSWORD)
+        dialog.preview_restore();case.wait();dialog.tabs.setCurrentIndex(1);QApplication.processEvents()
+        if not dialog.grab().save(str(folder/'remaining28-backup-existing-differences.png')):raise RuntimeError('backup Qt differences capture failed')
+        actual=backup_policy.history(case.window.library)[0]
+        if not archive.is_file() or not actual['test_restore'] or dialog.restore_plan is None or case.errors:raise RuntimeError('backup actual capture flow failed')
+        report=dict(status='PASS',kind='ACTUAL_QT_SQLITE_AESGCM_AND_ISOLATED_RESTORE_SYNTHETIC',parent='UI-047',
+                    customer_id=customer['id'],archive_sha256=receipt['sha256'],archive_bytes=receipt['bytes'],
+                    authenticated_file_created=True,actual_isolated_test_restore=actual['last_test_restore'],
+                    existing_environment_modified=False,scope=receipt['scope'],
+                    preview_categories=len(dialog.restore_plan['database_rows']),
+                    temporary_synthetic_archive_removed_after_capture=True,password_persisted=False,
+                    windows_verified=False,independent_review=False)
+        (folder/'remaining28-backup-capture.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+        return report
+    finally:case.tearDown()
 
 
 def capture(folder):
@@ -39,10 +69,11 @@ def capture(folder):
         dialog.close();dialog.deleteLater();dialog=None;window.close();window.deleteLater();window=None
         QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete);app.processEvents()
         if errors:raise RuntimeError('Unhandled Qt capture error: '+str(errors))
+        backup=capture_backup(folder)
         report=dict(status='PASS',kind='ACTUAL_QT_AND_SQLITE_SYNTHETIC_CAPTURE',
                     parent='UI-046',merged=True,split=True,original_template_payload_unchanged=True,
                     foreign_keys='PASS',runtime_errors=errors,local_export_has_only_synthetic_people=True,
-                    windows_verified=False,independent_review=False)
+                    windows_verified=False,independent_review=False,backup_parent_self_capture=backup['status'])
         (folder/'remaining28-identity-capture.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
         return report
     finally:

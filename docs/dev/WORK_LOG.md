@@ -748,3 +748,8 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - 24本機目標測試PASS（17 bundle+7policy），尚無管理GUI/排程執行器，UI047仍PARTIAL。其餘27父題未結案；139舊要求仍待新來源正式回歸。
 
 - BACKUP-POLICY checkpoint c4fa502801b22a854f598842819caf0e4be4cb7d已fresh讀回。補搬遷後停用舊排程、歷史備份僅憑證不自動繼承刪檔ownership；25相關測試PASS。下一接BackupManager/BackupScheduler，共用run_job與本機preferences。
+
+### UI047 backup center WIP / checkpoint cadence deviation
+- 4頁共用GUI、獨立SQLite worker、本次密碼排程、scope/依賴、成功憑證/隔離測試/現有SQL差異/新副本入口、取消、3次驗證限制與關閉timer守衛已接入。
+- 32新備份測試；46含Logo目標回歸PASS；真Qt capture scope/history/difference smoke PASS。補字型/兩尺寸Logo/背景/merge-alias再split搬遷，Logo/BG原核准只作歷史，不放寬此機正式Gate。
+- cadence偏離：上個checkpoint receipt 17:28:24 UTC到本次18:26+已有長間隔，GUI整合未每10分保存；如實記錄，不歸因工具。立即保存WIP，下一綁完整10原條款與source正式全回歸。

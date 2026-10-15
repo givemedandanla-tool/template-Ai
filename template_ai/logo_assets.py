@@ -38,6 +38,8 @@ def errors(asset, require_approved=True):
     if not asset.get('managed_logo'):
         return []
     result = []
+    if require_approved and asset.get('restore_revalidation_required'):
+        result.append('Logo從備份恢復，需在此環境建立候選並重新核對數位品質；原核准憑證保留作對照')
     if require_approved and (not asset.get('approved') or asset.get('status') != 'APPROVED'):
         result.append('Logo 未核准或已撤銷')
     try:

@@ -247,6 +247,11 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage("本機研究版 · 請使用匿名／合成資料 · 實體印刷分析尚未執行")
         if self.font_manager.issues:
             self.statusBar().showMessage("字型資產需處理：" + "；".join(self.font_manager.issues))
+        from .backup_center import BackupScheduler
+        self.backup_scheduler=BackupScheduler(self)
+        if (self.library.root/'RESTORE_REPORT.json').is_file():
+            self.setWindowTitle(self.windowTitle()+' · 還原副本（需重新驗證）')
+            self.statusBar().showMessage('目前為隔離還原副本；原環境保留，來源／字型／學習與正式輸出需重新驗證')
 
     def sync_property_mode(self,*args):
         browsing=self.tabs.currentIndex()==1 and self.template_stack.currentIndex()==0
@@ -318,6 +323,7 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("匯入合法本機字型", self.import_font)
         self.menuBar().addAction("修復既有本機字型", self.repair_font)
         self.menuBar().addAction("共用字型管理中心", self.font_center)
+        self.menuBar().addAction('本機完整關聯備份／還原',self.backup_center)
         self.menuBar().addAction("共用畫布設定",self.editor_settings)
         self.menuBar().addAction("字型替代審核歷史", self.font_review_history)
         self.menuBar().addAction("本機客戶／版型與備份", self.customer_center)
@@ -836,6 +842,11 @@ class MainWindow(QMainWindow):
         dialog = FontCenterDialog(self)
         dialog.refresh()
         dialog.exec()
+
+    def backup_center(self):
+        from .backup_center import BackupManagerDialog
+        if getattr(self,'backup_dialog',None) is None:self.backup_dialog=BackupManagerDialog(self)
+        self.backup_dialog.refresh_history();self.backup_dialog.show();self.backup_dialog.raise_()
 
     def font_review_history(self):
         if self.busy:return
@@ -1878,7 +1889,7 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         if self.busy:
-            self.inform("來源正在安全匯入，請完成後再關閉")
+            self.inform("背景工作尚未安全結束，請等待完成或先在目前工作面板安全取消")
             event.ignore()
             return
         try:
@@ -1891,6 +1902,7 @@ class MainWindow(QMainWindow):
             event.ignore()
             return
         self.input_timer.stop()
+        self.backup_scheduler.shutdown()
         self.font_manager.close()
         self.library.close()
         event.accept()

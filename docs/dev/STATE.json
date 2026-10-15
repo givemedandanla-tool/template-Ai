@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI047-RELATIONAL-BACKUP-CORE",
+  "active_task": "REMAINING28-UI047-BACKUP-CENTER-WIP",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-REMAINING28-BACKUP-POLICY.receipt.json",
   "last_confirmed_commit": "c4fa502801b22a854f598842819caf0e4be4cb7d",
   "latest_evidence_run": null,
@@ -18,9 +18,9 @@
   ],
   "next_tasks": [
     {
-      "id": "UI047-RELATIONAL-BACKUP",
+      "id": "UI047-FULL-CLAUSE-FORMAL",
       "status": "IN_PROGRESS",
-      "next": "隔離原型8測試PASS後接入source；補新機原位置離線、惡意封裝/schema、排程保留、正式備份管理GUI。139既有要求待新來源正式重驗，不把backend8測試當父題完成。"
+      "next": "備份中心4頁/worker/schedule及32新備份測試已實作，46含Logo回歸PASS、capture smoke PASS。先檢查畫面，再綁UI047完整10原條款並正式全回歸；UI047仍PARTIAL，139舊要求待新source重驗。"
     }
   ],
   "blocked": [],
@@ -29,7 +29,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261015-REMAINING28-BACKUP-CENTER-WIP"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-IDENTITY-002/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-IDENTITY.json",
@@ -613,5 +615,11 @@
     },
     "core_verified": 87,
     "governance_verified": 7
+  },
+  "checkpoint_cadence_deviation": {
+    "last_checkpoint_verified_utc": "2026-10-15T17:28:24.486163+00:00",
+    "observed_utc": "2026-10-15T18:27:36.011789+00:00",
+    "latest_remote_commit": "e828c2e4ce1109b4254701c6806a3a98b85c9c4d",
+    "reason": "GUI/source integration checkpoint exceeded 10 minutes; recorded actual gap, immediate WIP preservation; no claim cadence was met"
   }
 }

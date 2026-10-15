@@ -8,6 +8,7 @@ import shutil
 import sqlite3
 import tempfile
 import zipfile
+from contextlib import closing
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 
@@ -23,7 +24,7 @@ def backup(library,target,password):
     if library.db.in_transaction:raise ValueError('資料庫仍在交易中，稍後重試')
     with tempfile.TemporaryDirectory(dir=library.root) as tmp:
         path=Path(tmp)/'library.sqlite3'
-        with sqlite3.connect(path) as other:
+        with closing(sqlite3.connect(path)) as other, other:
             library.db.backup(other)
             if other.execute('PRAGMA integrity_check').fetchone()[0]!='ok' or other.execute('PRAGMA foreign_key_check').fetchall():raise ValueError('快照完整性失敗')
         if path.stat().st_size>LIMIT:raise ValueError('本版快照上限64 MiB')
@@ -54,7 +55,7 @@ def restore(archive,target,password):
     if manifest.get('schema')!=1 or manifest.get('database_bytes')!=len(data) or manifest.get('database_sha256')!=hashlib.sha256(data).hexdigest():raise ValueError('備份Manifest不符')
     with tempfile.TemporaryDirectory(dir=target.parent) as tmp:
         probe=Path(tmp)/'db.sqlite3';probe.write_bytes(data)
-        with sqlite3.connect('file:'+str(probe)+'?mode=ro',uri=True) as db:
+        with closing(sqlite3.connect('file:'+str(probe)+'?mode=ro',uri=True)) as db:
             if db.execute('PRAGMA integrity_check').fetchone()[0]!='ok' or db.execute('PRAGMA foreign_key_check').fetchall():raise ValueError('隔離資料庫檢查失敗')
             if not {'templates','sources','logos'}<={r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}:raise ValueError('不支援的schema')
         os.mkdir(target,0o700)

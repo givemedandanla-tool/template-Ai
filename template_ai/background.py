@@ -67,6 +67,8 @@ def background_errors(asset: dict | None, width: float, height: float, verify_fi
         return ["固定背景記錄格式不合法，需重新匯入"]
     errors = []
     try:
+        if asset.get('restore_revalidation_required'):
+            errors.append('固定背景從備份恢復，需在此環境重新檢視／核准，不沿用舊主機渲染品質通過')
         if asset.get("approved") is not True:
             errors.append("固定背景尚未人工核准；需確認沒有舊人物資料及待替換 Logo")
         dimensions = [asset[k] for k in ("width_mm", "height_mm", "source_width_mm", "source_height_mm")]

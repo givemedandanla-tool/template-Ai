@@ -16,6 +16,9 @@ import zipfile
 import stat
 import re
 import time
+from contextlib import closing
+import sys
+from importlib.metadata import version,PackageNotFoundError
 
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from .secure_backup import key
@@ -25,13 +28,36 @@ from .background import file_digest
 MAGIC=b'TABI2'
 MAX_BYTES=256*1024*1024
 MAX_FILES=5000
-PATH_KEYS={'path','preview','svg','pdf','png','jpg','current_path','cache_path','font_path','model_path','source_path','directory'}
+PATH_KEYS={'path','preview','svg','pdf','png','jpg','image','vector','raster','thumbnail','approval_file','model_file','checkpoint_file','current_path','cache_path','font_path','model_path','source_path','directory'}
 ACTIVE_JSON={'sources','templates','logos','font_assets','artworks','training_records'}
 REQUIRED_TABLES={'sources','contents','templates','logos','font_assets','source_links'}
 
 
 def _json(value):
     return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
+
+
+def schema_fingerprint(db):
+    rows=list(db.execute("SELECT type,name,tbl_name,sql FROM sqlite_master WHERE name NOT LIKE 'sqlite_%' ORDER BY type,name"))
+    return hashlib.sha256(_json(rows)).hexdigest()
+
+
+def application_fingerprint():
+    package=Path(__file__).parent;files={}
+    for path in sorted(package.glob('*.py')):
+        if path.is_file() and not path.is_symlink():files[path.name]=file_digest(path)
+    lock=package.parent/'requirements-lock.txt'
+    if lock.is_file():files['requirements-lock.txt']=file_digest(lock)
+    return hashlib.sha256(_json(files)).hexdigest()
+
+
+def runtime_versions():
+    packages={}
+    for name in ('PySide6','cryptography','pypdf','phonenumbers','kiwisolver','fonttools'):
+        try:packages[name]=version(name)
+        except PackageNotFoundError:packages[name]='UNKNOWN'
+    return dict(python='.'.join(map(str,sys.version_info[:3])),sqlite=sqlite3.sqlite_version,packages=packages,
+                external_tools='OS/fonts/Inkscape/Tesseract/runtime base models require separate supported setup; not installed by restore')
 
 
 def _integrity(db):
@@ -73,7 +99,7 @@ def _references(value,key_name=''):
 def _snapshot(library,path):
     if library.db.in_transaction:raise ValueError('目前有未完成交易，先完成交易再備份')
     if library.db.execute('PRAGMA page_count').fetchone()[0]*library.db.execute('PRAGMA page_size').fetchone()[0]>MAX_BYTES:raise ValueError('資料庫超過256MiB本次工具預算，未開始複製')
-    with sqlite3.connect(path) as destination:
+    with closing(sqlite3.connect(path)) as destination, destination:
         library.db.backup(destination)
         _integrity(destination)
     return file_digest(path)
@@ -166,9 +192,11 @@ def plan_backup(library,include_sources=False,include_fonts=False,limit_bytes=64
     options=dict(include_sources=include_sources,include_fonts=include_fonts,limit_bytes=limit_bytes,customers=customers,templates=templates,training=training)
     with tempfile.TemporaryDirectory(prefix='template-ai-backup-plan-') as temporary:
         probe=Path(temporary)/'snapshot.sqlite3';database_sha256=_snapshot(library,probe);database_bytes=probe.stat().st_size
+        with closing(sqlite3.connect(probe.resolve().as_uri()+'?mode=ro',uri=True)) as db:schema_sha256=schema_fingerprint(db)
     if database_bytes+total>limit_bytes:raise ValueError('資料庫加資產超過所選預算，請調整範圍／預算')
     result=dict(schema=2,state='PLANNED',library_root=str(root),entries=entries,sources=sources,notes=notes,
                 database_sha256=database_sha256,database_bytes=database_bytes,
+                schema_sha256=schema_sha256,application_code_sha256=application_fingerprint(),runtime=runtime_versions(),
                 estimated_extra_memory_bytes=4*(database_bytes+total)+4*1024*1024,
                 estimated_stage_disk_bytes=2*database_bytes+total+4*1024*1024,
                 complete=not notes,scope='FULL_RELATIONAL_BUNDLE' if not notes else 'PARTIAL_RELATIONAL_BUNDLE',
@@ -364,9 +392,10 @@ def restore_bundle(archive,target,password,trusted=False,allow_partial=False,can
             current_sources[sid]=str(target/'restored-library'/name)
             mapping[source['current_path']]=current_sources[sid]
         migrated={}
-        with sqlite3.connect(stage/'library.sqlite3') as db:
+        with closing(sqlite3.connect(stage/'library.sqlite3')) as db, db:
             _stage(cancel,progress,'RESTORE_RELATIONS')
             db.execute('PRAGMA trusted_schema=OFF');db.execute('PRAGMA foreign_keys=ON');tables=_tables(db);_integrity(db)
+            if manifest.get('schema_sha256') and schema_fingerprint(db)!=manifest['schema_sha256']:raise ValueError('Manifest與資料庫schema版本指紋不符，保持隔離')
             training_changed=False
             for table in sorted(ACTIVE_JSON & tables):
                 columns={r[1] for r in db.execute('PRAGMA table_info('+table+')')}
@@ -375,6 +404,8 @@ def restore_bundle(archive,target,password,trusted=False,allow_partial=False,can
                 else:rows=list(_active_rows(db,table))
                 for identity,kind,payload,revision,record_id in rows:
                     old=json.loads(payload);new=_rewrite(old,mapping)
+                    if table=='logos' and new.get('managed_logo'):new['restore_revalidation_required']=True
+                    if table=='templates' and new.get('background'):new['background']['restore_revalidation_required']=True
                     if kind=='SCAN_ROOT':new.update(mode='MANUAL_ONLY',enabled=False,restore_state='RECONNECT_REQUIRED')
                     if kind=='WORKER' and new.get('active'):new.update(active=False,owner=None,restore_state='INTERRUPTED')
                     if kind in ('JOB','AUTO_JOB','AUTO_UNIT','TRAINING_JOB','TRAINING_UNIT'):

@@ -206,6 +206,67 @@ class RelationalBackupTests(unittest.TestCase):
         missing=backup.plan_backup(self.library,True,True)
         self.assertFalse(missing['complete']);self.assertTrue(any(n['state']=='REFERENCED_ASSET_MISSING' for n in missing['notes']))
 
+    def test_offline_font_and_independent_logo_sizes_keep_bytes_ids_and_require_fresh_render_approval(self):
+        from template_ai.logo_store import LogoStore
+        from template_ai.logo_assets import errors
+        from template_ai.importer import import_file
+        from template_ai.background import make_background
+        from template_ai.model import Template,Slot,Rect
+        from template_ai.layout import generate
+        from template_ai.fonts import font_errors
+        from template_ai.font_evidence import output_rights_errors
+        import test_logo_lifecycle as fixture
+        logo=self.root/'brand.svg';logo.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="20mm" height="10mm"><rect width="10" height="5" fill="red"/></svg>')
+        converted=import_file(logo,self.library.assets);store=LogoStore(self.library);company=store.create_company('Synthetic Brand','Synthetic independent identity',True)
+        payload=dict(image=converted['image'],svg=converted['svg'],source_width_mm=converted['width_mm'],source_height_mm=converted['height_mm'],source_hash=converted['hash'],crop=None)
+        originals=[]
+        for width,height in ((90,54),(100,60)):
+            proposal=store.propose(payload,width,height,company_id=company['id'])
+            originals.append(store.approve(proposal['id'],proposal['revision'],company['id'],fixture.REVIEW,True))
+        manager=FontManager(self.library);self.addCleanup(manager.close)
+        font=manager.import_font('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',True)
+        background=self.root/'background.svg';background.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="90mm" height="54mm"><rect width="100%" height="100%" fill="white"/></svg>')
+        converted_bg=import_file(background,self.library.assets)
+        template=Template('Restored background',90,54,[Slot('name','p1',Rect(5,5,60,12),font='DejaVu Sans',size_pt=12)],background=make_background(converted_bg,90,54,True))
+        self.library.save_template(template);self.library.publish(template)
+        self.create(include_sources=True,include_fonts=True)
+        manager.close();self.library.close();self.library.root.rename(self.root/'old-library-offline');logo.rename(self.root/'old-logo.svg');background.rename(self.root/'old-background.svg')
+        result=backup.restore_bundle(self.target,self.root/'assets-restored',PASSWORD,True)
+        library=Library(result['library_root']);self.addCleanup(library.close)
+        new_manager=FontManager(library);self.addCleanup(new_manager.close);restored_font=library.fonts()[0]
+        self.assertEqual(restored_font['hash'],font['hash']);self.assertEqual(font_errors(restored_font,font['families'][0]),[])
+        self.assertTrue(output_rights_errors(restored_font,'png'))  # Backup rights do not grant printing rights.
+        actual=library.logos();self.assertEqual({a['id'] for a in actual},{a['id'] for a in originals})
+        self.assertEqual({(a['width_mm'],a['height_mm']) for a in actual},{(90,54),(100,60)})
+        for asset in actual:
+            for key,expected in asset['file_hashes'].items():self.assertEqual(backup.file_digest(asset[key]),expected)
+            self.assertEqual(backup.file_digest(asset['approval_file']),asset['approval_sha256'])
+            self.assertTrue(any('備份恢復' in error for error in errors(asset)))
+        old=next(a for a in actual if a['width_mm']==90);new_store=LogoStore(library)
+        proposal=new_store.propose(old,90,54,company_id=old['company_id'],family_base=old['id'])
+        fresh=new_store.approve(proposal['id'],proposal['revision'],old['company_id'],fixture.REVIEW,True)
+        self.assertEqual(errors(fresh),[]);self.assertNotEqual(fresh['id'],old['id'])
+        restored_template=next(t for t in library.templates() if t.id==template.id)
+        candidate=generate(restored_template,[{'name':'Example Person'}],[],{})
+        self.assertFalse(candidate.valid);self.assertTrue(any('備份恢復' in error for error in candidate.issues))
+
+    def test_customer_merge_aliases_and_split_provenance_remain_usable_after_isolated_restore(self):
+        from template_ai.customer_identity import CustomerIdentity
+        import test_customer_candidates as fixture
+        from template_ai.customer_candidates import CustomerCandidates
+        source,work,template,a=self.fixture();case=fixture.CustomerCandidateTests();case.library=self.library;case.root=self.root;case.candidates=CustomerCandidates(CustomerStore(self.library))
+        other,_,_=case.make_source('00002.svg');reviewed=case.reviewed(case.candidates.propose(other['id'])[0]);case.commit([reviewed])
+        store=CustomerStore(self.library);b=store.search('00002',field='CODE')[0]
+        identity=CustomerIdentity(store);merged=identity.merge(identity.plan_merge(a['id'],b['id']),True,'test','Synthetic identity decision')
+        self.create(include_sources=True,include_fonts=True)
+        result=backup.restore_bundle(self.target,self.root/'identity-restored',PASSWORD,True)
+        library=Library(result['library_root']);self.addCleanup(library.close);new=CustomerStore(library)
+        self.assertEqual(new.search('00002',field='CODE')[0]['id'],a['id'])
+        service=CustomerIdentity(new);service.split(service.plan_split(merged['id']),True,'test','Synthetic restored split')
+        self.assertEqual(new.search('00002',field='CODE')[0]['id'],b['id'])
+        self.assertEqual({f['id'] for f in new.get(b['id'])['fields']},{f['id'] for f in b['fields']})
+        self.assertEqual(library.db.execute('PRAGMA foreign_key_check').fetchall(),[])
+
     def test_preview_pins_database_and_assets_and_changed_bytes_never_publish_half_archive(self):
         source,_,_,_=self.fixture();plan=backup.plan_backup(self.library,True,True)
         with self.library.db:self.library.event('test','legitimate concurrent update')
