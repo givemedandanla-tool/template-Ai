@@ -922,3 +922,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-15 23:45 UTC UI053 original9 plan before dependency/code changes
 - 6/28已驗/22未完成，UI053原9與版本化防洩漏group/actualsource-only inference/domainmetrics/explicitpolicy/pairedAB/FIFO/重大跨批重審計畫保存，非已完成宣稱。
 - Actually fetched/read sklearn1.7.2 GroupKFold+classification PR,NetworkX3.5 Edmonds weightedmatching,AWSSDK2.253.1 ModelQualityMonitor baseline/groundtruth分離；URLs/bytes/SHA在engineeringbasis，Azure候選404未引用。只借公開思路，無AWS服務/付費呼叫。
+
+### 2026-10-15 23:46 UTC UI053 environment checkpoint
+- NetworkX3.5 pinned/actual projectvenv installed, connected components and weighted matching max-cardinality anti-greedy smoke PASS；no transitive dependencies, no AWS install/service。cloudsetup reusable import updated，完整環境重建未重跑。
+- 144 current claims pending，新source需正式回歸；前6/28完整證據Coverage001保留，不將dependency smoke算父題完成。

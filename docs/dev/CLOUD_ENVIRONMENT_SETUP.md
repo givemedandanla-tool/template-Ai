@@ -19,3 +19,5 @@
 環境設定工具只保存草稿，不會立即套用或發佈。首次更新環境設定後，需於環境設定儲存並發佈，才成為後續任務使用的配置；在此之前不能宣稱全新任務的自動還原已實測成功。一般對話切換亦不會讓未啟動的agent全天候背景開發。
 
 UI051依賴更新：requirements與lock固定psutil7.2.2；需以`.venv/bin/python`驗證，不能只看global Python。此次精確安裝進專案venv，8個資源核心測試PASS；`cloud_setup.sh`沿用lock同步並新增psutil import smoke。完整新環境重建未因這個增量自動宣稱已重新驗證。
+
+UI053依賴更新（2026-10-15）：requirements與lock固定NetworkX3.5，已透過uv精確安裝到專案`.venv`（單一1.9MiB wheel、無新增傳遞依賴），max-cardinality/max-weight反貪婪例與connected_components smoke PASS。cloud_setup.sh同步新增import smoke；未因增量安裝宣稱已重新完整建立雲端環境。只本機Python函式，無AWS SDK/雲端付費服務。
