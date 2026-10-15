@@ -1,0 +1,12 @@
+{
+  "kind": "NON_FORMAL_WORKTREE_TARGET_RUN",
+  "status": "FAILED",
+  "tests": 14,
+  "passed": 13,
+  "failures": 1,
+  "errors": 0,
+  "log": "docs/evidence/attempts/REMAINING28/ui051-supervisor001-heartbeat-first-ready.log",
+  "sha256": "dbd6cacb1640bb6043b30a6c27593aa83f278bed8774c67c08c0f6d7f489577e",
+  "cause": "Test jumped fake heartbeat by1s,correctly measuring750ms GUI delay;also separate foreground explicit admission from background interaction-recovery history.",
+  "correction": "Advance first ready pulse exactly250ms;separate foreground/background hysteresis while retaining memory/disk/GUI pressure checks."
+}

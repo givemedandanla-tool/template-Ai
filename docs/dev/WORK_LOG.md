@@ -840,3 +840,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### UI051 after exact project dependency install
 - 專案venv精確安裝psutil7.2.2，8/8資源測試PASS，真probe回有限度量；全域與venv差異失敗證據保留。版本/指令/loghash/UI051_RESOURCE_ENVIRONMENT與可重建cloud setup import smoke已保存。
 - 原命題8條整包尚在開發，資源取樣核心未接工作/GUI。下一Qt心跳/背壓與生命週期，保守啟動catalog与FIFO同DB job requests。
+
+### UI051 Qt resource supervisor recoverable stage
+- 資源控制器量Qt心跳、獨立thread-safe前景/背景准入，policy prefs CAS不改learning epoch；本次暫停和持久保存分開真實狀態，close observers停timer/probe。
+- 14/14目標PASS；首個14中1FAIL為假clock首pulse跳1s形成真750ms延遲，修fixture250ms且加前/背景hysteresis隔離，保留原失敗log/hash。尚未接現有worker/GUI入口，UI051仍PARTIAL；142歷史要求待新source全驗。
