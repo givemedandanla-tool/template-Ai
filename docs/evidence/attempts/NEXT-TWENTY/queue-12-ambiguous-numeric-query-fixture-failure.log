@@ -1,0 +1,28 @@
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+...This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.FThis plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.
+======================================================================
+FAIL: test_smart_queue_and_filename_search_rank_before_paging_beyond_first_hundred_unit_ids (test_annotation_gui.AnnotationGuiTests.test_smart_queue_and_filename_search_rank_before_paging_beyond_first_hundred_unit_ids)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_annotation_gui.py", line 116, in test_smart_queue_and_filename_search_rank_before_paging_beyond_first_hundred_unit_ids
+    found=exception_rows(self.library,query='Synthetic queue 100');self.assertTrue(found);self.assertTrue(all(row['work_id']==priority for row in found));self.assertTrue(exception_rows(self.library,query=self.path.name))
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 12 tests in 9.258s
+
+FAILED (failures=1)

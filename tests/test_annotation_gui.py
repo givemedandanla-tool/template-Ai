@@ -105,3 +105,12 @@ class AnnotationGuiTests(unittest.TestCase):
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes),patch.object(window,'schedule_affected_work') as schedule:
             dialog.confirm();schedule.assert_called_once_with(dialog.session.base['id'])
         facts=dialog.session.store.facts(dialog.session.base['id']);selected={o['id'] for o in facts['observations'] if o.get('slot_id') in phones};self.assertEqual(set(facts['confirmation']['observation_ids']),selected);self.assertFalse(window.library.templates());self.assertEqual(self.path.read_bytes(),self.original_bytes)
+
+    def test_smart_queue_and_filename_search_rank_before_paging_beyond_first_hundred_unit_ids(self):
+        self.run_job(self.job());base=self.library.artworks(self.library.list_sources()[0]['id'])[0];priority=None
+        for i in range(101):
+            failed=i==100;work=self.library.create_artwork(base['source_id'],('Synthetic unique-priority-target' if failed else 'Synthetic queue '+str(i)),base['payload']);identity=('z-priority' if failed else 'a-unit-'+str(i).zfill(3))
+            with self.service.store.transaction():self.service.store._write('AUTO_UNIT',identity,dict(work_id=work['id'],source_id=work['source_id'],state='FAILED' if failed else 'WAITING_REVIEW',issues=[dict(code='SYNTHETIC_HIGH_PRIORITY',severity='BLOCK',reason='Synthetic bounded queue proof',slot_ids=[])] if failed else [],input_signature=None,template_ids=[],pins=self.service.store.pins(work['id'])),0,'synthetic_queue_fixture')
+            if failed:priority=work['id']
+        rows=exception_rows(self.library);self.assertEqual(rows[0]['work_id'],priority);self.assertEqual(rows[0]['code'],'SYNTHETIC_HIGH_PRIORITY')
+        found=exception_rows(self.library,query='unique-priority-target');self.assertTrue(found);self.assertTrue(all(row['work_id']==priority for row in found));self.assertTrue(exception_rows(self.library,query=self.path.name))

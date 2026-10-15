@@ -1,0 +1,67 @@
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+...This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+EThis plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.........This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.....This plugin does not support propagateSizeHints()
+....This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.......This plugin does not support propagateSizeHints()
+............................
+======================================================================
+ERROR: test_unknown_source_observation_is_explicitly_mapped_with_same_stable_id_and_undo (test_annotation_gui.AnnotationGuiTests.test_unknown_source_observation_is_explicitly_mapped_with_same_stable_id_and_undo)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_annotation_gui.py", line 39, in test_unknown_source_observation_is_explicitly_mapped_with_same_stable_id_and_undo
+    mapped=next(o for o in dialog.session.observations if o['id']==unknown['id']);self.assertIsNotNone(mapped['slot_id']);dialog.undo()
+                                                                                                                          ^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/annotation_dialog.py", line 157, in undo
+    def undo(self):self.session.undo();self.refresh()
+                                       ^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/annotation_dialog.py", line 62, in refresh
+    self.visual.setChecked(bool(payload.get('visual_confirmed')));self.loading=False;self.rebuild_index();valid={s.id for s in slots}|{'observation:'+o['id'] for o in self.session.observations if o.get('slot_id') is None};self.select([i for i in selection if i in valid])
+                                                                                     ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/annotation_dialog.py", line 84, in rebuild_index
+    if not self.loading:self.select(selected)
+                        ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/annotation_dialog.py", line 100, in select
+    slot=next(s for s in self.session.payload['slots'] if s['id']==ids[0]);self.kind.setCurrentIndex(self.kind.findData(slot['kind']));self.owner.setText(slot['owner'])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+----------------------------------------------------------------------
+Ran 81 tests in 34.336s
+
+FAILED (errors=1)

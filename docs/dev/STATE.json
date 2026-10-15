@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "FIXED70-NEXT-TWENTY-IN-PROGRESS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-WORKBENCH-VERSIONS.receipt.json",
-  "last_confirmed_commit": "0db4c9823364155d9bb7d228edb688d766e9df87",
+  "active_task": "FIXED70-NEXT-TWENTY-INTERIM-VERIFY",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261015-CANVAS-SAFETY.receipt.json",
+  "last_confirmed_commit": "12d3ca8b27c2a642d23c2d3690fcf9dc22e5a87c",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -18,9 +18,14 @@
   ],
   "next_tasks": [
     {
-      "id": "AUTOMATIC_PIPELINE",
+      "id": "FORMAL_REGRESSION",
       "status": "IN_PROGRESS",
-      "next": "UI003/004/005/007/008/038/039/040/041/042整合：一鍵自動候選分析、可恢復單元、作品校正及規則例外閉環；再GUI10題"
+      "next": "凍結本批來源，執行553項正式回歸及7個新增Qt畫面／audit，重驗既有110驗證列；此階段不宣稱20父題結案"
+    },
+    {
+      "id": "COMPLETE_TWENTY_PARENT_GAPS",
+      "status": "PENDING",
+      "next": "依原始契約補近似檔案／作品／模板預檢、完整條款測試對照與缺口；模型保留未知與人工最終啟用，不能由來源候選或測試總數結案"
     }
   ],
   "blocked": [],
@@ -30,7 +35,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261015-CANVAS-SAFETY"
+    "CP-20261015-TWENTY-INTERIM-SOURCE"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-NEXT-TWENTY-BEGIN.json",

@@ -88,6 +88,8 @@ class AnnotationDialog(QDialog):
 
     def select(self,ids):
         if self.loading:return
+        valid={s['id'] for s in self.session.payload['slots']}|{'observation:'+o['id'] for o in self.session.observations if o.get('slot_id') is None}
+        ids=[identity for identity in ids if identity in valid]
         self.observation_id=next((i.split(':',1)[1] for i in ids if i.startswith('observation:')),None)
         self.ids=[i for i in ids if not i.startswith('observation:')];self.loading=True;self.canvas.select_ids(self.ids)
         for i in range(self.objects.count()):self.objects.item(i).setSelected(self.objects.item(i).data(Qt.UserRole) in ids)

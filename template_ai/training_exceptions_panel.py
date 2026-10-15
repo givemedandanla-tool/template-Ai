@@ -10,7 +10,7 @@ class TrainingExceptionsPanel(QWidget):
         layout=QVBoxLayout(self);self.status=QLabel('作品局部隔離；排序不核准資料，其他獨立作品可繼續。');self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('來源／作品／類型／原因');bar.addWidget(self.query)
         self.order=QComboBox()
-        for label,key in [('智慧建議：嚴重度與實際影響','SMART'),('依來源','SOURCE'),('依類型','TYPE')]:self.order.addItem(label,key)
+        for label,key in [('智慧建議：嚴重度與實際影響','SMART'),('依嚴重程度','SEVERITY'),('依來源','SOURCE'),('依類型','TYPE')]:self.order.addItem(label,key)
         bar.addWidget(self.order);self.severity=QComboBox();self.severity.addItems(['ALL','BLOCK','REVIEW','EXCLUDED']);bar.addWidget(self.severity)
         button=QPushButton('重新核對');button.clicked.connect(self.reload);bar.addWidget(button);layout.addLayout(bar)
         self.table=QTableWidget(0,5);self.table.setHorizontalHeaderLabels(['嚴重程度','作品／來源','問題','實際影響','排序依據']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.ExtendedSelection);layout.addWidget(self.table,2)
@@ -18,7 +18,9 @@ class TrainingExceptionsPanel(QWidget):
         bar=QHBoxLayout()
         for label,fn in [('定位作品／欄位',self.locate),('校正所選作品',self.edit),('只重分析所選作品',self.retry),('明確排除此作品',self.exclude),('恢復排除為待審',self.restore),('上一頁',lambda:self.page(-100)),('下一頁',lambda:self.page(100))]:
             b=QPushButton(label);b.clicked.connect(fn);bar.addWidget(b)
-        layout.addLayout(bar);self.query.textChanged.connect(self.reload);self.order.currentIndexChanged.connect(self.reload);self.severity.currentIndexChanged.connect(self.reload);self.table.itemSelectionChanged.connect(self.selected);self.reload()
+        layout.addLayout(bar);self.query.textChanged.connect(self.filter_changed);self.order.currentIndexChanged.connect(self.filter_changed);self.severity.currentIndexChanged.connect(self.filter_changed);self.table.itemSelectionChanged.connect(self.selected);self.reload()
+
+    def filter_changed(self,*_):self.offset=0;self.reload()
 
     def selected_rows(self):return [self.rows[i.row()] for i in self.table.selectionModel().selectedRows() if i.row()<len(self.rows)]
 
@@ -28,7 +30,7 @@ class TrainingExceptionsPanel(QWidget):
             for i,row in enumerate(self.rows):
                 for col,value in enumerate((row['severity'],row['work_name']+'／'+row['source_id'],row['code']+'：'+row['reason'],str(row['impact_count']),row['ranking_reason'])):
                     cell=QTableWidgetItem(value);cell.setToolTip(value);self.table.setItem(i,col,cell)
-            self.status.setText(f'本頁實際{len(self.rows)}項問題；只讀檢查100作品單元，未把未讀頁當例外清零。')
+            self.status.setText(f'持久單元先全庫搜尋／排序，再核對本頁最多100作品，顯示{len(self.rows)}問題（上限2000）；未讀頁不當清零，來源／標記修改後精確重分析才更新持久優先序。')
         except Exception as error:self.status.setText('例外索引未完成：'+str(error))
 
     def page(self,delta):self.offset=max(0,self.offset+delta);self.reload()
