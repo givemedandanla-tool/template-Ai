@@ -656,3 +656,6 @@ CP-20261015-TEN-PARENTS-VERIFIED已push並重新fetch逐檔確認，保存範圍
 
 ## 2026-10-15 20原父題BEGIN
 使用者「繼續20個父功能開發」。原始條款、基準與具體二階段計畫保存FIXED70_NEXT_TWENTY_CONTRACT；先existing元件盤點，再補一鍵管線／作品／例外與GUI整合，無多代理。既有110驗證列在新source前轉待重驗，舊證據保留。
+
+## 2026-10-15（Asia/Taipei）使用者核心規則持久化
+按需讀取（先rg搜尋、相關段落、輸出一般≤1600tokens）、倉庫存狀態（精簡接手與詳細決策分離）、新對話只用版本及交接、大型媒體由檔案工具按頁／區域處理，四項寫入CONTEXT_AND_PERSISTENCE_RULES／AGENTS／DEVELOPMENT_PROTOCOL。新增只讀resume_status入口；本輪20父題目標不變，尚未新增結案，不以文檔當功能完成。

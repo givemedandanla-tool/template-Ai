@@ -1,8 +1,10 @@
 # template-Ai 開發入口（Human 與 GPT 共用）
 
+**核心規則**：[零例行對話、上下文節制與GitHub持久化](docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md)。先搜尋路徑／關鍵字再讀相關段落，一般工具回傳≤1600 tokens；新對話先跑`python tools/resume_status.py`，只讀精簡接手，不展開整倉庫、完整聊天或大型日誌。大型圖片／PDF／模型／設計檔以檔案工具按頁／區域處理，禁止大量base64／全文回填。
+
 **開始或恢復工作前，依序讀取**：
 1. `docs/dev/STATE.json`：目前 checkpoint、工作包、下一步及阻擋。
-2. `docs/dev/HANDOFF.md`：人類交接與實作上下文。
+2. `docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md`：精簡當前交接；僅按需讀`HANDOFF.md`最新相關段，歷史／詳細決策分檔，不整份展開。
 3. `docs/dev/PROJECT_GOAL.md`／`PROJECT_ROADMAP.md`與STATE.active_contract，恢復全清單目標及當前驗收；再讀 `docs/dev/REQUIREMENTS.json` 與 `docs/dev/FEATURES.md`：要求、驗收條件及完成證據。
 4. `docs/dev/WORK_LOG.md` 最新紀錄；`STATE.json` 指向的 checkpoint 收據與證據 run。
 5. `docs/dev/DEVELOPMENT_PROTOCOL.md`：保存、GitHub 讀回及證據覆核規則。

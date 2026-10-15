@@ -1,15 +1,11 @@
-# 零例行對話、持久化接續入口
+# 當前精簡接手
 
-使用者要求：依規劃自主推進，參照數學、成熟開源及商用方案思路；每階段checkpoint保存GitHub；新對話可直接接續，不重問是否繼續或保存。
-
-目前UI043、045、020～027共10原父題的軟體條款SELF_VERIFIED：87條驗收、498/498測試PASS、實際Qt與三格式數位檔。固定70累計14完整／56剩餘；原75為16完整／56部分／3延後，CORE87／GOV7分開。來源、證據、收據及未驗證外部條件見STATE。不宣稱全產品完成、實體印刷／Windows／私人AI全面保真或獨立覆核。
-
-恢復順序：AGENTS→STATE→本檔→最新HANDOFF段→STATE.active_contract及REQUIREMENTS→最新WORK_LOG／收據。開發在dev/v0.1-first-version／PR2，main是較早文件狀態。舊/local完整聊天無法取得，已找回的GitHub決策與版本是可核對依據。
-
-下一項UI003自動管線，接UI004/005/007/008，詳見NEXT_AFTER_TEN_PARENTS。先寫原條款、具名驗收及BEGIN checkpoint，再改碼。真正缺外部條件只阻塞相依驗證，先做其他已授權工作。
-
-環境：.venv/bin/python；重建bash tools/cloud_setup.sh；測試使用XDG_CACHE_HOME=/workspace/.cache、QT_QPA_PLATFORM=offscreen。雲端設定與大型檔案按區域讀取策略見CLOUD_ENVIRONMENT_SETUP；不把整倉庫或base64附件塞入對話。
-
-每10分鐘及可恢復階段prepare→commit/push→fresh fetch→commit/tree/blob讀回；收據下一提交保存。本機ZIP不能冒稱GitHub保存。新證明媒體依既定metadata-first留本機與精確hash，程式／tests／text全保存，不宣稱全附件公開Gate。保留未提交、ignored與local-only提交，不reset或force checkout。
-
-不啟動多代理、不合併main、不建EXE；[skip ci]避免Actions自動啟動。不需要付費API或新token。零對話表示免例行問答，必要狀態仍依較高指令回報；沒有啟動agent時不會全天候背景執行。
+- 核心規則：CONTEXT_AND_PERSISTENCE_RULES.md；零例行問答、GitHub持久化、先搜尋再分段讀取、工具輸出一般≤1600 tokens。新對話只帶倉庫／提交／本交接，不帶整串聊天；大型媒體用檔案工具按頁／區域處理。
+- 工作樹：/workspace/template-Ai；分支dev/v0.1-first-version／PR2，未合併main。精確HEAD先跑`.venv/bin/python tools/resume_status.py`。
+- 使用者本輪目標：繼續20個原父功能，契約FIXED70_NEXT_TWENTY_CONTRACT。先UI003/004/005/007/008/038/039/040/041/042，再UI001/002/006/010/011/012/033/034/035/036；不能把子項或測試總數算父題完整。
+- 基準：前輪16父題完整、56部分、3延後；固定70完成14／剩56，CORE87／GOV7另計。前輪來源3cd2c22，498PASS／87條新驗收PASS。本輪改碼後110既有驗證列暫待重驗，歷史未刪；本輪20題尚未新增結案。
+- 已完成：環境與Git確認、治理保存範圍PASS、20題原文及BEGIN契約／基準已推送讀回；使用者四項核心規則已寫入AGENTS／協定及本接手。
+- 下一步：重用現有TrainingStore／批次匯入／規則審核，實作一鍵自動分析與可恢復單元、作品候選畫布校正、完整例外分流，再GUI10題。逐條驗收、正式source-bound回歸及GitHub讀回後才結案。
+- 驗證／未決：當前環境連線current/running、Git proxy讀取成功；runtime network state回報unknown，不宣稱政策已ready。沒有必要新增secret或付費API。Windows、真AI全面、實體印刷、硬體與獨立覆核未驗證。
+- 保存：每可恢復階段及每10分鐘checkpoint→push→fresh fetch→逐檔讀回；收據下一提交保存。詳細歷史在HANDOFF／WORK_LOG，只按需查相關段落。
+- 限制：無多代理、不建EXE、不merge main、[skip ci]保存；真資料不公開，新證明媒體依既定metadata-first留本機及hash。UI048最後，REV03／UI056D依既定順序延後。保留未提交／ignored／local-only資料，不reset。
