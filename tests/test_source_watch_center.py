@@ -18,7 +18,7 @@ SVG=b'<svg xmlns="http://www.w3.org/2000/svg" width="90mm" height="54mm" viewBox
 class SourceWatchCenterTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.directory=self.root/'sources';self.directory.mkdir();self.a=self.directory/'A001.svg';self.b=self.directory/'B002.svg';self.a.write_bytes(SVG);self.b.write_bytes(SVG)
-        self.window=MainWindow(self.root/'data');self.store=TrainingStore(self.window.library);self.watch=register_root(self.store,self.directory);self.dialog=SourceScanDialog(self.window);self.dialog.roots.setCurrentIndex(self.dialog.roots.findData(self.watch['id']));self.addCleanup(self.cleanup);APP.processEvents();self.window.source_watch.timer.stop()
+        self.window=MainWindow(self.root/'data');from runtime_fixture import controlled_resources;controlled_resources(self.window);self.store=TrainingStore(self.window.library);self.watch=register_root(self.store,self.directory);self.dialog=SourceScanDialog(self.window);self.dialog.roots.setCurrentIndex(self.dialog.roots.findData(self.watch['id']));self.addCleanup(self.cleanup);APP.processEvents();self.window.source_watch.timer.stop()
 
     def wait(self,predicate=None,seconds=30):
         predicate=predicate or (lambda:not self.window.busy and not self.dialog.running)

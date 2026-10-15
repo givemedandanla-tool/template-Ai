@@ -1,0 +1,50 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+........................EEF..F....
+======================================================================
+ERROR: test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection (test_source_watch_center.SourceWatchCenterTests.test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_watch_center.py", line 98, in test_actual_scan_and_candidate_paging_keeps_denominator_and_same_version_explicit_selection
+    self.scan();self.assertEqual(len(self.store.get('SCAN_ROOT',self.watch['id'])['last_scan']['entries']),53);self.assertEqual(self.dialog.scan_items.count(),50);self.assertEqual(self.dialog.candidates.topLevelItemCount(),50)
+                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+ERROR: test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts (test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_watch_center.py", line 56, in test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts
+    self.scan();self.select(lambda c:True);self.dialog.launch();child=self.dialog.training_dialog;self.wait(lambda:not child.running and not self.window.busy)
+                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_source_watch_center.py", line 26, in wait
+    while not predicate():
+              ^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_source_watch_center.py", line 56, in <lambda>
+    self.scan();self.select(lambda c:True);self.dialog.launch();child=self.dialog.training_dialog;self.wait(lambda:not child.running and not self.window.busy)
+                                                                                                                       ^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'running'
+
+======================================================================
+FAIL: test_modified_version_needs_review_and_changed_bytes_during_later_preflight_never_start_a_job (test_source_watch_center.SourceWatchCenterTests.test_modified_version_needs_review_and_changed_bytes_during_later_preflight_never_start_a_job)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_watch_center.py", line 72, in test_modified_version_needs_review_and_changed_bytes_during_later_preflight_never_start_a_job
+    self.scan();self.a.write_bytes(SVG.replace(b'Alex Example',b'Blair Example'));self.scan();selected=self.select(lambda c:c['path']==str(self.a) and c['state']=='REVIEW_REQUIRED');self.assertEqual(len(selected),1)
+                                                                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_review_worker_launch_failure_releases_gui_without_losing_review_or_source_data (test_source_watch_center.SourceWatchCenterTests.test_review_worker_launch_failure_releases_gui_without_losing_review_or_source_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_watch_center.py", line 86, in test_review_worker_launch_failure_releases_gui_without_losing_review_or_source_data
+    self.scan();self.a.write_bytes(SVG+b' ');self.scan();selected=self.select(lambda c:c['state']=='REVIEW_REQUIRED');self.assertEqual(len(selected),1)
+                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 35 tests in 37.018s
+
+FAILED (failures=2, errors=2)

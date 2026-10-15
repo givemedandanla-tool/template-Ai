@@ -854,3 +854,5 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 - UI051可恢復startup stage：bounded editor catalogs/source selectedID跨頁，catalog server全庫filter/count、不eager模板payload，字型lazy/僅active slots，import checkpoint延後GUI後且20 bound；實際Qt4測試、5大型startup測試與既有catalog/fonts/pipeline等82PASS。原31test內1 eager entries長度斷言失敗保留，改查新matching_count52與payload<=48，選取/無寫入既有assert全留。psutil IOwait/disk byte delta顯示，40%IOwait僅保守默認非reference保證。仍未閉合UI051。
 
 - UI051 process isolation recoverable checkpoint：新增stdlibPopen+psutil安全timeout/cancel/child tree、bounded pipe protocol及真正SQLite result readback，無新模型engine。20process/Qt/pipeline PASS；001/002 stdin daemon fatal、004廣35中1queued launch release FAIL原始保存；已修同步launch failure標FAILED_SYSTEM釋lease、005驗證中。尚未整父題驗證，下一review ledger。
+
+- UI051 source-work ledger recoverable stage：readonlySQLite來源/作品/索引預檢三模式，global SQL搜尋/50paging/真sourceHash及pins，人審已核准與analysis/explicit exclusion不同欄，未知全庫當前審核數不偽造；QProcess30s隔離核實，無新truthDB。AUTO全來源read改bounded定點hash/page/path，字型家族定點。35 isolated005 PASS；ledger fixture首次錯把invalidXML預檢當FAILED已更正unsupported格式，原log留存；廣watch failure資源fixture已精確注入，004驗證中。原8仍未閉合。

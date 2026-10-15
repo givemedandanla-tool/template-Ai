@@ -60,7 +60,8 @@ def healthy_source(source):
 def preflight(paths,sources,page=1,cancel=None,progress=None):
     if type(page) is not int or not 1<=page<=1000:raise ValueError('頁次需1～1000')
     rows=[];seen={};known={}
-    for s in sorted(sources,key=lambda s:s['id']):known.setdefault((s['hash'],s['page']),[]).append(s)
+    if not callable(sources):
+        for s in sorted(sources,key=lambda s:s['id']):known.setdefault((s['hash'],s['page']),[]).append(s)
     expanded=expand_paths(paths,cancel)
     for position,p in enumerate(expanded):
         row={'id':new_id(),'path':str(p),'page':page,'expected_hash':None,'status':'READY','reason':'待匯入；視覺／語意尚未核驗','attempts':0,'history':[],'source_id':None,'reuse_source':None}
@@ -72,7 +73,7 @@ def preflight(paths,sources,page=1,cancel=None,progress=None):
             if key in seen:row.update(status='SKIPPED',duplicate_of=seen[key],reason='同批相同SHA-256／頁次；路徑證據保留，作品／模板相似仍UNKNOWN')
             else:
                 seen[key]=row['id']
-                for source in known.get(key,[]):
+                for source in (sources(*key) if callable(sources) else known.get(key,[])):
                     if healthy_source(source):row.update(reuse_source=copy.deepcopy(source),reason='已登錄同內容／頁次且原稿與快取健康，啟動時再次檢查');break
         except ScanCancelled:raise
         except (OSError,ValueError) as error:row.update(status='FAILED',reason=str(error),error_type='PREFLIGHT')

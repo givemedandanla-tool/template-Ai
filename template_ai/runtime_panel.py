@@ -13,6 +13,7 @@ class RuntimePanel(QDialog):
         bar=QHBoxLayout();self.pause=QPushButton('保存背景暫停');self.resume=QPushButton('保存背景恢復');bar.addWidget(self.pause);bar.addWidget(self.resume);layout.addLayout(bar)
         self.pause.clicked.connect(lambda:self.change(True));self.resume.clicked.connect(lambda:self.change(False));self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details)
         self.cancel_foreground=QPushButton('取消尚未啟動的前景工作');self.cancel_foreground.clicked.connect(window.cancel_waiting_jobs);bar.addWidget(self.cancel_foreground)
+        self.ledger=QPushButton('逐來源／作品審核清單');self.ledger.clicked.connect(self.open_ledger);bar.addWidget(self.ledger)
         self.summary=QLabel();self.summary.setWordWrap(True);layout.addWidget(self.summary);self.queue_table=QTableWidget(0,5);self.queue_table.setHorizontalHeaderLabels(['到達序','執行狀態／結果','工作種類／ID','確認範圍','訊息']);self.queue_table.setEditTriggers(QTableWidget.NoEditTriggers);self.queue_table.setSelectionBehavior(QTableWidget.SelectRows);self.queue_table.setSelectionMode(QTableWidget.SingleSelection);layout.addWidget(self.queue_table,2)
         bar=QHBoxLayout();self.actor=QLineEdit();self.actor.setMaxLength(120);self.actor.setPlaceholderText('本次恢復操作者');bar.addWidget(self.actor);self.retry=QCheckBox('明確重試FAILED');bar.addWidget(self.retry)
         self.previous=QPushButton('上頁請求');self.next=QPushButton('下頁請求');self.restore=QPushButton('核對後恢復選中範圍');self.cancel=QPushButton('安全取消選中請求')
@@ -25,6 +26,10 @@ class RuntimePanel(QDialog):
         try:self.supervisor.set_paused(paused);self.status.setText('已寫入並提交背景'+('暫停' if paused else '恢復')+'策略；執行中工作於安全單位邊界停止。')
         except Exception as error:self.status.setText('未保存成功：'+str(error))
         self.refresh()
+
+    def open_ledger(self):
+        from .review_ledger_dialog import ReviewLedgerDialog
+        panel=ReviewLedgerDialog(self.parentWidget());panel.setAttribute(Qt.WA_DeleteOnClose);panel.show();return panel
 
     def refresh(self):
         state=self.supervisor.state();self.details.setPlainText(json.dumps(state,ensure_ascii=False,indent=2))

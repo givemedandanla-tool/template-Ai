@@ -74,6 +74,20 @@ class Library:
             raise ValueError("來源不存在")
         return {**json.loads(r[0]), "current_path": r[1], "link_revision": r[2], "byte_size": r[3]}
 
+    def sources_for_content(self,content_hash,page,path=None,limit=100):
+        """Bounded reuse candidates; never the denominator of registered sources."""
+        if content_hash is None:return []
+        if type(limit) is not int or not 1<=limit<=100:raise ValueError('單次來源快取候選最多100')
+        where=['s.hash=?',"json_extract(s.payload,'$.page')=?"];args=[content_hash,page]
+        if path is not None:
+            import os
+            self.db.create_function('runtime_normpath',1,lambda value:os.path.normcase(os.path.normpath(value)),deterministic=True)
+            where.append('runtime_normpath(COALESCE(l.current_path,s.original_path))=runtime_normpath(?)');args.append(str(Path(path).absolute()))
+        ids=[row[0] for row in self.db.execute('SELECT s.id FROM sources s LEFT JOIN source_links l ON l.source_id=s.id WHERE '+' AND '.join(where)+' ORDER BY s.rowid DESC LIMIT ?',(*args,limit))]
+        from .startup_catalog import payload
+        for identity in ids:payload(self,'sources',identity)
+        return [self.source(identity) for identity in ids]
+
     def relink_source(self, source_id: str, proof, expected_revision: int) -> dict:
         """背景驗證完成後於 SQLite 所屬執行緒提交；原來源與作品模板保持不變。"""
         from .source_links import check_verified

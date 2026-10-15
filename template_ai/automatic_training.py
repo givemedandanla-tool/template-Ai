@@ -21,15 +21,14 @@ class AutomaticTraining:
         self.library=library;self.store=TrainingStore(library);self.db=library.db
 
     def preflight(self,paths,page=1,compare=True,cancel=None,progress=None,all_pages=True):
-        report=preflight(paths,self.library.list_sources(),page,cancel,lambda done,total,path:progress(dict(stage='來源雜湊',done=done,total=total,path=path)) if progress else None)
+        report=preflight(paths,self.library.sources_for_content,page,cancel,lambda done,total,path:progress(dict(stage='來源雜湊',done=done,total=total,path=path)) if progress else None)
         report['all_pages']=all_pages and page==1;report['source_file_count']=len(report['items'])
         report['scope']='來源／作品／候選標記／品質／已授權幾何學習一鍵管線；人工事實、樣本准入及發布不自動核准'
         if compare:
             from .similarity_preflight import inspect_report
             inspect_report(self.library,report,cancel,lambda done,total,path:progress(dict(stage='作品／結構比對',done=done,total=total,path=path)) if progress else None)
-        known=self.library.list_sources()
         for item in report['items']:
-            matching=[source for source in known if source['hash']==item.get('expected_hash') and source['page']==item['page'] and Path(source['current_path']).resolve()==Path(item['path']).resolve()]
+            matching=self.library.sources_for_content(item.get('expected_hash'),item['page'],item['path'],limit=1)
             item['existing_source_id']=matching[0]['id'] if matching else None
         return report
 
@@ -37,12 +36,12 @@ class AutomaticTraining:
         if approved is not True:raise ValueError('需先核對預檢並明確開始訓練')
         text(actor,'啟動者',120)
         fresh=self.preflight([i['path'] for i in report['items']],report['page'],compare=False,all_pages=report.get('all_pages',False),cancel=cancel)
-        files={item['path']:item for item in fresh['items']};known=self.library.list_sources();expanded=[];seen=set()
+        files={item['path']:item for item in fresh['items']};expanded=[];seen=set()
         for old in report['items']:
             item=deepcopy(files[old['path']]);key=(old['path'],old['page'])
             if key in seen or type(old['page']) is not int or not 1<=old['page']<=1000:raise ValueError('來源頁次重複或不合法，請重新預檢')
             seen.add(key);item.update(page=old['page'],available_pages=old.get('available_pages',old['page']))
-            matches=[s for s in known if s['hash']==item.get('expected_hash') and s['page']==item['page'] and Path(s['current_path']).resolve()==Path(item['path']).resolve()]
+            matches=self.library.sources_for_content(item.get('expected_hash'),item['page'],item['path'],limit=1)
             item['existing_source_id']=matches[0]['id'] if matches else None;expanded.append(item)
         for path in files:
             pages=[i for i in report['items'] if i['path']==path]
@@ -166,9 +165,9 @@ class AutomaticTraining:
         path=Path(item['path']);verify_source(path,item['source_hash'])
         source=self.library.source(item['source_id']) if item.get('source_id') else None
         if source is None:
-            source=next((s for s in self.library.list_sources() if s['hash']==item['source_hash'] and s['page']==item['page'] and Path(s['current_path']).resolve()==path.resolve()),None)
+            matching=self.library.sources_for_content(item['source_hash'],item['page'],path,limit=1);source=matching[0] if matching else None
         if source is None:
-            reuse=next((s for s in self.library.list_sources() if s['hash']==item['source_hash'] and s['page']==item['page'] and healthy_source(s)),None)
+            reuse=next((s for s in self.library.sources_for_content(item['source_hash'],item['page']) if healthy_source(s)),None)
             result=convert_item(dict(path=str(path),page=item['page'],expected_hash=item['source_hash'],reuse_source=reuse),self.library.assets)
             if item.get('expected_page_count') and result['payload']['page_count']!=item['expected_page_count']:raise ValueError('可讀頁次數與預檢不符，未登錄部分來源')
             source=self.library.add_source(path,result['payload']);source=self.library.source(source['id'])

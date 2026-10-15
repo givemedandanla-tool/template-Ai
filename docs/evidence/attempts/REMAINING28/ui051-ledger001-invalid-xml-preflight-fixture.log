@@ -1,0 +1,17 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.....F
+======================================================================
+FAIL: test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files (test_review_ledger.ReviewLedgerTests.test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_review_ledger.py", line 41, in test_preflight_failed_and_unregistered_scopes_are_visible_and_not_counted_as_registered_files
+    self.assertEqual(result['total'],2);self.assertEqual(result['summary']['registered_source_pages'],0);self.assertTrue(any(row['analysis_state']=='FAILED' for row in result['rows']))
+                                                                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 7 tests in 5.141s
+
+FAILED (failures=1)

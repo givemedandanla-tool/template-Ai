@@ -91,7 +91,9 @@ class FontManager:
 
     def asset_for_family(self, family: str) -> dict | None:
         # 失聯也保留引用，讓指定此資產的欄位阻擋，而不是偷偷借用同名系統字型。
-        return next((asset for asset in self.library.fonts() if family in asset["families"]), None)
+        import json
+        row=self.library.db.execute("SELECT payload FROM font_assets WHERE EXISTS(SELECT 1 FROM json_each(font_assets.payload,'$.families') WHERE value=?) ORDER BY rowid LIMIT 1",(family,)).fetchone()
+        return json.loads(row[0]) if row else None
 
     def record_output_rights(self, expected, actor, basis, pdf_embedding=False):
         """Explicit attestation changes the asset record, never old templates."""
