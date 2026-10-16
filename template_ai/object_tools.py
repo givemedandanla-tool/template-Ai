@@ -9,6 +9,10 @@ TEXT_FIELDS={'color','size_pt','min_scale','align','font','font_style','font_ass
 PATCH_FIELDS=TEXT_FIELDS|{'x','y','w','h','required','kind','owner','index'}
 
 
+class NoObjectChange(ValueError):
+    """A valid exact request has no differences; do not create an empty history."""
+
+
 def slots_of(payload,cap=True):
     rows=payload.get('slots',[])
     if not isinstance(rows,list) or (cap and len(rows)>200):raise ValueError('物件超過200預算或格式不合法')
@@ -150,7 +154,7 @@ def propose(payload,kind,request):
             else:raw['rect']['x'],raw['rect']['y']=s.rect.x,s.rect.y
             new=copy.deepcopy(raw)
         if old!=s or operation=='DELETE':changes.append({'id':s.id,'owner':old.owner,'kind':old.kind,'before':copy.deepcopy(next(r for r in payload['slots'] if r['id']==s.id)),'after':new,'dx':s.rect.x-old.rect.x,'dy':s.rect.y-old.rect.y})
-    if not changes:raise ValueError('沒有實際差異；不建立空歷史')
+    if not changes:raise NoObjectChange('沒有實際差異；不建立空歷史')
     if kind=='ARTWORK' and operation!='LOCK':after['visual_confirmed']=False
     warnings=warnings_for(after,kind)
     if gap is not None and gap<0:warnings.insert(0,'邊界間距為負值；不偷偷縮小物件，草稿仍待修復')

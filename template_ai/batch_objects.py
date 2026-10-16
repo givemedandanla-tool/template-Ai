@@ -1,37 +1,115 @@
 """Bounded text-alignment batch adapter: reuse proposals, CAS, history and per-item commits."""
-import json
+import json,copy,sqlite3
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox,QComboBox
 from .customers import digest
-from .object_tools import propose
+from .object_tools import propose,select_slots,NoObjectChange
 from .model import new_id
 
 def batch_plan(library,targets,align='left'):
-    if not 1<=len(targets)<=50 or len({t['id'] for t in targets})!=len(targets):raise ValueError('明確選取1至50個不同作品')
+    if not isinstance(targets,list) or not 1<=len(targets)<=50 or len({(t.get('kind','ARTWORK'),t['id']) for t in targets})!=len(targets):raise ValueError('明確選取1至50個不同作品／草稿；同一實體先合併明確選取範圍')
     rows=[]
     for target in targets:
+        row=dict(id=target['id'],kind=target.get('kind','ARTWORK'),state='BLOCKED',risk='HIGH',formal_eligible=False)
+        row['target_key']=row['kind']+':'+row['id']
         try:
-            snapshot=library.object_snapshot('ARTWORK',target['id']);request={'operation':'PATCH','ids':target['slot_ids'],'patch':{'align':align},'cross_owner':False};plan=propose(snapshot['payload'],'ARTWORK',request)
+            snapshot=library.object_snapshot(row['kind'],row['id']);ids=target['slot_ids'];selected=select_slots(snapshot['payload'],ids)
+            if row['kind']=='ARTWORK' and snapshot['payload'].get('visual_confirmed') is not True:raise ValueError('來源標記尚待人工確認，不自動批次核准')
+            if any(s.locked or s.kind=='logo' or not s.owner or s.owner.upper()=='UNKNOWN' for s in selected) or len({s.owner for s in selected})!=1:raise ValueError('鎖定／Logo／未知或跨人物公司歸屬須走既有逐筆人工核對，不批次自動核准')
+            request=copy.deepcopy(target.get('request') or dict(operation='PATCH',ids=ids,patch={'align':align},cross_owner=False))
+            request.setdefault('ids',list(ids));request.setdefault('cross_owner',False)
+            if sorted(request['ids'])!=sorted(ids):raise ValueError('請求物件與明確選取範圍不同')
+            validate_request(request)
+            plan=propose(snapshot['payload'],row['kind'],request)
             if plan['warnings'] and any('重疊' in w or '邊界' in w for w in plan['warnings']):raise ValueError('作品幾何待人工處理')
-            rows.append({'id':target['id'],'state':'READY','snapshot':snapshot,'request':request,'changes':plan['changes'],'warnings':plan['warnings']})
-        except Exception as e:rows.append({'id':target['id'],'state':'BLOCKED','reason':str(e)})
-    return {'operation_id':new_id(),'rows':rows,'scope':'MANUAL_TEXT_ALIGNMENT_ONLY','count':len(targets)}
+            row.update(state='READY',risk='LOW' if request['operation']=='PATCH' and set(request['patch'])<={'align','color'} else 'CONFIRM',snapshot=snapshot,request=request,changes=plan['changes'],warnings=plan['warnings'])
+            if not plan['changes']:row.update(state='UNCHANGED',risk='NONE',reason='目前已是相同值；未建立重複寫入')
+        except NoObjectChange as e:row.update(state='UNCHANGED',risk='NONE',snapshot=snapshot,request=request,reason=str(e))
+        except (ValueError,KeyError,TypeError,OSError,sqlite3.Error) as e:row['reason']=str(e)
+        rows.append(row)
+    plan=dict(operation_id=new_id(),rows=rows,scope='EXACT_SELECTED_DRAFT_METADATA_ONLY',count=len(targets),root_digest=digest(str(library.root.resolve())),schema=2)
+    plan['seal']=digest(plan);return plan
 
-def apply_batch(library,plan,approved=False,cancel=lambda:False):
-    if not approved:raise ValueError('需明確確認範圍與逐項差異')
+
+def validate_request(request):
+    if request.get('operation') not in ('PATCH','MOVE','ALIGN','DISTRIBUTE') or request.get('cross_owner') is not False:raise ValueError('批次不能解鎖、刪除或跨人物公司；請逐筆人工核對')
+    if request['operation']=='PATCH' and (not request.get('patch') or set(request['patch'])-{'align','color','x','y','w','h'}):raise ValueError('批次不可修改人物／公司／字級／字型／文字下限或Logo')
+
+
+def check_batch(library,plan,approved):
+    if approved is not True:raise ValueError('需明確確認範圍與逐項差異')
+    if plan.get('root_digest')!=digest(str(library.root.resolve())) or plan.get('seal')!=digest({k:v for k,v in plan.items() if k!='seal'}):raise ValueError('批次來源／精確範圍或預覽已變更，重新預檢')
+
+
+def operation_id(plan,row):return 'batch:'+digest([plan['operation_id'],row['kind'],row['id']])
+
+
+def reconcile_item(library,plan,row):
+    raw=library.db.execute('SELECT payload FROM object_edits WHERE id=?',(operation_id(plan,row),)).fetchone()
+    if not raw:return None
+    record=json.loads(raw[0]);snapshot=row['snapshot']
+    if record['kind']!=row['kind'] or record['entity_id']!=row['id'] or record['plan']['request']!=row['request'] or record['before_revision']!=snapshot['revision'] or record['before']!=snapshot['payload']:raise ValueError('歷史操作ID與原核對範圍不同')
+    if record['phase']!='APPLIED':raise ValueError('此操作已復原；不能將安全重試當成重新套用')
+    current=library.object_snapshot(row['kind'],row['id']);unchanged=current['revision']==record['expected_revision'] and current['payload']==record['after']
+    return dict(id=row['id'],kind=row['kind'],target_key=row['target_key'],state='ALREADY_APPLIED',outcome='APPLIED_PENDING_FULL_VALIDATION' if unchanged else 'APPLIED_BUT_CURRENT_CHANGED',history_id=record['id'],attempted=False,formal_eligible=False,reason='核實原操作已保存；目前資格仍須整作品重驗' if unchanged else '原操作確有歷史，但目前已有新編輯；保留新版，未重複套用')
+
+def apply_batch(library,plan,approved=False,cancel=lambda:False,progress=lambda row:None):
+    check_batch(library,plan,approved)
     results=[]
     for row in plan['rows']:
-        if cancel():results.append({'id':row['id'],'state':'CANCELLED'});continue
-        if row['state']!='READY':results.append({'id':row['id'],'state':'BLOCKED','reason':row['reason']});continue
+        result=dict(id=row['id'],kind=row['kind'],target_key=row['target_key'],attempted=False,formal_eligible=False)
         try:
-            request=row['request']
-            if request.get('operation')!='PATCH' or set(request.get('patch',{}))!={'align'} or request.get('cross_owner') is not False:raise ValueError('批次只允許已核對的文字對齊，不可改人物／公司／字級／Logo')
-            recalculated=propose(row['snapshot']['payload'],'ARTWORK',request)
-            if recalculated['changes']!=row['changes']:raise ValueError('預覽範圍已被改變')
-            operation='batch:'+digest([plan['operation_id'],row['id']]);r=library.apply_object_edit(row['snapshot'],request,True,operation)
-            results.append({'id':row['id'],'state':'ALREADY_APPLIED' if r.get('reused') else 'APPLIED_PENDING_FULL_VALIDATION','history_id':r['id']})
-        except Exception as e:results.append({'id':row['id'],'state':'FAILED_OR_STALE','reason':str(e)})
+            previous=reconcile_item(library,plan,row) if row['state']=='READY' else None
+            if previous:result=previous
+            elif cancel():result.update(state='CANCELLED',outcome='CANCELLED',reason='尚未執行；既有完成項不因此撤銷')
+            elif row['state']=='UNCHANGED':
+                current=library.object_snapshot(row['kind'],row['id']);fresh=current==row['snapshot'];result.update(state='BLOCKED',outcome='SKIPPED_PRECONDITION' if fresh else 'STALE',reason=row['reason'] if fresh else '預檢後來源已變更；未猜測重試')
+            elif row['state']!='READY':result.update(state='BLOCKED',outcome='SKIPPED_PRECONDITION' if row['state']=='UNCHANGED' else 'NEEDS_MANUAL_REVIEW',reason=row['reason'])
+            else:
+                progress(dict(result,outcome='PROCESSING'))
+                request=row['request'];validate_request(request)
+                recalculated=propose(row['snapshot']['payload'],row['kind'],request)
+                if recalculated['changes']!=row['changes']:raise ValueError('預覽範圍已被改變')
+                result['attempted']=True;r=library.apply_object_edit(row['snapshot'],request,True,operation_id(plan,row))
+                result.update(state='APPLIED_PENDING_FULL_VALIDATION',outcome='APPLIED_PENDING_FULL_VALIDATION',history_id=r['id'],reason='只保存選取草稿／標記差異；尚未核實當前整作品印前條件')
+        except Exception as e:
+            try:
+                reconciled=reconcile_item(library,plan,row) if row['state']=='READY' else None
+                if reconciled:result=reconciled
+                else:
+                    current=library.object_snapshot(row['kind'],row['id']);stale=row.get('snapshot') and (current['revision']!=row['snapshot']['revision'] or current['payload']!=row['snapshot']['payload'])
+                    result.update(state='FAILED_OR_STALE',outcome='STALE' if stale else 'FAILED',reason=str(e))
+            except (ValueError,KeyError,TypeError,OSError,sqlite3.Error):result.update(state='FAILED_OR_STALE',outcome='STALE' if isinstance(e,ValueError) else 'RESULT_UNVERIFIED',reason=str(e)+'；結果未安全核實，不盲目重試')
+        results.append(result);progress(copy.deepcopy(result))
     return results
+
+
+def undo_batch(library,plan,results,approved=False,selected=None):
+    check_batch(library,plan,approved);known={r['target_key']:r for r in plan['rows']};requested={r['target_key'] for r in results if r.get('history_id')}
+    if selected is not None:
+        requested=set()
+        for value in selected:
+            choices=[key for key,row in known.items() if value in (key,row['id'])]
+            if len(choices)!=1:raise ValueError('回復實體ID不明確；請使用完整類型與ID')
+            requested.add(choices[0])
+    if not requested.issubset(known):raise ValueError('回復範圍含未核對目標')
+    receipts={r['target_key']:r for r in results};out=[]
+    for identity in reversed([r['target_key'] for r in plan['rows'] if r['target_key'] in requested]):
+        row=known[identity];result=dict(id=row['id'],kind=row['kind'],target_key=identity,formal_eligible=False)
+        try:
+            if receipts.get(identity,{}).get('history_id')!=operation_id(plan,row):raise ValueError('沒有此目標原操作的已核實歷史')
+            current=reconcile_item(library,plan,row)
+            if current is None or current['outcome']=='APPLIED_BUT_CURRENT_CHANGED':raise ValueError('此目標後已有新編輯／版本；未覆寫，請人工核對')
+            record=library.object_history_action(current['history_id'],'UNDO',True);result.update(outcome='UNDONE_PENDING_FULL_VALIDATION',history_id=record['id'])
+        except Exception as error:result.update(outcome='UNDO_CONFLICT',reason=str(error))
+        out.append(result)
+    return out
+
+
+def batch_summary(results):
+    from collections import Counter
+    counts=dict(Counter(r.get('outcome',r.get('state')) for r in results));applied=counts.get('APPLIED_PENDING_FULL_VALIDATION',0);changed=counts.get('APPLIED_BUT_CURRENT_CHANGED',0)
+    return dict(checked=len(results),attempted=sum(bool(r.get('attempted')) for r in results),applied_pending_validation=applied,current_changed=changed,failed=counts.get('FAILED',0)+counts.get('RESULT_UNVERIFIED',0),stale=counts.get('STALE',0),manual=counts.get('NEEDS_MANUAL_REVIEW',0),cancelled=counts.get('CANCELLED',0),outcomes=counts,status='APPLIED_PENDING_REVALIDATION' if applied==len(results) and results else 'PARTIAL_OR_BLOCKED',formal_eligible=False)
 
 class BatchObjectDialog(QDialog):
     def __init__(self,window):
