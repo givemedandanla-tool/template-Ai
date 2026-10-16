@@ -26,7 +26,15 @@ class CandidateBatchController:
             candidate=adapter.candidates[index];key=candidate_origin_key(adapter,index);self.adapters[key]=(adapter,index)
             for slot in candidate.template.slots:
                 if len(rows)>=200:break
-                rows.append(dict(key=key+':'+slot.id,scope_key=key,id=candidate.template.id,kind='CANDIDATE',slot_ids=[slot.id],name=candidate.template.name,slot=asdict(slot),size=[candidate.template.width_mm,candidate.template.height_mm],state='待預檢',risk='待預檢'))
+                snapshot=candidate.risk_context.get('input_snapshot',{});owners=snapshot.get('companies' if slot.owner.startswith('c') else 'people',[])
+                try:owner=owners[int(slot.owner[1:])-1] if int(slot.owner[1:])>0 else {}
+                except (ValueError,IndexError):owner={}
+                context='人物／公司 '+str(owner.get('name','歸屬待核實'))+'；來源實體 '+str(owner.get('source_entity_id','未知'))+'；版型版本ID '+candidate.template.id+'/v'+str(candidate.template.version)
+                if slot.kind=='logo':
+                    asset=next((item.logo for item in candidate.items if item.slot.id==slot.id),None) or {}
+                    context+='；本尺寸Logo資產 '+str(asset.get('id','缺少合法資產'))+'；來源 '+str(asset.get('source_id',asset.get('path','待核實')))
+                context+='；目前問題 '+'、'.join(str(item.get('code',''))+' '+str(item.get('severity','')) for item in candidate.diagnostics)
+                rows.append(dict(key=key+':'+slot.id,scope_key=key,id=candidate.template.id,kind='CANDIDATE',slot_ids=[slot.id],name=candidate.template.name,slot=asdict(slot),context=context,size=[candidate.template.width_mm,candidate.template.height_mm],state='待預檢',risk='待預檢'))
         return rows,len(rows)>=200
 
     def seal(self):
@@ -94,6 +102,7 @@ class CandidateBatchController:
         for row in d.plan['rows']:
             d.paint(row['target_key'],'可核對套用' if row['state']=='READY' else '需人工核對','需核對整卡' if row['state']=='READY' else '需逐筆人工核對')
             lines.extend([row['id']+'／'+row['target_key'],row.get('reason','尚未完成')])
+            lines.extend(r.get('context','') for r in d.rows if r.get('scope_key')==row['target_key'] and r['slot_ids'][0] in row['selected_slot_ids'])
             for change in row['changes']:
                 before=change['before'];after=change['after']
                 lines.append(change['owner']+'／'+change['kind']+'／'+change['id'])
@@ -128,7 +137,7 @@ class CandidateBatchController:
         row=self.items[self.position];self.position+=1;key=row['target_key'];result=dict(kind='CANDIDATE',id=row['id'],target_key=key,attempted=False,formal_eligible=False)
         try:
             if d.cancel_event.is_set():result.update(outcome='CANCELLED',reason='已停止尚未套用項')
-            elif row['state']!='READY':result.update(outcome='NEEDS_MANUAL_REVIEW',reason=row.get('reason','預檢未合格'))
+            elif row['state']!='READY':result.update(outcome='UNDO_CONFLICT' if self.mode=='UNDO' else 'NEEDS_MANUAL_REVIEW',reason=row.get('reason','預檢未合格'))
             else:
                 adapter,_=self.adapters[key];result['attempted']=True
                 result.update(install_candidate_target(adapter,self.checked[key],True))

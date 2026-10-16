@@ -252,6 +252,13 @@ class BatchObjectDialog(QDialog):
         self.candidate_batch=CandidateBatchController(self,origin or window)
         self.scope.blockSignals(True);self.scope.addItem('目前候選／尺寸（獨立預檢）','CANDIDATE');self.scope.blockSignals(False)
         self.action.blockSignals(True);self.action.addItem('文字X比例（固定字級）');self.action.blockSignals(False);self.ratio=QDoubleSpinBox();self.ratio.setRange(1,100);self.ratio.setValue(90);self.ratio.setSuffix(' % X');bar.addWidget(self.ratio);self.ratio.valueChanged.connect(self.update_counts)
+        from .batch_recovery import BatchRecoveryController
+        self.recovery_controller=BatchRecoveryController(self);recovery_bar=QHBoxLayout()
+        for title,slot in [('保存停止快照（24小時加密）',self.recovery_controller.save),('核對已保存批次',self.recovery_controller.restore),('清除批次暫存',self.recovery_controller.clear)]:
+            button=QPushButton(title);button.clicked.connect(slot);recovery_bar.addWidget(button)
+        layout.addLayout(recovery_bar)
+        self.graphic_button=QPushButton('目前列：原／新圖形差異（唯讀）');self.graphic_button.clicked.connect(self.graphic_preview);layout.addWidget(self.graphic_button)
+        self.table.cellDoubleClicked.connect(lambda *_:self.locate())
         self.reload()
     def valid_context(self):
         if self.library.closed or self.window.library is not self.library:raise ValueError('Library已切換／關閉；未對其他資料套用')
@@ -273,7 +280,7 @@ class BatchObjectDialog(QDialog):
         for i,row in enumerate(self.rows):
             item=QTableWidgetItem();item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsUserCheckable|Qt.ItemIsSelectable);item.setCheckState(Qt.Unchecked);item.setData(Qt.UserRole,row['key']);self.table.setItem(i,0,item)
             values=[row['name']+'／'+row['id'],row['slot_ids'][0],KINDS.get(row['slot']['kind'],row['slot']['kind'])+'／'+row['slot']['owner'],str(row['size'][0])+'×'+str(row['size'][1])+' mm',row['risk'],row['state']]
-            for j,value in enumerate(values,1):item=QTableWidgetItem(value);item.setToolTip(value);item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsSelectable);self.table.setItem(i,j,item)
+            for j,value in enumerate(values,1):item=QTableWidgetItem(value);item.setToolTip(value+'\n'+row.get('context',''));item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsSelectable);self.table.setItem(i,j,item)
         for column,width in enumerate([44,220,250,140,100,135,240]):self.table.setColumnWidth(column,width)
         self.table.horizontalHeader().setStretchLastSection(True);self.table.setWordWrap(False)
         self.preflight_text='';self.last_result_text=''
@@ -284,7 +291,7 @@ class BatchObjectDialog(QDialog):
     def filter_rows(self,*_):
         terms=self.search.text().casefold().split();wanted=self.state_filter.currentText()
         for i in range(self.table.rowCount()):
-            row=self.by_key[self.table.item(i,0).data(Qt.UserRole)];text=(' '.join(self.table.item(i,j).text() for j in range(1,7))+' '+row['slot']['kind']+' '+row['slot']['owner']).casefold();state=row['state'];match=all(t in text for t in terms)
+            row=self.by_key[self.table.item(i,0).data(Qt.UserRole)];text=(' '.join(self.table.item(i,j).text() for j in range(1,7))+' '+row['slot']['kind']+' '+row['slot']['owner']+' '+row.get('context','')).casefold();state=row['state'];match=all(t in text for t in terms)
             if wanted!='全部狀態':match=match and (state==wanted or (wanted=='失敗／過期' and any(s in state for s in ('失敗','過期','衝突','未核實'))))
             self.table.setRowHidden(i,not match)
         self.update_counts()
@@ -398,6 +405,16 @@ class BatchObjectDialog(QDialog):
             else:w.tabs.setCurrentIndex(1);w.template_stack.setCurrentIndex(1);w.template=None;w.refresh_templates(row['id']);w.editor_selection(row['slot_ids'])
             w.navigation.finish();self.accept()
         except Exception as error:self.status.setText('未定位：'+str(error))
+
+    def make_graphic_preview(self):
+        from .batch_preview import make_preview
+        return make_preview(self)
+    def graphic_preview(self):
+        try:
+            dialog=self.make_graphic_preview()
+            try:dialog.exec()
+            finally:dialog.deleteLater()
+        except Exception as error:self.status.setText('未顯示圖形差異：'+str(error))
     def reject(self):
         if self.running:self.cancel();return
         super().reject()
