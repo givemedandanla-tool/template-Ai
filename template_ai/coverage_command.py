@@ -49,11 +49,12 @@ def execute(root,command,payload):
     finally:library.close()
 
 
-def run_command(root,command,payload,*,cancel=None,timeout=120):
+def run_command(root,command,payload,*,cancel=None,timeout=120,module='template_ai.coverage_command'):
+    if module not in ('template_ai.coverage_command','template_ai.quality_command'):raise ValueError('不支援的核對程序')
     data=json.dumps(payload,ensure_ascii=False,allow_nan=False).encode()
     if len(data)>MAX_BYTES:raise ValueError('命令metadata超過32MiB，需明確分組')
     if cancel and cancel.is_set():raise ValueError('已取消，尚未開始')
-    process=subprocess.Popen([sys.executable,'-m','template_ai.coverage_command',str(root),command],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    process=subprocess.Popen([sys.executable,'-m',module,str(root),command],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     start=time.monotonic();first=True
     try:
         while True:
@@ -74,11 +75,11 @@ def run_command(root,command,payload,*,cancel=None,timeout=120):
             if stream:stream.close()
 
 
-def main():
+def main(executor=execute):
     try:
         raw=sys.stdin.buffer.read(MAX_BYTES+1)
         if len(raw)>MAX_BYTES:raise ValueError('命令超過有界metadata')
-        result=dict(result=execute(sys.argv[1],sys.argv[2],json.loads(raw)))
+        result=dict(result=executor(sys.argv[1],sys.argv[2],json.loads(raw)))
         encoded=json.dumps(result,ensure_ascii=False,allow_nan=False).encode()
         if len(encoded)>MAX_BYTES:raise ValueError('結果超過有界metadata，請縮小範圍')
     except Exception as error:encoded=json.dumps(dict(error=str(error)[:4000]),ensure_ascii=False).encode()

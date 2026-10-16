@@ -102,15 +102,18 @@ class EvaluationJobs:
             row=self.owned(identity,token);item=row['items'][index]
             if item['state']!='RUNNING':raise ValueError('來源執行階段已改變')
             if item['source_id'] and digest(self.library.source(item['source_id']))!=item['expected_pins']['source_digest']:raise ValueError('保存前來源版本已變更')
-            prediction_ids=[]
+            prediction_ids=[];prediction_references=[]
             if prediction:
                 from .source_links import check_verified,VerifiedSource
                 from .trusted_samples import cache_stamps
                 p=prediction['source_proof'];check_verified(VerifiedSource(p['path'],p['hash'],tuple(p['stat'])),p['hash'])
                 if cache_stamps(self.library.source(item['source_id']))!=prediction['source_cache_stamps']:raise ValueError('保存前cache已變更')
                 for work in prediction['predictions']:
-                    wid=digest([identity,item['id'],work['key']]);self.store._write('QUALITY_PREDICTED_WORK',wid,dict(job_id=identity,item_id=item['id'],source_id=item['source_id'],source_hash=item['source_hash'],pipeline_manifest_digest=row['pipeline_manifest_digest'],prediction=work,origin=prediction['prediction_origin']),0,'quality_source_only_prediction_saved');prediction_ids.append(wid)
-            iid=digest([identity,item['id']]);saved=self.store._write(ITEM,iid,dict(job_id=identity,item_id=item['id'],source_id=item['source_id'],source_hash=item['source_hash'],protocol_scope_digest=row['protocol_scope_digest'],pipeline_manifest_digest=row['pipeline_manifest_digest'],prediction_ids=prediction_ids,evaluation=evaluation,state='UNRESOLVED' if evaluation['unresolved_source_pages'] else 'MEASURED',origin='ACTUAL_FIXED_PIPELINE_EVALUATION',source_proof=prediction['source_proof'] if prediction else None,source_cache_stamps=prediction['source_cache_stamps'] if prediction else None),0,'quality_source_evaluation_atomically_saved')
+                    wid=digest([identity,item['id'],work['key']]);saved_prediction=self.store._write('QUALITY_PREDICTED_WORK',wid,dict(job_id=identity,item_id=item['id'],source_id=item['source_id'],source_hash=item['source_hash'],pipeline_manifest_digest=row['pipeline_manifest_digest'],prediction=work,origin=prediction['prediction_origin']),0,'quality_source_only_prediction_saved');prediction_ids.append(wid);prediction_references.append(dict(id=wid,digest=digest(saved_prediction)))
+            from .quality_facets import describe
+            manifest=self.store.get('QUALITY_SET',row['dataset_id'])['manifest']
+            facets=describe([self.store.get('QUALITY_GOLD',gid) for gid in item['gold_ids']],manifest)
+            iid=digest([identity,item['id']]);saved=self.store._write(ITEM,iid,dict(job_id=identity,item_id=item['id'],source_id=item['source_id'],source_hash=item['source_hash'],protocol_scope_digest=row['protocol_scope_digest'],pipeline_manifest_digest=row['pipeline_manifest_digest'],prediction_ids=prediction_ids,prediction_references=prediction_references,facets=facets,evaluation=evaluation,state='UNRESOLVED' if evaluation['unresolved_source_pages'] else 'MEASURED',origin='ACTUAL_FIXED_PIPELINE_EVALUATION',source_proof=prediction['source_proof'] if prediction else None,source_cache_stamps=prediction['source_cache_stamps'] if prediction else None),0,'quality_source_evaluation_atomically_saved')
             item.update(state='FAILED' if evaluation['unresolved_source_pages'] else 'DONE',error=evaluation.get('unresolved_reason'),attempts=item['attempts']+1,result_id=iid,result_digest=digest(saved))
             return self.store._write(JOB,identity,row,row['revision'],'quality_source_result_and_progress_committed')
 

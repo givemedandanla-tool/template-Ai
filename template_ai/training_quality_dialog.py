@@ -44,6 +44,9 @@ class TrainingQualityDialog(QDialog):
         from .training_queue_panel import TrainingQueuePanel
         self.queue_panel=TrainingQueuePanel(window,self);self.tabs.addTab(self.queue_panel,'可恢復幾何訓練工作')
         from .quality_evaluation_panel import EvaluationPanel, RecheckPanel
+        from .quality_panel import QualityPanel
+        self.quality_panel=QualityPanel(window,self);self.tabs.addTab(self.quality_panel,'獨立品質／實際版本A/B')
+        self.tabs.currentChanged.connect(lambda index:self.quality_panel.activate() if self.tabs.widget(index) is self.quality_panel else None)
         self.evaluation_panel=EvaluationPanel(window,self);self.tabs.addTab(self.evaluation_panel,'分類評估／隔離修復')
         self.recheck_panel=RecheckPanel(window,self);self.tabs.addTab(self.recheck_panel,'重大規則依賴重審')
         from .training_exceptions_panel import TrainingExceptionsPanel
@@ -59,7 +62,7 @@ class TrainingQualityDialog(QDialog):
         try:dialog.exec()
         finally:dialog.deleteLater()
     def reject(self):
-        if self.facts_panel.running or self.samples_panel.running or self.dataset_panel.running or self.queue_panel.running or self.closure_panel.loading: self.status.setText('背景來源核對尚未結束；可先取消該核對'); return
+        if self.facts_panel.running or self.samples_panel.running or self.dataset_panel.running or self.queue_panel.running or self.closure_panel.loading or self.quality_panel.loading: self.status.setText('背景來源核對尚未結束；可先取消該核對'); return
         super().reject()
     def selected_row(self):
         rows = self.table.selectionModel().selectedRows()

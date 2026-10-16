@@ -17,7 +17,7 @@ SIDES=('BASELINE','CANDIDATE')
 
 def calculation_files():
     root=Path(__file__).parent
-    names=('quality_metrics.py','quality_domains.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py')
+    names=('quality_metrics.py','quality_domains.py','quality_facets.py','quality_diagnostics.py','quality_rechecks.py','coverage_evidence.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py')
     return {name:file_digest(root/name) for name in names}
 
 

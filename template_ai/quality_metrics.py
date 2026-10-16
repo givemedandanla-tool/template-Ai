@@ -76,8 +76,8 @@ def classification_metrics(gold,predictions,minimum_iou):
             if mapped is None:unknown_owners+=1
             else:owner_error=mapped!=g.get('owner');critical+=int(owner_error);known_owner_pairs+=1
         if kind_error or owner_error is True or mapped is None and (g.get('owner') or p.get('owner')):cases.append(dict(gold_id=g['id'],prediction_id=p['id'],gold_kind=g['kind'],predicted_kind=p['kind'],gold_owner=g.get('owner'),predicted_owner=p.get('owner'),mapped_owner=mapped,kind_error=kind_error,critical_owner_error=owner_error,iou=pair['iou']))
-    for identity in matching['false_negative_ids']:classes[actual[identity]['kind']][2]+=1;cases.append(dict(gold_id=identity,prediction_id=None,reason='MISSING_GOLD_OBJECT'))
-    for identity in matching['false_positive_ids']:classes[predicted[identity]['kind']][1]+=1;cases.append(dict(gold_id=None,prediction_id=identity,reason='EXTRA_PREDICTED_OBJECT'))
+    for identity in matching['false_negative_ids']:classes[actual[identity]['kind']][2]+=1;cases.append(dict(gold_id=identity,prediction_id=None,gold_kind=actual[identity]['kind'],gold_rect=actual[identity]['rect'],gold_owner=actual[identity].get('owner'),reason='MISSING_GOLD_OBJECT'))
+    for identity in matching['false_positive_ids']:classes[predicted[identity]['kind']][1]+=1;cases.append(dict(gold_id=None,prediction_id=identity,predicted_kind=predicted[identity]['kind'],predicted_rect=predicted[identity]['rect'],predicted_owner=predicted[identity].get('owner'),reason='EXTRA_PREDICTED_OBJECT'))
     return dict(matching=matching,per_class={kind:counts(*values) for kind,values in classes.items()},detection=counts(len(matching['matches']),len(matching['false_positive_ids']),len(matching['false_negative_ids'])),critical_owner_errors=critical,unknown_owner_mappings=unknown_owners,known_owner_pairs=known_owner_pairs,root_correspondence=root_map,cases=cases,quality_pass=None,reason='僅定義口徑的描述指標；正式品質還需合法獨立樣本、完整真值、核准門檻與版本條件')
 
 
