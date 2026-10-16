@@ -47,6 +47,9 @@ class CanvasCommandFocusTests(unittest.TestCase):
         w=self.w;before=w.template.to_dict();view=w.edit_canvas.transform();self.focus(w.text_color)
         def wheel():APP.sendEvent(w.edit_canvas.viewport(),QWheelEvent(QPointF(100,100),QPointF(100,100),QPoint(),QPoint(0,120),Qt.NoButton,Qt.NoModifier,Qt.NoScrollPhase,False))
         wheel();self.assertEqual(w.edit_canvas.transform(),view);self.focus(w.edit_canvas);wheel();self.assertNotEqual(w.edit_canvas.transform(),view);self.assertEqual(w.template.to_dict(),before);self.assertFalse(w.undo_stack)
+    def test_unfocused_property_wheel_never_changes_numeric_draft_by_hover(self):
+        w=self.w;self.focus(w.edit_canvas);before=w.coords[0].value();APP.sendEvent(w.coords[0],QWheelEvent(QPointF(10,10),QPointF(10,10),QPoint(),QPoint(0,120),Qt.NoButton,Qt.NoModifier,Qt.NoScrollPhase,False));self.assertEqual(w.coords[0].value(),before);self.assertFalse(w.navigation.pending_form())
+        self.focus(w.coords[0]);APP.sendEvent(w.coords[0],QWheelEvent(QPointF(10,10),QPointF(10,10),QPoint(),QPoint(0,120),Qt.NoButton,Qt.NoModifier,Qt.NoScrollPhase,False));self.assertEqual(w.coords[0].value(),before+1);self.assertEqual(w.template.slots[0].rect.x,before);self.assertTrue(w.navigation.pending_form())
     def test_escape_cancels_only_unsubmitted_marking_rectangle(self):
         from template_ai.gui import Canvas
         canvas=Canvas();self.addCleanup(canvas.deleteLater);canvas.resize(600,400);canvas.set_content(90,54);canvas.set_mode('slot');canvas.show();canvas.activateWindow();canvas.setFocus();APP.processEvents();rectangles=[];canvas.rectangle.connect(rectangles.append)

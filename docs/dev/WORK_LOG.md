@@ -1265,3 +1265,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 - 2026-10-16 UI064-A implemented:12new actualQt focus/IME/mm/locked/stale/repeat/pending/Space/Esc/wheel tests;00312PASS/00540PASS.002/004 fixture focus failures preserved and actors corrected to real enabled focused controls. Next B keymap conflict and original safe Undo/Delete routes. No parent completed.
 
 - 2026-10-16 UI064-B original scoped history/delete routes and normalized finite keymap in existing settings/preferences.00915PASS/01066PASS/0125PASS;27newtests/catalog1286.008 controlled143 fixture scheduling;011 oldnofocus fixture error corrected; evidence preserved. C native/full30 pending, no parent promotion.
+
+- 2026-10-16 UI064 C:0141actualwheelFAIL→01645PASS;015importerror0tests preserved.028newtests;01814actualnativePASS/0Qt/all14 inspected+hash, runnerhook. Exact30 mapping/remaining direct actors pending; no parent promotion.

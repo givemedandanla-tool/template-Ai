@@ -254,6 +254,8 @@ class ObjectToolsDialog(QDialog):
                 raw=raw_asset(asset);self.font_choice.addItem(raw.familyName()+' / '+raw.styleName(),{'font':raw.familyName(),'font_style':raw.styleName(),'font_asset':copy.deepcopy(asset)})
             except ValueError:pass
         self.font_choice.currentIndexChanged.connect(lambda _:self.changed('font_asset'));form.addRow('明確核准字面',self.font_choice)
+        from .viewport_controls import guard_control_wheel
+        for control in list(self.editors.values())+[self.font_choice,self.margin]:guard_control_wheel(control)
         self.properties=QPlainTextEdit();self.properties.setReadOnly(True);self.properties.setMaximumHeight(130);form.addRow(self.properties)
         patch=QPushButton('預覽明確修改的共同屬性');patch.clicked.connect(self.preview_patch);form.addRow(patch)
         self.cross=QCheckBox('已核對跨人物／公司及共享關聯範圍');self.cross.toggled.connect(self.invalidate);form.addRow(self.cross)

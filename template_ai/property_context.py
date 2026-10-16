@@ -97,6 +97,8 @@ class RightPropertyContext:
         self.controls=dict(geometry=window.coords,text=[window.font,window.pt,window.text_color,window.scale,window.align,window.property_policy_button],identity=[window.kind,window.owner,window.index,window.required])
         for controls in self.controls.values():
             for control in controls:
+                from .viewport_controls import guard_control_wheel
+                guard_control_wheel(control)
                 for name in ('currentFontChanged','valueChanged','textChanged','currentIndexChanged','stateChanged'):
                     signal=getattr(control,name,None)
                     if signal is not None:signal.connect(self.schedule);break

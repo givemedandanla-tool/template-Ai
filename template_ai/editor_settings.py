@@ -50,7 +50,7 @@ class EditorSettingsDialog(QDialog):
         for command,label in [('UNDO','畫布目前工作復原／歷史'),('REDO','畫布目前工作重做／歷史'),('DELETE','刪除候選：先預覽與確認')]:
             editor=QKeySequenceEdit(QKeySequence(load_commands(window.library)[command]));editor.setMaximumSequenceLength(1);self.command_keys[command]=editor;key_form.addRow(label,editor)
         layout.insertLayout(layout.count()-2,key_form)
-        note=QLabel('僅作用於聚焦畫布；文字欄仍使用自己的快捷鍵。留空可停用。只接受有限候選鍵位，拒絕衝突／系統與輸入法保留鍵；Windows 實機相容性尚未驗證。');note.setWordWrap(True);layout.insertWidget(layout.count()-2,note)
+        note=QLabel('僅作用於聚焦畫布；文字欄仍使用自己的快捷鍵。留空可停用。拒絕衝突／系統與輸入法保留鍵；Windows 實機相容性尚未驗證。\n目前可選：'+'、'.join(sorted(ALLOWED_KEYS)));note.setWordWrap(True);layout.insertWidget(layout.count()-2,note)
 
     def save(self):
         try:

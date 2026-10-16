@@ -1,7 +1,21 @@
 """View-only millimetre navigation; nominal DPI is explicitly uncalibrated."""
 import math
-from PySide6.QtCore import Qt,QRectF
-from PySide6.QtWidgets import QWidget,QHBoxLayout,QPushButton,QLabel,QDoubleSpinBox,QSlider,QApplication,QGraphicsItem,QDialog,QVBoxLayout,QDialogButtonBox
+from PySide6.QtCore import Qt,QRectF,QObject,QEvent
+from PySide6.QtWidgets import QWidget,QHBoxLayout,QPushButton,QLabel,QDoubleSpinBox,QSlider,QApplication,QGraphicsItem,QDialog,QVBoxLayout,QDialogButtonBox,QAbstractSpinBox,QComboBox
+
+
+class FocusWheelGuard(QObject):
+    def eventFilter(self,widget,event):
+        if event.type()==QEvent.Wheel:
+            focus=QApplication.focusWidget()
+            if not widget.hasFocus() and (focus is None or not widget.isAncestorOf(focus)):
+                event.ignore();return True
+        return super().eventFilter(widget,event)
+
+
+def guard_control_wheel(widget):
+    if isinstance(widget,(QAbstractSpinBox,QComboBox)) and not hasattr(widget,'_focus_wheel_guard'):
+        widget._focus_wheel_guard=FocusWheelGuard(widget);widget.installEventFilter(widget._focus_wheel_guard)
 
 
 def canvas_has_input_focus(canvas):
@@ -39,6 +53,7 @@ def show_canvas_help(canvas):
             button=QPushButton(label+'（目前毫米步距）');row.addWidget(button)
             button.clicked.connect(lambda checked=False,x=dx,y=dy:(dialog.accept(),canvas.request_nudge(x,y)))
     keys=QLabel('目前畫布按鍵（可在共用畫布設定變更）：\n'+'\n'.join(name+'：'+(key or '未配置') for name,key in canvas.command_bindings.items())+'\n復原／重做沿用目前工作的既有歷史；刪除先開差異預覽，須明確核對後才套用。');keys.setWordWrap(True);keys.setTextFormat(Qt.PlainText);layout.addWidget(keys)
+    if not canvas.has_content_commands:keys.setText(keys.text()+'\n此畫布的內容操作使用目前視窗既有明確按鈕；不派送其他工作歷史。')
     if not canvas.readonly and canvas.has_content_commands:
         row=QHBoxLayout();layout.addLayout(row)
         for command,label in [('UNDO','核對目前工作復原'),('REDO','核對目前工作重做'),('DELETE','預覽所選物件刪除')]:
@@ -64,6 +79,7 @@ def navigation_controls(canvas,library=None):
     add('名義實際尺寸（未校準）',lambda:canvas.set_zoom(nominal))
     add('快捷鍵／模式',lambda:show_canvas_help(canvas))
     spin=QDoubleSpinBox();spin.setRange(.1,20000);spin.setDecimals(2);spin.setSuffix('%');bar.addWidget(spin)
+    guard_control_wheel(spin)
     slider=QSlider(Qt.Horizontal);slider.setRange(0,1000);slider.setMaximumWidth(150);bar.addWidget(slider)
     def refresh():
         scale=max(.2,min(500,canvas.transform().m11()))

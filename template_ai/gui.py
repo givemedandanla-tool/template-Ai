@@ -152,6 +152,8 @@ class Canvas(QGraphicsView):
             if isinstance(item, Box):
                 item.setFlag(QGraphicsItem.ItemIsMovable, mode == "edit" and not item.slot.locked)
                 item.setFlag(QGraphicsItem.ItemIsSelectable, mode == "edit")
+        label={'pan':'視角平移（不改物件）','edit':'物件選取／編輯','slot':'辨識／欄位標記草稿','crop':'作品邊界標記'}.get(mode,mode)
+        self.command_status.emit(f'目前工具：{label}；作品 {self.width_mm:g}×{self.height_mm:g} mm。')
 
     def selection_changed(self):
         boxes = [i for i in self.scene().selectedItems() if isinstance(i, Box)]
