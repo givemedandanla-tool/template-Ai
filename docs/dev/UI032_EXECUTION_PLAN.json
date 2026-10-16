@@ -1,6 +1,6 @@
 {
   "parent": "UI-032",
-  "status": "DESIGN_BEFORE_CODE",
+  "status": "CORE_IDENTITY_FILTERS_WINDOWS_WORKFLOW_WIP",
   "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
   "original_clauses": [
@@ -51,7 +51,9 @@
     "Original identity_match trusts matching arbitrary declared hashes, no actual byte check and helper not connected to centre source evidence",
     "Original centre supports kind/health/text query but lacks explicit current measured glyph/rights filters and source-vs-selected identity view",
     "App-local font import is separate but no explicit Windows installation handoff/action/status; do not silently write system font directories or registry",
-    "Local manual QA capture can leave fonts/private working libraries beneath targeted evidence; .gitignore now excludes them before staging"
+    "Local manual QA capture can leave fonts/private working libraries beneath targeted evidence; .gitignore now excludes them before staging",
+    "008actual3FAIL: output_rights_errors(None) returns empty and render.export skips assetNone; system-host availability wrongly bypasses source/use-rights for formal PNG/PDF/JPG. Need block unknown host sources, keep marked preview, named rights checklist/slot routes and explicit real-font-positive fixture migration, no fixture-only production bypass.",
+    "TTC asset font_evidence.index is original source face index, not physical index of the extracted single-face app copy. Need exact current source face_bytes proof via original fontTools extractor; do not conflate or infer original AI font relationship."
   ],
   "packages": [
     "A actual source/current selected face identity evidence and source-context UI; alias/unknown truthful if actual native source unavailable",
@@ -70,5 +72,21 @@
     "Windows installed-font scan/install/undo/elevation actual behavior and IME/accessibility require a real authorized Windows machine; current Linux tests and fake adapters are not that qualification",
     "Authorized nonempty native Illustrator/reference corpus remains external; derivative text/effects/names do not become native source evidence"
   ],
-  "next": "Implement packagesA/B/C in original centre, current-source targeted tests/native, full10 map. Continue UI031/UI066/UI067/REV01/REV02/REV04; no routine questions."
+  "next": "Implement packagesA/B/C in original centre, current-source targeted tests/native, full10 map. Continue UI031/UI066/UI067/REV01/REV02/REV04; no routine questions.",
+  "core_WIP": {
+    "new_tests": 26,
+    "catalog_tests": 1522,
+    "identity_counterexamples": "docs/qa/targeted/ui032-identity-counterexamples-001.log",
+    "identity_api": "docs/qa/targeted/ui032-identity-api-002.log",
+    "core_filters": "docs/qa/targeted/ui032-core-filters-003.log",
+    "gui_failure": "docs/qa/targeted/ui032-context-gui-005.log",
+    "coherent_failure": "docs/qa/targeted/ui032-context-coherent-006.log",
+    "coherent_pass": "docs/qa/targeted/ui032-font-workflow-007.log",
+    "coherent_tests": 94,
+    "coherent_actual_exit": 0,
+    "host_rights_counterexamples": "docs/qa/targeted/ui032-host-font-counterexamples-008.log",
+    "host_rights_tests": 3,
+    "host_rights_actual_exit": 1,
+    "remaining": "Guard actual unknown host source/rights + explicit positive fixture source approval; TTC origin-vs-physical face identity; original Linux native/screens/full10 mapping; real Windows OS scan/install/undo external qualification. No completed parent promotion."
+  }
 }

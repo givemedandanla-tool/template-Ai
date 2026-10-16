@@ -37,9 +37,22 @@ def text_evidence(source, elements, bounds, logo_members=()):
 
 def identity_match(reference, candidate):
     """A name or shape never establishes the source face's binary identity."""
+    common=dict(editable_source='UNKNOWN',original_ai_font_relation='UNVERIFIED')
     if reference.get('font_sha256') and reference['font_sha256']==candidate.get('hash'):
-        return dict(state='PROVEN_SAME_BYTES',basis='SHA256_EXACT',editable_source='UNKNOWN')
+        from .font_evidence import inspect_font
+        from .background import file_digest
+        try:
+            if not reference.get('font_path') or not candidate.get('path'):raise ValueError('只有宣告雜湊，缺少實際字型檔案')
+            source=inspect_font(reference['font_path']);selected=inspect_font(candidate['path'])
+            if source['hash']!=reference['font_sha256'] or selected['hash']!=candidate['hash']:raise ValueError('實際字型檔已變更，不能沿用宣告雜湊')
+            left=reference.get('face_index',0 if len(source['faces'])==1 else None)
+            right=candidate.get('font_evidence',{}).get('index',0 if len(selected['faces'])==1 else None)
+            if type(left) is not int or type(right) is not int or not 0<=left<len(source['faces']) or not 0<=right<len(selected['faces']) or left!=right:raise ValueError('同一集合檔不代表相同字面，需核對確切字面索引')
+            if file_digest(reference['font_path'])!=source['hash'] or file_digest(candidate['path'])!=selected['hash']:raise ValueError('字型在核對期間變更')
+            return dict(state='PROVEN_SAME_BYTES',basis='ACTUAL_CURRENT_FILE_SHA256_AND_FACE',face_index=left,font_sha256=source['hash'],**common)
+        except (ValueError,OSError,TypeError,KeyError) as error:
+            return dict(state='UNIDENTIFIED',basis='ACTUAL_FILE_PROOF_FAILED',reason=str(error),**common)
     names={str(candidate.get(k) or '').casefold() for k in ('family','postscript_name','unique_name')}-{''}
     refs={str(reference.get(k) or '').casefold() for k in ('family','postscript_name','unique_name')}-{''}
     return dict(state='POSSIBLE_ALIAS' if names & refs else 'UNIDENTIFIED',
-                basis='NAME_ONLY_REQUIRES_REVIEW' if names & refs else 'NO_IDENTITY_EVIDENCE',editable_source='UNKNOWN')
+                basis='NAME_ONLY_REQUIRES_REVIEW' if names & refs else 'NO_IDENTITY_EVIDENCE',**common)

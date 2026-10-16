@@ -113,9 +113,29 @@ def build_inventory(assets, templates, hosts, hosts_partial=False, max_assets=25
     return report
 
 
-def filter_inventory(rows, query="", kind=None, status=None):
+def recorded_use_rights(row):
+    """A searchable rights record, never a fresh output permission."""
+    asset=row.get('asset')
+    if not asset:return 'UNKNOWN'
+    if row.get('status')!='HEALTHY':return 'BLOCKED'
+    rights=asset.get('usage_rights',{})
+    if not isinstance(rights,dict) or rights.get('print_export') is not True or not all(isinstance(rights.get(k),str) and rights[k].strip() for k in ('actor','basis')):return 'UNKNOWN'
+    flags=asset.get('font_evidence',{}).get('fs_type')
+    return 'PDF_RECORDED' if rights.get('pdf_embedding') is True and type(flags) is int and flags>=0 and not flags&(2|0x100|0x200) else 'RASTER_RECORDED'
+
+
+def measured_glyph_state(row,measurements):
+    value=(measurements or {}).get(row['id'],{})
+    if value.get('face_fingerprint') and value.get('missing'):return 'MISSING'
+    if value.get('measurement_verified') is True and value.get('coverage')==1:return 'COVERED'
+    return 'NOT_CHECKED'
+
+
+def filter_inventory(rows, query="", kind=None, status=None,*,rights=None,glyph=None,measurements=None):
+    if rights not in (None,'UNKNOWN','BLOCKED','PDF_RECORDED','RASTER_RECORDED') or glyph not in (None,'NOT_CHECKED','MISSING','COVERED'):raise ValueError('未知字形／授權篩選條件')
     needle = query.casefold().strip()
     return [r for r in rows if (not kind or r["kind"]==kind) and (not status or r["status"]==status)
+            and (not rights or recorded_use_rights(r)==rights) and (not glyph or measured_glyph_state(r,measurements)==glyph)
             and (not needle or needle in " ".join([*r["families"],*r["styles"],r["source"],r["identity"],STATUS_NAMES[r["status"]],
                      *[v["template_name"] for v in r["references"]]]).casefold())]
 

@@ -24,4 +24,4 @@ class SourceTextEvidenceTests(unittest.TestCase):
         self.assertTrue(rows['inside']['logo_protected']);self.assertTrue(rows['inside']['stylesheet_unresolved'])
         self.assertEqual(identity_match({'family':'Example'},{'family':'Example'})['state'],'POSSIBLE_ALIAS')
         self.assertEqual(identity_match({'visual_score':1},{'visual_score':1})['state'],'UNIDENTIFIED')
-        self.assertEqual(identity_match({'font_sha256':'a'},{'hash':'a'})['state'],'PROVEN_SAME_BYTES')
+        self.assertEqual(identity_match({'font_sha256':'a'},{'hash':'a'})['state'],'UNIDENTIFIED')
