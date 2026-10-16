@@ -34,3 +34,22 @@ class CandidateRiskTests(unittest.TestCase):
         candidate=self.candidate();before=candidate.template.to_dict()
         with patch.object(self.library,'_template_provenance',side_effect=ValueError('Actual provenance is no longer usable')):result=bind_source(candidate,self.library)
         self.assertEqual(result['state'],'EVIDENCE_REQUIRED');self.assertFalse(result['formal_allowed']);self.assertEqual(candidate.template.to_dict(),before)
+
+    def test_mutated_input_template_placement_and_assets_require_regeneration(self):
+        baseline=copy.deepcopy(self.template)
+        for mutate in (lambda c:c.risk_context['input_snapshot']['people'][0]['name'].append('Unknown extra value'),lambda c:setattr(c.template.slots[0].rect,'w',.1),lambda c:setattr(c.items[0],'text','Altered after measurement')):
+            self.template=copy.deepcopy(baseline);candidate=self.candidate();mutate(candidate)
+            self.assertFalse(candidate.formal_eligible)
+            with self.assertRaises(ValueError):export(candidate,self.root/'stale-FINAL.png',150,False,7)
+        candidate=self.candidate();asset=self.root/'new-background.svg';asset.write_text('<svg/>');candidate.template.background={'path':str(asset)}
+        self.assertFalse(candidate.formal_eligible)
+    def test_clearing_diagnostics_cannot_skip_actual_engine_recheck(self):
+        self.template.slots[0].rect.w=.1;candidate=self.candidate();candidate.issues=[];candidate.diagnostics=[]
+        with self.assertRaisesRegex(ValueError,'重核不通過'):export(candidate,self.root/'tampered-FINAL.png',150,False,7)
+        self.assertFalse((self.root/'tampered-FINAL.png').exists())
+    def test_acceptance_flag_is_not_a_published_baseline_receipt(self):
+        self.template.state='draft';candidate=self.candidate();candidate.risk_context['approved_base']=True
+        self.assertEqual(candidate.risk['state'],'EVIDENCE_REQUIRED');self.assertFalse(candidate.risk['known_hard_conditions_passed'])
+    def test_fresh_source_binding_does_not_silently_drop_explicit_review(self):
+        candidate=transient_draft(self.candidate(),'Explicit unresolved style review')
+        bind_source(candidate,self.library);self.assertEqual(candidate.risk['state'],'REVIEW_DRAFT');self.assertFalse(candidate.formal_eligible)

@@ -22,7 +22,9 @@ def assess(candidate):
     evidence=copy.deepcopy(context.get('conditions',[]))
     if any(not isinstance(c,dict) or c.get('status') not in ('PASS','FAIL','UNKNOWN') or not c.get('reason') for c in evidence):raise ValueError('風險條件需明確PASS／FAIL／UNKNOWN與具體原因')
     conditions=[dict(id='ENGINE_REQUIRED_CONDITIONS',status=physical,reason='實際既有語意／固定字級／框位／Logo檢查',hard_failures=hard,unknown_conditions=unknown),dict(id='PUBLISHED_BASE_APPROVAL',status=approval,reason='目前模板已發布' if approval=='PASS' else '尚未完成模板發布核准')]+evidence
-    trust=conjunction([c['status'] for c in evidence if c.get('required',True)]);review=any(c['status']!='PASS' for c in evidence if not c.get('required',True));basis_approved=approval=='PASS' or bool(context.get('approved_base'))
+    conditions.extend(freshness_conditions(candidate))
+    evidence += [c for c in conditions if c.get('id')=='SNAPSHOT_FRESHNESS']
+    trust=conjunction([c['status'] for c in evidence if c.get('required',True)]);review=any(c['status']!='PASS' for c in evidence if not c.get('required',True));basis_approved=approval=='PASS' or valid_approved_base(context.get('approved_base'))
     if not basis_approved:conditions.append(dict(id='APPROVED_OR_REVIEWED_BASE',status='UNKNOWN',reason='尚無已核准基準的可核對憑證'))
     state='HARD_BLOCKED' if hard else 'EVIDENCE_REQUIRED' if physical=='UNKNOWN' or trust!='PASS' or not basis_approved else 'REVIEW_DRAFT' if approval!='PASS' or review else 'SAFE_RECOMMENDATION'
     result=dict(state=state,label=LABELS[state],conditions=conditions,known_hard_conditions_passed=physical=='PASS' and trust=='PASS' and basis_approved,formal_allowed=state=='SAFE_RECOMMENDATION' and candidate.valid,score_kind='RULE_FITNESS_NOT_CALIBRATED_CONFIDENCE',generation=candidate.generation,template_id=candidate.template.id,template_version=candidate.template.version,dimensions=[candidate.template.width_mm,candidate.template.height_mm],template_digest=digest(candidate.template.to_dict()),input_digest=context.get('input_digest'),dependency_stamp=candidate.dependency_stamp,basis=context.get('basis',['EXPLICIT_PUBLISHED_RULE_TEMPLATE'] if approval=='PASS' else ['UNAPPROVED_CANDIDATE_ONLY']),supplementation=False,automatic_learning=False,accept_risk_is_not_a_gate=True)
@@ -30,7 +32,7 @@ def assess(candidate):
 
 
 def bind_source(candidate,library,conditions=None):
-    context=copy.deepcopy(candidate.risk_context);context['conditions']=copy.deepcopy(conditions or []);context['basis']=['EXACT_PUBLISHED_TEMPLATE','CURRENT_EXPLICIT_SOURCE_AND_GEOMETRY_PROVENANCE']
+    context=copy.deepcopy(candidate.risk_context);context['conditions']=copy.deepcopy(conditions if conditions is not None else [x for x in context.get('conditions',[]) if x['id']!='SOURCE_AND_QUALITY_TRUST']);context['basis']=['EXACT_PUBLISHED_TEMPLATE','CURRENT_EXPLICIT_SOURCE_AND_GEOMETRY_PROVENANCE']
     try:library._template_provenance(candidate.template)
     except (ValueError,OSError) as error:context['conditions'].append(dict(id='SOURCE_AND_QUALITY_TRUST',status='UNKNOWN',reason=str(error)))
     else:context['conditions'].append(dict(id='SOURCE_AND_QUALITY_TRUST',status='PASS',reason='現行模板與來源／標記／必要用途已核對'))
@@ -54,4 +56,30 @@ def transient_draft(candidate,reason):
 def assert_formal(candidate):
     result=assess(candidate)
     if not result['formal_allowed']:raise ValueError('正式輸出被分級風險Gate阻擋：'+result['label']+'；'+'；'.join(c['reason'] for c in result['conditions'] if c['status']!='PASS'))
+    from .layout import generate
+    snapshot=candidate.risk_context['input_snapshot']
+    fresh=generate(candidate.template,**snapshot,generation=candidate.generation)
+    if not fresh.valid or placement_digest(fresh)!=placement_digest(candidate):raise ValueError('正式輸出重核不通過，請重新排版：'+'；'.join(fresh.issues))
     return result
+
+
+def placement_digest(candidate):
+    return digest([asdict(item) for item in candidate.items])
+
+def pin_inputs(candidate,people,companies,logos):
+    snapshot=copy.deepcopy(dict(people=people,companies=companies,logos=logos))
+    candidate.risk_context.update(input_snapshot=snapshot,input_digest=digest(snapshot),template_snapshot_digest=digest(candidate.template.to_dict()),placement_snapshot_digest=placement_digest(candidate))
+
+def freshness_conditions(candidate):
+    context=candidate.risk_context;reasons=[]
+    if 'input_snapshot' not in context:return [dict(id='SNAPSHOT_FRESHNESS',status='UNKNOWN',reason='缺當次輸入快照，需重新排版')]
+    if digest(context['input_snapshot'])!=context.get('input_digest'):reasons.append('輸入快照已變更')
+    if digest(candidate.template.to_dict())!=context.get('template_snapshot_digest'):reasons.append('模板內容已變更')
+    if placement_digest(candidate)!=context.get('placement_snapshot_digest'):reasons.append('已量測的文字／框位／Logo已變更')
+    from .layout import layout_dependency
+    if layout_dependency(candidate.template,context['input_snapshot']['logos'])!=candidate.dependency_stamp:reasons.append('字型／Logo／來源檔依賴已變更')
+    return [dict(id='SNAPSHOT_FRESHNESS',status='UNKNOWN' if reasons else 'PASS',reason='；'.join(reasons) if reasons else '輸入／模板／實際框位／資產依賴仍符合本次快照')]
+
+def valid_approved_base(base):
+    # A bare flag, score, or user acceptance is never an approval receipt.
+    return isinstance(base,dict) and base.get('state')=='published' and bool(base.get('id')) and isinstance(base.get('version'),int) and base.get('digest')==digest(base.get('payload')) and isinstance(base.get('payload'),dict) and base['payload'].get('state')=='published'

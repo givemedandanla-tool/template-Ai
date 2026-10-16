@@ -58,12 +58,14 @@ class MultiSizeWorkflow:
                 if cancel and cancel.is_set():break
                 try:
                     self.library._template_provenance(template)
-                    entry['candidates'].append(generate(deepcopy(template),self.people,self.companies,logos,self.generation))
+                    candidate=generate(deepcopy(template),self.people,self.companies,logos,self.generation)
+                    from .candidate_risk import bind_source
+                    bind_source(candidate,self.library);entry['candidates'].append(candidate)
                 except (ValueError,OSError) as error:entry['failures'].append(dict(template_id=template.id,reason=str(error)))
-            entry['candidates'].sort(key=lambda c:(not c.valid,-c.score,c.template.id))
+            entry['candidates'].sort(key=lambda c:(not c.formal_eligible,-c.score,c.template.id))
             if entry['candidates']:
                 entry['selected']=entry['candidates'][0].template.id
-                entry['state']='VALID' if entry['candidates'][0].valid else 'BLOCKED'
+                entry['state']='VALID' if entry['candidates'][0].formal_eligible else 'BLOCKED'
             else:entry['state']='FAILED' if entry['failures'] else 'NO_TEMPLATE'
             if cancel and cancel.is_set():entry['state']='CANCELLED'
             if progress:progress(dict(processed_sizes=index+1,total_sizes=len(sizes),state=entry['state']))
@@ -76,7 +78,7 @@ class MultiSizeWorkflow:
         entry=next(e for e in self.entries if e['key']==key)
         candidate=next((c for c in entry['candidates'] if c.template.id==template_id),None)
         if candidate is None:raise ValueError('候選不屬於此尺寸，不替換成其他版型')
-        entry['selected']=template_id;entry['state']='VALID' if candidate.valid else 'BLOCKED'
+        entry['selected']=template_id;entry['state']='VALID' if candidate.formal_eligible else 'BLOCKED'
 
     def revalidate(self,entry):
         candidate=self.selected(entry)
@@ -89,7 +91,11 @@ class MultiSizeWorkflow:
         current={a['id']:a for a in self.library.logos()}
         for asset in logos.values():
             if asset['id'] not in current or digest(current[asset['id']])!=digest(asset) or errors(asset):raise ValueError('Logo來源／版本已變更，不輸出舊候選')
-        return generate(template,self.people,self.companies,logos,self.generation)
+        from .candidate_risk import bind_source
+        fresh=generate(template,self.people,self.companies,logos,self.generation)
+        fresh.risk_context['conditions']=deepcopy(candidate.risk_context.get('conditions',[]))
+        bind_source(fresh,self.library)
+        return fresh
 
     def plan(self,directory,requests,prefix='layout'):
         directory=Path(directory).resolve()
@@ -102,7 +108,7 @@ class MultiSizeWorkflow:
             if entry is None or mode not in ('FINAL','PREVIEW') or not formats or len(set(formats))!=len(formats) or any(f not in ('pdf','png','jpg') for f in formats):raise ValueError('尺寸、輸出類別或格式不合法')
             candidate=self.selected(entry)
             if candidate is None or entry['state'] in ('CANCELLED','NOT_CHECKED'):raise ValueError('此尺寸無已計算候選，不虛構預覽')
-            if mode=='FINAL' and not candidate.valid:raise ValueError('不合格尺寸不能當正式成品，請另選PREVIEW')
+            if mode=='FINAL' and not candidate.formal_eligible:raise ValueError('不合格尺寸不能當正式成品，請另選PREVIEW')
             width,height=entry['size_mm']
             for suffix in formats:
                 name=f'{prefix}_{width:.10g}x{height:.10g}mm_{mode}.{suffix}'
@@ -126,7 +132,7 @@ class MultiSizeWorkflow:
                 entry=entries[item['key']]
                 if entry['selected']!=item['template_id']:raise ValueError('候選選擇已改變，需重新確認清單')
                 candidate=self.revalidate(entry)
-                if item['mode']=='FINAL' and not candidate.valid:raise ValueError('重新驗證未通過，正式輸出已阻擋')
+                if item['mode']=='FINAL' and not candidate.formal_eligible:raise ValueError('重新驗證未通過，正式輸出已阻擋')
                 target=Path(item['path'])
                 if target.parent.parent.resolve()!=root or target.parent.name!=item['mode'] or target.parent.is_symlink():raise ValueError('輸出位置超出確認範圍')
                 target.parent.mkdir(exist_ok=True)

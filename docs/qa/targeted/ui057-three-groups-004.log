@@ -1,0 +1,15 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input (test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_parent_navigation.py", line 33, in test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input
+    self.assertFalse(self.w.legacy_input_panel.isChecked());self.assertGreaterEqual(self.w.output_canvas.height(),240);self.assertFalse(self.w.property_fields.isVisible());self.assertTrue(self.w.output_properties.isVisible());self.assertIn('Qualified synthetic',self.w.output_properties.toPlainText())
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 232 not greater than or equal to 240
+
+----------------------------------------------------------------------
+Ran 34 tests in 9.587s
+
+FAILED (failures=1)

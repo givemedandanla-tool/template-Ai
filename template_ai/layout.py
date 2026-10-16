@@ -190,8 +190,11 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
     if layout_dependency(t, logos) != dependency:
         add("依賴檔案在排版期間異動，需重新產生", "DEPENDENCY_CHANGED")
     score = sum(item.scale for item in items if item.text) / max(1, sum(bool(item.text) for item in items))
-    return Candidate(t, items, list(dict.fromkeys(issues)), score, generation,
+    from .candidate_risk import pin_inputs
+    candidate = Candidate(t, items, list(dict.fromkeys(issues)), score, generation,
                      ["精確匹配矩形尺寸與人物容量", "固定字級，僅在本模板允許的字寬範圍適配", "排名比較字寬保持程度；不宣稱審美模型或全域最優"], diagnostics, measurements, dependency)
+    pin_inputs(candidate, people, companies, logos)
+    return candidate
 
 
 def match(templates: list[Template], width: float, height: float, people: list[dict], companies: list[dict], logos: dict[str, dict], generation: int = 0) -> list[Candidate]:

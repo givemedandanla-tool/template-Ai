@@ -631,12 +631,15 @@ class MainWindow(QMainWindow):
         self.candidate_list = QListWidget()
         self.candidate_list.currentRowChanged.connect(self.choose_candidate)
         self.candidate_list.hide()
-        candidate_panel=QWidget();candidate_layout=QVBoxLayout(candidate_panel);self.qualified_candidates=QListWidget();self.blocked_candidates=QListWidget()
-        for title,view in [('已驗證合格候選（固定字級與硬性條件通過）',self.qualified_candidates),('不合格／診斷候選（禁止正式輸出）',self.blocked_candidates)]:
+        candidate_panel=QWidget();candidate_layout=QVBoxLayout(candidate_panel);self.qualified_candidates=QListWidget();self.review_candidates=QListWidget();self.blocked_candidates=QListWidget()
+        for title,view in [('安全候選（輸出前重核）',self.qualified_candidates),('待確認／來源不明草稿（禁止正式輸出）',self.review_candidates),('硬性阻擋候選（禁止正式輸出）',self.blocked_candidates)]:
             candidate_layout.addWidget(QLabel(title));candidate_layout.addWidget(view)
             view.currentItemChanged.connect(lambda item,previous:self.candidate_list.setCurrentRow(item.data(Qt.UserRole)) if item else None)
+        self.button("保留當次待確認草稿",self.keep_review_draft,candidate_layout)
+        self.button("修正後重新檢查當前候選",self.recheck_candidate,candidate_layout)
         split.addWidget(candidate_panel)
         self.output_canvas = Canvas()
+        self.output_canvas.setMinimumHeight(240)
         split.addWidget(self.output_canvas)
         from .viewport_controls import navigation_controls
         layout.addWidget(navigation_controls(self.output_canvas))
@@ -1774,7 +1777,7 @@ class MainWindow(QMainWindow):
             self.issues.setText("資料／尺寸／模板或 Logo 已變更；目前候選過期，請重新排版。")
         if hasattr(self,'output_properties'):self.output_properties.setPlainText('當次資料／尺寸／模板已變更；候選過期，請重新試排。')
         if hasattr(self,'qualified_candidates'):
-            self.qualified_candidates.setEnabled(False);self.blocked_candidates.setEnabled(False)
+            self.qualified_candidates.setEnabled(False);self.review_candidates.setEnabled(False);self.blocked_candidates.setEnabled(False)
         self.inputs_invalidated.emit(self.generation)
 
     def refresh_input_problems(self):
@@ -1823,10 +1826,12 @@ class MainWindow(QMainWindow):
                 try:self.library._template_provenance(template);eligible.append(template)
                 except ValueError as error:excluded.append(template.name+'：'+str(error))
             self.candidates = match(eligible, self.out_w.value(), self.out_h.value(), people, companies, logos, self.generation)
-            self.last_layout_summary = dict(state="COMPLETED", total=len(self.candidates), checked=len(self.candidates), calculated=len(self.candidates), failed=0, unstarted=0, global_unsolvable=False)
+            from .candidate_risk import bind_source,search_result
+            for candidate in self.candidates:bind_source(candidate,self.library)
+            self.last_layout_summary = dict(search_result(self.candidates,scope_complete=True,excluded=excluded),state="COMPLETED",total=len(self.candidates),calculated=len(self.candidates),failed=0)
             self.candidate_list.clear()
             for c in self.candidates:
-                self.candidate_list.addItem(f"{'可正式數位輸出' if c.valid else '阻擋／診斷候選'}\n{c.template.name} · v{c.template.version}")
+                self.candidate_list.addItem(f"{c.risk['label']}\n{c.template.name} · v{c.template.version}")
             if not self.candidates:
                 self.issues.setText("目前沒有同矩形尺寸、同人物容量的已發布模板；請先建立或發布合適模板。可依已核准基準授權特製草稿；沒有核准設計規則時不猜造版面。")
                 self.export_button.setEnabled(False)
@@ -1842,14 +1847,15 @@ class MainWindow(QMainWindow):
     def refresh_candidate_views(self,row=None):
         if not hasattr(self,'qualified_candidates'):return
         from PySide6.QtWidgets import QListWidgetItem
-        signature=tuple((c.template.id,c.template.version,c.valid,c.generation,c.score) for c in self.candidates)
-        views=(self.qualified_candidates,self.blocked_candidates)
+        signature=tuple((c.template.id,c.template.version,c.risk['digest'],c.generation,c.score) for c in self.candidates)
+        views=(self.qualified_candidates,self.review_candidates,self.blocked_candidates)
         for view in views:view.blockSignals(True)
         if signature!=getattr(self,'_candidate_view_signature',None):
             for view in views:view.clear()
             for index,c in enumerate(self.candidates):
-                view=self.qualified_candidates if c.valid else self.blocked_candidates
-                item=QListWidgetItem(c.template.name+f' v{c.template.version}／{c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n'+('排序依據：'+str(c.score)+'；'+'；'.join(c.reasons) if c.valid else '；'.join(c.issues[:3])));item.setData(Qt.UserRole,index);view.addItem(item)
+                risk=c.risk
+                view=self.qualified_candidates if risk['formal_allowed'] else self.blocked_candidates if risk['state']=='HARD_BLOCKED' else self.review_candidates
+                item=QListWidgetItem(c.template.name+f' v{c.template.version}／{c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n'+('排序依據：'+str(c.score)+'；'+'；'.join(c.reasons) if c.formal_eligible else risk['label']+'；'+'；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS')+'；'+'；'.join(c.issues[:3])));item.setData(Qt.UserRole,index);view.addItem(item)
             self._candidate_view_signature=signature
         for view in views:
             view.clearSelection();view.setCurrentRow(-1)
@@ -1863,21 +1869,45 @@ class MainWindow(QMainWindow):
             return
         c = self.candidates[row]
         try:
-            image = render_image(c, 150, not c.valid)
+            from .candidate_risk import bind_source
+            bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id']!='SOURCE_AND_QUALITY_TRUST'])
+            risk=c.risk;eligible=risk['formal_allowed'];self.refresh_candidate_views(row)
+            image = render_image(c, 150, not eligible)
             from .render import preview_height
-            self.output_canvas.set_content(c.template.width_mm, preview_height(c) if not c.valid else c.template.height_mm, image)
+            self.output_canvas.set_content(c.template.width_mm, preview_height(c) if not eligible else c.template.height_mm, image)
             self.output_canvas.set_mode("pan")
             self.output_canvas.fit()
             current = c.generation == self.generation
-            self.export_button.setEnabled(c.valid and current)
+            self.export_button.setEnabled(eligible and current)
             self.preview_button.setEnabled(current)
-            self.output_properties.setPlainText(f"目前候選：{c.template.name} v{c.template.version}\nID {c.template.id}\n尺寸 {c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n"+('已驗證合格（有效版本）' if c.valid and current else '不合格／過期：禁止正式輸出')+'\n排序為規則適配，非審美保證\n'+'；'.join(c.reasons)+'\n問題：\n'+'\n'.join(c.issues[:20]))
-            self.input_state.setText(('目前所選候選已驗證合格；輸出前仍需重核有效版本。' if c.valid else '目前所選候選已驗證不合格：禁止正式輸出。可修正輸入或授權範圍內特製草稿；不推論所有設計都無解。') if current else '輸入／候選已變更，待重新驗證。')
-            self.issues.setText(("數位排版檢查通過；尚未做實體印刷分析。" if c.valid else "正式輸出阻擋：\n" + "\n".join(c.issues[:8])) + "\n" + "；".join(c.reasons))
+            self.output_properties.setPlainText(f"目前候選：{c.template.name} v{c.template.version}\nID {c.template.id}\n尺寸 {c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n"+('已驗證合格（有效版本）' if eligible and current else risk['label'] if current else '候選過期：禁止正式輸出')+'\n排序為規則適配，非審美保證\n'+'；'.join(c.reasons)+'\n問題：\n'+'\n'.join(c.issues[:20]))
+            self.input_state.setText(('目前所選候選已驗證合格；輸出前仍需重核有效版本。' if eligible else risk['label']+'。可修正輸入、公司與Logo配對、字型／來源或另選模板，再重新檢查；不推論所有設計都無解。') if current else '輸入／候選已變更，待重新驗證。')
+            self.issues.setText(risk['label']+'\n'+'；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS')+'\n'+("數位排版檢查通過；尚未做實體印刷分析。" if eligible else "正式輸出阻擋：\n" + "\n".join(c.issues[:8])) + "\n" + "；".join(c.reasons))
         except Exception as e:
             self.export_button.setEnabled(False)
             self.preview_button.setEnabled(False)
             self.error(str(e))
+
+    def keep_review_draft(self):
+        row=self.candidate_list.currentRow()
+        if not 0<=row<len(self.candidates):return
+        reason,ok=QInputDialog.getText(self,'當次待確認草稿','輸入此次需人工核對的原因；只保留記憶體，不發布、不寫入客戶或訓練集')
+        if not ok:return
+        try:
+            from .candidate_risk import transient_draft
+            self.candidates[row]=transient_draft(self.candidates[row],reason);self.choose_candidate(row)
+        except ValueError as error:self.error(str(error))
+
+    def recheck_candidate(self):
+        row=self.candidate_list.currentRow()
+        if not 0<=row<len(self.candidates):return
+        try:
+            from .candidate_risk import bind_source
+            from .layout import generate
+            old=self.candidates[row];people,companies,logos=self.input_data()
+            candidate=generate(copy.deepcopy(old.template),people,companies,logos,self.generation)
+            bind_source(candidate,self.library);self.candidates[row]=candidate;self.choose_candidate(row)
+        except (ValueError,OSError) as error:self.error(str(error))
 
     def export_current(self, preview):
         row = self.candidate_list.currentRow()
@@ -1891,7 +1921,8 @@ class MainWindow(QMainWindow):
         if not path:
             return
         try:
-            self.library._template_provenance(c.template)
+            from .candidate_risk import bind_source
+            bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id']!='SOURCE_AND_QUALITY_TRUST'])
             export(c, path, self.dpi.value(), preview, self.generation)
             self.statusBar().showMessage("檔案已實際寫入：" + path)
         except Exception as e:

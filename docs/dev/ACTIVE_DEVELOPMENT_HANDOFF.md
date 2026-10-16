@@ -13,3 +13,7 @@
 ## UI057 tri-state/export WIP
 
 New candidate_risk policy preserves PASS/FAIL/UNKNOWN, bounded-scope certificates, source conditions, transient memory-only draft and formal export gate. Existing engine checks retained; manual published templates do not need an arbitrary sample minimum. Actual36 targeted/regr tests PASS in ui057-tristate-export-001.log, including high-score/accept-risk blocked, missing fonts unknown, unknown source, empty/partial scope, watermarked draft/no business writes. Catalog1051; UI057 not full registered. Next bind actual snapshots/source freshness and three GUI groups, then shared UI058 foreground low-load worker. Checkpoint timing exceeded10min across context compaction; do not claim strict cadence PASS.
+
+## UI057 native/sizes WIP; shared UI058 next
+
+11risk tests PASS; actual31native/session/multisize/output tests PASS (ui057-risk-native-and-sizes-007). New3native tests cover real three groups, transient-only action, stale input and source reclassification. Snapshot/generation/assets/placement protected; final re-runs existing engine. Per-size revalidate keeps review conditions. Integration003 modal blocked due duplicate state kw, explicitly terminated owned process;004failed canvas232<240, real minheight fixed;00633PASS/00731PASS.1058catalog expected; UI057 full9 not registered. UI058 exact original clauses/plan read and persisted; extend existing worker/resources/encrypted opt-in recovery, no new center.

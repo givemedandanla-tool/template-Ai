@@ -63,7 +63,7 @@ class OutputBatch:
         if not entry or entry['selected']!=row['template_id']:raise OutputBlocked('所選尺寸／候選版本已變更')
         try:candidate=workflow.revalidate(entry)
         except (ValueError,KeyError) as error:raise OutputBlocked(str(error)) from error
-        if row['mode']=='FINAL' and not candidate.valid:raise OutputBlocked('正式印前未通過：'+'；'.join(candidate.issues))
+        if row['mode']=='FINAL' and not candidate.formal_eligible:raise OutputBlocked('正式印前未通過：'+'；'.join(candidate.issues))
         target=Path(row['path']);root=Path(self.plan['directory']).resolve()
         if target.parent.parent.resolve()!=root or target.parent.name!=row['mode'] or target.parent.is_symlink():raise OutputBlocked('目的地超出已確認範圍或目錄為符號連結')
         return candidate
