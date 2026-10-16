@@ -41,7 +41,8 @@ class QualityPolicies:
     def status(self,policy_id):
         record=self.store.get(POLICY,policy_id) if policy_id else None
         if not record:return dict(state='UNCONFIGURED',valid=False,policy=None,reason='尚無明確核准的各類門檻／必要樣本量／依據，不能宣稱品質PASS')
-        valid=not self.store.get('QUALITY_POLICY_WITHDRAWAL',policy_id)
+        plan=copy.deepcopy(record['plan']);expected=plan.pop('digest',None)
+        valid=not self.store.get('QUALITY_POLICY_WITHDRAWAL',policy_id) and record['state']=='APPROVED_EXACT_POLICY_VERSION' and expected==digest(plan) and plan['calculation_version']==VERSION
         return dict(state=record['state'] if valid else 'WITHDRAWN',valid=valid,policy=record,reason='政策核准不代表模型／驗收集／品質已通過')
 
     def withdraw(self,policy_id,expected_revision,actor,reason,approved=False):

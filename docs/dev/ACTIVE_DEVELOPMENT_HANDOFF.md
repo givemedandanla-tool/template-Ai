@@ -35,3 +35,9 @@
 - semantic_learning.plan/train也接GROUP_ROLE/related group防qualityholdout旁路，實際訓練原子寫roles；QualityGroups從歷史SEMANTIC_MODEL scopes SQLdistinct保留TRAIN/VALIDATION曝光（刪目前rolecache仍擋holdout），gold真值不依model而改寫。
 - 21 policy/groups/oldsemantic、17 policy+pipeline+oldsemantic及source pins調整後4pipeline PASS（重疊不相加unique）。尚無predeclared AB/exposure protocol/domain job/Gate/UI或full formal；UI053原9仍WIP，current144claims pending，前6/28已驗Coverage001保留。
 - 下一先protocol固定QUALITY_SET/品質policy/實際pipelines及配對條件、exposure journal，再domain metrics/persistent FIFO jobs/GUI/重大跨批次重審。
+
+### UI053 predeclared paired protocol WIP
+- quality_protocol同SQLite immutable scope：QUALITY_SET/goldmanifest、明確policy、實際BASELINE/CANDIDATE pipeline+環境/計算程式hash先固定；QUALITY_PROTOCOL_USE綁EVAL_JOB/side/owner，content關聯群組只供一個預宣告pair，samejob可續、不讓新job重跑或複製set重置holdout。
+- 明確看gold/逐案對照寫HOLDOUT_EXPOSED與group使用，保留舊gold/protocol/結果，不當新independentset；reservation+side同transaction lateaudit失敗回滾。12 protocol+policy targets PASS（EVAL_JOB為明示scheduler metadata fixture，尚未actual FIFO consumer，不冒稱完成）。
+- 重要下一缺口：QUALITY_SET目前由gold明列，需擴充declared raw/unparsed source scope以保留無gold來源分母；physical_size政策需適用mm口徑、fieldtypes按class防平均稀釋。actualdomainresults/FIFO/diagnosticGUI/seriouserror crossbatch尚未做；UI053原9未閉合，144currentclaims pending。
+- 自我盤點UI052 follow-up：explicit/root path scopes遇不同original filename alias重連同一physicalpath時，應保持logical sourcefile2與physicalpaths1另計；目前plan_source_files按physicalpath合併會保守阻擋此case，下一修正並補counterexample後全量重驗（舊milestone證據仍保留，current已pending）。
