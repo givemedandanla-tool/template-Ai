@@ -16,7 +16,7 @@ class TrainingExceptionsPanel(QWidget):
         self.table=QTableWidget(0,5);self.table.setHorizontalHeaderLabels(['嚴重程度','作品／來源','問題','實際影響','排序依據']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.ExtendedSelection);layout.addWidget(self.table,2)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details)
         bar=QHBoxLayout()
-        for label,fn in [('定位作品／欄位',self.locate),('校正所選作品',self.edit),('只重分析所選作品',self.retry),('明確排除此作品',self.exclude),('恢復排除為待審',self.restore),('從實際例外預覽局部修復',self.open_repair),('上一頁',lambda:self.page(-100)),('下一頁',lambda:self.page(100))]:
+        for label,fn in [('定位作品／欄位',self.locate),('校正所選作品',self.edit),('只重分析所選作品',self.retry),('明確排除此作品',self.exclude),('恢復排除為待審',self.restore),('從實際例外預覽局部修復',self.open_repair),('發現重大共通錯誤 → 發起重審',lambda:self.open_repair(True)),('上一頁',lambda:self.page(-100)),('下一頁',lambda:self.page(100))]:
             b=QPushButton(label);b.clicked.connect(fn);bar.addWidget(b)
         layout.addLayout(bar);self.query.textChanged.connect(self.filter_changed);self.order.currentIndexChanged.connect(self.filter_changed);self.severity.currentIndexChanged.connect(self.filter_changed);self.table.itemSelectionChanged.connect(self.selected);self.reload()
 
@@ -44,12 +44,12 @@ class TrainingExceptionsPanel(QWidget):
         if self.window.library.artwork(row['work_id'])['revision']!=row['work_revision']:raise ValueError('作品已更新，先重新核對')
         return row
 
-    def open_repair(self):
+    def open_repair(self,major=False):
         try:
             row=self.current();parent=self.parentWidget()
             while parent is not None and not hasattr(parent,'quality_panel'):parent=parent.parentWidget()
             if parent is None:raise ValueError('請由既有訓練／品質中心開啟修復')
-            parent.quality_panel.open_repair(dict(origin='EXCEPTION',origin_id=row['unit_id'],work_id=row['work_id'],description=row['reason']))
+            (parent.quality_panel.open_major_review if major else parent.quality_panel.open_repair)(dict(origin='EXCEPTION',origin_id=row['unit_id'],work_id=row['work_id'],description=row['reason']))
         except (ValueError,KeyError) as error:self.status.setText(str(error))
 
     def locate(self):

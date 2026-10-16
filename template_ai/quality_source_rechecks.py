@@ -22,7 +22,9 @@ def plan(service,issue_id,category,correct_example,wrong_example,severity='CRITI
             service.store.checked(identity,proofs[source_id]);verified=proofs[source_id];source_proof=dict(path=verified.path,hash=verified.hash,stat=list(verified.stat))
         except (ValueError,OSError) as error:source_proof=None;reason=str(error)
         samples=[(r[0],r[1]) for r in service.db.execute("SELECT id,revision FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id",(identity,))]
-        rows.append(dict(work_id=identity,source_id=source_id,pins=service.store.pins(identity),facts_revision=service.store.facts(identity)['revision'],source_proof=source_proof,samples=samples,dependency_match=matches['WORK:'+identity],precheck='SOURCE_CURRENT' if source_proof else 'SOURCE_UNKNOWN',reason=reason))
+        batch_ids=[r[0] for r in service.db.execute("SELECT DISTINCT json_extract(payload,'$.batch_id') FROM training_records WHERE kind='COVERAGE_REVIEW' AND json_extract(payload,'$.work_id')=? ORDER BY 1",(identity,)).fetchmany(201)]
+        if len(batch_ids)>200:raise ValueError('單作品歷史批次超過200，未截斷／未宣稱完整')
+        rows.append(dict(work_id=identity,batch_ids=batch_ids,source_id=source_id,pins=service.store.pins(identity),facts_revision=service.store.facts(identity)['revision'],source_proof=source_proof,samples=samples,dependency_match=matches['WORK:'+identity],precheck='SOURCE_CURRENT' if source_proof else 'SOURCE_UNKNOWN',reason=reason))
     for node in dependencies['nodes']:
         if not node['key'].startswith('TEMPLATE:'):continue
         _,identity,version=node['key'].split(':');snapshot=service.library.object_snapshot('TEMPLATE',identity)
@@ -39,7 +41,12 @@ def plan(service,issue_id,category,correct_example,wrong_example,severity='CRITI
         for fingerprint in components(manifest):
             if fingerprint['kind']=='MODEL' and (model in node_keys or manifest.get('semantic_model_revision') is None and any(n.startswith('MODEL:'+str(manifest.get('semantic_model_id'))+':') for n in node_keys)) or fingerprint['kind']=='RULE' and fingerprint['rule_id'] in rules:fingerprints[fingerprint['key']]=fingerprint
     result=dict(mode='SOURCE_EVIDENCE',case_id=case_id or new_id(),issue_id=issue_id,issue_digest=digest(issue),work_id=wid,category=category,correct_example=correct_example,wrong_example=wrong_example,severity=severity,rows=rows,templates=templates,dependency_digest=dependencies['digest'],dependency_nodes=dependencies['nodes'],missing_historical_nodes=dependencies['missing_historical_nodes'],unknown_unrecorded_dependencies=True,whole_corpus_safe=False,coverage=dict(registered_sources=service.db.execute('SELECT count(*) FROM sources').fetchone()[0],registered_works=service.db.execute('SELECT count(*) FROM artworks').fetchone()[0],affected_sources=len({r['source_id'] for r in rows}),affected_works=len(rows),affected_templates=len(templates),known_nodes=len(dependencies['nodes']),known_edges=len(dependencies['edges']),known_graph_complete=dependencies['complete_known_graph']))
-    result.update(component_fingerprints=list(fingerprints.values()),pipeline_ids=sorted(pipelines));result['digest']=digest(result);return result
+    gold_versions={key.split(':')[1]:digest(service.store.get('QUALITY_GOLD',key.split(':')[1])) for key in node_keys if key.startswith('GOLD:')}
+    from collections import Counter
+    counts=Counter(key.split(':',1)[0] for key in node_keys)
+    result['affected_batch_ids']=sorted({identity for row in rows for identity in row['batch_ids'] if identity})
+    result['coverage'].update(affected_rule_versions=counts['RULE'],affected_model_versions=counts['MODEL'],affected_customers=counts['CUSTOMER'],affected_style_families=counts['STYLE'],affected_batches=len(result['affected_batch_ids']))
+    result.update(component_fingerprints=list(fingerprints.values()),pipeline_ids=sorted(pipelines),gold_versions=gold_versions);result['digest']=digest(result);return result
 
 
 def confirm(service,value,actor,reason,approved=False):
@@ -66,6 +73,12 @@ def confirm(service,value,actor,reason,approved=False):
             previous=service.store.get('QUALITY_COMPONENT_QUARANTINE',fingerprint['key']);service.store._write('QUALITY_COMPONENT_QUARANTINE',fingerprint['key'],dict(fingerprint=fingerprint,case_id=case_id,state='REVIEW_REQUIRED',actor=actor,reason=reason,at=now,new_pipeline_id_does_not_reset_trust=True,models_decontaminated=False),previous['revision'] if previous else 0,'major_source_actual_component_suspended_not_display_alias')
         for identity in value.get('pipeline_ids',[]):
             previous=service.store.get('QUALITY_PIPELINE_QUARANTINE',identity);service.store._write('QUALITY_PIPELINE_QUARANTINE',identity,dict(case_id=case_id,state='REVIEW_REQUIRED',reason=reason,actor=actor,at=now,fallback_assumed_safe=False),previous['revision'] if previous else 0,'major_source_dependent_pipeline_suspended')
+        # A source may reach acceptance through GOLD -> SET -> PROTOCOL without
+        # traversing either incoming pipeline. Retire that exact old oracle using
+        # its original validity mechanism, rather than blame an unproved parser.
+        for identity in value.get('gold_versions',{}):
+            if not service.store.get('QUALITY_GOLD_INVALIDATION',identity):
+                service.store._write('QUALITY_GOLD_INVALIDATION',identity,dict(gold_id=identity,case_id=case_id,state='REVIEW_REQUIRED',actor=actor,reason=reason,at=now,old_version_retained=True),0,'major_source_exact_gold_suspended_new_explicit_gold_required')
         header={k:copy.deepcopy(v) for k,v in value.items() if k not in ('rows','templates','digest')}
         return service.store._write('QUALITY_MAJOR_RECHECK',case_id,dict(plan=header,plan_digest=value['digest'],affected_works=len(value['rows']),affected_templates=len(value['templates']),state='REVIEW_REQUIRED',actor=actor,reason=reason,at=now,completed=False,old_closure_receipts_preserved=True,models_decontaminated=False,formal_versions_changed=False),0,'major_source_evidence_case_started_not_completed')
 

@@ -18,7 +18,7 @@ class MajorReviewPage(MajorTemplatePageMixin,MajorFindingPageMixin,MajorJobPageM
         for title,field in [('可核對的正確例子',self.correct),('可核對的錯誤例子',self.wrong)]:layout.addWidget(QLabel(title));field.setMaximumHeight(70);layout.addWidget(field);field.textChanged.connect(self.invalidate)
         bar=QHBoxLayout();self.button(bar,'預覽影響／版本與隔離策略',self.preview);self.button(bar,'查看原待修問題／來源證據',lambda:dialog.tabs.setCurrentIndex(0));layout.addLayout(bar)
         self.coverage=QLabel('尚未檢索；選取一個既有原稿／例外問題，再預覽。');self.coverage.setWordWrap(True);layout.addWidget(self.coverage)
-        bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('來源證據案件／類別／ID');bar.addWidget(self.query);self.cases=QComboBox();bar.addWidget(self.cases,1);self.button(bar,'查詢持久案件',lambda:self.list_cases(0));self.button(bar,'前50案',lambda:self.list_cases(-50));self.button(bar,'後50案',lambda:self.list_cases(50));layout.addLayout(bar)
+        bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('案件：來源／規則／模型／客戶／版型／原批次ID');bar.addWidget(self.query);self.cases=QComboBox();bar.addWidget(self.cases,1);self.button(bar,'查詢持久案件',lambda:self.list_cases(0));self.button(bar,'前50案',lambda:self.list_cases(-50));self.button(bar,'後50案',lambda:self.list_cases(50));layout.addLayout(bar)
         bar=QHBoxLayout();self.unit_query=QLineEdit();self.unit_query.setPlaceholderText('此案來源／作品／模板版本／狀態／原因');bar.addWidget(self.unit_query);self.button(bar,'讀回案件／原批次仍保留',lambda:self.load_case(0));self.button(bar,'前50項',lambda:self.load_case(-50));self.button(bar,'後50項',lambda:self.load_case(50));layout.addLayout(bar)
         self.counts=QLabel('尚未讀回持久案件；未宣稱已完成。');self.counts.setWordWrap(True);layout.addWidget(self.counts);self.table=QTableWidget(0,5);self.table.setHorizontalHeaderLabels(['實體種類／確切ID','來源／版次','原核准／目前狀態','重審狀態','原因']);self.table.setSelectionBehavior(QTableWidget.SelectRows);layout.addWidget(self.table)
         bar=QHBoxLayout();self.button(bar,'定位原作品／既有來源事實編輯器',self.locate);layout.addLayout(bar)
@@ -43,7 +43,7 @@ class MajorReviewPage(MajorTemplatePageMixin,MajorFindingPageMixin,MajorJobPageM
         self.pending_action='CASE'
         def loaded(plan):
             if self.pin()!=pin:d.status.setText('預檢期間問題／證據／核對者已變更；舊影響清單未採用');return
-            self.plan=plan;self.plan_pin=pin;c=plan['coverage'];self.coverage.setText(f'已檢索本機登錄 {c["registered_sources"]} 個來源、{c["registered_works"]} 件作品；目前可追溯受影響 {c["affected_sources"]} 個來源、{c["affected_works"]} 件作品、{c["affected_templates"]} 個模板版本。未記錄與歷史失聯依賴仍未知。')
+            self.plan=plan;self.plan_pin=pin;c=plan['coverage'];self.coverage.setText(self.dimension_summary(c)+f'已檢索本機登錄 {c["registered_sources"]} 個來源、{c["registered_works"]} 件作品；目前可追溯受影響 {c["affected_sources"]} 個來源、{c["affected_works"]} 件作品、{c["affected_templates"]} 個模板版本。未記錄與歷史失聯依賴仍未知。')
             lines=['確認將對明確關聯作品／模板暫停信任；原稿、已發布版本及舊結案紀錄保留。','使用者證據：'+plan['category']+'／'+plan['severity'],'正確：'+plan['correct_example'],'錯誤：'+plan['wrong_example']]
             for row in plan['rows']:lines.append('作品 '+row['work_id']+'／來源 '+row['source_id']+'／標記版次 '+str(row['pins']['work_revision'])+'／原事實版次 '+str(row['facts_revision'])+'／'+row['precheck'])
             for row in plan['templates']:lines.append('模板 '+row['template_id']+'／版本 '+str(row['version']))
@@ -89,3 +89,8 @@ class MajorReviewPage(MajorTemplatePageMixin,MajorFindingPageMixin,MajorJobPageM
         ref=self.table.item(index,0).data(Qt.UserRole);row=next(r for r in self.rows if r['kind']==ref['kind'] and r['id']==ref['id'] and r['revision']==ref['revision'])
         if row['kind']!='QUALITY_WORK_QUARANTINE':raise ValueError('模板版本保留待審；請先由其來源作品核對，再使用既有模板版本工具')
         panel=self.dialog.panel;panel.table.clearSelection();panel.recheck_item=row;panel.source_facts();self.dialog.status.setText('已定位原作品與既有來源事實；保存新人工事實後回來讀回案件，未自動解除隔離。')
+
+    @staticmethod
+    def dimension_summary(coverage):
+        fields=[('affected_rule_versions','規則版本'),('affected_model_versions','模型版本'),('affected_customers','客戶'),('affected_style_families','版型系列'),('affected_batches','原批次')]
+        return '已記錄受影響：'+'、'.join(label+' '+str(coverage.get(key,0)) for key,label in fields)+'。'

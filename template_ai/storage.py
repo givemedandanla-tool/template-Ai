@@ -370,6 +370,9 @@ class Library:
         t.state = "published"
 
     def _template_provenance(self, t: Template,*,allow_quarantined_draft=False,for_publication=False) -> None:
+        registered=self.db.execute('SELECT family_id,version FROM templates WHERE id=?',(t.id,)).fetchone()
+        if registered and (registered[0],registered[1])!=(t.family_id,t.version):
+            raise ValueError('同一模板ID的系列與版次不可改寫；請建立具新ID的明確版本草稿')
         from .quality_source_rechecks import source_or_template_blocked
         if not (allow_quarantined_draft is True and t.state=='draft') and source_or_template_blocked(self,t,exact_content=for_publication):raise ValueError('重大共通錯誤重審尚未核准此來源／模板版本，暫停可信使用')
         if t.training_reference is not None:

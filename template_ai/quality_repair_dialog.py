@@ -142,7 +142,9 @@ class QualityRepairDialog(QDialog):
         command='CONFIRM' if kind in ('PROTOCOL','REPORT') else 'REPAIR_CONFIRM'
         def saved(row):
             self.pending=None;self.consent.setChecked(False);self.status.setText('已保存並讀回本次憑證；其他階段與正式採用仍需各自通過。')
-            if kind=='ISSUE':self.issue=row;self.select_record(self.issues,row['id'],row['reason'])
+            if kind=='ISSUE':
+                self.issue=row;self.select_record(self.issues,row['id'],row['reason'])
+                if getattr(self,'major_entrypoint',False):self.tabs.setCurrentWidget(self.major_scroll)
             if kind=='ROOT':self.select_record(self.review,row['id'],row['plan']['hypothesis'])
             if kind=='TRAIN':self.select_record(self.job,row['id'],'局部訓練待啟動')
             if kind=='CANDIDATE':self.select_record(self.candidate,row['id'],row['reason'])

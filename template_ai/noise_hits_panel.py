@@ -13,6 +13,7 @@ class NoiseHitsPanel(QWidget):
         self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['目前決定','保存決定／版次','完整文字','作品','規則／版本','觀察ID']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.SingleSelection);self.table.itemSelectionChanged.connect(self.selected);outer.addWidget(self.table,2);self.details=QPlainTextEdit();self.details.setReadOnly(True);outer.addWidget(self.details,2)
         bar=QHBoxLayout();self.previous_button=QPushButton('上一頁');self.next_button=QPushButton('下一頁');self.locate_button=QPushButton('定位exact來源／作品');self.refresh_button=QPushButton('保存選中作品的目前追溯');self.previous_button.clicked.connect(lambda:self.page(-200));self.next_button.clicked.connect(lambda:self.page(200));self.locate_button.clicked.connect(self.locate);self.refresh_button.clicked.connect(self.refresh)
         for b in (self.previous_button,self.next_button,self.locate_button,self.refresh_button):bar.addWidget(b)
+        self.major_button=QPushButton('發現重大共通錯誤 → 發起重審');self.major_button.clicked.connect(self.major_recheck);bar.addWidget(self.major_button)
         outer.addLayout(bar);self.reload()
         bar=QHBoxLayout();self.actor=QLineEdit();self.actor.setPlaceholderText('恢復／白名單提出者（本機）');self.actor.setMaxLength(120);bar.addWidget(self.actor);self.keep_button=QPushButton('不是雜訊：只保留此項');self.whitelist_button=QPushButton('保留並建立待審白名單');self.keep_button.clicked.connect(self.keep);self.whitelist_button.clicked.connect(self.whitelist);bar.addWidget(self.keep_button);bar.addWidget(self.whitelist_button);outer.addLayout(bar);self.selected()
     def search_changed(self,*_):self.offset=0;self.reload()
@@ -74,3 +75,13 @@ class NoiseHitsPanel(QWidget):
             finally:dialog.deleteLater()
             self.reload()
         except Exception as error:self.status.setText('未建立白名單：'+str(error));self.selected()
+
+    def major_recheck(self):
+        try:
+            row=self.selected_row()
+            if not row:raise ValueError('先選取實際規則追溯')
+            stored=row['stored'];parent=self.parentWidget()
+            while parent is not None and not hasattr(parent,'quality_panel'):parent=parent.parentWidget()
+            if parent is None:raise ValueError('請由既有品質中心開啟')
+            wid=stored['work_id'];parent.quality_panel.open_major_review(dict(origin='SOURCE_FACTS',origin_id=wid,work_id=wid,description='由規則追溯發現重大疑義；原命中 '+row['id']+'，尚未證實通用規則根因'))
+        except (ValueError,KeyError) as error:self.status.setText(str(error))

@@ -86,7 +86,8 @@ class QualityGold:
         from .trusted_sample_pool import source_restriction
         if source_restriction(self.store,gold['source_hash'],gold['rights']['use']):return dict(valid=False,errors=['此來源品質用途已停止使用；不重新讀取原稿'],gold=gold)
         errors=[]
-        if self.store.get('QUALITY_GOLD_INVALIDATION',gold_id):return dict(valid=False,errors=['品質真值／用途許可已撤回，舊版本只保留證據，未重新讀取原稿'],gold=gold)
+        invalidation=self.store.get('QUALITY_GOLD_INVALIDATION',gold_id)
+        if invalidation:return dict(valid=False,errors=['重大來源重審已暫停此黃金答案；舊版本保留，新品質核准需新人工真值版本' if invalidation.get('case_id') else '品質真值／用途許可已撤回，舊版本只保留證據，未重新讀取原稿'],gold=gold)
         try:
             self.check_mapping(gold)
             context,truth,sha=self.dependencies(gold['work_id'])

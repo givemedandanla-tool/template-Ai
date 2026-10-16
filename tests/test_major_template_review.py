@@ -48,4 +48,10 @@ class MajorTemplateReviewTests(unittest.TestCase):
     def test_canonical_source_field_coverage_cannot_be_hidden_by_omitting_validation_input(self):
         self.make();draft=TemplateVersions(self.library).clone(TemplateVersions(self.library).plan(self.template.id),'Synthetic reviewer','Try changed shape scope',True);draft.slots=[s for s in draft.slots if s.kind!='phone'];self.library.save_template(draft);people=copy.deepcopy(self.people);people[0]['phone']=[];value=self.plan(draft,people=people);self.assertFalse(value['can_release']);self.assertTrue(any('標記集合' in reason for reason in value['blockers']))
 
+    def test_registered_template_cannot_change_family_and_version_to_evade_quarantine(self):
+        template=self.publish();self.service.confirm_source(self.source_plan(),'Synthetic reviewer','Existing exact source and style held',True)
+        forged=copy.deepcopy(template);forged.family_id=new_id();forged.version+=1;forged.source_work_id='';forged.state='draft'
+        with self.assertRaisesRegex(ValueError,'系列與版次'):self.library.publish(forged)
+        self.assertEqual(self.library.object_snapshot('TEMPLATE',template.id)['payload']['family_id'],template.family_id)
+
 if __name__=='__main__':unittest.main()

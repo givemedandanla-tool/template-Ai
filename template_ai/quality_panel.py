@@ -34,7 +34,7 @@ class QualityPanel(QWidget):
         layout.addLayout(bar)
         self.table=QTableWidget(0,4);self.table.setHorizontalHeaderLabels(['嚴重度／領域','來源／作品','分類／原因','位置／歸屬']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.SingleSelection);self.table.cellDoubleClicked.connect(lambda *_:self.guarded(self.detail));layout.addWidget(self.table,1)
         bar=QHBoxLayout();self.button(bar,'前50筆',lambda:self.cases(-50));self.button(bar,'後50筆',lambda:self.cases(50));self.button(bar,'原稿：人工真值 vs 實際AI框',self.detail);self.component=QComboBox();self.component.addItems(['PARSER','MODEL','RULE']);bar.addWidget(self.component);self.rule=QLineEdit();self.rule.setPlaceholderText('規則版本ID（僅規則重審）');bar.addWidget(self.rule);self.button(bar,'預覽UI-052跨歷史批次重審',self.recheck);layout.addLayout(bar)
-        bar=QHBoxLayout();self.repair_button=self.button(bar,'局部修復／正式版本／安全回退',self.open_repair);self.case_repair_button=self.button(bar,'選中品質案例／影響作品修復',self.repair_selected);self.recheck_repair_button=self.button(bar,'選中持久重審項修復',self.repair_recheck);layout.addLayout(bar)
+        bar=QHBoxLayout();self.button(bar,'發現重大共通錯誤 → 發起重審',self.open_major_review);self.repair_button=self.button(bar,'局部修復／正式版本／安全回退',self.open_repair);self.case_repair_button=self.button(bar,'選中品質案例／影響作品修復',self.repair_selected);self.recheck_repair_button=self.button(bar,'選中持久重審項修復',self.repair_recheck);layout.addLayout(bar)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setMaximumHeight(155);layout.addWidget(self.details)
         bar=QHBoxLayout();self.quarantine_query=QLineEdit();self.quarantine_query.setPlaceholderText('全庫搜尋待重審作品／案例');self.quarantines=QComboBox();bar.addWidget(self.quarantine_query);bar.addWidget(self.quarantines,1);self.button(bar,'搜尋重審項（最多50）',self.list_quarantines);self.button(bar,'預覽逐件解除隔離',self.preview_resolution);self.button(bar,'開啟選中來源事實核對',self.source_facts);layout.addLayout(bar)
         self.review_evidence=QLineEdit();self.review_evidence.setPlaceholderText('逐件新事實與原稿對照證據（解除隔離必填；不解除模型品質隔離）');layout.addWidget(self.review_evidence);self.recheck_item=None;self.impact_rows=[];self.impact_offset=0;self.impact_mode=False
@@ -68,10 +68,15 @@ class QualityPanel(QWidget):
         try:self.window.run_job('本機品質核對',lambda:run_command(self.root,command,payload,cancel=cancel),JobCallbacks(done,failed,cancel))
         except Exception as error:failed(error)
 
+    def open_major_review(self,entry=None):
+        return self.open_repair(dict(entry or {},major_review=True))
+
     def open_repair(self,entry=None):
         from .quality_repair_dialog import QualityRepairDialog
         dialog=QualityRepairDialog(self);self._repair_dialog=dialog
-        if entry:
+        dialog.major_entrypoint=bool(entry and entry.get('major_review'))
+        if dialog.major_entrypoint and not entry.get('work_id'):dialog.tabs.setCurrentWidget(dialog.major_scroll)
+        if entry and entry.get('work_id'):
             dialog.source_work.setText(entry.get('work_id') or '')
             dialog.description.setText(entry.get('description') or '從既有來源／例外／品質憑證核對局部問題')
             if entry.get('origin')=='ACTUAL_QUALITY_CASE':dialog.guard(lambda:dialog.preview('REPAIR_QUALITY_PLAN',dict(protocol_id=entry['protocol_id'],side=entry['side'],row=entry['row'],work_id=entry.get('work_id')),'ISSUE'))

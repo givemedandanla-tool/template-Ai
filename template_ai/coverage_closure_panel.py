@@ -29,7 +29,7 @@ class CoverageClosurePanel(QWidget):
         self.reason=QLineEdit();self.reason.setPlaceholderText('本次審核／排除／重開理由（必填）');self.reason.setMaxLength(2000);layout.addWidget(self.reason)
         self.evidence=QLineEdit();self.evidence.setPlaceholderText('實際來源頁、區域及證據定位說明（逐層審核必填）');self.evidence.setMaxLength(2000);layout.addWidget(self.evidence)
         self.segmentation_checked=QCheckBox('我已檢視本檔全部頁面，核對清單中的全部真實作品；沒有以畫板數推定作品數');layout.addWidget(self.segmentation_checked)
-        bar=QHBoxLayout();self.rules=QComboBox();bar.addWidget(self.rules,1);self.button(bar,'預覽本頁同規則低風險分組核實',self.plan_group_rule);self.button(bar,'來源事實／漏標',lambda:self.repair('facts_panel'));self.button(bar,'雜訊事件',lambda:self.repair('hits_panel'));self.button(bar,'客戶來源審查',self.open_customer);self.button(bar,'匯入／Logo例外',self.window.import_exceptions);layout.addLayout(bar)
+        bar=QHBoxLayout();self.rules=QComboBox();bar.addWidget(self.rules,1);self.button(bar,'預覽本頁同規則低風險分組核實',self.plan_group_rule);self.button(bar,'來源事實／漏標',lambda:self.repair('facts_panel'));self.button(bar,'雜訊事件',lambda:self.repair('hits_panel'));self.button(bar,'客戶來源審查',self.open_customer);self.button(bar,'匯入／Logo例外',self.window.import_exceptions);self.button(bar,'發現重大共通錯誤 → 發起重審',self.open_major_review);layout.addLayout(bar)
         bar=QHBoxLayout();self.button(bar,'預覽全檔切分確認',self.plan_segmentation);self.layer=QComboBox()
         for key,label in LAYER_LABELS.items():self.layer.addItem(label,key)
         bar.addWidget(self.layer);self.decision=QComboBox();self.decision.addItem('已個別確認','CONFIRMED');self.decision.addItem('核對來源後確認不存在','VERIFIED_ABSENT');self.decision.addItem('本次未形成版型候選','NO_CANDIDATE_RETAINED');bar.addWidget(self.decision);self.button(bar,'預覽此作品此層審核',self.plan_layer);layout.addLayout(bar)
@@ -196,3 +196,17 @@ class CoverageClosurePanel(QWidget):
         dialog=CustomerCandidatesDialog(self.window,self)
         try:dialog.exec()
         finally:dialog.deleteLater()
+
+    def open_major_review(self):
+        def run():
+            identity=self.work_combo.currentData()
+            if not identity or not self.detail:raise ValueError('先核對來源並選擇確切作品')
+            from .coverage_evidence import work_context
+            from .coverage_batches import CoverageBatches
+            expected=next(w for w in self.detail['works'] if w['work_id']==identity)
+            if work_context(CoverageBatches(self.library),identity)['context_digest']!=expected['context_digest']:raise ValueError('作品依賴已變更，請重新核對')
+            parent=self.parentWidget()
+            while parent is not None and not hasattr(parent,'quality_panel'):parent=parent.parentWidget()
+            if parent is None:raise ValueError('請由既有品質中心開啟')
+            parent.quality_panel.open_major_review(dict(origin='SOURCE_FACTS',origin_id=identity,work_id=identity,description='由既有批次審核發現重大共通疑義；原結案保留，需新範圍核實'))
+        self.guarded(run)
