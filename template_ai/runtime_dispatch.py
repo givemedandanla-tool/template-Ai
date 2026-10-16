@@ -63,6 +63,9 @@ class RuntimeDispatch(QObject):
                     if payload.get('launch_failed'):
                         if kind=='JOB':
                             with self.queue.store.transaction():result=self.queue.store._finish_training_job(claimed['id'],token,'FAILED_SYSTEM',payload['error'])
+                        elif kind=='EVAL_JOB':
+                            from .quality_jobs import EvaluationJobs
+                            result=EvaluationJobs(self.library).finish(claimed['id'],token,'FAILED_SYSTEM',payload['error'])
                         else:
                             from .automatic_training import AutomaticTraining
                             result=AutomaticTraining(self.library).finish(claimed['id'],token,'FAILED_SYSTEM',payload['error'])

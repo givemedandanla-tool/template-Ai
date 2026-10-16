@@ -17,7 +17,7 @@ SIDES=('BASELINE','CANDIDATE')
 
 def calculation_files():
     root=Path(__file__).parent
-    names=('quality_metrics.py','quality_domains.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py')
+    names=('quality_metrics.py','quality_domains.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py')
     return {name:file_digest(root/name) for name in names}
 
 
@@ -94,7 +94,7 @@ class QualityProtocols:
     def begin(self,identity,side,job_id,owner_token):
         if side not in SIDES:raise ValueError('試驗側別不合法')
         text(job_id,'持久工作ID',128);text(owner_token,'本次執行owner',128)
-        checked=self.validity(identity)
+        checked=self.validity(identity,verify_sources=False)
         if not checked['valid']:raise ValueError('；'.join(checked['errors']))
         with self.store.transaction():return self._begin_in_transaction(checked['protocol'],side,job_id,owner_token)
 

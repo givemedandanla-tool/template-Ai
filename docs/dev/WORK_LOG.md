@@ -950,3 +950,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-16 00:42 UTC UI053 initial domain counter WIP
 - 12 domain/protocol target PASS；domain6為明示synthetic arithmetic oracle，沒有捏造realmodel evidence。實際inference另有pipeline tests。已知錯配/漏work critical、mm誤差、unknown完整性分母；Logo完整圖文與mapping仍缺Oracle/pred adapters，明確unknown不以bbox當PASS。
 - 下一actual FIFO evaluation job、persisted results/gates/pairedreport、GUI/exposure/severe historicalreview；原9未閉合，不在WIP停工。
+
+### 2026-10-16 00:51 UTC initial durable EVAL_JOB bridge WIP
+- py_compile PASS；實際backend smoke one source (explicit synthetic gold/policy,actualrenderer/source-only pipeline)COMPLETED，result5f810038e3bf473bafbd084bdd470f41品質EVIDENCE_INSUFFICIENT/False，非formal test/FIFO child證據。
+- runtime3-kind adapter已寫但未驗證；source/lease/BEGIN/atomic item+pred/report需下一counterexamples，statisticalGate/pairedreport/OracleGUI仍待。Checkpoint優先保存可恢復WIP，不提升父題。

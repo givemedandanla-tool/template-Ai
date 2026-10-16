@@ -18,7 +18,7 @@ class WorkerTimeout(RuntimeError):
 
 
 def read_job(root,kind,identity):
-    if kind not in ('JOB','AUTO_JOB'):raise ValueError('未知持久工作種類')
+    if kind not in ('JOB','AUTO_JOB','EVAL_JOB'):raise ValueError('未知持久工作種類')
     with closing(sqlite3.connect((Path(root)/'library.sqlite3').resolve().as_uri()+'?mode=ro',uri=True,timeout=2)) as db:
         row=db.execute('SELECT revision,payload FROM training_records WHERE kind=? AND id=?',(kind,identity)).fetchone()
         if not row or len(row[1].encode())>1048576:raise ValueError('工作失聯／超過持久metadata上限')
@@ -122,7 +122,7 @@ def run_isolated(root,kind,identity,token,*,cancel=None,progress=None,admission=
 
 def child_main(arguments=None):
     import argparse
-    parser=argparse.ArgumentParser();parser.add_argument('--root',required=True);parser.add_argument('--kind',choices=('JOB','AUTO_JOB'),required=True);parser.add_argument('--job',required=True);parser.add_argument('--token',required=True);args=parser.parse_args(arguments)
+    parser=argparse.ArgumentParser();parser.add_argument('--root',required=True);parser.add_argument('--kind',choices=('JOB','AUTO_JOB','EVAL_JOB'),required=True);parser.add_argument('--job',required=True);parser.add_argument('--token',required=True);args=parser.parse_args(arguments)
     def emit(kind,**value):
         raw=PREFIX+json.dumps(dict(type=kind,job_id=args.job,**value),ensure_ascii=False).encode()+b'\n'
         if len(raw)>MAX_LINE:raise ValueError('worker協定行超額')
@@ -168,6 +168,9 @@ def child_main(arguments=None):
         if args.kind=='JOB':
             from .training_pipeline import run_training_job
             result=run_training_job(args.root,args.job,args.token,cancel,lambda row:emit('PROGRESS',revision=row['revision']),admission=admission)
+        elif args.kind=='EVAL_JOB':
+            from .quality_jobs import run_evaluation
+            result=run_evaluation(args.root,args.job,args.token,cancel,lambda row:emit('PROGRESS',revision=row['revision']),admission=admission)
         else:
             from .automatic_training import run_automatic
             result=run_automatic(args.root,args.job,args.token,cancel,lambda row:emit('PROGRESS',revision=row['revision']),admission=admission)

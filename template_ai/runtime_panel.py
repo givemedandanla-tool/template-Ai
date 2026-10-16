@@ -56,7 +56,7 @@ class RuntimePanel(QDialog):
             total=self.dispatcher.library.db.execute('SELECT count(*) FROM runtime_requests').fetchone()[0];self.queue_table.setRowCount(len(self.rows))
             for index,row in enumerate(self.rows):
                 consent='本次範圍已確認' if row['consent_session']==self.dispatcher.session else '重啟／其他作用域：需明確恢復' if row['state'] in ('WAITING','PAUSED_RESOURCES','INTERRUPTED') else '此請求已結束／人工處理'
-                for column,value in enumerate((row['seq'],label(row['state'])+' / '+label(row.get('result_phase','')),('幾何學習' if row['kind']=='JOB' else '來源分析')+' / '+row['job_id'],consent,row.get('message') or '')):
+                for column,value in enumerate((row['seq'],label(row['state'])+' / '+label(row.get('result_phase','')),('幾何學習' if row['kind']=='JOB' else '品質評估' if row['kind']=='EVAL_JOB' else '來源分析')+' / '+row['job_id'],consent,row.get('message') or '')):
                     item=QTableWidgetItem(str(value));item.setToolTip(str(value));self.queue_table.setItem(index,column,item)
                 self.queue_table.setRowHeight(index,54)
                 if row['id']==selected_id:self.queue_table.selectRow(index)

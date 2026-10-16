@@ -52,3 +52,8 @@
 - quality_domains真值與predict分開，exact sourceID/hash/page，比對work框後在各work內class-agnostic欄位/ROOT配對；跨人物已知錯配與漏整件work/缺ROOT critical另列，不被容易field平均稀釋；physical_size以policy明確mm差值，空/無gold/未解析/不完整分母仍unknown。
 - 6純合成數學counterexamples +6實際artifact protocol共12PASS。數學fixture只測口徑，非actualmodel執行證據；actualPipeline已有另4case。Logo構件/客戶版型推論目前明示EVIDENCE_INSUFFICIENT，尚無完整scorer/Oracle adapters，不得關UI053或宣稱模型品質PASS。
 - 下一優先EVAL_JOB實際source-only producer接既有RuntimeQueue/FIFO/worker/owner/pause/timeout/restart；評估結果各分母/critical/unknown聚合及paired比較，再補Logo/映射真值adapter與診斷GUI/跨批重審/原9正式。目前僅6/28歷史已驗milestone，144currentpending，UI053未完成。
+
+### UI053 EVAL_JOB initial runtime bridge WIP
+- quality_jobs同TrainingStore EVAL_JOB/QUALITY_EVAL_ITEM/PREDICTED_WORK/RESULT，predeclared pair、shared automatic-worker lease、per-source持久BEGIN/atomic predictions+metrics+progress，noGold/raw不讀來源保留unknown；實際source-only backend smoke輸出COMPLETED/result5f810038e3bf473bafbd084bdd470f41，qualityGate EVIDENCE_INSUFFICIENT/quality_passFalse，非品質放行。
+- RuntimeQueue/worker/parser/dispatch/panel已初接EVAL_JOB，scope含sourceID/goldIDs/side/protocol/pipeline；120s generic timeout EVAL保留CONTINUATION_PENDING待補正式結果。僅py_compile與direct backend actual smoke，尚未真FIFO/isolated child/timeout/restart測試，不能當橋接已驗證。
+- 下一最優先meaningful EvalJob/actual FIFO/child/cancel/disk/restart tests，修final scope/stat/receipt & timeout-missingITEM補unknown，then statistical aggregate/pairedcomparison/Logo+mapping Oracle adapters/GUI/跨批review；原9未完成，144currentclaims pending。

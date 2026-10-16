@@ -18,6 +18,9 @@ ITEM_KEYS=('sample_id','sample_revision','scope_digest','source_pins','name','pr
 def scope_digest(kind,job):
     scope={k:job.get(k) for k in ('id','dataset_id','dataset_revision','manifest_digest','purpose','scope')}
     scope['kind']=kind;scope['items']=[{k:item.get(k) for k in ITEM_KEYS} for item in job['items']]
+    if kind=='EVAL_JOB':
+        scope.update(protocol_id=job['protocol_id'],protocol_scope_digest=job['protocol_scope_digest'],side=job['side'],pipeline_id=job['pipeline_id'],pipeline_manifest_digest=job['pipeline_manifest_digest'])
+        scope['items']=[{k:item.get(k) for k in (*ITEM_KEYS,'id','source_id','gold_ids','logical_file_keys')} for item in job['items']]
     return hashlib.sha256(json.dumps(scope,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()
 
 
@@ -51,7 +54,7 @@ class RuntimeQueue:
         self.library.event(identity,'runtime_queue_'+action);return self.get(identity)
 
     def enqueue(self,kind,job_id,actor,session,approved=False,retry_failed=False):
-        if approved is not True or kind not in ('JOB','AUTO_JOB') or not isinstance(actor,str) or not actor.strip() or len(actor)>120 or not isinstance(session,str) or len(session)!=32 or type(retry_failed) is not bool:raise ValueError('需明確確認工作種類、範圍、操作者與本次階段')
+        if approved is not True or kind not in ('JOB','AUTO_JOB','EVAL_JOB') or not isinstance(actor,str) or not actor.strip() or len(actor)>120 or not isinstance(session,str) or len(session)!=32 or type(retry_failed) is not bool:raise ValueError('需明確確認工作種類、範圍、操作者與本次階段')
         LIVE_OWNERS.add(session)
         with self.transaction():
             job=self.store.get(kind,job_id)
@@ -97,6 +100,9 @@ class RuntimeQueue:
             if scope_digest(request['kind'],claimed)!=request['scope_digest']:raise ValueError('工作範圍已改變')
             self._write(dict(current,state='RUNNING',owner=claimed['owner'],job_revision=claimed['revision'],retry_failed=False),current['revision'],'claimed_with_existing_worker_lease')
         if request['kind']=='JOB':return self.store.claim_training_job(job['id'],job['revision'],True,request['retry_failed'],claimed_hook=atomic_claim)
+        if request['kind']=='EVAL_JOB':
+            from .quality_jobs import EvaluationJobs
+            return EvaluationJobs(self.library).claim(job['id'],job['revision'],True,request['retry_failed'],claimed_hook=atomic_claim)
         from .automatic_training import AutomaticTraining
         return AutomaticTraining(self.library).claim(job['id'],job['revision'],True,request['retry_failed'],claimed_hook=atomic_claim)
 
@@ -117,6 +123,7 @@ class RuntimeQueue:
             if len(active)!=1:raise ValueError('沒有唯一持久執行項，未猜測要隔離的來源／樣本')
             active[0].update(state='FAILED',error=str(message)[:4000],attempts=active[0].get('attempts',0)+1)
             job['phase']='CONTINUATION_PENDING' if any(item['state']=='READY' for item in job['items']) else 'COMPLETED_WITH_EXCEPTIONS'
+            if request['kind']=='EVAL_JOB':job['phase']='CONTINUATION_PENDING'
             result=self.store._write(request['kind'],job['id'],job,job['revision'],'runtime_timed_out_item_isolated')
             worker='geometry-worker' if request['kind']=='JOB' else 'automatic-worker';lease=self.store.get('WORKER',worker)
             if not lease or lease.get('owner',{}).get('token')!=token:raise ValueError('既有worker執行權已改變')
