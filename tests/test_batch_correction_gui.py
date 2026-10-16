@@ -1,7 +1,8 @@
 """Real queued original worker and dialog scope/focus tests for batch source metadata."""
 import copy,threading,unittest
 from unittest.mock import patch
-from PySide6.QtCore import Qt,QTimer
+from PySide6.QtCore import Qt,QTimer,QPointF,QPoint
+from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication,QMessageBox
 from template_ai.batch_objects import BatchObjectDialog
 from template_ai.storage import Library
@@ -55,3 +56,5 @@ class BatchCorrectionGuiTests(unittest.TestCase):
         self.assertTrue(wait_for_gui(lambda:not d.running,5));self.assertEqual(self.w.library.artwork(self.works[0]['id'])['payload']['slots'][0]['align'],'left');self.assertEqual(self.w.library.artwork(self.works[1]['id'])['payload']['slots'][0]['align'],'center');self.assertIn('已回復 1',d.status.text())
     def test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job(self):
         d=self.make(1);self.w.property_pin_checks['text'].setChecked(True);key=self.check(self.works[0],2);index=next(i for i in range(d.table.rowCount()) if d.table.item(i,0).data(Qt.UserRole)==key);d.table.setCurrentCell(index,2);d.locate();self.assertEqual(self.w.tabs.currentIndex(),0);self.assertEqual(self.w.current_slot.id,self.works[0]['payload']['slots'][2]['id']);self.assertTrue(self.w.property_pin_checks['text'].isChecked());self.assertFalse(self.w.busy)
+    def test_located_pan_mouse_gesture_changes_only_view_and_never_creates_content_history(self):
+        d=self.make(1);key=self.check(self.works[0],2);index=next(i for i in range(d.table.rowCount()) if d.table.item(i,0).data(Qt.UserRole)==key);d.table.setCurrentCell(index,2);d.locate();w=self.w;w.show();APP.processEvents();canvas=w.train_canvas;canvas.set_zoom(canvas.transform().m11()*2);before=copy.deepcopy(w.slots);r=w.current_slot.rect;point=canvas.mapFromScene(QPointF(r.x+r.w/2,r.y+r.h/2));centre=canvas.mapToScene(canvas.viewport().rect().center());QTest.mousePress(canvas.viewport(),Qt.LeftButton,pos=point);QTest.mouseMove(canvas.viewport(),point+QPoint(40,30));QTest.mouseRelease(canvas.viewport(),Qt.LeftButton,pos=point+QPoint(40,30));self.assertEqual(w.slots,before);self.assertFalse(w.undo_stack);self.assertGreater((canvas.mapToScene(canvas.viewport().rect().center())-centre).manhattanLength(),.1)

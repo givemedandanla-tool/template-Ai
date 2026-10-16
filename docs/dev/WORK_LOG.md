@@ -1277,3 +1277,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 - 2026-10-16 UI065 source UI design persisted: native row identity/filter count and original atomic scope; existing run_job/shared resource admission/on_error and no-blind-retry recipe. Large class rewrite patch context mismatch did not apply; no UI verification claim. Continue replacing actual existing class and test real queued execution/confirmation races.
 
 - 2026-10-16 UI065 sourceUI WIP18newtests/catalog1310.0116actualGUI PASS;009legacy1PASS.007sync actor mismatch,008realSQLite thread restriction→original worker-owned Library pattern;010undo summary/source pan locator genuine defects fixed011. Selection/race/filter/partial sharedworker/closecancel/inverse/location tested. A broader/native and B/C/full25 pending. This package checkpoint cadence exceeded10min (~12min); no strict cadence PASS claim.
+
+- 2026-10-16 UI065 source pan invariant013 actualFAIL emptyUndo→nativeQt interactivepan/movable beforemove fix;01435PASS,01510modules103PASS actualexit0.19newtests/catalog1311. Native/B/C/full25 pending; no completion claim.

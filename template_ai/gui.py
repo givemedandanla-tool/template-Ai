@@ -78,7 +78,7 @@ class Box(QGraphicsRectItem):
         p.restore()
 
     def mousePressEvent(self, event):
-        self.callback("before_move", self.slot)
+        if self.flags() & QGraphicsItem.ItemIsMovable:self.callback("before_move", self.slot)
         super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event):
@@ -146,6 +146,7 @@ class Canvas(QGraphicsView):
         if self.readonly and mode in ("edit", "slot"):
             mode = "pan"
         self.mode = mode
+        self.setInteractive(mode!='pan')
         self.setDragMode(QGraphicsView.ScrollHandDrag if mode == "pan" else QGraphicsView.NoDrag)
         self.setCursor(Qt.CrossCursor if mode in ("crop", "slot") else Qt.ArrowCursor)
         for item in self.scene().items():

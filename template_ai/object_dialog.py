@@ -29,7 +29,7 @@ class ObjectCanvas(Canvas):
             super().set_content(*args,**kw)
             self.base_positions={i.slot.id:(i.pos().x(),i.pos().y()) for i in self.scene().items() if isinstance(i,Box)}
             self.setSceneRect(QRectF(-2010,-2010,6020,6020))
-            self.overlays=[];self.mode='edit';self.setDragMode(Canvas.RubberBandDrag)
+            self.overlays=[];self.mode='edit';self.setInteractive(True);self.setDragMode(Canvas.RubberBandDrag)
             for i in self.scene().items():
                 if isinstance(i,Box):i.setFlag(QGraphicsItem.ItemIsSelectable,True);i.setFlag(QGraphicsItem.ItemIsMovable,not self.readonly and not i.slot.locked)
         finally:self.resetting=False
