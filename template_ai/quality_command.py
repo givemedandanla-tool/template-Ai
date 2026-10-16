@@ -17,6 +17,9 @@ def execute(root,command,payload):
     from .quality_rechecks import QualityRechecks
     with closing(Library(root)) as library:
         store=TrainingStore(library)
+        if command.startswith('MAJOR_'):
+            from .major_review_commands import execute as major_execute
+            return major_execute(library,command.removeprefix('MAJOR_'),payload)
         if command.startswith('REPAIR_'):
             from .quality_repair_commands import execute as repair_execute
             return repair_execute(library,command.removeprefix('REPAIR_'),payload)

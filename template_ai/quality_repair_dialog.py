@@ -1,4 +1,4 @@
-"""Seven native repair pages over the existing QualityPanel request/worker path."""
+"""Existing repair and major-review pages over the original quality worker path."""
 from pathlib import Path
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QTabWidget,QWidget,QScrollArea,QLabel,QLineEdit,QPlainTextEdit,QComboBox,QCheckBox,QPushButton,QTableWidget,QTableWidgetItem,QHeaderView)
@@ -6,7 +6,7 @@ from shiboken6 import isValid
 from .quality_repairs import ROOT_LAYERS
 from .quality_repair_gates import STAGES
 
-TITLES=('待修問題','根因與影響','候選修復計畫','增量處理進度','前後品質差異','可核准／阻擋原因','回退／恢復')
+TITLES=('待修問題','根因與影響','候選修復計畫','增量處理進度','前後品質差異','可核准／阻擋原因','回退／恢復','重大共通重審')
 ROOT_NAMES=('來源不完整','作品切分','原生文字效果','本機OCR','欄位／人物歸屬','雜訊規則','完整複合Logo','尺寸專用Logo資產','客戶／版型版本','模型退步','人工真值有爭議')
 
 
@@ -18,7 +18,7 @@ class QualityRepairDialog(QDialog):
         outer=QVBoxLayout(self);self.status=QLabel('先核對原稿與人工真值；原問題修好、歷史重審及獨立品質驗收分開判定。');self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);outer.addWidget(self.status)
         bar=QHBoxLayout();self.actor=QLineEdit();self.actor.setPlaceholderText('具名核對者');self.reason=QLineEdit();self.reason.setPlaceholderText('本次核對、適用邊界與負面案例依據');bar.addWidget(self.actor);bar.addWidget(self.reason,1);outer.addLayout(bar);self.actor.textChanged.connect(self.invalidate);self.reason.textChanged.connect(self.invalidate)
         self.tabs=QTabWidget();outer.addWidget(self.tabs,1);self.forms=[]
-        for title in TITLES:
+        for title in TITLES[:-1]:
             scroll=QScrollArea();scroll.setWidgetResizable(True);page=QWidget();form=QFormLayout(page);scroll.setWidget(page);self.tabs.addTab(scroll,title);self.forms.append(form)
         self.issue_form();self.root_form();self.candidate_form();self.progress_form();self.comparison_form();self.approval_form();self.recovery_form()
         self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setMaximumHeight(175);outer.addWidget(self.details)
@@ -26,6 +26,8 @@ class QualityRepairDialog(QDialog):
         self.consent=QCheckBox('我已核對此預覽的實際來源、exact版本、影響與阻擋；明確確認本次操作');outer.addWidget(self.consent)
         bar=QHBoxLayout();self.confirm_button=QPushButton('確認並保存所選預覽');self.confirm_button.clicked.connect(lambda:self.guard(self.confirm));bar.addWidget(self.confirm_button)
         close=QPushButton('關閉');close.clicked.connect(self.reject);bar.addWidget(close);outer.addLayout(bar)
+        from .major_review_page import MajorReviewPage
+        self.major_review=MajorReviewPage(self);self.major_scroll=QScrollArea();self.major_scroll.setWidgetResizable(True);self.major_scroll.setWidget(self.major_review);self.tabs.addTab(self.major_scroll,TITLES[-1])
         boundary=QLabel('修復只變更分析推薦與版本憑證；原稿、人工事實、客戶主檔與已發布版型仍走各自核准流程。未證明原生Illustrator、實機效能或生產品質。');boundary.setWordWrap(True);outer.addWidget(boundary)
 
     def reject(self):
@@ -134,6 +136,7 @@ class QualityRepairDialog(QDialog):
         self.request(command,payload,loaded)
 
     def confirm(self):
+        if self.tabs.currentWidget() is self.major_scroll:return self.major_review.confirm()
         if not self.pending or not self.consent.isChecked() or not self.actor.text().strip() or not self.reason.text().strip():raise ValueError('需有預覽、具名核對者、原因與未預設的明確確認')
         kind,plan,extra=self.pending;payload=dict(kind=kind,plan=plan,actor=self.actor.text(),reason=self.reason.text(),approved=True,**extra)
         command='CONFIRM' if kind in ('PROTOCOL','REPORT') else 'REPAIR_CONFIRM'
