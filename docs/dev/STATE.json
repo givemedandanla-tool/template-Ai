@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI057-NEXT",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-LAYOUT003-ALLTESTS-WATCH.receipt.json",
-  "last_confirmed_commit": "ab7f33bd16ac9d1dc6c26ba92381f7d4a0ad1ba7",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-LAYOUT003-PUBLICATION.receipt.json",
+  "last_confirmed_commit": "406699e23e0ad8597ecda7a6fdc3dd34dfee589d",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -17,9 +17,9 @@
     "docs/dev/PROJECT_ROADMAP.md"
   ],
   "next_tasks": [
-    "Preserve/commit interrupted REPAIR001 and controlled startup guard32PASS; freeze999catalog source for new REPAIR002",
-    "Actual full REPAIR002 exit0/sourceunchanged/allcaptures/146claimhashes/82clauses and publicationGate beforeUI054closure",
-    "Then8of28 and continueUI055/rest20; no changing source duringformal, no fakehardware/native/productionclaims"
+    "UI059 original10 dependency/recompute/manual conflict/undo using saved executionplan",
+    "UI060A and remaining15 after UI059; preserve zero routine questions/checkpoints",
+    "Batch immutable current-source formal and ordinary GitHub evidence Gate; no EXE/mainmerge/agents"
   ],
   "blocked": [],
   "deferred": [
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-LAYOUT003-PUBLICATION"
+    "CP-20261016-REMAINING28-LAYOUT003-GATE-RECEIPT"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -39,7 +39,7 @@
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
-  "next_work_package": "Implement UI059 original10 using UI059_EXECUTION_PLAN; continue remaining16 without milestone stop",
+  "next_work_package": "Implement UI059 dependency impact/manual-preserving recompute/conflict/undo with existing single worker; continue remaining16, batch future formal",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -402,9 +402,13 @@
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
   "publication_status": {
     "run": "RUN-REMAINING28-LAYOUT-003",
-    "remote_verified": false,
-    "publication_scope_gate": "PENDING_ACTUAL_CHECK",
-    "new_run_all_attachments_published": false,
+    "remote_verified": true,
+    "publication_scope_gate": "PASS",
+    "publication_commit": "406699e23e0ad8597ecda7a6fdc3dd34dfee589d",
+    "publication_tree": "64807ab8fb1ce25ac14dcd8890ca9b89a465f177",
+    "new_run_all_attachments_published": true,
+    "attachment_count": 204,
+    "gate_log": "docs/qa/targeted/layout003-publication-gate-001.log",
     "previous_explicit_media_exceptions_unchanged": true
   },
   "cloud_environment_configuration": {
@@ -486,7 +490,7 @@
     "latest_remote_commit": "e828c2e4ce1109b4254701c6806a3a98b85c9c4d",
     "reason": "GUI/source integration checkpoint exceeded 10 minutes; recorded actual gap, immediate WIP preservation; no claim cadence was met"
   },
-  "latest_verification": "docs/qa/targeted/ui054-publication-gate-001.log",
+  "latest_verification": "docs/qa/targeted/layout003-publication-gate-001.log",
   "failed_evidence_runs": [
     "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json",
     "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
@@ -507,7 +511,7 @@
       "counts_as_completed": false
     }
   ],
-  "active_work_package_plan": "docs/dev/UI058_EXECUTION_PLAN.json",
+  "active_work_package_plan": "docs/dev/UI059_EXECUTION_PLAN.json",
   "formal_execution_watch": {
     "run_id": "RUN-REMAINING28-LAYOUT-003",
     "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
@@ -561,7 +565,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "剩餘28已完成12父題／120原條款；1078/1078正式PASS、140健康owned modules、0skip/0Qt、capture0、source unchanged、actual parent exit0。全75：56 VERIFIED／16 PARTIAL／3 DEFERRED；固定70：54閉合／16仍部分。CORE87／GOV7另計。下一UI059與剩餘16，總目標尚未完成。",
+  "current_work": "UI055–UI058 full38originalclauses closed in immutableLAYOUT0031078PASS/140healthy/capture0/sourceunchanged/exit0,204normalGitHubattachments/readback406699e..., publicationScopeGate actualPASS150claims.12/28/120originalclauses, fixed70closed54/remain16. NextUI059 original10; prototype11pure scenarios only, no active implementation yet.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -614,8 +618,8 @@
     }
   ],
   "next_work_package_plan": "docs/dev/UI055_IMPLEMENTATION_MAP.json",
-  "next_step": "Ordinary GitHub checkpoint/readback all204attachments and actualrequire-evidence/publication-scopeGate, then UI059original10 andremaining16",
-  "current_work_package": "Publish LAYOUT003 complete raw evidence and12/28 closure",
+  "next_step": "Implement UI059 dependency impact/manual-preserving recompute/conflict/undo with existing single worker; continue remaining16, batch future formal",
+  "current_work_package": "UI059 original10 implementation",
   "checkpoint_cadence_note": "Latest watch checkpoint exceeded10minutes across completion/capture wait; deviation retained, no strict cadence PASS claim.",
   "implementation_pending_original_parents": []
 }

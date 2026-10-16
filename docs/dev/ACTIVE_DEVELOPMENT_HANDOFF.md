@@ -1,4 +1,4 @@
-# 當前：LAYOUT003完整PASS，12/28軟體SELF；先完成GitHub publication Gate，再UI059
+# 當前：UI059原10開始；LAYOUT003／GitHub Gate全PASS，12/28軟體SELF
 
 - 使用者目標28父題全部自我驗證；不要停在12里程碑。dev/v0.1-first-version／PR#2，無EXE/main merge/多代理。按需rg/≤1600token輸出；零例行問題，靠STATE/本檔/GitHub接續，不讀完整聊天/倉庫/大日誌。
 - RUN-REMAINING28-LAYOUT-003 source842392433a96d09633fa051e41eb19fdfc48c82f／tree5d0a096faa2b165d1b46b7b57dbb65cf2670e93f：1078/1078PASS、140healthy ownedmodules全部exit0、0missing/skip/Qt、capture0、sourceunchanged、actualparentexit0。204附件須全部正常GitHub保存，不新增媒體例外。
@@ -14,3 +14,7 @@
 - 真Illustrator2017/GPL AIPrivateData examples/legal_ai為空白負例，不是正向AI訓練。REV02合法非空真AI語料/REV04指定Windows16GB RTX5050/VivoBook實機仍缺真證據，先完所有可做軟體，不虛構資格。
 - 每階段/10min checkpoint→stage所有generated/progress/rawrun→commit[skip ci]/push/native逐檔讀回，receipt也保存下一commit。最新watch CPab7f33bd16ac9d1dc6c26ba92381f7d4a0ad1ba7已ACK且parent已resume並0退出。歷史cadence>10min已如實記錄，不宣稱strictPASS。
 - 詳細歷史history/HANDOFF_BEFORE_LAYOUT003_CLOSURE_20261016.md、BEFORE_LAYOUT002、PRE_UI055。最新receipt/commit以STATE為準；publication完成後更新本段當前狀態。
+
+## Publication actual closed; proceedUI059
+
+204allrawattachments普通GitHub保存，nativeACK406699e23e0ad8597ecda7a6fdc3dd34dfee589d/tree64807ab8fb1ce25ac14dcd8890ca9b89a465f177；actualcheck --require-evidence --publication-scope PASS169/150scoped/75topics/1078known (qa/targeted/layout003-publication-gate-001.log)。此後才接新UI059程式。新source改動前把受影響freshclaims pending保留historical12，下一批再完整formal；不要再執行任何finalizer。
