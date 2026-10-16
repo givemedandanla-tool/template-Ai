@@ -8,6 +8,7 @@ import test_candidate_risk as risk_fixture
 from template_ai.layout import generate
 from template_ai.model import Slot,Rect
 from template_ai.render import export
+from authored_font_fixture import bind_authored_fonts
 APP=fixture.APP
 
 
@@ -16,7 +17,7 @@ class FinalDigitalPreflightTests(unittest.TestCase):
     people=risk_fixture.CandidateRiskTests.people
     candidate=risk_fixture.CandidateRiskTests.candidate
     def logo_candidate(self,pixels=10):
-        path=self.root/'authored-mark.png';image=QImage(pixels,max(1,pixels//2),QImage.Format_RGB32);image.fill(0xff224488);self.assertTrue(image.save(str(path)));t=copy.deepcopy(self.template);t.company_bindings={'p1':'c1'};t.slots.extend([Slot('company','c1',Rect(8,48,40,6),size_pt=8),Slot('logo','c1',Rect(75,48,10,5))]);people=self.people();people[0]['company']='c1';asset=dict(image=str(path),source_width_mm=20,source_height_mm=10,crop=None,approved=True,company='Authored Alpha',width_mm=90,height_mm=54);return generate(t,people,[dict(name='Authored Alpha')],{'c1':asset},7)
+        path=self.root/'authored-mark.png';image=QImage(pixels,max(1,pixels//2),QImage.Format_RGB32);image.fill(0xff224488);self.assertTrue(image.save(str(path)));t=copy.deepcopy(self.template);t.company_bindings={'p1':'c1'};t.slots.extend([Slot('company','c1',Rect(8,48,40,6),size_pt=8),Slot('logo','c1',Rect(75,48,10,5))]);bind_authored_fonts(t,self.source_font_manager);people=self.people();people[0]['company']='c1';asset=dict(image=str(path),source_width_mm=20,source_height_mm=10,crop=None,approved=True,company='Authored Alpha',width_mm=90,height_mm=54);return generate(t,people,[dict(name='Authored Alpha')],{'c1':asset},7)
     def review(self,c,format):
         from template_ai.digital_output_proof import build_proof
         from template_ai.digital_review import confirm
@@ -41,7 +42,7 @@ class FinalDigitalPreflightTests(unittest.TestCase):
         self.assertFalse(target.exists())
     def test_current_source_pixel_shortfall_blocks_final_but_retains_marked_preview(self):
         c=self.logo_candidate();self.assertTrue(c.formal_eligible,c.issues);target=self.root/'low-source-FINAL.png'
-        with self.assertRaises(ValueError):export(c,target,300,False,7)
+        with self.assertRaisesRegex(ValueError,'插值'):export(c,target,300,False,7)
         self.assertFalse(target.exists());preview=export(c,self.root/'low-source-PREVIEW.png',96,True,7);self.assertTrue(preview.is_file())
     def test_sufficient_actual_pixels_and_original_gate_can_publish_exact_png(self):
         c=self.logo_candidate(1000);self.assertTrue(c.formal_eligible,c.issues);path=export(c,self.root/'adequate-FINAL.png',96,False,7);self.assertFalse(QImage(str(path)).isNull())
