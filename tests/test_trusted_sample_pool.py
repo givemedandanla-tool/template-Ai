@@ -62,7 +62,9 @@ class TrustedSamplePoolTests(unittest.TestCase):
 
     def test_stop_geometry_use_blocks_alias_datasets_without_changing_original_sources(self):
         admitted=self.approve();sample=self.store.get('SAMPLE',admitted['sample_id']);dataset=self.store.create_dataset(self.store.dataset_plan('Exact approved version',[dict(sample_id=sample['id'],role='TRAIN')]),'Reviewer',True)
+        geometry=self.store.learn_dataset_sample(self.store.geometry_learning_plan(dataset['id'],sample['id'],'Actual derived geometry'),self.store.source_proof(self.work['id']),'Reviewer',True)
         pool=self.pool();before=self.library.artwork(self.work['id']);restriction=pool.restriction_plan(self.work['id'],['GEOMETRY_TRAINING_LOCAL'],'STOP_USE',30);rows=pool.stop_use(restriction,'Privacy reviewer',True)
+        with self.assertRaisesRegex(ValueError,'不可用'):self.store.validate_training_reference(geometry)
         source,alias=source_work(self.library,self.root,'stopped-alias.svg');noise_fixture.confirmed(self.store,alias);self.assertTrue(self.store.sample_approval_plan(alias['id'],fixture.RIGHTS)['errors']);self.assertNotEqual(source['id'],self.source['id'])
         self.assertEqual(self.store.sample_state(sample['id']),'RESTRICTED_USE');self.assertTrue(self.store.dataset_plan('Blocked new version',[dict(sample_id=sample['id'],role='TRAIN')])['errors']);self.assertEqual(self.store.get('DATASET',dataset['id']),dataset);self.assertEqual(self.library.artwork(self.work['id']),before);self.assertFalse(rows[0]['model_decontaminated']);self.assertEqual(self.store.sample_usage_impact(sample['id'])['dataset_ids'],[dataset['id']])
 
@@ -71,6 +73,7 @@ class TrustedSamplePoolTests(unittest.TestCase):
         pool.stop_use(pool.restriction_plan(self.work['id'],['GEOMETRY_TRAINING_LOCAL'],'REQUEST_LOCAL_ERASURE',0),'Privacy reviewer',True)
         plan=pool.redaction_plan(self.work['id'],[dict(kind='SAMPLE',id=sid)]);result=pool.redact_training_copies(plan,'Privacy reviewer',True)
         self.assertNotIn(subject,json.dumps(self.store.get('SAMPLE',sid),ensure_ascii=False));self.assertNotIn(subject,json.dumps(self.store.history('SAMPLE',sid),ensure_ascii=False));self.assertEqual(self.store.facts(self.work['id']),facts)
+        with self.assertRaisesRegex(ValueError,'已處理'):pool.redaction_plan(self.work['id'],[dict(kind='SAMPLE',id=sid)])
         receipt=result['receipt'];self.assertFalse(receipt['external_backups_deleted']);self.assertFalse(receipt['filesystem_secure_erasure']);self.assertFalse(receipt['model_decontaminated']);self.assertTrue(receipt['original_payload_hashes_retained'])
 
     def test_redaction_late_receipt_failure_restores_original_text_and_history(self):

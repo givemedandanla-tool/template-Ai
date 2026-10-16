@@ -1,0 +1,30 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_fact_row_selection_and_return_preserve_pending_human_edit_and_have_no_qt_errors (test_trusted_sample_gui.TrustedSampleGuiTests.test_fact_row_selection_and_return_preserve_pending_human_edit_and_have_no_qt_errors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_trusted_sample_gui.py", line 29, in test_fact_row_selection_and_return_preserve_pending_human_edit_and_have_no_qt_errors
+    center.facts_panel.load();self.assertFalse(center.facts_panel.has_pending_observation());dialog.source_facts();APP.processEvents();self.assertFalse(dialog.isVisible());self.assertEqual(center.tabs.currentWidget(),center.facts_panel);self.assertEqual(center.facts_panel.loaded['id'],self.work['id']);self.assertEqual(errors,[])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 17 tests in 17.429s
+
+FAILED (failures=1)

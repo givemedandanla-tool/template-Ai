@@ -24,11 +24,11 @@ class TrustedSampleReviewDialog(QDialog):
         self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['作品／來源','目前狀態','風險','本次逐項動作','高風險已逐項核實','標記候選版本']);self.table.setSelectionBehavior(QAbstractItemView.SelectRows);self.table.setSelectionMode(QAbstractItemView.SingleSelection);self.table.setEditTriggers(QAbstractItemView.NoEditTriggers);self.table.horizontalHeader().setStretchLastSection(True);self.table.setColumnWidth(0,340);self.table.setColumnWidth(1,160);self.table.setColumnWidth(2,70);self.table.setColumnWidth(3,120);self.table.setColumnWidth(4,155);layout.addWidget(self.table,2)
         self.binding_form=QFormLayout();layout.addLayout(self.binding_form);bar=QHBoxLayout();self.button(bar,'核對選中項目前後標記',self.detail);self.button(bar,'預覽本頁已指定的逐項結果',self.preview_batch);layout.addLayout(bar)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,2)
-        page=self.tab_page('用途追溯與來源修復');layout=QVBoxLayout(page);bar=QHBoxLayout();self.button(bar,'讀取實際／潛在／未知依賴',self.trace);self.button(bar,'返回來源事實與畫布',self.source_facts);self.button(bar,'開啟既有受控修復',self.repair);layout.addLayout(bar);self.trace_details=QPlainTextEdit();self.trace_details.setReadOnly(True);layout.addWidget(self.trace_details)
+        page=self.tab_page('用途追溯與來源修復');layout=QVBoxLayout(page);bar=QHBoxLayout();self.button(bar,'讀取實際／潛在／未知依賴',self.trace);self.button(bar,'依賴前50',lambda:self.trace(-50));self.button(bar,'依賴後50',lambda:self.trace(50));self.button(bar,'返回來源事實與畫布',self.source_facts);self.button(bar,'開啟既有受控修復',self.repair);layout.addLayout(bar);self.trace_details=QPlainTextEdit();self.trace_details.setReadOnly(True);layout.addWidget(self.trace_details)
         page=self.tab_page('用途停止與本機副本刪除');layout=QVBoxLayout(page);label=QLabel('停止使用會阻斷後續用途；撤銷不代表模型已去污染。刪除僅處理明列的本機訓練文字副本與歷史，原稿、業務資料、外部備份及安全擦除另行處理。');label.setWordWrap(True);layout.addWidget(label);self.purpose_checks=[]
         for title,purpose in zip(PURPOSE_LABELS,PURPOSES):
             check=QCheckBox(title);self.purpose_checks.append((purpose,check));layout.addWidget(check);check.toggled.connect(self.invalidate)
-        form=QFormLayout();self.privacy_action=QComboBox();self.privacy_action.addItem('僅停止所選用途','STOP_USE');self.privacy_action.addItem('停止用途並登記本機刪除審核','REQUEST_LOCAL_ERASURE');form.addRow('本次要求',self.privacy_action);self.retention=QSpinBox();self.retention.setRange(0,365);self.retention.setValue(30);form.addRow('必要審核期限（天，0為即日）',self.retention);layout.addLayout(form);bar=QHBoxLayout();self.button(bar,'預覽所選來源停止用途',self.preview_restriction);self.button(bar,'列出該來源實際訓練副本',self.load_privacy_records);layout.addLayout(bar);self.privacy_records=QListWidget();layout.addWidget(self.privacy_records);bar=QHBoxLayout();self.button(bar,'預覽勾選副本的文字刪除',self.preview_redaction);layout.addLayout(bar);self.privacy_details=QPlainTextEdit();self.privacy_details.setReadOnly(True);layout.addWidget(self.privacy_details)
+        form=QFormLayout();self.privacy_action=QComboBox();self.privacy_action.addItem('僅停止所選用途','STOP_USE');self.privacy_action.addItem('停止用途並登記本機刪除審核','REQUEST_LOCAL_ERASURE');form.addRow('本次要求',self.privacy_action);self.retention=QSpinBox();self.retention.setRange(0,365);self.retention.setValue(30);form.addRow('必要審核期限（天，0為即日）',self.retention);layout.addLayout(form);bar=QHBoxLayout();self.button(bar,'預覽所選來源停止用途',self.preview_restriction);self.button(bar,'列出該來源實際訓練副本',self.load_privacy_records);layout.addLayout(bar);self.privacy_records=QListWidget();self.privacy_records.setMaximumHeight(110);layout.addWidget(self.privacy_records);bar=QHBoxLayout();self.button(bar,'預覽勾選副本的文字刪除',self.preview_redaction);layout.addLayout(bar);self.privacy_details=QPlainTextEdit();self.privacy_details.setReadOnly(True);self.privacy_details.setMinimumHeight(230);layout.addWidget(self.privacy_details)
         self.consent=QCheckBox('我已核對目前預覽的來源、逐項結果、用途與影響；明確批准本次操作');outer.addWidget(self.consent);bar=QHBoxLayout();self.confirm_button=self.button(bar,'確認並保存目前預覽',self.confirm);self.button(bar,'關閉',self.reject);outer.addLayout(bar)
         self.table.itemSelectionChanged.connect(self.selection_changed);self.table.itemChanged.connect(self.invalidate);self.collection.currentIndexChanged.connect(lambda:self.reload(0));self.query.textChanged.connect(self.invalidate);self.actor.textChanged.connect(self.invalidate);self.basis.currentIndexChanged.connect(self.invalidate);self.reference.textChanged.connect(self.invalidate);self.privacy_action.currentIndexChanged.connect(self.invalidate);self.retention.valueChanged.connect(self.invalidate);self.privacy_records.itemChanged.connect(self.invalidate)
         self.reload(0)
@@ -82,7 +82,7 @@ class TrustedSampleReviewDialog(QDialog):
     def bind(self,identity,owner,combo):self.bindings.setdefault(identity,{})[owner]=combo.currentData();self.invalidate()
     def detail(self):
         def loaded(value):
-            detail=value['detail'];before=value['previous_human_label_version'];after=value['current_candidate_label_version'];lines=[detail['work_label'],str(detail['source_label']),'前一人工版本：'+str((before or {}).get('revision','無／歷史不足')),'目前候選標記：'+str((after or {}).get('revision','歷史不足')),'AI原判定：'+value['prior_AI_prediction'],'原判定與人工真值不混作正例。']
+            detail=value['detail'];before=value['previous_human_label_version'];after=value['current_candidate_label_version'];lines=[detail['work_label'],str(detail['source_label']),'前一人工版本：'+str((before or {}).get('revision','無／歷史不足')),'目前候選標記：'+str((after or {}).get('revision','歷史不足')),'AI原判定：'+('原始來源解析憑證已核對（非人工真值）' if value['actual_AI_prediction_version'] else '尚無可核對的原判定憑證'),'原判定與人工真值不混作正例。']
             confirmation=detail['current_confirmation'] or {};timestamp=confirmation.get('timestamp');pins=detail['candidate']['pins'];slots={slot['id']:slot for slot in detail['current_slots']}
             lines.extend(['確認者：'+str(confirmation.get('actor') or '尚未確認'),'確認時間：'+(QDateTime.fromSecsSinceEpoch(int(timestamp)).toString(Qt.ISODate) if timestamp else '尚未確認'),'來源連結版本：'+str(pins['link_revision'])+'／作品版本：'+str(pins['work_revision']),'尺寸：'+str(detail['dimensions']['width'])+' × '+str(detail['dimensions']['height'])+' mm','既有確認客戶關聯：'+str(len(detail['confirmed_customer_ids']))+'筆；未確認的歸屬不由樣本准入推定。'])
             for title,record in (('前一人工標記',before),('本次人工標記',after)):
@@ -91,12 +91,12 @@ class TrustedSampleReviewDialog(QDialog):
             if value['actual_AI_prediction_version']:
                 lines.append('實際本機來源解析提案（非人工真值）')
                 lines.extend(o['classification']+'／'+o['text'] for o in value['actual_AI_prediction_version']['observations'])
-            lines.extend('使用者回報的舊判定（診斷，非黃金答案）：'+str(p['prediction']) for p in value['user_supplied_prior_predictions']);lines.extend(detail['errors']);self.details.setPlainText('\n'.join(lines));self.status.setText('已讀取具名來源及原標記版本；尚未准入或訓練。')
+            lines.extend('使用者回報的舊判定（診斷，非黃金答案）：'+str(p['prediction']) for p in value['user_supplied_prior_predictions']);lines.extend(detail['errors']);self.details.setPlainText('\n'.join(lines));self.status.setText('已讀取具名來源及原標記版本；准入資格與實際訓練用途分別核對。')
         self.request('DETAIL',dict(identity=self.selected()['id']),loaded)
     def preview(self,kind,payload):
         self.invalidate()
         def loaded(value):
-            self.pending=(kind,value);self.consent.setChecked(False);target=self.details if kind=='CONFIRM' else self.privacy_details;target.setPlainText(self.describe_plan(kind,value));self.status.setText('已預覽目前確切範圍；核對後才確認保存。')
+            self.pending=(kind,value);self.consent.setChecked(False);self.tabs.setCurrentIndex(0 if kind=='CONFIRM' else 2);target=self.details if kind=='CONFIRM' else self.privacy_details;target.setPlainText(self.describe_plan(kind,value));self.tabs.currentWidget().ensureWidgetVisible(target,0,15);self.status.setText('已預覽目前確切範圍；核對後才確認保存。')
         command={'CONFIRM':'PLAN','RESTRICT':'RESTRICT_PLAN','REDACT':'REDACTION_PLAN'}[kind];self.request(command,payload,loaded)
     def describe_plan(self,kind,value):
         if kind=='CONFIRM':
@@ -127,6 +127,8 @@ class TrustedSampleReviewDialog(QDialog):
         def saved(value):
             self.invalidate();self.status.setText('本次明列操作已保存；沒有自動啟動訓練、正式啟用模型或宣稱去污染。')
             for index in range(self.table.rowCount()):self.table.item(index,1).setText('已保存操作；請重載核對目前資格')
+            for index in range(self.privacy_records.count()):
+                item=self.privacy_records.item(index);item.setCheckState(Qt.Unchecked);item.setText(item.text()+'／操作已保存，重載核對')
             target=self.details if kind=='CONFIRM' else self.privacy_details;target.setPlainText(self.describe_saved(kind,value))
         self.request(kind,dict(plan=plan,actor=self.actor.text(),approved=True),saved,mutation=True)
     def describe_saved(self,kind,value):
@@ -139,8 +141,15 @@ class TrustedSampleReviewDialog(QDialog):
             lines.append('舊資料／模型的實際使用證據仍保留；不宣稱已去污染。');return '\n'.join(lines)
         return '\n'.join(['已處理明列本機訓練副本：'+str(len(value['records']))+'筆','其中的歷史訓練文字已邏輯刪除，留下最少必要的用途與摘要憑證。','處理憑證：'+value['receipt']['id'][:12],'原稿、業務事實、外部備份未被刪除；未宣稱安全擦除或模型去污染。'])
 
-    def trace(self):
-        self.request('TRACE',dict(identity=self.selected()['id']),lambda value:self.trace_details.setPlainText(json.dumps(value,ensure_ascii=False,indent=2)))
+    def trace(self,delta=0):
+        identity=self.selected()['id'];offset=max(0,getattr(self,'trace_offset',0)+delta) if delta and getattr(self,'trace_identity',None)==identity else 0
+        def loaded(value):
+            self.last_trace=value;self.trace_identity=identity;self.trace_offset=value['offset'];lines=['已登錄依賴：'+str(value['total_nodes'])+'項；本頁'+str(len(value['rows']))+'項','未登錄的歷史關聯仍為未知；沒有據此推定其他版本安全。','失聯歷史：'+str(len(value['missing_historical_nodes']))+'項']
+            for row in value['rows']:
+                confidence='已登錄依賴' if row['dependency_match']=='RECORDED_DEPENDENCY' else '潛在依賴／版本不足'
+                lines.append(row['type_label']+'：'+row['label']+'／'+confidence+'／參照'+row['key'].split(':')[1][:12]+('／歷史版'+row['historical_revision'] if row['historical_revision'] else ''))
+            self.trace_details.setPlainText('\n'.join(lines));self.status.setText('已讀取本頁具名依賴；不載入原稿圖片或模型權重。')
+        self.request('TRACE',dict(identity=identity,offset=offset),loaded)
     def source_facts(self):
         row=self.selected();parent=self.panel.parentWidget()
         while parent is not None and not hasattr(parent,'facts_panel'):parent=parent.parentWidget()
@@ -156,7 +165,7 @@ class TrustedSampleReviewDialog(QDialog):
         def loaded(value):
             self.privacy_rows=value['rows'];self.privacy_records.blockSignals(True);self.privacy_records.clear()
             for row in self.privacy_rows:
-                item=QListWidgetItem(('幾何樣本' if row['kind']=='SAMPLE' else '語意模型')+'／'+row['state']+'／版本'+str(row['revision']));item.setData(Qt.UserRole,dict(kind=row['kind'],id=row['id']));item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsUserCheckable);item.setCheckState(Qt.Unchecked);self.privacy_records.addItem(item)
+                item=QListWidgetItem(('幾何樣本' if row['kind']=='SAMPLE' else '語意模型')+'／'+{'APPROVED':'目前准入有效','RESTRICTED_USE':'用途已停止','REVOKED':'已撤銷','PRIVACY_WITHDRAWN':'訓練副本已刪除'}.get(row['effective_state'],row['effective_state'])+'／原版本'+str(row['revision'])+'／'+row['id'][:12]);item.setData(Qt.UserRole,dict(kind=row['kind'],id=row['id']));item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsUserCheckable);item.setCheckState(Qt.Unchecked);self.privacy_records.addItem(item)
             self.privacy_records.blockSignals(False);self.status.setText('僅列所選來源實際訓練副本；預設皆未勾選，未宣稱外部副本已掌握。')
         self.request('PRIVACY_RECORDS',dict(work_id=self.selected()['work_id']),loaded)
     def preview_redaction(self):

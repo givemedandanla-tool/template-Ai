@@ -153,6 +153,7 @@ class TrustedSamplePool:
             if set(selected)!={'kind','id'} or kind not in ('SAMPLE','SEMANTIC_MODEL'):raise ValueError('只處理明列樣本／語意模型訓練副本')
             row=self.store.get(kind,selected['id'])
             if not row:raise ValueError('訓練副本不存在')
+            if sha in row.get('privacy_redacted_source_hashes',[]):raise ValueError('此來源的明列訓練文字副本已處理，勿重複刪除')
             if kind=='SAMPLE':
                 allowed=row['pins']['source_hash']==sha;purpose='GEOMETRY_TRAINING_LOCAL'
             else:
@@ -187,6 +188,7 @@ class TrustedSamplePool:
                     for example in payload.get('plan',{}).get('examples',[]):
                         if example.get('work_id') in works and example.get('text'):
                             example['text_sha256']=digest(example['text']);example['text']='';example['text_redacted']=True
+                payload['privacy_redacted_source_hashes']=sorted(set(payload.get('privacy_redacted_source_hashes',[]))|{sha})
                 payload['local_training_text_redacted']=True;payload['privacy_receipt_id']=receipt_id
                 return payload
             for item in current['items']:

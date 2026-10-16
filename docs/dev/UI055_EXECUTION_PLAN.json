@@ -1,6 +1,6 @@
 {
   "id": "UI055-EXACT11-TRUSTED-SAMPLE-POOL",
-  "status": "IMPLEMENTING_AFTER_UI054_ACTUAL_FULL_GATE",
+  "status": "FULL11_IMPLEMENTED_PENDING_BATCH_FROZEN_FORMAL",
   "original_parent_sha256": "c1ce876c8721c99d6d1eab975d42283bab8fbf148b154e556c9e291df54d6e5d",
   "original_clauses": [
     "**正式決策：D｜可信樣本庫＋來源驗證＋版本追蹤＋污染防護**。沿用 UI-038／UI-039 的原始作品與物件化標記、UI-040／UI-041 已核准雜訊規則、UI-042 的 `source_files`／`content_blobs`／`artworks`／`training_checkpoints`、UI-043 的人物 ROOT／公司／客戶編號來源關聯、UI-052 的重大共通錯誤重審、UI-053 的獨立驗收與 UI-054 的受控修復閉環。**人工修正完成≠訓練樣本已核准≠已正式訓練模型≠產生可泛化的永久規則**。本項是未來 GUI 與驗收需求，不開始程式開發。",
@@ -106,5 +106,6 @@
       "Native capture and remaining purpose/restore/lineage edge tests pending",
       "Local logical text redaction only; no original/business/external-backup/secure-erasure/model-decontamination claim"
     ]
-  }
+  },
+  "full11_coverage": "docs/dev/UI055_CLAUSE_COVERAGE.json"
 }
