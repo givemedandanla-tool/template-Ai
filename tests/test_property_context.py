@@ -26,6 +26,7 @@ class PropertyContextTests(unittest.TestCase):
     def test_pinned_text_stays_visible_but_disabled_for_whole_logo_and_never_changes_it(self):
         w=self.w;w.property_pin_checks['text'].setChecked(True);logo=self.logo();before=copy.deepcopy(logo)
         self.assertTrue(w.property_groups['text'].isVisible());self.assertIn('不適用',w.property_groups['text'].title());self.assertFalse(w.font.isEnabled());self.assertFalse(w.scale.isEnabled());self.assertFalse(w.property_policy_button.isEnabled())
+        self.assertIn('尚未核實',w.property_context_label.text())
         self.assertTrue(w.coords[0].isEnabled());w.all_property_tools.setChecked(True);self.sync();self.assertEqual(logo,before)
     def test_multiple_different_fields_have_blank_mixed_values_and_reuse_existing_editor_ids(self):
         from template_ai.object_dialog import ObjectToolsDialog
@@ -71,3 +72,11 @@ class CandidatePropertyGateTests(unittest.TestCase):
         self.ready();self.another(width=.1);w=self.w;row=next(r for r in problem_rows(w,1) if r['slot_ids']);locate_problem(w,row,open_input=False);APP.processEvents();w.right_context.sync()
         self.assertIn('文字物件',w.property_context_label.text());self.assertFalse(w.property_button.isEnabled());self.assertTrue(w.property_candidate_edit.isEnabled())
         w.people.item(0,2).setText('1234567890'*20);APP.processEvents();w.right_context.sync();self.assertFalse(w.property_candidate_edit.isEnabled());self.assertFalse(w.property_problem.isEnabled());self.assertFalse(w.export_button.isEnabled());self.assertIn('需重新',w.property_edit_state.text())
+    def test_local_problem_button_never_uses_unrelated_previously_selected_problem(self):
+        from template_ai.candidate_results import problem_rows,locate_problem
+        from template_ai.gui import Box
+        self.ready();bad=self.another(width=.1);w=self.w;row=next(r for r in problem_rows(w,1) if r['kind']=='name' and r['slot_ids']);locate_problem(w,row,open_input=False);w.result_problem_items.setCurrentRow(0)
+        w.output_canvas.scene().clearSelection();phone=next(slot for slot in bad.template.slots if slot.kind=='phone');box=Box(copy.deepcopy(phone),lambda *args:None);w.output_canvas.scene().addItem(box);box.setSelected(True);w.right_context.sync()
+        self.assertIsNone(w.right_context.problem_row);self.assertFalse(w.property_problem.isEnabled())
+        w.output_canvas.scene().clearSelection();next(item for item in w.output_canvas.scene().items() if isinstance(item,Box) and item.slot.id in row['slot_ids']).setSelected(True);w.right_context.sync();self.assertEqual(w.right_context.problem_row['slot_ids'],row['slot_ids'])
+        with patch('template_ai.candidate_results.fix_problem') as fix:w.right_context.fix_local_problem();self.assertEqual(fix.call_args.args[1]['slot_ids'],row['slot_ids'])

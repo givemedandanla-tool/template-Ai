@@ -102,7 +102,7 @@ class RightPropertyContext:
                     if signal is not None:signal.connect(self.schedule);break
         for key,control in numeric_controls(window).items():
             control.lineEdit().textEdited.connect(lambda text,k=key:self.numeric_edited(k))
-        window.property_conflict.clicked.connect(self.inspect_conflict)
+        window.property_conflict.clicked.connect(self.inspect_conflict);window.property_problem.clicked.disconnect();window.property_problem.clicked.connect(self.fix_local_problem)
         window.tabs.currentChanged.connect(self.schedule);window.inputs_invalidated.connect(self.schedule)
         window.candidate_list.currentRowChanged.connect(self.schedule);window.output_canvas.scene().selectionChanged.connect(self.schedule)
         window.result_problem_items.currentRowChanged.connect(self.schedule)
@@ -176,6 +176,9 @@ class RightPropertyContext:
             try:rows,payload,readonly,fresh,size,version,assessment=self.selected()
             except (ValueError,OSError,KeyError,sqlite3.Error):rows,payload,readonly,fresh,size,version,assessment=[],None,True,False,None,None,None
             count=len(rows);text=bool(rows) and all(row['kind']!='logo' for row in rows);logo=count==1 and rows[0]['kind']=='logo'
+            if fresh and count==1 and w.tabs.currentIndex()!=2 and w.current_slot:
+                canonical=next((slot for slot in w.current_slots() if slot.id==rows[0]['id']),None)
+                if canonical is not None and (digest(asdict(canonical))!=getattr(w,'_property_loaded_pin',None) or source_pin(w,w.tabs.currentIndex())!=getattr(w,'_property_loaded_source',None) or w.current_slot is not canonical):w.select_slot(canonical)
             if not fresh and w.current_slot and w.tabs.currentIndex()!=2:
                 if pending_main(w):retain_pending_main(w)
                 w.current_slot=None;w._property_form_baseline=None
@@ -187,6 +190,18 @@ class RightPropertyContext:
             w.property_context_label.setText(title+suffix)
             if assessment:
                 w.property_context_label.setText(w.property_context_label.text()+'\n'+assessment['label']+'；輸出前仍須核對目前作品。')
+            if logo:
+                if w.tabs.currentIndex()!=2:detail='公司欄位 '+rows[0]['owner']+'；尺寸專用資產尚未核實，完整框不等於素材已核准。'
+                else:
+                    candidate=w.candidates[w.candidate_list.currentRow()];placed=next((item for item in candidate.items if item.slot.id==rows[0]['id']),None);asset=placed.logo if placed else None
+                    detail=('本次放置 '+str(asset.get('company','公司身分待核對'))+'／版本 '+str(asset.get('version','待核對'))+'；尺寸與身分仍依整張檢查。') if asset else '本次缺已核對尺寸專用 Logo；不可由框位推定素材合格。'
+                w.property_context_label.setText(w.property_context_label.text()+'\n'+detail)
+            self.problem_row=None
+            if w.tabs.currentIndex()==2 and fresh:
+                selected_ids={row['id'] for row in rows};items=[w.result_problem_items.item(i) for i in range(w.result_problem_items.count())]
+                if selected_ids:self.problem_row=next((item.data(Qt.UserRole) for item in items if selected_ids.intersection(item.data(Qt.UserRole).get('slot_ids',[]))),None)
+                elif w.result_problem_items.currentItem():self.problem_row=w.result_problem_items.currentItem().data(Qt.UserRole)
+                if self.problem_row:w.property_context_label.setText(w.property_context_label.text()+'\n'+('物件問題：' if self.problem_row.get('slot_ids') else '作品問題：')+self.problem_row['reason'])
             w.property_fields.setVisible(bool(rows) or bool(self.pins) or w.all_property_tools.isChecked());w.property_pinned_box.setVisible(bool(self.pins))
             order=['text','geometry','identity'] if text else ['geometry','identity','text']
             positions=dict(pinned=0,context=0)
@@ -200,7 +215,7 @@ class RightPropertyContext:
                 for control in self.controls[key]:control.setEnabled(editable and (key!='text' or text))
             w.property_button.setEnabled(editable and not w._property_raw_inputs and all(control.hasAcceptableInput() for control in numeric_controls(w).values()));w.property_object_tools.setEnabled(bool(rows) and fresh and w.tabs.currentIndex()!=2)
             w.property_candidate_edit.setVisible(w.tabs.currentIndex()==2);w.property_candidate_edit.setEnabled(fresh and bool(w.candidates))
-            w.property_problem.setVisible(w.tabs.currentIndex()==2);w.property_problem.setEnabled(fresh and w.result_problem_items.currentItem() is not None)
+            w.property_problem.setVisible(w.tabs.currentIndex()==2);w.property_problem.setEnabled(fresh and self.problem_row is not None)
             w.property_conflict.setVisible(w.pending_property_conflict is not None)
             if pending_main(w):state='輸入中／待套用：仍屬目前物件，切選不會自動轉移。'
             elif not fresh:state='需重新驗證／重新選取；舊控制不可套用。'
@@ -210,6 +225,13 @@ class RightPropertyContext:
             else:state='顯示目前值；尚無待套用修改。正式保存與輸出另行核對。'
             w.property_edit_state.setText(state)
         finally:self.loading=False
+
+    def fix_local_problem(self):
+        row=getattr(self,'problem_row',None)
+        if row is None:return
+        from .candidate_results import fix_problem
+        try:fix_problem(self.w,row)
+        except ValueError as error:self.w.property_edit_state.setText('問題引用已更新，請重新定位：'+str(error))
 
     def inspect_conflict(self):
         value=self.w.pending_property_conflict

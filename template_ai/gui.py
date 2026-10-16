@@ -1152,7 +1152,7 @@ class MainWindow(QMainWindow):
 
     def make_slot(self, rect,preserve=False):
         defaults=Slot('name','p1',rect)
-        family=self.font.currentFont().family() if self.font.currentIndex()>=0 else defaults.font;asset=self.font_manager.asset_for_family(family)
+        family=self.font.currentFont().family() if self.font.currentText().strip() else defaults.font;asset=self.font_manager.asset_for_family(family)
         style=""
         displayed=getattr(self,'_selected_font_display',None)
         if self.current_slot and displayed and displayed['slot_id']==self.current_slot.id and family==displayed['display']:
@@ -1182,12 +1182,14 @@ class MainWindow(QMainWindow):
     def select_slot(self, slot):
         selected=next((s for s in self.current_slots() if slot and s.id == slot.id),None)
         old=self.current_slot
-        from .property_context import pending_main,property_values,discard_pending_selection,restore_main_selection,retain_pending_main
+        from .property_context import pending_main,property_values,discard_pending_selection,restore_main_selection,retain_pending_main,source_pin
         from .customers import digest
         from dataclasses import asdict
         if pending_main(self):
-            same_version=digest(asdict(old))==getattr(self,'_property_loaded_pin',None)
-            if selected is old and same_version:
+            canonical=next((s for s in self.current_slots() if s.id==old.id),None)
+            same_version=canonical is not None and digest(asdict(canonical))==getattr(self,'_property_loaded_pin',None) and source_pin(self,self.tabs.currentIndex())==getattr(self,'_property_loaded_source',None)
+            if selected is not None and selected.id==old.id and same_version:
+                self.current_slot=canonical
                 from .property_context import restore_incomplete
                 restore_incomplete(self);return True
             if old.id in {s.id for s in self.current_slots()} and same_version and (selected is None or selected.id!=old.id):
@@ -1304,7 +1306,14 @@ class MainWindow(QMainWindow):
     def apply_properties(self):
         if not self.current_slot or not self.editable():
             return
-        from .property_context import numeric_controls
+        from .property_context import numeric_controls,source_pin
+        from .customers import digest
+        from dataclasses import asdict
+        current=[s for s in self.current_slots() if s.id==self.current_slot.id]
+        if len(current)!=1 or digest(asdict(current[0]))!=getattr(self,'_property_loaded_pin',None) or source_pin(self,self.tabs.currentIndex())!=getattr(self,'_property_loaded_source',None):
+            if len(current)==1:self.select_slot(current[0])
+            self.error('物件或來源版本已更新；原輸入保留供核對，未覆寫新版本。');return
+        self.current_slot=current[0]
         if self._property_raw_inputs or any(not control.hasAcceptableInput() for control in numeric_controls(self).values()):self.error('數字輸入尚未完成；請先完成或明確放棄，未套用舊值。');return
         if self.current_slot.locked:self.error('物件已鎖定；請在安全多選工具明確解鎖');return
         import re
