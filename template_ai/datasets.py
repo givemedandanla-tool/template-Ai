@@ -11,7 +11,7 @@ def exact_label_signature(sample):
     slots=[{k:v for k,v in s.items() if k!='id'} for s in sample['label_slots']]
     slots.sort(key=lambda s:(s['owner'],s['kind'],s['index']))
     texts=sorted((p['owner'],p['kind'],p['index'],p['text']) for p in sample['positive_labels'])
-    return digest({'source_hash':sample['pins']['source_hash'],'page':sample['pins']['page'],'crop':sample['crop'],'dimensions':[sample['width_mm'],sample['height_mm']],'bindings':sample['bindings'],'slots':slots,'positive_text':texts})
+    return digest({'source_byte_size':sample.get('source_byte_size'), 'legacy_unknown_length_identity':sample['pins']['source_id'] if sample.get('source_byte_size') is None else None,'source_hash':sample['pins']['source_hash'],'page':sample['pins']['page'],'crop':sample['crop'],'dimensions':[sample['width_mm'],sample['height_mm']],'bindings':sample['bindings'],'slots':slots,'positive_text':texts})
 
 
 class DatasetMixin:

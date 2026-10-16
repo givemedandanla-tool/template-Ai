@@ -6,7 +6,7 @@ from .training_store import TrainingStore,digest,text
 from .quality_groups import QualityGroups
 
 CANDIDATE='SAMPLE_CANDIDATE'
-PURPOSES=('GEOMETRY_TRAINING_LOCAL','SEMANTIC_CLASSIFICATION_LOCAL','QUALITY_EVALUATION_LOCAL')
+PURPOSES=('GEOMETRY_TRAINING_LOCAL','SEMANTIC_CLASSIFICATION_LOCAL','INDEPENDENT_QUALITY_EVALUATION_LOCAL','QUALITY_DIAGNOSTICS_LOCAL_ONLY','RULE_APPROVAL_LOCAL')
 
 
 def source_restriction(store,source_hash,purpose):
@@ -194,5 +194,5 @@ class TrustedSamplePool:
         return dict(rows=rows,total_candidates=total,scanned=len(candidates),offset=offset,next_offset=offset+len(candidates),complete_scan=offset+len(candidates)>=total,scope='MATCHES_IN_THIS_SCANNED_CANDIDATE_PAGE; NOT_GLOBAL_MATCH_COUNT',collection=collection,images_loaded=False,model_weights_loaded=False,training_started=False)
 
     def comparison(self,identity):
-        detail=self.detail(identity);row=detail['candidate'];history={h['revision']:h['after'] for h in self.store.history('FACTS',row['work_id'])};previous=history.get(row['previous_facts_revision']);selected=history.get(row['facts_revision'])
+        detail=self.detail(identity);row=detail['candidate'];history={h['revision']:dict(h['after'],revision=h['revision']) for h in self.store.history('FACTS',row['work_id'])};previous=history.get(row['previous_facts_revision']);selected=history.get(row['facts_revision'])
         return dict(detail=detail,previous_human_label_version=previous,current_candidate_label_version=selected,current_confirmed_facts=self.store.facts(row['work_id']),prior_AI_prediction='UNKNOWN_UNLESS_LINKED_ACTUAL_PREDICTION_RECEIPT',user_supplied_prior_predictions=[dict(observation_id=o['id'],prediction=o['prior_prediction'],evidence='USER_REPORTED_DIAGNOSTIC_ONLY_NOT_TRAINING_TRUTH') for o in (selected or {}).get('observations',[]) if o.get('prior_prediction') is not None],history_complete=selected is not None and (row['previous_facts_revision']==0 or previous is not None),model_prediction_is_gold=False)

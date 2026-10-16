@@ -56,6 +56,8 @@ class NoiseMixin:
         return {'work_id': work_id, 'observation_id': observation_id, 'facts_revision': facts['revision'], 'observations_digest': digest(facts['observations']), 'pins': facts['pins'], 'observation': copy.deepcopy(row), 'confirmed_at': facts['confirmation']['timestamp']}
 
     def validate_ref(self, reference):
+        from .trusted_sample_pool import source_restriction
+        if source_restriction(self,self.pins(reference['work_id'])['source_hash'],'RULE_APPROVAL_LOCAL'):raise ValueError('規則支持／反例來源用途已停止使用')
         current = self.evidence_ref(reference['work_id'], reference['observation_id'])
         if current != reference: raise ValueError('規則支持／反例證據版次已過期')
         return current

@@ -33,6 +33,8 @@ class QualityGold:
         text(rights['reference'],'品質驗收權利依據',2000);text(reason,'真值核對理由',2000);text(evidence,'原始作品與黃金答案證據',2000)
         if not isinstance(domain_truth,dict) or set(domain_truth)!=set(DOMAINS) or any(v not in ('MANUALLY_VERIFIED','INSUFFICIENT_EVIDENCE') for v in domain_truth.values()):raise ValueError('需逐層明列人工真值已核實／證據不足，沒有默認全部正確')
         context,truth,sha=self.dependencies(work_id);facts=self.store.facts(work_id);work=self.library.artwork(work_id);source=self.library.source(work['source_id'])
+        from .trusted_sample_pool import source_restriction
+        if source_restriction(self.store,source['hash'],rights['use']):raise ValueError('此來源品質驗收／診斷用途已停止使用')
         if context['facts_state']!='CONFIRMED' or context['unconfirmed_observation_ids'] or context['unobserved_slot_ids'] or context['unresolved_observation_ids'] or not facts['observations']:raise ValueError('黃金答案需目前有效、逐項真正人工核對的來源事實；AI候選／未確認／爭議不算真值')
         if context['quality_blockers'] or context['unresolved_customer_candidates']:raise ValueError('標記／身分歧義尚未解決，不能宣稱黃金答案')
         if not work['payload'].get('visual_confirmed'):raise ValueError('需先人工對照可信原始作品及標記')
@@ -81,6 +83,8 @@ class QualityGold:
     def validity(self,gold_id,verify_bytes=True):
         gold=self.store.get(GOLD,gold_id)
         if not gold:return dict(valid=False,errors=['gold版本不存在'],gold=None)
+        from .trusted_sample_pool import source_restriction
+        if source_restriction(self.store,gold['source_hash'],gold['rights']['use']):return dict(valid=False,errors=['此來源品質用途已停止使用；不重新讀取原稿'],gold=gold)
         errors=[]
         if self.store.get('QUALITY_GOLD_INVALIDATION',gold_id):return dict(valid=False,errors=['品質真值／用途許可已撤回，舊版本只保留證據，未重新讀取原稿'],gold=gold)
         try:

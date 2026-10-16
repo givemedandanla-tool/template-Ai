@@ -20,6 +20,9 @@ def execute(root,command,payload):
         if command.startswith('REPAIR_'):
             from .quality_repair_commands import execute as repair_execute
             return repair_execute(library,command.removeprefix('REPAIR_'),payload)
+        if command.startswith('SAMPLE_'):
+            from .trusted_sample_commands import execute as sample_execute
+            return sample_execute(library,command.removeprefix('SAMPLE_'),payload)
         if command=='LIST':
             kind=payload['kind'];offset=payload.get('offset',0);query=payload.get('query','')
             if kind not in ('QUALITY_GOLD','QUALITY_SET','QUALITY_POLICY','QUALITY_PIPELINE','QUALITY_PROTOCOL','QUALITY_PAIR_REPORT','QUALITY_MAJOR_RECHECK','QUALITY_WORK_QUARANTINE','SEMANTIC_MODEL','RULE','AUTO_JOB','QUALITY_REPAIR_ISSUE','QUALITY_REPAIR_ROOT_REVIEW','QUALITY_REPAIR_PIPELINE_CANDIDATE','QUALITY_REPAIR_GATE','QUALITY_PIPELINE_DEPLOYMENT','QUALITY_VERSION_DECISION','QUALITY_REPAIR_IMPACT_REVIEW','QUALITY_REPAIR_TRUTH_REVIEW'):raise ValueError('不支援的品質目錄')
