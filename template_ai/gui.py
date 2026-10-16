@@ -253,6 +253,8 @@ class MainWindow(QMainWindow):
         self.refresh_logos()
         from .workbench_navigation import WorkbenchNavigation
         self.navigation=WorkbenchNavigation(self,self.work_context,self.return_work_button)
+        from .property_context import RightPropertyContext
+        self.right_context=RightPropertyContext(self)
         self.statusBar().showMessage("本機研究版 · 請使用匿名／合成資料 · 實體印刷分析尚未執行")
         if self.font_manager.issues:
             self.statusBar().showMessage("字型資產需處理：" + "；".join(self.font_manager.issues))
@@ -273,7 +275,8 @@ class MainWindow(QMainWindow):
     def sync_property_mode(self,*args):
         browsing=self.tabs.currentIndex()==1 and self.template_stack.currentIndex()==0
         self.property_fields.setVisible(self.tabs.currentIndex()!=2);self.selected_info.setVisible(self.tabs.currentIndex()!=2);self.output_properties.setVisible(self.tabs.currentIndex()==2)
-        self.property_panel.setEnabled(not browsing)
+        self.property_panel.setEnabled(True)
+        if hasattr(self,'right_context'):self.right_context.schedule()
         self.property_panel.setToolTip("模板瀏覽為唯讀；先明確開啟模板編輯區" if browsing else "")
 
     def closeEvent(self,event):
@@ -716,8 +719,22 @@ class MainWindow(QMainWindow):
         widget = QWidget()
         widget.setMinimumWidth(260)
         layout = QVBoxLayout(widget)
-        group = QGroupBox("目前欄位 · 毫米屬性");self.property_fields=group
-        form = QFormLayout(group)
+        self.property_context_label=QLabel('尚未選取物件');self.property_context_label.setWordWrap(True);layout.addWidget(self.property_context_label)
+        self.property_edit_state=QLabel('尚無可套用屬性');self.property_edit_state.setWordWrap(True);layout.addWidget(self.property_edit_state)
+        self.property_pin_checks={}
+        pins=QHBoxLayout()
+        for key,label in [('text','固定文字'),('geometry','固定框位'),('identity','固定歸屬')]:
+            check=QCheckBox(label);self.property_pin_checks[key]=check;pins.addWidget(check)
+        layout.addLayout(pins);self.all_property_tools=QCheckBox('全部屬性／詳細資訊');layout.addWidget(self.all_property_tools)
+        group=QGroupBox('目前物件的合法工具');self.property_fields=group;groups_layout=QVBoxLayout(group)
+        self.property_pinned_box=QGroupBox('固定工具');self.property_pinned_layout=QVBoxLayout(self.property_pinned_box);groups_layout.addWidget(self.property_pinned_box)
+        self.property_context_body=QWidget();self.property_context_layout=QVBoxLayout(self.property_context_body);groups_layout.addWidget(self.property_context_body)
+        self.property_groups={};forms={}
+        for key,label in [('geometry','框位與完整比例'),('text','文字與固定字級'),('identity','類型與人物／公司歸屬')]:
+            section=QGroupBox(label);section.setCheckable(True);section.setChecked(True);section_layout=QVBoxLayout(section)
+            body=QWidget();forms[key]=QFormLayout(body);section_layout.addWidget(body);section.toggled.connect(body.setVisible)
+            self.property_context_layout.addWidget(section);self.property_groups[key]=section
+        geometry_form=forms['geometry'];identity_form=forms['identity'];form=forms['text']
         self.kind = QComboBox()
         for key, name in KINDS.items():
             self.kind.addItem(name, key)
@@ -733,7 +750,7 @@ class MainWindow(QMainWindow):
             spin.setRange(-2000, 2000)
             spin.setDecimals(3)
             spin.setSuffix(" mm")
-            form.addRow(name, spin)
+            geometry_form.addRow(name, spin)
             self.coords.append(spin)
         self.font = QFontComboBox()
         from .demo import default_font
@@ -754,27 +771,32 @@ class MainWindow(QMainWindow):
             self.align.addItem(name, value)
         self.required = QCheckBox("必要欄位")
         self.required.setChecked(True)
-        form.addRow("類型", self.kind)
-        form.addRow("歸屬", self.owner)
-        form.addRow("同類資料第幾筆", self.index)
+        identity_form.addRow("類型", self.kind)
+        identity_form.addRow("歸屬", self.owner)
+        identity_form.addRow("同類資料第幾筆", self.index)
         form.addRow("字型", self.font)
         form.addRow("定案字級", self.pt)
         form.addRow("文字色彩", self.text_color)
         form.addRow("本模板字寬下限", self.scale)
         self.align.addItem("分散（需獨立核准欄位規則）","distributed")
         form.addRow("對齊", self.align)
-        policy_button=QPushButton("字距／語意分散規則");policy_button.clicked.connect(self.text_policy_editor);form.addRow(policy_button)
-        form.addRow(self.required)
+        policy_button=QPushButton("字距／語意分散規則");self.property_policy_button=policy_button;policy_button.clicked.connect(self.text_policy_editor);form.addRow(policy_button)
+        identity_form.addRow(self.required)
         self.property_button = QPushButton("套用至選取欄位")
         self.property_button.clicked.connect(self.apply_properties)
-        form.addRow(self.property_button)
+        groups_layout.addWidget(self.property_button)
         layout.addWidget(group)
+        self.property_object_tools=QPushButton('共同屬性／鎖定／精準對齊');self.property_object_tools.clicked.connect(self.object_tools);layout.addWidget(self.property_object_tools)
+        self.property_candidate_edit=QPushButton('開啟此候選既有人工編輯');self.property_candidate_edit.clicked.connect(self.candidate_editor);layout.addWidget(self.property_candidate_edit)
+        self.property_problem=QPushButton('定位所選候選問題／既有修正');self.property_problem.clicked.connect(lambda:self.fix_result_problem());layout.addWidget(self.property_problem)
+        self.property_conflict=QPushButton('查看保留的未套用輸入');layout.addWidget(self.property_conflict)
         self.selected_info = QLabel("先在畫布選取一個欄位。\n字級定案後不因字數自動改變。\n字寬下限是模板設計值，尚未實體印刷驗證。")
         self.selected_info.setWordWrap(True)
         layout.addWidget(self.selected_info)
-        self.output_properties=QPlainTextEdit();self.output_properties.setReadOnly(True);self.output_properties.setPlainText('尚無目前候選；請完成輸入並試排。');layout.addWidget(self.output_properties,1)
+        self.output_properties=QPlainTextEdit();self.output_properties.setReadOnly(True);self.output_properties.setMinimumHeight(120);self.output_properties.setMaximumHeight(200);self.output_properties.setPlainText('尚無目前候選；請完成輸入並試排。');layout.addWidget(self.output_properties,1)
         layout.addWidget(QLabel('標記／規則須明確核准；本機資料不會自動上傳。'))
-        return widget
+        scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setWidget(widget);scroll.setMinimumWidth(220)
+        return scroll
 
     def inform(self, text):
         QMessageBox.information(self, "Template AI", text)
@@ -1129,7 +1151,8 @@ class MainWindow(QMainWindow):
             self.refresh_editor()
 
     def make_slot(self, rect,preserve=False):
-        family=self.font.currentFont().family();asset=self.font_manager.asset_for_family(family)
+        defaults=Slot('name','p1',rect)
+        family=self.font.currentFont().family() if self.font.currentIndex()>=0 else defaults.font;asset=self.font_manager.asset_for_family(family)
         style=""
         displayed=getattr(self,'_selected_font_display',None)
         if self.current_slot and displayed and displayed['slot_id']==self.current_slot.id and family==displayed['display']:
@@ -1139,9 +1162,9 @@ class MainWindow(QMainWindow):
             from .font_catalog import raw_asset
             try:style=raw_asset(asset).styleName()
             except ValueError:pass  # 保留pin與既有Gate，不能暗借系統字型。
-        return Slot(self.kind.currentData(), self.owner.currentData(), rect, self.index.value()-1,
-                    family, self.pt.value(), self.scale.value()/100,
-                    self.align.currentData(), self.required.isChecked(), color=self.text_color.text().strip(),
+        return Slot(self.kind.currentData() or defaults.kind, self.owner.currentData() or defaults.owner, rect, self.index.value()-1 if self.index.lineEdit().text().strip() else defaults.index,
+                    family, self.pt.value() if self.pt.lineEdit().text().strip() else defaults.size_pt, self.scale.value()/100 if self.scale.lineEdit().text().strip() else defaults.min_scale,
+                    self.align.currentData() or defaults.align, self.required.isChecked() if self.current_slot else defaults.required, color=self.text_color.text().strip() or defaults.color,
                     font_asset=asset,font_style=style,locked=self.current_slot.locked if preserve and self.current_slot else False,
                     **({key:copy.deepcopy(getattr(self.current_slot,key)) for key in ('tracking_mm','tracking_min_mm','tracking_max_mm','distribution_approval')} if preserve and self.current_slot else {}))
 
@@ -1172,7 +1195,9 @@ class MainWindow(QMainWindow):
         s = self.current_slot
         self.property_button.setEnabled(s is not None and not s.locked and self.tabs.currentIndex() != 2 and (self.tabs.currentIndex()==0 or (self.template and self.template.state=='draft')))
         if not s:
-            self._property_form_baseline=None;self.selected_info.setText('尚未選取有效物件；請由目前畫布或物件樹重新選取。');return True
+            self._property_form_baseline=None;self.selected_info.setText('尚未選取有效物件；請由目前畫布或物件樹重新選取。')
+            if hasattr(self,'right_context'):self.right_context.schedule()
+            return True
         self.kind.setCurrentIndex(self.kind.findData(s.kind))
         self.owner.setCurrentIndex(self.owner.findData(s.owner))
         self.index.setValue(s.index+1)
@@ -1196,6 +1221,7 @@ class MainWindow(QMainWindow):
         elif self.tabs.currentIndex()==1 and self.template:
             errors=template_errors(self.template);self.selected_info.setText(self.selected_info.text()+'\n設計安全邊距：'+str(self.template.safe_margin_mm)+'mm\n'+('驗證待修復：'+'；'.join(errors[:8]) if errors else '幾何／語意檢查通過；仍依實際資料驗證字形及輸出。'))
         self._property_form_baseline=property_values(self);self._property_loaded_pin=digest(asdict(s))
+        if hasattr(self,'right_context'):self.right_context.schedule()
         return True
 
     def list_selection(self, row):
@@ -1338,6 +1364,8 @@ class MainWindow(QMainWindow):
                 draft=self.make_slot(Rect(*(s.value() for s in self.coords)),preserve=True);draft.id=self.current_slot.id
                 if draft!=self.current_slot:raise ValueError('屬性面板有未套用內容；請先套用或明確重選放棄')
             dialog=ObjectToolsDialog(self,kind,entity_id)
+            selected=list(self.edit_canvas.selection_intent) if tab==1 else [self.current_slot.id] if self.current_slot else []
+            if selected:dialog.select_ids(selected)
             try:dialog.exec()
             finally:dialog.deleteLater()
         except Exception as error:self.error(str(error))

@@ -250,6 +250,7 @@ class WorkbenchNavigation:
     def close_impacts(self):
         w=self.window;impacts=[]
         if self.pending_form():impacts.append('目前物件有尚未套用的屬性。')
+        if getattr(w,'pending_property_conflict',None):impacts.append('仍有舊物件的未套用輸入供核對；排版短期恢復不包含這份屬性。')
         for mode,(selected,undo,redo,form) in w._mode_memory.items():
             if mode!=w.tabs.currentIndex() and selected and form:
                 slots=w.slots if mode==0 else w.template.slots if mode==1 and w.template else []

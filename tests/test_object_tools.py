@@ -212,7 +212,10 @@ class ObjectToolsGuiTests(unittest.TestCase):
         with patch.object(ObjectToolsDialog,'exec',return_value=0) as execute:self.w.object_tools();execute.assert_called_once()
         self.w.text_color.setText('#998877')
         with patch.object(ObjectToolsDialog,'exec',return_value=0) as execute:self.w.object_tools();execute.assert_not_called()
-        self.assertIn('未套用',self.errors[-1]);self.w.select_slot(None);self.w.template.name='not saved'
+        self.assertIn('未套用',self.errors[-1])
+        from PySide6.QtCore import QTimer
+        from test_workbench_navigation import click_message
+        QTimer.singleShot(0,lambda:click_message('放棄未套用輸入並切換'));self.w.select_slot(None);self.w.template.name='not saved'
         with patch.object(ObjectToolsDialog,'exec',return_value=0) as execute:self.w.object_tools();execute.assert_not_called()
         self.assertIn('未保存',self.errors[-1])
         from template_ai.importer import import_file

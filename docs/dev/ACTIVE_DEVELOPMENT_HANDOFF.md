@@ -11,3 +11,5 @@
 - 詳細歷史history/HANDOFF_BEFORE_UI062_FULL26_20261016.md與UI061等按需讀。最新ACK以STATE.last_confirmed_checkpoint為準。
 
 UI063原26 plan已保存；package1 Main/ObjectTools切選前實際Stay/明確discard；同物件重選保留typedvalues；widgetbaseline與modelpin分開避免模型正常移動誤判pending；同ID新版保留舊輸入diagnostic，不套新物件。0037PASS。001importindent錯誤/002fixture training-onlymove in template失敗皆保留。下一步adaptive現有Maingroups/pins/preferences、ObjectTools lifecycle/affectedregression/native/full26mapping，再UI064。7newtests/catalog1229。UI063planning+參考/guard stage>10min cadence偏差已明記。
+
+UI063 Main原widgets已分geometry/text/identitygroups，固定區+existingpreferences property_tool_pins、全部/收合、型別/鎖定/readonly/混合/none上下文與既有ObjectTools/candidate/problem入口；不新造物件表。007/008 pending原7PASS只算smoke，**新adaptive情境仍需專測**；make_slot對清空的unknownUI用既有Slot合法defaults，不將None寫新框；舊pendingconflict增加closeimpact。005既有回歸停在legacy select_slot(None)隱式discard（owned593745 SIGTERM actual143/incomplete），006更新真實explicitdiscard點擊PASS。下一步專測adaptive text/logo/mixed/none/pins/fold/stale，補ObjectTools鎖定與版本/close-reload lifecycle，不算整父題完成。stage>10min cadence偏差仍記錄，strict非PASS。
