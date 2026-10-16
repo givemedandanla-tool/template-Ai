@@ -1,5 +1,5 @@
 """Original encrypted store, real durable transaction readback and lost-RAM honesty."""
-import copy,tempfile,unittest
+import copy,tempfile,unittest,threading
 from pathlib import Path
 from unittest.mock import patch
 from PySide6.QtCore import Qt
@@ -57,6 +57,17 @@ class BatchRecoveryGuiTests(unittest.TestCase):
     apply=source_gui.BatchCorrectionGuiTests.apply
     # Inherit the real source fixtures, not duplicate inherited test cases.
     __test__=True
+    def test_recovery_buttons_during_real_owned_worker_do_not_clear_running_or_start_restore(self):
+        d=self.make();self.check(self.works[0]);d.preview();started=threading.Event();release=threading.Event();original=Library.apply_object_edit
+        def hold(library,*args):
+            started.set()
+            if not release.wait(5):raise TimeoutError('owned fixture release missing')
+            return original(library,*args)
+        try:
+            with patch.object(Library,'apply_object_edit',hold):
+                with patch('template_ai.batch_objects.QMessageBox.question',return_value=QMessageBox.Yes):d.apply()
+                self.assertTrue(wait_for_gui(started.is_set,5));self.assertTrue(d.running);d.recovery_controller.save();self.assertTrue(d.running);d.recovery_controller.restore();self.assertTrue(d.running);self.assertTrue(self.w.busy);d.close();self.assertTrue(d.running);release.set();self.assertTrue(wait_for_gui(lambda:not d.running and not self.w.busy,5))
+        finally:release.set()
     def test_changed_parameters_cannot_be_saved_as_old_preflight(self):
         d=self.make();self.check(self.works[0]);d.preview();d.dx.setValue(3)
         with self.assertRaisesRegex(ValueError,'參數'):payload(d)
@@ -67,7 +78,7 @@ class BatchRecoveryGuiTests(unittest.TestCase):
         with patch('PySide6.QtWidgets.QInputDialog.getText',return_value=('synthetic-batch-password',True)):d.recovery_controller.save()
         self.assertTrue(wait_for_gui(lambda:not d.running and not self.w.busy,10),d.status.text());self.assertTrue(store(self.w.library.root).pending());self.assertIn('逐位元讀回',d.status.text());self.assertIsNone(self.w.navigation.recovery)
         with patch('PySide6.QtWidgets.QInputDialog.getText',return_value=('synthetic-batch-password',True)),patch('PySide6.QtWidgets.QMessageBox.question',return_value=QMessageBox.Yes):d.recovery_controller.restore();self.assertTrue(wait_for_gui(lambda:not d.running and not self.w.busy,10),d.status.text())
-        self.assertEqual(self.w.library.object_snapshot('ARTWORK',self.works[0]['id']),before);self.assertEqual(d.results[0]['outcome'],'APPLIED_PENDING_FULL_VALIDATION');self.assertFalse(d.results[0]['attempted'])
+        self.assertEqual(self.w.library.object_snapshot('ARTWORK',self.works[0]['id']),before);applied=next(row for row in d.results if row['id']==self.works[0]['id']);self.assertEqual(applied['outcome'],'APPLIED_PENDING_FULL_VALIDATION');self.assertFalse(applied['attempted'])
 
 
 class BatchRecoveryCandidateTests(unittest.TestCase):
@@ -79,6 +90,15 @@ class BatchRecoveryCandidateTests(unittest.TestCase):
     apply=candidate_gui.BatchCandidateGuiTests.apply
     def test_candidate_graphic_preview_keeps_cached_before_after_and_current_model(self):
         slot=self.check('A90');self.preview();before=copy.deepcopy(self.f.candidate('A90'));index=next(i for i in range(self.d.table.rowCount()) if self.d.by_key[self.d.table.item(i,0).data(Qt.UserRole)]['slot_ids']==[slot]);self.d.table.setCurrentCell(index,1);graphic=self.d.make_graphic_preview();self.addCleanup(graphic.deleteLater);graphic.show();APP.processEvents();self.assertTrue(all(c.readonly for c in graphic.canvases));self.assertEqual(self.f.candidate('A90').template.to_dict(),before.template.to_dict());self.assertEqual(self.f.candidate('A90').risk_context,before.risk_context)
+    def test_actual_gui_restore_then_selected_inverse_keeps_same_stable_field_identity(self):
+        self.check('A90');self.check('C100');self.preview();self.apply();store(self.f.w.library.root).save(payload(self.d),'synthetic-batch-password')
+        with patch('PySide6.QtWidgets.QInputDialog.getText',return_value=('synthetic-batch-password',True)),patch('PySide6.QtWidgets.QMessageBox.question',return_value=QMessageBox.Yes):self.d.recovery_controller.restore();self.wait()
+        self.assertEqual(sum(r['outcome']=='ALREADY_APPLIED' for r in self.d.results),1)
+        for i in range(self.d.table.rowCount()):
+            item=self.d.table.item(i,0);row=self.d.by_key[item.data(Qt.UserRole)]
+            if row['id']!=self.f.candidate('A90').template.id:item.setCheckState(Qt.Unchecked)
+        with patch('PySide6.QtWidgets.QMessageBox.question',return_value=QMessageBox.Yes):self.d.undo()
+        self.wait();self.assertIn('已回復 1',self.d.status.text());self.assertEqual(next(s for s in self.f.candidate('A90').template.slots if s.kind=='phone' and s.owner=='p1').align,'left')
     def test_candidate_cached_receipt_roundtrip_reconnects_exact_current_origin(self):
         self.check('A90');self.check('C100');self.preview();self.apply();before=copy.deepcopy(self.f.candidate('A90'));value=payload(self.d);r=store(self.f.w.library.root);r.save(value,'synthetic-batch-password');restored=r.load('synthetic-batch-password');rows=inspect(self.f.w.library,restored);rows,checked=reconnect(self.d,restored,rows);self.assertEqual(sum(row['outcome']=='ALREADY_APPLIED' for row in rows),1);self.assertEqual(self.f.candidate('A90').risk_context['manual_history'],before.risk_context['manual_history']);self.assertEqual(len(checked),2)
     def test_restarted_view_without_original_ram_origin_is_unverified_and_cannot_replay(self):

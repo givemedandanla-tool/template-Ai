@@ -52,7 +52,8 @@ def reconnect(dialog,value,rows):
         adapter,index=pair;target=item['target'];current=adapter.candidates[index]
         if candidate_pin(current)==candidate_pin(item['candidate']):
             from .batch_objects import install_candidate_target
-            try:row.update(install_candidate_target(adapter,item,True))
+            try:
+                row.update(install_candidate_target(adapter,item,True));row['reason']='已核實本視窗原操作與版面，未重複修改；正式輸出仍核對目前Gate。' if row['outcome']=='ALREADY_APPLIED' else '原操作已存在，但目前依賴已有變動；保留目前工作，需重驗。'
             except ValueError as error:row['reason']=str(error)
         elif candidate_pin(current)==target['before_pin']:
             row.update(outcome='CANCELLED',reason='原前置版面仍存在；未證明套用，明確核對後才允許原預檢安全重試')
@@ -67,9 +68,11 @@ class BatchRecoveryController:
     def save(self):
         from PySide6.QtWidgets import QInputDialog,QLineEdit
         d=self.d
+        if d.running or d.window.busy:d.status.setText('原工作尚未安全停止；未保存進行中工作');return
         try:
             value=payload(d);password,ok=QInputDialog.getText(d,'保存安全停止的批次','12字以上密碼，24小時有效；不保存密碼。未落盤項不承諾可恢復。',QLineEdit.Password)
             if not ok:return
+            if digest(value)!=digest(payload(d)):raise ValueError('密碼輸入期間範圍／內容已變更，未保存')
             d.running=True
             def done(receipt):d.running=False;d.batch_recovery_receipt=receipt;d.status.setText('已逐位元讀回加密停止快照；未保存的新進度不保證可恢復。')
             def failed(error):d.running=False;d.status.setText('未保存：'+str(error))
@@ -78,6 +81,7 @@ class BatchRecoveryController:
     def restore(self):
         from PySide6.QtWidgets import QInputDialog,QLineEdit,QMessageBox
         d=self.d
+        if d.running or d.window.busy:d.status.setText('原工作尚未安全停止；未讀取或載入恢復');return
         try:
             d.valid_context()
             if d.running or d.window.busy:raise ValueError('原工作尚未安全停止')

@@ -19573,25 +19573,249 @@
       "id": "UI-065",
       "kind": "topic",
       "title": "template-Ai｜UI-065 多物件／多候選／多作品批次修正：風險分級、差異預覽與安全回復（正式決策）",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
-      "review_level": "SELF_VERIFIED_SUBSET_ONLY",
-      "scope": "精確範圍預覽、部分成功、冪等重試與安全回復",
+      "review_level": "NOT_REVIEWED",
+      "scope": "Full original25: exact source/candidate/size batch scopes; risk/current preflight and original read-only before-after canvases; explicit pinned confirmation, per-target original transactions/receipts, cancellation and safe selected inverse; typed encrypted stopped recovery, lost RAM unverified. External device/native corpus qualification remains.",
       "phase": "P7",
       "decision_status": "需求已核准",
       "sources": [
         "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-065-BATCH-REPAIR-SAFETY.md"
       ],
       "parents": [],
-      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+      "evidence_run": null,
       "acceptance": [
         {
-          "id": "UI-065-FULL",
-          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：精確範圍預覽、部分成功、冪等重試與安全回復",
-          "tests": []
+          "id": "UI-065-CLAUSE-1",
+          "expected": "**同一問題工作台中的精確選取**：沿用 UI-014／015／040／057 已有問題診斷與 UI-034／035／038／039 的物件定位，提供依問題類型、目前工作／來源、畫板／作品 ID、人物／公司、候選 ID、實體尺寸、警告等級、可處理狀態等條件篩選。每個勾選項必須綁定**確切物件／欄位、來源、版本與適用工作範圍**，不可單靠字串相同就將不同人物的電話或不同公司的 Logo 合併修改。顯示真實的「符合篩選 X 筆／實際選取 Y 筆／可安全處理 Z 筆」，不能把未知／尚未載入的項目計入已完成。",
+          "tests": [
+            "test_batch_correction_gui.BatchCorrectionGuiTests.test_sorted_filtered_hidden_selection_keeps_exact_ids_counts_and_only_selected_states",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_same_phone_strings_still_have_distinct_person_and_field_references",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_sorted_hidden_checked_exact_targets_keep_their_own_coordinates"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-2",
+          "expected": "**風險分級，但不把 AI 信心當授權**：\n   - **低風險且可批次**：來源、歸屬、對象、操作方式與每一筆前置條件均已核實，且不更改受保護資訊。例如符合各自固定字級及允許 X 軸縮放邊界的獨立文字框修正；使用者先選定明確範圍及核對差異後批次套用。\n   - **需確認**：可能影響相鄰物件幾何、特殊框位／人工位置、來源版本、已綁定的欄位或需確認套用目標；先顯示精確影響，依風險要求單筆或受控分組確認。\n   - **高風險／阻擋**：人物 ROOT／公司歸屬衝突、公司 Logo 完整性與合法來源、跨作品／跨公司誤映射、已人工鎖定或核心受保護物件、已發布模板、印前硬性 Gate 不符；**必須逐筆人工審核或先解除實際阻擋條件**，不可因同類問題很多、AI 信心高或一鍵批次而自動核准。高風險不等於允許忽略硬性 FAIL。",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_locked_unknown_cross_person_logo_and_fixed_font_change_never_auto_approve",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_floor_unknown_measurement_and_boolean_ratio_are_not_guessed",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-3",
+          "expected": "**先預檢，再看前後差異，再確認套用**：在執行前列出每個被勾選目標的原值與建議值、文字壓縮比例／固定字級、真實毫米幾何、相鄰與安全區碰撞、人物／公司／Logo 歸屬、所依賴的模板 `style_version_id` 與尺寸。以畫布差異預覽及可展開清單呈現；可排除單筆或整組、取消而不修改內容。預檢若尚未完成則顯示「待驗證」，不得假稱預檢 PASS；來源未知或版本不一致應剔除待處理而非猜測。",
+          "tests": [
+            "test_batch_correction_gui.BatchCorrectionGuiTests.test_actual_confirmation_selection_race_rejects_without_starting_worker_or_writing",
+            "test_batch_recovery.BatchRecoveryGuiTests.test_source_graphic_preview_is_readonly_and_does_not_add_history",
+            "test_batch_recovery.BatchRecoveryCandidateTests.test_candidate_graphic_preview_keeps_cached_before_after_and_current_model",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_fixed_x_ratio_uses_each_target_original_measurement_and_preserves_other_candidate_sizes"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-4",
+          "expected": "**批次作用範圍與手動鎖定保護**：逐筆核實可編輯性、群組／共享關聯與合法動作，只能變更確切授權集合。跨候選或不同尺寸的版面修正仍走 UI-061 的目標確認／適用差異比對，不能硬複製另一尺寸的絕對座標、完整 Logo 或印前合格狀態。遵守 UI-013 不依字串長度自動改字級、UI-020／025 不拆分複合 Logo；無法在合法 X 軸範圍內適配者保持阻擋，不自動刪字／改人物歸屬／強行外擴安全區。",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_locked_unknown_cross_person_logo_and_fixed_font_change_never_auto_approve",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_per_object_patch_cannot_change_owner_font_or_anisotropic_whole_logo",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_changed_shared_input_after_preflight_never_retargets_old_field_or_installs",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_selection_change_inside_confirmation_prevents_all_installations"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-5",
+          "expected": "**有界、可中止的分批處理與逐項結論**：低配置 Windows 上按 UI-051／058 的保守資源限額分批；沿用當次任務實際進度，允許安全取消尚未執行的項目，不可把已完成項冒稱已撤銷。每個目標給出「未開始／正在處理／成功套用待重驗／成功且重驗完成／因前置條件不符跳過／高風險待人工／失敗／版本過期／取消」等互斥且可核對狀態，顯示實際執行總數與成功、失敗、跳過數。**部分成功可以被明確接受並保留有效結果，但不能顯示整批成功，也不能把整批的部分 PASS 轉成作品印前 PASS**。",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_eight_applied_two_failed_one_manual_counts_are_exact_and_not_global_pass",
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_cancel_after_first_preserves_applied_result_and_cancels_only_unstarted",
+            "test_batch_correction_gui.BatchCorrectionGuiTests.test_close_cancels_unstarted_only_and_stays_open_until_current_transaction_finishes",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_cancel_between_card_installs_keeps_completed_and_stops_unstarted",
+            "test_batch_recovery.BatchRecoveryGuiTests.test_recovery_buttons_during_real_owned_worker_do_not_clear_running_or_start_restore"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-6",
+          "expected": "**失敗隔離、可重試而不重複套用**：每筆變更有來源物件 ID、操作 ID、目標版本、寫入結果與必要的重驗憑證，失敗不污染其他已確認目標；再次點選重試時只重新檢查確切仍需要處理、依賴未改變的項目。當已完成或未知是否已完成時，必須先核實目前狀態，**不得盲目再次套用位移、壓縮或批次屬性，導致重複變動**。程式異常或磁碟滿時要顯示「結果待核實／未安全保存」，不得承諾全批永久可恢復。",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_relative_move_retry_reads_existing_operation_instead_of_moving_twice",
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_replay_after_newer_manual_change_is_explicit_and_preserves_new_values",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_retry_reconciles_original_manual_receipt_without_second_edit_and_preserves_new_manual_move",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_retry_reads_original_receipt_without_duplicate_move"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-7",
+          "expected": "**單筆與整批安全回復**：提供「檢視此批紀錄／回復這一筆／回復本次合法批次」等入口；使用 UI-010／034／064 已有 Undo／Redo 和 UI-059 的版本柵欄、UI-061 的跨候選／尺寸回復範圍。回復前對照變更後是否出現更新的人工修改、共用來源改動、模板／Logo／字型變更與正式版本更新；**僅對仍可證明可逆的項目安全回復**，其餘須明示不可直接回復及人工衝突處理，不能無條件把較新人工編輯覆寫。已執行且有合法結果的項目可逐一保留。",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_partial_undo_keeps_new_manual_edit_and_reverts_only_other_reversible_item",
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_single_explicit_inverse_does_not_undo_other_success_and_retry_cannot_redo_undone",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_old_explicit_receipt_inverse_preserves_later_unrelated_manual_attribute",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_old_receipt_same_attribute_conflict_and_tampered_cached_result_do_not_overwrite",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_selected_partial_inverse_preserves_other_card",
+            "test_batch_recovery.BatchRecoveryCandidateTests.test_actual_gui_restore_then_selected_inverse_keeps_same_stable_field_identity"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-8",
+          "expected": "**批次修正不等於發布、輸出或學習**：套用操作只影響**該當次允許編輯的草稿／標記／候選**；不自動更新原始 Illustrator `.ai`、UI-010 已發布模板、UI-043 客戶主檔、各尺寸正式 Logo 庫或 UI-055 學習訓練真值。若欲正式改模板或學習規則，仍走 UI-007／008／010／040／041 與必要核准；正式客戶主檔回寫只走 UI-045。",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_twelve_of_thirty_exact_sources_keep_same_text_entities_and_other_eighteen_unchanged",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_per_object_width_composition_preserves_individual_sizes_and_fixed_font_owner",
+            "test_batch_recovery.BatchRecoveryCandidateTests.test_all_applied_phase_does_not_retain_normal_completed_private_snapshot"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-9",
+          "expected": "**每作品、每候選與每尺寸的重新驗證**：局部計算可按 UI-059 最小依賴重算，但每個受影響作品／候選／尺寸，仍必須按當前來源／版本完成全面適用的語意無損映射、人物容量 `peopleCapacity`、人物／公司／完整 Logo 歸屬、固定字級、允許 X 軸縮放、幾何不重疊、安全區、字型、Logo 尺寸品質與 UI-019／027～030 印前 Gate。其他候選或其他尺寸的 PASS 不能代替本尺寸驗證；未驗證／不合格時不可輸出正式 PDF／AI／PNG／JPG。",
+          "tests": [
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_blocked_size100_missing_own_logo_cannot_inherit_size90_pass",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_x_ratio_uses_original_measurements_and_preserves_font"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-10",
+          "expected": "**低干擾透明 UX**：批次總覽能點擊失敗原因直接跳回既有原稿／候選畫布和右側屬性面板，保留 UI-062 返回位置及 UI-063 釘選工具；高風險需審核而非大量重複警告，低風險在同一次確定範圍後不逐項彈出無意義確認。若 AI 算法結果尚未覆蓋全部來源或被 UI-058 暫停，明說「已檢查的局部問題」，不得宣稱全庫問題已全部修復。",
+          "tests": [
+            "test_batch_correction_gui.BatchCorrectionGuiTests.test_locate_uses_current_exact_object_and_keeps_existing_pinned_tools_without_new_job",
+            "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_pan_mouse_gesture_changes_only_view_and_never_creates_content_history",
+            "test_batch_correction_gui.BatchCorrectionGuiTests.test_located_locked_source_properties_settle_without_overlapping_controls",
+            "test_batch_recovery.BatchRecoveryGuiTests.test_source_graphic_preview_is_readonly_and_does_not_add_history",
+            "test_batch_recovery.BatchRecoveryCandidateTests.test_candidate_graphic_preview_keeps_cached_before_after_and_current_model"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-11",
+          "expected": "UI-033 已有**字型替代風險分級批次審核**：本題僅提供統一的批次選取／執行／回復 GUI 容器，不替代其來源字型品質與授權 Gate。",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_locked_unknown_cross_person_logo_and_fixed_font_change_never_auto_approve",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_per_object_patch_cannot_change_owner_font_or_anisotropic_whole_logo"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-12",
+          "expected": "UI-036 已有**多物件對齊與等距**：本題不新增另一套幾何對齊演算法，只處理對同類合法目標套用及逐筆驗證的流程。",
+          "tests": [
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_per_object_width_composition_preserves_individual_sizes_and_fixed_font_owner",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_five_candidate_phone_alignments_use_own_geometry_and_no_first_candidate_coordinates"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-13",
+          "expected": "UI-039／040 已有**標記框批次確認與雜訊規則**：已核准且符合規則命中的雜訊仍可依 UI-040 自動剔除；不把一次批次修正默默升格為全域永久規則，亦不干預高風險標記逐筆審核。",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_locked_unknown_cross_person_logo_and_fixed_font_change_never_auto_approve",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-14",
+          "expected": "UI-057 已有**草稿／未知／無解安全界線**，UI-058 當次工作進度，UI-059 編輯世代與失效，UI-061 跨尺寸同步，UI-064 快捷與 Undo；本題直接沿用，不新增第二套批次引擎、永久歷史庫或影子資料來源。",
+          "tests": [
+            "test_batch_correction_gui.BatchCorrectionGuiTests.test_close_cancels_unstarted_only_and_stays_open_until_current_transaction_finishes",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_manual_change_after_preflight_refuses_stale_install",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_changed_shared_input_after_preflight_never_retargets_old_field_or_installs",
+            "test_batch_recovery.BatchRecoverySourceTests.test_encrypted_restart_readback_and_retry_do_not_repeat_saved_relative_move"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-15",
+          "expected": "| 30 張名片發現 12 個已核實合法的文字 X 壓縮調整 | 顯示實際 12 筆可選，套用前逐筆有原／新比例、字級不變與全卡影響；只改被明確勾選的項目 |",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_twelve_of_thirty_exact_sources_keep_same_text_entities_and_other_eighteen_unchanged",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_fixed_x_ratio_uses_each_target_original_measurement_and_preserves_other_candidate_sizes",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_x_ratio_uses_original_measurements_and_preserves_font"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-16",
+          "expected": "| 5 個不同候選的電話框待對齊 | 以每候選版型及幾何基準作合法對齊，**不**複製 A 候選座標到 B 候選 |",
+          "tests": [
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_five_candidate_phone_alignments_use_own_geometry_and_no_first_candidate_coordinates",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_sorted_hidden_checked_exact_targets_keep_their_own_coordinates"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-17",
+          "expected": "| 3 個不同尺寸 Logo 疑似錯誤 | 顯示所屬公司、各尺寸資產與來源；待逐筆審核，無合法來源者阻擋，不自動替換成其它公司的 Logo |",
+          "tests": [
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_per_object_patch_cannot_change_owner_font_or_anisotropic_whole_logo",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_blocked_size100_missing_own_logo_cannot_inherit_size90_pass",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-18",
+          "expected": "| 2 個姓名／公司歸屬不明的框 | 不因其他 18 筆低風險項已完成就自動核准該 2 筆，保留待人工且禁止相關正式輸出 |",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_locked_unknown_cross_person_logo_and_fixed_font_change_never_auto_approve",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_missing_stable_person_identity_is_manual_review_not_same_string_inference"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-19",
+          "expected": "| 批次中 8 筆成功、2 筆失敗、1 筆跳過 | 精確顯示數據與原因；不出現「全部修正成功」，後續可僅重新核實失敗／跳過項 |",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_eight_applied_two_failed_one_manual_counts_are_exact_and_not_global_pass"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-20",
+          "expected": "| 批次套用後有人又手動移動其中一個姓名框 | 整批回復前偵測版本衝突，只對可逆的其它項目執行安全回復，不覆寫新人工移動 |",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_partial_undo_keeps_new_manual_edit_and_reverts_only_other_reversible_item",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_old_explicit_receipt_inverse_preserves_later_unrelated_manual_attribute",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_old_receipt_same_attribute_conflict_and_tampered_cached_result_do_not_overwrite"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-21",
+          "expected": "| 同一批次因當機再次啟動 | 根據每項操作與版本核實狀態，不重複套用位移，也不宣稱未落盤項已完成 |",
+          "tests": [
+            "test_batch_recovery.BatchRecoverySourceTests.test_encrypted_restart_readback_and_retry_do_not_repeat_saved_relative_move",
+            "test_batch_recovery.BatchRecoveryGuiTests.test_actual_worker_save_restore_reads_partial_source_history_without_writing",
+            "test_batch_recovery.BatchRecoveryCandidateTests.test_actual_gui_restore_then_selected_inverse_keeps_same_stable_field_identity",
+            "test_batch_recovery.BatchRecoveryCandidateTests.test_candidate_cached_receipt_roundtrip_reconnects_exact_current_origin",
+            "test_batch_recovery.BatchRecoveryCandidateTests.test_restarted_view_without_original_ram_origin_is_unverified_and_cannot_replay"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-22",
+          "expected": "| 某物理尺寸修復成功但另一尺寸仍有安全區衝突 | 僅合格尺寸依 UI-027 授權可做部分正式輸出，失敗尺寸仍阻擋 |",
+          "tests": [
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_blocked_size100_missing_own_logo_cannot_inherit_size90_pass",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-23",
+          "expected": "| 含已鎖定框位或不同人物共享公司 | 沒有精確明確核准不得更改；不自動解鎖、不跨人物配錯資料 |",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_locked_unknown_cross_person_logo_and_fixed_font_change_never_auto_approve",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_same_phone_strings_still_have_distinct_person_and_field_references",
+            "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_missing_stable_person_identity_is_manual_review_not_same_string_inference"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-24",
+          "expected": "同類錯誤的可靠自動分組、批次預覽承載數量、實際 Windows 低配限制、逐筆交易持久保存策略與風險門檻需未來研究／實機測試；本次決策不冒稱已選技術或保證效能。",
+          "tests": [
+            "test_batch_recovery.BatchRecoverySourceTests.test_aggregate_original_recovery_budget_is_bounded",
+            "test_batch_correction_gui.BatchCorrectionGuiTests.test_close_cancels_unstarted_only_and_stays_open_until_current_transaction_finishes"
+          ]
+        },
+        {
+          "id": "UI-065-CLAUSE-25",
+          "expected": "保持「UI-075 是暫定收斂檢查點，不是固定必答題數」。",
+          "tests": [
+            "test_batch_correction_source.BatchCorrectionSourceTests.test_eight_applied_two_failed_one_manual_counts_are_exact_and_not_global_pass",
+            "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies"
+          ]
         }
       ],
-      "next_step": "補各操作家族及跨尺寸語意映射，測只重試失敗、整批回復不覆蓋後續新值／不改字級或Logo比例；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT"
+      "next_step": "Immutable current-source full regression, native review, ordinary GitHub evidence publication Gate; do not promote from targeted checks",
+      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
     },
     {
       "id": "UI-066",

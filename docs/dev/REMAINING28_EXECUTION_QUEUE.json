@@ -1,6 +1,6 @@
 {
   "id": "REMAINING28-AFTER-UI054-EXECUTION-QUEUE",
-  "status": "UI059_UI060A_IMPLEMENTED_PENDING_BATCH_NEXT_UI061",
+  "status": "UI059_UI060A_UI061_UI062_UI063_UI064_UI065_IMPLEMENTED_PENDING_IMMUTABLE_BATCH_NEXT_UI052_REVIEW",
   "target_original_parents": 28,
   "completed_historical": [
     "UI-046",
@@ -16,7 +16,7 @@
     "UI-057",
     "UI-058"
   ],
-  "active_parent": "UI-065",
+  "active_parent": "UI-052-REVIEW",
   "remaining_after_active": [
     "UI-019",
     "UI-031",
@@ -24,10 +24,8 @@
     "UI-062",
     "UI-063",
     "UI-064",
-    "UI-065",
     "UI-066",
     "UI-067",
-    "UI-052-REVIEW",
     "REV-01",
     "REV-02",
     "REV-04"
@@ -112,8 +110,10 @@
       "id": "UI-065",
       "title": "template-Ai｜UI-065 多物件／多候選／多作品批次修正：風險分級、差異預覽與安全回復（正式決策）",
       "gap": "補各操作家族及跨尺寸語意映射，測只重試失敗、整批回復不覆蓋後續新值／不改字級或Logo比例；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT",
-      "status": "NOT_FULLY_VERIFIED",
-      "source_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json#original_clauses/UI-065"
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "source_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json#original_clauses/UI-065",
+      "clause_coverage": "docs/dev/UI065_CLAUSE_COVERAGE.json",
+      "next": "Immutable current-source batch and publication Gate"
     },
     {
       "id": "UI-052-REVIEW",
@@ -191,13 +191,13 @@
     "UI-061",
     "UI-062",
     "UI-063",
-    "UI-064"
+    "UI-064",
+    "UI-065"
   ],
   "remaining_to_fully_implement": [
     "UI-019",
     "UI-031",
     "UI-032",
-    "UI-065",
     "UI-066",
     "UI-067",
     "UI-052-REVIEW",

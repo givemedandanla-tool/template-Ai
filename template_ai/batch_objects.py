@@ -112,7 +112,7 @@ def prepare_candidate_undo(window,target,receipt_id):
     if candidate_origin_key(window,index)!=target['target_key']:raise ValueError('原候選／尺寸來源已變更')
     candidate=window.candidates[index];ids=target['envelope']['plan']['request']['ids']
     references=[field_reference(candidate,s) for s in select_slots(candidate.template.to_dict(),ids)]
-    if references!=target['references']:raise ValueError('原人物／公司欄位已變更，不回復到其他實體')
+    if digest(references)!=digest(target['references']):raise ValueError('原人物／公司欄位已變更，不回復到其他實體')
     envelope=prepare_edit(window,plan_undo(window,index,receipt_id))
     inverse=dict(target, before_pin=candidate_pin(candidate),envelope=envelope);inverse['seal']=candidate_target_seal(inverse);return inverse
 
@@ -225,7 +225,7 @@ def undo_batch(library,plan,results,approved=False,selected=None,cancel=lambda:F
 def batch_summary(results):
     from collections import Counter
     counts=dict(Counter(r.get('outcome',r.get('state')) for r in results));applied=counts.get('APPLIED_PENDING_FULL_VALIDATION',0);changed=counts.get('APPLIED_BUT_CURRENT_CHANGED',0)
-    return dict(checked=len(results),attempted=sum(bool(r.get('attempted')) for r in results),applied_pending_validation=applied,current_changed=changed,failed=counts.get('FAILED',0)+counts.get('RESULT_UNVERIFIED',0),stale=counts.get('STALE',0),manual=counts.get('NEEDS_MANUAL_REVIEW',0)+counts.get('APPLIED_BLOCKED',0),cancelled=counts.get('CANCELLED',0)+counts.get('UNDO_CANCELLED',0),undone=counts.get('UNDONE_PENDING_FULL_VALIDATION',0)+counts.get('ALREADY_UNDONE',0)+counts.get('UNDONE_VALIDATED',0),undo_conflicts=counts.get('UNDO_CONFLICT',0),skipped=counts.get('SKIPPED_PRECONDITION',0),validated=counts.get('APPLIED_VALIDATED',0),already_applied=counts.get('ALREADY_APPLIED',0),outcomes=counts,status='APPLIED_PENDING_REVALIDATION' if applied==len(results) and results else 'PARTIAL_OR_BLOCKED',formal_eligible=False)
+    return dict(checked=len(results),attempted=sum(bool(r.get('attempted')) for r in results),applied_pending_validation=applied,current_changed=changed,failed=counts.get('FAILED',0),unverified=counts.get('RESULT_UNVERIFIED',0),stale=counts.get('STALE',0),manual=counts.get('NEEDS_MANUAL_REVIEW',0)+counts.get('APPLIED_BLOCKED',0),cancelled=counts.get('CANCELLED',0)+counts.get('UNDO_CANCELLED',0),undone=counts.get('UNDONE_PENDING_FULL_VALIDATION',0)+counts.get('ALREADY_UNDONE',0)+counts.get('UNDONE_VALIDATED',0),undo_conflicts=counts.get('UNDO_CONFLICT',0),skipped=counts.get('SKIPPED_PRECONDITION',0),validated=counts.get('APPLIED_VALIDATED',0)+counts.get('UNDONE_VALIDATED',0),already_applied=counts.get('ALREADY_APPLIED',0),outcomes=counts,status='APPLIED_PENDING_REVALIDATION' if applied==len(results) and results else 'PARTIAL_OR_BLOCKED',formal_eligible=False)
 
 class BatchObjectDialog(QDialog):
     batch_progress=Signal(object)
@@ -296,6 +296,8 @@ class BatchObjectDialog(QDialog):
             self.table.setRowHidden(i,not match)
         self.update_counts()
     def update_counts(self,*_):
+        candidate=self.scope.currentData()=='CANDIDATE';action=self.action.currentIndex()
+        self.align.setEnabled(action==0);self.dx.setEnabled(action==1);self.dy.setEnabled(action==1);self.width.setEnabled(action==2);self.height.setEnabled(action==2);self.ratio.setEnabled(candidate and action==3)
         selected=self.selected_rows();safe=0
         if self.plan and not self.results and self.selection_pin()==self.selected_ids and self.parameters()==self.preview_parameters:safe=sum(len(r.get('changes',[])) for r in self.plan['rows'] if r['state']=='READY')
         visible=sum(not self.table.isRowHidden(i) for i in range(self.table.rowCount()));hidden=sum(self.table.isRowHidden(i) and self.table.item(i,0).checkState()==Qt.Checked for i in range(self.table.rowCount()));self.counts.setText(f'符合篩選 {visible} 筆／實際勾選 {len(selected)} 筆（篩選外仍勾選 {hidden}）／預檢可修改 {safe} 筆；不是印前PASS。')
@@ -367,8 +369,11 @@ class BatchObjectDialog(QDialog):
         for control in [self.scope,self.preview_button,self.apply_button,self.undo_button]:control.setEnabled(True)
         if not inverse:self.results=rows
         lines=[]
-        for row in rows:self.paint(row['target_key'],self.state_label(row.get('outcome')));lines.append(row['kind']+'/'+row['id']+'：'+self.state_label(row.get('outcome'))+'\n'+row.get('reason','沿用既有歷史核對，尚須整作品重驗')+('\n歷史 '+row['history_id'] if row.get('history_id') else ''))
-        self.last_result_text='\n'.join(lines);self.details.setPlainText(self.last_result_text);summary=batch_summary(rows);self.status.setText(f'逐項結果：核對 {summary["checked"]} 個交易、嘗試 {summary["attempted"]}；本尺寸合格 {summary["validated"]}、原操作已核實 {summary["already_applied"]}、套用待重驗 {summary["applied_pending_validation"]}、失敗 {summary["failed"]}、過期 {summary["stale"]}、需人工 {summary["manual"]}、跳過 {summary["skipped"]}、取消 {summary["cancelled"]}、另有新版 {summary["current_changed"]}、已回復 {summary["undone"]}、回復衝突 {summary["undo_conflicts"]}。不是印前PASS。')
+        for row in rows:
+            self.paint(row['target_key'],self.state_label(row.get('outcome')))
+            reason=row.get('reason') or ('已依目前資料重驗此候選與尺寸；正式輸出仍走既有授權。' if row.get('outcome') in ('APPLIED_VALIDATED','UNDONE_VALIDATED') else '已核實原操作與版面，未重複修改；正式輸出仍核對目前Gate。' if row.get('outcome')=='ALREADY_APPLIED' else '沿用既有歷史核對，尚須整作品重驗')
+            lines.append(row['kind']+'/'+row['id']+'：'+self.state_label(row.get('outcome'))+'\n'+reason+('\n歷史 '+row['history_id'] if row.get('history_id') else ''))
+        self.last_result_text='\n'.join(lines);self.details.setPlainText(self.last_result_text);summary=batch_summary(rows);self.status.setText(f'逐項結果：核對 {summary["checked"]} 個交易、嘗試 {summary["attempted"]}；本尺寸合格 {summary["validated"]}、原操作已核實 {summary["already_applied"]}、套用待重驗 {summary["applied_pending_validation"]}、失敗 {summary["failed"]}、未核實 {summary["unverified"]}、過期 {summary["stale"]}、需人工 {summary["manual"]}、跳過 {summary["skipped"]}、取消 {summary["cancelled"]}、另有新版 {summary["current_changed"]}、已回復 {summary["undone"]}、回復衝突 {summary["undo_conflicts"]}。不是印前PASS。')
         if invalidate and self.window.library is self.library and not self.library.closed:self.window.invalidate()
         self.filter_rows()
     def failed(self,text):

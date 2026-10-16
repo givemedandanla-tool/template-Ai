@@ -54,6 +54,7 @@ class CandidateBatchController:
 
     def preview(self):
         d=self.d
+        if d.running or d.window.busy:d.status.setText('原背景工作進行中，保留此批固定範圍，稍後再預檢');return
         try:
             d.valid_context()
             if d.running or d.window.busy:raise ValueError('原背景工作進行中，稍後再預檢')
