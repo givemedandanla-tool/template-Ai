@@ -8,6 +8,7 @@ from pathlib import Path
 from xml.etree import ElementTree
 from PySide6.QtGui import QImageReader
 from .training_store import digest
+from .background import file_digest
 from .logo_assets import geometry,errors as logo_errors
 
 MAX_PIXELS=24_000_000
@@ -30,7 +31,8 @@ def scope(candidate,format,dpi):
     from .candidate_risk import engine_digest
     from .layout import layout_dependency
     spec=options(candidate,format,dpi);logos={str(i):p.logo for i,p in enumerate(candidate.items) if p.logo}
-    value=dict(**spec,template_digest=digest(candidate.template.to_dict()),items_digest=digest([asdict(p) for p in candidate.items]),generation=candidate.generation,input_digest=candidate.risk_context.get('input_digest'),risk_digest=candidate.risk['digest'],engine_digest=engine_digest(),dependency=layout_dependency(candidate.template,logos))
+    validation_code=digest({name:file_digest(Path(__file__).with_name(name)) for name in ('digital_preflight.py','digital_output_proof.py','digital_preflight_panel.py','preflight_detail.py') if Path(__file__).with_name(name).exists()})
+    value=dict(**spec,validation_code=validation_code,template_digest=digest(candidate.template.to_dict()),items_digest=digest([asdict(p) for p in candidate.items]),generation=candidate.generation,input_digest=candidate.risk_context.get('input_digest'),risk_digest=candidate.risk['digest'],engine_digest=engine_digest(),dependency=layout_dependency(candidate.template,logos))
     value['digest']=digest(value);return value
 
 

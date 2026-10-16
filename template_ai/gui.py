@@ -726,6 +726,7 @@ class MainWindow(QMainWindow):
         self.issues.setWordWrap(True)
         layout.addWidget(self.issues)
         self.button("候選問題報告", lambda: self.diagnostic_report("candidate"), layout)
+        self.button('印前檢查／Logo實際輸出比對',self.digital_preflight,layout)
         row = QHBoxLayout()
         self.dpi = QSpinBox()
         self.dpi.setRange(72, 600)
@@ -2076,6 +2077,7 @@ class MainWindow(QMainWindow):
             self.output_properties.appendPlainText('\n逐項Gate：\n'+'\n'.join(x['status']+' · '+x['reason'] for x in risk['conditions'])+'\n輸入快照 '+str(risk['input_digest'])[:16]+'\n引擎／規則 '+str(risk['engine_digest'])[:16]+'\n資產依賴 '+str(risk['dependency_stamp'])[:16]+'\n使用依據：已核准模板與明確規則；未將排序分數當模型信心')
             self.input_state.setText(('目前所選候選已驗證合格；輸出前仍需重核有效版本。' if eligible else risk['label']+'。可修正輸入、公司與Logo配對、字型／來源或另選模板，再重新檢查；不推論所有設計都無解。') if current else '輸入／候選已變更，待重新驗證。')
             self.issues.setText(risk['label']+'\n'+'；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS')+'\n'+("數位排版檢查通過；尚未做實體印刷分析。" if eligible else "正式輸出阻擋：\n" + "\n".join(c.issues[:8])) + "\n" + "；".join(c.reasons))
+            if hasattr(self,'digital_preflight_panel'):self.digital_preflight_panel.candidate_rendered()
         except Exception as e:
             self.export_button.setEnabled(False)
             self.preview_button.setEnabled(False)
@@ -2154,6 +2156,10 @@ class MainWindow(QMainWindow):
             from .candidate_edit_dispatch import dispatcher
             dispatcher(self).submit(plan_recheck(self,row))
         except (ValueError,OSError) as error:self.error(str(error))
+
+    def digital_preflight(self):
+        from .digital_preflight_panel import open_preflight
+        return open_preflight(self)
 
     def export_current(self, preview):
         row = self.candidate_list.currentRow()
