@@ -45,3 +45,11 @@ class QualityDomainTests(unittest.TestCase):
         self.assertIsNone(result['domains']['whole_logo']['metrics']['precision']);self.assertEqual(result['domains']['whole_logo']['required_gold'],0);self.assertEqual(result['domains']['customer_style_mapping']['state'],'EVIDENCE_INSUFFICIENT')
         prediction['prediction_origin']='USER_SUPPLIED_RECORDS_NOT_EXECUTED_MODEL_INFERENCE'
         with self.assertRaises(ValueError):evaluate_source([gold],prediction,policy,complete_source_gold=True)
+
+    def test_nonfinite_physical_output_cannot_become_zero_error(self):
+        gold,prediction,policy=self.fixture();prediction['predictions'][0]['work_width']=float('nan')
+        with self.assertRaisesRegex(ValueError,'正有限'):evaluate_source([gold],prediction,policy,complete_source_gold=True)
+
+    def test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner(self):
+        gold,prediction,policy=self.fixture();prediction['predictions'][0]['slots'][0]['owner']='c1'
+        with self.assertRaisesRegex(ValueError,'ROOT類型'):evaluate_source([gold],prediction,policy,complete_source_gold=True)

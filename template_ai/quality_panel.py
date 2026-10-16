@@ -20,6 +20,7 @@ class QualityPanel(QWidget):
         bar=QHBoxLayout();self.button(bar,'設定真值／政策／版本／固定試驗',self.setup);self.button(bar,'確認保存預覽',self.confirm_preview);self.button(bar,'固定雙側加入公平佇列',self.enqueue_pair);self.button(bar,'刷新工作／品質指標',self.load_status);self.button(bar,'取消本次核對',lambda:self.cancel_event.set());layout.addLayout(bar)
         bar=QHBoxLayout();self.side=QComboBox();self.side.addItem('基準版本','BASELINE');self.side.addItem('候選版本','CANDIDATE');bar.addWidget(self.side);self.button(bar,'取消選中側工作',self.cancel_side);self.button(bar,'精確A/B比較預覽',self.compare);self.button(bar,'核准已保存品質比較憑證',self.decide);layout.addLayout(bar)
         self.report_id=QLineEdit();self.report_id.setPlaceholderText('品質比較憑證ID（保存後填入；不足／合成自驗不會核准正式品質）');layout.addWidget(self.report_id)
+        bar=QHBoxLayout();self.decision_id=QLineEdit();self.decision_id.setPlaceholderText('已接受的品質決策憑證ID（撤回保留歷史）');bar.addWidget(self.decision_id,1);self.button(bar,'撤回此品質接受／不自動回退',self.withdraw);layout.addLayout(bar)
         self.stats=QTableWidget(0,8);self.stats.setHorizontalHeaderLabels(['領域／類別','TP／FP／FN','Precision／Recall','Gold物件','正例獨立群組','失敗群組','群組失敗率區間','判定']);self.stats.setEditTriggers(QTableWidget.NoEditTriggers);layout.addWidget(self.stats,1)
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('全清單搜尋原因／來源／版本／人物／作品');self.severity=QComboBox();self.severity.addItems(['ALL','CRITICAL','ERROR','UNKNOWN']);self.domain=QComboBox();self.domain.addItem('所有領域','ALL')
         for key,label in LABELS.items():self.domain.addItem(label,key)
@@ -30,9 +31,11 @@ class QualityPanel(QWidget):
         for key,label in (('size','尺寸如90x54'),('people','人數容量'),('logo','Logo類型'),('customer','客戶ID'),('group','獨立群組ID'),('role','資料角色'),('multi_work','多作品YES／NO')):
             field=QLineEdit();field.setPlaceholderText(label);bar.addWidget(field);self.facets[key]=field
         layout.addLayout(bar)
-        self.table=QTableWidget(0,4);self.table.setHorizontalHeaderLabels(['嚴重度／領域','來源／作品','分類／原因','位置／歸屬']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.SingleSelection);self.table.cellDoubleClicked.connect(lambda *_:self.detail());layout.addWidget(self.table,1)
+        self.table=QTableWidget(0,4);self.table.setHorizontalHeaderLabels(['嚴重度／領域','來源／作品','分類／原因','位置／歸屬']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.SingleSelection);self.table.cellDoubleClicked.connect(lambda *_:self.guarded(self.detail));layout.addWidget(self.table,1)
         bar=QHBoxLayout();self.button(bar,'前50筆',lambda:self.cases(-50));self.button(bar,'後50筆',lambda:self.cases(50));self.button(bar,'原稿：人工真值 vs 實際AI框',self.detail);self.component=QComboBox();self.component.addItems(['PARSER','MODEL','RULE']);bar.addWidget(self.component);self.rule=QLineEdit();self.rule.setPlaceholderText('規則版本ID（僅規則重審）');bar.addWidget(self.rule);self.button(bar,'預覽UI-052跨歷史批次重審',self.recheck);layout.addLayout(bar)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setMaximumHeight(155);layout.addWidget(self.details)
+        bar=QHBoxLayout();self.quarantine_query=QLineEdit();self.quarantine_query.setPlaceholderText('全庫搜尋待重審作品／案例');self.quarantines=QComboBox();bar.addWidget(self.quarantine_query);bar.addWidget(self.quarantines,1);self.button(bar,'搜尋重審項（最多50）',self.list_quarantines);self.button(bar,'預覽逐件解除隔離',self.preview_resolution);self.button(bar,'開啟選中來源事實核對',self.source_facts);layout.addLayout(bar)
+        self.review_evidence=QLineEdit();self.review_evidence.setPlaceholderText('逐件新事實與原稿對照證據（解除隔離必填；不解除模型品質隔離）');layout.addWidget(self.review_evidence);self.recheck_item=None;self.impact_rows=[];self.impact_offset=0;self.impact_mode=False
 
     def button(self,bar,label,fn):
         button=QPushButton(label);button.clicked.connect(lambda:self.guarded(fn));bar.addWidget(button);return button
@@ -93,14 +96,18 @@ class QualityPanel(QWidget):
             scope=value['scope'];lines=[scope['name'],f"Gold作品{scope['gold_work_count']}／物件{scope['gold_object_count']}／來源檔{scope['source_file_count']}／獨立群組{scope['independent_groups']}",f"固定集 {scope['dataset_id']}／政策 {scope['policy_id']}"]+[side+'：'+row['id']+'／'+row['manifest_digest'] for side,row in scope['pipelines'].items()]
         elif kind=='REPORT':lines=[value['conclusion'],f"公平比較：{value['fair_comparison']}；可作正式品質決策：{value['candidate_decision_eligible']}",f"觀察到修復案例{len(value['fixed_cases'])}／新案例{len(value['new_cases'])}／尚存{len(value['unresolved_cases'])}",f"新重大錯誤：{value['new_critical_errors']}；類別退步：{value['class_regressions']}",f"固定分母：{value['denominators']}",'修復數量不等於統計顯著進步；逐案答案需另行明確揭露。']
         elif kind=='RECHECK':lines=[f"共通重大錯誤：{value['critical_errors']}",f"歷史影響候選{len(value['rows'])}／失聯{len(value['missing_historical_work_ids'])}",f"缺少舊依賴版本的候選{sum(r['legacy_dependency_versions_unknown'] for r in value['rows'])}；不是已證實錯誤，須逐件重審。",'確認後隔離受影響作品／樣本，包含歷史已結案。保留原稿、客戶、已發布模板與舊收據；不宣稱模型已去污染。']
+        elif kind=='RESOLVE':
+            row=value['row'];self.recheck_item=row;lines=[f"作品{row['work_id']}／隔離r{row['revision']}／案例{row['case_id']}",f"隔離時事實r{row['facts_revision']}；目前r{value['current_facts_revision']}／{value['current_facts_state']}",'需比隔離時更新且已人工確認的來源事實；只解除此件，模型品質隔離與舊接受不會自動恢復。']
         else:lines=['已保存本機版本／憑證：'+str(value.get('id','')),'此操作不代表模型已通過品質或模板／規則已發布。']
         self.details.setPlainText('\n'.join(lines));self.status.setText('預覽已取得；核對範圍後明確保存' if kind else '本機版本已保存，品質尚待固定獨立試驗')
+        if kind=='RECHECK':self.impact_rows=value['rows'];self.impact_offset=0;self.show_impact()
 
     def confirm_preview(self):
         if not self.pending:raise ValueError('先取得本次預覽')
         kind,plan=self.pending
         if QMessageBox.question(self,'確認本次具名範圍','已核對以上來源、合法用途、版本及影響？此操作保存本次預覽。')!=QMessageBox.Yes:return
         if kind=='RECHECK':command='CONFIRM_RECHECK';payload=dict(plan=plan,actor=self.actor.text(),reason=self.reason.text(),approved=True)
+        elif kind=='RESOLVE':command='RESOLVE_RECHECK';payload=dict(quarantine_id=plan['row']['id'],revision=plan['row']['revision'],actor=self.actor.text(),reason=self.reason.text(),evidence=self.review_evidence.text(),approved=True)
         else:command='CONFIRM';payload=dict(kind=kind,plan=plan,actor=self.actor.text(),approved=True)
         def saved(value):
             self.pending=None;self.previewed(None,value)
@@ -148,7 +155,43 @@ class QualityPanel(QWidget):
 
     def decide(self):
         if QMessageBox.question(self,'明確品質決策','核准所填比較憑證的候選版本為品質依據？不覆寫舊安全版本、原稿、客戶或已發布模板。')!=QMessageBox.Yes:return
-        self.request('DECIDE',dict(report_id=self.report_id.text().strip(),actor=self.actor.text(),reason=self.reason.text(),approved=True),lambda value:self.previewed(None,value))
+        def saved(value):self.decision_id.setText(value['id']);self.previewed(None,value)
+        self.request('DECIDE',dict(report_id=self.report_id.text().strip(),actor=self.actor.text(),reason=self.reason.text(),approved=True),saved)
+
+    def withdraw(self):
+        if QMessageBox.question(self,'撤回品質接受','撤回所填品質決策？舊憑證與正式資料保留，不會把其他舊版本自動當安全替代。')!=QMessageBox.Yes:return
+        self.request('WITHDRAW_DECISION',dict(decision_id=self.decision_id.text().strip(),actor=self.actor.text(),reason=self.reason.text(),approved=True),lambda value:self.previewed(None,value))
+
+    def list_quarantines(self):
+        def loaded(value):
+            self.quarantines.clear()
+            for row in value['rows']:self.quarantines.addItem(row['label']+'／'+row['state']+'／'+row['id'][:12],row['id'])
+            self.status.setText(f"符合重審項共{value['total']}；顯示最多50。縮小搜尋可定位其餘歷史項。")
+        self.request('LIST',dict(kind='QUALITY_WORK_QUARANTINE',query=self.quarantine_query.text()),loaded)
+
+    def preview_resolution(self):
+        if not self.quarantines.currentData():raise ValueError('先搜尋並選取逐件重審項')
+        self.request('RECHECK_ITEM',dict(identity=self.quarantines.currentData()),lambda value:self.previewed('RESOLVE',value))
+
+    def source_facts(self):
+        work_id=self.recheck_item['work_id'] if self.recheck_item else None
+        selected=self.table.selectionModel().selectedRows()
+        if selected and self.impact_mode:work_id=self.impact_rows[self.impact_offset+selected[0].row()]['work_id']
+        elif selected and self.rows and selected[0].row()<len(self.rows):work_id=self.rows[selected[0].row()]['case'].get('work_id') or work_id
+        if not work_id:raise ValueError('先選取具名作品案例／預覽逐件重審項')
+        from .training_navigation import require_clean_navigation,locate_work
+        require_clean_navigation(self.window);locate_work(self.window,work_id)
+        parent=self.parentWidget()
+        while parent is not None and not hasattr(parent,'facts_panel'):parent=parent.parentWidget()
+        if parent is not None:parent.facts_panel.focus(work_id,[]);parent.tabs.setCurrentWidget(parent.facts_panel)
+        self.status.setText('已定位原作品／來源事實；需人工核對保存後回來刷新重審，未自動修改。')
+
+    def show_impact(self):
+        self.impact_mode=True;self.rows=[];rows=self.impact_rows[self.impact_offset:self.impact_offset+50];self.table.setRowCount(len(rows))
+        for index,row in enumerate(rows):
+            values=['版本待核對' if row['legacy_dependency_versions_unknown'] else '已記錄版本關聯',row['source_id']+'／'+row['work_id'],'歷史批次：'+','.join(row['batch_ids']),'事實r'+str(row['facts_revision'])+'／樣本'+str(len(row['samples']))]
+            for column,text in enumerate(values):self.table.setItem(index,column,QTableWidgetItem(text))
+        self.status.setText(f"重審影響候選{len(self.impact_rows)}；本頁{len(rows)}；含歷史已結案。先核對清單再確認。")
 
     def expose(self):
         role=self.store.get('QUALITY_PROTOCOL',self.selected())['scope'].get('evaluation_role','HOLDOUT')
@@ -157,6 +200,9 @@ class QualityPanel(QWidget):
         self.request('EXPOSE',dict(identity=self.selected(),actor=self.actor.text(),reason=self.reason.text(),approved=True),lambda _:self.cases(0))
 
     def cases(self,delta):
+        if self.impact_mode and delta:
+            self.impact_offset=max(0,min(max(0,len(self.impact_rows)-1)//50*50,self.impact_offset+delta));self.show_impact();return
+        self.impact_mode=False
         offset=max(0,self.offset+delta) if delta else 0
         def loaded(value):
             self.offset=value['offset'];self.rows=value['rows'];self.table.setRowCount(len(self.rows))
@@ -167,6 +213,7 @@ class QualityPanel(QWidget):
         self.request('DIAGNOSTICS',dict(protocol_id=self.selected(),side=self.side.currentData(),offset=offset,query=self.search.text(),severity=self.severity.currentText(),domain=self.domain.currentData(),field_type=self.field.currentText(),facets={key:widget.text().strip() for key,widget in self.facets.items() if widget.text().strip()}),loaded)
 
     def detail(self):
+        if self.impact_mode:return self.source_facts()
         selected=self.table.selectionModel().selectedRows()
         if not selected:raise ValueError('先選取一個診斷案例')
         row=self.rows[selected[0].row()]

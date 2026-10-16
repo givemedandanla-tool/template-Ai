@@ -48,6 +48,10 @@ def execute(root,command,payload):
         if command=='DIAGNOSTICS':return QualityDiagnostics(library).page(**payload)
         if command=='DIAGNOSTIC_DETAIL':return QualityDiagnostics(library).detail(**payload)
         if command=='PLAN_RECHECK':return QualityRechecks(library).plan(**payload)
+        if command=='RECHECK_ITEM':
+            row=store.get('QUALITY_WORK_QUARANTINE',payload['identity'])
+            if not row:raise ValueError('逐件重審項已失聯')
+            return dict(row=row,current_facts_revision=store.facts(row['work_id'])['revision'],current_facts_state=store.facts_state(row['work_id']))
         if command=='CONFIRM_RECHECK':return QualityRechecks(library).confirm(**payload)
         if command=='RESOLVE_RECHECK':return QualityRechecks(library).resolve(**payload)
         raise ValueError('品質操作不支援')

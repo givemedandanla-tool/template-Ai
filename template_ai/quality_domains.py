@@ -1,5 +1,8 @@
 """Per-source diagnostic counts. Unknown truth/capabilities never become perfect scores."""
 from collections import Counter
+import math
+import re
+from .model import KINDS
 from .quality_gold import DOMAINS
 from .quality_metrics import match_boxes,classification_metrics,counts
 
@@ -16,6 +19,9 @@ def predicted_objects(work):
     slots={row['id']:row for row in work.get('slots',[])};result=[]
     for observation in work.get('observations',[]):
         slot=slots.get(observation.get('slot_id'));kind=slot['kind'] if slot else observation.get('classification','UNKNOWN')
+        if slot:
+            owner=slot.get('owner');prefix='c' if kind in ('company','logo') else 'p' if kind in ('name','title') else '[pc]'
+            if kind not in KINDS or not isinstance(owner,str) or not re.fullmatch(prefix+r'[1-9][0-9]*',owner):raise ValueError('實際預測ROOT類型／識別不合法，不能用任意同名ROOT映成正解')
         obj=dict(id=observation['id'],kind=kind,owner=slot.get('owner') if slot else None,rect=observation['region'],object_type=observation.get('object_type'),text=observation.get('text',''),component_prediction=observation.get('component_prediction'))
         if 'component_text_predictions' in observation:obj['component_text_predictions']=observation['component_text_predictions']
         result.append(obj)
@@ -50,6 +56,9 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
     if not prediction or prediction.get('prediction_origin')!='ACTUAL_EXECUTED_SOURCE_ANALYSIS_NO_GOLD_ARGUMENT':raise ValueError('此品質驗收只接受實際source-only執行結果，不能把手填分類當模型推論')
     if any(g['source_hash']!=prediction['source_hash'] or g['source_id']!=prediction['source_id'] or g['source_page']!=prediction['source_page'] for g in golds):raise ValueError('gold與預測不是同一exact來源頁／內容版本')
     works=prediction['predictions'];gold_by={g['work_id']:g for g in golds};pred_by={p['key']:p for p in works}
+    if len(pred_by)!=len(works) or len(works)>100:raise ValueError('實際預測作品ID重複或超過100作品預算')
+    for work in works:
+        if any(type(work.get(key)) not in (int,float) or not math.isfinite(work[key]) or work[key]<=0 for key in ('work_width','work_height')):raise ValueError('實際預測物理尺寸需正有限數值，NaN不能當零誤差通過')
     paired=match_boxes([dict(id=g['work_id'],rect=g['crop']) for g in golds],[dict(id=p['key'],rect=p['crop']) for p in works],policy['matching_iou'])
     truth=lambda domain:complete_source_gold and all(g['domain_truth'][domain]=='MANUALLY_VERIFIED' for g in golds)
     cases=[];critical=Counter();class_counts={};person=[0,0,0];company=[0,0,0];owner_unknown=0;person_unknown=0;company_unknown=0;root_missing=0;mm_errors=[]
