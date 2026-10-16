@@ -15,12 +15,17 @@ class SessionSignals(QObject):
     finished=Signal(object)
 
 class LayoutWorker(QRunnable):
-    def __init__(self,templates,people,companies,logos,generation,pause,cancel,admission=None):
-        super().__init__();self.setAutoDelete(False);self.templates=templates;self.people=people;self.companies=companies;self.logos=logos;self.generation=generation;self.pause=pause;self.cancel=cancel;self.signals=SessionSignals();self.admission=admission
+    def __init__(self,templates,people,companies,logos,generation,pause,cancel,admission=None,completed=None,library_root=None):
+        super().__init__();self.setAutoDelete(False);self.templates=templates;self.people=people;self.companies=companies;self.logos=logos;self.generation=generation;self.pause=pause;self.cancel=cancel;self.signals=SessionSignals();self.admission=admission;self.completed=list(completed or []);self.library_root=library_root
     def run(self):
-        rows=[];state='COMPLETED'
+        library=None;source_cache={}
+        if self.library_root:
+            from .storage import Library
+            library=Library(self.library_root)
+        rows=list(self.completed);checked={row.get('template_id') for row in rows};state='COMPLETED'
         try:
             for i,t in enumerate(self.templates):
+                if t.id in checked:continue
                 waiting=None
                 while not self.cancel.is_set():
                     decision=self.admission() if self.admission else None
@@ -34,12 +39,20 @@ class LayoutWorker(QRunnable):
                 def phase(name,slot_id=None):self.signals.progress.emit(dict(phase=name,index=i,total=len(self.templates),template_id=t.id,slot_id=slot_id))
                 try:
                     c=generate(t,self.people,self.companies,self.logos,self.generation,progress=phase)
+                    c.risk_context['source_template_pin']=dict(id=t.id,version=t.version,digest=digest(t.to_dict()))
+                    if library:
+                        from .candidate_risk import verify_original_source
+                        try:verify_original_source(c,library,source_cache)
+                        except (ValueError,OSError):pass
+                        bind_source(c,library,require_registered=True)
                     row=dict(candidate=c,template_id=t.id,state='CALCULATED_PENDING_ADOPTION')
                 except Exception as error:row=dict(candidate=None,template_id=t.id,state='FAILED',error=str(error))
-                rows.append(row);self.signals.progress.emit(dict(phase='ITEM_FINISHED',index=i+1,total=len(self.templates),row=row))
+                rows.append(row);self.signals.progress.emit(dict(phase='ITEM_FINISHED',index=len(rows),total=len(self.templates),row=row))
             if self.cancel.is_set():state='CANCELLED'
         except Exception as error:state='FAILED_SYSTEM';rows.append(dict(candidate=None,state='FAILED_SYSTEM',error=str(error)))
-        finally:self.signals.finished.emit(dict(state=state,rows=rows))
+        finally:
+            if library:library.close()
+            self.signals.finished.emit(dict(state=state,rows=rows))
 
 
 def canvas_stamp(window):
@@ -56,7 +69,7 @@ class LayoutSessionDialog(QDialog):
         self.pause_button=QPushButton('暫停');self.pause_button.clicked.connect(self.pause);bar.addWidget(self.pause_button);self.resume_button=QPushButton('繼續');self.resume_button.clicked.connect(self.resume);bar.addWidget(self.resume_button);self.cancel_button=QPushButton('取消此次計算');self.cancel_button.clicked.connect(self.cancel);bar.addWidget(self.cancel_button);self.adopt_button=QPushButton('明確採用已算候選至既有畫布');self.adopt_button.clicked.connect(self.adopt);bar.addWidget(self.adopt_button);self.preview_button=QPushButton('預覽已算部分候選');self.preview_button.clicked.connect(self.preview_selected);bar.addWidget(self.preview_button);self.report_button=QPushButton('當次進度／問題報告');self.report_button.clicked.connect(self.report);bar.addWidget(self.report_button);l.addLayout(bar)
         recovery_bar=QHBoxLayout();self.save_recovery_button=QPushButton('安全停止後加密暫存（24小時）');self.save_recovery_button.clicked.connect(self.save_recovery);recovery_bar.addWidget(self.save_recovery_button);self.restore_button=QPushButton('恢復上一次未完成的排版？');self.restore_button.clicked.connect(self.restore_recovery);recovery_bar.addWidget(self.restore_button);self.clear_recovery_button=QPushButton('放棄並清除暫存');self.clear_recovery_button.clicked.connect(self.clear_recovery);recovery_bar.addWidget(self.clear_recovery_button);l.addLayout(recovery_bar);self.controls()
     def controls(self):
-        self.start_button.setEnabled(not self.running);self.pause_button.setEnabled(self.running and not self.pause_event.is_set());self.resume_button.setEnabled(self.running and self.pause_event.is_set());self.cancel_button.setEnabled(self.running);self.adopt_button.setEnabled(any(r.get('candidate') for r in self.rows));self.preview_button.setEnabled(any(r.get('candidate') for r in self.rows))
+        self.start_button.setEnabled(not self.running);self.pause_button.setEnabled(self.running and not self.pause_event.is_set());self.resume_button.setEnabled((self.running and self.pause_event.is_set()) or (not self.running and self.report_state=='CANCELLED' and self.worker is not None));self.cancel_button.setEnabled(self.running);self.adopt_button.setEnabled(any(r.get('candidate') for r in self.rows));self.preview_button.setEnabled(any(r.get('candidate') for r in self.rows))
         self.save_recovery_button.setEnabled(not self.running and self.report_state=='CANCELLED' and bool(self.worker));self.restore_button.setEnabled(not self.running);self.clear_recovery_button.setEnabled(not self.running)
     def start(self,auto_apply=False):
         if self.running or self.window.busy:self.status.setText('已有背景工作；未開始');return
@@ -66,9 +79,9 @@ class LayoutSessionDialog(QDialog):
             from .diagnostic_snapshot import selected_templates
             for t in selected_templates(w):
                 if (t.width_mm,t.height_mm)!=self.size or t.capacity!=len(self.people) or (getattr(w,'reorder_template_id',None) and w.reorder_template_id!=t.id):continue
-                w.library._template_provenance(t);templates.append(copy.deepcopy(t))
+                templates.append(copy.deepcopy(t))
             if len(templates)>200:raise ValueError('超過單次200候選預算；請縮小模板範圍，未開始亦未宣稱全部檢查')
-            self.template_digests={t.id:digest(t.to_dict()) for t in templates};self.rows=[];self.list.clear();self.pause_event.clear();self.cancel_event.clear();self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event,lambda:w.runtime.admit('GEOMETRY',foreground=True));self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.report_state='RUNNING';self.running=True;w.busy=True;self.controls();self.status.setText(f'已核對{len(templates)}個同尺寸同容量模板，單worker；未遍歷完成前不是全域最佳')
+            self.template_digests={t.id:digest(t.to_dict()) for t in templates};self.rows=[];self.list.clear();self.pause_event.clear();self.cancel_event.clear();self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event,lambda:w.runtime.admit('GEOMETRY',foreground=True),library_root=w.library.root);self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.report_state='RUNNING';self.running=True;w.busy=True;self.controls();self.status.setText(f'已核對{len(templates)}個同尺寸同容量模板，單worker；未遍歷完成前不是全域最佳')
             try:w.pool.start(self.worker)
             except BaseException:self.running=False;w.busy=False;self.controls();raise
         except Exception as e:self.report_state='FAILED_SYSTEM';self.rows=[];self.worker=None;self.status.setText('未開始：'+str(e));self.controls()
@@ -95,6 +108,14 @@ class LayoutSessionDialog(QDialog):
     def resume(self):
         try:self.check_current()
         except ValueError as error:self.status.setText('不能續算：'+str(error));return
+        if not self.running:
+            self.rows=[r for r in self.rows if r.get('state')!='STALE_RECALCULATE'];self.list.clear()
+            for row in self.rows:self.list.addItem(row.get('template_id','?')+' · '+row['state'])
+            self.cancel_event.clear();self.pause_event.clear();w=self.window
+            self.worker=LayoutWorker(self.worker.templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event,lambda:w.runtime.admit('GEOMETRY',foreground=True),completed=self.rows,library_root=w.library.root)
+            self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.running=True;self.report_state='RUNNING';w.busy=True
+            try:w.pool.start(self.worker)
+            except BaseException:self.running=False;w.busy=False;self.controls();raise
         self.pause_event.clear();self.controls()
     def cancel(self):
         self.cancel_event.set();self.pause_event.clear();self.status.setText('正在安全取消；已完成計算仍保留，未聲稱撤銷');self.controls()
@@ -103,7 +124,12 @@ class LayoutSessionDialog(QDialog):
             w=self.window
             if canvas_stamp(w)!=getattr(self,'canvas_stamp',canvas_stamp(w)):raise ValueError('目前畫布已有人工修正／新結果，保留差異，不覆寫；請取消後重新檢查')
             if w.generation!=self.generation or digest((*w.input_data(),(w.out_w.value(),w.out_h.value())))!=self.input_digest:raise ValueError('輸入／人工版本已改變；結果過期')
-            current={t.id:t for t in w.library.templates(True)};results=[r['candidate'] for r in self.rows if r['candidate']]
+            current={}
+            for saved in self.worker.templates:
+                try:template=Template.from_dict(w.library.object_snapshot('TEMPLATE',saved.id)['payload'])
+                except ValueError:continue
+                if template.state=='published':current[template.id]=template
+            results=[r['candidate'] for r in self.rows if r.get('candidate')]
             for c in results:
                 t=current.get(c.template.id)
                 if not t or digest(t.to_dict())!=self.template_digests[t.id]:raise ValueError('模板版本已改變；需重算')
@@ -122,7 +148,11 @@ class LayoutSessionDialog(QDialog):
     def check_current(self):
         w=self.window
         if w.generation!=self.generation or digest((*w.input_data(),(w.out_w.value(),w.out_h.value())))!=self.input_digest:raise ValueError('輸入版本已改變，需重新開始')
-        current={t.id:t for t in w.library.templates(True)}
+        current={}
+        for saved in self.worker.templates:
+            try:template=Template.from_dict(w.library.object_snapshot('TEMPLATE',saved.id)['payload'])
+            except ValueError:continue
+            if template.state=='published':current[template.id]=template
         for t in self.worker.templates:
             if t.id not in current or digest(current[t.id].to_dict())!=self.template_digests[t.id]:raise ValueError('模板版本已改變，需重新計算')
             w.library._template_provenance(current[t.id])

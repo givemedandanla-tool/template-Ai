@@ -31,11 +31,31 @@ def assess(candidate):
     result['digest']=digest(result);return result
 
 
-def bind_source(candidate,library,conditions=None):
-    context=copy.deepcopy(candidate.risk_context);context['conditions']=copy.deepcopy(conditions if conditions is not None else [x for x in context.get('conditions',[]) if x['id']!='SOURCE_AND_QUALITY_TRUST']);context['basis']=['EXACT_PUBLISHED_TEMPLATE','CURRENT_EXPLICIT_SOURCE_AND_GEOMETRY_PROVENANCE']
+def bind_source(candidate,library,conditions=None,require_registered=False):
+    context=copy.deepcopy(candidate.risk_context);context['conditions']=copy.deepcopy(conditions if conditions is not None else [x for x in context.get('conditions',[]) if x['id'] not in ('SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES')]);context['basis']=['EXACT_PUBLISHED_TEMPLATE','CURRENT_EXPLICIT_SOURCE_AND_GEOMETRY_PROVENANCE']
     try:library._template_provenance(candidate.template)
     except (ValueError,OSError) as error:context['conditions'].append(dict(id='SOURCE_AND_QUALITY_TRUST',status='UNKNOWN',reason=str(error)))
     else:context['conditions'].append(dict(id='SOURCE_AND_QUALITY_TRUST',status='PASS',reason='現行模板與來源／標記／必要用途已核對'))
+    pinned=context.get('source_template_pin')
+    if require_registered or pinned:
+        try:
+            source=library.object_snapshot('TEMPLATE',candidate.template.id)['payload']
+            if source.get('state')!='published':raise ValueError('來源模板已不再發布')
+            expected=dict(id=source['id'],version=source['version'],digest=digest(source))
+            if pinned is not None and pinned!=expected:raise ValueError('已核准來源模板exact版本已變更，需重新選擇／核對')
+            if pinned is None:
+                if digest(candidate.template.to_dict())!=expected['digest']:raise ValueError('局部版面缺已核對來源版本與人工更動憑證')
+                context['source_template_pin']=expected
+        except (ValueError,OSError,KeyError) as error:context['conditions'].append(dict(id='EXACT_PUBLISHED_SOURCE_VERSION',status='UNKNOWN',reason=str(error)))
+        else:context['conditions'].append(dict(id='EXACT_PUBLISHED_SOURCE_VERSION',status='PASS',reason='來源已發布模板exact版次仍一致；本次幾何另受整張Gate核對'))
+    if candidate.template.source_id:
+        try:
+            source=library.source(candidate.template.source_id);proof=context.get('original_source_proof')
+            from .source_links import fingerprint
+            from pathlib import Path
+            if not proof or proof['hash']!=source['hash'] or proof['path']!=str(Path(source['current_path']).resolve()) or proof['link_revision']!=source['link_revision'] or tuple(proof['stat'])!=fingerprint(Path(proof['path']).stat()):raise ValueError('原稿內容／路徑／連結版次缺當次背景核實憑證或已變更，需重新排版')
+        except (ValueError,OSError,KeyError) as error:context['conditions'].append(dict(id='ORIGINAL_SOURCE_BYTES',status='UNKNOWN',reason=str(error)))
+        else:context['conditions'].append(dict(id='ORIGINAL_SOURCE_BYTES',status='PASS',reason='原稿SHA-256／byte長度／檔案指紋與當次背景核實一致'))
     candidate.risk_context=context;return assess(candidate)
 
 
@@ -83,3 +103,16 @@ def freshness_conditions(candidate):
 def valid_approved_base(base):
     # A bare flag, score, or user acceptance is never an approval receipt.
     return isinstance(base,dict) and base.get('state')=='published' and bool(base.get('id')) and isinstance(base.get('version'),int) and base.get('digest')==digest(base.get('payload')) and isinstance(base.get('payload'),dict) and base['payload'].get('state')=='published'
+
+
+def verify_original_source(candidate,library,cache=None):
+    if not candidate.template.source_id:return
+    from .source_links import verify_source,fingerprint
+    from pathlib import Path
+    source=library.source(candidate.template.source_id);path=Path(source['current_path']).resolve();stamp=fingerprint(path.stat());identity=(str(path),source['hash'],stamp)
+    proof=(cache or {}).get(identity)
+    if proof is None:
+        proof=verify_source(path,source['hash'])
+        if proof.stat[2]!=source['byte_size']:raise ValueError('原稿byte長度與內容目錄不符')
+        if cache is not None:cache[identity]=proof
+    candidate.risk_context['original_source_proof']=dict(path=proof.path,hash=proof.hash,stat=list(proof.stat),link_revision=source['link_revision'])

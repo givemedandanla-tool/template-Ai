@@ -7,6 +7,9 @@ os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication,QMessageBox,QTableWidgetItem
 from PySide6.QtTest import QTest
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tests'))
+from gui_wait import wait_layout
+
 from template_ai.gui import MainWindow
 from template_ai.automatic_training_dialog import AutomaticTrainingDialog
 from template_ai.annotation_dialog import AnnotationDialog
@@ -54,7 +57,7 @@ def capture(folder):
         graph=InputGraph.from_legacy([dict(name=['Alex Example'],title=['Designer'])],[]);entry=InputGraphDialog(window,graph.data);fid=next(f['id'] for f in graph.data['fields'] if f['kind']=='name');entry.field_editors[fid].setText('W'*200);entry.pending_input[fid]='W'*200;entry.refresh_warnings();assert entry.warning_report['issues'];shot(entry,'next28-live-input-field-warning.png');entry.warning_timer.stop();audit['text_and_input']=dict(point_size_unchanged=True,tracking_preview_not_applied=True,inline_warning_and_exact_field_ids=True,estimated_risk_not_global_unsolvable=True)
         good=demo_template();good.name='Qualified synthetic';bad=demo_template();bad.name='Narrow diagnostic';bad.slots[0].rect.w=20;window.library.publish(good);window.library.publish(bad);window.people.setRowCount(1)
         for col,value in enumerate(('Alex Example','Designer','123','a@example.test','','','','')):window.people.setItem(0,col,QTableWidgetItem(value))
-        window.tabs.setCurrentIndex(2);window.generate();assert window.qualified_candidates.count() and window.blocked_candidates.count();shot(window,'next28-qualified-diagnostic-separate.png');audit['candidates']=dict(qualified=window.qualified_candidates.count(),diagnostic=window.blocked_candidates.count(),separate_sections=True)
+        window.tabs.setCurrentIndex(2);window.generate();wait_layout(window);assert window.qualified_candidates.count() and window.blocked_candidates.count();shot(window,'next28-qualified-diagnostic-separate.png');audit['candidates']=dict(qualified=window.qualified_candidates.count(),diagnostic=window.blocked_candidates.count(),separate_sections=True)
     finally:close(window);versions.doCleanups()
     custom=custom_fixture.CustomLayoutTests();custom.setUp();window=None
     try:

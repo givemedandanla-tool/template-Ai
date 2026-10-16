@@ -78,7 +78,9 @@ class LayoutRecovery:
             restored=copy.deepcopy(row)
             if row.get('candidate'):
                 candidate=decode_candidate(row['candidate']);template=current.get(candidate.template.id)
-                if not template or digest(template.to_dict())!=digest(candidate.template.to_dict()):restored.update(candidate=None,state='STALE_RECALCULATE',reason='模板版本已改變／失聯')
+                pin=candidate.risk_context.get('source_template_pin')
+                expected=dict(id=template.id,version=template.version,digest=digest(template.to_dict())) if template else None
+                if not template or (pin!=expected if pin else digest(template.to_dict())!=digest(candidate.template.to_dict())):restored.update(candidate=None,state='STALE_RECALCULATE',reason='模板版本已改變／失聯')
                 else:
                     bind_source(candidate,library)
                     freshness=[c for c in candidate.risk['conditions'] if c['id']=='SNAPSHOT_FRESHNESS']

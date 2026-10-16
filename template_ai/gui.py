@@ -576,7 +576,11 @@ class MainWindow(QMainWindow):
         size_row.addWidget(self.out_w)
         size_row.addWidget(self.out_h)
         self.button("開始自動排版", self.generate, size_row)
-        self.button("當次單worker／暫停取消", self.layout_session, size_row)
+        self.layout_session_button=self.button("當次單worker／暫停取消／短期恢復", self.layout_session, size_row)
+        from .layout_recovery import LayoutRecovery
+        try:
+            if LayoutRecovery(self.library.root).pending():self.layout_session_button.setText("恢復上一次未完成的排版？")
+        except (OSError,ValueError):self.layout_session_button.setText("短期恢復暫存需核實／清除")
         self.button('多尺寸驗證／部分輸出',self.multi_size,size_row)
         self.button("解除重訂版型限定", self.clear_reorder_filter, size_row)
         self.button("當次候選局部修改", self.candidate_editor, size_row)
@@ -680,9 +684,9 @@ class MainWindow(QMainWindow):
 
     def layout_session(self):
         from .layout_session import LayoutSessionDialog
-        dialog=LayoutSessionDialog(self)
-        try:dialog.exec()
-        finally:dialog.deleteLater()
+        dialog=getattr(self,'foreground_layout_session',None)
+        if dialog is None:dialog=LayoutSessionDialog(self);self.foreground_layout_session=dialog
+        dialog.show();dialog.raise_()
 
     def build_properties(self):
         widget = QWidget()
@@ -1852,7 +1856,7 @@ class MainWindow(QMainWindow):
         c = self.candidates[row]
         try:
             from .candidate_risk import bind_source
-            bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id']!='SOURCE_AND_QUALITY_TRUST'])
+            bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id'] not in ('SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES')],require_registered=True)
             risk=c.risk;eligible=risk['formal_allowed'];self.refresh_candidate_views(row)
             image = render_image(c, 150, not eligible)
             from .render import preview_height
@@ -1888,7 +1892,10 @@ class MainWindow(QMainWindow):
             from .layout import generate
             old=self.candidates[row];people,companies,logos=self.input_data()
             candidate=generate(copy.deepcopy(old.template),people,companies,logos,self.generation)
-            bind_source(candidate,self.library);self.candidates[row]=candidate;self.choose_candidate(row)
+            if old.risk_context.get('original_source_proof'):candidate.risk_context['original_source_proof']=copy.deepcopy(old.risk_context['original_source_proof'])
+            if old.risk_context.get('source_template_pin'):candidate.risk_context['source_template_pin']=copy.deepcopy(old.risk_context['source_template_pin'])
+            candidate.risk_context['conditions']=[copy.deepcopy(x) for x in old.risk_context.get('conditions',[]) if x.get('required',True) and x['id'] not in ('SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES')]
+            bind_source(candidate,self.library,require_registered=True);self.candidates[row]=candidate;self.choose_candidate(row)
         except (ValueError,OSError) as error:self.error(str(error))
 
     def export_current(self, preview):
@@ -1904,7 +1911,7 @@ class MainWindow(QMainWindow):
             return
         try:
             from .candidate_risk import bind_source
-            bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id']!='SOURCE_AND_QUALITY_TRUST'])
+            bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id'] not in ('SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES')],require_registered=True)
             export(c, path, self.dpi.value(), preview, self.generation)
             self.statusBar().showMessage("檔案已實際寫入：" + path)
         except Exception as e:

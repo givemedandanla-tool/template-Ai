@@ -21,6 +21,10 @@ def apply_candidate(window,plan,approved=False):
     if fresh!=plan:raise ValueError('候選／人工版本已改變，重新預覽')
     c=window.candidates[plan['index']];window.library._template_provenance(c.template);local=c.template.to_dict();local['state']='draft';after=propose(local,'TEMPLATE',plan['request'])['after'];after['state']=c.template.state;t=Template.from_dict(after)
     people,companies,logos=window.input_data();result=generate(t,people,companies,logos,window.generation);result.reasons.append('當次候選獨立毫米修改；其他候選／尺寸未改、發布模板未改；已重新執行數位Gate')
+    if c.risk_context.get('source_template_pin'):result.risk_context['source_template_pin']=copy.deepcopy(c.risk_context['source_template_pin'])
+    if c.risk_context.get('original_source_proof'):result.risk_context['original_source_proof']=copy.deepcopy(c.risk_context['original_source_proof'])
+    result.risk_context['conditions']=copy.deepcopy(c.risk_context.get('conditions',[]))
+    result.risk_context['manual_edit_receipt']=copy.deepcopy(plan)
     window.candidates[plan['index']]=result;window.choose_candidate(plan['index']);return result
 
 class CandidateEditDialog(QDialog):
