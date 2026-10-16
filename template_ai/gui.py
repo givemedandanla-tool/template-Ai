@@ -90,6 +90,7 @@ class Box(QGraphicsRectItem):
 
 class Canvas(QGraphicsView):
     view_changed = Signal()
+    command_status = Signal(str)
     rectangle = Signal(object)
     selected = Signal(object)
     moved = Signal(str, object)
@@ -107,6 +108,7 @@ class Canvas(QGraphicsView):
         self.rubber = None
         self.width_mm, self.height_mm = 90.0, 54.0
         self.readonly = False
+        self._ime_preedit=False
         self.scene().selectionChanged.connect(self.selection_changed)
 
     def set_content(self, width, height, image=None, slots=None, crop=None):
@@ -160,12 +162,35 @@ class Canvas(QGraphicsView):
                 self.ensureVisible(item)
 
     def keyPressEvent(self,event):
+        from .viewport_controls import canvas_has_input_focus
+        if not canvas_has_input_focus(self):event.ignore();return
+        if event.key()==Qt.Key_F1:
+            if not event.isAutoRepeat():
+                from .viewport_controls import show_canvas_help
+                show_canvas_help(self)
+            event.accept();return
+        if event.key()==Qt.Key_Escape:
+            self.cancel_gesture();event.accept();return
         if event.modifiers() & Qt.ControlModifier and event.key() in (Qt.Key_Plus,Qt.Key_Equal,Qt.Key_Minus,Qt.Key_0):
             value=self.logicalDpiX()/25.4 if event.key()==Qt.Key_0 else self.transform().m11()*(.8 if event.key()==Qt.Key_Minus else 1.25)
             self.set_zoom(value);event.accept();return
         super().keyPressEvent(event)
 
+    def cancel_gesture(self,announce=True):
+        if self.rubber is not None:self.scene().removeItem(self.rubber)
+        self.start=None;self.rubber=None
+        if announce:self.command_status.emit('結束尚未提交的畫布手勢；未放棄已保存工作或待套用欄位。')
+
+    def inputMethodEvent(self,event):
+        self._ime_preedit=bool(event.preeditString());super().inputMethodEvent(event)
+
+    def focusOutEvent(self,event):
+        self._ime_preedit=False;self.cancel_gesture(announce=False);super().focusOutEvent(event)
+
     def wheelEvent(self, event):
+        from .viewport_controls import canvas_has_input_focus
+        if not canvas_has_input_focus(self):event.ignore();return
+        if not event.angleDelta().y():event.ignore();return
         factor = 1.15 if event.angleDelta().y() > 0 else 1 / 1.15
         scale = self.transform().m11() * factor
         if 0.2 <= scale <= 500:
@@ -543,6 +568,8 @@ class MainWindow(QMainWindow):
         self.editor_tree=QTreeWidget();self.editor_tree.setHeaderLabel('人物／公司／欄位（共享引用）');self.editor_tree.setSelectionMode(QTreeWidget.ExtendedSelection);self.editor_tree.itemSelectionChanged.connect(self.editor_tree_selection);left_layout.addWidget(self.editor_tree);split.addWidget(left)
         from .object_dialog import ObjectCanvas,canvas_controls
         self.edit_canvas = ObjectCanvas();self.edit_canvas.allow_multi_drag=False
+        self.edit_canvas.content_guard=lambda operation:self.canvas_content_guard(self.edit_canvas,operation)
+        self.edit_canvas.command_status.connect(self.statusBar().showMessage)
         self.edit_canvas.selection_ids.connect(self.editor_selection)
         self.edit_canvas.drag_proposal.connect(self.editor_canvas_apply)
         self.edit_canvas.preview_proposal.connect(self.editor_canvas_preview)
@@ -1576,6 +1603,18 @@ class MainWindow(QMainWindow):
             self.template=Template.from_dict(plan['after']);self.refresh_editor();self.editor_selection(request['ids'])
             self.template_info.setText('已套用目前未發布草稿；'+'；'.join(plan['warnings']) if plan['warnings'] else '已套用目前未發布草稿；幾何與語意檢查未發現問題，輸出仍需實際資料驗證。')
         except (ValueError,TypeError,KeyError) as error:self.template_info.setText('未套用：'+str(error));self.refresh_editor()
+
+    def canvas_content_guard(self,canvas,operation):
+        from .property_context import pending_main
+        from .font_review import fingerprint
+        if self.tabs.currentIndex()!=1 or canvas is not self.edit_canvas or not self.editable():return '目前模式／畫布不可修改；請選取可編輯草稿。'
+        if self.busy:return '正在處理既有工作；本次未重複提交。'
+        if pending_main(self):return '右側仍有待套用輸入；先套用或明確放棄，未移動物件。'
+        try:
+            current=self.library.object_snapshot('TEMPLATE',self.template.id)
+            if current['revision']!=self.template_revision or fingerprint(current['payload'])!=self.template_base_hash:return '來源版本已變更；請重新核對，未使用過期選取。'
+        except (ValueError,OSError):return '來源不可用；原編輯保留，未提交。'
+        return ''
 
     def import_background(self):
         if not self.template or not self.editable() or self.busy:

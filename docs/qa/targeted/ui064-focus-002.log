@@ -1,0 +1,66 @@
+test_actual_focused_canvas_nudges_only_selected_mm_and_keeps_fixed_font (test_canvas_command_focus.CanvasCommandFocusTests.test_actual_focused_canvas_nudges_only_selected_mm_and_keeps_fixed_font) ... Fontconfig error: No writable cache directories
+ok
+test_actual_text_preedit_leaves_selected_geometry_untouched (test_canvas_command_focus.CanvasCommandFocusTests.test_actual_text_preedit_leaves_selected_geometry_untouched) ... FAIL
+test_auto_repeat_does_not_submit_any_repeated_content_transaction (test_canvas_command_focus.CanvasCommandFocusTests.test_auto_repeat_does_not_submit_any_repeated_content_transaction) ... ok
+test_ctrl_space_is_reserved_for_ime_and_never_starts_pan (test_canvas_command_focus.CanvasCommandFocusTests.test_ctrl_space_is_reserved_for_ime_and_never_starts_pan) ... ok
+test_escape_cancels_only_unsubmitted_marking_rectangle (test_canvas_command_focus.CanvasCommandFocusTests.test_escape_cancels_only_unsubmitted_marking_rectangle) ... ok
+test_ime_preedit_on_canvas_blocks_arrow_until_composition_ends (test_canvas_command_focus.CanvasCommandFocusTests.test_ime_preedit_on_canvas_blocks_arrow_until_composition_ends) ... ok
+test_locked_or_stale_source_refuses_keyboard_geometry_without_transactions (test_canvas_command_focus.CanvasCommandFocusTests.test_locked_or_stale_source_refuses_keyboard_geometry_without_transactions) ... ok
+test_numeric_and_combo_focus_never_dispatch_move_to_old_canvas_selection (test_canvas_command_focus.CanvasCommandFocusTests.test_numeric_and_combo_focus_never_dispatch_move_to_old_canvas_selection) ... FAIL
+test_pending_property_prevents_canvas_nudge_without_losing_input (test_canvas_command_focus.CanvasCommandFocusTests.test_pending_property_prevents_canvas_nudge_without_losing_input) ... ok
+test_space_focus_loss_restores_exact_tool_and_selection_without_model_change (test_canvas_command_focus.CanvasCommandFocusTests.test_space_focus_loss_restores_exact_tool_and_selection_without_model_change) ... ok
+test_text_delete_arrows_and_ctrlz_stay_in_real_property_field (test_canvas_command_focus.CanvasCommandFocusTests.test_text_delete_arrows_and_ctrlz_stay_in_real_property_field) ... FAIL
+test_wheel_without_canvas_focus_is_ignored_and_focused_zoom_is_view_only (test_canvas_command_focus.CanvasCommandFocusTests.test_wheel_without_canvas_focus_is_ignored_and_focused_zoom_is_view_only) ... FAIL
+
+======================================================================
+FAIL: test_actual_text_preedit_leaves_selected_geometry_untouched (test_canvas_command_focus.CanvasCommandFocusTests.test_actual_text_preedit_leaves_selected_geometry_untouched)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_command_focus.py", line 32, in test_actual_text_preedit_leaves_selected_geometry_untouched
+    w=self.w;before=w.template.to_dict();self.focus(w.text_color);APP.sendEvent(w.text_color,QInputMethodEvent('中文',[]));QTest.keyClick(w.text_color,Qt.Key_Left);APP.sendEvent(w.text_color,QInputMethodEvent('',[]));self.assertEqual(w.template.to_dict(),before)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_canvas_command_focus.py", line 16, in focus
+    self.w.activateWindow();widget.setFocus();APP.processEvents();self.assertTrue(widget.hasFocus())
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_numeric_and_combo_focus_never_dispatch_move_to_old_canvas_selection (test_canvas_command_focus.CanvasCommandFocusTests.test_numeric_and_combo_focus_never_dispatch_move_to_old_canvas_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_command_focus.py", line 26, in test_numeric_and_combo_focus_never_dispatch_move_to_old_canvas_selection
+    self.focus(control);QTest.keyClick(control,Qt.Key_Up);QTest.keyClick(control,Qt.Key_Down)
+    ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_canvas_command_focus.py", line 16, in focus
+    self.w.activateWindow();widget.setFocus();APP.processEvents();self.assertTrue(widget.hasFocus())
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_text_delete_arrows_and_ctrlz_stay_in_real_property_field (test_canvas_command_focus.CanvasCommandFocusTests.test_text_delete_arrows_and_ctrlz_stay_in_real_property_field)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_command_focus.py", line 21, in test_text_delete_arrows_and_ctrlz_stay_in_real_property_field
+    w=self.w;before=w.template.to_dict();self.focus(w.text_color);w.text_color.selectAll();QTest.keyClicks(w.text_color,'#abcdef');QTest.keyClick(w.text_color,Qt.Key_Left);QTest.keyClick(w.text_color,Qt.Key_Delete);QTest.keyClick(w.text_color,Qt.Key_Z,Qt.ControlModifier)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_canvas_command_focus.py", line 16, in focus
+    self.w.activateWindow();widget.setFocus();APP.processEvents();self.assertTrue(widget.hasFocus())
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_wheel_without_canvas_focus_is_ignored_and_focused_zoom_is_view_only (test_canvas_command_focus.CanvasCommandFocusTests.test_wheel_without_canvas_focus_is_ignored_and_focused_zoom_is_view_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_command_focus.py", line 47, in test_wheel_without_canvas_focus_is_ignored_and_focused_zoom_is_view_only
+    w=self.w;before=w.template.to_dict();view=w.edit_canvas.transform();self.focus(w.text_color)
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_canvas_command_focus.py", line 16, in focus
+    self.w.activateWindow();widget.setFocus();APP.processEvents();self.assertTrue(widget.hasFocus())
+                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 12 tests in 2.824s
+
+FAILED (failures=4)

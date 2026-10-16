@@ -1,6 +1,6 @@
 {
   "parent": "UI-064",
-  "status": "PLANNED",
+  "status": "IMPLEMENTATION_IN_PROGRESS",
   "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
   "original_clauses": [
@@ -89,5 +89,12 @@
     "Default candidate keymap extends familiar existing controls and remains configurable; no locked final Windows/IME/touchpad compatibility matrix",
     "Current Linux tests cannot certify reference Windows16GB RTX5050/VivoBook or all IMEs; external gap remains",
     "No paid services, agents, EXE, main merge, original.ai writes, automatic training/customerwrites or print Gate bypass"
+  ],
+  "package_A": "Focus/IME/context guards, original finite mm nudge/auto-repeat refusal, Space/FocusOut restore, Esc unsubmitted gesture only, focus-gated view zoom, mouse help/nudge route",
+  "target_evidence": [
+    "docs/qa/targeted/ui064-focus-002.log",
+    "docs/qa/targeted/ui064-focus-003.log",
+    "docs/qa/targeted/ui064-gesture-regression-004.log",
+    "docs/qa/targeted/ui064-gesture-regression-005.log"
   ]
 }

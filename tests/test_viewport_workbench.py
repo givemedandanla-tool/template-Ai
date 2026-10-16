@@ -39,6 +39,7 @@ class ViewportWorkbenchTests(unittest.TestCase):
     def test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo(self):
         window,d=self.ready();s=d.session.payload['slots'][0];d.select([s['id']]);baseline=deepcopy(d.session.payload);history=deepcopy(d.session.undo_stack) if hasattr(d.session,'undo_stack') else None
         c=d.canvas;c.zoom_percent.setValue(200);self.assertAlmostEqual(c.transform().m11(),c.logicalDpiX()/25.4*2,places=2)
+        d.activateWindow();c.setFocus();APP.processEvents();self.assertTrue(c.hasFocus())
         QTest.keyClick(c,Qt.Key_Plus,Qt.ControlModifier);self.assertAlmostEqual(c.transform().m11(),c.logicalDpiX()/25.4*2.5,places=2)
         c.zoom_slider.setValue(1000);self.assertAlmostEqual(c.transform().m11(),500,places=5);c.zoom_slider.setValue(0);self.assertAlmostEqual(c.transform().m11(),.2,places=5);c.fit();self.assertIn(s['id'],c.selection_intent)
         self.assertEqual(d.session.payload,baseline);self.assertEqual(self.path.read_bytes(),self.original_bytes)

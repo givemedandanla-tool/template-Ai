@@ -1,7 +1,35 @@
 """View-only millimetre navigation; nominal DPI is explicitly uncalibrated."""
 import math
 from PySide6.QtCore import Qt,QRectF
-from PySide6.QtWidgets import QWidget,QHBoxLayout,QPushButton,QLabel,QDoubleSpinBox,QSlider
+from PySide6.QtWidgets import QWidget,QHBoxLayout,QPushButton,QLabel,QDoubleSpinBox,QSlider,QApplication,QGraphicsItem,QDialog,QVBoxLayout,QDialogButtonBox
+
+
+def canvas_has_input_focus(canvas):
+    """Qt retains authority over text/IME/popups; never dispatch from stale selection."""
+    focus=QApplication.focusWidget();modal=QApplication.activeModalWidget()
+    if focus not in (canvas,canvas.viewport()) or getattr(canvas,'_ime_preedit',False):return False
+    if QApplication.activePopupWidget() is not None or (modal is not None and modal is not canvas.window()):return False
+    item=canvas.scene().focusItem()
+    return item is None or not bool(item.flags() & QGraphicsItem.ItemAcceptsInputMethod)
+
+
+def allow_canvas_content(canvas,operation):
+    guard=getattr(canvas,'content_guard',None)
+    reason=guard(operation) if guard else ('此畫布唯讀，請使用既有編輯流程。' if canvas.readonly else '')
+    if reason:canvas.command_status.emit(str(reason));return False
+    return True
+
+
+def show_canvas_help(canvas):
+    dialog=QDialog(canvas.window());dialog.setWindowTitle('畫布快捷鍵與目前模式');layout=QVBoxLayout(dialog)
+    ids=sorted(getattr(canvas,'selection_intent',set()))
+    note=QLabel(f'目前工具：{canvas.mode}；作品 {canvas.width_mm:g}×{canvas.height_mm:g} mm\n明確選取：'+('、'.join(ids[:8]) or '無')+'\n\n先看輸入焦點，再看工具與目前物件。文字／數字／下拉選單及中文組字不派送畫布修改。\n方向鍵：可編輯框位按目前毫米步距微調；Shift×10。長按不重複提交。\nSpace：暫時平移；放開或離開焦點恢復原工具。\n滾輪／Ctrl＋、－、0：聚焦畫布後只改視角。全稿／定位／倍率亦可點選工具列。\nEsc：結束尚未提交的手勢，不放棄已保存工作或待套用欄位。\n\n鍵位與步距是可用性候選；尚未完成 Windows 輸入法／裝置相容資格驗證。');note.setWordWrap(True);note.setTextFormat(Qt.PlainText);layout.addWidget(note)
+    if hasattr(canvas,'request_nudge'):
+        row=QHBoxLayout();layout.addLayout(row)
+        for label,dx,dy in [('向左',-1,0),('向上',0,-1),('向下',0,1),('向右',1,0)]:
+            button=QPushButton(label+'（目前毫米步距）');row.addWidget(button)
+            button.clicked.connect(lambda checked=False,x=dx,y=dy:(dialog.accept(),canvas.request_nudge(x,y)))
+    buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.rejected.connect(dialog.reject);layout.addWidget(buttons);dialog.resize(640,440);dialog.exec();dialog.deleteLater()
 
 
 def navigation_controls(canvas):
@@ -17,6 +45,7 @@ def navigation_controls(canvas):
     add('全稿',canvas.fit);add('定位選取',focus);add('−',lambda:canvas.set_zoom(canvas.transform().m11()/1.25));add('＋',lambda:canvas.set_zoom(canvas.transform().m11()*1.25))
     nominal=canvas.logicalDpiX()/25.4
     add('名義實際尺寸（未校準）',lambda:canvas.set_zoom(nominal))
+    add('快捷鍵／模式',lambda:show_canvas_help(canvas))
     spin=QDoubleSpinBox();spin.setRange(.1,20000);spin.setDecimals(2);spin.setSuffix('%');bar.addWidget(spin)
     slider=QSlider(Qt.Horizontal);slider.setRange(0,1000);slider.setMaximumWidth(150);bar.addWidget(slider)
     def refresh():

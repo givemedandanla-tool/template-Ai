@@ -1261,3 +1261,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 - 2026-10-16 UI063 full original26 implementation/mapping pendingverification.37newtests;03419PASS;0367modules81PASS actualexit0;03515actual nativePASS/0Qt all15 visuallyreviewed/hashes. Registry remains completedfalse until immutable current-source fullbatch/publication. ContinueUI064.
 
 - 2026-10-16 UI064 plan beforecode: exact30 normative clauses, native Qt context/autorepeat and Microsoft VSCode conflict/when-clause references version/hash read; extend existing Canvas commands/undo and preferences only. UI064-A focus/IME/current-ID + gestures, B existing safety routes/config conflict, C native/full30. Windows/IME device verification remains external gap.
+
+- 2026-10-16 UI064-A implemented:12new actualQt focus/IME/mm/locked/stale/repeat/pending/Space/Esc/wheel tests;00312PASS/00540PASS.002/004 fixture focus failures preserved and actors corrected to real enabled focused controls. Next B keymap conflict and original safe Undo/Delete routes. No parent completed.

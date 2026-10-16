@@ -22,6 +22,7 @@ class ObjectCanvas(Canvas):
         self.selection_ids.emit(sorted(i.slot.id for i in self.scene().selectedItems() if isinstance(i,Box)))
     def set_content(self,*args,**kw):
         self.resetting=True;self.selection_intent=set()
+        self.pan_restore=None
         self.resize_state=None;self.snap_lines=[]
         self.safe_margin_mm=kw.pop('safe_margin_mm',0.)
         try:
@@ -121,18 +122,47 @@ class ObjectCanvas(Canvas):
             self.drag_proposal.emit({'operation':'MOVE','ids':ids,'dx':dx,'dy':dy})
 
     def keyPressEvent(self,event):
-        if event.key()==Qt.Key_Space and not event.isAutoRepeat():
+        from .viewport_controls import canvas_has_input_focus,allow_canvas_content
+        if not canvas_has_input_focus(self):event.ignore();return
+        if event.key()==Qt.Key_Escape:self.cancel_gesture();event.accept();return
+        if event.key()==Qt.Key_Space and event.modifiers()==Qt.NoModifier and not event.isAutoRepeat():
             self.pan_restore=(self.mode,set(self.selection_intent));self.resetting=True;self.set_mode('pan');self.resetting=False;event.accept();return
         directions={Qt.Key_Left:(-1,0),Qt.Key_Right:(1,0),Qt.Key_Up:(0,-1),Qt.Key_Down:(0,1)}
-        if event.key() in directions and self.mode=='edit' and self.selection_intent and not self.readonly:
-            dx,dy=directions[event.key()];step=self.nudge_mm*(10 if event.modifiers()&Qt.ShiftModifier else 1)
-            self.drag_proposal.emit(dict(operation='MOVE',ids=sorted(self.selection_intent),dx=dx*step,dy=dy*step));event.accept();return
+        if event.key() in directions and event.modifiers() in (Qt.NoModifier,Qt.ShiftModifier) and self.mode=='edit' and self.selection_intent and not self.readonly:
+            if event.isAutoRepeat():self.command_status.emit('長按不重複提交；請放開後再次微調。');event.accept();return
+            dx,dy=directions[event.key()];self.request_nudge(dx,dy,bool(event.modifiers()&Qt.ShiftModifier));event.accept();return
         super().keyPressEvent(event)
+
+    def request_nudge(self,dx,dy,accelerated=False):
+        from .viewport_controls import allow_canvas_content
+        boxes=self.selected_boxes()
+        if self.mode!='edit' or self.readonly or not boxes or len(boxes)!=len(self.selection_intent) or any(b.slot.locked for b in boxes):self.command_status.emit('目前模式不可移動，或選取已失效／包含鎖定物件。');return
+        if not allow_canvas_content(self,'MOVE'):return
+        step=self.nudge_mm*(10 if accelerated else 1)
+        self.drag_proposal.emit(dict(operation='MOVE',ids=sorted(self.selection_intent),dx=dx*step,dy=dy*step))
 
     def keyReleaseEvent(self,event):
         if event.key()==Qt.Key_Space and self.pan_restore and not event.isAutoRepeat():
             mode,ids=self.pan_restore;self.pan_restore=None;self.resetting=True;self.set_mode(mode);self.resetting=False;self.select_ids(ids);event.accept();return
         super().keyReleaseEvent(event)
+
+    def cancel_gesture(self,announce=True):
+        # Scene boxes are disposable previews; restore only unsubmitted geometry.
+        for box in self.selected_boxes():
+            if box.slot.id in self.base_positions:box.setPos(*self.base_positions[box.slot.id])
+        self.resize_state=None;self.snap_lines=[]
+        self.restore_pan()
+        super().cancel_gesture(announce=announce)
+
+    def restore_pan(self):
+        if self.pan_restore:
+            mode,ids=self.pan_restore;self.pan_restore=None;self.resetting=True
+            try:self.set_mode(mode)
+            finally:self.resetting=False
+            self.select_ids(ids)
+
+    def focusOutEvent(self,event):
+        self.restore_pan();super().focusOutEvent(event)
 
     def drawForeground(self,painter,rect):
         super().drawForeground(painter,rect);painter.save()
@@ -196,6 +226,7 @@ class ObjectToolsDialog(QDialog):
             b=QPushButton(title);b.clicked.connect(lambda _,a=action:self.viewport_action(a));index_layout.addWidget(b)
         body.addWidget(left)
         self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select_ids);self.canvas.drag_proposal.connect(self.preview_request);self.canvas.preview_proposal.connect(self.preview_request);body.addWidget(self.canvas)
+        self.canvas.content_guard=self.canvas_content_guard;self.canvas.command_status.connect(self.status.setText)
         layout.addWidget(canvas_controls(self.canvas,self.library))
         right=QWidget();form=QFormLayout(right);self.context_form=form;self.editors={}
         self.context_status=QLabel('未選取／未知上下文');self.context_status.setWordWrap(True);form.addRow(self.context_status)
@@ -431,6 +462,12 @@ class ObjectToolsDialog(QDialog):
             current=self.library.object_snapshot(self.kind,self.entity_id)
             return current['revision']==self.snapshot['revision'] and fingerprint(current['payload'])==fingerprint(self.snapshot['payload'])
         except (ValueError,OSError):return False
+    def canvas_content_guard(self,operation):
+        if not self.context_current():self.update_context();return '來源已變更；請重新載入並選取，未使用過期物件。'
+        if self.dirty or self.retained_patch:return '屬性仍待套用／核對；先完成或明確放棄，未改動框位。'
+        if self.canvas.readonly:return '來源唯讀；請沿用既有草稿修改流程。'
+        if self.window.busy:return '正在處理既有工作；未重複提交。'
+        return ''
     def current_patch(self):
         patch={}
         for key in self.dirty:
