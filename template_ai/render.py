@@ -190,9 +190,10 @@ def card_view_image(candidate: Candidate,dpi: int=100) -> QImage:
     return image.copy(0,0,image.width(),max(1,round(candidate.template.height_mm*dpi/25.4)))
 
 
-def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bool = False, expected_generation: int | None = None) -> Path:
+def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bool = False, expected_generation: int | None = None, *, format_review=None, exact_preview=False) -> Path:
     """同目錄暫存與排他建立；任何錯誤不留下冒充成功的半成品，也不覆寫既有檔。"""
     target = Path(target)
+    if exact_preview and (not preview or not target.name.startswith('PREVIEW-')):raise ValueError('原尺寸診斷快照僅能使用明列PREVIEW檔名及preview模式')
     from .fonts import font_asset_errors
     font_issues = font_asset_errors(item.slot for item in candidate.items)
     if font_issues:
@@ -230,7 +231,7 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
     format_pin=None
     if not preview:
         from .digital_final import before
-        format_pin=before(candidate,extension,dpi)
+        format_pin=before(candidate,extension,dpi,format_review)
     fd, name = tempfile.mkstemp(prefix=".template-ai-", suffix=extension, dir=target.parent)
     os.close(fd)
     temporary = Path(name)
@@ -239,7 +240,7 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
         if extension == ".pdf":
             writer = QPdfWriter(str(temporary))
             writer.setResolution(600)
-            height = preview_height(candidate) if preview else candidate.template.height_mm
+            height = preview_height(candidate) if preview and not exact_preview else candidate.template.height_mm
             writer.setPageSize(QPageSize(QSizeF(candidate.template.width_mm, height), QPageSize.Millimeter))
             from PySide6.QtCore import QMarginsF
             writer.setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout.Millimeter)
@@ -250,21 +251,22 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
                 raise ValueError("PDF 編碼器無法啟動")
             p.scale(600 / 25.4, 600 / 25.4)
             try:
-                paint_candidate(p, candidate, preview)
+                paint_candidate(p, candidate, preview and not exact_preview)
             finally:
                 p.end()
             del writer
             from .pdf_geometry import exact_page_box
             exact_page_box(temporary,candidate.template.width_mm,height)
         else:
-            image = render_image(candidate, dpi, preview)
+            image = render_image(candidate,dpi,preview and not exact_preview)
+            if exact_preview:image.setText('Purpose','PREVIEW / 非正式／原尺寸數位核對快照')
             if not image.save(str(temporary), "PNG" if extension == ".png" else "JPEG", 95):
                 raise ValueError("影像編碼失敗")
         if temporary.stat().st_size == 0:
             raise ValueError("輸出檔案為空")
         if not preview:
             from .digital_final import after
-            after(candidate,format_pin,temporary)
+            after(candidate,format_pin,temporary,format_review)
             from .candidate_risk import assert_formal
             assert_formal(candidate)
         # 核准／來源在編碼途中變動也不能發布；舊候選必須重新產生。

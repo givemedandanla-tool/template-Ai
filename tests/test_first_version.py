@@ -101,16 +101,23 @@ class FirstVersionTests(unittest.TestCase):
         bad = generate(self.template, [{**DATA[0], "company": "c2"}], [{"name": "同名"}, {"name": "同名"}], {})
         self.assertIn("不能混配", "；".join(bad.issues))
 
+    def format_review(self,c,format,dpi=300):
+        if format.upper()=='PNG':return None
+        from template_ai.digital_output_proof import build_proof
+        from template_ai.digital_review import confirm
+        return confirm(c,build_proof(c,format,dpi,self.root/'authored-format-proofs'),'SYNTHETIC_SOURCE_AUTHOR','Authored fixture source and actual original-size format snapshot verified before publication',True)
+
     def test_export_all_formats_real_pdf_dimensions_and_no_overwrite(self):
         c = self.candidate()
         self.assertTrue(c.valid, c.issues)
         for extension in ["png", "jpg", "pdf"]:
             path = self.root / ("FINAL." + extension)
-            export(c, path, expected_generation=7)
+            review=self.format_review(c,extension)
+            export(c,path,expected_generation=7,format_review=review)
             digest = path.read_bytes()
             with self.assertRaises(FileExistsError):
-                export(c, path)
-            self.assertEqual(digest, path.read_bytes())
+                export(c,path,format_review=review)
+            self.assertEqual(digest,path.read_bytes())
         doc = QPdfDocument()
         self.assertEqual(doc.load(str(self.root / "FINAL.pdf")), QPdfDocument.Error.None_)
         size = doc.pagePointSize(0)
@@ -184,7 +191,7 @@ class FirstVersionTests(unittest.TestCase):
         self.assertIn("標記", "；".join(learned.reasons))
         from template_ai.candidate_risk import verify_original_source,bind_source
         verify_original_source(results[0],self.library);bind_source(results[0],self.library,require_registered=True)
-        export(results[0], self.root / "learned.pdf")
+        export(results[0],self.root/"learned.pdf",format_review=self.format_review(results[0],"PDF"))
         self.assertEqual(match(self.library.templates(True), 91, 54, DATA, [], {}), [])
 
     def test_pixel_comparison_reports_unknown_alignment(self):
@@ -203,7 +210,7 @@ class FirstVersionTests(unittest.TestCase):
         self.assertIn("Inkscape", imported["engine"])
         self.assertTrue(Path(imported["svg"]).is_file())
         self.assertFalse(QImage(imported["image"]).isNull())
-        export(self.candidate(), self.root / "fixture.pdf")
+        candidate=self.candidate();export(candidate,self.root/"fixture.pdf",format_review=self.format_review(candidate,"PDF"))
         shutil.copyfile(self.root / "fixture.pdf", self.root / "fixture.ai")
         compatible = import_file(self.root / "fixture.ai", self.library.assets)
         self.assertIn("Inkscape", compatible["engine"])

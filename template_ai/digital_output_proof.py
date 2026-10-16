@@ -57,10 +57,10 @@ def pdf_evidence(path):
             if key in seen:continue
             seen.add(key);budget+=1
             if budget>5000:raise ValueError('PDF資源超過5000件有界核對預算')
-            if obj.get('/Subtype')=='/Image':images.append(dict(resource=str(name),width=int(obj.get('/Width',0)),height=int(obj.get('/Height',0))))
+            if obj.get('/Subtype')=='/Image':images.append(dict(resource=str(name),width=int(obj.get('/Width',0)),height=int(obj.get('/Height',0)),filter=str(obj.get('/Filter','')),stream_digest=__import__('hashlib').sha256(obj.get_data()).hexdigest()))
             elif obj.get('/Subtype')=='/Form':resources(obj.get('/Resources'),obj)
     resources(page.get('/Resources'),page.get_contents())
-    return dict(page_count=1,size_mm=[float(page.mediabox.width)*25.4/72,float(page.mediabox.height)*25.4/72],fonts=fonts,all_fonts_embedded=all(f['embedded'] for f in fonts),image_xobjects=images,vector_operator_count=sum(operators[k] for k in ('m','l','c','re','S','s','f','f*','B','B*')),text_operator_count=sum(operators[k] for k in ('Tj','TJ',"'",'"')),pdfa_or_print_certified=False,individual_logo_fidelity_approved=False)
+    return dict(page_count=1,size_mm=[float(page.mediabox.width)*25.4/72,float(page.mediabox.height)*25.4/72],fonts=fonts,all_fonts_embedded=all(f['embedded'] for f in fonts),image_xobjects=images,vector_operator_count=sum(operators[k] for k in ('m','l','c','re','S','s','f','f*','B','B*')),text_operator_count=sum(operators[k] for k in ('Tj','TJ',"'",'"')),operator_histogram=dict(operators),pdfa_or_print_certified=False,individual_logo_fidelity_approved=False)
 
 
 def decoded_image(path,size_mm,dpi):
@@ -89,12 +89,16 @@ def build_proof(candidate,format,dpi,root):
         pdf=pdf_evidence(path) if pin['format']=='PDF' else None
         validate_scope(candidate,pin)
         file=dict(path=str(path),sha256=file_digest(path),bytes=path.stat().st_size)
+        exact_file=None
+        if pin['format']!='PNG':
+            exact_path=folder/('PREVIEW-exact-card.'+pin['format'].lower());export(candidate,exact_path,dpi,True,candidate.generation,exact_preview=True);decoded_image(exact_path,pin['size_mm'],dpi);exact_file=dict(path=str(exact_path),sha256=file_digest(exact_path),bytes=exact_path.stat().st_size)
+            validate_scope(candidate,pin)
         for check in value['rows']:
             if check['code']=='ENCODED_FORMAT':check.update(status='PASS',reason='此診斷格式已實際編碼並讀回；附註在卡片外，尚非正式成品',measurements=dict(format=pin['format'],card_body_mm=pin['size_mm'],actual_preview_page_mm=page_mm))
             if check['code']=='PDF_FONT_EMBEDDING' and pdf:check.update(status='PASS' if pdf['all_fonts_embedded'] else 'BLOCKED',reason='實際PDF字型程式已讀回' if pdf['all_fonts_embedded'] else '實際PDF含未內嵌字型，需修正',measurements=dict(fonts=pdf['fonts']))
         consistent=metrics.get('exact_equal') is True
         value['rows'].append(dict(code='ENCODED_BODY_COMPARISON',status='PASS' if consistent else 'NOT_CHECKED' if metrics['status']=='NOT_CHECKED' else 'WARNING',reason='目前卡片本體逐像素一致；不等於原稿／印刷認證' if consistent else '已列實測差異或未涵蓋區域，需局部對照；不以任意分數自動核准',slot_ids=[],measurements=metrics))
-        return dict(scope=pin,rows=value['rows'],file=file,preview_page_mm=page_mm,card_body_mm=pin['size_mm'],body_comparison=metrics,pdf=pdf,formal_output_allowed=False,output_written=False,diagnostic_preview_written=True,explicit_visual_review_required=True,physical_print_verified=False,reason='此檔含矩形外PREVIEW附註；只比對原尺寸卡片本體，不能把預覽頁面當正式成品尺寸')
+        return dict(scope=pin,exact_file=exact_file,rows=value['rows'],file=file,preview_page_mm=page_mm,card_body_mm=pin['size_mm'],body_comparison=metrics,pdf=pdf,formal_output_allowed=False,output_written=False,diagnostic_preview_written=True,explicit_visual_review_required=True,physical_print_verified=False,reason='此檔含矩形外PREVIEW附註；只比對原尺寸卡片本體，不能把預覽頁面當正式成品尺寸')
     except BaseException:
         shutil.rmtree(folder);raise
 
@@ -102,11 +106,11 @@ def build_proof(candidate,format,dpi,root):
 def region_images(candidate,proof,slot_id):
     """Exact selected object's current source render and actual encoded crop."""
     from .render import render_image
-    validate_scope(candidate,proof['scope']);file=proof['file']
+    validate_scope(candidate,proof['scope']);file=proof.get('exact_file') or proof['file']
     if file_digest(file['path'])!=file['sha256']:raise ValueError('實際數位比較檔已變更，不能沿用舊憑證')
     matches=[p for p in candidate.items if p.slot.id==slot_id]
     if len(matches)!=1:raise ValueError('需確切唯一物件ID；不靠相同字串選取')
-    dpi=proof['scope']['dpi'];rect=matches[0].slot.rect;page=decoded_image(file['path'],proof['preview_page_mm'],dpi);source=render_image(candidate,dpi,False)
+    dpi=proof['scope']['dpi'];rect=matches[0].slot.rect;page=decoded_image(file['path'],proof['scope']['size_mm'] if proof.get('exact_file') else proof['preview_page_mm'],dpi);source=render_image(candidate,dpi,False)
     x=max(0,math.floor(rect.x*dpi/25.4));y=max(0,math.floor(rect.y*dpi/25.4));right=min(source.width(),math.ceil((rect.x+rect.w)*dpi/25.4));bottom=min(source.height(),math.ceil((rect.y+rect.h)*dpi/25.4))
     if right<=x or bottom<=y:raise ValueError('物件實際區域無法核對')
     a=source.copy(x,y,right-x,bottom-y);b=page.copy(x,y,right-x,bottom-y)

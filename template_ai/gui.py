@@ -2180,7 +2180,9 @@ class MainWindow(QMainWindow):
             from .candidate_risk import bind_source
             bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id'] not in ('SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES')],require_registered=True)
             if not preview and (self.candidate_list.currentRow()!=row or selection_pin(self,row)!=output_pin or not current_assessment(self,row)['formal_allowed']):raise ValueError('目前資料／尺寸／來源或人工版本已改，正式輸出前須重新核對')
-            export(c, path, self.dpi.value(), preview, self.generation)
+            panel=getattr(self,'digital_preflight_panel',None)
+            format_review=getattr(panel,'review_receipt',None) if panel else None
+            export(c,path,self.dpi.value(),preview,self.generation,format_review=format_review)
             self.statusBar().showMessage("檔案已實際寫入：" + path)
         except Exception as e:
             self.error(str(e))

@@ -131,5 +131,18 @@
     "status": "C2_DESIGNED_BEFORE_CODE_NOT_IMPLEMENTED",
     "new_tests_total": 41,
     "catalog": 1466
+  },
+  "format_review_C2_API_GUI_WIP": {
+    "new_tests_total": 52,
+    "catalog": 1477,
+    "implementation": "Original render.export exact_preview (preview-only, PREVIEW filename/title/metadata), build_proof exact_file, digital_review confirm/validate/PDF signature, digital_final final full RGB+PDF structure match; original right property actor/evidence/default-no consent/current worker and Main.export_current receipt",
+    "evidence": [
+      "docs/qa/targeted/ui019-format-review-017.log:25PASS actualexit0",
+      "docs/qa/targeted/ui019-review-gui-018.log:10PASS actualexit0",
+      "docs/qa/targeted/ui019-review-gui-019.log:21PASS actualexit0"
+    ],
+    "behavior": "PDF/JPG require literal named current same-format/size/DPI actual exact snapshot review. No perceptual threshold invented; final decoded RGB must match actual inspected encoding and PDF resources/vector histogram/image signatures. PNG original source full RGB checks remain. Receipt RAM scoped, no order DB. Five real GUI cases default-no, actor invalidation, actual original Main reviewed PDF publish preserving template, DPI stale failclosed, late actor race.",
+    "regression_fixture_change": "Original FirstVersion positive PDF/JPG authors now explicitly create actual-format review before publish; original dimensions/content/no-overwrite assertions retained. Negative codec tests obtain valid review BEFORE fault injection so they test actual corruption, not missing consent.",
+    "remaining": "Original batch per-target receipt/API/UI routes and other callers; concrete complex source/font/vector/raster/compression PoC; unsupported source policy; native individual images/full12/current immutable full Gate"
   }
 }
