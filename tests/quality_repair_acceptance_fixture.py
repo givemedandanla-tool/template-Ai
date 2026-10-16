@@ -65,3 +65,22 @@ def group(case,label,portrait=False,multi=False):
     case.assertFalse(preview['errors'],preview['errors'])
     dataset=sets.create(preview,'Synthetic author',True)
     return dict(dataset=dataset,customer_ids=[c['id'] for c in targets],sources=sources)
+
+
+def actual_chain(case):
+    from template_ai.quality_repair_gates import STAGES
+    from template_ai.quality_reports import QualityReports
+    from template_ai.quality_repair_releases import QualityRepairReleases
+    case.prepare(full_chain=True)
+    root=case.run_stage(case.gates.protocol_plan(case.candidate['id'],STAGES[0],case.dataset_id,case.policy_id,'Actual root correction first'))
+    case.assertTrue(root['plan']['passed'],root['plan']['blockers'])
+    controls=case.run_stage(case.gates.protocol_plan(case.candidate['id'],STAGES[1],case.controls['dataset']['id'],case.policy_id,'Unrelated two-column actual phone/person/logo/mm/customer and multi-panel controls',root['id']))
+    case.assertTrue(controls['plan']['passed'],controls['plan']['blockers'])
+    final=case.run_stage(case.gates.protocol_plan(case.candidate['id'],STAGES[2],case.independent['dataset']['id'],case.policy_id,'New authored portrait HOLDOUT, software state-machine safety only',controls['id']))
+    case.assertTrue(final['plan']['passed'],final['plan']['blockers']);case.assertTrue(final['plan']['independence_claim'])
+    decision=QualityReports(case.library).decide(final['plan']['report_id'],'Reviewer','Explicit intentionally lenient authored synthetic safety test; not production accuracy',True)
+    release=QualityRepairReleases(case.library);impact=release.confirm_impact(release.impact_plan(case.candidate['id']),'Reviewer','Inspect known impact and explicitly retain unknown history; no pending confirmed highrisk',True)
+    plan=release.plan(decision['id'],0,gate_id=final['id'],impact_review_id=impact['id'])
+    installed=release.confirm(plan,'Reviewer','Exact candidate passed ordered actual safety checks, remains human-review source recommendation',True)
+    case.assertEqual(release.pin()['event_id'],installed['event']['id']);case.assertEqual(release.pin()['pipeline_id'],case.candidate['plan']['pipeline_id'])
+    return dict(root=root,controls=controls,final=final,decision=decision,release=release,impact=impact,installed=installed)

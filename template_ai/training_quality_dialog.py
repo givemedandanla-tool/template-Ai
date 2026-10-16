@@ -122,6 +122,7 @@ def open_repair_center(window,entry):
     """Same center and repair workbench for canvas and source-only exceptions."""
     from PySide6.QtCore import QTimer
     dialog=TrainingQualityDialog(window)
-    QTimer.singleShot(0,lambda:dialog.quality_panel.open_repair(entry))
+    from shiboken6 import isValid
+    QTimer.singleShot(0,lambda:dialog.quality_panel.open_repair(entry) if isValid(dialog) else None)
     try:dialog.exec()
     finally:dialog.deleteLater()

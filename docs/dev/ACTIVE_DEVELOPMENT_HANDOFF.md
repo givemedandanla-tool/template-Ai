@@ -4,7 +4,10 @@
 - 先讀 STATE 的 current_work／next_tasks／last_confirmed_checkpoint，並跑 dev_governance check。按需 rg、通常輸出≤1600；每可恢復包與10分鐘 GitHub checkpoint＋原生逐檔讀回；歷史不得覆寫。
 - 原28契約 `FIXED70_REMAINING28_CONTRACT.json`；歷史完成7：UI046/047/049/050/051/052/053（71原條）。UI054原11正在實作，**不能計8/28**；當前145 claims因source更動全部pending，998known tests。CORE/GOV不冒充父題。
 
-## 現在下一步
+## 最新畫面檢查與現在下一步
+
+- 07:07 actual `docs/qa/ui054-native-capture-002` 七張真Qt截圖＋metadata，全部視覺檢查；actual fullchain59.94s preparatory，另有真語意FIFOchild，withdrawalblocksrollback。**有待修**：source/impact table欄太窄且高度只顯示2列，進度rawid/English需具名；maxGUIgap2456ms包含capturer直接呼叫重backend `release.pin()` assertion，非正常UI讀取，先改用已由ownedSTATUS回傳的pin並重測，不能把這份冒稱低負載PASS。capture001 namespaceImportError保留。
+- tests/quality_repair_acceptance_fixture.actual_chain已抽共用給fullchain測試與capture，無複製模型結果；fullchain test仍withdrawpriorRootGold阻擋，目前新helper由actualcapture完整執行。
 
 1. **實際七頁截圖／視覺檢查／加入aggregate**。`quality_repair_dialog.py` 七個原生scrollpages已做；`capture_quality.py` 舊8張、`capture_remaining28.py` aggregate尚未含repair。新capture沿用真實合法合成資料／現有Qt／同SQLite／FIFO，實際state，不能以空白tab或字符串冒充。整個現有aggregate有外部timeout，先查run_evidence呼叫界線；不要為了截圖又重建引擎或長期卡住GUI。
 2. 原UI054全文11／SHA在 `UI054_EXECUTION_PLAN.json`（13e2c0f1dee610fa6485a53f806bef1dadacd9f0c920a32953851121af942498）。按全條核對後才註冊完整pending驗收／sourcefreeze／push＋native readback／正式fullrun。不得只拿target PASS結案。
