@@ -1,0 +1,130 @@
+This plugin does not support propagateSizeHints()
+Thread 0x00007fdf4f4e86c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 840 in stat
+  File "/workspace/template-Ai/template_ai/candidate_risk.py", line 142 in engine_digest
+  File "/workspace/template-Ai/template_ai/candidate_risk.py", line 97 in freshness_conditions
+  File "/workspace/template-Ai/template_ai/candidate_risk.py", line 27 in assess
+  File "/workspace/template-Ai/template_ai/layout.py", line 40 in risk
+  File "/workspace/template-Ai/template_ai/layout.py", line 43 in formal_eligible
+  File "/workspace/template-Ai/template_ai/output_batch.py", line 66 in _check
+  File "/workspace/template-Ai/template_ai/output_batch.py", line 101 in <lambda>
+  File "/workspace/template-Ai/template_ai/safe_publish.py", line 11 in publish_complete
+  File "/workspace/template-Ai/template_ai/output_batch.py", line 101 in execute
+  File "/workspace/template-Ai/template_ai/output_batch_dialog.py", line 52 in worker
+  File "/workspace/template-Ai/template_ai/gui.py", line 42 in run
+
+Current thread 0x00007fdf61639740 (most recent call first):
+  File "/workspace/template-Ai/tests/gui_wait.py", line 18 in job_diagnostics
+  File "/workspace/template-Ai/tests/test_output_batch_gui.py", line 26 in finish
+  File "/workspace/template-Ai/tests/test_output_batch_gui.py", line 34 in test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/main.py", line 281 in runTests
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/main.py", line 105 in __init__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/__main__.py", line 18 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main
+Thread 0x00007fdf4f4e86c0 (most recent call first):
+  File "<frozen importlib._bootstrap_external>", line 1190 in get_data
+  File "<frozen importlib._bootstrap_external>", line 1091 in get_code
+  File "<frozen importlib._bootstrap_external>", line 995 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/networkx/drawing/__init__.py", line 5 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap>", line 1415 in _handle_fromlist
+  File "/workspace/template-Ai/.venv/lib/python3.12/site-packages/networkx/__init__.py", line 52 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/workspace/template-Ai/template_ai/quality_groups.py", line 8 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/workspace/template-Ai/template_ai/quality_sets.py", line 5 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/workspace/template-Ai/template_ai/quality_protocol.py", line 6 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/workspace/template-Ai/template_ai/quality_reports.py", line 5 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/workspace/template-Ai/template_ai/quality_repair_releases.py", line 5 in <module>
+  File "<frozen importlib._bootstrap>", line 488 in _call_with_frames_removed
+  File "<frozen importlib._bootstrap_external>", line 999 in exec_module
+  File "<frozen importlib._bootstrap>", line 935 in _load_unlocked
+  File "<frozen importlib._bootstrap>", line 1331 in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 1360 in _find_and_load
+  File "/workspace/template-Ai/template_ai/automatic_training.py", line 33 in preflight
+  File "/workspace/template-Ai/template_ai/automatic_training_dialog.py", line 59 in worker
+  File "/workspace/template-Ai/template_ai/gui.py", line 42 in run
+
+Current thread 0x00007fdf61639740 (most recent call first):
+  File "/workspace/template-Ai/tests/gui_wait.py", line 18 in job_diagnostics
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 156 in wait
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 186 in test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/main.py", line 281 in runTests
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/main.py", line 105 in __init__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/__main__.py", line 18 in <module>
+  File "<frozen runpy>", line 88 in _run_code
+  File "<frozen runpy>", line 198 in _run_module_as_main
+======================================================================
+FAIL: test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults (test_output_batch_gui.OutputBatchGuiTests.test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_output_batch_gui.py", line 34, in test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults
+    self.finish(d);self.assertEqual(d.engine.items[0]['status'],'SUCCESS');self.assertTrue((self.output/'FINAL'/'renamed_FINAL.pdf').exists());self.assertTrue(all(row['status']=='SKIPPED' for row in d.engine.items[1:]));self.assertIn('SKIPPED',d.status.text())
+    ^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_output_batch_gui.py", line 26, in finish
+    self.fail('output worker did not finish within bounded test wait: '+job_diagnostics(d.window,'EXPORT')+'; dialog='+d.status.text())
+AssertionError: output worker did not finish within bounded test wait: {'status': '逐檔安全輸出／精確重試 · 背景執行中，完成前不宣稱成功', 'allowed': True, 'reasons': [], 'active_threads': 1, 'waiting_launches': 0, 'owned_jobs': 1, 'policy_error': None, 'library_closed': False}; dialog=確認前不寫檔。新增預設不覆寫；覆寫將保留原檔並重新核對版本，競爭衝突時停止。
+
+======================================================================
+FAIL: test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel (test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 186, in test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel
+    window.runtime.ready_after=0;self.wait(lambda:not window.busy);self.assertIsNotNone(dialog.report)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 156, in wait
+    self.fail('Actual background workflow did not finish: '+job_diagnostics(getattr(self,'_gui_wait_window',None)))
+AssertionError: Actual background workflow did not finish: {'status': '掃描及來源預檢 · 等待資源；尚未執行／保存：GUI_STARTUP_WARMUP', 'allowed': True, 'reasons': [], 'active_threads': 1, 'waiting_launches': 0, 'owned_jobs': 1, 'policy_error': None, 'library_closed': False}
+
+----------------------------------------------------------------------
+Ran 2 tests in 17.068s
+
+FAILED (failures=2)

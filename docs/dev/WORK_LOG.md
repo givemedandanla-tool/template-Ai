@@ -1239,3 +1239,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 2026-10-16 manual-source repaired final01845PASS; native00513views0Qt all visually reviewed, preserved3realregressionfailures. Refreshed exact9+10 clause maps each126support IDs,1078catalog/140modules/150claims. FreezeLAYOUT002 next; LAYOUT001599observedPASS/parent143 remains controlled interrupted, no completion. Active handoff trimmed with detailed history retained.
 
 2026-10-16 LAYOUT002 latewatch954completed/952PASS/twoGUIwaitfail, exactsourceunchanged. Prepared guarded diagnostic patch (notapplied), strictfuturefinalizer (notrun), pureUI059DAG/threewayprototype7scenariosPASS (notapp/fullscope). OutputGUI fixture uncovered uncontrolledresources; startupcauseunknown after3isolatedPASS. Preserve allfailures, no completion change.
+
+2026-10-16 LAYOUT002actual1076/1078FAIL/parent1/0Qt/sourceunchanged. Diagnostic patch002still2FAIL withworkersactive; stack003coldimport/statblocked under tightQTestpoll. RealQtEventLoop withunchanged5s/10swatchdogs00417PASS19.197s; productiongatesunchanged. Persist fullfailedrun/probes andfreezeLAYOUT003, no completionclaim.

@@ -144,15 +144,12 @@ class AutomaticTrainingGuiTests(unittest.TestCase):
         controlled_resources(window)
         def close():
             window.input_timer.stop();window.font_manager.close();window.library.close();window.deleteLater()
-        self.addCleanup(close);return window
+        self.addCleanup(close);self._gui_wait_window=window;return window
 
     def wait(self,condition):
-        from PySide6.QtTest import QTest
-        for _ in range(1000):
-            APP.processEvents()
-            if condition():return
-            QTest.qWait(10)
-        self.fail('Actual background workflow did not finish')
+        from gui_wait import job_diagnostics,wait_for_gui
+        if wait_for_gui(condition,10):return
+        self.fail('Actual background workflow did not finish: '+job_diagnostics(getattr(self,'_gui_wait_window',None)))
 
     def test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls(self):
         from template_ai.automatic_training_dialog import AutomaticTrainingDialog

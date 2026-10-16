@@ -9,19 +9,19 @@ from template_ai.output_batch_dialog import OutputBatchDialog
 from template_ai.background import file_digest
 import test_multi_size as fixture
 APP=fixture.APP
+from runtime_fixture import controlled_resources
+from gui_wait import job_diagnostics,wait_for_gui
 
 class OutputBatchGuiTests(unittest.TestCase):
     setUp=fixture.MultiSizeTests.setUp
     tearDown=fixture.MultiSizeTests.tearDown
     requests=fixture.MultiSizeTests.requests
     def dialog(self):
-        window=MainWindow(self.library.root);self.addCleanup(window.deleteLater);self.addCleanup(window.library.close);self.addCleanup(window.font_manager.close);self.addCleanup(window.input_timer.stop);parent=MultiSizeDialog(window);self.addCleanup(parent.deleteLater);parent.service=self.workflow;parent.inputs=self.inputs;parent.graph=self.graph;parent.generation=7;parent.is_current=lambda:True
+        window=MainWindow(self.library.root);controlled_resources(window);self.addCleanup(window.deleteLater);self.addCleanup(window.library.close);self.addCleanup(window.font_manager.close);self.addCleanup(window.input_timer.stop);parent=MultiSizeDialog(window);self.addCleanup(parent.deleteLater);parent.service=self.workflow;parent.inputs=self.inputs;parent.graph=self.graph;parent.generation=7;parent.is_current=lambda:True
         d=OutputBatchDialog(parent,self.workflow.plan(self.output,self.requests()));self.addCleanup(d.deleteLater);d.show();APP.processEvents();return d,parent
     def finish(self,d):
-        for _ in range(500):
-            APP.processEvents();QTest.qWait(10)
-            if not d.running:return
-        self.fail('output worker did not finish within bounded test wait')
+        if wait_for_gui(lambda:not d.running,5):return
+        self.fail('output worker did not finish within bounded test wait: '+job_diagnostics(d.window,'EXPORT')+'; dialog='+d.status.text())
     def test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults(self):
         d,parent=self.dialog();self.assertEqual([k for k,v in parent.preview_formats.items() if v.isChecked()],['png']);self.assertEqual([k for k,v in parent.formats.items() if v.isChecked()],['pdf'])
         for name,action in d.controls[1:]:action.setCurrentIndex(action.findData('SKIP'))
