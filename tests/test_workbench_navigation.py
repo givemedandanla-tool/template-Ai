@@ -23,6 +23,7 @@ class WorkbenchNavigationTests(unittest.TestCase):
     close_window=fixture.SeventyUiTests.close_window
     def ready(self):
         self.w.tabs.setCurrentIndex(2);self.w.show();self.w.generate();wait_layout(self.w);APP.processEvents()
+        self.w.navigation.locations.clear();self.w.navigation.update()
         return self.w.candidates[0]
     def test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection(self):
         c=self.ready();w=self.w;before=c.template.to_dict();changes=w.library.db.total_changes
@@ -63,7 +64,7 @@ class WorkbenchNavigationTests(unittest.TestCase):
     def test_navigation_history_is_bounded_deduplicated_consumed_and_contains_no_business_copy(self):
         self.ready();w=self.w;nav=w.navigation
         nav.begin('Logo');nav.finish();nav.begin('Logo');nav.finish();self.assertEqual(len(nav.locations),1)
-        for n in range(12):w.generation+=1;nav.begin('字型');nav.finish()
+        for n in range(12):w.candidates[0].risk_context['manual_revision']=n+1;nav.begin('字型');nav.finish()
         self.assertEqual(len(nav.locations),8);self.assertFalse(any(key in nav.locations[-1] for key in ('people','companies','candidate','payload','template')))
         self.assertTrue(nav.return_to_work());self.assertEqual(len(nav.locations),7)
         self.assertFalse(nav.return_to_work());self.assertEqual(len(nav.locations),6)
@@ -92,7 +93,7 @@ class WorkbenchNavigationTests(unittest.TestCase):
         nav.recovery_saved(dict(saved=True,encrypted=True,authenticated=True,expires=time.time()-1),token)
         self.assertFalse(nav.recovery_current());self.assertIn('尚未保存',w.work_context.text())
         nav.recovery_saved(dict(saved=True,encrypted=True,authenticated=True,expires=time.time()+100),token)
-        self.assertTrue(nav.recovery_current());w.people.item(0,2).setText('1234567');self.assertFalse(nav.recovery_current());self.assertTrue(nav.close_impacts())
+        self.assertFalse(nav.recovery_current());self.assertIn('保存失敗',w.work_context.text());self.assertTrue(nav.close_impacts())
 
     def test_context_minimizes_personal_details_and_navigation_does_not_schedule_calculation(self):
         self.ready();w=self.w;before=[c.template.to_dict() for c in w.candidates];count=w.library.db.total_changes
@@ -117,3 +118,49 @@ class WorkbenchNavigationTests(unittest.TestCase):
         self.assertFalse(w.navigation.recovery_current());self.assertTrue(w.navigation.close_impacts())
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):session.clear_recovery()
         self.assertFalse(session.recovery.pending());self.assertIsNone(w.navigation.recovery);self.assertIn('尚未保存',w.work_context.text())
+
+    def test_mode_back_consumes_history_and_preserves_unstarted_input_without_recalculation(self):
+        w=self.w;w.show();w.navigation.locations.clear();before=w.input_data();changes=w.library.db.total_changes
+        with patch.object(w,'run_job') as jobs:
+            w.tabs.setCurrentIndex(1);w.tabs.setCurrentIndex(2)
+            self.assertIn('尚未產生候選',w.work_context.text());self.assertTrue(w.navigation.close_impacts())
+            self.assertTrue(w.navigation.return_to_work());self.assertEqual(w.tabs.currentIndex(),1)
+            self.assertTrue(w.navigation.return_to_work());self.assertEqual(w.tabs.currentIndex(),0)
+            self.assertFalse(w.navigation.locations);jobs.assert_not_called()
+        self.assertEqual(w.input_data(),before);self.assertEqual(w.library.db.total_changes,changes)
+
+    def test_actual_official_save_failure_does_not_close_or_claim_safe_saved(self):
+        w=self.w;w.tabs.setCurrentIndex(1);w.add_demo();w.show();before=w.template.to_dict()
+        QTimer.singleShot(0,lambda:click_message('明確放棄當次操作並關閉'))
+        with patch.object(w,'save_current_template',side_effect=OSError('Injected official save failure')),patch.object(w,'error') as error:
+            self.assertFalse(w.close());error.assert_called_once()
+        self.assertFalse(w.library.closed);self.assertEqual(w.template.to_dict(),before);self.assertIn('正式資料保存失敗',w.work_context.text())
+
+    def test_real_active_worker_is_not_restarted_cancelled_or_duplicated_by_mode_back(self):
+        import threading
+        from gui_wait import wait_for_gui
+        w=self.w;entered=threading.Event();release=threading.Event();calls=[];done=[]
+        def work():calls.append(1);entered.set();release.wait(3);return 'actual worker result'
+        w.run_job('Synthetic bounded foreground worker',work,done.append);self.assertTrue(entered.wait(1))
+        for mode in (1,2,0):w.tabs.setCurrentIndex(mode);self.assertIn('背景工作進行中',w.work_context.text())
+        self.assertTrue(w.navigation.return_to_work());self.assertTrue(w.busy);self.assertEqual(len(w._background_jobs),1)
+        release.set();self.assertTrue(wait_for_gui(lambda:not w.busy,5));self.assertEqual(calls,[1]);self.assertEqual(done,['actual worker result'])
+
+    def test_actual_back_with_selected_frame_keeps_unapplied_property_value(self):
+        from training_fixture import source_work
+        from template_ai.model import Slot,Rect
+        source,work=source_work(self.w.library,self.root,'navigation-selected-frame.svg');w=self.w;w.work=work
+        w.slots=[Slot(**{**row,'rect':Rect(**row['rect'])}) for row in work['payload']['slots']]
+        w.train_canvas.set_content(90,54,slots=w.slots);w.train_canvas.set_mode('edit');w.train_canvas.select_id(w.slots[0].id)
+        original=w.slots[0].rect.x;w.coords[0].setValue(original+1);w.tabs.setCurrentIndex(1)
+        self.assertTrue(w.navigation.return_to_work());self.assertEqual(w.coords[0].value(),original+1)
+        self.assertEqual(w.slots[0].rect.x,original);self.assertTrue(w.navigation.pending_form())
+
+    def test_removed_actual_encrypted_file_revokes_current_recovery_before_close(self):
+        from PySide6.QtWidgets import QInputDialog
+        from gui_wait import wait_for_gui
+        self.ready();w=self.w;session=w.foreground_layout_session;session.report_state='CANCELLED';session.controls()
+        with patch.object(QInputDialog,'getText',return_value=('synthetic-navigation-password',True)):
+            session.save_recovery();self.assertTrue(wait_for_gui(lambda:not w.busy,10))
+        self.assertTrue(w.navigation.recovery_current());session.recovery.path.unlink()
+        self.assertFalse(w.navigation.recovery_current());self.assertTrue(w.navigation.close_impacts())

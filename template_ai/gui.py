@@ -2037,6 +2037,7 @@ class MainWindow(QMainWindow):
 
     def mode_changed(self,index=None):
         index=self.tabs.currentIndex() if index is None else index
+        if hasattr(self,'navigation') and not self.navigation.restoring:self.navigation.remember(self._active_mode)
         form=dict(kind=self.kind.currentData(),owner=self.owner.currentData(),index=self.index.value(),coords=[s.value() for s in self.coords],font=self.font.currentFont(),pt=self.pt.value(),color=self.text_color.text(),scale=self.scale.value(),align=self.align.currentData(),required=self.required.isChecked(),font_display=copy.deepcopy(getattr(self,'_selected_font_display',None)))
         self._mode_memory[self._active_mode]=(self.current_slot.id if self.current_slot else None,self.undo_stack,self.redo_stack,form)
         self._active_mode=index

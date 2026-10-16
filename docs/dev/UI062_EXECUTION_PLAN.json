@@ -93,6 +93,29 @@
       "log": "docs/qa/targeted/ui062-close-regression-003.log",
       "status": "PASS",
       "tests": 43
+    },
+    {
+      "log": "docs/qa/targeted/ui062-mode-back-005.log",
+      "status": "PASS",
+      "tests": 16
+    },
+    {
+      "log": "docs/qa/targeted/ui062-pending-form-regression-006.log",
+      "status": "FAIL",
+      "tests": 1,
+      "reason": "Actual selected-frame return signal reset unapplied X9 to savedX8"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-pending-form-fixed-007.log",
+      "status": "PASS",
+      "tests": 25,
+      "reason": "Signal-block viewonlyselection; exactformpin prevents stalepropertyoverwrite"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-recovery-file-fence-008.log",
+      "status": "PASS",
+      "tests": 48,
+      "reason": "Actual encrypted readback/statreceipt; removedfile preventscurrentrecovery; realdiskfail then success distinct"
     }
   ]
 }

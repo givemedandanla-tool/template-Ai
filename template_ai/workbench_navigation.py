@@ -2,7 +2,7 @@
 import copy
 import time
 from dataclasses import asdict
-from PySide6.QtCore import QPointF
+from PySide6.QtCore import QPointF,QSignalBlocker,QTimer
 from PySide6.QtGui import QTransform
 from PySide6.QtWidgets import QGraphicsItem, QMessageBox
 from .customers import digest
@@ -22,7 +22,7 @@ def work_token(window):
 class WorkbenchNavigation:
     def __init__(self,window,label,back):
         self.window=window;self.label=label;self.back=back;self.locations=[]
-        self.route=None;self.notice='';self.recovery=None;self.save_error=None
+        self.route=None;self.notice='';self.recovery=None;self.save_error=None;self.restoring=False
         self.back.clicked.connect(self.return_to_work)
         window.tabs.currentChanged.connect(self.update)
         window.inputs_invalidated.connect(self.update)
@@ -56,37 +56,58 @@ class WorkbenchNavigation:
         bind_source(checked,self.window.library,require_registered=True)
         return (selection_pin(self.window,index),checked.risk['digest'])
 
-    def capture(self):
-        w=self.window;mode=w.tabs.currentIndex();canvas=self.canvas(mode)
+    def capture(self,mode=None):
+        w=self.window;mode=w.tabs.currentIndex() if mode is None else mode;canvas=self.canvas(mode)
         from .gui import Box
         return dict(root=str(w.library.root),generation=w.generation,mode=mode,pin=self.pin(mode),
                     transform=QTransform(canvas.transform()),centre=QPointF(canvas.mapToScene(canvas.viewport().rect().center())),
                     selected=[item.slot.id for item in canvas.scene().selectedItems() if isinstance(item,Box)],
                     slot=w.current_slot.id if w.current_slot else None,
+                    form_pin=self.form_pin(mode),
                     template_page=w.template_stack.currentIndex())
 
-    def begin(self,route):
-        try:location=self.capture()
+    def form_pin(self,mode):
+        if mode==2:return None
+        w=self.window
+        if mode==w._active_mode:
+            if w.current_slot is None:return None
+            form=dict(kind=w.kind.currentData(),owner=w.owner.currentData(),index=w.index.value(),
+                      coords=[s.value() for s in w.coords],font=w.font.currentFont().family(),
+                      pt=w.pt.value(),color=w.text_color.text(),scale=w.scale.value(),
+                      align=w.align.currentData(),required=w.required.isChecked())
+            return digest(dict(slot=w.current_slot.id,form=form))
+        selected,undo,redo,stored=w._mode_memory.get(mode,(None,[],[],None))
+        if not selected or not stored:return None
+        form={k:v for k,v in stored.items() if k not in ('font','font_display')};form['font']=stored['font'].family()
+        return digest(dict(slot=selected,form=form))
+
+    def remember(self,mode=None):
+        try:location=self.capture(mode)
         except (ValueError,OSError,KeyError,TypeError):
             self.notice='目前物件尚無可核對的返回位置；修正後請由原列表重新選取。'
         else:
             if not self.locations or any(location[k]!=self.locations[-1][k] for k in ('root','generation','mode','pin')):
                 self.locations.append(location);self.locations=self.locations[-8:]
-        self.route=route;self.update()
+        self.update()
+
+    def begin(self,route):
+        self.remember();self.route=route;self.update()
 
     def finish(self):
         self.route=None;self.update()
 
     def return_to_work(self):
         if not self.locations:return False
-        w=self.window;location=self.locations.pop();mode=location['mode'];reason=None
+        w=self.window;location=self.locations.pop();mode=location['mode'];reason=None;self.restoring=True
         try:
             if w.library.closed or str(w.library.root)!=location['root']:raise ValueError('工作資料位置已變更')
             if w.generation!=location['generation']:raise ValueError('當次人物資料或資產版本已改變，原候選需重新驗證')
+            if self.form_pin(mode)!=location['form_pin']:raise ValueError('尚未套用的物件屬性已有更新，保留目前編輯')
             if mode==2 and location['pin'][0]=='CANDIDATE':
                 matches=[i for i,c in enumerate(w.candidates) if c.template.id==location['pin'][1]]
                 if len(matches)!=1:raise ValueError('原候選已移除或無法唯一辨識')
                 index=matches[0]
+                if w.candidates[index].generation!=w.generation:raise ValueError('原候選目前需重新驗證')
                 if ('CANDIDATE',w.candidates[index].template.id,self.candidate_pin(index))!=location['pin']:raise ValueError('原候選、模板或人工編輯版本已變更')
             elif self.pin(mode)!=location['pin']:raise ValueError('原作品、模板或物件版本已變更')
             # Changing an existing tab retains its own pending property form/history.
@@ -104,7 +125,10 @@ class WorkbenchNavigation:
             else:
                 if mode==1:w.template_stack.setCurrentIndex(location['template_page'])
                 canvas=self.canvas(mode)
-                for identity in location['selected']:canvas.select_id(identity)
+                # Selection callbacks normally populate the property form from
+                # the saved object. A view-only return must retain pending fields.
+                with QSignalBlocker(canvas):
+                    for identity in location['selected']:canvas.select_id(identity)
             canvas=self.canvas(mode);canvas.setTransform(location['transform']);canvas.centerOn(location['centre']);canvas.view_changed.emit()
             self.notice='已返回原工作視角；正式輸出仍依當前尺寸檢查。'
         except (ValueError,OSError,KeyError,TypeError) as error:
@@ -113,6 +137,7 @@ class WorkbenchNavigation:
             self.notice='無法還原原位置：'+reason+'。已返回目前列表，請重新選取。'
             if mode==2:
                 w.export_button.setEnabled(False);w.candidate_list.setFocus()
+        finally:self.restoring=False
         self.update();return reason is None
 
     def recovery_started(self):
@@ -121,7 +146,14 @@ class WorkbenchNavigation:
     def recovery_saved(self,receipt,token):
         if not all(receipt.get(k) is True for k in ('saved','encrypted','authenticated')):
             self.recovery_failed('未取得已驗證落盤收據');return
-        self.recovery=dict(token=token,expires=receipt['expires']);self.save_error=None
+        from .layout_recovery import LayoutRecovery
+        from .source_links import fingerprint
+        path=LayoutRecovery(self.window.library.root).path
+        try:
+            if path.is_symlink() or list(fingerprint(path.stat()))!=receipt.get('stat'):raise ValueError('落盤收據與實際檔案不一致')
+        except (ValueError,OSError):self.recovery_failed('恢復檔案缺失或已變更');return
+        self.recovery=dict(token=token,expires=receipt['expires'],stat=receipt['stat']);self.save_error=None
+        QTimer.singleShot(max(1,int((receipt['expires']-time.time())*1000)),self.window,self.update)
         self.notice='短期恢復資料已加密落盤；正式客戶與模板另行核准保存。';self.update()
 
     def recovery_failed(self,error):
@@ -133,7 +165,10 @@ class WorkbenchNavigation:
 
     def recovery_current(self):
         if not self.recovery or self.recovery['expires']<=time.time():return False
-        try:return self.recovery['token']==work_token(self.window)
+        from .layout_recovery import LayoutRecovery
+        from .source_links import fingerprint
+        path=LayoutRecovery(self.window.library.root).path
+        try:return not path.is_symlink() and list(fingerprint(path.stat()))==self.recovery['stat'] and self.recovery['token']==work_token(self.window)
         except (ValueError,OSError,KeyError,TypeError):return False
 
     def pending_form(self):
@@ -165,12 +200,19 @@ class WorkbenchNavigation:
                 slot=next((s for s in slots if s.id==selected),None)
                 if slot and not self.form_matches(slot,form):
                     impacts.append('其他功能頁有已保留、尚未套用的物件屬性。')
-        if w.candidates and not self.recovery_current():impacts.append('當次排版及人工修改尚未保存為目前版本的短期恢復資料。')
+        if (w.candidates or self.input_present()) and not self.recovery_current():impacts.append('當次人物資料、排版及人工修改尚未保存為目前版本的短期恢復資料。')
         from .multi_size_dialog import MultiSizeDialog
         if any(getattr(d,'service',None) and any(e.get('candidates') for e in d.service.entries) for d in w.findChildren(MultiSizeDialog)):
             impacts.append('多尺寸候選僅保留在當次視窗；主排版短期恢復不包含這些獨立作品。')
         if self.save_error:impacts.append(self.save_error)
         return list(dict.fromkeys(impacts))
+
+    def input_present(self):
+        w=self.window
+        # Inspect existing widgets only; no source files, customers or training DB.
+        return any(table.item(row,col) and table.item(row,col).text().strip()
+                   for table in (w.people,w.companies) for row in range(table.rowCount())
+                   for col in range(table.columnCount()))
 
     def confirm_close(self):
         impacts=self.close_impacts()
@@ -191,10 +233,12 @@ class WorkbenchNavigation:
             c=w.candidates[index];parts+=[f'候選 {index+1}',f'{c.template.width_mm:g}×{c.template.height_mm:g} mm']
             parts.append('需重新驗證' if c.generation!=w.generation else '正式輸出仍需當前檢查')
             parts.append('短期恢復已加密落盤；目前進度另需核對' if self.recovery and self.recovery['expires']>time.time() else '尚未保存的當次排版')
+        elif mode==2 and self.input_present():parts.append('當次人物資料尚未保存；尚未產生候選')
         elif mode==1 and w.template:parts.append('已發布模板' if w.template.state=='published' else '模板草稿；依原流程保存')
         elif mode==0 and w.work:parts.append('原稿標記；未保存變更依原流程核對')
         if w.busy:parts.append('背景工作進行中')
         if self.pending_form():parts.append('尚未套用屬性；切換後保留')
         if self.save_error:parts.append(self.save_error)
+        if self.notice.startswith('無法還原'):parts.append(self.notice)
         self.label.setText(' ｜ '.join(parts));self.label.setToolTip(self.notice or self.label.text())
         self.back.setEnabled(bool(self.locations));self.back.setToolTip(self.notice or '返回原工作；失效時回到目前列表')

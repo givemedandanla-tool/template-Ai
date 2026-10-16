@@ -60,7 +60,9 @@ class LayoutRecovery:
             with os.fdopen(descriptor,'wb') as stream:stream.write(blob);stream.flush();os.fsync(stream.fileno())
             publish_complete(path,self.path)
         finally:Path(path).unlink(missing_ok=True)
-        return dict(saved=True,encrypted=True,authenticated=True,expires=record['expires'],scope='ONE_LOCAL_SHORT_LIVED_LAYOUT',unsaved_progress_recoverable=False)
+        if self.path.read_bytes()!=blob:raise OSError('短期恢復寫入內容未能核對，尚未確認保存')
+        from .source_links import fingerprint
+        return dict(saved=True,encrypted=True,authenticated=True,expires=record['expires'],stat=list(fingerprint(self.path.stat())),scope='ONE_LOCAL_SHORT_LIVED_LAYOUT',unsaved_progress_recoverable=False)
     def load(self,password):
         if not self.pending():raise ValueError('沒有有效的已落盤恢復資訊；未保存進度無法承諾恢復')
         blob=self.path.read_bytes()
