@@ -42,7 +42,8 @@ class QualityReports:
                     if not case.get('gold_id'):
                         failure.update(predicted_work_id=case.get('predicted_work_id'), prediction_id=case.get('prediction_id'))
                     key = digest([item['source_id'], failure])
-                    side_cases[key] = dict(source_id=item['source_id'], item_id=item['id'], **copy.deepcopy(case))
+                    if case.get('source_id',item['source_id'])!=item['source_id']:raise ValueError('錯誤案例與實際來源憑證不一致')
+                    side_cases[key] = dict(copy.deepcopy(case),source_id=item['source_id'], item_id=item['id'])
             cases[side] = side_cases
             critical[side] = result['critical_errors']
             results[side] = dict(id=result['id'], digest=digest(result), statistics=copy.deepcopy(result['statistics']),

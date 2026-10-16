@@ -18,7 +18,7 @@ REPAIR='EXPOSED_HOLDOUT_REPAIR_DIAGNOSTIC'
 
 def calculation_files():
     root=Path(__file__).parent
-    names=('quality_metrics.py','quality_domains.py','quality_facets.py','quality_diagnostics.py','quality_rechecks.py','quality_trust.py','coverage_evidence.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_rules.py','quality_ocr.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py','quality_repairs.py','quality_repair_training.py','quality_repair_rules.py')
+    names=('quality_metrics.py','quality_domains.py','quality_facets.py','quality_diagnostics.py','quality_rechecks.py','quality_trust.py','coverage_evidence.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_rules.py','quality_ocr.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py','quality_repairs.py','quality_repair_training.py','quality_repair_rules.py','quality_repair_gates.py')
     return {name:file_digest(root/name) for name in names}
 
 
@@ -41,7 +41,7 @@ class QualityProtocols:
     def dataset_status(self,scope,verify_sources=True):
         return self.sets.validity(scope['dataset_id'],verify_sources,exposure_policy='DESCRIPTIVE_REPAIR_ONLY' if scope.get('purpose')==REPAIR else 'REJECT')
 
-    def plan(self,name,dataset_id,policy_id,pipelines,reason,*,repair_review_id=None):
+    def plan(self,name,dataset_id,policy_id,pipelines,reason,*,repair_review_id=None,repair_stage=None):
         text(name,'固定獨立試驗名稱',120);text(reason,'試驗目的與預先固定的比較依據',2000)
         if not isinstance(pipelines,dict) or set(pipelines)!=set(SIDES) or any(not isinstance(value,str) or not value for value in pipelines.values()):raise ValueError('先明列基準／候選實際pipeline版本；不能看完分數再選候選')
         repair=self.repair_context(repair_review_id,dataset_id) if repair_review_id else None
@@ -61,6 +61,11 @@ class QualityProtocols:
         if not repair and any(self.store.get(CONSUMED,sha) for sha in contents):raise ValueError('此來源／相關家族已供先前試驗或已揭露答案，需真正全新獨立群組；複製驗收集不會重置曝光')
         scope=dict(schema_version=1,evaluation_role=dataset['manifest'].get('evaluation_role','HOLDOUT'),name=name,dataset_id=dataset_id,dataset_revision=dataset['revision'],dataset_manifest_digest=dataset['manifest_digest'],policy_id=policy_id,policy_revision=policy['policy']['revision'],policy_digest=digest(policy['policy']),pipelines=versions,environment=copy.deepcopy(environment),calculation_files=calculation_files(),content_scope=contents,gold_work_count=dataset['manifest']['gold_work_count'],gold_object_count=dataset['manifest']['gold_object_count'],source_file_count=dataset['manifest']['file_count'],independent_groups=dataset['manifest']['independent_group_count'],reason=reason,source_only_predictions_required=True,predeclared_sides=list(SIDES),one_frozen_protocol_per_related_holdout_group=True)
         if repair:scope.update(purpose=REPAIR,repair_review=repair,independence_claim=False,answers_exposed=True)
+        if repair_stage:
+            from .quality_repair_gates import QualityRepairGates
+            context=QualityRepairGates(self.library).stage_context(repair_stage['candidate_id'],repair_stage['stage'],repair_stage.get('previous_gate_id'),dataset_id,pipelines)
+            if repair and context['root_review_id']!=repair['id']:raise ValueError('階段根因不一致')
+            scope['repair_stage']=context
         result=dict(scope=scope,scope_digest=digest(scope),quality_pass_claim=False,independence_claim=bool(not repair and dataset['manifest']['independence_scope_ready']),whole_source_gold_complete=dataset['manifest']['whole_source_gold_complete'],complete_font_environment=bool(environment['fonts']['complete']))
         result['digest']=digest(result);return result
 
@@ -68,7 +73,7 @@ class QualityProtocols:
         if approved is not True:raise ValueError('需先核對固定資料／真值／品質政策／兩版pipeline及一次性holdout範圍')
         text(actor,'試驗宣告者',120);preview=copy.deepcopy(plan);expected=preview.pop('digest',None)
         if expected!=digest(preview):raise ValueError('預先宣告試驗的預覽已被修改')
-        scope=plan['scope'];current=self.plan(scope['name'],scope['dataset_id'],scope['policy_id'],{side:row['id'] for side,row in scope['pipelines'].items()},scope['reason'],repair_review_id=(scope.get('repair_review') or {}).get('id'))
+        scope=plan['scope'];current=self.plan(scope['name'],scope['dataset_id'],scope['policy_id'],{side:row['id'] for side,row in scope['pipelines'].items()},scope['reason'],repair_review_id=(scope.get('repair_review') or {}).get('id'),repair_stage=scope.get('repair_stage'))
         if current!=plan:raise ValueError('固定比較條件已改變')
         with self.store.transaction():
             self.check_metadata(scope)
@@ -88,6 +93,10 @@ class QualityProtocols:
         if scope.get('purpose')==REPAIR:
             if scope.get('independence_claim') is not False or self.repair_context(scope['repair_review']['id'],scope['dataset_id'])!=scope['repair_review']:raise ValueError('修復重播根因憑證改變／不可冒稱獨立驗收')
         elif self.store.get('HOLDOUT_EXPOSED',scope['dataset_id']):raise ValueError('holdout已揭露或獨立性已失效')
+        if scope.get('repair_stage'):
+            from .quality_repair_gates import QualityRepairGates
+            binding=scope['repair_stage']
+            if QualityRepairGates(self.library).stage_context(binding['candidate_id'],binding['stage'],binding.get('previous_gate_id'),scope['dataset_id'],{side:pin['id'] for side,pin in scope['pipelines'].items()})!=binding:raise ValueError('修復階段版本／前置Gate已改變')
         for side,pin in scope['pipelines'].items():
             record=self.store.get('QUALITY_PIPELINE',pin['id'])
             if not record or record['revision']!=pin['revision'] or record['manifest_digest']!=pin['manifest_digest']:raise ValueError('實際pipeline版本已改變')

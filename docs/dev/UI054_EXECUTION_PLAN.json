@@ -111,7 +111,7 @@
     ],
     "targeted_evidence": "docs/qa/targeted/ui054-issue-impact-002.log"
   },
-  "next_package": "Ordered immutable root-regression / unaffected-critical-controls / fresh-independent-acceptance gates, then actualdeployment/rollback and GUI",
+  "next_package": "Current Gold rebinding then positive full ordered chain, actual deployment/rollback, seven-page GUI",
   "semantic_candidate_package": {
     "status": "IMPLEMENTED_LEGACY43PASS_RECOVERY7PASS_PENDING_FULL11",
     "implementation": [
@@ -165,5 +165,20 @@
     ],
     "evidence": "docs/qa/targeted/ui054-source-impact-001.log",
     "scope": "Bounded NetworkX directed descendants: all same-content source works, actual historical TRAIN/VALIDATION model inputs, actual current/historical AUTO model producers, template versions/styles/customers; missing revisions and descendants POTENTIAL; unrecorded legacy UNKNOWN; source issues need no invented pipeline. No automatic writes/training/quarantine."
+  },
+  "ordered_gate_package": {
+    "status": "IMPLEMENTED_ROOT3PASS_COMBINED17PASS_CONTROLS_POSITIVE_CHAIN_PENDING",
+    "implementation": [
+      "template_ai/quality_repair_gates.py",
+      "template_ai/quality_protocol.py",
+      "template_ai/quality_reports.py"
+    ],
+    "evidence": "docs/qa/targeted/ui054-ordered-gates-003.log",
+    "scope": "Immutable exact pipeline candidate; actual root-fault replay fixes omitted source; predeclared same-candidate ordered root/control/independent stages, direct previous PASS and dataset unrelatedness/time constraints. Sparse controls persist FAIL and block final stage; identical version rename rejected. Actual omitted-source test exposed existing source_id duplicate merge bug, fixed with source receipt consistency guard.",
+    "pending": [
+      "Explicit new current Gold binding after re-review updates FACTS; no exposure reset",
+      "Full positive critical-controls/fresh-independent chain",
+      "Actual deployment/rollback, seven pages/full original11/formal"
+    ]
   }
 }
