@@ -126,5 +126,30 @@
       "Automatic suggestion apply requires explicit differences and fresh complete gates; retain-manual conflict choice may keep a blocked preview. Source/engine/code dependencies require pin updates when integrating the new module.",
       "Reuse real Qt event-loop test waits with existing time budgets for worker imports/I/O, not tight QTest polling. No claims of Windows hardware performance or active UI059 completion from draft tests."
     ]
+  },
+  "current_implementation": {
+    "status": "IMPLEMENTATION_IN_PROGRESS",
+    "catalog_expected": 1118,
+    "packages": [
+      "dependency DAG and bounded inverse receipts",
+      "single existing worker/coalescing/ABA fencing",
+      "native move/resize/lock/undo and side-by-side comparison",
+      "source/font/logo/engine token fence; comparison-only copies cannot formally export"
+    ],
+    "targeted_pass": [
+      "ui059-shared-worker-integration-005.log:22",
+      "ui059-worker-ordering-007.log:6",
+      "ui059-difference-controls-008.log:24",
+      "ui059-comparison-source-fence-011.log:32"
+    ],
+    "preserved_diagnostics": [
+      "006 used incorrect expected dictionary key; fixed test to actual contract",
+      "009 used nonexistent library fixture method; also source was edited during diagnostic test, so not frozen evidence",
+      "010 attempted forbidden published overwrite; change to explicit adversarial external payload replacement test"
+    ],
+    "pending": [
+      "dependency candidate state/action UI",
+      "native captures, source freeze and full regression, ten-clause final registration"
+    ]
   }
 }

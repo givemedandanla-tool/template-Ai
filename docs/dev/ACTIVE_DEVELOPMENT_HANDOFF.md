@@ -1,4 +1,4 @@
-# 當前：UI059 dependency/delta WIP23PASS；歷史LAYOUT003/GitHub Gate全PASS，12/28
+# 當前：UI059共用worker／差異比較WIP；歷史LAYOUT003/GitHub Gate全PASS，12/28
 
 - 使用者目標28父題全部自我驗證；不要停在12里程碑。dev/v0.1-first-version／PR#2，無EXE/main merge/多代理。按需rg/≤1600token輸出；零例行問題，靠STATE/本檔/GitHub接續，不讀完整聊天/倉庫/大日誌。
 - RUN-REMAINING28-LAYOUT-003 source842392433a96d09633fa051e41eb19fdfc48c82f／tree5d0a096faa2b165d1b46b7b57dbb65cf2670e93f：1078/1078PASS、140healthy ownedmodules全部exit0、0missing/skip/Qt、capture0、sourceunchanged、actualparentexit0。204附件須全部正常GitHub保存，不新增媒體例外。
@@ -26,3 +26,7 @@ New template_ai/candidate_changes.py reuses lazyNetworkX DAG/BFS, explicit whole
 ## UI059 edit/history/native WIP
 
 Generalized plan_operation +prepare/calculate/install separated in candidate_edit.py, existing moveAPI retained. Move/resize/lock andbounded20per-propertyhistory/inverse all useobject_tools; actualwholecard/currentinput/source recheck andmanual_revision token. Existingdialog adds previewundo+explicitapply.7newnative/historytests004PASS: physicalroundtrip/othercandidate+officialsourceuntouched/singleactiononly/newlongphonehardblock/ABAgeometrysamebutrevchangedlateworkerrejected/essentialunknown/lockresize/fixedptguard/actualbutton. Combinedintegration00346PASS; prior23 mathPASS.1108catalog,150pending, nofullUI05910registration. Next productGUI async viaexistingpool/run_job, provisionalmanual UNKNOWN whilebusy, per-candidate latesttoken/coalescing/dependency impact/conflict+keepmanual/suggestion/compare/cancel. Currentprogrammaticapply synccompat andproductdialog notyet async; do notclaimlow-loadfullscope. Newcode/recoverypins includecandidate_changes/edit/session, exactcacheversionguard maintained.
+
+## UI059 shared-worker/difference WIP (latest)
+
+Existing run_job/pool max1 reused; pending coalesces latest per candidate. Provisional manual geometry blocks formal export until current full validation. Actual worker ordering tests0076PASS and combined00824PASS; 10 total new dispatch tests verified with history/risk/existing UI:01132PASS. Side-by-side existing Canvas/object selection, resize/lock, per-property/core element differences; original manual-base proposal explicitly previewed, separate comparison-only risk blocks formal export, safe adoption requires current dependency/input/manual tokens and actual fullGate. Existing dialog destroyed before worker completion tested. External published payload mutation is adversarial fixture, not legal overwrite API. 006/009/010 diagnostics preserved; no parent closure. Catalog expected1118. Next finish dependency state/reasons/actions, native/capture and full ten-clause registration. Last checkpoint73ff5df20b4adf4fb2dbbe6b44bf5d4fdf4f131d tree291389be810d872fa94c59cfe7f91f305c8a662f (sharedworker ACK).

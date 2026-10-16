@@ -1,0 +1,32 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+======================================================================
+ERROR: test_changed_input_rejects_late_result_then_current_long_phone_rechecks (test_candidate_edit_dispatch.CandidateEditDispatchTests.test_changed_input_rejects_late_result_then_current_long_phone_rechecks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_edit_dispatch.py", line 48, in test_changed_input_rejects_late_result_then_current_long_phone_rechecks
+    self.assertFalse(completed);self.assertFalse(self.w.candidates[0].formal_eligible);manager.submit(plan_recheck(self.w,0));wait_candidate_edits(self.w);current=self.w.candidates[0];self.assertEqual(current.template.to_dict(),manual);self.assertIn(phone,[i.text for i in current.items]);self.assertEqual(current.risk['state'],'HARD_BLOCKED');self.assertTrue(current.risk_context['recompute_impact']['whole_card_required'])
+                                                                                                                                                                                                                                                                                                                                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'whole_card_required'
+
+----------------------------------------------------------------------
+Ran 6 tests in 7.311s
+
+FAILED (errors=1)

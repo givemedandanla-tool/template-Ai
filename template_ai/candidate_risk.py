@@ -22,6 +22,7 @@ def assess(candidate):
     unexplained=bool(candidate.issues) and not hard and not unknown and codes!={'UNPUBLISHED'}
     physical='FAIL' if hard else 'UNKNOWN' if unknown or unexplained else 'PASS'
     evidence=copy.deepcopy(context.get('conditions',[]))
+    if context.get('comparison_only'):evidence.append(dict(id='COMPARISON_ONLY',status='UNKNOWN',reason='非正式比較副本；尚未明確採用，不得正式輸出'))
     if any(not isinstance(c,dict) or c.get('status') not in ('PASS','FAIL','UNKNOWN') or not c.get('reason') for c in evidence):raise ValueError('風險條件需明確PASS／FAIL／UNKNOWN與具體原因')
     conditions=[dict(id='ENGINE_REQUIRED_CONDITIONS',status=physical,reason='實際既有語意／固定字級／框位／Logo檢查',hard_failures=hard,unknown_conditions=unknown),dict(id='PUBLISHED_BASE_APPROVAL',status=approval,reason='目前模板已發布' if approval=='PASS' else '尚未完成模板發布核准')]+evidence
     conditions.extend(freshness_conditions(candidate))
