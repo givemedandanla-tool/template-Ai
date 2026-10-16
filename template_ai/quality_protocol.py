@@ -43,9 +43,9 @@ class QualityProtocols:
             current_env=record['manifest']['environment']
             if environment is None:environment=current_env
             elif environment!=current_env:raise ValueError('基準／候選測試環境不相同，不能公平配對A/B')
-        contents=self.content_scope(dataset)
+        contents=self.content_scope(dataset) if dataset['manifest'].get('evaluation_role','HOLDOUT')=='HOLDOUT' else []
         if any(self.store.get(CONSUMED,sha) for sha in contents):raise ValueError('此來源／相關家族已供先前試驗或已揭露答案，需真正全新獨立群組；複製驗收集不會重置曝光')
-        scope=dict(schema_version=1,name=name,dataset_id=dataset_id,dataset_revision=dataset['revision'],dataset_manifest_digest=dataset['manifest_digest'],policy_id=policy_id,policy_revision=policy['policy']['revision'],policy_digest=digest(policy['policy']),pipelines=versions,environment=copy.deepcopy(environment),calculation_files=calculation_files(),content_scope=contents,gold_work_count=dataset['manifest']['gold_work_count'],gold_object_count=dataset['manifest']['gold_object_count'],source_file_count=dataset['manifest']['file_count'],independent_groups=dataset['manifest']['independent_group_count'],reason=reason,source_only_predictions_required=True,predeclared_sides=list(SIDES),one_frozen_protocol_per_related_holdout_group=True)
+        scope=dict(schema_version=1,evaluation_role=dataset['manifest'].get('evaluation_role','HOLDOUT'),name=name,dataset_id=dataset_id,dataset_revision=dataset['revision'],dataset_manifest_digest=dataset['manifest_digest'],policy_id=policy_id,policy_revision=policy['policy']['revision'],policy_digest=digest(policy['policy']),pipelines=versions,environment=copy.deepcopy(environment),calculation_files=calculation_files(),content_scope=contents,gold_work_count=dataset['manifest']['gold_work_count'],gold_object_count=dataset['manifest']['gold_object_count'],source_file_count=dataset['manifest']['file_count'],independent_groups=dataset['manifest']['independent_group_count'],reason=reason,source_only_predictions_required=True,predeclared_sides=list(SIDES),one_frozen_protocol_per_related_holdout_group=True)
         result=dict(scope=scope,scope_digest=digest(scope),quality_pass_claim=False,independence_claim=dataset['manifest']['independence_scope_ready'],whole_source_gold_complete=dataset['manifest']['whole_source_gold_complete'],complete_font_environment=bool(environment['fonts']['complete']))
         result['digest']=digest(result);return result
 
@@ -119,4 +119,8 @@ class QualityProtocols:
             for sha in scope['content_scope']:
                 used=self.store.get(CONSUMED,sha)
                 if not used:self.store._write(CONSUMED,sha,dict(protocol_id=identity,dataset_id=scope['dataset_id'],state='ANSWERS_EXPOSED_NOT_FRESH_HOLDOUT',at=time.time()),0,'quality_answer_view_reserves_group_against_future_tuning')
-            return self.store._write('HOLDOUT_EXPOSED',scope['dataset_id'],dict(dataset_id=scope['dataset_id'],protocol_id=identity,actor=actor,reason=reason,at=time.time(),state='ANSWERS_EXPOSED_REQUIRES_NEW_INDEPENDENT_GROUP',old_evaluation_records_preserved=True),prior['revision'] if prior else 0,'quality_gold_answers_exposed_not_fresh_test')
+            record=dict(dataset_id=scope['dataset_id'],protocol_id=identity,actor=actor,reason=reason,at=time.time(),state='ANSWERS_EXPOSED_REQUIRES_NEW_INDEPENDENT_GROUP' if scope.get('evaluation_role','HOLDOUT')=='HOLDOUT' else 'DIAGNOSTIC_ANSWERS_EXPOSED_NOT_INDEPENDENT',old_evaluation_records_preserved=True)
+            exposure=self.store.get('QUALITY_ANSWER_EXPOSURE',identity)
+            saved=self.store._write('QUALITY_ANSWER_EXPOSURE',identity,record,exposure['revision'] if exposure else 0,'quality_answers_explicitly_viewed_local_only')
+            if scope.get('evaluation_role','HOLDOUT')=='HOLDOUT':return self.store._write('HOLDOUT_EXPOSED',scope['dataset_id'],record,prior['revision'] if prior else 0,'quality_gold_answers_exposed_not_fresh_test')
+            return saved

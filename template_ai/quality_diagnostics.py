@@ -11,7 +11,7 @@ class QualityDiagnostics:
     def page(self,protocol_id,side,offset=0,limit=50,query='',severity='ALL',domain='ALL',field_type='ALL',facets=None):
         if type(offset) is not int or offset<0 or type(limit) is not int or not 1<=limit<=50 or not isinstance(query,str) or len(query)>500:raise ValueError('診斷查詢需有界分頁，每頁最多50列')
         protocol=QualityProtocols(self.library).get(protocol_id)
-        if not self.store.get('HOLDOUT_EXPOSED',protocol['scope']['dataset_id']):raise ValueError('逐案人工答案尚未明確揭露；先核對保留集失效邊界')
+        if not self.store.get('QUALITY_ANSWER_EXPOSURE',protocol_id) and not self.store.get('HOLDOUT_EXPOSED',protocol['scope']['dataset_id']):raise ValueError('逐案人工答案尚未明確揭露；先核對保留集失效邊界')
         if side not in ('BASELINE','CANDIDATE'):raise ValueError('需明確固定側別')
         pair=self.store.get('QUALITY_PROTOCOL_JOBS',protocol_id)
         if not pair:raise ValueError('固定品質工作不存在')
@@ -51,7 +51,7 @@ class QualityDiagnostics:
 
     def detail(self,protocol_id,side,row,work_id=None):
         protocol=QualityProtocols(self.library).get(protocol_id)
-        if not self.store.get('HOLDOUT_EXPOSED',protocol['scope']['dataset_id']):raise ValueError('需明確揭露答案後才能對照原稿')
+        if not self.store.get('QUALITY_ANSWER_EXPOSURE',protocol_id) and not self.store.get('HOLDOUT_EXPOSED',protocol['scope']['dataset_id']):raise ValueError('需明確揭露答案後才能對照原稿')
         pair=self.store.get('QUALITY_PROTOCOL_JOBS',protocol_id);job=self.store.get('EVAL_JOB',pair['jobs'][side])
         item=self.store.get('QUALITY_EVAL_ITEM',row['item_id'])
         if not item or item['revision']!=row['item_revision'] or item['job_id']!=job['id']:raise ValueError('診斷列版次／試驗範圍已改變')

@@ -18,5 +18,5 @@ def describe(golds,manifest):
     if not logos:logos.add('NO_LOGO' if golds and all(g['domain_truth']['whole_logo']=='MANUALLY_VERIFIED' for g in golds) else 'UNKNOWN')
     return dict(size=sorted(sizes) or ['UNKNOWN'],people=sorted(people) or ['UNKNOWN'],logo=sorted(logos),
                 customer=sorted(customers) or ['UNKNOWN'],field_type=sorted(kinds),group=sorted(groups) or ['UNKNOWN'],
-                role=['HOLDOUT'],multi_work=['YES' if len(golds)>1 else 'NO'] if manifest['whole_source_gold_complete'] else ['UNKNOWN'],
+                role=[manifest.get('evaluation_role','HOLDOUT')],multi_work=['YES' if len(golds)>1 else 'NO'] if manifest['whole_source_gold_complete'] else ['UNKNOWN'],
                 descriptors_are_fixed_gold_metadata_not_quality_pass=True)

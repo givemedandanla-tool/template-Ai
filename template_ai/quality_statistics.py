@@ -78,11 +78,18 @@ def aggregate(rows, manifest, policy):
     insufficient = (not manifest['independence_scope_ready'] or bool(missing_groups)
                     or any(d['state'] == 'EVIDENCE_INSUFFICIENT' for d in domains.values()))
     passed = not any(critical.values()) and not insufficient and all(d['state'] == 'PASS' for d in domains.values())
-    return dict(domains=domains, critical_errors=dict(critical),
-                quality_gate='FAILED_CRITICAL' if any(critical.values()) else 'EVIDENCE_INSUFFICIENT' if insufficient else 'PASS' if passed else 'FAILED_THRESHOLD',
+    descriptive=manifest.get('evaluation_role','HOLDOUT')!='HOLDOUT'
+    if descriptive:
+        for domain in domains.values():
+            domain['state']='DESCRIPTIVE_FIT_ROLE_ONLY'
+            for item in domain['classes'].values():
+                item['state']='DESCRIPTIVE_FIT_ROLE_ONLY';item['failure_rate_interval']=None
+        passed=False
+    return dict(domains=domains, critical_errors=dict(critical),evaluation_role=manifest.get('evaluation_role','HOLDOUT'),
+                quality_gate='DESCRIPTIVE_FIT_ROLE_ONLY_NOT_INDEPENDENT' if descriptive else 'FAILED_CRITICAL' if any(critical.values()) else 'EVIDENCE_INSUFFICIENT' if insufficient else 'PASS' if passed else 'FAILED_THRESHOLD',
                 quality_pass=passed, required_independent_groups=manifest['independent_group_count'],
                 required_source_units=len(rows), confidence=policy['confidence'],
                 missing_independent_groups=missing_groups,
-                confidence_scope='PER_DOMAIN_PER_CLASS_MARGINAL_NOT_SIMULTANEOUS',
+                confidence_scope='FIT_DATA_NOT_GENERALIZATION_EVIDENCE' if descriptive else 'PER_DOMAIN_PER_CLASS_MARGINAL_NOT_SIMULTANEOUS',
                 automatic_recommendation_allowed=False,
                 policy_scope=policy['scope'], acceptance_is_not_publication=True)

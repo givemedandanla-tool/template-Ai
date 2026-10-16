@@ -1,7 +1,7 @@
 """Explicit local quality configuration using named controls and actual records."""
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QTabWidget,QWidget,QLabel,QLineEdit,QPlainTextEdit,QComboBox,QPushButton,QCheckBox,QTableWidget,QTableWidgetItem,QFileDialog,QScrollArea)
-from .quality_gold import DOMAINS,USE
+from .quality_gold import DOMAINS,USE,DIAGNOSTIC_USE
 from .model import KINDS
 
 LABELS=dict(source_readability='來源可讀性',work_segmentation='完整作品切分',text_candidates='所有文字候選（含Logo文字）',field_types='各欄位類型',person_ownership='人物ROOT與聯絡歸屬',company_ownership='公司歸屬',whole_logo='完整Logo圖文構件',physical_size='作品物理尺寸',customer_style_mapping='來源→客戶→exact版型')
@@ -51,6 +51,7 @@ class QualitySetupDialog(QDialog):
                 self.work.addItem(name+' · '+path,identity)
         query.textChanged.connect(works);works()
         self.basis=QComboBox();self.basis.addItems(['OWNED','AUTHORIZED','OPEN_LICENSE']);form.addRow('本機品質用途權利依據',self.basis)
+        self.gold_use=QComboBox();self.gold_use.addItem('獨立品質驗收（不是訓練授權）',USE);self.gold_use.addItem('訓練／調參集描述診斷（不能當獨立驗收）',DIAGNOSTIC_USE);form.addRow('單獨明列本次合法用途',self.gold_use)
         self.rights=self.line(form,'可核對的權利證明／範圍');self.gold_reason=self.line(form,'人工原稿核對理由');self.gold_evidence=self.line(form,'原始作品及正確標註證據')
         self.truth={}
         for domain in DOMAINS:
@@ -75,7 +76,7 @@ class QualitySetupDialog(QDialog):
         for row in range(self.logo.rowCount()):
             values=[self.logo.item(row,column).text().strip() for column in range(4)]
             if any(values[1:]):logos[values[0]]=dict(root_id=values[1],component_ids=[v.strip() for v in values[2].split(',') if v.strip()],review_reason=values[3],original_correspondence_confirmed=self.truth['whole_logo'].isChecked())
-        payload=dict(work_id=self.work.currentData(),rights=dict(basis=self.basis.currentText(),reference=self.rights.text(),use=USE),domain_truth={key:'MANUALLY_VERIFIED' if box.isChecked() else 'INSUFFICIENT_EVIDENCE' for key,box in self.truth.items()},reason=self.gold_reason.text(),evidence=self.gold_evidence.text(),logo_truth=logos or None)
+        payload=dict(work_id=self.work.currentData(),rights=dict(basis=self.basis.currentText(),reference=self.rights.text(),use=self.gold_use.currentData()),domain_truth={key:'MANUALLY_VERIFIED' if box.isChecked() else 'INSUFFICIENT_EVIDENCE' for key,box in self.truth.items()},reason=self.gold_reason.text(),evidence=self.gold_evidence.text(),logo_truth=logos or None)
         if self.mapping.isChecked():payload['mapping_truth']=dict(customer_id=self.mapping_customer.text().strip(),style_id=self.mapping_style.text().strip(),review_reason=self.mapping_reason.text())
         self.submit('PLAN_GOLD',payload,'GOLD')
 
@@ -103,12 +104,13 @@ class QualitySetupDialog(QDialog):
 
     def set_form(self):
         form=self.tab('固定獨立驗收集');self.set_name=self.line(form,'驗收集名稱');self.gold_ids=self.line(form,'已核對Gold版本ID（空白分隔）');self.paths=QPlainTextEdit();self.paths.setPlaceholderText('每行一個原始來源檔案；無Gold／未解析來源也須明列');form.addRow('明列來源',self.paths)
+        self.evaluation_role=QComboBox();self.evaluation_role.addItem('HOLDOUT：獨立驗收', 'HOLDOUT');self.evaluation_role.addItem('TRAIN：僅描述診斷，不執行訓練','TRAIN');self.evaluation_role.addItem('VALIDATION：僅調參診斷，不是獨立測試','VALIDATION');form.addRow('明確資料角色',self.evaluation_role)
         def choose():
             paths,_=QFileDialog.getOpenFileNames(self,'明列品質來源（本機）','','設計與來源 (*.ai *.pdf *.svg *.eps *.png *.jpg *.jpeg)')
             if paths:self.paths.setPlainText('\n'.join(paths))
         self.button(form,'選擇本機來源',choose)
         self.inventory=QCheckBox('已對照所有來源頁與其中全部實際作品，沒有省略未解析項');self.independence=QCheckBox('已核對內容／近重複／客戶／模板家族獨立性');form.addRow(self.inventory);form.addRow(self.independence);self.set_reason=self.line(form,'獨立群組核對依據')
-        self.button(form,'預覽固定來源、真值與獨立群組分母',lambda:self.submit('PLAN_SET',dict(name=self.set_name.text(),gold_ids=self.gold_ids.text().split(),inventory_attested=self.inventory.isChecked(),independence_reviewed=self.independence.isChecked(),review_reason=self.set_reason.text(),declared_paths=[p.strip() for p in self.paths.toPlainText().splitlines() if p.strip()] or None),'SET'))
+        self.button(form,'預覽固定來源、真值與獨立群組分母',lambda:self.submit('PLAN_SET',dict(name=self.set_name.text(),gold_ids=self.gold_ids.text().split(),inventory_attested=self.inventory.isChecked(),independence_reviewed=self.independence.isChecked(),review_reason=self.set_reason.text(),declared_paths=[p.strip() for p in self.paths.toPlainText().splitlines() if p.strip()] or None,evaluation_role=self.evaluation_role.currentData()),'SET'))
 
     def version_form(self):
         form=self.tab('實際可執行版本');self.version_name=self.line(form,'版本名稱');self.model=self.picker(form,'實際語意模型版本','SEMANTIC_MODEL',True)

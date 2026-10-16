@@ -27,3 +27,7 @@
 ## 最新02:00 checkpoint補充
 - 33 targets PASS：quality-only Gold mapping連結customer/template-family且原子失效舊role洩漏set，無businessassoc；actual lateauditrollback、predictiontamper與legacyunknownhistory branch已測。新case含domain/critical/rect，qualitytabscroll已接。舊31失敗因optionaltable與training_ eventprefix測試假設，原log保留。
 - 下一先按UI053_ROLE_DIAGNOSTICS_DESIGN.md完成TRAIN/VALIDATION受控診斷（新DIAGNOSTIC-only rights，不能擴張舊Gold授權），再nativewithdraw/resolve/sourcefacts navigation/capture、處理rules未執行的原9scope。仍144pending／歷史6of28，未全formal。
+
+## 最新02:09角色診斷checkpoint
+- UI053_ROLE_DIAGNOSTICS_DESIGN已實作：Gold新DIAGNOSTIC_USE=QUALITY_DIAGNOSTICS_LOCAL_ONLY，不能挪用舊independentrights；QualitySet明列HOLDOUT/TRAIN/VALIDATION，fit不准入也不執行訓練。Actual pipelines/jobs/GUI下TRAIN/VALIDATION只描述，CI None/noqualityPASS/noindependentdecision；perprotocol QUALITY_ANSWER_EXPOSURE，HOLDOUT原保護保留。最新roles-00233PASS（前00138含5重複繼承測試，已去掉僅留helperbindings，原log留）。
+- 下一優先：QualitySet.group_edges_digest全庫hash的誤失效→relevantconnectedprojection；Logo path可能是outline文字，需人工textcomponentIDs/unknown不能假全text分母；真正gold-free frozenrule執行、actualOCR版本選擇；nativewithdraw/resolve/sourcefacts導航與actualGUIcapture。仍144currentpending/歷史6of28，UI053未全9或新sourceformal。

@@ -109,7 +109,9 @@ class QualityPanel(QWidget):
 
     def enqueue_pair(self):
         protocol=self.selected()
-        if QMessageBox.question(self,'固定雙側驗收','將基準與候選加入既有公平佇列？使用固定來源與版本，完成後不得藉重跑本集調參。')!=QMessageBox.Yes:return
+        role=self.store.get('QUALITY_PROTOCOL',protocol)['scope'].get('evaluation_role','HOLDOUT')
+        message='HOLDOUT完成後不得藉重跑本集調參。' if role=='HOLDOUT' else role+'只做描述診斷，不是獨立品質驗收，也不執行訓練。'
+        if QMessageBox.question(self,'固定雙側驗收','將基準與候選加入既有公平佇列？使用固定來源與版本。'+message)!=QMessageBox.Yes:return
         def submit(value):
             jobs=value.get('jobs',value)
             for side in ('BASELINE','CANDIDATE'):
@@ -149,7 +151,9 @@ class QualityPanel(QWidget):
         self.request('DECIDE',dict(report_id=self.report_id.text().strip(),actor=self.actor.text(),reason=self.reason.text(),approved=True),lambda value:self.previewed(None,value))
 
     def expose(self):
-        if QMessageBox.question(self,'揭露保留集答案','逐案對照會標記本保留集答案已揭露，不能再用它調參後重新驗收。舊報告保留；需新獨立來源才能再驗收。確定進入診斷？')!=QMessageBox.Yes:return
+        role=self.store.get('QUALITY_PROTOCOL',self.selected())['scope'].get('evaluation_role','HOLDOUT')
+        message='逐案對照會標記本保留集答案已揭露，不能再用它調參後重新驗收。舊報告保留；需新獨立來源才能再驗收。' if role=='HOLDOUT' else role+'只做本機描述診斷；答案及fit成績不能作獨立品質證據。'
+        if QMessageBox.question(self,'明確揭露答案',message+'確定進入診斷？')!=QMessageBox.Yes:return
         self.request('EXPOSE',dict(identity=self.selected(),actor=self.actor.text(),reason=self.reason.text(),approved=True),lambda _:self.cases(0))
 
     def cases(self,delta):
