@@ -13,6 +13,14 @@ def scope_matches(rule, work, observation, source):
             and contains(scope['zone'], relative_region(work, observation)))
 
 
+def approval_checks(plan, detail_reviewed=False):
+    """One approval policy shared by ordinary review and isolated repairs."""
+    if any(r['state'] not in ('PENDING', 'DEFERRED') for r in plan['rows']): raise ValueError('只能審核目前PENDING或DEFERRED版本')
+    if any(r['risk'] == 'BLOCK' for r in plan['rows']): raise ValueError('缺證或未知完整影響不能批准')
+    if len(plan['rows']) > 1 and not plan['batch_eligible']: raise ValueError('只有同前提且已驗證LOW風險可批次批准')
+    if any(r['risk'] == 'HIGH' for r in plan['rows']) and (len(plan['rows']) != 1 or detail_reviewed is not True): raise ValueError('HIGH風險需逐條詳審')
+
+
 class RuleReviewMixin:
     def scan_observations(self, limit=2000):
         rows = []; offset = 0; more = False
@@ -79,9 +87,7 @@ class RuleReviewMixin:
             if current['digest'] != plan.get('digest'): raise ValueError('規則版次／來源證據／影響範圍已變更，重新審核')
             if any(r['state'] not in ('PENDING', 'DEFERRED') for r in current['rows']): raise ValueError('只能審核目前PENDING或DEFERRED版本')
             if action == 'APPROVE':
-                if any(r['risk'] == 'BLOCK' for r in current['rows']): raise ValueError('缺證或未知完整影響不能批准')
-                if len(current['rows']) > 1 and not current['batch_eligible']: raise ValueError('只有同前提且已驗證LOW風險可批次批准')
-                if any(r['risk'] == 'HIGH' for r in current['rows']) and (len(current['rows']) != 1 or detail_reviewed is not True): raise ValueError('HIGH風險需逐條詳審')
+                approval_checks(current, detail_reviewed)
             result = []
             for row in current['rows']:
                 if action=='APPROVE':

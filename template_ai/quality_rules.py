@@ -19,7 +19,9 @@ def snapshots(store,selection=None):
         if rule is None:
             row=store.db.execute("SELECT after_json FROM training_history WHERE kind='RULE' AND id=? AND revision=?",key).fetchone()
             if row:rule=dict(id=key[0],revision=key[1],**json.loads(row[0]))
-        if not rule or rule['state']!='ACTIVE' or rule['action'] not in ('KEEP','EXCLUDE'):raise ValueError('只能選有實際歷史核准憑證的規則，不執行pending／自填版本')
+        from .quality_repair_rules import STATE, checked
+        if rule and rule['state']==STATE:rule=checked(store,*key)
+        if not rule or rule['state'] not in ('ACTIVE',STATE) or rule['action'] not in ('KEEP','EXCLUDE'):raise ValueError('只能選有實際歷史核准憑證的規則，不執行pending／自填版本')
         if not rule.get('positive_examples') or not rule.get('counterexamples'):raise ValueError('規則缺少支持／反例')
         for ref in rule['positive_examples']+rule['counterexamples']:store.validate_ref(ref)
         result.append(rule)
@@ -28,6 +30,17 @@ def snapshots(store,selection=None):
 
 def production_current(store,records):
     return all(digest(store.get('RULE',row['id']))==digest(row) and row['state']=='ACTIVE' for row in records)
+
+
+def approved_for_quality_current(store, records):
+    from .quality_repair_rules import STATE, checked
+    for row in records:
+        if digest(store.get('RULE',row['id']))!=digest(row):return False
+        if row['state']=='ACTIVE':continue
+        if row['state']!=STATE:return False
+        try:checked(store,row['id'],row['revision'])
+        except (ValueError, KeyError, OSError):return False
+    return True
 
 
 def evaluate(source,work,records):

@@ -1,0 +1,35 @@
+test_actual_holdout_lock_blocks_isolated_approval (test_quality_repair_rules.QualityRepairRuleTests.test_actual_holdout_lock_blocks_isolated_approval) ... ok
+test_candidate_training_exposure_survives_later_withdrawal (test_quality_repair_rules.QualityRepairRuleTests.test_candidate_training_exposure_survives_later_withdrawal) ... ok
+test_explicit_rule_executes_in_frozen_pipeline_but_default_remains_empty (test_quality_repair_rules.QualityRepairRuleTests.test_explicit_rule_executes_in_frozen_pipeline_but_default_remains_empty) ... ok
+test_late_audit_failure_rolls_back_origin_lock_and_candidate (test_quality_repair_rules.QualityRepairRuleTests.test_late_audit_failure_rolls_back_origin_lock_and_candidate) ... FAIL
+test_shared_high_risk_policy_and_root_layer_cannot_be_bypassed (test_quality_repair_rules.QualityRepairRuleTests.test_shared_high_risk_policy_and_root_layer_cannot_be_bypassed) ... ok
+test_actual_frozen_rules_execute_scope_checks_and_keep_unknown_without_gold (test_quality_rules.QualityRuleTests.test_actual_frozen_rules_execute_scope_checks_and_keep_unknown_without_gold) ... ok
+test_explicit_no_rules_snapshot_is_independent_of_new_active_rules (test_quality_rules.QualityRuleTests.test_explicit_no_rules_snapshot_is_independent_of_new_active_rules) ... ok
+test_historical_approved_rule_version_can_execute_but_not_be_current_production_evidence (test_quality_rules.QualityRuleTests.test_historical_approved_rule_version_can_execute_but_not_be_current_production_evidence) ... ok
+test_rule_authoring_and_late_approval_cannot_absorb_holdout_answers (test_quality_rules.QualityRuleTests.test_rule_authoring_and_late_approval_cannot_absorb_holdout_answers) ... ok
+test_noise_review (unittest.loader._FailedTest.test_noise_review) ... ERROR
+
+======================================================================
+ERROR: test_noise_review (unittest.loader._FailedTest.test_noise_review)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_noise_review
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'test_noise_review'
+
+
+======================================================================
+FAIL: test_late_audit_failure_rolls_back_origin_lock_and_candidate (test_quality_repair_rules.QualityRepairRuleTests.test_late_audit_failure_rolls_back_origin_lock_and_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_repair_rules.py", line 63, in test_late_audit_failure_rolls_back_origin_lock_and_candidate
+    with self.assertRaises(OSError):approve(self.store,review['id'],plan,'Reviewer','No partial candidate',True,True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: OSError not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 6.575s
+
+FAILED (failures=1, errors=1)

@@ -27,12 +27,12 @@
 - 新actualAUTO producer保存analysis_version、分析模型在analysis_evidence；重審讀actual+legacy欄位，同weights其他版本僅POTENTIAL；覆核記actualsource模型與當前active分開，Goldtruth排除predictionversions。3realmodel→AUTO→實際critical結果→impact/quarantine及truth依賴回歸PASS。
 - 正式capture8quality畫面已含總capture且檢視actualGold/AI圖；當前雲端測量FIFO4.0196s、parent318078976B、maxGUIgap279.17ms。**合成安全流程、明確寬鬆policy**，不是生產準確率校準／原生Illustrator／Windows16GBRTX5050VivoBook／實印／獨立覆核。這些缺證不可冒稱通過。
 
-## UI054接續材料（尚未實作）
+## UI054接續材料（分包實作中，完整11尚未完成）
 
 - `UI054_EXECUTION_PLAN.json`：完整原11/SHA、實際sklearn1.7.2/MLflow2.22/NetworkX3.5/AWS公開source/hash思路。`UI054_RELEASE_AND_GUI_DESIGN.md` 七頁、ordered root/control/freshholdout、真正部署與可信rollback。
-- docs/dev/wip 的 `UI054_QUALITY_REPAIRS_DRAFT.py`、`UI054_REPAIR_TRAINING_DRAFT.py`、`UI054_RULE_CANDIDATES_DRAFT.py` **只有ast語法檢查，沒import/執行/整合，需review+test後才可搬用**。舊UI053_QUALITY_*draft更不可覆寫active模組。
+- docs/dev/wip 的UI054三個draft是歷史未整合草稿；現有active `quality_repairs.py`、`quality_repair_training.py`、`quality_repair_rules.py`已審改實作及目標測試，不可用舊draft覆寫。規則分包25/25PASS，existingreview/risk共用；isolated規則只供explicit品質試驗，不在預設ACTIVE。歷史TRAIN曝露保留、一般approve/version旁路阻擋。
 - 決定沿用AUTO_JOB明確operation、原claim/finish/sharedlease/child/runtime/restore；候選model＋link＋job＋lease原子提交。沿用QualityPanel.request＋quality_command新增REPAIR路由，無新DB/scheduler/command協定。
-- 未完成：通用影響resolver（沿用現有真AUTO版本重審）；isolated approved RULE候選及shared approval checks/歷史TRAIN曝露；已曝露HLD只作descriptive修復replay仍永久不獨立；原錯誤→未受影響關鍵控制→新獨立HLD順序Gate；真正frozenpipeline runtime deployment/安全rollback；7頁及全部原稿/例外/品質/重審入口。根因不明或source/Gold失效先manual，不拿手填prediction閉合。
+- 未完成：通用影響resolver（沿用現有真AUTO版本重審）；規則candidate後續正式部署及受控withdraw；已曝露HLD只作descriptive修復replay仍永久不獨立；原錯誤→未受影響關鍵控制→新獨立HLD順序Gate；真正frozenpipeline runtime deployment/安全rollback；7頁及全部原稿/例外/品質/重審入口。根因不明或source/Gold失效先manual，不拿手填prediction閉合。
 
 ## 歷史失敗與環境
 

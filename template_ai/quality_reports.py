@@ -68,10 +68,11 @@ class QualityReports:
         from .quality_trust import blockers
         quarantined={side:bool(blockers(self.store,self.store.get('QUALITY_PIPELINE',scope['pipelines'][side]['id']))) for side in SIDES}
         eligible = eligible and not quarantined['CANDIDATE']
-        from .quality_rules import production_current
+        from .quality_rules import production_current, approved_for_quality_current
         candidate_pipeline=self.store.get('QUALITY_PIPELINE',scope['pipelines']['CANDIDATE']['id'])
         rules_current=production_current(self.store,candidate_pipeline['manifest'].get('rule_records',[]))
-        eligible=eligible and rules_current
+        rules_quality_approved=approved_for_quality_current(self.store,candidate_pipeline['manifest'].get('rule_records',[]))
+        eligible=eligible and rules_quality_approved
         plan = dict(protocol_id=protocol_id, protocol_scope_digest=protocol['scope_digest'],
                     fixed_conditions=copy.deepcopy(scope), results=results, denominators=denominators[0],
                     fair_comparison=fair, current_errors=checked['errors'],
@@ -81,6 +82,7 @@ class QualityReports:
                     critical_errors=critical, new_critical_errors=new_critical, class_regressions=regressions,
                     version_quarantined=quarantined,
                     candidate_rules_current_for_production=rules_current,
+                    candidate_rules_approved_for_quality=rules_quality_approved,
                     candidate_decision_eligible=eligible, automatic_publication=False,
                     conclusion='NEEDS_EXPLICIT_LOCAL_DECISION' if eligible else 'BLOCKED_OR_EVIDENCE_INSUFFICIENT',
                     fewer_observed_errors_is_not_statistical_superiority=True)

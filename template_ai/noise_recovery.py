@@ -48,6 +48,7 @@ class NoiseRecoveryMixin:
         if operation not in ('DISABLE','ROLLBACK','CHANGE'):raise ValueError('版本動作不支援')
         rule=self.get('RULE',rule_id)
         if not rule:raise ValueError('規則不存在')
+        if rule['state'] in ('ISOLATED_IN_REPAIR','ISOLATED_APPROVED_REPAIR_CANDIDATE'):raise ValueError('修復隔離規則不可經一般版本操作繞過Gate，需修復中心處置')
         proposal=copy.deepcopy(rule)
         if operation=='DISABLE':proposal.update(state='DISABLED',review=None)
         elif operation=='ROLLBACK':

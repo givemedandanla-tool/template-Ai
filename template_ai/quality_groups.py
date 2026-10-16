@@ -28,7 +28,7 @@ class QualityGroups:
 
     def model_exposure_roles(self):
         # SQL extracts only small distinct scope facts, never model weights or gold answers.
-        return self.rows("SELECT DISTINCT json_extract(s.value,'$.pins.source_hash'),json_extract(s.value,'$.role') FROM training_history h,json_each(h.after_json,'$.plan.scopes') s WHERE h.kind='SEMANTIC_MODEL' AND json_extract(s.value,'$.role') IN ('TRAIN','VALIDATION') UNION SELECT DISTINCT json_extract(e.value,'$.pins.source_hash'),'TRAIN' FROM training_history h,json_each(h.after_json,'$.positive_examples') e WHERE h.kind='RULE' AND json_extract(h.after_json,'$.state')='ACTIVE' UNION SELECT DISTINCT json_extract(e.value,'$.pins.source_hash'),'TRAIN' FROM training_history h,json_each(h.after_json,'$.counterexamples') e WHERE h.kind='RULE' AND json_extract(h.after_json,'$.state')='ACTIVE' ORDER BY 1,2")
+        return self.rows("SELECT DISTINCT json_extract(s.value,'$.pins.source_hash'),json_extract(s.value,'$.role') FROM training_history h,json_each(h.after_json,'$.plan.scopes') s WHERE h.kind='SEMANTIC_MODEL' AND json_extract(s.value,'$.role') IN ('TRAIN','VALIDATION') UNION SELECT DISTINCT json_extract(e.value,'$.pins.source_hash'),'TRAIN' FROM training_history h,json_each(h.after_json,'$.positive_examples') e WHERE h.kind='RULE' AND json_extract(h.after_json,'$.state') IN ('ACTIVE','ISOLATED_APPROVED_REPAIR_CANDIDATE') UNION SELECT DISTINCT json_extract(e.value,'$.pins.source_hash'),'TRAIN' FROM training_history h,json_each(h.after_json,'$.counterexamples') e WHERE h.kind='RULE' AND json_extract(h.after_json,'$.state') IN ('ACTIVE','ISOLATED_APPROVED_REPAIR_CANDIDATE') ORDER BY 1,2")
 
     def graph_state(self):
         graph=nx.Graph();edges=[]
