@@ -32,7 +32,7 @@
 - `UI054_EXECUTION_PLAN.json`：完整原11/SHA、實際sklearn1.7.2/MLflow2.22/NetworkX3.5/AWS公開source/hash思路。`UI054_RELEASE_AND_GUI_DESIGN.md` 七頁、ordered root/control/freshholdout、真正部署與可信rollback。
 - docs/dev/wip 的UI054三個draft是歷史未整合草稿；現有active `quality_repairs.py`、`quality_repair_training.py`、`quality_repair_rules.py`已審改實作及目標測試，不可用舊draft覆寫。規則分包25/25PASS，existingreview/risk共用；isolated規則只供explicit品質試驗，不在預設ACTIVE。歷史TRAIN曝露保留、一般approve/version旁路阻擋。
 - 決定沿用AUTO_JOB明確operation、原claim/finish/sharedlease/child/runtime/restore；候選model＋link＋job＋lease原子提交。沿用QualityPanel.request＋quality_command新增REPAIR路由，無新DB/scheduler/command協定。
-- 未完成：通用影響resolver（沿用現有真AUTO版本重審）；規則candidate後續正式部署及受控withdraw；已曝露HLD只作descriptive修復replay仍永久不獨立；原錯誤→未受影響關鍵控制→新獨立HLD順序Gate；真正frozenpipeline runtime deployment/安全rollback；7頁及全部原稿/例外/品質/重審入口。根因不明或source/Gold失效先manual，不拿手填prediction閉合。
+- 未完成：通用影響resolver（沿用現有真AUTO版本重審）；規則candidate後續正式部署及受控withdraw；已實作曝露HLD descriptive修復replay（actualFIFO9PASS／擴大36PASS），仍永久不獨立；原錯誤→未受影響關鍵控制→新獨立HLD順序Gate；真正frozenpipeline runtime deployment/安全rollback；7頁及全部原稿/例外/品質/重審入口。根因不明或source/Gold失效先manual，不拿手填prediction閉合。
 
 ## 歷史失敗與環境
 
@@ -41,3 +41,5 @@
 - QUALITY003 source012c717...：已知missing QApplication bootstrap及coldworkflow失敗，受控SIGINT130，561aggregate records＋401rawfiles/421576B在controlled-stop與module-raw-evidence。每worker強QApplication/core0、scopedworkflow controlledresources已修。
 - QUALITY004 source95d11c...：sharedfixture self.close_window借用不相容，29setupERROR；受控SIGINT130，644aggregate＋481rawfiles/563158B保存。class-qualified cleanup已修，943全正式證明。001–004及其finalizer不可使用，不覆寫任何歷史run/CP。
 - .venv Python3.12.14/Qt6.8.3/NetworkX3.5；Tesseract5.5與local chi_tra/eng packs已installed。QT_QPA_PLATFORM=offscreen PYTHONPATH=tests XDG_CACHE_HOME=/workspace/.cache。Skills onboarding/runtime早已用過，當前catalog無需重查；正常Git/native_readback可用。
+
+2026-10-16T05:55Z UI054 replay: existing QualityProtocols purpose EXPOSED_HOLDOUT_REPAIR_DIAGNOSTIC bound actual failed issue/root and same exposed dataset. Original HOLDOUT/consumption immutable; actual shared-FIFO children recompute both sides, descriptive quality false/CI suppressed/acceptance blocked. 9targeted +36expanded PASS (overlap, not summed). Next ordered gates/root/control/fresh HLD, actual deployment/rollback, impact enrichment, seven-page GUI; 7/28 historical only.

@@ -13,11 +13,12 @@ PROTOCOL='QUALITY_PROTOCOL'
 USE='QUALITY_PROTOCOL_USE'
 CONSUMED='QUALITY_HOLDOUT_USAGE'
 SIDES=('BASELINE','CANDIDATE')
+REPAIR='EXPOSED_HOLDOUT_REPAIR_DIAGNOSTIC'
 
 
 def calculation_files():
     root=Path(__file__).parent
-    names=('quality_metrics.py','quality_domains.py','quality_facets.py','quality_diagnostics.py','quality_rechecks.py','quality_trust.py','coverage_evidence.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_rules.py','quality_ocr.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py')
+    names=('quality_metrics.py','quality_domains.py','quality_facets.py','quality_diagnostics.py','quality_rechecks.py','quality_trust.py','coverage_evidence.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_rules.py','quality_ocr.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py','quality_repairs.py','quality_repair_training.py','quality_repair_rules.py')
     return {name:file_digest(root/name) for name in names}
 
 
@@ -28,10 +29,23 @@ class QualityProtocols:
     def content_scope(self,dataset):
         return sorted({node.split(':',1)[1] for component in dataset['manifest']['group_components'] for node in component if node.startswith('CONTENT:')})
 
-    def plan(self,name,dataset_id,policy_id,pipelines,reason):
+    def repair_context(self,review_id,dataset_id):
+        from .quality_repair_training import root_review
+        review=root_review(self,review_id)
+        issue=self.store.get('QUALITY_REPAIR_ISSUE',review['plan']['issue_id'])
+        if issue['evidence']['origin']!='ACTUAL_QUALITY_CASE':raise ValueError('診斷重播需綁定實際已執行失敗及根因核對')
+        origin=self.get(issue['evidence']['protocol_id'])
+        if origin['scope']['dataset_id']!=dataset_id or not self.store.get('HOLDOUT_EXPOSED',dataset_id):raise ValueError('只重播原問題已揭露的同一驗收集；新資料仍走獨立試驗')
+        return dict(id=review_id,digest=digest(review),issue_id=issue['id'],issue_digest=digest(issue),origin_protocol_id=origin['id'],origin_scope_digest=origin['scope_digest'])
+
+    def dataset_status(self,scope,verify_sources=True):
+        return self.sets.validity(scope['dataset_id'],verify_sources,exposure_policy='DESCRIPTIVE_REPAIR_ONLY' if scope.get('purpose')==REPAIR else 'REJECT')
+
+    def plan(self,name,dataset_id,policy_id,pipelines,reason,*,repair_review_id=None):
         text(name,'固定獨立試驗名稱',120);text(reason,'試驗目的與預先固定的比較依據',2000)
         if not isinstance(pipelines,dict) or set(pipelines)!=set(SIDES) or any(not isinstance(value,str) or not value for value in pipelines.values()):raise ValueError('先明列基準／候選實際pipeline版本；不能看完分數再選候選')
-        checked=self.sets.validity(dataset_id)
+        repair=self.repair_context(repair_review_id,dataset_id) if repair_review_id else None
+        checked=self.sets.validity(dataset_id,exposure_policy='DESCRIPTIVE_REPAIR_ONLY' if repair else 'REJECT')
         if not checked['valid']:raise ValueError('獨立驗收集無效：'+'；'.join(checked['errors']))
         dataset=checked['dataset'];policy=self.policies.status(policy_id)
         if not policy['valid']:raise ValueError(policy['reason'])
@@ -44,22 +58,23 @@ class QualityProtocols:
             if environment is None:environment=current_env
             elif environment!=current_env:raise ValueError('基準／候選測試環境不相同，不能公平配對A/B')
         contents=self.content_scope(dataset) if dataset['manifest'].get('evaluation_role','HOLDOUT')=='HOLDOUT' else []
-        if any(self.store.get(CONSUMED,sha) for sha in contents):raise ValueError('此來源／相關家族已供先前試驗或已揭露答案，需真正全新獨立群組；複製驗收集不會重置曝光')
+        if not repair and any(self.store.get(CONSUMED,sha) for sha in contents):raise ValueError('此來源／相關家族已供先前試驗或已揭露答案，需真正全新獨立群組；複製驗收集不會重置曝光')
         scope=dict(schema_version=1,evaluation_role=dataset['manifest'].get('evaluation_role','HOLDOUT'),name=name,dataset_id=dataset_id,dataset_revision=dataset['revision'],dataset_manifest_digest=dataset['manifest_digest'],policy_id=policy_id,policy_revision=policy['policy']['revision'],policy_digest=digest(policy['policy']),pipelines=versions,environment=copy.deepcopy(environment),calculation_files=calculation_files(),content_scope=contents,gold_work_count=dataset['manifest']['gold_work_count'],gold_object_count=dataset['manifest']['gold_object_count'],source_file_count=dataset['manifest']['file_count'],independent_groups=dataset['manifest']['independent_group_count'],reason=reason,source_only_predictions_required=True,predeclared_sides=list(SIDES),one_frozen_protocol_per_related_holdout_group=True)
-        result=dict(scope=scope,scope_digest=digest(scope),quality_pass_claim=False,independence_claim=dataset['manifest']['independence_scope_ready'],whole_source_gold_complete=dataset['manifest']['whole_source_gold_complete'],complete_font_environment=bool(environment['fonts']['complete']))
+        if repair:scope.update(purpose=REPAIR,repair_review=repair,independence_claim=False,answers_exposed=True)
+        result=dict(scope=scope,scope_digest=digest(scope),quality_pass_claim=False,independence_claim=bool(not repair and dataset['manifest']['independence_scope_ready']),whole_source_gold_complete=dataset['manifest']['whole_source_gold_complete'],complete_font_environment=bool(environment['fonts']['complete']))
         result['digest']=digest(result);return result
 
     def freeze(self,plan,actor,approved=False):
         if approved is not True:raise ValueError('需先核對固定資料／真值／品質政策／兩版pipeline及一次性holdout範圍')
         text(actor,'試驗宣告者',120);preview=copy.deepcopy(plan);expected=preview.pop('digest',None)
         if expected!=digest(preview):raise ValueError('預先宣告試驗的預覽已被修改')
-        scope=plan['scope'];current=self.plan(scope['name'],scope['dataset_id'],scope['policy_id'],{side:row['id'] for side,row in scope['pipelines'].items()},scope['reason'])
+        scope=plan['scope'];current=self.plan(scope['name'],scope['dataset_id'],scope['policy_id'],{side:row['id'] for side,row in scope['pipelines'].items()},scope['reason'],repair_review_id=(scope.get('repair_review') or {}).get('id'))
         if current!=plan:raise ValueError('固定比較條件已改變')
         with self.store.transaction():
             self.check_metadata(scope)
-            current_set=self.sets.validity(scope['dataset_id'],verify_bytes=False)
+            current_set=self.dataset_status(scope,False)
             if not current_set['valid']:raise ValueError('gold／群組依賴已改變：'+'；'.join(current_set['errors']))
-            if any(self.store.get(CONSUMED,sha) for sha in scope['content_scope']):raise ValueError('holdout已被其他試驗保留／曝光')
+            if scope.get('purpose')!=REPAIR and any(self.store.get(CONSUMED,sha) for sha in scope['content_scope']):raise ValueError('holdout已被其他試驗保留／曝光')
             return self.store._write(PROTOCOL,new_id(),dict(scope=copy.deepcopy(scope),scope_digest=plan['scope_digest'],actor=actor,declared_at=time.time(),immutable=True,state='FROZEN_BEFORE_ANY_SCORE',quality_pass=False),0,'quality_paired_protocol_predeclared_not_quality_release')
 
     def get(self,identity):
@@ -70,7 +85,9 @@ class QualityProtocols:
     def check_metadata(self,scope):
         dataset=self.store.get('QUALITY_SET',scope['dataset_id']);policy=self.policies.status(scope['policy_id'])
         if not dataset or dataset['revision']!=scope['dataset_revision'] or dataset['manifest_digest']!=scope['dataset_manifest_digest'] or not policy['valid'] or digest(policy['policy'])!=scope['policy_digest']:raise ValueError('固定驗收集／政策版本已改變')
-        if self.store.get('HOLDOUT_EXPOSED',scope['dataset_id']):raise ValueError('holdout已揭露或獨立性已失效')
+        if scope.get('purpose')==REPAIR:
+            if scope.get('independence_claim') is not False or self.repair_context(scope['repair_review']['id'],scope['dataset_id'])!=scope['repair_review']:raise ValueError('修復重播根因憑證改變／不可冒稱獨立驗收')
+        elif self.store.get('HOLDOUT_EXPOSED',scope['dataset_id']):raise ValueError('holdout已揭露或獨立性已失效')
         for side,pin in scope['pipelines'].items():
             record=self.store.get('QUALITY_PIPELINE',pin['id'])
             if not record or record['revision']!=pin['revision'] or record['manifest_digest']!=pin['manifest_digest']:raise ValueError('實際pipeline版本已改變')
@@ -80,14 +97,14 @@ class QualityProtocols:
         try:
             if digest(scope)!=protocol['scope_digest'] or calculation_files()!=scope['calculation_files']:raise ValueError('試驗／計算口徑版本已改變')
             self.check_metadata(scope)
-            dataset=self.sets.validity(scope['dataset_id'],verify_sources)
+            dataset=self.dataset_status(scope,verify_sources)
             if not dataset['valid']:errors+=dataset['errors']
             for side,pin in scope['pipelines'].items():
                 checked=self.pipelines.validity(pin['id'])
                 if not checked['valid']:errors += [side+'：'+e for e in checked['errors']]
             for sha in scope['content_scope']:
                 used=self.store.get(CONSUMED,sha)
-                if used and used['protocol_id']!=identity:errors.append('此來源／相關群組已由其他試驗使用，不能視為新獨立樣本')
+                if scope.get('purpose')!=REPAIR and used and used['protocol_id']!=identity:errors.append('此來源／相關群組已由其他試驗使用，不能視為新獨立樣本')
         except (OSError,ValueError,KeyError) as error:errors.append(str(error))
         return dict(valid=not errors,errors=sorted(set(errors)),protocol=protocol)
 
@@ -107,8 +124,8 @@ class QualityProtocols:
             if prior['job_id']!=job_id or prior['state']=='COMPLETED':raise ValueError('此固定側別已由另一工作保留／已完成，不自動重跑或另測同一holdout')
         for sha in scope['content_scope']:
             used=self.store.get(CONSUMED,sha)
-            if used and used['protocol_id']!=identity:raise ValueError('來源／相關群組已供另一試驗，不准反覆調參重測')
-            if not used:self.store._write(CONSUMED,sha,dict(protocol_id=identity,dataset_id=scope['dataset_id'],state='RESERVED_FOR_ONE_PREDECLARED_PAIR',at=time.time()),0,'quality_holdout_group_first_protocol_reserved')
+            if scope.get('purpose')!=REPAIR and used and used['protocol_id']!=identity:raise ValueError('來源／相關群組已供另一試驗，不准反覆調參重測')
+            if scope.get('purpose')!=REPAIR and not used:self.store._write(CONSUMED,sha,dict(protocol_id=identity,dataset_id=scope['dataset_id'],state='RESERVED_FOR_ONE_PREDECLARED_PAIR',at=time.time()),0,'quality_holdout_group_first_protocol_reserved')
         return self.store._write(USE,uid,dict(protocol_id=identity,side=side,job_id=job_id,owner_token=owner_token,state='STARTED_FIXED_SCOPE',scope_digest=protocol['scope_digest'],started_at=prior['started_at'] if prior else time.time(),resumed_at=time.time() if prior else None),prior['revision'] if prior else 0,'quality_fixed_side_started_or_same_job_resumed')
 
     def expose(self,identity,actor,reason,approved=False):

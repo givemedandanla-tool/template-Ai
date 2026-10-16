@@ -44,7 +44,7 @@ class EvaluationJobs:
             result={}
             for side in SIDES:
                 identity=new_id();pin=scope['pipelines'][side]
-                result[side]=self.store._write(JOB,identity,dict(protocol_id=protocol_id,protocol_scope_digest=protocol['scope_digest'],side=side,pipeline_id=pin['id'],pipeline_manifest_digest=pin['manifest_digest'],dataset_id=scope['dataset_id'],dataset_revision=scope['dataset_revision'],manifest_digest=scope['dataset_manifest_digest'],scope=dict(protocol=protocol['scope_digest'],side=side,pipeline=pin['manifest_digest']),purpose='INDEPENDENT_QUALITY_EVALUATION_LOCAL',items=copy.deepcopy(items),actor=actor,created=time.time(),phase='READY',owner=None,owner_token=None,result_id=None,cancel_requested=False),0,'quality_evaluation_job_created_not_executed')
+                result[side]=self.store._write(JOB,identity,dict(protocol_id=protocol_id,protocol_scope_digest=protocol['scope_digest'],side=side,pipeline_id=pin['id'],pipeline_manifest_digest=pin['manifest_digest'],dataset_id=scope['dataset_id'],dataset_revision=scope['dataset_revision'],manifest_digest=scope['dataset_manifest_digest'],scope=dict(protocol=protocol['scope_digest'],side=side,pipeline=pin['manifest_digest']),purpose=scope.get('purpose','INDEPENDENT_QUALITY_EVALUATION_LOCAL'),items=copy.deepcopy(items),actor=actor,created=time.time(),phase='READY',owner=None,owner_token=None,result_id=None,cancel_requested=False),0,'quality_evaluation_job_created_not_executed')
             self.store._write('QUALITY_PROTOCOL_JOBS',protocol_id,dict(protocol_id=protocol_id,jobs={side:row['id'] for side,row in result.items()},actor=actor),0,'quality_pair_jobs_linked')
             return result
 
@@ -142,6 +142,11 @@ class EvaluationJobs:
             manifest=self.store.get('QUALITY_SET',row['dataset_id'])['manifest']
             from .quality_statistics import aggregate
             policy=self.store.get('QUALITY_POLICY',scope_check['protocol']['scope']['policy_id'])['plan']
+            from .quality_protocol import REPAIR
+            repair=scope_check['protocol']['scope'].get('purpose')==REPAIR
+            if repair:
+                manifest=copy.deepcopy(manifest)
+                manifest.update(evaluation_role=REPAIR,independence_scope_ready=False)
             statistics=aggregate(source_results,manifest,policy)
             result_id=new_id();result=self.store._write(RESULT,result_id,dict(job_id=identity,protocol_id=row['protocol_id'],side=row['side'],dataset_id=row['dataset_id'],dataset_manifest_digest=row['manifest_digest'],pipeline_manifest_digest=row['pipeline_manifest_digest'],protocol_scope_digest=row['protocol_scope_digest'],required_source_pages_or_unparsed_files=len(row['items']),declared_logical_files=manifest['file_count'],declared_physical_paths=manifest['physical_path_count'],declared_gold_works=manifest['gold_work_count'],declared_gold_objects=manifest['gold_object_count'],required_independent_groups=manifest['independent_group_count'],source_results=references,critical_errors=dict(critical),unmeasured_domains=sorted(unknown),scope_current=not scope_errors,scope_errors=sorted(set(scope_errors)),statistics=statistics,quality_gate='EVIDENCE_INSUFFICIENT_CHANGED_SCOPE' if scope_errors else statistics['quality_gate'],quality_pass=bool(not scope_errors and statistics['quality_pass']),automatic_recommendation_allowed=False,origin='ACTUAL_FIFO_SOURCE_EVALUATION',finished_at=time.time(),immutable=True),0,'quality_fixed_side_result_saved_not_release')
             use_id=digest([row['protocol_id'],row['side']]);use=self.store.get('QUALITY_PROTOCOL_USE',use_id)

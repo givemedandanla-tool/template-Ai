@@ -111,7 +111,7 @@
     ],
     "targeted_evidence": "docs/qa/targeted/ui054-issue-impact-002.log"
   },
-  "next_package": "Descriptive exposed-HOLDOUT repair replay via existing QualityProtocols/EvaluationJobs; actual source inference, never independent PASS",
+  "next_package": "Ordered immutable root-regression / unaffected-critical-controls / fresh-independent-acceptance gates, then actualdeployment/rollback and GUI",
   "semantic_candidate_package": {
     "status": "IMPLEMENTED_LEGACY43PASS_RECOVERY7PASS_PENDING_FULL11",
     "implementation": [
@@ -142,5 +142,19 @@
     "evidence": "docs/qa/targeted/ui054-isolated-rules-003.log",
     "scope": "Shared risk checks, root NOISE_RULE review, immutable isolated RULE/current origin locks, explicit frozen execution only, quality approval separated from production, permanent historical TRAIN exposure; ordinary version/review bypass blocked",
     "not_claimed": "No UI054 parent closure/deployment/whole quality acceptance"
+  },
+  "replay_package": {
+    "status": "IMPLEMENTED_TARGETED9PASS_EXPANDED36PASS_PENDING_FULL11",
+    "implementation": [
+      "template_ai/quality_protocol.py",
+      "template_ai/quality_sets.py",
+      "template_ai/quality_jobs.py",
+      "template_ai/quality_statistics.py"
+    ],
+    "evidence": [
+      "docs/qa/targeted/ui054-exposed-replay-001.log",
+      "docs/qa/targeted/ui054-exposed-replay-002.log"
+    ],
+    "scope": "Existing source-only FIFO evaluation; exact actual-failure/root-review/origin dataset; permanent HOLDOUT role/exposure/consumption untouched. Diagnostic output always quality_pass false, independent confidence suppressed; no fresh acceptance claim. Current source/truth/root/pipeline pins rechecked."
   }
 }

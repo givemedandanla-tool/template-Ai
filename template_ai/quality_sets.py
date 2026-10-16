@@ -79,12 +79,13 @@ class QualitySets:
                 if not self.store.get('GROUP_ROLE',sha):self.store._write('GROUP_ROLE',sha,dict(role=manifest.get('evaluation_role','HOLDOUT'),source_hash=sha,basis='QUALITY_OR_DIAGNOSTIC_ROLE_NOT_TRAINING_ADMISSION',actor=actor),0,'quality_set_source_group_role_locked_not_training')
             return self.store._write(SET,new_id(),dict(state='FROZEN_QUALITY_HOLDOUT' if manifest.get('evaluation_role','HOLDOUT')=='HOLDOUT' else 'FROZEN_FIT_ROLE_DIAGNOSTICS',manifest=copy.deepcopy(manifest),manifest_digest=plan['manifest_digest'],entries=copy.deepcopy(manifest['entries']),actor=actor,created=time.time(),quality_pass=False),0,'independent_quality_set_frozen_not_training')
 
-    def validity(self,identity,verify_bytes=True):
+    def validity(self,identity,verify_bytes=True,*,exposure_policy='REJECT'):
+        if exposure_policy not in ('REJECT','DESCRIPTIVE_REPAIR_ONLY'):raise ValueError('未知答案曝露處理政策')
         record=self.store.get(SET,identity)
         if not record:return dict(valid=False,errors=['品質驗收集不存在'],dataset=None)
         manifest=record['manifest'];errors=[]
         if digest(manifest)!=record['manifest_digest'] or record['entries']!=manifest['entries']:errors.append('固定驗收集manifest不符')
-        if manifest.get('evaluation_role','HOLDOUT')=='HOLDOUT' and self.store.get('HOLDOUT_EXPOSED',identity):errors.append('此holdout已揭露答案／角色洩漏；需真正獨立新來源，不可當全新驗收集')
+        if exposure_policy=='REJECT' and manifest.get('evaluation_role','HOLDOUT')=='HOLDOUT' and self.store.get('HOLDOUT_EXPOSED',identity):errors.append('此holdout已揭露答案／角色洩漏；需真正獨立新來源，不可當全新驗收集')
         for entry in record['entries']:
             current=self.gold.validity(entry['gold_id'],verify_bytes)
             if not current['valid'] or digest(current['gold'])!=entry['gold_digest']:errors.append(entry['gold_id']+'gold／來源／用途許可已失效')

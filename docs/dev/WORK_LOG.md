@@ -1135,3 +1135,5 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 
 
 2026-10-16T05:51Z UI054 isolated approved rules: reused existing exact review/risk policy, SOURCE_FACTS/NOISE_RULE root receipt, existing RULE history and frozen source inference. Default ACTIVE excludes candidates; original draft/version bypass blocked. Historical candidate evidence remains TRAIN even after withdrawal. Actual targeted 25/25 PASS in ui054-isolated-rules-003.log; first failed fixture/module run preserved. Full UI054 original11 and deployment/GUI remain incomplete; 7/28 historical only, 145 claims pending. Prior semantic recovery commit85d70bb native GitHub exact-tree ACK obtained.
+
+2026-10-16T05:55Z UI054 exposed-holdout descriptive replay: 9/9 actual bound replay/protocol tests and 36/36 expanded jobs/reports/statistics/gold-set tests PASS. Reused existing evaluation engine, shared FIFO/isolation, no role/consumption reset, stale truth blocks, original independent admission unchanged, replay never quality PASS. Formal full parent not yet complete. Isolated-rules checkpoint a3d4cbf native exact-tree ACK saved.
