@@ -54,7 +54,7 @@ class OutputBatch:
 
     def authorized(self):return dict(plan=self.plan,items=[{k:row[k] for k in ('id','path','key','template_id','mode','action','expected_target')} for row in self.items])
 
-    def _check(self,row,current_check,cancel):
+    def _check(self,row,current_check,cancel,dpi=150):
         if cancel and cancel.is_set():raise OutputBlocked('使用者安全停止；尚未輸出的項目維持未完成')
         if current_check and not current_check():raise OutputBlocked('當次輸入已變更，先重新試排及確認清單')
         workflow=self.workflow
@@ -64,6 +64,11 @@ class OutputBatch:
         try:candidate=workflow.revalidate(entry)
         except (ValueError,KeyError) as error:raise OutputBlocked(str(error)) from error
         if row['mode']=='FINAL' and not candidate.formal_eligible:raise OutputBlocked('正式印前未通過：'+'；'.join(candidate.issues))
+        if row['mode']=='FINAL' and Path(row['path']).suffix.lower()!='.png':
+            from .digital_review import validate
+            from .digital_preflight import scope
+            try:validate(candidate,scope(candidate,Path(row['path']).suffix,dpi),workflow.get_format_review(row['key'],Path(row['path']).suffix,dpi))
+            except (ValueError,OSError) as error:raise OutputBlocked(str(error)) from error
         target=Path(row['path']);root=Path(self.plan['directory']).resolve()
         if target.parent.parent.resolve()!=root or target.parent.name!=row['mode'] or target.parent.is_symlink():raise OutputBlocked('目的地超出已確認範圍或目錄為符號連結')
         return candidate
@@ -83,22 +88,22 @@ class OutputBatch:
             if progress:progress(deepcopy(row))
             stage=None;backup=None
             try:
-                candidate=self._check(row,current_check,cancel);target=Path(row['path']);target.parent.mkdir(exist_ok=True)
+                candidate=self._check(row,current_check,cancel,dpi);target=Path(row['path']);target.parent.mkdir(exist_ok=True)
                 if row['action']=='OVERWRITE' and pin(target)!=row['expected_target']:raise OutputBlocked('既存檔案已變更，覆寫確認過期，請重建清單')
                 if row['action']=='CREATE' and (target.exists() or target.is_symlink()):raise FileExistsError('目的檔案在確認後出現，未覆寫')
                 # Conservative encoding workspace estimate, not a promised file size.
                 estimate=max(1024*1024,int(candidate.template.width_mm*candidate.template.height_mm*(dpi/25.4)**2*8))
                 if shutil.disk_usage(target.parent).free<estimate:raise OSError('可用空間不足以容納保守編碼工作預算；釋放空間後可重試')
                 stage=target.with_name('.template-ai-STAGING_NOT_FINAL-'+uuid.uuid4().hex+'-'+row['mode']+target.suffix)
-                export(candidate,stage,dpi=dpi,preview=row['mode']=='PREVIEW',expected_generation=self.workflow.generation)
+                export(candidate,stage,dpi=dpi,preview=row['mode']=='PREVIEW',expected_generation=self.workflow.generation,format_review=self.workflow.get_format_review(row['key'],target.suffix,dpi))
                 row.update(stage_path=str(stage),stage_pin=pin(stage))
-                fresh=self._check(row,current_check,cancel)
+                fresh=self._check(row,current_check,cancel,dpi)
                 if fresh.dependency_stamp!=candidate.dependency_stamp:raise OutputBlocked('編碼期間字型／素材依賴變更，請重新試排')
                 if row['action']=='OVERWRITE':
                     folder=Path(tempfile.mkdtemp(prefix='.template-ai-recovery-',dir=target.parent));backup=folder/target.name
                     os.rename(target,backup);row.update(recovery_path=str(backup),recovery_pin=pin(backup))
                     if row['recovery_pin']!=row['expected_target']:raise OutputBlocked('覆寫前的檔案版本已變更；已保留並嘗試恢復，請核對恢復路徑')
-                publish_complete(stage,target,check=lambda:self._check(row,current_check,cancel));row.update(status='SUCCESS',sha256=file_digest(target),bytes=target.stat().st_size,issues=list(fresh.issues))
+                publish_complete(stage,target,check=lambda:self._check(row,current_check,cancel,dpi));row.update(status='SUCCESS',sha256=file_digest(target),bytes=target.stat().st_size,issues=list(fresh.issues))
                 try:stage.unlink();row['stage_path']=None
                 except OSError:row['reason']='正式檔已完成；暫存清理未完成，可另行確認清理'
             except Exception as error:

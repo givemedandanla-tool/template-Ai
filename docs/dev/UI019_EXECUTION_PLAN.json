@@ -144,5 +144,13 @@
     "behavior": "PDF/JPG require literal named current same-format/size/DPI actual exact snapshot review. No perceptual threshold invented; final decoded RGB must match actual inspected encoding and PDF resources/vector histogram/image signatures. PNG original source full RGB checks remain. Receipt RAM scoped, no order DB. Five real GUI cases default-no, actor invalidation, actual original Main reviewed PDF publish preserving template, DPI stale failclosed, late actor race.",
     "regression_fixture_change": "Original FirstVersion positive PDF/JPG authors now explicitly create actual-format review before publish; original dimensions/content/no-overwrite assertions retained. Negative codec tests obtain valid review BEFORE fault injection so they test actual corruption, not missing consent.",
     "remaining": "Original batch per-target receipt/API/UI routes and other callers; concrete complex source/font/vector/raster/compression PoC; unsupported source policy; native individual images/full12/current immutable full Gate"
+  },
+  "batch_format_registry_WIP": {
+    "new_tests_total": 58,
+    "catalog": 1483,
+    "implementation": "Original MultiSizeWorkflow format_proof/set_format_review/get_format_review session registry; original execute and OutputBatch before stage/prepublish checks/export use exact key/format/DPI receipt; owned OutputBatchDialog worker copies registry",
+    "evidence": "docs/qa/targeted/ui019-batch-review-021.log:6PASS actualexit0",
+    "behavior": "No current PDF/JPG review => per-row BLOCKED, unrelated PNG/marked previews still succeed. Only reviewed exact format released; DPI/new inputs/other-size/tampering rejected. Direct original MultiSizeWorkflow uses same registry. No parallel order DB.",
+    "remaining": "Original batch GUI per-row actual review entry and shared detail UI; positive legacy multi-size/output fixtures must explicitly review authorized output; other callers/integration/PoC/native/full12 pending"
   }
 }

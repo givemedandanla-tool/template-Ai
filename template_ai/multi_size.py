@@ -23,7 +23,7 @@ class MultiSizeWorkflow:
         # The same graph supplies exact source identity in every physical size.
         # Original per-size Logo choices remain separately resolved below.
         self.people,self.companies,_=self.graph.compile()
-        self.generation=generation;self.entries=[]
+        self.generation=generation;self.entries=[];self.format_reviews={};self._format_proofs=None
 
     def catalog_stamp(self,width,height):
         assets=[a for a in self.library.logos() if abs(a['width_mm']-width)<1e-5 and abs(a['height_mm']-height)<1e-5]
@@ -165,6 +165,21 @@ class MultiSizeWorkflow:
                     partial=bool(omitted) or any(e['state']!='VALID' for e in self.entries),
                     input_digest=digest([self.people,self.companies,self.original_logos,self.graph.data]))
 
+    def format_proof(self,key,format,dpi=150):
+        import tempfile
+        from .digital_output_proof import build_proof
+        entry=next((e for e in self.entries if e['key']==key),None)
+        if entry is None:raise ValueError('需明列目前尺寸ID')
+        candidate=self.revalidate(entry)
+        if self._format_proofs is None:self._format_proofs=tempfile.TemporaryDirectory(prefix='template-ai-batch-format-PREVIEW-')
+        return build_proof(candidate,format,dpi,self._format_proofs.name)
+    def set_format_review(self,key,format,dpi,receipt):
+        from .digital_preflight import scope
+        from .digital_review import validate
+        entry=next((e for e in self.entries if e['key']==key),None)
+        if entry is None:raise ValueError('核對尺寸已失聯')
+        candidate=self.revalidate(entry);pin=scope(candidate,format,dpi);validate(candidate,pin,receipt);self.format_reviews[(key,pin['format'],dpi)]=deepcopy(receipt);return receipt
+    def get_format_review(self,key,format,dpi=150):return self.format_reviews.get((key,str(format).upper().lstrip('.').replace('JPEG','JPG'),dpi))
     def execute(self,plan,approved=False,acknowledge_partial=False,current_check=None,dpi=150):
         if not approved or (plan['partial'] and not acknowledge_partial):raise ValueError('需明確確認正式／預覽清單及部分輸出，未寫檔')
         if plan['generation']!=self.generation or plan['input_digest']!=digest([self.people,self.companies,self.original_logos,self.graph.data]):raise ValueError('當次資料版本已變更')
@@ -181,7 +196,7 @@ class MultiSizeWorkflow:
                 target=Path(item['path'])
                 if target.parent.parent.resolve()!=root or target.parent.name!=item['mode'] or target.parent.is_symlink():raise ValueError('輸出位置超出確認範圍')
                 target.parent.mkdir(exist_ok=True)
-                export(candidate,target,dpi=dpi,preview=item['mode']=='PREVIEW',expected_generation=self.generation)
+                export(candidate,target,dpi=dpi,preview=item['mode']=='PREVIEW',expected_generation=self.generation,format_review=self.get_format_review(item['key'],target.suffix,dpi))
                 result.update(status='SUCCESS',issues=list(candidate.issues))
             except (ValueError,KeyError,OSError) as error:result.update(status='FAILED',reason=str(error))
             results.append(result)

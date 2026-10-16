@@ -43,12 +43,12 @@ class OutputBatchDialog(QDialog):
                 return
             self.running=True;self.cancel.clear();self.start.setEnabled(False);self.retry.setEnabled(False)
             for name,action in self.controls:name.setEnabled(False);action.setEnabled(False)
-            root=self.window.library.root;plan=deepcopy(self.engine.plan);items=deepcopy(self.engine.items);scope=self.engine.scope;entries=deepcopy(self.owner.service.entries);inputs=deepcopy(self.owner.inputs);graph=deepcopy(self.owner.graph.data);generation=self.owner.generation;stale=self.owner.stale;stop=self.owner.stop
+            root=self.window.library.root;plan=deepcopy(self.engine.plan);items=deepcopy(self.engine.items);scope=self.engine.scope;entries=deepcopy(self.owner.service.entries);inputs=deepcopy(self.owner.inputs);graph=deepcopy(self.owner.graph.data);generation=self.owner.generation;format_reviews=deepcopy(self.owner.service.format_reviews);stale=self.owner.stale;stop=self.owner.stop
             def worker():
                 from .storage import Library
                 library=None
                 try:
-                    library=Library(root);workflow=MultiSizeWorkflow(library,inputs,graph,generation);workflow.entries=entries;engine=OutputBatch(workflow,plan);engine.items=items;engine.scope=scope
+                    library=Library(root);workflow=MultiSizeWorkflow(library,inputs,graph,generation);workflow.entries=entries;workflow.format_reviews=format_reviews;engine=OutputBatch(workflow,plan);engine.items=items;engine.scope=scope
                     return dict(items=engine.execute(selected,True,plan['partial'],current_check=lambda:not stale.is_set() and not stop.is_set(),cancel=self.cancel,progress=self.progress.updated.emit,retry=retry))
                 except Exception as error:return dict(error=str(error))
                 finally:
