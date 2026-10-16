@@ -1,0 +1,54 @@
+test_actual_jpeg_difference_is_measured_without_fabricated_perceptual_threshold (test_digital_output_proof.DigitalOutputProofTests.test_actual_jpeg_difference_is_measured_without_fabricated_perceptual_threshold) ... ok
+test_actual_pdf_fonts_and_physical_preview_page_are_read_back_without_print_certification (test_digital_output_proof.DigitalOutputProofTests.test_actual_pdf_fonts_and_physical_preview_page_are_read_back_without_print_certification) ... FAIL
+test_actual_png_preview_body_matches_original_pixels_and_never_claims_formal_output (test_digital_output_proof.DigitalOutputProofTests.test_actual_png_preview_body_matches_original_pixels_and_never_claims_formal_output) ... ok
+test_actual_vector_logo_pdf_contains_curve_operators_without_raster_xobject (test_digital_output_proof.DigitalOutputProofTests.test_actual_vector_logo_pdf_contains_curve_operators_without_raster_xobject) ... FAIL
+test_changed_actual_encoded_bytes_cannot_reuse_saved_proof (test_digital_output_proof.DigitalOutputProofTests.test_changed_actual_encoded_bytes_cannot_reuse_saved_proof) ... ok
+test_dimension_mismatch_is_not_rescaled_and_large_comparison_is_not_called_pass (test_digital_output_proof.DigitalOutputProofTests.test_dimension_mismatch_is_not_rescaled_and_large_comparison_is_not_called_pass) ... ok
+test_exact_selected_slot_crop_uses_encoded_pixels_and_rejects_changed_candidate (test_digital_output_proof.DigitalOutputProofTests.test_exact_selected_slot_crop_uses_encoded_pixels_and_rejects_changed_candidate) ... FAIL
+test_failed_original_encoding_leaves_no_success_or_partial_preview_directory (test_digital_output_proof.DigitalOutputProofTests.test_failed_original_encoding_leaves_no_success_or_partial_preview_directory) ... ok
+test_real_encoded_pixels_and_pdf_size_cannot_be_approved_with_wrong_dimensions (test_digital_output_proof.DigitalOutputProofTests.test_real_encoded_pixels_and_pdf_size_cannot_be_approved_with_wrong_dimensions) ... ok
+test_rgb_mse_excludes_row_padding_and_reports_exact_channel_difference (test_digital_output_proof.DigitalOutputProofTests.test_rgb_mse_excludes_row_padding_and_reports_exact_channel_difference) ... ok
+test_corrupt_or_missing_actual_source_is_blocked_even_with_optimistic_flags (test_digital_preflight.DigitalPreflightTests.test_corrupt_or_missing_actual_source_is_blocked_even_with_optimistic_flags) ... ok
+test_crop_available_pixels_use_whole_mark_contain_actual_geometry (test_digital_preflight.DigitalPreflightTests.test_crop_available_pixels_use_whole_mark_contain_actual_geometry) ... ok
+test_invalid_format_boolean_dpi_and_excessive_pixels_are_refused_without_downsampling (test_digital_preflight.DigitalPreflightTests.test_invalid_format_boolean_dpi_and_excessive_pixels_are_refused_without_downsampling) ... ok
+test_original_vector_is_not_replaced_by_lower_resolution_preview_asset (test_digital_preflight.DigitalPreflightTests.test_original_vector_is_not_replaced_by_lower_resolution_preview_asset) ... ok
+test_overlap_check_is_specific_instead_of_hidden_behind_generic_engine_failure (test_digital_preflight.DigitalPreflightTests.test_overlap_check_is_specific_instead_of_hidden_behind_generic_engine_failure) ... ok
+test_raster_sampling_uses_actual_pixels_and_placed_size_not_dpi_tag (test_digital_preflight.DigitalPreflightTests.test_raster_sampling_uses_actual_pixels_and_placed_size_not_dpi_tag) ... ok
+test_real_complete_candidate_still_needs_actual_encoded_format_evidence (test_digital_preflight.DigitalPreflightTests.test_real_complete_candidate_still_needs_actual_encoded_format_evidence) ... ok
+test_safe_boundary_and_trim_failures_have_exact_slot_ids (test_digital_preflight.DigitalPreflightTests.test_safe_boundary_and_trim_failures_have_exact_slot_ids) ... ok
+test_scope_captures_format_dpi_and_rejects_candidate_geometry_changes (test_digital_preflight.DigitalPreflightTests.test_scope_captures_format_dpi_and_rejects_candidate_geometry_changes) ... ok
+test_source_pixels_at_smaller_actual_size_can_meet_explicit_sampling_without_global_print_claim (test_digital_preflight.DigitalPreflightTests.test_source_pixels_at_smaller_actual_size_can_meet_explicit_sampling_without_global_print_claim) ... ok
+test_svg_container_with_embedded_raster_is_not_assumed_infinite_resolution (test_digital_preflight.DigitalPreflightTests.test_svg_container_with_embedded_raster_is_not_assumed_infinite_resolution) ... ok
+test_unapproved_template_does_not_gain_trust_from_named_checklist (test_digital_preflight.DigitalPreflightTests.test_unapproved_template_does_not_gain_trust_from_named_checklist) ... ok
+
+======================================================================
+FAIL: test_actual_pdf_fonts_and_physical_preview_page_are_read_back_without_print_certification (test_digital_output_proof.DigitalOutputProofTests.test_actual_pdf_fonts_and_physical_preview_page_are_read_back_without_print_certification)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_digital_output_proof.py", line 19, in test_actual_pdf_fonts_and_physical_preview_page_are_read_back_without_print_certification
+    value=build_proof(self.candidate(),'PDF',96,self.root/'proofs');pdf=value['pdf'];self.assertEqual(pdf['page_count'],1);self.assertTrue(pdf['fonts']);self.assertTrue(pdf['all_fonts_embedded']);self.assertGreater(pdf['text_operator_count'],0);self.assertFalse(pdf['pdfa_or_print_certified']);self.assertFalse(pdf['individual_logo_fidelity_approved'])
+                                                                                                                                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than 0
+
+======================================================================
+FAIL: test_actual_vector_logo_pdf_contains_curve_operators_without_raster_xobject (test_digital_output_proof.DigitalOutputProofTests.test_actual_vector_logo_pdf_contains_curve_operators_without_raster_xobject)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_digital_output_proof.py", line 43, in test_actual_vector_logo_pdf_contains_curve_operators_without_raster_xobject
+    source=self.root/'authored-composite.svg';source.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="20mm" height="10mm" viewBox="0 0 200 100"><path d="M5 50 C50 5 150 95 195 50" fill="none" stroke="black" stroke-width="1"/><circle cx="90" cy="50" r="18" fill="#cc3300"/><path d="M20 70 L180 70" stroke="#113388" stroke-width=".5"/></svg>');raw=import_file(source,self.root/'assets');asset=checked_payload(dict(image=raw['image'],svg=raw['svg'],source_width_mm=raw['width_mm'],source_height_mm=raw['height_mm'],crop=None));proof=create_proof(asset,20,10,self.root/'logos',96);pdf=pdf_evidence(proof['files'][0]['path']);self.assertGreater(pdf['vector_operator_count'],0);self.assertEqual(pdf['image_xobjects'],[])
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 not greater than 0
+
+======================================================================
+FAIL: test_exact_selected_slot_crop_uses_encoded_pixels_and_rejects_changed_candidate (test_digital_output_proof.DigitalOutputProofTests.test_exact_selected_slot_crop_uses_encoded_pixels_and_rejects_changed_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_digital_output_proof.py", line 29, in test_exact_selected_slot_crop_uses_encoded_pixels_and_rejects_changed_candidate
+    c=self.candidate();value=build_proof(c,'PNG',96,self.root/'proofs');a,b,detail=region_images(c,value,c.items[0].slot.id);self.assertFalse(a.isNull());self.assertEqual(a,b);self.assertEqual(detail['slot_id'],c.items[0].slot.id);c.template.slots[0].rect.x+=.2
+                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: <PySi[55 chars]RGB32_Premultiplied,depth=32,devicePixelRatio=[52 chars]8f80> != <PySi[55 chars]RGB32,depth=32,devicePixelRatio=1,bytesPerLine[38 chars]b940>
+
+----------------------------------------------------------------------
+Ran 22 tests in 2.504s
+
+FAILED (failures=3)

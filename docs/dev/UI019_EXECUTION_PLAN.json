@@ -85,5 +85,17 @@
     "evidence": "docs/qa/targeted/ui019-core-002.log:42PASS actualexit0 (new12 plus original layout/risk/proof)",
     "actual_failure": "00124 tests incl accidentally imported old TestCase,1 actual failure overlap row PASS despite original generic engine failure; shared predicate/IDs fixed, imported fixture now module alias to prevent duplicate execution",
     "remaining": "B actual original canvas checklist/overlays/Logo detail; C actual encoded vector/font/pixel comparison and original export guards; D PoC/native/full12 and immutable full Gate"
+  },
+  "encoded_preview_WIP": {
+    "implementation": "template_ai/digital_output_proof.py",
+    "reuse": "Original render.export(preview=True) keeps original card body unchanged with diagnostic footer outside; no parallel encoder/exporter",
+    "new_tests": "tests/test_digital_output_proof.py:10, total UI01922 new/catalog1447",
+    "verification": [
+      "docs/qa/targeted/ui019-proof-005.log:36PASS actualexit0",
+      "docs/qa/targeted/ui019-proof-006.log:10PASS actualexit0"
+    ],
+    "behavior": "Single exact selected PDF/PNG/JPG, actual decoded file/page/body, real pypdf fonts/FontFile bytes/vector/image resources; RGB MSE/MAE/max difference excludes row padding,1M-pixel comparison cap explicit NOT_CHECKED no downsampling. Exact selected slot source/current encoded crop+byte/scope seals, corrupt/changed/failed storage cleanup. PNG real pixels match, JPEG measured difference requires review, vector composite standalone PDF has curves and zero image XObjects. Preview page size explicitly differs from unchanged card body; all formal/output/print approval flags False.",
+    "failures": "004 actual ContentStream empty-dict truthiness skipped operators; fixed is not None. QImage format-object equality fixture corrected to canonical actual RGB metrics and same dimensions. Logs retained.",
+    "remaining": "Original checklist/canvas overlay/detail GUI; actual formal format readback/approval gate integration; full composite/source/format PoC, native and original12 map"
   }
 }
