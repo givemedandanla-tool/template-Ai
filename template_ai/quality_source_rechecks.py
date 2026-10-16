@@ -14,7 +14,9 @@ def plan(service,issue_id,category,correct_example,wrong_example,severity='CRITI
     proof=service.store.source_proof(wid);service.store.checked(wid,proof)
     dependencies=service.source_dependencies(wid,include_quality_evidence=True);rows=[];templates=[];proofs={};matches={r['key']:r['dependency_match'] for r in dependencies['nodes']}
     for identity in dependencies['affected_work_ids']:
-        work=service.library.artwork(identity);source_id=work['source_id'];reason=''
+        work=service.library.artwork(identity)
+        if not work:continue  # Explicit missing_historical_nodes remains UNKNOWN in the frozen case.
+        source_id=work['source_id'];reason=''
         try:
             if source_id not in proofs:proofs[source_id]=service.store.source_proof(identity)
             service.store.checked(identity,proofs[source_id]);verified=proofs[source_id];source_proof=dict(path=verified.path,hash=verified.hash,stat=list(verified.stat))

@@ -125,6 +125,7 @@ def install_candidate_target(window,checked,approved=False):
     target=checked['target'];envelope=target['envelope'];index=target['index']
     if target['seal']!=candidate_target_seal(target) or checked['seal']!=digest(dict(target=target['seal'],candidate=encode_candidate(checked['candidate']),outcome=checked['outcome'])):raise ValueError('預檢差異或結果已變更，未套用')
     if checked['outcome']!='READY':raise ValueError('未完成合法整卡預檢，不自動核准硬性失敗／缺證據')
+    if not checked['candidate'].formal_eligible:raise ValueError('目前來源／重審／完整Gate已變更，原預檢需重新核對；未套用')
     if window.library.closed or str(window.library.root)!=envelope['root'] or window.generation!=envelope['plan']['generation'] or not 0<=index<len(window.candidates):raise ValueError('來源／候選世代已變更')
     if candidate_origin_key(window,index)!=target['target_key']:raise ValueError('候選工作視窗／尺寸服務已換代，未套至其他實體')
     current=window.candidates[index];inverse=envelope['plan']['request']['operation']=='UNDO'

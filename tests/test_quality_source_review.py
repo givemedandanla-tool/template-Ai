@@ -55,6 +55,20 @@ class QualitySourceReviewTests(unittest.TestCase):
             store=TrainingStore.bind(other);self.assertTrue(blocked(store,self.work['id']));self.assertEqual(store.get('QUALITY_MAJOR_RECHECK',plan['case_id'])['plan_digest'],plan['digest'])
             with self.assertRaises(ValueError):other._template_provenance(template)
         finally:other.close()
+    def test_unknown_other_source_stays_quarantined_without_claiming_complete_safety(self):
+        twin_source,twin=source_work(self.library,self.root,'review-missing.svg');Path(self.library.source(twin_source['id'])['current_path']).unlink();plan=self.plan();row=next(r for r in plan['rows'] if r['work_id']==twin['id']);self.assertEqual(row['precheck'],'SOURCE_UNKNOWN');case=self.service.confirm_source(plan,'Synthetic reviewer','Isolate known linked source even when its file is missing',True);self.assertTrue(blocked(self.store,twin['id']));self.assertFalse(case['completed']);self.assertTrue(case['plan']['unknown_unrecorded_dependencies'])
+    def test_explicit_new_correction_draft_is_editable_but_cannot_be_published_under_quarantine(self):
+        from template_ai.template_versions import TemplateVersions
+        template=self.publish();before=self.library.object_snapshot('TEMPLATE',template.id);self.service.confirm_source(self.plan(),'Synthetic reviewer','Quarantine published source, allow explicit correction draft',True);versions=TemplateVersions(self.library);draft=versions.clone(versions.plan(template.id),'Synthetic reviewer','Explicit isolated manual correction draft',True);self.assertEqual(draft.state,'draft');draft.slots[0].rect.x+=.1;self.library.save_template(draft);self.assertEqual(self.library.object_snapshot('TEMPLATE',template.id),before)
+        with self.assertRaisesRegex(ValueError,'重大'):self.library.publish(draft)
+        self.assertEqual(self.library.object_snapshot('TEMPLATE',draft.id)['payload']['state'],'draft')
+    def test_new_major_case_invalidates_cached_batch_ready_before_installing_any_geometry(self):
+        from types import SimpleNamespace
+        from template_ai.model import new_id
+        from template_ai.batch_objects import prepare_candidate_target,calculate_candidate_target,install_candidate_target
+        template=self.publish();people=[dict(name=['Alex Example'],title=['Designer'],phone=['+1 202 555 0100'],email=['alex@example.test'],source_entity_id=new_id(),field_ids={k:[new_id()] for k in ('name','title','phone','email')})];candidate=generate(template,people,[],{},3);verify_original_source(candidate,self.library);bind_source(candidate,self.library,require_registered=True);snapshot=candidate.risk_context['input_snapshot'];window=SimpleNamespace(library=self.library,candidates=[candidate],generation=3,input_data=lambda:copy.deepcopy(tuple(snapshot[k] for k in ('people','companies','logos'))),choose_candidate=lambda index:None);slot=next(s for s in template.slots if s.kind=='phone');target=prepare_candidate_target(window,0,dict(operation='PATCH',ids=[slot.id],patch={'align':'center'},cross_owner=False));checked=calculate_candidate_target(target,self.library);self.assertEqual(checked['outcome'],'READY');before=candidate.template.to_dict();self.service.confirm_source(self.plan(),'Synthetic reviewer','Major review after cached preflight',True)
+        with self.assertRaisesRegex(ValueError,'Gate'):install_candidate_target(window,checked,True)
+        self.assertEqual(window.candidates[0].template.to_dict(),before);self.assertFalse(window.candidates[0].risk_context.get('manual_history'))
     def test_examples_and_literal_approval_are_required(self):
         with self.assertRaises(ValueError):self.service.source_plan(issue_id=self.issue['id'],category='PHONE_OWNER',correct_example='same',wrong_example='same')
         for approval in (False,1,'yes'):

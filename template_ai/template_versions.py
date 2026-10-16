@@ -38,7 +38,7 @@ class TemplateVersions:
                 for identity,rect in sorted(geometry.items()):
                     if set(rect)!={'x','y','w','h'}:raise ValueError('特製僅授權幾何，不改文字、字級或歸屬')
                     proposal=propose(template.to_dict(),'TEMPLATE',dict(operation='PATCH',ids=[identity],patch=rect));template=Template.from_dict(proposal['after']);changes.extend(proposal['changes'])
-            self.library._template_provenance(template)
+            self.library._template_provenance(template,allow_quarantined_draft=True)
             self.library.db.execute('INSERT INTO templates VALUES(?,?,?,?,?)',(template.id,template.family_id,template.version,template.state,json.dumps(template.to_dict(),ensure_ascii=False)))
             self.library._bump_template_clock(template.id);self.library.event(template.id,'rollback_as_new_draft' if rollback else 'same_family_new_version_draft')
             self.store._write('TEMPLATE_VERSION',new_id(),dict(source_template_id=source_id,source_revision=fresh['source']['revision'],source_digest=digest(fresh['source']['payload']),

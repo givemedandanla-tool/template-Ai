@@ -316,7 +316,7 @@ class Library:
         except BaseException:self.db.rollback();raise
 
     def _save_template_data(self,t):
-        self._template_provenance(t)
+        self._template_provenance(t,allow_quarantined_draft=True)
         row = self.db.execute("SELECT state,family_id,version,payload FROM templates WHERE id=?", (t.id,)).fetchone()
         if row and row[0] == "published":
             raise ValueError("已發布版本不可覆寫，請建立新版本草稿")
@@ -369,9 +369,9 @@ class Library:
             self.event(t.id, "publish_user_confirmed")
         t.state = "published"
 
-    def _template_provenance(self, t: Template) -> None:
+    def _template_provenance(self, t: Template,*,allow_quarantined_draft=False) -> None:
         from .quality_source_rechecks import source_or_template_blocked
-        if source_or_template_blocked(self,t):raise ValueError('重大共通錯誤重審尚未核准此來源／模板版本，暫停可信使用')
+        if not (allow_quarantined_draft is True and t.state=='draft') and source_or_template_blocked(self,t):raise ValueError('重大共通錯誤重審尚未核准此來源／模板版本，暫停可信使用')
         if t.training_reference is not None:
             from .training_store import TrainingStore
             try: TrainingStore.bind(self).validate_training_reference(t)
@@ -409,7 +409,7 @@ class Library:
 
     def _object_write(self,kind,entity_id,payload,revision):
         if kind=='TEMPLATE':
-            t=Template.from_dict(payload);self._template_provenance(t)
+            t=Template.from_dict(payload);self._template_provenance(t,allow_quarantined_draft=True)
             if t.state!='draft' or t.id!=entity_id:raise ValueError('發布版本唯讀／模板身份不符')
             self.db.execute('UPDATE templates SET payload=? WHERE id=? AND state=?',(json.dumps(payload,ensure_ascii=False),entity_id,'draft'))
             self._bump_template_clock(entity_id)
