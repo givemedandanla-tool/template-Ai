@@ -1,0 +1,25 @@
+test_actual_resize_handle_previews_without_writing_and_applies_through_existing_history (test_canvas_controls.CanvasControlTests.test_actual_resize_handle_previews_without_writing_and_applies_through_existing_history) ... Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+ok
+test_design_safety_zone_is_versioned_undoable_and_publish_gate_ignores_overlay_visibility (test_canvas_controls.CanvasControlTests.test_design_safety_zone_is_versioned_undoable_and_publish_gate_ignores_overlay_visibility) ... This plugin does not support propagateSizeHints()
+ok
+test_keyboard_millimetre_nudge_space_pan_preserves_selection_and_lock_blocks_changes (test_canvas_controls.CanvasControlTests.test_keyboard_millimetre_nudge_space_pan_preserves_selection_and_lock_blocks_changes) ... This plugin does not support propagateSizeHints()
+ERROR
+test_shared_settings_persist_view_defaults_and_sync_controls_without_changing_template (test_canvas_controls.CanvasControlTests.test_shared_settings_persist_view_defaults_and_sync_controls_without_changing_template) ... This plugin does not support propagateSizeHints()
+ok
+test_snap_projection_is_mm_based_toggleable_and_hiding_boundary_never_disables_validation (test_canvas_controls.CanvasControlTests.test_snap_projection_is_mm_based_toggleable_and_hiding_boundary_never_disables_validation) ... This plugin does not support propagateSizeHints()
+ok
+
+======================================================================
+ERROR: test_keyboard_millimetre_nudge_space_pan_preserves_selection_and_lock_blocks_changes (test_canvas_controls.CanvasControlTests.test_keyboard_millimetre_nudge_space_pan_preserves_selection_and_lock_blocks_changes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_canvas_controls.py", line 22, in test_keyboard_millimetre_nudge_space_pan_preserves_selection_and_lock_blocks_changes
+    QTest.keyClick(canvas,Qt.Key_Right);APP.processEvents();self.assertAlmostEqual(self.d.plan['changes'][0]['dx'],.2);self.d.apply();self.d.select_ids([identity])
+                                                                                   ~~~~~~~~~~~^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.390s
+
+FAILED (errors=1)

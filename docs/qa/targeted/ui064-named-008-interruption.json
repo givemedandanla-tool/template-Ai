@@ -1,0 +1,15 @@
+{
+  "status": "CONTROLLED_INTERRUPTION_NOT_PASS",
+  "owned_pid": 605202,
+  "parent_pid": 605199,
+  "actual_exit": 143,
+  "verified_argv": [
+    ".venv/bin/python",
+    "-m",
+    "unittest",
+    "test_canvas_named_commands",
+    "-v"
+  ],
+  "reason": "Real delete dialog waited because fixture response QTimer ran during focus helper processEvents before keydispatch; normalized Control+Z is unsupported Qt spelling in first assertion, use actual Delete/Del normalization aliases",
+  "process_scope": "Only exact owned command/parent qa-log validated; cwd probe AccessDenied, no escalation or unrelated process termination"
+}

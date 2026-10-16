@@ -91,6 +91,7 @@ class Box(QGraphicsRectItem):
 class Canvas(QGraphicsView):
     view_changed = Signal()
     command_status = Signal(str)
+    command_requested = Signal(str)
     rectangle = Signal(object)
     selected = Signal(object)
     moved = Signal(str, object)
@@ -109,6 +110,8 @@ class Canvas(QGraphicsView):
         self.width_mm, self.height_mm = 90.0, 54.0
         self.readonly = False
         self._ime_preedit=False
+        from .editor_settings import COMMAND_KEYS
+        self.command_bindings=dict(COMMAND_KEYS);self._command_inflight=False;self.has_content_commands=False
         self.scene().selectionChanged.connect(self.selection_changed)
 
     def set_content(self, width, height, image=None, slots=None, crop=None):
@@ -171,6 +174,14 @@ class Canvas(QGraphicsView):
             event.accept();return
         if event.key()==Qt.Key_Escape:
             self.cancel_gesture();event.accept();return
+        from PySide6.QtGui import QKeySequence
+        sequence=QKeySequence(event.keyCombination()).toString(QKeySequence.PortableText)
+        command=next((name for name,key in self.command_bindings.items() if key and key==sequence),None)
+        if command:
+            if not event.isAutoRepeat():
+                from .viewport_controls import dispatch_canvas_command
+                dispatch_canvas_command(self,command)
+            event.accept();return
         if event.modifiers() & Qt.ControlModifier and event.key() in (Qt.Key_Plus,Qt.Key_Equal,Qt.Key_Minus,Qt.Key_0):
             value=self.logicalDpiX()/25.4 if event.key()==Qt.Key_0 else self.transform().m11()*(.8 if event.key()==Qt.Key_Minus else 1.25)
             self.set_zoom(value);event.accept();return
@@ -495,12 +506,16 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.source_info)
         split = QSplitter()
         self.train_canvas = Canvas()
+        self.train_canvas.content_guard=lambda operation:self.canvas_content_guard(self.train_canvas,operation)
+        self.train_canvas.has_content_commands=True
+        self.train_canvas.command_requested.connect(lambda command:self.canvas_command(self.train_canvas,command))
+        self.train_canvas.command_status.connect(self.statusBar().showMessage)
         self.train_canvas.rectangle.connect(self.add_rectangle)
         self.train_canvas.selected.connect(self.select_slot)
         self.train_canvas.moved.connect(self.box_moved)
         split.addWidget(self.train_canvas)
         from .viewport_controls import navigation_controls
-        layout.addWidget(navigation_controls(self.train_canvas))
+        layout.addWidget(navigation_controls(self.train_canvas,self.library))
         self.slot_list = QListWidget()
         self.slot_list.currentRowChanged.connect(self.list_selection)
         split.addWidget(self.slot_list)
@@ -569,6 +584,8 @@ class MainWindow(QMainWindow):
         from .object_dialog import ObjectCanvas,canvas_controls
         self.edit_canvas = ObjectCanvas();self.edit_canvas.allow_multi_drag=False
         self.edit_canvas.content_guard=lambda operation:self.canvas_content_guard(self.edit_canvas,operation)
+        self.edit_canvas.has_content_commands=True
+        self.edit_canvas.command_requested.connect(lambda command:self.canvas_command(self.edit_canvas,command))
         self.edit_canvas.command_status.connect(self.statusBar().showMessage)
         self.edit_canvas.selection_ids.connect(self.editor_selection)
         self.edit_canvas.drag_proposal.connect(self.editor_canvas_apply)
@@ -695,7 +712,7 @@ class MainWindow(QMainWindow):
         self.output_canvas.setMinimumHeight(240)
         split.addWidget(self.output_canvas)
         from .viewport_controls import navigation_controls
-        layout.addWidget(navigation_controls(self.output_canvas))
+        layout.addWidget(navigation_controls(self.output_canvas,self.library))
         split.setSizes([220, 740])
         layout.addWidget(split, 1)
         self.issues = QLabel("輸入資料後開始排版。缺少同尺寸真實 Logo 或超出固定字級字寬限制時，正式輸出會被阻擋。")
@@ -1393,7 +1410,7 @@ class MainWindow(QMainWindow):
         try: dialog.exec()
         finally: dialog.deleteLater()
 
-    def object_tools(self):
+    def object_tools(self,initial_operation=None):
         from .object_dialog import ObjectToolsDialog
         from .font_review import fingerprint
         try:
@@ -1414,6 +1431,7 @@ class MainWindow(QMainWindow):
             dialog=ObjectToolsDialog(self,kind,entity_id)
             selected=list(self.edit_canvas.selection_intent) if tab==1 else [self.current_slot.id] if self.current_slot else []
             if selected:dialog.select_ids(selected)
+            if initial_operation=='DELETE':dialog.preview_request(dict(operation='DELETE',ids=selected,cross_owner=False))
             try:dialog.exec()
             finally:dialog.deleteLater()
         except Exception as error:self.error(str(error))
@@ -1607,14 +1625,44 @@ class MainWindow(QMainWindow):
     def canvas_content_guard(self,canvas,operation):
         from .property_context import pending_main
         from .font_review import fingerprint
-        if self.tabs.currentIndex()!=1 or canvas is not self.edit_canvas or not self.editable():return '目前模式／畫布不可修改；請選取可編輯草稿。'
+        tab=self.tabs.currentIndex()
+        if tab not in (0,1) or canvas is not (self.train_canvas if tab==0 else self.edit_canvas):return '目前模式／畫布不可修改；請選取可編輯草稿。'
+        if (tab==0 and (not self.source or not self.work)) or (tab==1 and (not self.template or self.template.state!='draft')):return '目前來源／模板唯讀或不可用；請沿用既有草稿修改流程。'
         if self.busy:return '正在處理既有工作；本次未重複提交。'
         if pending_main(self):return '右側仍有待套用輸入；先套用或明確放棄，未移動物件。'
         try:
-            current=self.library.object_snapshot('TEMPLATE',self.template.id)
-            if current['revision']!=self.template_revision or fingerprint(current['payload'])!=self.template_base_hash:return '來源版本已變更；請重新核對，未使用過期選取。'
+            current=self.library.object_snapshot('TEMPLATE' if tab==1 else 'ARTWORK',self.template.id if tab==1 else self.work['id'])
+            revision=self.template_revision if tab==1 else self.work['revision'];base=self.template_base_hash if tab==1 else fingerprint(self.work['payload'])
+            if current['revision']!=revision or fingerprint(current['payload'])!=base:return '來源版本已變更；請重新核對，未使用過期選取。'
         except (ValueError,OSError):return '來源不可用；原編輯保留，未提交。'
         return ''
+
+    def canvas_command(self,canvas,command):
+        reason=self.canvas_content_guard(canvas,command)
+        if reason:canvas.command_status.emit(reason);return
+        if command=='DELETE':
+            ids=set(getattr(canvas,'selection_intent',set())) or ({self.current_slot.id} if self.current_slot else set())
+            if not ids:canvas.command_status.emit('請先明確選取物件；沒有刪除預設範圍。');return
+            self.object_tools(initial_operation='DELETE');return
+        if command not in ('UNDO','REDO'):return
+        stack=self.undo_stack if command=='UNDO' else self.redo_stack
+        if not stack:canvas.command_status.emit('目前工作沒有可復原／重做的交易。');return
+        from .object_tools import protect_locked
+        from dataclasses import asdict
+        from .customers import digest
+        before=copy.deepcopy(self.current_slots());target=copy.deepcopy(stack[-1]);a={s.id:s for s in before};b={s.id:s for s in target};ids=sorted(k for k in set(a)|set(b) if a.get(k)!=b.get(k))
+        try:protect_locked({'slots':[asdict(s) for s in before]},{'slots':[asdict(s) for s in target]})
+        except ValueError as error:canvas.command_status.emit('歷史含鎖定保護，未復原：'+str(error));return
+        def selection():return sorted(getattr(canvas,'selection_intent',set()) or ({self.current_slot.id} if self.current_slot else set()))
+        def work_pin():return digest(self.template.to_dict() if self.tabs.currentIndex()==1 else dict(work=self.work,slots=[asdict(s) for s in self.slots]))
+        selected=selection();pin=work_pin()
+        if len(ids)>1 or not set(ids).issubset(selected):
+            scope='\n'.join((a.get(k) or b[k]).owner+'/'+(a.get(k) or b[k]).kind+'/'+k for k in ids)
+            if QMessageBox.question(self,'核對目前工作'+command,'僅目前標記／草稿，不回滾已發布模板或正式客戶主檔。\n實際影響：\n'+scope,QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
+        if self.canvas_content_guard(canvas,command) or work_pin()!=pin or selection()!=selected or not stack or stack[-1]!=target:
+            canvas.command_status.emit('核對期間工作／選取／版本已變更；未套用過期歷史。');return
+        (self.undo if command=='UNDO' else self.redo)()
+        canvas.command_status.emit('已處理目前標記／草稿 '+command+'；影響 '+str(len(ids))+' 件，正式保存與輸出另行核對。')
 
     def import_background(self):
         if not self.template or not self.editable() or self.busy:

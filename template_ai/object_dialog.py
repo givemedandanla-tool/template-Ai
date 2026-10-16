@@ -195,7 +195,7 @@ def canvas_controls(canvas,library=None):
         from .editor_settings import load
         for key,value in load(library).items():setattr(canvas,key,value)
     widget=QWidget();outer=QVBoxLayout(widget);from .viewport_controls import navigation_controls
-    outer.addWidget(navigation_controls(canvas));bar=QHBoxLayout();outer.addLayout(bar);bar.setContentsMargins(0,0,0,0);canvas.preference_widgets={}
+    outer.addWidget(navigation_controls(canvas,library));bar=QHBoxLayout();outer.addLayout(bar);bar.setContentsMargins(0,0,0,0);canvas.preference_widgets={}
     for label,attribute in [('邊界／中心吸附','snap_enabled'),('對齊參考線','guides_enabled'),('作品邊界疊圖','safety_visible'),('單框縮放控制點','resize_enabled')]:
         checkbox=QCheckBox(label);checkbox.setChecked(getattr(canvas,attribute));checkbox.toggled.connect(lambda value,key=attribute:(setattr(canvas,key,value),canvas.viewport().update()));bar.addWidget(checkbox);canvas.preference_widgets[attribute]=checkbox
     bar.addWidget(QLabel('微調mm（Shift×10）'));step=QDoubleSpinBox();step.setRange(.01,10);step.setDecimals(2);step.setValue(canvas.nudge_mm);step.valueChanged.connect(lambda value:setattr(canvas,'nudge_mm',value));bar.addWidget(step);canvas.preference_widgets['nudge_mm']=step;bar.addWidget(QLabel('Space暫時平移；疊圖開關不改驗證'));return widget
@@ -227,6 +227,8 @@ class ObjectToolsDialog(QDialog):
         body.addWidget(left)
         self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select_ids);self.canvas.drag_proposal.connect(self.preview_request);self.canvas.preview_proposal.connect(self.preview_request);body.addWidget(self.canvas)
         self.canvas.content_guard=self.canvas_content_guard;self.canvas.command_status.connect(self.status.setText)
+        self.canvas.has_content_commands=True
+        self.canvas.command_requested.connect(self.canvas_command)
         layout.addWidget(canvas_controls(self.canvas,self.library))
         right=QWidget();form=QFormLayout(right);self.context_form=form;self.editors={}
         self.context_status=QLabel('未選取／未知上下文');self.context_status.setWordWrap(True);form.addRow(self.context_status)
@@ -468,6 +470,11 @@ class ObjectToolsDialog(QDialog):
         if self.canvas.readonly:return '來源唯讀；請沿用既有草稿修改流程。'
         if self.window.busy:return '正在處理既有工作；未重複提交。'
         return ''
+    def canvas_command(self,command):
+        if command=='DELETE':self.preview_request(dict(operation='DELETE',ids=self.ids.copy(),cross_owner=self.cross.isChecked()))
+        elif command in ('UNDO','REDO'):
+            if not self.history.selectionModel().selectedRows():self.status.setText('請先明確選取本工作的一筆歷史，再核對影響範圍。');return
+            self.history_action(command)
     def current_patch(self):
         patch={}
         for key in self.dirty:

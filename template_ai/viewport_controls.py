@@ -20,6 +20,15 @@ def allow_canvas_content(canvas,operation):
     return True
 
 
+def dispatch_canvas_command(canvas,command):
+    if not canvas.has_content_commands:canvas.command_status.emit('此畫布的內容操作請使用目前視窗既有的明確按鈕；未派送其他工作歷史。');return
+    if getattr(canvas,'_command_inflight',False):canvas.command_status.emit('目前指令尚未結束；未重複提交。');return
+    if not allow_canvas_content(canvas,command):return
+    canvas._command_inflight=True
+    try:canvas.command_requested.emit(command)
+    finally:canvas._command_inflight=False
+
+
 def show_canvas_help(canvas):
     dialog=QDialog(canvas.window());dialog.setWindowTitle('畫布快捷鍵與目前模式');layout=QVBoxLayout(dialog)
     ids=sorted(getattr(canvas,'selection_intent',set()))
@@ -29,10 +38,18 @@ def show_canvas_help(canvas):
         for label,dx,dy in [('向左',-1,0),('向上',0,-1),('向下',0,1),('向右',1,0)]:
             button=QPushButton(label+'（目前毫米步距）');row.addWidget(button)
             button.clicked.connect(lambda checked=False,x=dx,y=dy:(dialog.accept(),canvas.request_nudge(x,y)))
+    keys=QLabel('目前畫布按鍵（可在共用畫布設定變更）：\n'+'\n'.join(name+'：'+(key or '未配置') for name,key in canvas.command_bindings.items())+'\n復原／重做沿用目前工作的既有歷史；刪除先開差異預覽，須明確核對後才套用。');keys.setWordWrap(True);keys.setTextFormat(Qt.PlainText);layout.addWidget(keys)
+    if not canvas.readonly and canvas.has_content_commands:
+        row=QHBoxLayout();layout.addLayout(row)
+        for command,label in [('UNDO','核對目前工作復原'),('REDO','核對目前工作重做'),('DELETE','預覽所選物件刪除')]:
+            button=QPushButton(label);row.addWidget(button);button.clicked.connect(lambda checked=False,name=command:(dialog.accept(),dispatch_canvas_command(canvas,name)))
     buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.rejected.connect(dialog.reject);layout.addWidget(buttons);dialog.resize(640,440);dialog.exec();dialog.deleteLater()
 
 
-def navigation_controls(canvas):
+def navigation_controls(canvas,library=None):
+    if library is not None:
+        from .editor_settings import load_commands
+        canvas.command_bindings=load_commands(library)
     widget=QWidget();bar=QHBoxLayout(widget);bar.setContentsMargins(0,0,0,0)
     def add(label,fn):
         b=QPushButton(label);b.clicked.connect(fn);bar.addWidget(b)
@@ -55,4 +72,4 @@ def navigation_controls(canvas):
     spin.valueChanged.connect(lambda value:canvas.set_zoom(value/100*nominal))
     slider.valueChanged.connect(lambda value:canvas.set_zoom(.2*math.exp(value/1000*math.log(2500))))
     canvas.view_changed.connect(refresh);canvas.zoom_percent=spin;canvas.zoom_slider=slider;refresh()
-    bar.addWidget(QLabel('僅改視角；滾輪縮放，平移模式拖曳。百分比非物理校準。'));return widget
+    hint=QLabel('聚焦畫布後滾輪縮放，平移模式拖曳；百分比非物理校準。');hint.setWordWrap(True);hint.setTextFormat(Qt.PlainText);canvas.command_status.connect(hint.setText);bar.addWidget(hint);return widget

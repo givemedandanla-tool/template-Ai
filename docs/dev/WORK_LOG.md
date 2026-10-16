@@ -1263,3 +1263,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 - 2026-10-16 UI064 plan beforecode: exact30 normative clauses, native Qt context/autorepeat and Microsoft VSCode conflict/when-clause references version/hash read; extend existing Canvas commands/undo and preferences only. UI064-A focus/IME/current-ID + gestures, B existing safety routes/config conflict, C native/full30. Windows/IME device verification remains external gap.
 
 - 2026-10-16 UI064-A implemented:12new actualQt focus/IME/mm/locked/stale/repeat/pending/Space/Esc/wheel tests;00312PASS/00540PASS.002/004 fixture focus failures preserved and actors corrected to real enabled focused controls. Next B keymap conflict and original safe Undo/Delete routes. No parent completed.
+
+- 2026-10-16 UI064-B original scoped history/delete routes and normalized finite keymap in existing settings/preferences.00915PASS/01066PASS/0125PASS;27newtests/catalog1286.008 controlled143 fixture scheduling;011 oldnofocus fixture error corrected; evidence preserved. C native/full30 pending, no parent promotion.

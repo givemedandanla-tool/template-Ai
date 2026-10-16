@@ -19,6 +19,7 @@ class CanvasControlTests(unittest.TestCase):
 
     def test_keyboard_millimetre_nudge_space_pan_preserves_selection_and_lock_blocks_changes(self):
         identity=self.ids[0];self.d.select_ids([identity]);canvas=self.d.canvas;canvas.nudge_mm=.2
+        self.d.activateWindow();canvas.setFocus();APP.processEvents();self.assertTrue(canvas.hasFocus())
         QTest.keyClick(canvas,Qt.Key_Right);APP.processEvents();self.assertAlmostEqual(self.d.plan['changes'][0]['dx'],.2);self.d.apply();self.d.select_ids([identity])
         QTest.keyPress(canvas,Qt.Key_Space);self.assertEqual(canvas.mode,'pan');QTest.keyRelease(canvas,Qt.Key_Space);self.assertEqual(canvas.mode,'edit');self.assertEqual(canvas.selection_intent,{identity})
         self.d.preview_lock(True);self.d.apply();self.d.select_ids([identity]);before=self.w.library.object_snapshot('TEMPLATE',self.t.id)
