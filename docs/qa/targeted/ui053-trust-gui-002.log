@@ -1,0 +1,32 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+ERROR: test_quality_only_mapping_truth_connects_customer_family_and_invalidates_old_split (test_quality_mapping.QualityMappingTests.test_quality_only_mapping_truth_connects_customer_family_and_invalidates_old_split)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_mapping.py", line 84, in test_quality_only_mapping_truth_connects_customer_family_and_invalidates_old_split
+    self.assertEqual(self.library.db.execute('SELECT count(*) FROM customer_source_associations').fetchone()[0],0)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: customer_source_associations
+
+======================================================================
+FAIL: test_late_mapping_leakage_audit_failure_rolls_back_gold_and_holdout_invalidation (test_quality_mapping.QualityMappingTests.test_late_mapping_leakage_audit_failure_rolls_back_gold_and_holdout_invalidation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_mapping.py", line 93, in test_late_mapping_leakage_audit_failure_rolls_back_gold_and_holdout_invalidation
+    with self.assertRaises(sqlite3.OperationalError):self.gold.confirm(plan,'Reviewer',True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: OperationalError not raised
+
+----------------------------------------------------------------------
+Ran 31 tests in 24.898s
+
+FAILED (failures=1, errors=1)

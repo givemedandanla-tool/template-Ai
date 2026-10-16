@@ -46,6 +46,12 @@ class QualityGroups:
                 if row:add('WORK:'+wid,'TEMPLATE_FAMILY:'+row[0],'ASSOCIATED_TEMPLATE:'+tid)
         if self.has_table('customer_identity_redirects'):
             for secondary,primary,merge_id in self.rows('SELECT secondary_id,primary_id,merge_id FROM customer_identity_redirects ORDER BY secondary_id'):add('CUSTOMER:'+secondary,'CUSTOMER:'+primary,'CONFIRMED_IDENTITY_REDIRECT:'+merge_id)
+        # Quality-only human truth establishes correlation, without creating a
+        # business association. Withdrawal cannot erase historical leakage.
+        for gid,sha,cid,tid in self.rows("SELECT id,json_extract(payload,'$.source_hash'),json_extract(payload,'$.mapping_truth.customer_id'),json_extract(payload,'$.mapping_truth.template_id') FROM training_records WHERE kind='QUALITY_GOLD' AND json_extract(payload,'$.mapping_truth.manually_verified')=1 ORDER BY id"):
+            add('CONTENT:'+sha,'CUSTOMER:'+cid,'HUMAN_QUALITY_MAPPING:'+gid)
+            family=self.db.execute('SELECT family_id FROM templates WHERE id=?',(tid,)).fetchone()
+            if family:add('CONTENT:'+sha,'TEMPLATE_FAMILY:'+family[0],'HUMAN_QUALITY_STYLE:'+gid)
         # Historical links remain conservative constraints even after explicit revocation.
         for lid,revision,raw in self.rows("SELECT id,revision,payload FROM training_records WHERE kind='QUALITY_GROUP_LINK' ORDER BY id"):
             import json
@@ -103,14 +109,19 @@ class QualityGroups:
             record={key:copy.deepcopy(plan[key]) for key in ('left','right','relation','reason','evidence','impact')};record.update(state='ACTIVE',actor=actor,at=time.time())
             saved=self.store._write(LINK,plan['link_id'],record,plan['prior_revision'],'quality_group_relation_confirmed_not_identity_merge')
             # Newly discovered truth is saved even when it reveals an old split was invalid.
-            affected={sha for conflict in plan['conflicts'] for sha in conflict['content_hashes']}
-            for did,raw in self.rows("SELECT id,payload FROM training_records WHERE kind IN ('DATASET','QUALITY_SET') ORDER BY id"):
-                import json
-                dataset=json.loads(raw)
-                if any(entry['role']=='HOLDOUT' and entry['source_hash'] in affected for entry in dataset['entries']) or affected.intersection(dataset.get('manifest',{}).get('declared_content_hashes',[])):
-                    prior=self.store.get('HOLDOUT_EXPOSED',did);exposed=copy.deepcopy(prior or {});exposed.update(dataset_id=did,reason='新核實關聯揭露跨角色洩漏，舊測試集不可恢復獨立資格',group_link_id=saved['id'],state='INVALID_INDEPENDENCE_REQUIRES_NEW_DATA',actor=actor,at=time.time())
-                    self.store._write('HOLDOUT_EXPOSED',did,exposed,prior['revision'] if prior else 0,'quality_holdout_invalidated_by_group_leakage')
+            self.invalidate_conflicts(plan['conflicts'],actor,saved['id'])
             return saved
+
+    def invalidate_conflicts(self,conflicts,actor,reference):
+        if not self.db.in_transaction:raise RuntimeError('群組洩漏失效需與新真值在同一交易保存')
+        affected={sha for conflict in conflicts for sha in conflict['content_hashes']}
+        if not affected:return
+        for did,raw in self.rows("SELECT id,payload FROM training_records WHERE kind IN ('DATASET','QUALITY_SET') ORDER BY id"):
+            import json
+            dataset=json.loads(raw)
+            if any(entry['role']=='HOLDOUT' and entry['source_hash'] in affected for entry in dataset['entries']) or affected.intersection(dataset.get('manifest',{}).get('declared_content_hashes',[])):
+                prior=self.store.get('HOLDOUT_EXPOSED',did);exposed=copy.deepcopy(prior or {});exposed.update(dataset_id=did,reason='新核實關聯揭露跨角色洩漏，舊測試集不可恢復獨立資格',group_link_id=reference,state='INVALID_INDEPENDENCE_REQUIRES_NEW_DATA',actor=actor,at=time.time())
+                self.store._write('HOLDOUT_EXPOSED',did,exposed,prior['revision'] if prior else 0,'quality_holdout_invalidated_by_group_leakage')
 
     def revoke_link(self,link_id,expected_revision,actor,reason,approved=False):
         if approved is not True:raise ValueError('需明確撤回關聯；歷史洩漏不會消失')

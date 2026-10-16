@@ -19,7 +19,7 @@ class QualityDiagnostics:
         base="""WITH cases AS (
           SELECT r.id item_id,r.revision item_revision,json_extract(r.payload,'$.source_id') source_id,
             CAST(c.key AS TEXT) ordinal,c.value case_payload,
-            CASE WHEN json_extract(c.value,'$.critical_owner_error')=1 OR json_extract(c.value,'$.reason') IN ('MISSING_WHOLE_GOLD_WORK','WHOLE_LOGO_COMPONENTS_DIFFER','CUSTOMER_STYLE_MAPPING_WRONG_EXACT_VERSION') THEN 'CRITICAL' ELSE 'ERROR' END severity,
+            CASE WHEN json_extract(c.value,'$.critical_owner_error')=1 OR json_extract(c.value,'$.critical')=1 OR json_extract(c.value,'$.reason')='WHOLE_LOGO_COMPONENTS_DIFFER' THEN 'CRITICAL' ELSE 'ERROR' END severity,
             COALESCE(json_extract(c.value,'$.domain'),'CASE') domain,json_extract(r.payload,'$.facets') facets
           FROM training_records r,json_each(r.payload,'$.evaluation.cases') c
           WHERE r.kind='QUALITY_EVAL_ITEM' AND json_extract(r.payload,'$.job_id')=?

@@ -23,3 +23,7 @@
 - 完成全部原9後才能登錄第145claim/UI053 fullscope，sourcefreeze/push/nativebaseline、全unittest+capture/evidence實際exit0、publicationGate實查，再7/28。正式run中不可改app/tests/tools/acceptance；docs-only checkpoint可；不要覆寫舊run或重跑舊milestonehelper。
 - 用 .venv/bin/python（3.12.14），QT_QPA_PLATFORM=offscreen PYTHONPATH=tests XDG_CACHE_HOME=/workspace/.cache；NetworkX3.5新增已鎖requirements+lock，無付費雲端服務/新CI。環境ready，不再waitstarting。
 - 請先讀STATE.last_confirmed_checkpoint的實際receipt與git狀態，persist新receipt後繼續；所有當前工作區修改均本輪所有，不丟棄。源於錯填base的MAPPING-ADAPTER-WIP第一個PREPARED無ACK，STATE.abandoned_preparations明示；-002才實際readback成功，勿把失敗當完成。
+
+## 最新02:00 checkpoint補充
+- 33 targets PASS：quality-only Gold mapping連結customer/template-family且原子失效舊role洩漏set，無businessassoc；actual lateauditrollback、predictiontamper與legacyunknownhistory branch已測。新case含domain/critical/rect，qualitytabscroll已接。舊31失敗因optionaltable與training_ eventprefix測試假設，原log保留。
+- 下一先按UI053_ROLE_DIAGNOSTICS_DESIGN.md完成TRAIN/VALIDATION受控診斷（新DIAGNOSTIC-only rights，不能擴張舊Gold授權），再nativewithdraw/resolve/sourcefacts navigation/capture、處理rules未執行的原9scope。仍144pending／歷史6of28，未全formal。

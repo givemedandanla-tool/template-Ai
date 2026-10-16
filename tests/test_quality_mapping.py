@@ -60,3 +60,37 @@ class QualityMappingTests(unittest.TestCase):
         abstained=evaluate_source([gold],prediction,policy,complete_source_gold=True)
         self.assertEqual(abstained['domains']['customer_style_mapping']['metrics']['fn'],1)
         self.assertEqual(abstained['domains']['customer_style_mapping']['metrics']['recall'],0)
+
+    def related_split(self):
+        from training_fixture import source_work
+        from test_noise_authoring import confirmed
+        config,evidence=self.configured()
+        source,work=source_work(self.library,self.root,'independent-bytes.svg',note_text='Different design bytes, same confirmed customer family')
+        confirmed(self.store,work)
+        base=fixtures.QualityGoldSetTests.plan(self,work)
+        gold=self.gold.confirm(self.gold.plan(work['id'],base['rights'],base['domain_truth'],base['reason'],base['evidence'],mapping_truth=evidence),'Reviewer',True)
+        plain=self.gold.confirm(fixtures.QualityGoldSetTests.plan(self),'Reviewer',True)
+        dataset=self.sets.create(self.sets.plan('Initially unlinked holdout',[plain['id']],True,True,'Prior independence review'),'Reviewer',True)
+        with self.store.transaction():self.store._write('GROUP_ROLE',source['hash'],dict(role='TRAIN'),0,'synthetic_preexisting_training_role')
+        base=fixtures.QualityGoldSetTests.plan(self)
+        plan=self.gold.plan(self.work['id'],base['rights'],base['domain_truth'],base['reason'],base['evidence'],mapping_truth=evidence)
+        return dataset,plan
+
+    def test_quality_only_mapping_truth_connects_customer_family_and_invalidates_old_split(self):
+        dataset,plan=self.related_split()
+        self.gold.confirm(plan,'Reviewer',True)
+        self.assertIsNotNone(self.store.get('HOLDOUT_EXPOSED',dataset['id']))
+        self.assertFalse(self.sets.validity(dataset['id'])['valid'])
+        exists=self.library.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='customer_source_associations'").fetchone()
+        if exists:self.assertEqual(self.library.db.execute('SELECT count(*) FROM customer_source_associations').fetchone()[0],0)
+
+    def test_late_mapping_leakage_audit_failure_rolls_back_gold_and_holdout_invalidation(self):
+        import sqlite3
+        dataset,plan=self.related_split();before=self.store.count('QUALITY_GOLD');event=self.library.event
+        def failed(identity,action):
+            if action=='training_quality_holdout_invalidated_by_group_leakage':raise sqlite3.OperationalError('synthetic disk full on correlated split invalidation')
+            return event(identity,action)
+        with patch.object(self.library,'event',side_effect=failed):
+            with self.assertRaises(sqlite3.OperationalError):self.gold.confirm(plan,'Reviewer',True)
+        self.assertEqual(self.store.count('QUALITY_GOLD'),before)
+        self.assertIsNone(self.store.get('HOLDOUT_EXPOSED',dataset['id']))

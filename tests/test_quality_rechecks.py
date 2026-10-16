@@ -76,3 +76,13 @@ class QualityRecheckTests(unittest.TestCase):
         status=QualityReports(self.library).recommendation_status('missing-decision')
         self.assertFalse(status['quality_verified_recommendation_allowed'])
         self.assertFalse(status['fallback_assumed_safe'])
+
+    def test_legacy_review_without_version_snapshot_is_potential_impact_not_guessed_exact(self):
+        from template_ai.model import new_id
+        self.critical()
+        with self.store.transaction():self.store._write('COVERAGE_REVIEW',new_id(),dict(work_id=self.work['id'],batch_id='synthetic-legacy-closed-batch',context_digest='historical-hash-without-recoverable-version'),0,'synthetic_legacy_review_format')
+        plan=self.rechecks.plan(self.protocol['id'],'BASELINE','PARSER')
+        self.assertEqual(len(plan['rows']),1)
+        self.assertTrue(plan['rows'][0]['legacy_dependency_versions_unknown'])
+        self.assertTrue(plan['unknown_unrecorded_dependencies'])
+        self.assertFalse(blocked(self.store,self.work['id']))

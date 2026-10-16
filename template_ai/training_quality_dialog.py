@@ -1,7 +1,7 @@
 """Readonly marking overview with stable issue selection and explicit navigation."""
 import json
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QDialog, QWidget, QTabWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QComboBox, QPushButton, QTableWidget, QTableWidgetItem, QPlainTextEdit, QDialogButtonBox
+from PySide6.QtWidgets import QDialog, QWidget, QTabWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QComboBox, QPushButton, QTableWidget, QTableWidgetItem, QPlainTextEdit, QDialogButtonBox,QScrollArea
 from .training_quality import quality_rows
 from .training_navigation import require_clean_navigation, locate_work
 
@@ -45,8 +45,8 @@ class TrainingQualityDialog(QDialog):
         self.queue_panel=TrainingQueuePanel(window,self);self.tabs.addTab(self.queue_panel,'可恢復幾何訓練工作')
         from .quality_evaluation_panel import EvaluationPanel, RecheckPanel
         from .quality_panel import QualityPanel
-        self.quality_panel=QualityPanel(window,self);self.tabs.addTab(self.quality_panel,'獨立品質／實際版本A/B')
-        self.tabs.currentChanged.connect(lambda index:self.quality_panel.activate() if self.tabs.widget(index) is self.quality_panel else None)
+        self.quality_panel=QualityPanel(window,self);self.quality_scroll=QScrollArea();self.quality_scroll.setWidgetResizable(True);self.quality_scroll.setWidget(self.quality_panel);self.tabs.addTab(self.quality_scroll,'獨立品質／實際版本A/B')
+        self.tabs.currentChanged.connect(lambda index:self.quality_panel.activate() if self.tabs.widget(index) is self.quality_scroll else None)
         self.evaluation_panel=EvaluationPanel(window,self);self.tabs.addTab(self.evaluation_panel,'分類評估／隔離修復')
         self.recheck_panel=RecheckPanel(window,self);self.tabs.addTab(self.recheck_panel,'重大規則依賴重審')
         from .training_exceptions_panel import TrainingExceptionsPanel

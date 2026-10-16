@@ -62,13 +62,15 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
         else:
             mapping_counts[1]+=1;mapping_counts[2]+=1
             if oracle['customer_id']!=selected['customer_id'] and truth('customer_style_mapping'):critical['customer_owner_mismatch']+=1
-            cases.append(dict(work_id=gold['work_id'],reason='CUSTOMER_STYLE_MAPPING_WRONG_EXACT_VERSION',expected_mapping=oracle,predicted_mapping=selected))
+            cases.append(dict(work_id=gold['work_id'],domain='customer_style_mapping',critical=oracle['customer_id']!=selected['customer_id'],reason='CUSTOMER_STYLE_MAPPING_WRONG_EXACT_VERSION',expected_mapping=oracle,predicted_mapping=selected))
         result=classification_metrics(gold['objects'],objects,policy['matching_iou'])
         gt,gcomplete=text_boxes(gold['objects']);pt,pcomplete=text_boxes(objects,True);text_unknown|=not(gcomplete and pcomplete)
         text_match=match_boxes(gt,pt,policy['matching_iou'])
         for index,key in enumerate(('matches','false_positive_ids','false_negative_ids')):text_counts[index]+=len(text_match[key])
         for kind,m in result['per_class'].items():add_class(kind,m['tp'],m['fp'],m['fn'])
-        cases += [dict(case,work_id=gold['work_id'],predicted_work_id=pred['key']) for case in result['cases']]
+        for case in result['cases']:
+            domain=('person_ownership' if str(case.get('gold_owner') or '').startswith('p') else 'company_ownership') if case.get('critical_owner_error') else 'whole_logo' if case.get('gold_kind',case.get('predicted_kind'))=='logo' else 'field_types'
+            cases.append(dict(case,work_id=gold['work_id'],predicted_work_id=pred['key'],domain=domain))
         gobs={o['id']:o for o in gold['objects']};pobs={o['id']:o for o in objects};matched_g=set();matched_p=set()
         for match in result['matching']['matches']:
             g,p=gobs[match['gold_id']],pobs[match['prediction_id']];matched_g.add(g['id']);matched_p.add(p['id'])
@@ -108,7 +110,9 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
                 if str(obj.get('owner') or '').startswith('p'):person[1]+=1
                 elif str(obj.get('owner') or '').startswith('c'):company[1]+=1
         roots={o['owner'] for o in gold['objects'] if o['kind']=='name' and o.get('owner')};mapped_roots=set(result['root_correspondence'].values());root_missing+=len(roots-mapped_roots)
+        for root in sorted(roots-mapped_roots):cases.append(dict(work_id=gold['work_id'],predicted_work_id=pred['key'],domain='person_ownership',reason='MISSING_PERSON_ROOT',gold_owner=root,critical=truth('person_ownership')))
         mm_errors.append(max(abs(gold['width_mm']-pred['work_width']),abs(gold['height_mm']-pred['work_height'])))
+        if mm_errors[-1]>policy['thresholds']['physical_size']['maximum_absolute_error_mm']:cases.append(dict(work_id=gold['work_id'],predicted_work_id=pred['key'],domain='physical_size',reason='PHYSICAL_SIZE_ERROR_MM',maximum_absolute_error_mm=mm_errors[-1],gold_rect=gold['crop'],predicted_rect=pred['crop']))
         logo_gold+=sum(o['kind']=='logo' for o in gold['objects']);logo_predictions+=sum(o['kind']=='logo' for o in objects)
         logo_missing_component_truth+=sum(o['kind']=='logo' and not o.get('component_truth') for o in gold['objects'])
     for wid in paired['false_negative_ids']:
@@ -126,7 +130,7 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
             elif str(obj.get('owner') or '').startswith('c'):company[2]+=1
         root_missing+=len({o['owner'] for o in gold['objects'] if o['kind']=='name' and o.get('owner')})
         if truth('work_segmentation'):critical['missing_work']+=1
-        cases.append(dict(work_id=wid,predicted_work_id=None,reason='MISSING_WHOLE_GOLD_WORK',source_id=prediction['source_id']))
+        cases.append(dict(work_id=wid,predicted_work_id=None,domain='work_segmentation',critical=truth('work_segmentation'),reason='MISSING_WHOLE_GOLD_WORK',source_id=prediction['source_id'],gold_rect=gold['crop']))
     for wid in paired['false_positive_ids']:
         mapping=pred_by[wid].get('mapping_prediction') or {}
         if mapping.get('state') in (None,'NOT_CONFIGURED'):mapping_unknown+=1
@@ -139,7 +143,7 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
             add_class(obj['kind'],fp=1)
             if str(obj.get('owner') or '').startswith('p'):person[1]+=1
             elif str(obj.get('owner') or '').startswith('c'):company[1]+=1
-        cases.append(dict(work_id=None,predicted_work_id=wid,reason='EXTRA_PREDICTED_WORK',source_id=prediction['source_id']))
+        cases.append(dict(work_id=None,predicted_work_id=wid,domain='work_segmentation',reason='EXTRA_PREDICTED_WORK',source_id=prediction['source_id'],predicted_rect=pred_by[wid]['crop']))
     per_class={kind:counts(*values) for kind,values in sorted(class_counts.items())};gold_objects=sum(len(g['objects']) for g in golds)
     if truth('source_readability'):domains['source_readability']=measured(counts(1,0,0),1,'SOURCE_PAGE_READABILITY;FILES_AGGREGATED_SEPARATELY')
     if truth('work_segmentation'):domains['work_segmentation']=measured(counts(len(paired['matches']),len(paired['false_positive_ids']),len(paired['false_negative_ids'])),len(golds),'ACTUAL_WORK_BOXES',matching=paired)

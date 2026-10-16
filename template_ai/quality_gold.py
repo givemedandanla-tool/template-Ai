@@ -70,7 +70,12 @@ class QualityGold:
             inventory=[row[0] for row in self.db.execute("SELECT id FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED' ORDER BY id LIMIT 2001",(plan['source_id'],))]
             if inventory!=plan['source_inventory_work_ids']:raise ValueError('同來源作品清單已變更，不能漏作品')
             identity=new_id();record=copy.deepcopy(plan);record.update(actor=actor,confirmed_at=time.time(),state='MANUALLY_VERIFIED_QUALITY_ONLY_GOLD',immutable=True)
-            return self.store._write(GOLD,identity,record,0,'independent_quality_gold_confirmed_not_training_admission')
+            saved=self.store._write(GOLD,identity,record,0,'independent_quality_gold_confirmed_not_training_admission')
+            if record.get('mapping_truth'):
+                from .quality_groups import QualityGroups
+                groups=QualityGroups(self.library)
+                groups.invalidate_conflicts(groups.role_conflicts([(record['source_hash'],'UNASSIGNED')]),actor,'QUALITY_GOLD:'+identity)
+            return saved
 
     def validity(self,gold_id,verify_bytes=True):
         gold=self.store.get(GOLD,gold_id)
