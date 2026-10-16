@@ -73,3 +73,51 @@ def verify_cross_plan(plan,source,targets):
     for row in plan['targets']:
         if row['key'] not in current or candidate_pin(current[row['key']])!=row['target_pin']:raise ValueError('目標人工／資料版本已變，舊套用計畫已忽略')
     return True
+
+
+def prepare_cross_batch(plan,source,adapters,*,approved=False):
+    """GUI thread: copy plain envelopes; no candidate/DB/worker mutation."""
+    from .candidate_edit import plan_cross_properties,prepare_edit
+    if approved is not True:raise ValueError('先逐目標核對差異並明確確認')
+    verify_cross_plan(plan,source,[(key,adapter.candidates[index]) for key,(adapter,index) in adapters.items()]);envelopes={}
+    for row in plan['targets']:
+        if row['state']!='READY_FOR_EXPLICIT_CONFIRMATION':continue
+        adapter,index=adapters[row['key']];envelopes[row['key']]=prepare_edit(adapter,plan_cross_properties(adapter,index,row['after'],plan['source_pin']))
+    return dict(plan=deepcopy(plan),envelopes=envelopes)
+
+
+def calculate_cross_batch(batch,library,cancel=None):
+    """Existing owned worker: calculate only, never access live GUI adapters."""
+    from .candidate_edit import calculate_edit
+    results=[]
+    for row in batch['plan']['targets']:
+        key=row['key'];result=dict(key=key,state=row['state'],reason=row['reason'])
+        if row['state']=='READY_FOR_EXPLICIT_CONFIRMATION':
+            try:
+                if cancel and cancel.is_set():raise InterruptedError('已取消，未套用此目標')
+                candidate=calculate_edit(batch['envelopes'][key],library);gate=candidate.risk
+                if cancel and cancel.is_set():raise InterruptedError('已取消，計算副本不套用')
+                result.update(state='VERIFIED_PENDING_INSTALL' if gate['formal_allowed'] else 'VALIDATION_FAILED',reason=gate['label'],gate=gate,candidate=candidate);candidate.risk_context['comparison_only']=True
+            except InterruptedError as error:result.update(state='CANCELLED',reason=str(error))
+            except (ValueError,OSError,TypeError,KeyError) as error:result.update(state='FAILED',reason=str(error))
+        results.append(result)
+    return results
+
+
+def install_cross_batch(batch,results,source,adapters):
+    """GUI thread: reject changed source/targets, install only whole-Gate passes."""
+    from .candidate_edit import install_edit
+    from .candidate_risk import bind_source
+    try:verify_cross_plan(batch['plan'],source,[(key,adapter.candidates[index]) for key,(adapter,index) in adapters.items()])
+    except (ValueError,IndexError,KeyError) as error:return [dict(key=row['key'],state='STALE_IGNORED',reason=str(error)) for row in results]
+    installed=[]
+    for row in results:
+        result={key:value for key,value in row.items() if key!='candidate'}
+        if row['state']=='VERIFIED_PENDING_INSTALL':
+            try:
+                adapter,index=adapters[row['key']];candidate=deepcopy(row['candidate']);candidate.risk_context.pop('comparison_only',None);bind_source(candidate,adapter.library,require_registered=True)
+                if not candidate.formal_eligible:raise ValueError('現行必要Gate已改，不採用舊檢查')
+                install_edit(adapter,batch['envelopes'][row['key']],candidate);result.update(state='APPLIED_VERIFIED',reason='此目標屬性已明確套用並通過整張Gate；可單筆復原')
+            except (ValueError,OSError,TypeError,KeyError,IndexError) as error:result.update(state='STALE_IGNORED',reason=str(error))
+        installed.append(result)
+    return installed

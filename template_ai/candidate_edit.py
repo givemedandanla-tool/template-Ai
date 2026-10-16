@@ -47,6 +47,20 @@ def plan_original(window,index):
     return plan
 
 
+def plan_cross_properties(window,index,after,source_pin):
+    """Restricted exact-target property proposal, never cross-size geometry."""
+    from .candidate_changes import manual_delta
+    if not isinstance(source_pin,str) or len(source_pin)!=64:raise ValueError('缺跨候選來源版本憑證')
+    plan=plan_recheck(window,index);candidate=window.candidates[index]
+    if candidate.generation!=window.generation:raise ValueError('目標來源世代已過期，先同步重驗')
+    receipt=manual_delta(candidate.template.to_dict(),after);slots={s.id:s for s in candidate.template.slots}
+    for row in receipt['changes']:
+        if row['property'] not in ('align','color','locked'):raise ValueError('跨候選只接受對齊、顏色、明確鎖定；不複製座標／字級／來源／歸屬')
+        if slots[row['object_id']].locked and row['property']!='locked':raise ValueError('目標人工鎖定尚未明確解除，不套用屬性')
+    plan.update(request=dict(operation='CROSS_PROPERTIES',source_pin=source_pin),after=copy.deepcopy(after),changes=receipt['changes'],warnings=['明確跨候選屬性；此目標通過整張Gate後才能採用，失敗保留舊版本'])
+    return plan
+
+
 def manual_metadata(envelope):
     from .candidate_changes import manual_delta
     from .training_store import digest as pin_digest
@@ -80,10 +94,15 @@ def review_context_token(context):
 
 
 def prepare_edit(window,plan):
-    fresh=plan_undo(window,plan['index']) if plan['request']['operation']=='UNDO' else plan_recheck(window,plan['index']) if plan['request']['operation']=='RECHECK' else plan_original(window,plan['index']) if plan['request']['operation']=='ORIGINAL_GEOMETRY' else plan_operation(window,plan['index'],plan['request'])
+    operation=plan['request']['operation']
+    if operation=='UNDO':fresh=plan_undo(window,plan['index'])
+    elif operation=='RECHECK':fresh=plan_recheck(window,plan['index'])
+    elif operation=='ORIGINAL_GEOMETRY':fresh=plan_original(window,plan['index'])
+    elif operation=='CROSS_PROPERTIES':fresh=plan_cross_properties(window,plan['index'],plan['after'],plan['request']['source_pin'])
+    else:fresh=plan_operation(window,plan['index'],plan['request'])
     if fresh!=plan:raise ValueError('候選／人工版本或輸入已改變，重新預覽')
     c=copy.deepcopy(window.candidates[plan['index']]);local=c.template.to_dict();local['state']='draft'
-    after=copy.deepcopy(plan['after']) if plan['request']['operation'] in ('UNDO','RECHECK','ORIGINAL_GEOMETRY') else propose(local,'TEMPLATE',plan['request'])['after'];after['state']=c.template.state
+    after=copy.deepcopy(plan['after']) if operation in ('UNDO','RECHECK','ORIGINAL_GEOMETRY','CROSS_PROPERTIES') else propose(local,'TEMPLATE',plan['request'])['after'];after['state']=c.template.state
     if not c.risk_context.get('source_template_pin'):
         from .training_store import digest as pin_digest
         try:base=window.library.object_snapshot('TEMPLATE',c.template.id)['payload']
