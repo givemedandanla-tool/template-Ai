@@ -13,3 +13,7 @@
 - UI059下一原10已讀、UI059_EXECUTION_PLAN已保存：NetworkX3.5 descendants/BFS installedfileSHA、Git2.51.0三方merge及Microsoft VSCode1.66 localhistory公開來源/version/hash已實際讀。JetBrains連結失敗不作依據。目前尚無UI059完整依賴/局部重算/差異選擇/單筆undo實作，待當前formal結束再做；其餘16未完整實作見REMAINING28_EXECUTION_QUEUE。勿因12里程碑停止。
 - 合法GPL實際Illustrator2017 AIPrivateData檔examples/legal_ai/dashicons-icon-template.ai為空白負例，不能冒充正向訓練。REV02合法非空真AI語料與REV04指定Windows/16GB/RTX5050/VivoBook實機仍缺真證據；先完成所有可做軟體，不虛構資格。
 - 詳細本輪歷史在history/HANDOFF_BEFORE_LAYOUT002_20261016.md；更早history/HANDOFF_PRE_UI055_20261016.md。歷史checkpoint超10min偏差已如實記錄，不能宣稱strict cadence PASS。最新receipt/commit以STATE為準。
+
+## LAYOUT002 active watch: do not finalize
+
+Observed two actual GUI wait timeouts: AutomaticTraining startupadmission and OutputBatch firstdelivery. Isolated startup probe3PASS, root cause not established. Keep full run, do not relax timeout or overwrite failures. Current source/tests/tools/examples still frozen at86cf4bc06d7c3093be475a606eee8df072285b1b. Actual parent exit not yet observed; run session65193, ownedparent499566 fromSTATE. Next inspect complete evidence and improve failure diagnostics before new freeze; no completion count change.

@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI057-NEXT",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI058-MANUAL-SCOPE-REPAIR.receipt.json",
-  "last_confirmed_commit": "30d13dca69bc47f2cd6525ddae10d9e7e5c970d5",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-LAYOUT002-SOURCE-FREEZE.receipt.json",
+  "last_confirmed_commit": "86cf4bc06d7c3093be475a606eee8df072285b1b",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-LAYOUT002-SOURCE-FREEZE"
+    "CP-20261016-REMAINING28-LAYOUT002-FAILURE-WATCH"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -646,35 +646,48 @@
   ],
   "active_work_package_plan": "docs/dev/UI058_EXECUTION_PLAN.json",
   "formal_execution_watch": {
-    "run_id": "RUN-REMAINING28-LAYOUT-001",
-    "source_commit": "4bb32a98004fa7a55f535cf410714aa603971949",
-    "status": "CONTROLLED_INTERRUPTION_KNOWN_UNCOVERED_MANUAL_SCOPE_GAP",
+    "run_id": "RUN-REMAINING28-LAYOUT-002",
+    "source_commit": "86cf4bc06d7c3093be475a606eee8df072285b1b",
+    "status": "RUNNING_WITH_OBSERVED_TEST_FAILURES",
     "owners": [
       {
+        "create_time": 1792148479.48,
+        "ppid": 499560,
         "cmdline": [
           ".venv/bin/python",
           "tools/run_evidence.py",
           "--run-id",
-          "RUN-REMAINING28-LAYOUT-001",
+          "RUN-REMAINING28-LAYOUT-002",
           "--source-commit",
-          "4bb32a98004fa7a55f535cf410714aa603971949",
+          "86cf4bc06d7c3093be475a606eee8df072285b1b",
           "--commit-json",
           ".checkpoints/native-readback/commit.json",
           "--tree-json",
           ".checkpoints/native-readback/tree.json"
         ],
-        "pid": 491768,
-        "create_time": 1792147690.2,
-        "ppid": 491764
+        "pid": 499566
       }
     ],
-    "source_frozen": false,
+    "source_frozen": true,
     "do_not_finalize_before_actual_exit_zero": true,
-    "parent_log": "docs/qa/targeted/remaining28-layout-001-parent.log",
-    "parent_exit": "docs/qa/targeted/remaining28-layout-001-parent-exit.txt",
-    "live_directory": ".checkpoints/formal-live/RUN-REMAINING28-LAYOUT-001",
-    "observed_passed_before_stop": 599,
-    "actual_parent_exit": 143
+    "parent_log": "docs/qa/targeted/remaining28-layout-002-parent.log",
+    "parent_exit": "docs/qa/targeted/remaining28-layout-002-parent-exit.txt",
+    "live_directory": ".checkpoints/formal-live/RUN-REMAINING28-LAYOUT-002",
+    "progress": {
+      "phase": "RUNNING_OWNED_TEST_MODULE",
+      "current_test": "test_quality_panel.QualityPanelTests.test_actual_answer_exposure_paged_diagnosis_and_readonly_source_canvas",
+      "started": 708,
+      "completed": 707,
+      "passed": 705,
+      "failed_ids": [
+        "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
+        "test_output_batch_gui.OutputBatchGuiTests.test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults"
+      ],
+      "planned_tests": 1078,
+      "formal_complete": false,
+      "updated_at": "2026-10-16T11:08:15.257209+00:00"
+    },
+    "source_manifest_unchanged_now": true
   },
   "abandoned_preparations": [
     {
@@ -683,7 +696,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "UI05511/UI0568/UI0579/UI05810 full original clauses implemented and registered pending fresh immutable full-source formal.1078catalog/150claims; historical8of28 unchanged. Native UI057/58 capture005 thirteen views0Qt all visually reviewed; code/input/source/template/font/Logo pins, final actual gate rerun, one foreground worker/resource/cancel/partial/manual fence/opt-in encrypted24h recovery. LAYOUT001 controlled interruption599observedPASS/actualparent143, nevercomplete;3new real regressions reproduced and fixed18PASS, current manual geometry preserved and stale input save rejected.",
+  "current_work": "LAYOUT002 immutable source86cf4bc... currently running with observed GUI timeouts (startup admission and output batch). No completion claim. Isolated actual startup probe3PASS; cause not established, do not call fixed. Preserve full run and inspect diagnostics before next source.1078catalog/140modules/150pendingclaims, historical8of28 unchanged.",
   "last_formal_failure": {
     "run": "RUN-REMAINING28-REPAIR-002",
     "status": "FAIL",
