@@ -1,4 +1,5 @@
 """Native three-way candidate routing and explicit transient-only correction."""
+from gui_wait import wait_layout
 import copy,unittest
 from unittest.mock import patch
 from PySide6.QtWidgets import QTableWidgetItem,QInputDialog
@@ -15,7 +16,7 @@ class CandidateRiskGuiTests(unittest.TestCase):
         good=demo_template();good.name='Synthetic safe';bad=demo_template();bad.name='Synthetic hard block';bad.slots[0].rect.w=.1
         self.w.library.publish(good);self.w.library.publish(bad);self.w.people.setRowCount(1)
         for col,value in enumerate(('Alex Example','Designer','123','a@example.test','','','','')):self.w.people.setItem(0,col,QTableWidgetItem(value))
-        self.w.tabs.setCurrentIndex(2);self.w.generate();APP.processEvents()
+        self.w.tabs.setCurrentIndex(2);self.w.generate();wait_layout(self.w);APP.processEvents()
     def test_real_three_groups_marked_preview_and_explicit_recheck_without_database_writes(self):
         self.seed();before=[t.to_dict() for t in self.w.library.templates()];candidate=transient_draft(self.w.candidates[0],'Explicit local non-hard review');self.w.candidates.append(candidate);self.w.candidate_list.addItem('Synthetic review');self.w.choose_candidate(2)
         self.assertEqual((self.w.qualified_candidates.count(),self.w.review_candidates.count(),self.w.blocked_candidates.count()),(1,1,1));self.assertFalse(self.w.export_button.isEnabled());self.assertTrue(self.w.preview_button.isEnabled());self.assertIn('待確認草稿',self.w.issues.text());self.assertNotIn('數位排版檢查通過',self.w.issues.text())

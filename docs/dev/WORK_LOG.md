@@ -1225,3 +1225,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 2026-10-16 UI057 WIP: tri-state candidate/source/basis risk and export gate; actual36 targeted+legacy PASS,1051catalog. Temporary draft memory-only/marked preview; full9 not registered pending UI/lowload integration. Checkpoint >10min across compaction, not strict cadence PASS.
 
 2026-10-16 UI057 source/input/template/asset pins and actual export engine rerun;11risk and31native/session/per-size/output PASS. Native three groups/tempdraft/recheck current source; failed003modal/004canvas preserved and fixed. Shared UI058 exact executionplan persisted before editing, no full parent count change.
+
+2026-10-16 UI058 WIP: actual stages/resource admission/partial preview/manual canvas fence; strict report schema repaired51PASS; encrypted recovery6PASS, native integration25PASS. Default foreground async conversion in progress,005syntax error retained/fixed006pending. Local24h default technical retention explicitly visible, no persistent customer DB/model API/new services.

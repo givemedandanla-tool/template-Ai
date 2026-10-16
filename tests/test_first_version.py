@@ -1,4 +1,5 @@
 """驗證最容易造成錯誤成品的限制，以及來源→標記→模板→輸出的實際閉環。"""
+from gui_wait import wait_layout
 import copy
 import json
 import os
@@ -218,7 +219,9 @@ class FirstVersionTests(unittest.TestCase):
         self.assertEqual(window.edit_canvas.mode, "pan")
         window.tabs.setCurrentIndex(2)
         window.demo_input()
-        window.generate()
+        from runtime_fixture import controlled_resources
+        controlled_resources(window)
+        window.generate();wait_layout(window)
         self.assertTrue(window.candidates[0].valid, window.candidates[0].issues)
         self.assertTrue(window.export_button.isEnabled())
         window.people.item(0, 0).setText("姓名已修改")

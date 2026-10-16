@@ -1818,31 +1818,13 @@ class MainWindow(QMainWindow):
         dialog=CustomLayoutDialog(self);dialog.exec();dialog.deleteLater()
 
     def generate(self):
-        try:
-            people, companies, logos = self.input_data()
-            eligible=[];excluded=[]
-            for template in self.library.templates(True):
-                if getattr(self,'reorder_template_id',None) and template.id!=self.reorder_template_id: continue
-                try:self.library._template_provenance(template);eligible.append(template)
-                except ValueError as error:excluded.append(template.name+'：'+str(error))
-            self.candidates = match(eligible, self.out_w.value(), self.out_h.value(), people, companies, logos, self.generation)
-            from .candidate_risk import bind_source,search_result
-            for candidate in self.candidates:bind_source(candidate,self.library)
-            self.last_layout_summary = dict(search_result(self.candidates,scope_complete=True,excluded=excluded),state="COMPLETED",total=len(self.candidates),calculated=len(self.candidates),failed=0)
-            self.candidate_list.clear()
-            for c in self.candidates:
-                self.candidate_list.addItem(f"{c.risk['label']}\n{c.template.name} · v{c.template.version}")
-            if not self.candidates:
-                self.issues.setText("目前沒有同矩形尺寸、同人物容量的已發布模板；請先建立或發布合適模板。可依已核准基準授權特製草稿；沒有核准設計規則時不猜造版面。")
-                self.export_button.setEnabled(False)
-                self.preview_button.setEnabled(False)
-                self.output_canvas.scene().clear()
-            else:
-                self.candidate_list.setCurrentRow(0)
-                self.statusBar().showMessage(f"已實際檢查 {len(self.candidates)} 個同尺寸同容量模板；排名為規則適配，不宣稱審美最優")
-            if excluded:self.issues.setText(self.issues.text()+'\n訓練來源失效／不可用：\n'+'\n'.join(excluded[:20]))
-        except Exception as e:
-            self.error(str(e))
+        if self.busy:self.statusBar().showMessage('已有背景工作；此次排版未開始');return
+        from .layout_session import LayoutSessionDialog
+        dialog=getattr(self,'foreground_layout_session',None)
+        if dialog is None:
+            dialog=LayoutSessionDialog(self);self.foreground_layout_session=dialog
+        dialog.show();dialog.raise_();dialog.start(auto_apply=True)
+        self.issues.setText('當次排版在單一背景worker執行；先顯示已核實的部分候選，未遍歷者不代表無解。')
 
     def refresh_candidate_views(self,row=None):
         if not hasattr(self,'qualified_candidates'):return

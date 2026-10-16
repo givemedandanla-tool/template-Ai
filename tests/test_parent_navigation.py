@@ -1,4 +1,5 @@
 from pathlib import Path
+from gui_wait import wait_layout
 import tempfile,threading,unittest
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication,QPushButton
@@ -29,7 +30,7 @@ class ParentNavigationTests(unittest.TestCase):
         good=demo_template();good.name='Qualified synthetic';bad=demo_template();bad.name='Narrow diagnostic';bad.slots[0].rect.w=20;self.w.library.publish(good);self.w.library.publish(bad)
         self.w.people.setRowCount(1)
         for col,value in enumerate(('Alex Example','Designer','123','a@example.test','','','','')):self.w.people.setItem(0,col,QTableWidgetItem(value))
-        self.w.tabs.setCurrentIndex(2);self.w.generate();APP.processEvents();self.assertEqual(self.w.qualified_candidates.count(),1);self.assertEqual(self.w.blocked_candidates.count(),1);self.assertTrue(self.w.export_button.isEnabled());self.assertTrue(self.w.candidates[0].valid)
+        self.w.tabs.setCurrentIndex(2);self.w.generate();wait_layout(self.w);APP.processEvents();self.assertEqual(self.w.qualified_candidates.count(),1);self.assertEqual(self.w.blocked_candidates.count(),1);self.assertTrue(self.w.export_button.isEnabled());self.assertTrue(self.w.candidates[0].valid)
         self.assertFalse(self.w.legacy_input_panel.isChecked());self.assertGreaterEqual(self.w.output_canvas.height(),240);self.assertFalse(self.w.property_fields.isVisible());self.assertTrue(self.w.output_properties.isVisible());self.assertIn('Qualified synthetic',self.w.output_properties.toPlainText())
         view=self.w.blocked_candidates;QTest.mouseClick(view.viewport(),Qt.LeftButton,pos=view.visualItemRect(view.item(0)).center());APP.processEvents();self.assertFalse(self.w.export_button.isEnabled());self.assertIn('禁止正式',self.w.input_state.text());self.assertEqual(len(self.w.library.templates(True)),2)
         view=self.w.qualified_candidates;QTest.mouseClick(view.viewport(),Qt.LeftButton,pos=view.visualItemRect(view.item(0)).center());APP.processEvents();self.assertTrue(self.w.export_button.isEnabled())

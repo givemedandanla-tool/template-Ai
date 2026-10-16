@@ -92,12 +92,19 @@ def layout_dependency(t, logos):
         try:
             v=Path(path).stat();stamps[path]=[v.st_dev,v.st_ino,v.st_size,v.st_mtime_ns,v.st_ctime_ns]
         except (OSError,ValueError):stamps[path]=None
-    fonts=[(f,list(QFontDatabase.styles(f))) for f in sorted({s.font for s in t.slots})]
+    from .font_catalog import face_fingerprint
+    fonts=[]
+    for family,style in sorted({(s.font,getattr(s,'font_style','')) for s in t.slots if s.kind!='logo'}):
+        font=QFont(family);font.setPixelSize(1000)
+        if style:font.setStyleName(style)
+        raw=QRawFont.fromFont(font)
+        fonts.append((family,style,face_fingerprint(raw),list(QFontDatabase.styles(family))))
     return hashlib.sha256(json.dumps([stamps,fonts],sort_keys=True).encode()).hexdigest()
 
 
-def generate(t: Template, people: list[dict], companies: list[dict], logos: dict[str, dict], generation: int = 0) -> Candidate:
+def generate(t: Template, people: list[dict], companies: list[dict], logos: dict[str, dict], generation: int = 0, progress=None) -> Candidate:
     from .diagnostic_schema import issue
+    if progress:progress("INPUT_SOURCE_PRECHECK")
     dependency = layout_dependency(t, logos)
     issues = template_errors(t)
     diagnostics = [issue("TEMPLATE_CHECK") for _ in issues]
@@ -113,6 +120,7 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
         add("模板尚未發布", "UNPUBLISHED")
     if len(people) != t.capacity:
         add(f"人物容量需精確匹配：模板 {t.capacity}，輸入 {len(people)}", "CAPACITY", capacity=t.capacity, people=len(people))
+    if progress:progress("LOSSLESS_OWNER_FIELD_MATCH")
     persons = {f"p{i+1}": p for i, p in enumerate(people)}
     company_map = {f"c{i+1}": p for i, p in enumerate(companies)}
     from .model import company_ports, input_company_ports
@@ -122,6 +130,7 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
     items = []
     used = set()
     for s in t.slots:
+        if progress:progress("SIZE_LOGO_FONT_CHECK" if s.kind=="logo" else "FIXED_FONT_GEOMETRY",s.id)
         label = KINDS[s.kind] + "／" + s.owner
         if s.owner.startswith("c"):
             person_indexes = [c for p in people for c in input_company_ports(p)]
@@ -189,6 +198,7 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
             add(owner + "：公司資料沒有可用模板映射，不可無聲略去", "UNBOUND_COMPANY")
     if layout_dependency(t, logos) != dependency:
         add("依賴檔案在排版期間異動，需重新產生", "DEPENDENCY_CHANGED")
+    if progress:progress("CANDIDATE_RISK_GATE")
     score = sum(item.scale for item in items if item.text) / max(1, sum(bool(item.text) for item in items))
     from .candidate_risk import pin_inputs
     candidate = Candidate(t, items, list(dict.fromkeys(issues)), score, generation,

@@ -1,3 +1,4 @@
+from gui_wait import wait_layout
 import copy
 import errno
 import io
@@ -31,7 +32,7 @@ class DiagnosticReportTests(unittest.TestCase):
         fixture.pump_until(lambda:d.raw is not None or d.status.text().startswith(('未產生','未完成')))
         self.assertFalse(d.running);return d
     def candidate(self):
-        self.w.generate();self.assertTrue(self.w.candidates);return self.w.candidates[0]
+        self.w.generate();wait_layout(self.w);self.assertTrue(self.w.candidates);return self.w.candidates[0]
     def write(self,snapshot,name='report.zip'):
         path=self.root/name;save_bundle(path,build_bundle(snapshot.data),lambda:snapshot.check(self.w));LocatorStore(self.w.library).remember(snapshot);return path
     def tampered(self,raw,transform):

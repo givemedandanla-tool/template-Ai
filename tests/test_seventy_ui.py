@@ -1,3 +1,4 @@
+from gui_wait import wait_layout
 import copy,json,threading,time
 from pathlib import Path
 import tempfile,unittest
@@ -65,13 +66,13 @@ class SeventyUiTests(unittest.TestCase):
         with patch('template_ai.layout_session.generate',side_effect=ValueError('font failure')):d.start();pump_until(lambda:not d.running)
         self.assertEqual(d.rows[0]['state'],'FAILED');self.assertIsNone(d.rows[0]['candidate']);self.assertTrue(d.start_button.isEnabled())
     def test_candidate_exact_local_geometry_isolation_fixed_font_template_readonly_stale(self):
-        self.w.generate();self.assertEqual(len(self.w.candidates),1);other=copy.deepcopy(self.w.candidates[0]);self.w.candidates.append(other);before=copy.deepcopy(other);dbbefore=self.w.library.templates()[0].to_dict();slot=self.w.candidates[0].template.slots[0];plan=plan_candidate(self.w,0,[slot.id],1,0);self.assertEqual(plan['unaffected_candidates'],1)
+        self.w.generate();wait_layout(self.w);self.assertEqual(len(self.w.candidates),1);other=copy.deepcopy(self.w.candidates[0]);self.w.candidates.append(other);before=copy.deepcopy(other);dbbefore=self.w.library.templates()[0].to_dict();slot=self.w.candidates[0].template.slots[0];plan=plan_candidate(self.w,0,[slot.id],1,0);self.assertEqual(plan['unaffected_candidates'],1)
         result=apply_candidate(self.w,plan,True);self.assertEqual(result.template.slots[0].rect.x,slot.rect.x+1);self.assertEqual(result.template.slots[0].size_pt,slot.size_pt);self.assertEqual(self.w.candidates[1],before);self.assertEqual(self.w.library.templates()[0].to_dict(),dbbefore)
         with self.assertRaises(ValueError):apply_candidate(self.w,plan,True)
         self.w.invalidate()
         with self.assertRaises(ValueError):plan_candidate(self.w,0,[slot.id],1,0)
     def test_actual_candidate_dialog_preview_cancel_then_apply(self):
-        self.w.generate();d=CandidateEditDialog(self.w);self.addCleanup(d.deleteLater);d.objects.item(0).setSelected(True);d.dx.setValue(1);d.preview();self.assertIsNotNone(d.plan);x=self.w.candidates[0].template.slots[0].rect.x
+        self.w.generate();wait_layout(self.w);d=CandidateEditDialog(self.w);self.addCleanup(d.deleteLater);d.objects.item(0).setSelected(True);d.dx.setValue(1);d.preview();self.assertIsNotNone(d.plan);x=self.w.candidates[0].template.slots[0].rect.x
         with patch('template_ai.candidate_edit.QMessageBox.question',return_value=QMessageBox.No):d.apply()
         self.assertEqual(self.w.candidates[0].template.slots[0].rect.x,x)
         with patch('template_ai.candidate_edit.QMessageBox.question',return_value=QMessageBox.Yes):d.apply()

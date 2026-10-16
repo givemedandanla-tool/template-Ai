@@ -1,3 +1,4 @@
+from gui_wait import wait_layout
 import copy
 from dataclasses import asdict
 from pathlib import Path
@@ -99,7 +100,7 @@ class CatalogTests(unittest.TestCase):
     def test_exact_reorder_changes_work_only_and_missing_logo_stays_blocked(self):
         store,c=self.customer();d=CustomerStyleDialog(self.w,c);self.extra.append(d);link=next(s for s in c['styles'] if s['template_id']==self.t2.id);select(d.catalog,[link['id']])
         with patch('template_ai.customer_catalog.QMessageBox.question',return_value=QMessageBox.Yes):d.catalog.pick()
-        self.assertTrue(d.adopted,d.catalog.status.text());self.assertEqual(self.w.reorder_template_id,self.t2.id);self.assertEqual(self.w.out_w.value(),100);self.assertEqual(store.get(c['id']),c);self.assertEqual(self.w.active_input_graph.data['people'],c['graph']['people']);self.w.generate();self.assertFalse(self.w.export_button.isEnabled());self.assertTrue(any('Logo' in reason for candidate in self.w.candidates for reason in candidate.issues))
+        self.assertTrue(d.adopted,d.catalog.status.text());self.assertEqual(self.w.reorder_template_id,self.t2.id);self.assertEqual(self.w.out_w.value(),100);self.assertEqual(store.get(c['id']),c);self.assertEqual(self.w.active_input_graph.data['people'],c['graph']['people']);self.w.generate();wait_layout(self.w);self.assertFalse(self.w.export_button.isEnabled());self.assertTrue(any('Logo' in reason for candidate in self.w.candidates for reason in candidate.issues))
     def test_master_changed_during_confirmation_cannot_replace_work(self):
         store,c=self.customer();d=CustomerStyleDialog(self.w,c);self.extra.append(d);entry=d.catalog.entries[0];select(d.catalog,[entry['id']])
         def concurrent(*args):
