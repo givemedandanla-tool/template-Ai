@@ -162,11 +162,16 @@ def template_errors(t: Template) -> list[str]:
             errors.append(f"人物 {n} 缺少姓名欄位")
     companies = {s.owner for s in t.slots if s.owner.startswith("c")}
     errors.extend(binding_errors(t.company_bindings, {f"p{i+1}" for i in range(t.capacity)}, companies))
-    for i, s in enumerate(t.slots):
-        for other in t.slots[i + 1:]:
-            if s.rect.intersects(other.rect):
-                errors.append(f"{KINDS.get(s.kind)}／{s.owner} 與 {KINDS.get(other.kind)}／{other.owner} 重疊")
+    for s,other in overlapping_pairs(t.slots):
+        errors.append(f"{KINDS.get(s.kind)}／{s.owner} 與 {KINDS.get(other.kind)}／{other.owner} 重疊")
     return errors
+
+
+def overlapping_pairs(slots):
+    """The shared original rectangle predicate, streamed without a second validator."""
+    for i,slot in enumerate(slots):
+        for other in slots[i+1:]:
+            if slot.rect.intersects(other.rect):yield slot,other
 
 
 def learn_from_labels(name: str, width: float, height: float, slots: list[Slot], source_id: str, artwork: Rect, bindings: dict[str, str] | None = None, source_work_id: str = "", source_work_revision: int = 0) -> Template:
