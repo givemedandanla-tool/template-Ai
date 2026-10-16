@@ -1,0 +1,20 @@
+This plugin does not support propagateSizeHints()
+======================================================================
+ERROR: test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected (test_automatic_training.AutomaticTrainingTests.test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 130, in test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected
+    done=self.run_job(job);self.assertEqual(done['items'][0]['work_scope'],[works[0]['id']])
+         ^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_automatic_training.py", line 39, in run_job
+    row=self.service.claim(job['id'],job['revision'],True);self.tokens.append(row['owner']['token'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/automatic_training.py", line 90, in claim
+    if row.get('operation') or (row.get('scope') or {}).get('operation'):
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+----------------------------------------------------------------------
+Ran 43 tests in 53.639s
+
+FAILED (errors=1)

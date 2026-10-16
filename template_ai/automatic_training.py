@@ -87,7 +87,7 @@ class AutomaticTraining:
         with self.store.transaction():
             row=self.get(identity)
             if row['revision']!=revision:raise ValueError('工作版本已更新')
-            if row.get('operation') or (row.get('scope') or {}).get('operation'):
+            if row.get('operation') or isinstance(row.get('scope'),dict) and row['scope'].get('operation'):
                 from .quality_repair_training import check
                 check(self,row)
             for worker in ('geometry-worker','automatic-worker'):
@@ -240,7 +240,7 @@ def run_automatic(root,identity,token,cancel=None,progress=None,admission=None):
     library=Library(root);service=AutomaticTraining(library)
     try:
         job=service.owned(identity,token)
-        if job.get('operation') or (job.get('scope') or {}).get('operation'):
+        if job.get('operation') or isinstance(job.get('scope'),dict) and job['scope'].get('operation'):
             from .quality_repair_training import run,check
             check(service,job)
             return run(service,job,token,cancel,progress,admission)

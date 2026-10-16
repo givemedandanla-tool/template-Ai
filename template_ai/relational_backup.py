@@ -414,6 +414,7 @@ def restore_bundle(archive,target,password,trusted=False,allow_partial=False,can
                     if kind in ('JOB','AUTO_JOB','EVAL_JOB','AUTO_UNIT','TRAINING_JOB','TRAINING_UNIT'):
                         if new.get('phase')=='RUNNING':new.update(phase='INTERRUPTED',owner=None,cancel_requested=False)
                         if kind=='EVAL_JOB':new.update(owner=None,owner_token=None,restore_state='EXPLICIT_RESUME_REQUIRED')
+                        if kind=='AUTO_JOB' and new.get('operation')=='SEMANTIC_REPAIR_CANDIDATE':new.update(owner=None,restore_state='EXPLICIT_RESUME_REQUIRED')
                         if new.get('state')=='RUNNING':new['state']='INTERRUPTED'
                         for item in new.get('items',[]):
                             if item.get('state')=='RUNNING':item['state']='INTERRUPTED'
