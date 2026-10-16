@@ -28,7 +28,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261016-REMAINING28-UI053-FORMAL004-STOP-WIP"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-COVERAGE.json",
@@ -567,7 +569,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-QUALITY-004",
+  "planned_evidence_run": "RUN-REMAINING28-QUALITY-005",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -657,7 +659,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "Knownfailures/coldworkflow/lifecycle fixed;27+11disjointtargettestsPASS; freeze940-test source004 for145claims/7registeredparents71originalclauses. Historic6of28 only.",
+  "current_work": "Formal004 stopped130 after common borrowedfixture cleanup AttributeError; exactsource unchanged/partialraw persisted. Correct helper compatibility, verify realAUTO source/model provenance in major recheck, thennewsource005. No newformalPASS;historic6/28.",
   "last_formal_failure": {
     "run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
     "source_commit": "233e9ea4edc8d8927e482c3f0d362a78bd2ced5d",
@@ -683,6 +685,12 @@
       "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-003/controlled-stop.json",
       "actual_exit_code": 130,
       "source_commit": "012c71724bd5b8e18a93afe8d098f40e03506153"
+    },
+    {
+      "folder": "docs/evidence/runs/RUN-REMAINING28-QUALITY-004",
+      "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-004/controlled-stop.json",
+      "actual_exit_code": 130,
+      "source_commit": "95d11c53942c7b6ef20d0d65d8724829de24b75e"
     }
   ]
 }
