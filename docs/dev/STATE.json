@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI057-NEXT",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI056-NATIVE-CAPTURE-WIP.receipt.json",
-  "last_confirmed_commit": "b85b744bc17f51fed53dd106746767e891bf7f9c",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI056-FULL8-PENDING.receipt.json",
+  "last_confirmed_commit": "23b7672b0d6d1510a4c9d94d7e6d095d2bd22716",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-UI056-FULL8-PENDING"
+    "CP-20261016-REMAINING28-UI057-EXACT9-PLAN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -642,7 +642,7 @@
     "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json",
     "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json"
   ],
-  "active_work_package_plan": "docs/dev/UI054_EXECUTION_PLAN.json",
+  "active_work_package_plan": "docs/dev/UI057_EXECUTION_PLAN.json",
   "formal_execution_watch": {
     "run_id": "RUN-REMAINING28-REPAIR-003",
     "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
@@ -668,7 +668,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "UI055 exact11 and UI056 exact8 fully implemented/targeted-tested/native-reviewed but both pending batch full formal.1044known/148pending; historical8of28 unchanged. UI05627combinedPASS+currentnative6PASS and7capture002screens0Qt inspected.",
+  "current_work": "UI057 exact9 design persisted after actual local code/reference review; tri-state gate separation, declared finite-scope failure and transient draft planned; app implementation not started. UI05511/UI0568 remain pending batch formal1044tests148claims, historical8/28.",
   "last_formal_failure": {
     "run": "RUN-REMAINING28-REPAIR-002",
     "status": "FAIL",
@@ -722,7 +722,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/UI055_IMPLEMENTATION_MAP.json",
-  "next_step": "Read UI057 exact original clauses/current code, persist execution plan then implement.18other target parents remain beyond UI055/UI056 pending; batch frozen formal before any completion count changes.",
+  "next_step": "Implement risk policy with actual diagnostic codes and render gate first, then native transient draft; persist checkpoints and integrate shared UI058 worker before batch frozen formal",
   "current_work_package": "UI057 risk-levelled safe draft/hard blockers",
   "checkpoint_cadence_note": "REPAIR002 failure triage exceeded ten minutes since last remote checkpoint; saving immediately, no strict cadence PASS claim.",
   "implementation_pending_original_parents": [

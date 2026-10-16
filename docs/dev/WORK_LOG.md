@@ -1217,3 +1217,7 @@ Actual debugger showed source and derivative SHA hashes agree; Inkscape output o
 ## UI056 exact8 registered pending formal; continue UI057
 
 Original8 verbatim/SHA/fullacceptance registered194supporting IDs;18newcase/1044catalog,148claims pending. Full parent not markedVERIFIED. Actual27combinedPASS and finalQt6PASS; capture0027screens0Qt all visually inspected. Historical count wording nowas-of, HLD exposure/consumption shown explicitly. Capture metrics172535808B/RSS,maxgap94.7646ms controlledfixture excluding sourceprep, not hardwarebenchmark. UI05511 andUI0568 await batch frozen full-source formal/captures/claims/actualexit0/GitHubGate; historical8of28 unchanged. NextUI057 and18otherunimplemented targets including it, no milestone stop.
+
+## UI057 exact9 before implementation
+
+Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/render final gate/custom Cassowary session. Existing boolean conflates source/font/approval unknown with hard failure. Plan tri-state conditions and explicitly bounded search evidence; no sample-count threshold, high confidence or accept-risk bypass. Actually fetched/read Kubernetes/apimachinery v0.33.4 types.go84953B/SHA1288e296b31cd87faad841a81a712cd7dbde4d72b877c39f136dad9373e5692f Condition True/False/Unknown and metadata; public design only, no service/install. Reuse installedkiwi solver and prior reviewed MLflow basis. Shared foreground low-load work will be completed with UI058 before UI057 full verification, avoiding duplicate schedulers. No new app code yet.
