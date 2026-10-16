@@ -32,6 +32,10 @@ class CanvasNamedCommandTests(unittest.TestCase):
     def test_canvas_ctrlz_and_redo_use_only_current_existing_work_stack(self):
         self.move();self.assertAlmostEqual(self.w.template.slots[0].rect.x,8.1);self.key(Qt.Key_Z,Qt.ControlModifier);self.assertEqual(self.w.template.slots[0].rect.x,8);self.assertEqual(len(self.w.redo_stack),1)
         self.key(Qt.Key_Y,Qt.ControlModifier);self.assertAlmostEqual(self.w.template.slots[0].rect.x,8.1);self.assertEqual(self.w.template.slots[0].size_pt,18);self.assertIsNone(self.w.pending_property_conflict)
+    def test_keyboard_transaction_receipt_has_exact_ids_content_versions_and_no_false_save_claim(self):
+        w=self.w;before=w.library.object_snapshot('TEMPLATE',self.draft.id);self.move();receipt=w.edit_canvas.last_command_receipt;self.assertEqual(receipt['action'],'MOVE');self.assertEqual(receipt['affected'],[dict(id=self.ids[0],owner='p1',kind='name')]);self.assertNotEqual(receipt['before_content_digest'],receipt['after_content_digest']);self.assertEqual(receipt['before_source_revision'],w.template_revision);self.assertEqual(receipt['after_source_revision'],w.template_revision);self.assertIn('不是安全落盤收據',receipt['scope'])
+        self.key(Qt.Key_Z,Qt.ControlModifier);self.assertEqual(w.edit_canvas.last_command_receipt['action'],'UNDO');self.assertEqual(w.edit_canvas.last_command_receipt['affected'],receipt['affected']);self.assertEqual(w.library.object_snapshot('TEMPLATE',self.draft.id),before)
+        old=copy.deepcopy(w.edit_canvas.last_command_receipt);w.coords[0].setValue(12);self.key(Qt.Key_Right);self.assertEqual(w.edit_canvas.last_command_receipt,old)
     def test_ctrlz_in_text_field_after_canvas_edit_never_consumes_work_history(self):
         self.move();w=self.w;self.focus(w.text_color);w.text_color.selectAll();QTest.keyClicks(w.text_color,'#abcdef');QTest.keyClick(w.text_color,Qt.Key_Z,Qt.ControlModifier)
         self.assertAlmostEqual(w.template.slots[0].rect.x,8.1);self.assertEqual(len(w.undo_stack),1);self.assertEqual(w.text_color.text(),'#111827')
@@ -84,3 +88,18 @@ class CanvasKeymapValidationTests(unittest.TestCase):
     def test_unknown_command_scope_or_nontext_value_rejected(self):
         for value in [dict(COMMAND_KEYS,EXPORT='F9'),dict(COMMAND_KEYS,UNDO=True),None]:
             with self.assertRaises(ValueError):validate_commands(value)
+
+
+import test_property_context as result_fixture
+
+
+class CanvasBlockedOutputTests(unittest.TestCase):
+    setUp=result_fixture.CandidatePropertyGateTests.setUp
+    close_window=result_fixture.CandidatePropertyGateTests.close_window
+    ready=result_fixture.CandidatePropertyGateTests.ready
+    another=result_fixture.CandidatePropertyGateTests.another
+    focus=fixture.CanvasCommandFocusTests.focus
+    def test_actual_blocked_output_keys_never_bypass_formal_gate_or_change_candidate(self):
+        self.ready();bad=self.another(width=.1);w=self.w;w.candidate_list.setCurrentRow(1);before=bad.template.to_dict();risk=bad.risk['digest'];self.focus(w.output_canvas);changes=w.library.db.total_changes
+        for key,modifier in [(Qt.Key_Z,Qt.ControlModifier),(Qt.Key_Y,Qt.ControlModifier),(Qt.Key_Delete,Qt.NoModifier),(Qt.Key_P,Qt.ControlModifier),(Qt.Key_F9,Qt.NoModifier)]:QTest.keyClick(w.output_canvas,key,modifier)
+        self.assertFalse(w.export_button.isEnabled());self.assertFalse(bad.formal_eligible);self.assertEqual(bad.template.to_dict(),before);self.assertEqual(bad.risk['digest'],risk);self.assertEqual(w.library.db.total_changes,changes)

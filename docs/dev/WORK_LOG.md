@@ -1267,3 +1267,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 - 2026-10-16 UI064-B original scoped history/delete routes and normalized finite keymap in existing settings/preferences.00915PASS/01066PASS/0125PASS;27newtests/catalog1286.008 controlled143 fixture scheduling;011 oldnofocus fixture error corrected; evidence preserved. C native/full30 pending, no parent promotion.
 
 - 2026-10-16 UI064 C:0141actualwheelFAIL→01645PASS;015importerror0tests preserved.028newtests;01814actualnativePASS/0Qt/all14 inspected+hash, runnerhook. Exact30 mapping/remaining direct actors pending; no parent promotion.
+
+- 2026-10-16 UI064 full original30 implemented/mapped pendingverification.33newtests/catalog1292;02032PASS/02133PASS;02311modules134PASS actualexit0;02215actualnativePASS/0Qt/all15 individually reviewed+hash. Phone-table Chinese input, actualSpace mouse pan, pinnedLogo, blockedoutput shortcuts direct actors; one last-action receipt uses original transactions, not new history engine/save proof. ContinueUI065; no parent promotion.

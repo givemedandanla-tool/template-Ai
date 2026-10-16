@@ -1620,7 +1620,11 @@ class MainWindow(QMainWindow):
             from .object_tools import propose
             plan=propose(self.template.to_dict(),'TEMPLATE',request)
             if self.checkpoint() is False:return
-            self.template=Template.from_dict(plan['after']);self.refresh_editor();self.editor_selection(request['ids'])
+            from .customers import digest
+            before_pin=digest(self.template.to_dict())
+            self.template=Template.from_dict(plan['after'])
+            self.edit_canvas.last_command_receipt=dict(action=request['operation'],description='目前草稿框位／屬性變更',work_id=self.template.id,template_version=self.template.version,before_source_revision=self.template_revision,after_source_revision=self.template_revision,before_content_digest=before_pin,after_content_digest=digest(self.template.to_dict()),affected=[dict(id=row['id'],owner=row['owner'],kind=row['kind']) for row in plan['changes']],scope='目前未發布草稿；內容指紋不是安全落盤收據')
+            self.refresh_editor();self.editor_selection(request['ids'])
             self.template_info.setText('已套用目前未發布草稿；'+'；'.join(plan['warnings']) if plan['warnings'] else '已套用目前未發布草稿；幾何與語意檢查未發現問題，輸出仍需實際資料驗證。')
         except (ValueError,TypeError,KeyError) as error:self.template_info.setText('未套用：'+str(error));self.refresh_editor()
 
@@ -1663,7 +1667,10 @@ class MainWindow(QMainWindow):
             if QMessageBox.question(self,'核對目前工作'+command,'僅目前標記／草稿，不回滾已發布模板或正式客戶主檔。\n實際影響：\n'+scope,QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
         if self.canvas_content_guard(canvas,command) or work_pin()!=pin or selection()!=selected or not stack or stack[-1]!=target:
             canvas.command_status.emit('核對期間工作／選取／版本已變更；未套用過期歷史。');return
+        source_revision=self.template_revision if self.tabs.currentIndex()==1 else self.work['revision']
         (self.undo if command=='UNDO' else self.redo)()
+        if self.current_slots()!=target:canvas.command_status.emit('既有歷史未完成；請核對目前工作與保護條件。');return
+        canvas.last_command_receipt=dict(action=command,description='目前標記／草稿的既有歷史'+command,work_id=self.template.id if self.tabs.currentIndex()==1 else self.work['id'],before_source_revision=source_revision,after_source_revision=self.template_revision if self.tabs.currentIndex()==1 else self.work['revision'],before_content_digest=pin,after_content_digest=work_pin(),affected=[dict(id=k,owner=(a.get(k) or b[k]).owner,kind=(a.get(k) or b[k]).kind) for k in ids],scope='目前工作；不表示正式主檔或已發布模板回滾，也不是安全落盤收據')
         canvas.command_status.emit('已處理目前標記／草稿 '+command+'；影響 '+str(len(ids))+' 件，正式保存與輸出另行核對。')
 
     def import_background(self):

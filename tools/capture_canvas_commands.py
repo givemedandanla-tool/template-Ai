@@ -37,6 +37,16 @@ def capture(folder):
         modal(cancel_undo,lambda:QTest.keyClick(w.edit_canvas,Qt.Key_Z,Qt.ControlModifier));assert len(w.undo_stack)==1
         def help_view(dialog):
             assert isinstance(dialog,QDialog) and dialog.windowTitle()=='畫布快捷鍵與目前模式';shot(dialog,'07-actual-f1-overview-and-mouse-routes')
+            from PySide6.QtWidgets import QPushButton
+            button=next(b for b in dialog.findChildren(QPushButton) if '最近操作版本' in b.text())
+            def receipt_view():
+                box=QApplication.activeModalWidget()
+                try:
+                    assert isinstance(box,QMessageBox) and box.windowTitle()=='最近操作版本與精確範圍';assert case.ids[0] in box.detailedText();shot(box,'15-actual-operation-version-scope-receipt')
+                except BaseException as error:errors.append(str(error))
+                finally:
+                    if box:box.accept()
+            QTimer.singleShot(0,receipt_view);button.click()
         modal(help_view,lambda:QTest.keyClick(w.edit_canvas,Qt.Key_F1))
         w.editor_selection([case.ids[0]]);case.key(Qt.Key_Z,Qt.ControlModifier);assert w.template.slots[0].rect.x==8
         before=w.library.object_snapshot('TEMPLATE',case.draft.id)

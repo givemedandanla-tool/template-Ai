@@ -30,6 +30,14 @@ class CanvasCommandFocusTests(unittest.TestCase):
         APP.sendEvent(w.edit_canvas,QInputMethodEvent('',[]));QTest.keyClick(w.edit_canvas,Qt.Key_Right);self.assertAlmostEqual(w.template.slots[0].rect.x,8.1)
     def test_actual_text_preedit_leaves_selected_geometry_untouched(self):
         w=self.w;before=w.template.to_dict();self.focus(w.text_color);APP.sendEvent(w.text_color,QInputMethodEvent('中文',[]));QTest.keyClick(w.text_color,Qt.Key_Left);APP.sendEvent(w.text_color,QInputMethodEvent('',[]));self.assertEqual(w.template.to_dict(),before)
+    def test_phone_table_real_editor_chinese_commit_and_cursor_do_not_move_old_selected_frame(self):
+        from PySide6.QtWidgets import QLineEdit
+        w=self.w;before=w.template.to_dict();w.tabs.setCurrentIndex(2);w.legacy_input_panel.setChecked(True);w.output_page_scroll.ensureWidgetVisible(w.people);APP.processEvents();self.focus(w.people);w.people.setCurrentCell(0,2);w.people.editItem(w.people.item(0,2));APP.processEvents();editor=APP.focusWidget();self.assertIsInstance(editor,QLineEdit)
+        event=QInputMethodEvent();event.setCommitString('中文電話');APP.sendEvent(editor,event);self.assertIn('中文',editor.text());cursor=editor.cursorPosition();QTest.keyClick(editor,Qt.Key_Left);self.assertEqual(editor.cursorPosition(),cursor-1);self.assertEqual(w.template.to_dict(),before);self.assertFalse(w.undo_stack)
+    def test_pinned_text_then_logo_keyboard_nudge_keeps_whole_logo_attributes(self):
+        from template_ai.model import Slot,Rect
+        w=self.w;w.property_pin_checks['text'].setChecked(True);logo=Slot('logo','c1',Rect(65,40,15,10));w.template.slots.append(logo);w.refresh_editor();w.editor_selection([logo.id]);APP.processEvents();w.right_context.sync();before=copy.deepcopy(w.template.slots[-1]);self.assertFalse(w.font.isEnabled());self.focus(w.edit_canvas);QTest.keyClick(w.edit_canvas,Qt.Key_Right);after=w.template.slots[-1];self.assertAlmostEqual(after.rect.x,before.rect.x+.1)
+        expected=copy.deepcopy(before);expected.rect.x=after.rect.x;self.assertEqual(after,expected)
     def test_pending_property_prevents_canvas_nudge_without_losing_input(self):
         w=self.w;w.coords[0].setValue(12);self.focus(w.edit_canvas);QTest.keyClick(w.edit_canvas,Qt.Key_Right);self.assertEqual(w.template.slots[0].rect.x,8);self.assertEqual(w.coords[0].value(),12);self.assertIn('待套用',w.statusBar().currentMessage());self.assertFalse(w.undo_stack)
     def test_locked_or_stale_source_refuses_keyboard_geometry_without_transactions(self):
@@ -41,6 +49,8 @@ class CanvasCommandFocusTests(unittest.TestCase):
     def test_space_focus_loss_restores_exact_tool_and_selection_without_model_change(self):
         w=self.w;before=w.template.to_dict();self.focus(w.edit_canvas);QTest.keyPress(w.edit_canvas,Qt.Key_Space);self.assertEqual(w.edit_canvas.mode,'pan');self.focus(w.text_color)
         self.assertEqual(w.edit_canvas.mode,'edit');self.assertEqual(w.edit_canvas.selection_intent,{self.ids[0]});self.assertIsNone(w.edit_canvas.pan_restore);self.assertEqual(w.template.to_dict(),before)
+    def test_actual_space_mouse_drag_changes_viewport_only(self):
+        w=self.w;before=w.template.to_dict();canvas=w.edit_canvas;self.focus(canvas);QTest.keyPress(canvas,Qt.Key_Space);centre=canvas.mapToScene(canvas.viewport().rect().center());start=canvas.viewport().rect().center();QTest.mousePress(canvas.viewport(),Qt.LeftButton,pos=start);QTest.mouseMove(canvas.viewport(),start+QPoint(40,30));QTest.mouseRelease(canvas.viewport(),Qt.LeftButton,pos=start+QPoint(40,30));APP.processEvents();self.assertGreater((canvas.mapToScene(canvas.viewport().rect().center())-centre).manhattanLength(),.1);QTest.keyRelease(canvas,Qt.Key_Space);self.assertEqual(w.template.to_dict(),before);self.assertFalse(w.undo_stack)
     def test_ctrl_space_is_reserved_for_ime_and_never_starts_pan(self):
         w=self.w;self.focus(w.edit_canvas);QTest.keyClick(w.edit_canvas,Qt.Key_Space,Qt.ControlModifier);self.assertIsNone(w.edit_canvas.pan_restore);self.assertEqual(w.edit_canvas.mode,'edit')
     def test_wheel_without_canvas_focus_is_ignored_and_focused_zoom_is_view_only(self):

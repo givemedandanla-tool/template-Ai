@@ -1,0 +1,267 @@
+{
+  "parent": "UI-064",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "normative_clause_count": 30,
+  "clauses": [
+    {
+      "id": "UI-064-CLAUSE-1",
+      "expected": "**成熟習慣優先，快捷鍵應可探索**：初始預設參考 Windows 與常見設計軟體之熟悉的鍵盤／滑鼠操作習慣，提供滑鼠可點選的等價入口、功能選單提示、快捷鍵總覽及目前模式說明。**尚不鎖定完整按鍵對照、修飾鍵組合與移動步距**；須於未來技術／可用性研究核對作業系統保留鍵、輸入法、輔助工具與衝突後決定，不假稱已完成實機驗證。",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_explicit_remap_persists_in_existing_preferences_and_old_key_no_longer_undoes",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_focused_canvas_nudges_only_selected_mm_and_keeps_fixed_font"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-2",
+      "expected": "**先判斷焦點，再判斷模式，最後驗證目標**：熱鍵派送必須依「目前取得輸入焦點的控制項 → 明確的操作模式 → 本次選取的候選／尺寸／物件 ID 與可編輯權限 → 指令可用性」逐級決定。處於文字輸入框、數字欄位、搜尋欄、下拉選單或輸入法中文組字期間時，方向鍵、Backspace、Delete、Enter、Esc 等應先遵守該控制項預期的輸入行為，**不得因舊畫布仍有選取便暗中移動、刪除或修改物件**。",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_phone_table_real_editor_chinese_commit_and_cursor_do_not_move_old_selected_frame",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_numeric_and_combo_focus_never_dispatch_move_to_old_canvas_selection",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_ime_preedit_on_canvas_blocks_arrow_until_composition_ends"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-3",
+      "expected": "**操作模式可見、指令作用範圍明確**：清楚區分「文字輸入」、「實體物件編輯／選取」、「畫布視角平移／縮放」、「AI 辨識標記框／校正」、「批次對齊或屬性操作」等既有模式；工具列或狀態區呈現正在使用的工具、選取對象、候選與實體尺寸。若目前焦點／模式／物件已不適用，快捷操作顯示簡短原因或保持安全無動作；不能使用已過期選取 ID 或錯誤人物／公司歸屬。",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_locked_or_stale_source_refuses_keyboard_geometry_without_transactions",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_pending_property_prevents_canvas_nudge_without_losing_input"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-4",
+      "expected": "**鍵盤與滑鼠的語意不得偷換**：在畫布可進行移動、毫米級鍵盤微調、拖曳、吸附與縮放；視角平移或視窗倍率調整**僅改 viewport**，不能影響 X／Y、文字比例、群組、完整複合 Logo、字級、裁切與安全區。AI 標記框拖拉只改受控標記草稿，不改真實 Illustrator 物件；所有模式切換應顯示當下操作對象。滾輪／修飾鍵的預設優先權應避免捲動面板、編輯數值與畫布倍率三者衝突；未釐清焦點時不進行不可預期的變更。",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_space_mouse_drag_changes_viewport_only",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_wheel_without_canvas_focus_is_ignored_and_focused_zoom_is_view_only",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_unfocused_property_wheel_never_changes_numeric_draft_by_hover",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_escape_cancels_only_unsubmitted_marking_rectangle"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-5",
+      "expected": "**適度自訂與衝突診斷**：允許使用者對安全且適合的常用指令自訂快捷鍵；系統須檢查同一作用域／不同模式的歧義、Windows 保留按鍵、文字編輯常用鍵、輸入法及必要無障礙路徑。衝突時顯示「新設定／既有用途／生效範圍」與可執行替代方案（取消、更換按鍵、還原預設），不得默默覆蓋重要功能或讓同一按鍵在不明模式下同時觸發兩種編輯。釘選右側工具（UI-063）不自動改變快捷鍵的目標或優先級。",
+      "tests": [
+        "test_canvas_named_commands.CanvasKeymapValidationTests.test_duplicate_normalized_keys_rejected",
+        "test_canvas_named_commands.CanvasKeymapValidationTests.test_reserved_ime_system_clipboard_navigation_and_chords_rejected",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_invalid_keymap_rejects_whole_settings_save_before_any_preference_write",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_explicit_remap_persists_in_existing_preferences_and_old_key_no_longer_undoes"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-6",
+      "expected": "**風險分級防誤觸**：日常可回復的單物件檢視與編輯可直接操作、提供即時提示，不必每按一次方向鍵都彈窗；刪除含多人／公司共享關係的物件、批次刪改、解鎖核心受保護框位、套用到其他候選或物理尺寸等高風險行為，必須顯示**實際目標、影響範圍、相關鎖定／歸屬、預覽與必要確認**，且只能走既有合法授權程序。不同風險等級依可逆性與權限實際判斷，不能用「快捷操作」繞過 UI-010、034～036、061 的保護與發布審核。",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_focused_canvas_nudges_only_selected_mm_and_keeps_fixed_font",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_delete_opens_actual_exact_scope_preview_and_cancel_writes_nothing",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_cross_person_delete_preview_requires_existing_explicit_scope_permission",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_stale_or_locked_history_is_not_popped_or_forced_into_current_model"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-7",
+      "expected": "**現有 Undo／Redo 的作用域清楚**：沿用既有內容編輯與標記的 Undo／Redo 語意，按鍵需作用於**目前有焦點的文字編輯控制項**或**目前明確選中的可回復工作交易**；不能因聚焦切換，撤銷到另一名人物、另一張候選、另一尺寸的未知操作。對物件移動、批次對齊等應記錄可理解的動作描述、修改前後版本及精確受影響清單。視角縮放／平移不可混同為內容變更，也不可讓一次 Undo 被誤解為正式客戶主檔或已發布模板回滾。",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_canvas_ctrlz_and_redo_use_only_current_existing_work_stack",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_ctrlz_in_text_field_after_canvas_edit_never_consumes_work_history",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_undo_of_another_selection_requires_actual_scope_confirmation_and_cancel_keeps_history",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_keyboard_transaction_receipt_has_exact_ids_content_versions_and_no_false_save_claim"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-8",
+      "expected": "**版控柵欄與部分可撤銷性**：若動作後輸入資料、候選、人工編輯版本、模板 `style_version_id`、來源或 Logo 已改變，Undo／Redo 必須先核實依賴與可逆範圍；版本衝突可提供差異對照／人工解決，不得強行還原已被其他新動作合法更新的物件。既有 UI-059 的晚到 AI 防護和 UI-061 的跨候選同步／局部回復仍有效；未落盤內容也不得被描述為已安全保存。",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_work_changed_inside_real_undo_confirmation_is_preserved_and_old_history_not_applied",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_stale_or_locked_history_is_not_popped_or_forced_into_current_model",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_undo_during_active_move_rejects_old_result_and_preserves_history"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-9",
+      "expected": "**失敗與中斷行為清楚**：按 Esc／取消時應有明確模式語意，例如關閉臨時選單或退出尚未提交的操作，**不能不經確認取消已合法保存的工作、整筆刪除、全域放棄候選或繞過印前 Gate**；長按、重複觸發或高負載狀況須避免重覆提交交易，必要時顯示正在處理與拒絕重入。錯誤、選取失效或暫時無法操作時，保留人工編輯、清楚告知原因。",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_auto_repeat_and_reentry_cannot_consume_two_history_transactions",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_escape_cancels_only_unsubmitted_marking_rectangle",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_space_focus_loss_restores_exact_tool_and_selection_without_model_change"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-10",
+      "expected": "**低配與無障礙可用性**：快捷鍵只是操作加速選項，不可要求所有人必須記住；所有關鍵功能有滑鼠／明確 GUI 操作路徑，焦點、工具模式及風險提示應可辨識。輸入法組字和文字游標移動不應引起畫布卡頓；遵循 UI-051／058 的資源限制，效能／實際鍵位由未來 Windows 裝置測試確認。",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_text_preedit_leaves_selected_geometry_untouched",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_resource_wait_cancel_never_starts_calculation_or_claims_saved_result"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-11",
+      "expected": "**UI-012、034、036**：物件移動、毫米座標、三向選取、多選對齊、鎖定、已發布模板與原始 .ai 的保護不變。",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_locked_or_stale_source_refuses_keyboard_geometry_without_transactions",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_cross_person_delete_preview_requires_existing_explicit_scope_permission"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-12",
+      "expected": "**UI-037**：縮放／平移只是視角，不是修改真實物件幾何，螢幕 100% 也不自動代表實體毫米 1:1。",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_space_mouse_drag_changes_viewport_only",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-13",
+      "expected": "**UI-039**：在原稿上標記 AI 辨識候選框，不等於編輯 Illustrator 真實物件；不同模式快捷操作不得混淆。",
+      "tests": [
+        "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_annotation_actual_before_after_images_and_bidirectional_selection_never_confirm"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-14",
+      "expected": "**UI-013、016～020、023、027**：字級固定、人物 ROOT／公司／Logo 強歸屬、各尺寸 Logo 合法來源、印前硬性 Gate 不能因快捷鍵／Undo 被旁路。",
+      "tests": [
+        "test_canvas_named_commands.CanvasBlockedOutputTests.test_actual_blocked_output_keys_never_bypass_formal_gate_or_change_candidate",
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_pinned_text_then_logo_keyboard_nudge_keeps_whole_logo_attributes"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-15",
+      "expected": "**UI-059～063**：依賴增量重算與編輯版本柵欄、跨尺寸同步與局部回復、跨模式安全返回、右側固定工具及工作狀態顯示均維持一致。",
+      "tests": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_undo_during_active_move_rejects_old_result_and_preserves_history",
+        "test_property_form_versions.PropertyFormVersionTests.test_old_mode_pending_values_are_retained_as_conflict_without_retargeting_new_source"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-16",
+      "expected": "**UI-045／048／055**：快捷鍵不可靜默更新正式客戶主檔、改變完整權限核准排序或將人工操作自動當作訓練真值；UI-056 D 補樣功能仍是後期低優先級候選。",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_delete_opens_actual_exact_scope_preview_and_cancel_writes_nothing",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_explicit_remap_persists_in_existing_preferences_and_old_key_no_longer_undoes"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-17",
+      "expected": "**Anti-proliferation**：只能延伸既有 GUI command／Undo／工作狀態與資料層，不另外新增平行快捷鍵系統、第二個撤銷引擎或永久操作歷史資料庫。",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_keyboard_transaction_receipt_has_exact_ids_content_versions_and_no_false_save_claim",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_explicit_remap_persists_in_existing_preferences_and_old_key_no_longer_undoes"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-18",
+      "expected": "| 在電話輸入框輸入中文、方向鍵移動游標 | 僅影響文字游標／中文輸入法；畫布上的電話框位置不變 |",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_phone_table_real_editor_chinese_commit_and_cursor_do_not_move_old_selected_frame"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-19",
+      "expected": "| 選取可編輯姓名框，聚焦畫布後用鍵盤微調 | 只有合法選取物件按明確毫米步距移動，必要相鄰／安全區重驗；固定字級不變 |",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_focused_canvas_nudges_only_selected_mm_and_keeps_fixed_font"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-20",
+      "expected": "| 正在平移視角時滑鼠拖曳 | 只移 viewport；原稿物件、AI 標記、字型與真實座標不被改動 |",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_actual_space_mouse_drag_changes_viewport_only"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-21",
+      "expected": "| 在 AI 標記模式拖曳辨識框 | 僅更改標記草稿；不移動 Illustrator 原稿內真實文字或複合 Logo |",
+      "tests": [
+        "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-22",
+      "expected": "| 選取鎖定核心物件後按 Delete／方向鍵 | 阻擋非法刪除／位移，明示鎖定理由，不自動解鎖 |",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_locked_or_stale_source_refuses_keyboard_geometry_without_transactions",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_stale_or_locked_history_is_not_popped_or_forced_into_current_model"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-23",
+      "expected": "| 快捷鍵與 Windows／輸入法／同作用域命令衝突 | 自訂設定被拒絕或需明確重新指派，不會偷偷讓兩個行為同時生效 |",
+      "tests": [
+        "test_canvas_named_commands.CanvasKeymapValidationTests.test_duplicate_normalized_keys_rejected",
+        "test_canvas_named_commands.CanvasKeymapValidationTests.test_reserved_ime_system_clipboard_navigation_and_chords_rejected",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_invalid_keymap_rejects_whole_settings_save_before_any_preference_write"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-24",
+      "expected": "| 釘選文字工具後切換選取 Logo | 快捷鍵仍依現行焦點／選取物件合法性判斷，不修改不適用的 Logo |",
+      "tests": [
+        "test_canvas_command_focus.CanvasCommandFocusTests.test_pinned_text_then_logo_keyboard_nudge_keeps_whole_logo_attributes"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-25",
+      "expected": "| 對跨人物的多選執行刪改 | 顯示受影響名單、不可處理項及風險；未經核准不修改 |",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_cross_person_delete_preview_requires_existing_explicit_scope_permission",
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_undo_of_another_selection_requires_actual_scope_confirmation_and_cancel_keeps_history"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-26",
+      "expected": "| 按 Ctrl+Z 且目前正在編輯某文字欄 | 只撤銷該欄文字輸入中對應動作，而不是跨候選移動舊版物件 |",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_ctrlz_in_text_field_after_canvas_edit_never_consumes_work_history"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-27",
+      "expected": "| 舊運算結果晚到、使用者重做或撤銷先前修改 | 版本柵欄擋下過時交易，保留目前已確認的人工變更 |",
+      "tests": [
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_undo_during_active_move_rejects_old_result_and_preserves_history",
+        "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_new_manual_review_during_worker_is_not_erased_by_late_result"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-28",
+      "expected": "| 在印前阻擋狀態按快捷鍵試圖跳過驗證 | 仍維持正式輸出禁止狀態；只提供合法修正入口 |",
+      "tests": [
+        "test_canvas_named_commands.CanvasBlockedOutputTests.test_actual_blocked_output_keys_never_bypass_formal_gate_or_change_candidate"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-29",
+      "expected": "具體每個快捷鍵組合、單次／加速微調毫米步距、不同滑鼠及觸控板手勢、輸入法相容清單、可自訂範圍、確認風險門檻需未來與 Windows／設計軟體成熟模式比較、真機測試，再依法確定；本次不擅自鎖死。",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_explicit_remap_persists_in_existing_preferences_and_old_key_no_longer_undoes",
+        "test_canvas_named_commands.CanvasKeymapValidationTests.test_reserved_ime_system_clipboard_navigation_and_chords_rejected"
+      ]
+    },
+    {
+      "id": "UI-064-CLAUSE-30",
+      "expected": "按鍵方案可作 GUI 研究候選，尚非技術選型；不將未驗證的鍵位／效能承諾為已實作功能。",
+      "tests": [
+        "test_canvas_named_commands.CanvasNamedCommandTests.test_explicit_remap_persists_in_existing_preferences_and_old_key_no_longer_undoes"
+      ]
+    }
+  ],
+  "native_capture": "tools/capture_canvas_commands.py",
+  "architecture_audit": [
+    "Native Qt Canvas/ObjectCanvas keyPressEvent/inputMethodEvent/focus are the dispatch authority; no applicationwide QShortcut registry or second undo engine",
+    "Existing Main snapshot history and ObjectTools durable preview/confirm/history remain authoritative; one transient last-command view receipt contains exact IDs/source revisions/content digests, has no undo authority and is not durable-save proof",
+    "Only existing preferences gains bounded keymap value; no new schema/work/customer/action-history DB, worker/model/corpus loading",
+    "Keyboard Delete opens original exact preview, never applies/publishes; source customer-master/Illustrator/training/permissions paths are not added",
+    "Unconfigured child canvas content shortcuts refuse with current-window mouse path reason; they never route another work history"
+  ],
+  "limits": [
+    "Controlled authored Linux Qt input/preedit events do not certify any Windows IME/OS/device performance or physical keyboard/touchpad matrix",
+    "Finite configurable keys/mm are provisional research profile, not locked final hardware-approved scheme",
+    "No private Illustrator/native corpus qualification; existing authored source immutability tests only",
+    "Target/native PASS does not replace immutable current-source full regression and ordinary GitHub evidence publication Gate"
+  ]
+}

@@ -1,7 +1,7 @@
 """View-only millimetre navigation; nominal DPI is explicitly uncalibrated."""
-import math
+import math,json
 from PySide6.QtCore import Qt,QRectF,QObject,QEvent
-from PySide6.QtWidgets import QWidget,QHBoxLayout,QPushButton,QLabel,QDoubleSpinBox,QSlider,QApplication,QGraphicsItem,QDialog,QVBoxLayout,QDialogButtonBox,QAbstractSpinBox,QComboBox
+from PySide6.QtWidgets import QWidget,QHBoxLayout,QPushButton,QLabel,QDoubleSpinBox,QSlider,QApplication,QGraphicsItem,QDialog,QVBoxLayout,QDialogButtonBox,QAbstractSpinBox,QComboBox,QMessageBox
 
 
 class FocusWheelGuard(QObject):
@@ -43,6 +43,12 @@ def dispatch_canvas_command(canvas,command):
     finally:canvas._command_inflight=False
 
 
+def show_canvas_receipt(canvas):
+    receipt=getattr(canvas,'last_command_receipt',None)
+    if not receipt:return
+    box=QMessageBox(canvas.window());box.setWindowTitle('最近操作版本與精確範圍');box.setTextFormat(Qt.PlainText);box.setText(receipt['description']+'\n來源版本 '+str(receipt['before_source_revision'])+' → '+str(receipt['after_source_revision'])+'\n內容指紋 '+receipt['before_content_digest'][:16]+' → '+receipt['after_content_digest'][:16]+'\n實際影響 '+str(len(receipt['affected']))+' 件；展開詳情核對確切 ID／歸屬。\n'+receipt['scope']);box.setDetailedText(json.dumps(receipt,ensure_ascii=False,indent=2));box.exec()
+
+
 def show_canvas_help(canvas):
     dialog=QDialog(canvas.window());dialog.setWindowTitle('畫布快捷鍵與目前模式');layout=QVBoxLayout(dialog)
     ids=sorted(getattr(canvas,'selection_intent',set()))
@@ -54,6 +60,8 @@ def show_canvas_help(canvas):
             button.clicked.connect(lambda checked=False,x=dx,y=dy:(dialog.accept(),canvas.request_nudge(x,y)))
     keys=QLabel('目前畫布按鍵（可在共用畫布設定變更）：\n'+'\n'.join(name+'：'+(key or '未配置') for name,key in canvas.command_bindings.items())+'\n復原／重做沿用目前工作的既有歷史；刪除先開差異預覽，須明確核對後才套用。');keys.setWordWrap(True);keys.setTextFormat(Qt.PlainText);layout.addWidget(keys)
     if not canvas.has_content_commands:keys.setText(keys.text()+'\n此畫布的內容操作使用目前視窗既有明確按鈕；不派送其他工作歷史。')
+    if getattr(canvas,'last_command_receipt',None):
+        receipt=QPushButton('最近操作版本／精確範圍（唯讀）');receipt.clicked.connect(lambda:show_canvas_receipt(canvas));layout.addWidget(receipt)
     if not canvas.readonly and canvas.has_content_commands:
         row=QHBoxLayout();layout.addLayout(row)
         for command,label in [('UNDO','核對目前工作復原'),('REDO','核對目前工作重做'),('DELETE','預覽所選物件刪除')]:
