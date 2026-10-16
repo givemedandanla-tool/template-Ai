@@ -212,7 +212,7 @@ class FontCenterDialog(QDialog):
         reference=dict(self.source_reference);asset=row.get('asset') or {};face=asset.get('font_evidence',{});candidate={**asset,'family':face.get('family') or next(iter(row['families']),''),'postscript_name':face.get('postscript_name'),'unique_name':face.get('unique_name')};generation=self.analysis_generation
         def loaded(report):
             if generation!=self.analysis_generation:self.identity_label.setText('核對期間資料已變更，未採用舊身分結果。');return
-            self.identity_report=report;self.identity_label.setText({'PROVEN_SAME_BYTES':'已核對同一檔案與字面；原稿字型關聯及原生可編輯性仍待證據。','POSSIBLE_ALIAS':'僅名稱可能別名，未證實原稿字型。','UNIDENTIFIED':'字型身分未識別；來源不足或已變更，未核准替換。'}[report['state']]+report.get('reason',''))
+            self.identity_report=report;self.identity_label.setText({'PROVEN_SAME_EXTRACTED_FACE':'已核對來源集合之同一字面複本；原稿關聯及原生可編輯性仍待證據。','PROVEN_SAME_BYTES':'已核對同一檔案與字面；原稿字型關聯及原生可編輯性仍待證據。','POSSIBLE_ALIAS':'僅名稱可能別名，未證實原稿字型。','UNIDENTIFIED':'字型身分未識別；來源不足或已變更，未核准替換。'}[report['state']]+report.get('reason',''))
         self.start('核對目前來源／選取檔案與確切字面',lambda:identity_match(reference,candidate),loaded)
 
     def show_analysis(self,result):
@@ -235,8 +235,8 @@ class FontCenterDialog(QDialog):
         if not ok:return
         basis,ok=QInputDialog.getText(self,'字型輸出授權','有權印製／轉出的授權依據；不接受以外觀或可載入當授權')
         if not ok:return
-        pdf=QMessageBox.question(self,'PDF嵌入用途','授權是否也明確允許PDF嵌入？\nOpenType技術限制仍會獨立檢查；選否仍可核對點陣輸出。')==QMessageBox.Yes
-        if QMessageBox.question(self,'確認授權範圍','只更新所選字面記錄；既有模板不會被自動改寫，需另建草稿重新套用並驗證。是否確認？')!=QMessageBox.Yes:return
+        pdf=QMessageBox.question(self,'PDF嵌入用途','授權是否也明確允許PDF嵌入？\nOpenType技術限制仍會獨立檢查；選否仍可核對點陣輸出。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)==QMessageBox.Yes
+        if QMessageBox.question(self,'確認授權範圍','只更新所選字面記錄；既有模板不會被自動改寫，需另建草稿重新套用並驗證。是否確認？',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
         try:self.window.font_manager.record_output_rights(row['asset'],actor,basis,pdf);self.refresh()
         except (ValueError,OSError) as error:self.result.setText(str(error))
 

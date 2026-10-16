@@ -6,7 +6,9 @@ from template_ai.font_evidence import output_rights_errors
 from template_ai.render import export
 
 class HostFontSourceRightsTests(unittest.TestCase):
-    setUp=fixture.FirstVersionTests.setUp
+    def setUp(self):
+        fixture.FirstVersionTests.setUp(self)
+        for slot in self.template.slots:slot.font_asset=None
     candidate=fixture.FirstVersionTests.candidate
     def test_unknown_host_rights_are_not_empty_success_for_any_formal_format(self):
         for format in ('png','jpg','pdf'):self.assertTrue(output_rights_errors(None,format))

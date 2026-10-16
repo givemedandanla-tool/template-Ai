@@ -13,6 +13,8 @@ from PySide6.QtPdf import QPdfDocument
 from PySide6.QtWidgets import QApplication, QComboBox, QDialog, QMessageBox
 
 from digital_review_fixture import authored_review
+from authored_font_fixture import bind_authored_fonts
+from template_ai.fonts import FontManager
 from template_ai.background import ensure_embedded_svg, make_background
 from template_ai.demo import demo_template
 from template_ai.gui import MainWindow
@@ -36,6 +38,7 @@ class VisualBackgroundTests(unittest.TestCase):
         fixture = Path(__file__).parents[1] / "examples/synthetic-background.svg"
         self.source = import_file(fixture, self.library.assets)
         self.template = demo_template()
+        self.source_font_manager=FontManager(self.library);self.addCleanup(self.source_font_manager.close);bind_authored_fonts(self.template,self.source_font_manager)
         self.template.background = make_background(self.source, 90, 54, approved=True)
 
     def candidate(self):

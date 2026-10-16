@@ -82,7 +82,8 @@ def face_bytes(path, index):
 def output_rights_errors(asset, output_format):
     """Imported assets require explicit rights; unknown remains blocked."""
     if asset is None:
-        return []  # Host font rights are reported separately by the inventory.
+        return ['主機字型來源／使用授權未核實；請匯入有權使用的原字型、核對用途並重新套用，僅允許診斷預覽']
+    if not isinstance(asset,dict):return ['字型來源記錄無效，不能核對使用／嵌入授權']
     rights = asset.get("usage_rights", {})
     if not isinstance(rights,dict) or rights.get('print_export') is not True or not all(isinstance(rights.get(k),str) and rights[k].strip() for k in ('actor','basis')):
         return ["匯入字型尚無印製／轉出授權確認，僅允許非正式預覽"]
@@ -99,3 +100,15 @@ def output_rights_errors(asset, output_format):
         if evidence.get("fs_type") is None or evidence.get("fs_type", 0) & (2 | 0x100 | 0x200):
             return ["字型嵌入未知／限制／禁止子集／僅點陣；目前PDF引擎不能保證遵守，阻擋正式PDF"]
     return []
+
+
+def font_rights_diagnostics(candidate,output_format):
+    """One shared per-format check, with exact affected text fields."""
+    cache={};rows=[]
+    for item in candidate.items:
+        if item.slot.kind=='logo' or not item.text:continue
+        asset=item.slot.font_asset
+        key=(asset.get('hash'),asset.get('path'),repr(asset.get('usage_rights'))) if isinstance(asset,dict) else repr(asset)
+        if key not in cache:cache[key]=output_rights_errors(asset,output_format)
+        if cache[key]:rows.append(dict(slot_id=item.slot.id,owner=item.slot.owner,kind=item.slot.kind,reasons=cache[key]))
+    return rows

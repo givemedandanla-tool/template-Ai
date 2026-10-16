@@ -24,6 +24,8 @@ from template_ai.render import export,preview_footer,preview_height
 from template_ai.storage import Library
 from gui_wait import wait_for_gui,job_diagnostics
 from runtime_fixture import controlled_resources
+from template_ai.fonts import FontManager
+from authored_font_fixture import bind_authored_fonts
 
 APP=QApplication.instance() or QApplication([])
 REVIEW=dict(identity_confirmed=True,whole_mark_confirmed=True,usage_authorized=True,
@@ -43,6 +45,7 @@ def approve_formats(workflow,plan,dpi=150):
 class MultiSizeTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name);self.library=Library(self.root/'library')
+        self.source_font_manager=FontManager(self.library)
         self.logos=LogoStore(self.library);company=self.logos.create_company('Synthetic Brand','Synthetic identity',True)
         path=self.root/'mark.svg';path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="20mm" height="10mm"><rect width="60" height="30" fill="red"/></svg>')
         image=import_file(path,self.library.assets);self.payload=dict(image=image['image'],svg=image['svg'],source_width_mm=image['width_mm'],source_height_mm=image['height_mm'],crop=None)
@@ -52,12 +55,13 @@ class MultiSizeTests(unittest.TestCase):
         self.templates=[]
         for width,height,logo_x in ((90,54,3),(100,60,60)):
             t=Template('Synthetic '+str(width),width,height,[Slot('name','p1',Rect(3,3,60,8)),Slot('logo','c1',Rect(logo_x,20,30,15))],company_bindings={'p1':'c1'})
+            bind_authored_fonts(t,self.source_font_manager)
             self.library.publish(t);self.templates.append(t)
         self.inputs=self.graph.compile(self.library.logos());self.workflow=MultiSizeWorkflow(self.library,self.inputs,self.graph.data,7)
         self.entries=self.workflow.calculate([[90,54],[100,60]])
         self.output=self.root/'output';self.output.mkdir()
 
-    def tearDown(self):self.workflow.close_format_reviews();self.library.close();self.temp.cleanup()
+    def tearDown(self):self.workflow.close_format_reviews();self.source_font_manager.close();self.library.close();self.temp.cleanup()
 
     def requests(self):return [dict(key=size_key(90,54),mode='FINAL',formats=['pdf','png','jpg']),dict(key=size_key(100,60),mode='PREVIEW',formats=['pdf','png','jpg'])]
 

@@ -23,6 +23,8 @@ from template_ai.model import Rect, Slot, Template, learn_from_labels, new_id, t
 from template_ai.render import export
 from template_ai.storage import Library
 from template_ai.validation import compare_images
+from template_ai.fonts import FontManager
+from authored_font_fixture import bind_authored_fonts
 
 APP = QApplication.instance() or QApplication([])
 DATA = [{"name": "林小明", "title": "設計顧問", "phone": "0900-123-456", "email": "hello@example.test"}]
@@ -36,9 +38,11 @@ class FirstVersionTests(unittest.TestCase):
         self.library = Library(self.root / "data")
         self.addCleanup(self.library.close)
         self.template = demo_template()
+        self.source_font_manager=FontManager(self.library);self.addCleanup(self.source_font_manager.close);bind_authored_fonts(self.template,self.source_font_manager)
         self.template.state = "published"
 
     def tearDown(self):
+        self.source_font_manager.close()
         self.library.close()
         self.temp.cleanup()
 
@@ -70,6 +74,7 @@ class FirstVersionTests(unittest.TestCase):
 
     def test_missing_font_does_not_use_silent_fallback(self):
         self.template.slots[0].font = "Nonexistent-Font-For-Validation"
+        self.template.slots[0].font_asset=None
         c = self.candidate()
         self.assertIn("未安裝", "；".join(c.issues))
         self.assertFalse(c.valid)

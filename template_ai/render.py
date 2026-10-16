@@ -114,10 +114,12 @@ def preview_footer(candidate):
     factor=6*MM_PER_POINT/1000
     document=QTextDocument();document.setDocumentMargin(0);document.setDefaultFont(font)
     risk=candidate.risk
+    from .font_evidence import font_rights_diagnostics
+    problems=list(dict.fromkeys([*candidate.issues,*[reason for r in font_rights_diagnostics(candidate,'png') for reason in r['reasons']]]))
     risk_note=risk['label']+'；'+'；'.join(c['reason'] for c in risk['conditions'] if c['status']!='PASS') if not risk['formal_allowed'] else ''
     document.setPlainText('PREVIEW / 非正式 / Logo 占位或待驗證\n'+
         f'{candidate.template.width_mm:g}×{candidate.template.height_mm:g} mm\n'+
-        ('\n'.join(candidate.issues)+('\n'+risk_note if risk_note else '') if candidate.issues else risk_note or '數位檢查通過；本檔仍為預覽，未作實體印刷驗收。'))
+        ('\n'.join(problems)+('\n'+risk_note if risk_note else '') if problems else risk_note or '數位檢查通過；本檔仍為預覽，未作實體印刷驗收。'))
     document.setTextWidth(max(.1,candidate.template.width_mm-4)/factor)
     return document,factor,max(14,document.size().height()*factor+4)
 
@@ -208,15 +210,8 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
     if not preview:
         from .candidate_risk import assert_formal
         assert_formal(candidate)
-        from .font_evidence import output_rights_errors
-        rights_issues=[];checked_rights=set()
-        for item in candidate.items:
-            asset=item.slot.font_asset
-            if item.slot.kind=='logo' or asset is None:continue
-            key=(asset.get('hash'),asset.get('path'),repr(asset.get('usage_rights')))
-            if key in checked_rights:continue
-            checked_rights.add(key)
-            rights_issues.extend(output_rights_errors(asset,target.suffix.lstrip('.')))
+        from .font_evidence import font_rights_diagnostics
+        rights_issues=[reason for r in font_rights_diagnostics(candidate,target.suffix.lstrip('.')) for reason in r['reasons']]
         if rights_issues:
             raise ValueError('；'.join(dict.fromkeys(rights_issues)))
     if preview and "PREVIEW" not in target.stem.upper():

@@ -20,6 +20,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tests'))
 from gui_wait import wait_layout
 from runtime_fixture import controlled_resources
 from digital_review_fixture import authored_review
+from authored_font_fixture import bind_authored_fonts
 
 from template_ai.demo import demo_template
 from template_ai import __version__ as app_version
@@ -47,7 +48,9 @@ def main():
         if result.returncode:
             raise SystemExit(result.returncode)
     app = QApplication.instance() or QApplication([])
+    window = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     t = demo_template()
+    bind_authored_fonts(t,window.font_manager)
     t.state = "published"
     data = [{"name": "林小明", "title": "設計顧問", "phone": "0900-123-456", "email": "hello@example.test"}]
     c = generate(t, data, [], {})
@@ -57,8 +60,8 @@ def main():
         # 僅清理本工具的合成產物，應用程式不使用這個覆寫方式。
         target.unlink(missing_ok=True)
         export(c, target, dpi=args.dpi,format_review=authored_review(c,extension,artifacts/'authored-format-proofs',args.dpi))
-    window = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     window.add_demo()
+    bind_authored_fonts(window.template,window.font_manager)
     window.library.publish(window.template)
     window.refresh_templates(window.template.id)
     window.tabs.setCurrentIndex(2)
@@ -74,7 +77,7 @@ def main():
     source_path = root / "examples/synthetic-source.svg"
     source = window.library.add_source(source_path, import_file(source_path, window.library.assets))
     window.refresh_sources(source["id"])
-    window.slots = demo_template().slots
+    source_template=demo_template();bind_authored_fonts(source_template,window.font_manager);window.slots=source_template.slots
     window.refresh_training()
     window.train_canvas.fit()
     app.processEvents()

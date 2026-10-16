@@ -31,7 +31,7 @@ def scope(candidate,format,dpi):
     from .candidate_risk import engine_digest
     from .layout import layout_dependency
     spec=options(candidate,format,dpi);logos={str(i):p.logo for i,p in enumerate(candidate.items) if p.logo}
-    validation_code=digest({name:file_digest(Path(__file__).with_name(name)) for name in ('digital_preflight.py','digital_final.py','digital_review.py','digital_output_proof.py','digital_preflight_panel.py','preflight_detail.py') if Path(__file__).with_name(name).exists()})
+    validation_code=digest({name:file_digest(Path(__file__).with_name(name)) for name in ('digital_preflight.py','digital_final.py','digital_review.py','digital_output_proof.py','digital_preflight_panel.py','preflight_detail.py','font_evidence.py') if Path(__file__).with_name(name).exists()})
     value=dict(**spec,validation_code=validation_code,template_digest=digest(candidate.template.to_dict()),items_digest=digest([asdict(p) for p in candidate.items]),generation=candidate.generation,input_digest=candidate.risk_context.get('input_digest'),risk_digest=candidate.risk['digest'],engine_digest=engine_digest(),dependency=layout_dependency(candidate.template,logos))
     value['digest']=digest(value);return value
 
@@ -119,6 +119,9 @@ def inspect_candidate(candidate,format,dpi):
     if bad:rows.append(row('HORIZONTAL_SCALE','BLOCKED','目前實際比例不符合固定字級的模板範圍',bad,actual=scales))
     rows.append(row('CURRENT_WHOLE_CARD_GATE','PASS' if risk['formal_allowed'] else 'BLOCKED','原完整目前Gate通過；仍須本格式實際編碼核對' if risk['formal_allowed'] else risk['label'],conditions=copy.deepcopy(risk['conditions']),text_measurements=copy.deepcopy(candidate.measurements),actual_text=scales))
     rows.extend(logo_sampling(p,dpi) for p in candidate.items if p.slot.kind=='logo')
+    from .font_evidence import font_rights_diagnostics
+    font_rights=font_rights_diagnostics(candidate,spec['format'])
+    rows.append(row('FONT_USE_RIGHTS','BLOCKED' if font_rights else 'PASS','；'.join(dict.fromkeys(reason for r in font_rights for reason in r['reasons'])) if font_rights else '依目前文字來源與明列格式核對用途／嵌入授權；不代表印刷樣張認證',[r['slot_id'] for r in font_rights],affected_fields=font_rights))
     if t.background:
         from .layout import Placed
         from .model import Slot,Rect
