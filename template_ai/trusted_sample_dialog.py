@@ -1,6 +1,6 @@
 """Native trusted-sample review in the existing training/quality center."""
 import json
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt,QDateTime
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QTabWidget,QWidget,QLabel,QLineEdit,QComboBox,QPushButton,QCheckBox,QSpinBox,QTableWidget,QTableWidgetItem,QPlainTextEdit,QListWidget,QListWidgetItem,QAbstractItemView,QScrollArea)
 from shiboken6 import isValid
 from .trusted_sample_pool import PURPOSES
@@ -83,16 +83,38 @@ class TrustedSampleReviewDialog(QDialog):
     def detail(self):
         def loaded(value):
             detail=value['detail'];before=value['previous_human_label_version'];after=value['current_candidate_label_version'];lines=[detail['work_label'],str(detail['source_label']),'前一人工版本：'+str((before or {}).get('revision','無／歷史不足')),'目前候選標記：'+str((after or {}).get('revision','歷史不足')),'AI原判定：'+value['prior_AI_prediction'],'原判定與人工真值不混作正例。']
+            confirmation=detail['current_confirmation'] or {};timestamp=confirmation.get('timestamp');pins=detail['candidate']['pins'];slots={slot['id']:slot for slot in detail['current_slots']}
+            lines.extend(['確認者：'+str(confirmation.get('actor') or '尚未確認'),'確認時間：'+(QDateTime.fromSecsSinceEpoch(int(timestamp)).toString(Qt.ISODate) if timestamp else '尚未確認'),'來源連結版本：'+str(pins['link_revision'])+'／作品版本：'+str(pins['work_revision']),'尺寸：'+str(detail['dimensions']['width'])+' × '+str(detail['dimensions']['height'])+' mm','既有確認客戶關聯：'+str(len(detail['confirmed_customer_ids']))+'筆；未確認的歸屬不由樣本准入推定。'])
             for title,record in (('前一人工標記',before),('本次人工標記',after)):
                 lines.append(title)
-                lines.extend(o['classification']+'／'+o['text'] for o in (record or {}).get('observations',[]))
+                lines.extend(o['classification']+'／'+str(slots.get(o.get('slot_id'),{}).get('kind','非欄位'))+'／'+str(slots.get(o.get('slot_id'),{}).get('owner','來源註記'))+'／'+o['text'] for o in (record or {}).get('observations',[]))
+            if value['actual_AI_prediction_version']:
+                lines.append('實際本機來源解析提案（非人工真值）')
+                lines.extend(o['classification']+'／'+o['text'] for o in value['actual_AI_prediction_version']['observations'])
             lines.extend('使用者回報的舊判定（診斷，非黃金答案）：'+str(p['prediction']) for p in value['user_supplied_prior_predictions']);lines.extend(detail['errors']);self.details.setPlainText('\n'.join(lines));self.status.setText('已讀取具名來源及原標記版本；尚未准入或訓練。')
         self.request('DETAIL',dict(identity=self.selected()['id']),loaded)
     def preview(self,kind,payload):
         self.invalidate()
         def loaded(value):
-            self.pending=(kind,value);self.consent.setChecked(False);target=self.details if kind=='CONFIRM' else self.privacy_details;target.setPlainText(json.dumps(value,ensure_ascii=False,indent=2));self.status.setText('已預覽目前確切範圍；核對後才確認保存。')
+            self.pending=(kind,value);self.consent.setChecked(False);target=self.details if kind=='CONFIRM' else self.privacy_details;target.setPlainText(self.describe_plan(kind,value));self.status.setText('已預覽目前確切範圍；核對後才確認保存。')
         command={'CONFIRM':'PLAN','RESTRICT':'RESTRICT_PLAN','REDACT':'REDACTION_PLAN'}[kind];self.request(command,payload,loaded)
+    def describe_plan(self,kind,value):
+        if kind=='CONFIRM':
+            rights=value['rights'];lines=['本次逐項預覽：'+str(len(value['items']))+'項','准入僅供明列的本機幾何用途，不會啟動訓練。','授權依據：'+str(rights.get('reference',''))]
+            for step in value['items']:
+                detail=step['detail'];action={'APPROVE':'准入','REJECT':'拒絕','DEFER':'保留待審'}[step['item']['action']]
+                lines.extend(['',detail['work_label']+'／'+str(detail['source_label']),'本次：'+action+'；風險：'+detail['risk'],'候選標記版本：'+str(detail['candidate']['facts_revision'])+'；目前核實版本：'+str(detail['current_facts_revision'])])
+                lines.extend('阻擋：'+error for error in step['errors'])
+                if not step['errors']:lines.append('目前明列條件核對通過；仍需下方明確批准。')
+            return '\n'.join(lines)
+        if kind=='RESTRICT':
+            names=dict(zip(PURPOSES,PURPOSE_LABELS));impact=value['impact'];lines=['來源：'+self.selected()['label'],'停止用途：'+'、'.join(names[p] for p in value['purposes']),'必要審核期限：'+str(value['retention_days'])+'天','已記錄的依賴節點：'+str(len(impact['nodes'])),'歷史失聯：'+str(len(impact['missing_historical_nodes'])),'未登錄的舊依賴仍為未知；不宣稱模型已去污染。','本次不刪除原稿、業務事實或外部備份。']
+            return '\n'.join(lines)
+        lines=['僅刪除以下明列的本機訓練文字副本及其中的歷史文字：']
+        lines.extend(('幾何樣本' if item['kind']=='SAMPLE' else '語意模型')+'／版本'+str(item['revision'])+'／'+item['id'][:12] for item in value['items'])
+        lines.extend(['保留最少必要的來源／用途／版本與摘要憑證。','原稿、業務事實與外部備份未被刪除；不宣稱安全擦除或模型去污染。'])
+        return '\n'.join(lines)
+
     def preview_batch(self):
         items=[]
         for i,row in enumerate(self.rows):
@@ -103,8 +125,20 @@ class TrustedSampleReviewDialog(QDialog):
         if not self.pending or not self.consent.isChecked():raise ValueError('先核對有效預覽並明確勾選批准')
         kind,plan=self.pending;self.pending=None;self.consent.setChecked(False)
         def saved(value):
-            self.invalidate();self.status.setText('本次明列操作已保存；沒有自動啟動訓練、正式啟用模型或宣稱去污染。');target=self.details if kind=='CONFIRM' else self.privacy_details;target.setPlainText(json.dumps(value,ensure_ascii=False,indent=2))
+            self.invalidate();self.status.setText('本次明列操作已保存；沒有自動啟動訓練、正式啟用模型或宣稱去污染。')
+            for index in range(self.table.rowCount()):self.table.item(index,1).setText('已保存操作；請重載核對目前資格')
+            target=self.details if kind=='CONFIRM' else self.privacy_details;target.setPlainText(self.describe_saved(kind,value))
         self.request(kind,dict(plan=plan,actor=self.actor.text(),approved=True),saved,mutation=True)
+    def describe_saved(self,kind,value):
+        if kind=='CONFIRM':
+            names={row['id']:row['label'] for row in self.rows};labels={'ADMITTED':'已明確准入','REJECTED':'已拒絕','DEFERRED':'保留待審'}
+            return '\n'.join([names.get(row['id'],'所選來源')+'：'+labels[row['state']] for row in value]+['沒有啟動訓練、發布模板或正式採用模型。'])
+        if kind=='RESTRICT':
+            names=dict(zip(PURPOSES,PURPOSE_LABELS));lines=['所選用途已停止；原資料未被自動刪除。']
+            for row in value:lines.append(names[row['purpose']]+'：已停止；必要審核期限 '+QDateTime.fromSecsSinceEpoch(int(row['review_due_at'])).toString(Qt.ISODate))
+            lines.append('舊資料／模型的實際使用證據仍保留；不宣稱已去污染。');return '\n'.join(lines)
+        return '\n'.join(['已處理明列本機訓練副本：'+str(len(value['records']))+'筆','其中的歷史訓練文字已邏輯刪除，留下最少必要的用途與摘要憑證。','處理憑證：'+value['receipt']['id'][:12],'原稿、業務事實、外部備份未被刪除；未宣稱安全擦除或模型去污染。'])
+
     def trace(self):
         self.request('TRACE',dict(identity=self.selected()['id']),lambda value:self.trace_details.setPlainText(json.dumps(value,ensure_ascii=False,indent=2)))
     def source_facts(self):

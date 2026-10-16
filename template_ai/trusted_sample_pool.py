@@ -2,6 +2,7 @@
 import copy
 import json
 import time
+from pathlib import Path
 from .training_store import TrainingStore,digest,text
 from .quality_groups import QualityGroups
 
@@ -26,12 +27,29 @@ class TrustedSamplePool:
     def __init__(self,library):
         self.library=library;self.store=TrainingStore.bind(library);self.db=library.db
 
+    def prediction_reference(self,work_id,pins):
+        for entry in self.store.history('FACTS',work_id):
+            if entry['action']!='source_observations_proposed_not_confirmed':continue
+            row=entry['after'];origin=row.get('pins',{})
+            if origin.get('source_hash')!=pins['source_hash'] or origin.get('source_id')!=pins['source_id']:continue
+            actual=self.db.execute('SELECT payload FROM artwork_revisions WHERE artwork_id=? AND revision=?',(work_id,origin.get('work_revision'))).fetchone()
+            if not actual:continue
+            payload=json.loads(actual[0]);mapping=payload.get('analysis_evidence',{}).get('slot_source_map',{})
+            if digest(payload)!=origin.get('work_digest') or not payload.get('analysis_key') or not mapping or any(v.get('source_hash')!=pins['source_hash'] for v in mapping.values()):continue
+            if not row.get('observations') or any(o.get('evidence')!='AI_SOURCE_HYPOTHESIS' for o in row['observations']):continue
+            return dict(kind='ACTUAL_AUTO_SOURCE_FACTS_HISTORY',work_id=work_id,facts_revision=entry['revision'],facts_digest=digest(row),source_hash=pins['source_hash'],artwork_revision=origin['work_revision'],analysis_key=payload['analysis_key'],analysis_version=payload.get('analysis_version'),model_context=payload.get('analysis_evidence',{}).get('semantic_model'),is_human_truth=False)
+        return None
+
     def collect_in_transaction(self,work_id,before,after):
         """Called inside the existing FACTS transaction; references, never extra PII copies."""
-        if before.get('observations')==after.get('observations') and before.get('pins')==after.get('pins'):return None
+        if before.get('observations')==after.get('observations') and before.get('pins')==after.get('pins'):
+            if before.get('confirmation') or not after.get('confirmation'):return None
+            covered=self.db.execute("SELECT 1 FROM training_records WHERE kind=? AND json_extract(payload,'$.work_id')=? AND json_extract(payload,'$.facts_digest')=? AND json_extract(payload,'$.pins.work_digest')=? LIMIT 1",(CANDIDATE,work_id,digest(after['observations']),after['pins']['work_digest'])).fetchone()
+            if covered:return None
         identity=digest([CANDIDATE,work_id,after['revision'],after['pins']])
         if self.store.get(CANDIDATE,identity):return self.store.get(CANDIDATE,identity)
-        record=dict(has_user_reported_negative_diagnostic=any(o.get('prior_prediction') is not None for o in after['observations']),work_id=work_id,pins=after['pins'],facts_revision=after['revision'],facts_digest=digest(after['observations']),previous_facts_revision=before.get('revision',0),previous_facts_digest=digest(before.get('observations',[])),state='COLLECTED',correction_kind='CONFIRMED_HUMAN_CORRECTION' if before.get('confirmation') else 'INITIAL_OR_UNCONFIRMED_LABEL_EDIT',prediction_evidence='NONE_UNLESS_EXACT_EXISTING_SOURCE_RECEIPT',source_truth='PENDING_EXPLICIT_CURRENT_CONFIRMATION',created=time.time(),training_admission=False,rule_approval=False,model_training_started=False)
+        prediction_ref=self.prediction_reference(work_id,after['pins'])
+        record=dict(actual_prediction_reference=prediction_ref,has_user_reported_negative_diagnostic=any(o.get('prior_prediction') is not None for o in after['observations']),work_id=work_id,pins=after['pins'],facts_revision=after['revision'],facts_digest=digest(after['observations']),previous_facts_revision=before.get('revision',0),previous_facts_digest=digest(before.get('observations',[])),state='COLLECTED',correction_kind='CONFIRMED_HUMAN_CORRECTION' if before.get('confirmation') else 'INITIAL_OR_UNCONFIRMED_LABEL_EDIT',prediction_evidence='ACTUAL_AUTO_SOURCE_HYPOTHESIS_NOT_GROUND_TRUTH' if prediction_ref else 'NONE_UNLESS_EXACT_EXISTING_SOURCE_RECEIPT',source_truth='PENDING_EXPLICIT_CURRENT_CONFIRMATION',created=time.time(),training_admission=False,rule_approval=False,model_training_started=False)
         return self.store._write(CANDIDATE,identity,record,0,'correction_candidate_collected')
 
     def exact_scope(self,work_id):
@@ -63,9 +81,13 @@ class TrustedSamplePool:
         if role_errors:errors.extend(role_errors)
         if source_restriction(self.store,source['hash'],'GEOMETRY_TRAINING_LOCAL'):errors.append('此來源用途已停止使用')
         people={s.get('owner') for s in work['payload']['slots'] if str(s.get('owner','')).startswith('p')};high=bool(len(people)>1 or any(s.get('kind')=='logo' for s in work['payload']['slots']) or conflict['conflicting_work_ids'])
+        customer_ids=[]
+        if self.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='customer_source_associations'").fetchone():
+            customer_ids=[r[0] for r in self.db.execute('SELECT DISTINCT customer_id FROM customer_source_associations WHERE artwork_id=? ORDER BY customer_id LIMIT 201',(row['work_id'],))]
+        if len(customer_ids)>1:high=True
         restrictions={purpose:value for purpose in PURPOSES if (value:=source_restriction(self.store,source['hash'],purpose)) is not None}
         role=self.store.get('GROUP_ROLE',source['hash']);sample=self.store.get('SAMPLE',row.get('sample_id','')) if row.get('sample_id') else None
-        return dict(source_restrictions=restrictions,candidate=row,work_label=work['name'],source_label=source.get('filename') or source.get('original_name') or source.get('current_path'),current_facts_revision=facts['revision'],current_confirmation=facts.get('confirmation'),conflict=conflict,role=role,errors=sorted(set(errors)),risk='HIGH' if high else 'LOW',sample_state=self.store.sample_state(sample['id']) if sample else None,usage=self.store.sample_usage_impact(sample['id']) if sample else None,customer_identities_merged=False,prior_prediction_is_truth=False)
+        return dict(confirmed_customer_ids=customer_ids[:200],customer_link_scope='EXISTING_CONFIRMED_ASSOCIATIONS_ONLY' if len(customer_ids)<=200 else 'INCOMPLETE_MAX200',dimensions=dict(width=work['payload']['work_width'],height=work['payload']['work_height']),current_slots=work['payload']['slots'],source_restrictions=restrictions,candidate=row,work_label=work['name'],source_label=Path(source.get('original_path') or source['current_path']).name,current_facts_revision=facts['revision'],current_confirmation=facts.get('confirmation'),conflict=conflict,role=role,errors=sorted(set(errors)),risk='HIGH' if high else 'LOW',sample_state=self.store.sample_state(sample['id']) if sample else None,usage=self.store.sample_usage_impact(sample['id']) if sample else None,customer_identities_merged=False,prior_prediction_is_truth=False)
 
     def batch_plan(self,items,rights):
         if not isinstance(items,list) or not 1<=len(items)<=50 or len({i['id'] for i in items})!=len(items):raise ValueError('每批需1～50個不重複候選')
@@ -195,5 +217,16 @@ class TrustedSamplePool:
         return dict(rows=rows,total_candidates=total,scanned=len(candidates),offset=offset,next_offset=offset+len(candidates),complete_scan=offset+len(candidates)>=total,scope='MATCHES_IN_THIS_SCANNED_CANDIDATE_PAGE; NOT_GLOBAL_MATCH_COUNT',collection=collection,images_loaded=False,model_weights_loaded=False,training_started=False)
 
     def comparison(self,identity):
-        detail=self.detail(identity);row=detail['candidate'];history={h['revision']:dict(h['after'],revision=h['revision']) for h in self.store.history('FACTS',row['work_id'])};previous=history.get(row['previous_facts_revision']);selected=history.get(row['facts_revision'])
-        return dict(detail=detail,previous_human_label_version=previous,current_candidate_label_version=selected,current_confirmed_facts=self.store.facts(row['work_id']),prior_AI_prediction='UNKNOWN_UNLESS_LINKED_ACTUAL_PREDICTION_RECEIPT',user_supplied_prior_predictions=[dict(observation_id=o['id'],prediction=o['prior_prediction'],evidence='USER_REPORTED_DIAGNOSTIC_ONLY_NOT_TRAINING_TRUTH') for o in (selected or {}).get('observations',[]) if o.get('prior_prediction') is not None],history_complete=selected is not None and (row['previous_facts_revision']==0 or previous is not None),model_prediction_is_gold=False)
+        detail=self.detail(identity);row=detail['candidate'];raw_history={h['revision']:h['after'] for h in self.store.history('FACTS',row['work_id'])}
+        history={revision:dict(record,revision=revision) for revision,record in raw_history.items()};previous=history.get(row['previous_facts_revision']);selected=history.get(row['facts_revision'])
+        reference=row.get('actual_prediction_reference');actual=None
+        if reference and self.prediction_reference(row['work_id'],row['pins'])==reference:
+            original=raw_history.get(reference['facts_revision'])
+            if original and digest(original)==reference['facts_digest']:actual=dict(original,revision=reference['facts_revision'])
+        original_by_id={o['id']:o for o in (actual or {}).get('observations',[])};reported=[]
+        for observation in (selected or {}).get('observations',[]):
+            prediction=observation.get('prior_prediction')
+            if prediction is None:continue
+            if actual and original_by_id.get(observation['id'],{}).get('prior_prediction')==prediction:continue
+            reported.append(dict(observation_id=observation['id'],prediction=prediction,evidence='USER_REPORTED_DIAGNOSTIC_ONLY_NOT_TRAINING_TRUTH'))
+        return dict(detail=detail,previous_human_label_version=previous,current_candidate_label_version=selected,current_confirmed_facts=self.store.facts(row['work_id']),actual_AI_prediction_version=actual,actual_prediction_reference=reference,prior_AI_prediction='ACTUAL_SOURCE_PROPOSAL_RECEIPT_VERIFIED_NOT_GROUND_TRUTH' if actual else 'UNKNOWN_UNLESS_LINKED_ACTUAL_PREDICTION_RECEIPT',user_supplied_prior_predictions=reported,history_complete=selected is not None and (row['previous_facts_revision']==0 or previous is not None),model_prediction_is_gold=False)

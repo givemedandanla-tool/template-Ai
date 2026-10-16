@@ -23,6 +23,8 @@ class TrustedSemanticPrivacyTests(unittest.TestCase):
         self.assertEqual(self.service.store.get('SEMANTIC_MODEL',model['id'])['weights_digest'],model['weights_digest'])
         with self.assertRaises(ValueError):self.service.checked_model(model['id'])
         self.assertTrue(self.service.store.facts(self.train['id'])['observations'][0]['text'])
+        from template_ai.quality_groups import QualityGroups
+        source_hash=self.service.store.pins(self.train['id'])['source_hash'];self.assertTrue(QualityGroups(self.library).role_conflicts([(source_hash,'HOLDOUT')]))
 
     def test_redaction_requires_actual_matching_source_and_prior_purpose_stop(self):
         model=self.service.train(self.service.plan(self.roles),'Reviewer',True);pool=TrustedSamplePool(self.library)

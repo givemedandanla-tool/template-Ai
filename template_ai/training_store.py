@@ -179,7 +179,7 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
         if approved is not True: raise ValueError('需要人工明確確認作品事實')
         text(actor, '確認者', 120)
         with self.transaction():
-            record = self.facts(work_id); self.checked(work_id, proof)
+            record = self.facts(work_id); before_confirmation = copy.deepcopy(record); self.checked(work_id, proof)
             self.checked(work_id, self.source_proof(work_id))
             if self.pins(work_id) != expected_pins or record['pins'] != expected_pins: raise ValueError('來源或作品範圍已變更')
             ids = sorted(observation_ids)
@@ -205,6 +205,8 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
                                       'source_stat': list(proof.stat), 'scope': 'EXACT_WORK_FACTS_ONLY; NOT_SAMPLE_OR_RULE_APPROVAL'}
             record['state'] = 'CONFIRMED'
             saved = self._write('FACTS', work_id, record, expected_revision, 'facts_confirmed')
+            from .trusted_sample_pool import TrustedSamplePool
+            TrustedSamplePool(self.library).collect_in_transaction(work_id,before_confirmation,saved)
             self._refresh_noise(work_id); return saved
 
     def revoke_facts(self, work_id, expected_revision, reason):
