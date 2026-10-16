@@ -1,10 +1,10 @@
-# 現行：UI055已實作第一後端，尚未父題完成
+# 當前接續：UI056 C覆蓋儀表板；歷史8/28，UI055等批次正式驗證
 
-- UI054 full REPAIR003 1001/1001、126healthy modules、0Qt/capture0/sourceunchanged/parentexit0，174原始附件皆正常GitHub保存。CP ba60136338a06adedde518e04687427d88fc7027 native ACK；receipt/Gate followup55903990b12ef622c08175b0b531c515eae9990c。publication require-evidence Gate實際PASS。歷史8/28/82原條。
-- 已開始UI055：template_ai/trusted_sample_pool.py從docs草稿接入；save_facts同交易收集不含原文複製的候選refs；樣本准入拆出in_transaction以支援50筆顯式批次；加入HOLDOUT/相關群組阻擋、幾何／語意用途停止、選定訓練副本與history文字邏輯最小化（不宣稱原稿/FACTS/外部備份/安全擦除已完成）。既有23樣本/資料集/語意流程PASS；新10 transaction、3實際語意privacy、4實際GUI皆PASS；另26 privacy/rules/gold PASS。1023known；尚非full父題。
-- primary146既有verified暫改pending重驗，歷史完成數仍8；尚未註冊UI055 full11、GUI與geometry/semantic/quality/rule用途已接線；舊品質/規則失效、typed lineage及encrypted restore實際26PASS；相關HLD群組與51修正分頁2PASS。下一native capture/視覺核對、full11註冊後UI056/rest20，批次formal。下一補backend regression/實際模型、existing quality command transport與原生GUI，然後UI056/rest20，批次正式freeze驗證，不停milestone。
-- UI056_EXECUTION_PLAN exact8+historicalfooter only設計。WordPress GPL真Illustrator AI範例已取得於/tmp/rev02-legal-ai-research（44725B/SHA bc7bd71f...），Creator Adobe Illustrator CC2017/AIPrivateData存在，但實際畫面空白；只能負例，不可當正向訓練完成證據。其他repo素材限制/空缺研究尚需保存。
-- 絕不可重跑UI053/UI054已執行finalizer；REPAIR001/002失敗保留。無EXE/mainmerge/多代理。
-
-
-歷史交接另存 `history/HANDOFF_PRE_UI055_20261016.md`，新對話按需讀取。
+- 不要停在里程碑；使用者目標28父題全部自我驗證。無EXE／mainmerge／多代理。新對話先resume_status，只讀精簡交接與STATE。
+- UI054 REPAIR003 source c87fa8323fa387929d470e874f3c07ee11942c08：1001/1001、126healthy modules、0Qt/capture0/sourceunchanged/parentexit0，174附件正常GitHub保存；CP ba60136338a06adedde518e04687427d88fc7027，receipt/Gate followup55903990b12ef622c08175b0b531c515eae9990c。已實際publication Gate PASS。歷史8/28/82原條；勿重跑已執行UI053/UI054finalizer；001/002失敗保留。
+- UI055原11完整軟體已實作、逐條199supporting tests登錄，但未全量formal，不能計9/28。25個新測試case已targeted PASS（1026catalog）；實際模型/品質/規則停用、alias/相關HLD防入池、51真修正與51真manifest IPC分頁、加密restore、實際Qt4、真正來源AI原判定ref與tamper guard。native002七圖均視覺核對，0Qt；RSS170278912B/maxGUIgap61.656ms為controlled workflow，非參考硬體benchmark。UI055_CLAUSE_COVERAGE.json詳列；147claims pending。新native0034PASS、derivedgeometrytrust1PASS。
+- UI056正在開發：qualified_coverage.py首批roster/row/facet草稿目前未被呼叫，尚缺aggregate/snapshot/GUI/tests。重用sample_state/exact_label_signature/QualityGroups/Gold.describe；每次50metadata，預設可訓練，不混候選/VALIDATION/HLD。舊CoveragePanel總盤點另名保留，避免重寫其已驗證API。參見UI056_EXECUTION_PLAN原8+歷史footer。
+- 下一完成UI056後繼續其後19題，在批次邊界凍結source做一次完整formal／新capture／claimdigests／GitHub Gate再更新完成數；不每個小包都重跑全部1000多測試。全批次source凍結時勿改程式/測試/REQUIREMENTS，只可docs-only保存。
+- tools/run_evidence已加入capture_trusted_samples獨立owned process timeout60；無新queue/DB/paidservice。正式新run未定，不跑舊finalizer。
+- 小型GPL真AI負例在examples/legal_ai，Creator Illustrator2017/AIPrivateData真，但實際空白，不能當正向真AI訓練證據。REV02合法非空真AI與REV04指定Windows參考機仍需實際證據，先完成所有可做軟體，不虛構。
+- 每可恢復階段／10min checkpoint，含所有render/generated/source/run docs；prepare→git add/commit/push/native readback同一串，receipt也要下一次push。歷史多次超10min已記STATE，勿宣稱strictcadencePASS。

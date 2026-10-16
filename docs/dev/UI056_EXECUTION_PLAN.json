@@ -1,6 +1,6 @@
 {
   "id": "UI056-EXACT8-APPROVED-COVERAGE-C",
-  "status": "DESIGN_ONLY_NO_APP_EDITS_DURING_FORMAL",
+  "status": "IMPLEMENTING_AFTER_UI055_FULL11_PENDING",
   "original_parent_sha256": "7ed53d2d00d59b239e2619ca69a421df377b85d592e4cc19e4b6c65c7f7e8807",
   "original_clauses": [
     "**使用者正式選擇 C｜樣本覆蓋儀表板＋缺口提醒**。**不得擅自升級為 D「多維度失衡診斷＋系統化補樣建議」**。本項只有可解讀、可追溯的分布統計與資料量／代表性**提示**：不建立自動挑選補樣、補樣任務候選、素材搜尋推薦、樣本生成、按 AI 建議擴充來源、強制平衡配額或背景補樣排程。即便某類樣本少，也不自動判定已不合格或要求使用者補交資料。",
@@ -52,5 +52,6 @@
     "Actual native collection selector/filter paging/source-return with pending-editor guard"
   ],
   "references_reused": "docs/dev/REMAINING28_ENGINEERING_BASIS.json: previously fetched exact sklearn group-isolation, NetworkX grouping and MLflow version provenance; no new service",
-  "next_action": "Implement with UI055-dependent source-purpose restrictions, meaningful targeted backend/Qt tests, then full-source batch validation"
+  "next_action": "Implement with UI055-dependent source-purpose restrictions, meaningful targeted backend/Qt tests, then full-source batch validation",
+  "implementation_notes": "Reuse existing TrainingStore, exact_label_signature, QualityGroups and Gold metadata; keep old inventory as explicitly labelled separate scope. New primary qualified coverage scans50 metadata rows perrequest, neutral UNKNOWN/no arbitrary thresholds and no supplementation."
 }
