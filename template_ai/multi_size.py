@@ -165,14 +165,22 @@ class MultiSizeWorkflow:
                     partial=bool(omitted) or any(e['state']!='VALID' for e in self.entries),
                     input_digest=digest([self.people,self.companies,self.original_logos,self.graph.data]))
 
+    def close_format_reviews(self):
+        self.format_reviews.clear()
+        if self._format_proofs is not None:
+            self._format_proofs.cleanup();self._format_proofs=None
+
+    def format_proof_directory(self):
+        import tempfile
+        if self._format_proofs is None:self._format_proofs=tempfile.TemporaryDirectory(prefix='template-ai-batch-format-PREVIEW-')
+        return self._format_proofs.name
     def format_proof(self,key,format,dpi=150):
         import tempfile
         from .digital_output_proof import build_proof
         entry=next((e for e in self.entries if e['key']==key),None)
         if entry is None:raise ValueError('需明列目前尺寸ID')
         candidate=self.revalidate(entry)
-        if self._format_proofs is None:self._format_proofs=tempfile.TemporaryDirectory(prefix='template-ai-batch-format-PREVIEW-')
-        return build_proof(candidate,format,dpi,self._format_proofs.name)
+        return build_proof(candidate,format,dpi,self.format_proof_directory())
     def set_format_review(self,key,format,dpi,receipt):
         from .digital_preflight import scope
         from .digital_review import validate

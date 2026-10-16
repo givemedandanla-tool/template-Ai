@@ -21,8 +21,8 @@ class SourcePictureItem(QGraphicsItem):
 
 
 class PreflightDetailDialog(QDialog):
-    def __init__(self,window,item,proof,source,actual,detail,picture=None):
-        super().__init__(window);self.setWindowTitle('物件來源／實際數位輸出細節');self.resize(1200,780);layout=QVBoxLayout(self)
+    def __init__(self,window,item,proof,source,actual,detail,picture=None,parent=None):
+        super().__init__(parent or window);self.setWindowTitle('物件來源／實際數位輸出細節');self.resize(1200,780);layout=QVBoxLayout(self)
         self.status=QLabel('比較快照：'+item.slot.owner+'／'+item.slot.kind+'／'+item.slot.id+'；'+proof['scope']['format']+'，'+str(proof['scope']['dpi'])+' DPI。畫面放大不等於實體印刷認證。');self.status.setWordWrap(True);layout.addWidget(self.status)
         from .gui import Canvas
         from .viewport_controls import navigation_controls

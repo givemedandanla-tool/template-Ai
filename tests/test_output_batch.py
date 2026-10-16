@@ -11,7 +11,8 @@ class OutputBatchTests(unittest.TestCase):
     tearDown=fixture.MultiSizeTests.tearDown
     requests=fixture.MultiSizeTests.requests
     def batch(self):return OutputBatch(self.workflow,self.workflow.plan(self.output,self.requests()))
-    def configure(self,batch,overrides=None):return batch.configure({row['id']:dict(name=Path(row['path']).name,action=(overrides or {}).get(row['id'],'CREATE')) for row in batch.items})
+    def configure(self,batch,overrides=None):
+        result=batch.configure({row['id']:dict(name=Path(row['path']).name,action=(overrides or {}).get(row['id'],'CREATE')) for row in batch.items});fixture.approve_formats(self.workflow,batch.plan,150);return result
 
     def test_actual_mixed_final_preview_files_keep_sizes_formats_hashes_and_skips_separate(self):
         batch=self.batch();self.configure(batch,{'1':'SKIP'});before=self.library.template_snapshots();rows=batch.execute(approved=True,acknowledge_partial=True)

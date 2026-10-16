@@ -27,13 +27,14 @@ class OutputBatchGuiTests(unittest.TestCase):
         for name,action in d.controls[1:]:action.setCurrentIndex(action.findData('SKIP'))
         with patch.object(QMessageBox,'question',return_value=QMessageBox.No):d.run(False)
         self.assertIsNone(d.engine.scope);self.assertEqual(list(self.output.iterdir()),[])
-        d.controls[0][0].setText('renamed_FINAL.pdf')
+        d.controls[0][0].setText('renamed_FINAL.pdf');fixture.approve_formats(self.workflow,d.engine.plan,d.dpi.value())
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):d.run(False)
         self.finish(d);self.assertEqual(d.engine.items[0]['status'],'SUCCESS');self.assertTrue((self.output/'FINAL'/'renamed_FINAL.pdf').exists());self.assertTrue(all(row['status']=='SKIPPED' for row in d.engine.items[1:]));self.assertIn('SKIPPED',d.status.text())
     def test_actual_exact_retry_does_not_rewrite_success_and_cleanup_requires_specific_stage(self):
         import template_ai.output_batch as module
         d,parent=self.dialog()
         for name,action in d.controls[2:]:action.setCurrentIndex(action.findData('SKIP'))
+        fixture.approve_formats(self.workflow,d.engine.plan,d.dpi.value())
         real=module.export
         def fail(candidate,target,**kwargs):
             if str(target).endswith('.pdf'):raise PermissionError('synthetic permission denied')

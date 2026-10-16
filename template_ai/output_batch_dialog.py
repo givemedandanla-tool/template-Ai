@@ -4,7 +4,7 @@ import threading
 from pathlib import Path
 from PySide6.QtCore import Qt,QObject,Signal,QUrl
 from PySide6.QtGui import QDesktopServices
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QTableWidget,QTableWidgetItem,QLineEdit,QComboBox,QPushButton,QPlainTextEdit,QMessageBox
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QTableWidget,QTableWidgetItem,QLineEdit,QComboBox,QPushButton,QPlainTextEdit,QMessageBox,QSpinBox
 from .worker_callbacks import JobCallbacks
 from .output_batch import OutputBatch
 from .multi_size import MultiSizeWorkflow
@@ -15,16 +15,29 @@ class OutputBatchDialog(QDialog):
     def __init__(self,parent,plan):
         super().__init__(parent);self.owner=parent;self.window=parent.window;self.engine=OutputBatch(parent.service,plan);self.running=False;self.cancel=threading.Event();self.controls=[];self.setWindowTitle('逐檔FINAL／PREVIEW清單、更名與安全重試');self.resize(1350,780);self.progress=Progress(self);self.progress.updated.connect(self.update_row,Qt.QueuedConnection)
         layout=QVBoxLayout(self);self.status=QLabel('確認前不寫檔。新增預設不覆寫；覆寫將保留原檔並重新核對版本，競爭衝突時停止。');self.status.setWordWrap(True);layout.addWidget(self.status)
+        dpi_row=QHBoxLayout();dpi_row.addWidget(QLabel('此清單實際輸出DPI'));self.dpi=QSpinBox();self.dpi.setRange(72,600);self.dpi.setValue(self.window.dpi.value());dpi_row.addWidget(self.dpi);self.review_button=self.button(dpi_row,'核對選取此筆格式／Logo快照',self.review_selected);layout.addLayout(dpi_row);self.dpi.valueChanged.connect(lambda *_:self.cancel.set() if self.running else None)
         self.table=QTableWidget(len(self.engine.items),7);self.table.setHorizontalHeaderLabels(['尺寸／類型／格式','預計檔名（可更名）','衝突動作','實際狀態','已嘗試','目的地／原因','暫存／原檔恢復位置']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.ExtendedSelection);layout.addWidget(self.table,2)
         for i,row in enumerate(self.engine.items):
-            name=QLineEdit(Path(row['path']).name);action=QComboBox();action.addItem('更名／新增（不覆寫）','CREATE');action.addItem('略過','SKIP');action.addItem('明確覆寫（保留原檔）','OVERWRITE');self.controls.append((name,action));self.table.setCellWidget(i,1,name);self.table.setCellWidget(i,2,action);self.table.setItem(i,0,QTableWidgetItem(row['key']+' mm／'+row['mode']+'／'+Path(row['path']).suffix));self.update_row(row)
+            name=QLineEdit(Path(row['path']).name);action=QComboBox();action.addItem('更名／新增（不覆寫）','CREATE');action.addItem('略過','SKIP');action.addItem('明確覆寫（保留原檔）','OVERWRITE');self.controls.append((name,action));self.table.setCellWidget(i,1,name);self.table.setCellWidget(i,2,action);self.table.setItem(i,0,QTableWidgetItem(row['key']+' mm／'+row['mode']+'／'+Path(row['path']).suffix));self.table.item(i,0).setData(Qt.UserRole,row['id']);self.update_row(row)
         self.table.horizontalHeader().setStretchLastSection(True);self.table.resizeColumnsToContents();bar=QHBoxLayout();self.start=self.button(bar,'核對完整清單並輸出',lambda:self.run(False));self.retry=self.button(bar,'只重試選取的可恢復失敗',lambda:self.run(True));self.retry.setEnabled(False);self.button(bar,'安全取消',self.cancel.set);self.button(bar,'開啟選取檔案資料夾',self.open_folder);self.button(bar,'確認清理選取暫存（保留正式／原檔）',self.cleanup);layout.addLayout(bar)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setPlainText('未輸出尺寸與原因：\n'+str(plan['omitted'])+'\n本次部分輸出：'+str(plan['partial']));layout.addWidget(self.details,1)
+    def review_selected(self):
+        try:
+            if self.running or self.window.busy:raise ValueError('原背景輸出尚未結束')
+            ids=self.ids()
+            if len(ids)!=1:raise ValueError('請明確選取一筆FINAL PDF／JPG')
+            row=next(r for r in self.engine.items if r['id']==ids[0])
+            if row['mode']!='FINAL' or Path(row['path']).suffix.lower() not in ('.pdf','.jpg','.jpeg'):raise ValueError('此入口僅核對FINAL PDF／JPG；PNG按原無損像素核對、PREVIEW不作正式核准')
+            from .batch_format_review_dialog import BatchFormatReviewDialog
+            dialog=BatchFormatReviewDialog(self,row);self._format_review_dialog=dialog
+            try:dialog.exec()
+            finally:self._format_review_dialog=None;dialog.deleteLater()
+        except (ValueError,OSError,StopIteration) as error:self.status.setText(str(error))
     def button(self,bar,label,fn):
         button=QPushButton(label);button.clicked.connect(fn);bar.addWidget(button);return button
-    def ids(self):return [str(index.row()) for index in self.table.selectionModel().selectedRows()]
+    def ids(self):return [self.table.item(index.row(),0).data(Qt.UserRole) for index in self.table.selectionModel().selectedRows()]
     def update_row(self,row):
-        i=int(row['id']);self.table.setItem(i,3,QTableWidgetItem(row['status']));self.table.setItem(i,4,QTableWidgetItem(str(row['attempts'])));self.table.setItem(i,5,QTableWidgetItem(row['path']+'\n'+row.get('reason','')));self.table.setItem(i,6,QTableWidgetItem('暫存：'+str(row.get('stage_path') or '無')+'\n原檔恢復：'+str(row.get('recovery_path') or '無')))
+        i=next(i for i in range(self.table.rowCount()) if self.table.item(i,0).data(Qt.UserRole)==row['id']);self.table.setItem(i,3,QTableWidgetItem(row['status']));self.table.setItem(i,4,QTableWidgetItem(str(row['attempts'])));self.table.setItem(i,5,QTableWidgetItem(row['path']+'\n'+row.get('reason','')));self.table.setItem(i,6,QTableWidgetItem('暫存：'+str(row.get('stage_path') or '無')+'\n原檔恢復：'+str(row.get('recovery_path') or '無')))
     def run(self,retry):
         try:
             if self.running or self.window.busy:return
@@ -41,20 +54,20 @@ class OutputBatchDialog(QDialog):
                 self.status.setText('全部明確略過；沒有產生檔案。')
                 for row in self.engine.items:self.update_row(row)
                 return
-            self.running=True;self.cancel.clear();self.start.setEnabled(False);self.retry.setEnabled(False)
+            self.running=True;self.dpi.setEnabled(False);self.review_button.setEnabled(False);self.cancel.clear();self.start.setEnabled(False);self.retry.setEnabled(False)
             for name,action in self.controls:name.setEnabled(False);action.setEnabled(False)
-            root=self.window.library.root;plan=deepcopy(self.engine.plan);items=deepcopy(self.engine.items);scope=self.engine.scope;entries=deepcopy(self.owner.service.entries);inputs=deepcopy(self.owner.inputs);graph=deepcopy(self.owner.graph.data);generation=self.owner.generation;format_reviews=deepcopy(self.owner.service.format_reviews);stale=self.owner.stale;stop=self.owner.stop
+            root=self.window.library.root;plan=deepcopy(self.engine.plan);items=deepcopy(self.engine.items);scope=self.engine.scope;entries=deepcopy(self.owner.service.entries);inputs=deepcopy(self.owner.inputs);graph=deepcopy(self.owner.graph.data);generation=self.owner.generation;format_reviews=deepcopy(self.owner.service.format_reviews);dpi=self.dpi.value();stale=self.owner.stale;stop=self.owner.stop
             def worker():
                 from .storage import Library
                 library=None
                 try:
                     library=Library(root);workflow=MultiSizeWorkflow(library,inputs,graph,generation);workflow.entries=entries;workflow.format_reviews=format_reviews;engine=OutputBatch(workflow,plan);engine.items=items;engine.scope=scope
-                    return dict(items=engine.execute(selected,True,plan['partial'],current_check=lambda:not stale.is_set() and not stop.is_set(),cancel=self.cancel,progress=self.progress.updated.emit,retry=retry))
+                    return dict(items=engine.execute(selected,True,plan['partial'],current_check=lambda:not stale.is_set() and not stop.is_set(),cancel=self.cancel,progress=self.progress.updated.emit,retry=retry,dpi=dpi))
                 except Exception as error:return dict(error=str(error))
                 finally:
                     if library:library.close()
             def finished(result):
-                self.running=False;self.retry.setEnabled(True);self.start.setEnabled(any(row['status']=='PLANNED' for row in result.get('items',self.engine.items)))
+                self.running=False;self.dpi.setEnabled(True);self.review_button.setEnabled(True);self.retry.setEnabled(True);self.start.setEnabled(any(row['status']=='PLANNED' for row in result.get('items',self.engine.items)))
                 if result.get('error'):self.status.setText('未完成：'+result['error']);return
                 self.engine.items=result['items']
                 for row in self.engine.items:self.update_row(row)

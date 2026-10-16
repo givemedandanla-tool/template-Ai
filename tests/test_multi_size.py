@@ -22,10 +22,22 @@ from template_ai.multi_size import MultiSizeWorkflow,size_key
 from template_ai.multi_size_dialog import MultiSizeDialog
 from template_ai.render import export,preview_footer,preview_height
 from template_ai.storage import Library
+from gui_wait import wait_for_gui,job_diagnostics
+from runtime_fixture import controlled_resources
 
 APP=QApplication.instance() or QApplication([])
 REVIEW=dict(identity_confirmed=True,whole_mark_confirmed=True,usage_authorized=True,
     digital_quality_confirmed=True,actor='SYNTHETIC_TEST',note='Synthetic source and digital quality checked')
+
+
+def approve_formats(workflow,plan,dpi=150):
+    # Authored fixture review is explicit; production defaults remain unchecked.
+    from template_ai.digital_review import confirm
+    seen=set()
+    for row in plan['items']:
+        format=Path(row['path']).suffix[1:].upper();key=(row['key'],format)
+        if row['mode']!='FINAL' or format=='PNG' or key in seen:continue
+        seen.add(key);proof=workflow.format_proof(row['key'],format,dpi);entry=next(e for e in workflow.entries if e['key']==row['key']);candidate=workflow.revalidate(entry);receipt=confirm(candidate,proof,'SYNTHETIC_SOURCE_AUTHOR','Authored source and actual original-size format snapshot verified before fixture publication',True);workflow.set_format_review(row['key'],format,dpi,receipt)
 
 
 class MultiSizeTests(unittest.TestCase):
@@ -45,7 +57,7 @@ class MultiSizeTests(unittest.TestCase):
         self.entries=self.workflow.calculate([[90,54],[100,60]])
         self.output=self.root/'output';self.output.mkdir()
 
-    def tearDown(self):self.library.close();self.temp.cleanup()
+    def tearDown(self):self.workflow.close_format_reviews();self.library.close();self.temp.cleanup()
 
     def requests(self):return [dict(key=size_key(90,54),mode='FINAL',formats=['pdf','png','jpg']),dict(key=size_key(100,60),mode='PREVIEW',formats=['pdf','png','jpg'])]
 
@@ -61,6 +73,7 @@ class MultiSizeTests(unittest.TestCase):
         plan=self.workflow.plan(self.output,self.requests());self.assertTrue(plan['partial'])
         with self.assertRaises(ValueError):self.workflow.execute(plan,True)
         self.assertEqual(list(self.output.iterdir()),[])
+        approve_formats(self.workflow,plan,96)
         results=self.workflow.execute(plan,True,acknowledge_partial=True,dpi=96)
         self.assertEqual([r['status'] for r in results],['SUCCESS']*6)
         self.assertEqual({Path(r['path']).parent.name for r in results},{'FINAL','PREVIEW'})
@@ -93,6 +106,7 @@ class MultiSizeTests(unittest.TestCase):
     def test_existing_success_is_not_overwritten_and_late_failure_does_not_delete_other_files(self):
         requests=[dict(key=size_key(90,54),mode='FINAL',formats=['png','pdf'])]
         plan=self.workflow.plan(self.output,requests);target=Path(plan['items'][0]['path']);target.parent.mkdir();target.write_bytes(b'Existing synthetic success')
+        approve_formats(self.workflow,plan,96)
         results=self.workflow.execute(plan,True,True,dpi=96)
         self.assertEqual([r['status'] for r in results],['FAILED','SUCCESS'])
         self.assertEqual(target.read_bytes(),b'Existing synthetic success')
@@ -103,6 +117,7 @@ class MultiSizeTests(unittest.TestCase):
         with self.assertRaises(ValueError):self.workflow.execute(plan,True,True,current_check=lambda:False)
         calls=[]
         def valid():calls.append(1);return len(calls)<=2
+        approve_formats(self.workflow,plan,96)
         results=self.workflow.execute(plan,True,True,current_check=valid,dpi=96)
         self.assertEqual([r['status'] for r in results],['SUCCESS','FAILED'])
 
@@ -125,15 +140,13 @@ class MultiSizeTests(unittest.TestCase):
 
     def test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files(self):
         window=MainWindow(self.library.root)
+        controlled_resources(window)
         try:
             window.adopt_input_graph(self.graph.data)
             dialog=MultiSizeDialog(window);self.addCleanup(dialog.deleteLater)
             for row in range(dialog.table.rowCount()):dialog.table.item(row,0).setCheckState(Qt.Checked)
             dialog.start()
-            for _ in range(1000):
-                APP.processEvents()
-                if not dialog.running:break
-                QTest.qWait(10)
+            self.assertTrue(wait_for_gui(lambda:not dialog.running,10),job_diagnostics(window,'GEOMETRY') if dialog.running else '')
             self.assertFalse(dialog.running);self.assertIsNotNone(dialog.service)
             self.assertEqual([e['state'] for e in dialog.service.entries],['VALID','BLOCKED'])
             for row in range(dialog.table.rowCount()):dialog.table.cellWidget(row,5).setCurrentText('FINAL' if row==0 else 'PREVIEW')

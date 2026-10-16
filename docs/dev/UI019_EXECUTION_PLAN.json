@@ -152,5 +152,18 @@
     "evidence": "docs/qa/targeted/ui019-batch-review-021.log:6PASS actualexit0",
     "behavior": "No current PDF/JPG review => per-row BLOCKED, unrelated PNG/marked previews still succeed. Only reviewed exact format released; DPI/new inputs/other-size/tampering rejected. Direct original MultiSizeWorkflow uses same registry. No parallel order DB.",
     "remaining": "Original batch GUI per-row actual review entry and shared detail UI; positive legacy multi-size/output fixtures must explicitly review authorized output; other callers/integration/PoC/native/full12 pending"
+  },
+  "batch_original_GUI_WIP": {
+    "status": "IMPLEMENTED_PENDING_NATIVE_FULL_SOURCE",
+    "new_tests": 63,
+    "catalog_tests": 1488,
+    "evidence": [
+      "docs/qa/targeted/ui019-batch-gui-023.log",
+      "docs/qa/targeted/ui019-batch-gui-024.log",
+      "docs/qa/targeted/ui019-batch-coherent-025.log",
+      "docs/qa/targeted/ui019-batch-coherent-026.log"
+    ],
+    "result": "023 actual sort/visible-row identity failure fixed with Qt.UserRole;02416PASS.02529/30 old polling/resource test timeout,02630PASS actualexit0 using original gui_wait/runtime fixture. Original per-row read-only batch actual-format proof/detail/consent, current size/format/DPI registry, worker copies review snapshot and chosen DPI. Explicit workflow close cleans temporary proof directory, no child-close deletion before delivery. Positive fixture author review added; no automatic product consent.",
+    "remaining": "Other positive formal callers, complex SVG/composite source PoC/policy, actual native individual review, full12 mapping and immutable full-source Gate"
   }
 }

@@ -125,6 +125,7 @@ class MultiSizeDialog(QDialog):
                 service=MultiSizeWorkflow(library,inputs,graph,generation)
                 return service.calculate_preserving(sizes,previous,chosen,scope,self.stop) if previous else service.calculate(sizes,chosen,scope,self.stop)
             def finished(entries):
+                if self.service:self.service.close_format_reviews()
                 self.service=MultiSizeWorkflow(self.window.library,inputs,graph,generation);self.service.entries=entries;self.render_rows()
                 self.export_button.setEnabled(self.is_current())
                 self.status.setText(f'實際處理{len(entries)}個尺寸；未檢查／取消／失敗各自保留狀態。正式與PREVIEW須明確選擇。')
@@ -260,7 +261,10 @@ class MultiSizeDialog(QDialog):
 
     def closeEvent(self,event):
         if self.running:self.stop.set();self.status.setText('安全停止中；等待當前工作完成再關閉。');event.ignore()
-        else:super().closeEvent(event)
+        else:
+            if self.service:self.service.close_format_reviews()
+            super().closeEvent(event)
     def reject(self):
         if self.running:self.stop.set();self.status.setText('取消中；原背景工作結束後才能安全關閉。');return
+        if self.service:self.service.close_format_reviews()
         super().reject()
