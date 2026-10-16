@@ -1,0 +1,22 @@
+======================================================================
+ERROR: test_actual_distinct_source_versions_execute_their_own_frozen_code (test_quality_engine.QualityEngineTests.test_actual_distinct_source_versions_execute_their_own_frozen_code)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_engine.py", line 23, in test_actual_distinct_source_versions_execute_their_own_frozen_code
+    left=quality_engine.execute(baseline,self.source,self.library.assets,None,None)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_engine.py", line 92, in execute
+    result=module.analyse_source(source,assets,model,context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/tmpsy0gq4n7/data/assets/quality-engines/e347cc39d026363b8b1e370033819d304420c951331417956672c559cbeb5592/source_analysis.py", line 56, in analyse_source
+    root,elements,bounds=vector_objects(source,assets)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/tmpsy0gq4n7/data/assets/quality-engines/e347cc39d026363b8b1e370033819d304420c951331417956672c559cbeb5592/source_analysis.py", line 24, in vector_objects
+    verify_source(source['current_path'],source['hash'])
+                  ~~~~~~^^^^^^^^^^^^^^^^
+KeyError: 'current_path'
+
+----------------------------------------------------------------------
+Ran 27 tests in 51.315s
+
+FAILED (errors=1)
