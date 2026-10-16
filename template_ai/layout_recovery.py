@@ -17,7 +17,7 @@ MAGIC=b'TALR1';LIMIT=4*1024*1024;TTL_SECONDS=24*3600
 def engine_pins():
     from PySide6.QtCore import qVersion
     root=Path(__file__).parent
-    names=('layout.py','render.py','model.py','candidate_risk.py','layout_recovery.py','text_policy.py','text_metrics.py','font_catalog.py','font_evidence.py','logo_assets.py','background.py')
+    names=('candidate_changes.py','candidate_edit.py','layout_session.py','layout.py','render.py','model.py','candidate_risk.py','layout_recovery.py','text_policy.py','text_metrics.py','font_catalog.py','font_evidence.py','logo_assets.py','background.py')
     return dict(qt=qVersion(),files={name:file_digest(root/name) for name in names})
 
 

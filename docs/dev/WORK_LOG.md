@@ -1251,3 +1251,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 2026-10-16 LAYOUT003204attachments normalGitHubACK406699e23e0ad8597ecda7a6fdc3dd34dfee589d/tree64807ab8fb1ce25ac14dcd8890ca9b89a465f177, actualpublicationScopeGatePASS150claims.12/28/120originalclauses completeSELF, fixed70closed54/remain16. ContinueUI059original10 immediately; preserve all prior failures and no EXE/mainmerge/agents.
 
 2026-10-16 UI059 firstreal dependency/threeway/delta/inverse module23targetedPASS. Canonicalc1/manycompany+unknownfallback, source/size/font/locks/lateproperty guarded, actualinverse+wholecardgenerate/noDBwrite.001failure retained.1101catalog/150currentclaims pending, historical12unchanged; nofull10/GUIintegration claim.
+
+2026-10-16 UI059 actualedit/history/undo source23+integration46+newnative7PASS. Bounded20delta, currentinputwholecardrecheck, ABAmanualrevision/requiredunknown/lockresize/exactUIbutton tests.1108catalog/150pending, historical12unchanged. Productasync/impact/conflictsstillpending; nofull10claim.
