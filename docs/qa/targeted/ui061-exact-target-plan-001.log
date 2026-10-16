@@ -1,0 +1,16 @@
+======================================================================
+FAIL: test_unchanged_property_and_generation_conflict_have_named_per_target_states (test_candidate_sync.CandidateSyncTests.test_unchanged_property_and_generation_conflict_have_named_per_target_states)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_sync.py", line 47, in test_unchanged_property_and_generation_conflict_have_named_per_target_states
+    self.b.template.slots[0].align='center';self.c.generation=8;rows=self.plan()['targets'];self.assertEqual(rows[0]['state'],'UNCHANGED');self.assertEqual(rows[1]['state'],'INCOMPATIBLE');self.assertIn('世代',rows[1]['reason'])
+                                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'INCOMPATIBLE' != 'UNCHANGED'
+- INCOMPATIBLE
++ UNCHANGED
+
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.307s
+
+FAILED (failures=1)

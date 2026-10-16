@@ -1,6 +1,6 @@
 {
   "id": "UI061-EXECUTION-PLAN",
-  "status": "PLANNED",
+  "status": "IMPLEMENTATION_IN_PROGRESS",
   "parent": "UI-061",
   "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
@@ -97,5 +97,25 @@
     "No geometry scaling/fuzzy name inference/published template/business customer/Logo/train writes/new permanent drafts",
     "Resource budget and single existing worker; no untested reference Windows performance claim"
   ],
-  "next_action": "Read existing MultiSize service/dialog targeted portions, preserve source-ID semantics and reuse existing manual per-target services via ephemeral adapters on original worker."
+  "next_action": "Integrate existing MultiSizeWorkflow/Dialog and candidate_edit services: canonical graph IDs, per-size shared-input synchronization preserving manual geometry, explicit cross-target confirmation/apply/undo on original worker.",
+  "targeted_checks": [
+    {
+      "log": "docs/qa/targeted/ui061-exact-target-plan-001.log",
+      "status": "FAIL",
+      "tests": 10,
+      "reason": "Unchanged property proposed an empty object_tools history; retained diagnostic"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-exact-target-plan-002.log",
+      "status": "PASS",
+      "tests": 10,
+      "reason": "Skip unchanged properties/lock; bounded unique stable-ID join, no geometry copies, target statuses and pin fencing"
+    }
+  ],
+  "implementation_limits": [
+    "First module builds transient preview plans only, no app GUI/apply yet; do not claim full UI061 or formal qualification",
+    "Unit fixture has two same-name people/two companies and three candidate previews across two sizes; deliberately not full Logo/source qualification evidence",
+    "Existing MultiSizeWorkflow.revalidate currently demands published template digest equal candidate geometry; must extend to preserve manual geometry using original source pins and candidate_edit recheck",
+    "Existing MultiSizeDialog.background reuses original MainWindow.run_job but needs explicit resource-kind/cancel/error/current-source fencing when new edit/sync actions integrate"
+  ]
 }
