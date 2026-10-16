@@ -24,7 +24,8 @@ class RuntimeSupervisor(QObject):
         if start:self.monitor.start();self.timer.start()
 
     def eventFilter(self,watched,event):
-        if event.type() in (QEvent.KeyPress,QEvent.MouseButtonPress,QEvent.Wheel) and isinstance(watched,QWidget) and (watched is self.window or self.window.isAncestorOf(watched)):self.last_interaction=self.clock()
+        if self.closed_event.is_set() or not isValid(self.window):return False
+        if event.type() in (QEvent.KeyPress,QEvent.MouseButtonPress,QEvent.Wheel) and isinstance(watched,QWidget) and isValid(watched) and (watched is self.window or self.window.isAncestorOf(watched)):self.last_interaction=self.clock()
         return False
 
     def context_active(self):

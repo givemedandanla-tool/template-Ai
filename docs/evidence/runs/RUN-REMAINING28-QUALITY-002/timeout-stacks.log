@@ -1,0 +1,339 @@
+Timeout (0:01:00)!
+Thread 0x00007f75f2adc6c0 (most recent call first):
+  File "/workspace/template-Ai/template_ai/source_links.py", line 53 in <lambda>
+  File "/workspace/template-Ai/template_ai/source_links.py", line 53 in hash_source
+  File "/workspace/template-Ai/template_ai/batch_import.py", line 89 in convert_item
+  File "/workspace/template-Ai/template_ai/batch_dialog.py", line 111 in <lambda>
+  File "/workspace/template-Ai/template_ai/batch_dialog.py", line 47 in work
+  File "/workspace/template-Ai/template_ai/gui.py", line 42 in run
+
+Thread 0x00007f75f46b36c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f761d494740 (most recent call first):
+  File "/workspace/template-Ai/tests/test_batch_import.py", line 99 in wait_for
+  File "/workspace/template-Ai/tests/test_batch_import.py", line 137 in test_late_result_transaction_failure_stops_and_reenables_gui
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/run_evidence.py", line 133 in main
+  File "/workspace/template-Ai/tools/run_evidence.py", line 286 in <module>
+Timeout (0:01:00)!
+Thread 0x00007f75e27fc6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75e1ffb6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75f46b36c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f761d494740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/diagnostic_dialog.py", line 68 in display
+  File "/workspace/template-Ai/template_ai/diagnostic_dialog.py", line 61 in on_finished
+  File "/workspace/template-Ai/tests/test_seventy_ui.py", line 27 in pump_until
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 31 in dialog
+  File "/workspace/template-Ai/tests/test_diagnostic_reports.py", line 210 in test_gui_original_entry_points_training_template_and_candidate
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/run_evidence.py", line 133 in main
+  File "/workspace/template-Ai/tools/run_evidence.py", line 286 in <module>
+Timeout (0:01:00)!
+Thread 0x00007f75e37fe6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75f46b36c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f761d494740 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/selectors.py", line 415 in select
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2115 in _communicate
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1209 in communicate
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 550 in run
+  File "/workspace/template-Ai/template_ai/importer.py", line 73 in _run
+  File "/workspace/template-Ai/template_ai/importer.py", line 165 in import_file
+  File "/workspace/template-Ai/tests/test_logo_lifecycle.py", line 39 in setUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 586 in _callSetUp
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 630 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/run_evidence.py", line 133 in main
+  File "/workspace/template-Ai/tools/run_evidence.py", line 286 in <module>
+Timeout (0:01:00)!
+Thread 0x00007f75f0dfc6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75c153d6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75e37fe6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75f46b36c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f761d494740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/object_dialog.py", line 236 in __init__
+  File "/workspace/template-Ai/tests/test_object_tools.py", line 223 in test_both_mode_entries_source_history_and_unsaved_editor_protection
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/run_evidence.py", line 133 in main
+  File "/workspace/template-Ai/tools/run_evidence.py", line 286 in <module>
+Timeout (0:01:00)!
+Thread 0x00007f75e27fc6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75f0dfc6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75c153d6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75e37fe6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75f46b36c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f761d494740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/quality_pipeline.py", line 32 in font_environment
+  File "/workspace/template-Ai/template_ai/quality_pipeline.py", line 59 in current_manifest
+  File "/workspace/template-Ai/template_ai/quality_pipeline.py", line 79 in validity
+  File "/workspace/template-Ai/template_ai/quality_protocol.py", line 86 in validity
+  File "/workspace/template-Ai/template_ai/quality_jobs.py", line 28 in create_pair
+  File "/workspace/template-Ai/tests/test_quality_jobs.py", line 32 in build
+  File "/workspace/template-Ai/tests/test_quality_dispatch.py", line 51 in test_real_owned_stalled_child_kill_rolls_back_then_persists_last_failed_source_receipt
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/run_evidence.py", line 133 in main
+  File "/workspace/template-Ai/tools/run_evidence.py", line 286 in <module>
+Timeout (0:01:00)!
+Thread 0x00007f75e27fc6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75f0dfc6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75c153d6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75e37fe6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75f46b36c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f761d494740 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/selectors.py", line 415 in select
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2115 in _communicate
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1209 in communicate
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 550 in run
+  File "/tmp/tmpktdme2nt/data/assets/quality-engines/4947c55178e7760691128634f9a79f9039b262bb541552a36ccf2908b5f82793/source_analysis.py", line 33 in vector_objects
+  File "/tmp/tmpktdme2nt/data/assets/quality-engines/4947c55178e7760691128634f9a79f9039b262bb541552a36ccf2908b5f82793/source_analysis.py", line 56 in analyse_source
+  File "/workspace/template-Ai/template_ai/quality_engine.py", line 95 in execute
+  File "/workspace/template-Ai/template_ai/quality_pipeline.py", line 100 in predict_source
+  File "/workspace/template-Ai/template_ai/quality_jobs.py", line 89 in evaluate_item
+  File "/workspace/template-Ai/template_ai/quality_jobs.py", line 171 in run_evaluation
+  File "/workspace/template-Ai/tests/test_quality_panel.py", line 24 in completed
+  File "/workspace/template-Ai/tests/test_quality_panel.py", line 85 in test_actual_source_sample_view_and_live_invalidity_badge_after_exposure
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589 in _callTestMethod
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/run_evidence.py", line 133 in main
+  File "/workspace/template-Ai/tools/run_evidence.py", line 286 in <module>
+Timeout (0:01:00)!
+Thread 0x00007f75abfff6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75e27fc6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75f0dfc6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75c153d6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75e37fe6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f75f46b36c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Thread 0x00007f761d494740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/runtime_supervisor.py", line 28 in eventFilter
+  File ???, line ??? in 

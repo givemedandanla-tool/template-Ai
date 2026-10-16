@@ -1,7 +1,8 @@
 import tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
-from PySide6.QtCore import QEvent
+from PySide6.QtCore import QEvent,QCoreApplication
+from shiboken6 import isValid
 from PySide6.QtWidgets import QApplication,QWidget
 from template_ai.storage import Library
 from template_ai.runtime_supervisor import RuntimeSupervisor,KEY
@@ -23,6 +24,15 @@ class RuntimeSupervisorTests(unittest.TestCase):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=QWidget();self.window.library=Library(self.root);self.addCleanup(self.window.library.close);self.addCleanup(self.window.close);self.clock=[100.0];self.monitor=Monitor(self.clock);self.service=RuntimeSupervisor(self.window,self.monitor,lambda:self.clock[0],start=False);self.addCleanup(self.service.shutdown)
 
     def ready(self):self.clock[0]+=.25;self.service.pulse()
+
+    def test_delayed_input_events_do_not_touch_destroyed_widgets_or_closed_context(self):
+        child=QWidget(self.window);child.deleteLater();QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete)
+        self.assertFalse(isValid(child));before=self.service.last_interaction
+        self.assertFalse(self.service.eventFilter(child,QEvent(QEvent.MouseButtonPress)))
+        self.assertEqual(self.service.last_interaction,before)
+        self.service.shutdown();self.clock[0]+=1
+        self.assertFalse(self.service.eventFilter(self.window,QEvent(QEvent.KeyPress)))
+        self.assertEqual(self.service.last_interaction,before);self.assertTrue(self.monitor.closed)
 
     def test_gui_heartbeat_and_foreground_priority_are_measured_without_reading_key_text(self):
         self.assertIn('GUI_STARTUP_WARMUP',self.service.admit().reasons);self.ready();self.assertTrue(self.service.admit().allowed)

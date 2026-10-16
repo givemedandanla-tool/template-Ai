@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI053-ACTUAL-QUALITY-CAPTURE-WIP",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI053-QUALITY-SOURCE-002.receipt.json",
-  "last_confirmed_commit": "f7fd4536acf1ec3834027384e6951341e1506db4",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI053-FORMAL002-RUNNING.receipt.json",
+  "last_confirmed_commit": "a16c29582692cc03cd92804ee323444584295355",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -29,7 +29,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-UI053-FORMAL002-RUNNING"
+    "CP-20261016-REMAINING28-UI053-NATIVE-LIFECYCLE-WIP"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -569,7 +569,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-QUALITY-002",
+  "planned_evidence_run": "RUN-REMAINING28-QUALITY-003",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -659,7 +659,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "Formalquality002 sourcef7fd4536acf1ec3834027384e6951341e1506db4 stillrunning; 684/935PASS sofar; app/tests/tools/acceptancefrozen; UI054 docs drafts syntaxonly, not appimplementation",
+  "current_work": "Formal002 nativecrash139 preserved; isolatedGUI4PASS and actualdestroyed-widget/shutdown guard+GUI12PASS. Building serial module-owned formal harness; no oldrun completion.936known tests before harness tests.",
   "last_formal_failure": {
     "run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
     "source_commit": "233e9ea4edc8d8927e482c3f0d362a78bd2ced5d",
@@ -672,5 +672,13 @@
     "capture_executed": false,
     "capture_exit_code_sentinel": 1,
     "reason": "Existing watch test equated idle with finished although real resource admission can leave FIFO pending; production guards unchanged"
-  }
+  },
+  "interrupted_evidence_runs": [
+    {
+      "folder": "docs/evidence/runs/RUN-REMAINING28-QUALITY-002",
+      "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-002/native-interruption.json",
+      "actual_exit_code": 139,
+      "source_commit": "f7fd4536acf1ec3834027384e6951341e1506db4"
+    }
+  ]
 }
