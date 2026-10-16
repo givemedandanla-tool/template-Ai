@@ -42,6 +42,6 @@ class QualityDomainTests(unittest.TestCase):
 
     def test_whole_logo_and_customer_mapping_never_inferred_from_correct_field_boxes(self):
         gold,prediction,policy=self.fixture();result=evaluate_source([gold],prediction,policy,complete_source_gold=True)
-        self.assertEqual(result['domains']['whole_logo']['state'],'EVIDENCE_INSUFFICIENT');self.assertEqual(result['domains']['customer_style_mapping']['state'],'EVIDENCE_INSUFFICIENT')
+        self.assertIsNone(result['domains']['whole_logo']['metrics']['precision']);self.assertEqual(result['domains']['whole_logo']['required_gold'],0);self.assertEqual(result['domains']['customer_style_mapping']['state'],'EVIDENCE_INSUFFICIENT')
         prediction['prediction_origin']='USER_SUPPLIED_RECORDS_NOT_EXECUTED_MODEL_INFERENCE'
         with self.assertRaises(ValueError):evaluate_source([gold],prediction,policy,complete_source_gold=True)

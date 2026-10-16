@@ -63,7 +63,9 @@ def classification_metrics(gold,predictions,minimum_iou):
     classes={kind:[0,0,0] for kind in sorted({r['kind'] for r in gold+predictions})};cases=[];root_candidates={};inverse={}
     for pair in matching['matches']:
         g,p=actual[pair['gold_id']],predicted[pair['prediction_id']]
-        if g['kind']==p['kind'] and g['kind'] in ('name','company') and g.get('owner') and p.get('owner'):
+        oracle=g.get('component_truth') or {};candidate=p.get('component_prediction') or {}
+        logo_anchor=(g['kind']=='logo' and oracle.get('manually_verified') and oracle.get('complete') and candidate.get('complete') and oracle.get('svg_hash')==candidate.get('svg_hash') and set(oracle.get('component_ids',[]))==set(candidate.get('component_ids',[])))
+        if g['kind']==p['kind'] and (g['kind'] in ('name','company') or logo_anchor) and g.get('owner') and p.get('owner'):
             root_candidates.setdefault(p['owner'],set()).add(g['owner']);inverse.setdefault(g['owner'],set()).add(p['owner'])
     root_map={p:next(iter(gs)) for p,gs in root_candidates.items() if len(gs)==1 and len(inverse[next(iter(gs))])==1}
     critical=0;unknown_owners=0;known_owner_pairs=0

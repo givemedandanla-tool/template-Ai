@@ -40,8 +40,16 @@ def validate_truth(evidence, source, elements, bounds):
     if not actual['complete'] or set(ids) != set(actual['component_ids']): raise ValueError('人工完整構件與已核對向量群組不一致／尚有外部或未知構件')
     semantic_ids=evidence.get('text_component_ids')
     if semantic_ids is not None:
-        if not isinstance(semantic_ids,list) or any(not isinstance(i,str) for i in semantic_ids) or len(set(semantic_ids))!=len(semantic_ids) or not set(semantic_ids)<=set(ids):raise ValueError('人工文字構件需明列完整Logo構件的子集，不能把SVG path自動當非文字')
+        if not isinstance(semantic_ids,list) or any(not isinstance(i,str) for i in semantic_ids) or len(set(semantic_ids))!=len(semantic_ids) or len(semantic_ids)>200:raise ValueError('人工文字區域需明列有界且不重複的原稿物件ID')
+        by_id={node.get('id'):node for node in roots[0].iter() if node.get('id')};covered=set()
+        for identity in semantic_ids:
+            node=by_id.get(identity)
+            if node is None or identity not in bounds:raise ValueError('人工文字區域不在已核實完整Logo群組')
+            leaves={child.get('id') for child in node.iter() if child.tag.rsplit('}',1)[-1] in PAINT}
+            if not leaves or not leaves<=set(ids) or covered.intersection(leaves):raise ValueError('人工文字區域不可重複包含相同構件／超出Logo；不能重複增加分母')
+            covered.update(leaves);actual['component_regions'][identity]=vars(bounds[identity])
         actual['text_component_ids']=sorted(semantic_ids)
+        actual['text_paint_ids']=sorted(covered)
     actual['text_content_manually_reviewed']=semantic_ids is not None
     return dict(actual, review_reason=evidence['review_reason'], original_correspondence='MANUALLY_CONFIRMED_ORIGINAL_AND_DERIVATIVE',
                 manually_verified=True, component_digest=digest(actual))

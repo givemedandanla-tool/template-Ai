@@ -133,6 +133,7 @@ def analyse(source,assets,model,context,record,vector_analyser):
     else:
         crop=dict(x=0,y=0,w=source['width_mm'],h=source['height_mm'])
         works=[dict(key=digest([VERSION,source['hash'],source['page'],crop]),source_id=source['id'],source_hash=source['hash'],source_page=source['page'],crop=crop,work_width=crop['w'],work_height=crop['h'],slots=[],observations=[],company_bindings={},visual_confirmed=False,analysis_version=VERSION,review_state='AI_PENDING_REVIEW',evidence=dict(method='ACTUAL_TESSERACT_SOURCE_IMAGE_PAGE_HYPOTHESIS',native_illustrator_mapping='UNKNOWN'))]
+    assigned=set()
     for work in works:
         crop=Rect(**work['crop']);kept={slot['id'] for slot in work['slots'] if slot['kind']=='logo'}
         work['slots']=[slot for slot in work['slots'] if slot['id'] in kept];work['observations']=[obs for obs in work['observations'] if obs.get('slot_id') in kept]
@@ -141,6 +142,7 @@ def analyse(source,assets,model,context,record,vector_analyser):
         for line in text_lines:
             rect=Rect(**line['rect'])
             if not contains(crop,rect):continue
+            assigned.add(tuple(line['key']))
             logo=next((obs for obs in work['observations'] if obs['classification']=='LOGO' and contains(Rect(**obs['region']),rect)),None)
             identity='ocr-'+digest([source['hash'],source['page'],work['key'],line['key']])[:28]
             if logo is not None:logo['component_text_predictions'].append(dict(id=identity,rect=line['rect'],text=line['text']));continue
@@ -153,4 +155,6 @@ def analyse(source,assets,model,context,record,vector_analyser):
             work['observations'].append(dict(id='obs-'+identity,slot_id=slot_id,text=line['text'],region=line['rect'],object_type='TEXT',classification='FIELD' if kind else 'UNKNOWN',semantic=semantic,ocr_word_confidences=line['word_confidences'],prior_prediction='ACTUAL_OCR_UNCONFIRMED'))
         work['company_bindings']={'p1':companies} if name else {}
         work['evidence']['ocr']=dict(executed=True,algorithm_version=VERSION,model_hashes={m['language']:m['sha256'] for m in record['models']},configuration=record['configuration'],all_page_lines=len(text_lines),confidence_filter_applied=False,original_native_text_or_identity_verified=False)
+    unassigned=[copy.deepcopy(line) for line in text_lines if tuple(line['key']) not in assigned]
+    for work in works:work['evidence']['ocr']['unassigned_source_text_lines']=unassigned
     return works

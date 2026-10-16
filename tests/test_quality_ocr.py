@@ -58,3 +58,13 @@ class QualityOcrTests(unittest.TestCase):
         different=self.root/'different-installed-models';different.mkdir();(different/'eng.traineddata').write_bytes(b'not the actual frozen language model')
         with patch('template_ai.logo_ocr.capability',return_value=dict(original,data_dir=str(different))):verify(record)
         self.assertNotEqual(Path(record['models'][0]['path']).read_bytes(),b'not the actual frozen language model')
+
+    def test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate(self):
+        import test_quality_domains as domain_fixture
+        from template_ai.quality_domains import evaluate_source
+        gold,prediction,policy=domain_fixture.QualityDomainTests.fixture(self)
+        line=dict(key=[1,1,1,1],text='Unassigned source text',rect=dict(x=1,y=60,w=30,h=4))
+        prediction['predictions'][0]['evidence']=dict(ocr=dict(unassigned_source_text_lines=[line]))
+        result=evaluate_source([gold],prediction,policy,complete_source_gold=True)
+        self.assertEqual(result['domains']['text_candidates']['state'],'EVIDENCE_INSUFFICIENT')
+        self.assertTrue(any(c.get('reason')=='UNASSIGNED_SOURCE_TEXT_OUTSIDE_PREDICTED_WORKS' for c in result['cases']))

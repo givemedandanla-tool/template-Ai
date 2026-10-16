@@ -64,6 +64,14 @@ class QualityLogoTests(unittest.TestCase):
         self.assertEqual(result['domains']['text_candidates']['state'],'EVIDENCE_INSUFFICIENT')
         self.assertIsNone(result['domains']['text_candidates']['metrics'])
 
+    def test_manual_nested_outline_word_group_is_one_text_region_and_cannot_double_count_glyph(self):
+        node=ET.fromstring('<g id="logo"><g id="word"><path id="glyph1"/><path id="glyph2"/></g><circle id="mark"/></g>')
+        bounds=dict(word=Rect(1,1,4,2),glyph1=Rect(1,1,2,2),glyph2=Rect(3,1,2,2),mark=Rect(6,1,2,2))
+        source=dict(hash='0'*64,file_hashes=dict(svg='1'*64));evidence=dict(root_id='logo',component_ids=['glyph1','glyph2','mark'],text_component_ids=['word'],review_reason='Manual complete outlined word correspondence',original_correspondence_confirmed=True)
+        truth=validate_truth(evidence,source,list(node.iter()),bounds)
+        self.assertEqual(truth['text_component_ids'],['word']);self.assertEqual(truth['text_paint_ids'],['glyph1','glyph2'])
+        with self.assertRaises(ValueError):validate_truth(dict(evidence,text_component_ids=['word','glyph1']),source,list(node.iter()),bounds)
+
 
 class ActualLogoPipelineTests(unittest.TestCase):
     setUp=source_fixture.QualityGoldSetTests.setUp

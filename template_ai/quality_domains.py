@@ -163,9 +163,13 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
     if truth('physical_size') and len(mm_errors)==len(golds):
         tolerance=policy['thresholds']['physical_size']['maximum_absolute_error_mm'];domains['physical_size']=measured(None,len(mm_errors),'WORK_MAX_ABSOLUTE_MM_ERROR',errors_mm=mm_errors,maximum_absolute_error_mm=max(mm_errors,default=None),mean_absolute_error_mm=sum(mm_errors)/len(mm_errors) if mm_errors else None,within_explicit_tolerance=sum(error<=tolerance for error in mm_errors),tolerance_mm=tolerance)
     logo_gold=sum(o['kind']=='logo' for g in golds for o in g['objects']);logo_predictions=sum(o['kind']=='logo' for p in works for o in predicted_objects(p))
-    domains['whole_logo']=measured(counts(*logo_counts),logo_gold,'MANUALLY_REVIEWED_WHOLE_SOURCE_LOGO_COMPONENT_SETS') if truth('whole_logo') and not logo_unknown and (logo_gold or logo_predictions) else unknown('完整Logo需要原始群組／構件與圖文真值，bbox相符不能證實完整；未當100%',logo_gold)
+    domains['whole_logo']=measured(counts(*logo_counts),logo_gold,'MANUALLY_REVIEWED_WHOLE_SOURCE_LOGO_COMPONENT_SETS') if truth('whole_logo') and not logo_unknown else unknown('完整Logo需要原始群組／構件與圖文真值，bbox相符不能證實完整；未當100%',logo_gold)
     domains['whole_logo'].update(recorded_logo_candidates=logo_predictions,missing_component_truth=logo_missing_component_truth)
     domains['customer_style_mapping']=measured(counts(*mapping_counts),len(golds),'WHOLE_SOURCE_WORK_TO_EXACT_CUSTOMER_STYLE_TEMPLATE_VERSION') if truth('customer_style_mapping') and not mapping_unknown else unknown('需明確人工映射真值及預先固定的既有候選目錄；未配置／缺gold不拿人工關聯冒充推論',len(golds))
+    unassigned={tuple(line['key']):line for work in works for line in work.get('evidence',{}).get('ocr',{}).get('unassigned_source_text_lines',[])}
+    if unassigned:
+        domains['text_candidates']=unknown('存在未歸入任何預測作品的來源OCR文字；未把它們省略為完整文字分母',gold_objects)
+        cases.extend(dict(domain='text_candidates',reason='UNASSIGNED_SOURCE_TEXT_OUTSIDE_PREDICTED_WORKS',predicted_rect=line['rect'],text=line['text'],work_id=None) for line in unassigned.values())
     for name,domain in domains.items():
         if not truth(name):domain['reason']='此層真值或全來源分母尚未完整核實；未解析／缺gold來源不被排除'
     return dict(domains=domains,conditional_per_class=per_class,required_source_pages=1,unresolved_source_pages=0,gold_work_count=len(golds),predicted_work_count=len(works),gold_object_count=gold_objects,work_matching=paired,unknown_owner_mappings=owner_unknown,missing_person_roots=root_missing,cases=cases,critical_errors=dict(critical),quality_pass=None)
