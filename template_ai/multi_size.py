@@ -20,6 +20,9 @@ class MultiSizeWorkflow:
         self.library=library;self.store=LogoStore(library)
         self.people,self.companies,self.original_logos=deepcopy(inputs)
         self.graph=InputGraph(graph) if graph is not None else InputGraph.from_legacy(*inputs)
+        # The same graph supplies exact source identity in every physical size.
+        # Original per-size Logo choices remain separately resolved below.
+        self.people,self.companies,_=self.graph.compile()
         self.generation=generation;self.entries=[]
 
     def catalog_stamp(self,width,height):
@@ -32,6 +35,8 @@ class MultiSizeWorkflow:
         if len({size_key(*size) for size in sizes})!=len(sizes):raise ValueError('輸出尺寸重複，請核對方向與毫米值')
         for size in sizes:self.store._size(*size)
         selections=selections or {};templates=self.library.templates(True);assets={a['id']:a for a in self.library.logos()}
+        count=sum(1 for width,height in sizes for t in templates if abs(t.width_mm-width)<1e-5 and abs(t.height_mm-height)<1e-5 and t.capacity==len(self.people) and (allowed_template_ids is None or t.id in allowed_template_ids))
+        if count>200:raise ValueError('超過當次200候選資源預算；請縮小尺寸／模板集合，未截斷或開始計算')
         self.entries=[]
         for index,(width,height) in enumerate(sizes):
             entry=dict(key=size_key(width,height),size_mm=[width,height],candidates=[],failures=[],
@@ -53,6 +58,7 @@ class MultiSizeWorkflow:
                     found=self.store.match(entity,company['name'],width,height)
                     entry['logo_states'][port]=found['state']
                     if found['selected']:logos[port]=deepcopy(found['selected'])
+            entry['resolved_logos']=deepcopy(logos)
             matching=[t for t in templates if abs(t.width_mm-width)<1e-5 and abs(t.height_mm-height)<1e-5 and t.capacity==len(self.people) and (allowed_template_ids is None or t.id in allowed_template_ids)]
             for template in matching:
                 if cancel and cancel.is_set():break
@@ -62,7 +68,7 @@ class MultiSizeWorkflow:
                     from .candidate_risk import bind_source,verify_original_source
                     try:verify_original_source(candidate,self.library)
                     except (ValueError,OSError):pass
-                    bind_source(candidate,self.library);entry['candidates'].append(candidate)
+                    bind_source(candidate,self.library,require_registered=True);entry['candidates'].append(candidate)
                 except (ValueError,OSError) as error:entry['failures'].append(dict(template_id=template.id,reason=str(error)))
             entry['candidates'].sort(key=lambda c:(not c.formal_eligible,-c.score,c.template.id))
             if entry['candidates']:
@@ -71,6 +77,40 @@ class MultiSizeWorkflow:
             else:entry['state']='FAILED' if entry['failures'] else 'NO_TEMPLATE'
             if cancel and cancel.is_set():entry['state']='CANCELLED'
             if progress:progress(dict(processed_sizes=index+1,total_sizes=len(sizes),state=entry['state']))
+        return self.entries
+
+    def calculate_preserving(self,sizes,previous,selections=None,allowed_template_ids=None,cancel=None,progress=None):
+        """Recompute shared source while retaining each explicitly manual instance."""
+        from types import SimpleNamespace
+        from .candidate_edit import plan_recheck,prepare_edit,calculate_edit
+        from .candidate_sync import field_reference
+        old_entries={entry['key']:deepcopy(entry) for entry in previous}
+        self.calculate(sizes,selections,allowed_template_ids,cancel,progress)
+        for entry in self.entries:
+            old=old_entries.get(entry['key'])
+            if old is None:continue
+            for original in old['candidates']:
+                if not original.risk_context.get('manual_edit_receipt'):continue
+                index=next((i for i,c in enumerate(entry['candidates']) if c.template.id==original.template.id),None)
+                try:
+                    if cancel and cancel.is_set():raise ValueError('已取消，人工作品保留但未重驗')
+                    if index is None:raise ValueError('來源版型／容量不再相容，保留人工作品供比較')
+                    # Compare exact field/consumer identities before using new
+                    # pN/cN positions; card reorder/deletion is never name-based.
+                    current=entry['candidates'][index]
+                    for slot in original.template.slots:
+                        if field_reference(original,slot)!=field_reference(current,slot):raise ValueError('來源實體／欄位對應已改；人工位置保留待核對，不能按位置套給另一人物')
+                    original.risk_context['conditions']=[row for row in original.risk_context.get('conditions',[]) if row['id']!='SHARED_SOURCE_SYNC_REQUIRED']
+                    inputs=(self.people,self.companies,entry['resolved_logos']);adapter=SimpleNamespace(library=self.library,candidates=[original],generation=self.generation,input_data=lambda values=inputs:deepcopy(values))
+                    preserved=calculate_edit(prepare_edit(adapter,plan_recheck(adapter,0)),self.library)
+                except (ValueError,OSError,TypeError,KeyError) as error:
+                    preserved=deepcopy(original);preserved.risk_context.setdefault('conditions',[]).append(dict(id='SHARED_SOURCE_SYNC_REQUIRED',status='UNKNOWN',reason=str(error)));preserved.risk_context['edit_state']='MANUAL_SOURCE_CONFLICT'
+                if index is None:entry['candidates'].append(preserved)
+                else:entry['candidates'][index]=preserved
+            if any(c.template.id==old.get('selected') and c.risk_context.get('manual_edit_receipt') for c in entry['candidates']):entry['selected']=old['selected']
+            selected=self.selected(entry)
+            if selected is not None:entry['state']='VALID' if selected.formal_eligible else 'BLOCKED'
+            if cancel and cancel.is_set():entry['state']='CANCELLED'
         return self.entries
 
     def selected(self,entry):
@@ -87,19 +127,17 @@ class MultiSizeWorkflow:
         if candidate is None or entry['state'] in ('NOT_CHECKED','CANCELLED'):raise ValueError('此尺寸尚未完成計算，不能輸出')
         if self.catalog_stamp(*entry['size_mm'])!=entry['catalog_stamp']:raise ValueError('此尺寸Logo版本／核准／身分已變更，先重新計算')
         template=next((t for t in self.library.templates(True) if t.id==candidate.template.id),None)
-        if template is None or digest(template.to_dict())!=digest(candidate.template.to_dict()):raise ValueError('確切模板版本已變更／失聯，需重驗')
+        from .training_store import digest as pin_digest
+        if template is None or candidate.risk_context.get('source_template_pin')!=dict(id=template.id,version=template.version,digest=pin_digest(template.to_dict())):raise ValueError('確切模板版本已變更／失聯，需重驗')
         self.library._template_provenance(template)
         logos={item.slot.owner:deepcopy(item.logo) for item in candidate.items if item.logo}
         current={a['id']:a for a in self.library.logos()}
         for asset in logos.values():
             if asset['id'] not in current or digest(current[asset['id']])!=digest(asset) or errors(asset):raise ValueError('Logo來源／版本已變更，不輸出舊候選')
-        from .candidate_risk import bind_source
-        fresh=generate(template,self.people,self.companies,logos,self.generation)
-        for key in ('source_template_pin','original_source_proof'):
-            if key in candidate.risk_context:fresh.risk_context[key]=deepcopy(candidate.risk_context[key])
-        fresh.risk_context['conditions']=deepcopy(candidate.risk_context.get('conditions',[]))
-        bind_source(fresh,self.library)
-        return fresh
+        from types import SimpleNamespace
+        from .candidate_edit import plan_recheck,prepare_edit,calculate_edit
+        adapter=SimpleNamespace(library=self.library,candidates=[candidate],generation=self.generation,input_data=lambda:deepcopy((self.people,self.companies,logos)))
+        return calculate_edit(prepare_edit(adapter,plan_recheck(adapter,0)),self.library)
 
     def plan(self,directory,requests,prefix='layout'):
         directory=Path(directory).resolve()

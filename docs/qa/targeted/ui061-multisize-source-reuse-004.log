@@ -1,0 +1,69 @@
+======================================================================
+ERROR: test_sizes_keep_independent_geometry_and_missing_logo_does_not_borrow_or_block_other_size (test_multi_size.MultiSizeTests.test_sizes_keep_independent_geometry_and_missing_logo_does_not_borrow_or_block_other_size)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_multi_size.py", line 58, in test_sizes_keep_independent_geometry_and_missing_logo_does_not_borrow_or_block_other_size
+    self.assertTrue(self.workflow.revalidate(a).valid);self.assertFalse(self.workflow.revalidate(b).valid)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/multi_size.py", line 129, in revalidate
+    if template is None or candidate.risk_context.get('source_template_pin')!=dict(id=template.id,version=template.version,digest=pin_digest(template.to_dict())):raise ValueError('確切模板版本已變更／失聯，需重驗')
+                                                                                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 確切模板版本已變更／失聯，需重驗
+
+======================================================================
+FAIL: test_existing_success_is_not_overwritten_and_late_failure_does_not_delete_other_files (test_multi_size.MultiSizeTests.test_existing_success_is_not_overwritten_and_late_failure_does_not_delete_other_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_multi_size.py", line 97, in test_existing_success_is_not_overwritten_and_late_failure_does_not_delete_other_files
+    self.assertEqual([r['status'] for r in results],['FAILED','SUCCESS'])
+AssertionError: Lists differ: ['FAILED', 'FAILED'] != ['FAILED', 'SUCCESS']
+
+First differing element 1:
+'FAILED'
+'SUCCESS'
+
+- ['FAILED', 'FAILED']
++ ['FAILED', 'SUCCESS']
+
+======================================================================
+FAIL: test_input_change_before_and_between_files_never_produces_unconfirmed_new_output (test_multi_size.MultiSizeTests.test_input_change_before_and_between_files_never_produces_unconfirmed_new_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_multi_size.py", line 107, in test_input_change_before_and_between_files_never_produces_unconfirmed_new_output
+    self.assertEqual([r['status'] for r in results],['SUCCESS','FAILED'])
+AssertionError: Lists differ: ['FAILED', 'FAILED'] != ['SUCCESS', 'FAILED']
+
+First differing element 0:
+'FAILED'
+'SUCCESS'
+
+- ['FAILED', 'FAILED']
++ ['SUCCESS', 'FAILED']
+
+======================================================================
+FAIL: test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate (test_multi_size.MultiSizeTests.test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_multi_size.py", line 65, in test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate
+    self.assertEqual([r['status'] for r in results],['SUCCESS']*6)
+AssertionError: Lists differ: ['FAILED', 'FAILED', 'FAILED', 'FAILED', 'FAILED', 'FAILED'] != ['SUCCESS', 'SUCCESS', 'SUCCESS', 'SUCCESS', 'SUCCESS', 'SUCCESS']
+
+First differing element 0:
+'FAILED'
+'SUCCESS'
+
+- ['FAILED', 'FAILED', 'FAILED', 'FAILED', 'FAILED', 'FAILED']
++ ['SUCCESS', 'SUCCESS', 'SUCCESS', 'SUCCESS', 'SUCCESS', 'SUCCESS']
+
+======================================================================
+FAIL: test_revoked_or_changed_logo_and_template_block_only_affected_output (test_multi_size.MultiSizeTests.test_revoked_or_changed_logo_and_template_block_only_affected_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_multi_size.py", line 90, in test_revoked_or_changed_logo_and_template_block_only_affected_output
+    self.assertTrue(all(r['status']=='SUCCESS' for r in results[3:]))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 20 tests in 9.093s
+
+FAILED (failures=4, errors=1)
