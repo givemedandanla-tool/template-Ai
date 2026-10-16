@@ -1,6 +1,6 @@
 {
   "id": "UI053-INDEPENDENT-QUALITY-EXACT9",
-  "status": "FULL_ORIGINAL9_REGISTERED_PENDING_FROZEN_SOURCE_FORMAL",
+  "status": "FULL_ORIGINAL9_PENDING_FROZEN_940_TEST_SOURCE004",
   "original_clauses": [
     "使用者正式選擇 **D｜獨立樣本驗收＋分類誤判診斷＋版本比較＋品質阻擋**。UI-052 已確認**來源與作品審核覆蓋是否完整**，UI-053 獨立判定**AI 解析、欄位語意、人物／公司／Logo 歸屬、尺寸與作品切分，對真正未參與訓練的來源能否可靠運作**。**訓練成功、UI-052 批次已結案、訓練集上高準確率，均不等於品質驗收 PASS**；不許只展示未明確定義的一個「AI 準確率」。",
     "**獨立驗收樣本與防資料洩漏**：以**完整來源與作品關係／同位元內容、近重複設計、客戶與模板家族**等適當群組切分訓練、調參／驗證與**保留測試集（holdout）**；相同位元或高度相關的作品不能拆到訓練與測試兩邊而虛增成果。驗收資料須有來源、確定可合法使用的範圍、可核對原始 Illustrator 作品、必要真實人工標註／黃金答案及版本；若來源無法確認、標註與真值存在爭議，記為待核對而非當作正確答案。訓練與開發反覆調參不可窺看或利用保留測試集答案；若已洩漏或多次藉測試結果調參，須標示測試集失效／需更換真正獨立新樣本，避免評估資料被訓練吸收。",
@@ -112,6 +112,6 @@
     "docs/evidence/runs/RUN-REMAINING28-QUALITY-002/native-interruption.json",
     "docs/evidence/runs/RUN-REMAINING28-QUALITY-003/controlled-stop.json"
   ],
-  "test_execution_strategy": "Exact939 catalog,serialfreshownedmoduleprocesses,120sdeadline vs measuredlargest25.65s; no skipped/dropped/replayed-to-PASS test; failed/missing/nativeexit blocks formal",
+  "test_execution_strategy": "Exact940catalog;serialfreshownedmoduleprocesses;QApplicationbeforetestload/core0;120s/module;allmissing/failed/native/timeout/errors block;scopedworkflowfixturescontrolled,actualresource/capture unchanged",
   "worker_bootstrap": "Everyfreshworker ownsstrongQApplication beforetestload,owncorelimit0; knowncoldworkflowtests useexplicitcontrolledresourcefixture, realresource/capture stillactual"
 }

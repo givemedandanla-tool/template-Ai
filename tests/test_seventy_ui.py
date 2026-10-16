@@ -2,7 +2,7 @@ import copy,json,threading,time
 from pathlib import Path
 import tempfile,unittest
 from unittest.mock import patch
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt,QCoreApplication,QEvent
 from PySide6.QtWidgets import QApplication,QMessageBox
 from PySide6.QtTest import QTest
 from template_ai.gui import MainWindow
@@ -17,6 +17,7 @@ from template_ai.batch_objects import batch_plan,apply_batch,BatchObjectDialog
 from template_ai.diagnostic_routes import open_diagnostic
 from template_ai.model import Slot,Rect
 from training_fixture import source_work
+from runtime_fixture import controlled_resources
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
 from gui_convergence import reconcile
@@ -29,9 +30,14 @@ def pump_until(fn,seconds=5):
 
 class SeventyUiTests(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'data');self.addCleanup(self.w.library.db.close);self.t=demo_template();self.w.library.publish(self.t);self.w.people.setRowCount(1)
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'data');controlled_resources(self.w);self.addCleanup(self.close_window);self.t=demo_template();self.w.library.publish(self.t);self.w.people.setRowCount(1)
         from PySide6.QtWidgets import QTableWidgetItem
         for j,v in enumerate(('Alex Example','Designer','+12025550100','alex@example.test','','','','')):self.w.people.setItem(0,j,QTableWidgetItem(v))
+
+    def close_window(self):
+        self.w.input_timer.stop();self.w.execution_queue.cancel_event.set();self.w.pool.waitForDone(5000);APP.processEvents()
+        self.w.font_manager.close();self.w.library.close();self.w.deleteLater()
+        QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete)
     def test_input_width_is_measured_fixed_point_no_global_limit_and_exact_gui_location(self):
         people,companies,_=self.w.input_data();people[0]['name']=['X'*200];report=diagnose(people,companies,[self.t],90,54);self.assertFalse(report['global_unsolvable']);self.assertTrue(any(i['code']=='FIT_RISK' for i in report['issues']));self.assertIn('固定18pt',report['issues'][0]['reason'])
         self.w.people.item(0,0).setText('');self.w.refresh_input_problems();item=self.w.input_problems.item(0);self.w.locate_input_problem(item);self.assertEqual((self.w.people.currentRow(),self.w.people.currentColumn()),(0,0));self.assertIn('待版面驗證',self.w.input_state.text());self.assertFalse(self.w.export_button.isEnabled())
