@@ -1084,4 +1084,4 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 
 ### Freeze940-test quality004 after targeted lifecycle verification
 - SeventyUiTests fixture hadrawSQLiteclose andcoldlayoutworker barriers; nowexistingcontrolled_resources onlyforworkflowtest, stopinputtimer/cancelqueue/waitownpool, closefontmanager+Library withobservers, deleteLater+flushdeferredwidgets. Actualownedmodule11/11PASS3.8589s/exit0/noQt/runtimeerrors/noleftoverownedchildren. No productionpolicy changed; no performanceclaim fromsyntheticresources.
-- Previouslyknown3module failures nowtarget6modules27PASS; disjointSeventy11PASS. Source941? exactgovernancecatalog940 authoritative; no furthercodechangeplanned duringformal004. Nativewrongbootstrap/failures/interruptionrecords remainunchanged; onlyearlierWORK_LOG count581? typo clarifiedtoactual561.
+- Previouslyknown3module failures nowtarget6modules27PASS; disjointSeventy11PASS. Exactgovernancecatalog940; no furthercodechangeplanned duringformal004. Nativewrongbootstrap/failures/interruptionrecords remainunchanged; earlierWORK_LOG count typo clarifiedtoactual561.
