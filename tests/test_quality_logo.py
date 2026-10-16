@@ -38,8 +38,8 @@ class QualityLogoTests(unittest.TestCase):
         evidence=validate_truth(truth,source,list(node.iter()),bounds)
         gold,prediction,policy=fixtures.QualityDomainTests.fixture(self)
         rect=dict(x=60,y=2,w=6,h=3)
-        gold['objects'].append(dict(id='gold-logo',slot_id='logo',kind='logo',owner=None,rect=rect,text='',object_type='LOGO_PART',classification='LOGO',component_truth=evidence))
-        work=prediction['predictions'][0];work['slots'].append(dict(id='logo',kind='logo',owner=None))
+        gold['objects'].append(dict(id='gold-logo',slot_id='logo',kind='logo',owner='c1',rect=rect,text='',object_type='LOGO_PART',classification='LOGO',component_truth=evidence))
+        work=prediction['predictions'][0];work['slots'].append(dict(id='logo',kind='logo',owner='c1'))
         candidate=components(node,source,bounds)
         if truncate:candidate['component_ids']=['mark'];candidate['text_component_ids']=[]
         work['observations'].append(dict(id='pred-logo',slot_id='logo',region=rect,text='',object_type='LOGO_PART',classification='LOGO',component_prediction=candidate))

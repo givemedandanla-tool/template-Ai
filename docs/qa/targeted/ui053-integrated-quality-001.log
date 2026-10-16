@@ -1,0 +1,82 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+ERROR: test_actual_path_tag_cannot_erase_human_confirmed_outlined_logo_text (test_quality_logo.QualityLogoTests.test_actual_path_tag_cannot_erase_human_confirmed_outlined_logo_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_logo.py", line 56, in test_actual_path_tag_cannot_erase_human_confirmed_outlined_logo_text
+    result=self.score(semantic_text_ids=['mark','label'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_logo.py", line 46, in score
+    return evaluate_source([gold],prediction,policy,complete_source_gold=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_domains.py", line 69, in evaluate_source
+    gold=gold_by[pair['gold_id']];pred=pred_by[pair['prediction_id']];objects=predicted_objects(pred)
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_domains.py", line 24, in predicted_objects
+    if kind not in KINDS or not isinstance(owner,str) or not re.fullmatch(prefix+r'[1-9][0-9]*',owner):raise ValueError('實際預測ROOT類型／識別不合法，不能用任意同名ROOT映成正解')
+                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 實際預測ROOT類型／識別不合法，不能用任意同名ROOT映成正解
+
+======================================================================
+ERROR: test_no_manual_text_partition_keeps_logo_text_completeness_unknown (test_quality_logo.QualityLogoTests.test_no_manual_text_partition_keeps_logo_text_completeness_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_logo.py", line 63, in test_no_manual_text_partition_keeps_logo_text_completeness_unknown
+    result=self.score(unreviewed=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_logo.py", line 46, in score
+    return evaluate_source([gold],prediction,policy,complete_source_gold=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_domains.py", line 69, in evaluate_source
+    gold=gold_by[pair['gold_id']];pred=pred_by[pair['prediction_id']];objects=predicted_objects(pred)
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_domains.py", line 24, in predicted_objects
+    if kind not in KINDS or not isinstance(owner,str) or not re.fullmatch(prefix+r'[1-9][0-9]*',owner):raise ValueError('實際預測ROOT類型／識別不合法，不能用任意同名ROOT映成正解')
+                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 實際預測ROOT類型／識別不合法，不能用任意同名ROOT映成正解
+
+======================================================================
+ERROR: test_same_bbox_truncated_logo_is_critical_and_logo_text_remains_denominator (test_quality_logo.QualityLogoTests.test_same_bbox_truncated_logo_is_critical_and_logo_text_remains_denominator)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_logo.py", line 49, in test_same_bbox_truncated_logo_is_critical_and_logo_text_remains_denominator
+    correct=self.score();bad=self.score(True)
+            ^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_logo.py", line 46, in score
+    return evaluate_source([gold],prediction,policy,complete_source_gold=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_domains.py", line 69, in evaluate_source
+    gold=gold_by[pair['gold_id']];pred=pred_by[pair['prediction_id']];objects=predicted_objects(pred)
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_domains.py", line 24, in predicted_objects
+    if kind not in KINDS or not isinstance(owner,str) or not re.fullmatch(prefix+r'[1-9][0-9]*',owner):raise ValueError('實際預測ROOT類型／識別不合法，不能用任意同名ROOT映成正解')
+                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 實際預測ROOT類型／識別不合法，不能用任意同名ROOT映成正解
+
+----------------------------------------------------------------------
+Ran 152 tests in 182.197s
+
+FAILED (errors=3)
