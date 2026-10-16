@@ -1,0 +1,17 @@
+======================================================================
+FAIL: test_copying_set_or_another_job_cannot_reset_used_holdout_for_tuning (test_quality_protocol.QualityProtocolTests.test_copying_set_or_another_job_cannot_reset_used_holdout_for_tuning)
+----------------------------------------------------------------------
+ValueError: BASELINE：實際模型／程式／解析器／規則／字型或環境版本已變更
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_protocol.py", line 43, in test_copying_set_or_another_job_cannot_reset_used_holdout_for_tuning
+    with self.assertRaisesRegex(ValueError,'全新獨立群組'):self.plan(cloned)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "全新獨立群組" does not match "BASELINE：實際模型／程式／解析器／規則／字型或環境版本已變更"
+
+----------------------------------------------------------------------
+Ran 24 tests in 34.989s
+
+FAILED (failures=1)

@@ -16,8 +16,20 @@ def predicted_objects(work):
     slots={row['id']:row for row in work.get('slots',[])};result=[]
     for observation in work.get('observations',[]):
         slot=slots.get(observation.get('slot_id'));kind=slot['kind'] if slot else observation.get('classification','UNKNOWN')
-        result.append(dict(id=observation['id'],kind=kind,owner=slot.get('owner') if slot else None,rect=observation['region'],object_type=observation.get('object_type'),text=observation.get('text','')))
+        result.append(dict(id=observation['id'],kind=kind,owner=slot.get('owner') if slot else None,rect=observation['region'],object_type=observation.get('object_type'),text=observation.get('text',''),component_prediction=observation.get('component_prediction')))
     return result
+
+
+def text_boxes(objects, prediction=False):
+    result=[];complete=True
+    for obj in objects:
+        if obj['kind']=='logo':
+            evidence=obj.get('component_prediction' if prediction else 'component_truth') or {}
+            if not evidence.get('complete') or not prediction and not evidence.get('manually_verified'):complete=False;continue
+            for identity in evidence['text_component_ids']:
+                result.append(dict(id=obj['id']+':'+identity,rect=evidence['component_regions'][identity]))
+        elif obj.get('object_type')=='TEXT':result.append(dict(id=obj['id'],rect=obj['rect']))
+    return result,complete
 
 
 def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresolved_reason=None):
@@ -37,17 +49,30 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
     paired=match_boxes([dict(id=g['work_id'],rect=g['crop']) for g in golds],[dict(id=p['key'],rect=p['crop']) for p in works],policy['matching_iou'])
     truth=lambda domain:complete_source_gold and all(g['domain_truth'][domain]=='MANUALLY_VERIFIED' for g in golds)
     cases=[];critical=Counter();class_counts={};person=[0,0,0];company=[0,0,0];owner_unknown=0;person_unknown=0;company_unknown=0;root_missing=0;mm_errors=[]
-    logo_gold=0;logo_predictions=0;logo_missing_component_truth=0
+    logo_gold=0;logo_predictions=0;logo_missing_component_truth=0;logo_counts=[0,0,0];logo_unknown=0;text_counts=[0,0,0];text_unknown=False
     def add_class(kind,tp=0,fp=0,fn=0):
         row=class_counts.setdefault(kind,[0,0,0]);row[0]+=tp;row[1]+=fp;row[2]+=fn
     for pair in paired['matches']:
         gold=gold_by[pair['gold_id']];pred=pred_by[pair['prediction_id']];objects=predicted_objects(pred)
         result=classification_metrics(gold['objects'],objects,policy['matching_iou'])
+        gt,gcomplete=text_boxes(gold['objects']);pt,pcomplete=text_boxes(objects,True);text_unknown|=not(gcomplete and pcomplete)
+        text_match=match_boxes(gt,pt,policy['matching_iou'])
+        for index,key in enumerate(('matches','false_positive_ids','false_negative_ids')):text_counts[index]+=len(text_match[key])
         for kind,m in result['per_class'].items():add_class(kind,m['tp'],m['fp'],m['fn'])
         cases += [dict(case,work_id=gold['work_id'],predicted_work_id=pred['key']) for case in result['cases']]
         gobs={o['id']:o for o in gold['objects']};pobs={o['id']:o for o in objects};matched_g=set();matched_p=set()
         for match in result['matching']['matches']:
             g,p=gobs[match['gold_id']],pobs[match['prediction_id']];matched_g.add(g['id']);matched_p.add(p['id'])
+            if g['kind']=='logo' or p['kind']=='logo':
+                oracle=g.get('component_truth') or {};candidate=p.get('component_prediction') or {}
+                if g['kind']=='logo' and (not oracle.get('complete') or not oracle.get('manually_verified')):logo_unknown+=1
+                elif p['kind']=='logo' and not candidate.get('complete'):logo_unknown+=1
+                elif g['kind']!='logo':logo_counts[1]+=1
+                elif p['kind']!='logo':logo_counts[2]+=1;critical['missing_whole_logo']+=int(truth('whole_logo'))
+                elif set(oracle['component_ids'])==set(candidate['component_ids']) and oracle['svg_hash']==candidate['svg_hash']:logo_counts[0]+=1
+                else:
+                    logo_counts[1]+=1;logo_counts[2]+=1;critical['truncated_or_misgrouped_logo']+=int(truth('whole_logo'))
+                    cases.append(dict(work_id=gold['work_id'],gold_id=g['id'],prediction_id=p['id'],reason='WHOLE_LOGO_COMPONENTS_DIFFER',missing_components=sorted(set(oracle['component_ids'])-set(candidate['component_ids'])),extra_components=sorted(set(candidate['component_ids'])-set(oracle['component_ids']))))
             target=person if str(g.get('owner') or '').startswith('p') else company if str(g.get('owner') or '').startswith('c') else None
             if target is None:continue
             mapped=result['root_correspondence'].get(p.get('owner'))
@@ -61,10 +86,16 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
                 if truth('person_ownership' if target is person else 'company_ownership'):critical['person_owner_mismatch' if target is person else 'company_owner_mismatch']+=1
         for obj in gold['objects']:
             if obj['id'] not in matched_g:
+                if obj['kind']=='logo':
+                    if (obj.get('component_truth') or {}).get('manually_verified'):logo_counts[2]+=1;critical['missing_whole_logo']+=int(truth('whole_logo'))
+                    else:logo_unknown+=1
                 if str(obj.get('owner') or '').startswith('p'):person[2]+=1
                 elif str(obj.get('owner') or '').startswith('c'):company[2]+=1
         for obj in objects:
             if obj['id'] not in matched_p:
+                if obj['kind']=='logo':
+                    if (obj.get('component_prediction') or {}).get('complete'):logo_counts[1]+=1
+                    else:logo_unknown+=1
                 if str(obj.get('owner') or '').startswith('p'):person[1]+=1
                 elif str(obj.get('owner') or '').startswith('c'):company[1]+=1
         roots={o['owner'] for o in gold['objects'] if o['kind']=='name' and o.get('owner')};mapped_roots=set(result['root_correspondence'].values());root_missing+=len(roots-mapped_roots)
@@ -73,6 +104,11 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
         logo_missing_component_truth+=sum(o['kind']=='logo' and not o.get('component_truth') for o in gold['objects'])
     for wid in paired['false_negative_ids']:
         gold=gold_by[wid]
+        gt,gcomplete=text_boxes(gold['objects']);text_counts[2]+=len(gt);text_unknown|=not gcomplete
+        for obj in gold['objects']:
+            if obj['kind']=='logo':
+                if (obj.get('component_truth') or {}).get('manually_verified'):logo_counts[2]+=1;critical['missing_whole_logo']+=int(truth('whole_logo'))
+                else:logo_unknown+=1
         for obj in gold['objects']:
             add_class(obj['kind'],fn=1)
             if str(obj.get('owner') or '').startswith('p'):person[2]+=1
@@ -81,7 +117,11 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
         if truth('work_segmentation'):critical['missing_work']+=1
         cases.append(dict(work_id=wid,predicted_work_id=None,reason='MISSING_WHOLE_GOLD_WORK',source_id=prediction['source_id']))
     for wid in paired['false_positive_ids']:
-        for obj in predicted_objects(pred_by[wid]):
+        extra_objects=predicted_objects(pred_by[wid]);pt,pcomplete=text_boxes(extra_objects,True);text_counts[1]+=len(pt);text_unknown|=not pcomplete
+        for obj in extra_objects:
+            if obj['kind']=='logo':
+                if (obj.get('component_prediction') or {}).get('complete'):logo_counts[1]+=1
+                else:logo_unknown+=1
             add_class(obj['kind'],fp=1)
             if str(obj.get('owner') or '').startswith('p'):person[1]+=1
             elif str(obj.get('owner') or '').startswith('c'):company[1]+=1
@@ -93,14 +133,15 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
     # Detection TP includes misclassified spatial matches; semantic errors are scored separately.
     tp=sum(v['tp'] for v in per_class.values());fp=sum(v['fp'] for v in per_class.values());fn=sum(v['fn'] for v in per_class.values())
     wrong_kinds=sum(case.get('kind_error',False) for case in cases)
-    if truth('text_candidates'):domains['text_candidates']=measured(counts(tp+wrong_kinds,max(0,fp-wrong_kinds),max(0,fn-wrong_kinds)),gold_objects,'SOURCE_OBSERVATION_BOXES_INCLUDING_ANNOTATION;LOGO_TEXT_MEMBERS_UNKNOWN')
-    if truth('text_candidates') and logo_missing_component_truth:domains['text_candidates']=unknown('Logo圖文構件中的文字真值不完整；已知bbox統計不能冒充所有文字候選完整率',gold_objects)
+    if truth('text_candidates'):domains['text_candidates']=measured(counts(*text_counts),text_counts[0]+text_counts[2],'ACTUAL_TEXT_BOXES_INCLUDING_ANNOTATION_AND_REVIEWED_LOGO_TEXT')
+    if truth('text_candidates') and text_unknown:domains['text_candidates']=unknown('Logo圖文構件中的文字真值不完整；已知bbox統計不能冒充所有文字候選完整率',gold_objects)
     if truth('person_ownership') and not person_unknown:domains['person_ownership']=measured(counts(*person),sum(str(o.get('owner') or '').startswith('p') for g in golds for o in g['objects']),'PERSON_OWNED_OBJECT_ASSIGNMENTS')
     if truth('company_ownership') and not company_unknown:domains['company_ownership']=measured(counts(*company),sum(str(o.get('owner') or '').startswith('c') for g in golds for o in g['objects']),'COMPANY_OWNED_OBJECT_ASSIGNMENTS')
     if truth('person_ownership') and root_missing:critical['missing_person_root']+=root_missing
     if truth('physical_size') and len(mm_errors)==len(golds):
         tolerance=policy['thresholds']['physical_size']['maximum_absolute_error_mm'];domains['physical_size']=measured(None,len(mm_errors),'WORK_MAX_ABSOLUTE_MM_ERROR',errors_mm=mm_errors,maximum_absolute_error_mm=max(mm_errors,default=None),mean_absolute_error_mm=sum(mm_errors)/len(mm_errors) if mm_errors else None,within_explicit_tolerance=sum(error<=tolerance for error in mm_errors),tolerance_mm=tolerance)
-    domains['whole_logo']=unknown('完整Logo需要原始群組／構件與圖文真值，bbox相符不能證實完整；未當100%',logo_gold)
+    logo_gold=sum(o['kind']=='logo' for g in golds for o in g['objects']);logo_predictions=sum(o['kind']=='logo' for p in works for o in predicted_objects(p))
+    domains['whole_logo']=measured(counts(*logo_counts),logo_gold,'MANUALLY_REVIEWED_WHOLE_SOURCE_LOGO_COMPONENT_SETS') if truth('whole_logo') and not logo_unknown and (logo_gold or logo_predictions) else unknown('完整Logo需要原始群組／構件與圖文真值，bbox相符不能證實完整；未當100%',logo_gold)
     domains['whole_logo'].update(recorded_logo_candidates=logo_predictions,missing_component_truth=logo_missing_component_truth)
     domains['customer_style_mapping']=unknown('目前source-only解析器未產生已確認客戶／版型版本推論；不能拿既有人工關聯冒充模型預測')
     for name,domain in domains.items():

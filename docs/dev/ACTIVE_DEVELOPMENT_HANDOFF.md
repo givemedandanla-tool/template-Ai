@@ -66,3 +66,7 @@
 ### UI053 dispatcher / restore tested WIP
 - 8 actual dispatch+jobs and27 dispatch+pipeline+restore targets PASS (overlap). EVAL_JOB restore owner/token cleared, explicit resume; actual owned-child timeout rollback then persisted unknown denominator receipt. Logs docs/qa/targeted/ui053-*.
 - Next independent-group statistical Gate/pairedAB; complete Logo/mapping Oracle adapters, diagnostic/exposure GUI and severe historical review, original9 full-source formal. UI053 not closed;144 currentclaims pending, historical6/28.
+
+### UI053 statistics / exact pair / Logo checkpoint
+- Latest34 targets PASS, original source-change-during-target1failure preserved then frozen-source rerunPASS. quality_statistics: whole-group Wilson failure upperbound/perclass minima/unknown and missinggroup guards; quality_reports: exact fixedpair/pins/denominators/durable report/decision/withdrawal, synthetic cannot approveproduction. Actual sourceanalyser v6 Logo components; optional explicit human original component Gold, component/text counters and truncationcritical, actual renderer test.
+- Still missing customer/style versioned Oracle+source-only adapter, full paged setup/diagnostic/exposure GUI and severe historicalcrossbatch trustguard; then original9/sourceformal. UI053 not closed,144 currentpending; historical6/28 unchanged.

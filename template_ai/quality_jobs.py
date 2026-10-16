@@ -119,7 +119,7 @@ class EvaluationJobs:
         with self.store.transaction():
             row=self.owned(identity,token)
             if any(item['state'] in ('READY','RUNNING') for item in row['items']):raise ValueError('仍有未執行來源，不能將工作標完成')
-            critical=Counter();unknown=set();references=[]
+            critical=Counter();unknown=set();references=[];source_results=[]
             for item in row['items']:
                 result=self.store.get(ITEM,item.get('result_id',''))
                 if not result:
@@ -135,13 +135,16 @@ class EvaluationJobs:
                         p=result['source_proof'];check_verified(VerifiedSource(p['path'],p['hash'],tuple(p['stat'])),p['hash'])
                         if cache_stamps(self.library.source(item['source_id']))!=result['source_cache_stamps'] or digest(self.library.source(item['source_id']))!=item['expected_pins']['source_digest']:raise ValueError('來源／cache／位置metadata已變更')
                     except (OSError,ValueError) as error:scope_errors.append(str(error))
-                critical.update(result['evaluation']['critical_errors']);unknown.update(name for name,domain in result['evaluation']['domains'].items() if domain['state']!='MEASURED_DESCRIPTIVE_ONLY');references.append(dict(id=result['id'],digest=digest(result)))
+                critical.update(result['evaluation']['critical_errors']);unknown.update(name for name,domain in result['evaluation']['domains'].items() if domain['state']!='MEASURED_DESCRIPTIVE_ONLY');references.append(dict(id=result['id'],digest=digest(result)));source_results.append(result)
             manifest=self.store.get('QUALITY_SET',row['dataset_id'])['manifest']
-            result_id=new_id();result=self.store._write(RESULT,result_id,dict(job_id=identity,protocol_id=row['protocol_id'],side=row['side'],dataset_id=row['dataset_id'],dataset_manifest_digest=row['manifest_digest'],pipeline_manifest_digest=row['pipeline_manifest_digest'],protocol_scope_digest=row['protocol_scope_digest'],required_source_pages_or_unparsed_files=len(row['items']),declared_logical_files=manifest['file_count'],declared_physical_paths=manifest['physical_path_count'],declared_gold_works=manifest['gold_work_count'],declared_gold_objects=manifest['gold_object_count'],required_independent_groups=manifest['independent_group_count'],source_results=references,critical_errors=dict(critical),unmeasured_domains=sorted(unknown),scope_current=not scope_errors,scope_errors=sorted(set(scope_errors)),quality_gate='EVIDENCE_INSUFFICIENT_CHANGED_SCOPE' if scope_errors else 'FAILED_CRITICAL' if any(critical.values()) else 'EVIDENCE_INSUFFICIENT' if unknown else 'PENDING_STATISTICAL_POLICY_CHECK',quality_pass=False,automatic_recommendation_allowed=False,origin='ACTUAL_FIFO_SOURCE_EVALUATION',finished_at=time.time(),immutable=True),0,'quality_fixed_side_result_saved_not_release')
+            from .quality_statistics import aggregate
+            policy=self.store.get('QUALITY_POLICY',scope_check['protocol']['scope']['policy_id'])['plan']
+            statistics=aggregate(source_results,manifest,policy)
+            result_id=new_id();result=self.store._write(RESULT,result_id,dict(job_id=identity,protocol_id=row['protocol_id'],side=row['side'],dataset_id=row['dataset_id'],dataset_manifest_digest=row['manifest_digest'],pipeline_manifest_digest=row['pipeline_manifest_digest'],protocol_scope_digest=row['protocol_scope_digest'],required_source_pages_or_unparsed_files=len(row['items']),declared_logical_files=manifest['file_count'],declared_physical_paths=manifest['physical_path_count'],declared_gold_works=manifest['gold_work_count'],declared_gold_objects=manifest['gold_object_count'],required_independent_groups=manifest['independent_group_count'],source_results=references,critical_errors=dict(critical),unmeasured_domains=sorted(unknown),scope_current=not scope_errors,scope_errors=sorted(set(scope_errors)),statistics=statistics,quality_gate='EVIDENCE_INSUFFICIENT_CHANGED_SCOPE' if scope_errors else statistics['quality_gate'],quality_pass=bool(not scope_errors and statistics['quality_pass']),automatic_recommendation_allowed=False,origin='ACTUAL_FIFO_SOURCE_EVALUATION',finished_at=time.time(),immutable=True),0,'quality_fixed_side_result_saved_not_release')
             use_id=digest([row['protocol_id'],row['side']]);use=self.store.get('QUALITY_PROTOCOL_USE',use_id)
             if not use or use['job_id']!=identity or use['owner_token']!=token or use['state']=='COMPLETED':raise ValueError('固定側別使用權已改變')
             use.update(state='COMPLETED',result_id=result_id,finished_at=time.time());self.store._write('QUALITY_PROTOCOL_USE',use_id,use,use['revision'],'quality_fixed_side_completed_with_immutable_result')
-            row['result_id']=result_id;row['phase']='COMPLETED_WITH_EXCEPTIONS' if any(i['state']=='FAILED' for i in row['items']) else 'COMPLETED';row['finished']=time.time();saved=self.store._write(JOB,identity,row,row['revision'],'quality_job_computation_completed_not_quality_pass')
+            row['result_id']=result_id;row['result_digest']=digest(result);row['phase']='COMPLETED_WITH_EXCEPTIONS' if any(i['state']=='FAILED' for i in row['items']) else 'COMPLETED';row['finished']=time.time();saved=self.store._write(JOB,identity,row,row['revision'],'quality_job_computation_completed_not_quality_pass')
             lease=self.store.get('WORKER','automatic-worker')
             if lease.get('owner',{}).get('token')!=token:raise ValueError('共享worker owner已改變')
             lease['active']=False;self.store._write('WORKER','automatic-worker',lease,lease['revision'],'quality_shared_worker_released');return saved

@@ -27,7 +27,7 @@ class QualityGold:
         source=self.library.source(context['source_id']);truth['source_derivative_manifest']=digest(source.get('file_hashes',{}))
         return context,truth,digest(truth)
 
-    def plan(self,work_id,rights,domain_truth,reason,evidence):
+    def plan(self,work_id,rights,domain_truth,reason,evidence,*,logo_truth=None):
         if not isinstance(rights,dict) or set(rights)!={'basis','reference','use'} or rights['basis'] not in ('OWNED','AUTHORIZED','OPEN_LICENSE') or rights['use']!=USE:raise ValueError('需另行明列獨立品質驗收本機用途及權利；幾何訓練同意不等於此用途／外傳許可')
         text(rights['reference'],'品質驗收權利依據',2000);text(reason,'真值核對理由',2000);text(evidence,'原始作品與黃金答案證據',2000)
         if not isinstance(domain_truth,dict) or set(domain_truth)!=set(DOMAINS) or any(v not in ('MANUALLY_VERIFIED','INSUFFICIENT_EVIDENCE') for v in domain_truth.values()):raise ValueError('需逐層明列人工真值已核實／證據不足，沒有默認全部正確')
@@ -40,6 +40,13 @@ class QualityGold:
         for observation in facts['observations']:
             slot=slots.get(observation['slot_id']);kind=slot['kind'] if slot else observation['classification']
             objects.append(dict(id=observation['id'],slot_id=observation['slot_id'],kind=kind,owner=slot.get('owner') if slot else None,text=observation['text'],rect=copy.deepcopy(observation['region']),object_type=observation['object_type'],classification=observation['classification']))
+        if logo_truth is not None:
+            if not isinstance(logo_truth,dict) or not set(logo_truth)<={o['id'] for o in objects if o['kind']=='logo'}:raise ValueError('Logo真值只可指定本作品已確認Logo觀察')
+            from .source_analysis import vector_objects
+            from .quality_logo import validate_truth
+            root,elements,bounds=vector_objects(source,self.library.assets)
+            for obj in objects:
+                if obj['id'] in logo_truth:obj['component_truth']=validate_truth(logo_truth[obj['id']],source,elements,bounds)
         proof=verify_source(source['current_path'],source['hash'])
         if not healthy_source(source):raise ValueError('原稿／渲染來源cache健康不足，不能把畫面當黃金答案')
         inventory=[row[0] for row in self.db.execute("SELECT id FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED' ORDER BY id LIMIT 2001",(source['id'],))]

@@ -17,7 +17,7 @@ from .source_links import verify_source
 from .training_store import digest
 from .semantic_fields import recognize
 
-ANALYSER_VERSION='source-hypotheses-5-text-evidence'
+ANALYSER_VERSION='source-hypotheses-6-logo-component-evidence'
 
 
 def vector_objects(source,assets):
@@ -113,6 +113,8 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             slots.append(asdict(Slot('logo',owner,Rect(rect.x-crop.x,rect.y-crop.y,rect.w,rect.h),id=identity)))
             source_map[identity]=dict(svg_object_id=node.get('id'),source_hash=source['hash'],svg_hash=source['file_hashes']['svg'])
             observations.append(dict(id='obs-'+identity,slot_id=identity,text='完整複合Logo／公司身分待核對',object_type='LOGO_PART',classification='LOGO',region=asdict(rect),prior_prediction='UNCONFIRMED_WHOLE_GROUP'))
+            from .quality_logo import components
+            observations[-1]['component_prediction']=components(node,source,bounds)
         result.append(dict(key=digest([ANALYSER_VERSION,source['hash'],source.get('page',1),key,asdict(crop)]),
             source_id=source['id'],source_hash=source['hash'],source_page=source.get('page',1),source_object_id=key,
             crop=asdict(crop),work_width=crop.w,work_height=crop.h,slots=slots,observations=observations,
