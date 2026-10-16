@@ -1,3 +1,9 @@
+# REPAIR002 正在正式執行：source/tests/tools/acceptance凍結
+
+- 活躍parent session63633，run RUN-REMAINING28-REPAIR-002，實際source eee91b160e11685f05543e4f05843dbfd345bc77/tree51396ab5e12ec8a4e41fe7ddb2ab6a8f1573b282；源碼逐檔nativeACK。預期999 tests/146requirements/82原條/8parent-audit，尚無最終結論。讀 `.checkpoints/formal-live/.../test-progress.json`，不是runfolder的progress.json。實際shell exit在 docs/qa/targeted/remaining28-repair-002-parent-exit.txt。run.json未出現前不要finalize。
+- 只准docs-only checkpoint／nextplan，勿修改程式／測試／工具／REQUIREMENTS。UI055_EXECUTION_PLAN.json是原11全文/SHA與已實際讀LabelStudio1.21.0(57531B/SHA10e2...)等設計，**尚未實作**；等UI054 fullPASS/Gate才改source。
+- 確認REPAIR002實際999全PASS/sourceunchanged/parentexit0/captures與146claimdigests、82原條後才finalizeUI054；要建立新的UI054/REPAIR002 finalizer，絕不跑舊UI053 finalizer。7/28歷史，未計8。其後立即UI055+rest20，勿停milestone。
+
 # REPAIR001 已受控停止；下一凍結999測試跑 REPAIR002
 
 - **REPAIR001不是PASS**：source3fb28a69d3a23df944105f98718cf839da022f08，實際parent exit130（僅SIGINT exactownedparent，ownedchild已停），437completed/436PASS/1FAIL，沒有run.json／capture。失敗是AutomaticTrainingGuiTests確認取消案例在preflight等10秒未完成，未到取消assert；原始延遲具體sensor原因未捕獲，勿斷言生產bug。275個rawfiles533397B逐檔hash保留在該run/interrupted-live、module-raw-evidence.jsonl與controlled-stop.json，不覆寫／不finalize此run。

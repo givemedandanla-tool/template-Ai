@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI054-EXACT11-IN_PROGRESS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI054-FULL11-SOURCE-FREEZE.receipt.json",
-  "last_confirmed_commit": "f3609dfc572a97a673f907b7a86075a43f9b3949",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI054-COLD-ADMISSION-REPAIR-WIP.receipt.json",
+  "last_confirmed_commit": "eee91b160e11685f05543e4f05843dbfd345bc77",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-UI054-COLD-ADMISSION-REPAIR-WIP"
+    "CP-20261016-REMAINING28-REPAIR002-LIVE-001"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -647,7 +647,7 @@
   "active_work_package_plan": "docs/dev/UI054_EXECUTION_PLAN.json",
   "formal_execution_watch": {
     "run": "RUN-REMAINING28-REPAIR-002",
-    "status": "READY_AFTER_REPAIR001_CONTROLLED_STOP",
+    "status": "RUNNING_FROZEN_SOURCE",
     "expected_tests": 999,
     "expected_claim_requirements": 146,
     "expected_remaining28_verified": 8,
@@ -656,7 +656,22 @@
     "source_checkpoint_tree": "fa44d0ff72c09ca52819409f89eea0d8333b8be4",
     "source_edits_forbidden_until_run_finishes": true,
     "previous_actual_parent_exit": 130,
-    "previous_run": "RUN-REMAINING28-REPAIR-001"
+    "previous_run": "RUN-REMAINING28-REPAIR-001",
+    "session_id": 63633,
+    "source_commit": "eee91b160e11685f05543e4f05843dbfd345bc77",
+    "source_tree": "51396ab5e12ec8a4e41fe7ddb2ab6a8f1573b282",
+    "progress": ".checkpoints/formal-live/RUN-REMAINING28-REPAIR-002/test-progress.json",
+    "last_observed": {
+      "phase": "RUNNING_OWNED_TEST_MODULE",
+      "current_test": "test_quality_repair_import_canvas",
+      "started": 704,
+      "completed": 704,
+      "passed": 704,
+      "failed_ids": [],
+      "planned_tests": 999,
+      "formal_complete": false,
+      "updated_at": "2026-10-16T07:42:40.034687+00:00"
+    }
   },
   "abandoned_preparations": [
     {
@@ -721,5 +736,6 @@
       "status": "REMOTE_VERIFIED_AFTER_CORRECTION_NOT_STRICT_10MIN_CADENCE_PASS",
       "reason": "First readback correctly rejected two generated progress files omitted from commit; f3609df adds exact prepared files, original prepared manifest preserved and ACK succeeded; delay exceeds10min, no false cadencePASS."
     }
-  ]
+  ],
+  "next_work_package_plan": "docs/dev/UI055_EXECUTION_PLAN.json"
 }
