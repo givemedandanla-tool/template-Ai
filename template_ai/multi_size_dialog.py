@@ -35,7 +35,7 @@ class MultiSizeDialog(QDialog):
         for name in ('png','jpg','pdf'):
             box=QCheckBox(name.upper());box.setChecked(name=='png');self.preview_formats[name]=box;bar.addWidget(box)
         self.export_button=self.button(bar,'確認清單後輸出',self.export);self.export_button.setEnabled(False);layout.addLayout(bar)
-        bar=QHBoxLayout();self.button(bar,'編輯此尺寸當次人工版面',self.edit_local_candidate);self.button(bar,'修改共用來源人物資料',lambda:self.window.edit_input_graph(return_origin=self));self.button(bar,'保留人工版面同步共用資料',self.sync_source);self.button(bar,'跨候選／尺寸屬性差異',self.cross_properties);layout.addLayout(bar)
+        bar=QHBoxLayout();self.button(bar,'編輯此尺寸當次人工版面',self.edit_local_candidate);self.button(bar,'修改共用來源人物資料',lambda:self.window.edit_input_graph(return_origin=self));self.button(bar,'保留人工版面同步共用資料',self.sync_source);self.button(bar,'跨候選／尺寸屬性差異',self.cross_properties);self.button(bar,'批次候選修正',lambda:self.window.batch_object_center(origin=self));layout.addLayout(bar)
         bar=QHBoxLayout();self.button(bar,'開啟尺寸 Logo 管理',lambda:self.window.logo_center(return_origin=self));self.button(bar,'返回原候選／尺寸',self.window.navigation.return_to_work);layout.addLayout(bar)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
         sizes={(t.width_mm,t.height_mm) for t in window.library.templates(True)}|{(window.out_w.value(),window.out_h.value())}

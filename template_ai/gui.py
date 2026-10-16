@@ -442,9 +442,10 @@ class MainWindow(QMainWindow):
         try:return open_diagnostic(self,kind)
         except Exception as error:self.error(str(error))
 
-    def batch_object_center(self):
+    def batch_object_center(self,*,origin=None):
         from .batch_objects import BatchObjectDialog
-        dialog=BatchObjectDialog(self)
+        dialog=BatchObjectDialog(self,origin=origin)
+        if origin is not None:dialog.scope.setCurrentIndex(dialog.scope.findData('CANDIDATE'))
         try:dialog.exec()
         finally:dialog.deleteLater()
 

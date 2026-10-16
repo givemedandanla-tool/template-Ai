@@ -94,6 +94,29 @@ def calculate_candidate_target(target,library):
     checked['seal']=digest(dict(target=target['seal'],candidate=encode_candidate(result),outcome=outcome));return checked
 
 
+def candidate_target_current(window,target):
+    from .candidate_sync import candidate_pin
+    from .candidate_edit import dependency_token
+    envelope=target['envelope'];index=target['index']
+    try:
+        return (not window.library.closed and str(window.library.root)==envelope['root'] and window.generation==envelope['plan']['generation']
+            and candidate_origin_key(window,index)==target['target_key'] and candidate_pin(window.candidates[index])==target['before_pin']
+            and digest(window.input_data())==envelope['input_digest'] and dependency_token(window,window.candidates[index].template,envelope['logos'])==envelope['dependency_token'])
+    except (ValueError,IndexError,KeyError,TypeError,AttributeError):return False
+
+
+def prepare_candidate_undo(window,target,receipt_id):
+    from .candidate_edit import plan_undo,prepare_edit
+    from .candidate_sync import candidate_pin,field_reference
+    index=target['index']
+    if candidate_origin_key(window,index)!=target['target_key']:raise ValueError('原候選／尺寸來源已變更')
+    candidate=window.candidates[index];ids=target['envelope']['plan']['request']['ids']
+    references=[field_reference(candidate,s) for s in select_slots(candidate.template.to_dict(),ids)]
+    if references!=target['references']:raise ValueError('原人物／公司欄位已變更，不回復到其他實體')
+    envelope=prepare_edit(window,plan_undo(window,index,receipt_id))
+    inverse=dict(target, before_pin=candidate_pin(candidate),envelope=envelope);inverse['seal']=candidate_target_seal(inverse);return inverse
+
+
 def install_candidate_target(window,checked,approved=False):
     from .candidate_edit import install_edit,dependency_token
     from .candidate_sync import candidate_pin
@@ -104,7 +127,16 @@ def install_candidate_target(window,checked,approved=False):
     if checked['outcome']!='READY':raise ValueError('未完成合法整卡預檢，不自動核准硬性失敗／缺證據')
     if window.library.closed or str(window.library.root)!=envelope['root'] or window.generation!=envelope['plan']['generation'] or not 0<=index<len(window.candidates):raise ValueError('來源／候選世代已變更')
     if candidate_origin_key(window,index)!=target['target_key']:raise ValueError('候選工作視窗／尺寸服務已換代，未套至其他實體')
-    current=window.candidates[index];expected=envelope['manual_metadata']['manual_history'][-1];history=current.risk_context.get('manual_history',[]);existing=next((r for r in history if r['id']==expected['id']),None)
+    current=window.candidates[index];inverse=envelope['plan']['request']['operation']=='UNDO'
+    expected=next(r for r in envelope['manual_metadata']['manual_history'] if r['id']==envelope['plan']['request']['receipt_id']) if inverse else envelope['manual_metadata']['manual_history'][-1]
+    history=current.risk_context.get('manual_history',[]);existing=next((r for r in history if r['id']==expected['id']),None)
+    if inverse:
+        if existing and existing.get('undone'):
+            if candidate_pin(current)!=candidate_pin(checked['candidate']):raise ValueError('原回復後已有新編輯；不覆寫目前版本')
+            return dict(target_key=target['target_key'],outcome='ALREADY_UNDONE',formal_eligible=False,receipt_id=expected['id'])
+        if not candidate_target_current(window,target):raise ValueError('回復預檢後目前版面／資料已變更')
+        result=install_edit(window,copy.deepcopy(envelope),copy.deepcopy(checked['candidate']))
+        return dict(target_key=target['target_key'],outcome='UNDONE_VALIDATED',formal_eligible=result.formal_eligible,receipt_id=expected['id'])
     if existing:
         if existing.get('undone'):raise ValueError('此批操作已回復；安全重試不能盲目重做')
         unchanged=existing==expected and candidate_pin(current)==candidate_pin(checked['candidate']) and digest(window.input_data())==envelope['input_digest'] and dependency_token(window,current.template,envelope['logos'])==envelope['dependency_token']
@@ -193,11 +225,11 @@ def undo_batch(library,plan,results,approved=False,selected=None,cancel=lambda:F
 def batch_summary(results):
     from collections import Counter
     counts=dict(Counter(r.get('outcome',r.get('state')) for r in results));applied=counts.get('APPLIED_PENDING_FULL_VALIDATION',0);changed=counts.get('APPLIED_BUT_CURRENT_CHANGED',0)
-    return dict(checked=len(results),attempted=sum(bool(r.get('attempted')) for r in results),applied_pending_validation=applied,current_changed=changed,failed=counts.get('FAILED',0)+counts.get('RESULT_UNVERIFIED',0),stale=counts.get('STALE',0),manual=counts.get('NEEDS_MANUAL_REVIEW',0),cancelled=counts.get('CANCELLED',0)+counts.get('UNDO_CANCELLED',0),undone=counts.get('UNDONE_PENDING_FULL_VALIDATION',0)+counts.get('ALREADY_UNDONE',0),undo_conflicts=counts.get('UNDO_CONFLICT',0),skipped=counts.get('SKIPPED_PRECONDITION',0),outcomes=counts,status='APPLIED_PENDING_REVALIDATION' if applied==len(results) and results else 'PARTIAL_OR_BLOCKED',formal_eligible=False)
+    return dict(checked=len(results),attempted=sum(bool(r.get('attempted')) for r in results),applied_pending_validation=applied,current_changed=changed,failed=counts.get('FAILED',0)+counts.get('RESULT_UNVERIFIED',0),stale=counts.get('STALE',0),manual=counts.get('NEEDS_MANUAL_REVIEW',0)+counts.get('APPLIED_BLOCKED',0),cancelled=counts.get('CANCELLED',0)+counts.get('UNDO_CANCELLED',0),undone=counts.get('UNDONE_PENDING_FULL_VALIDATION',0)+counts.get('ALREADY_UNDONE',0)+counts.get('UNDONE_VALIDATED',0),undo_conflicts=counts.get('UNDO_CONFLICT',0),skipped=counts.get('SKIPPED_PRECONDITION',0),validated=counts.get('APPLIED_VALIDATED',0),already_applied=counts.get('ALREADY_APPLIED',0),outcomes=counts,status='APPLIED_PENDING_REVALIDATION' if applied==len(results) and results else 'PARTIAL_OR_BLOCKED',formal_eligible=False)
 
 class BatchObjectDialog(QDialog):
     batch_progress=Signal(object)
-    def __init__(self,window):
+    def __init__(self,window,origin=None):
         import threading
         super().__init__(window);self.window=window;self.library=window.library;self.plan=None;self.results=[];self.running=False;self.cancel_event=threading.Event();self.ticket=None;self.preflight_text='';self.last_result_text=''
         self.setWindowTitle('批次修正：明確範圍與逐筆結果');self.resize(1200,850);layout=QVBoxLayout(self)
@@ -216,6 +248,10 @@ class BatchObjectDialog(QDialog):
         view_bar=QHBoxLayout()
         for title,slot in [('查看本批原預檢差異',lambda:self.details.setPlainText(self.preflight_text)),('查看最新逐筆結果',lambda:self.details.setPlainText(self.last_result_text))]:button=QPushButton(title);button.clicked.connect(slot);view_bar.addWidget(button)
         layout.insertLayout(layout.indexOf(self.details),view_bar)
+        from .batch_candidate_ui import CandidateBatchController
+        self.candidate_batch=CandidateBatchController(self,origin or window)
+        self.scope.blockSignals(True);self.scope.addItem('目前候選／尺寸（獨立預檢）','CANDIDATE');self.scope.blockSignals(False)
+        self.action.blockSignals(True);self.action.addItem('文字X比例（固定字級）');self.action.blockSignals(False);self.ratio=QDoubleSpinBox();self.ratio.setRange(1,100);self.ratio.setValue(90);self.ratio.setSuffix(' % X');bar.addWidget(self.ratio);self.ratio.valueChanged.connect(self.update_counts)
         self.reload()
     def valid_context(self):
         if self.library.closed or self.window.library is not self.library:raise ValueError('Library已切換／關閉；未對其他資料套用')
@@ -223,7 +259,10 @@ class BatchObjectDialog(QDialog):
         if self.running:return
         if self.library.closed or self.window.library is not self.library:self.status.setText('來源已切換，請回到原工作核對。');return
         self.plan=None;self.results=[];self.rows=[];self.by_key={};kind=self.scope.currentData();more=False;query=('SELECT id,name,payload FROM artworks' if kind=='ARTWORK' else "SELECT id,'' AS name,payload FROM templates")+' ORDER BY id LIMIT 201'
-        for identity,name,raw in self.library.db.execute(query):
+        if kind=='CANDIDATE':
+            try:self.rows,more=self.candidate_batch.rows();self.by_key={r['key']:r for r in self.rows}
+            except Exception as error:self.status.setText(str(error))
+        for identity,name,raw in ([] if kind=='CANDIDATE' else self.library.db.execute(query)):
             payload=json.loads(raw)
             if kind=='TEMPLATE' and payload.get('state')!='draft':continue
             for slot in payload['slots']:
@@ -240,7 +279,7 @@ class BatchObjectDialog(QDialog):
         self.preflight_text='';self.last_result_text=''
         self.table.setSortingEnabled(True);self.table.blockSignals(False);self.coverage.setText('已載入 '+str(len(self.rows))+' 個標記，最多200筆；不是全庫問題掃描。'+('還有未載入項目，不能計為已檢查。' if more else '只代表本次載入範圍。'));self.details.clear();self.filter_rows()
     def selected_rows(self):return [self.by_key[self.table.item(i,0).data(Qt.UserRole)] for i in range(self.table.rowCount()) if self.table.item(i,0).checkState()==Qt.Checked]
-    def parameters(self):return [self.action.currentIndex(),self.align.currentData(),self.dx.value(),self.dy.value(),self.width.value(),self.height.value()]
+    def parameters(self):return [self.action.currentIndex(),self.align.currentData(),self.dx.value(),self.dy.value(),self.width.value(),self.height.value(),self.ratio.value()]
     def selection_pin(self):return sorted(r['key'] for r in self.selected_rows())
     def filter_rows(self,*_):
         terms=self.search.text().casefold().split();wanted=self.state_filter.currentText()
@@ -263,11 +302,12 @@ class BatchObjectDialog(QDialog):
         scope=next((r.get('selected_slot_ids',r.get('request',{}).get('ids',[])) for r in (plan or {}).get('rows',[]) if r['target_key']==entity_key),[])
         for i in range(self.table.rowCount()):
             row=self.by_key[self.table.item(i,0).data(Qt.UserRole)]
-            if row['kind']+':'+row['id']==entity_key and row['slot_ids'][0] in scope:
+            if row.get('scope_key',row['kind']+':'+row['id'])==entity_key and row['slot_ids'][0] in scope:
                 row['state']=state;self.table.item(i,6).setText(state)
                 if risk is not None:row['risk']=risk;self.table.item(i,5).setText(risk)
         self.table.setSortingEnabled(sorting);self.table.blockSignals(False)
     def preview(self):
+        if self.scope.currentData()=='CANDIDATE':return self.candidate_batch.preview()
         if self.running:self.status.setText('正在處理固定範圍；未重新預檢或重入。');return
         try:
             self.valid_context()
@@ -284,6 +324,7 @@ class BatchObjectDialog(QDialog):
             self.preflight_text='\n'.join(lines);self.last_result_text='';self.details.setPlainText(self.preflight_text);self.status.setText('已預檢本次原子交易範圍；高風險不自動核准，整作品印前仍待完整驗證。');self.filter_rows()
         except Exception as error:self.plan=None;self.status.setText('未預檢：'+str(error))
     def apply(self):
+        if self.scope.currentData()=='CANDIDATE':return self.candidate_batch.apply()
         try:
             if self.running:self.status.setText('正在處理固定範圍；未重複提交。');return
             self.valid_context()
@@ -313,15 +354,15 @@ class BatchObjectDialog(QDialog):
         if not self.running or value['ticket']!=self.ticket:return
         row=value['row'];state=self.state_label(row.get('outcome'));self.paint(row['target_key'],state);self.status.setText('本輪固定預檢範圍：'+row['id']+'／'+state+'；不宣稱整批通過。');self.filter_rows()
     @staticmethod
-    def state_label(outcome):return {'PROCESSING':'正在處理','APPLIED_PENDING_FULL_VALIDATION':'已處理／待整卡重驗','APPLIED_BUT_CURRENT_CHANGED':'原操作已保存／目前另有新編輯','NEEDS_MANUAL_REVIEW':'需人工核對','SKIPPED_PRECONDITION':'無實際差異／跳過','STALE':'版本過期','FAILED':'失敗','RESULT_UNVERIFIED':'結果未核實','CANCELLED':'已取消未開始項','UNDONE_PENDING_FULL_VALIDATION':'已回復／待整卡重驗','ALREADY_UNDONE':'已核實原交易已回復','UNDO_CANCELLED':'已取消未開始回復','UNDO_CONFLICT':'回復衝突／未覆寫'}.get(outcome,str(outcome))
-    def finished(self,rows,inverse=False):
+    def state_label(outcome):return {'APPLIED_VALIDATED':'已套用／本尺寸整卡合格','ALREADY_APPLIED':'已核實原候選操作／未重複套用','APPLIED_BLOCKED':'已套用／仍受阻擋','UNDONE_VALIDATED':'已回復／本尺寸整卡合格','PROCESSING':'正在處理','APPLIED_PENDING_FULL_VALIDATION':'已處理／待整卡重驗','APPLIED_BUT_CURRENT_CHANGED':'原操作已保存／目前另有新編輯','NEEDS_MANUAL_REVIEW':'需人工核對','SKIPPED_PRECONDITION':'無實際差異／跳過','STALE':'版本過期','FAILED':'失敗','RESULT_UNVERIFIED':'結果未核實','CANCELLED':'已取消未開始項','UNDONE_PENDING_FULL_VALIDATION':'已回復／待整卡重驗','ALREADY_UNDONE':'已核實原交易已回復','UNDO_CANCELLED':'已取消未開始回復','UNDO_CONFLICT':'回復衝突／未覆寫'}.get(outcome,str(outcome))
+    def finished(self,rows,inverse=False,*,invalidate=True):
         self.running=False
         for control in [self.scope,self.preview_button,self.apply_button,self.undo_button]:control.setEnabled(True)
         if not inverse:self.results=rows
         lines=[]
         for row in rows:self.paint(row['target_key'],self.state_label(row.get('outcome')));lines.append(row['kind']+'/'+row['id']+'：'+self.state_label(row.get('outcome'))+'\n'+row.get('reason','沿用既有歷史核對，尚須整作品重驗')+('\n歷史 '+row['history_id'] if row.get('history_id') else ''))
-        self.last_result_text='\n'.join(lines);self.details.setPlainText(self.last_result_text);summary=batch_summary(rows);self.status.setText(f'逐項結果：核對 {summary["checked"]} 個交易、嘗試 {summary["attempted"]}；套用待重驗 {summary["applied_pending_validation"]}、失敗 {summary["failed"]}、過期 {summary["stale"]}、需人工 {summary["manual"]}、跳過 {summary["skipped"]}、取消 {summary["cancelled"]}、另有新版 {summary["current_changed"]}、已回復 {summary["undone"]}、回復衝突 {summary["undo_conflicts"]}。不是印前PASS。')
-        if self.window.library is self.library and not self.library.closed:self.window.invalidate()
+        self.last_result_text='\n'.join(lines);self.details.setPlainText(self.last_result_text);summary=batch_summary(rows);self.status.setText(f'逐項結果：核對 {summary["checked"]} 個交易、嘗試 {summary["attempted"]}；本尺寸合格 {summary["validated"]}、原操作已核實 {summary["already_applied"]}、套用待重驗 {summary["applied_pending_validation"]}、失敗 {summary["failed"]}、過期 {summary["stale"]}、需人工 {summary["manual"]}、跳過 {summary["skipped"]}、取消 {summary["cancelled"]}、另有新版 {summary["current_changed"]}、已回復 {summary["undone"]}、回復衝突 {summary["undo_conflicts"]}。不是印前PASS。')
+        if invalidate and self.window.library is self.library and not self.library.closed:self.window.invalidate()
         self.filter_rows()
     def failed(self,text):
         try:rows=undo_batch(self.library,self.execution_plan,self.results,True,self.undo_selected,cancel=lambda:True) if self.inverse else apply_batch(self.library,self.execution_plan,True,cancel=lambda:True)
@@ -329,6 +370,7 @@ class BatchObjectDialog(QDialog):
         self.finished(rows,self.inverse);self.status.setText('工作未正常完成：'+str(text)+'；依既有操作ID核對已保存項，其餘結果未安全保存，不承諾全批恢復。')
     def cancel(self):self.cancel_event.set();self.status.setText('已要求停止尚未執行項；已保存差異不因此撤銷。')
     def undo(self):
+        if self.scope.currentData()=='CANDIDATE':return self.candidate_batch.undo()
         try:
             self.valid_context()
             if self.running or self.window.busy:raise ValueError('既有工作進行中，未重複回復')
@@ -343,6 +385,7 @@ class BatchObjectDialog(QDialog):
         except Exception as error:self.status.setText('未回復：'+str(error))
     def locate(self):
         try:
+            if self.scope.currentData()=='CANDIDATE':return self.candidate_batch.locate()
             self.valid_context()
             if self.running:raise ValueError('先停止並核對逐筆結果')
             item=self.table.item(self.table.currentRow(),0)
