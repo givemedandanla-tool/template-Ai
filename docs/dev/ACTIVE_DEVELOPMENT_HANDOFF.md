@@ -70,3 +70,7 @@
 ### UI053 statistics / exact pair / Logo checkpoint
 - Latest34 targets PASS, original source-change-during-target1failure preserved then frozen-source rerunPASS. quality_statistics: whole-group Wilson failure upperbound/perclass minima/unknown and missinggroup guards; quality_reports: exact fixedpair/pins/denominators/durable report/decision/withdrawal, synthetic cannot approveproduction. Actual sourceanalyser v6 Logo components; optional explicit human original component Gold, component/text counters and truncationcritical, actual renderer test.
 - Still missing customer/style versioned Oracle+source-only adapter, full paged setup/diagnostic/exposure GUI and severe historicalcrossbatch trustguard; then original9/sourceformal. UI053 not closed,144 currentpending; historical6/28 unchanged.
+
+### UI053 customer/style adapter WIP
+- 33 targeted PASS, actual source-only frozen catalog mapping (shared filename parser), explicit tolerance/customer candidates, noGold reads/business writes; ambiguous exactstyle abstention, manual versioned mapping Gold, wrongcustomer critical.
+- New identified softwaregap: preserve executable source-engine snapshots for historical parser AB; current fingerprints invalidate old code instead. Next fix this then pagedGUI/diagnostics/exposure, severe historicalcrossbatch trustguard, original9 formal. UI053 incomplete;144pending/historical6of28.

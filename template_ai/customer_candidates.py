@@ -17,6 +17,15 @@ from .source_links import verify_source
 from .training_store import TrainingStore
 
 
+def source_code(original_path,pattern=r'(?P<code>.+)'):
+    """Shared bounded filename policy; no arbitrary regular expressions."""
+    if pattern not in (r'(?P<code>.+)',r'(?P<code>[0-9]+)',r'(?P<code>[^_]+)_.+',r'(?P<code>[A-Za-z0-9-]+)'):
+        raise ValueError('請選擇已支援的完整檔名規則；不執行任意正則表達式')
+    match=re.fullmatch(pattern,Path(original_path).stem)
+    code=match.group('code') if match else ''
+    return code if len(code)<=64 else ''
+
+
 class CustomerCandidates:
     def __init__(self, store):
         self.store, self.library, self.db = store, store.library, store.db
@@ -132,11 +141,7 @@ class CustomerCandidates:
             raise ValueError('規則需要具名 code 群，且匹配完整檔名')
         source = self.library.source(source_id)
         verify_source(source['current_path'], source['hash'])
-        stem = Path(source['original_path']).stem
-        match = rule.fullmatch(stem)
-        code = match.group('code') if match else ''
-        if len(code) > 64:
-            code = ''
+        code = source_code(source['original_path'],pattern)
         templates = self.library.templates()
         rows = []
         for work in self.library.artworks(source_id):

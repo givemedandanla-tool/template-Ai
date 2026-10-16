@@ -49,11 +49,20 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
     paired=match_boxes([dict(id=g['work_id'],rect=g['crop']) for g in golds],[dict(id=p['key'],rect=p['crop']) for p in works],policy['matching_iou'])
     truth=lambda domain:complete_source_gold and all(g['domain_truth'][domain]=='MANUALLY_VERIFIED' for g in golds)
     cases=[];critical=Counter();class_counts={};person=[0,0,0];company=[0,0,0];owner_unknown=0;person_unknown=0;company_unknown=0;root_missing=0;mm_errors=[]
-    logo_gold=0;logo_predictions=0;logo_missing_component_truth=0;logo_counts=[0,0,0];logo_unknown=0;text_counts=[0,0,0];text_unknown=False
+    logo_gold=0;logo_predictions=0;logo_missing_component_truth=0;logo_counts=[0,0,0];logo_unknown=0;text_counts=[0,0,0];text_unknown=False;mapping_counts=[0,0,0];mapping_unknown=0
     def add_class(kind,tp=0,fp=0,fn=0):
         row=class_counts.setdefault(kind,[0,0,0]);row[0]+=tp;row[1]+=fp;row[2]+=fn
     for pair in paired['matches']:
         gold=gold_by[pair['gold_id']];pred=pred_by[pair['prediction_id']];objects=predicted_objects(pred)
+        oracle=gold.get('mapping_truth') or {};mapping=pred.get('mapping_prediction') or {}
+        selected=mapping.get('selected')
+        if not oracle.get('manually_verified') or mapping.get('state') in (None,'NOT_CONFIGURED'):mapping_unknown+=1
+        elif selected is None:mapping_counts[2]+=1;cases.append(dict(work_id=gold['work_id'],reason='CUSTOMER_STYLE_MAPPING_ABSTAINED'))
+        elif all(oracle[key]==selected[key] for key in ('customer_id','style_id','template_id','template_hash')):mapping_counts[0]+=1
+        else:
+            mapping_counts[1]+=1;mapping_counts[2]+=1
+            if oracle['customer_id']!=selected['customer_id'] and truth('customer_style_mapping'):critical['customer_owner_mismatch']+=1
+            cases.append(dict(work_id=gold['work_id'],reason='CUSTOMER_STYLE_MAPPING_WRONG_EXACT_VERSION',expected_mapping=oracle,predicted_mapping=selected))
         result=classification_metrics(gold['objects'],objects,policy['matching_iou'])
         gt,gcomplete=text_boxes(gold['objects']);pt,pcomplete=text_boxes(objects,True);text_unknown|=not(gcomplete and pcomplete)
         text_match=match_boxes(gt,pt,policy['matching_iou'])
@@ -104,6 +113,8 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
         logo_missing_component_truth+=sum(o['kind']=='logo' and not o.get('component_truth') for o in gold['objects'])
     for wid in paired['false_negative_ids']:
         gold=gold_by[wid]
+        if (gold.get('mapping_truth') or {}).get('manually_verified'):mapping_counts[2]+=1
+        else:mapping_unknown+=1
         gt,gcomplete=text_boxes(gold['objects']);text_counts[2]+=len(gt);text_unknown|=not gcomplete
         for obj in gold['objects']:
             if obj['kind']=='logo':
@@ -117,6 +128,9 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
         if truth('work_segmentation'):critical['missing_work']+=1
         cases.append(dict(work_id=wid,predicted_work_id=None,reason='MISSING_WHOLE_GOLD_WORK',source_id=prediction['source_id']))
     for wid in paired['false_positive_ids']:
+        mapping=pred_by[wid].get('mapping_prediction') or {}
+        if mapping.get('state') in (None,'NOT_CONFIGURED'):mapping_unknown+=1
+        elif mapping.get('selected'):mapping_counts[1]+=1
         extra_objects=predicted_objects(pred_by[wid]);pt,pcomplete=text_boxes(extra_objects,True);text_counts[1]+=len(pt);text_unknown|=not pcomplete
         for obj in extra_objects:
             if obj['kind']=='logo':
@@ -143,7 +157,7 @@ def evaluate_source(golds,prediction,policy,*,complete_source_gold=False,unresol
     logo_gold=sum(o['kind']=='logo' for g in golds for o in g['objects']);logo_predictions=sum(o['kind']=='logo' for p in works for o in predicted_objects(p))
     domains['whole_logo']=measured(counts(*logo_counts),logo_gold,'MANUALLY_REVIEWED_WHOLE_SOURCE_LOGO_COMPONENT_SETS') if truth('whole_logo') and not logo_unknown and (logo_gold or logo_predictions) else unknown('完整Logo需要原始群組／構件與圖文真值，bbox相符不能證實完整；未當100%',logo_gold)
     domains['whole_logo'].update(recorded_logo_candidates=logo_predictions,missing_component_truth=logo_missing_component_truth)
-    domains['customer_style_mapping']=unknown('目前source-only解析器未產生已確認客戶／版型版本推論；不能拿既有人工關聯冒充模型預測')
+    domains['customer_style_mapping']=measured(counts(*mapping_counts),len(golds),'WHOLE_SOURCE_WORK_TO_EXACT_CUSTOMER_STYLE_TEMPLATE_VERSION') if truth('customer_style_mapping') and not mapping_unknown else unknown('需明確人工映射真值及預先固定的既有候選目錄；未配置／缺gold不拿人工關聯冒充推論',len(golds))
     for name,domain in domains.items():
         if not truth(name):domain['reason']='此層真值或全來源分母尚未完整核實；未解析／缺gold來源不被排除'
     return dict(domains=domains,conditional_per_class=per_class,required_source_pages=1,unresolved_source_pages=0,gold_work_count=len(golds),predicted_work_count=len(works),gold_object_count=gold_objects,work_matching=paired,unknown_owner_mappings=owner_unknown,missing_person_roots=root_missing,cases=cases,critical_errors=dict(critical),quality_pass=None)

@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI053-STATISTICS-LOGO-WIP",
+  "active_task": "REMAINING28-UI053-MAPPING-ADAPTER-WIP",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI053-STATISTICS-LOGO-WIP.receipt.json",
   "last_confirmed_commit": "266989740d5b7ea87fe8be9a42cb121a2c513259",
   "latest_evidence_run": null,
@@ -17,10 +17,10 @@
     "docs/dev/PROJECT_ROADMAP.md"
   ],
   "next_tasks": [
-    "Complete versioned customer-style truth and source-only prediction adapters",
-    "Paged quality setup/diagnostic/exposure and exact paired comparison GUI",
-    "Severe historical cross-batch re-review and recommendation trust guards",
-    "Register original9 full acceptance then new-source formal regression; continue remaining parents"
+    "Preserve executable source-engine versions for actual parser A/B rather than invalidate all old code snapshots",
+    "Paged quality setup and diagnostic/exposure GUI",
+    "Severe historical cross-batch re-review and trust guards",
+    "Original9 full-source acceptance; continue remaining parents"
   ],
   "blocked": [],
   "deferred": [
@@ -28,7 +28,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261016-REMAINING28-UI053-MAPPING-ADAPTER-WIP-002"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-COVERAGE.json",
@@ -647,5 +649,12 @@
     "unhandled_runtime_errors": 0,
     "capture_exit_code": 0,
     "source_unchanged": true
-  }
+  },
+  "abandoned_preparations": [
+    {
+      "checkpoint": "CP-20261016-REMAINING28-UI053-MAPPING-ADAPTER-WIP",
+      "reason": "Incorrect unverified base SHA entered; no remote acknowledgement. Superseded by -002; original PREPARED manifest and local ZIP retained.",
+      "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
+    }
+  ]
 }

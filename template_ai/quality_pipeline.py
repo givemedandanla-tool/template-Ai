@@ -43,21 +43,23 @@ class QualityPipelines:
         service=object.__new__(SemanticLearning);service.library=self.library;service.store=self.store
         return service.checked_model(model_id)
 
-    def current_manifest(self,model_id=None):
+    def current_manifest(self,model_id=None,mapping_config=None):
         row,model=self.semantic(model_id);executable=inkscape_path()
         if not executable:raise ValueError('實際Inkscape解析器不可用，不接受自行輸入版本冒充執行證據')
         version=subprocess.run([executable,'--version'],capture_output=True,text=True,timeout=10)
         if version.returncode:raise ValueError('實際解析器版本讀回失敗')
-        base=Path(__file__).parent;names=('quality_pipeline.py','quality_logo.py','source_analysis.py','source_text_evidence.py','semantic_fields.py','importer.py','background.py')
+        base=Path(__file__).parent;names=('quality_pipeline.py','quality_mapping.py','customer_candidates.py','quality_logo.py','source_analysis.py','source_text_evidence.py','semantic_fields.py','importer.py','background.py')
         active,invalid=self.store.active_noise_rules()
         if invalid:raise ValueError('目前正式規則支持／反例證據失效；不保存可疑版本為已核實pipeline')
-        return dict(schema_version=1,analyser_version=ANALYSER_VERSION,source_modules={name:file_digest(base/name) for name in names},semantic_model_id=model_id,semantic_model_revision=row['revision'] if row else None,semantic_model_digest=digest(row) if row else None,semantic_weights_digest=row['weights_digest'] if row else None,model_training_scopes=[dict(source_hash=s['pins']['source_hash'],role=s['role'],work_id=s['work_id']) for s in row['plan']['scopes']] if row else [],renderer=dict(executable=str(Path(executable).resolve()),sha256=file_digest(executable),version=version.stdout.strip()[:1000]),rules=[dict(id=r['id'],revision=r['revision'],digest=digest(r)) for r in active],rules_execution='NOT_APPLIED_WITHOUT_GOLD_FREE_HUMAN_CONTEXT',ocr_execution='NOT_EXECUTED_BY_VECTOR_SOURCE_PIPELINE',native_illustrator_mapping='UNVERIFIED_NOT_CERTIFIED',environment=dict(python=platform.python_version(),system=platform.platform(),qt=qt_version,networkx=networkx.__version__,fonts=font_environment()),prediction_inputs='ORIGINAL_SOURCE_AND_TRAINED_WEIGHTS_ONLY_NO_HOLDOUT_GOLD_LABELS')
+        from .quality_mapping import catalog
+        mapping_catalog=catalog(self.library,mapping_config)
+        return dict(schema_version=1,mapping_catalog=mapping_catalog,mapping_configuration=mapping_config,analyser_version=ANALYSER_VERSION,source_modules={name:file_digest(base/name) for name in names},semantic_model_id=model_id,semantic_model_revision=row['revision'] if row else None,semantic_model_digest=digest(row) if row else None,semantic_weights_digest=row['weights_digest'] if row else None,model_training_scopes=[dict(source_hash=s['pins']['source_hash'],role=s['role'],work_id=s['work_id']) for s in row['plan']['scopes']] if row else [],renderer=dict(executable=str(Path(executable).resolve()),sha256=file_digest(executable),version=version.stdout.strip()[:1000]),rules=[dict(id=r['id'],revision=r['revision'],digest=digest(r)) for r in active],rules_execution='NOT_APPLIED_WITHOUT_GOLD_FREE_HUMAN_CONTEXT',ocr_execution='NOT_EXECUTED_BY_VECTOR_SOURCE_PIPELINE',native_illustrator_mapping='UNVERIFIED_NOT_CERTIFIED',environment=dict(python=platform.python_version(),system=platform.platform(),qt=qt_version,networkx=networkx.__version__,fonts=font_environment()),prediction_inputs='ORIGINAL_SOURCE_AND_TRAINED_WEIGHTS_ONLY_NO_HOLDOUT_GOLD_LABELS')
 
-    def freeze(self,name,model_id,actor,approved=False):
+    def freeze(self,name,model_id,actor,approved=False,*,mapping_config=None):
         if approved is not True:raise ValueError('需明確核對實際可執行pipeline範圍；不自動放行模型')
         text(name,'pipeline名稱',120);text(actor,'版本保存者',120)
         # Executable/model verification happens outside the SQLite write lock.
-        manifest=self.current_manifest(model_id)
+        manifest=self.current_manifest(model_id,mapping_config)
         with self.store.transaction():
             if model_id and digest(self.store.get('SEMANTIC_MODEL',model_id))!=manifest['semantic_model_digest']:raise ValueError('模型版本已變更')
             return self.store._write(PIPELINE,new_id(),dict(name=name,manifest=manifest,manifest_digest=digest(manifest),actor=actor,created=time.time(),state='ACTUAL_SOURCE_ONLY_PIPELINE_FROZEN_NOT_QUALITY_APPROVED',quality_pass=False,immutable=True),0,'quality_actual_pipeline_frozen_not_quality_release')
@@ -67,7 +69,7 @@ class QualityPipelines:
         if not record:return dict(valid=False,errors=['實際pipeline版本不存在'],pipeline=None)
         errors=[]
         try:
-            current=self.current_manifest(record['manifest']['semantic_model_id'])
+            current=self.current_manifest(record['manifest']['semantic_model_id'],record['manifest'].get('mapping_configuration'))
             if digest(current)!=record['manifest_digest'] or digest(record['manifest'])!=record['manifest_digest']:errors.append('實際模型／程式／解析器／規則／字型或環境版本已變更')
         except (OSError,ValueError,subprocess.TimeoutExpired) as error:errors.append(str(error))
         return dict(valid=not errors,errors=errors,pipeline=record)
@@ -83,6 +85,8 @@ class QualityPipelines:
         proof=verify_source(source['current_path'],source['hash']);stamps=cache_stamps(source);source_digest=digest(source)
         context=dict(state='FROZEN_EVALUATION_MODEL',model_id=row['id'],model_revision=row['revision'],weights_digest=row['weights_digest']) if row else None
         predictions=analyse_source(source,self.library.assets,model,context)
+        from .quality_mapping import predict
+        for work in predictions:work['mapping_prediction']=predict(source,work,pipeline['manifest']['mapping_catalog'])
         check_verified(proof,source['hash'])
         if digest(self.library.source(source_id))!=source_digest or cache_stamps(source)!=stamps or not self.validity(pipeline_id)['valid']:raise ValueError('推論期間來源／cache／實際pipeline依賴改變，未採用過期結果')
         return dict(pipeline_id=pipeline_id,pipeline_manifest_digest=pipeline['manifest_digest'],source_id=source_id,source_hash=source['hash'],source_page=source['page'],source_dependency_digest=source_digest,source_proof=dict(path=proof.path,hash=proof.hash,stat=list(proof.stat)),source_cache_stamps=stamps,prediction_origin='ACTUAL_EXECUTED_SOURCE_ANALYSIS_NO_GOLD_ARGUMENT',predictions=predictions,capabilities=dict(ocr_executed=False,native_illustrator_mapping_verified=False,noise_rules_applied_using_holdout_gold=False),quality_pass=None)

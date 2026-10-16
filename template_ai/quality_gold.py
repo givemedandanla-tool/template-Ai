@@ -27,7 +27,7 @@ class QualityGold:
         source=self.library.source(context['source_id']);truth['source_derivative_manifest']=digest(source.get('file_hashes',{}))
         return context,truth,digest(truth)
 
-    def plan(self,work_id,rights,domain_truth,reason,evidence,*,logo_truth=None):
+    def plan(self,work_id,rights,domain_truth,reason,evidence,*,logo_truth=None,mapping_truth=None):
         if not isinstance(rights,dict) or set(rights)!={'basis','reference','use'} or rights['basis'] not in ('OWNED','AUTHORIZED','OPEN_LICENSE') or rights['use']!=USE:raise ValueError('需另行明列獨立品質驗收本機用途及權利；幾何訓練同意不等於此用途／外傳許可')
         text(rights['reference'],'品質驗收權利依據',2000);text(reason,'真值核對理由',2000);text(evidence,'原始作品與黃金答案證據',2000)
         if not isinstance(domain_truth,dict) or set(domain_truth)!=set(DOMAINS) or any(v not in ('MANUALLY_VERIFIED','INSUFFICIENT_EVIDENCE') for v in domain_truth.values()):raise ValueError('需逐層明列人工真值已核實／證據不足，沒有默認全部正確')
@@ -52,6 +52,9 @@ class QualityGold:
         inventory=[row[0] for row in self.db.execute("SELECT id FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED' ORDER BY id LIMIT 2001",(source['id'],))]
         if len(inventory)>2000:raise ValueError('來源作品清單超過2000，全部作品真值尚未完整核實')
         plan=dict(work_id=work_id,source_id=source['id'],source_hash=source['hash'],source_page=source['page'],source_page_count=source['page_count'],original_path=source['original_path'],current_path=source['current_path'],truth_dependencies=truth,truth_dependency_digest=sha,source_inventory_work_ids=inventory,facts_revision=facts['revision'],facts_confirmation=copy.deepcopy(facts['confirmation']),objects=objects,crop=copy.deepcopy(work['payload']['crop']),width_mm=work['payload']['work_width'],height_mm=work['payload']['work_height'],rights=copy.deepcopy(rights),domain_truth=copy.deepcopy(domain_truth),reason=reason,evidence=evidence,source_proof=dict(path=proof.path,hash=proof.hash,stat=list(proof.stat)),local_only=True,training_admission=False,model_prediction_is_gold=False)
+        if mapping_truth is not None:
+            from .quality_mapping import truth as mapping_oracle
+            plan['mapping_truth']=mapping_oracle(self.library,mapping_truth)
         plan['source_cache_stamps']=cache_stamps(source);plan['digest']=digest(plan);return plan
 
     def confirm(self,plan,actor,approved=False):
@@ -59,6 +62,7 @@ class QualityGold:
         text(actor,'gold核對者',120);preview=copy.deepcopy(plan);expected=preview.pop('digest',None)
         if expected!=digest(preview):raise ValueError('gold預覽已被修改')
         with self.store.transaction():
+            self.check_mapping(plan)
             context,truth,sha=self.dependencies(plan['work_id'])
             if sha!=plan['truth_dependency_digest'] or context['facts_state']!='CONFIRMED':raise ValueError('真值來源／標記／歸屬已變更，需重新逐項核對')
             proof=plan['source_proof'];check_verified(VerifiedSource(proof['path'],proof['hash'],tuple(proof['stat'])),plan['source_hash'])
@@ -74,6 +78,7 @@ class QualityGold:
         errors=[]
         if self.store.get('QUALITY_GOLD_INVALIDATION',gold_id):return dict(valid=False,errors=['品質真值／用途許可已撤回，舊版本只保留證據，未重新讀取原稿'],gold=gold)
         try:
+            self.check_mapping(gold)
             context,truth,sha=self.dependencies(gold['work_id'])
             if sha!=gold['truth_dependency_digest'] or context['facts_state']!='CONFIRMED':errors.append('真值來源／標記／歸屬版本已失效')
             inventory=[row[0] for row in self.db.execute("SELECT id FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED' ORDER BY id LIMIT 2001",(gold['source_id'],))]
@@ -85,6 +90,12 @@ class QualityGold:
                 p=gold['source_proof'];check_verified(VerifiedSource(p['path'],p['hash'],tuple(p['stat'])),gold['source_hash'])
         except (OSError,ValueError,KeyError) as error:errors.append(str(error))
         return dict(valid=not errors,errors=errors,gold=gold)
+
+    def check_mapping(self,gold):
+        if gold.get('mapping_truth'):
+            from .quality_mapping import truth as mapping_oracle
+            expected=gold['mapping_truth'];evidence={key:expected[key] for key in ('customer_id','style_id','review_reason')}
+            if mapping_oracle(self.library,evidence)!=expected:raise ValueError('映射真值客戶／exact版型版本已改變，需新gold核對')
 
     def withdraw(self,gold_id,expected_revision,actor,reason,approved=False):
         if approved is not True:raise ValueError('需明確撤回品質真值／用途許可')
