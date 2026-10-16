@@ -1,0 +1,35 @@
+test_actual_cancel_after_first_keeps_checkpoint_and_resume_skips_already_saved_source (test_major_review_jobs.MajorReviewJobTests.test_actual_cancel_after_first_keeps_checkpoint_and_resume_skips_already_saved_source) ... Fontconfig error: No writable cache directories
+ok
+test_completed_analysis_cannot_be_claimed_as_new_training_or_review_approval (test_major_review_jobs.MajorReviewJobTests.test_completed_analysis_cannot_be_claimed_as_new_training_or_review_approval) ... ok
+test_missing_source_failure_does_not_contaminate_other_success (test_major_review_jobs.MajorReviewJobTests.test_missing_source_failure_does_not_contaminate_other_success) ... ok
+test_real_original_parser_job_saves_comparison_and_keeps_business_data_and_quarantine (test_major_review_jobs.MajorReviewJobTests.test_real_original_parser_job_saves_comparison_and_keeps_business_data_and_quarantine) ... ok
+test_real_owned_process_exit_is_interrupted_and_requires_explicit_resume (test_major_review_jobs.MajorReviewJobTests.test_real_owned_process_exit_is_interrupted_and_requires_explicit_resume) ... FAIL
+test_selected_subset_leaves_other_case_work_unscanned (test_major_review_jobs.MajorReviewJobTests.test_selected_subset_leaves_other_case_work_unscanned) ... ok
+test_shared_fifo_claims_source_jobs_in_original_order_and_preserves_other_source (test_major_review_jobs.MajorReviewJobTests.test_shared_fifo_claims_source_jobs_in_original_order_and_preserves_other_source) ... ok
+test_stale_or_tampered_scope_never_enters_original_worker (test_major_review_jobs.MajorReviewJobTests.test_stale_or_tampered_scope_never_enters_original_worker) ... FAIL
+
+======================================================================
+FAIL: test_real_owned_process_exit_is_interrupted_and_requires_explicit_resume (test_major_review_jobs.MajorReviewJobTests.test_real_owned_process_exit_is_interrupted_and_requires_explicit_resume)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_major_review_jobs.py", line 45, in test_real_owned_process_exit_is_interrupted_and_requires_explicit_resume
+    self.make();script='''import sys\nfrom unittest.mock import patch\nfrom template_ai.storage import Library\nfrom template_ai.automatic_training import AutomaticTraining,run_automatic\nroot,identity=sys.argv[1:];lib=Library(root);auto=AutomaticTraining(lib);job=auto.get(identity);claimed=auto.claim(identity,job['revision'],True);lib.close()\nwith patch('template_ai.source_analysis.analyse_source',side_effect=SystemExit(17)):run_automatic(root,identity,claimed['owner']['token'])\n''';result=subprocess.run([sys.executable,'-c',script,str(self.library.root),self.job['id']],capture_output=True,text=True,timeout=25);self.assertEqual(result.returncode,17,result.stderr[-500:]);self.assertEqual(self.auto.phase(self.auto.get(self.job['id'])),'INTERRUPTED');status=execute(self.library,'STATUS',dict(case_id=self.case['id']));self.assertEqual(status['summary']['states'],{'INTERRUPTED':1});self.assertEqual(status['summary']['checked'],0);self.assertEqual(self.store.count('QUALITY_SOURCE_REANALYSIS'),0);resumed=self.claim_run();self.assertEqual(resumed['phase'],'COMPLETED');self.assertEqual(self.store.count('QUALITY_SOURCE_REANALYSIS'),1)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'FAILED_SYSTEM' != 'INTERRUPTED'
+- FAILED_SYSTEM
++ INTERRUPTED
+
+
+======================================================================
+FAIL: test_stale_or_tampered_scope_never_enters_original_worker (test_major_review_jobs.MajorReviewJobTests.test_stale_or_tampered_scope_never_enters_original_worker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_major_review_jobs.py", line 36, in test_stale_or_tampered_scope_never_enters_original_worker
+    with self.assertRaises(ValueError):create(self.auto,bad,'Synthetic reviewer','Altered preview',True)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 8 tests in 8.612s
+
+FAILED (failures=2)

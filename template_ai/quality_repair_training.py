@@ -47,6 +47,9 @@ def create(service,review_id,training_plan,actor,approved=False):
 
 
 def check(service,job):
+    if job.get('operation')=='MAJOR_SOURCE_RECHECK':
+        from .major_review_jobs import check as major_check
+        return major_check(service,job)
     if job.get('operation')!=OPERATION:raise ValueError('非局部語意修復工作')
     if not isinstance(job.get('scope'),dict):raise ValueError('局部訓練工作缺少明列版本範圍')
     if job.get('candidate_id') or job.get('model_id') or job['phase']=='COMPLETED':raise ValueError('此工作已有實際候選結果，讀回原版本而不重複訓練')
@@ -58,6 +61,9 @@ def check(service,job):
 
 
 def run(service,job,token,cancel=None,progress=None,admission=None):
+    if job.get('operation')=='MAJOR_SOURCE_RECHECK':
+        from .major_review_jobs import run as major_run
+        return major_run(service,job,token,cancel,progress,admission)
     from .runtime_admission import require_resources,ResourcePause
     identity=job['id']
     def cancelled():return bool(cancel and cancel.is_set())

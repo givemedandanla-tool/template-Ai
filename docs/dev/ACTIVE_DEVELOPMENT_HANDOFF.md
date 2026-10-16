@@ -1,7 +1,7 @@
 # 當前開發接手（最新，按需讀，不帶整串聊天）
 
 - 目標仍為原28父題完整軟體自驗證；branch dev/v0.1-first-version／PR#2。無agents、EXE、worktree、mainmerge、付費服務。遵循原CAS/單一worker/引擎，不建平行資料庫。
-- 歷史12/28及120條款 @RUN-REMAINING28-LAYOUT-003；不是目前來源已通過。UI059/060A/061/062/063/064/065七父題已完整實作與原條款映射，全部IMPLEMENTED_PENDING_VERIFICATION，等待新不可變全批、native審閱、普通GitHub證據Gate。1368已知測試。
+- 歷史12/28及120條款 @RUN-REMAINING28-LAYOUT-003；不是目前來源已通過。UI059/060A/061/062/063/064/065七父題已完整實作與原條款映射，全部IMPLEMENTED_PENDING_VERIFICATION，等待新不可變全批、native審閱、普通GitHub證據Gate。1377已知測試。
 - 下一父題UI052-REVIEW；再UI019/032/031/066/067/REV01/02/04。先持久化原契約/工程依據/預計測試，再程式；不要停在規劃或checkpoint。
 - UI065原25映射 docs/dev/UI065_CLAUSE_COVERAGE.json；58newtests。原batch_objects工作台擴充source/TEMPLATE/currentMain/per-size候選，200載入物件、1..50交易，精確UserRole/版本/歸屬/欄位/contextpins，風險/逐項整卡預檢/確認前後seal/單一worker-ownedLibrary，原CAS/opID及manual receipt安全重試/所選舊receipt inverse，不自動Logo/解鎖/字級/跨人物核准。
 - X比例用目標原measurements字寬×ratio、原PATCH_EACH逐項PATCH；新before/after比較重用唯讀ObjectCanvas/renderers；Source只改標記，尚須整作品內容驗證，不改Illustrator。候選結果不Main.invalidate，保留各尺寸目前Gate。
@@ -19,3 +19,5 @@ UI052-REVIEW A WIP: new quality_source_rechecks.py exposes source evidence plan+
 UI052 A followup11newtests/catalog1361：005 fixture current_path缺key改完整source lookup；真draft-state-only exemption讓publish檢查前仍draft而繞過重大Gate，改_provenance allow_quarantined_draft明確internalflag只原save/clone/object-write，publish/bind嚴格；006 new11+templateVersions4+candidateAdapter14=29PASS actualexit0。原有批次cachedREADY現在install前再次checked.candidate.formal_eligible，MajorCase晚到不改版面；來源失聯unit保持UNKNOWN+隔離、缺歷史work保留graph UNKNOWN不lookup None。下一步真正接source-major commands+原QualityRepairDialog page，再公平增量/人工舊新/close-release；family/新版本別名、rule/model組件隔離、training-reference correction draft route尚未完成。無owned jobs，UI052未完成。
 
 UI052 sourceGUI18newtests/catalog1368：MAJOR_ originalqualitycommand namespace、quality_repair_dialog第8頁（原scrollableworkbench/TITLES相符），source issue正反例/分類嚴重度/actor reason/consent，lateFormpin、persistedcases50頁/單項狀態/sourcefacts UserRole定位。0087PASS；009新7+舊repairGUI5=12PASS actualexit0。完整增量/公平/review/release尚未接，full9/native未完；下一步具體重用AUTO_JOB operation/source_analysis/原FIFO與unitcheckpoint在wip/UI052_REVIEW_INCREMENTAL_DESIGN.md，別再冗長設計停住。family新版本繞過、rule/model fingerprints、trained-reference修正路徑仍待補。所有jobs已exit。
+
+UI052 incremental API WIP27newtests/catalog1377：major_review_jobs OPERATION MAJOR_SOURCE_RECHECK，原quality_repair_training.check/run dispatch+AUTO_JOB FIFO/lease/worker；1..200精確WorkID依logicalSourceID分組、原1MiB預算、source/case/unit/CAS scope。原analyse_source(None model)只保存typed來源建議+舊facts對照/NEEDS_MANUAL+原job checkpoint，不寫原稿/事實/客戶/模板/模型。0116PASS2FAIL（tampered incoming body未驗seal、SystemExit觸原finally變FAILED_SYSTEM）；修seal、改真owned child os._exit17。0129PASS actualexit0含真parser/FIFO/取消已保存source不重做/失聯隔離/死owner中斷及明確resume；恢復來源有效分析不被舊UNKNOWN遮蓋。SourceGUI尚未接JOB_PLAN/CREATE_JOB-submit/progress，下一步立刻接原majorPage selected UserRole + execution_queue.submit AUTO_JOB，再manual findings/close-release/family/component guards/full9/native。無jobs在跑。

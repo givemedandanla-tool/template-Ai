@@ -3,7 +3,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QLineEdit,QPushButton,QTableWidget,QTableWidgetItem
 from .customers import digest
 
-STATES={'UNSCANNED':'未掃描','UNKNOWN':'無法判定','REAPPROVED':'修正後重新核准','CHECKED_OK':'確認無誤','ERROR_NEEDS_FIX':'確認錯誤待修','NEEDS_MANUAL':'待人工','BLOCKED':'阻擋'}
+STATES={'UNSCANNED':'未掃描','UNKNOWN':'無法判定','REAPPROVED':'修正後重新核准','CHECKED_OK':'確認無誤','ERROR_NEEDS_FIX':'確認錯誤待修','NEEDS_MANUAL':'待人工','BLOCKED':'阻擋','PROCESSING':'正在分析','INTERRUPTED':'中斷待明確接續','CANCELLED':'已取消／尚未完成'}
 
 
 class MajorReviewPage(QWidget):
