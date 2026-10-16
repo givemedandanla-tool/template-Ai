@@ -81,12 +81,16 @@
   ],
   "drafts": [
     "docs/dev/wip/UI054_QUALITY_REPAIRS_DRAFT.py",
-    "docs/dev/wip/UI054_REPAIR_TRAINING_DRAFT.py"
+    "docs/dev/wip/UI054_REPAIR_TRAINING_DRAFT.py",
+    "docs/dev/wip/UI054_RULE_CANDIDATES_DRAFT.py"
   ],
   "draft_limits": [
     "Only ast.parse syntax checked; never imported/executed or copied into actual application",
     "Issue draft still needs current Gold/domain truth and external exception integration tests; no completeness claim",
     "Training draft reuses actual AUTO_JOB claim/finish/sharedlease/child/runtime protocol; integration into claim/run plus mode scope validation still NOT DONE",
     "Need all root/control/replay/independent receipts, actual isolated rule selection and runtime deployment/rollback, GUI/entrypoints/negative tests before full11 acceptance"
-  ]
+  ],
+  "gui_release_design": "docs/dev/UI054_RELEASE_AND_GUI_DESIGN.md",
+  "shared_command_transport": "Extend existing quality_command REPAIR_* routing and reuse QualityPanel.request/owned subprocess transport; no third command protocol/scheduler",
+  "actual_provenance_reuse": "UI053 actualAUTO analysis_version/analysis_evidence source model now captured separately from active model; sameweights otherversions remainpotential; reuse current majorrecheck dependency resolver"
 }

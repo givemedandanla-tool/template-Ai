@@ -1,3 +1,5 @@
+> 最新05:03：formal005仍running，工具session22547；source6cd038cb6aca4544a0a9458eac859289496dc613，已676/943PASS，allfinishedmodules正常。沒有新completeclaim；凍結app/tests/tools/acceptance。等待actualexit與capture/Qt/source/journal，僅005可943守衛finalize，然後progress＋完整metadataCP/nativeACK＋publicationGate真PASS→7/28，接UI054。新GUI/release設計與3draft已持久但未執行，勿當完成。
+
 > 正式005已啟動：source6cd038cb6aca4544a0a9458eac859289496dc613/tree5f8fe4457cc1aec6e2521b9233428c0d95c4d251，live `.checkpoints/formal-live/RUN-REMAINING28-QUALITY-005`。凍結app/tests/tools/acceptance；只有actual943PASS/0skip/Qt0/capture0/sourceunchanged與publicationGate後可finalizer005→7/28，再UI054；其餘舊run/helper不可使用。
 
 > 最新04:54：actual6module100/100PASS。共享setup class-qualified cleanup已修；actualAUTO保存parserVersion、MODELquery支援analysis_evidence＋sameweights版本potential；review保留actualsourcemodel與active分開；Gold不被predictionversion污染。新3realproducer回歸全PASS，943catalog、UI053原9/124supporttests、145pending。準備CP-SOURCE-005→nativebaseline→RUN-QUALITY-005；formal期間不改app/tests/tools/acceptance。只有005actual943PASS/0skip/Qt0/capture0/sourceunchanged＋publicationGate後可finalizer005→7/28，後繼續UI054。所有舊001–004不得finalize，歷史仍6/28。
