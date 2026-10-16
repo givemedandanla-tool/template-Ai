@@ -45,5 +45,10 @@ class LayoutRecoveryTests(unittest.TestCase):
         self.library.publish(self.template);first=self.library.templates(True)[0];second=copy.deepcopy(first);from template_ai.model import new_id;second.id=new_id();second.family_id=new_id();self.library.publish(second)
         a=generate(first,self.people(),[],{},7);b=generate(second,self.people(),[],{},7);payload=self.payload();payload['rows']=[dict(template_id=c.template.id,candidate=encode_candidate(c),state='CALCULATED_PENDING_ADOPTION') for c in (a,b)]
         changed=copy.deepcopy(second);changed.width_mm+=1
-        with patch.object(self.library,'templates',return_value=[first,changed]):rows=LayoutRecovery(self.library.root).validate(self.library,payload)
+        original=self.library.object_snapshot
+        def snapshot(kind,identity):
+            result=original(kind,identity)
+            if identity==changed.id:result['payload']=changed.to_dict()
+            return result
+        with patch.object(self.library,'object_snapshot',side_effect=snapshot):rows=LayoutRecovery(self.library.root).validate(self.library,payload)
         self.assertIsNotNone(rows[0]['candidate']);self.assertTrue(rows[0]['candidate'].formal_eligible);self.assertIsNone(rows[1]['candidate']);self.assertEqual(rows[1]['state'],'STALE_RECALCULATE')

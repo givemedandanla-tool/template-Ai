@@ -18,6 +18,7 @@ from PySide6 import __version__ as qt_version
 from PySide6.QtWidgets import QApplication
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tests'))
 from gui_wait import wait_layout
+from runtime_fixture import controlled_resources
 
 from template_ai.demo import demo_template
 from template_ai import __version__ as app_version
@@ -61,7 +62,7 @@ def main():
     window.refresh_templates(window.template.id)
     window.tabs.setCurrentIndex(2)
     window.demo_input()
-    window.generate();wait_layout(window)
+    controlled_resources(window);window.generate();wait_layout(window)
     window.show()
     app.processEvents()
     window.output_canvas.fit()
@@ -91,7 +92,7 @@ def main():
     app.processEvents()
     window.grab().save(str(artifacts / "template-workspace.png"))
     window.tabs.setCurrentIndex(2)
-    window.generate();wait_layout(window)
+    controlled_resources(window);window.generate();wait_layout(window)
     decorated = next(c for c in window.candidates if c.template.id == decorated_id)
     assert decorated.valid, decorated.issues
     window.candidate_list.setCurrentRow(window.candidates.index(decorated))

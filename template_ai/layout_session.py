@@ -2,13 +2,15 @@
 import copy
 import threading
 from PySide6.QtCore import QObject,QRunnable,Signal,Qt
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QPushButton,QLabel,QListWidget,QPlainTextEdit,QMessageBox,QInputDialog,QLineEdit
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QPushButton,QLabel,QListWidget,QPlainTextEdit,QMessageBox,QInputDialog,QLineEdit,QListWidgetItem
 from .layout import generate
 from .candidate_risk import bind_source,search_result
 from dataclasses import asdict
 from .layout_recovery import LayoutRecovery,encode_candidate
 from .model import Template
 from .customers import digest
+
+PHASE_LABELS=dict(INPUT_SOURCE_PRECHECK='輸入／來源預檢',LOSSLESS_OWNER_FIELD_MATCH='人物／公司／欄位無損配對',FIXED_FONT_GEOMETRY='固定字級／框位及受限字寬適配',SIZE_LOGO_FONT_CHECK='此尺寸Logo／字型核對',CANDIDATE_RISK_GATE='安全／草稿／硬性阻擋Gate',STARTED='計算中',PAUSED_OPERATOR='已在安全邊界暫停',PAUSED_RESOURCES='資源不足，暫緩下一候選',RESTORED_CURRENT_PENDING_ADOPTION='已恢復且版本一致／待明確採用',RESTORED_REVIEW_OR_EVIDENCE_REQUIRED='已恢復草稿／來源待核實',STALE_RECALCULATE='需重新計算',CALCULATED_PENDING_ADOPTION='已完成計算／待採用')
 
 class SessionSignals(QObject):
     progress=Signal(object)
@@ -19,11 +21,11 @@ class LayoutWorker(QRunnable):
         super().__init__();self.setAutoDelete(False);self.templates=templates;self.people=people;self.companies=companies;self.logos=logos;self.generation=generation;self.pause=pause;self.cancel=cancel;self.signals=SessionSignals();self.admission=admission;self.completed=list(completed or []);self.library_root=library_root
     def run(self):
         library=None;source_cache={}
-        if self.library_root:
-            from .storage import Library
-            library=Library(self.library_root)
         rows=list(self.completed);checked={row.get('template_id') for row in rows};state='COMPLETED'
         try:
+            if self.library_root:
+                from .storage import Library
+                library=Library(self.library_root)
             for i,t in enumerate(self.templates):
                 if t.id in checked:continue
                 waiting=None
@@ -68,6 +70,15 @@ class LayoutSessionDialog(QDialog):
         bar=QHBoxLayout();self.start_button=QPushButton('快照預檢後開始');self.start_button.clicked.connect(self.start);bar.addWidget(self.start_button)
         self.pause_button=QPushButton('暫停');self.pause_button.clicked.connect(self.pause);bar.addWidget(self.pause_button);self.resume_button=QPushButton('繼續');self.resume_button.clicked.connect(self.resume);bar.addWidget(self.resume_button);self.cancel_button=QPushButton('取消此次計算');self.cancel_button.clicked.connect(self.cancel);bar.addWidget(self.cancel_button);self.adopt_button=QPushButton('明確採用已算候選至既有畫布');self.adopt_button.clicked.connect(self.adopt);bar.addWidget(self.adopt_button);self.preview_button=QPushButton('預覽已算部分候選');self.preview_button.clicked.connect(self.preview_selected);bar.addWidget(self.preview_button);self.report_button=QPushButton('當次進度／問題報告');self.report_button.clicked.connect(self.report);bar.addWidget(self.report_button);l.addLayout(bar)
         recovery_bar=QHBoxLayout();self.save_recovery_button=QPushButton('安全停止後加密暫存（24小時）');self.save_recovery_button.clicked.connect(self.save_recovery);recovery_bar.addWidget(self.save_recovery_button);self.restore_button=QPushButton('恢復上一次未完成的排版？');self.restore_button.clicked.connect(self.restore_recovery);recovery_bar.addWidget(self.restore_button);self.clear_recovery_button=QPushButton('放棄並清除暫存');self.clear_recovery_button.clicked.connect(self.clear_recovery);recovery_bar.addWidget(self.clear_recovery_button);l.addLayout(recovery_bar);self.controls()
+    def initialize_scope(self,templates):
+        self.list.clear();self.scope_items={}
+        for template in templates:
+            item=QListWidgetItem(template.name+f' v{template.version} · 尚未開始');item.setData(Qt.UserRole,template.id);self.list.addItem(item);self.scope_items[template.id]=(item,template.name+f' v{template.version}')
+
+    def scope_status(self,identity,status):
+        entry=getattr(self,'scope_items',{}).get(identity)
+        if entry:entry[0].setText(entry[1]+' · '+PHASE_LABELS.get(status,status))
+
     def controls(self):
         self.start_button.setEnabled(not self.running);self.pause_button.setEnabled(self.running and not self.pause_event.is_set());self.resume_button.setEnabled((self.running and self.pause_event.is_set()) or (not self.running and self.report_state=='CANCELLED' and self.worker is not None));self.cancel_button.setEnabled(self.running);self.adopt_button.setEnabled(any(r.get('candidate') for r in self.rows));self.preview_button.setEnabled(any(r.get('candidate') for r in self.rows))
         self.save_recovery_button.setEnabled(not self.running and self.report_state=='CANCELLED' and bool(self.worker));self.restore_button.setEnabled(not self.running);self.clear_recovery_button.setEnabled(not self.running)
@@ -81,21 +92,25 @@ class LayoutSessionDialog(QDialog):
                 if (t.width_mm,t.height_mm)!=self.size or t.capacity!=len(self.people) or (getattr(w,'reorder_template_id',None) and w.reorder_template_id!=t.id):continue
                 templates.append(copy.deepcopy(t))
             if len(templates)>200:raise ValueError('超過單次200候選預算；請縮小模板範圍，未開始亦未宣稱全部檢查')
-            self.template_digests={t.id:digest(t.to_dict()) for t in templates};self.rows=[];self.list.clear();self.pause_event.clear();self.cancel_event.clear();self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event,lambda:w.runtime.admit('GEOMETRY',foreground=True),library_root=w.library.root);self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.report_state='RUNNING';self.running=True;w.busy=True;self.controls();self.status.setText(f'已核對{len(templates)}個同尺寸同容量模板，單worker；未遍歷完成前不是全域最佳')
+            self.template_digests={t.id:digest(t.to_dict()) for t in templates};self.rows=[];self.initialize_scope(templates);self.pause_event.clear();self.cancel_event.clear();self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event,lambda:w.runtime.admit('GEOMETRY',foreground=True),library_root=w.library.root);self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.report_state='RUNNING';self.running=True;w.busy=True;self.controls();self.status.setText(f'已核對{len(templates)}個同尺寸同容量模板，單worker；未遍歷完成前不是全域最佳')
             try:w.pool.start(self.worker)
             except BaseException:self.running=False;w.busy=False;self.controls();raise
         except Exception as e:self.report_state='FAILED_SYSTEM';self.rows=[];self.worker=None;self.status.setText('未開始：'+str(e));self.controls()
     def progress(self,event):
-        self.status.setText(f"實際階段{event['phase']}：{event['index']}/{event['total']}；目前已完成部分候選，尚未比對所有模板"+'；'.join(event.get('reasons',[])))
+        self.status.setText(f"實際階段{PHASE_LABELS.get(event['phase'],event['phase'])}：{event['index']}/{event['total']}；目前已完成部分候選，尚未比對所有模板"+'；'.join(event.get('reasons',[])))
+        if event.get('template_id'):self.scope_status(event['template_id'],PHASE_LABELS.get(event['phase'],event['phase'])+'（已完成'+str(len(self.rows))+'/'+str(event['total'])+'）')
         if event['phase']=='ITEM_FINISHED':
             r=event['row']
             if r.get('candidate'):bind_source(r['candidate'],self.window.library)
-            self.rows.append(r);self.list.addItem(r['template_id']+' · '+r['state']+(' · 阻擋' if r['candidate'] and not r['candidate'].valid else ''));self.details.setPlainText(r['candidate'].risk['label']+'\n'+'\n'.join(r['candidate'].issues) if r['candidate'] else r.get('error',''))
+            self.rows.append(r);self.scope_status(r['template_id'],r['candidate'].risk['label'] if r.get('candidate') else '發生錯誤：'+r.get('error','未知錯誤'));self.details.setPlainText(r['candidate'].risk['label']+'\n'+'\n'.join(r['candidate'].issues) if r['candidate'] else r.get('error',''))
         self.controls()
         if event['phase']=='ITEM_FINISHED' and getattr(self,'auto_apply',False) and not self.auto_first_adopted:
             self.adopt(confirmed=True);self.auto_first_adopted=True
     def on_finished(self,result):
         self.report_state=result['state'];self.running=False;self.window.busy=False;self.rows=result['rows']
+        finished={row.get('template_id') for row in self.rows}
+        for template in self.worker.templates:
+            if template.id not in finished:self.scope_status(template.id,'已取消／尚未計算' if self.report_state=='CANCELLED' else '尚未計算')
         if self.report_state=='COMPLETED':
             try:self.recovery.clear()
             except OSError as error:self.status.setText('計算完成但暫存清理失敗：'+str(error));self.controls();return
@@ -109,8 +124,8 @@ class LayoutSessionDialog(QDialog):
         try:self.check_current()
         except ValueError as error:self.status.setText('不能續算：'+str(error));return
         if not self.running:
-            self.rows=[r for r in self.rows if r.get('state')!='STALE_RECALCULATE'];self.list.clear()
-            for row in self.rows:self.list.addItem(row.get('template_id','?')+' · '+row['state'])
+            self.rows=[r for r in self.rows if r.get('state')!='STALE_RECALCULATE'];self.initialize_scope(self.worker.templates)
+            for row in self.rows:self.scope_status(row.get('template_id'),row['state'])
             self.cancel_event.clear();self.pause_event.clear();w=self.window
             self.worker=LayoutWorker(self.worker.templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event,lambda:w.runtime.admit('GEOMETRY',foreground=True),completed=self.rows,library_root=w.library.root)
             self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.running=True;self.report_state='RUNNING';w.busy=True
@@ -160,9 +175,11 @@ class LayoutSessionDialog(QDialog):
             if row.get('candidate') and any(c['status']!='PASS' for c in row['candidate'].risk['conditions'] if c['id']=='SNAPSHOT_FRESHNESS'):raise ValueError('字型／Logo／來源指紋已變更，需重新計算')
 
     def preview_selected(self):
-        index=self.list.currentRow()
-        if not 0<=index<len(self.rows):return
-        candidate=self.rows[index].get('candidate')
+        item=self.list.currentItem()
+        if item is None:return
+        row=next((row for row in self.rows if row.get('template_id')==item.data(Qt.UserRole)),None)
+        if row is None:self.status.setText('所選候選尚未開始／未計算，沒有可預覽結果');return
+        candidate=row.get('candidate')
         if not candidate:return
         try:
             self.check_current();bind_source(candidate,self.window.library)
@@ -206,12 +223,12 @@ class LayoutSessionDialog(QDialog):
             from .input_graph import InputGraph
             graph=payload.get('graph') or InputGraph.from_legacy(payload['people'],payload['companies'],payload['logos']).data
             w.adopt_input_graph(graph);self.graph_snapshot=copy.deepcopy(graph);w.out_w.setValue(payload['size'][0]);w.out_h.setValue(payload['size'][1]);self.generation=w.generation;self.people,self.companies,self.logos=copy.deepcopy(w.input_data());self.size=tuple(payload['size']);self.input_digest=digest((self.people,self.companies,self.logos,self.size));self.canvas_stamp=canvas_stamp(w);self.template_digests=payload['template_digests'];templates=[Template.from_dict(t) for t in payload['templates']]
-            self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event);self.rows=rows;self.report_state='CANCELLED';self.list.clear()
+            self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event);self.rows=rows;self.report_state='CANCELLED';self.initialize_scope(templates)
             for row in rows:
                 if row.get('candidate'):
                     if digest(dict(people=self.people,companies=self.companies,logos=self.logos))!=row['candidate'].risk_context.get('input_digest'):row.update(candidate=None,state='STALE_RECALCULATE',reason='恢復後輸入／Logo映射需重算')
                     else:row['candidate'].generation=self.generation
-                self.list.addItem(row.get('template_id','?')+' · '+row['state'])
+                self.scope_status(row.get('template_id'),row['state'])
             self.status.setText('已明確恢復已落盤且可核實的部分計算；未自動採用、續算或輸出。過期者需重新開始。');self.controls()
         self.window.run_job('解密核實短期排版恢復',work,done,on_error=lambda error:self.status.setText('未恢復：'+str(error)),resource_kind='RESTORE')
 

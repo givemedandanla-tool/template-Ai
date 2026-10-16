@@ -1229,3 +1229,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 2026-10-16 UI058 WIP: actual stages/resource admission/partial preview/manual canvas fence; strict report schema repaired51PASS; encrypted recovery6PASS, native integration25PASS. Default foreground async conversion in progress,005syntax error retained/fixed006pending. Local24h default technical retention explicitly visible, no persistent customer DB/model API/new services.
 
 2026-10-16 UI057/058 WIP: default foreground async81PASS; single-worker backpressure/partial/cancel/resume/manual/restart native22PASS; exact source/byteproof36PASS. Source uses actual SHA/length/stat and exact published template pin, no confidence bypass. No parents marked complete; source adversarial/capture/fullclauses pending.
+
+2026-10-16 UI057/058 combined57PASS and actual4source adversariesPASS;1073catalog. Actual11viewcapture0020Qt visually reviewed; clipped entry fixed and00311view0Qt, finalvisual pending. Kept001publication refusal fixturefailure. No parent markedcomplete; original9+10 registration/frozenformal pending.

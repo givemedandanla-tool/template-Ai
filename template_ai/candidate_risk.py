@@ -96,6 +96,13 @@ def freshness_conditions(candidate):
     if digest(context['input_snapshot'])!=context.get('input_digest'):reasons.append('輸入快照已變更')
     if digest(candidate.template.to_dict())!=context.get('template_snapshot_digest'):reasons.append('模板內容已變更')
     if placement_digest(candidate)!=context.get('placement_snapshot_digest'):reasons.append('已量測的文字／框位／Logo已變更')
+    if context.get('original_source_proof'):
+        from .source_links import fingerprint
+        from pathlib import Path
+        proof=context['original_source_proof']
+        try:unchanged=tuple(proof['stat'])==fingerprint(Path(proof['path']).stat())
+        except (OSError,ValueError,KeyError):unchanged=False
+        if not unchanged:reasons.append('已核實原稿指紋已變更／失聯')
     from .layout import layout_dependency
     if layout_dependency(candidate.template,context['input_snapshot']['logos'])!=candidate.dependency_stamp:reasons.append('字型／Logo／來源檔依賴已變更')
     return [dict(id='SNAPSHOT_FRESHNESS',status='UNKNOWN' if reasons else 'PASS',reason='；'.join(reasons) if reasons else '輸入／模板／實際框位／資產依賴仍符合本次快照')]

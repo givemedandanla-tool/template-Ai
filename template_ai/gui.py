@@ -576,11 +576,12 @@ class MainWindow(QMainWindow):
         size_row.addWidget(self.out_w)
         size_row.addWidget(self.out_h)
         self.button("開始自動排版", self.generate, size_row)
-        self.layout_session_button=self.button("當次單worker／暫停取消／短期恢復", self.layout_session, size_row)
+        self.layout_session_button=self.button("排版進度／恢復", self.layout_session, size_row)
+        self.layout_session_button.setToolTip("當次真實進度、暫停／取消及恢復上一次未完成的排版")
         from .layout_recovery import LayoutRecovery
         try:
-            if LayoutRecovery(self.library.root).pending():self.layout_session_button.setText("恢復上一次未完成的排版？")
-        except (OSError,ValueError):self.layout_session_button.setText("短期恢復暫存需核實／清除")
+            if LayoutRecovery(self.library.root).pending():self.layout_session_button.setText("恢復排版")
+        except (OSError,ValueError):self.layout_session_button.setText("核實恢復暫存")
         self.button('多尺寸驗證／部分輸出',self.multi_size,size_row)
         self.button("解除重訂版型限定", self.clear_reorder_filter, size_row)
         self.button("當次候選局部修改", self.candidate_editor, size_row)
@@ -1903,8 +1904,9 @@ class MainWindow(QMainWindow):
         if not 0 <= row < len(self.candidates):
             return
         c = self.candidates[row]
-        try:self.library._template_provenance(c.template)
-        except ValueError as error:self.error(str(error));self.export_button.setEnabled(False);return
+        from .candidate_risk import bind_source
+        bind_source(c,self.library,require_registered=True)
+        if not preview and not c.formal_eligible:self.error(c.risk['label']);self.export_button.setEnabled(False);return
         name = f"{c.template.width_mm:g}x{c.template.height_mm:g}_{'PREVIEW' if preview else 'FINAL'}.png"
         path, _ = QFileDialog.getSaveFileName(self, "保存數位檔案（預設不覆寫）", name, "PNG (*.png);;PDF (*.pdf);;JPG (*.jpg)")
         if not path:

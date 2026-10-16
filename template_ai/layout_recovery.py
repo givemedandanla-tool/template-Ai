@@ -73,7 +73,13 @@ class LayoutRecovery:
         return record['payload']
     def validate(self,library,payload):
         if len(payload.get('rows',[]))>200 or len(payload.get('templates',[]))>200:raise ValueError('恢復候選範圍超過200上限')
-        current={t.id:t for t in library.templates(True)};rows=[]
+        current={};rows=[]
+        for row in payload.get('rows',[]):
+            identity=row.get('template_id')
+            if identity in current:continue
+            try:template=Template.from_dict(library.object_snapshot('TEMPLATE',identity)['payload'])
+            except ValueError:continue
+            if template.state=='published':current[identity]=template
         for row in payload.get('rows',[]):
             restored=copy.deepcopy(row)
             if row.get('candidate'):
@@ -85,6 +91,6 @@ class LayoutRecovery:
                     bind_source(candidate,library)
                     freshness=[c for c in candidate.risk['conditions'] if c['id']=='SNAPSHOT_FRESHNESS']
                     if any(c['status']!='PASS' for c in freshness):restored.update(candidate=None,state='STALE_RECALCULATE',reason='輸入／資產／框位指紋已變更')
-                    else:restored.update(candidate=candidate,state='RESTORED_CURRENT_PENDING_ADOPTION')
+                    else:restored.update(candidate=candidate,state='RESTORED_CURRENT_PENDING_ADOPTION' if candidate.formal_eligible else 'RESTORED_REVIEW_OR_EVIDENCE_REQUIRED')
             rows.append(restored)
         return rows

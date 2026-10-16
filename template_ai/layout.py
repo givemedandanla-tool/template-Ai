@@ -107,7 +107,10 @@ def generate(t: Template, people: list[dict], companies: list[dict], logos: dict
     if progress:progress("INPUT_SOURCE_PRECHECK")
     dependency = layout_dependency(t, logos)
     issues = template_errors(t)
-    diagnostics = [issue("TEMPLATE_CHECK") for _ in issues]
+    from .fonts import font_asset_errors
+    from .background import background_errors
+    uncertain_assets=set(font_asset_errors(t.slots))|set(background_errors(t.background,t.width_mm,t.height_mm,verify_files=False))
+    diagnostics = [issue("FONT_UNVERIFIED" if reason in uncertain_assets else "TEMPLATE_CHECK") for reason in issues]
     measurements = []
     def add(reason, code, slot=None, **parameters):
         issues.append(reason)

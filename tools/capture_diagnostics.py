@@ -14,6 +14,7 @@ from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication,QTableWidgetItem
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tests'))
 from gui_wait import wait_layout
+from runtime_fixture import controlled_resources
 
 from template_ai.gui import MainWindow
 from template_ai.demo import demo_template
@@ -32,7 +33,7 @@ def capture(root):
         if dialog.raw is None:raise ValueError('actual report GUI did not produce payload: '+dialog.status.text())
     window=MainWindow(root/'diagnostic-local-data');template=demo_template();window.library.publish(template)
     for j,v in enumerate(('X'*200,'Designer','+12025550100','alex@example.test','','','','')):window.people.setItem(0,j,QTableWidgetItem(v))
-    window.generate();wait_layout(window);before=window.library.templates()[0].to_dict();gate=window.export_button.isEnabled()
+    controlled_resources(window);window.generate();wait_layout(window);before=window.library.templates()[0].to_dict();gate=window.export_button.isEnabled()
     d=DiagnosticReportDialog(window,'candidate');d.show();wait(d);app.processEvents()
     assert d.data['status']=='BLOCKED' and not gate
     assert d.grab().save(str(root/'diagnostic-preview.png'))

@@ -76,7 +76,7 @@ class CustomLayout:
         except ValueError as error:
             result.update(issues=[str(error)]);return self._finish(result,draft,candidate)
     def _finish(self,result,draft,candidate):
-        result['draft']=draft.to_dict();result['changes']=differences(result['base_plan']['source']['payload'],result['draft']);result['digest']=digest(result);result['preview_candidate']=candidate;return result
+        result['draft']=draft.to_dict();result['changes']=differences(result['base_plan']['source']['payload'],result['draft']);result['digest']=digest(result);base=result['base_plan']['source']['payload'];candidate.risk_context['approved_base']=dict(id=base['id'],version=base['version'],state=base['state'],payload=deepcopy(base),digest=digest(base));candidate.risk_context['basis']=['EXACT_PUBLISHED_BASE','BOUNDED_CASSOWARY_REPAIR_NOT_PUBLISHED'];result['preview_candidate']=candidate;return result
     def create_draft(self,plan,people,companies,logos,actor,reason,approved=False):
         if digest({k:v for k,v in plan.items() if k not in ('digest','preview_candidate')})!=plan.get('digest'):raise ValueError('特製計畫內容已變更，請重新預覽')
         if approved is not True or plan['status']!='FEASIBLE_DRAFT':raise ValueError('須核對可行候選、變動清單，明確建立草稿；未發布')

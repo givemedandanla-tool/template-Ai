@@ -59,7 +59,9 @@ class MultiSizeWorkflow:
                 try:
                     self.library._template_provenance(template)
                     candidate=generate(deepcopy(template),self.people,self.companies,logos,self.generation)
-                    from .candidate_risk import bind_source
+                    from .candidate_risk import bind_source,verify_original_source
+                    try:verify_original_source(candidate,self.library)
+                    except (ValueError,OSError):pass
                     bind_source(candidate,self.library);entry['candidates'].append(candidate)
                 except (ValueError,OSError) as error:entry['failures'].append(dict(template_id=template.id,reason=str(error)))
             entry['candidates'].sort(key=lambda c:(not c.formal_eligible,-c.score,c.template.id))
@@ -93,6 +95,8 @@ class MultiSizeWorkflow:
             if asset['id'] not in current or digest(current[asset['id']])!=digest(asset) or errors(asset):raise ValueError('Logo來源／版本已變更，不輸出舊候選')
         from .candidate_risk import bind_source
         fresh=generate(template,self.people,self.companies,logos,self.generation)
+        for key in ('source_template_pin','original_source_proof'):
+            if key in candidate.risk_context:fresh.risk_context[key]=deepcopy(candidate.risk_context[key])
         fresh.risk_context['conditions']=deepcopy(candidate.risk_context.get('conditions',[]))
         bind_source(fresh,self.library)
         return fresh
