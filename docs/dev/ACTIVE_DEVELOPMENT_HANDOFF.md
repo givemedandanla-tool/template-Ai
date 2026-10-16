@@ -12,3 +12,5 @@
 - 詳細歷史：history/HANDOFF_BEFORE_UI061_FULL20_20261016.md；更早layout002/003及UI059等見history，按需讀，不全展開。
 
 UI061 coherent037：163tests/17modules 全部PASS，0skip/Qt；full20 mapping及runner capturehook就緒，下一項UI062。
+
+UI062 original26 plan beforecode：workbench_navigation輕量當次bounded8返回位置（IDs/version/view，無商業資料副本）、current SourceGate+selectionpin、Main上下文與back、Logo/font/source/input既有modal、未套用forms跨頁保留/closeStay+existingRecovery+explicitdiscard、真實UI058落盤收據/expiry/後續修改/失敗區分。10newtests，0019tests1fixtureERROR（非法覆寫published已被原API阻擋，修fixture用明確外部registryreplacement注入）；00221PASS；00343PASS(含firstversion原close真實discard選擇/font/artwork恢復)。下一步modeback延伸/native實際逐圖review/full26mapping後UI063，沒有新父題宣稱完成。

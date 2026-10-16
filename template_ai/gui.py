@@ -249,6 +249,8 @@ class MainWindow(QMainWindow):
         self.refresh_sources()
         self.refresh_templates()
         self.refresh_logos()
+        from .workbench_navigation import WorkbenchNavigation
+        self.navigation=WorkbenchNavigation(self,self.work_context,self.return_work_button)
         self.statusBar().showMessage("本機研究版 · 請使用匿名／合成資料 · 實體印刷分析尚未執行")
         if self.font_manager.issues:
             self.statusBar().showMessage("字型資產需處理：" + "；".join(self.font_manager.issues))
@@ -288,6 +290,9 @@ class MainWindow(QMainWindow):
         title = QLabel("Template AI   矩形區域自動排版與模板學習")
         title.setObjectName("title")
         header=QHBoxLayout();header.addWidget(title,1);outer.addLayout(header)
+        context_row=QHBoxLayout();self.work_context=QLabel();self.work_context.setWordWrap(True)
+        self.work_context.setAccessibleName('當次工作位置與保存狀態');context_row.addWidget(self.work_context,1)
+        self.return_work_button=QPushButton('返回原工作');context_row.addWidget(self.return_work_button);outer.addLayout(context_row)
         title.setToolTip("匯入原稿 → 視覺核對與標記 → 學習並發布模板 → 輸入人物資料 → 驗證與數位輸出")
         splitter = QSplitter();self.workspace_splitter=splitter
         rail=QWidget();rail.setMaximumWidth(185);rail_layout=QVBoxLayout(rail)
@@ -381,8 +386,9 @@ class MainWindow(QMainWindow):
     def source_scan_center(self):
         from .source_scan_dialog import SourceScanDialog
         dialog=SourceScanDialog(self)
+        self.navigation.begin('來源修正')
         try:dialog.exec()
-        finally:dialog.deleteLater()
+        finally:dialog.deleteLater();self.navigation.finish()
 
     def open_diagnostic(self, kind):
         from .diagnostic_routes import open_diagnostic
@@ -401,8 +407,9 @@ class MainWindow(QMainWindow):
             return
         from .logo_library_dialog import LogoLibraryDialog
         dialog = LogoLibraryDialog(self)
+        self.navigation.begin('尺寸 Logo 管理')
         try: dialog.exec()
-        finally: dialog.deleteLater()
+        finally: dialog.deleteLater();self.navigation.finish()
 
     def customer_center(self):
         from .customer_dialog import CustomerDialog
@@ -898,8 +905,9 @@ class MainWindow(QMainWindow):
         if self.busy: return
         from .font_dialog import FontCenterDialog
         dialog = FontCenterDialog(self)
-        dialog.refresh()
-        dialog.exec()
+        self.navigation.begin('字型管理')
+        try:dialog.refresh();dialog.exec()
+        finally:dialog.deleteLater();self.navigation.finish()
 
     def backup_center(self):
         from .backup_center import BackupManagerDialog
@@ -1718,11 +1726,13 @@ class MainWindow(QMainWindow):
         if self.busy:
             self.error("背景工作中，待完成後編輯當次輸入");return
         from .input_graph_dialog import InputGraphDialog
+        self.navigation.begin('人物與公司資料')
         try:
             dialog=InputGraphDialog(self)
             if focus_field_id:QTimer.singleShot(0,dialog,lambda:dialog.focus_field(focus_field_id,focus_entity_id))
             if dialog.exec()==QDialog.Accepted:self.adopt_input_graph(dialog.graph.data,history=dialog.graph)
         except (ValueError,TypeError) as error:self.error(str(error))
+        finally:self.navigation.finish()
 
     def adopt_input_graph(self, data, snapshot=None, history=None):
         from .input_graph import InputGraph
@@ -1871,6 +1881,7 @@ class MainWindow(QMainWindow):
         if not 0 <= row < len(self.candidates):
             return
         c = self.candidates[row]
+        if hasattr(self,'navigation'):self.navigation.update()
         try:
             from .candidate_risk import bind_source
             bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id'] not in ('SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES')],require_registered=True)
@@ -2066,16 +2077,21 @@ class MainWindow(QMainWindow):
         self.inform("第一版快速操作：\n1. 模板區加入示範模板，驗證並發布。\n2. 輸出區填入匿名示範，開始排版並輸出。\n3. 訓練區匯入來源，框選作品、標定毫米，新增欄位並設定歸屬。\n4. 核對原稿後確認視覺一致，保存標記、學習模板。\n5. 缺少 Logo 或內容排不下只可 PREVIEW，不會暗縮字級。\n\n本版只提供標記幾何規則學習；完整自動辨識、客戶重訂、深度模型、完整權限與印刷分析尚未完成。")
 
     def closeEvent(self, event):
+        if self.library.closed:
+            event.accept();return
         if self.busy:
             self.inform("背景工作尚未安全結束，請等待完成或先在目前工作面板安全取消")
             event.ignore()
             return
+        if not self.navigation.confirm_close():
+            event.ignore();return
         try:
             if self.template and self.template.state == "draft":
                 self.save_current_template()
             if self.source:
                 self.save_labels(silent=True)
         except Exception as e:
+            self.navigation.save_error='正式資料保存失敗；尚未安全關閉。';self.navigation.update()
             self.error("保存失敗，尚未安全關閉：" + str(e))
             event.ignore()
             return

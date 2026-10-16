@@ -228,7 +228,14 @@ class FirstVersionTests(unittest.TestCase):
         self.assertTrue(window.export_button.isEnabled())
         window.people.item(0, 0).setText("姓名已修改")
         self.assertFalse(window.export_button.isEnabled())
-        window.close()
+        # Closing computed in-memory work requires an explicit human choice.
+        from PySide6.QtCore import QTimer
+        from PySide6.QtWidgets import QMessageBox
+        def discard_current():
+            box=next(w for w in QApplication.topLevelWidgets() if isinstance(w,QMessageBox) and w.isVisible())
+            next(b for b in box.buttons() if b.text()=='明確放棄當次操作並關閉').click()
+        QTimer.singleShot(0,discard_current)
+        self.assertTrue(window.close())
 
 
 if __name__ == "__main__":

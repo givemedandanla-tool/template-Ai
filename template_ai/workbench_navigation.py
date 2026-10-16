@@ -1,0 +1,200 @@
+"""Bounded, transient return locations for the existing workbench, never work copies."""
+import copy
+import time
+from dataclasses import asdict
+from PySide6.QtCore import QPointF
+from PySide6.QtGui import QTransform
+from PySide6.QtWidgets import QGraphicsItem, QMessageBox
+from .customers import digest
+
+MODE_LABELS=('原稿標記','模板與 Logo','排版與輸出')
+
+
+def work_token(window):
+    """Only used at explicit recovery boundaries, not on a refresh timer."""
+    from .layout_session import canvas_stamp
+    return digest(dict(root=str(window.library.root),generation=window.generation,
+                       input=window.input_data(),canvas=canvas_stamp(window),
+                       reviews=[c.risk_context for c in window.candidates],
+                       size=[window.out_w.value(),window.out_h.value()]))
+
+
+class WorkbenchNavigation:
+    def __init__(self,window,label,back):
+        self.window=window;self.label=label;self.back=back;self.locations=[]
+        self.route=None;self.notice='';self.recovery=None;self.save_error=None
+        self.back.clicked.connect(self.return_to_work)
+        window.tabs.currentChanged.connect(self.update)
+        window.inputs_invalidated.connect(self.update)
+        window.statusBar().messageChanged.connect(self.update)
+        window.candidate_list.currentRowChanged.connect(self.update)
+        self.update()
+
+    def canvas(self,mode):
+        return (self.window.train_canvas,self.window.edit_canvas,self.window.output_canvas)[mode]
+
+    def pin(self,mode):
+        w=self.window
+        if mode==2:
+            from .candidate_results import selection_pin
+            index=w.candidate_list.currentRow()
+            if not 0<=index<len(w.candidates):return ('EMPTY',w.generation)
+            return ('CANDIDATE',w.candidates[index].template.id,self.candidate_pin(index))
+        if mode==0 and w.work:
+            stored=w.library.artwork(w.work['id'])
+            return ('WORK',w.work['id'],stored['revision'],digest(stored['payload']),
+                    digest([asdict(s) for s in w.slots]),digest(asdict(w.crop)) if w.crop else None)
+        if mode==1 and w.template:
+            stored=w.library.object_snapshot('TEMPLATE',w.template.id)
+            return ('TEMPLATE',w.template.id,digest(stored['payload']),digest(w.template.to_dict()))
+        return ('EMPTY',)
+
+    def candidate_pin(self,index):
+        from .candidate_results import selection_pin
+        from .candidate_risk import bind_source
+        checked=copy.deepcopy(self.window.candidates[index])
+        bind_source(checked,self.window.library,require_registered=True)
+        return (selection_pin(self.window,index),checked.risk['digest'])
+
+    def capture(self):
+        w=self.window;mode=w.tabs.currentIndex();canvas=self.canvas(mode)
+        from .gui import Box
+        return dict(root=str(w.library.root),generation=w.generation,mode=mode,pin=self.pin(mode),
+                    transform=QTransform(canvas.transform()),centre=QPointF(canvas.mapToScene(canvas.viewport().rect().center())),
+                    selected=[item.slot.id for item in canvas.scene().selectedItems() if isinstance(item,Box)],
+                    slot=w.current_slot.id if w.current_slot else None,
+                    template_page=w.template_stack.currentIndex())
+
+    def begin(self,route):
+        try:location=self.capture()
+        except (ValueError,OSError,KeyError,TypeError):
+            self.notice='目前物件尚無可核對的返回位置；修正後請由原列表重新選取。'
+        else:
+            if not self.locations or any(location[k]!=self.locations[-1][k] for k in ('root','generation','mode','pin')):
+                self.locations.append(location);self.locations=self.locations[-8:]
+        self.route=route;self.update()
+
+    def finish(self):
+        self.route=None;self.update()
+
+    def return_to_work(self):
+        if not self.locations:return False
+        w=self.window;location=self.locations.pop();mode=location['mode'];reason=None
+        try:
+            if w.library.closed or str(w.library.root)!=location['root']:raise ValueError('工作資料位置已變更')
+            if w.generation!=location['generation']:raise ValueError('當次人物資料或資產版本已改變，原候選需重新驗證')
+            if mode==2 and location['pin'][0]=='CANDIDATE':
+                matches=[i for i,c in enumerate(w.candidates) if c.template.id==location['pin'][1]]
+                if len(matches)!=1:raise ValueError('原候選已移除或無法唯一辨識')
+                index=matches[0]
+                if ('CANDIDATE',w.candidates[index].template.id,self.candidate_pin(index))!=location['pin']:raise ValueError('原候選、模板或人工編輯版本已變更')
+            elif self.pin(mode)!=location['pin']:raise ValueError('原作品、模板或物件版本已變更')
+            # Changing an existing tab retains its own pending property form/history.
+            # Never copy business data or a previously safe risk assessment back.
+            w.tabs.setCurrentIndex(mode)
+            if mode==2 and location['pin'][0]=='CANDIDATE':
+                w.candidate_list.setCurrentRow(index);w.choose_candidate(index)
+                from .gui import Box
+                slots={slot.id:slot for slot in w.candidates[index].template.slots}
+                if any(identity not in slots for identity in location['selected']):raise ValueError('原定位物件已不存在')
+                for identity in location['selected']:
+                    box=Box(copy.deepcopy(slots[identity]),lambda *args:None)
+                    box.setFlag(QGraphicsItem.ItemIsMovable,False);box.setFlag(QGraphicsItem.ItemIsSelectable,True)
+                    w.output_canvas.scene().addItem(box);box.setSelected(True)
+            else:
+                if mode==1:w.template_stack.setCurrentIndex(location['template_page'])
+                canvas=self.canvas(mode)
+                for identity in location['selected']:canvas.select_id(identity)
+            canvas=self.canvas(mode);canvas.setTransform(location['transform']);canvas.centerOn(location['centre']);canvas.view_changed.emit()
+            self.notice='已返回原工作視角；正式輸出仍依當前尺寸檢查。'
+        except (ValueError,OSError,KeyError,TypeError) as error:
+            reason=str(error);w.tabs.setCurrentIndex(mode)
+            # Leave the newest actual geometry, selection and form untouched.
+            self.notice='無法還原原位置：'+reason+'。已返回目前列表，請重新選取。'
+            if mode==2:
+                w.export_button.setEnabled(False);w.candidate_list.setFocus()
+        self.update();return reason is None
+
+    def recovery_started(self):
+        self.save_error=None;self.notice='正在核實及寫入短期恢復資料；尚未保存。';self.update()
+
+    def recovery_saved(self,receipt,token):
+        if not all(receipt.get(k) is True for k in ('saved','encrypted','authenticated')):
+            self.recovery_failed('未取得已驗證落盤收據');return
+        self.recovery=dict(token=token,expires=receipt['expires']);self.save_error=None
+        self.notice='短期恢復資料已加密落盤；正式客戶與模板另行核准保存。';self.update()
+
+    def recovery_failed(self,error):
+        self.save_error='短期恢復保存失敗；當次操作尚未安全保存。'
+        self.notice=self.save_error;self.update()
+
+    def recovery_cleared(self):
+        self.recovery=None;self.notice='短期恢復資料已清除；當次排版仍僅在記憶體。';self.update()
+
+    def recovery_current(self):
+        if not self.recovery or self.recovery['expires']<=time.time():return False
+        try:return self.recovery['token']==work_token(self.window)
+        except (ValueError,OSError,KeyError,TypeError):return False
+
+    def pending_form(self):
+        w=self.window
+        if w.tabs.currentIndex()==2 or w.current_slot is None:return False
+        form=dict(kind=w.kind.currentData(),owner=w.owner.currentData(),index=w.index.value(),
+                  coords=[s.value() for s in w.coords],font=w.font.currentFont(),pt=w.pt.value(),
+                  color=w.text_color.text(),scale=w.scale.value(),align=w.align.currentData(),
+                  required=w.required.isChecked(),font_display=getattr(w,'_selected_font_display',None))
+        return not self.form_matches(w.current_slot,form)
+
+    @staticmethod
+    def form_matches(slot,form):
+        displayed=form.get('font_display')
+        family=form['font'].family()
+        same_font=family==slot.font or bool(displayed and displayed['slot_id']==slot.id and family==displayed['display'])
+        return (same_font and form['kind']==slot.kind and form['owner']==slot.owner
+                and form['index']==slot.index+1 and form['coords']==[slot.rect.x,slot.rect.y,slot.rect.w,slot.rect.h]
+                and form['color'].strip()==slot.color and form['pt']==slot.size_pt
+                and abs(form['scale']/100-slot.min_scale)<1e-8 and form['align']==slot.align
+                and form['required']==slot.required)
+
+    def close_impacts(self):
+        w=self.window;impacts=[]
+        if self.pending_form():impacts.append('目前物件有尚未套用的屬性。')
+        for mode,(selected,undo,redo,form) in w._mode_memory.items():
+            if mode!=w.tabs.currentIndex() and selected and form:
+                slots=w.slots if mode==0 else w.template.slots if mode==1 and w.template else []
+                slot=next((s for s in slots if s.id==selected),None)
+                if slot and not self.form_matches(slot,form):
+                    impacts.append('其他功能頁有已保留、尚未套用的物件屬性。')
+        if w.candidates and not self.recovery_current():impacts.append('當次排版及人工修改尚未保存為目前版本的短期恢復資料。')
+        from .multi_size_dialog import MultiSizeDialog
+        if any(getattr(d,'service',None) and any(e.get('candidates') for e in d.service.entries) for d in w.findChildren(MultiSizeDialog)):
+            impacts.append('多尺寸候選僅保留在當次視窗；主排版短期恢復不包含這些獨立作品。')
+        if self.save_error:impacts.append(self.save_error)
+        return list(dict.fromkeys(impacts))
+
+    def confirm_close(self):
+        impacts=self.close_impacts()
+        if not impacts:return True
+        box=QMessageBox(self.window);box.setWindowTitle('當次工作尚未安全保存')
+        box.setText('\n'.join(impacts));box.setInformativeText('切換功能會保留當次內容；關閉程式將結束記憶體工作。正式主檔另依原保存規則處理。')
+        stay=box.addButton('返回繼續編輯',QMessageBox.RejectRole)
+        recover=box.addButton('開啟安全恢復',QMessageBox.ActionRole)
+        discard=box.addButton('明確放棄當次操作並關閉',QMessageBox.DestructiveRole)
+        box.setDefaultButton(stay);box.exec();chosen=box.clickedButton()
+        if chosen==recover:self.window.layout_session()
+        return chosen==discard
+
+    def update(self,*args):
+        w=self.window;mode=w.tabs.currentIndex();parts=[self.route or MODE_LABELS[mode]]
+        index=w.candidate_list.currentRow()
+        if mode==2 and 0<=index<len(w.candidates):
+            c=w.candidates[index];parts+=[f'候選 {index+1}',f'{c.template.width_mm:g}×{c.template.height_mm:g} mm']
+            parts.append('需重新驗證' if c.generation!=w.generation else '正式輸出仍需當前檢查')
+            parts.append('短期恢復已加密落盤；目前進度另需核對' if self.recovery and self.recovery['expires']>time.time() else '尚未保存的當次排版')
+        elif mode==1 and w.template:parts.append('已發布模板' if w.template.state=='published' else '模板草稿；依原流程保存')
+        elif mode==0 and w.work:parts.append('原稿標記；未保存變更依原流程核對')
+        if w.busy:parts.append('背景工作進行中')
+        if self.pending_form():parts.append('尚未套用屬性；切換後保留')
+        if self.save_error:parts.append(self.save_error)
+        self.label.setText(' ｜ '.join(parts));self.label.setToolTip(self.notice or self.label.text())
+        self.back.setEnabled(bool(self.locations));self.back.setToolTip(self.notice or '返回原工作；失效時回到目前列表')

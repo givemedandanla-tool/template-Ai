@@ -1,0 +1,98 @@
+{
+  "parent": "UI-062",
+  "status": "IMPLEMENTATION_IN_PROGRESS",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "original_clauses": [
+    "**清楚可見的主導覽**：左側保留穩定且名稱一致的功能導覽，讓使用者可以直接進入既有相關功能；可用性／必要前置條件以狀態提示呈現，而非強迫依固定順序走訪。導覽與工作操作可分層顯示，避免在低解析度視窗擠掉實際畫布。",
+    "**工作上下文條**：上方顯示「目前位於哪一功能／哪個當次候選／哪個物理尺寸／是否有未完成檢查」等與當前操作直接相關的資訊。不得以未核對的客戶 ID 或舊候選狀態假裝正式案件；涉及個資時以最小必要資訊展示，敏感內容不無條件曝光。",
+    "**上下文導向切換與返回**：從缺少 Logo、字型或來源等問題進入既有修正介面時，保留原功能入口、候選 ID、尺寸、畫布位置／縮放、當次選取物件／問題定位與相關版本資訊；完成或取消處理後提供「返回原工作」入口。僅在原工作／物件／版本**仍存在且有效**時精確還原；否則顯示原因、定位到安全的最近有效層級（如候選列表或來源欄位），**不假裝恢復到不存在或已過期的物件**。",
+    "**分辨不同保存狀態**：GUI 必須區分「尚未保存的當次操作」、「已安全保存的短期恢復資料」、「正式客戶主檔／已發布模板已核准保存」、「保存失敗」、「需重新驗證」，不可用單一籠統的『已保存』混淆。保留 UI-058 的安全恢復及 UI-045 的正式客戶主檔逐項受控回寫界線。",
+    "**離開與返回不造成無聲資料遺失**：切換功能、返回上一頁、關閉工作或離開程式時，若存在尚未安全保存的有效編輯、尚未解決的版本衝突或正在進行不可安全即停的操作，顯示實際影響與清楚選擇（例如返回繼續編輯、依既有機制安全保存／暫存、明確放棄）；不得以切換路徑為由自動刪除或覆寫人工內容，亦不得宣稱在磁碟滿／寫入失敗時已安全保存。非必要時不每次切換都彈窗，減少干擾。",
+    "**未完成事項與操作順序**：對當前工作清楚顯示實際缺口（如尚缺公司 Logo、模型低把握待確認、候選過期需重算、某實體尺寸印前 Gate 失敗），可點擊跳往既有修正介面；允許先處理其他可獨立操作的事項，但**正式印前輸出仍必須滿足所有硬性 Gate**。不同尺寸個別標示狀態，不能以已核准尺寸帶過未核准尺寸。",
+    "**不干擾已有人工編輯／AI 狀態**：導航本身不觸發來源資料改寫、跨候選同步、AI 重算或輸出；只在使用者完成實際資料變更時遵守 UI-059 局部失效／版本柵欄和 UI-061 跨候選／尺寸作用範圍。晚到 AI 計算或返回過期畫面不得覆蓋更新後的人工修改。",
+    "**低配置 Windows 支援**：導航／狀態列為輕量資料，不因切換模式一次讀取整批 .ai、整個訓練資料庫或數百預覽。保護前景操作可用，遵守 UI-051／058 低負載限制。若需重新載入資料，先顯示真實狀態，不偽裝瞬間恢復。",
+    "**優先重用既有 GUI**：左側功能選單、UI-034 畫布物件面板、UI-014／015 問題定位、UI-018 候選比較、UI-027 印前狀態、UI-047 既有持久化與 UI-058 工作階段恢復均應優先擴充，不另外建立影子工作台。",
+    "| 正常從候選畫布跳往 Logo 管理再返回 | 恢復原候選與尺寸、原畫布位置；已受影響項標「待重驗」 |",
+    "| 原候選在切換期間被刪除、範本改版或工作取消 | 顯示原入口失效理由，返回候選列表或安全入口；不套用舊狀態 |",
+    "| 離開時有未保存的手動框位修改 | 提示真實可行的保留／放棄選項，放棄需明確確認 |",
+    "| 暫存寫入失敗、磁碟空間不足 | 顯示保存失敗和目前狀態，不標記為『已保存』 |",
+    "| 同一人物資料改動後返回另一尺寸候選 | 畫面顯示同步後來源版本與尚待分尺寸驗證，不借用舊 PASS |",
+    "| 使用者跳過必要印前檢查 | 保留自由操作，但正式輸出保持阻擋與原因 |",
+    "| 多次跨模式跳轉或從問題清單開啟修正頁 | 返回來源明確、避免循環導航、錯誤候選或跨人物定位 |",
+    "| 小尺寸視窗或效能緊張 | 保留關鍵操作與狀態；逐步載入，不能讓主 GUI 卡死 |",
+    "**一致性**：不同功能入口看到的是當次同一版本的合法人物／公司／候選 ID，切換不導致資料複製成平行正式主檔。",
+    "**可復原性**：在版本未變且工作尚有效時，跳出至 Logo 修正後可回到原候選、原尺寸、原畫布縮放與選取位置；不相容時安全降級並說明。",
+    "**真實保存**：若操作未落盤或保存失敗，切換與關閉介面都不假稱安全已保存。",
+    "**防誤輸出**：跳步完成其他工作，仍不能繞過 UI-019／027 印前硬性條件。",
+    "**人工編輯保護**：導航與恢復不覆寫人工鎖定物件，不接收舊世代計算結果作為新版本。",
+    "**可用性**：使用者不需要知道內部模板、模型或 GitHub 工程術語，即可找到目前工作、必需修正及返回入口；低配效能數值留未來 Windows 實機驗證。",
+    "不新增永久草稿、客戶訂單系統、影子資料庫、跨裝置雲端同步或額外權限中心。",
+    "不改 UI-043 正式客戶分類，不自行回寫 UI-045 客戶主檔，不改原始 .ai、UI-010 已發布模板、UI-020～026 Logo 庫或 UI-055 訓練資料。",
+    "UI-048 完整登入權限介面仍保留原定實作順位；UI-056 D 只作日後低優先級候選。"
+  ],
+  "normative_clause_count": 26,
+  "historical_status_excluded": "Decision-time non-development/non-verified footer; latest user authorizes complete28 implementation, approval is not verification.",
+  "references": [
+    {
+      "name": "qt-qtabwidget-6.8.3",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/widgets/widgets/qtabwidget.cpp",
+      "bytes": 40783,
+      "sha256": "464fca3144c1d4c2807298c499aa609b009e0aea71bbf91d6cd8c2df6fa6a91b",
+      "local": "/tmp/ui062-reference-review/qt-qtabwidget-6.8.3.txt"
+    },
+    {
+      "name": "vscode-codebasics",
+      "url": "https://raw.githubusercontent.com/microsoft/vscode-docs/main/docs/editor/editingevolved.md",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "Microsoft VSCode1.66 LocalHistory",
+      "url": "https://raw.githubusercontent.com/microsoft/vscode-docs/main/release-notes/v1_66.md",
+      "sha256": "93c81b917f4036ee579cd1a8c93d05cfa2cce8372041f85ace912c08d2ebbef4",
+      "bytes": 57517,
+      "review": "Read compare/restore and bounded entries; reuse explicit return without duplicate business data."
+    }
+  ],
+  "actually_reviewed": [
+    "Qt6.8.3 qtabwidget.cpp currentChanged after stack change; preserve existing mode memory",
+    "Microsoft VSCode1.66 Timeline explicit compare/restore and bounded history"
+  ],
+  "math": [
+    "Finite state mode/root/generation/exactobject-version fence; validreturn iff capturedpin==currentpin",
+    "Bounded8 LIFO locations, eliminate adjacentduplicates, poponreturn",
+    "QTransform +sceneCentre preserve physicalview without geometrychanges"
+  ],
+  "reuse": [
+    "Existing Main3tabs/functionrail/mode memory/Canvas controls",
+    "Existing candidate_results exactselectionpin/typedproblemroutes/currentwholecardGate",
+    "Existing clean-navigation checks/UI058 encrypted recovery/singleworker"
+  ],
+  "acceptance_plan": [
+    "Actual Logo modal cancel then exactcandidate/size/zoom/selectionreturn; staleinput/source/manual/deletedcandidate explicitfallback",
+    "Unsavedforms retained between modes; close Stay/explicitdiscard/opensafeRecovery; injected diskfail never saved",
+    "Privacyminimum context; activeworkerunchanged; no autonavigation writes/recalc/output",
+    "Nativecontrolled captures and original26 coverage; no reference Windows/corpus claim"
+  ],
+  "checkpoint": "CP-20261016-REMAINING28-UI062-NAVIGATION-WIP",
+  "next_action": "Checkpoint recoverable navigation before mode-back extension/native captures/full26 mapping; UI063 follows.",
+  "targeted_checks": [
+    {
+      "log": "docs/qa/targeted/ui062-navigation-001.log",
+      "status": "ERROR",
+      "tests": 9,
+      "errors": 1,
+      "reason": "Fixture tried unsupported published-template overwrite; supported API correctly rejected. Keep diagnostic, changed deliberate external registry replacement injection."
+    },
+    {
+      "log": "docs/qa/targeted/ui062-navigation-002.log",
+      "status": "PASS",
+      "tests": 21
+    },
+    {
+      "log": "docs/qa/targeted/ui062-close-regression-003.log",
+      "status": "PASS",
+      "tests": 43
+    }
+  ]
+}

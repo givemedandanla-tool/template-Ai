@@ -113,7 +113,7 @@ class LayoutSessionDialog(QDialog):
         for template in self.worker.templates:
             if template.id not in finished:self.scope_status(template.id,'已取消／尚未計算' if self.report_state=='CANCELLED' else '尚未計算')
         if self.report_state=='COMPLETED':
-            try:self.recovery.clear()
+            try:self.recovery.clear();self.window.navigation.recovery_cleared()
             except OSError as error:self.status.setText('計算完成但暫存清理失敗：'+str(error));self.controls();return
         self.status.setText(result['state']+f'；實際完成{len(self.rows)}，結果僅對原快照有效／正式輸出仍需Gate');self.controls()
         if getattr(self,'protected_manual',[]):
@@ -228,13 +228,19 @@ class LayoutSessionDialog(QDialog):
         except (ValueError,OSError) as error:self.status.setText('未保存：'+str(error));return
         password,ok=QInputDialog.getText(self,'本機短期恢復','設定12字以上密碼；不儲存密碼，遺失無法恢復。24小時後失效，可隨時清除。',QLineEdit.Password)
         if not ok:return
-        def done(receipt):self.status.setText('已實際驗證加密並落盤，24小時有效；未保存的後續進度不保證可恢復。');self.controls()
-        self.window.run_job('保存短期加密排版快照',lambda:self.recovery.save(payload,password),done,on_error=lambda error:self.status.setText('未保存：'+str(error)),resource_kind='RESTORE')
+        from .workbench_navigation import work_token
+        token=work_token(self.window);self.window.navigation.recovery_started()
+        def done(receipt):
+            self.window.navigation.recovery_saved(receipt,token)
+            self.status.setText('已實際驗證加密並落盤，24小時有效；未保存的後續進度不保證可恢復。');self.controls()
+        def failed(error):
+            self.window.navigation.recovery_failed(error);self.status.setText('未保存：'+str(error))
+        self.window.run_job('保存短期加密排版快照',lambda:self.recovery.save(payload,password),done,on_error=failed,resource_kind='RESTORE')
 
     def clear_recovery(self):
         if self.running or self.window.busy:return
         if QMessageBox.question(self,'放棄並清除暫存','只刪除本機短期排版恢復資訊，不修改原稿、模板、客戶主檔。確認？')!=QMessageBox.Yes:return
-        try:self.recovery.clear();self.status.setText('已清除短期恢復暫存；不是磁碟安全抹除')
+        try:self.recovery.clear();self.window.navigation.recovery_cleared();self.status.setText('已清除短期恢復暫存；不是磁碟安全抹除')
         except OSError as error:self.status.setText('清除失敗：'+str(error))
 
     def restore_recovery(self):
