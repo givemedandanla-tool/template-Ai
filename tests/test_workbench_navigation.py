@@ -28,12 +28,12 @@ class WorkbenchNavigationTests(unittest.TestCase):
     def test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection(self):
         c=self.ready();w=self.w;before=c.template.to_dict();changes=w.library.db.total_changes
         box=Box(copy.deepcopy(c.template.slots[0]),lambda *args:None);w.output_canvas.scene().addItem(box);box.setSelected(True)
-        w.output_canvas.set_zoom(16);w.output_canvas.centerOn(QPointF(35,20));transform=w.output_canvas.transform();centre=w.output_canvas.mapToScene(w.output_canvas.viewport().rect().center())
+        w.output_canvas.set_zoom(16);w.output_canvas.centerOn(QPointF(35,20));QTest.qWait(30);transform=w.output_canvas.transform();centre=w.output_canvas.mapToScene(w.output_canvas.viewport().rect().center())
         from template_ai.logo_library_dialog import LogoLibraryDialog
         def cancel():
             dialog=next(d for d in w.findChildren(LogoLibraryDialog) if d.isVisible());dialog.reject()
         QTimer.singleShot(0,cancel);w.logo_center();self.assertTrue(w.return_work_button.isEnabled())
-        w.tabs.setCurrentIndex(1);QTest.mouseClick(w.return_work_button,Qt.LeftButton)
+        w.tabs.setCurrentIndex(1);QTest.mouseClick(w.return_work_button,Qt.LeftButton);QTest.qWait(30)
         self.assertEqual(w.tabs.currentIndex(),2);self.assertEqual(w.candidates[0].template.to_dict(),before)
         self.assertEqual(w.output_canvas.transform(),transform);self.assertLess((w.output_canvas.mapToScene(w.output_canvas.viewport().rect().center())-centre).manhattanLength(),.2)
         self.assertEqual([b.slot.id for b in w.output_canvas.scene().selectedItems() if isinstance(b,Box)],[c.template.slots[0].id])
@@ -165,3 +165,15 @@ class WorkbenchNavigationTests(unittest.TestCase):
             session.save_recovery();self.assertTrue(wait_for_gui(lambda:not w.busy,10))
         self.assertTrue(w.navigation.recovery_current());session.recovery.path.unlink()
         self.assertFalse(w.navigation.recovery_current());self.assertTrue(w.navigation.close_impacts())
+
+    def test_small_window_keeps_visible_canvas_and_reachable_existing_controls(self):
+        from PySide6.QtWidgets import QPushButton
+        from gui_wait import wait_for_gui
+        self.ready();w=self.w;w.foreground_layout_session.hide();w.resize(960,640);w.property_panel.hide();APP.processEvents()
+        QTest.mouseClick(next(b for b in w.function_rail.findChildren(QPushButton) if b.text()=='排版與輸出'),Qt.LeftButton)
+        self.assertTrue(wait_for_gui(lambda:w.output_canvas.visibleRegion().boundingRect().height()>=180,2))
+        visible=w.output_canvas.visibleRegion().boundingRect()
+        self.assertGreaterEqual(visible.height(),180);self.assertGreaterEqual(visible.width(),240)
+        self.assertTrue(w.rect().contains(w.return_work_button.mapTo(w,w.return_work_button.rect().center())))
+        if hasattr(w,'output_page_scroll'):
+            w.output_page_scroll.ensureWidgetVisible(w.preview_button);APP.processEvents();self.assertFalse(w.preview_button.visibleRegion().isEmpty())

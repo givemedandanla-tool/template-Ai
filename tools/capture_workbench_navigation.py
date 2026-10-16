@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[1];sys.path[:0]=[str(ROOT),str(ROOT/'tests
 def capture(folder):
     from unittest.mock import patch
     from PySide6.QtCore import Qt,QTimer,QCoreApplication,QEvent
-    from PySide6.QtWidgets import QApplication,QMessageBox,QInputDialog
+    from PySide6.QtWidgets import QApplication,QMessageBox,QInputDialog,QPushButton
     from PySide6.QtTest import QTest
     from template_ai.gui import Box
     from template_ai.logo_library_dialog import LogoLibraryDialog
@@ -40,6 +40,8 @@ def capture(folder):
         w.navigation.begin('字型管理');w.navigation.finish();apply_candidate(w,plan_candidate(w,0,[c.template.slots[0].id],1,0),True);manual=w.candidates[0].template.to_dict()
         assert not w.navigation.return_to_work();assert not w.navigation.recovery_current();assert w.candidates[0].template.to_dict()==manual;shot(w,'07-new-manual-version-safe-fallback')
         w.resize(960,640);app.processEvents();w.function_rail.setVisible(True);w.property_panel.setVisible(False);w.navigation.update();app.processEvents()
+        QTest.mouseClick(next(b for b in w.function_rail.findChildren(QPushButton) if b.text()=='排版與輸出'),Qt.LeftButton)
+        assert wait_for_gui(lambda:w.output_canvas.visibleRegion().boundingRect().height()>=180,2)
         assert w.rect().contains(w.return_work_button.mapTo(w,w.return_work_button.rect().center()));assert w.output_canvas.viewport().width()>=240
         shot(w,'08-small-window-current-work-return-visible')
         multi=SyncWorkflowFixture();multi.d.resize(1250,850);multi.select('C100');before=multi.candidate('C100').template.to_dict()

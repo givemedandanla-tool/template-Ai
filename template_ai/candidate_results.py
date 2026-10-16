@@ -70,6 +70,7 @@ def locate_problem(window,row,*,open_input=True):
             if kind in keys:
                 window.legacy_input_panel.setChecked(True);column=keys.index(kind);table.setCurrentCell(owner_index,column);table.scrollToItem(table.currentItem());table.setFocus()
                 def reveal_field():
+                    if hasattr(window,'output_page_scroll'):window.output_page_scroll.ensureWidgetVisible(table,0,20)
                     point=table.viewport().mapTo(window.legacy_table_scroll.widget(),table.visualRect(table.model().index(owner_index,column)).center());window.legacy_table_scroll.ensureVisible(point.x(),point.y(),30,18)
                 QTimer.singleShot(0,window,reveal_field)
     window.statusBar().showMessage(row['reason']+'；修正後仍需整張重驗');return dict(slot_ids=located,field=field_target,route=row['route'])

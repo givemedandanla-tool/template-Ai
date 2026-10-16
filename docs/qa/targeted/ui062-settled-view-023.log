@@ -1,0 +1,20 @@
+test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection (test_workbench_navigation.WorkbenchNavigationTests.test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection) ... Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+FAIL
+
+======================================================================
+FAIL: test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection (test_workbench_navigation.WorkbenchNavigationTests.test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_workbench_navigation.py", line 38, in test_actual_logo_modal_cancel_returns_exact_candidate_size_view_and_problem_selection
+    self.assertEqual(w.output_canvas.transform(),transform);self.assertLess((w.output_canvas.mapToScene(w.output_canvas.viewport().rect().center())-centre).manhattanLength(),.2)
+                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 7.5 not less than 0.2
+
+----------------------------------------------------------------------
+Ran 1 test in 1.089s
+
+FAILED (failures=1)

@@ -14,7 +14,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QDoubleSpinBo
     QDialog, QDialogButtonBox, QFontComboBox, QFormLayout, QGraphicsItem, QGraphicsRectItem, QGraphicsScene, QGraphicsView,
     QGroupBox, QHBoxLayout, QHeaderView, QInputDialog, QLabel, QLineEdit, QListWidget,
     QMainWindow, QMessageBox, QPushButton, QSpinBox, QSplitter, QTabWidget, QTableWidget, QTreeWidget, QTreeWidgetItem, QPlainTextEdit,
-    QTableWidgetItem, QVBoxLayout, QWidget, QStackedWidget, QScrollArea)
+    QTableWidgetItem, QVBoxLayout, QWidget, QStackedWidget, QScrollArea,QLayout)
 
 from . import __version__
 from .importer import import_file, inkscape_path
@@ -297,7 +297,7 @@ class MainWindow(QMainWindow):
         splitter = QSplitter();self.workspace_splitter=splitter
         rail=QWidget();rail.setMaximumWidth(185);rail_layout=QVBoxLayout(rail)
         for label,index in [('訓練與原稿',0),('模板／Logo',1),('排版與輸出',2)]:
-            button=QPushButton(label);button.clicked.connect(lambda _,i=index:self.tabs.setCurrentIndex(i));rail_layout.addWidget(button)
+            button=QPushButton(label);button.clicked.connect(lambda _,i=index:self.navigate_mode(i));rail_layout.addWidget(button)
         self.function_stack=QStackedWidget()
         groups=[ [('一鍵來源分析',self.automatic_training),('來源／作品總覽',self.work_overview),('品質／規則／學習',self.training_center)],
                  [('模板瀏覽',self.return_catalog),('新版本草稿',self.new_version),('物件／精確對齊',self.object_tools),('版本差異／回退',self.template_versions),('尺寸Logo庫',self.logo_center)],
@@ -681,7 +681,12 @@ class MainWindow(QMainWindow):
         self.export_button.setEnabled(False)
         self.preview_button.setEnabled(False)
         layout.addLayout(row)
-        return widget
+        # Let existing controls scroll at small resolutions instead of clipping
+        # the central canvas below its declared physical-view minimum.
+        layout.setSizeConstraint(QLayout.SetMinimumSize)
+        self.output_page_scroll=QScrollArea();self.output_page_scroll.setWidgetResizable(True)
+        self.output_page_scroll.setWidget(widget)
+        return self.output_page_scroll
 
     def candidate_editor(self):
         from .candidate_edit import CandidateEditDialog
@@ -2037,6 +2042,19 @@ class MainWindow(QMainWindow):
             self.invalidate()
         except Exception as e:
             self.error(str(e))
+
+    def navigate_mode(self,index):
+        self.tabs.setCurrentIndex(index)
+        if index==2 and self.candidates:
+            def reveal():
+                canvas=self.output_canvas;scroll=self.output_page_scroll;canvas.setFocus()
+                # QGraphicsView's input-method focus rectangle is not the whole
+                # canvas. Reveal its actual widget rectangle in page coordinates.
+                centre=canvas.mapTo(scroll.widget(),canvas.rect().center())
+                xmargin=max(0,min(canvas.width()//2,scroll.viewport().width()//2-12))
+                ymargin=max(0,min(canvas.height()//2,scroll.viewport().height()//2-12))
+                scroll.ensureVisible(centre.x(),centre.y(),xmargin,ymargin)
+            QTimer.singleShot(0,self,reveal)
 
     def mode_changed(self,index=None):
         index=self.tabs.currentIndex() if index is None else index
