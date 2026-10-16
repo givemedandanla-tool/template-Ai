@@ -1,3 +1,9 @@
+# REPAIR003 正在正式驗證；凍結 source/tests/tools/驗收
+
+- source c87fa8323fa387929d470e874f3c07ee11942c08，實際1001測試；目前 614 completed，[] failures。實際最終結果仍待定。
+- 只准docs-only checkpoint，勿修改程式／測試／工具／REQUIREMENTS。wip/UI054_FINALIZE_REPAIR_003.py僅語法檢查，未執行；必須實際parent exit0+1001PASS+0Qt+capture0/sourceunchanged+146claimdigests+82條/8父題audit才可執行。
+- UI055_IMPLEMENTATION_MAP及REMAINING28_EXECUTION_QUEUE只設計；完成UI054後繼續20題，勿停milestone。
+
 # 現行下一步：修復 REPAIR002 實際 Qt 錯誤，再跑 REPAIR003
 
 - REPAIR002 真實 FAIL：999/999 斷言通過，但 FactsPanel.selected 誤插入建構按鈕程式，5次 NameError(outer)。parent exit1、source_unchanged=true；capture未執行，不可finalize。原始run完整保存，不覆寫。
