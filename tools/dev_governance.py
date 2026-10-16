@@ -65,6 +65,15 @@ def check(root=ROOT, require_evidence=False, publication_scope=False):
     ids = [row["id"] for row in rows]
     if len(ids) != len(set(ids)):
         raise ValueError("要求 ID 重複")
+    remaining_contract = root / "docs/dev/FIXED70_REMAINING28_CONTRACT.json"
+    if remaining_contract.is_file():
+        contract = read_json(remaining_contract)
+        indexed = contract.get("acceptance", [])
+        for row in rows:
+            if row["id"] in contract.get("target_parent_ids", []) and row.get("full_acceptance_registered"):
+                entry = next((item for item in indexed if item.get("parent") == row["id"]), {})
+                if not row["acceptance"] or entry.get("clause_count") != len(row["acceptance"]):
+                    raise ValueError("完整父題條款數與索引不符：" + row["id"])
     tests = test_ids(root)
     runs = {}
     for row in rows:

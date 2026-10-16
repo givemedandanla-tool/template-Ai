@@ -1,3 +1,10 @@
+# 現行下一步：修復 REPAIR002 實際 Qt 錯誤，再跑 REPAIR003
+
+- REPAIR002 真實 FAIL：999/999 斷言通過，但 FactsPanel.selected 誤插入建構按鈕程式，5次 NameError(outer)。parent exit1、source_unchanged=true；capture未執行，不可finalize。原始run完整保存，不覆寫。
+- 已移除 selected 重複初始化，新增真正 QTest 點選多列／excepthook／唯一按鈕／dirty editor 回歸；補UI054次級索引clause_count11，新增治理防漏測試。實際目標測試結果見最新 targeted log；未取代 full formal。
+- 下一次重新freeze GitHub readback source 後啟動 RUN-REMAINING28-REPAIR-003（預計1001tests）；未獲實際全PASS+exit0+sourceunchanged+capture0+146claimdigests+82原條+8父題audit及publication Gate前，不計UI054完成。之後立即UI055/rest20，不停在milestone。
+- 歷史成功仍7/28。UI055_EXECUTION_PLAN.json已保存原11規範及實際LabelStudio1.21.0參考，只有設計未實作。
+
 # REPAIR002 正在正式執行：source/tests/tools/acceptance凍結
 
 - 活躍parent session63633，run RUN-REMAINING28-REPAIR-002，實際source eee91b160e11685f05543e4f05843dbfd345bc77/tree51396ab5e12ec8a4e41fe7ddb2ab6a8f1573b282；源碼逐檔nativeACK。預期999 tests/146requirements/82原條/8parent-audit，尚無最終結論。讀 `.checkpoints/formal-live/.../test-progress.json`，不是runfolder的progress.json。實際shell exit在 docs/qa/targeted/remaining28-repair-002-parent-exit.txt。run.json未出現前不要finalize。

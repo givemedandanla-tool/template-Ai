@@ -96,7 +96,6 @@ class FactsPanel(QWidget):
         if self.loaded and len(rows) == 1:
             item = self.loaded['observations'][rows[0]]; self.observed_text.setText(item['text']); self.object_type.setCurrentText(item['object_type']); self.classification.setCurrentText(item['classification']); self.slot_combo.setCurrentIndex(max(0, self.slot_combo.findData(item['slot_id'])))
             for spin, label in zip(self.coords, ('x', 'y', 'w', 'h')): spin.setValue(item['region'][label])
-            self.repair_button=QPushButton('以已保存原稿事實預覽局部修復問題');self.repair_button.clicked.connect(self.open_repair);outer.addWidget(self.repair_button)
         self._editor_baseline=self.observation('editor-state')
 
     def has_pending_observation(self):

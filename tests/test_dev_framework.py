@@ -141,3 +141,12 @@ class DevFrameworkTests(unittest.TestCase):
         state = read_json(self.root / "docs/dev/STATE.json")
         self.assertEqual(state["pending_remote"], [])
         self.assertEqual(state["last_confirmed_checkpoint"], "docs/checkpoints/CP-NEXT.receipt.json")
+
+    def test_registered_parent_clause_count_requires_matching_secondary_index(self):
+        row=copy.deepcopy(self.record);row['full_acceptance_registered']=True
+        write_json(self.root/'docs/dev/REQUIREMENTS.json',{'requirements':[row]})
+        path=self.root/'docs/dev/FIXED70_REMAINING28_CONTRACT.json'
+        write_json(path,{'target_parent_ids':['CORE-X'],'acceptance':[{'parent':'CORE-X'}]})
+        with self.assertRaisesRegex(ValueError,'條款數與索引不符'):check(self.root)
+        write_json(path,{'target_parent_ids':['CORE-X'],'acceptance':[{'parent':'CORE-X','clause_count':1}]})
+        check(self.root)

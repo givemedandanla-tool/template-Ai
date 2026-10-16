@@ -1,7 +1,9 @@
 """Actual native seven-page GUI using owned quality workers, not placeholder tabs."""
+import sys
 import unittest
+from PySide6.QtCore import Qt
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication,QComboBox
+from PySide6.QtWidgets import QApplication,QComboBox,QPushButton
 import test_quality_panel as gui_fixture
 import test_quality_gold_sets as fixtures
 from template_ai.quality_repair_dialog import QualityRepairDialog,TITLES
@@ -49,3 +51,18 @@ class QualityRepairGuiTests(unittest.TestCase):
         center.facts_panel.observed_text.setText('Unsaved human editor content')
         dialog.source_work.setText('different-work');dialog.guard(dialog.source_facts);self.assertIn('未套用',dialog.status.text());self.assertEqual(center.facts_panel.observed_text.text(),'Unsaved human editor content')
         center.quality_panel.loading=True;dialog.reject();self.assertTrue(dialog.isVisible());center.quality_panel.loading=False;dialog.reject();self.assertFalse(dialog.isVisible())
+
+    def test_actual_fact_row_click_has_no_callback_error_or_duplicate_repair_button(self):
+        window=self.window();center=TrainingQualityDialog(window);self.addCleanup(center.deleteLater)
+        center.show();facts=center.facts_panel;facts.focus(self.work['id'],[]);APP.processEvents()
+        errors=[];previous=sys.excepthook;sys.excepthook=lambda *args:errors.append(args)
+        self.addCleanup(setattr,sys,'excepthook',previous)
+        button=facts.repair_button;self.assertGreater(facts.table.rowCount(),1)
+        for row in (0,1,0):
+            facts.table.clearSelection();facts.table.scrollToItem(facts.table.item(row,0));APP.processEvents()
+            QTest.mouseClick(facts.table.viewport(),Qt.LeftButton,pos=facts.table.visualItemRect(facts.table.item(row,0)).center());APP.processEvents()
+            self.assertEqual(facts.observed_text.text(),facts.loaded['observations'][row]['text'])
+            self.assertFalse(facts.has_pending_observation());self.assertIs(facts.repair_button,button)
+        self.assertEqual(errors,[])
+        self.assertEqual(len([item for item in facts.findChildren(QPushButton) if item.text()==button.text()]),1)
+        facts.observed_text.setText('Changed human observation');self.assertTrue(facts.has_pending_observation())

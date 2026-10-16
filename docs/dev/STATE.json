@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI054-EXACT11-IN_PROGRESS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI054-COLD-ADMISSION-REPAIR-WIP.receipt.json",
-  "last_confirmed_commit": "eee91b160e11685f05543e4f05843dbfd345bc77",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-REPAIR002-LIVE-001.receipt.json",
+  "last_confirmed_commit": "86506b98fc1475fa7aec24a15762a0fadc46cafc",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-REPAIR002-LIVE-001"
+    "CP-20261016-REMAINING28-UI054-QT-SELECTION-REPAIR"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -572,7 +572,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-REPAIR-002",
+  "planned_evidence_run": "RUN-REMAINING28-REPAIR-003",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -737,5 +737,8 @@
       "reason": "First readback correctly rejected two generated progress files omitted from commit; f3609df adds exact prepared files, original prepared manifest preserved and ACK succeeded; delay exceeds10min, no false cadencePASS."
     }
   ],
-  "next_work_package_plan": "docs/dev/UI055_EXECUTION_PLAN.json"
+  "next_work_package_plan": "docs/dev/UI055_EXECUTION_PLAN.json",
+  "next_step": "修正 REPAIR002 Qt selected NameError，實際點選+索引治理回歸後重新freeze跑REPAIR003；UI054未完成，成功後UI055/rest20。",
+  "current_work_package": "UI054 REPAIR002 actual Qt callback correction, pending REPAIR003",
+  "checkpoint_cadence_note": "REPAIR002 failure triage exceeded ten minutes since last remote checkpoint; saving immediately, no strict cadence PASS claim."
 }
