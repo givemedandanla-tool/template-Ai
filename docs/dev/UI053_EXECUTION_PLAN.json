@@ -103,13 +103,15 @@
     "original_clauses": 9,
     "unique_referenced_tests": 121,
     "requirements_pending": 145,
-    "formal_run": "RUN-REMAINING28-QUALITY-003",
+    "formal_run": "RUN-REMAINING28-QUALITY-004",
     "not_completed_yet": true,
-    "planned_test_count": 939
+    "planned_test_count": 940
   },
   "prior_formal_attempts": [
     "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
-    "docs/evidence/runs/RUN-REMAINING28-QUALITY-002/native-interruption.json"
+    "docs/evidence/runs/RUN-REMAINING28-QUALITY-002/native-interruption.json",
+    "docs/evidence/runs/RUN-REMAINING28-QUALITY-003/controlled-stop.json"
   ],
-  "test_execution_strategy": "Exact939 catalog,serialfreshownedmoduleprocesses,120sdeadline vs measuredlargest25.65s; no skipped/dropped/replayed-to-PASS test; failed/missing/nativeexit blocks formal"
+  "test_execution_strategy": "Exact939 catalog,serialfreshownedmoduleprocesses,120sdeadline vs measuredlargest25.65s; no skipped/dropped/replayed-to-PASS test; failed/missing/nativeexit blocks formal",
+  "worker_bootstrap": "Everyfreshworker ownsstrongQApplication beforetestload,owncorelimit0; knowncoldworkflowtests useexplicitcontrolledresourcefixture, realresource/capture stillactual"
 }

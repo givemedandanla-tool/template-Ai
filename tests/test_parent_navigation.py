@@ -4,11 +4,12 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication,QPushButton
 from PySide6.QtTest import QTest
 from template_ai.gui import MainWindow
+from runtime_fixture import controlled_resources
 APP=QApplication.instance() or QApplication([])
 
 class ParentNavigationTests(unittest.TestCase):
     def setUp(self):
-        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.w=MainWindow(Path(self.temp.name)/'data');self.addCleanup(self.w.deleteLater);self.addCleanup(self.w.library.close);self.addCleanup(self.w.font_manager.close);self.addCleanup(self.w.input_timer.stop);self.w.show();APP.processEvents()
+        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.w=MainWindow(Path(self.temp.name)/'data');controlled_resources(self.w);self.addCleanup(self.w.deleteLater);self.addCleanup(self.w.library.close);self.addCleanup(self.w.font_manager.close);self.addCleanup(self.w.input_timer.stop);self.w.show();APP.processEvents()
     def test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once(self):
         self.assertEqual(self.w.tabs.count(),3);entered=threading.Event();release=threading.Event();done=[];calls=[]
         def work():calls.append(1);entered.set();release.wait(3);return 'complete'

@@ -3,9 +3,8 @@
 Draft for integration after the frozen UI053 formal run; not currently imported.
 """
 import copy,json,time
-from .training_store import TrainingStore,digest
+from .training_store import TrainingStore,digest,text
 from .model import new_id
-from .noise import text
 
 ROOT_LAYERS=(
     'SOURCE_INCOMPLETE','WORK_SEGMENTATION','NATIVE_TEXT_EFFECT',
@@ -22,7 +21,9 @@ class QualityRepairs:
         work=self.library.artwork(work_id)
         if not work:raise ValueError('修復作品失聯，不能猜測其他作品')
         facts=self.store.facts(work_id);errors=[]
-        try:self.store.checked(work_id,self.store.source_proof(work_id))
+        try:
+            proof=self.store.source_proof(work_id);self.store.checked(work_id,proof)
+            if self.store.facts_state(work_id,proof)!='CONFIRMED':errors.append('作品事實尚未人工確認或已過期，不能作修復正解')
         except (ValueError,OSError) as error:errors.append(str(error))
         return dict(work_id=work_id,source_id=work['source_id'],pins=self.store.pins(work_id),
                     facts_revision=facts['revision'],facts_digest=digest(facts),
@@ -109,6 +110,12 @@ class QualityRepairs:
         if original_reviewed is not True or truth_reviewed is not True:blockers.append('尚未明確核對原稿及人工正確答案')
         if not state or not state['human_truth_current']:blockers.append('來源／人工真值不可核對或已過期')
         if issue['evidence']['origin']=='ACTUAL_QUALITY_CASE' and not issue['evidence']['domain_truth_ready']:blockers.append('此錯誤領域仍無明確人工黃金答案，停止自動修復')
+        if issue['evidence']['origin']=='ACTUAL_QUALITY_CASE':
+            from .quality_gold import QualityGold
+            for reference in issue['evidence']['gold_refs']:
+                current=self.store.get('QUALITY_GOLD',reference['id'])
+                if not current or digest(current)!=reference['digest'] or not QualityGold(self.library).validity(reference['id'])['valid']:
+                    blockers.append('原案例Gold已失效；需明確建立新的人工真值版本，不自動沿用舊答案')
         if layer in ('SOURCE_INCOMPLETE','DISPUTED_GOLD'):blockers.append('來源不完整或真值有爭議，停止自動修復並走人工修訂')
         result=dict(issue_id=identity,issue_revision=issue['revision'],issue_digest=digest(issue),
                     layer=layer,hypothesis=hypothesis,evidence=evidence,source_state=state,

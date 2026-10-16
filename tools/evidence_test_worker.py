@@ -19,6 +19,13 @@ def main():
     stacks=(args.output/'stacks.log').open('w',encoding='utf-8');sys.excepthook=hook
     faulthandler.enable(file=stacks,all_threads=True);faulthandler.dump_traceback_later(60,repeat=True,file=stacks)
     try:
+        if os.name=='posix':
+            import resource
+            resource.setrlimit(resource.RLIMIT_CORE,(0,0))
+        # Monolithic discovery previously initialized a shared QApplication via
+        # GUI fixture imports. Preserve that contract in every fresh interpreter.
+        from PySide6.QtWidgets import QApplication
+        app=QApplication.instance() or QApplication([])
         runner=unittest.TextTestRunner(stream=log,verbosity=2,resultclass=lambda *values:EvidenceResult(*values,progress_path=args.output/'progress.json'))
         result=runner.run(unittest.defaultTestLoader.loadTestsFromNames(expected))
         if any(name.startswith('PySide6.') for name in sys.modules):

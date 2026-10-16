@@ -5,9 +5,8 @@ dispatching run() inside run_automatic's existing owned-library/finally scope.
 No new queue, worker lease, model activation or source import.
 """
 import copy,json,time
-from .training_store import digest
+from .training_store import digest,text
 from .model import new_id
-from .noise import text
 from .semantic_learning import SemanticLearning
 from .quality_repairs import QualityRepairs
 

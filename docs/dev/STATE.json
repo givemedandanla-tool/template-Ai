@@ -28,7 +28,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261016-REMAINING28-UI053-BOOTSTRAP-ADMISSION-WIP"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-COVERAGE.json",
@@ -567,7 +569,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-QUALITY-003",
+  "planned_evidence_run": "RUN-REMAINING28-QUALITY-004",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -657,7 +659,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "Fulloriginal9/145pending; nativeguard and serialownedmodule harness actual15PASS/0runtimeerrors; freeze939-test source003; historic6of28, no previousfailed/interrupted run closed",
+  "current_work": "ConfirmedQtbootstrap fixed;6modules27/27PASS with0runtimeerrors. Known940tests/145claims pending; complete coldworkflowfixture lifecycle audit beforefreeze004. Historic6of28.",
   "last_formal_failure": {
     "run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
     "source_commit": "233e9ea4edc8d8927e482c3f0d362a78bd2ced5d",
@@ -677,6 +679,12 @@
       "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-002/native-interruption.json",
       "actual_exit_code": 139,
       "source_commit": "f7fd4536acf1ec3834027384e6951341e1506db4"
+    },
+    {
+      "folder": "docs/evidence/runs/RUN-REMAINING28-QUALITY-003",
+      "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-003/controlled-stop.json",
+      "actual_exit_code": 130,
+      "source_commit": "012c71724bd5b8e18a93afe8d098f40e03506153"
     }
   ]
 }

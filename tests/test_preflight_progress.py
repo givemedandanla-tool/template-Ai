@@ -5,12 +5,14 @@ from template_ai.automatic_training import AutomaticTraining
 from template_ai.automatic_training_dialog import AutomaticTrainingDialog
 from template_ai.source_links import ScanCancelled
 import test_automatic_training as fixture
+from runtime_fixture import controlled_resources
 APP=fixture.APP
 
 class PreflightProgressTests(unittest.TestCase):
     setUp=fixture.AutomaticTrainingTests.setUp
     tearDown=fixture.AutomaticTrainingTests.tearDown
-    window=fixture.AutomaticTrainingGuiTests.window
+    def window(self):
+        window=fixture.AutomaticTrainingGuiTests.window(self);controlled_resources(window);return window
 
     def test_preflight_true_hash_progress_cancel_keeps_database_and_original_unchanged(self):
         event=threading.Event();seen=[];raw=self.path.read_bytes();before=self.library.db.total_changes

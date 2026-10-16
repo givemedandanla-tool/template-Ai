@@ -19,6 +19,11 @@ class EvidenceModuleTests(unittest.TestCase):
         self.assertFalse(result.wasSuccessful());self.assertEqual([r['status'] for r in result.records.values()],['PASS','FAIL']);self.assertFalse(errors)
         self.assertEqual(result.modules[0]['exit_code'],1);self.assertEqual(result.modules[0]['missing_test_ids'],[]);self.assertIn('Synthetic actual child assertion',log)
 
+    def test_fresh_worker_bootstraps_real_gui_font_database_before_test_module_execution(self):
+        code='import unittest\nfrom PySide6.QtWidgets import QApplication\nfrom PySide6.QtGui import QFontDatabase\nclass Case(unittest.TestCase):\n def test_a(self):\n  self.assertIsNotNone(QApplication.instance())\n  self.assertGreater(len(QFontDatabase.families()),0)\n'
+        result,errors,_=self.execute(code,['test_a'])
+        self.assertTrue(result.wasSuccessful());self.assertFalse(errors);self.assertEqual(result.modules[0]['exit_code'],0)
+
     def test_abnormal_child_exit_keeps_actual_partial_journal_and_never_invents_remaining_tests(self):
         code='import unittest,os\nclass Case(unittest.TestCase):\n def test_a(self):pass\n def test_b(self):\n  if os.name=="posix":\n   import resource\n   resource.setrlimit(resource.RLIMIT_CORE,(0,0))\n   os.abort()\n  os._exit(7)\n def test_c(self):pass\n'
         result,errors,log=self.execute(code,['test_a','test_b','test_c'])
