@@ -1,3 +1,10 @@
+# 正在正式驗證：不可修改source/tests/tools/REQUIREMENTS
+
+- 下一步啟動／追蹤 `RUN-REMAINING28-REPAIR-001`，預期998tests／126左右serialownedmodules／146claim requirements／8of28 fullparent-audit／82原條。只有實際parent shell exit0、source_unchanged、allcatalog PASS、所有capture exit0與publication Gate才可結案UI054；其後立即繼續20父題，不停milestone。
+- Full11 source checkpoint已由native精確ACK：f3609dfc572a97a673f907b7a86075a43f9b3949/treefa44d0ff72c09ca52819409f89eea0d8333b8be4（2885files）。前一dafdcd漏generated CURRENT_PROGRESS/PROGRESS，讀回正確拒絕；已補兩檔，未改原prepared manifest，延遲超10min已記STATE，不能說strictcadencePASS。正式實際tested commit以run.json為準（receipt/state followup可能再有docs-only commit）。
+- pending_revalidation_ids已補UI054共146；原11逐字/SHA已註冊，80unique supporting tests。7of28是歷史，UI054仍pending。003七頁實際截圖都已視覺檢查，parent180183040B/GUImaxgap65.0569ms是controlledworkflow，非硬體benchmark或生產準確率。
+- Sourcefreeze後只可docs-only保存CP／run進度／finalizer設計；不得編輯source/tests/tools/acceptance。full formal結果/claimdigests確認前不能重跑任何舊finalizer。
+
 # 當前交接：持續完成原28父題，不例行詢問
 
 - 倉庫 `/workspace/template-Ai`；分支 `dev/v0.1-first-version`／PR2，禁止自行merge main／EXE／subagents／新增付費服務。Python `.venv/bin/python`；Qt offscreen；`PYTHONPATH=tests XDG_CACHE_HOME=/workspace/.cache`。

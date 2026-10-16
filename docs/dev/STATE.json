@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI054-EXACT11-IN_PROGRESS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI054-PRELIMINARY-CAPTURE-WIP.receipt.json",
-  "last_confirmed_commit": "2a49dfd8d20174b23ffad759f0cb85eb8c627dad",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI054-FULL11-SOURCE-FREEZE.receipt.json",
+  "last_confirmed_commit": "f3609dfc572a97a673f907b7a86075a43f9b3949",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -27,9 +27,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261016-REMAINING28-UI054-FULL11-SOURCE-FREEZE"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261016-REMAINING28-QUALITY.json",
@@ -533,7 +531,8 @@
     "CORE-084",
     "CORE-085",
     "CORE-086",
-    "CORE-087"
+    "CORE-087",
+    "UI-054"
   ],
   "last_formal_validation": {
     "run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json",
@@ -645,15 +644,15 @@
   ],
   "active_work_package_plan": "docs/dev/UI054_EXECUTION_PLAN.json",
   "formal_execution_watch": {
-    "run": "RUN-REMAINING28-RUNTIME-003",
-    "source_commit": "8f8f638a1096f0aeb8aebe2231d6d49b96970c05",
-    "state": "COMPLETED_PASS",
-    "complete": true,
-    "tests": 749,
-    "passed": 749,
-    "unhandled_runtime_errors": 0,
-    "capture_exit_code": 0,
-    "source_unchanged": true
+    "run": "RUN-REMAINING28-REPAIR-001",
+    "status": "READY_TO_LAUNCH_FROZEN_SOURCE",
+    "expected_tests": 998,
+    "expected_claim_requirements": 146,
+    "expected_remaining28_verified": 8,
+    "full_original_clauses": 82,
+    "source_checkpoint_commit": "f3609dfc572a97a673f907b7a86075a43f9b3949",
+    "source_checkpoint_tree": "fa44d0ff72c09ca52819409f89eea0d8333b8be4",
+    "source_edits_forbidden_until_run_finishes": true
   },
   "abandoned_preparations": [
     {
@@ -694,6 +693,14 @@
       "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-004/controlled-stop.json",
       "actual_exit_code": 130,
       "source_commit": "95d11c53942c7b6ef20d0d65d8724829de24b75e"
+    }
+  ],
+  "checkpoint_cadence_events": [
+    {
+      "at": "2026-10-16T07:20Z",
+      "checkpoint": "CP-20261016-REMAINING28-UI054-FULL11-SOURCE-FREEZE",
+      "status": "REMOTE_VERIFIED_AFTER_CORRECTION_NOT_STRICT_10MIN_CADENCE_PASS",
+      "reason": "First readback correctly rejected two generated progress files omitted from commit; f3609df adds exact prepared files, original prepared manifest preserved and ACK succeeded; delay exceeds10min, no false cadencePASS."
     }
   ]
 }
