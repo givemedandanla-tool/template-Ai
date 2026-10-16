@@ -2,11 +2,12 @@
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QLineEdit,QPushButton,QTableWidget,QTableWidgetItem
 from .customers import digest
+from .major_review_job_ui import MajorJobPageMixin
 
 STATES={'UNSCANNED':'未掃描','UNKNOWN':'無法判定','REAPPROVED':'修正後重新核准','CHECKED_OK':'確認無誤','ERROR_NEEDS_FIX':'確認錯誤待修','NEEDS_MANUAL':'待人工','BLOCKED':'阻擋','PROCESSING':'正在分析','INTERRUPTED':'中斷待明確接續','CANCELLED':'已取消／尚未完成'}
 
 
-class MajorReviewPage(QWidget):
+class MajorReviewPage(MajorJobPageMixin,QWidget):
     def __init__(self,dialog):
         super().__init__(dialog);self.dialog=dialog;self.plan=None;self.plan_pin=None;self.offset=0;self.case_offset=0;self.rows=[];self.case=None
         layout=QVBoxLayout(self);notice=QLabel('發現重大共通錯誤 → 以目前選定的既有問題發起重審。先核對來源、正反例與影響範圍；開始隔離不等於完成重審，未知依賴不算全庫安全。');notice.setWordWrap(True);layout.addWidget(notice)
@@ -22,15 +23,18 @@ class MajorReviewPage(QWidget):
         for field in [self.category,self.severity]:field.currentIndexChanged.connect(self.invalidate)
         dialog.actor.textChanged.connect(self.invalidate);dialog.reason.textChanged.connect(self.invalidate)
         self.cases.currentIndexChanged.connect(lambda *_:setattr(self,'offset',0))
+        self.init_job_controls(layout)
     def button(self,bar,title,action):
         button=QPushButton(title);button.clicked.connect(lambda:self.dialog.guard(action));bar.addWidget(button);return button
     def invalidate(self,*_):
         self.plan=None;self.plan_pin=None
+        self.job_plan=None;self.job_pin=None
         if hasattr(self.dialog,'consent'):self.dialog.consent.setChecked(False)
     def form(self):return dict(issue_id=self.dialog.issue_id(),category=self.category.currentText(),correct_example=self.correct.toPlainText(),wrong_example=self.wrong.toPlainText(),severity=self.severity.currentData())
     def pin(self):return digest(dict(form=self.form(),actor=self.dialog.actor.text(),reason=self.dialog.reason.text()))
     def preview(self):
         d=self.dialog;form=self.form();pin=self.pin();self.invalidate();self.coverage.setText('檢索既有依賴與歷史中；尚未完成預檢或啟動隔離。')
+        self.pending_action='CASE'
         def loaded(plan):
             if self.pin()!=pin:d.status.setText('預檢期間問題／證據／核對者已變更；舊影響清單未採用');return
             self.plan=plan;self.plan_pin=pin;c=plan['coverage'];self.coverage.setText(f'已檢索本機登錄 {c["registered_sources"]} 個來源、{c["registered_works"]} 件作品；目前可追溯受影響 {c["affected_sources"]} 個來源、{c["affected_works"]} 件作品、{c["affected_templates"]} 個模板版本。未記錄與歷史失聯依賴仍未知。')
@@ -40,6 +44,7 @@ class MajorReviewPage(QWidget):
             d.details.setPlainText('\n'.join(lines));d.status.setText('影響預覽完成，尚未啟動。核對未知範圍及下方明確確認，再按「確認並保存所選預覽」。')
         d.request('MAJOR_PLAN',form,loaded)
     def confirm(self):
+        if self.pending_action=='JOB':return self.confirm_job()
         d=self.dialog
         if not self.plan or self.pin()!=self.plan_pin or not d.consent.isChecked() or not d.actor.text().strip() or not d.reason.text().strip():raise ValueError('需目前預覽、來源正反例、具名核對者、原因與明確確認')
         plan=self.plan;pin=self.plan_pin
