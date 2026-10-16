@@ -52,9 +52,10 @@ def capture(folder):
         output=CandidatePropertyGateTests('runTest');output.setUp();output.ready();bad=output.another(width=.1);o=output.w;o.resize(1360,940)
         row=next(r for r in problem_rows(o,1) if r['kind']=='name' and r['slot_ids']);locate_problem(o,row,open_input=False);app.processEvents();o.right_context.sync()
         assert o.right_context.problem_row['slot_ids']==row['slot_ids'] and not o.export_button.isEnabled();shot(o,'13-exact-local-problem-blocked')
+        selected=next(item for item in bad.items if item.slot.id in row['slot_ids']);assert str(selected.text) in o.selected_info.text();o.property_panel.ensureWidgetVisible(o.selected_info);app.processEvents();shot(o,'14-current-exact-text-readonly')
         digest=bad.risk['digest'];o.property_pin_checks['text'].setChecked(True);o.all_property_tools.setChecked(True)
         for group in o.property_groups.values():group.setChecked(False)
-        o.property_panel.hide();app.processEvents();assert not o.export_button.isEnabled() and bad.risk['digest']==digest and not bad.formal_eligible;shot(o,'14-hidden-panel-keeps-formal-gate')
+        o.property_panel.hide();app.processEvents();assert not o.export_button.isEnabled() and bad.risk['digest']==digest and not bad.formal_eligible;shot(o,'15-hidden-panel-keeps-formal-gate')
         assert stored['payload']==original and not errors,errors
         result=dict(status='PASS',screens=screens,qt_errors=errors,actual_gui=True,scope='Authored controlled Linux Qt widgets, actual focus/dialog/selection and draft-CAS scenarios; no Windows/device/private Illustrator qualification',fixture_preparation=['Synthetic Logo frame only; explicitly unverified asset','Reset synthetic model from existing stored draft before mixed scene','Supported draft CAS simulates external source revision, never a user navigation action'],paid_services=False,automatic_training=False)
         (folder/'property-context-metadata.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result

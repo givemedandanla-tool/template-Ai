@@ -792,6 +792,7 @@ class MainWindow(QMainWindow):
         self.property_conflict=QPushButton('查看保留的未套用輸入');layout.addWidget(self.property_conflict)
         self.selected_info = QLabel("先在畫布選取一個欄位。\n字級定案後不因字數自動改變。\n字寬下限是模板設計值，尚未實體印刷驗證。")
         self.selected_info.setWordWrap(True)
+        self.selected_info.setTextFormat(Qt.PlainText)
         layout.addWidget(self.selected_info)
         self.output_properties=QPlainTextEdit();self.output_properties.setReadOnly(True);self.output_properties.setMinimumHeight(120);self.output_properties.setMaximumHeight(200);self.output_properties.setPlainText('尚無目前候選；請完成輸入並試排。');layout.addWidget(self.output_properties,1)
         layout.addWidget(QLabel('標記／規則須明確核准；本機資料不會自動上傳。'))

@@ -62,6 +62,15 @@ class CandidatePropertyGateTests(unittest.TestCase):
     close_window=results_fixture.CandidateResultsTests.close_window
     ready=results_fixture.CandidateResultsTests.ready
     another=results_fixture.CandidateResultsTests.another
+    def test_selected_text_is_current_exact_field_plaintext_and_only_a_view(self):
+        from template_ai.gui import Box
+        c=self.ready();w=self.w;slot=c.template.slots[0];item=next(i for i in c.items if i.slot.id==slot.id);box=Box(copy.deepcopy(slot),lambda *args:None);w.output_canvas.scene().addItem(box);box.setSelected(True)
+        before=c.template.to_dict();changes=w.library.db.total_changes;w.right_context.sync()
+        self.assertIn(str(item.text),w.selected_info.text());self.assertIn(slot.id,w.selected_info.text());self.assertIn(slot.owner,w.selected_info.text());self.assertEqual(w.selected_info.textFormat(),Qt.PlainText);self.assertEqual(c.template.to_dict(),before);self.assertEqual(w.library.db.total_changes,changes)
+    def test_stale_selected_text_is_removed_without_retargeting_another_field(self):
+        from template_ai.gui import Box
+        c=self.ready();w=self.w;slot=c.template.slots[0];item=next(i for i in c.items if i.slot.id==slot.id);box=Box(copy.deepcopy(slot),lambda *args:None);w.output_canvas.scene().addItem(box);box.setSelected(True);w.right_context.sync();self.assertIn(str(item.text),w.selected_info.text())
+        w.people.item(0,0).setText('Another authored name');APP.processEvents();w.right_context.sync();self.assertIn('過期',w.selected_info.text());self.assertNotIn(str(item.text),w.selected_info.text());self.assertNotIn(slot.id,w.selected_info.text());self.assertFalse(w.export_button.isEnabled())
     def test_pins_all_properties_and_hidden_panel_never_relax_actual_hard_block(self):
         self.ready();bad=self.another(width=.1);w=self.w;w.candidate_list.setCurrentRow(1);w.right_context.sync();before=bad.risk['digest']
         w.property_pin_checks['text'].setChecked(True);w.all_property_tools.setChecked(True)

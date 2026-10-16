@@ -1257,3 +1257,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 - 2026-10-16 UI063 ownsave0262FAIL preserved; actual02828PASS after baseline/apply and pending-save guard.027 fixture cleanup error and stale-control expectation preserved and corrected;35newtests. Pending broader/native/full26; no parent completion claim.
 
 - 2026-10-16 UI063 broader02914modules154PASS actualexit0. Native030 fixture API error;03114PASS and14 reviewed, stale selected-count visual defect→0327PASS/03314capturePASS0Qt, final visual review and original26 mapping pending. Capture tool uses actual GUI dialogs and is hooked to immutable runner. No parent promotion.
+
+- 2026-10-16 UI063 full original26 implementation/mapping pendingverification.37newtests;03419PASS;0367modules81PASS actualexit0;03515actual nativePASS/0Qt all15 visuallyreviewed/hashes. Registry remains completedfalse until immutable current-source fullbatch/publication. ContinueUI064.

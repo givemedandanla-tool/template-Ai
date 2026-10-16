@@ -8,3 +8,5 @@
 - 原26條款覆核仍需確認文字內容／可核實來源的上下文顯示，再完成UI063精確mapping/registry pending。capture_property_context已接正式runner。先完成UI063再UI064/065/052-REVIEW/019/032/031/066/067/REV01/02/04；不要停在里程碑或問繼續。
 - 低配Windows16GB RTX5050/VivoBook及非空授權原生Illustrator corpus是外部缺口；Linux合成樣本不冒充。無fullrunner在跑；所有owned subprocess已exit才snapshot。
 - 最新ACK見STATE.last_confirmed_checkpoint，詳情按需history/HANDOFF_BEFORE_UI063_NATIVE_20261016.md，之前UI062FULL/UI061FULL等。
+
+UI063 full26 implemented/mapped pending:37newtests/catalog1259;03419PASS;0367modules81PASS/actualexit0;03515actualPASS/0Qt/all15 individuallyreviewed+hash. Exact currentselectedtext reuses selected_info PlainText bounded256×8, stale clears; no business write. UI063_CLAUSE_COVERAGE links26original clauses. Queue now reflects UI059/060A/061/062/063 pendingformal; activeUI064. Next readcontract, plan/references beforecode. Noactivejobs.

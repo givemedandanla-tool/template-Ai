@@ -202,6 +202,19 @@ class RightPropertyContext:
                 if selected_ids:self.problem_row=next((item.data(Qt.UserRole) for item in items if selected_ids.intersection(item.data(Qt.UserRole).get('slot_ids',[]))),None)
                 elif w.result_problem_items.currentItem():self.problem_row=w.result_problem_items.currentItem().data(Qt.UserRole)
                 if self.problem_row:w.property_context_label.setText(w.property_context_label.text()+'\n'+('物件問題：' if self.problem_row.get('slot_ids') else '作品問題：')+self.problem_row['reason'])
+            if w.tabs.currentIndex()==2:
+                w.selected_info.setVisible(True)
+                if not fresh:w.selected_info.setText('來源已過期；未顯示舊物件文字，請重新驗證並選取。')
+                elif not rows:w.selected_info.setText('未選取物件；請由目前作品定位，沒有預設任何人物欄位。')
+                else:
+                    candidate=w.candidates[w.candidate_list.currentRow()];placed={item.slot.id:item for item in candidate.items}
+                    details=[]
+                    for row in rows[:8]:
+                        item=placed.get(row['id']);value=str(item.text) if item is not None and row['kind']!='logo' else None
+                        content=('本次文字：'+value[:256]+('…（節錄）' if len(value)>256 else '')) if value is not None else '文字內容未核實／Logo不拆分圖文'
+                        details.append(row['id']+'／'+row['owner']+'／'+row['kind']+'\n'+content)
+                    if len(rows)>8:details.append('其餘 '+str(len(rows)-8)+' 件請由既有共同屬性工具逐項核對。')
+                    w.selected_info.setText('目前確切選取（唯讀；修改沿用既有流程）\n'+'\n'.join(details))
             w.property_fields.setVisible(bool(rows) or bool(self.pins) or w.all_property_tools.isChecked());w.property_pinned_box.setVisible(bool(self.pins))
             order=['text','geometry','identity'] if text else ['geometry','identity','text']
             positions=dict(pinned=0,context=0)

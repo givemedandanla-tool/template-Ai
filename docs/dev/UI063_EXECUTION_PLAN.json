@@ -1,6 +1,6 @@
 {
   "parent": "UI-063",
-  "status": "IMPLEMENTATION_IN_PROGRESS",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
   "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
   "original_clauses": [
@@ -207,5 +207,20 @@
       "completed_tests": 33,
       "reason": "First4modallPASS, test_object_tools ownedsubprocess90s timeout at legacy_undo_and_save externalABA case; no completeunittestsummary. Diagnose ownsave/pending/closepath and explicitfixturedisposition; do not claimbatchPASS"
     }
+  ],
+  "new_tests": 37,
+  "target_evidence": [
+    "docs/qa/targeted/ui063-broader-029/summary.json",
+    "docs/qa/targeted/ui063-exact-content-034.log",
+    "docs/qa/targeted/ui063-coherent-036/summary.json"
+  ],
+  "native_evidence": "docs/qa/targeted/ui063-native-035-visual-review.json",
+  "coverage": "docs/dev/UI063_CLAUSE_COVERAGE.json",
+  "failures_retained": [
+    "0262actualownsaveFAIL→02828PASS",
+    "027cleanupfixtureerror/stale expectation corrected",
+    "030capturefixture nonexistentAPI",
+    "03114reviewed stale selectioncount→0327PASS",
+    "03314capturePASS superseded by035 selectedcontent capture"
   ]
 }
