@@ -25,7 +25,7 @@ def text_boxes(objects, prediction=False):
     for obj in objects:
         if obj['kind']=='logo':
             evidence=obj.get('component_prediction' if prediction else 'component_truth') or {}
-            if not evidence.get('complete') or not prediction and not evidence.get('manually_verified'):complete=False;continue
+            if not evidence.get('complete') or not prediction and (not evidence.get('manually_verified') or not evidence.get('text_content_manually_reviewed')):complete=False;continue
             for identity in evidence['text_component_ids']:
                 result.append(dict(id=obj['id']+':'+identity,rect=evidence['component_regions'][identity]))
         elif obj.get('object_type')=='TEXT':result.append(dict(id=obj['id'],rect=obj['rect']))

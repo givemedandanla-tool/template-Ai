@@ -56,6 +56,25 @@ class QualityGoldSetTests(unittest.TestCase):
         self.assertEqual(plan['errors'],[]);self.assertEqual((plan['manifest']['file_count'],plan['manifest']['gold_work_count'],plan['manifest']['independent_group_count']),(2,2,1))
         dataset=self.sets.create(plan,'Reviewer',True);self.assertTrue(self.sets.validity(dataset['id'])['valid']);self.assertEqual(self.store.count('SAMPLE'),0)
 
+    def test_unrelated_actual_import_does_not_stale_declared_group_projection(self):
+        gold=self.approved();dataset=self.sets.create(self.sets.plan('Fixed declared original',[gold['id']],True,True,'Reviewed declared source family'),'Reviewer',True)
+        source,work=source_work(self.library,self.root,'unrelated.svg',note_text='Different unrelated authored content')
+        confirmed(self.store,work)
+        with self.store.transaction():self.store._write('GROUP_ROLE',source['hash'],dict(role='TRAIN'),0,'synthetic_unrelated_training_role')
+        self.assertTrue(self.sets.validity(dataset['id'])['valid'])
+        self.assertEqual(dataset['manifest']['independent_group_count'],1)
+
+    def test_related_new_training_link_still_invalidates_focused_holdout(self):
+        gold=self.approved();dataset=self.sets.create(self.sets.plan('Exact source before new relation',[gold['id']],True,True,'Prior declared independence'),'Reviewer',True)
+        source,work=source_work(self.library,self.root,'new-related.svg',note_text='Different bytes, later confirmed near duplicate')
+        confirmed(self.store,work)
+        with self.store.transaction():self.store._write('GROUP_ROLE',source['hash'],dict(role='TRAIN'),0,'synthetic_related_training_role')
+        self.assertTrue(self.sets.validity(dataset['id'])['valid'])
+        groups=self.sets.groups;plan=groups.link_plan('CONTENT:'+self.source['hash'],'CONTENT:'+source['hash'],'NEAR_DUPLICATE','Confirmed actual design relation','Synthetic full-source comparison')
+        groups.confirm_link(plan,'Reviewer',True)
+        self.assertFalse(self.sets.validity(dataset['id'])['valid'])
+        self.assertIsNotNone(self.store.get('HOLDOUT_EXPOSED',dataset['id']))
+
     def test_train_locked_content_and_duplicate_gold_versions_cannot_be_holdout(self):
         gold=self.approved()
         with self.store.transaction():self.store._write('GROUP_ROLE',self.source['hash'],dict(role='TRAIN'),0,'synthetic_existing_train')

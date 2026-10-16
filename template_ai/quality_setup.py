@@ -57,7 +57,7 @@ class QualitySetupDialog(QDialog):
         for domain in DOMAINS:
             box=QCheckBox('已逐項核實：'+LABELS[domain]);form.addRow(box);self.truth[domain]=box
         form.addRow(QLabel('未勾選的層次維持「資料不足」。Logo原稿對照與客戶exact版型另列，不能由AI候選自動填答案。'))
-        self.logo=QTableWidget(0,4);self.logo.setHorizontalHeaderLabels(['Logo觀察ID','原稿群組ID','完整構件ID（逗號分隔）','人工圖文對照依據']);form.addRow('完整Logo真值',self.logo)
+        self.logo=QTableWidget(0,5);self.logo.setHorizontalHeaderLabels(['Logo觀察ID','原稿群組ID','完整構件ID（逗號分隔）','人工圖文對照依據','其中真實文字ID（含outline；確認無文字才留空）']);form.addRow('完整Logo真值',self.logo)
         def logos():
             self.logo.setRowCount(0)
             if not self.work.currentData():return
@@ -65,7 +65,7 @@ class QualitySetupDialog(QDialog):
             for observation in facts['observations']:
                 if kinds.get(observation.get('slot_id'))!='logo':continue
                 row=self.logo.rowCount();self.logo.insertRow(row);item=QTableWidgetItem(observation['id']);item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsSelectable);self.logo.setItem(row,0,item)
-                for column in range(1,4):self.logo.setItem(row,column,QTableWidgetItem(''))
+                for column in range(1,5):self.logo.setItem(row,column,QTableWidgetItem(''))
         self.work.currentIndexChanged.connect(logos);logos()
         self.mapping=QCheckBox('另核對已存在客戶與exact版型（不寫入客戶資料）');form.addRow(self.mapping)
         self.mapping_customer=self.line(form,'已核對的主客戶ID');self.mapping_style=self.line(form,'已核對的exact版型關聯ID');self.mapping_reason=self.line(form,'映射核對依據')
@@ -74,8 +74,8 @@ class QualitySetupDialog(QDialog):
     def plan_gold(self):
         logos={}
         for row in range(self.logo.rowCount()):
-            values=[self.logo.item(row,column).text().strip() for column in range(4)]
-            if any(values[1:]):logos[values[0]]=dict(root_id=values[1],component_ids=[v.strip() for v in values[2].split(',') if v.strip()],review_reason=values[3],original_correspondence_confirmed=self.truth['whole_logo'].isChecked())
+            values=[self.logo.item(row,column).text().strip() for column in range(5)]
+            if any(values[1:]):logos[values[0]]=dict(root_id=values[1],component_ids=[v.strip() for v in values[2].split(',') if v.strip()],text_component_ids=[v.strip() for v in values[4].split(',') if v.strip()],review_reason=values[3],original_correspondence_confirmed=self.truth['whole_logo'].isChecked())
         payload=dict(work_id=self.work.currentData(),rights=dict(basis=self.basis.currentText(),reference=self.rights.text(),use=self.gold_use.currentData()),domain_truth={key:'MANUALLY_VERIFIED' if box.isChecked() else 'INSUFFICIENT_EVIDENCE' for key,box in self.truth.items()},reason=self.gold_reason.text(),evidence=self.gold_evidence.text(),logo_truth=logos or None)
         if self.mapping.isChecked():payload['mapping_truth']=dict(customer_id=self.mapping_customer.text().strip(),style_id=self.mapping_style.text().strip(),review_reason=self.mapping_reason.text())
         self.submit('PLAN_GOLD',payload,'GOLD')

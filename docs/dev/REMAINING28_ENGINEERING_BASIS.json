@@ -140,6 +140,15 @@
       "inspected": "max_weight_matching maximum-cardinality option,Edmonds blossom primal-dual,O(V^3),integer weights avoid documented float precision issues",
       "reuse": "Use mature matching and connected_components;do not implement Hungarian/union-find from scratch",
       "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED"
+    },
+    {
+      "project": "Tesseract OCR CLI",
+      "version": "5.5.0",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tesseract/5.5.0/doc/tesseract.1.asc",
+      "sha256": "2b1823fa238b7b3e030b96f916fa2ee948d0194ae47ecf09968e35f71933fd6c",
+      "bytes": 15602,
+      "inspected": "--psm modes6/11, --tessdata-dir, -l and TSV output, option order before CONFIGFILE",
+      "reuse": "Reuse installed Tesseract5.5.0 and existing local language packs; exact runtime/model hashes and bounded adapter, no new OCR engine or paid service"
     }
   ],
   "mathematical_basis": [

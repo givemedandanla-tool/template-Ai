@@ -71,6 +71,15 @@ class QualityGroups:
         if not self.has_table(table) or not self.db.execute(f'SELECT 1 FROM {table} WHERE {column}=?',(value,)).fetchone():raise ValueError('群組關聯對象不存在')
         return key
 
+    def projection(self,content_hashes,graph=None,state=None):
+        if graph is None or state is None:graph,state,_=self.graph_state()
+        focus={'CONTENT:'+sha for sha in content_hashes};graph.add_nodes_from(focus)
+        components=sorted(sorted(component) for component in nx.connected_components(graph) if component.intersection(focus))
+        members={node for component in components for node in component}
+        edges=sorted(edge for edge in state['edges'] if edge[0] in members and edge[1] in members)
+        result=dict(version=1,components=components,edges=edges)
+        result['digest']=digest(result);return result
+
     def role_conflicts(self,assignments,*,graph=None):
         """Known correlated content must not span TRAIN/VALIDATION/HOLDOUT."""
         if not isinstance(assignments,list) or len(assignments)>MAX_ROWS:raise ValueError('角色核對需有界明列內容清單')

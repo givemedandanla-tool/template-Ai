@@ -27,7 +27,7 @@ def components(node, source, bounds):
 
 
 def validate_truth(evidence, source, elements, bounds):
-    if not isinstance(evidence, dict) or set(evidence) != {'root_id', 'component_ids', 'review_reason', 'original_correspondence_confirmed'}:
+    if not isinstance(evidence, dict) or not {'root_id','component_ids','review_reason','original_correspondence_confirmed'}<=set(evidence) or not set(evidence)<={'root_id','component_ids','review_reason','original_correspondence_confirmed','text_component_ids'}:
         raise ValueError('Logo真值需明列原稿群組、完整構件及人工對照理由')
     text(evidence['review_reason'], '完整Logo原稿圖文對照依據', 2000)
     if evidence['original_correspondence_confirmed'] is not True: raise ValueError('向量衍生檔不自動證明原始Illustrator完整Logo')
@@ -38,5 +38,10 @@ def validate_truth(evidence, source, elements, bounds):
     if len(roots) != 1: raise ValueError('原稿Logo群組ID不唯一或失聯')
     actual = components(roots[0], source, bounds)
     if not actual['complete'] or set(ids) != set(actual['component_ids']): raise ValueError('人工完整構件與已核對向量群組不一致／尚有外部或未知構件')
+    semantic_ids=evidence.get('text_component_ids')
+    if semantic_ids is not None:
+        if not isinstance(semantic_ids,list) or any(not isinstance(i,str) for i in semantic_ids) or len(set(semantic_ids))!=len(semantic_ids) or not set(semantic_ids)<=set(ids):raise ValueError('人工文字構件需明列完整Logo構件的子集，不能把SVG path自動當非文字')
+        actual['text_component_ids']=sorted(semantic_ids)
+    actual['text_content_manually_reviewed']=semantic_ids is not None
     return dict(actual, review_reason=evidence['review_reason'], original_correspondence='MANUALLY_CONFIRMED_ORIGINAL_AND_DERIVATIVE',
                 manually_verified=True, component_digest=digest(actual))
