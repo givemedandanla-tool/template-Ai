@@ -934,3 +934,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-16 00:04 UTC UI053 quality gold/holdout WIP
 - 36 target/integration/legacydataset PASS；withdrawal早停原稿read修正後10相關case重跑PASS，不虛增unique。首次note list排序假設失敗已保留，按exact observationID核對。
 - Gold需單獨local-evaluation rights與manual/currentfacts/source/cache，模型變更不改真值，撤回只附加invalidation；QUALITY_SET roles/sharedgroup與immutable manifest/source缺口/independentgroup分母，近重複新發現使舊set失效保留gold。無SAMPLE/train/雲端upload sideeffect。尚未UI053全實作/全sourceformal，原6/28仍歷史已驗里程碑，144currentpending。
+
+### 2026-10-16 00:14 UTC UI053 policy/pipeline WIP
+- 21 combinedpolicy/group/oldsemantic PASS；17 policy/pipeline/oldsemantic PASS；加來源/cache/pipeline推論後釘選4pipeline重驗PASS。typed labels不能當actualversion，goldFACTS讀取陷阱未觸發/epoch不變/無businesswrites；實際renderer/source-engine執行，OCR/native/rule capabilities不足明示。
+- explicitpolicy不預設未研究數值，QualitySem guard既有training入口與historical source exposure覆蓋；未知不給品質PASS。尚待paired protocol/exposure/domainmetrics/FIFO/GUI/完整原9新sourceformal。

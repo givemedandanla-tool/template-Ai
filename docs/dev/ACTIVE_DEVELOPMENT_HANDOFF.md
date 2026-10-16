@@ -28,3 +28,10 @@
 - quality_sets sameTrainingStore QUALITY_SET（distinct purpose，不偷當geometry DATASET），<=1000gold exactmanifest/全檔分頁及missingwork保留/重複跨界拒絕、samebytes alias2files1independentgroup、HOLDOUT GROUP_ROLE防train、不自動聲稱獨立/qualitypass/上傳；新near-group發現會invalid舊QUALITY_SET/HOLDOUT_EXPOSED但不改gold原標註。
 - 36 combined targets+10 withdrawal修正後重跑PASS（不相加當46unique）；第一輪gold note排序假設1fail原log保留，改exact observationID核對。currentknown825，144current claims仍pending；UI053原9尚未完成，前6/28 Coverage001里程碑保留。
 - 下一明確品質政策（預設UNCONFIGURED）、actual pipeline/version receipts/source-only inference、predeclared固定AB/exposure、FIFO jobs及paged diagnostics/跨批次重大重審；尚無完整UI053驗證或品質放行。
+
+### UI053 explicit policy / real vector pipeline WIP
+- quality_policy無production數字預設，9domain各層groups/gold數/precision/recall/group-failure threshold+confidence/IoU需明列依據/reference/合成或授權本機scope，critical及unknown/leak永遠阻擋；approve immutable policy非模型放行，withdraw不假定fallback安全。
+- quality_pipeline只freeze實際可執行source engine/CharModel或baseline，actual sourcefiles SHA/weights/inkscape binary+version/Qt Python NetworkX OS/fc-list bounded字型stat digest/正式rules版本，typed model label拒絕。actual analyse_source不讀holdout FACTS，不寫work/customer/template/sample，before/after source/cache/pipeline checks。OCR NOT_EXECUTED、native Illustrator UNKNOWN、rules不靠gold humancontext套用均明示，不冒充完整AI品質。
+- semantic_learning.plan/train也接GROUP_ROLE/related group防qualityholdout旁路，實際訓練原子寫roles；QualityGroups從歷史SEMANTIC_MODEL scopes SQLdistinct保留TRAIN/VALIDATION曝光（刪目前rolecache仍擋holdout），gold真值不依model而改寫。
+- 21 policy/groups/oldsemantic、17 policy+pipeline+oldsemantic及source pins調整後4pipeline PASS（重疊不相加unique）。尚無predeclared AB/exposure protocol/domain job/Gate/UI或full formal；UI053原9仍WIP，current144claims pending，前6/28已驗Coverage001保留。
+- 下一先protocol固定QUALITY_SET/品質policy/實際pipelines及配對條件、exposure journal，再domain metrics/persistent FIFO jobs/GUI/重大跨批次重審。

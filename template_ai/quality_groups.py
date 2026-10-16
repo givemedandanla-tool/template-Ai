@@ -26,6 +26,10 @@ class QualityGroups:
 
     def has_table(self,name):return bool(self.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",(name,)).fetchone())
 
+    def model_exposure_roles(self):
+        # SQL extracts only small distinct scope facts, never model weights or gold answers.
+        return self.rows("SELECT DISTINCT json_extract(s.value,'$.pins.source_hash'),json_extract(s.value,'$.role') FROM training_history h,json_each(h.after_json,'$.plan.scopes') s WHERE h.kind='SEMANTIC_MODEL' AND json_extract(s.value,'$.role') IN ('TRAIN','VALIDATION') ORDER BY 1,2")
+
     def graph_state(self):
         graph=nx.Graph();edges=[]
         def add(a,b,basis):
@@ -49,7 +53,7 @@ class QualityGroups:
             if row['state'] in ('ACTIVE','REVOKED_RETAIN_HISTORICAL_LEAKAGE'):add(row['left'],row['right'],'DECLARED:'+lid+':'+str(revision)+':'+row['state'])
         roles=[list(row) for row in self.rows("SELECT id,revision,json_extract(payload,'$.role') FROM training_records WHERE kind='GROUP_ROLE' ORDER BY id")]
         if graph.number_of_nodes()>50000 or len(edges)>50000:raise ValueError('獨立性圖超過資源預算；保持未知，未當獨立PASS')
-        payload=dict(schema_version=1,edges=sorted(edges),locked_content_roles=roles,unknown_near_duplicate_relations_are_not_assumed_independent=True)
+        payload=dict(schema_version=1,edges=sorted(edges),locked_content_roles=roles,historical_model_exposure_roles=[list(r) for r in self.model_exposure_roles()],unknown_near_duplicate_relations_are_not_assumed_independent=True)
         return graph,payload,digest(payload)
 
     def validate_key(self,key):
@@ -71,6 +75,8 @@ class QualityGroups:
             if role!='UNASSIGNED':roles.setdefault('CONTENT:'+sha,set()).add(role)
         for sha,role in self.db.execute("SELECT id,json_extract(payload,'$.role') FROM training_records WHERE kind='GROUP_ROLE'"):
             if role!='UNASSIGNED':roles.setdefault('CONTENT:'+sha,set()).add(role)
+        for sha,role in self.model_exposure_roles():
+            if sha:roles.setdefault('CONTENT:'+sha,set()).add(role)
         for node in roles:graph.add_node(node)
         conflicts=[]
         for component in nx.connected_components(graph):

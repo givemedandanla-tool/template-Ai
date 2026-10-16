@@ -36,6 +36,9 @@ class SemanticLearning:
                 literal_roles[key]=role
                 examples.append(dict(sample_id=wid+'-'+observation['id'],work_id=wid,text=observation['text'],semantic_type=kind,confirmed=True,use='SEMANTIC_CLASSIFICATION_LOCAL',role=role))
             scopes.append(dict(work_id=wid,pins=pins,facts_revision=facts['revision'],observations_digest=digest(facts['observations']),role=role))
+        from .quality_groups import QualityGroups
+        conflicts=QualityGroups(self.library).role_conflicts([(scope['pins']['source_hash'],scope['role']) for scope in scopes])
+        if conflicts:raise ValueError('同來源／相關家族角色或品質holdout不可供語意訓練／調參：'+'；'.join(row['reason'] for row in conflicts))
         train=[e for e in examples if e['role']=='TRAIN'];counts=Counter(e['semantic_type'] for e in train);validation=Counter(e['semantic_type'] for e in examples if e['role']=='VALIDATION')
         if len(examples)>2000 or len(counts)<2 or any(n<2 for n in counts.values()) or set(validation)!=set(counts):raise ValueError('需至少兩類、每類TRAIN至少2筆及各類獨立留出；每版上限2000字串')
         result=dict(work_roles=work_roles,scopes=scopes,examples=examples,training_counts=dict(counts),validation_counts=dict(validation),
@@ -60,6 +63,9 @@ class SemanticLearning:
             model=CharacterModel([e for e in fresh['examples'] if e['role']=='TRAIN'])
             metrics=self.evaluate(model,[e for e in fresh['examples'] if e['role']=='VALIDATION'])
             baseline=self.evaluate(None,[e for e in fresh['examples'] if e['role']=='VALIDATION'])
+            for scope in fresh['scopes']:
+                sha=scope['pins']['source_hash']
+                if not self.store.get('GROUP_ROLE',sha):self.store._write('GROUP_ROLE',sha,dict(role=scope['role'],source_hash=sha,basis='SEMANTIC_MODEL_ACTUAL_SOURCE_USE',actor=actor),0,'semantic_model_source_role_locked')
             return self.store._write('SEMANTIC_MODEL',new_id(),dict(state='PENDING',plan=fresh,actor=actor,created=time.time(),metrics=metrics,baseline_metrics=baseline,
                 parameter_count=sum(len(v) for v in model.counts.values())+len(model.documents),vocabulary_size=len(model.vocabulary),
                 weights_digest=digest({k:dict(v) for k,v in model.counts.items()}),score_kind='UNCALIBRATED_LOG_LIKELIHOOD_MARGIN',scope='LOCAL_TEXT_ONLY; NO_NEURAL_ARCHITECTURE_CHANGE'),0,'semantic_model_candidate_trained_not_activated')
