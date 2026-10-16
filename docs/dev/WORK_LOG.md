@@ -1209,3 +1209,7 @@ Actual native busy rejection/recovery now tested without a stuck loading state o
 ## UI056 actual17PASS and legacy source proof reuse
 
 Actual OCR→human confirmed source→sample admission metadata, whole-composite Logo truth, source-change race, late-audit rollback, stale-worker generation fence and51approval versions/50-page dedup are now17targetPASS. FirstOCR boundary test only failed due nonexistent patched function execute; correct actual lines entrypoint in002, no production guard relaxed. Added reuse of existing verified source_stat byte length for legacy samples, preserving alias dedup without reapproval or source identity merge, plus actual transformedSVG-derived text/effect evidence stays unverified native. Dataset regression/new facet results pending. UI056 original8 still pending.
+
+## UI056 actual27PASS and native capture
+
+Actual debugger showed source and derivative SHA hashes agree; Inkscape output object is VECTOR_PATH_TEXT_ORIGIN_UNKNOWN, so prior test expecting derivative TEXT was wrong. Expose derivative vector-path/native-text-origin-unknown, never certify true outline/editable native text. Combined27 actual evidence/native/counts/old dataset PASS, including real local Tesseract admission, 51-page dedup, source race and audit rollback, legacy source_stat byte-length proof. Native7-view script seeded authored legal alias/VALIDATION/independent Gold metadata before GUI timing, exercises actual owned queries/exact picker/revoke/old snapshots; capture pending final check. No parent completion,1044catalog.

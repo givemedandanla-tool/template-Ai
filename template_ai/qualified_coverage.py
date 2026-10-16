@@ -62,7 +62,7 @@ class QualifiedCoverage:
             holdout_state='EXPOSED_NOT_FRESH' if self.store.get('HOLDOUT_EXPOSED',reference['dataset_id']) else 'CONSUMED_EXISTING_PROTOCOL_ONLY' if self.store.get(CONSUMED,source['hash']) else 'REGISTERED_GOLD_FRESHNESS_NOT_GRANTED'
             signature=digest([source['hash'],source['byte_size'],record['width_mm'],record['height_mm'],[{k:o.get(k) for k in ('kind','owner','text','rect')} for o in record['objects']]])
         else:
-            state='PENDING_CANDIDATE';reason.append('候選未獲訓練准入，不混入可訓練樣本')
+            state='PENDING_CANDIDATE';reason.append('修正候選與准入樣本分別列冊；此集合不當作正式訓練樣本數')
         known=known and facts_state=='CONFIRMED' and work['payload'].get('visual_confirmed') is True
         if collection in ('APPROVED_TRAINABLE','VALIDATION'):matches=matches and known
         facets=self.facets(work,source,known,gold)
@@ -75,7 +75,7 @@ class QualifiedCoverage:
             from .quality_facets import describe
             described=describe([gold],dict(group_components=[],whole_source_gold_complete=False,evaluation_role='HOLDOUT'));values=described['logo'];logo=values[0] if len(values)==1 else 'MULTIPLE_VERIFIED_TYPES'
         evidence=work['payload'].get('analysis_evidence',{});proofs=[p for p in evidence.get('text_object_evidence',{}).values() if p.get('source_hash')==source['hash'] and p.get('derivative_hash')==source.get('file_hashes',{}).get('svg') and p.get('evidence_channel')=='INKSCAPE_SVG_DERIVATIVE']
-        native='DERIVATIVE_TEXT_NATIVE_UNVERIFIED' if any(p.get('classification')=='DERIVATIVE_TEXT' for p in proofs) else 'UNKNOWN'
+        native='DERIVATIVE_TEXT_NATIVE_UNVERIFIED' if any(p.get('classification')=='DERIVATIVE_TEXT' for p in proofs) else 'DERIVATIVE_PATH_NATIVE_TEXT_UNKNOWN' if any(p.get('classification')=='VECTOR_PATH_TEXT_ORIGIN_UNKNOWN' for p in proofs) else 'UNKNOWN'
         effects='DERIVATIVE_EFFECT_ATTRIBUTES_NATIVE_TYPE_UNKNOWN' if any(p.get('observed_effect_attributes') for p in proofs) else 'UNKNOWN'
         ocr=evidence.get('ocr',{});ocr_class='LOCAL_OCR_EXECUTION_RECORDED_NATIVE_UNKNOWN' if ocr.get('executed') is True and ocr.get('algorithm_version') and ocr.get('model_hashes') and work['payload'].get('analysis_key') else 'UNKNOWN'
         count=self.db.execute("SELECT count(*) FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED'",(source['id'],)).fetchone()[0]

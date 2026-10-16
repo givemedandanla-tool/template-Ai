@@ -1,12 +1,12 @@
 """Primary C-scope coverage view; inventory is a separately labelled legacy view."""
 from PySide6.QtCore import Qt,QDateTime
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QComboBox,QTreeWidget,QTreeWidgetItem,QPlainTextEdit
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QComboBox,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QHeaderView
 from shiboken6 import isValid
 from .training_store import TrainingStore
 
 VIEWS=(('目前已核准可訓練','APPROVED_TRAINABLE'),('候選待審','CANDIDATE_PENDING'),('已排除／污染隔離','EXCLUDED'),('調參驗證','VALIDATION'),('獨立品質保留集','QUALITY_HOLDOUT'),('精確訓練資料集版本','EXACT_DATASET'))
 AXES=dict(size='實體尺寸',people='人數',companies='公司數',logo='Logo類型',native_text='原生文字證據',special_effect='特殊文字效果',ocr='OCR補救',multi_work='單檔多作品')
-VALUES=dict(DERIVATIVE_TEXT_NATIVE_UNVERIFIED='衍生檔文字；原生可編輯性未核實',DERIVATIVE_EFFECT_ATTRIBUTES_NATIVE_TYPE_UNKNOWN='衍生檔效果屬性；原生效果類型未知',LOCAL_OCR_EXECUTION_RECORDED_NATIVE_UNKNOWN='有本機OCR執行紀錄；原生類型未知',UNKNOWN='未知／未核實',VECTOR_ONLY='已核對純圖形',TEXT_AND_VECTOR='已核對完整複合圖文',TEXT_ONLY='已核對文字型Logo',NO_LOGO='已核對無Logo',MULTIPLE_VERIFIED_TYPES='多種已核對類型',SOURCE_HAS_MULTIPLE_REGISTERED_WORKS_COMPLETENESS_UNKNOWN='來源登錄多件作品；原稿完整性未知',SOURCE_HAS_ONE_REGISTERED_WORK_COMPLETENESS_UNKNOWN='來源登錄一件作品；原稿完整性未知')
+VALUES=dict(DERIVATIVE_PATH_NATIVE_TEXT_UNKNOWN='衍生向量路徑；原生文字／外框來源未知',DERIVATIVE_TEXT_NATIVE_UNVERIFIED='衍生檔文字；原生可編輯性未核實',DERIVATIVE_EFFECT_ATTRIBUTES_NATIVE_TYPE_UNKNOWN='衍生檔效果屬性；原生效果類型未知',LOCAL_OCR_EXECUTION_RECORDED_NATIVE_UNKNOWN='有本機OCR執行紀錄；原生類型未知',UNKNOWN='未知／未核實',VECTOR_ONLY='已核對純圖形',TEXT_AND_VECTOR='已核對完整複合圖文',TEXT_ONLY='已核對文字型Logo',NO_LOGO='已核對無Logo',MULTIPLE_VERIFIED_TYPES='多種已核對類型',SOURCE_HAS_MULTIPLE_REGISTERED_WORKS_COMPLETENESS_UNKNOWN='來源登錄多件作品；原稿完整性未知',SOURCE_HAS_ONE_REGISTERED_WORK_COMPLETENESS_UNKNOWN='來源登錄一件作品；原稿完整性未知')
 
 
 class QualifiedCoveragePanel(QWidget):
@@ -17,7 +17,7 @@ class QualifiedCoveragePanel(QWidget):
         bar.addWidget(self.collection);self.dataset=QComboBox();self.dataset.addItem('先選明確資料集版本',None);self.dataset.setEnabled(False);bar.addWidget(self.dataset,1);self.button(bar,'資料集前50',lambda:self.datasets(-50));self.button(bar,'資料集後50',lambda:self.datasets(50));layout.addLayout(bar)
         bar=QHBoxLayout();self.previous_button=self.button(bar,'前50筆',lambda:self.reload(max(0,self.offset-50)));self.next_button=self.button(bar,'後50筆',lambda:self.reload(self.offset+50));self.reload_button=self.button(bar,'依目前資格重算',lambda:self.reload(0));layout.addLayout(bar)
         self.status=QLabel('只描述明確資料集合的當時計數；不以數量判定品質，不提供補樣建議。');self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status);self.count=QLabel();self.count.setTextFormat(Qt.PlainText);self.count.setWordWrap(True);layout.addWidget(self.count)
-        self.tree=QTreeWidget();self.tree.setHeaderLabels(['可核對分類／具名來源','本頁作品數／去重標記權重']);layout.addWidget(self.tree,2);self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setMaximumHeight(130);layout.addWidget(self.details)
+        self.tree=QTreeWidget();self.tree.setHeaderLabels(['可核對分類／具名來源','本頁作品數／去重標記權重']);self.tree.header().setSectionResizeMode(0,QHeaderView.Stretch);self.tree.header().setSectionResizeMode(1,QHeaderView.ResizeToContents);layout.addWidget(self.tree,2);self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setMaximumHeight(130);layout.addWidget(self.details)
         bar=QHBoxLayout();self.locate_button=self.button(bar,'返回選中來源與標記核對',self.locate);self.samples_button=self.button(bar,'開啟既有可信樣本審核',self.samples);layout.addLayout(bar)
         bar=QHBoxLayout();self.history=QComboBox();self.history.addItem('歷史快照僅當時計數',None);bar.addWidget(self.history,1);self.button(bar,'歷史前50',lambda:self.histories(-50));self.button(bar,'歷史後50',lambda:self.histories(50));self.button(bar,'檢視選中歷史快照',self.load_history);layout.addLayout(bar)
         self.collection.currentIndexChanged.connect(lambda:self.guard(self.changed));self.dataset.currentIndexChanged.connect(lambda:self.guard(lambda:self.reload(0)));self.tree.itemSelectionChanged.connect(self.selected)
