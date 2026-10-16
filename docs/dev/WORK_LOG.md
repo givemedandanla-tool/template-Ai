@@ -1201,3 +1201,7 @@ Six actual backend checks PASS: candidates/HOLDOUT excluded from default, two al
 ## UI056 native primary view and explicit inventory
 
 QualifiedCoveragePanel now primary default purpose-filtered C stats; old CoveragePanel kept as separately named inventory and lazy-loaded. Existing legacy inventory tests/capture select inventory explicitly, preserving original readonly coverage assertions; new Qt tests target new default, explicit manifest selection, retained historicalcounts after revoke and dirty-source protection/actual exact return. First11new+old Qt tests PASS. Added busy/environment admission checks before declaring loading, generation guard for changed selections and weakref Qt lifecycle guard; rerun pending. 1037known, no new parent completion.
+
+## UI056 current-role native and actual source evidence
+
+Actual native busy rejection/recovery now tested without a stuck loading state or false saved snapshot; combined12Qt+legacyinventory PASS. Added four actual source evidence cases: existing verified full-composite Gold metadata, local Tesseract execution→manual actual-source facts→approved sample→descriptive OCR metadata without rerunning OCR, source change during scan rejected, snapshot late-audit rollback/minimal no copied personal labels. Results pending. Native/model/effect unknown remains explicit; recorded derivative/OCR is not certified Illustrator editability. No parent completion.

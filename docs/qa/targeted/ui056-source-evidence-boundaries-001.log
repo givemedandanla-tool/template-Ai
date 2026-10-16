@@ -1,0 +1,18 @@
+======================================================================
+ERROR: test_actual_local_ocr_source_admission_counts_recorded_ocr_without_loading_model_again (test_qualified_coverage_evidence.QualifiedCoverageEvidenceTests.test_actual_local_ocr_source_admission_counts_recorded_ocr_without_loading_model_again)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_qualified_coverage_evidence.py", line 19, in test_actual_local_ocr_source_admission_counts_recorded_ocr_without_loading_model_again
+    with patch('template_ai.quality_ocr.execute',side_effect=AssertionError('Stats must not rerun OCR')):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1467, in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1437, in get_original
+    raise AttributeError(
+AttributeError: <module 'template_ai.quality_ocr' from '/workspace/template-Ai/template_ai/quality_ocr.py'> does not have the attribute 'execute'
+
+----------------------------------------------------------------------
+Ran 4 tests in 4.471s
+
+FAILED (errors=1)

@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI056-EXACT8-IN-PROGRESS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI056-COUNTS-SNAPSHOTS-WIP.receipt.json",
-  "last_confirmed_commit": "8043f54b81e97189d9e2af2c863ec7613c93055e",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI056-NATIVE-PRIMARY-WIP.receipt.json",
+  "last_confirmed_commit": "48d2e4802c4fd9e3cbaa9cdbb4f52eb82cce48f1",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-UI056-NATIVE-PRIMARY-WIP"
+    "CP-20261016-REMAINING28-UI056-SOURCE-EVIDENCE-WIP"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -667,7 +667,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "UI056 primary qualified coverage now wired with lazy owned-worker collection/exact-manifest/history/source-return view; legacy inventory renamed and lazy kept intact. First11 Qt+inventory checks PASS; busy rejection/recovery rerun pending. Backend6PASS;1037known (1026+6backend+5Qt); historical8of28/147pending, UI056 not full complete.",
+  "current_work": "UI056 backend6PASS and actual primary/busy/history/source-return+legacy inventory12PASS. Added actual local OCR/verified whole-logo and source-change/late-audit boundary tests (result pending). Current1041known after4newcases; current8/28 historical/147pending, UI056 full8 not registered.",
   "last_formal_failure": {
     "run": "RUN-REMAINING28-REPAIR-002",
     "status": "FAIL",
@@ -721,7 +721,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/UI055_IMPLEMENTATION_MAP.json",
-  "next_step": "Check current native rerun, cover stale/concurrent/source-facet edges, actual capture/visual review and original8 registration; then next19 parents and batch formal.",
+  "next_step": "Resolve source-evidence tests, add generation/paging/legacy-proof edges as needed, capture actual native coverage, register exact8 pending then next19 parents and batch full formal.",
   "current_work_package": "UI056 C approved-sample coverage and explicit denominators",
   "checkpoint_cadence_note": "REPAIR002 failure triage exceeded ten minutes since last remote checkpoint; saving immediately, no strict cadence PASS claim."
 }

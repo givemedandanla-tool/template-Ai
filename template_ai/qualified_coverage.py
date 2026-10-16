@@ -74,8 +74,12 @@ class QualifiedCoverage:
         if gold:
             from .quality_facets import describe
             described=describe([gold],dict(group_components=[],whole_source_gold_complete=False,evaluation_role='HOLDOUT'));values=described['logo'];logo=values[0] if len(values)==1 else 'MULTIPLE_VERIFIED_TYPES'
+        evidence=work['payload'].get('analysis_evidence',{});proofs=[p for p in evidence.get('text_object_evidence',{}).values() if p.get('source_hash')==source['hash'] and p.get('derivative_hash')==source.get('file_hashes',{}).get('svg') and p.get('evidence_channel')=='INKSCAPE_SVG_DERIVATIVE']
+        native='DERIVATIVE_TEXT_NATIVE_UNVERIFIED' if any(p.get('classification')=='DERIVATIVE_TEXT' for p in proofs) else 'UNKNOWN'
+        effects='DERIVATIVE_EFFECT_ATTRIBUTES_NATIVE_TYPE_UNKNOWN' if any(p.get('observed_effect_attributes') for p in proofs) else 'UNKNOWN'
+        ocr=evidence.get('ocr',{});ocr_class='LOCAL_OCR_EXECUTION_RECORDED_NATIVE_UNKNOWN' if ocr.get('executed') is True and ocr.get('algorithm_version') and ocr.get('model_hashes') and work['payload'].get('analysis_key') else 'UNKNOWN'
         count=self.db.execute("SELECT count(*) FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED'",(source['id'],)).fetchone()[0]
-        return dict(size=f"{work['payload']['work_width']:g}×{work['payload']['work_height']:g}mm",people='3+' if people>=3 else str(people),companies=str(companies),logo=logo,native_text='UNKNOWN',special_effect='UNKNOWN',ocr='UNKNOWN',multi_work='SOURCE_HAS_MULTIPLE_REGISTERED_WORKS_COMPLETENESS_UNKNOWN' if count>1 else 'SOURCE_HAS_ONE_REGISTERED_WORK_COMPLETENESS_UNKNOWN')
+        return dict(size=f"{work['payload']['work_width']:g}×{work['payload']['work_height']:g}mm",people='3+' if people>=3 else str(people),companies=str(companies),logo=logo,native_text=native,special_effect=effects,ocr=ocr_class,multi_work='SOURCE_HAS_MULTIPLE_REGISTERED_WORKS_COMPLETENESS_UNKNOWN' if count>1 else 'SOURCE_HAS_ONE_REGISTERED_WORK_COMPLETENESS_UNKNOWN')
 
     def report(self,collection='APPROVED_TRAINABLE',dataset_id=None,offset=0,save_snapshot=True):
         if collection not in COLLECTIONS or type(offset) is not int or offset<0 or type(save_snapshot) is not bool:raise ValueError('覆蓋統計需明確集合與50筆分頁')

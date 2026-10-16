@@ -6,7 +6,7 @@ from .training_store import TrainingStore
 
 VIEWS=(('目前已核准可訓練','APPROVED_TRAINABLE'),('候選待審','CANDIDATE_PENDING'),('已排除／污染隔離','EXCLUDED'),('調參驗證','VALIDATION'),('獨立品質保留集','QUALITY_HOLDOUT'),('精確訓練資料集版本','EXACT_DATASET'))
 AXES=dict(size='實體尺寸',people='人數',companies='公司數',logo='Logo類型',native_text='原生文字證據',special_effect='特殊文字效果',ocr='OCR補救',multi_work='單檔多作品')
-VALUES=dict(UNKNOWN='未知／未核實',VECTOR_ONLY='已核對純圖形',TEXT_AND_VECTOR='已核對完整複合圖文',TEXT_ONLY='已核對文字型Logo',NO_LOGO='已核對無Logo',MULTIPLE_VERIFIED_TYPES='多種已核對類型',SOURCE_HAS_MULTIPLE_REGISTERED_WORKS_COMPLETENESS_UNKNOWN='來源登錄多件作品；原稿完整性未知',SOURCE_HAS_ONE_REGISTERED_WORK_COMPLETENESS_UNKNOWN='來源登錄一件作品；原稿完整性未知')
+VALUES=dict(DERIVATIVE_TEXT_NATIVE_UNVERIFIED='衍生檔文字；原生可編輯性未核實',DERIVATIVE_EFFECT_ATTRIBUTES_NATIVE_TYPE_UNKNOWN='衍生檔效果屬性；原生效果類型未知',LOCAL_OCR_EXECUTION_RECORDED_NATIVE_UNKNOWN='有本機OCR執行紀錄；原生類型未知',UNKNOWN='未知／未核實',VECTOR_ONLY='已核對純圖形',TEXT_AND_VECTOR='已核對完整複合圖文',TEXT_ONLY='已核對文字型Logo',NO_LOGO='已核對無Logo',MULTIPLE_VERIFIED_TYPES='多種已核對類型',SOURCE_HAS_MULTIPLE_REGISTERED_WORKS_COMPLETENESS_UNKNOWN='來源登錄多件作品；原稿完整性未知',SOURCE_HAS_ONE_REGISTERED_WORK_COMPLETENESS_UNKNOWN='來源登錄一件作品；原稿完整性未知')
 
 
 class QualifiedCoveragePanel(QWidget):
