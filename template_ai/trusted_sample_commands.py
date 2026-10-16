@@ -31,6 +31,10 @@ def trace_page(library,pool,identity,offset=0):
 
 def execute(library,command,payload):
     pool=TrustedSamplePool(library)
+    if command in ('COVERAGE','COVERAGE_SNAPSHOTS','COVERAGE_HISTORICAL'):
+        from .qualified_coverage import QualifiedCoverage
+        service=QualifiedCoverage(library)
+        return {'COVERAGE':service.report,'COVERAGE_SNAPSHOTS':service.snapshots,'COVERAGE_HISTORICAL':service.historical}[command](**payload)
     if command=='LIST':return pool.directory(**payload)
     if command=='DETAIL':return pool.comparison(**payload)
     if command=='PLAN':return pool.batch_plan(**payload)

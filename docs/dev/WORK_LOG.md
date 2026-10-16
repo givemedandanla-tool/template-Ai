@@ -1193,3 +1193,7 @@ Reuse original FACTS history action source_observations_proposed_not_confirmed p
 ## UI055 full11 pending; UI056 implementation begins
 
 UI055199supporting IDs/original11 exact registered,147claims pending,1026catalog. Native002 sevenimages all visually inspected; actual0Qt/RSS170278912/maxgap61.656ms controlledworkflow. Current-state native0034PASS; actualderivedgeometry source-stop validates oldtrainingref blocked1PASS. UI056 C begins with metadata50rosters/exactmanifests/current sample/gold state and explicit UNKNOWN facets; aggregation/snapshot/GUI not complete, unused draft service only. Keep inventory separate; no arbitrary thresholds or supplementation.
+
+## UI056 qualified counts and snapshot backend
+
+Six actual backend checks PASS: candidates/HOLDOUT excluded from default, two aliases/two sources butonecontent/oneweight, explicitVALIDATION/exactmanifest, revocation retains historicalcounts without currentclaim, noimages/models/autojobs, heldout exposure remains visible without freshindependence. Snapshotstores minimal IDs/counts/statdigests, no duplicated source/work names; no arbitrary thresholds or supplementation. Native panel constructor/owned request host only drafted, not wired; source-return/display/history handlers pending. No parent completion.
