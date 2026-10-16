@@ -370,6 +370,8 @@ class Library:
         t.state = "published"
 
     def _template_provenance(self, t: Template) -> None:
+        from .quality_source_rechecks import source_or_template_blocked
+        if source_or_template_blocked(self,t):raise ValueError('重大共通錯誤重審尚未核准此來源／模板版本，暫停可信使用')
         if t.training_reference is not None:
             from .training_store import TrainingStore
             try: TrainingStore.bind(self).validate_training_reference(t)

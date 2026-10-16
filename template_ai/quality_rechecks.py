@@ -13,6 +13,13 @@ def blocked(store, work_id):
 class QualityRechecks:
     def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library);self.db=library.db
 
+    def source_plan(self,**kwargs):
+        from .quality_source_rechecks import plan
+        return plan(self,**kwargs)
+    def confirm_source(self,plan,actor,reason,approved=False):
+        from .quality_source_rechecks import confirm
+        return confirm(self,plan,actor,reason,approved)
+
     def source_dependencies(self,work_id,additional_work_ids=None,*,include_quality_evidence=False):
         """Bounded directed reachability over actual current and historical IDs."""
         import networkx as nx
