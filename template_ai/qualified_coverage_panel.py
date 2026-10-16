@@ -71,8 +71,9 @@ class QualifiedCoveragePanel(QWidget):
         def loaded(value):self.loaded=True;self.report=value;self.display()
         self.request('COVERAGE',dict(collection=self.collection.currentData(),dataset_id=self.dataset.currentData(),offset=offset),loaded)
     def display(self):
-        value=self.report;self.tree.clear();rows={row.get('work_id'):row for row in value['rows'] if row.get('work_id')};counts=value['counts'];collection=dict((data,label) for label,data in VIEWS).get(value['collection'],value['collection']);prefix='歷史快照，只供對帳；需要重算才有目前資格。' if self.historical else '本次資料集合：'+collection
-        self.count.setText(prefix+'\n掃描'+str(counts['scanned_record_occurrences'])+'／登錄範圍'+str(value['roster_total'])+'；符合'+str(counts['matching_record_occurrences'])+'、當前核實'+str(counts['currently_verified_occurrences'])+'。\n本頁有效來源檔'+str(counts['distinct_source_files'])+'／作品'+str(counts['distinct_artworks'])+'／精確內容'+str(counts['exact_content_groups'])+'／去重標記權重'+str(counts['deduplicated_approved_label_weights'])+'／已登錄相關群組'+str(counts['declared_related_groups'])+'；獨立性未由件數決定。')
+        value=self.report;self.tree.clear();rows={row.get('work_id'):row for row in value['rows'] if row.get('work_id')};counts=value['counts'];collection=dict((data,label) for label,data in VIEWS).get(value['collection'],value['collection']);prefix='歷史快照（當時集合：'+collection+'），只供對帳；需要重算才有目前資格。' if self.historical else '本次資料集合：'+collection
+        self.count.setText(prefix+'\n掃描'+str(counts['scanned_record_occurrences'])+'／登錄範圍'+str(value['roster_total'])+'；符合'+str(counts['matching_record_occurrences'])+('、當時核實' if self.historical else '、本次核實')+str(counts['currently_verified_occurrences'])+'。\n'+('當時有效來源檔' if self.historical else '本頁有效來源檔')+str(counts['distinct_source_files'])+'／作品'+str(counts['distinct_artworks'])+'／精確內容'+str(counts['exact_content_groups'])+'／去重標記權重'+str(counts['deduplicated_approved_label_weights'])+'／已登錄相關群組'+str(counts['declared_related_groups'])+'；獨立性未由件數決定。')
+        if value['collection']=='QUALITY_HOLDOUT':self.count.setText(self.count.text()+'\n其中已使用／曝光成員：'+str(counts.get('exposed_or_consumed_holdout_members',0))+'筆；不授予新的獨立驗收資格。')
         for axis,values in value['facets'].items():
             parent=QTreeWidgetItem([AXES.get(axis,axis),'分類重疊，分母僅本掃描集合']);self.tree.addTopLevelItem(parent)
             for category,work_ids in values.items():
@@ -83,7 +84,7 @@ class QualifiedCoveragePanel(QWidget):
     def selected(self):
         item=self.tree.currentItem();wid=item.data(0,Qt.UserRole) if item else None;enabled=bool(wid) and bool(self.report) and not self.loading and not self.historical and not self.window.busy;self.locate_button.setEnabled(enabled)
         if wid and self.report:
-            row=next(row for row in self.report['rows'] if row.get('work_id')==wid);self.details.setPlainText((row.get('work_name') or '歷史作品')+'\n來源：'+str(row.get('source_name','歷史參照'))+'\n標記／記錄版本：'+str(row['record_revision'])+'；作品版本：'+str(row['work_revision'])+'\n角色：'+row['role']+'；目前狀態：'+row['state']+'\n'+'；'.join(row.get('reasons',[])))
+            row=next(row for row in self.report['rows'] if row.get('work_id')==wid);self.details.setPlainText((row.get('work_name') or '歷史作品')+'\n來源：'+str(row.get('source_name','歷史參照'))+'\n標記／記錄版本：'+str(row['record_revision'])+'；作品版本：'+str(row['work_revision'])+'\n角色：'+row['role']+'；目前狀態：'+row['state']+'\n'+'；'.join(row.get('reasons',[]))+('\n保留集狀態：'+{'EXPOSED_NOT_FRESH':'答案已揭露，不能當新獨立來源','CONSUMED_EXISTING_PROTOCOL_ONLY':'已有固定試驗使用紀錄，只可用於原試驗','REGISTERED_GOLD_FRESHNESS_NOT_GRANTED':'僅已登錄，本頁未授予新獨立驗收資格'}.get(row.get('holdout_state'),'未知') if row.get('holdout_state') else ''))
     def locate(self):
         if self.historical or not self.report:raise ValueError('歷史快照不冒充目前資格，請重算後返回來源')
         if self.store.epoch!=self.report['source_epoch_after_snapshot']:raise ValueError('統計後資料版本已變更，請先重算')
