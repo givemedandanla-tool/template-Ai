@@ -6,10 +6,13 @@ from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QSplitter,Q
 
 
 def source_picture(item):
-    if not item.logo:return None
-    from .render import draw_logo
+    if not item.logo and not item.text:return None
+    from .render import draw_logo,draw_text
     picture=QPicture();painter=QPainter(picture)
-    try:draw_logo(painter,QRectF(0,0,item.slot.rect.w,item.slot.rect.h),item.logo)
+    try:
+        slot=item.slot;rect=QRectF(0,0,slot.rect.w,slot.rect.h)
+        if item.logo:draw_logo(painter,rect,item.logo)
+        else:draw_text(painter,rect,item.text,slot.font,slot.size_pt,item.scale,slot.align,slot.color,slot.font_style,slot.font_asset,item.tracking_mm)
     finally:painter.end()
     return picture
 
@@ -27,7 +30,7 @@ class PreflightDetailDialog(QDialog):
         from .gui import Canvas
         from .viewport_controls import navigation_controls
         split=QSplitter();layout.addWidget(split,1);self.views=[]
-        titles=['完整Logo來源（白底、保留原繪圖幾何）' if picture else '目前來源渲染／原尺寸物件區域','實際已編碼並讀回（含成品背景合成）']
+        titles=['完整Logo來源（白底、保留原繪圖幾何）' if item.logo and picture else '原文字繪圖（目前已核驗字型／固定字級）' if picture else '目前來源渲染／原尺寸物件區域','實際已編碼並讀回（含成品背景合成）']
         for index,(title,image) in enumerate(zip(titles,(source,actual))):
             page=QWidget();box=QVBoxLayout(page);box.addWidget(QLabel(title));canvas=Canvas();canvas.readonly=True;self.views.append(canvas)
             if index==0 and picture:

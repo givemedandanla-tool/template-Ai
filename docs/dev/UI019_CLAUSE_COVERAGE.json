@@ -1,0 +1,136 @@
+{
+  "parent": "UI-019",
+  "status": "IMPLEMENTED_PENDING_IMMUTABLE_VERIFICATION",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "normative_clause_count": 12,
+  "clauses": [
+    {
+      "id": "UI-019-CLAUSE-1",
+      "expected": "使用者選擇 **D｜印刷預檢工作台＋即時診斷＋安全輸出**。",
+      "tests": [
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_initial_panel_is_same_existing_right_container_without_running_or_approval",
+        "test_digital_review_gui.DigitalReviewGuiTests.test_actual_default_no_requires_explicit_named_scope_before_enabling_formal_output"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-2",
+      "expected": "中央提供**可縮放、可平移的完整排版預覽**，支援放大檢查姓名、公司名稱、細小文字、邊緣及**公司 Logo 細節**；可切換裁切線、安全區、印刷範圍等參考疊圖，顯示倍率與實際尺寸。螢幕放大預覽不能冒充實際印刷品質證據。",
+      "tests": [
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_overlay_toggles_and_mode_return_do_not_edit_or_revalidate_candidate",
+        "test_viewport_workbench.ViewportWorkbenchTests.test_numeric_slider_keyboard_and_fit_change_only_view_not_slots_or_undo",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_text_detail_keeps_verified_font_drawing_and_selected_scope_without_layout_edits",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_logo_detail_keeps_vector_picture_and_encoded_pixels_with_original_pan_zoom"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-3",
+      "expected": "右側顯示印前檢查清單、檢查結果（未檢查／通過／警告／阻擋）、實測原因、受影響欄位或物件與可直接定位的修正入口。檢查包含尺寸、裁切、安全區、文字完整、UI-013 的**固定欄位字級**、水平縮放比例與可讀性、字型可用性/嵌入、人物／公司歸屬、物件重疊及格式可輸出性。",
+      "tests": [
+        "test_digital_preflight.DigitalPreflightTests.test_safe_boundary_and_trim_failures_have_exact_slot_ids",
+        "test_digital_preflight.DigitalPreflightTests.test_overlap_check_is_specific_instead_of_hidden_behind_generic_engine_failure",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_original_worker_populates_named_checks_and_marked_format_readback",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_problem_row_routes_exact_slot_to_existing_canvas_without_moving_it"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-4",
+      "expected": "輸出設定提供實際尺寸、所需解析度與 PDF／PNG／JPG 格式等；以使用者選擇的尺寸和輸出格式進行相應的最終驗證。正式輸出前必須以目前有效資料、模板版本、字型、Logo 資產及目標格式取得新鮮驗證結果；驗證失敗則停用正式輸出，只保留標記為診斷用途的預覽。",
+      "tests": [
+        "test_digital_preflight.DigitalPreflightTests.test_scope_captures_format_dpi_and_rejects_candidate_geometry_changes",
+        "test_digital_preflight.DigitalPreflightTests.test_invalid_format_boolean_dpi_and_excessive_pixels_are_refused_without_downsampling",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval",
+        "test_digital_review_gui.DigitalReviewGuiTests.test_current_format_change_cannot_reuse_old_receipt_even_if_export_called_directly",
+        "test_batch_format_review.BatchFormatReviewTests.test_dpi_change_cannot_reuse_other_sampling_review"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-5",
+      "expected": "**使用者補充且列為必要驗證：可放大查看文字細節，尤其公司 Logo 細節必須保持高保真，不可失真。**",
+      "tests": [
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_text_detail_keeps_verified_font_drawing_and_selected_scope_without_layout_edits",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_logo_detail_keeps_vector_picture_and_encoded_pixels_with_original_pan_zoom",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-6",
+      "expected": "盡可能使用並保留來源的**原生向量 Logo／輪廓**，PDF 等可支援向量的輸出不得無理由提前點陣化；不得把 Logo 轉成較差品質的低解析預覽資產再當正式輸出來源。",
+      "tests": [
+        "test_digital_preflight.DigitalPreflightTests.test_original_vector_is_not_replaced_by_lower_resolution_preview_asset",
+        "test_digital_output_proof.DigitalOutputProofTests.test_actual_vector_logo_pdf_contains_curve_operators_without_raster_xobject",
+        "test_svg_preflight.SvgPreflightTests.test_native_curves_strokes_and_internal_reference_remain_vector"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-7",
+      "expected": "對 PNG/JPG 或只能取得點陣來源的情況，必須以**實體印刷尺寸下的有效像素密度、邊緣清晰度、幾何比例及實際匯出結果**驗證；不能以插值放大或單純提高檔案 DPI 標記假裝增加原圖不存在的細節。",
+      "tests": [
+        "test_digital_preflight.DigitalPreflightTests.test_raster_sampling_uses_actual_pixels_and_placed_size_not_dpi_tag",
+        "test_digital_preflight.DigitalPreflightTests.test_source_pixels_at_smaller_actual_size_can_meet_explicit_sampling_without_global_print_claim",
+        "test_digital_preflight.DigitalPreflightTests.test_crop_available_pixels_use_whole_mark_contain_actual_geometry",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_current_source_pixel_shortfall_blocks_final_but_retains_marked_preview"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-8",
+      "expected": "保持 Logo 長寬比例、線條、曲線與構圖，不得任意拉伸、平滑、過度壓縮、重畫或改變來源細節。向量化/清晰化若屬推測重建，只能作明確標示、需人工審核的候選，不得宣稱與原圖完全一致。",
+      "tests": [
+        "test_digital_preflight.DigitalPreflightTests.test_crop_available_pixels_use_whole_mark_contain_actual_geometry",
+        "test_digital_review.DigitalReviewTests.test_real_pdf_and_jpeg_exact_snapshot_review_matches_final_pixels_and_pdf_structure",
+        "test_digital_review.DigitalReviewTests.test_pdf_signature_captures_actual_vectors_and_images_but_ignores_subset_resource_ids",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-9",
+      "expected": "需支援選取 Logo 進行**局部放大／實際輸出品質比對**，列出 Logo 來源類型（向量／點陣／未知）、來源可用性與品質檢查結果；介面顯示清晰不代表 PDF 或點陣輸出一定無失真。",
+      "tests": [
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_logo_detail_keeps_vector_picture_and_encoded_pixels_with_original_pan_zoom",
+        "test_digital_output_proof.DigitalOutputProofTests.test_exact_selected_slot_crop_uses_encoded_pixels_and_rejects_changed_candidate",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-10",
+      "expected": "Logo 原始來源不足、缺失、在預定尺寸或格式下細節無法驗證或已確認明顯劣化，須明確警告並依硬性品質條件**阻擋正式輸出**，引導使用者提供更高品質原始 Logo／正確向量來源或採其他合法方案；不得默默用 AI 虛構 Logo 筆畫。",
+      "tests": [
+        "test_digital_preflight.DigitalPreflightTests.test_corrupt_or_missing_actual_source_is_blocked_even_with_optimistic_flags",
+        "test_digital_preflight.DigitalPreflightTests.test_svg_container_with_embedded_raster_is_not_assumed_infinite_resolution",
+        "test_svg_preflight.SvgPreflightTests.test_filter_effect_cannot_pass_as_preserved_native_vector",
+        "test_svg_preflight.SvgPreflightTests.test_unpinned_svg_text_font_cannot_pass_as_verified_outlines",
+        "test_svg_preflight.SvgPreflightTests.test_external_reference_is_not_assumed_current_source_evidence",
+        "test_svg_preflight.SvgPreflightTests.test_unknown_extension_cannot_be_silently_ignored"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-11",
+      "expected": "各格式有不同物理特性：PDF 可保留向量，PNG/JPG 本質是點陣，不能保證任何倍率下永不像素化；驗收目標是符合經驗證的**指定輸出尺寸與印刷用途**且不引入不可接受的細節劣化。具體品質門檻、工具及可達性待實際 PoC／樣張測試後確定，不任意捏造 DPI 下限。",
+      "tests": [
+        "test_digital_output_proof.DigitalOutputProofTests.test_actual_jpeg_difference_is_measured_without_fabricated_perceptual_threshold",
+        "test_digital_output_proof.DigitalOutputProofTests.test_real_encoded_pixels_and_pdf_size_cannot_be_approved_with_wrong_dimensions",
+        "test_svg_preflight.SvgPreflightTests.test_large_lossless_body_has_full_rgb_evidence_without_mse_downsampling",
+        "test_digital_review.DigitalReviewTests.test_real_pdf_and_jpeg_exact_snapshot_review_matches_final_pixels_and_pdf_structure"
+      ]
+    },
+    {
+      "id": "UI-019-CLAUSE-12",
+      "expected": "輸出預檢沿用 UI-014、UI-015、UI-018 的風險／硬性阻擋與候選排序規範；預覽、儲存草稿、顯示檢查清單均**不等於通過驗證或已輸出**。",
+      "tests": [
+        "test_digital_preflight.DigitalPreflightTests.test_real_complete_candidate_still_needs_actual_encoded_format_evidence",
+        "test_digital_preflight.DigitalPreflightTests.test_unapproved_template_does_not_gain_trust_from_named_checklist",
+        "test_digital_review.DigitalReviewTests.test_missing_or_nonliteral_visual_review_never_publishes_nonlossless_format",
+        "test_batch_format_review.BatchFormatReviewTests.test_unreviewed_pdf_jpeg_are_blocked_while_png_and_marked_previews_complete",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_cancel_never_claims_saved_comparison_or_formal_output"
+      ]
+    }
+  ],
+  "native_review": "docs/qa/targeted/ui019-native-036-visual-review.json",
+  "source_poc": "docs/qa/targeted/ui019-source-poc-030/source-poc.json",
+  "scope": "Digital software only per original REV03 deferral. SVG unsupported/mixed/unpinned source blocked, no invented details/perceptual score; reviewed PDF/JPG exact-format receipts and PNG full RGB, no physical print/hardware qualification. Current original small-screen horizontal scroll tracked in UI067.",
+  "coherent_verification": {
+    "log": "docs/qa/targeted/ui019-full12-coherent-037.log",
+    "tests": 173,
+    "actual_exit": 0
+  }
+}

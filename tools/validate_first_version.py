@@ -19,6 +19,7 @@ from PySide6.QtWidgets import QApplication
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tests'))
 from gui_wait import wait_layout
 from runtime_fixture import controlled_resources
+from digital_review_fixture import authored_review
 
 from template_ai.demo import demo_template
 from template_ai import __version__ as app_version
@@ -55,7 +56,7 @@ def main():
         target = artifacts / ("synthetic-FINAL."+extension)
         # 僅清理本工具的合成產物，應用程式不使用這個覆寫方式。
         target.unlink(missing_ok=True)
-        export(c, target, dpi=args.dpi)
+        export(c, target, dpi=args.dpi,format_review=authored_review(c,extension,artifacts/'authored-format-proofs',args.dpi))
     window = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     window.add_demo()
     window.library.publish(window.template)
@@ -101,7 +102,7 @@ def main():
     for extension in ["png", "pdf", "jpg"]:
         target = artifacts / ("decorated-FINAL." + extension)
         target.unlink(missing_ok=True)
-        export(decorated, target, dpi=args.dpi)
+        export(decorated, target, dpi=args.dpi,format_review=authored_review(decorated,extension,artifacts/'decorated-format-proofs',args.dpi))
     window.tabs.setCurrentIndex(0)
     multi_path = root / "examples/synthetic-two-artworks.svg"
     multi_source = window.library.add_source(multi_path, import_file(multi_path, window.library.assets))
@@ -267,6 +268,8 @@ def main():
     capture_exceptions(window,artifacts)
     from capture_ten_packages import capture_ten_packages
     capture_ten_packages(artifacts)
+    # All authored capture assertions are complete; disposal is not a product approval.
+    window.navigation.confirm_close=lambda:True
     window.close()
     reopened = MainWindow(artifacts / ("anonymous-smoke-data-" + app_version))
     assert reopened.work["id"] == second["id"]
@@ -274,6 +277,7 @@ def main():
     assert len(reopened.slots) == 4
     assert reopened.library.font_change_history()[0]['phase']=='APPLIED'
     assert next(t for t in reopened.library.templates() if t.id==created).slots[0].font_asset['hash']==mono['hash']
+    reopened.navigation.confirm_close=lambda:True
     reopened.close()
     files = {p.name: {"bytes": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
              for p in artifacts.iterdir() if p.is_file() and p.name != "VALIDATION.json"}

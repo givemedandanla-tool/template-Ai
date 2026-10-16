@@ -17,7 +17,7 @@ def capture(folder):
     def shot(widget,name):
         QApplication.processEvents();path=folder/('digital-preflight-'+name+'.png');assert widget.grab().save(str(path));screens.append(path.name)
     try:
-        main.setUp();w=main.w;p=main.p;w.dpi.setValue(300);w.resize(1420,1060);shot(w,'01-original-canvas-unchecked-guides')
+        main.setUp();w=main.w;p=main.p;w.dpi.setValue(300);w.resize(1700,1060);QApplication.processEvents();w.output_canvas.fit();shot(w,'01-original-canvas-unchecked-guides')
         p.format.setCurrentText('PDF');main.inspect();assert not p.review_consent.isChecked();assert not w.export_button.isEnabled();shot(w,'02-actual-pdf-checklist-no-consent')
         index=next(i for i in range(p.objects.count()) if 'logo' in p.objects.itemText(i).lower());p.objects.setCurrentIndex(index);p.open_detail();main.wait();assert p.detail;shot(p.detail,'03-logo-source-vector-and-actual-pdf');p.detail.close()
         index=next(i for i in range(p.objects.count()) if 'name' in p.objects.itemText(i).lower());p.objects.setCurrentIndex(index);p.open_detail();main.wait();shot(p.detail,'04-text-source-and-actual-pdf');p.detail.close()

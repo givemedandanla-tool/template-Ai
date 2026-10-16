@@ -1,6 +1,6 @@
 {
   "parent": "UI-019",
-  "status": "A_CORE_WIP_PENDING_UI_FORMAT_READBACK_AND_FULL12",
+  "status": "IMPLEMENTED_FULL12_MAPPED_PENDING_IMMUTABLE_FULL_SOURCE",
   "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
   "original_clauses": [
@@ -180,5 +180,24 @@
     "native_status": "CHANGES_REQUIRED; behavior15/15 actualexit0 but visual capture is not yet closure",
     "reference_failure": "https://doc.qt.io/qt-6.8/svgrendering.html network tunnel403; not claimed read",
     "next": "Final actual native recapture/current-source coherent test/full12 map; exact source import/print/hardware external boundaries retained"
+  },
+  "full12": {
+    "coverage": "docs/dev/UI019_CLAUSE_COVERAGE.json",
+    "exact_mapped_tests": 42,
+    "coherent_evidence": "docs/qa/targeted/ui019-full12-coherent-037.log",
+    "coherent_actual_exit": 0,
+    "coherent_tests": 173,
+    "new_tests": 70,
+    "catalog_tests": 1495,
+    "native_review": "docs/qa/targeted/ui019-native-036-visual-review.json",
+    "native_individually_reviewed": 15,
+    "native_actual_exit": 0,
+    "legacy_original_capture": "docs/qa/targeted/ui019-original-capture-039/VALIDATION.json",
+    "legacy_original_actual_exit": 0,
+    "legacy_original_screens": 49,
+    "legacy_original_exports": 6,
+    "legacy_screens_visual_review_not_claimed": true,
+    "failed_legacy_receipt": "docs/qa/targeted/ui019-original-capture-038-outcome.json",
+    "remaining": "Current immutable all-parent regression/native/publication Gate. Original small viewport horizontal scroll remains for UI067; physical sample deferredREV03, not software blocker."
   }
 }

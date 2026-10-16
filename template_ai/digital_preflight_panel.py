@@ -12,6 +12,7 @@ from .digital_output_proof import build_proof,region_images
 from .candidate_results import selection_pin
 
 LABELS={'PASS':'通過','BLOCKED':'阻擋','WARNING':'警告','NOT_CHECKED':'未檢查'}
+NAMES_BACKGROUND='背景來源／有效像素'
 NAMES={'PHYSICAL_SIZE':'實體尺寸／取樣','TRIM_BOUNDS':'成品裁切邊界','SAFE_ZONE':'安全區','TEXT_COMPLETE':'文字完整','FIXED_FONT':'固定字級／字型','HORIZONTAL_SCALE':'水平比例','OWNERSHIP':'人物／公司歸屬','OVERLAP':'物件重疊','CURRENT_WHOLE_CARD_GATE':'目前完整Gate','LOGO_SOURCE':'Logo來源／有效像素','ENCODED_FORMAT':'實際格式讀回','PDF_FONT_EMBEDDING':'PDF字型內嵌','ENCODED_BODY_COMPARISON':'卡片本體實測差異'}
 
 
@@ -125,7 +126,7 @@ class DigitalPreflightPanel(QWidget):
     def show_rows(self,rows):
         self.table.setSortingEnabled(False);self.table.setRowCount(len(rows))
         for i,r in enumerate(rows):
-            for j,text in enumerate((NAMES.get(r['code'],r['code']),LABELS[r['status']],r['reason'])):
+            for j,text in enumerate((NAMES_BACKGROUND if r['code']=='BACKGROUND_SOURCE' else NAMES.get(r['code'],r['code']),LABELS[r['status']],r['reason'])):
                 item=QTableWidgetItem(text);item.setData(Qt.UserRole,copy.deepcopy(r));item.setToolTip(text);self.table.setItem(i,j,item)
     def selected(self):
         selected=self.table.selectionModel().selectedRows()

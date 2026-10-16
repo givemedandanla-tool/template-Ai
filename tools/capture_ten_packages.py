@@ -123,4 +123,6 @@ def capture_ten_packages(root):
         (root / '.private' / 'ten-packages-audit.json').write_text(json.dumps(audit, ensure_ascii=False, indent=2)+'\n')
         (root / 'ten-packages-audit.json').write_text(json.dumps(public_audit(audit), ensure_ascii=False, indent=2)+'\n')
     finally:
+        # Dispose only authored fixture inputs after all real product approvals.
+        window.navigation.confirm_close=lambda:True
         dialog.close(); window.source = None; window.work = None; window.template = None; window.close()

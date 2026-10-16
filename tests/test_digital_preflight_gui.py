@@ -54,4 +54,8 @@ class DigitalPreflightGuiTests(unittest.TestCase):
         from template_ai.gui import Box
         c=self.w.candidates[0];c.template.slots[0].rect.x=-1;self.w.choose_candidate(0);self.inspect();row=next(i for i in range(self.p.table.rowCount()) if self.p.table.item(i,0).data(Qt.UserRole)['code']=='TRIM_BOUNDS');self.p.table.selectRow(row);before=c.template.to_dict();self.p.locate();self.assertTrue(any(isinstance(item,Box) and item.slot.id==c.items[0].slot.id for item in self.w.output_canvas.scene().items()));self.assertEqual(c.template.to_dict(),before);self.assertTrue(self.p.guides)
 
+    def test_text_detail_keeps_verified_font_drawing_and_selected_scope_without_layout_edits(self):
+        self.inspect();before=self.w.candidates[0].template.to_dict();self.p.objects.setCurrentIndex(next(i for i in range(self.p.objects.count()) if 'name' in self.p.objects.itemText(i)));self.p.open_detail();self.wait();detail=self.p.detail
+        self.assertTrue(any(isinstance(item,SourcePictureItem) for item in detail.views[0].scene().items()));self.assertEqual(self.w.candidates[0].template.to_dict(),before);self.assertFalse(self.p.proof['output_written']);self.assertTrue(detail.views[0].readonly)
+
 if __name__=='__main__':unittest.main()
