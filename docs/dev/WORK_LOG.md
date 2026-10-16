@@ -1233,3 +1233,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 2026-10-16 UI057/058 combined57PASS and actual4source adversariesPASS;1073catalog. Actual11viewcapture0020Qt visually reviewed; clipped entry fixed and00311view0Qt, finalvisual pending. Kept001publication refusal fixturefailure. No parent markedcomplete; original9+10 registration/frozenformal pending.
 
 2026-10-16 UI0579/UI05810 full original clauses registered pending batch,123support IDs each;150claims/1075catalog. Finaltarget01572PASS, capture00411images0Qt all visually inspected. SourceAPI unknown cannot bypass via direct export. Freeze next RUN-REMAINING28-LAYOUT-001; expected12parents120clauses only after actual completePASS+exit0+publication. Historical8 unchanged.
+
+2026-10-16 controlled interrupted LAYOUT001599observedPASS/parent143, no finalclaim. Uncovered UI058 manual-before-start + actualmanualsnapshot/staleinput save gaps reproduced3FAIL016, fixed18PASS017; native00513views0QtPASS visualpending. Persist all rawliveevidence and UI059 exact10 referenceplan. Next refresh acceptance andfreezeLAYOUT002, no milestone stop.

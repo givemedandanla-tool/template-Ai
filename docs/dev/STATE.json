@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI057-NEXT",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI057058-CAPTURE-WIP.receipt.json",
-  "last_confirmed_commit": "707e74b8983ed9965b80fb69de075cd235de50f6",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-LAYOUT-SOURCE-FREEZE.receipt.json",
+  "last_confirmed_commit": "4bb32a98004fa7a55f535cf410714aa603971949",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-LAYOUT-SOURCE-FREEZE"
+    "CP-20261016-REMAINING28-UI058-MANUAL-SCOPE-REPAIR"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -39,7 +39,7 @@
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
-  "next_work_package": "Run immutable full-source batch formal, audit actual modules/captures/parent exit0 and normal GitHub publication Gate; then UI059 and remaining16 parents without milestone stop",
+  "next_work_package": "Review capture005 thirteen views, refresh acceptance test IDs for3new manual regressions, freeze/push/readback and full RUN-REMAINING28-LAYOUT-002; then UI059 original10",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -571,7 +571,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-LAYOUT-001",
+  "planned_evidence_run": "RUN-REMAINING28-LAYOUT-002",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -646,22 +646,35 @@
   ],
   "active_work_package_plan": "docs/dev/UI058_EXECUTION_PLAN.json",
   "formal_execution_watch": {
-    "run_id": "RUN-REMAINING28-REPAIR-003",
-    "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
-    "status": "COMPLETED_PASS_ACTUAL_EXIT_0",
-    "progress": {
-      "phase": "RUNNING_OWNED_TEST_MODULE",
-      "current_test": "test_quality_roles",
-      "started": 747,
-      "completed": 747,
-      "passed": 747,
-      "failed_ids": [],
-      "planned_tests": 1001,
-      "formal_complete": false,
-      "updated_at": "2026-10-16T08:09:35.044417+00:00"
-    },
-    "source_frozen": true,
-    "do_not_finalize_before_actual_exit_zero": true
+    "run_id": "RUN-REMAINING28-LAYOUT-001",
+    "source_commit": "4bb32a98004fa7a55f535cf410714aa603971949",
+    "status": "CONTROLLED_INTERRUPTION_KNOWN_UNCOVERED_MANUAL_SCOPE_GAP",
+    "owners": [
+      {
+        "cmdline": [
+          ".venv/bin/python",
+          "tools/run_evidence.py",
+          "--run-id",
+          "RUN-REMAINING28-LAYOUT-001",
+          "--source-commit",
+          "4bb32a98004fa7a55f535cf410714aa603971949",
+          "--commit-json",
+          ".checkpoints/native-readback/commit.json",
+          "--tree-json",
+          ".checkpoints/native-readback/tree.json"
+        ],
+        "pid": 491768,
+        "create_time": 1792147690.2,
+        "ppid": 491764
+      }
+    ],
+    "source_frozen": false,
+    "do_not_finalize_before_actual_exit_zero": true,
+    "parent_log": "docs/qa/targeted/remaining28-layout-001-parent.log",
+    "parent_exit": "docs/qa/targeted/remaining28-layout-001-parent-exit.txt",
+    "live_directory": ".checkpoints/formal-live/RUN-REMAINING28-LAYOUT-001",
+    "observed_passed_before_stop": 599,
+    "actual_parent_exit": 143
   },
   "abandoned_preparations": [
     {
@@ -670,7 +683,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "UI05511/UI0568/UI0579/UI05810 full original clauses implemented and registered pending fresh immutable full-source formal.1075catalog expected/150claims; historical8of28 unchanged. Native UI057/58 capture004 eleven views0Qt all visually reviewed; code/input/source/template/font/Logo pins, final actual gate rerun, one foreground worker/resource/cancel/partial/manual fence/opt-in encrypted24h recovery.",
+  "current_work": "UI055/56/57/58 full original38 clauses registered pending; RUN-LAYOUT-001 controlled stop after599/599 observedPASS, actual parent143, no completion. Source review found pre-existing manual-layout replacement and encrypted stale/manual snapshot gap. Three meaningful tests reproduced3fail, fixed targeted18PASS; capture00513views0QtPASS, visual pending.1078catalog expected/150claims. Need update clause maps and freeze RUN-REMAINING28-LAYOUT-002.",
   "last_formal_failure": {
     "run": "RUN-REMAINING28-REPAIR-002",
     "status": "FAIL",
@@ -713,6 +726,13 @@
       "raw_bytes": 533397,
       "record": "docs/evidence/runs/RUN-REMAINING28-REPAIR-001/controlled-stop.json",
       "not_pass": true
+    },
+    {
+      "run_id": "RUN-REMAINING28-LAYOUT-001",
+      "reason": "Uncovered UI058 pre-existing manual geometry auto-adoption and GUI recovery snapshot preservation gaps discovered by source review; no completion claim",
+      "source_commit": "4bb32a98004fa7a55f535cf410714aa603971949",
+      "audit": "docs/qa/targeted/remaining28-layout-001-controlled-interruption.json",
+      "counts_as_completed": false
     }
   ],
   "checkpoint_cadence_events": [
@@ -724,8 +744,8 @@
     }
   ],
   "next_work_package_plan": "docs/dev/UI055_IMPLEMENTATION_MAP.json",
-  "next_step": "Run immutable full-source batch formal, audit actual modules/captures/parent exit0 and normal GitHub publication Gate; then UI059 and remaining16 parents without milestone stop",
-  "current_work_package": "UI055–UI058 frozen batch formal preparation",
+  "next_step": "Review capture005 thirteen views, refresh acceptance test IDs for3new manual regressions, freeze/push/readback and full RUN-REMAINING28-LAYOUT-002; then UI059 original10",
+  "current_work_package": "UI058 manual-scope repair before next immutable full-source batch",
   "checkpoint_cadence_note": "REPAIR002 failure triage exceeded ten minutes since last remote checkpoint; saving immediately, no strict cadence PASS claim.",
   "implementation_pending_original_parents": [
     "UI-055",

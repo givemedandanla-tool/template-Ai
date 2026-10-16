@@ -1,0 +1,45 @@
+{
+  "reason": "Uncovered UI058 pre-existing manual geometry auto-adoption and GUI recovery snapshot preservation gaps discovered by source review; no completion claim",
+  "parent": {
+    "cmdline": [
+      ".venv/bin/python",
+      "tools/run_evidence.py",
+      "--run-id",
+      "RUN-REMAINING28-LAYOUT-001",
+      "--source-commit",
+      "4bb32a98004fa7a55f535cf410714aa603971949",
+      "--commit-json",
+      ".checkpoints/native-readback/commit.json",
+      "--tree-json",
+      ".checkpoints/native-readback/tree.json"
+    ],
+    "pid": 491768,
+    "create_time": 1792147690.2,
+    "ppid": 491764
+  },
+  "children": [
+    {
+      "pid": 497666,
+      "created": 1792147989.0,
+      "cmd": [
+        "/workspace/template-Ai/.venv/bin/python",
+        "/workspace/template-Ai/tools/evidence_test_worker.py",
+        "--expected",
+        "/workspace/template-Ai/.checkpoints/formal-live/RUN-REMAINING28-LAYOUT-001/modules/test_qualified_coverage_evidence-expected.json",
+        "--test-root",
+        "/workspace/template-Ai/tests",
+        "--output",
+        "/workspace/template-Ai/.checkpoints/formal-live/RUN-REMAINING28-LAYOUT-001/modules/test_qualified_coverage_evidence"
+      ]
+    },
+    {
+      "pid": 497856,
+      "created": 1792147994.55,
+      "cmd": [
+        "/usr/bin/inkscape",
+        "--version"
+      ]
+    }
+  ],
+  "time": 1792147994.6639297
+}

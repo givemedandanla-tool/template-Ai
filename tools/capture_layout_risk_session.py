@@ -40,7 +40,15 @@ def capture(folder):
         assert reopened.rows and reopened.report_state=='CANCELLED';assert reopened.rows[0]['candidate'] is not None;shot(reopened,'10-restored-current-not-auto-adopted')
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):reopened.clear_recovery()
         assert not reopened.recovery.pending();shot(reopened,'11-explicit-local-clear');assert not errors,errors
-        report=dict(status='PASS',screens=screens,qt_uncaught=errors,scope='CONTROLLED_SYNTHETIC_NATIVE_WORKFLOW_NOT_REFERENCE_HARDWARE',peak_rss_bytes=max(rss,default=0),max_gui_timer_gap_ms=max(((b-a)*1000 for a,b in zip(ticks,ticks[1:])),default=0),timer_ticks=len(ticks),source_preparation_excluded=True,actual_source='Authored synthetic templates/input; no private Illustrator or production customer data',automatic_training=False,paid_services=False)
+        from template_ai.candidate_edit import plan_candidate,apply_candidate
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):reopened.adopt()
+        slot=w.candidates[0].template.slots[0];manual_x=slot.rect.x+1;apply_candidate(w,plan_candidate(w,0,[slot.id],1,0),True);before_manual=w.candidates[0].template.to_dict();w.generate();active=wait_layout(w);assert w.candidates[0].template.to_dict()==before_manual;assert not active.auto_apply;assert '人工' in active.details.toPlainText();shot(active,'12-existing-manual-preserved-differences')
+        calls.clear()
+        with patch('template_ai.layout_session.generate',side_effect=calculate),patch.object(w.runtime,'admit',side_effect=admission):
+            active.start();pump_until(lambda:len(active.rows)==1 and '資源不足' in active.status.text());active.cancel();pump_until(lambda:not active.running)
+        with patch.object(QInputDialog,'getText',return_value=('authored-recovery-password',True)):active.save_recovery();pump_until(lambda:not w.busy)
+        saved=active.recovery.load('authored-recovery-password');restored=active.recovery.validate(w.library,saved);assert restored[0]['candidate'].template.slots[0].rect.x==manual_x;assert restored[0]['candidate'].risk_context.get('manual_edit_receipt');shot(active,'13-encrypted-current-manual-geometry');active.recovery.clear();assert not errors,errors
+        report=dict(status='PASS',screens=screens,qt_uncaught=errors,scope='CONTROLLED_SYNTHETIC_NATIVE_WORKFLOW_NOT_REFERENCE_HARDWARE',peak_rss_bytes=max(rss,default=0),max_gui_timer_gap_ms=max(((b-a)*1000 for a,b in zip(ticks,ticks[1:])),default=0),timer_ticks=len(ticks),source_preparation_excluded=True,actual_source='Authored synthetic templates/input; no private Illustrator or production customer data',automatic_training=False,paid_services=False,preexisting_manual_layout_protected=True,encrypted_recovery_preserves_current_manual_geometry=True)
         (folder/'layout-risk-session-capture.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');return report
     finally:
         timer.stop()

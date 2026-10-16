@@ -85,7 +85,8 @@ class LayoutSessionDialog(QDialog):
     def start(self,auto_apply=False):
         if self.running or self.window.busy:self.status.setText('已有背景工作；未開始');return
         try:
-            self.auto_apply=auto_apply is True;self.auto_first_adopted=False
+            self.protected_manual=[copy.deepcopy(c) for c in self.window.candidates if c.risk_context.get('manual_edit_receipt')]
+            self.auto_apply=auto_apply is True and not self.protected_manual;self.auto_first_adopted=False
             w=self.window;self.generation=w.generation;self.people,self.companies,self.logos=copy.deepcopy(w.input_data());self.size=(w.out_w.value(),w.out_h.value());self.input_digest=digest((self.people,self.companies,self.logos,self.size));self.canvas_stamp=canvas_stamp(w);self.graph_snapshot=copy.deepcopy(w.active_input_graph.data if w.active_input_graph else None);templates=[]
             from .diagnostic_snapshot import selected_templates
             for t in selected_templates(w):
@@ -115,6 +116,10 @@ class LayoutSessionDialog(QDialog):
             try:self.recovery.clear()
             except OSError as error:self.status.setText('計算完成但暫存清理失敗：'+str(error));self.controls();return
         self.status.setText(result['state']+f'；實際完成{len(self.rows)}，結果僅對原快照有效／正式輸出仍需Gate');self.controls()
+        if getattr(self,'protected_manual',[]):
+            try:details=self.manual_difference_text()
+            except ValueError as error:details=str(error)
+            self.details.setPlainText(details);self.status.setText('已保留目前人工版面；新計算結果待核對差異後明確採用。原過期／硬性阻擋仍有效。')
         if getattr(self,'auto_apply',False):self.adopt(confirmed=True)
         if not self.rows and getattr(self,'auto_apply',False):
             self.window.export_button.setEnabled(False);self.window.preview_button.setEnabled(False);self.window.issues.setText('無已計算候選；請核對尺寸／容量／已發布模板與來源，不推論所有設計均無解。')
@@ -149,7 +154,11 @@ class LayoutSessionDialog(QDialog):
                 t=current.get(c.template.id)
                 if not t or digest(t.to_dict())!=self.template_digests[t.id]:raise ValueError('模板版本已改變；需重算')
                 w.library._template_provenance(t)
-            if confirmed is not True and QMessageBox.question(self,'採用候選','使用這些已完成候選取代目前結果？未遍歷項不代表無解。')!=QMessageBox.Yes:return
+            protected=bool(getattr(self,'protected_manual',[]))
+            if protected and confirmed is True:raise ValueError('既有人工版面需先核對差異並明確選擇，不能自動取代')
+            message='使用這些已完成候選取代目前結果？未遍歷項不代表無解。'
+            if protected:message+='\n'+self.manual_difference_text()+'\n確認會替換上述人工版面；取消則完整保留目前內容。'
+            if confirmed is not True and QMessageBox.question(self,'採用候選',message)!=QMessageBox.Yes:return
             total=len(self.worker.templates);checked=sum('template_id' in r for r in self.rows);failed=sum('template_id' in r and r.get('candidate') is None for r in self.rows)
             w.last_layout_risk_summary=search_result(results,scope_complete=self.report_state=='COMPLETED' and checked==total and not failed,unstarted=max(0,total-checked),excluded=[r.get('error','計算失敗') for r in self.rows if not r.get('candidate')])
             w.last_layout_summary=dict(state=self.report_state,total=total,checked=checked,calculated=max(0,checked-failed),failed=failed,unstarted=max(0,total-checked),global_unsolvable=False)
@@ -188,14 +197,37 @@ class LayoutSessionDialog(QDialog):
             self.status.setText('僅預覽此已算部分候選；尚未遍歷完整範圍，正式輸出仍需另行採用與重核')
         except ValueError as error:self.status.setText('未預覽：'+str(error))
 
+    def manual_difference_text(self):
+        lines=['目前人工版面 → 新計算候選的實際差異（未套用）：'];by_id={r['candidate'].template.id:r['candidate'] for r in self.rows if r.get('candidate')}
+        for old in getattr(self,'protected_manual',[]):
+            new=by_id.get(old.template.id)
+            if new is None:lines.append(old.template.name+'：不屬本次候選範圍，原人工版面仍保留');continue
+            after={s.id:asdict(s) for s in new.template.slots}
+            for slot in old.template.slots:
+                before=asdict(slot);changed=after.get(slot.id)
+                if changed is None:lines.append(slot.owner+'／'+slot.kind+'：新候選缺此人工物件');continue
+                for key,value in before.items():
+                    if value!=changed.get(key):lines.append(slot.owner+'／'+slot.kind+'／'+key+'：'+str(value)+' → '+str(changed.get(key)))
+        if len(lines)>51:raise ValueError('人工差異超過單次50列預算；請縮小範圍，禁止未檢視便整批取代')
+        return '\n'.join(lines if len(lines)>1 else lines+['框位無變動；仍需確認是否保留人工標記及當次內容。'])
+
     def recovery_payload(self):
-        return dict(state=self.report_state,generation=self.generation,people=copy.deepcopy(self.people),companies=copy.deepcopy(self.companies),logos=copy.deepcopy(self.logos),size=list(self.size),input_digest=self.input_digest,graph=copy.deepcopy(getattr(self,'graph_snapshot',None)),templates=[t.to_dict() for t in self.worker.templates],template_digests=copy.deepcopy(self.template_digests),rows=[dict(**{k:v for k,v in row.items() if k!='candidate'},candidate=encode_candidate(row['candidate']) if row.get('candidate') else None) for row in self.rows])
+        rows=[]
+        for row in self.rows:
+            candidate=row.get('candidate')
+            if candidate:
+                manual=[c for c in self.window.candidates if c.template.id==candidate.template.id and c.generation==self.generation and c.risk_context.get('manual_edit_receipt') and c.risk_context.get('input_digest')==candidate.risk_context.get('input_digest') and c.risk_context.get('source_template_pin')==candidate.risk_context.get('source_template_pin')]
+                if len(manual)>1:raise ValueError('同模板有多份人工版面，需先明確選擇恢復對象，未保存')
+                if manual:candidate=manual[0]
+            rows.append(dict(**{k:v for k,v in row.items() if k!='candidate'},candidate=encode_candidate(candidate) if candidate else None))
+        return dict(state=self.report_state,generation=self.generation,people=copy.deepcopy(self.people),companies=copy.deepcopy(self.companies),logos=copy.deepcopy(self.logos),size=list(self.size),input_digest=self.input_digest,graph=copy.deepcopy(getattr(self,'graph_snapshot',None)),templates=[t.to_dict() for t in self.worker.templates],template_digests=copy.deepcopy(self.template_digests),rows=rows)
 
     def save_recovery(self):
         if self.running or self.window.busy or self.report_state!='CANCELLED':self.status.setText('先安全取消並等待結束，才可保存實際已算快照；目前未保存');return
+        try:self.check_current();payload=self.recovery_payload()
+        except (ValueError,OSError) as error:self.status.setText('未保存：'+str(error));return
         password,ok=QInputDialog.getText(self,'本機短期恢復','設定12字以上密碼；不儲存密碼，遺失無法恢復。24小時後失效，可隨時清除。',QLineEdit.Password)
         if not ok:return
-        payload=self.recovery_payload()
         def done(receipt):self.status.setText('已實際驗證加密並落盤，24小時有效；未保存的後續進度不保證可恢復。');self.controls()
         self.window.run_job('保存短期加密排版快照',lambda:self.recovery.save(payload,password),done,on_error=lambda error:self.status.setText('未保存：'+str(error)),resource_kind='RESTORE')
 

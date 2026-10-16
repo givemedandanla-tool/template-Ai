@@ -55,3 +55,20 @@ class LayoutSessionExtendedTests(unittest.TestCase):
             return original(message,work,finish,**kwargs)
         with patch.object(QInputDialog,'getText',return_value=('synthetic-password-123',True)),patch.object(self.w,'run_job',side_effect=dispatch):d.restore_recovery();pump_until(lambda:not self.w.busy)
         self.assertEqual(self.w.people.item(0,0).text(),'New manual person');self.assertIn('保留目前工作',d.status.text());self.assertTrue(d.recovery.pending())
+
+    def test_new_main_calculation_preserves_preexisting_manual_layout_until_explicit_difference_choice(self):
+        from gui_wait import wait_layout
+        d=self.dialog();d.start();pump_until(lambda:not d.running)
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):d.adopt()
+        slot=self.w.candidates[0].template.slots[0];apply_candidate(self.w,plan_candidate(self.w,0,[slot.id],1,0),True);self.w.people.item(0,0).setText('New person input');before=canvas_stamp(self.w);self.w.generate();new=wait_layout(self.w)
+        self.assertEqual(canvas_stamp(self.w),before);self.assertFalse(new.auto_apply);self.assertIn('人工',new.details.toPlainText());self.assertTrue(new.rows);self.assertFalse(self.w.export_button.isEnabled())
+    def test_actual_gui_encrypted_snapshot_preserves_current_legal_manual_geometry_and_receipt(self):
+        d=self.dialog();d.start();pump_until(lambda:not d.running)
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):d.adopt()
+        slot=self.w.candidates[0].template.slots[0];old_x=slot.rect.x;apply_candidate(self.w,plan_candidate(self.w,0,[slot.id],1,0),True);d.report_state='CANCELLED';d.controls()
+        with patch.object(QInputDialog,'getText',return_value=('synthetic-password-123',True)):d.save_recovery();pump_until(lambda:not self.w.busy)
+        payload=d.recovery.load('synthetic-password-123');rows=d.recovery.validate(self.w.library,payload);self.assertIsNotNone(rows[0]['candidate']);self.assertEqual(rows[0]['candidate'].template.slots[0].rect.x,old_x+1);self.assertIn('manual_edit_receipt',rows[0]['candidate'].risk_context)
+    def test_save_after_input_change_never_claims_stale_session_is_current_saved_work(self):
+        d=self.dialog();d.start();pump_until(lambda:not d.running);d.report_state='CANCELLED';self.w.people.item(0,0).setText('New unsaved input')
+        with patch.object(QInputDialog,'getText',return_value=('synthetic-password-123',True)):d.save_recovery();pump_until(lambda:not self.w.busy)
+        self.assertFalse(d.recovery.pending());self.assertIn('未保存',d.status.text())
