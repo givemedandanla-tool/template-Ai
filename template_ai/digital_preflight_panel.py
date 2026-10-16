@@ -1,9 +1,9 @@
 """An on-demand inspection section in the original right property panel."""
 import copy,json,shutil,tempfile,threading
 from pathlib import Path
-from PySide6.QtCore import Qt,QRectF
+from PySide6.QtCore import Qt,QRectF,QTimer
 from PySide6.QtGui import QColor,QPen
-from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QCheckBox,QTableWidget,QTableWidgetItem,QPlainTextEdit,QLineEdit
+from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPushButton,QCheckBox,QTableWidget,QTableWidgetItem,QPlainTextEdit,QLineEdit,QLayout
 from shiboken6 import isValid
 from .training_store import digest
 from .worker_callbacks import JobCallbacks
@@ -18,7 +18,7 @@ NAMES={'PHYSICAL_SIZE':'實體尺寸／取樣','TRIM_BOUNDS':'成品裁切邊界
 class DigitalPreflightPanel(QWidget):
     def __init__(self,window):
         super().__init__(window.property_panel.widget());self.window=window;self.library=window.library;self.running=False;self.proof=None;self.proof_pin=None;self.review_receipt=None;self.cancel_event=threading.Event();self.serial=0;self.guides=[];self.detail=None;self.temporary=tempfile.TemporaryDirectory(prefix='template-ai-preflight-PREVIEW-')
-        box=QVBoxLayout(self);self.status=QLabel('數位印前檢查尚未執行；比較檔不是正式輸出。');self.status.setWordWrap(True);box.addWidget(self.status)
+        box=QVBoxLayout(self);box.setSizeConstraint(QLayout.SetMinimumSize);self.setMinimumWidth(400);self.status=QLabel('數位印前檢查尚未執行；比較檔不是正式輸出。');self.status.setWordWrap(True);box.addWidget(self.status)
         row=QHBoxLayout();row.addWidget(QLabel('目標格式'));self.format=QComboBox();self.format.addItems(['PNG','PDF','JPG']);row.addWidget(self.format);box.addLayout(row);self.settings=QLabel();self.settings.setWordWrap(True);box.addWidget(self.settings)
         self.overlay={}
         for key,label,checked in [('trim','成品裁切線',True),('safe','目前模板安全區',True),('page','印刷頁範圍（未另加出血）',False)]:
@@ -45,7 +45,7 @@ class DigitalPreflightPanel(QWidget):
         except (ValueError,OSError):changed=True
         if changed:self.invalidate()
         else:self.draw_guides()
-    def mode_changed(self,*args):self.setVisible(self.window.tabs.currentIndex()==2);self.draw_guides()
+    def mode_changed(self,*args):self.mode_changed_visibility();self.draw_guides()
     def invalidate(self,*args):
         self.serial+=1;self.proof=None;self.proof_pin=None;self.review_receipt=None;self.review_consent.setChecked(False);self.table.setRowCount(0);self.details.clear();self.objects.blockSignals(True);self.objects.clear()
         try:
@@ -59,7 +59,9 @@ class DigitalPreflightPanel(QWidget):
         try:self.render_pin=self.pin()
         except (ValueError,OSError):self.render_pin=None
         self.draw_guides();self.mode_changed_visibility();self.review_widget.setVisible(self.format.currentText()!='PNG');self.update_export_state()
-    def mode_changed_visibility(self):self.setVisible(self.window.tabs.currentIndex()==2)
+    def mode_changed_visibility(self):
+        active=self.window.tabs.currentIndex()==2
+        self.setVisible(active);self.window.property_panel.setMinimumWidth(440 if active else 220)
     def remove_guides(self):
         for item in self.guides:
             try:
@@ -129,6 +131,10 @@ class DigitalPreflightPanel(QWidget):
         selected=self.table.selectionModel().selectedRows()
         if selected:self.details.setPlainText(json.dumps(self.table.item(selected[0].row(),0).data(Qt.UserRole),ensure_ascii=False,indent=2))
     def cancel(self):self.cancel_event.set();self.status.setText('已要求取消；等待原工作結束，未宣稱比較完成。')
+    def close_session(self):
+        self.cancel_event.set();self.proof=None;self.proof_pin=None;self.review_receipt=None
+        if self.detail and isValid(self.detail):self.detail.close()
+        self.temporary.cleanup()
     def locate(self):
         try:
             if not self.proof or self.proof_pin!=self.pin():raise ValueError('需目前有效比較與明確選中問題')
@@ -163,4 +169,6 @@ def open_preflight(window):
     window.tabs.setCurrentIndex(2)
     panel=getattr(window,'digital_preflight_panel',None)
     if panel is None:panel=DigitalPreflightPanel(window);window.digital_preflight_panel=panel
-    window.property_panel.setVisible(True);panel.show();window.property_panel.ensureWidgetVisible(panel);panel.draw_guides();return panel
+    window.property_panel.setVisible(True);panel.show();panel.draw_guides()
+    QTimer.singleShot(0,panel,lambda:window.property_panel.verticalScrollBar().setValue(0))
+    return panel

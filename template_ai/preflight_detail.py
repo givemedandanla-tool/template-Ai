@@ -33,7 +33,7 @@ class PreflightDetailDialog(QDialog):
             if index==0 and picture:
                 canvas.set_content(item.slot.rect.w,item.slot.rect.h);canvas.scene().addItem(SourcePictureItem(picture,item.slot.rect.w,item.slot.rect.h))
             else:canvas.set_content(image.width()*25.4/proof['scope']['dpi'],image.height()*25.4/proof['scope']['dpi'],image)
-            canvas.set_mode('pan');box.addWidget(canvas,1);box.addWidget(navigation_controls(canvas,window.library));split.addWidget(page)
+            canvas.set_mode('pan');box.addWidget(canvas,1);box.addWidget(navigation_controls(canvas,window.library,compact=True));split.addWidget(page)
         self.measurements=QPlainTextEdit();self.measurements.setReadOnly(True);self.measurements.setMaximumHeight(135);self.measurements.setPlainText(json.dumps(detail,ensure_ascii=False,indent=2));layout.addWidget(self.measurements)
         if item.slot.kind=='logo' and not item.logo:self.status.setText(self.status.text()+' 來源缺失：此框為診斷占位，並非真實Logo。')
     def showEvent(self,event):

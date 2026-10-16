@@ -9,7 +9,7 @@ from template_ai.preflight_detail import SourcePictureItem
 
 class DigitalPreflightGuiTests(unittest.TestCase):
     def setUp(self):
-        self.f=SyncWorkflowFixture();self.addCleanup(self.f.close);self.w=self.f.w;self.w.candidates=[copy.deepcopy(self.f.candidate('A90'))];self.w.candidate_list.clear();self.w.candidate_list.addItem('Authored exact A90');self.w.candidate_list.setCurrentRow(0);self.w.tabs.setCurrentIndex(2);self.w.resize(1360,940);self.w.show();self.w.dpi.setValue(96);self.p=self.w.digital_preflight();self.addCleanup(self.cleanup)
+        self.f=SyncWorkflowFixture(compound_marks=True);self.addCleanup(self.f.close);self.w=self.f.w;self.w.candidates=[copy.deepcopy(self.f.candidate('A90'))];self.w.candidate_list.clear();self.w.candidate_list.addItem('Authored exact A90');self.w.candidate_list.setCurrentRow(0);self.w.tabs.setCurrentIndex(2);self.w.resize(1360,940);self.w.show();self.w.dpi.setValue(96);self.p=self.w.digital_preflight();self.addCleanup(self.cleanup)
     def cleanup(self):
         self.p.cancel_event.set();self.w.pool.waitForDone(5000);APP.processEvents()
         if self.p.detail:self.p.detail.close();self.p.detail.deleteLater()

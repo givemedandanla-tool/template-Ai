@@ -2,7 +2,7 @@
 
 A measured or decoded preview is evidence, never a print or model approval.
 """
-import copy,math
+import copy,math,re
 from dataclasses import asdict
 from pathlib import Path
 from xml.etree import ElementTree
@@ -40,6 +40,36 @@ def row(code,status,reason,slot_ids=(),**measurements):
     return dict(code=code,status=status,reason=reason,slot_ids=list(slot_ids),measurements=measurements)
 
 
+def svg_characteristics(path):
+    """A bounded supported-source profile, not an SVG renderer or equivalence proof."""
+    path=Path(path)
+    if path.stat().st_size>MAX_SVG_BYTES:raise ValueError('向量來源超過有界核對預算')
+    data=path.read_bytes()
+    if b'<!DOCTYPE' in data.upper() or b'<!ENTITY' in data.upper():raise ValueError('SVG外部宣告／實體不在可核對來源範圍')
+    xml=ElementTree.fromstring(data);nodes=list(xml.iter())
+    if len(nodes)>50000:raise ValueError('向量節點超過有界核對預算')
+    if xml.tag not in ('svg','{http://www.w3.org/2000/svg}svg'):raise ValueError('來源不是支援的SVG根節點')
+    supported={'svg','g','defs','symbol','use','path','rect','circle','ellipse','line','polyline','polygon','linearGradient','radialGradient','stop','title','desc','metadata'}
+    unsupported=set();mixed=False
+    pending=[xml]
+    while pending:
+        node=pending.pop()
+        tag=node.tag.rsplit('}',1)[-1]
+        if tag=='metadata':continue
+        if node.tag.startswith('{') and not node.tag.startswith('{http://www.w3.org/2000/svg}'):unsupported.add('unknown-namespace')
+        if tag=='image':mixed=True
+        elif tag not in supported:unsupported.add(tag)
+        for key,value in node.attrib.items():
+            key=key.rsplit('}',1)[-1]
+            if key in ('href','src') and value and not value.startswith('#'):unsupported.add('external-reference')
+            if key.lower().startswith('on'):unsupported.add('event-script')
+            if key in ('filter','mask','clip-path') and value!='none':unsupported.add(key)
+            if key=='style' and any(part.split(':',1)[0].strip() in ('filter','mask','clip-path') for part in value.split(';')):unsupported.add('style-effect')
+            if 'url(' in value.lower() and any(not ref.strip(' \"\'').startswith('#') for ref in re.findall(r'url\((.*?)\)',value,re.I)):unsupported.add('external-reference')
+        pending.extend(node)
+    return dict(source_type='MIXED' if mixed else 'VECTOR',unsupported_features=sorted(unsupported))
+
+
 def logo_sampling(item,dpi):
     """Actual source pixels divided by placed millimetres; ignore DPI metadata."""
     asset=item.logo;slot=item.slot
@@ -49,12 +79,9 @@ def logo_sampling(item,dpi):
     try:
         fit=geometry(asset,slot.rect);actual=fit['actual'];svg=asset.get('svg')
         if svg:
-            path=Path(svg)
-            if path.stat().st_size>MAX_SVG_BYTES:raise ValueError('向量來源超過有界核對預算')
-            xml=ElementTree.fromstring(path.read_bytes());nodes=list(xml.iter())
-            if len(nodes)>50000:raise ValueError('向量節點超過有界核對預算')
-            embedded=any(n.tag.rsplit('}',1)[-1].lower()=='image' for n in nodes)
-            if embedded:return row('LOGO_SOURCE','NOT_CHECKED','混合向量／點陣來源需逐件核對內嵌影像；不能把SVG副檔名當成無限解析度',[slot.id],source_type='MIXED',actual_mm=actual,fit=fit)
+            features=svg_characteristics(svg)
+            if features['source_type']=='MIXED':return row('LOGO_SOURCE','NOT_CHECKED','混合向量／點陣來源需逐件核對內嵌影像；不能把SVG副檔名當成無限解析度',[slot.id],**features,actual_mm=actual,fit=fit)
+            if features['unsupported_features']:return row('LOGO_SOURCE','BLOCKED','SVG含未固定字型／尚未驗證的效果或引用：'+','.join(features['unsupported_features'])+'；請提供已核對輪廓／支援的原始向量或足夠解析度來源',[slot.id],**features,actual_mm=actual,fit=fit)
             return row('LOGO_SOURCE','PASS','原生向量由原QSvgRenderer保留整組／比例；實際編碼仍須核對',[slot.id],source_type='VECTOR',actual_mm=actual,fit=fit,encoded_fidelity_verified=False)
         reader=QImageReader(str(asset.get('image','')));size=reader.size()
         if not reader.canRead() or size.isEmpty():raise ValueError('點陣原始來源無法實際解碼尺寸')
@@ -92,6 +119,12 @@ def inspect_candidate(candidate,format,dpi):
     if bad:rows.append(row('HORIZONTAL_SCALE','BLOCKED','目前實際比例不符合固定字級的模板範圍',bad,actual=scales))
     rows.append(row('CURRENT_WHOLE_CARD_GATE','PASS' if risk['formal_allowed'] else 'BLOCKED','原完整目前Gate通過；仍須本格式實際編碼核對' if risk['formal_allowed'] else risk['label'],conditions=copy.deepcopy(risk['conditions']),text_measurements=copy.deepcopy(candidate.measurements),actual_text=scales))
     rows.extend(logo_sampling(p,dpi) for p in candidate.items if p.slot.kind=='logo')
+    if t.background:
+        from .layout import Placed
+        from .model import Slot,Rect
+        asset=t.background if t.background['render_mode']=='vector' else {**t.background,'svg':''}
+        background=logo_sampling(Placed(Slot('logo','background',Rect(0,0,t.width_mm,t.height_mm)),logo=asset),dpi)
+        background.update(code='BACKGROUND_SOURCE',slot_ids=[]);rows.append(background)
     rows.append(row('ENCODED_FORMAT','NOT_CHECKED','尚未實際編碼、讀回與比對；預覽不是已輸出',format=spec['format']))
     rows.append(row('PDF_FONT_EMBEDDING','NOT_CHECKED' if spec['format']=='PDF' else 'PASS','實際PDF字型資源尚未讀回' if spec['format']=='PDF' else '此點陣格式不使用PDF內嵌字型'))
     return dict(scope=spec,rows=rows,can_encode=all(r['status']=='PASS' for r in rows if r['code'] not in ('ENCODED_FORMAT','PDF_FONT_EMBEDDING')),formal_output_allowed=False,physical_print_verified=False,output_written=False)

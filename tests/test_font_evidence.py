@@ -6,6 +6,7 @@ from pathlib import Path
 from fontTools.ttLib import TTFont, TTCollection
 from PySide6.QtWidgets import QApplication
 
+from digital_review_fixture import authored_review
 from template_ai.font_evidence import inspect_font, output_rights_errors
 from template_ai.fonts import FontManager
 from template_ai.storage import Library
@@ -86,7 +87,7 @@ class FontEvidenceTests(unittest.TestCase):
         new=copy.deepcopy(template);new.id=new_id();new.version+=1;new.state='DRAFT';new.slots[0].font_asset=approved
         self.library.save_template(new);self.library.publish(new)
         fresh=generate(new,[{'name':'Example Person'}],[],{})
-        for ext in ('png','pdf'):self.assertGreater(export(fresh,self.root/('NEW-FINAL.'+ext),96).stat().st_size,100)
+        for ext in ('png','pdf'):self.assertGreater(export(fresh,self.root/('NEW-FINAL.'+ext),96,format_review=authored_review(fresh,ext,self.root/'proofs',96)).stat().st_size,100)
         mixed=copy.deepcopy(new);mixed.id=new_id();mixed.version+=1;mixed.state='DRAFT'
         mixed.slots.append(Slot('phone','p1',Rect(5,25,75,12),font=asset['families'][0],font_asset=asset,size_pt=12))
         self.library.save_template(mixed);self.library.publish(mixed)

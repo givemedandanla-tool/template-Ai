@@ -12,6 +12,7 @@ from PySide6.QtGui import QImage
 from PySide6.QtPdf import QPdfDocument
 from PySide6.QtWidgets import QApplication, QComboBox, QDialog, QMessageBox
 
+from digital_review_fixture import authored_review
 from template_ai.background import ensure_embedded_svg, make_background
 from template_ai.demo import demo_template
 from template_ai.gui import MainWindow
@@ -54,7 +55,7 @@ class VisualBackgroundTests(unittest.TestCase):
         self.assert_decoration(render_image(c))
         for suffix in ("png", "jpg", "pdf"):
             target = self.root / ("decorated." + suffix)
-            export(c, target)
+            export(c, target,format_review=authored_review(c,suffix,self.root/"proofs"))
             if suffix == "pdf":
                 doc = QPdfDocument()
                 self.assertEqual(doc.load(str(target)), QPdfDocument.Error.None_)
@@ -123,7 +124,7 @@ class VisualBackgroundTests(unittest.TestCase):
         c = self.candidate()
         self.assertTrue(c.valid)
         self.assert_decoration(render_image(c))
-        export(c, self.root / "raster.pdf")
+        export(c, self.root / "raster.pdf",format_review=authored_review(c,"PDF",self.root/"proofs"))
         document = QPdfDocument()
         self.assertEqual(document.load(str(self.root / "raster.pdf")), QPdfDocument.Error.None_)
         self.assert_decoration(document.render(0, QSize(900, 540)))

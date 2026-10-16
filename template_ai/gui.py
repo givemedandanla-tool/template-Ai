@@ -771,6 +771,7 @@ class MainWindow(QMainWindow):
         widget = QWidget()
         widget.setMinimumWidth(260)
         layout = QVBoxLayout(widget)
+        layout.setSizeConstraint(QLayout.SetMinimumSize)
         self.property_context_label=QLabel('尚未選取物件');self.property_context_label.setWordWrap(True);layout.addWidget(self.property_context_label)
         self.property_edit_state=QLabel('尚無可套用屬性');self.property_edit_state.setWordWrap(True);layout.addWidget(self.property_edit_state)
         self.property_pin_checks={}
@@ -2307,6 +2308,7 @@ class MainWindow(QMainWindow):
         self.input_timer.stop()
         self.backup_scheduler.shutdown()
         self.source_watch.shutdown()
+        if hasattr(self,'digital_preflight_panel'):self.digital_preflight_panel.close_session()
         self.font_manager.close()
         self.library.close()
         event.accept()

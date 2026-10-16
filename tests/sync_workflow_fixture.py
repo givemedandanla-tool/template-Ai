@@ -17,10 +17,10 @@ REVIEW=dict(identity_confirmed=True,whole_mark_confirmed=True,usage_authorized=T
 
 
 class SyncWorkflowFixture:
-    def __init__(self):
+    def __init__(self,*,compound_marks=False):
         self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'data');controlled_resources(self.w);self.store=LogoStore(self.w.library);self.assets={};self.registry=[];self.payloads=[]
         for index,(name,color) in enumerate((('Synthetic Alpha','#df3030'),('Synthetic Beta','#3060df'))):
-            company=self.store.create_company(name,'Authored synthetic identity '+str(index),True);self.registry.append(company);path=self.root/('authored-mark-'+str(index)+'.svg');path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="20mm" height="10mm"><rect width="20" height="10" fill="'+color+'"/></svg>');image=import_file(path,self.w.library.assets);payload=dict(image=image['image'],svg=image['svg'],source_width_mm=image['width_mm'],source_height_mm=image['height_mm'],crop=None);self.payloads.append(payload)
+            company=self.store.create_company(name,'Authored synthetic identity '+str(index),True);self.registry.append(company);path=self.root/('authored-mark-'+str(index)+'.svg');path.write_text(('<svg xmlns="http://www.w3.org/2000/svg" width="20mm" height="10mm" viewBox="0 0 200 100"><path d="M10 80 C35 5 70 95 100 30 S160 5 190 80" stroke="'+color+'" stroke-width="2" fill="none"/><circle cx="150" cy="55" r="22" fill="#c99e2d"/><path d="M125 55h50M150 30v50" stroke="#123456" stroke-width="1"/></svg>') if compound_marks else '<svg xmlns="http://www.w3.org/2000/svg" width="20mm" height="10mm"><rect width="20" height="10" fill="'+color+'"/></svg>');image=import_file(path,self.w.library.assets);payload=dict(image=image['image'],svg=image['svg'],source_width_mm=image['width_mm'],source_height_mm=image['height_mm'],crop=None);self.payloads.append(payload)
             for width,height in ((90,54),(100,60)):
                 if index==1 and width==100:continue
                 plan=self.store.propose(payload,width,height,company_id=company['id']);self.assets[index,width]=self.store.approve(plan['id'],plan['revision'],company['id'],REVIEW,True)

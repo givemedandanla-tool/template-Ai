@@ -10,6 +10,7 @@ from unittest.mock import patch
 
 os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
 from PySide6.QtCore import QTimer
+from digital_review_fixture import authored_review
 from template_ai.comparison_view import CanvasCompareDialog
 from PySide6.QtGui import QFont,QFontMetricsF
 from PySide6.QtWidgets import QApplication,QMessageBox
@@ -245,7 +246,7 @@ class FontReviewTests(unittest.TestCase):
         width,height,issues=text_geometry(t.slots[0].font,18,'AV Wi Example',t.slots[0].font_style,asset)
         self.assertEqual(issues,[]);self.assertAlmostEqual(width,measured['width_mm'],places=8)
         image=render_image(candidate,96);self.assertFalse(image.isNull())
-        for ext in ('png','pdf'):self.assertGreater(export(candidate,self.root/('style.'+ext),96).stat().st_size,100)
+        for ext in ('png','pdf'):self.assertGreater(export(candidate,self.root/('style.'+ext),96,format_review=authored_review(candidate,ext,self.root/'proofs',96)).stat().st_size,100)
         t.slots[0].font_style='Regular'
         self.assertTrue(template_errors(t));self.assertFalse(generate(t,[{'name':'AV Wi Example'}],[],{}).valid)
 

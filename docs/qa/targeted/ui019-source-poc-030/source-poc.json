@@ -1,0 +1,59 @@
+{
+  "status": "MEASURED",
+  "purpose": "Authored source curves/effect comparison at exact pixels; no arbitrary perceptual cutoff and no hardware/physical print qualification",
+  "inkscape_version": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+  "rows": [
+    {
+      "name": "native-curves",
+      "source": "native-curves.svg",
+      "source_sha256": "4edcd05b1b95c845daa082dedfa65d65842f2ac81a33e655cefc433bbdfcc567",
+      "source_profile": {
+        "source_type": "VECTOR",
+        "unsupported_features": []
+      },
+      "qt": "native-curves-qt.png",
+      "independent_original_source_renderer": "native-curves-inkscape.png",
+      "metrics": {
+        "status": "MEASURED",
+        "pixels": 180000,
+        "channels": 3,
+        "mse": 0.808187037037037,
+        "mae": 0.062127777777777775,
+        "max_absolute_error": 54,
+        "changed_channels": 6769,
+        "exact_equal": false,
+        "perceptual_quality_approved": false,
+        "physical_print_verified": false
+      },
+      "perceptual_fidelity_approved": false
+    },
+    {
+      "name": "effect-source",
+      "source": "effect-source.svg",
+      "source_sha256": "8bf28a44a99af2135198308f9f714d7827120975d8e9281ad3778b1583c76972",
+      "source_profile": {
+        "source_type": "VECTOR",
+        "unsupported_features": [
+          "feGaussianBlur",
+          "filter"
+        ]
+      },
+      "qt": "effect-source-qt.png",
+      "independent_original_source_renderer": "effect-source-inkscape.png",
+      "metrics": {
+        "status": "MEASURED",
+        "pixels": 180000,
+        "channels": 3,
+        "mse": 40.44131111111111,
+        "mae": 2.973440740740741,
+        "max_absolute_error": 46,
+        "changed_channels": 466199,
+        "exact_equal": false,
+        "perceptual_quality_approved": false,
+        "physical_print_verified": false
+      },
+      "perceptual_fidelity_approved": false
+    }
+  ],
+  "paid_services": false
+}

@@ -69,11 +69,15 @@ def show_canvas_help(canvas):
     buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.rejected.connect(dialog.reject);layout.addWidget(buttons);dialog.resize(640,440);dialog.exec();dialog.deleteLater()
 
 
-def navigation_controls(canvas,library=None):
+def navigation_controls(canvas,library=None,*,compact=False):
     if library is not None:
         from .editor_settings import load_commands
         canvas.command_bindings=load_commands(library)
-    widget=QWidget();bar=QHBoxLayout(widget);bar.setContentsMargins(0,0,0,0)
+    widget=QWidget()
+    if compact:
+        outer=QVBoxLayout(widget);outer.setContentsMargins(0,0,0,0);bar=QHBoxLayout();outer.addLayout(bar)
+    else:bar=QHBoxLayout(widget)
+    bar.setContentsMargins(0,0,0,0)
     def add(label,fn):
         b=QPushButton(label);b.clicked.connect(fn);bar.addWidget(b)
     def focus():
@@ -83,6 +87,7 @@ def navigation_controls(canvas,library=None):
             for item in items:rect=rect.united(item.sceneBoundingRect())
             canvas.fitInView(rect.adjusted(-2,-2,2,2),Qt.KeepAspectRatio);canvas.view_changed.emit()
     add('全稿',canvas.fit);add('定位選取',focus);add('−',lambda:canvas.set_zoom(canvas.transform().m11()/1.25));add('＋',lambda:canvas.set_zoom(canvas.transform().m11()*1.25))
+    if compact:bar=QHBoxLayout();outer.addLayout(bar)
     nominal=canvas.logicalDpiX()/25.4
     add('名義實際尺寸（未校準）',lambda:canvas.set_zoom(nominal))
     add('快捷鍵／模式',lambda:show_canvas_help(canvas))
@@ -96,4 +101,7 @@ def navigation_controls(canvas,library=None):
     spin.valueChanged.connect(lambda value:canvas.set_zoom(value/100*nominal))
     slider.valueChanged.connect(lambda value:canvas.set_zoom(.2*math.exp(value/1000*math.log(2500))))
     canvas.view_changed.connect(refresh);canvas.zoom_percent=spin;canvas.zoom_slider=slider;refresh()
-    hint=QLabel('聚焦畫布後滾輪縮放，平移模式拖曳；百分比非物理校準。');hint.setWordWrap(True);hint.setTextFormat(Qt.PlainText);canvas.command_status.connect(hint.setText);bar.addWidget(hint);return widget
+    hint=QLabel('聚焦畫布後滾輪縮放，平移模式拖曳；百分比非物理校準。');hint.setWordWrap(True);hint.setTextFormat(Qt.PlainText);canvas.command_status.connect(hint.setText)
+    if compact:outer.addWidget(hint)
+    else:bar.addWidget(hint)
+    return widget

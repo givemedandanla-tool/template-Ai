@@ -96,8 +96,8 @@ def build_proof(candidate,format,dpi,root):
         for check in value['rows']:
             if check['code']=='ENCODED_FORMAT':check.update(status='PASS',reason='此診斷格式已實際編碼並讀回；附註在卡片外，尚非正式成品',measurements=dict(format=pin['format'],card_body_mm=pin['size_mm'],actual_preview_page_mm=page_mm))
             if check['code']=='PDF_FONT_EMBEDDING' and pdf:check.update(status='PASS' if pdf['all_fonts_embedded'] else 'BLOCKED',reason='實際PDF字型程式已讀回' if pdf['all_fonts_embedded'] else '實際PDF含未內嵌字型，需修正',measurements=dict(fonts=pdf['fonts']))
-        consistent=metrics.get('exact_equal') is True
-        value['rows'].append(dict(code='ENCODED_BODY_COMPARISON',status='PASS' if consistent else 'NOT_CHECKED' if metrics['status']=='NOT_CHECKED' else 'WARNING',reason='目前卡片本體逐像素一致；不等於原稿／印刷認證' if consistent else '已列實測差異或未涵蓋區域，需局部對照；不以任意分數自動核准',slot_ids=[],measurements=metrics))
+        consistent=rgb_bytes(reference)==rgb_bytes(body)
+        value['rows'].append(dict(code='ENCODED_BODY_COMPARISON',status='PASS' if consistent else 'WARNING',reason='目前卡片本體完整RGB一致；不等於原稿／印刷認證' if consistent else '完整RGB有差異，需局部對照；有界MSE未涵蓋時不降採樣、不以任意分數自動核准',slot_ids=[],measurements={**metrics,'full_rgb_equal':consistent,'full_rgb_pixels':width*height}))
         return dict(scope=pin,exact_file=exact_file,rows=value['rows'],file=file,preview_page_mm=page_mm,card_body_mm=pin['size_mm'],body_comparison=metrics,pdf=pdf,formal_output_allowed=False,output_written=False,diagnostic_preview_written=True,explicit_visual_review_required=True,physical_print_verified=False,reason='此檔含矩形外PREVIEW附註；只比對原尺寸卡片本體，不能把預覽頁面當正式成品尺寸')
     except BaseException:
         shutil.rmtree(folder);raise
