@@ -1,6 +1,6 @@
 {
   "id": "UI061-EXECUTION-PLAN",
-  "status": "IMPLEMENTATION_IN_PROGRESS",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
   "parent": "UI-061",
   "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
@@ -97,7 +97,7 @@
     "No geometry scaling/fuzzy name inference/published template/business customer/Logo/train writes/new permanent drafts",
     "Resource budget and single existing worker; no untested reference Windows performance claim"
   ],
-  "next_action": "Add directbind known-root wrong-registry regression; hook sync capture/full original20 mapping, finalcoherent regression thenUI062. Native030all13reviewed, recapture in formalbatch.",
+  "next_action": "Coherent affected regression then UI062; immutable full batch/native/publication Gate required before parent completion.",
   "targeted_checks": [
     {
       "log": "docs/qa/targeted/ui061-exact-target-plan-001.log",
@@ -224,6 +224,19 @@
       "status": "PASS",
       "tests": 34,
       "reason": "Reuse LogoStore.match selected_id in explicitcalc and outputrevalidate; candidate_risk.bind_source checks placedLogo known source_entity_id against current registrybinding/size, adds derived CURRENT_LOGO_IDENTITY unknown onfail"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-common-logo-gate-034.log",
+      "status": "PASS",
+      "tests": 2,
+      "reason": "Actual placed wrong-registry same-name Logo; removed binding; derived condition restoration preserves unrelated UNKNOWN; cross source dependency rejects invalid identity."
+    },
+    {
+      "log": "docs/qa/targeted/ui061-combined-037/summary.json",
+      "status": "PASS",
+      "tests": 163,
+      "modules": 17,
+      "reason": "Coherent current UI059/60/61 +existing source/risk/recovery; actual exits0/no skips/Qt errors."
     }
   ],
   "implementation_limits": [
@@ -299,5 +312,6 @@
       "visual_review": "docs/qa/targeted/ui061-native-030-visual-review.json",
       "all13_individually_reviewed": true
     }
-  }
+  },
+  "coverage": "docs/dev/UI061_CLAUSE_COVERAGE.json"
 }

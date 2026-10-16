@@ -48,3 +48,35 @@ class SyncWorkflowTests(unittest.TestCase):
         self.assertEqual(f.entry('A90')['logo_states']['c1'],'SELECTION_INVALID_NO_REPLACEMENT')
     def test_explicit_logo_without_confirmed_entity_binding_stays_unverified(self):
         f=self.fx;entity=f.w.active_input_graph.data['companies'][0]['id'];f.w.library.db.execute('DELETE FROM logo_entity_bindings WHERE entity_id=?',(entity,));f.w.library.db.commit();f.w.invalidate();f.sync();self.assertFalse(f.candidate('A90').formal_eligible);self.assertEqual(f.entry('A90')['logo_states']['c1'],'IDENTITY_REVIEW_REQUIRED')
+
+    def test_common_source_gate_rejects_actual_same_named_other_registry_logo(self):
+        from sync_workflow_fixture import REVIEW
+        from template_ai.candidate_risk import bind_source
+        from template_ai.candidate_sync import source_dependency_pin
+        f=self.fx;candidate=copy.deepcopy(f.candidate('A90'))
+        other=f.store.create_company(f.registry[0]['name'],'Another legal synthetic company',True)
+        proposal=f.store.propose(f.payloads[0],90,54,company_id=other['id'])
+        wrong=f.store.approve(proposal['id'],proposal['revision'],other['id'],REVIEW,True)
+        next(item for item in candidate.items if item.slot.kind=='logo' and item.slot.owner=='c1').logo=wrong
+        bind_source(candidate,f.w.library,require_registered=True)
+        condition=next(row for row in candidate.risk['conditions'] if row['id']=='CURRENT_LOGO_IDENTITY')
+        self.assertEqual(condition['status'],'UNKNOWN');self.assertFalse(candidate.formal_eligible)
+        with self.assertRaisesRegex(ValueError,'未核實'):source_dependency_pin(candidate,f.w.library)
+
+    def test_common_source_gate_rechecks_removed_binding_and_recovers_only_derived_condition(self):
+        from template_ai.candidate_risk import bind_source
+        from template_ai.candidate_sync import source_dependency_pin
+        f=self.fx;candidate=copy.deepcopy(f.candidate('A90'));entity=f.w.active_input_graph.data['companies'][0]['id']
+        bind_source(candidate,f.w.library,require_registered=True)
+        self.assertEqual(next(row['status'] for row in candidate.risk['conditions'] if row['id']=='CURRENT_LOGO_IDENTITY'),'PASS')
+        f.w.library.db.execute('DELETE FROM logo_entity_bindings WHERE entity_id=?',(entity,));f.w.library.db.commit()
+        bind_source(candidate,f.w.library,require_registered=True)
+        self.assertEqual(next(row['status'] for row in candidate.risk['conditions'] if row['id']=='CURRENT_LOGO_IDENTITY'),'UNKNOWN')
+        self.assertFalse(candidate.formal_eligible)
+        with self.assertRaisesRegex(ValueError,'未核實'):source_dependency_pin(candidate,f.w.library)
+        candidate.risk_context['conditions'].append(dict(id='HUMAN_REQUIRED_EVIDENCE',status='UNKNOWN',reason='Authored unresolved condition'))
+        f.store.bind(entity,f.registry[0]['id'],f.registry[0]['name'],True)
+        bind_source(candidate,f.w.library,require_registered=True)
+        self.assertEqual(next(row['status'] for row in candidate.risk['conditions'] if row['id']=='CURRENT_LOGO_IDENTITY'),'PASS')
+        self.assertEqual(next(row['status'] for row in candidate.risk['conditions'] if row['id']=='HUMAN_REQUIRED_EVIDENCE'),'UNKNOWN')
+        self.assertFalse(candidate.formal_eligible)

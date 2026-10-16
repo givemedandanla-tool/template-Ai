@@ -1,0 +1,200 @@
+{
+  "parent": "UI-061",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "normative_clause_count": 20,
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "clauses": [
+    {
+      "id": "UI-061-CLAUSE-1",
+      "expected": "**共用語意資料**：在**同一次排版工作階段**修改人物 ROOT 所屬姓名、電話、Email、IG、LINE、公司與聯絡欄位等已確認的來源資料，依**同一來源實體／欄位 ID 與歸屬鏈**傳遞至所有真正引用該資料的候選與實體尺寸。不得以字串相同、欄位位置相似推定為同一人物；不屬於該人物／公司者不可被波及。修改人物與公司隸屬關係可能使配對候選失效，須重新核實歸屬，不可直接複製舊位置。",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged",
+        "test_source_change_impact.SourceChangeImpactTests.test_other_source_graph_equal_strings_never_become_same_person",
+        "test_source_change_impact.SourceChangeImpactTests.test_deleting_a_field_does_not_invalidate_other_person_due_to_global_array_shift",
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_new_equal_text_entity_cannot_inherit_old_person_manual_positions"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-2",
+      "expected": "**公司與 Logo 強綁**：公司相關資料變更僅影響該公司的合法映射；Logo 以公司實體和**各實體尺寸專用的已核准資產**分開解析與驗證，不能從 A 尺寸直接挪用 B 尺寸的 Logo 圖或既有合格結論。",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_from_different_same_named_company_cannot_match_by_string",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_without_confirmed_entity_binding_stays_unverified",
+        "test_sync_workflow.SyncWorkflowTests.test_common_source_gate_rejects_actual_same_named_other_registry_logo",
+        "test_sync_workflow.SyncWorkflowTests.test_common_source_gate_rechecks_removed_binding_and_recovers_only_derived_condition",
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_missing_size_specific_logo_never_borrows_other_size_pass_after_sync"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-3",
+      "expected": "**候選版面獨立**：文字框座標、大小、文字水平壓縮、對齊、特製欄位及群組關係的人工修改，預設**只作用於目前候選＋目前實體尺寸的作品實例**；不同模板的幾何與物理尺寸不直接複製，也不暗中覆寫人工鎖定內容。",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_manual_a_only_and_single_undo_after_source_update_keep_b_c_geometry_and_current_phone",
+        "test_candidate_sync.CandidateSyncTests.test_different_physical_sizes_keep_actual_geometry_unchanged",
+        "test_candidate_sync.CandidateSyncTests.test_locked_target_preserves_lock_and_other_ready_target_is_explicit"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-4",
+      "expected": "**有意跨候選／跨尺寸套用**：如果使用者主動選擇「套用至其他候選／尺寸」，先列出具體目標、可套用的屬性、涉及人物／公司／物件及例外，再給差異預覽、影響範圍和確認。不得以無對應物件、座標比例或欄位名稱推測就強套。無法可靠映射時顯示不相容／待人工處理，**不部分偷偷套用**；可保留成功目標與失敗目標的明確逐項狀態。",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_actual_three_candidate_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100",
+        "test_candidate_sync.CandidateSyncTests.test_partial_matching_of_multiple_source_slots_never_partially_changes_target",
+        "test_candidate_sync.CandidateSyncTests.test_ambiguous_two_consumers_cannot_choose_one_by_slot_position",
+        "test_candidate_sync.CandidateSyncTests.test_coordinate_font_and_owner_copy_are_not_allowed_properties",
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_controls_changed_after_preview_do_not_start_or_mutate_any_target"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-5",
+      "expected": "**局部回復**：使用者可回復某個候選某次版面修改或單一套用動作，而不連帶回退其他已確認的人工變更；對**共用來源內容**的回復則必須明示會影響到哪些引用候選，避免「回復其中一張預覽」悄悄將全部人物來源值改回舊資料。支持預覽差異／取消，保留可追溯的操作版本及作用範圍；若版本已過期或回復依賴不存在，須阻擋或要求明確衝突處理，不聲稱一定可無損還原。",
+      "tests": [
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_single_target_undo_never_reverts_source_or_other_size",
+        "test_source_history_gui.SourceHistoryGuiTests.test_actual_undo_cancel_displays_both_size_consumers_without_source_change",
+        "test_source_history_gui.SourceHistoryGuiTests.test_actual_undo_then_redo_require_impact_confirmation_and_stay_unadopted",
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_target_roundtrip_same_geometry_still_invalidates_old_cross_plan"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-6",
+      "expected": "每次共用資料修改產生新的來源版本；候選及尺寸作品記錄引用的來源／模板 `style_version_id`／Logo／字型／模型與規則／人工編輯版本。沿用 UI-059 的版本柵欄，晚到 AI 結果或 UI-058 暫停／恢復結果不得覆寫新值與人工位置。",
+      "tests": [
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_source_registry_changes_during_actual_worker_reject_both_target_results",
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_new_source_manual_revision_rejects_previously_calculated_cross_batch",
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_new_target_manual_revision_is_never_overwritten",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_old_worker_cannot_overwrite_current_manual_geometry_even_after_reconfirmation",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_actual_gui_encrypted_snapshot_preserves_current_legal_manual_geometry_and_receipt"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-7",
+      "expected": "同步後，依依賴圖只重算必要內容與受影響候選，**但每個受影響的正式輸出尺寸都必須重新通過整張作品硬性驗證與 UI-019、UI-027 印前 Gate**，含人物公司資訊無損映射、容量 `peopleCapacity`、相鄰／全域不重疊、裁切安全區、固定字級與允許的 X 軸壓縮、完整尺寸 Logo、字型及來源證據。",
+      "tests": [
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_actual_output_revalidation_preserves_legal_manual_geometry_and_receipt",
+        "test_sync_workflow.SyncWorkflowTests.test_long_phone_after_locked_a_never_shrinks_or_moves_any_manual_geometry",
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_required_unknown_target_cannot_become_safe_through_cross_alignment",
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_changed_registered_source_after_calculation_cannot_install_any_target"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-8",
+      "expected": "GUI 狀態須可辨識：**已同步待重驗／不受影響／人工編輯保留／跨候選套用待確認／無法安全套用／驗證失敗／已重新驗證**，並可直接定位差異。任何候選從過期轉為可正式輸出須有當前版本 Gate 證據，不能沿用另一尺寸 PASS。",
+      "tests": [
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_failed_source_recalculation_never_makes_old_service_current",
+        "test_sync_workflow.SyncWorkflowTests.test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged",
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original",
+        "test_candidate_sync.CandidateSyncTests.test_unchanged_property_and_generation_conflict_have_named_per_target_states"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-9",
+      "expected": "UI-060 補充決策 A 的「最佳候選／可展開比較／問題定位」作為展示入口，與 UI-018 原候選列表重用；不另造同步管理中心，避免重複功能。",
+      "tests": [
+        "test_candidate_results.CandidateResultsTests.test_actual_recommend_button_selects_safe_candidate_without_business_write",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue",
+        "test_candidate_results.CandidateResultsTests.test_actual_problem_click_opens_existing_candidate_fix_entry"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-10",
+      "expected": "有兩人／兩公司、三候選與二實體尺寸時，僅修改人物甲電話：所有引用**人物甲該欄位 ID**的候選、尺寸反映新電話；人物乙的同名欄位不受影響；每項受影響結果標記待重驗。",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged",
+        "test_source_change_impact.SourceChangeImpactTests.test_only_person_a_phone_consumers_across_three_candidates_two_sizes"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-11",
+      "expected": "在候選 A／尺寸 1 手動移動姓名框：候選 B 與尺寸 2 位置維持原狀；AI 局部重算不得還原 A 的人工位置。",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_manual_a_only_and_single_undo_after_source_update_keep_b_c_geometry_and_current_phone",
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_shared_name_update_keeps_manual_geometry_and_other_size_independent"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-12",
+      "expected": "主動跨候選套用對齊設定：GUI 先列出可映射與不可映射物件、各目標實際差異；不得把原始物理座標硬複製至不同尺寸，失敗目標保留舊版本與阻擋理由。",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_actual_three_candidate_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100",
+        "test_candidate_sync.CandidateSyncTests.test_different_physical_sizes_keep_actual_geometry_unchanged",
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_only_qualified_target_applies_with_geometry_history_and_official_source_unchanged"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-13",
+      "expected": "公司 Logo 變更只使引用該公司 Logo 及涉及實體尺寸的候選需要核實；沒有尺寸專用合法 Logo 的目標不能被標記合格。",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_from_different_same_named_company_cannot_match_by_string",
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_missing_size_specific_logo_never_borrows_other_size_pass_after_sync"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-14",
+      "expected": "回復某候選的「移動姓名框」不改動電話來源，也不影響其他候選；若回復電話來源值，先顯示所有真正引用者的影響清單。",
+      "tests": [
+        "test_sync_workflow.SyncWorkflowTests.test_manual_a_only_and_single_undo_after_source_update_keep_b_c_geometry_and_current_phone",
+        "test_source_history_gui.SourceHistoryGuiTests.test_actual_undo_cancel_displays_both_size_consumers_without_source_change"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-15",
+      "expected": "兩次修改交錯、排版較早運算晚完成或當機恢復時，版本比對阻止舊數據覆蓋新人工內容；不得把舊印前 PASS 當作新版本 PASS。",
+      "tests": [
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_source_registry_changes_during_actual_worker_reject_both_target_results",
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_new_target_manual_revision_is_never_overwritten",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_old_worker_cannot_overwrite_current_manual_geometry_even_after_reconfirmation",
+        "test_layout_session_extended.LayoutSessionExtendedTests.test_restore_background_decryption_cannot_replace_newer_input"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-16",
+      "expected": "僅一個尺寸驗證成功時，可依 UI-027 原核准規則對該合格尺寸進行許可的輸出，不得讓失敗尺寸搭便車。",
+      "tests": [
+        "test_multi_size.MultiSizeTests.test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate",
+        "test_multi_size.MultiSizeTests.test_revoked_or_changed_logo_and_template_block_only_affected_output",
+        "test_candidate_results.CandidateResultsTests.test_actual_formal_png_uses_current_dimensions_and_preserves_official_template"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-17",
+      "expected": "優先重用 UI-013、016～019、020～027、034～037、045、057～059 和 UI-060 補充 A 的既有介面與規則，**REUSE/EXTEND EXISTING 優先**。",
+      "tests": [
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue",
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-18",
+      "expected": "本次候選變更不是 UI-043 正式客戶主檔變更；正式更新走 UI-045。不得改寫原始 .ai、已發布模板、正式 Logo 庫或 UI-055 訓練集，也不建立額外永久訂單／草稿資料庫。",
+      "tests": [
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_only_qualified_target_applies_with_geometry_history_and_official_source_unchanged",
+        "test_candidate_sync_batch.CandidateSyncBatchTests.test_single_target_undo_never_reverts_source_or_other_size",
+        "test_candidate_results.CandidateResultsTests.test_actual_recommend_button_selects_safe_candidate_without_business_write"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-19",
+      "expected": "UI-056 D 的未來補樣建議仍是低優先級待另行核准；UI-048 完整登入權限仍依先前決策留後期；不新造「曾設計／已確認購買」狀態。",
+      "tests": [
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue"
+      ]
+    },
+    {
+      "id": "UI-061-CLAUSE-20",
+      "expected": "低配置 Windows 受 UI-051／058 的保守資源限額保護，未經實機測試不承諾效能。",
+      "tests": [
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_candidate_budget_rejects_before_mutating_previous_collection",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_cancel_resource_wait_starts_no_calculation_and_keeps_manual_unknown",
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_cancel_resource_wait_cross_keeps_all_old_targets",
+        "test_sync_workflow.SyncWorkflowTests.test_esc_during_matrix_admission_cancels_without_deleting_active_owner"
+      ]
+    }
+  ],
+  "limits": [
+    "Linux authored controlled corpus; reference Windows performance and private Illustrator acceptance remain external gaps",
+    "Boundary19 checked by architecture audit: no new login/customer/order/training feature or data mutation; reused ephemeral dialogs, no standalone future-supplement UI"
+  ],
+  "native_capture": "tools/capture_sync_workflow.py"
+}
