@@ -72,3 +72,10 @@ class MultiSizeEditGuiTests(unittest.TestCase):
         with guard:
             controller.submit(plan_candidate(adapter,0,[identity],1,0));self.assertTrue(wait_for_gui(started.is_set,2));dialog.deleteLater();QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete);release.set();self.wait()
         self.assertTrue(entry['candidates'][0].formal_eligible)
+
+    def test_actual_color_control_revalidates_and_invalid_color_keeps_current_template(self):
+        from PySide6.QtWidgets import QMessageBox
+        from PySide6.QtTest import QTest
+        entry,adapter,controller,dialog=self.local();dialog.operation.setCurrentIndex(5);dialog.color.setText('#123456');dialog.preview();self.assertIsNotNone(dialog.plan)
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(dialog.apply_button,Qt.LeftButton)
+        self.wait();self.assertEqual(adapter.candidates[0].template.slots[0].color,'#123456');self.assertTrue(adapter.candidates[0].formal_eligible);before=adapter.candidates[0].template.to_dict();dialog.color.setText('#nothex');dialog.preview();self.assertIsNone(dialog.plan);self.assertEqual(adapter.candidates[0].template.to_dict(),before)

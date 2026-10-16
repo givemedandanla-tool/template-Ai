@@ -1,7 +1,7 @@
 """Edit one transient candidate instance through the existing geometry proposal engine."""
 import copy,json
 from PySide6.QtCore import Qt,Slot,QTimer
-from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QListWidget,QListWidgetItem,QDoubleSpinBox,QPushButton,QPlainTextEdit,QLabel,QMessageBox,QComboBox,QSplitter
+from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QListWidget,QListWidgetItem,QDoubleSpinBox,QPushButton,QPlainTextEdit,QLabel,QMessageBox,QComboBox,QSplitter,QLineEdit
 from .customers import digest
 from .model import Template
 from .object_tools import propose
@@ -167,11 +167,11 @@ class CandidateEditDialog(QDialog):
                 item=QListWidgetItem(obj.owner+'／'+obj.kind+'／'+obj.id);item.setData(Qt.UserRole,obj.id);self.objects.addItem(item)
             self.show_canvas(self.current_canvas,window.candidates[self.index])
         self.objects.itemSelectionChanged.connect(self.object_selected)
-        bar=QHBoxLayout();self.operation=QComboBox();self.operation.addItems(['移動','框位尺寸','鎖定','解除鎖定']);bar.addWidget(self.operation)
+        bar=QHBoxLayout();self.operation=QComboBox();self.operation.addItems(['移動','框位尺寸','鎖定','解除鎖定','文字對齊','文字顏色']);bar.addWidget(self.operation)
         self.dx=QDoubleSpinBox();self.dy=QDoubleSpinBox();self.width=QDoubleSpinBox();self.height=QDoubleSpinBox()
         for title,spin in (('水平位移',self.dx),('垂直位移',self.dy),('框寬',self.width),('框高',self.height)):
             spin.setRange(-2000 if spin in (self.dx,self.dy) else .001,2000);spin.setDecimals(4);spin.setSuffix(' mm');bar.addWidget(QLabel(title));bar.addWidget(spin)
-        layout.addLayout(bar);bar=QHBoxLayout()
+        layout.addLayout(bar);bar=QHBoxLayout();self.align=QComboBox();self.align.addItems(['left','center','right']);self.color=QLineEdit('#111827');self.color.setMaxLength(7);bar.addWidget(QLabel('文字對齊（選對齊操作時套用）'));bar.addWidget(self.align);bar.addWidget(QLabel('文字顏色（#RRGGBB）'));bar.addWidget(self.color);layout.addLayout(bar);bar=QHBoxLayout()
         actions=[('預覽差異',self.preview,'preview_button'),('確認人工修改',self.apply,'apply_button'),('預覽復原單筆',self.preview_undo,'undo_button'),('比較編輯前框位',self.preview_original,'original_button')]
         for title,callback,name in actions:
             button=QPushButton(title);button.clicked.connect(callback);setattr(self,name,button);bar.addWidget(button)
@@ -206,18 +206,20 @@ class CandidateEditDialog(QDialog):
         try:
             for i in range(self.objects.count()):self.objects.item(i).setSelected(self.objects.item(i).data(Qt.UserRole)==slot.id)
         finally:self.objects.blockSignals(False)
-        self.width.setValue(slot.rect.w);self.height.setValue(slot.rect.h)
+        self.width.setValue(slot.rect.w);self.height.setValue(slot.rect.h);self.align.setCurrentText(slot.align);self.color.setText(slot.color)
     def object_selected(self):
         selected=self.objects.selectedItems()
         if not selected:return
         identity=selected[0].data(Qt.UserRole);self.current_canvas.blockSignals(True)
         try:self.current_canvas.select_id(identity)
         finally:self.current_canvas.blockSignals(False)
-        slot=next(s for s in self.window.candidates[self.index].template.slots if s.id==identity);self.width.setValue(slot.rect.w);self.height.setValue(slot.rect.h)
+        slot=next(s for s in self.window.candidates[self.index].template.slots if s.id==identity);self.width.setValue(slot.rect.w);self.height.setValue(slot.rect.h);self.align.setCurrentText(slot.align);self.color.setText(slot.color)
     def current_plan(self):
         ids=[i.data(Qt.UserRole) for i in self.objects.selectedItems()];operation=self.operation.currentIndex()
         if operation==0:return plan_candidate(self.window,self.index,ids,self.dx.value(),self.dy.value())
         request=dict(ids=ids,cross_owner=False)
+        if operation==4:return plan_operation(self.window,self.index,dict(request,operation='PATCH',patch=dict(align=self.align.currentText())))
+        if operation==5:return plan_operation(self.window,self.index,dict(request,operation='PATCH',patch=dict(color=self.color.text().strip())))
         if operation==1:request.update(operation='PATCH',patch=dict(w=self.width.value(),h=self.height.value()))
         else:request.update(operation='LOCK',locked=operation==2)
         return plan_operation(self.window,self.index,request)

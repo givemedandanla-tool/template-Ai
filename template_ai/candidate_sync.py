@@ -44,6 +44,7 @@ def cross_property_plan(source,targets,slot_ids,attributes):
     rows=[]
     for key,target in targets:
         row=dict(key=key,target_pin=candidate_pin(target),dimensions=[target.template.width_mm,target.template.height_mm],template_id=target.template.id,state='INCOMPATIBLE',changes=[],reason='')
+        row['current_risk_label']=target.risk['label']
         try:
             if target.generation!=source.generation or semantic_pin(target)!=semantic_pin(source):raise ValueError('來源資料／世代不一致，先同步並逐尺寸重驗')
             index={}
@@ -75,15 +76,29 @@ def verify_cross_plan(plan,source,targets):
     return True
 
 
+def source_dependency_pin(source,library):
+    from types import SimpleNamespace
+    from .candidate_edit import dependency_token
+    from .candidate_risk import bind_source
+    checked=deepcopy(source);bind_source(checked,library,require_registered=True)
+    ids={'SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES','SNAPSHOT_FRESHNESS','PUBLISHED_BASE_APPROVAL'}
+    if any(row['status']!='PASS' for row in checked.risk['conditions'] if row['id'] in ids):raise ValueError('跨候選來源版本／資產／核准依據已改或未核實，先重驗來源')
+    return dependency_token(SimpleNamespace(library=library),source.template,source.risk_context['input_snapshot']['logos'])
+
+
 def prepare_cross_batch(plan,source,adapters,*,approved=False):
     """GUI thread: copy plain envelopes; no candidate/DB/worker mutation."""
     from .candidate_edit import plan_cross_properties,prepare_edit
     if approved is not True:raise ValueError('先逐目標核對差異並明確確認')
-    verify_cross_plan(plan,source,[(key,adapter.candidates[index]) for key,(adapter,index) in adapters.items()]);envelopes={}
+    targets=[(key,adapter.candidates[index]) for key,(adapter,index) in adapters.items()];verify_cross_plan(plan,source,targets)
+    if cross_property_plan(source,targets,plan['source_slot_ids'],plan['attributes'])!=plan:raise ValueError('跨候選預覽內容已改，先重新核對實際差異')
+    libraries=[adapter.library for adapter,index in adapters.values()]
+    if not libraries or len({str(library.root) for library in libraries})!=1:raise ValueError('不跨專案根目錄套用屬性')
+    source_pin=source_dependency_pin(source,libraries[0]);envelopes={}
     for row in plan['targets']:
         if row['state']!='READY_FOR_EXPLICIT_CONFIRMATION':continue
         adapter,index=adapters[row['key']];envelopes[row['key']]=prepare_edit(adapter,plan_cross_properties(adapter,index,row['after'],plan['source_pin']))
-    return dict(plan=deepcopy(plan),envelopes=envelopes)
+    return dict(plan=deepcopy(plan),envelopes=envelopes,source_dependency_pin=source_pin)
 
 
 def calculate_cross_batch(batch,library,cancel=None):
@@ -108,8 +123,11 @@ def install_cross_batch(batch,results,source,adapters):
     """GUI thread: reject changed source/targets, install only whole-Gate passes."""
     from .candidate_edit import install_edit
     from .candidate_risk import bind_source
-    try:verify_cross_plan(batch['plan'],source,[(key,adapter.candidates[index]) for key,(adapter,index) in adapters.items()])
-    except (ValueError,IndexError,KeyError) as error:return [dict(key=row['key'],state='STALE_IGNORED',reason=str(error)) for row in results]
+    try:
+        verify_cross_plan(batch['plan'],source,[(key,adapter.candidates[index]) for key,(adapter,index) in adapters.items()])
+        library=next(iter(adapters.values()))[0].library
+        if source_dependency_pin(source,library)!=batch['source_dependency_pin']:raise ValueError('跨候選來源／規則／資產依賴已更新，舊套用結果已忽略')
+    except (ValueError,IndexError,KeyError,OSError,TypeError) as error:return [dict(key=row['key'],state='STALE_IGNORED',reason=str(error)) for row in results]
     installed=[]
     for row in results:
         result={key:value for key,value in row.items() if key!='candidate'}

@@ -42,3 +42,12 @@ class CandidateSyncBatchTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'只接受'):plan_cross_properties(self.a,self.b_index,after,self.prepare()['plan']['source_pin'])
     def test_target_roundtrip_same_geometry_still_invalidates_old_cross_plan(self):
         batch=self.prepare();results=calculate_cross_batch(batch,self.library);target=self.a.candidates[self.b_index];before=target.template.to_dict();apply_candidate(self.a,plan_candidate(self.a,self.b_index,[target.template.slots[0].id],.5,0),True);apply_candidate(self.a,plan_undo(self.a,self.b_index),True);self.assertEqual(self.a.candidates[self.b_index].template.to_dict(),before);installed=install_cross_batch(batch,results,self.source(),self.adapters);self.assertTrue(all(r['state']=='STALE_IGNORED' for r in installed))
+
+    def tamper_registered_source(self):
+        import json
+        source=self.source();payload=self.library.object_snapshot('TEMPLATE',source.template.id)['payload'];payload['name']+=' external replacement';self.library.db.execute('UPDATE templates SET payload=? WHERE id=?',(json.dumps(payload),source.template.id));self.library.db.commit()
+    def test_changed_registered_source_before_confirmation_cannot_prepare_batch(self):
+        source=self.source();plan=cross_property_plan(source,self.targets(),[source.template.slots[0].id],['align']);self.tamper_registered_source()
+        with self.assertRaisesRegex(ValueError,'來源'):prepare_cross_batch(plan,source,self.adapters,approved=True)
+    def test_changed_registered_source_after_calculation_cannot_install_any_target(self):
+        batch=self.prepare();results=calculate_cross_batch(batch,self.library);before=[copy.deepcopy(c.template.to_dict()) for _,c in self.targets()];self.tamper_registered_source();installed=install_cross_batch(batch,results,self.source(),self.adapters);self.assertTrue(all(r['state']=='STALE_IGNORED' for r in installed));self.assertEqual([c.template.to_dict() for _,c in self.targets()],before)
