@@ -46,7 +46,10 @@ class QualityRepairDialog(QDialog):
         def done(value):
             if not isValid(self):return
             callback(value)
-        self.panel.request(command,payload,done)
+        def failed(error):
+            if not isValid(self):return
+            self.pending=None;self.consent.setChecked(False);self.status.setText('操作未確認，請重新核對；未自動重試：'+str(error))
+        self.panel.request(command,payload,done,on_error=failed)
 
     def button(self,form,label,action):
         button=QPushButton(label);button.clicked.connect(lambda:self.guard(action));form.addRow(button);return button
@@ -143,6 +146,7 @@ class QualityRepairDialog(QDialog):
             if kind=='REPORT':self.select_record(self.report,row['id'],'已保存固定兩側比較')
             if kind=='GATE':self.select_record(self.previous_gate,row['id'],row['plan']['stage']);self.select_record(self.final_gate,row['id'],row['plan']['stage'])
             if kind=='IMPACT':self.select_record(self.impact_review,row['id'],row['reason'])
+            if kind=='DECISION':self.select_record(self.decision,row['id'],row['reason'])
             if kind=='RELEASE':self.details.setPlainText('已原子保存正式版本與部署憑證；新來源使用核准的凍結管線，佇列沿用各工作原本核對版本。')
         self.request(command,payload,saved)
 
@@ -229,7 +233,9 @@ class QualityRepairDialog(QDialog):
     def job_page(self,delta):
         offset=max(0,self.job_offset+delta) if delta else 0
         def loaded(row):self.job_offset=row['offset'];self.progress.setPlainText('工作：'+str(row['phase'])+'\n模型：'+str(row['semantic_training_state'])+'\n'+'\n'.join(str(item['work_id'])+'：'+str(item['state'])+' / '+str(item.get('action') or item.get('error') or '') for item in row['items']));self.status.setText('來源核對完成與模型候選產生分開顯示；不是品質通過。')
-        self.request('REPAIR_JOB_STATUS',dict(id=self.identity(self.job),offset=offset),loaded)
+        if self.library.closed or self.window.library is not self.library:raise ValueError('環境已改變，未套用舊進度')
+        from .quality_repair_commands import job_status
+        loaded(job_status(self.library,self.identity(self.job),offset))
 
     def enqueue_train(self):
         if not self.consent.isChecked() or not self.actor.text().strip():raise ValueError('需具名並明確勾選啟動／續跑選定範圍')
@@ -251,6 +257,7 @@ class QualityRepairDialog(QDialog):
         self.protocol=self.picker(form,'本階段固定試驗','QUALITY_PROTOCOL');self.button(form,'將固定雙側送入共用評估佇列',self.enqueue_pair)
         self.button(form,'讀取前後品質差異並預覽保存',lambda:self.preview('COMPARE',dict(protocol_id=self.identity(self.protocol)),'REPORT'))
         self.report=self.picker(form,'已保存固定差異報告','QUALITY_PAIR_REPORT');self.button(form,'預覽本階段PASS／FAIL與阻擋憑證',lambda:self.preview('REPAIR_GATE_PLAN',dict(report_id=self.identity(self.report)),'GATE'))
+        self.button(form,'預覽明確品質接受（仍不正式啟用）',lambda:self.preview('REPAIR_DECISION_PLAN',dict(report_id=self.identity(self.report)),'DECISION'))
         self.button(form,'在原品質中心檢視逐案對照（揭露規則仍適用）',self.open_quality)
 
     def enqueue_pair(self):

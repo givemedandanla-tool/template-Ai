@@ -99,12 +99,13 @@ class QualityReports:
                                      dict(plan=copy.deepcopy(plan), actor=actor, created=time.time(), immutable=True),
                                      0, 'quality_exact_pair_report_saved_no_publication')
 
-    def decide(self, report_id, actor, reason, approved=False):
+    def decide(self, report_id, actor, reason, approved=False,*,expected_report_digest=None):
         if approved is not True: raise ValueError('需明確核准品質版本；不自動發布模板或訓練規則')
         text(actor, '品質決策者', 120); text(reason, '品質決策依據', 2000)
         with self.store.transaction():
             report = self.store.get('QUALITY_PAIR_REPORT', report_id)
             if not report: raise ValueError('固定比較憑證不存在')
+            if expected_report_digest is not None and digest(report)!=expected_report_digest:raise ValueError('明確品質接受的報告版本已改變')
             current = self.plan(report['plan']['protocol_id'])
             if current != report['plan'] or not current['candidate_decision_eligible']:
                 raise ValueError('品質不足／重大退步／來源洩漏／僅合成自驗，不可核准正式品質推薦依據')

@@ -49,7 +49,7 @@ class QualityPanel(QWidget):
     def activate(self):
         if not self.active:self.active=True;self.list_protocols(0)
 
-    def request(self,command,payload,callback):
+    def request(self,command,payload,callback,on_error=None):
         if self.loading:return self.status.setText('核對仍在執行；可取消並刷新持久結果')
         if self.library.closed or self.window.library is not self.library:return self.status.setText('專案環境已變更，未執行')
         if self.window.busy:return self.status.setText('目前已有背景操作，完成後再送出本次明確核對')
@@ -57,6 +57,7 @@ class QualityPanel(QWidget):
         def failed(error):
             from shiboken6 import isValid
             if isValid(self):self.loading=False;self.pending=None;self.status.setText('結果未確認，請刷新持久資料；未自動重試：'+str(error))
+            if on_error is not None:on_error(error)
         def done(value):
             from shiboken6 import isValid
             if not isValid(self):return

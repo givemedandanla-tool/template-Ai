@@ -28,6 +28,28 @@ def work_page(library,offset=0,query=''):
     return dict(rows=rows,total=total,offset=offset,limit=50,images_loaded=False,model_weights_loaded=False)
 
 
+def job_status(library,identity,offset=0):
+    if type(offset) is not int or offset<0:raise ValueError('進度需50筆分頁')
+    keys=('id','revision','phase','semantic_training_state','model_id','candidate_id','root_review_id','error','restore_state','total')
+    row=library.db.execute("SELECT id,revision,json_extract(payload,'$.phase'),json_extract(payload,'$.semantic_training_state'),json_extract(payload,'$.model_id'),json_extract(payload,'$.candidate_id'),json_extract(payload,'$.root_review_id'),json_extract(payload,'$.error'),json_extract(payload,'$.restore_state'),json_array_length(payload,'$.items') FROM training_records WHERE kind='AUTO_JOB' AND id=? AND json_extract(payload,'$.operation')='SEMANTIC_REPAIR_CANDIDATE'",(identity,)).fetchone()
+    if not row:raise ValueError('需選實際局部修復訓練工作')
+    result=dict(zip(keys,row));item_keys=('work_id','state','attempts','action','error')
+    result['items']=[dict(zip(item_keys,item)) for item in library.db.execute("SELECT json_extract(i.value,'$.work_id'),json_extract(i.value,'$.state'),json_extract(i.value,'$.attempts'),json_extract(i.value,'$.action'),json_extract(i.value,'$.error') FROM training_records r,json_each(r.payload,'$.items') i WHERE r.kind='AUTO_JOB' AND r.id=? ORDER BY CAST(i.key AS INTEGER) LIMIT 50 OFFSET ?",(identity,offset))]
+    result.update(offset=offset,limit=50,weights_loaded=False);return result
+
+
+def decision_plan(library,report_id):
+    from .quality_reports import QualityReports
+    store=TrainingStore.bind(library);report=store.get('QUALITY_PAIR_REPORT',report_id)
+    if not report:raise ValueError('先保存實際固定雙側報告')
+    current=QualityReports(library).plan(report['plan']['protocol_id'])
+    if current!=report['plan']:raise ValueError('報告品質／版本／來源證據已改變')
+    result=dict(report_id=report_id,report_digest=digest(report),candidate_decision_eligible=current['candidate_decision_eligible'],
+                blockers=[] if current['candidate_decision_eligible'] else ['新的獨立來源／品質門檻／類別退步／重大錯誤或當前版本證據尚未符合'],
+                automatic_activation=False)
+    result['digest']=digest(result);return result
+
+
 def execute(library,command,payload):
     store=TrainingStore.bind(library);repairs=QualityRepairs(library);gates=QualityRepairGates(library);releases=QualityRepairReleases(library)
     if command=='ISSUES':return repairs.page(**payload)
@@ -60,14 +82,14 @@ def execute(library,command,payload):
         row=store.get(payload['kind'],payload['id'])
         if not row:raise ValueError('持久修復憑證不存在')
         return row
-    if command=='JOB_STATUS':
-        row=store.get('AUTO_JOB',payload['id']);offset=payload.get('offset',0)
-        if not row or row.get('operation')!='SEMANTIC_REPAIR_CANDIDATE' or type(offset) is not int or offset<0:raise ValueError('需選明列修復訓練工作及50筆進度頁')
-        return dict(**{key:row.get(key) for key in ('id','revision','phase','semantic_training_state','model_id','candidate_id','root_review_id','error','restore_state')},
-                    items=[{key:item.get(key) for key in ('work_id','state','attempts','action','error')} for item in row['items'][offset:offset+50]],
-                    total=len(row['items']),offset=offset,limit=50,weights_loaded=False)
+    if command=='JOB_STATUS':return job_status(library,payload['id'],payload.get('offset',0))
+    if command=='DECISION_PLAN':return decision_plan(library,**payload)
     if command=='CONFIRM':
         kind=payload['kind'];plan=payload['plan'];actor=payload['actor'];approved=payload.get('approved',False);reason=payload.get('reason','')
+        if kind=='DECISION':
+            from .quality_reports import QualityReports
+            if decision_plan(library,plan['report_id'])!=plan:raise ValueError('品質接受預覽已改變')
+            return QualityReports(library).decide(plan['report_id'],actor,reason,approved,expected_report_digest=plan['report_digest'])
         if kind=='ISSUE':return (repairs.create_quality_issue if plan.get('origin')=='ACTUAL_QUALITY_CASE' else repairs.create_source_issue)(plan,actor,reason,approved)
         if kind=='ROOT':return repairs.confirm_root(plan,actor,approved)
         if kind=='TRUTH':return truth.confirm(repairs,plan,actor,approved)
