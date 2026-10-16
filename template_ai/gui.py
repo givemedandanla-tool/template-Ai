@@ -645,6 +645,8 @@ class MainWindow(QMainWindow):
         self.button('重新計算受影響候選',self.recheck_affected_candidates,candidate_layout)
         self.dependency_notice=QLabel('選取候選可檢視變更依賴與受影響框位');self.dependency_notice.setWordWrap(True);self.dependency_notice.setMinimumHeight(96);candidate_layout.addWidget(self.dependency_notice)
         candidate_layout.removeWidget(self.dependency_notice);candidate_layout.insertWidget(0,self.dependency_notice)
+        self.result_recommendation=QLabel('尚無已驗證候選');self.result_recommendation.setWordWrap(True);candidate_layout.insertWidget(0,self.result_recommendation)
+        self.recommended_button=QPushButton('查看目前合格推薦');self.recommended_button.clicked.connect(self.select_recommended_candidate);candidate_layout.insertWidget(1,self.recommended_button)
         self.candidate_scroll=QScrollArea();self.candidate_scroll.setWidgetResizable(True);self.candidate_scroll.setWidget(candidate_panel);self.candidate_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff);self.candidate_scroll.setMinimumWidth(270);split.addWidget(self.candidate_scroll)
         self.output_canvas = Canvas()
         self.output_canvas.setMinimumHeight(240)
@@ -1851,6 +1853,8 @@ class MainWindow(QMainWindow):
                 item=QListWidgetItem(c.template.name+f' v{c.template.version}／{c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n'+('排序依據：'+str(c.score)+'；'+'；'.join(c.reasons) if c.formal_eligible else risk['label']+'；'+'；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS')+'；'+'；'.join(c.issues[:3])));item.setData(Qt.UserRole,index);view.addItem(item)
                 if c.generation!=self.generation:item.setText('待重驗：輸入世代已變，人工框位保留\n'+item.text())
             self._candidate_view_signature=signature
+        from .candidate_results import recommendation
+        recommendation_state=recommendation(self);self.result_recommendation.setText(recommendation_state['label']+'\n'+recommendation_state['scope_label']);self.recommended_button.setEnabled(recommendation_state['index'] is not None)
         for view in views:
             view.clearSelection();view.setCurrentRow(-1)
             for index in range(view.count()):
@@ -1893,6 +1897,12 @@ class MainWindow(QMainWindow):
             from .candidate_risk import transient_draft
             self.candidates[row]=transient_draft(self.candidates[row],reason);self.choose_candidate(row)
         except ValueError as error:self.error(str(error))
+
+    def select_recommended_candidate(self):
+        from .candidate_results import recommendation
+        result=recommendation(self)
+        if result['index'] is not None:self.candidate_list.setCurrentRow(result['index'])
+        else:self.statusBar().showMessage(result['label'])
 
     def refresh_dependency_notice(self):
         if not hasattr(self,'dependency_notice') or not self.candidates:return

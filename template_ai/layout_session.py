@@ -161,7 +161,7 @@ class LayoutSessionDialog(QDialog):
             if confirmed is not True and QMessageBox.question(self,'採用候選',message)!=QMessageBox.Yes:return
             total=len(self.worker.templates);checked=sum('template_id' in r for r in self.rows);failed=sum('template_id' in r and r.get('candidate') is None for r in self.rows)
             w.last_layout_risk_summary=search_result(results,scope_complete=self.report_state=='COMPLETED' and checked==total and not failed,unstarted=max(0,total-checked),excluded=[r.get('error','計算失敗') for r in self.rows if not r.get('candidate')])
-            w.last_layout_summary=dict(state=self.report_state,total=total,checked=checked,calculated=max(0,checked-failed),failed=failed,unstarted=max(0,total-checked),global_unsolvable=False)
+            w.last_layout_summary=dict(state=self.report_state,total=total,checked=checked,calculated=max(0,checked-failed),failed=failed,unstarted=max(0,total-checked),global_unsolvable=False,generation=self.generation,scope_template_pins=copy.deepcopy(self.template_digests))
             for candidate in results:bind_source(candidate,w.library)
             w.candidates=sorted(results,key=lambda c:(not c.formal_eligible,-c.score,c.template.id));w.candidate_list.clear()
             for c in w.candidates:w.candidate_list.addItem(c.template.name+' · 當次已計算／待最終輸出Gate')
