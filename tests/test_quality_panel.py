@@ -69,6 +69,9 @@ class QualityPanelTests(unittest.TestCase):
         self.assertEqual(empty['rows'],[]);self.assertEqual(empty['whole_source_units'],1)
         gold=service.page(self.protocol['id'],'BASELINE',facets=dict(role='HOLDOUT'))
         self.assertEqual(gold['total'],all_rows['total'])
+        by_filename=service.page(self.protocol['id'],'BASELINE',query='example.svg')
+        by_version=service.page(self.protocol['id'],'BASELINE',query='Actual baseline')
+        self.assertEqual(by_filename['total'],all_rows['total']);self.assertEqual(by_version['total'],all_rows['total'])
 
     def test_predicted_work_tamper_is_rejected_even_with_unchanged_item_receipt(self):
         self.completed();QualityProtocols(self.library).expose(self.protocol['id'],'Reviewer','Inspect source prediction',True)

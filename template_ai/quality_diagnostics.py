@@ -16,6 +16,8 @@ class QualityDiagnostics:
         pair=self.store.get('QUALITY_PROTOCOL_JOBS',protocol_id)
         if not pair:raise ValueError('固定品質工作不存在')
         job_id=pair['jobs'][side]
+        pipeline=self.store.get('QUALITY_PIPELINE',protocol['scope']['pipelines'][side]['id'])
+        version_text=' '.join([pipeline['id'],pipeline['name'],pipeline['manifest_digest'],pipeline['manifest']['analyser_version'],str(pipeline['manifest'].get('semantic_model_id') or ''),str((pipeline['manifest'].get('ocr') or {}).get('runtime',{}).get('version',''))])
         base="""WITH cases AS (
           SELECT r.id item_id,r.revision item_revision,json_extract(r.payload,'$.source_id') source_id,
             CAST(c.key AS TEXT) ordinal,c.value case_payload,
@@ -41,7 +43,7 @@ class QualityDiagnostics:
         if field_type!='ALL':
             where+=" AND (json_extract(case_payload,'$.gold_kind')=? OR json_extract(case_payload,'$.predicted_kind')=?)";args.extend([field_type,field_type])
         for token in query.casefold().split():
-            where+=" AND instr(training_casefold(coalesce(source_id,'')||' '||case_payload),?)>0";args.append(token)
+            where+=" AND instr(training_casefold(coalesce(source_id,'')||' '||case_payload||' '||COALESCE((SELECT original_path FROM sources WHERE sources.id=cases.source_id),'')||' '||?),?)>0";args.extend([version_text,token])
         total=self.library.db.execute(base+'SELECT count(*) FROM cases'+where,args).fetchone()[0]
         rows=[]
         for row in self.library.db.execute(base+'SELECT item_id,item_revision,source_id,ordinal,case_payload,severity,domain FROM cases'+where+' ORDER BY item_id,ordinal LIMIT ? OFFSET ?',(*args,limit,offset)):
