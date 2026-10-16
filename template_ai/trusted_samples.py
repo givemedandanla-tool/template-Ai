@@ -43,30 +43,43 @@ class TrustedSampleMixin:
         try:
             payload=work['payload'];slots=[Slot(**{**s,'rect':Rect(**s['rect'])}) for s in payload['slots']];learn_from_labels('sample preflight',payload['work_width'],payload['work_height'],slots,work['source_id'],Rect(**payload['crop']),bindings,work_id,work['revision'])
         except (ValueError,TypeError,KeyError) as error:errors.append('幾何／語意硬條件：'+str(error))
+        from .trusted_sample_pool import source_restriction,holdout_admission_errors
+        if source_restriction(self,source['hash'],'GEOMETRY_TRAINING_LOCAL'):errors.append('來源幾何訓練用途已停止使用')
+        errors.extend(holdout_admission_errors(self.library,source['hash']))
+        from .trusted_sample_pool import TrustedSamplePool
+        conflicts=TrustedSamplePool(self.library).conflicts(work_id)
+        if not conflicts['complete'] or conflicts['conflicting_work_ids']:errors.append('同內容現行人工標記衝突或核實範圍不完整，不能准入')
         decisions=self.noise_decisions(work_id)
         if any(r['state'].startswith(('REVIEW','STALE')) for r in decisions):errors.append('雜訊／來源／規則疑義需先解決')
         deps={r['id']:r['revision'] for row in decisions for r in row['rule_matches']}
         plan={'epoch':self.epoch,'work_id':work_id,'pins':self.pins(work_id),'facts_revision':facts['revision'],'observations_digest':digest(facts['observations']),'noise_signature':self.noise_signature(work_id),'rights':rights,'bindings':bindings,'positive_labels':sorted(positive,key=lambda r:r['slot_id']),'negative_predictions':negative,'label_slots':copy.deepcopy(work['payload']['slots']),'crop':copy.deepcopy(work['payload']['crop']),'width_mm':work['payload']['work_width'],'height_mm':work['payload']['work_height'],'rule_dependencies':[{'id':rid,'revision':deps[rid]} for rid in sorted(deps)],'errors':sorted(set(errors)),'native_mapping':'UNKNOWN','training_scope':'GEOMETRY_ONLY; NO_NEURAL_OR_INDEPENDENT_VISUAL_CLAIM'}
+        plan['source_byte_size']=source['byte_size']
         plan['scope_digest']=digest({k:v for k,v in plan.items() if k not in ('epoch','errors')});plan['digest']=digest(plan);return plan
 
     def approve_sample(self,plan,proof,actor,approved=False):
+        with self.transaction():
+            return self.approve_sample_in_transaction(plan,proof,actor,approved)
+
+    def approve_sample_in_transaction(self,plan,proof,actor,approved=False):
         from .training_store import text
         if approved is not True:raise ValueError('明確批准准入，並非啟動訓練')
         text(actor,'准入確認者',120)
-        with self.transaction():
-            current=self.sample_approval_plan(plan['work_id'],plan['rights'],plan['bindings'])
-            if current['digest']!=plan.get('digest') or current['errors']:raise ValueError('准入範圍已變更或條件未滿足：'+'；'.join(current['errors']))
-            self.checked(current['work_id'],proof)
-            if not healthy_source(self.library.source(current['pins']['source_id'])):raise ValueError('來源快取／分析資產不健康，未准入')
-            duplicates=list(self.db.execute("SELECT id FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.admission_digest')=? AND json_extract(payload,'$.state')='APPROVED'",(current['scope_digest'],)))
-            if duplicates:raise ValueError('同一准入範圍已存在，不重複批准')
-            record={k:v for k,v in current.items() if k not in ('errors','epoch','digest')};record.update(state='APPROVED',admission_digest=current['scope_digest'],actor=actor,admitted=time.time(),source_stat=list(proof.stat),cache_stamps=cache_stamps(self.library.source(current['pins']['source_id'])),invalidations=[],used_for_training=False)
-            return self._write('SAMPLE',new_id(),record,0,'sample_admitted')
+        if not self.db.in_transaction:raise ValueError('樣本准入需在既有明確交易內')
+        current=self.sample_approval_plan(plan['work_id'],plan['rights'],plan['bindings'])
+        if current['digest']!=plan.get('digest') or current['errors']:raise ValueError('准入範圍已變更或條件未滿足：'+'；'.join(current['errors']))
+        self.checked(current['work_id'],proof)
+        if not healthy_source(self.library.source(current['pins']['source_id'])):raise ValueError('來源快取／分析資產不健康，未准入')
+        duplicates=list(self.db.execute("SELECT id FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.admission_digest')=? AND json_extract(payload,'$.state')='APPROVED'",(current['scope_digest'],)))
+        if duplicates:raise ValueError('同一准入範圍已存在，不重複批准')
+        record={k:v for k,v in current.items() if k not in ('errors','epoch','digest')};record.update(state='APPROVED',admission_digest=current['scope_digest'],actor=actor,admitted=time.time(),source_stat=list(proof.stat),cache_stamps=cache_stamps(self.library.source(current['pins']['source_id'])),invalidations=[],used_for_training=False)
+        return self._write('SAMPLE',new_id(),record,0,'sample_admitted')
 
     def sample_state(self,sample_id):
         from .quality_rechecks import blocked
         record=self.get('SAMPLE',sample_id)
         if record and blocked(self,record['work_id']):return 'QUARANTINED_QUALITY_RECHECK'
+        from .trusted_sample_pool import source_restriction
+        if record and source_restriction(self,record['pins']['source_hash'],'GEOMETRY_TRAINING_LOCAL'):return 'RESTRICTED_USE'
         from .training_store import digest
         record=self.get('SAMPLE',sample_id)
         if not record:return 'MISSING'

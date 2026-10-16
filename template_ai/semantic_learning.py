@@ -22,6 +22,8 @@ class SemanticLearning:
             work=self.library.artwork(wid);facts=self.store.facts(wid);pins=self.store.pins(wid)
             if work['payload'].get('segmentation_state')=='SUPERSEDED' or not work['payload'].get('visual_confirmed') or self.store.facts_state(wid)!='CONFIRMED':raise ValueError('只收現行、來源有效、已視覺核對與明確確認的文字事實')
             source_hash=pins['source_hash']
+            from .trusted_sample_pool import source_restriction
+            if source_restriction(self.store,source_hash,'SEMANTIC_CLASSIFICATION_LOCAL'):raise ValueError('來源語意訓練用途已停止使用')
             source_sizes[source_hash]=self.library.source(pins['source_id'])['byte_size']
             if sum(source_sizes.values())>100_000_000:raise ValueError('本次語意來源核驗超過100MB，請縮小明確範圍')
             if source_hash in source_roles and source_roles[source_hash]!=role:raise ValueError('同一原來源hash不可跨訓練與留出集')

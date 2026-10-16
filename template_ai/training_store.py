@@ -154,7 +154,10 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
             pins = self.pins(work_id)
             if pins['work_revision'] != expected_work_revision: raise ValueError('作品已變更，觀察未覆蓋新標記')
             checked = self.validate_observations(work_id, observations)
+            before = self.facts(work_id)
             saved = self._write('FACTS', work_id, {'observations': checked, 'confirmation': None, 'state': 'PENDING', 'pins': pins}, expected_revision, 'facts_saved')
+            from .trusted_sample_pool import TrustedSamplePool
+            TrustedSamplePool(self.library).collect_in_transaction(work_id, before, saved)
             self._refresh_noise(work_id); return saved
 
     def facts_state(self, work_id, proof=None):
