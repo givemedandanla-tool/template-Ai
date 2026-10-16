@@ -9,9 +9,13 @@ class CoveragePanel(QWidget):
     def __init__(self,window,parent=None):
         super().__init__(parent);self.window=window;self.store=TrainingStore(window.library);self.offset=0;self.report=None;layout=QVBoxLayout(self);bar=QHBoxLayout();self.previous_button=QPushButton('上頁掃描');self.next_button=QPushButton('下頁掃描');self.reload_button=QPushButton('重算目前範圍');self.previous_button.clicked.connect(lambda:self.page(-200));self.next_button.clicked.connect(lambda:self.page(200));self.reload_button.clicked.connect(self.reload)
         for b in (self.previous_button,self.next_button,self.reload_button):bar.addWidget(b)
-        layout.addLayout(bar);self.status=QLabel('僅描述來源／作品／可信樣本／資料集分布。不用樣本數判品質，不推薦補樣；原生效果／客戶身份UNKNOWN。');self.status.setWordWrap(True);layout.addWidget(self.status);self.count=QLabel();self.count.setWordWrap(True);layout.addWidget(self.count);self.tree=QTreeWidget();self.tree.setHeaderLabels(['分組／精確內容','本頁作品數／ID']);self.tree.itemSelectionChanged.connect(self.selected);layout.addWidget(self.tree,2);self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,2);self.locate_button=QPushButton('定位選中exact作品');self.locate_button.clicked.connect(self.locate);layout.addWidget(self.locate_button);self.reload()
+        layout.addLayout(bar);self.status=QLabel('僅描述來源／作品／可信樣本／資料集分布。不用樣本數判品質，不推薦補樣；原生效果／客戶身份UNKNOWN。');self.status.setWordWrap(True);layout.addWidget(self.status);self.count=QLabel();self.count.setWordWrap(True);layout.addWidget(self.count);self.tree=QTreeWidget();self.tree.setHeaderLabels(['分組／精確內容','本頁作品數／ID']);self.tree.itemSelectionChanged.connect(self.selected);layout.addWidget(self.tree,2);self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,2);self.locate_button=QPushButton('定位選中exact作品');self.locate_button.clicked.connect(self.locate);layout.addWidget(self.locate_button);self._loaded=False
+    def showEvent(self,event):
+        super().showEvent(event)
+        if not self._loaded:self.reload()
     def page(self,delta):self.offset=max(0,self.offset+delta);self.reload()
     def reload(self,*_):
+        self._loaded=True
         from PySide6.QtCore import Qt
         try:
             self.report=self.store.coverage_report(self.offset);self.tree.clear()

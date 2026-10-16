@@ -37,7 +37,9 @@ class TrainingQualityDialog(QDialog):
         from .dataset_panel import DatasetPanel
         self.dataset_panel=DatasetPanel(window,self);self.tabs.addTab(self.dataset_panel,'資料集／幾何學習')
         from .coverage_panel import CoveragePanel
-        self.coverage_panel=CoveragePanel(window,self);self.tabs.addTab(self.coverage_panel,'覆蓋／分布')
+        from .qualified_coverage_panel import QualifiedCoveragePanel
+        self.coverage_panel=QualifiedCoveragePanel(window,self);self.tabs.addTab(self.coverage_panel,'樣本覆蓋C／用途與分母')
+        self.inventory_panel=CoveragePanel(window,self);self.tabs.addTab(self.inventory_panel,'來源作品盤點（含待審）')
         from .coverage_closure_panel import CoverageClosurePanel
         self.closure_panel=CoverageClosurePanel(window,self);self.tabs.addTab(self.closure_panel,'來源審核／安全結案')
         self.tabs.currentChanged.connect(lambda index:self.closure_panel.activate() if self.tabs.widget(index) is self.closure_panel else None)

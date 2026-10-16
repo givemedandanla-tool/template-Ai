@@ -1197,3 +1197,7 @@ UI055199supporting IDs/original11 exact registered,147claims pending,1026catalog
 ## UI056 qualified counts and snapshot backend
 
 Six actual backend checks PASS: candidates/HOLDOUT excluded from default, two aliases/two sources butonecontent/oneweight, explicitVALIDATION/exactmanifest, revocation retains historicalcounts without currentclaim, noimages/models/autojobs, heldout exposure remains visible without freshindependence. Snapshotstores minimal IDs/counts/statdigests, no duplicated source/work names; no arbitrary thresholds or supplementation. Native panel constructor/owned request host only drafted, not wired; source-return/display/history handlers pending. No parent completion.
+
+## UI056 native primary view and explicit inventory
+
+QualifiedCoveragePanel now primary default purpose-filtered C stats; old CoveragePanel kept as separately named inventory and lazy-loaded. Existing legacy inventory tests/capture select inventory explicitly, preserving original readonly coverage assertions; new Qt tests target new default, explicit manifest selection, retained historicalcounts after revoke and dirty-source protection/actual exact return. First11new+old Qt tests PASS. Added busy/environment admission checks before declaring loading, generation guard for changed selections and weakref Qt lifecycle guard; rerun pending. 1037known, no new parent completion.

@@ -31,6 +31,11 @@ def trace_page(library,pool,identity,offset=0):
 
 def execute(library,command,payload):
     pool=TrustedSamplePool(library)
+    if command=='COVERAGE_DATASETS':
+        kind=payload.get('kind');offset=payload.get('offset',0)
+        if kind not in ('DATASET','QUALITY_SET') or type(offset) is not int or offset<0:raise ValueError('資料集目錄需有效種類與50筆分頁')
+        rows=pool.db.execute("SELECT id,revision,COALESCE(json_extract(payload,'$.manifest.name'),'未命名版本') FROM training_records WHERE kind=? ORDER BY rowid DESC LIMIT 50 OFFSET ?",(kind,offset))
+        return dict(rows=[dict(id=r[0],revision=r[1],label=r[2]) for r in rows],offset=offset,total=pool.store.count(kind),images_loaded=False)
     if command in ('COVERAGE','COVERAGE_SNAPSHOTS','COVERAGE_HISTORICAL'):
         from .qualified_coverage import QualifiedCoverage
         service=QualifiedCoverage(library)
