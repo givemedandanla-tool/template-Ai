@@ -47,3 +47,8 @@
 - QUALITY_SET可明列raw/unparsed/missing files，即使0gold也保存filedenominator/unknownwork，無gold不得讀原稿或冒充獨立/qualitypass；gold不得混入scope外；source registration/version/stat變更使舊scope失效，physical/logical各計。56 gold/protocol/sourcebatch targets PASS。
 - QualityPolicy schema2：physical_size採明確mm誤差口徑（不拿PR當尺寸），field_types明列各支援類別，no aggregate hiding；舊policy schema不假冒valid。12 policy/protocol targets PASS，仍全UI0539未閉合。
 - 下一actual per-domain source results/critical/unknown metrics，EVAL_JOB接既有FIFO/isolated worker，pairedAB result/answer曝光GUI與historical severe-error跨批重審；勿在這裡停止或關UI053。
+
+### UI053 initial domain counts WIP
+- quality_domains真值與predict分開，exact sourceID/hash/page，比對work框後在各work內class-agnostic欄位/ROOT配對；跨人物已知錯配與漏整件work/缺ROOT critical另列，不被容易field平均稀釋；physical_size以policy明確mm差值，空/無gold/未解析/不完整分母仍unknown。
+- 6純合成數學counterexamples +6實際artifact protocol共12PASS。數學fixture只測口徑，非actualmodel執行證據；actualPipeline已有另4case。Logo構件/客戶版型推論目前明示EVIDENCE_INSUFFICIENT，尚無完整scorer/Oracle adapters，不得關UI053或宣稱模型品質PASS。
+- 下一優先EVAL_JOB實際source-only producer接既有RuntimeQueue/FIFO/worker/owner/pause/timeout/restart；評估結果各分母/critical/unknown聚合及paired比較，再補Logo/映射真值adapter與診斷GUI/跨批重審/原9正式。目前僅6/28歷史已驗milestone，144currentpending，UI053未完成。

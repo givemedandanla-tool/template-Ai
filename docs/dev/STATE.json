@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI053-DECLARED-SOURCE-DOMAINS-WIP",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI053-PAIRED-PROTOCOL-WIP.receipt.json",
-  "last_confirmed_commit": "9bceed73a9d4d771a64ae9d08d60f518005b43dc",
+  "active_task": "REMAINING28-UI053-DOMAIN-COUNTS-WIP",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI053-DECLARED-SOURCE-WIP.receipt.json",
+  "last_confirmed_commit": "d85c5c92b8d41c214c063928803764c04dcaef67",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -17,10 +17,10 @@
     "docs/dev/PROJECT_ROADMAP.md"
   ],
   "next_tasks": [
-    "Actual per-domain source evaluation and critical/unknown results with schema2 policy",
-    "Persisted EVAL_JOB through existing FIFO/subprocess/pause/restart and fixed protocol use",
-    "Paired result comparison/controlled answer exposure GUI and confirmed severe-error historical batches",
-    "Full original9 UI053 registration plus source formal revalidation of144+UI053 after complete"
+    "Implement actual EVAL_JOB producer through existing RuntimeQueue/FIFO/isolated worker/lease/pause/timeout/restart",
+    "Aggregate per-domain independent-group/critical/unknown results and exact paired comparison",
+    "Complete Logo/component and customer-style truth/prediction adapters,diagnostic/exposure GUI and confirmed historical batch re-review",
+    "Register unchanged original9 only after complete,then fresh full source formal verification"
   ],
   "blocked": [],
   "deferred": [
@@ -29,7 +29,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-UI053-DECLARED-SOURCE-WIP"
+    "CP-20261016-REMAINING28-UI053-DOMAIN-COUNTS-WIP"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",

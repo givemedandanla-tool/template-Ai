@@ -946,3 +946,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-16 00:32 UTC logical source scope and domain policy WIP
 - UI052 samephysical relink2original aliases independent validated45cases；stronger originalclause6 regression saved without changing normative text/parent counts。
 - Quality rawscope56casesPASS含0gold1fileunknown、raw未解析不讀、不漏分母、scope外gold拒絕、新register/stat stalescope；Policy schema2明確physicalmm/perclassmetrics，12targetPASS。current144pending，尚未UI053domainjob/FIFO/GUI/fullformal。
+
+### 2026-10-16 00:42 UTC UI053 initial domain counter WIP
+- 12 domain/protocol target PASS；domain6為明示synthetic arithmetic oracle，沒有捏造realmodel evidence。實際inference另有pipeline tests。已知錯配/漏work critical、mm誤差、unknown完整性分母；Logo完整圖文與mapping仍缺Oracle/pred adapters，明確unknown不以bbox當PASS。
+- 下一actual FIFO evaluation job、persisted results/gates/pairedreport、GUI/exposure/severe historicalreview；原9未閉合，不在WIP停工。
