@@ -66,7 +66,11 @@ class QualityRepairGates:
         if stage==STAGES[0]:
             if previous_gate_id:raise ValueError('原問題回歸不可冒接其他Gate')
             origin=QualityProtocols(self.library).get(issue['evidence']['protocol_id'])
-            if dataset_id!=origin['scope']['dataset_id']:raise ValueError('先重播原問題同一來源及有效人工答案')
+            from .quality_repair_truth import checked as checked_truth
+            from .quality_repairs import QualityRepairs
+            truth=checked_truth(QualityRepairs(self.library),issue['id'])
+            expected_dataset=truth['plan']['dataset_id'] if truth else origin['scope']['dataset_id']
+            if dataset_id!=expected_dataset:raise ValueError('先重播原問題同一來源及明確核對的有效人工答案')
         else:
             prior=self.checked_gate(previous_gate_id)
             if prior['plan']['stage']!=STAGES[STAGES.index(stage)-1] or prior['plan']['candidate_id']!=candidate_id:raise ValueError('需同一候選的直接前階段PASS憑證')

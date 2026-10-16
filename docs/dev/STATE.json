@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI054-EXACT11-IN_PROGRESS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI054-SOURCE-IMPACT-WIP.receipt.json",
-  "last_confirmed_commit": "ec5e7353f8ba9feea637202ff5b64e6a86fb8407",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI054-ORDERED-GATES-WIP.receipt.json",
+  "last_confirmed_commit": "c78a46ac1a3d5345bda3ecc5cacd4927afe46184",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-UI054-ORDERED-GATES-WIP"
+    "CP-20261016-REMAINING28-UI054-CURRENT-TRUTH-WIP"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -662,7 +662,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "UI054 actual frozen faulty→repaired ROOT gate3PASS; combined ordered/replay/protocol/report17PASS. 971known/145pending; 7/28 historical only, full11 incomplete.",
+  "current_work": "UI054 explicit current Gold truth rebind13PASS plus ordered/candidate/rule15PASS;974known/145pending,7of28 historical only. Next positive full-chain and actual runtime deployment/rollback; release draft AST only.",
   "last_formal_failure": {
     "run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
     "source_commit": "233e9ea4edc8d8927e482c3f0d362a78bd2ced5d",

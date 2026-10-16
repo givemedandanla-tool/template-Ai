@@ -180,5 +180,30 @@
       "Full positive critical-controls/fresh-independent chain",
       "Actual deployment/rollback, seven pages/full original11/formal"
     ]
+  },
+  "truth_rebind_package": {
+    "status": "IMPLEMENTED13PASS_CANDIDATE_RULE_GATE15PASS_PENDING_FULL11",
+    "implementation": [
+      "template_ai/quality_repair_truth.py",
+      "template_ai/quality_repairs.py",
+      "template_ai/quality_protocol.py",
+      "template_ai/quality_repair_gates.py"
+    ],
+    "evidence": [
+      "docs/qa/targeted/ui054-current-truth-001.log",
+      "docs/qa/targeted/ui054-current-truth-002.log"
+    ],
+    "scope": "Explicit current same-content HOLDOUT Gold binding after human fact re-review; old immutable failure retained, exposure/role/consumption never reset; new root review can run actual descriptive replay, stale changes and late audit fail closed.",
+    "pending": "Full positive critical-controls/fresh-independent chain, actualdeployment/rollback and seven pages/all original11"
+  },
+  "release_draft": {
+    "path": "docs/dev/wip/UI054_RELEASES_DRAFT.py",
+    "status": "AST_ONLY_NOT_IMPORTED_NOT_IMPLEMENTED",
+    "review_required": [
+      "CAS immutable deployment and current quality trust",
+      "Actual AUTO preflight/job pipeline pins and frozen source execution; no version switching",
+      "Backup restore revalidation marker; actual rollback target proof/late audit failure tests",
+      "Full positive ordered chain with actual multiwork/critical controls"
+    ]
   }
 }

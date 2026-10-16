@@ -18,7 +18,7 @@ REPAIR='EXPOSED_HOLDOUT_REPAIR_DIAGNOSTIC'
 
 def calculation_files():
     root=Path(__file__).parent
-    names=('quality_metrics.py','quality_domains.py','quality_facets.py','quality_diagnostics.py','quality_rechecks.py','quality_trust.py','coverage_evidence.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_rules.py','quality_ocr.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py','quality_repairs.py','quality_repair_training.py','quality_repair_rules.py','quality_repair_gates.py')
+    names=('quality_metrics.py','quality_domains.py','quality_facets.py','quality_diagnostics.py','quality_rechecks.py','quality_trust.py','coverage_evidence.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_rules.py','quality_ocr.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py','quality_repairs.py','quality_repair_training.py','quality_repair_rules.py','quality_repair_gates.py','quality_repair_truth.py')
     return {name:file_digest(root/name) for name in names}
 
 
@@ -35,8 +35,12 @@ class QualityProtocols:
         issue=self.store.get('QUALITY_REPAIR_ISSUE',review['plan']['issue_id'])
         if issue['evidence']['origin']!='ACTUAL_QUALITY_CASE':raise ValueError('診斷重播需綁定實際已執行失敗及根因核對')
         origin=self.get(issue['evidence']['protocol_id'])
-        if origin['scope']['dataset_id']!=dataset_id or not self.store.get('HOLDOUT_EXPOSED',dataset_id):raise ValueError('只重播原問題已揭露的同一驗收集；新資料仍走獨立試驗')
-        return dict(id=review_id,digest=digest(review),issue_id=issue['id'],issue_digest=digest(issue),origin_protocol_id=origin['id'],origin_scope_digest=origin['scope_digest'])
+        from .quality_repair_truth import checked as checked_truth
+        from .quality_repairs import QualityRepairs
+        truth=checked_truth(QualityRepairs(self.library),issue['id'])
+        expected_dataset=truth['plan']['dataset_id'] if truth else origin['scope']['dataset_id']
+        if expected_dataset!=dataset_id or not self.store.get('HOLDOUT_EXPOSED',origin['scope']['dataset_id']):raise ValueError('只重播原問題已揭露的同一來源範圍及明確新版真值；新資料仍走獨立試驗')
+        return dict(truth_review_digest=digest(truth) if truth else None,id=review_id,digest=digest(review),issue_id=issue['id'],issue_digest=digest(issue),origin_protocol_id=origin['id'],origin_scope_digest=origin['scope_digest'])
 
     def dataset_status(self,scope,verify_sources=True):
         return self.sets.validity(scope['dataset_id'],verify_sources,exposure_policy='DESCRIPTIVE_REPAIR_ONLY' if scope.get('purpose')==REPAIR else 'REJECT')
