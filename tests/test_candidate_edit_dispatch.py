@@ -80,3 +80,26 @@ class CandidateEditDispatchTests(unittest.TestCase):
         self.assertEqual(self.w.candidates[0].template.slots[0].rect.w,c.template.slots[0].rect.w-1);dialog.preview_original();dialog.compare();wait_candidate_edits(self.w);current=self.w.candidates[0];QTest.mouseClick(dialog.keep_button,Qt.LeftButton);self.assertIs(self.w.candidates[0],current);self.assertFalse(dialog.adopt_button.isEnabled());dialog.operation.setCurrentIndex(2);dialog.preview()
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(dialog.apply_button,Qt.LeftButton)
         wait_candidate_edits(self.w);self.assertTrue(self.w.candidates[0].template.slots[0].locked)
+
+    def test_dependency_notice_identifies_phone_only_and_reuses_unchanged_size(self):
+        from template_ai.candidate_changes import candidate_impact
+        c=self.ready();initial=candidate_impact(self.w,0);self.assertEqual(initial['state'],'REUSABLE');self.assertFalse(initial['needs_recheck']);self.w.people.item(0,2).setText('1234567');self.w.refresh_input_problems();impact=candidate_impact(self.w,0);phone_ids=[s.id for s in c.template.slots if s.kind=='phone'];self.assertEqual(impact['affected_slot_ids'],phone_ids);self.assertEqual(impact['state'],'RECOMPUTE');self.assertIn('phone',self.w.dependency_notice.text());self.assertIn(phone_ids[0],self.w.dependency_notice.text());self.assertFalse(self.w.export_button.isEnabled())
+    def test_explicit_affected_action_uses_existing_single_worker_and_preserves_manual(self):
+        self.ready();self.move();wait_candidate_edits(self.w);manual=self.w.candidates[0].template.to_dict();self.w.people.item(0,2).setText('1234567');self.w.recheck_affected_candidates();wait_candidate_edits(self.w);self.assertEqual(self.w.candidates[0].template.to_dict(),manual);self.assertTrue(self.w.candidates[0].formal_eligible);self.assertIn('重驗',self.w.statusBar().currentMessage());self.assertEqual(self.w.pool.maxThreadCount(),1)
+
+    def test_stale_groups_are_inspectable_after_debounce_but_never_exportable(self):
+        self.ready();self.w.people.item(0,2).setText('1234567');self.assertFalse(self.w.qualified_candidates.isEnabled());self.w.refresh_input_problems();self.assertEqual(self.w.qualified_candidates.count(),0);self.assertEqual(self.w.review_candidates.count(),1);self.assertTrue(self.w.review_candidates.isEnabled());self.assertIn('待重驗',self.w.review_candidates.item(0).text());self.assertFalse(self.w.export_button.isEnabled())
+
+    def test_actual_pending_dialog_geometry_and_comparison_use_same_scale(self):
+        from PySide6.QtWidgets import QMessageBox
+        from template_ai.gui import Box
+        c=self.ready();started,release,calls,guard=self.blocked();dialog=CandidateEditDialog(self.w);self.addCleanup(dialog.deleteLater);dialog.show();dialog.current_canvas.select_id(c.template.slots[0].id);dialog.dx.setValue(1);dialog.preview()
+        with guard:
+            with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):dialog.apply()
+            self.assertTrue(wait_for_gui(started.is_set,2));box=next(i for i in dialog.current_canvas.scene().items() if isinstance(i,Box) and i.slot.id==c.template.slots[0].id);self.assertEqual(box.pos().x(),c.template.slots[0].rect.x+1);self.assertAlmostEqual(dialog.current_canvas.transform().m11(),dialog.proposal_canvas.transform().m11());release.set();wait_candidate_edits(self.w)
+    def test_resource_wait_cancel_never_starts_calculation_or_claims_saved_result(self):
+        from types import SimpleNamespace
+        self.ready();manager=dispatcher(self.w)
+        with patch.object(self.w.runtime,'admit',return_value=SimpleNamespace(allowed=False,reasons=['SYNTHETIC_HIGH_LOAD'])),patch('template_ai.candidate_edit_dispatch.calculate_edit') as work:
+            self.move();self.assertTrue(wait_for_gui(lambda:bool(self.w._waiting_launches),2));self.assertFalse(work.called);self.assertIn('等待資源',self.w.statusBar().currentMessage());self.assertFalse(self.w.candidates[0].formal_eligible);manager.cancel(0);wait_candidate_edits(self.w);self.assertFalse(work.called)
+        self.assertEqual(self.w.candidates[0].risk_context['edit_state'],'PENDING_MANUAL_RECHECK')

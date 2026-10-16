@@ -57,6 +57,7 @@ class CandidateEditDispatcher(QObject):
         key=next(iter(self.pending));envelope=self.pending.pop(key);index=envelope['plan']['index']
         if not self.current(envelope):self.failed.emit(index,'輸入／人工版本已更新，過期重驗要求已忽略；請重新核對');return
         self.active=envelope
+        if envelope.get('mode')!='COMPARE_ONLY':w.candidates[index].risk_context['edit_state']='RECOMPUTING';w.refresh_dependency_notice()
         def work():
             from .storage import Library
             library=Library(envelope['root'])
@@ -65,18 +66,25 @@ class CandidateEditDispatcher(QObject):
         def done(result):
             self.active=None
             if envelope['cancel'].is_set():self.failed.emit(index,'已取消此次重驗；人工版面保留且禁止正式輸出');return
-            if not self.current(envelope):self.failed.emit(index,'較新的輸入或人工版本已存在，過期結果已忽略／可重新比較');return
+            if not self.current(envelope):
+                if envelope.get('mode')!='COMPARE_ONLY' and index<len(w.candidates):
+                    current=w.candidates[index]
+                    if current.risk_context.get('manual_revision',0)==envelope['target_revision'] and digest(current.template.to_dict())==envelope['target_digest']:current.risk_context['edit_state']='PENDING_MANUAL_RECHECK'
+                self.failed.emit(index,'較新的輸入／來源／規則或人工版本已存在，過期結果已忽略／可重新比較');return
             if envelope.get('mode')=='COMPARE_ONLY':
                 result.risk_context['comparison_gate']=result.risk;result.risk_context['comparison_only']=True;self.preview_ready.emit(index,envelope,result);return
             w.candidates[index]=result;w.choose_candidate(index);self.completed.emit(index,result);w.statusBar().showMessage('候選整張重驗完成：'+result.risk['label'])
         def failed(message):
-            self.active=None;self.failed.emit(index,'重驗未完成：'+str(message)+'；人工版面保留，未放行正式輸出')
+            self.active=None
+            if self.current(envelope) and envelope.get('mode')!='COMPARE_ONLY':w.candidates[index].risk_context['edit_state']='PENDING_MANUAL_RECHECK'
+            self.failed.emit(index,'重驗未完成：'+str(message)+'；人工版面保留，未放行正式輸出')
         try:w.run_job('當次候選／人工設定整張重驗',work,done,on_error=failed,resource_kind='GEOMETRY',cancel=envelope['cancel'])
         except Exception as error:failed(str(error))
     def cancel(self,index):
         for key,envelope in list(self.pending.items()):
             if envelope['plan']['index']==index:self.pending.pop(key)['cancel'].set()
         if self.active and self.active['plan']['index']==index:self.active['cancel'].set()
+        if 0<=index<len(self.window.candidates) and self.window.candidates[index].risk_context.get('edit_state')=='RECOMPUTING':self.window.candidates[index].risk_context['edit_state']='PENDING_MANUAL_RECHECK'
         self.failed.emit(index,'已取消此候選重驗；保留人工設定，仍需完整Gate')
 
 

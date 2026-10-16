@@ -196,6 +196,13 @@ def main():
                 for path in generated.glob('layout-risk-session-*'):
                     if path.is_file():shutil.copyfile(path,folder/path.name)
         if capture_code == 0:
+            extra=subprocess.run([sys.executable,str(ROOT/'tools/capture_candidate_changes.py'),'--folder',str(generated)],cwd=ROOT,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=120)
+            with capture_log.open('a') as log:log.write(extra.stdout+extra.stderr)
+            capture_code=extra.returncode
+            if capture_code==0:
+                for path in generated.glob('candidate-changes-*'):
+                    if path.is_file():shutil.copyfile(path,folder/path.name)
+        if capture_code == 0:
             extra=subprocess.run([sys.executable,str(ROOT / 'tools/capture_fixed70_ten.py'),'--artifacts-dir',str(generated)],cwd=ROOT,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=60)
             with capture_log.open('a') as log:log.write(extra.stdout+extra.stderr)
             capture_code=extra.returncode

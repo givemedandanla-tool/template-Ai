@@ -642,6 +642,8 @@ class MainWindow(QMainWindow):
             view.currentItemChanged.connect(lambda item,previous:self.candidate_list.setCurrentRow(item.data(Qt.UserRole)) if item else None)
         self.button("保留當次待確認草稿",self.keep_review_draft,candidate_layout)
         self.button("修正後重新檢查當前候選",self.recheck_candidate,candidate_layout)
+        self.button('重新計算受影響候選',self.recheck_affected_candidates,candidate_layout)
+        self.dependency_notice=QLabel('選取候選可檢視變更依賴與受影響框位');self.dependency_notice.setWordWrap(True);self.dependency_notice.setMinimumHeight(96);candidate_layout.addWidget(self.dependency_notice)
         split.addWidget(candidate_panel)
         self.output_canvas = Canvas()
         self.output_canvas.setMinimumHeight(240)
@@ -1783,6 +1785,7 @@ class MainWindow(QMainWindow):
         if hasattr(self,'output_properties'):self.output_properties.setPlainText('當次資料／尺寸／模板已變更；候選過期，請重新試排。')
         if hasattr(self,'qualified_candidates'):
             self.qualified_candidates.setEnabled(False);self.review_candidates.setEnabled(False);self.blocked_candidates.setEnabled(False)
+        if hasattr(self,'dependency_notice'):self.dependency_notice.setText('資料已變更；人工框位保留，停止連續輸入後顯示受影響原因。尚未重驗，不得正式輸出。')
         self.inputs_invalidated.emit(self.generation)
 
     def refresh_input_problems(self):
@@ -1810,6 +1813,8 @@ class MainWindow(QMainWindow):
                 table.setRowHeight(row,48 if any(i['row']==row and i['table']==('people' if table is self.people else 'companies') for i in report['issues']) else 28)
             del blocker
         self.input_state.setText(f"{len(report['issues'])}項輸入提示／待版面驗證；非全域無解，正式輸出依當前候選Gate")
+        self.refresh_dependency_notice()
+        self.refresh_candidate_views(self.candidate_list.currentRow())
 
     def locate_input_problem(self, item):
         if self.active_input_graph is not None:
@@ -1834,21 +1839,22 @@ class MainWindow(QMainWindow):
     def refresh_candidate_views(self,row=None):
         if not hasattr(self,'qualified_candidates'):return
         from PySide6.QtWidgets import QListWidgetItem
-        signature=tuple((c.template.id,c.template.version,c.risk['digest'],c.generation,c.score) for c in self.candidates)
+        signature=(self.generation,tuple((c.template.id,c.template.version,c.risk['digest'],c.generation,c.score) for c in self.candidates))
         views=(self.qualified_candidates,self.review_candidates,self.blocked_candidates)
         for view in views:view.blockSignals(True)
         if signature!=getattr(self,'_candidate_view_signature',None):
             for view in views:view.clear()
             for index,c in enumerate(self.candidates):
                 risk=c.risk
-                view=self.qualified_candidates if risk['formal_allowed'] else self.blocked_candidates if risk['state']=='HARD_BLOCKED' else self.review_candidates
+                view=self.review_candidates if c.generation!=self.generation else self.qualified_candidates if risk['formal_allowed'] else self.blocked_candidates if risk['state']=='HARD_BLOCKED' else self.review_candidates
                 item=QListWidgetItem(c.template.name+f' v{c.template.version}／{c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n'+('排序依據：'+str(c.score)+'；'+'；'.join(c.reasons) if c.formal_eligible else risk['label']+'；'+'；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS')+'；'+'；'.join(c.issues[:3])));item.setData(Qt.UserRole,index);view.addItem(item)
+                if c.generation!=self.generation:item.setText('待重驗：輸入世代已變，人工框位保留\n'+item.text())
             self._candidate_view_signature=signature
         for view in views:
             view.clearSelection();view.setCurrentRow(-1)
             for index in range(view.count()):
                 if view.item(index).data(Qt.UserRole)==row:view.setCurrentRow(index)
-            view.setEnabled(bool(self.candidates) and all(c.generation==self.generation for c in self.candidates));view.blockSignals(False)
+            view.setEnabled(bool(self.candidates));view.blockSignals(False)
 
     def choose_candidate(self, row):
         self.refresh_candidate_views(row)
@@ -1865,6 +1871,7 @@ class MainWindow(QMainWindow):
             self.output_canvas.set_mode("pan")
             self.output_canvas.fit()
             current = c.generation == self.generation
+            self.refresh_dependency_notice()
             self.export_button.setEnabled(eligible and current)
             self.preview_button.setEnabled(current)
             self.output_properties.setPlainText(f"目前候選：{c.template.name} v{c.template.version}\nID {c.template.id}\n尺寸 {c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n"+('已驗證合格（有效版本）' if eligible and current else risk['label'] if current else '候選過期：禁止正式輸出')+'\n排序為規則適配，非審美保證\n'+'；'.join(c.reasons)+'\n問題：\n'+'\n'.join(c.issues[:20]))
@@ -1885,6 +1892,27 @@ class MainWindow(QMainWindow):
             from .candidate_risk import transient_draft
             self.candidates[row]=transient_draft(self.candidates[row],reason);self.choose_candidate(row)
         except ValueError as error:self.error(str(error))
+
+    def refresh_dependency_notice(self):
+        if not hasattr(self,'dependency_notice') or not self.candidates:return
+        index=self.candidate_list.currentRow()
+        if not 0<=index<len(self.candidates):return
+        from .candidate_changes import candidate_impact
+        try:
+            impact=candidate_impact(self,index);self.dependency_notice.setText(impact['label']+'：'+impact['reason']+'\n涉及物件：'+('、'.join(impact['affected_slot_ids']) or '無局部框位變動；整張不變條件仍須核對'))
+        except (ValueError,OSError,TypeError,KeyError) as error:self.dependency_notice.setText('依賴待核對；保守重驗整張作品：'+str(error))
+
+    def recheck_affected_candidates(self):
+        from .candidate_edit import plan_recheck
+        from .candidate_edit_dispatch import dispatcher
+        if len(self.candidates)>200:self.inform('超過當次200候選重驗預算，請縮小目前集合');return
+        manager=dispatcher(self);count=0
+        for index,candidate in enumerate(self.candidates):
+            # Conservative admission: unchanged current candidates reuse measurements;
+            # stale generations are explicit user-triggered jobs, never per keystroke.
+            if candidate.generation==self.generation and candidate.risk_context.get('edit_state') not in ('PENDING_MANUAL_RECHECK','RECOMPUTING') and candidate.formal_eligible:continue
+            manager.submit(plan_recheck(self,index));count+=1
+        self.statusBar().showMessage('已排程'+str(count)+'個候選完整重驗；共用單worker，人工框位保留')
 
     def recheck_candidate(self):
         row=self.candidate_list.currentRow()

@@ -88,6 +88,33 @@ def merge_properties(base,current,suggestion,locked=False):
 
 EDITABLE={'rect.x','rect.y','rect.w','rect.h','align','color','locked','tracking_mm','tracking_min_mm','tracking_max_mm'}
 
+
+def candidate_impact(window,index):
+    """Inspect one selected candidate, never launch computation on text events."""
+    from .candidate_risk import engine_digest
+    from .layout import layout_dependency
+    from .training_store import digest
+    candidate=window.candidates[index];ctx=candidate.risk_context;old=ctx.get('input_snapshot');people,companies,logos=window.input_data();nodes=[];reasons=[];source_current=True
+    if old is None:return dict(state='SOURCE_REVIEW',label='來源待核對',reason='缺少可追溯輸入快照，需保守重驗整張作品',affected_slot_ids=[s.id for s in candidate.template.slots],needs_recheck=True)
+    if old.get('logos')!=logos:nodes.extend(('LOGO',s.owner,(candidate.template.width_mm,candidate.template.height_mm)) for s in candidate.template.slots if s.kind=='logo');reasons.append('公司Logo或該尺寸資產已變更')
+    if ctx.get('engine_digest')!=engine_digest() or layout_dependency(candidate.template,logos)!=candidate.dependency_stamp:nodes.extend(('SLOT',s.id) for s in candidate.template.slots);reasons.append('字型／Logo／來源／規則依賴已變更')
+    try:
+        source=window.library.object_snapshot('TEMPLATE',candidate.template.id)['payload'];expected=dict(id=source['id'],version=source['version'],digest=digest(source));source_current=source.get('state')=='published' and ctx.get('source_template_pin')==expected
+    except (ValueError,OSError):source_current=False
+    try:impact=affected(candidate.template,old.get('people',[]),old.get('companies',[]),people,companies,nodes)
+    except (ValueError,TypeError,KeyError):impact=dict(affected_slot_ids=[s.id for s in candidate.template.slots],changed_fields=[],whole_card_validation_required=True);reasons.append('依賴邊界無法核實，保守擴大整張重驗')
+    if impact.get('changed_fields'):reasons.append('輸入欄位：'+'、'.join(str(row[0])+'／'+str(row[1]) for row in impact['changed_fields']))
+    dirty=candidate.generation!=window.generation or bool(reasons) or not source_current or ctx.get('edit_state') in ('PENDING_MANUAL_RECHECK','RECOMPUTING')
+    if not source_current:state,label='SOURCE_REVIEW','來源待核對';reasons.append('核准模板exact版本失聯或已變，不能沿用舊核准')
+    elif ctx.get('edit_state')=='RECOMPUTING':state,label='RECOMPUTING','正在重算'
+    elif ctx.get('edit_state')=='PENDING_MANUAL_RECHECK':state,label='PENDING','人工位置保留，待重算'
+    elif dirty:state,label=('RECOMPUTE','受影響框位待重算') if impact['affected_slot_ids'] else ('REVALIDATE','框位可保留，整張待重驗')
+    elif ctx.get('edit_state')=='MANUAL_INPUT_CONFLICT':state,label='MANUAL_CONFLICT','人工位置與輸入衝突待決'
+    elif candidate.risk['state']=='HARD_BLOCKED':state,label='BLOCKED','目前框位／輸入未通過'
+    elif not candidate.formal_eligible:state,label='SOURCE_REVIEW','必要證據／風險待核對';reasons.append('當次量測不能取代尚未通過的必要條件')
+    else:state,label='REUSABLE','依賴未改，可沿用當次量測'
+    return dict(impact,state=state,label=label,reason='；'.join(reasons) or '當次依賴已核對；正式輸出仍需目前尺寸完整Gate',needs_recheck=dirty)
+
 def slot_properties(slot):
     values={key:deepcopy(value) for key,value in slot.items() if key!='rect'}
     values.update({'rect.'+key:value for key,value in slot['rect'].items()});return values

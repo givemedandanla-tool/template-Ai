@@ -67,7 +67,7 @@ class LayoutSessionExtendedTests(unittest.TestCase):
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):d.adopt()
         slot=self.w.candidates[0].template.slots[0];old_x=slot.rect.x;apply_candidate(self.w,plan_candidate(self.w,0,[slot.id],1,0),True);d.report_state='CANCELLED';d.controls()
         with patch.object(QInputDialog,'getText',return_value=('synthetic-password-123',True)):d.save_recovery();pump_until(lambda:not self.w.busy)
-        payload=d.recovery.load('synthetic-password-123');rows=d.recovery.validate(self.w.library,payload);self.assertIsNotNone(rows[0]['candidate']);self.assertEqual(rows[0]['candidate'].template.slots[0].rect.x,old_x+1);self.assertIn('manual_edit_receipt',rows[0]['candidate'].risk_context)
+        payload=d.recovery.load('synthetic-password-123');rows=d.recovery.validate(self.w.library,payload);self.assertIsNotNone(rows[0]['candidate']);self.assertEqual(rows[0]['candidate'].template.slots[0].rect.x,old_x+1);self.assertIn('manual_edit_receipt',rows[0]['candidate'].risk_context);self.assertEqual(rows[0]['candidate'].risk_context['manual_revision'],1);self.assertEqual(len(rows[0]['candidate'].risk_context['manual_history']),1);self.assertEqual(rows[0]['candidate'].risk_context['manual_base_template']['slots'][0]['rect']['x'],old_x)
     def test_save_after_input_change_never_claims_stale_session_is_current_saved_work(self):
         d=self.dialog();d.start();pump_until(lambda:not d.running);d.report_state='CANCELLED';self.w.people.item(0,0).setText('New unsaved input')
         with patch.object(QInputDialog,'getText',return_value=('synthetic-password-123',True)):d.save_recovery();pump_until(lambda:not self.w.busy)

@@ -129,7 +129,7 @@
   },
   "current_implementation": {
     "status": "IMPLEMENTATION_IN_PROGRESS",
-    "catalog_expected": 1118,
+    "catalog_expected": 1123,
     "packages": [
       "dependency DAG and bounded inverse receipts",
       "single existing worker/coalescing/ABA fencing",
@@ -140,7 +140,10 @@
       "ui059-shared-worker-integration-005.log:22",
       "ui059-worker-ordering-007.log:6",
       "ui059-difference-controls-008.log:24",
-      "ui059-comparison-source-fence-011.log:32"
+      "ui059-comparison-source-fence-011.log:32",
+      "ui059-dependency-states-013.log:26",
+      "ui059-dependency-recovery-014.log:35",
+      "ui059-native-scale-admission-018.log:23"
     ],
     "preserved_diagnostics": [
       "006 used incorrect expected dictionary key; fixed test to actual contract",
@@ -148,8 +151,14 @@
       "010 attempted forbidden published overwrite; change to explicit adversarial external payload replacement test"
     ],
     "pending": [
-      "dependency candidate state/action UI",
-      "native captures, source freeze and full regression, ten-clause final registration"
-    ]
+      "Finish native019 visual review",
+      "Regression and fence for risk/review context changed during active edit",
+      "Original10 clause mapping, fresh source freeze/full regression after next unblocked parent package"
+    ],
+    "native_review": {
+      "015": "Actual capture PASS but visually found initial zoom mismatch and export footer squeezed into card height; not final accepted display evidence",
+      "017": "Cards now aligned to actual geometry; first4 visually reviewed; found pending dialog still held prior geometry and unequal pane scale; corrected and tested018",
+      "019": "Capture in progress after equal-scale and pending-geometry fixes"
+    }
   }
 }

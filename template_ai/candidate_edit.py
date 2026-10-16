@@ -1,6 +1,6 @@
 """Edit one transient candidate instance through the existing geometry proposal engine."""
 import copy,json
-from PySide6.QtCore import Qt,Slot
+from PySide6.QtCore import Qt,Slot,QTimer
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QListWidget,QListWidgetItem,QDoubleSpinBox,QPushButton,QPlainTextEdit,QLabel,QMessageBox,QComboBox,QSplitter
 from .customers import digest
 from .model import Template
@@ -130,6 +130,7 @@ class CandidateEditDialog(QDialog):
         from .gui import Canvas
         views=QSplitter();self.current_canvas=Canvas();self.proposal_canvas=Canvas()
         for title,canvas in (('目前人工版面（待驗證時保留風險）',self.current_canvas),('新建議比較（非正式，不會自動套用）',self.proposal_canvas)):
+            canvas.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff);canvas.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
             pane=QDialog();box=QVBoxLayout(pane);box.addWidget(QLabel(title));box.addWidget(canvas);views.addWidget(pane)
         layout.addWidget(views,2);self.current_canvas.selected.connect(self.canvas_selected)
         self.objects=QListWidget();self.objects.setSelectionMode(QListWidget.ExtendedSelection);layout.addWidget(self.objects)
@@ -153,16 +154,28 @@ class CandidateEditDialog(QDialog):
         self.adopt_button.setEnabled(False);layout.addLayout(bar);self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details);self.resize(1180,850)
         from .candidate_edit_dispatch import dispatcher
         manager=dispatcher(window);manager.completed.connect(self.edit_completed);manager.failed.connect(self.edit_failed);manager.preview_ready.connect(self.comparison_ready)
+    def resizeEvent(self,event):
+        super().resizeEvent(event);QTimer.singleShot(0,self.fit_views)
+    def fit_views(self):
+        self.current_canvas.fit();self.proposal_canvas.fit()
+        if self.current_canvas.scene().items() and self.proposal_canvas.scene().items():
+            common=min(self.current_canvas.transform().m11(),self.proposal_canvas.transform().m11())
+            for canvas in (self.current_canvas,self.proposal_canvas):canvas.scale(common/canvas.transform().m11(),common/canvas.transform().m11())
     def show_canvas(self,canvas,candidate):
         from .gui import Box
         from PySide6.QtWidgets import QGraphicsItem
         from .render import render_image
-        try:image=render_image(candidate,dpi=100,preview=True)
+        try:
+            image=render_image(candidate,dpi=100,preview=True)
+            # The canvas shows the card at its physical coordinate system.
+            # Risk notes already have visible UI text; the export footer must
+            # never be squeezed into card height and misalign the object overlay.
+            image=image.copy(0,0,image.width(),max(1,round(candidate.template.height_mm*100/25.4)))
         except (ValueError,OSError):image=None
         canvas.set_content(candidate.template.width_mm,candidate.template.height_mm,image,candidate.template.slots)
         for item in canvas.scene().items():
             if isinstance(item,Box):item.setFlag(QGraphicsItem.ItemIsSelectable,True);item.setFlag(QGraphicsItem.ItemIsMovable,False)
-        canvas.fit()
+        self.fit_views()
     def canvas_selected(self,slot):
         if slot is None:return
         self.objects.blockSignals(True)
@@ -239,5 +252,5 @@ class CandidateEditDialog(QDialog):
             if current!=self.plan:raise ValueError('控制值已變，重新預覽')
             if QMessageBox.question(self,'當次作用範圍',self.details.toPlainText())!=QMessageBox.Yes:return
             from .candidate_edit_dispatch import dispatcher
-            dispatcher(self.window).submit(self.plan);self.plan=None;self.status.setText('人工版面已保留，等待整張重驗；未通過前禁止正式輸出')
+            pending=dispatcher(self.window).submit(self.plan);self.show_canvas(self.current_canvas,pending);self.plan=None;self.status.setText('人工版面已保留，等待整張重驗；未通過前禁止正式輸出')
         except Exception as error:self.status.setText('未套用：'+str(error))
