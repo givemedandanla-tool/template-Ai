@@ -33,6 +33,7 @@ class MultiSizeDialog(QDialog):
         for name in ('png','jpg','pdf'):
             box=QCheckBox(name.upper());box.setChecked(name=='png');self.preview_formats[name]=box;bar.addWidget(box)
         self.export_button=self.button(bar,'確認清單後輸出',self.export);self.export_button.setEnabled(False);layout.addLayout(bar)
+        bar=QHBoxLayout();self.button(bar,'編輯此尺寸當次人工版面',self.edit_local_candidate);self.button(bar,'修改共用來源人物資料',self.window.edit_input_graph);self.button(bar,'保留人工版面同步共用資料',self.sync_source);layout.addLayout(bar)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
         sizes={(t.width_mm,t.height_mm) for t in window.library.templates(True)}|{(window.out_w.value(),window.out_h.value())}
         self.sizes=[]
@@ -58,9 +59,10 @@ class MultiSizeDialog(QDialog):
         if not self.running:self.insert_size([self.width.value(),self.height.value()]);self.changed()
 
     def is_current(self):
-        return not self.stale.is_set() and self.window.generation==self.generation and digest(self.window.input_data())==self.input_signature
+        try:return not self.window.library.closed and not self.stale.is_set() and self.window.generation==self.generation and digest(self.window.input_data())==self.input_signature
+        except (ValueError,TypeError,AttributeError):return False
 
-    def background(self,label,operation,finished):
+    def background(self,label,operation,finished,*,resource_kind='ANALYSIS',cancel=None,on_error=None,require_current=False):
         root=self.window.library.root;self.running=True;self.table.setEnabled(False)
         def worker():
             from .storage import Library
@@ -72,9 +74,17 @@ class MultiSizeDialog(QDialog):
                 if library:library.close()
         def completed(result):
             self.running=False;self.table.setEnabled(True)
-            if 'error' in result:self.status.setText('未完成：'+result['error']);return
+            if 'error' in result:
+                self.status.setText('未完成：'+result['error'])
+                if on_error:on_error(result['error'])
+                return
+            if require_current and (self.window.library.closed or self.window.library.root!=root or not self.is_current()):
+                message='較新的輸入／來源已存在，舊結果已忽略；人工版面保留'
+                self.status.setText(message)
+                if on_error:on_error(message)
+                return
             finished(result['result'])
-        try:self.window.run_job(label,worker,JobCallbacks(completed,lambda error:completed({'error':str(error)})))
+        try:self.window.run_job(label,worker,JobCallbacks(completed,lambda error:completed({'error':str(error)})),resource_kind=resource_kind,cancel=cancel)
         except Exception:self.running=False;self.table.setEnabled(True);raise
 
     def start(self):
@@ -82,36 +92,64 @@ class MultiSizeDialog(QDialog):
         try:
             sizes=[s for i,s in enumerate(self.sizes) if self.table.item(i,0).checkState()==Qt.Checked]
             if not sizes:raise ValueError('先勾選要計算的實體尺寸')
+            if getattr(self.window,'active_input_graph',None) is None and not self.service:
+                graph=InputGraph.from_legacy(*self.window.input_data());self.window.adopt_input_graph(graph.data,history=graph)
             self.inputs=deepcopy(self.window.input_data());self.generation=self.window.generation;self.input_signature=digest(self.inputs)
             active=getattr(self.window,'active_input_graph',None)
             if active:self.graph=active.clone()
             elif not hasattr(self,'graph') or getattr(self,'graph_input_signature',None)!=self.input_signature:self.graph=InputGraph.from_legacy(*self.inputs)
             self.graph_input_signature=self.input_signature;self.stop.clear();self.stale.clear();self.export_button.setEnabled(False)
             inputs,graph,generation,chosen=deepcopy(self.inputs),deepcopy(self.graph.data),self.generation,deepcopy(self.selections)
+            previous=deepcopy(self.service.entries) if self.service else []
             scope=None
             if getattr(self.window,'reorder_template_id',None):
                 snapshot=getattr(self.window,'reorder_customer_snapshot',None)
                 scope=[s['template_id'] for s in snapshot['styles']] if snapshot else [self.window.reorder_template_id]
-            def operation(library):return MultiSizeWorkflow(library,inputs,graph,generation).calculate(sizes,chosen,scope,self.stop)
+            def operation(library):
+                service=MultiSizeWorkflow(library,inputs,graph,generation)
+                return service.calculate_preserving(sizes,previous,chosen,scope,self.stop) if previous else service.calculate(sizes,chosen,scope,self.stop)
             def finished(entries):
                 self.service=MultiSizeWorkflow(self.window.library,inputs,graph,generation);self.service.entries=entries;self.render_rows()
                 self.export_button.setEnabled(self.is_current())
                 self.status.setText(f'實際處理{len(entries)}個尺寸；未檢查／取消／失敗各自保留狀態。正式與PREVIEW須明確選擇。')
-            self.background('逐尺寸計算／驗證',operation,finished)
+            self.background('逐尺寸計算／保留人工版面驗證',operation,finished,resource_kind='GEOMETRY',cancel=self.stop,require_current=True)
         except (ValueError,KeyError,OSError) as error:self.status.setText('未開始：'+str(error))
+
+    def sync_source(self):
+        if self.running or self.window.busy:return
+        if not self.service:self.status.setText('先計算明確尺寸集合');return
+        self.start()
+
+    def edit_local_candidate(self):
+        if self.running or self.window.busy:self.status.setText('原背景工作尚未完成，保留目前版面');return
+        try:
+            if not self.is_current():raise ValueError('共用資料已改，先保留人工版面同步重驗')
+            entry=self.entry();index=next(i for i,c in enumerate(entry['candidates']) if c.template.id==entry['selected'])
+            from .multi_size_edit import SizeEditAdapter,SizeEditController
+            from .candidate_edit import CandidateEditDialog
+            from shiboken6 import isValid
+            adapter=SizeEditAdapter(self,entry,index);controller=SizeEditController(adapter);dialog=CandidateEditDialog(adapter,controller=controller)
+            def closed(result):
+                adapter.editor_closed=True;controller.release()
+            dialog.finished.connect(closed)
+            try:dialog.exec()
+            finally:
+                if isValid(dialog):dialog.deleteLater()
+        except (ValueError,KeyError,IndexError,StopIteration) as error:self.status.setText('未開啟此尺寸人工編輯：'+str(error))
 
     def render_rows(self):
         for entry in self.service.entries:
             row=next(i for i,s in enumerate(self.sizes) if size_key(*s)==entry['key'])
             combo=QComboBox()
             for candidate in entry['candidates']:combo.addItem(f'{candidate.template.name}／v{candidate.template.version}／{candidate.template.id}',candidate.template.id)
+            combo.setCurrentIndex(max(0,combo.findData(entry['selected'])))
             combo.activated.connect(lambda _,key=entry['key'],control=combo:self.select_candidate(key,control.currentData()))
             states=dict(VALID='數位檢查通過',BLOCKED='有問題／禁止正式輸出',FAILED='驗證失敗',NO_TEMPLATE='無適用模板',CANCELLED='已取消',NOT_CHECKED='尚未檢查')
             self.table.setCellWidget(row,2,combo);self.table.item(row,3).setText(states.get(entry['state'],entry['state']))
             logo_states=dict(MISSING='缺少此尺寸已核准Logo',SINGLE_PREVIEW='單一版本待輸出驗證',MULTIPLE_REVIEW_REQUIRED='多版本需明確選擇',IDENTITY_REVIEW_REQUIRED='公司身分待核對',EXACT_VERSION_PENDING_OUTPUT='已選確切版本待輸出驗證',SELECTION_INVALID_NO_REPLACEMENT='原選擇已失效，未替換')
             self.table.item(row,4).setText('；'.join(port+'：'+logo_states.get(state,state) for port,state in entry['logo_states'].items()) or '此輸入無公司Logo')
             for col in (3,4):self.table.item(row,col).setToolTip(self.table.item(row,col).text())
-            mode=self.table.cellWidget(row,5);mode.setCurrentIndex(0);mode.model().item(1).setEnabled(bool(self.service.selected(entry) and self.service.selected(entry).valid))
+            mode=self.table.cellWidget(row,5);mode.setCurrentIndex(0);mode.model().item(1).setEnabled(bool(self.service.selected(entry) and self.service.selected(entry).formal_eligible))
         lines=[]
         for e in self.service.entries:
             c=self.service.selected(e);lines.append(f"{e['size_mm'][0]:g}×{e['size_mm'][1]:g} mm：{e['state']}")
@@ -127,7 +165,7 @@ class MultiSizeDialog(QDialog):
         if self.running or not self.service:return
         self.service.select(key,identity)
         entry=next(e for e in self.service.entries if e['key']==key);row=next(i for i,s in enumerate(self.sizes) if size_key(*s)==key)
-        self.table.item(row,3).setText(entry['state']);self.table.cellWidget(row,5).setCurrentIndex(0);self.table.cellWidget(row,5).model().item(1).setEnabled(self.service.selected(entry).valid)
+        self.table.item(row,3).setText(entry['state']);self.table.cellWidget(row,5).setCurrentIndex(0);self.table.cellWidget(row,5).model().item(1).setEnabled(self.service.selected(entry).formal_eligible)
 
     def entry(self):
         if not self.service:raise ValueError('先完成所選尺寸計算')

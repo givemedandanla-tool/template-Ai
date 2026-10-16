@@ -22,6 +22,17 @@ def provisional(envelope):
     candidate.risk_context['last_verified_issue_codes']=[r.get('code') for r in candidate.diagnostics];candidate.issues=['人工版面保留，完整數位Gate尚待重驗'];candidate.diagnostics=[issue('DEPENDENCY_CHANGED')];candidate.measurements=[];return candidate
 
 
+def envelope_current(window,envelope):
+    w=window;p=envelope['plan'];index=p['index']
+    try:
+        if w.library.closed or str(w.library.root)!=envelope['root'] or w.generation!=p['generation'] or digest(w.input_data())!=envelope['input_digest']:return False
+        if dependency_token(w,Template.from_dict(envelope['after']),envelope['logos'])!=envelope['dependency_token']:return False
+    except (ValueError,OSError,TypeError,KeyError):return False
+    if not 0<=index<len(w.candidates):return False
+    candidate=w.candidates[index]
+    if review_context_token(candidate.risk_context)!=envelope['context_token']:return False
+    return candidate.template.id==p['template_id'] and candidate.risk_context.get('manual_revision',0)==envelope['target_revision'] and digest(candidate.template.to_dict())==envelope['target_digest']
+
 class CandidateEditDispatcher(QObject):
     completed=Signal(int,object)
     failed=Signal(int,str)
@@ -32,15 +43,7 @@ class CandidateEditDispatcher(QObject):
         if len(self.pending)>=200 and plan['index'] not in self.pending:raise ValueError('超過當次200候選重驗預算')
         envelope=prepare_edit(self.window,plan);candidate=provisional(envelope);envelope.update(target_revision=candidate.risk_context['manual_revision'],target_digest=digest(candidate.template.to_dict()),context_token=review_context_token(candidate.risk_context),cancel=threading.Event());self.pending[plan['index']]=envelope;self.window.candidates[plan['index']]=candidate;self.window.choose_candidate(plan['index']);self.timer.start();return candidate
     def current(self,envelope):
-        w=self.window;p=envelope['plan'];index=p['index']
-        try:
-            if w.library.closed or str(w.library.root)!=envelope['root'] or w.generation!=p['generation'] or digest(w.input_data())!=envelope['input_digest']:return False
-            if dependency_token(w,Template.from_dict(envelope['after']),envelope['logos'])!=envelope['dependency_token']:return False
-        except (ValueError,OSError,TypeError,KeyError):return False
-        if not 0<=index<len(w.candidates):return False
-        candidate=w.candidates[index]
-        if review_context_token(candidate.risk_context)!=envelope['context_token']:return False
-        return candidate.template.id==p['template_id'] and candidate.risk_context.get('manual_revision',0)==envelope['target_revision'] and digest(candidate.template.to_dict())==envelope['target_digest']
+        return envelope_current(self.window,envelope)
     def preview(self,plan):
         if len(self.pending)>=200 and (plan['index'],'COMPARE_ONLY') not in self.pending:raise ValueError('超過當次200候選重驗預算')
         envelope=prepare_edit(self.window,plan);envelope.update(mode='COMPARE_ONLY',target_revision=plan['manual_revision'],target_digest=plan['before_digest'],context_token=envelope['before_context_token'],cancel=threading.Event());self.pending[(plan['index'],'COMPARE_ONLY')]=envelope;self.timer.start();return envelope

@@ -151,7 +151,7 @@ def apply_candidate(window,plan,approved=False):
 
 
 class CandidateEditDialog(QDialog):
-    def __init__(self,window):
+    def __init__(self,window,controller=None):
         super().__init__(window);self.window=window;self.index=window.candidate_list.currentRow();self.plan=None;self.compared=None
         self.setWindowTitle('當次候選／人工框位與差異');layout=QVBoxLayout(self)
         self.status=QLabel('只修改目前候選尺寸。人工位置保留；未完成整張重驗時禁止正式輸出。');self.status.setWordWrap(True);layout.addWidget(self.status)
@@ -181,7 +181,7 @@ class CandidateEditDialog(QDialog):
             button=QPushButton(title);button.clicked.connect(callback);setattr(self,name,button);bar.addWidget(button)
         self.adopt_button.setEnabled(False);layout.addLayout(bar);self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details);self.resize(1180,850)
         from .candidate_edit_dispatch import dispatcher
-        manager=dispatcher(window);manager.completed.connect(self.edit_completed);manager.failed.connect(self.edit_failed);manager.preview_ready.connect(self.comparison_ready)
+        self.controller=controller if controller is not None else dispatcher(window);manager=self.controller;manager.completed.connect(self.edit_completed);manager.failed.connect(self.edit_failed);manager.preview_ready.connect(self.comparison_ready)
     def resizeEvent(self,event):
         super().resizeEvent(event);QTimer.singleShot(0,self.fit_views)
     def fit_views(self):
@@ -254,21 +254,21 @@ class CandidateEditDialog(QDialog):
         try:
             if self.plan is None:raise ValueError('先預覽實際差異')
             from .candidate_edit_dispatch import dispatcher
-            dispatcher(self.window).preview(self.plan);self.status.setText('建議排隊重驗中；人工版面保留，結果只供非正式比較')
+            self.controller.preview(self.plan);self.status.setText('建議排隊重驗中；人工版面保留，結果只供非正式比較')
         except Exception as error:self.status.setText('未比較：'+str(error))
     def adopt(self):
         try:
             if self.compared is None:raise ValueError('先完成建議的完整Gate')
             if QMessageBox.question(self,'確認採用逐項差異',self.details.toPlainText())!=QMessageBox.Yes:return
             from .candidate_edit_dispatch import dispatcher
-            dispatcher(self.window).adopt_preview(*self.compared);self.compared=None;self.plan=None;self.adopt_button.setEnabled(False)
+            self.controller.adopt_preview(*self.compared);self.compared=None;self.plan=None;self.adopt_button.setEnabled(False)
         except Exception as error:self.status.setText('未採用：'+str(error))
     def keep_manual(self):
         self.cancel_recheck();self.status.setText('保留人工位置與目前風險；此動作不會消除衝突或放行輸出')
     def cancel_recheck(self):
         from .candidate_edit_dispatch import dispatcher
         if self.compared:self.compared[0]['cancel'].set()
-        dispatcher(self.window).cancel(self.index);self.compared=None;self.plan=None;self.adopt_button.setEnabled(False)
+        self.controller.cancel(self.index);self.compared=None;self.plan=None;self.adopt_button.setEnabled(False)
     def apply(self):
         try:
             if not self.plan:raise ValueError('先預覽')
@@ -276,5 +276,5 @@ class CandidateEditDialog(QDialog):
             if current!=self.plan:raise ValueError('控制值已變，重新預覽')
             if QMessageBox.question(self,'當次作用範圍',self.details.toPlainText())!=QMessageBox.Yes:return
             from .candidate_edit_dispatch import dispatcher
-            pending=dispatcher(self.window).submit(self.plan);self.show_canvas(self.current_canvas,pending);self.plan=None;self.status.setText('人工版面已保留，等待整張重驗；未通過前禁止正式輸出')
+            pending=self.controller.submit(self.plan);self.show_canvas(self.current_canvas,pending);self.plan=None;self.status.setText('人工版面已保留，等待整張重驗；未通過前禁止正式輸出')
         except Exception as error:self.status.setText('未套用：'+str(error))
