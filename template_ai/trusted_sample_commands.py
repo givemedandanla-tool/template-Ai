@@ -16,7 +16,7 @@ def execute(library,command,payload):
     if command=='TRACE':
         row=pool.store.get('SAMPLE_CANDIDATE',payload['identity'])
         if not row:raise ValueError('修正候選不存在')
-        return QualityRechecks(library).source_dependencies(row['work_id'])
+        return QualityRechecks(library).source_dependencies(row['work_id'],include_quality_evidence=True)
     if command=='PRIVACY_RECORDS':
         sha=pool.store.pins(payload['work_id'])['source_hash'];rows=[]
         for kind in ('SAMPLE','SEMANTIC_MODEL'):

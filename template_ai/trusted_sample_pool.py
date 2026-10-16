@@ -31,7 +31,7 @@ class TrustedSamplePool:
         if before.get('observations')==after.get('observations') and before.get('pins')==after.get('pins'):return None
         identity=digest([CANDIDATE,work_id,after['revision'],after['pins']])
         if self.store.get(CANDIDATE,identity):return self.store.get(CANDIDATE,identity)
-        record=dict(work_id=work_id,pins=after['pins'],facts_revision=after['revision'],facts_digest=digest(after['observations']),previous_facts_revision=before.get('revision',0),previous_facts_digest=digest(before.get('observations',[])),state='COLLECTED',correction_kind='CONFIRMED_HUMAN_CORRECTION' if before.get('confirmation') else 'INITIAL_OR_UNCONFIRMED_LABEL_EDIT',prediction_evidence='NONE_UNLESS_EXACT_EXISTING_SOURCE_RECEIPT',source_truth='PENDING_EXPLICIT_CURRENT_CONFIRMATION',created=time.time(),training_admission=False,rule_approval=False,model_training_started=False)
+        record=dict(has_user_reported_negative_diagnostic=any(o.get('prior_prediction') is not None for o in after['observations']),work_id=work_id,pins=after['pins'],facts_revision=after['revision'],facts_digest=digest(after['observations']),previous_facts_revision=before.get('revision',0),previous_facts_digest=digest(before.get('observations',[])),state='COLLECTED',correction_kind='CONFIRMED_HUMAN_CORRECTION' if before.get('confirmation') else 'INITIAL_OR_UNCONFIRMED_LABEL_EDIT',prediction_evidence='NONE_UNLESS_EXACT_EXISTING_SOURCE_RECEIPT',source_truth='PENDING_EXPLICIT_CURRENT_CONFIRMATION',created=time.time(),training_admission=False,rule_approval=False,model_training_started=False)
         return self.store._write(CANDIDATE,identity,record,0,'correction_candidate_collected')
 
     def exact_scope(self,work_id):
@@ -63,8 +63,9 @@ class TrustedSamplePool:
         if role_errors:errors.extend(role_errors)
         if source_restriction(self.store,source['hash'],'GEOMETRY_TRAINING_LOCAL'):errors.append('此來源用途已停止使用')
         people={s.get('owner') for s in work['payload']['slots'] if str(s.get('owner','')).startswith('p')};high=bool(len(people)>1 or any(s.get('kind')=='logo' for s in work['payload']['slots']) or conflict['conflicting_work_ids'])
+        restrictions={purpose:value for purpose in PURPOSES if (value:=source_restriction(self.store,source['hash'],purpose)) is not None}
         role=self.store.get('GROUP_ROLE',source['hash']);sample=self.store.get('SAMPLE',row.get('sample_id','')) if row.get('sample_id') else None
-        return dict(candidate=row,work_label=work['name'],source_label=source.get('filename') or source.get('original_name') or source.get('current_path'),current_facts_revision=facts['revision'],current_confirmation=facts.get('confirmation'),conflict=conflict,role=role,errors=sorted(set(errors)),risk='HIGH' if high else 'LOW',sample_state=self.store.sample_state(sample['id']) if sample else None,usage=self.store.sample_usage_impact(sample['id']) if sample else None,customer_identities_merged=False,prior_prediction_is_truth=False)
+        return dict(source_restrictions=restrictions,candidate=row,work_label=work['name'],source_label=source.get('filename') or source.get('original_name') or source.get('current_path'),current_facts_revision=facts['revision'],current_confirmation=facts.get('confirmation'),conflict=conflict,role=role,errors=sorted(set(errors)),risk='HIGH' if high else 'LOW',sample_state=self.store.sample_state(sample['id']) if sample else None,usage=self.store.sample_usage_impact(sample['id']) if sample else None,customer_identities_merged=False,prior_prediction_is_truth=False)
 
     def batch_plan(self,items,rights):
         if not isinstance(items,list) or not 1<=len(items)<=50 or len({i['id'] for i in items})!=len(items):raise ValueError('每批需1～50個不重複候選')
@@ -105,7 +106,7 @@ class TrustedSamplePool:
         if not isinstance(purposes,list) or not purposes or len(purposes)!=len(set(purposes)) or not set(purposes)<=set(PURPOSES):raise ValueError('明列停止使用用途')
         if action not in ('STOP_USE','REQUEST_LOCAL_ERASURE') or type(retention_days) is not int or not 0<=retention_days<=365:raise ValueError('需明列處理動作與最長365日的必要審核期限')
         from .quality_rechecks import QualityRechecks
-        pins=self.store.pins(work_id);impact=QualityRechecks(self.library).source_dependencies(work_id)
+        pins=self.store.pins(work_id);impact=QualityRechecks(self.library).source_dependencies(work_id,include_quality_evidence=True)
         plan=dict(work_id=work_id,pins=pins,purposes=sorted(purposes),action=action,retention_days=retention_days,impact=impact,epoch=self.store.epoch,erasure_completed=False,external_backups_erased=False,model_decontaminated=False);plan['digest']=digest(plan);return plan
 
     def stop_use(self,plan,actor,approved=False):
@@ -189,7 +190,7 @@ class TrustedSamplePool:
         for (identity,) in candidates:
             detail=self.detail(identity);candidate=detail['candidate'];sample=candidate.get('sample_id');usage=detail['usage'] or {};state=candidate['state']
             semantic=[r[0] for r in self.db.execute("SELECT DISTINCT m.id FROM training_records m,json_each(m.payload,'$.plan.scopes') s WHERE m.kind='SEMANTIC_MODEL' AND json_extract(s.value,'$.work_id')=? ORDER BY m.id LIMIT 51",(candidate['work_id'],))]
-            match=dict(PENDING=state in ('COLLECTED','DEFERRED'),ADMITTED=state=='ADMITTED',CONFLICTS=bool(detail['conflict']['conflicting_work_ids']),DATASETS=bool(usage.get('dataset_ids')),POLLUTED=bool(detail['errors']) or detail['sample_state'] not in (None,'APPROVED'),LINEAGE=bool(usage.get('dataset_ids') or usage.get('template_ids') or semantic))[collection]
+            match=dict(PENDING=state in ('COLLECTED','DEFERRED'),ADMITTED=state=='ADMITTED',CONFLICTS=bool(detail['conflict']['conflicting_work_ids'] or candidate.get('has_user_reported_negative_diagnostic')),DATASETS=bool(usage.get('dataset_ids')),POLLUTED=bool(detail['source_restrictions'] or detail['errors']) or detail['sample_state'] not in (None,'APPROVED'),LINEAGE=bool(usage.get('dataset_ids') or usage.get('template_ids') or semantic))[collection]
             if match:rows.append(dict(id=identity,revision=candidate['revision'],work_id=candidate['work_id'],label=detail['work_label'],source_label=detail['source_label'],state=state,current_sample_state=detail['sample_state'],risk=detail['risk'],errors=detail['errors'],sample_id=sample,semantic_model_ids=semantic[:50],semantic_lineage_complete=len(semantic)<=50))
         return dict(rows=rows,total_candidates=total,scanned=len(candidates),offset=offset,next_offset=offset+len(candidates),complete_scan=offset+len(candidates)>=total,scope='MATCHES_IN_THIS_SCANNED_CANDIDATE_PAGE; NOT_GLOBAL_MATCH_COUNT',collection=collection,images_loaded=False,model_weights_loaded=False,training_started=False)
 

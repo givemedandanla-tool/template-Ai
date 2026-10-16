@@ -63,6 +63,7 @@ class TrustedSamplePoolTests(unittest.TestCase):
     def test_stop_geometry_use_blocks_alias_datasets_without_changing_original_sources(self):
         admitted=self.approve();sample=self.store.get('SAMPLE',admitted['sample_id']);dataset=self.store.create_dataset(self.store.dataset_plan('Exact approved version',[dict(sample_id=sample['id'],role='TRAIN')]),'Reviewer',True)
         pool=self.pool();before=self.library.artwork(self.work['id']);restriction=pool.restriction_plan(self.work['id'],['GEOMETRY_TRAINING_LOCAL'],'STOP_USE',30);rows=pool.stop_use(restriction,'Privacy reviewer',True)
+        source,alias=source_work(self.library,self.root,'stopped-alias.svg');noise_fixture.confirmed(self.store,alias);self.assertTrue(self.store.sample_approval_plan(alias['id'],fixture.RIGHTS)['errors']);self.assertNotEqual(source['id'],self.source['id'])
         self.assertEqual(self.store.sample_state(sample['id']),'RESTRICTED_USE');self.assertTrue(self.store.dataset_plan('Blocked new version',[dict(sample_id=sample['id'],role='TRAIN')])['errors']);self.assertEqual(self.store.get('DATASET',dataset['id']),dataset);self.assertEqual(self.library.artwork(self.work['id']),before);self.assertFalse(rows[0]['model_decontaminated']);self.assertEqual(self.store.sample_usage_impact(sample['id'])['dataset_ids'],[dataset['id']])
 
     def test_explicit_local_copy_redaction_removes_subject_text_from_all_sample_history(self):

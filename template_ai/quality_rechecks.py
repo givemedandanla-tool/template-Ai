@@ -13,7 +13,7 @@ def blocked(store, work_id):
 class QualityRechecks:
     def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library);self.db=library.db
 
-    def source_dependencies(self,work_id,additional_work_ids=None):
+    def source_dependencies(self,work_id,additional_work_ids=None,*,include_quality_evidence=False):
         """Bounded directed reachability over actual current and historical IDs."""
         import networkx as nx
         from .quality_groups import QualityGroups
@@ -70,6 +70,29 @@ class QualityRechecks:
             versions={tid:version for tid,family,version,wid in templates}
             for cid,tid in rows('SELECT customer_id,template_id FROM customer_styles ORDER BY id'):
                 edge('TEMPLATE:'+tid+':'+str(versions.get(tid,'UNKNOWN')),'CUSTOMER:'+cid,'CONFIRMED_CUSTOMER_STYLE')
+        if include_quality_evidence:
+            for gid,revision,wid in rows("SELECT id,revision,json_extract(payload,'$.work_id') FROM training_records WHERE kind='QUALITY_GOLD' ORDER BY id"):
+                edge('WORK:'+wid,'GOLD:'+gid+':'+str(revision),'ACTUAL_QUALITY_GOLD_SOURCE')
+            for qid,gid,revision in rows("SELECT q.id,json_extract(e.value,'$.gold_id'),json_extract(e.value,'$.gold_revision') FROM training_records q,json_each(q.payload,'$.entries') e WHERE q.kind='QUALITY_SET' ORDER BY q.id"):
+                edge('GOLD:'+gid+':'+str(revision),'QUALITY_SET:'+qid,'EXACT_QUALITY_GOLD_VERSION_IN_MANIFEST')
+            for pid,revision,mid,mrevision in rows("SELECT id,revision,json_extract(payload,'$.manifest.semantic_model_id'),json_extract(payload,'$.manifest.semantic_model_revision') FROM training_records WHERE kind='QUALITY_PIPELINE' ORDER BY id"):
+                if mid:edge('MODEL:'+mid+':'+str(mrevision),'PIPELINE:'+pid+':'+str(revision),'EXACT_QUALITY_PIPELINE_MODEL_VERSION',mrevision is None)
+            for pid,revision,rid,rrevision in rows("SELECT p.id,p.revision,json_extract(r.value,'$.id'),json_extract(r.value,'$.revision') FROM training_records p,json_each(p.payload,'$.manifest.rules') r WHERE p.kind='QUALITY_PIPELINE' ORDER BY p.id"):
+                edge('RULE:'+rid+':'+str(rrevision),'PIPELINE:'+pid+':'+str(revision),'EXACT_QUALITY_PIPELINE_RULE_VERSION')
+            for pid,qid in rows("SELECT id,json_extract(payload,'$.scope.dataset_id') FROM training_records WHERE kind='QUALITY_PROTOCOL' ORDER BY id"):
+                if qid:edge('QUALITY_SET:'+qid,'PROTOCOL:'+pid,'ACTUAL_FIXED_QUALITY_SET')
+            for pid,pipeline,revision in rows("SELECT p.id,json_extract(s.value,'$.id'),json_extract(s.value,'$.revision') FROM training_records p,json_each(p.payload,'$.scope.pipelines') s WHERE p.kind='QUALITY_PROTOCOL' ORDER BY p.id"):
+                edge('PIPELINE:'+pipeline+':'+str(revision),'PROTOCOL:'+pid,'EXACT_FIXED_PIPELINE_SIDE')
+            for rid,pid in rows("SELECT id,json_extract(payload,'$.plan.protocol_id') FROM training_records WHERE kind='QUALITY_PAIR_REPORT' ORDER BY id"):
+                if pid:edge('PROTOCOL:'+pid,'QUALITY_REPORT:'+rid,'ACTUAL_SAVED_PAIR_REPORT')
+            for did,rid in rows("SELECT id,json_extract(payload,'$.report_id') FROM training_records WHERE kind='QUALITY_VERSION_DECISION' ORDER BY id"):
+                if rid:edge('QUALITY_REPORT:'+rid,'QUALITY_DECISION:'+did,'ACTUAL_EXPLICIT_QUALITY_ACCEPTANCE')
+            for eid,did in rows("SELECT id,json_extract(payload,'$.plan.decision_id') FROM training_records WHERE kind='QUALITY_PIPELINE_DEPLOYMENT' ORDER BY id"):
+                if did:edge('QUALITY_DECISION:'+did,'DEPLOYMENT:'+eid,'ACTUAL_RUNTIME_DEPLOYMENT_EVENT')
+            for jid,did in rows("SELECT id,json_extract(payload,'$.dataset_id') FROM training_records WHERE kind='JOB' ORDER BY id"):
+                if did:edge('DATASET:'+did,'GEOMETRY_JOB:'+jid,'ACTUAL_GEOMETRY_JOB_MANIFEST')
+            for jid,mid in rows("SELECT id,json_extract(payload,'$.model_id') FROM training_records WHERE kind='AUTO_JOB' AND json_type(payload,'$.model_id') IS NOT NULL ORDER BY id"):
+                for model in model_nodes.get(mid,set()):edge(model,'AUTO_JOB:'+jid,'ACTUAL_MODEL_CANDIDATE_PRODUCTION_CHECKPOINT')
         graph.add_nodes_from(roots);reachable=set(roots)
         for root in roots:reachable.update(nx.descendants(graph,root))
         induced=graph.subgraph(reachable)
