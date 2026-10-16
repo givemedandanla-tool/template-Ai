@@ -27,12 +27,17 @@ class QualityRechecks:
         from .quality_trust import components
         fingerprint=next((c for c in components(manifest) if c['kind']==component and (component!='RULE' or c.get('rule_id')==rule_id)),None)
         if not fingerprint:raise ValueError('缺少可核對的實際組件版本指紋')
+        model_ids=[]
         if component=='PARSER':
-            direct="SELECT id FROM artworks WHERE json_extract(payload,'$.analysis_version')=?";args=[manifest['analyser_version']]
-            historical="json_extract(h.after_json,'$.dependency_versions.analyser_version')=?";hargs=[manifest['analyser_version']]
+            direct="SELECT id FROM artworks WHERE json_extract(payload,'$.analysis_version')=? OR (json_type(payload,'$.analysis_key') IS NOT NULL AND json_type(payload,'$.analysis_version') IS NULL)";args=[manifest['analyser_version']]
+            historical="json_extract(h.after_json,'$.dependency_versions.analyser_version')=? OR json_extract(h.after_json,'$.dependency_versions.source_parser_provenance_unknown')=1";hargs=[manifest['analyser_version']]
         elif component=='MODEL':
-            direct="SELECT id FROM artworks WHERE json_extract(payload,'$.evidence.semantic_model.model_id')=?";args=[manifest['semantic_model_id']]
-            historical="json_extract(h.after_json,'$.dependency_versions.semantic_model_digest')=?";hargs=[manifest['semantic_model_digest']]
+            model_ids=[r[0] for r in self.db.execute("SELECT id FROM training_records WHERE kind='SEMANTIC_MODEL' AND json_extract(payload,'$.weights_digest')=? ORDER BY id LIMIT 2001",(manifest['semantic_weights_digest'],))]
+            if len(model_ids)>2000:raise ValueError('相同權重候選超過2000版本，需明確分段核對；未截斷歷史影響')
+            model_ids=sorted(set(model_ids+[manifest['semantic_model_id']]))
+            markers=','.join('?' for _ in model_ids)
+            direct="SELECT id FROM artworks WHERE COALESCE(json_extract(payload,'$.analysis_evidence.semantic_model.model_id'),json_extract(payload,'$.evidence.semantic_model.model_id')) IN ("+markers+")";args=model_ids
+            historical="json_extract(h.after_json,'$.dependency_versions.semantic_model_digest')=? OR json_extract(h.after_json,'$.dependency_versions.source_semantic_model_id') IN ("+markers+") OR json_extract(h.after_json,'$.dependency_versions.source_model_provenance_unknown')=1";hargs=[manifest['semantic_model_digest'],*model_ids]
         else:
             direct="SELECT json_extract(s.payload,'$.work_id') FROM training_records s,json_each(s.payload,'$.rule_dependencies') d WHERE s.kind='SAMPLE' AND json_extract(d.value,'$.id')=? AND json_extract(d.value,'$.revision')=?";args=[rule_id,rule['revision']]
             historical="EXISTS (SELECT 1 FROM json_each(h.after_json,'$.dependency_versions.active_rule_versions') d WHERE json_extract(d.value,'$.id')=? AND json_extract(d.value,'$.revision')=?)";hargs=[rule_id,rule['revision']]
@@ -40,7 +45,7 @@ class QualityRechecks:
         rows=[];missing=[]
         for (work_id,) in self.db.execute(query+' ORDER BY 1 LIMIT 10001',(*args,*hargs)):
             if len(rows)+len(missing)>=10000:raise ValueError('重大影響超過10000作品，需明確分段版本；未當完整歷史掃描')
-            work=self.db.execute('SELECT revision,source_id FROM artworks WHERE id=?',(work_id,)).fetchone()
+            work=self.db.execute("SELECT revision,source_id,COALESCE(json_extract(payload,'$.analysis_evidence.semantic_model.model_id'),json_extract(payload,'$.evidence.semantic_model.model_id')),json_type(payload,'$.analysis_key') IS NOT NULL AND json_type(payload,'$.analysis_version') IS NULL FROM artworks WHERE id=?",(work_id,)).fetchone()
             if not work:missing.append(work_id);continue
             facts=self.db.execute("SELECT revision FROM training_records WHERE kind='FACTS' AND id=?",(work_id,)).fetchone()
             samples=[list(r) for r in self.db.execute("SELECT id,revision FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id",(work_id,)).fetchmany(201)]
@@ -48,7 +53,9 @@ class QualityRechecks:
             batch_ids=[r[0] for r in self.db.execute("SELECT DISTINCT json_extract(payload,'$.batch_id') FROM training_records WHERE kind='COVERAGE_REVIEW' AND json_extract(payload,'$.work_id')=? ORDER BY 1",(work_id,)).fetchmany(201)]
             if len(batch_ids)>200:raise ValueError('單作品歷史批次超過200，不截斷重大影響')
             legacy=self.db.execute("SELECT 1 FROM training_history WHERE kind='COVERAGE_REVIEW' AND json_extract(after_json,'$.work_id')=? AND json_type(after_json,'$.dependency_versions') IS NULL LIMIT 1",(work_id,)).fetchone()
-            rows.append(dict(work_id=work_id,work_revision=work[0],source_id=work[1],facts_revision=facts[0] if facts else 0,samples=samples,batch_ids=batch_ids,legacy_dependency_versions_unknown=bool(legacy)))
+            equivalent=component=='MODEL' and work[2] in model_ids and work[2]!=manifest['semantic_model_id']
+            unknown=bool(legacy or component=='PARSER' and work[3] or equivalent)
+            rows.append(dict(work_id=work_id,work_revision=work[0],source_id=work[1],facts_revision=facts[0] if facts else 0,samples=samples,batch_ids=batch_ids,source_semantic_model_id=work[2],dependency_match='POTENTIAL_SAME_WEIGHTS_OTHER_MODEL_VERSION' if equivalent else 'POTENTIAL_LEGACY_VERSION_UNKNOWN' if unknown else 'RECORDED_VERSION_DEPENDENCY',legacy_dependency_versions_unknown=unknown))
         plan=dict(protocol_id=protocol_id,side=side,component=component,rule_id=rule_id,pipeline_id=pipeline['id'],
                   pipeline_digest=digest(pipeline),component_fingerprint=fingerprint,result_id=result['id'],result_digest=digest(result),critical_errors=result['critical_errors'],
                   rows=rows,missing_historical_work_ids=missing,complete=not missing,

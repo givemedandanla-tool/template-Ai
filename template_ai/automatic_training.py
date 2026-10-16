@@ -202,6 +202,7 @@ class AutomaticTraining:
                     payload={k:deepcopy(hypothesis[k]) for k in ('crop','work_width','work_height','slots','visual_confirmed','company_bindings')}
                     payload['analysis_evidence']=hypothesis['evidence']
                     payload['analysis_key']=hypothesis['key']
+                    payload['analysis_version']=hypothesis['analysis_version']
                     encoded=self.library._artwork_payload(source['id'],payload);wid=new_id()
                     self.db.execute('INSERT INTO artworks VALUES(?,?,?,1,?)',(wid,source['id'],'AI候選作品 '+str(number),encoded))
                     self.db.execute('INSERT INTO artwork_revisions VALUES(?,1,?,?)',(wid,encoded,time.time()))

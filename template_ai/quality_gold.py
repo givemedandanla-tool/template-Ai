@@ -24,7 +24,7 @@ class QualityGold:
     def dependencies(self,work_id):
         context=work_context(self,work_id)
         # An independent gold answer must not change merely because a candidate model changes.
-        truth={k:v for k,v in context['context'].items() if k not in ('analyser_version','semantic_active_digest','semantic_model_digest','active_rule_versions','related_digest')}
+        truth={k:v for k,v in context['context'].items() if k not in ('analyser_version','source_parser_provenance_unknown','source_semantic_model_id','source_semantic_model_digest','source_model_provenance_unknown','semantic_active_digest','semantic_model_digest','active_rule_versions','related_digest')}
         source=self.library.source(context['source_id']);truth['source_derivative_manifest']=digest(source.get('file_hashes',{}))
         return context,truth,digest(truth)
 

@@ -43,8 +43,12 @@ def work_context(service, work_id):
     related = bounded_rows(db, "SELECT kind,id,revision,payload FROM training_records WHERE (id=? OR json_extract(payload,'$.work_id')=?) AND kind IN ('FACTS','LOCAL_NOISE','HIT','SAMPLE','AUTO_UNIT','RULE_HINT','LABEL_REVIEW') ORDER BY kind,id", (work_id, work_id))
     active_model = store.get('SEMANTIC_ACTIVE','local-text')
     model = store.get('SEMANTIC_MODEL', active_model['model_id']) if active_model else None
+    source_evidence=work['payload'].get('analysis_evidence') or work['payload'].get('evidence') or {}
+    source_semantic=source_evidence.get('semantic_model')
+    source_model_id=source_semantic.get('model_id') if isinstance(source_semantic,dict) else None
+    source_model=store.get('SEMANTIC_MODEL',source_model_id) if source_model_id else None
     from .source_analysis import ANALYSER_VERSION
-    context = dict(pins=store.pins(work_id), analyser_version=ANALYSER_VERSION, semantic_active_digest=digest(active_model), semantic_model_digest=digest(model), facts_digest=digest(facts), associations_digest=digest(associations), owners_digest=digest(owners), styles_digest=digest(styles), templates=templates, related_digest=digest(related), active_rule_versions=[dict(id=r[0], revision=r[1], payload_digest=digest(json.loads(r[2]))) for r in active_rules])
+    context = dict(pins=store.pins(work_id), analyser_version=work['payload'].get('analysis_version',ANALYSER_VERSION),source_parser_provenance_unknown=bool(work['payload'].get('analysis_key') and not work['payload'].get('analysis_version')),source_semantic_model_id=source_model_id,source_semantic_model_digest=digest(source_model),source_model_provenance_unknown=bool(work['payload'].get('analysis_key') and (not isinstance(source_semantic,dict) or source_model_id and not source_model)), semantic_active_digest=digest(active_model), semantic_model_digest=digest(model), facts_digest=digest(facts), associations_digest=digest(associations), owners_digest=digest(owners), styles_digest=digest(styles), templates=templates, related_digest=digest(related), active_rule_versions=[dict(id=r[0], revision=r[1], payload_digest=digest(json.loads(r[2]))) for r in active_rules])
     context.update(association_refs=[dict(association_id=r[0],customer_id=r[1],template_id=r[4],template_hash=r[7]) for r in associations],style_version_refs=[dict(style_id=r[0],customer_id=r[1],template_id=r[2],template_hash=r[3]) for r in styles])
     context['customer_candidate_digest']=digest(customer_candidates)
     confirmed = set((facts.get('confirmation') or {}).get('observation_ids', [])) if store.facts_state(work_id)=='CONFIRMED' else set()

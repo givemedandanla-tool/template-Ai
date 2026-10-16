@@ -845,6 +845,7 @@
             "test_quality_policy.SemanticQualityIsolationTests.test_quality_holdout_cannot_bypass_guard_via_semantic_training_api",
             "test_quality_protocol.QualityProtocolTests.test_copying_set_or_another_job_cannot_reset_used_holdout_for_tuning",
             "test_quality_protocol.QualityProtocolTests.test_explicit_gold_exposure_invalidates_future_use_and_preserves_gold_protocol",
+            "test_quality_provenance.QualityProducerProvenanceTests.test_actual_model_reapproval_changes_review_context_but_not_independent_truth_dependencies",
             "test_quality_roles.QualityRoleGuiTests.test_actual_native_train_role_diagnosis_has_correct_filtered_rows",
             "test_quality_roles.QualityRoleTests.test_actual_train_diagnostics_never_admit_train_or_qualify_independent_quality",
             "test_quality_roles.QualityRoleTests.test_actual_validation_diagnostics_are_not_holdout_generalization",
@@ -966,6 +967,8 @@
           "expected": "**連結 UI-052 重大錯誤重審**：若獨立測試揭露被既有已接受版本廣泛使用的**共通嚴重誤判**，顯示「**發起 UI-052 跨批次重審**」並帶入測試案例／規則／模型版本及影響候選；經使用者確認後按 UI-052 的受影響清單與隔離 Gate 處理，**包括歷史已通過及已結案檔案**，不得只把錯誤當成 UI-053 測試集上的一筆負分而繼續信任被污染的正式推薦。",
           "tests": [
             "test_quality_decisions.QualityDecisionTests.test_known_bad_actual_parser_blocks_previously_accepted_version_and_new_id_clone",
+            "test_quality_provenance.QualityProducerProvenanceTests.test_actual_auto_parser_and_model_provenance_are_found_and_quarantined",
+            "test_quality_provenance.QualityProducerProvenanceTests.test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model",
             "test_quality_rechecks.QualityRecheckTests.test_actual_critical_result_finds_closed_historical_batch_and_quarantines_it",
             "test_quality_rechecks.QualityRecheckTests.test_explicit_approval_and_disk_failure_cannot_partially_quarantine_history",
             "test_quality_rechecks.QualityRecheckTests.test_legacy_review_without_version_snapshot_is_potential_impact_not_guessed_exact",

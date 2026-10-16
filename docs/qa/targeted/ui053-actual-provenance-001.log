@@ -1,0 +1,37 @@
+test_actual_auto_parser_and_model_provenance_are_found_and_quarantined (test_quality_provenance.QualityProducerProvenanceTests.test_actual_auto_parser_and_model_provenance_are_found_and_quarantined) ... FAIL
+test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model (test_quality_provenance.QualityProducerProvenanceTests.test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model) ... FAIL
+
+======================================================================
+FAIL: test_actual_auto_parser_and_model_provenance_are_found_and_quarantined (test_quality_provenance.QualityProducerProvenanceTests.test_actual_auto_parser_and_model_provenance_are_found_and_quarantined)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_provenance.py", line 52, in test_actual_auto_parser_and_model_provenance_are_found_and_quarantined
+    model=self.trained_model();work=self.actual_work(1);payload=work['payload']
+                                    ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_provenance.py", line 41, in actual_work
+    self.assertEqual(done['phase'],'COMPLETED');self.assertEqual(path.read_bytes(),before)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_WITH_EXCEPTIONS' != 'COMPLETED'
+- COMPLETED_WITH_EXCEPTIONS
++ COMPLETED
+
+
+======================================================================
+FAIL: test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model (test_quality_provenance.QualityProducerProvenanceTests.test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_provenance.py", line 62, in test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model
+    original=self.trained_model();first=self.actual_work(1)
+                                        ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_quality_provenance.py", line 41, in actual_work
+    self.assertEqual(done['phase'],'COMPLETED');self.assertEqual(path.read_bytes(),before)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_WITH_EXCEPTIONS' != 'COMPLETED'
+- COMPLETED_WITH_EXCEPTIONS
++ COMPLETED
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 5.294s
+
+FAILED (failures=2)
