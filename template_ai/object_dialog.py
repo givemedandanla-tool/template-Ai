@@ -413,6 +413,7 @@ class ObjectToolsDialog(QDialog):
                     else:editor.setTristate(True);editor.setCheckState(Qt.PartiallyChecked)
                 self.font_choice.setEnabled(False);self.margin.setEnabled(False);self.margin_button.setEnabled(False);self.apply_button.setEnabled(False)
             finally:self.loading=was_loading
+            self.filter_index()
             self.context_status.setText('來源版本已失效；屬性已清空，請重新載入並選取。');self.status.setText('來源版本已失效；待套用輸入保留供核對，未套到新物件。');self.retained_button.setVisible(self.retained_patch is not None);return
         text=bool(rows) and all(s['kind']!='logo' for s in rows)
         locked=any(s.get('locked',False) for s in rows)

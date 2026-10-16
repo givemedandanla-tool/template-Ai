@@ -1,0 +1,14 @@
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/capture_property_context.py", line 68, in <module>
+    parser=argparse.ArgumentParser();parser.add_argument('--folder',required=True);args=parser.parse_args();r=capture(args.folder);print(json.dumps({k:v for k,v in r.items() if k!='screens'},ensure_ascii=False))
+                                                                                                              ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_property_context.py", line 50, in capture
+    changed=copy.deepcopy(w.library.get_template(case.draft.id));changed.name+=' authored external revision';w.library.save_template(changed)
+                          ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Library' object has no attribute 'get_template'. Did you mean: 'save_template'?

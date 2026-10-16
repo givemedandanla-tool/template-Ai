@@ -26,7 +26,7 @@ class PropertyLifecycleTests(unittest.TestCase):
         QTimer.singleShot(0,lambda:click_message('放棄未套用輸入並重新載入'));d.reload();self.assertFalse(d.dirty);self.assertEqual(d.ids,[]);self.assertEqual(self.w.library.object_snapshot('TEMPLATE',self.draft.id),before)
     def test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies(self):
         d=self.dialog();d.editors['x'].setValue(77);changed=copy.deepcopy(self.w.template);changed.name+=' newer';self.w.library.save_template(changed,expected_revision=d.snapshot['revision']);before=self.w.library.object_snapshot('TEMPLATE',self.draft.id)
-        d.update_context();self.assertEqual(d.ids,[]);self.assertTrue(d.canvas.readonly);self.assertFalse(d.editors['x'].isEnabled());self.assertEqual(d.editors['x'].value(),d.editors['x'].minimum());self.assertEqual(d.retained_patch['patch']['x'],77);self.assertEqual(d.retained_patch['ids'],[self.ids[0]])
+        d.update_context();self.assertEqual(d.ids,[]);self.assertIn('选取 0',d.index_count.text());self.assertFalse(d.objects.selectedItems());self.assertFalse(d.index_tree.selectedItems());self.assertTrue(d.canvas.readonly);self.assertFalse(d.editors['x'].isEnabled());self.assertEqual(d.editors['x'].value(),d.editors['x'].minimum());self.assertEqual(d.retained_patch['patch']['x'],77);self.assertEqual(d.retained_patch['ids'],[self.ids[0]])
         d.preview_patch();d.apply();self.assertFalse(d.apply_button.isEnabled());self.assertEqual(self.w.library.object_snapshot('TEMPLATE',self.draft.id),before);self.assertIn('已變更',d.status.text())
     def test_locked_existing_object_disables_value_tools_but_explicit_unlock_uses_original_pipeline(self):
         d=self.dialog();d.preview_lock(True)
