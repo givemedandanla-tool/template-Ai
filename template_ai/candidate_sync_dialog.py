@@ -70,3 +70,6 @@ class CrossPropertyDialog(QDialog):
     def closeEvent(self,event):
         if self.running:self.cancel();event.ignore()
         else:super().closeEvent(event)
+    def reject(self):
+        if self.running:self.cancel();return
+        super().reject()

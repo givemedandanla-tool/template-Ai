@@ -2,7 +2,7 @@
 from PySide6.QtCore import Qt,QTimer
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QSplitter,
     QTreeWidget,QTreeWidgetItem,QScrollArea,QWidget,QGroupBox,QLineEdit,QComboBox,
-    QInputDialog,QMessageBox,QDialogButtonBox,QListWidget,QListWidgetItem)
+    QInputDialog,QMessageBox,QDialogButtonBox,QListWidget,QListWidgetItem,QPlainTextEdit)
 from .input_graph import InputGraph, CONTACT_KINDS
 from .model import KINDS
 
@@ -17,6 +17,8 @@ class InputGraphDialog(QDialog):
             else:
                 p,c,l=window.input_data();graph=InputGraph.from_legacy(p,c,l).data
         self.graph=history.clone() if history is not None else InputGraph(graph);self.initial_revision=self.graph.data["revision"]
+        from copy import deepcopy
+        self.initial_graph=deepcopy(self.graph.data)
         from .logo_store import LogoStore
         self.logo_store=LogoStore(window.library)
         self.setWindowTitle('人物卡片／公司與共享聯絡資料（當次製作）');self.resize(1180,780)
@@ -31,6 +33,7 @@ class InputGraphDialog(QDialog):
         self.problems=QListWidget();self.problems.setMaximumWidth(330);self.problems.itemClicked.connect(self.locate_warning);split.addWidget(self.problems)
         self.pending_input={};self.field_warnings={};self.field_locations={};self.warning_timer=QTimer(self);self.warning_timer.setSingleShot(True);self.warning_timer.timeout.connect(self.refresh_warnings)
         buttons=QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel);buttons.button(QDialogButtonBox.Ok).setText('採用到當次輸入（須重新排版）');buttons.button(QDialogButtonBox.Cancel).setText('取消全部未採用修改');buttons.accepted.connect(self.accept);buttons.rejected.connect(self.reject);layout.addWidget(buttons)
+        self.source_impacts=QPlainTextEdit();self.source_impacts.setReadOnly(True);self.source_impacts.setMaximumHeight(105);self.source_impacts.setPlaceholderText('目前沒有來源差異；採用任何來源操作版本後，舊候選仍須重新核對。');layout.insertWidget(2,self.source_impacts)
         self.field_editors={};self.cards={};self.rebuild()
 
     def add_button(self,bar,text,action):
@@ -60,10 +63,21 @@ class InputGraphDialog(QDialog):
             self.status.setText('未套用：'+str(error));return False
 
     def undo(self):
-        self.graph.undo();self.rebuild()
+        if not self.graph.undo_stack:return
+        if self.confirm_source_history(self.graph.undo_stack[-1],'復原'):self.graph.undo();self.rebuild()
 
     def redo(self):
-        self.graph.redo();self.rebuild()
+        if not self.graph.redo_stack:return
+        if self.confirm_source_history(self.graph.redo_stack[-1],'重做'):self.graph.redo();self.rebuild()
+
+    def confirm_source_history(self,target,action):
+        from .source_change_impact import consumers,source_change_impact,describe
+        try:rows=source_change_impact(consumers(self.window),self.graph.data,target)
+        except ValueError as error:self.status.setText('未'+action+'：'+str(error));return False
+        if not rows:return True
+        dialog=QDialog(self);dialog.setWindowTitle(action+'共用來源／實際引用範圍');box=QVBoxLayout(dialog);label=QLabel(action+'這次來源變更將影響下列'+str(len(rows))+'份引用作品。只先修改目前草稿，採用後才同步當次來源；各作品人工位置保留，仍須各尺寸完整重驗。');label.setWordWrap(True);box.addWidget(label);details=QPlainTextEdit(describe(rows));details.setReadOnly(True);box.addWidget(details);buttons=QDialogButtonBox(QDialogButtonBox.Yes|QDialogButtonBox.No);buttons.button(QDialogButtonBox.No).setDefault(True);buttons.accepted.connect(dialog.accept);buttons.rejected.connect(dialog.reject);box.addWidget(buttons);dialog.resize(950,620)
+        try:return dialog.exec()==QDialog.Accepted
+        finally:dialog.deleteLater()
 
     def navigate(self,item,previous=None):
         if not item:return
@@ -220,6 +234,9 @@ class InputGraphDialog(QDialog):
                 if not any(cid==c['id'] for _,cid in self.graph.data['links']):self.company_card(v,c['id'])
             v.addStretch(1);self.scroll.setWidget(content);self.tree.expandAll();self.undo_button.setEnabled(bool(self.graph.undo_stack));self.redo_button.setEnabled(bool(self.graph.redo_stack))
             self.refresh_warnings()
+            from .source_change_impact import consumers,source_change_impact,describe
+            try:self.source_impacts.setPlainText(describe(source_change_impact(consumers(self.window),self.initial_graph,self.graph.data)))
+            except ValueError as error:self.source_impacts.setPlainText('來源影響待核對：'+str(error))
         finally:self.rebuilding=False;self.tree.blockSignals(False)
 
     def hideEvent(self,event):

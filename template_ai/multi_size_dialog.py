@@ -249,3 +249,6 @@ class MultiSizeDialog(QDialog):
     def closeEvent(self,event):
         if self.running:self.stop.set();self.status.setText('安全停止中；等待當前工作完成再關閉。');event.ignore()
         else:super().closeEvent(event)
+    def reject(self):
+        if self.running:self.stop.set();self.status.setText('取消中；原背景工作結束後才能安全關閉。');return
+        super().reject()
