@@ -140,6 +140,8 @@ class AutomaticTrainingGuiTests(unittest.TestCase):
     def window(self):
         from template_ai.gui import MainWindow
         window=MainWindow(self.library.root)
+        from runtime_fixture import controlled_resources
+        controlled_resources(window)
         def close():
             window.input_timer.stop();window.font_manager.close();window.library.close();window.deleteLater()
         self.addCleanup(close);return window
@@ -168,6 +170,19 @@ class AutomaticTrainingGuiTests(unittest.TestCase):
         from PySide6.QtWidgets import QMessageBox
         window=self.window();dialog=AutomaticTrainingDialog(window);self.addCleanup(dialog.deleteLater)
         dialog.preflight([str(self.path)]);self.wait(lambda:not window.busy)
+        with patch.object(QMessageBox,'question',return_value=QMessageBox.No):dialog.start()
+        self.assertEqual(self.service.store.count('AUTO_JOB'),0);self.assertFalse(self.library.list_sources())
+
+    def test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel(self):
+        from template_ai.automatic_training_dialog import AutomaticTrainingDialog
+        from PySide6.QtTest import QTest
+        from PySide6.QtWidgets import QMessageBox
+        window=self.window();window.runtime.ready_after=window.runtime.clock()+60
+        dialog=AutomaticTrainingDialog(window);self.addCleanup(dialog.deleteLater)
+        dialog.preflight([str(self.path)]);QTest.qWait(200);APP.processEvents()
+        self.assertTrue(window.busy);self.assertIsNone(dialog.report);self.assertFalse(dialog.start_button.isEnabled())
+        self.assertEqual(self.service.store.count('AUTO_JOB'),0);self.assertFalse(self.library.list_sources())
+        window.runtime.ready_after=0;self.wait(lambda:not window.busy);self.assertIsNotNone(dialog.report)
         with patch.object(QMessageBox,'question',return_value=QMessageBox.No):dialog.start()
         self.assertEqual(self.service.store.count('AUTO_JOB'),0);self.assertFalse(self.library.list_sources())
 

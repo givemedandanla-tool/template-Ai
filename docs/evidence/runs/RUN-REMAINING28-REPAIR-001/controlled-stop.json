@@ -1,0 +1,16 @@
+{
+  "status": "CONTROLLED_STOP_AFTER_KNOWN_GUI_FAILURE_NOT_PASS",
+  "source_commit": "3fb28a69d3a23df944105f98718cf839da022f08",
+  "actual_parent_exit": 130,
+  "formal_complete": false,
+  "run_json_exists": false,
+  "completed": 437,
+  "passed": 436,
+  "failed_ids": [
+    "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source"
+  ],
+  "last_current_test": "test_logo_lifecycle.LogoLifecycleTests.test_missing_logo_is_true_black_placeholder_without_formal_gate_bypass",
+  "raw_files": 275,
+  "raw_bytes": 533397,
+  "reason": "GUI preflight workflow hit10s wait while real startup/load admission can defer work; no cancellation action reached, no PASS invented; preserve every raw file before source/test fix."
+}

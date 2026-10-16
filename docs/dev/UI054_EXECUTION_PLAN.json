@@ -325,5 +325,18 @@
     "admission": "CONTROLLED_WORKFLOW_NOT_HARDWARE_CALIBRATION",
     "regression": "docs/qa/targeted/ui054-native-layout-progress-001.log",
     "scope": "Readable source/impact table height+stretch, named source/progress, rawapproval data preserved; actualowned STATUS pin removes duplicate direct test-only backend assertion from GUI timing. Separate repair capture process added formalaggregate, same120s bound/no test weakened."
+  },
+  "formal_repair001_interruption": {
+    "source_commit": "3fb28a69d3a23df944105f98718cf839da022f08",
+    "parent_exit": 130,
+    "completed": 437,
+    "passed": 436,
+    "failed_test": "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source",
+    "exact_original_delay_cause": "NOT_CAPTURED; GUI workflow used live host/startup admission,10s wait unrelated to cancel assertion",
+    "evidence": "docs/evidence/runs/RUN-REMAINING28-REPAIR-001/controlled-stop.json",
+    "fix": "Workflow-only AutomaticTrainingGuiTests uses existing controlled_resources; actualforced60s startup gate blocks preflight then explicitrelease reaches confirmation cancel with no jobs/sources. Actualruntime sampling/pressure tests unchanged.",
+    "targeted": "docs/qa/targeted/ui054-cold-preflight-admission-001.log",
+    "targeted_tests": 32,
+    "source_frozen_next": "RUN-REMAINING28-REPAIR-002"
   }
 }

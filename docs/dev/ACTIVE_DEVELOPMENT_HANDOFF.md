@@ -1,3 +1,9 @@
+# REPAIR001 已受控停止；下一凍結999測試跑 REPAIR002
+
+- **REPAIR001不是PASS**：source3fb28a69d3a23df944105f98718cf839da022f08，實際parent exit130（僅SIGINT exactownedparent，ownedchild已停），437completed/436PASS/1FAIL，沒有run.json／capture。失敗是AutomaticTrainingGuiTests確認取消案例在preflight等10秒未完成，未到取消assert；原始延遲具體sensor原因未捕獲，勿斷言生產bug。275個rawfiles533397B逐檔hash保留在該run/interrupted-live、module-raw-evidence.jsonl與controlled-stop.json，不覆寫／不finalize此run。
+- 只改該GUI workflowfixture用既有controlled_resources（不是產品程式），新增真startup barrier60s→證明仍在等且無jobs/sources→解除後預檢完成→No取消仍無job。與actual runtime sampling/pressure/fairqueue一起32/32PASS；999known，146claims仍pending。下一 RUN-REMAINING28-REPAIR-002 source必須重新push/native後實際full；不可用001或target32結案。
+- 仍歷史7/28；UI054原11/SHA/80supportingtests已pending註冊；新full應999tests／146claimrequirements／82原條／8parent audit。實際fullPASS＋exit0/sourceunchanged/captures/Gate後才8，立即繼續UI055/rest20。
+
 # 正在正式驗證：不可修改source/tests/tools/REQUIREMENTS
 
 - 下一步啟動／追蹤 `RUN-REMAINING28-REPAIR-001`，預期998tests／126左右serialownedmodules／146claim requirements／8of28 fullparent-audit／82原條。只有實際parent shell exit0、source_unchanged、allcatalog PASS、所有capture exit0與publication Gate才可結案UI054；其後立即繼續20父題，不停milestone。

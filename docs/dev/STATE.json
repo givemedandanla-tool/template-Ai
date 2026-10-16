@@ -17,9 +17,9 @@
     "docs/dev/PROJECT_ROADMAP.md"
   ],
   "next_tasks": [
-    "Freeze/push/native source and original11 acceptance; actual full formal tests with new separate repair capture (same120s cap)",
-    "Only after actual parent shell exit0/sourceunchanged/exact998catalog/captures PASS: finalize146claims/82originalclauses/8of28 and publication Gate/receipt",
-    "Continue remaining20parents without routine questions; noEXE/mainmerge/subagents or unproved native/hardware claims"
+    "Preserve/commit interrupted REPAIR001 and controlled startup guard32PASS; freeze999catalog source for new REPAIR002",
+    "Actual full REPAIR002 exit0/sourceunchanged/allcaptures/146claimhashes/82clauses and publicationGate beforeUI054closure",
+    "Then8of28 and continueUI055/rest20; no changing source duringformal, no fakehardware/native/productionclaims"
   ],
   "blocked": [],
   "deferred": [
@@ -27,7 +27,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261016-REMAINING28-UI054-COLD-ADMISSION-REPAIR-WIP"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261016-REMAINING28-QUALITY.json",
@@ -570,7 +572,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-REPAIR-001",
+  "planned_evidence_run": "RUN-REMAINING28-REPAIR-002",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -644,15 +646,17 @@
   ],
   "active_work_package_plan": "docs/dev/UI054_EXECUTION_PLAN.json",
   "formal_execution_watch": {
-    "run": "RUN-REMAINING28-REPAIR-001",
-    "status": "READY_TO_LAUNCH_FROZEN_SOURCE",
-    "expected_tests": 998,
+    "run": "RUN-REMAINING28-REPAIR-002",
+    "status": "READY_AFTER_REPAIR001_CONTROLLED_STOP",
+    "expected_tests": 999,
     "expected_claim_requirements": 146,
     "expected_remaining28_verified": 8,
     "full_original_clauses": 82,
     "source_checkpoint_commit": "f3609dfc572a97a673f907b7a86075a43f9b3949",
     "source_checkpoint_tree": "fa44d0ff72c09ca52819409f89eea0d8333b8be4",
-    "source_edits_forbidden_until_run_finishes": true
+    "source_edits_forbidden_until_run_finishes": true,
+    "previous_actual_parent_exit": 130,
+    "previous_run": "RUN-REMAINING28-REPAIR-001"
   },
   "abandoned_preparations": [
     {
@@ -661,7 +665,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "UI054 exactoriginal11/SHA registeredpending with80unique supporting tests; actualall7screens003 reviewed,65.057ms controlledGUIgap/180183040B;998known/146pending. Nextsourcefreeze/nativefullformal;7of28historical,not8yet.",
+  "current_work": "Formal REPAIR001 controlledSTOP exit130/437completed436PASS1GUIwaitFAIL, all275rawfiles533397B retained; exactcauseofcold delay notcaptured. Workflowfixture explicitcontrolledresources +actual forcedstartup-admission/cancel guard32PASS,999known/146pending. Freeze for REPAIR002;7of28historical.",
   "last_formal_failure": {
     "run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
     "source_commit": "233e9ea4edc8d8927e482c3f0d362a78bd2ced5d",
@@ -693,6 +697,21 @@
       "metadata": "docs/evidence/runs/RUN-REMAINING28-QUALITY-004/controlled-stop.json",
       "actual_exit_code": 130,
       "source_commit": "95d11c53942c7b6ef20d0d65d8724829de24b75e"
+    },
+    {
+      "run": "RUN-REMAINING28-REPAIR-001",
+      "source_commit": "3fb28a69d3a23df944105f98718cf839da022f08",
+      "actual_parent_exit": 130,
+      "status": "CONTROLLED_STOP_AFTER_KNOWN_GUI_FAILURE_NOT_PASS",
+      "completed": 437,
+      "passed": 436,
+      "failed_ids": [
+        "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source"
+      ],
+      "raw_files": 275,
+      "raw_bytes": 533397,
+      "record": "docs/evidence/runs/RUN-REMAINING28-REPAIR-001/controlled-stop.json",
+      "not_pass": true
     }
   ],
   "checkpoint_cadence_events": [
