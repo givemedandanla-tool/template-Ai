@@ -3,11 +3,12 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QPlainTextEdit,QLineEdit,QPushButton,QTableWidget,QTableWidgetItem
 from .customers import digest
 from .major_review_job_ui import MajorJobPageMixin
+from .major_review_finding_ui import MajorFindingPageMixin
 
 STATES={'UNSCANNED':'未掃描','UNKNOWN':'無法判定','REAPPROVED':'修正後重新核准','CHECKED_OK':'確認無誤','ERROR_NEEDS_FIX':'確認錯誤待修','NEEDS_MANUAL':'待人工','BLOCKED':'阻擋','PROCESSING':'正在分析','INTERRUPTED':'中斷待明確接續','CANCELLED':'已取消／尚未完成','EXCLUDED_VERIFIED':'核准排除／仍暫停信任','STALE_REVIEW':'重審憑證已過期'}
 
 
-class MajorReviewPage(MajorJobPageMixin,QWidget):
+class MajorReviewPage(MajorFindingPageMixin,MajorJobPageMixin,QWidget):
     def __init__(self,dialog):
         super().__init__(dialog);self.dialog=dialog;self.plan=None;self.plan_pin=None;self.offset=0;self.case_offset=0;self.rows=[];self.case=None
         layout=QVBoxLayout(self);notice=QLabel('發現重大共通錯誤 → 以目前選定的既有問題發起重審。先核對來源、正反例與影響範圍；開始隔離不等於完成重審，未知依賴不算全庫安全。');notice.setWordWrap(True);layout.addWidget(notice)
@@ -24,11 +25,13 @@ class MajorReviewPage(MajorJobPageMixin,QWidget):
         dialog.actor.textChanged.connect(self.invalidate);dialog.reason.textChanged.connect(self.invalidate)
         self.cases.currentIndexChanged.connect(lambda *_:setattr(self,'offset',0))
         self.init_job_controls(layout)
+        self.init_finding_controls(layout)
     def button(self,bar,title,action):
         button=QPushButton(title);button.clicked.connect(lambda:self.dialog.guard(action));bar.addWidget(button);return button
     def invalidate(self,*_):
         self.plan=None;self.plan_pin=None
         self.job_plan=None;self.job_pin=None
+        self.finding_plan=None;self.finding_pin=None
         if hasattr(self.dialog,'consent'):self.dialog.consent.setChecked(False)
     def form(self):return dict(issue_id=self.dialog.issue_id(),category=self.category.currentText(),correct_example=self.correct.toPlainText(),wrong_example=self.wrong.toPlainText(),severity=self.severity.currentData())
     def pin(self):return digest(dict(form=self.form(),actor=self.dialog.actor.text(),reason=self.dialog.reason.text()))
@@ -41,9 +44,12 @@ class MajorReviewPage(MajorJobPageMixin,QWidget):
             lines=['確認將對明確關聯作品／模板暫停信任；原稿、已發布版本及舊結案紀錄保留。','使用者證據：'+plan['category']+'／'+plan['severity'],'正確：'+plan['correct_example'],'錯誤：'+plan['wrong_example']]
             for row in plan['rows']:lines.append('作品 '+row['work_id']+'／來源 '+row['source_id']+'／標記版次 '+str(row['pins']['work_revision'])+'／原事實版次 '+str(row['facts_revision'])+'／'+row['precheck'])
             for row in plan['templates']:lines.append('模板 '+row['template_id']+'／版本 '+str(row['version']))
+            for row in plan.get('component_fingerprints',[]):lines.append('暫停信任實際組件 '+row['kind']+'／指紋 '+row['key']+'；改名稱／新管線ID不解除，仍需獨立品質驗證')
+            for identity in plan.get('pipeline_ids',[]):lines.append('暫停依賴管線 '+identity+'；未宣稱模型已去污染')
             d.details.setPlainText('\n'.join(lines));d.status.setText('影響預覽完成，尚未啟動。核對未知範圍及下方明確確認，再按「確認並保存所選預覽」。')
         d.request('MAJOR_PLAN',form,loaded)
     def confirm(self):
+        if self.pending_action=='FINDING':return self.confirm_finding()
         if self.pending_action=='JOB':return self.confirm_job()
         d=self.dialog
         if not self.plan or self.pin()!=self.plan_pin or not d.consent.isChecked() or not d.actor.text().strip() or not d.reason.text().strip():raise ValueError('需目前預覽、來源正反例、具名核對者、原因與明確確認')
@@ -71,6 +77,7 @@ class MajorReviewPage(MajorJobPageMixin,QWidget):
                 for j,text in enumerate(values):item=QTableWidgetItem(text);item.setFlags(Qt.ItemIsEnabled|Qt.ItemIsSelectable);item.setData(Qt.UserRole,dict(id=row['id'],kind=row['kind'],revision=row['revision']));item.setToolTip(text);self.table.setItem(i,j,item)
             for i,width in enumerate([265,220,170,130,230]):self.table.setColumnWidth(i,width)
             self.table.horizontalHeader().setStretchLastSection(True)
+            self.dialog.status.setText('已讀回本案實際逐項狀態；完整結案與模型品質仍需各自驗證。')
         self.dialog.request('MAJOR_STATUS',dict(case_id=case_id,offset=self.offset,query=query),loaded)
     def locate(self):
         index=self.table.currentRow()

@@ -27,9 +27,19 @@ def plan(service,issue_id,category,correct_example,wrong_example,severity='CRITI
         if not node['key'].startswith('TEMPLATE:'):continue
         _,identity,version=node['key'].split(':');snapshot=service.library.object_snapshot('TEMPLATE',identity)
         if snapshot['payload']['version']!=int(version):raise ValueError('受影響模板版次已變更，需重新核對範圍')
-        templates.append(dict(template_id=identity,version=int(version),snapshot_digest=digest(snapshot),dependency_match=node['dependency_match']))
+        templates.append(dict(template_id=identity,version=int(version),family_id=snapshot['payload']['family_id'],source_work_id=snapshot['payload'].get('source_work_id',''),snapshot_digest=digest(snapshot),dependency_match=node['dependency_match']))
+    from .quality_trust import components
+    fingerprints={};pipelines=set();node_keys={row['key'] for row in dependencies['nodes']}
+    for key in node_keys:
+        if not key.startswith('PIPELINE:'):continue
+        pipeline=service.store.get('QUALITY_PIPELINE',key.split(':')[1])
+        if not pipeline or digest(pipeline['manifest'])!=pipeline['manifest_digest']:raise ValueError('受影響實際管線指紋失聯／變更，不能以名稱猜測')
+        pipelines.add(pipeline['id']);manifest=pipeline['manifest'];model=f'MODEL:{manifest.get("semantic_model_id")}:{manifest.get("semantic_model_revision")}'
+        rules={r['id'] for r in manifest.get('rules',[]) if f'RULE:{r["id"]}:{r["revision"]}' in node_keys}
+        for fingerprint in components(manifest):
+            if fingerprint['kind']=='MODEL' and (model in node_keys or manifest.get('semantic_model_revision') is None and any(n.startswith('MODEL:'+str(manifest.get('semantic_model_id'))+':') for n in node_keys)) or fingerprint['kind']=='RULE' and fingerprint['rule_id'] in rules:fingerprints[fingerprint['key']]=fingerprint
     result=dict(mode='SOURCE_EVIDENCE',case_id=case_id or new_id(),issue_id=issue_id,issue_digest=digest(issue),work_id=wid,category=category,correct_example=correct_example,wrong_example=wrong_example,severity=severity,rows=rows,templates=templates,dependency_digest=dependencies['digest'],dependency_nodes=dependencies['nodes'],missing_historical_nodes=dependencies['missing_historical_nodes'],unknown_unrecorded_dependencies=True,whole_corpus_safe=False,coverage=dict(registered_sources=service.db.execute('SELECT count(*) FROM sources').fetchone()[0],registered_works=service.db.execute('SELECT count(*) FROM artworks').fetchone()[0],affected_sources=len({r['source_id'] for r in rows}),affected_works=len(rows),affected_templates=len(templates),known_nodes=len(dependencies['nodes']),known_edges=len(dependencies['edges']),known_graph_complete=dependencies['complete_known_graph']))
-    result['digest']=digest(result);return result
+    result.update(component_fingerprints=list(fingerprints.values()),pipeline_ids=sorted(pipelines));result['digest']=digest(result);return result
 
 
 def confirm(service,value,actor,reason,approved=False):
@@ -52,15 +62,25 @@ def confirm(service,value,actor,reason,approved=False):
                     sample.update(state='QUARANTINED',quality_recheck_case=case_id,transition_actor=actor,transition_reason=reason);service.store._write('SAMPLE',identity,sample,revision,'major_source_evidence_sample_quarantined')
         for row in value['templates']:
             service.store._write('QUALITY_TEMPLATE_QUARANTINE',digest([case_id,'TEMPLATE',row['template_id'],row['version']]),dict(row,case_id=case_id,state='REVIEW_REQUIRED',review_state='UNSCANNED',actor=actor,reason=reason,at=now),0,'major_source_evidence_template_availability_suspended')
+        for fingerprint in value.get('component_fingerprints',[]):
+            previous=service.store.get('QUALITY_COMPONENT_QUARANTINE',fingerprint['key']);service.store._write('QUALITY_COMPONENT_QUARANTINE',fingerprint['key'],dict(fingerprint=fingerprint,case_id=case_id,state='REVIEW_REQUIRED',actor=actor,reason=reason,at=now,new_pipeline_id_does_not_reset_trust=True,models_decontaminated=False),previous['revision'] if previous else 0,'major_source_actual_component_suspended_not_display_alias')
+        for identity in value.get('pipeline_ids',[]):
+            previous=service.store.get('QUALITY_PIPELINE_QUARANTINE',identity);service.store._write('QUALITY_PIPELINE_QUARANTINE',identity,dict(case_id=case_id,state='REVIEW_REQUIRED',reason=reason,actor=actor,at=now,fallback_assumed_safe=False),previous['revision'] if previous else 0,'major_source_dependent_pipeline_suspended')
         header={k:copy.deepcopy(v) for k,v in value.items() if k not in ('rows','templates','digest')}
         return service.store._write('QUALITY_MAJOR_RECHECK',case_id,dict(plan=header,plan_digest=value['digest'],affected_works=len(value['rows']),affected_templates=len(value['templates']),state='REVIEW_REQUIRED',actor=actor,reason=reason,at=now,completed=False,old_closure_receipts_preserved=True,models_decontaminated=False,formal_versions_changed=False),0,'major_source_evidence_case_started_not_completed')
 
 
-def source_or_template_blocked(store,template):
+def source_or_template_blocked(store,template,*,exact_content=False):
     if not store.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='training_records'").fetchone():return False
     from .quality_rechecks import blocked
     if template.source_work_id and blocked(store,template.source_work_id):return True
-    return bool(store.db.execute("SELECT 1 FROM training_records WHERE kind='QUALITY_TEMPLATE_QUARANTINE' AND json_extract(payload,'$.template_id')=? AND json_extract(payload,'$.version')=? AND json_extract(payload,'$.state')='REVIEW_REQUIRED' LIMIT 1",(template.id,template.version)).fetchone())
+    matches=store.db.execute("SELECT q.payload FROM training_records q LEFT JOIN templates t ON t.id=json_extract(q.payload,'$.template_id') WHERE q.kind='QUALITY_TEMPLATE_QUARANTINE' AND json_extract(q.payload,'$.state') IN ('REVIEW_REQUIRED','REPLACED_WITH_VERIFIED_TEMPLATE','EXCLUDED_HOLD') AND ((json_extract(q.payload,'$.template_id')=? AND json_extract(q.payload,'$.version')=?) OR COALESCE(json_extract(q.payload,'$.family_id'),t.family_id)=? OR (?<>'' AND COALESCE(json_extract(q.payload,'$.source_work_id'),json_extract(t.payload,'$.source_work_id'))=?))",(template.id,template.version,template.family_id,template.source_work_id,template.source_work_id)).fetchall()
+    if not matches:return False
+    # A new ID/version/family must not evade an unresolved source/style case.
+    # Clearances are exact reviewed versions, never a global trust reset.
+    from .major_template_review import clearance_current
+    import json
+    return any(not clearance_current(store.db,json.loads(raw[0])['case_id'],template,exact_content=exact_content) for raw in matches)
 
 
 def current_condition(candidate):

@@ -31,7 +31,7 @@ def plan(service,case_id,unit_id,finding,evidence):
     try:
         verified=service.store.source_proof(wid);service.store.checked(wid,verified);proof=dict(path=verified.path,hash=verified.hash,stat=list(verified.stat))
     except (ValueError,OSError) as error:source_error=str(error)
-    if finding in ('CHECKED_OK','REAPPROVED') and (not proof or facts['revision']<=unit['facts_revision'] or service.store.facts_state(wid)!='CONFIRMED'):raise ValueError('解除需比隔離時更新且已人工確認、目前來源仍有效的完整事實')
+    if finding in ('CHECKED_OK','REAPPROVED') and (not proof or facts['revision']<=max(unit['facts_revision'],unit.get('reopen_facts_revision',0)) or service.store.facts_state(wid)!='CONFIRMED'):raise ValueError('解除需比隔離／重新開啟時更新且已人工確認、目前來源仍有效的完整事實')
     value=dict(case_id=case_id,case_revision=case['revision'],unit_id=unit_id,unit_revision=unit['revision'],work_id=wid,finding=finding,evidence=evidence,pins=service.store.pins(wid),facts_revision=facts['revision'],facts_digest=digest(facts),source_proof=proof,source_error=source_error,release_work=finding in ('CHECKED_OK','REAPPROVED'),model_quality_released=False,template_quality_released=False)
     value['digest']=digest(value);return value
 
@@ -52,3 +52,27 @@ def confirm(service,value,actor,reason,approved=False):
         unit=service.store.get('QUALITY_WORK_QUARANTINE',value['unit_id']);unit.update(review_state='EXCLUDED_VERIFIED' if value['finding']=='EXCLUDED_HOLD' else value['finding'],review_actor=actor,review_reason=reason,review_evidence=value['evidence'],finding_plan_digest=value['digest'],finding_snapshot=value,reviewed_at=time.time())
         if value['finding']=='EXCLUDED_HOLD':unit['state']='EXCLUDED_HOLD'
         return service.store._write('QUALITY_WORK_QUARANTINE',unit['id'],unit,unit['revision'],'major_source_manual_finding_saved_not_quality_release')
+
+
+def reopen_plan(service,case_id,unit_id):
+    case=service.store.get('QUALITY_MAJOR_RECHECK',case_id);unit=service.store.get('QUALITY_WORK_QUARANTINE',unit_id)
+    if not case or case['plan'].get('mode')!='SOURCE_EVIDENCE' or not unit or unit['case_id']!=case_id or unit['state'] not in ('RESOLVED_AFTER_NEW_HUMAN_FACTS','EXCLUDED_HOLD'):raise ValueError('只重新開啟本案已解除／排除的實際作品；待審項保持原狀')
+    value=dict(case_id=case_id,case_revision=case['revision'],unit_id=unit_id,unit_revision=unit['revision'],work_id=unit['work_id'],facts_revision=service.store.facts(unit['work_id'])['revision'],pins=service.store.pins(unit['work_id']),action='REOPEN_UNIT_REQUIRE_NEW_HUMAN_FACTS')
+    value['digest']=digest(value);return value
+
+
+def reopen(service,value,actor,reason,approved=False):
+    if approved is not True:raise ValueError('需明確重新開啟此件重審；原核准歷史保留')
+    text(actor,'重新開啟核對者',120);text(reason,'新疑義／版本變更依據',2000)
+    if value.get('digest')!=digest({k:v for k,v in value.items() if k!='digest'}):raise ValueError('重新開啟預覽已變更')
+    with service.store.transaction():
+        current=service.store.get('QUALITY_WORK_QUARANTINE',value['unit_id'])
+        if current and current.get('reopen_plan_digest')==value['digest']:return dict(current,replayed=True)
+        fresh=reopen_plan(service,value['case_id'],value['unit_id'])
+        if fresh['digest']!=value['digest']:raise ValueError('目前事實／來源／審核版次已變更，未重新開啟')
+        current.update(state='REVIEW_REQUIRED',review_state='NEEDS_MANUAL',reopen_facts_revision=value['facts_revision'],reopen_plan_digest=value['digest'],finding_plan_digest=None,reopened_at=time.time(),reopen_actor=actor,reopen_reason=reason)
+        saved=service.store._write('QUALITY_WORK_QUARANTINE',current['id'],current,current['revision'],'major_source_unit_reopened_old_receipts_preserved')
+        case=service.store.get('QUALITY_MAJOR_RECHECK',value['case_id'])
+        if case['state']!='REVIEW_REQUIRED':
+            case.update(state='REVIEW_REQUIRED',completed=False,reopened_at=time.time(),reopen_reason=reason);service.store._write('QUALITY_MAJOR_RECHECK',case['id'],case,case['revision'],'major_case_scope_reopened_old_completion_preserved')
+        return saved

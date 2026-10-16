@@ -216,6 +216,6 @@ class QualityRechecks:
             facts=self.store.facts(row['work_id'])
             if expected_facts_digest is not None and digest(facts)!=expected_facts_digest:raise ValueError('人工事實已變更，未套用舊解除預覽')
             if expected_pins is not None and self.store.pins(row['work_id'])!=expected_pins:raise ValueError('作品／來源已變更，未套用舊解除預覽')
-            if facts['revision']<=row['facts_revision'] or self.store.facts_state(row['work_id'])!='CONFIRMED':raise ValueError('需比隔離時更新且已人工確認的來源事實；保留舊版不等於已修正')
+            if facts['revision']<=max(row['facts_revision'],row.get('reopen_facts_revision',0)) or self.store.facts_state(row['work_id'])!='CONFIRMED':raise ValueError('需比隔離／重新開啟時更新且已人工確認的來源事實；保留舊版不等於已修正')
             current.update(state='RESOLVED_AFTER_NEW_HUMAN_FACTS',review_state=review_state,review_actor=actor,review_reason=reason,review_evidence=evidence,resolved_at=time.time(),resolved_facts_revision=facts['revision'],resolved_facts_digest=digest(facts),resolved_source_pins=self.store.pins(row['work_id']),finding_plan_digest=review_plan_digest)
             return self.store._write('QUALITY_WORK_QUARANTINE',quarantine_id,current,revision,'quality_single_historical_work_rereviewed_not_model_release')

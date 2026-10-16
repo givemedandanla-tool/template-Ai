@@ -336,7 +336,7 @@ class Library:
             self.event(t.id, "save_draft")
 
     def publish(self, t: Template) -> None:
-        self._template_provenance(t)
+        self._template_provenance(t,for_publication=True)
         errors = template_errors(t)
         from PySide6.QtGui import QFontDatabase,QGuiApplication
         if QGuiApplication.instance() is None:errors.append('字型系統未初始化，不能核驗發布')
@@ -369,9 +369,9 @@ class Library:
             self.event(t.id, "publish_user_confirmed")
         t.state = "published"
 
-    def _template_provenance(self, t: Template,*,allow_quarantined_draft=False) -> None:
+    def _template_provenance(self, t: Template,*,allow_quarantined_draft=False,for_publication=False) -> None:
         from .quality_source_rechecks import source_or_template_blocked
-        if not (allow_quarantined_draft is True and t.state=='draft') and source_or_template_blocked(self,t):raise ValueError('重大共通錯誤重審尚未核准此來源／模板版本，暫停可信使用')
+        if not (allow_quarantined_draft is True and t.state=='draft') and source_or_template_blocked(self,t,exact_content=for_publication):raise ValueError('重大共通錯誤重審尚未核准此來源／模板版本，暫停可信使用')
         if t.training_reference is not None:
             from .training_store import TrainingStore
             try: TrainingStore.bind(self).validate_training_reference(t)

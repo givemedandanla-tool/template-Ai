@@ -1,0 +1,51 @@
+test_canonical_source_field_coverage_cannot_be_hidden_by_omitting_validation_input (test_major_template_review.MajorTemplateReviewTests.test_canonical_source_field_coverage_cannot_be_hidden_by_omitting_validation_input) ... Fontconfig error: No writable cache directories
+ok
+test_changed_source_facts_after_template_preflight_prevent_clearance (test_major_template_review.MajorTemplateReviewTests.test_changed_source_facts_after_template_preflight_prevent_clearance) ... ok
+test_current_width_or_missing_manual_check_is_not_waived_by_old_publication (test_major_template_review.MajorTemplateReviewTests.test_current_width_or_missing_manual_check_is_not_waived_by_old_publication) ... ok
+test_exact_current_old_version_can_be_reverified_without_mutating_publication (test_major_template_review.MajorTemplateReviewTests.test_exact_current_old_version_can_be_reverified_without_mutating_publication) ... FAIL
+test_reviewed_new_draft_can_publish_but_another_unreviewed_version_remains_blocked (test_major_template_review.MajorTemplateReviewTests.test_reviewed_new_draft_can_publish_but_another_unreviewed_version_remains_blocked) ... FAIL
+test_unsaved_geometry_cannot_reuse_old_exact_clearance_during_publication (test_major_template_review.MajorTemplateReviewTests.test_unsaved_geometry_cannot_reuse_old_exact_clearance_during_publication) ... FAIL
+test_work_only_release_does_not_release_old_template_family_or_new_source_alias (test_major_template_review.MajorTemplateReviewTests.test_work_only_release_does_not_release_old_template_family_or_new_source_alias) ... ok
+test_exact_case_retry_is_idempotent_even_after_another_manual_edit (test_quality_source_review.QualitySourceReviewTests.test_exact_case_retry_is_idempotent_even_after_another_manual_edit) ... ok
+test_examples_and_literal_approval_are_required (test_quality_source_review.QualitySourceReviewTests.test_examples_and_literal_approval_are_required) ... ok
+test_existing_qualified_candidate_loses_current_trust_without_template_mutation (test_quality_source_review.QualitySourceReviewTests.test_existing_qualified_candidate_loses_current_trust_without_template_mutation) ... ok
+test_explicit_new_correction_draft_is_editable_but_cannot_be_published_under_quarantine (test_quality_source_review.QualitySourceReviewTests.test_explicit_new_correction_draft_is_editable_but_cannot_be_published_under_quarantine) ... ok
+test_midtransaction_storage_failure_rolls_back_quarantine_and_case_together (test_quality_source_review.QualitySourceReviewTests.test_midtransaction_storage_failure_rolls_back_quarantine_and_case_together) ... ok
+test_modified_scope_or_changed_source_after_preflight_does_not_create_case (test_quality_source_review.QualitySourceReviewTests.test_modified_scope_or_changed_source_after_preflight_does_not_create_case) ... ok
+test_new_major_case_invalidates_cached_batch_ready_before_installing_any_geometry (test_quality_source_review.QualitySourceReviewTests.test_new_major_case_invalidates_cached_batch_ready_before_installing_any_geometry) ... ok
+test_restart_reads_same_persistent_case_and_runtime_guard (test_quality_source_review.QualitySourceReviewTests.test_restart_reads_same_persistent_case_and_runtime_guard) ... ok
+test_source_and_work_denominators_keep_equal_bytes_as_distinct_logical_records (test_quality_source_review.QualitySourceReviewTests.test_source_and_work_denominators_keep_equal_bytes_as_distinct_logical_records) ... ok
+test_source_evidence_can_start_without_quality_protocol_and_preserves_original_records (test_quality_source_review.QualitySourceReviewTests.test_source_evidence_can_start_without_quality_protocol_and_preserves_original_records) ... ok
+test_unknown_other_source_stays_quarantined_without_claiming_complete_safety (test_quality_source_review.QualitySourceReviewTests.test_unknown_other_source_stays_quarantined_without_claiming_complete_safety) ... ok
+
+======================================================================
+FAIL: test_exact_current_old_version_can_be_reverified_without_mutating_publication (test_major_template_review.MajorTemplateReviewTests.test_exact_current_old_version_can_be_reverified_without_mutating_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_major_template_review.py", line 29, in test_exact_current_old_version_can_be_reverified_without_mutating_publication
+    self.make();value=self.plan();self.assertTrue(value['can_release'],value['blockers']);receipt=confirm(self.service,value,'Synthetic reviewer','Current exact template fully reverified',True);self.assertTrue(receipt['reviewed']);self.assertFalse(receipt['model_quality_released']);self.assertEqual(self.library.object_snapshot('TEMPLATE',self.template.id),self.before);self.library._template_provenance(self.template);candidate=self.candidate(self.template);self.assertTrue(candidate.formal_eligible,candidate.risk)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : ['模板未完整對應目前原稿標記集合，不以省略輸入隱藏來源欄位', '模板欄位／人物公司對應不符合目前原稿標記：45c17d1cbc21449da6ba3a9d68fe14f8', '模板欄位／人物公司對應不符合目前原稿標記：66282b2df3fb4d00a85a2cc42f7717f7', '模板欄位／人物公司對應不符合目前原稿標記：6c335bd4582a48a2a398b232c1876372', '模板欄位／人物公司對應不符合目前原稿標記：92a1af0f8b4040869a37a677afb02aaa']
+
+======================================================================
+FAIL: test_reviewed_new_draft_can_publish_but_another_unreviewed_version_remains_blocked (test_major_template_review.MajorTemplateReviewTests.test_reviewed_new_draft_can_publish_but_another_unreviewed_version_remains_blocked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_major_template_review.py", line 31, in test_reviewed_new_draft_can_publish_but_another_unreviewed_version_remains_blocked
+    self.make();versions=TemplateVersions(self.library);draft=versions.clone(versions.plan(self.template.id),'Synthetic reviewer','Exact isolated correction draft',True);value=self.plan(draft);self.assertTrue(value['can_release'],value['blockers']);confirm(self.service,value,'Synthetic reviewer','Current draft physical/semantic source checks',True);self.library.publish(draft);self.assertEqual(self.library.object_snapshot('TEMPLATE',draft.id)['payload']['state'],'published');self.assertTrue(self.candidate(draft).formal_eligible)
+                                                                                                                                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : ['模板未完整對應目前原稿標記集合，不以省略輸入隱藏來源欄位', '模板欄位／人物公司對應不符合目前原稿標記：498efbd99c2b40868ff1ae774dd3ead6', '模板欄位／人物公司對應不符合目前原稿標記：7c4c37efe2674ae9b0be971dc06d4376', '模板欄位／人物公司對應不符合目前原稿標記：82233ef3848e45bb962e1a3975e472ba', '模板欄位／人物公司對應不符合目前原稿標記：f2ac433870c3449a995c6447d95845fd']
+
+======================================================================
+FAIL: test_unsaved_geometry_cannot_reuse_old_exact_clearance_during_publication (test_major_template_review.MajorTemplateReviewTests.test_unsaved_geometry_cannot_reuse_old_exact_clearance_during_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_major_template_review.py", line 36, in test_unsaved_geometry_cannot_reuse_old_exact_clearance_during_publication
+    self.make();draft=TemplateVersions(self.library).clone(TemplateVersions(self.library).plan(self.template.id),'Synthetic reviewer','Current draft',True);value=self.plan(draft);self.assertTrue(value['can_release'],value['blockers']);confirm(self.service,value,'Synthetic reviewer','Exact reviewed draft',True);draft.slots[0].rect.x+=.1
+                                                                                                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true : ['模板未完整對應目前原稿標記集合，不以省略輸入隱藏來源欄位', '模板欄位／人物公司對應不符合目前原稿標記：2fee560058bb4f3091cb0beb33be98ec', '模板欄位／人物公司對應不符合目前原稿標記：34d7543e336c4b009914a260d480a27f', '模板欄位／人物公司對應不符合目前原稿標記：3c0730ebe3f449c887add61ed6eb698e', '模板欄位／人物公司對應不符合目前原稿標記：d93f049720e44fcfa4d1e4107b12a998']
+
+----------------------------------------------------------------------
+Ran 18 tests in 15.805s
+
+FAILED (failures=3)

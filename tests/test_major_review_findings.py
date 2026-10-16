@@ -40,6 +40,15 @@ class MajorReviewFindingTests(unittest.TestCase):
         self.assertTrue(blocked(self.store,self.work['id']))
     def test_idempotent_finding_readback_does_not_duplicate_approval_events(self):
         self.case();confirmed(self.store,self.work);value=self.finding();saved=confirm(self.service,value,'Synthetic reviewer','Same exact current human evidence',True);before=self.library.db.execute('SELECT count(*) FROM training_history').fetchone()[0];again=confirm(self.service,value,'Synthetic reviewer','Read original receipt only',True);self.assertTrue(again['replayed']);self.assertEqual(saved['revision'],again['revision']);self.assertEqual(self.library.db.execute('SELECT count(*) FROM training_history').fetchone()[0],before)
+    def test_explicit_reopen_preserves_history_and_requires_facts_newer_than_reopen(self):
+        from template_ai.major_review_findings import reopen_plan,reopen
+        self.case();facts=confirmed(self.store,self.work);confirm(self.service,self.finding(),'Synthetic reviewer','Initial exact human review',True);value=reopen_plan(self.service,self.case_record['id'],self.unit_id);reopened=reopen(self.service,value,'Synthetic reviewer','New doubt requires fresh manual facts',True);self.assertEqual(reopened['state'],'REVIEW_REQUIRED');self.assertTrue(blocked(self.store,self.work['id']))
+        with self.assertRaises(ValueError):self.finding()
+        again=reopen(self.service,value,'Synthetic reviewer','Read saved original reopen',True);self.assertTrue(again['replayed']);facts=self.store.save_facts(self.work['id'],facts['observations'],facts['revision'],self.work['revision']);self.store.confirm_facts(self.work['id'],[o['id'] for o in facts['observations']],facts['revision'],facts['pins'],self.store.source_proof(self.work['id']),'Synthetic reviewer',True);confirm(self.service,self.finding('REAPPROVED'),'Synthetic reviewer','New facts after reopening',True);self.assertFalse(blocked(self.store,self.work['id']))
+    def test_stale_reopen_preview_does_not_overwrite_new_facts(self):
+        from template_ai.major_review_findings import reopen_plan,reopen
+        self.case();facts=confirmed(self.store,self.work);confirm(self.service,self.finding(),'Synthetic reviewer','Initial review',True);value=reopen_plan(self.service,self.case_record['id'],self.unit_id);self.store.save_facts(self.work['id'],facts['observations'],facts['revision'],self.work['revision'])
+        with self.assertRaises(ValueError):reopen(self.service,value,'Synthetic reviewer','Stale reopen',True)
     def test_new_source_work_or_fact_revision_invalidates_old_release_receipt(self):
         self.case();facts=confirmed(self.store,self.work);confirm(self.service,self.finding(),'Synthetic reviewer','First actual review',True);self.assertFalse(blocked(self.store,self.work['id']));self.store.save_facts(self.work['id'],facts['observations'],facts['revision'],self.work['revision']);self.assertTrue(blocked(self.store,self.work['id']));status=execute(self.library,'STATUS',dict(case_id=self.case_record['id']));self.assertEqual(status['summary']['states'],{'STALE_REVIEW':1});self.assertEqual(status['summary']['checked'],0)
 

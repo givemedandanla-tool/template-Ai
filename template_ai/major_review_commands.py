@@ -14,6 +14,18 @@ def execute(library,command,payload):
     if command=='CONFIRM_FINDING':
         from .major_review_findings import confirm
         return confirm(service,**payload)
+    if command=='REOPEN_PLAN':
+        from .major_review_findings import reopen_plan
+        return reopen_plan(service,**payload)
+    if command=='REOPEN_UNIT':
+        from .major_review_findings import reopen
+        return reopen(service,**payload)
+    if command=='TEMPLATE_PLAN':
+        from .major_template_review import plan
+        return plan(service,**payload)
+    if command=='CONFIRM_TEMPLATE':
+        from .major_template_review import confirm
+        return confirm(service,**payload)
     if command=='JOB_PLAN':
         from .major_review_jobs import plan
         return plan(library,**payload)
@@ -61,6 +73,12 @@ def execute(library,command,payload):
             if row['state']=='RESOLVED_AFTER_NEW_HUMAN_FACTS':
                 from .major_review_findings import resolution_current
                 state=row.get('review_state','REAPPROVED') if resolution_current(library.db,row) else 'STALE_REVIEW'
+            elif kind=='QUALITY_TEMPLATE_QUARANTINE' and row['state']=='REPLACED_WITH_VERIFIED_TEMPLATE':
+                from .major_template_review import clearance_current
+                from .model import Template
+                try:template=Template.from_dict(library.object_snapshot('TEMPLATE',row['approved_template_id'])['payload']);valid=clearance_current(library.db,case['id'],template)
+                except (ValueError,KeyError):valid=False
+                if not valid:state='STALE_REVIEW'
             if state=='UNSCANNED' and row.get('precheck')=='SOURCE_UNKNOWN':state='UNKNOWN'
             if state=='PROCESSING' and row.get('analysis_job_id'):
                 from .automatic_training import AutomaticTraining
