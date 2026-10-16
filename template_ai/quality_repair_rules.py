@@ -46,7 +46,7 @@ def checked(store,identity,revision):
     approval=record.get('review') or {}
     if approval.get('decision')!='APPROVE' or approval.get('reviewed_revision')!=revision-1 or approval.get('publication')!='ISOLATED_NOT_ACTIVE':raise ValueError('候選沒有可核對的獨立核准憑證')
     origin=record['origin_rule'];current=store.get('RULE',origin['id'])
-    if not current or current['revision']!=origin['revision'] or digest(current)!=origin['digest'] or current['state']!='ISOLATED_IN_REPAIR':raise ValueError('原始草稿／修復隔離已變更，候選不能繼續發布')
+    if not current or current['revision']!=origin['revision'] or digest(current)!=origin['digest'] or current['state']!='ISOLATED_IN_REPAIR' or current.get('repair_candidate_id')!=identity:raise ValueError('原始草稿／修復隔離已變更，候選不能繼續發布')
     review=root_review(QualityRepairs(store.library),record['root_review_id'])
     if digest(review)!=record['root_review_digest'] or review['plan']['layer']!='NOISE_RULE':raise ValueError('規則根因憑證不一致')
     for ref in record['positive_examples']+record['counterexamples']:store.validate_ref(ref)

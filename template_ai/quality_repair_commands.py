@@ -54,6 +54,7 @@ def execute(library,command,payload):
     store=TrainingStore.bind(library);repairs=QualityRepairs(library);gates=QualityRepairGates(library);releases=QualityRepairReleases(library)
     if command=='ISSUES':return repairs.page(**payload)
     if command=='WORKS':return work_page(library,**payload)
+    if command=='IMPORT_PLAN':return repairs.plan_import_issue(**payload)
     if command=='SOURCE_PLAN':return repairs.plan_source_issue(**payload)
     if command=='QUALITY_PLAN':return repairs.plan_quality_issue(**payload)
     if command=='ROOT_PLAN':return repairs.root_plan(**payload)
@@ -90,7 +91,7 @@ def execute(library,command,payload):
             from .quality_reports import QualityReports
             if decision_plan(library,plan['report_id'])!=plan:raise ValueError('品質接受預覽已改變')
             return QualityReports(library).decide(plan['report_id'],actor,reason,approved,expected_report_digest=plan['report_digest'])
-        if kind=='ISSUE':return (repairs.create_quality_issue if plan.get('origin')=='ACTUAL_QUALITY_CASE' else repairs.create_source_issue)(plan,actor,reason,approved)
+        if kind=='ISSUE':return (repairs.create_quality_issue if plan.get('origin')=='ACTUAL_QUALITY_CASE' else repairs.create_import_issue if plan.get('origin')=='IMPORT_EXCEPTION' else repairs.create_source_issue)(plan,actor,reason,approved)
         if kind=='ROOT':return repairs.confirm_root(plan,actor,approved)
         if kind=='TRUTH':return truth.confirm(repairs,plan,actor,approved)
         if kind=='CANDIDATE':return gates.register(plan,actor,reason,approved)

@@ -24,6 +24,7 @@ class ImportExceptionDialog(QDialog):
         self.filter.currentIndexChanged.connect(self.reload);bar.addWidget(self.filter)
         self.reload_button=QPushButton('重新載入');self.reload_button.clicked.connect(self.reload);bar.addWidget(self.reload_button);layout.addLayout(bar)
         self.count=QLabel();layout.addWidget(self.count)
+        self.repair_button=QPushButton('以實際匯入例外預覽根因／人工恢復');self.repair_button.clicked.connect(self.open_repair);layout.addWidget(self.repair_button)
         self.logo_exceptions=QPushButton('核對不確定／衝突 Logo（按尺寸）');self.logo_exceptions.clicked.connect(self.open_logo_exceptions);layout.addWidget(self.logo_exceptions)
         self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['狀態／嚴重度','來源／頁次','類型／attempt','exact依賴影響','排序原因','批次／項ID']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.ExtendedSelection);self.table.itemSelectionChanged.connect(self.selected);layout.addWidget(self.table,2)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
@@ -33,6 +34,16 @@ class ImportExceptionDialog(QDialog):
         self.restore_button=QPushButton('明確恢復已排除項');self.restore_button.clicked.connect(lambda:self.change_status('RESTORE'));row.addWidget(self.restore_button);layout.addLayout(row)
         row=QHBoxLayout();self.source=QComboBox();row.addWidget(self.source,1);self.locate_button=QPushButton('定位明確所選登錄來源');self.locate_button.clicked.connect(self.locate);row.addWidget(self.locate_button);layout.addLayout(row)
         close=QDialogButtonBox(QDialogButtonBox.Close);close.rejected.connect(self.reject);layout.addWidget(close);self.loading=False;self.reload()
+    def open_repair(self):
+        try:
+            if self.busy or self.window.busy:raise ValueError('匯入仍在執行，請先等待或安全停止')
+            rows=self.selection()
+            if len(rows)!=1:raise ValueError('一次選一個實際失敗／中斷項；不猜測未登錄作品')
+            row=rows[0]
+            from .training_quality_dialog import open_repair_center
+            open_repair_center(self.window,dict(origin='IMPORT_EXCEPTION',batch_id=row['batch_id'],item_id=row['item']['id'],expected_revision=row['revision'],description='核對實際來源匯入例外及人工恢復，不自動訓練'))
+        except (ValueError,KeyError) as error:self.status.setText(str(error))
+
     def open_logo_exceptions(self):
         if self.busy or self.window.busy:return
         from .logo_library_dialog import LogoLibraryDialog

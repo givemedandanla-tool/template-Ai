@@ -11,6 +11,7 @@ import test_quality_rechecks as recheck_fixture
 from template_ai.quality_repair_dialog import QualityRepairDialog
 from template_ai.quality_repairs import QualityRepairs
 from template_ai.semantic_learning import SemanticLearning
+from template_ai.training_store import digest
 
 APP=QApplication.instance() or QApplication([])
 
@@ -76,7 +77,7 @@ class QualityRepairGuiActionTests(unittest.TestCase):
         panel=self.panel();panel.recheck_item=record
         with patch.object(panel,'open_repair') as opened:panel.repair_selected()
         self.assertEqual(opened.call_args.args[0]['origin'],'CROSS_BATCH_RECHECK')
-        panel.recheck_item=None;panel.impact_mode=False;panel.rows=[dict(case=dict(work_id=self.work['id']))];panel.table.setRowCount(1);panel.table.selectRow(0);panel.protocols.addItem('Actual source protocol',self.protocol['id']);panel.protocols.setCurrentIndex(panel.protocols.count()-1);panel.side.setCurrentIndex(1)
+        panel.recheck_item=record;panel.impact_mode=False;panel.rows=[dict(case=dict(work_id=self.work['id']))];panel.table.setRowCount(1);panel.table.selectRow(0);panel.protocols.addItem('Actual source protocol',self.protocol['id']);panel.protocols.setCurrentIndex(panel.protocols.count()-1);panel.side.setCurrentIndex(1)
         with patch.object(panel,'open_repair') as opened:panel.repair_selected()
         self.assertEqual(opened.call_args.args[0]['side'],'CANDIDATE')
 
@@ -87,7 +88,7 @@ class QualityRepairGuiActionTests(unittest.TestCase):
         panel,dialog=self.dialog();dialog.actor.setText('Synthetic reviewer');dialog.reason.setText('Authored lenient safety fixture, not production accuracy')
         dialog.select_record(dialog.report,report['id'],'Actual saved comparison')
         dialog.preview('REPAIR_DECISION_PLAN',dict(report_id=report['id']),'DECISION');self.wait(panel)
-        self.assertTrue(dialog.pending[1]['candidate_decision_eligible']);self.assertEqual(dialog.pending[1]['report_digest'],__import__('template_ai.training_store',fromlist=['digest']).digest(report))
+        self.assertTrue(dialog.pending[1]['candidate_decision_eligible']);self.assertEqual(dialog.pending[1]['report_digest'],digest(report))
         with self.assertRaises(ValueError):reports.decide(report['id'],'Reviewer','Stale preview must fail',True,expected_report_digest='not-the-approved-report')
         dialog.consent.setChecked(True);dialog.confirm();self.wait(panel)
         decision=self.store.get('QUALITY_VERSION_DECISION',dialog.decision.currentData());self.assertEqual(decision['report_id'],report['id'])

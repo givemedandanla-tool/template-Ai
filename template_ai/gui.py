@@ -450,6 +450,7 @@ class MainWindow(QMainWindow):
         self.button("重新命名作品", self.rename_work, works_row)
         self.button("標記歷史／恢復", self.restore_work, works_row)
         self.button("標記品質／規則與可信樣本", self.training_center, works_row)
+        self.source_repair_button=self.button("目前原稿局部修復",self.source_repair,works_row)
         layout.addLayout(works_row)
         self.source_info = QLabel("選取一份來源；一個檔案可以逐作品框選、保存標記並學習不同模板。")
         self.source_info.setWordWrap(True)
@@ -1255,6 +1256,15 @@ class MainWindow(QMainWindow):
             self.save_labels(silent=True)
         else:
             self.refresh_editor()
+
+    def source_repair(self):
+        try:
+            if not self.work:raise ValueError('先選取實際來源作品')
+            from .training_navigation import require_clean_navigation
+            from .training_quality_dialog import open_repair_center
+            require_clean_navigation(self)
+            open_repair_center(self,dict(origin='SOURCE_FACTS',origin_id=self.work['id'],work_id=self.work['id'],description='從原畫布核對此作品的來源、人工真值與局部問題'))
+        except (ValueError,KeyError) as error:self.statusBar().showMessage(str(error))
 
     def training_center(self):
         from .training_quality_dialog import TrainingQualityDialog

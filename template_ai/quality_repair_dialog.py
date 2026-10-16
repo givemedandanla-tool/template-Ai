@@ -202,9 +202,23 @@ class QualityRepairDialog(QDialog):
         self.button(form,'預覽局部語意訓練計畫',lambda:self.preview('REPAIR_SEMANTIC_PLAN',dict(work_roles=dict(self.roles)),'TRAIN',dict(review_id=self.review_id())))
         self.detail_rule=QCheckBox('我已逐條詳閱HIGH風險規則的原稿、支持與反例');form.addRow(self.detail_rule);self.detail_rule.toggled.connect(self.invalidate)
         self.button(form,'預覽所選既有規則的獨立候選核對',lambda:self.preview('REPAIR_RULE_PLAN',dict(rule_ids=[self.identity(self.rule)]),'RULE',dict(review_id=self.review_id(),detail_reviewed=self.detail_rule.isChecked())))
+        self.button(form,'使用既有版本設定選擇模型／已核准隔離規則',self.version_setup)
         self.pipeline=self.picker(form,'實際凍結候選管線（在既有品質設定保存）','QUALITY_PIPELINE')
         self.button(form,'預覽登錄exact修復候選',lambda:self.preview('REPAIR_CANDIDATE_PLAN',dict(review_id=self.review_id(),pipeline_id=self.identity(self.pipeline)),'CANDIDATE'))
         self.candidate=self.picker(form,'同問題的exact修復候選','QUALITY_REPAIR_PIPELINE_CANDIDATE')
+
+    def version_setup(self):
+        from .quality_setup import QualitySetupDialog
+        dialog=QualitySetupDialog(self)
+        for index in range(dialog.tabs.count()):dialog.tabs.setTabVisible(index,index==3)
+        dialog.tabs.setCurrentIndex(3)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
+
+    def previewed(self,kind,value):
+        if kind is not None:raise ValueError('此入口只保存實際可執行版本；人工真值及品質仍走既有獨立流程')
+        if not value.get('manifest') or not value.get('id'):raise ValueError('沒有可讀回的實際管線版本')
+        self.select_record(self.pipeline,value['id'],value['name']);self.details.setPlainText('已保存並選取實際可執行版本：'+value['name']+' · '+value['id'][:12]+'\n下一步核對同問題根因與候選登錄；這不是品質或正式採用通過。');self.status.setText('已保存凍結版本；規則仍保持隔離，需完成順序品質與明確採用。')
 
     def work_page(self,delta):
         offset=max(0,self.work_offset+delta) if delta else 0

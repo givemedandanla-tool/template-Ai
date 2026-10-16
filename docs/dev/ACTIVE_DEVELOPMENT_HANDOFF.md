@@ -1,61 +1,31 @@
-> 最新05:46：UI054semoperation新增legacy00443PASS、recovery0067PASS（真实加密restore＋真实uncommittedmodel childtimeout/rollback）。兼容legacy stringscope，newop需dict；semantic AUTO恢复显式标记EXPLICIT_RESUME_REQUIRED。957catalog/145pending，历史7/28。下一isolated approvedRULE候选、sharedriskchecks、历史TRAIN曝露及实际frozen规则执行，然后replay/control/newHLD/真部署rollback/7页全部原11。新架构无额外scheduler/db。
+# 當前交接：持續完成原28父題，不例行詢問
 
-> 最新05:37：UI054semanticcandidate actualAUTO_JOB operation 已5targetPASS（actualFIFO2children/modelscandidates隔離、cancel/resourcepause/resume/completedrerun拒絕、stale/HLDfamily阻擋、晚期audit atomicrollback）。新增SemanticLearning.bind/train_in_transaction＋AutomaticTraining.finish_in_transaction 避免nested/DDLimplicitcommit，舊publicAPI保留普通交易。955catalog/145pending。下一先legacy regression＋restore/timeout/receipt gaps，再rules/replay/newHLD/真部署rollback/7頁；UI054仍未完成，historical7/28。001failedlog保留，0025PASS。
+- 倉庫 `/workspace/template-Ai`；分支 `dev/v0.1-first-version`／PR2，禁止自行merge main／EXE／subagents／新增付費服務。Python `.venv/bin/python`；Qt offscreen；`PYTHONPATH=tests XDG_CACHE_HOME=/workspace/.cache`。
+- 先讀 STATE 的 current_work／next_tasks／last_confirmed_checkpoint，並跑 dev_governance check。按需 rg、通常輸出≤1600；每可恢復包與10分鐘 GitHub checkpoint＋原生逐檔讀回；歷史不得覆寫。
+- 原28契約 `FIXED70_REMAINING28_CONTRACT.json`；歷史完成7：UI046/047/049/050/051/052/053（71原條）。UI054原11正在實作，**不能計8/28**；當前145 claims因source更動全部pending，998known tests。CORE/GOV不冒充父題。
 
-> 最新05:28：UI054 quality_repairs＋sharedQualityRechecks.dependencies 已15targetPASS（含legacymajor＋realprovenance），950catalog/145pending，historical7/28。canonicalcase/Gold/source-facts/root flags/stale/dispute/lateaudit/50paging已做；metadata-onlyimpact不可majorconfirm。下一真正AUTO_JOB semanticrepair operation，reuseclaim/finish/lease/child，atomicmodel/candidate/job/lease及holdout/pause/cancel/resume。其余replay/newHLD/isolatedrules/真部署rollback/七页未做，不可闭合UI054。
+## 現在下一步
 
-> 最新05:20：已完成7/28的943PASS與publicationGate／收據push再Gate；現在UI054原11 START，145舊claims已pending，最新證據移previous QUALITY005，不能把舊PASS用到新code。先canonical issue/source-humanfacts-Gold/root候選/impact共用，然後AUTOcandidate/replay/freshHLD/部署rollback/七頁全部做完；original11不縮scope。準備CP-UI054-START後才搬用reviewed drafts並測試。
+1. **實際七頁截圖／視覺檢查／加入aggregate**。`quality_repair_dialog.py` 七個原生scrollpages已做；`capture_quality.py` 舊8張、`capture_remaining28.py` aggregate尚未含repair。新capture沿用真實合法合成資料／現有Qt／同SQLite／FIFO，實際state，不能以空白tab或字符串冒充。整個現有aggregate有外部timeout，先查run_evidence呼叫界線；不要為了截圖又重建引擎或長期卡住GUI。
+2. 原UI054全文11／SHA在 `UI054_EXECUTION_PLAN.json`（13e2c0f1dee610fa6485a53f806bef1dadacd9f0c920a32953851121af942498）。按全條核對後才註冊完整pending驗收／sourcefreeze／push＋native readback／正式fullrun。不得只拿target PASS結案。
+3. PASS需實際full parent shell exit0、source_unchanged、全catalog無skip／missing／native異常、真capture，再做完整publication-scope Gate及GitHub receipt。其後才8/28，繼續其餘20，不能停在milestone。
 
-> 出版核對已實查PASS：metadataCP00b32b6ec9371f2185cb75188acf5f8914344c86、145claims全驗；41文字attachment＋run/政策GitHub，125media按精確policy留local。收據/state follow-up與再Gate後直接UI054 START（先145pending再改source）。
+## 已實作／最新證據
 
-# 當前接續（2026-10-16 UTC）
+- quality_repairs：actual canonical failure、SOURCE_FACTS／實際AUTO_UNIT例外／持久Q_WORK跨批重審／匯入batch item無作品manual恢復；原稿FACTS/Gold人工核對、11層根因候選，不把假設說成已證實。QualityRechecks共用resolver含歷史RULE exactrev→SAMPLE→DATASET→geometrytemplate、模型inputs→actualAUTO→alltemplate/customer；未知／缺rev保留POTENTIAL。
+- quality_repair_training：既有AUTO_JOB operation、sharedFIFO/lease/ownedchild/selectedTRAIN-VALIDATION、model+candidate+job+lease同Tx；真timeout訓練未提交rollback／pause/cancel/resume／加密restore7PASS+legacy43PASS。
+- quality_repair_rules／quality_rule_selector：共用風險review、isolatedimmutable候選及origin exactid鎖；永續TRAIN曝露、一般approve/version旁路阻擋；明列frozen選擇執行、不在預設ACTIVE；現有QualitySetup在GUI可選真已核准ISO規則，不輸入UUID；cloneid不能冒充核准link。
+- exposed-HLD descriptive protocol重播、current human Gold rebind：新人工事實後明確新Gold／新rootreview；舊failure／HOLDOUT／曝露／consumption永不重置；quality false、CI suppressed，實際FIFO驗證13+15等target PASS。
+- quality_repair_gates：predeclared ROOT→unaffectedcritical-controls→fresh-HLD不可跳階；required baseline+candidate positiveTP（人物/電話/Logo/mm/customer/realmultiwork）。真frozen故障parser→正常parser→controls→freshHLD→impact→repairDEPLOY整鏈PASS。duplicate recursive validation移除但QualityReports/protocol.check_metadata仍fresh驗完整前鏈；test_quality_repair_full_chain自己的module，priorRootGold.withdraw後finalGate及activepin阻斷，11combined PASS75.507s。
+- quality_repair_releases：不可變deployment+CASpointer，AUTO預檢／job／scope／推論pin；pointer換版不偷換佇列version；actualwithdrawn/criticalsame-parser quarantine舊版不自動fallback；實際encryptedrestore標記revalidation。32combined PASS。只有無repairissues才可initialbootstrap，repairDEPLOY需lastGate+impact/no pendinghighrisk。原稿/客戶/模板/active-model record不暗改。
+- GUI sevenpages／原稿facts/actualexception/quality/recheck/importfailed/canvas全入口。新quality_repair_commands只是existing quality_command/QualityPanel.request內routing，無新transport/DB/worker。50pagedHLDdisabled來源、defaultunchecked、changedinputs清舊預覽、error返child、unsavedfacts/close guard。busyprogress只SQLmetadata50，不搶worker。明確品質決策有insideTx expectedreportdigest，仍不activation。
+- 最新：`ui054-seven-page-gui-002.log`4PASS、`ui054-native-critical-actions-003.log`4PASS、`ui054-exact-rule-native-001.log`11PASS、`ui054-import-canvas-exact-rule-001.log`9PASS（互有重疊，不相加）。原失敗logs都保留。
 
-- `/workspace/template-Ai`，`dev/v0.1-first-version`／PR2，不合併main。目標：完成剩餘28原父題完整軟體條款並SELF驗證；**現在7/28，尚有21**，不可在7/28停工。全75=51 VERIFIED/21 PARTIAL/3 DEFERRED；固定70=49閉合/21部分；CORE87/GOV7另計，沒有新增父題。
-- 核心：零例行問答，按需rg/讀段，一般輸出≤1600tokens；每可恢復包/≤10min checkpoint→GitHub commit/tree/blob讀回→收據push。約8min先保存；曾超時如實WORK_LOG，不冒稱strictPASS。無多代理、EXE、paidAPI/新CI；commit `[skip ci]`。UI048最後、UI056D/REV03延後。
+## 正式歷史與限制
 
-## 立即完成出版核對，再繼續開發
-
-1. 最新完整PASS `docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json`：source `6cd038cb6aca4544a0a9458eac859289496dc613`／tree `5f8fe4457cc1aec6e2521b9233428c0d95c4d251`；**943/943PASS、111owned modules正常、0skip/0unhandled、capture0、sourceunchangedTrue、actualexit0**。7parents/71原條、145requirements claims digest均吻合。
-2. 守衛finalizer005已成功執行，**不可重跑**（media archive已存在）。Registry145已VERIFIED、render/progress snapshot已成；`PROGRESS-20261016-REMAINING28-QUALITY` 對BEGIN：新增0／scope修訂7／完成7。已完成 UI046/047/049/050/051/052/053。
-3. publication-scope Gate已實際PASS145；收據/state正在follow-up push。已完成 `CP-20261016-REMAINING28-UI053-VERIFIED`：完整run文字、FULL70_PUBLICATION exactsource/hash/bytes、所有計數/進度/收據都必須push/nativeACK後，實際 `tools/dev_governance.py check --require-evidence --publication-scope` PASS，才可STATE publicationPASS；收據push再Gate。所有metadata保存GitHub，**125PNG/PDF媒體留local** `.checkpoints/formal-media/RUN-REMAINING28-QUALITY-005/`；41attachment文字＋run metadata。這是精確FULL70 policy，不套任意9附件例外，不宣稱strict全媒體已上傳。
-4. 然後開發**UI054原11**；修改app前將145已VERIFIED改pending保留previous evidence，render並保存START checkpoint，nextwork `UI054-ROOT-CAUSE-REPAIR-EXACT11`。不能從28目標改成只完成下一題。
-
-## UI053現在的實作與界線
-
-- quality_*.py 同TrainingStore SQLite；合法immutableGold、整來源分母、NetworkX關聯群組TRAIN/VALIDATION/HOLDOUT防洩漏、max-cardinality integer12 IoU、九域/類別counts及群組Wilson、不預設生產品質數字；固定同源A/B實際Inkscape/CharModel/核准規則/Tesseract5.5 eng+chi_tra/frozenengine/canonicalcases/Logo全組件/映射。
-- 真FIFO隔離子程序/持久進度/暫停續跑/源級失敗收據；lazy Qt50分頁/搜尋篩選/所有來源含零錯誤/一作品Gold-AI原稿對照/批准撤回；actual parser/model/rule fingerprint防換ID、歷史閉案跨批重審。
-- 新actualAUTO producer保存analysis_version、分析模型在analysis_evidence；重審讀actual+legacy欄位，同weights其他版本僅POTENTIAL；覆核記actualsource模型與當前active分開，Goldtruth排除predictionversions。3realmodel→AUTO→實際critical結果→impact/quarantine及truth依賴回歸PASS。
-- 正式capture8quality畫面已含總capture且檢視actualGold/AI圖；當前雲端測量FIFO4.0196s、parent318078976B、maxGUIgap279.17ms。**合成安全流程、明確寬鬆policy**，不是生產準確率校準／原生Illustrator／Windows16GBRTX5050VivoBook／實印／獨立覆核。這些缺證不可冒稱通過。
-
-## UI054接續材料（分包實作中，完整11尚未完成）
-
-- `UI054_EXECUTION_PLAN.json`：完整原11/SHA、實際sklearn1.7.2/MLflow2.22/NetworkX3.5/AWS公開source/hash思路。`UI054_RELEASE_AND_GUI_DESIGN.md` 七頁、ordered root/control/freshholdout、真正部署與可信rollback。
-- docs/dev/wip 的UI054三個draft是歷史未整合草稿；現有active `quality_repairs.py`、`quality_repair_training.py`、`quality_repair_rules.py`已審改實作及目標測試，不可用舊draft覆寫。規則分包25/25PASS，existingreview/risk共用；isolated規則只供explicit品質試驗，不在預設ACTIVE。歷史TRAIN曝露保留、一般approve/version旁路阻擋。
-- 決定沿用AUTO_JOB明確operation、原claim/finish/sharedlease/child/runtime/restore；候選model＋link＋job＋lease原子提交。沿用QualityPanel.request＋quality_command新增REPAIR路由，無新DB/scheduler/command協定。
-- 未完成：通用影響resolver（沿用現有真AUTO版本重審）；規則candidate後續正式部署及受控withdraw；已實作曝露HLD descriptive修復replay（actualFIFO9PASS／擴大36PASS），仍永久不獨立；原錯誤→未受影響關鍵控制→新獨立HLD順序Gate；真正frozenpipeline runtime deployment/安全rollback；7頁及全部原稿/例外/品質/重審入口。根因不明或source/Gold失效先manual，不拿手填prediction閉合。
-
-## 歷史失敗與環境
-
-- QUALITY001 source233e9ea...：935/934PASS/1watch等待FAIL、exit1，capture未執行(sentinel1)；修test待actualresult/候選，保留原run。
-- QUALITY002 sourcef7fd453...：nativeSIGSEGV139，684完成全PASS，無run.json；partialjournal/native-interruption保存。確切native根因未證明；closed/deleted widget guard及serialowned module strategy已驗證，不把中斷說PASS。
-- QUALITY003 source012c717...：已知missing QApplication bootstrap及coldworkflow失敗，受控SIGINT130，561aggregate records＋401rawfiles/421576B在controlled-stop與module-raw-evidence。每worker強QApplication/core0、scopedworkflow controlledresources已修。
-- QUALITY004 source95d11c...：sharedfixture self.close_window借用不相容，29setupERROR；受控SIGINT130，644aggregate＋481rawfiles/563158B保存。class-qualified cleanup已修，943全正式證明。001–004及其finalizer不可使用，不覆寫任何歷史run/CP。
-- .venv Python3.12.14/Qt6.8.3/NetworkX3.5；Tesseract5.5與local chi_tra/eng packs已installed。QT_QPA_PLATFORM=offscreen PYTHONPATH=tests XDG_CACHE_HOME=/workspace/.cache。Skills onboarding/runtime早已用過，當前catalog無需重查；正常Git/native_readback可用。
-
-2026-10-16T05:55Z UI054 replay: existing QualityProtocols purpose EXPOSED_HOLDOUT_REPAIR_DIAGNOSTIC bound actual failed issue/root and same exposed dataset. Original HOLDOUT/consumption immutable; actual shared-FIFO children recompute both sides, descriptive quality false/CI suppressed/acceptance blocked. 9targeted +36expanded PASS (overlap, not summed). Next ordered gates/root/control/fresh HLD, actual deployment/rollback, impact enrichment, seven-page GUI; 7/28 historical only.
-
-2026-10-16T05:57Z UI054 source impact13/13PASS: reused QualityRechecks.source_dependencies NetworkX bounded actual historical input→models→AUTO works→templates/customer graph; SOURCE_FACTS issue can read-only preview without fake producer. Missing modelrevision and descendants POTENTIAL, unrecorded legacy UNKNOWN. Next ordered gates, actualdeployment/rollback, seven pages/full11. 968known/145pending; 7/28 historical only.
-
-2026-10-16T06:05Z UI054 ordered gates: actual frozen deliberately faulty source parser→real normal parser ROOT PASS, no independent PASS; sparse controls FAIL/skip-stage blocked. 3/3 targeted +17/17 combined (overlap) PASS; historical first ERROR source_id duplicate merge preserved, report consistency fixed. 971known/145pending,7/28 historical. Next IMPORTANT: re-review updates FACTS invalidates old Gold; implement explicit immutable truth rebinding/current root review +same exposed source scope diagnostic replay (never reset HOLDOUT), then passing full control/independent chain/deployment/GUI.
-
-2026-10-16T06:09Z UI054 explicit currenttruth binding: quality_repair_truth.py and protocol/root/gate hooks13/13PASS; ordered gates + actualtraining/isolatedrules15/15PASS. Same source-content/currentGold, oldfailure preserved/HOLDOUT neverreset, lateauditrollback and laterstale guarded; 974known/145pending. Release draft docs/dev/wip/UI054_RELEASES_DRAFT.py AST ONLY NOT IMPLEMENTED; promote after review+AUTO preflight/job pins/frozen runtime/restore marker+actual tests. Still need full positive multiwork-control/fresh-HLD chain, actualrelease/rollback, sevenpages/allentrypoints/full11formal.
-
-2026-10-16T06:15Z UI054 runtime release active: quality_repair_releases.py promoted/reviewed +actualAUTO preflight/job/queue versionpins and frozenpipeline sourceexecution, CAS/event atomic, explicit valid oldevent rollback, no safe fallback. Actual5release safety cases inclownedFIFO/actualcriticalparserq/encryptedrestore +legacy27 =32/32PASS (first failed Library contextmanager fixture retained/fixed withclosing). 979known/145pending. Fullpositive repair DEPLOY chain (not justbootstrap), stronger positive controls, historicalRULE/sample impact +sevenpages/allentrypoints/full11 formal still pending;7of28historical. Historical RELEASES_DRAFT no longer authority; never overwriteactivefile fromit.
-
-2026-10-16T06:24Z UI054 full chain PASS: tests/quality_repair_acceptance_fixture.py distinct authored two-column VALIDATION (3files4works inclrealmultipanel) and portrait freshHLD2files; actual frozen bad→good ROOT, positive baseline+candidate critical controls, newHLDquality, impactreview and actual repairDEPLOY allPASS. Firstfullcase143.902s, removed duplicate recursive gatevalidation already freshlydone inQualityReports/protocolvalidity/checkmetadata; whole4-case module98.939sPASS. First2failedfixturelogs preserve sourceinventoryGoldguard.980known/145pending,7of28historical. NEXT splitfullchain into own boundedmodule +withdrawpriorrootGold prove stillblocks; actualEXCEPTION AUTO_UNIT, source/rule/sampleimpact, REPAIR commandrouting/sevenpageGUI/allentrypoints/full11formal.
-
-2026-10-16T06:31Z UI054 GUI backend ready: quality_repair_commands.py is only routing within EXISTING quality_command/ownedchild/QualityPanel.request, not newtransport/queue/DB. Actualowned preview/confirm/readback +50paged HOLDOUT-disabled/unselected metadata catalog5/5PASS; first searchtest assumed53 notmatchingUUIDs, fixedunique query, no appfailure. sourcegraph RULE exactrev→SAMPLE→DATASET→geometrytemplate and actual AUTO_UNIT exception2/2PASS. Separate test_quality_repair_full_chain module adds priorRootGold.withdraw afterdeployment; finalGate +pin blocked, previous event retained nofallback; fullchain+impact+issues11/11PASS75.507s total.985known/145pending,7of28historical. NEXT actual sevenpageGUI/all entrypoints and unsavedguard via existingtransport; fulloriginal11 accept/formal only aftercomplete.
-
-2026-10-16T06:40Z UI054 quality_repair_dialog.py seven actual native scrollpages +QualityPanel/sourceFacts/exception/recheck entryadapters. Basic4/4 Qt testsPASS: lazy7tabs/no writes/defaultunchecked, actualowned preview/confirm+changedinputinvalidates, actualHLDdisabledcatalog, unsavedhumanFacts+backgroundcloseguard. Firstfixtureerror `.text` vsactual `.observed_text` preserved/fixed; selfreview fixed qualityside currentData (Chinese label cannotbackendside). CROSS source issue nowchecks actual persisted QUALITY_WORK_QUARANTINE (majorheader intentionallyomitsrows), fullroute testsstillpending.989known/145pending,7of28historical. NEXT allentrypoint/criticalGUI model/rule/stage/deploy interactions; capture7pages and inspect/includeformalaggregate; original11register/fullformal onlyaftercoveragecomplete.
-
-2026-10-16T06:48Z UI054 nativecriticalactions4/4PASS +previous15/15regression. ActualGUIselected semantic TRAIN/VAL→ownedcreate/sharedFIFOchild→PENDINGmodel; actualHIGHrulefailure now reachesdialog(clearpending/consent), detailapprovalisolatedonly; realCROSSquarantine+qualitysideData; nativequalitydecision exactreportdigest guardedinsideQualityReports.decide, noactivation. Initial001training succeeded but jobprogress launchedcompetingworker beforefinishcallback: fixed sharedjob_status SQLmetadata50 directreadonly whilebusy (no weights/images), not sleeps.993known/145pending,7of28historical. NEXT exactISOapprovedrule picker in existingQualitySetup and reuseSetup fromRepairDialog host; distinguishcase/recheck stalecontexts; actualscreens7/captureaggregate/coverageoriginal11/fullformal.
+- 最新完成正式 `RUN-REMAINING28-QUALITY-005`：source6cd038cb6aca4544a0a9458eac859289496dc613/tree5f8fe4457cc1aec6e2521b9233428c0d95c4d251，943/943、111serialownedmodules exit0、parentexit0、sourceunchanged，GatePASS；**只證7父題的當時來源**。166附件=41text+run.json在GitHub、125PNG/PDF local例外有exactmanifest；不是所有media已上傳。
+- UI053 finalizer005已執行，**絕不可重跑**；QUALITY001–004失敗／native／受控中斷保留，不能拿其finalizer結案。早期細節在archive與各run。
+- run_evidence使用serialfreshownedmodule harness、強QApplication/精確catalog/120s每module/ownedprocess終止；不能編輯受測source/tests/tools/acceptance於正式run期間，docs-only CP可。
+- 全部品質fixture是明確寬鬆policy的合法作者合成安全流程；不是生產準確率校準／nativeIllustrator／Windows16GBRTX5050VivoBook／實印／獨立覆核。先完成其他未阻擋軟體，不虛報這些證明。
+- 實際數學／sklearn1.7.2、NetworkX3.5、MLflow2.22、AWS公開設計/Tesseract5.5依據與hash在 REMAINING28_ENGINEERING_BASIS.json／UI054 plan；沒有新增SDK/雲服務/神經架構。Semantic用本機字元NaiveBayes及成熟語意/電話套件。
+- 詳細本段歷史：handoff-history/ACTIVE-20261016-UI054-DESIGN-TO-NATIVE-GUI.md；只按需讀，別再整份展開。

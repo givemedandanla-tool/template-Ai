@@ -97,6 +97,31 @@ class QualityRepairs:
                 reason=reason,at=time.time(),state='AWAITING_ROOT_REVIEW',root_cause_proven=False,
                 formal_versions_changed=False),0,'quality_source_issue_registered_not_formal_mutation')
 
+    def plan_import_issue(self,batch_id,item_id,expected_revision,description):
+        import json
+        text(description,'匯入來源問題與可重現現象',2000)
+        if not self.store.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='import_batches'").fetchone():raise ValueError('沒有既有匯入批次憑證')
+        raw=self.store.db.execute('SELECT revision,payload FROM import_batches WHERE id=?',(batch_id,)).fetchone()
+        if not raw:raise ValueError('實際匯入批次不存在')
+        batch=json.loads(raw[1])
+        if raw[0]!=expected_revision or batch['revision']!=expected_revision:raise ValueError('匯入批次版次改變，需重新讀取例外')
+        item=next((row for row in batch['items'] if row['id']==item_id),None)
+        if not item or item['status'] not in ('FAILED','INTERRUPTED'):raise ValueError('需明列實際失敗／中斷項；已排除或正常項不能冒充失敗')
+        result=dict(origin='IMPORT_EXCEPTION',origin_reference=dict(kind='IMPORT_BATCH_ITEM',id=batch_id,revision=expected_revision,item_id=item_id,item_digest=digest(item),batch_digest=digest(batch)),
+                    work_id=None,source_id=item.get('source_id') or (item.get('reuse_source') or {}).get('id'),
+                    source_path=item['path'],source_hash=item.get('expected_hash'),source_page=item['page'],
+                    actual_error=dict(status=item['status'],type=item.get('error_type'),reason=item.get('error') or item.get('reason')),
+                    description=description,root_cause_proven=False,automatic_repair_allowed=False,
+                    next_step='USE_EXISTING_IMPORT_RETRY_AND_MANUAL_SOURCE_TRUTH_NOT_TRAINING')
+        result['digest']=digest(result);return result
+
+    def create_import_issue(self,plan,actor,reason,approved=False):
+        if approved is not True:raise ValueError('需明確核對實際匯入例外；沒有作品時不建立訓練候選')
+        text(actor,'匯入問題登錄者',120);text(reason,'原始匯入錯誤核對依據',2000);ref=plan['origin_reference']
+        with self.store.transaction():
+            if self.plan_import_issue(ref['id'],ref['item_id'],ref['revision'],plan['description'])!=plan:raise ValueError('匯入例外／來源範圍已改變')
+            return self.store._write('QUALITY_REPAIR_ISSUE',new_id(),dict(evidence=plan,actor=actor,reason=reason,at=time.time(),state='MANUAL_SOURCE_RECOVERY_REQUIRED',root_cause_proven=False,formal_versions_changed=False),0,'quality_actual_import_issue_registered_no_training')
+
     def current_issue(self,identity):
         issue=self.store.get('QUALITY_REPAIR_ISSUE',identity)
         if not issue:raise ValueError('修復問題不存在')
@@ -106,6 +131,7 @@ class QualityRepairs:
         from .quality_rechecks import QualityRechecks
         issue=self.current_issue(identity);pipeline_id=issue['evidence'].get('pipeline_id')
         service=QualityRechecks(self.library)
+        if not issue['evidence'].get('work_id'):raise ValueError('此匯入例外尚無已核對作品；已知批次保留，其他依賴未知，請先由既有匯入重試恢復原稿')
         if component=='SOURCE':dependencies=service.source_dependencies(issue['evidence']['work_id'])
         else:
             if not pipeline_id:raise ValueError('尚無可核對的實際版本；先從原稿／模型／規則依賴確認版本，不把未知說成已掃描')
