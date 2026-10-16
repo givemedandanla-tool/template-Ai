@@ -33,8 +33,8 @@ def job_status(library,identity,offset=0):
     keys=('id','revision','phase','semantic_training_state','model_id','candidate_id','root_review_id','error','restore_state','total')
     row=library.db.execute("SELECT id,revision,json_extract(payload,'$.phase'),json_extract(payload,'$.semantic_training_state'),json_extract(payload,'$.model_id'),json_extract(payload,'$.candidate_id'),json_extract(payload,'$.root_review_id'),json_extract(payload,'$.error'),json_extract(payload,'$.restore_state'),json_array_length(payload,'$.items') FROM training_records WHERE kind='AUTO_JOB' AND id=? AND json_extract(payload,'$.operation')='SEMANTIC_REPAIR_CANDIDATE'",(identity,)).fetchone()
     if not row:raise ValueError('需選實際局部修復訓練工作')
-    result=dict(zip(keys,row));item_keys=('work_id','state','attempts','action','error')
-    result['items']=[dict(zip(item_keys,item)) for item in library.db.execute("SELECT json_extract(i.value,'$.work_id'),json_extract(i.value,'$.state'),json_extract(i.value,'$.attempts'),json_extract(i.value,'$.action'),json_extract(i.value,'$.error') FROM training_records r,json_each(r.payload,'$.items') i WHERE r.kind='AUTO_JOB' AND r.id=? ORDER BY CAST(i.key AS INTEGER) LIMIT 50 OFFSET ?",(identity,offset))]
+    result=dict(zip(keys,row));item_keys=('work_id','state','attempts','action','error','work_name')
+    result['items']=[dict(zip(item_keys,item)) for item in library.db.execute("SELECT json_extract(i.value,'$.work_id'),json_extract(i.value,'$.state'),json_extract(i.value,'$.attempts'),json_extract(i.value,'$.action'),json_extract(i.value,'$.error'),COALESCE(a.name,'來源作品已失聯') FROM training_records r JOIN json_each(r.payload,'$.items') i LEFT JOIN artworks a ON a.id=json_extract(i.value,'$.work_id') WHERE r.kind='AUTO_JOB' AND r.id=? ORDER BY CAST(i.key AS INTEGER) LIMIT 50 OFFSET ?",(identity,offset))]
     result.update(offset=offset,limit=50,weights_loaded=False);return result
 
 

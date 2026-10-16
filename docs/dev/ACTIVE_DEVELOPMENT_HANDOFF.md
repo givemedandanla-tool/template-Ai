@@ -4,7 +4,12 @@
 - 先讀 STATE 的 current_work／next_tasks／last_confirmed_checkpoint，並跑 dev_governance check。按需 rg、通常輸出≤1600；每可恢復包與10分鐘 GitHub checkpoint＋原生逐檔讀回；歷史不得覆寫。
 - 原28契約 `FIXED70_REMAINING28_CONTRACT.json`；歷史完成7：UI046/047/049/050/051/052/053（71原條）。UI054原11正在實作，**不能計8/28**；當前145 claims因source更動全部pending，998known tests。CORE/GOV不冒充父題。
 
-## 最新畫面檢查與現在下一步
+## 當前優先：正式來源凍結／全回歸
+
+- 07:17 原UI054 **11條逐字與原sectionSHA13e2...完全核對**，已在REQUIREMENTS註冊pending（共146claims、998known），覆蓋矩陣 UI054_FULL_ACCEPTANCE_COVERAGE.json。歷史7/28，未計8；下一 RUN-REMAINING28-REPAIR-001 實際full sourcefreeze/push/native/fullrun/sourceunchanged/parentexit0/allcapture/Gate。不要再只跑target當結案。
+- 畫面003全部7張已視覺檢查並持久化：docs/qa/ui054-native-capture-003；tableheight/columns及具名source/progress已改善；preparation57.5056s，controlledworkflowGUImaxgap65.0569ms、parent180183040B。不是硬體benchmark／生產品質。003 actualownedSTATUS pin替代capturer同步duplicatebackendassert，002原2456ms保留不改。正式runner新增獨立repair capture子程序，同120s上限，避免與既有Qt capture共用存活widget。
+
+## 前期畫面檢查與歷史下一步
 
 - 07:07 actual `docs/qa/ui054-native-capture-002` 七張真Qt截圖＋metadata，全部視覺檢查；actual fullchain59.94s preparatory，另有真語意FIFOchild，withdrawalblocksrollback。**有待修**：source/impact table欄太窄且高度只顯示2列，進度rawid/English需具名；maxGUIgap2456ms包含capturer直接呼叫重backend `release.pin()` assertion，非正常UI讀取，先改用已由ownedSTATUS回傳的pin並重測，不能把這份冒稱低負載PASS。capture001 namespaceImportError保留。
 - tests/quality_repair_acceptance_fixture.actual_chain已抽共用給fullchain測試與capture，無複製模型結果；fullchain test仍withdrawpriorRootGold阻擋，目前新helper由actualcapture完整執行。

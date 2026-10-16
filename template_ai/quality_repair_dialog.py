@@ -1,7 +1,7 @@
 """Seven native repair pages over the existing QualityPanel request/worker path."""
 from pathlib import Path
 from PySide6.QtCore import Qt
-from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QTabWidget,QWidget,QScrollArea,QLabel,QLineEdit,QPlainTextEdit,QComboBox,QCheckBox,QPushButton,QTableWidget,QTableWidgetItem)
+from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QTabWidget,QWidget,QScrollArea,QLabel,QLineEdit,QPlainTextEdit,QComboBox,QCheckBox,QPushButton,QTableWidget,QTableWidgetItem,QHeaderView)
 from shiboken6 import isValid
 from .quality_repairs import ROOT_LAYERS
 from .quality_repair_gates import STAGES
@@ -34,8 +34,9 @@ class QualityRepairDialog(QDialog):
         super().reject()
 
     def invalidate(self,*_):
-        self.pending=None
+        previous=self.pending;self.pending=None
         if hasattr(self,'consent'):self.consent.setChecked(False)
+        if previous is not None and hasattr(self,'status'):self.status.setText('輸入或版本選擇已改變，舊預覽已失效；請重新核對後再保存。')
 
     def guard(self,action):
         try:action()
@@ -152,7 +153,7 @@ class QualityRepairDialog(QDialog):
 
     def issue_form(self):
         form=self.forms[0];self.issues=self.picker(form,'待修問題','QUALITY_REPAIR_ISSUE');self.button(form,'讀取選中問題',self.load_issue)
-        self.source_work=self.line(form,'來源作品（入口或目前畫布定位，無需輸入識別碼）');self.source_work.setReadOnly(True);self.description=self.line(form,'原稿問題、重現現象與負面案例')
+        self.source_work=self.line(form,'來源作品（入口或目前畫布定位，無需輸入識別碼）');self.source_work.setReadOnly(True);self.source_name=QLabel();self.source_name.setTextFormat(Qt.PlainText);self.source_name.setWordWrap(True);form.addRow('具名來源',self.source_name);self.source_work.textChanged.connect(self.source_identity_changed);self.description=self.line(form,'原稿問題、重現現象與負面案例')
         self.button(form,'帶入目前畫布作品',lambda:self.source_work.setText(self.window.work['id'] if self.window.work else ''))
         self.button(form,'預覽原稿問題登錄',lambda:self.source_issue('SOURCE_FACTS',self.source_work.text()))
         self.button(form,'開啟原稿事實核對（保留未儲存編輯）',self.source_facts)
@@ -160,6 +161,13 @@ class QualityRepairDialog(QDialog):
     def load_issue(self):
         def loaded(row):self.issue=row;self.source_work.setText(row['evidence'].get('work_id') or '');self.details.setPlainText(row['reason']+'\n'+row['evidence'].get('description',''));self.status.setText('已選取實際問題；請另外選同一問題的根因核對與候選。')
         self.request('REPAIR_GET',dict(kind='QUALITY_REPAIR_ISSUE',id=self.identity(self.issues)),loaded)
+
+    def source_identity_changed(self,identity):
+        if not identity:
+            self.source_name.setText((self.issue or {}).get('evidence',{}).get('source_path') or '尚未選定具名作品');return
+        try:
+            work=self.library.artwork(identity);source=self.library.source(work['source_id']);self.source_name.setText(work['name']+' ／ '+Path(source['original_path']).name)
+        except (ValueError,KeyError):self.source_name.setText('來源作品失聯，請重新核對')
 
     def source_issue(self,origin,origin_id):
         self.preview('REPAIR_SOURCE_PLAN',dict(work_id=self.source_work.text(),origin=origin,origin_id=origin_id,description=self.description.text()),'ISSUE')
@@ -174,7 +182,7 @@ class QualityRepairDialog(QDialog):
         self.review=self.picker(form,'同一問題的根因核對憑證','QUALITY_REPAIR_ROOT_REVIEW')
         self.component=QComboBox();self.component.addItems(['SOURCE','PARSER','MODEL','RULE']);form.addRow('影響依據',self.component);self.rule=self.picker(form,'實際規則（僅規則影響）','RULE')
         self.button(form,'讀取已知／潛在／未知影響',self.load_impact)
-        self.impact_nodes=[];self.impact_offset=0;self.impact_table=QTableWidget(0,3);self.impact_table.setHorizontalHeaderLabels(['影響類型','具名來源／作品／版本','直接／潛在／未知']);self.impact_table.setEditTriggers(QTableWidget.NoEditTriggers);self.impact_table.setMaximumHeight(160);form.addRow(self.impact_table)
+        self.impact_nodes=[];self.impact_offset=0;self.impact_table=QTableWidget(0,3);self.impact_table.setHorizontalHeaderLabels(['影響類型','具名來源／作品／版本','直接／潛在／未知']);self.impact_table.setEditTriggers(QTableWidget.NoEditTriggers);self.impact_table.setMinimumHeight(150);self.impact_table.setMaximumHeight(180);self.impact_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch);form.addRow(self.impact_table)
         self.button(form,'前50項影響',lambda:self.impact_page(-50));self.button(form,'後50項影響',lambda:self.impact_page(50))
         self.truth_set=self.picker(form,'重新人工核對後的同來源新版真值集','QUALITY_SET')
         self.button(form,'預覽新版人工真值接續（不解除HOLDOUT曝露）',lambda:self.preview('REPAIR_TRUTH_PLAN',dict(issue_id=self.issue_id(),dataset_id=self.identity(self.truth_set),reason=self.reason.text()),'TRUTH'))
@@ -197,7 +205,7 @@ class QualityRepairDialog(QDialog):
             for column,text in enumerate((labels.get(kind,kind),name,row['dependency_match'])):self.impact_table.setItem(index,column,QTableWidgetItem(str(text)))
 
     def candidate_form(self):
-        form=self.forms[2];self.work_query=self.line(form,'全庫搜尋訓練來源／角色');self.work_table=QTableWidget(0,3);self.work_table.setHorizontalHeaderLabels(['來源／作品','人工事實與角色','本次明列用途']);self.work_table.setMaximumHeight(205);form.addRow(self.work_table)
+        form=self.forms[2];self.work_query=self.line(form,'全庫搜尋訓練來源／角色');self.work_table=QTableWidget(0,3);self.work_table.setHorizontalHeaderLabels(['來源／作品','人工事實與角色','本次明列用途']);self.work_table.setMinimumHeight(180);self.work_table.setMaximumHeight(225);self.work_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch);form.addRow(self.work_table)
         self.button(form,'搜尋來源（前50筆）',lambda:self.work_page(0));self.button(form,'前50筆來源',lambda:self.work_page(-50));self.button(form,'後50筆來源',lambda:self.work_page(50))
         self.button(form,'預覽局部語意訓練計畫',lambda:self.preview('REPAIR_SEMANTIC_PLAN',dict(work_roles=dict(self.roles)),'TRAIN',dict(review_id=self.review_id())))
         self.detail_rule=QCheckBox('我已逐條詳閱HIGH風險規則的原稿、支持與反例');form.addRow(self.detail_rule);self.detail_rule.toggled.connect(self.invalidate)
@@ -225,9 +233,9 @@ class QualityRepairDialog(QDialog):
         def loaded(page):
             self.work_offset=page['offset'];self.work_table.setRowCount(len(page['rows']))
             for index,row in enumerate(page['rows']):
-                self.work_table.setItem(index,0,QTableWidgetItem(row['name']+' · '+Path(row['source_path']).name));self.work_table.setItem(index,1,QTableWidgetItem(row['facts_state']+' / '+str(row['locked_role'] or '尚未分派')))
+                self.work_table.setItem(index,0,QTableWidgetItem(row['name']+' · '+Path(row['source_path']).name));self.work_table.setItem(index,1,QTableWidgetItem(('人工已確認' if row['facts_state']=='CONFIRMED' else '人工事實待核對')+' / '+{'HOLDOUT':'保留集（禁訓練）','TRAIN':'訓練來源','VALIDATION':'驗證對照'}.get(row['locked_role'],'尚未分派')))
                 combo=QComboBox();combo.addItem('未選擇',None)
-                for role in ('TRAIN','VALIDATION'):combo.addItem(role,role);combo.model().item(combo.count()-1).setEnabled(role in row['allowed_roles'])
+                for role in ('TRAIN','VALIDATION'):combo.addItem('本次訓練' if role=='TRAIN' else '本次驗證',role);combo.model().item(combo.count()-1).setEnabled(role in row['allowed_roles'])
                 selected=self.roles.get(row['id'])
                 if selected not in row['allowed_roles']:self.roles.pop(row['id'],None);selected=None
                 combo.setCurrentIndex(max(0,combo.findData(selected)));combo.setToolTip('\n'.join(row['blockers']));combo.currentIndexChanged.connect(lambda _,c=combo,wid=row['id']:self.set_role(wid,c.currentData()));self.work_table.setCellWidget(index,2,combo)
@@ -246,7 +254,13 @@ class QualityRepairDialog(QDialog):
 
     def job_page(self,delta):
         offset=max(0,self.job_offset+delta) if delta else 0
-        def loaded(row):self.job_offset=row['offset'];self.progress.setPlainText('工作：'+str(row['phase'])+'\n模型：'+str(row['semantic_training_state'])+'\n'+'\n'.join(str(item['work_id'])+'：'+str(item['state'])+' / '+str(item.get('action') or item.get('error') or '') for item in row['items']));self.status.setText('來源核對完成與模型候選產生分開顯示；不是品質通過。')
+        def loaded(row):
+            self.job_offset=row['offset'];phases=dict(READY='等待明確啟動',RUNNING='處理中',COMPLETED='已完成',CANCELLED='已取消',PAUSED_RESOURCES='因資源暫停',INTERRUPTED='中斷後待明確接續')
+            model_state='候選已產生，尚未品質驗收' if row['model_id'] else '尚未產生候選模型；來源核對與訓練分開顯示'
+            actions=dict(SOURCE_VERIFIED_NOT_YET_TRAINED='來源已核對（模型另列）',MODEL_CREATED_NOT_ACTIVATED='候選模型已建立，未正式採用')
+            lines=['工作：'+phases.get(row['phase'],'狀態待核對')+'（'+str(row['phase'])+'）','模型：'+model_state]
+            for item in row['items']:lines.append(item['work_name']+'：'+('成功' if item['state']=='SUCCESS' else '待核對／處理中')+' / '+str(item.get('error') or actions.get(item.get('action'),'等待來源核對')))
+            self.progress.setPlainText('\n'.join(lines));self.status.setText('來源核對完成與模型候選產生分開顯示；不是品質通過。')
         if self.library.closed or self.window.library is not self.library:raise ValueError('環境已改變，未套用舊進度')
         from .quality_repair_commands import job_status
         loaded(job_status(self.library,self.identity(self.job),offset))
@@ -255,6 +269,8 @@ class QualityRepairDialog(QDialog):
         if not self.consent.isChecked() or not self.actor.text().strip():raise ValueError('需具名並明確勾選啟動／續跑選定範圍')
         job=self.store.get('AUTO_JOB',self.identity(self.job))
         if not job or job.get('operation')!='SEMANTIC_REPAIR_CANDIDATE':raise ValueError('只送入選中的局部修復訓練工作')
+        root=self.store.get('QUALITY_REPAIR_ROOT_REVIEW',job['root_review_id'])
+        if not root or root['plan']['issue_id']!=self.issue_id():raise ValueError('訓練工作必須屬於同一個目前選取問題，不能借用其他問題的工作')
         self.window.execution_queue.submit('AUTO_JOB',job,self.actor.text());self.consent.setChecked(False);self.status.setText('已送入既有公平佇列；進度與暫停／取消沿用背景控制。')
 
     def runtime_controls(self):
@@ -275,6 +291,8 @@ class QualityRepairDialog(QDialog):
         self.button(form,'在原品質中心檢視逐案對照（揭露規則仍適用）',self.open_quality)
 
     def enqueue_pair(self):
+        protocol=self.store.get('QUALITY_PROTOCOL',self.identity(self.protocol));binding=protocol['scope'].get('repair_stage') or {}
+        if binding.get('candidate_id')!=self.candidate_id():raise ValueError('只送入同一問題、同一候選預先核對的階段試驗')
         self.select_record(self.panel.protocols,self.identity(self.protocol),'修復固定階段');self.panel.actor.setText(self.actor.text());self.panel.enqueue_pair()
 
     def open_quality(self):
@@ -291,7 +309,7 @@ class QualityRepairDialog(QDialog):
         self.request('REPAIR_STATUS',{},status)
 
     def release_status(self):
-        def loaded(row):self.details.setPlainText('正式版本：'+str((row['pin'] or {}).get('pipeline_id') or '未建立或需重新核對')+'\n'+'\n'.join(row['errors'])+'\n不自動信任任何舊版；發布與原稿核准仍獨立。');self.status.setText('已讀回目前正式指標與可信證據。')
+        def loaded(row):self.last_release_status=row;self.details.setPlainText('正式版本：'+str((row['pin'] or {}).get('pipeline_id') or '未建立或需重新核對')+'\n'+'\n'.join(row['errors'])+'\n不自動信任任何舊版；發布與原稿核准仍獨立。');self.status.setText('已讀回目前正式指標與可信證據。')
         self.request('REPAIR_STATUS',{},loaded)
 
     def recovery_form(self):
