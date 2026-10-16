@@ -40,12 +40,16 @@ def execute(root,command,payload):
             if not pair:return dict(jobs={},results={})
             jobs={side:EvaluationJobs(library).get(identity) for side,identity in pair['jobs'].items()}
             results={side:store.get('QUALITY_EVAL_RESULT',job.get('result_id','')) for side,job in jobs.items()}
-            return dict(jobs={side:{key:row.get(key) for key in ('id','revision','phase','items','result_id','side','error')} for side,row in jobs.items()},results=results)
+            checked=QualityProtocols(library).validity(payload['protocol_id'],verify_sources=False)
+            from .quality_trust import blockers
+            component_blocks={side:blockers(store,store.get('QUALITY_PIPELINE',jobs[side]['pipeline_id'])) for side in jobs}
+            return dict(jobs={side:{key:row.get(key) for key in ('id','revision','phase','items','result_id','side','error')} for side,row in jobs.items()},results=results,live_scope=dict(valid=checked['valid'],errors=checked['errors']),component_blocks=component_blocks)
         if command=='COMPARE':return QualityReports(library).plan(payload['protocol_id'])
         if command=='DECIDE':return QualityReports(library).decide(**payload)
         if command=='WITHDRAW_DECISION':return QualityReports(library).withdraw(**payload)
         if command=='EXPOSE':return QualityProtocols(library).expose(**payload)
         if command=='DIAGNOSTICS':return QualityDiagnostics(library).page(**payload)
+        if command=='SOURCE_UNITS':return QualityDiagnostics(library).source_page(**payload)
         if command=='DIAGNOSTIC_DETAIL':return QualityDiagnostics(library).detail(**payload)
         if command=='PLAN_RECHECK':return QualityRechecks(library).plan(**payload)
         if command=='RECHECK_ITEM':

@@ -80,3 +80,9 @@ class QualityPanelTests(unittest.TestCase):
         prediction['prediction']['work_width']=1
         with self.store.transaction():self.store._write('QUALITY_PREDICTED_WORK',prediction['id'],prediction,prediction['revision'],'synthetic_prediction_corruption')
         with self.assertRaisesRegex(ValueError,'指紋'):service.detail(self.protocol['id'],'BASELINE',row)
+
+    def test_actual_source_sample_view_and_live_invalidity_badge_after_exposure(self):
+        self.completed();panel=self.panel();panel.activate();self.wait(panel)
+        QualityProtocols(self.library).expose(self.protocol['id'],'Reviewer','Local source inspection',True)
+        panel.source_units(0);self.wait(panel);self.assertEqual(panel.table.rowCount(),1);self.assertTrue(panel.source_mode)
+        panel.load_status();self.wait(panel);self.assertIn('已失效',panel.status.text())

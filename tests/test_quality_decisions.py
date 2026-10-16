@@ -42,3 +42,14 @@ class QualityDecisionTests(unittest.TestCase):
         self.assertNotEqual(clone['id'],plan['pipeline_id']);self.assertTrue(service.component_blocked(clone['id']))
         self.assertTrue(service.component_blocked(decision['pipeline_id']))
         self.assertEqual(self.store.get('QUALITY_VERSION_DECISION',decision['id']),decision)
+
+    def test_actual_zero_error_source_samples_remain_visible_and_fake_case_text_is_rejected(self):
+        from template_ai.quality_protocol import QualityProtocols
+        from template_ai.quality_diagnostics import QualityDiagnostics
+        fixture=actual_positive_pair(self);protocol=fixture['protocol']['id'];diagnostics=QualityDiagnostics(self.library)
+        QualityProtocols(self.library).expose(protocol,'Synthetic author','Inspect complete sources including correct predictions',True)
+        page=diagnostics.source_page(protocol,'BASELINE');self.assertEqual(page['total'],2);self.assertTrue(page['zero_error_sources_included'])
+        detail=diagnostics.detail(protocol,'BASELINE',page['rows'][0]);self.assertEqual(len(detail['golds']),1);self.assertEqual(len(detail['predictions']),1)
+        import copy
+        wrong=copy.deepcopy(page['rows'][0]);wrong['case']['reason']='INVENTED_SEVERE_MODEL_FAILURE'
+        with self.assertRaisesRegex(ValueError,'內容已改變'):diagnostics.detail(protocol,'BASELINE',wrong)

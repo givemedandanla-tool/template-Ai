@@ -8,6 +8,26 @@ from .quality_gold import QualityGold
 class QualityDiagnostics:
     def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library)
 
+    def source_page(self,protocol_id,side,offset=0,limit=50,query=''):
+        if type(offset) is not int or offset<0 or type(limit) is not int or not 1<=limit<=50 or not isinstance(query,str) or len(query)>500:raise ValueError('來源樣本需有界50筆分頁')
+        protocol=QualityProtocols(self.library).get(protocol_id)
+        if side not in ('BASELINE','CANDIDATE') or not self.store.get('QUALITY_ANSWER_EXPOSURE',protocol_id) and not self.store.get('HOLDOUT_EXPOSED',protocol['scope']['dataset_id']):raise ValueError('需明確揭露答案並選固定側，才能逐件對照所有樣本')
+        pair=self.store.get('QUALITY_PROTOCOL_JOBS',protocol_id);job=self.store.get('EVAL_JOB',pair['jobs'][side]) if pair else None
+        if not job:raise ValueError('固定來源工作失聯')
+        base="""WITH units AS MATERIALIZED (
+          SELECT json_extract(i.value,'$.id') unit_id,json_extract(i.value,'$.path') path
+          FROM training_records j,json_each(j.payload,'$.items') i WHERE j.kind='EVAL_JOB' AND j.id=?
+        ) SELECT r.id,r.revision,json_extract(r.payload,'$.source_id'),COALESCE(s.original_path,u.path,'UNKNOWN')
+          FROM training_records r JOIN units u ON json_extract(r.payload,'$.item_id')=u.unit_id
+          LEFT JOIN sources s ON s.id=json_extract(r.payload,'$.source_id')
+          WHERE r.kind='QUALITY_EVAL_ITEM' AND json_extract(r.payload,'$.job_id')=?"""
+        args=[job['id'],job['id']]
+        for token in query.casefold().split():base+=" AND instr(training_casefold(COALESCE(s.original_path,u.path,'')||' '||r.id),?)>0";args.append(token)
+        total=self.store.db.execute('SELECT count(*) FROM ('+base+')',args).fetchone()[0];rows=[]
+        for identity,revision,source_id,path in self.store.db.execute(base+' ORDER BY r.id LIMIT ? OFFSET ?',(*args,limit,offset)):
+            rows.append(dict(item_id=identity,item_revision=revision,source_id=source_id,ordinal='SOURCE_OVERVIEW',case=dict(reason='SOURCE_OVERVIEW',work_id=None),severity='INFO',domain='SOURCE',source_label=path))
+        return dict(rows=rows,total=total,offset=offset,limit=limit,whole_source_units=len(job['items']),source_images_loaded=False,zero_error_sources_included=True,source_rows_are_not_error_counts=True)
+
     def page(self,protocol_id,side,offset=0,limit=50,query='',severity='ALL',domain='ALL',field_type='ALL',facets=None):
         if type(offset) is not int or offset<0 or type(limit) is not int or not 1<=limit<=50 or not isinstance(query,str) or len(query)>500:raise ValueError('診斷查詢需有界分頁，每頁最多50列')
         protocol=QualityProtocols(self.library).get(protocol_id)
@@ -57,6 +77,16 @@ class QualityDiagnostics:
         pair=self.store.get('QUALITY_PROTOCOL_JOBS',protocol_id);job=self.store.get('EVAL_JOB',pair['jobs'][side])
         item=self.store.get('QUALITY_EVAL_ITEM',row['item_id'])
         if not item or item['revision']!=row['item_revision'] or item['job_id']!=job['id']:raise ValueError('診斷列版次／試驗範圍已改變')
+        ordinal=row.get('ordinal')
+        if ordinal=='SOURCE_OVERVIEW':expected=dict(reason='SOURCE_OVERVIEW',work_id=None)
+        elif isinstance(ordinal,str) and ordinal.startswith('DOMAIN:'):
+            domain=ordinal[7:];evidence=item['evaluation']['domains'].get(domain)
+            if not evidence or evidence['state']=='MEASURED_DESCRIPTIVE_ONLY':raise ValueError('未知領域診斷列已失聯／不是原收據內容')
+            expected=dict(reason=evidence.get('reason'),domain=domain)
+        else:
+            if not isinstance(ordinal,str) or not ordinal.isdecimal() or int(ordinal)>=len(item['evaluation']['cases']):raise ValueError('診斷列位置不是保存的案例')
+            expected=item['evaluation']['cases'][int(ordinal)]
+        if row['case']!=expected or row['source_id']!=item['source_id']:raise ValueError('診斷案例內容已改變，不能用手填敘述冒充已保存模型失敗')
         result=self.store.get('QUALITY_EVAL_RESULT',job.get('result_id',''))
         if not result or digest(result)!=job.get('result_digest') or not any(r['id']==item['id'] and r['digest']==digest(item) for r in result['source_results']):raise ValueError('逐案結果正式收據缺漏或已變更')
         unit=next((i for i in job['items'] if i['id']==item['item_id']),None)

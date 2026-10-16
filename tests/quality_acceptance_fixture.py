@@ -13,7 +13,7 @@ from template_ai.quality_groups import QualityGroups
 from template_ai.quality_jobs import EvaluationJobs,run_evaluation
 
 
-def actual_positive_pair(case):
+def actual_positive_pair(case,execute=True):
     library=case.library;store=case.store;customers=CustomerStore(library);golds=[];customer_ids=[];sources=[]
     for index in (1,2):
         code='authored-'+str(index);path=case.root/(code+'.svg')
@@ -48,7 +48,7 @@ def actual_positive_pair(case):
     sides={side:pipelines.freeze('Actual authored '+side,None,'Synthetic author',True,mapping_config=config,rule_versions=[])['id'] for side in ('BASELINE','CANDIDATE')}
     protocols=QualityProtocols(library);protocol=protocols.freeze(protocols.plan('Actual acceptance-branch pair',dataset['id'],policy['id'],sides,'Software decision/withdraw/rollback safety only'),'Synthetic author',True)
     service=EvaluationJobs(library);jobs=service.create_pair(protocol['id'],'Synthetic author',True)
-    for job in jobs.values():
+    for job in jobs.values() if execute else []:
         claimed=service.claim(job['id'],job['revision'],True);done=run_evaluation(library.root,job['id'],claimed['owner_token'])
         result=store.get('QUALITY_EVAL_RESULT',done['result_id'])
         if not result['quality_pass']:raise AssertionError(str(dict(gate=result['quality_gate'],critical=result['critical_errors'],unknown=result['unmeasured_domains'],statistics=result['statistics'])))

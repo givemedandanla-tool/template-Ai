@@ -20,6 +20,7 @@ class QualityPanel(QWidget):
         bar=QHBoxLayout();self.button(bar,'設定真值／政策／版本／固定試驗',self.setup);self.button(bar,'確認保存預覽',self.confirm_preview);self.button(bar,'固定雙側加入公平佇列',self.enqueue_pair);self.button(bar,'刷新工作／品質指標',self.load_status);self.button(bar,'取消本次核對',lambda:self.cancel_event.set());layout.addLayout(bar)
         bar=QHBoxLayout();self.side=QComboBox();self.side.addItem('基準版本','BASELINE');self.side.addItem('候選版本','CANDIDATE');bar.addWidget(self.side);self.button(bar,'取消選中側工作',self.cancel_side);self.button(bar,'精確A/B比較預覽',self.compare);self.button(bar,'核准已保存品質比較憑證',self.decide);layout.addLayout(bar)
         self.report_id=QLineEdit();self.report_id.setPlaceholderText('品質比較憑證ID（保存後填入；不足／合成自驗不會核准正式品質）');layout.addWidget(self.report_id)
+        bar=QHBoxLayout();self.button(bar,'查看所有來源樣本（含零錯誤）',lambda:self.source_units(0));layout.addLayout(bar);self.source_mode=False
         bar=QHBoxLayout();self.decision_id=QLineEdit();self.decision_id.setPlaceholderText('已接受的品質決策憑證ID（撤回保留歷史）');bar.addWidget(self.decision_id,1);self.button(bar,'撤回此品質接受／不自動回退',self.withdraw);layout.addLayout(bar)
         self.stats=QTableWidget(0,8);self.stats.setHorizontalHeaderLabels(['領域／類別','TP／FP／FN','Precision／Recall','Gold物件','正例獨立群組','失敗群組','群組失敗率區間','判定']);self.stats.setEditTriggers(QTableWidget.NoEditTriggers);layout.addWidget(self.stats,1)
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('全清單搜尋原因／來源／版本／人物／作品');self.severity=QComboBox();self.severity.addItems(['ALL','CRITICAL','ERROR','UNKNOWN']);self.domain=QComboBox();self.domain.addItem('所有領域','ALL')
@@ -142,6 +143,7 @@ class QualityPanel(QWidget):
                     values=[LABELS[domain]+'／'+kind,'／'.join(str(counts[k]) for k in ('tp','fp','fn')) if counts else '不適用（尺寸誤差）','／'.join('資料不足' if counts[k] is None else f"{counts[k]:.4f}" for k in ('precision','recall')) if counts else '不適用',str(data['gold_objects']),str(data['positive_independent_groups']),str(data['failed_independent_groups']),f"{interval['lower']:.4f}～{interval['upper']:.4f}" if interval else '資料不足',data['state']]
                     for column,text in enumerate(values):self.stats.setItem(row,column,QTableWidgetItem(text))
             self.status.setText(f"{phases}；品質 {result['quality_gate']}；來源單位{result['required_source_pages_or_unparsed_files']}／邏輯檔{result['declared_logical_files']}／Gold作品{result['declared_gold_works']}／獨立群組{result['required_independent_groups']}；重大錯誤{result['critical_errors']}。未自動發布。")
+            if not value.get('live_scope',{}).get('valid',True) or value.get('component_blocks',{}).get(self.side.currentData()):self.status.setText('歷史計算保留；目前來源／版本／答案獨立性或組件信任已失效，不能新放行。'+self.status.text())
         self.request('PAIR_STATUS',dict(protocol_id=self.selected()),loaded)
 
     def cancel_side(self):
@@ -160,7 +162,8 @@ class QualityPanel(QWidget):
 
     def withdraw(self):
         if QMessageBox.question(self,'撤回品質接受','撤回所填品質決策？舊憑證與正式資料保留，不會把其他舊版本自動當安全替代。')!=QMessageBox.Yes:return
-        self.request('WITHDRAW_DECISION',dict(decision_id=self.decision_id.text().strip(),actor=self.actor.text(),reason=self.reason.text(),approved=True),lambda value:self.previewed(None,value))
+        def saved(value):self.previewed(None,value);self.status.setText('已撤回此品質接受；原報告與正式資料保留，不自動信任其他舊版本。')
+        self.request('WITHDRAW_DECISION',dict(decision_id=self.decision_id.text().strip(),actor=self.actor.text(),reason=self.reason.text(),approved=True),saved)
 
     def list_quarantines(self):
         def loaded(value):
@@ -206,6 +209,8 @@ class QualityPanel(QWidget):
         if self.impact_mode and delta:
             self.impact_offset=max(0,min(max(0,len(self.impact_rows)-1)//50*50,self.impact_offset+delta));self.show_impact();return
         self.impact_mode=False
+        if self.source_mode and delta:return self.source_units(delta)
+        self.source_mode=False
         offset=max(0,self.offset+delta) if delta else 0
         def loaded(value):
             self.offset=value['offset'];self.rows=value['rows'];self.table.setRowCount(len(self.rows))
@@ -214,6 +219,15 @@ class QualityPanel(QWidget):
                 for column,text in enumerate(values):self.table.setItem(row,column,QTableWidgetItem(text))
             self.status.setText(f"診斷共{value['total']}列／本頁{len(self.rows)}；固定來源單位{value['whole_source_units']}。問題列數不是品質分母；影像只在點選後載入。")
         self.request('DIAGNOSTICS',dict(protocol_id=self.selected(),side=self.side.currentData(),offset=offset,query=self.search.text(),severity=self.severity.currentText(),domain=self.domain.currentData(),field_type=self.field.currentText(),facets={key:widget.text().strip() for key,widget in self.facets.items() if widget.text().strip()}),loaded)
+
+    def source_units(self,delta=0):
+        offset=max(0,self.offset+delta) if delta else 0
+        def loaded(value):
+            self.impact_mode=False;self.source_mode=True;self.offset=value['offset'];self.rows=value['rows'];self.table.setRowCount(len(self.rows))
+            for index,row in enumerate(self.rows):
+                for column,text in enumerate(('來源樣本／非錯誤分數',row['source_label'],'包含零錯誤／未解析來源','點選才載入單件原稿與實際預測')):self.table.setItem(index,column,QTableWidgetItem(text))
+            self.status.setText(f"已保存來源樣本共{value['total']}／本頁{len(self.rows)}；固定應評來源單位{value['whole_source_units']}。來源列數不是錯誤數。")
+        self.request('SOURCE_UNITS',dict(protocol_id=self.selected(),side=self.side.currentData(),offset=offset,query=self.search.text()),loaded)
 
     def detail(self):
         if self.impact_mode:return self.source_facts()
