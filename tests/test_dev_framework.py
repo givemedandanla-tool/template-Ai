@@ -12,6 +12,14 @@ from dev_governance import check, verify_run
 
 
 class DevFrameworkTests(unittest.TestCase):
+    def test_checkpoint_manifest_excludes_private_capture_libraries_but_keeps_public_report(self):
+        public=self.root/'docs/qa/capture/public-report.json';public.parent.mkdir(parents=True,exist_ok=True);public.write_text('{"synthetic":true}')
+        for relative in ('docs/qa/capture/.private/raw-audit.json','docs/qa/capture/ten-package-data/work.json','docs/qa/capture/anonymous-smoke-data-0.1/local.json','docs/qa/capture/assets/fonts/license.json'):
+            path=self.root/relative;path.parent.mkdir(parents=True,exist_ok=True);path.write_text('{"private":true}')
+        paths=manifest(self.root)
+        self.assertIn('docs/qa/capture/public-report.json',paths)
+        self.assertFalse(any(any(part in ('.private','ten-package-data','assets') or part.startswith('anonymous-smoke-data') for part in Path(name).parts) for name in paths))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

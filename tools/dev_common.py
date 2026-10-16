@@ -57,7 +57,7 @@ def source_files(root=ROOT, code_only=False):
     for directory in directories:
         for path in (root / directory).rglob("*"):
             relative = path.relative_to(root)
-            if any(part in ("__pycache__", "assets", ".venv") or part.startswith("anonymous-smoke-data") for part in relative.parts):
+            if any(part in ("__pycache__", "assets", ".venv", ".private", "ten-package-data") or part.startswith("anonymous-smoke-data") for part in relative.parts):
                 continue
             evidence_binary = relative.parts[:3] == ("docs", "evidence", "runs") and path.suffix in (".png", ".jpg", ".pdf")
             if path.is_file() and not path.is_symlink() and (path.suffix in allowed or evidence_binary):

@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-UI019-FULL12-TESTED"
+    "CP-20261016-REMAINING28-UI019-FULL12-RECEIPT-REPAIR"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -121,6 +121,10 @@
     {
       "id": "CP-20261015-RESUME-TEN-PARENTS-BEGIN",
       "reason": "Environment pre-change checkpoint is preserved; explicit parent scope and baseline were finalized afterwards. New contract checkpoint supersedes it without rewriting the old record."
+    },
+    {
+      "id": "CP-20261016-REMAINING28-UI019-FULL12-TESTED",
+      "reason": "Git push1264624 actualexit0 but exact readback rejected two ignored .private synthetic capture audits. They were not uploaded. Fixed manifest private/work-library exclusion with04114PASS; old immutable PREPARED record preserved, not acknowledged."
     }
   ],
   "evidence_publication": {
@@ -718,7 +722,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "UI019 full12 mapped42exacttests;037173/173PASS actualexit0,03615actual native images individually viewed/PASS actualexit0, real original final PDF/embedded fonts/vector16+operators and per-row review.038old capture fixture disposal stalled, exact-owned PID terminated143/invalid receipt retained;039 same original capture tool49screens/6exports actualexit0 after fixture-only disposal correction (no product consent bypass).70new/catalog1495. UI019 joins9 implemented parents pending immutable full-source Gate. UI032 original10 plan persisted BEFORE code.",
+  "current_work": "UI019 full12 mapped42exacttests;037173/173PASS actualexit0,03615actual native images individually viewed/PASS actualexit0, real original final PDF/embedded fonts/vector16+operators and per-row review.038old capture fixture disposal stalled, exact-owned PID terminated143/invalid receipt retained;039 same original capture tool49screens/6exports actualexit0 after fixture-only disposal correction (no product consent bypass).70new/catalog1495. UI019 joins9 implemented parents pending immutable full-source Gate. UI032 original10 plan persisted BEFORE code. Checkpoint1264624 notACK: manifest included ignored private audits. Source exclusion fixed,04114PASS actualexit0, fresh replacement checkpoint; catalog1496 including1privacy regression (UI019 remains70new).",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -792,6 +796,12 @@
       "status": "READBACK_FAILED_MUTABLE_CAPTURE_LOG",
       "replacement": "CP-20261016-REMAINING28-UI059-NATIVE-SNAPSHOT-REPAIR",
       "reason": "Capture019 log completed after snapshot preparation; actual latest source pushed at fc486182d4f29ddd7a179fb5230531039a0cd55c but old snapshot unacknowledged. Preserve immutable failed record; fresh stable snapshot supersedes pending obligation."
+    },
+    {
+      "id": "CP-20261016-REMAINING28-UI019-FULL12-TESTED",
+      "status": "READBACK_FAILED_PRIVATE_CAPTURE_MANIFEST",
+      "replacement": "CP-20261016-REMAINING28-UI019-FULL12-RECEIPT-REPAIR",
+      "reason": "Git push1264624 actualexit0 but exact readback rejected two ignored .private synthetic capture audits. They were not uploaded. Fixed manifest private/work-library exclusion with04114PASS; old immutable PREPARED record preserved, not acknowledged."
     }
   ]
 }
