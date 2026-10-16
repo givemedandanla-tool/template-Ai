@@ -17,14 +17,17 @@ def execute(root,command,payload):
     from .quality_rechecks import QualityRechecks
     with closing(Library(root)) as library:
         store=TrainingStore(library)
+        if command.startswith('REPAIR_'):
+            from .quality_repair_commands import execute as repair_execute
+            return repair_execute(library,command.removeprefix('REPAIR_'),payload)
         if command=='LIST':
             kind=payload['kind'];offset=payload.get('offset',0);query=payload.get('query','')
-            if kind not in ('QUALITY_GOLD','QUALITY_SET','QUALITY_POLICY','QUALITY_PIPELINE','QUALITY_PROTOCOL','QUALITY_PAIR_REPORT','QUALITY_MAJOR_RECHECK','QUALITY_WORK_QUARANTINE','SEMANTIC_MODEL'):raise ValueError('不支援的品質目錄')
+            if kind not in ('QUALITY_GOLD','QUALITY_SET','QUALITY_POLICY','QUALITY_PIPELINE','QUALITY_PROTOCOL','QUALITY_PAIR_REPORT','QUALITY_MAJOR_RECHECK','QUALITY_WORK_QUARANTINE','SEMANTIC_MODEL','RULE','AUTO_JOB','QUALITY_REPAIR_ISSUE','QUALITY_REPAIR_ROOT_REVIEW','QUALITY_REPAIR_PIPELINE_CANDIDATE','QUALITY_REPAIR_GATE','QUALITY_PIPELINE_DEPLOYMENT','QUALITY_VERSION_DECISION','QUALITY_REPAIR_IMPACT_REVIEW','QUALITY_REPAIR_TRUTH_REVIEW'):raise ValueError('不支援的品質目錄')
             if type(offset) is not int or offset<0 or not isinstance(query,str) or len(query)>500:raise ValueError('目錄範圍無效')
             where='kind=?';args=[kind]
             for token in query.casefold().split():where+=" AND instr(training_casefold(id||' '||payload),?)>0";args.append(token)
             total=library.db.execute('SELECT count(*) FROM training_records WHERE '+where,args).fetchone()[0]
-            sql="SELECT id,revision,COALESCE(json_extract(payload,'$.name'),json_extract(payload,'$.manifest.name'),json_extract(payload,'$.plan.name'),json_extract(payload,'$.work_id'),''),COALESCE(json_extract(payload,'$.state'),'') FROM training_records WHERE "+where+' ORDER BY rowid DESC LIMIT 50 OFFSET ?'
+            sql="SELECT id,revision,COALESCE(json_extract(payload,'$.name'),json_extract(payload,'$.manifest.name'),json_extract(payload,'$.plan.name'),json_extract(payload,'$.plan.hypothesis'),json_extract(payload,'$.literal'),json_extract(payload,'$.evidence.description'),json_extract(payload,'$.reason'),json_extract(payload,'$.operation'),json_extract(payload,'$.work_id'),''),COALESCE(json_extract(payload,'$.state'),'') FROM training_records WHERE "+where+' ORDER BY rowid DESC LIMIT 50 OFFSET ?'
             return dict(rows=[dict(id=r[0],revision=r[1],label=r[2],state=r[3]) for r in library.db.execute(sql,(*args,offset))],total=total,offset=offset,images_loaded=False)
         if command=='PLAN_GOLD':return QualityGold(library).plan(**payload)
         if command=='PLAN_SET':return QualitySets(library).plan(**payload)

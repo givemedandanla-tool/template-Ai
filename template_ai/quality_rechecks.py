@@ -13,7 +13,7 @@ def blocked(store, work_id):
 class QualityRechecks:
     def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library);self.db=library.db
 
-    def source_dependencies(self,work_id):
+    def source_dependencies(self,work_id,additional_work_ids=None):
         """Bounded directed reachability over actual current and historical IDs."""
         import networkx as nx
         from .quality_groups import QualityGroups
@@ -28,9 +28,21 @@ class QualityRechecks:
             if uncertain:potential.add(right)
             if graph.number_of_edges()>20000:raise ValueError('來源依賴超過20000條，需縮小核對範圍')
         sources=rows('SELECT id,hash FROM sources ORDER BY id')
-        roots=['SOURCE:'+sid for sid,sha in sources if sha==source['hash']]
+        additional_work_ids=additional_work_ids or []
+        if not isinstance(additional_work_ids,list) or len(additional_work_ids)>200:raise ValueError('額外實際訓練／規則支持作品需明列最多200件')
+        hashes={source['hash']}
+        for wid in additional_work_ids:hashes.add(self.library.source(self.library.artwork(wid)['source_id'])['hash'])
+        roots=['SOURCE:'+sid for sid,sha in sources if sha in hashes]
         current_works={wid:(sid,revision) for wid,sid,revision in rows('SELECT id,source_id,revision FROM artworks ORDER BY id')}
         for wid,(sid,revision) in current_works.items():edge('SOURCE:'+sid,'WORK:'+wid,'SAME_ACTUAL_SOURCE_CONTENT')
+        for rid,revision,wid,state in rows("SELECT DISTINCT h.id,h.revision,json_extract(e.value,'$.work_id'),json_extract(h.after_json,'$.state') FROM training_history h,json_each(h.after_json,'$.positive_examples') e WHERE h.kind='RULE' UNION SELECT DISTINCT h.id,h.revision,json_extract(e.value,'$.work_id'),json_extract(h.after_json,'$.state') FROM training_history h,json_each(h.after_json,'$.counterexamples') e WHERE h.kind='RULE' ORDER BY 1,2,3"):
+            edge('WORK:'+wid,'RULE:'+rid+':'+str(revision),'HISTORICAL_RULE_SUPPORT_OR_COUNTEREXAMPLE',state not in ('ACTIVE','ISOLATED_APPROVED_REPAIR_CANDIDATE'))
+        for sid,wid in rows("SELECT DISTINCT id,json_extract(after_json,'$.work_id') FROM training_history WHERE kind='SAMPLE' ORDER BY 1,2"):
+            edge('WORK:'+wid,'SAMPLE:'+sid,'HISTORICAL_CONFIRMED_SAMPLE_SOURCE')
+        for sid,rid,revision in rows("SELECT DISTINCT h.id,json_extract(r.value,'$.id'),json_extract(r.value,'$.revision') FROM training_history h,json_each(h.after_json,'$.rule_dependencies') r WHERE h.kind='SAMPLE' ORDER BY 1,2,3"):
+            edge('RULE:'+rid+':'+str(revision),'SAMPLE:'+sid,'EXACT_HISTORICAL_SAMPLE_RULE_VERSION')
+        for did,sid,role in rows("SELECT DISTINCT h.id,json_extract(e.value,'$.sample_id'),json_extract(e.value,'$.role') FROM training_history h,json_each(h.after_json,'$.entries') e WHERE h.kind='DATASET' ORDER BY 1,2,3"):
+            edge('SAMPLE:'+sid,'DATASET:'+did,'HISTORICAL_'+str(role)+'_DATASET_MEMBER')
         models=rows("SELECT DISTINCT h.id,h.revision,json_extract(s.value,'$.work_id'),json_extract(s.value,'$.role') FROM training_history h,json_each(h.after_json,'$.plan.scopes') s WHERE h.kind='SEMANTIC_MODEL' ORDER BY h.id,h.revision,3")
         model_nodes={}
         for mid,revision,wid,role in models:
@@ -47,6 +59,9 @@ class QualityRechecks:
                 edge('WORK:'+wid,'TEMPLATE:'+tid+':'+str(version),'EXISTING_TEMPLATE_SOURCE_WORK')
                 edge('TEMPLATE:'+tid+':'+str(version),'STYLE:'+family,'EXISTING_TEMPLATE_FAMILY')
                 if wid not in current_works:missing.add('WORK:'+wid)
+        for tid,version,sid,did in rows("SELECT id,version,json_extract(payload,'$.training_reference.sample_id'),json_extract(payload,'$.training_reference.dataset_id') FROM templates WHERE json_type(payload,'$.training_reference.sample_id') IS NOT NULL ORDER BY id"):
+            edge('SAMPLE:'+sid,'TEMPLATE:'+tid+':'+str(version),'ACTUAL_GEOMETRY_TRAINING_SAMPLE')
+            if did:edge('DATASET:'+did,'TEMPLATE:'+tid+':'+str(version),'ACTUAL_GEOMETRY_TRAINING_DATASET')
         groups=QualityGroups(self.library)
         if groups.has_table('customer_source_associations'):
             for cid,wid,tid in rows('SELECT customer_id,artwork_id,template_id FROM customer_source_associations ORDER BY id'):
@@ -60,7 +75,7 @@ class QualityRechecks:
         induced=graph.subgraph(reachable)
         uncertain=set()
         for node in potential.intersection(reachable):uncertain.add(node);uncertain.update(nx.descendants(induced,node))
-        result=dict(work_id=work_id,source_id=source['id'],source_hash=source['hash'],
+        result=dict(work_id=work_id,source_id=source['id'],source_hash=source['hash'],additional_work_ids=sorted(set(additional_work_ids)),
                     nodes=[dict(key=node,dependency_match='POTENTIAL_MISSING_MODEL_REVISION' if node in uncertain else 'RECORDED_DEPENDENCY') for node in sorted(reachable)],
                     edges=[dict(left=a,right=b,basis=value['basis']) for a,b,value in sorted(induced.edges(data=True))],
                     missing_historical_nodes=sorted(missing.intersection(reachable)),

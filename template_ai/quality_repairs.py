@@ -75,9 +75,9 @@ class QualityRepairs:
             if origin_id!=work_id:raise ValueError('原稿入口必須精確對應同一作品')
             reference=dict(kind='FACTS',id=work_id,digest=digest(self.store.facts(work_id)))
         else:
-            # Exception adapters must bind their actual immutable exception record;
-            # a caller-supplied error string alone is never an AI failure receipt.
-            raise ValueError('例外入口需先由既有例外中心定位原稿並核對FACTS；不能用手填例外ID冒充證據')
+            record=self.store.get('AUTO_UNIT',origin_id)
+            if not record or record['work_id']!=work_id or not record.get('issues') or record['state']=='EXCLUDED':raise ValueError('例外入口需實際同作品AUTO_UNIT未排除問題憑證，不能手填錯誤冒充')
+            reference=dict(kind='AUTO_UNIT',id=record['id'],revision=record['revision'],digest=digest(record))
         state=self.source_state(work_id)
         result=dict(origin=origin,origin_reference=reference,work_id=work_id,
                     source_id=state['source_id'],source_state=state,description=description,

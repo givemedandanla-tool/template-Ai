@@ -19,21 +19,27 @@ class QualityRepairReleases:
         from .quality_rechecks import QualityRechecks
         from .quality_repairs import QualityRepairs
         candidate=QualityRepairGates(self.library).candidate(candidate_id);root=candidate['plan'];issue=self.store.get('QUALITY_REPAIR_ISSUE',root['issue_id'])
-        source=QualityRechecks(self.library).source_dependencies(issue['evidence']['work_id'])
+        extra=set()
+        for parent in root['parents']:
+            row=self.store.get(parent['kind'],parent['id'])
+            if parent['kind']=='RULE':extra.update(ref['work_id'] for ref in row['positive_examples']+row['counterexamples'])
+            elif parent['kind']=='QUALITY_REPAIR_CANDIDATE':extra.update(scope['work_id'] for scope in self.store.get('SEMANTIC_MODEL',row['model_id'])['plan']['scopes'])
+        source=QualityRechecks(self.library).source_dependencies(issue['evidence']['work_id'],sorted(extra))
         review=self.store.get('QUALITY_REPAIR_ROOT_REVIEW',root['root_review_id']);layer=review['plan']['layer']
         component='MODEL' if layer in ('FIELD_OWNER_SEMANTICS','MODEL_REGRESSION') else 'PARSER'
         original=self.store.get('QUALITY_PIPELINE',issue['evidence'].get('pipeline_id',''))
         if not original:raise ValueError('需先取得原問題實際版本與歷史影響')
         if component=='MODEL' and not original['manifest'].get('semantic_model_id'):component='PARSER'
         dependency=QualityRechecks(self.library).dependencies(original['id'],component)
-        work_ids=sorted(set(source['affected_work_ids'])|{r['work_id'] for r in dependency['rows']})
+        rule_impacts=[QualityRechecks(self.library).dependencies(original['id'],'RULE',rule['id']) for rule in original['manifest'].get('rules',[])]
+        work_ids=sorted(set(source['affected_work_ids'])|{r['work_id'] for impact in [dependency,*rule_impacts] for r in impact['rows']})
         pending=[]
         for wid in work_ids:
             pending.extend(row[0] for row in self.store.db.execute("SELECT id FROM training_records WHERE kind='QUALITY_WORK_QUARANTINE' AND json_extract(payload,'$.work_id')=? AND json_extract(payload,'$.state')='REVIEW_REQUIRED' ORDER BY id",(wid,)).fetchmany(201))
             if len(pending)>200:raise ValueError('待重審超過200件，需分組處理，不截斷放行')
-        result=dict(candidate_id=candidate_id,candidate_digest=digest(candidate),source_impact=source,component_impact=dependency,
+        result=dict(candidate_id=candidate_id,candidate_digest=digest(candidate),source_impact=source,component_impact=dependency,rule_impacts=rule_impacts,
                     affected_work_ids=work_ids,pending_historical_rechecks=sorted(set(pending)),
-                    missing_historical_evidence=bool(source['missing_historical_nodes'] or dependency['missing_historical_work_ids']),
+                    missing_historical_evidence=bool(source['missing_historical_nodes'] or any(impact['missing_historical_work_ids'] for impact in [dependency,*rule_impacts])),
                     unknown_unrecorded_dependencies=True,unscanned_history_is_not_certified_safe=True,
                     original_and_published_data_modified=False)
         result['digest']=digest(result);return result
