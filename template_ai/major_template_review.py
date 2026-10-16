@@ -20,6 +20,9 @@ def clearance_current(db,case_id,template,*,exact_content=False):
         if layout_dependency(normalized,receipt['inputs']['logos'])!=receipt['validation_dependency']:return False
         wid=receipt.get('source_work_id')
         if wid:
+            from types import SimpleNamespace
+            from .quality_rechecks import blocked
+            if blocked(SimpleNamespace(db=db),wid):return False
             from .major_review_findings import resolution_current
             current=dict(work_id=wid,resolved_facts_revision=receipt['facts_revision'])
             if not resolution_current(db,current):return False

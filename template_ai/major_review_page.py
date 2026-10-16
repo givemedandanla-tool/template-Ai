@@ -74,7 +74,7 @@ class MajorReviewPage(MajorTemplatePageMixin,MajorFindingPageMixin,MajorJobPageM
         self.offset=max(0,self.offset+delta);query=self.unit_query.text()
         def loaded(value):
             self.case=value['case'];self.rows=value['rows'];summary=value['summary'];counts=summary['states'];self.counts.setText('本案工作／模板任務 '+str(summary['total'])+'，已檢查 '+str(summary['checked'])+'；'+'、'.join(STATES.get(k,k)+' '+str(v) for k,v in counts.items())+f'。符合搜尋 {value["total"]}／本頁 {len(self.rows)}；未知依賴不算全庫安全。')
-            c=value['coverage'];self.coverage.setText(f'此案快照：登錄來源 {c["registered_sources"]}／作品 {c["registered_works"]}；受影響來源 {c["affected_sources"]}／作品 {c["affected_works"]}／模板版本 {c["affected_templates"]}。這是已記錄依賴；未知範圍未宣稱安全。')
+            c=value['coverage'];self.coverage.setText(self.dimension_summary(c)+f'此案快照：登錄來源 {c["registered_sources"]}／作品 {c["registered_works"]}；受影響來源 {c["affected_sources"]}／作品 {c["affected_works"]}／模板版本 {c["affected_templates"]}。這是已記錄依賴；未知範圍未宣稱安全。')
             self.table.setRowCount(len(self.rows))
             for i,row in enumerate(self.rows):
                 work=row['kind']=='QUALITY_WORK_QUARANTINE';values=[('作品 ' if work else '模板 ')+(row.get('work_id') or row.get('template_id')),(row.get('source_id','')+'／'+str(row.get('pins',{}).get('work_revision',row.get('version','')))),str(row.get('facts_revision',''))+'／'+row['state'],STATES.get(row['effective_state'],row['effective_state']),row.get('reason','')]

@@ -51,7 +51,7 @@ class MajorJobPageMixin:
         d.request('MAJOR_CREATE_JOB',dict(value=value,actor=d.actor.text(),reason=d.reason.text(),approved=True),saved)
     def job_progress(self,request_id,job):
         if not self.analysis_job or job['id']!=self.analysis_job['id'] or job.get('scope',{}).get('case_id')!=self.cases.currentData():return
-        self.analysis_job=job;items=job['items'];saved=sum(item['state']=='SUCCESS' for item in items);failed=sum(item['state']=='FAILED' for item in items)
+        self.analysis_job=job;self.update_job_label(job,job['phase']);items=job['items'];saved=sum(item['state']=='SUCCESS' for item in items);failed=sum(item['state']=='FAILED' for item in items)
         self.job_notice.setText(f'原共享工作實際進度：來源已保存 {saved}/{len(items)}、失敗 {failed}；目前 {job["phase"]}。分析完成仍需人工核對／受控解除隔離。')
     def job_queue_changed(self):
         if not self.isVisible() or not self.analysis_job:return
@@ -59,7 +59,7 @@ class MajorJobPageMixin:
             d=self.dialog
             if d.window.busy or d.panel.loading or not self.analysis_job or self.analysis_job['scope']['case_id']!=self.cases.currentData():return
             def loaded(value):
-                job=value['job'];self.analysis_job=job;saved=sum(item['state']=='SUCCESS' for item in job['items']);self.job_notice.setText(f'已讀回原共享工作：{value["effective_phase"]}，來源已保存 {saved}/{len(job["items"])}；重審仍待人工核對。')
+                job=value['job'];self.analysis_job=job;self.update_job_label(job,value['effective_phase']);saved=sum(item['state']=='SUCCESS' for item in job['items']);self.job_notice.setText(f'已讀回原共享工作：{value["effective_phase"]}，來源已保存 {saved}/{len(job["items"])}；重審仍待人工核對。')
             d.request('MAJOR_JOB',dict(case_id=self.cases.currentData(),job_id=self.analysis_job['id']),loaded)
         QTimer.singleShot(0,refresh)
     def list_jobs(self):
@@ -103,3 +103,7 @@ class MajorJobPageMixin:
                 lines.extend(str(reason) for reason in suggestion.get('evidence',{}).get('issues',[]))
             self.dialog.details.setPlainText('\n'.join(lines));self.dialog.status.setText('已讀回本件實際保存的原／新判定；尚未人工核准或解除隔離。')
         self.dialog.request('MAJOR_ANALYSIS',dict(case_id=self.case_id(),unit_id=row['id']),loaded)
+
+    def update_job_label(self,job,phase):
+        index=self.analysis_jobs.findData(job['id'])
+        if index>=0:self.analysis_jobs.setItemText(index,'來源重分析／'+phase+'／'+job['id'])
