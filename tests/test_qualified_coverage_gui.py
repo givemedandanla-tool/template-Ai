@@ -33,3 +33,6 @@ class QualifiedCoverageGuiTests(unittest.TestCase):
 
     def test_busy_foreground_rejection_does_not_leave_false_loading_or_save_a_snapshot(self):
         dialog,panel,sample=self.panel();before=self.store.count('COVERAGE_SNAPSHOT');panel.window.busy=True;panel.guard(lambda:panel.reload(0));self.assertFalse(panel.loading);self.assertEqual(self.store.count('COVERAGE_SNAPSHOT'),before);self.assertIn('背景操作',panel.status.text());panel.window.busy=False;panel.reload(0);self.wait(dialog.quality_panel);self.assertIsNotNone(panel.report)
+
+    def test_changed_collection_during_owned_count_does_not_apply_old_scope_result(self):
+        dialog,panel,sample=self.panel();panel.reload(0);panel.collection.setCurrentIndex(panel.collection.findData('CANDIDATE_PENDING'));self.wait(dialog.quality_panel);self.assertIsNone(panel.report);self.assertIn('選擇已變更',panel.status.text());self.assertFalse(panel.loading);panel.reload(0);self.wait(dialog.quality_panel);self.assertEqual(panel.report['collection'],'CANDIDATE_PENDING')

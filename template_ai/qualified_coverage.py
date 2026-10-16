@@ -3,7 +3,7 @@ import copy,time
 from collections import Counter,defaultdict
 from pathlib import Path
 from .training_store import TrainingStore,digest
-from .datasets import exact_label_signature
+from .datasets import exact_label_signature,sample_byte_size
 from .quality_groups import QualityGroups
 from .quality_gold import QualityGold
 from .trusted_samples import cache_stamps
@@ -49,7 +49,7 @@ class QualifiedCoverage:
         elif len(combined)>1:role='ROLE_CONFLICT'
         holdout_state=None
         if reference['kind']=='SAMPLE':
-            state=self.store.sample_state(record['id']);known=state=='APPROVED' and record.get('source_byte_size')==source['byte_size'];signature=exact_label_signature(record)
+            state=self.store.sample_state(record['id']);known=state=='APPROVED' and sample_byte_size(record)==source['byte_size'];signature=exact_label_signature(record)
             if not known:reason.append('目前准入／來源／長度釘選無效或未知')
             if entry and (record['revision']!=entry['sample_revision'] or record['scope_digest']!=entry['scope_digest']):known=False;reason.append('保存資料集的exact樣本版本已失效')
             if collection=='APPROVED_TRAINABLE':matches=known and role not in ('VALIDATION','HOLDOUT') and not groups.role_conflicts([(source['hash'],'TRAIN')],graph=graph)

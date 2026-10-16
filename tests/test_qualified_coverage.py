@@ -19,7 +19,10 @@ class QualifiedCoverageTests(unittest.TestCase):
         sample=self.sample();report=self.report();self.assertEqual(report['counts']['currently_verified_occurrences'],1);self.assertEqual(report['counts']['distinct_artworks'],1);self.assertEqual(report['facets']['size']['90×54mm'],[self.work['id']]);self.assertEqual(report['facets']['people']['1'],[self.work['id']]);self.assertIn('UNKNOWN',report['facets']['logo']);self.assertFalse(report['quality_pass_claim']);self.assertFalse(report['supplementation']);self.assertFalse(report['automatic_training'])
         self.store.create_dataset(self.store.dataset_plan('Reserved geometry source',[dict(sample_id=sample['id'],role='HOLDOUT')]),'Reviewer',True);self.assertEqual(self.report()['counts']['currently_verified_occurrences'],0)
     def test_same_byte_aliases_count_two_sources_but_one_exact_content_and_label_weight(self):
-        self.sample();source,work=source_work(self.library,self.root,'alias.svg');noise_fixture.confirmed(self.store,work);self.sample(work);report=self.report()
+        original=self.sample()
+        legacy=dict(original);legacy.pop('source_byte_size')
+        with self.store.transaction():self.store._write('SAMPLE',legacy['id'],legacy,legacy['revision'],'synthetic_legacy_admission_with_real_source_stat')
+        source,work=source_work(self.library,self.root,'alias.svg');noise_fixture.confirmed(self.store,work);self.sample(work);report=self.report()
         self.assertEqual(report['counts']['distinct_source_files'],2);self.assertEqual(report['counts']['distinct_artworks'],2);self.assertEqual(report['counts']['exact_content_groups'],1);self.assertEqual(report['counts']['deduplicated_approved_label_weights'],1);self.assertNotEqual(source['id'],self.source['id'])
     def test_exact_manifest_and_development_validation_do_not_become_trainable_totals(self):
         sample=self.sample();dataset=self.store.create_dataset(self.store.dataset_plan('Exact validation manifest',[dict(sample_id=sample['id'],role='VALIDATION')]),'Reviewer',True)
@@ -38,3 +41,8 @@ class QualifiedCoverageTests(unittest.TestCase):
         report=self.report(collection='QUALITY_HOLDOUT');self.assertEqual(report['counts']['currently_verified_occurrences'],1);self.assertEqual(report['roles'],{'HOLDOUT':1});self.assertEqual(self.report()['counts']['currently_verified_occurrences'],0)
         with self.store.transaction():self.store._write('HOLDOUT_EXPOSED',dataset['id'],dict(reason='Actual answer disclosure receipt'),0,'synthetic_answer_disclosure')
         exposed=self.report(collection='QUALITY_HOLDOUT');self.assertEqual(exposed['counts']['exposed_or_consumed_holdout_members'],1);self.assertFalse(exposed['quality_pass_claim']);self.assertTrue(exposed['independence_unknown'])
+
+    def test_51_approved_authorization_versions_page50_without_inflating_one_work_label_weight(self):
+        for index in range(51):
+            rights=dict(fixture.RIGHTS,reference='Synthetic explicit authorization version '+str(index));plan=self.store.sample_approval_plan(self.work['id'],rights);self.store.approve_sample(plan,self.store.source_proof(self.work['id']),'Reviewer',True)
+        first=self.report();tail=self.report(offset=50);self.assertEqual(first['roster_total'],51);self.assertEqual(first['counts']['scanned_record_occurrences'],50);self.assertEqual(tail['counts']['scanned_record_occurrences'],1);self.assertFalse(first['scan_complete']);self.assertEqual(first['counts']['distinct_source_files'],1);self.assertEqual(first['counts']['distinct_artworks'],1);self.assertEqual(first['counts']['deduplicated_approved_label_weights'],1);self.assertEqual(self.store.count('AUTO_JOB'),0)

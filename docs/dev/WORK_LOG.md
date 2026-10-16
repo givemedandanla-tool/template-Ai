@@ -1205,3 +1205,7 @@ QualifiedCoveragePanel now primary default purpose-filtered C stats; old Coverag
 ## UI056 current-role native and actual source evidence
 
 Actual native busy rejection/recovery now tested without a stuck loading state or false saved snapshot; combined12Qt+legacyinventory PASS. Added four actual source evidence cases: existing verified full-composite Gold metadata, local Tesseract execution→manual actual-source facts→approved sample→descriptive OCR metadata without rerunning OCR, source change during scan rejected, snapshot late-audit rollback/minimal no copied personal labels. Results pending. Native/model/effect unknown remains explicit; recorded derivative/OCR is not certified Illustrator editability. No parent completion.
+
+## UI056 actual17PASS and legacy source proof reuse
+
+Actual OCR→human confirmed source→sample admission metadata, whole-composite Logo truth, source-change race, late-audit rollback, stale-worker generation fence and51approval versions/50-page dedup are now17targetPASS. FirstOCR boundary test only failed due nonexistent patched function execute; correct actual lines entrypoint in002, no production guard relaxed. Added reuse of existing verified source_stat byte length for legacy samples, preserving alias dedup without reapproval or source identity merge, plus actual transformedSVG-derived text/effect evidence stays unverified native. Dataset regression/new facet results pending. UI056 original8 still pending.

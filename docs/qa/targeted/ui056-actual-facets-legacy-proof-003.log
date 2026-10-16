@@ -1,0 +1,16 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+ERROR: test_actual_transformed_svg_source_evidence_stays_derivative_not_certified_native (test_qualified_coverage_evidence.QualifiedActualDerivativeTests.test_actual_transformed_svg_source_evidence_stays_derivative_not_certified_native)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_qualified_coverage_evidence.py", line 51, in test_actual_transformed_svg_source_evidence_stays_derivative_not_certified_native
+    self.assertEqual(report['facets']['native_text']['DERIVATIVE_TEXT_NATIVE_UNVERIFIED'],[work['id']]);self.assertIn('DERIVATIVE_EFFECT_ATTRIBUTES_NATIVE_TYPE_UNKNOWN',report['facets']['special_effect']);self.assertNotIn('VERIFIED_NATIVE_TEXT',report['facets']['native_text']);self.assertFalse(report['quality_pass_claim'])
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'DERIVATIVE_TEXT_NATIVE_UNVERIFIED'
+
+----------------------------------------------------------------------
+Ran 21 tests in 15.223s
+
+FAILED (errors=1)

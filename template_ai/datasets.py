@@ -6,12 +6,18 @@ from .model import Slot,Rect,learn_from_labels,new_id
 from .batch_import import healthy_source
 
 
+def sample_byte_size(sample):
+    proof=sample.get('source_stat',[])
+    value=sample.get('source_byte_size',proof[2] if isinstance(proof,list) and len(proof)>2 else None)
+    return value if type(value) is int and value>0 else None
+
+
 def exact_label_signature(sample):
     from .training_store import digest
     slots=[{k:v for k,v in s.items() if k!='id'} for s in sample['label_slots']]
     slots.sort(key=lambda s:(s['owner'],s['kind'],s['index']))
     texts=sorted((p['owner'],p['kind'],p['index'],p['text']) for p in sample['positive_labels'])
-    return digest({'source_byte_size':sample.get('source_byte_size'), 'legacy_unknown_length_identity':sample['pins']['source_id'] if sample.get('source_byte_size') is None else None,'source_hash':sample['pins']['source_hash'],'page':sample['pins']['page'],'crop':sample['crop'],'dimensions':[sample['width_mm'],sample['height_mm']],'bindings':sample['bindings'],'slots':slots,'positive_text':texts})
+    return digest({'source_byte_size':sample_byte_size(sample), 'legacy_unknown_length_identity':sample['pins']['source_id'] if sample_byte_size(sample) is None else None,'source_hash':sample['pins']['source_hash'],'page':sample['pins']['page'],'crop':sample['crop'],'dimensions':[sample['width_mm'],sample['height_mm']],'bindings':sample['bindings'],'slots':slots,'positive_text':texts})
 
 
 class DatasetMixin:
