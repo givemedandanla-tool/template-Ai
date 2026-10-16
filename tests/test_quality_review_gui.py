@@ -47,3 +47,17 @@ class QualityReviewGuiTests(unittest.TestCase):
         panel.impact_rows=[dict(row,work_id='synthetic-'+str(i)) for i in range(123)];panel.show_impact()
         self.assertEqual(panel.table.rowCount(),50);panel.cases(50);self.assertEqual(panel.impact_offset,50);self.assertEqual(panel.table.rowCount(),50)
         panel.cases(50);self.assertEqual(panel.table.rowCount(),23);self.assertEqual(panel.rows,[])
+
+    def test_actual_source_fact_navigation_keeps_unsaved_correction_and_blocks_cross_work_reset(self):
+        from template_ai.training_quality_dialog import TrainingQualityDialog
+        from training_fixture import source_work
+        from test_noise_authoring import confirmed
+        source,other=source_work(self.library,self.root,'other-navigation.svg');confirmed(self.store,other)
+        window=self.window();dialog=TrainingQualityDialog(window);self.addCleanup(dialog.deleteLater)
+        facts=dialog.facts_panel;facts.focus(self.work['id'],[]);facts.table.selectRow(0);facts.observed_text.setText('Unsaved authored human correction')
+        self.assertTrue(facts.has_pending_observation())
+        panel=dialog.quality_panel;panel.recheck_item=dict(work_id=other['id'])
+        with self.assertRaisesRegex(ValueError,'尚未套用'):panel.source_facts()
+        self.assertEqual(facts.loaded['id'],self.work['id']);self.assertEqual(facts.observed_text.text(),'Unsaved authored human correction')
+        panel.recheck_item=dict(work_id=self.work['id']);panel.source_facts()
+        self.assertEqual(dialog.tabs.currentWidget(),facts);self.assertEqual(facts.observed_text.text(),'Unsaved authored human correction')

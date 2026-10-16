@@ -20,9 +20,13 @@ class QualityRechecks:
         result=self.store.get('QUALITY_EVAL_RESULT',job.get('result_id','')) if job else None
         if not result or digest(result)!=job.get('result_digest') or not any(result['critical_errors'].values()):raise ValueError('需實際執行且已保存的重大錯誤結果，不以猜測擴大隔離')
         pipeline=self.store.get('QUALITY_PIPELINE',protocol['scope']['pipelines'][side]['id']);manifest=pipeline['manifest']
+        if pipeline['manifest_digest']!=protocol['scope']['pipelines'][side]['manifest_digest'] or digest(manifest)!=pipeline['manifest_digest']:raise ValueError('重大結果對應的實際版本已改變，未隔離其他程式冒充原版本')
         rule=next((r for r in manifest['rules'] if r['id']==rule_id),None)
         if component=='MODEL' and not manifest['semantic_model_id']:raise ValueError('此版本沒有已執行語意模型')
         if component=='RULE' and not rule:raise ValueError('exact規則不在已固定版本集合')
+        from .quality_trust import components
+        fingerprint=next((c for c in components(manifest) if c['kind']==component and (component!='RULE' or c.get('rule_id')==rule_id)),None)
+        if not fingerprint:raise ValueError('缺少可核對的實際組件版本指紋')
         if component=='PARSER':
             direct="SELECT id FROM artworks WHERE json_extract(payload,'$.analysis_version')=?";args=[manifest['analyser_version']]
             historical="json_extract(h.after_json,'$.dependency_versions.analyser_version')=?";hargs=[manifest['analyser_version']]
@@ -46,7 +50,7 @@ class QualityRechecks:
             legacy=self.db.execute("SELECT 1 FROM training_history WHERE kind='COVERAGE_REVIEW' AND json_extract(after_json,'$.work_id')=? AND json_type(after_json,'$.dependency_versions') IS NULL LIMIT 1",(work_id,)).fetchone()
             rows.append(dict(work_id=work_id,work_revision=work[0],source_id=work[1],facts_revision=facts[0] if facts else 0,samples=samples,batch_ids=batch_ids,legacy_dependency_versions_unknown=bool(legacy)))
         plan=dict(protocol_id=protocol_id,side=side,component=component,rule_id=rule_id,pipeline_id=pipeline['id'],
-                  pipeline_digest=digest(pipeline),result_id=result['id'],result_digest=digest(result),critical_errors=result['critical_errors'],
+                  pipeline_digest=digest(pipeline),component_fingerprint=fingerprint,result_id=result['id'],result_digest=digest(result),critical_errors=result['critical_errors'],
                   rows=rows,missing_historical_work_ids=missing,complete=not missing,
                   scope='EXACT_DEPENDENCIES_AND_POTENTIAL_LEGACY_REVIEWS_WITHOUT_VERSION_SNAPSHOT_INCLUDING_CLOSED_BATCHES',
                   unknown_unrecorded_dependencies=True,original_and_published_data_modified=False)
@@ -67,6 +71,8 @@ class QualityRechecks:
                         self.store._write('SAMPLE',sample_id,sample,revision,'quality_major_historical_sample_quarantined')
             prior=self.store.get('QUALITY_PIPELINE_QUARANTINE',plan['pipeline_id'])
             self.store._write('QUALITY_PIPELINE_QUARANTINE',plan['pipeline_id'],dict(case_id=case_id,state='REVIEW_REQUIRED',reason=reason,actor=actor,at=time.time(),fallback_assumed_safe=False),prior['revision'] if prior else 0,'quality_major_version_quality_recommendations_blocked')
+            fingerprint=plan['component_fingerprint'];prior_component=self.store.get('QUALITY_COMPONENT_QUARANTINE',fingerprint['key'])
+            self.store._write('QUALITY_COMPONENT_QUARANTINE',fingerprint['key'],dict(fingerprint=fingerprint,case_id=case_id,state='REVIEW_REQUIRED',actor=actor,reason=reason,at=time.time(),new_pipeline_id_does_not_reset_trust=True),prior_component['revision'] if prior_component else 0,'quality_actual_component_quarantined_not_display_name')
             header={key:copy.deepcopy(value) for key,value in plan.items() if key!='rows'}
             return self.store._write('QUALITY_MAJOR_RECHECK',case_id,dict(plan=header,affected_works=len(plan['rows']),actor=actor,reason=reason,state='REVIEW_REQUIRED',at=time.time(),old_closure_receipts_preserved=True,models_decontaminated=False),0,'quality_major_cross_batch_recheck_confirmed')
 

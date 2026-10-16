@@ -179,11 +179,14 @@ class QualityPanel(QWidget):
         if selected and self.impact_mode:work_id=self.impact_rows[self.impact_offset+selected[0].row()]['work_id']
         elif selected and self.rows and selected[0].row()<len(self.rows):work_id=self.rows[selected[0].row()]['case'].get('work_id') or work_id
         if not work_id:raise ValueError('先選取具名作品案例／預覽逐件重審項')
-        from .training_navigation import require_clean_navigation,locate_work
-        require_clean_navigation(self.window);locate_work(self.window,work_id)
         parent=self.parentWidget()
         while parent is not None and not hasattr(parent,'facts_panel'):parent=parent.parentWidget()
-        if parent is not None:parent.facts_panel.focus(work_id,[]);parent.tabs.setCurrentWidget(parent.facts_panel)
+        if parent is not None and parent.facts_panel.loaded and parent.facts_panel.loaded['id']!=work_id and parent.facts_panel.has_pending_observation():raise ValueError('來源事實編輯器仍有尚未套用的人工內容；保留原編輯，不切換')
+        from .training_navigation import require_clean_navigation,locate_work
+        require_clean_navigation(self.window);locate_work(self.window,work_id)
+        if parent is not None:
+            if not parent.facts_panel.loaded or parent.facts_panel.loaded['id']!=work_id:parent.facts_panel.focus(work_id,[])
+            parent.tabs.setCurrentWidget(parent.facts_panel)
         self.status.setText('已定位原作品／來源事實；需人工核對保存後回來刷新重審，未自動修改。')
 
     def show_impact(self):

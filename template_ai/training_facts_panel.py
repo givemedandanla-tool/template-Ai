@@ -29,6 +29,7 @@ class FactsPanel(QWidget):
             button.clicked.connect(handler); bar.addWidget(button)
         outer.addLayout(bar); self.details = QPlainTextEdit(); self.details.setReadOnly(True); outer.addWidget(self.details, 1); self.reload()
         bar = QHBoxLayout(); self.exclude_button = QPushButton('只排除此作品的選中觀察'); self.remember_button = QPushButton('剔除並記住（待審候選）'); self.undo_noise_button = QPushButton('撤銷選中局部剔除'); self.exclude_button.clicked.connect(self.exclude); self.remember_button.clicked.connect(self.remember); self.undo_noise_button.clicked.connect(self.undo_noise); bar.addWidget(self.exclude_button); bar.addWidget(self.remember_button); bar.addWidget(self.undo_noise_button); outer.addLayout(bar); self.controls()
+        self._editor_baseline=self.observation('editor-state')
 
     def page(self, delta):
         self.offset = max(0, self.offset+delta); self.reload()
@@ -47,6 +48,7 @@ class FactsPanel(QWidget):
 
     def focus(self,work_id,observation_ids):
         from PySide6.QtWidgets import QTableWidgetSelectionRange
+        if self.loaded and self.loaded['id']!=work_id and self.has_pending_observation():raise ValueError('來源事實有尚未套用的人工內容，先保存／保留後再切換作品')
         self.store.library.artwork(work_id)
         rank=self.store.db.execute('SELECT count(*) FROM artworks WHERE id<?',(work_id,)).fetchone()[0];self.offset=(rank//200)*200;self.reload();self.work_combo.setCurrentIndex(self.work_combo.findData(work_id));self.load()
         selected=set(observation_ids)
@@ -84,13 +86,18 @@ class FactsPanel(QWidget):
         if self.loaded and len(rows) == 1:
             item = self.loaded['observations'][rows[0]]; self.observed_text.setText(item['text']); self.object_type.setCurrentText(item['object_type']); self.classification.setCurrentText(item['classification']); self.slot_combo.setCurrentIndex(max(0, self.slot_combo.findData(item['slot_id'])))
             for spin, label in zip(self.coords, ('x', 'y', 'w', 'h')): spin.setValue(item['region'][label])
+            self._editor_baseline=self.observation('editor-state')
+
+    def has_pending_observation(self):
+        current=self.observation('editor-state')
+        return current!=getattr(self,'_editor_baseline',current)
 
     def observation(self, oid):
         return {'id': oid, 'slot_id': self.slot_combo.currentData(), 'text': self.observed_text.text(), 'object_type': self.object_type.currentText(), 'classification': self.classification.currentText(), 'region': dict(zip(('x', 'y', 'w', 'h'), (x.value() for x in self.coords)))}
 
     def save(self, observations):
         if self.running or self.window.busy: raise ValueError('背景工作尚未完成')
-        self.store.save_facts(self.loaded['id'], observations, self.loaded['revision'], self.work_revision); self.load()
+        self.store.save_facts(self.loaded['id'], observations, self.loaded['revision'], self.work_revision); self.load();self._editor_baseline=self.observation('editor-state')
 
     def add(self):
         try: self.save(self.loaded['observations']+[self.observation(new_id())])

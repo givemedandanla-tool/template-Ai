@@ -65,7 +65,8 @@ class QualityReports:
         fair = bool(checked['valid'] and all(row['source_current'] for row in results.values()))
         eligible = bool(fair and results['CANDIDATE']['quality_pass'] and not new_critical and not regressions
                         and results['CANDIDATE']['statistics']['policy_scope'] == 'AUTHORIZED_LOCAL_QUALITY_ACCEPTANCE')
-        quarantined={side:bool(self.store.get('QUALITY_PIPELINE_QUARANTINE',scope['pipelines'][side]['id'])) for side in SIDES}
+        from .quality_trust import blockers
+        quarantined={side:bool(blockers(self.store,self.store.get('QUALITY_PIPELINE',scope['pipelines'][side]['id']))) for side in SIDES}
         eligible = eligible and not quarantined['CANDIDATE']
         from .quality_rules import production_current
         candidate_pipeline=self.store.get('QUALITY_PIPELINE',scope['pipelines']['CANDIDATE']['id'])
@@ -125,7 +126,7 @@ class QualityReports:
         errors=[]
         if not decision:errors.append('沒有明確品質接受憑證')
         elif self.store.get('QUALITY_DECISION_WITHDRAWAL',decision_id):errors.append('品質接受已撤回；不自動信任舊版')
-        elif self.store.get('QUALITY_PIPELINE_QUARANTINE',decision['pipeline_id']):errors.append('此版本重大共通錯誤隔離中；不自動信任回退版')
+        elif self.component_blocked(decision['pipeline_id']):errors.append('此實際程式／權重／規則組件重大錯誤隔離中，改名稱／ID不能恢復信任，也不自動信任回退版')
         else:
             report=self.store.get('QUALITY_PAIR_REPORT',decision['report_id'])
             try:
@@ -134,3 +135,8 @@ class QualityReports:
             except (OSError,ValueError,KeyError,TypeError) as error:errors.append(str(error))
         return dict(quality_verified_recommendation_allowed=not errors,errors=errors,
                     automatic_template_or_rule_publication=False,fallback_assumed_safe=False)
+
+    def component_blocked(self,pipeline_id):
+        from .quality_trust import blockers
+        pipeline=self.store.get('QUALITY_PIPELINE',pipeline_id)
+        return True if not pipeline else bool(blockers(self.store,pipeline))
