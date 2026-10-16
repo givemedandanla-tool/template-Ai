@@ -9,3 +9,5 @@
 - 下一步：讀UI063原契約、保存精確clauses/來源重用/測試/checkpoint計畫，再改既有右側panel；接UI064/065/052-REVIEW/019/032/031/066/067/REV01/02/04。不要在里程碑結束或詢問繼續。
 - Snapshot前等自己啟動的test/capture真exit，不能讓log在prepare後繼續寫。舊PID皆不用。先前>10min節奏偏差留STATE/history，不聲稱overallstrictPASS。9f046d1 WIP有效讀回，但當時metadata腳本SyntaxError未改STATE；現已補齊全部失敗與正確交接。
 - 詳細歷史history/HANDOFF_BEFORE_UI062_FULL26_20261016.md與UI061等按需讀。最新ACK以STATE.last_confirmed_checkpoint為準。
+
+UI063原26 plan已保存；package1 Main/ObjectTools切選前實際Stay/明確discard；同物件重選保留typedvalues；widgetbaseline與modelpin分開避免模型正常移動誤判pending；同ID新版保留舊輸入diagnostic，不套新物件。0037PASS。001importindent錯誤/002fixture training-onlymove in template失敗皆保留。下一步adaptive現有Maingroups/pins/preferences、ObjectTools lifecycle/affectedregression/native/full26mapping，再UI064。7newtests/catalog1229。UI063planning+參考/guard stage>10min cadence偏差已明記。

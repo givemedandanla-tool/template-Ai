@@ -227,6 +227,9 @@ class WorkbenchNavigation:
     def pending_form(self):
         w=self.window
         if w.tabs.currentIndex()==2 or w.current_slot is None:return False
+        if getattr(w,'_property_form_baseline',None) is not None:
+            from .property_context import pending_main
+            return pending_main(w)
         form=dict(kind=w.kind.currentData(),owner=w.owner.currentData(),index=w.index.value(),
                   coords=[s.value() for s in w.coords],font=w.font.currentFont(),pt=w.pt.value(),
                   color=w.text_color.text(),scale=w.scale.value(),align=w.align.currentData(),

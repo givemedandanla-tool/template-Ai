@@ -1,0 +1,120 @@
+{
+  "parent": "UI-063",
+  "status": "IMPLEMENTATION_IN_PROGRESS",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "original_clauses": [
+    "**選取上下文決定主要工具**：右側面板依目前工作模式、現行候選／實體尺寸、確切選取物件類型與數量，優先呈現相關編輯控制。選姓名／文字框時，顯示文字內容、歸屬、字型、**已確定而不得自動縮小的字級**、水平 X 軸縮放與界限、座標／幾何及有效警告；選完整複合 Logo 時，顯示公司歸屬、尺寸專用素材來源、完整性與允許的等比操作；選多物件時，顯示共同可用的對齊／分布／群組操作與混合值、鎖定狀態。無物件選取時顯示該模式最相關的工作狀態與引導，不憑空顯示某物件屬性。",
+    "**可固定常用工具**：使用者可以將經常操作的合法工具群組釘選在固定區域；選取對象變化時，釘選區域仍可見，但**控制是否啟用及作用目標必須跟當前確切選取同步**。例如由文字切到 Logo，固定的「字元水平縮放」控制可顯示為不適用，不得把上一個文字框的值或操作偷偷套到 Logo。釘選是 GUI 偏好／可見性，不是永久欄位或模板規則。",
+    "**完整屬性可隨時展開**：自適應僅改變顯示的優先順序與摺疊狀態，不刪減必要屬性或變更底層資料；提供「全部屬性／詳細資訊」入口。原稿來源、人物－公司－欄位歸屬、Logo 尺寸資產、物件鎖定與風險證據需依現有權限／可核實來源呈現。未知或不可編輯的值應標為未核實／唯讀，不假稱可直接修改。",
+    "**局部且可定位的 AI 問題提示**：當目前物件、人物欄位或候選有警告時，在相對應控制附近顯示簡短原因與狀態（正常、警告、待人工確認、阻擋／無解、待重新驗證）；可開啟 UI-014／015／057 的既有詳情與修正入口，點選後依 UI-034／035 高亮定位同一確切物件。面板摺疊、釘選或隱藏警告視覺提示**不改變底層印前 Gate、不得把失敗標記改成 PASS**。AI 低把握與已證實違反硬條件必須分開。",
+    "**維持人工設定及編輯狀態**：切換面板、選取不同物件、切換候選或返回時，**不重設任何已確認的人工數值**、已鎖定座標、字級或人物／公司歸屬。面板輸入框尚在編輯但未提交時，必須明確區分「輸入中／待套用／已套用／已安全保存／失敗」，避免自動切換導致未提交數值不知去向。實際變更才可按 UI-059／061 規則產生版本／失效；僅顯示或切換面板不得觸發 AI 重算、正式主檔回寫或改動原始 .ai。",
+    "**面板尺寸與可見性**：使用者可調整右側面板寬度、收合區段、暫時收起整個面板並快速還原，讓中央畫布可用。不得因面板窄化而失去關鍵確認／取消與錯誤狀態，長文字、中文欄位及無障礙焦點應保持可讀且可操作；暫時收合不等於忽略印前阻擋。",
+    "**單選與多選安全**：沿用 UI-034 已核准的三向同步選取與多選共通屬性判定、UI-035 語意樹與鎖定、UI-036 多物件精準對齊。跨人物、跨公司、不同 Logo／文字或鎖定混選時不把選到的第一個物件值假裝所有物件相同；不合法批次變更必須停在明確不可用／需另選範圍。",
+    "**狀態生命週期與失效保護**：右側面板所呈現的內容必須連到當下的候選、尺寸、來源欄位 ID、物件 ID、模板 `style_version_id`、人工編輯版本；較早 AI 計算回來時不可替換較新的人工輸入。選取物件已刪除或來源版本改變時清楚清空過期屬性、顯示重新選取提示，不能顯示看似還可編輯的舊內容。",
+    "**低配置 Windows 互動**：選取與面板切換應採輕量讀取、必要時延遲顯示較重的來源預覽；禁止每次選取都整批載入 Illustrator 原稿、Logo 集或模型。沿用 UI-051／058 資源限制；尚未實機測量，不承諾具體速度或最低硬體數值。",
+    "**不另建資料中心**：右側只是既有編輯工具與風險資訊的上下文檢視，不新造物件資料表、例外中心、AI 學習中心、永久案件管理或重複屬性系統。UI-062 左側導航／安全返回持續負責跨模式跳轉；右側面板只控制同模式目前物件相關工具。",
+    "| 選取姓名文字框 | 文字屬性優先；已決定字級僅依法編輯，不因超長字串自動縮字級 |",
+    "| 選取某公司的複合 Logo | 優先顯示該公司與目前實體尺寸的合法 Logo 來源及等比框位控制，不拆分 Logo 圖文 |",
+    "| 選取兩個不同人物的電話框 | 共同屬性可用但語意歸屬仍分離；值不同顯示「混合值」，不可默默覆寫兩者 |",
+    "| 將文字縮放工具釘選後切到 Logo | 釘選區仍可見，但文字專用控制標記不適用並禁止誤修改 |",
+    "| 在右側輸入尚未提交的新座標後切選另一物件 | 清楚處理「待套用／返回編輯／放棄」而不暗中重設或將值套到新物件 |",
+    "| AI 發現目前尺寸 Logo 不完整 | 顯示阻擋與來源、定位及合法修正入口；折疊面板後該尺寸仍不能正式輸出 |",
+    "| 點擊風險定位但來源物件已被替換 | 明示引用過期並要求重新定位，不把警告導向另一個人物物件 |",
+    "| 手動鎖定某姓名框，AI 延後完成候選 | 面板保留人工鎖定與當前版本，不讓舊計算覆寫數值 |",
+    "**類型正確**：文字、Logo、多選、未選取四種場景均只顯示／啟用對應的合法控制。",
+    "**釘選安全**：固定工具可見但不對不適用物件動作；混合數值不被當成單一確定值。",
+    "**資料一致**：右側與畫布、左側物件樹使用同一物件版本與身份；切換／收合不改動工作資料。",
+    "**人工修改保護**：人工字級、文字 X 縮放、位置及鎖定／人物歸屬不會被介面切換或舊 AI 結果覆寫。",
+    "**警告可靠**：UI-057 的風險分級、UI-027 的分尺寸印前阻擋不受折疊、隱藏、切選或釘選影響。",
+    "**回復穩妥**：輸入中途切換選取、無效來源／衝突、低配資源壓力皆有可理解提示及可行處理入口，並可依既有版本／Undo 機制處理。",
+    "不變更 UI-010 已發布模板、原 Illustrator .ai、UI-043 正式客戶主檔、UI-023 分尺寸 Logo 庫或 UI-055 訓練資料；UI-045 正式主檔回寫須另經使用者明確操作。",
+    "UI-048 完整權限 GUI 仍依原核准排序後期實作，UI-056 D 系統化補樣僅屬低優先未來候選。"
+  ],
+  "normative_clause_count": 26,
+  "historical_status_excluded": "Decision-time notimplemented/notauthorized footer; latest explicit user instruction authorizes implementation of remaining28. No approval implies tested.",
+  "references": [
+    {
+      "name": "qt-toolbox-6.8.3",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/widgets/widgets/qtoolbox.cpp",
+      "bytes": 19068,
+      "sha256": "1265d7fde4a734a9d89e9ae8d7f91db2ce52fbb5d3608139bfba879f46c07b33",
+      "local": "/tmp/ui063-reference-review/qt-toolbox-6.8.3.txt"
+    },
+    {
+      "name": "blender-properties-4.5",
+      "url": "https://docs.blender.org/manual/en/4.5/editors/properties_editor.html",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "adobe-properties",
+      "url": "https://helpx.adobe.com/illustrator/using/properties-panel.html",
+      "error": "<urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    {
+      "name": "microsoft-vscode-layout",
+      "url": "https://raw.githubusercontent.com/microsoft/vscode-docs/main/docs/getstarted/userinterface.md",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "krita-dockers",
+      "url": "https://raw.githubusercontent.com/KDE/docs-krita-org/master/reference_manual/dockers.rst",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "name": "Microsoft VSCode1.66 workbench sidepanels and localhistory",
+      "url": "https://raw.githubusercontent.com/microsoft/vscode-docs/main/release-notes/v1_66.md",
+      "bytes": 57517,
+      "sha256": "93c81b917f4036ee579cd1a8c93d05cfa2cce8372041f85ace912c08d2ebbef4",
+      "review": "Read lines51-77 explicit compare/restore boundedhistory and155-167 primary/secondary sidebars preserving existing workflows; commercially distributed VSCode design, not a claim to read inaccessible Adobe/Blender sources."
+    }
+  ],
+  "actually_reviewed": [
+    "Qt6.8.3 QToolBox currentChanged/setItemEnabled/relayout preserve original page widgets across visibility changes",
+    "Microsoft VSCode1.66 primary/secondary SideBar naming/workflow preservation and explicitLocalHistory compare/restore; inaccessible URL attempts recorded without claiming review"
+  ],
+  "math": [
+    "Visibility=applicable context UNION pinned groups UNION requested allproperties; editability=intersection of legal selected types, ownership scope, unlocked/current versions and existing editor permissions",
+    "Mixed selection uses existing object_tools.common_properties: equal/allknown, MIXED, UNKNOWN distinct; never use firstobject asall",
+    "Pending property values belong to exact root/mode/object/source/manual revision; selection/view changes cannot commit or retarget pending values"
+  ],
+  "reuse": [
+    "Existing Main property widgets and canonical slots/template, ObjectToolsDialog mixed/dirty preview/apply/CAS/undo/context pin_text/all_properties; no duplicatepropertymodel",
+    "Existing preferences table for UI-only pins; existing Main/Multi navigation and candidate problemroutes/Gates",
+    "Existing singleworker/version fences/candidate editor; no extra training/customer/persistentdraft store"
+  ],
+  "packages": [
+    "Guard actual pending-property selection transitions in Main and ObjectTools; preservecancel and rejectstale targets",
+    "Group existing Main widgets into adaptive/pinned/collapsible containers; synchronize controls/currentissues and safe readonly/mixed/no-selection state",
+    "Extend existing ObjectTools pin/status lifecycle, actual tests/native/all26mapping, checkpoint and proceedUI064"
+  ],
+  "acceptance_plan": [
+    "Actual text/logo/mixed/none context/pin/allproperties, authoritative objects unchanged by presentation",
+    "Actual unapplied x/pt/owner selection Stay vs explicitdiscard; cannot transfer oldvalues to anotherobject",
+    "Actual stale/deleted object clears activecontrols and reportsreason, newmanual/lateAI versions retained",
+    "Local issue/highlight/currentphysicalsize Gate unaffected by fold/hide/pins; narrow panel controls scrollreachable",
+    "Linuxcontrolled softwaretarget checks and immutablefullsource/native/publication Gate; no reference Windows performance claim"
+  ],
+  "checkpoint": "CP-20261016-REMAINING28-UI063-ADAPTIVE-WIP",
+  "next_action": "Adaptive grouped existingMain controls/pins/prefs, ObjectTools lifecycle/status +affectedregression/native/full26mapping; retain actualpending tests, no parentpromotion.",
+  "targeted_checks": [
+    {
+      "log": "docs/qa/targeted/ui063-pending-selection-001.log",
+      "status": "IMPORT_ERROR",
+      "tests": 0,
+      "reason": "IndentationError aftermoving existing editor_selection conditional; fixed before product execution"
+    },
+    {
+      "log": "docs/qa/targeted/ui063-pending-selection-002.log",
+      "status": "FAIL",
+      "tests": 7,
+      "reason": "6PASS; fixture invoked training-only box_moved intemplate mode; use actual template editor_canvas_apply pipeline"
+    },
+    {
+      "log": "docs/qa/targeted/ui063-pending-selection-003.log",
+      "status": "PASS",
+      "tests": 7,
+      "reason": "Actual Main/existingObjectTools pendingStay/explicitdiscard/sameIDreselect/currentmodelmove/replacedversion diagnostic; no business writes fromselection"
+    }
+  ]
+}

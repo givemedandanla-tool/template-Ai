@@ -235,6 +235,7 @@ class MainWindow(QMainWindow):
         self.generation = 0
         self.undo_stack, self.redo_stack = [], []
         self._mode_memory={};self._active_mode=0
+        self._property_mode=0;self.pending_property_conflict=None
         self.busy = False
         self._background_jobs = {}
         self._waiting_launches={}
@@ -1156,11 +1157,22 @@ class MainWindow(QMainWindow):
         return False
 
     def select_slot(self, slot):
-        self.current_slot = next((s for s in self.current_slots() if slot and s.id == slot.id), None)
+        selected=next((s for s in self.current_slots() if slot and s.id == slot.id),None)
+        old=self.current_slot
+        from .property_context import pending_main,property_values,discard_pending_selection,restore_main_selection,retain_pending_main
+        from .customers import digest
+        from dataclasses import asdict
+        if pending_main(self):
+            same_version=digest(asdict(old))==getattr(self,'_property_loaded_pin',None)
+            if selected is old and same_version:return True
+            if old.id in {s.id for s in self.current_slots()} and same_version and (selected is None or selected.id!=old.id):
+                if not discard_pending_selection(self):restore_main_selection(self);return False
+            else:retain_pending_main(self)
+        self.current_slot=selected;self._property_mode=self.tabs.currentIndex()
         s = self.current_slot
         self.property_button.setEnabled(s is not None and not s.locked and self.tabs.currentIndex() != 2 and (self.tabs.currentIndex()==0 or (self.template and self.template.state=='draft')))
         if not s:
-            return
+            self._property_form_baseline=None;self.selected_info.setText('尚未選取有效物件；請由目前畫布或物件樹重新選取。');return True
         self.kind.setCurrentIndex(self.kind.findData(s.kind))
         self.owner.setCurrentIndex(self.owner.findData(s.owner))
         self.index.setValue(s.index+1)
@@ -1183,6 +1195,8 @@ class MainWindow(QMainWindow):
                 semantic=observation.get('semantic') or {};self.selected_info.setText(self.selected_info.text()+'\n來源文字：'+observation['text'][:512]+'\n語意候選：'+TYPE_LABELS.get(semantic.get('semantic_type'),'待確認')+'／'+str(semantic.get('confidence','UNKNOWN'))+'\n依據：'+'；'.join(semantic.get('signals',[]))+'\n作品事實保存狀態：'+facts['state']+'；確認範圍以逐項核對紀錄為準。')
         elif self.tabs.currentIndex()==1 and self.template:
             errors=template_errors(self.template);self.selected_info.setText(self.selected_info.text()+'\n設計安全邊距：'+str(self.template.safe_margin_mm)+'mm\n'+('驗證待修復：'+'；'.join(errors[:8]) if errors else '幾何／語意檢查通過；仍依實際資料驗證字形及輸出。'))
+        self._property_form_baseline=property_values(self);self._property_loaded_pin=digest(asdict(s))
+        return True
 
     def list_selection(self, row):
         if 0 <= row < len(self.slots):
@@ -1490,13 +1504,13 @@ class MainWindow(QMainWindow):
     def editor_selection(self,ids):
         if not self.template:return
         valid={slot.id for slot in self.template.slots};ids=[identity for identity in ids if identity in valid]
+        if self.tabs.currentIndex()==1:
+            if self.select_slot(next((slot for slot in self.template.slots if len(ids)==1 and slot.id==ids[0]),None)) is False:return
         self.edit_canvas.select_ids(ids);self.editor_tree.blockSignals(True)
         for item in getattr(self,'editor_tree_nodes',[]):
             members=item.data(0,Qt.UserRole) or [];item.setSelected(bool(members) and set(members)<=set(ids))
         self.editor_tree.blockSignals(False)
-        if self.tabs.currentIndex()==1:
-            self.select_slot(next((slot for slot in self.template.slots if len(ids)==1 and slot.id==ids[0]),None))
-            if len(ids)>1:self.selected_info.setText(f'選取{len(ids)}物件；共同屬性／群組操作請用安全多選工具。未擴大範圍。')
+        if self.tabs.currentIndex()==1 and len(ids)>1:self.selected_info.setText(f'選取{len(ids)}物件；共同屬性／群組操作請用安全多選工具。未擴大範圍。')
 
     def editor_canvas_preview(self,request):
         try:

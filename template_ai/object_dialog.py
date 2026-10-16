@@ -249,7 +249,7 @@ class ObjectToolsDialog(QDialog):
         self.summary.setPlainText('候選已清除；只影響明確選取且可編輯物件，未核驗字形／原稿內容不冒稱PASS。')
     def changed(self,key):
         if self.loading:return
-        self.dirty.add(key);self.invalidate()
+        self.dirty.add(key);self.invalidate();self.status.setText('輸入中／待套用：只屬目前明確選取，先預覽差異再確認。')
     def reload(self):
         try:
             self.snapshot=self.library.object_snapshot(self.kind,self.entity_id);self.invalidate();self.loading=True
@@ -334,6 +334,17 @@ class ObjectToolsDialog(QDialog):
         if self.loading:return
         known={s['id'] for s in self.snapshot['payload']['slots']}
         if len(ids)!=len(set(ids)) or any(i not in known for i in ids):self.status.setText('物件身份不唯一／上下文不符，未變更選取');return
+        if self.dirty:
+            if set(ids)==set(self.ids):return
+            from .property_context import discard_pending_selection
+            if not discard_pending_selection(self):
+                self.loading=True
+                try:
+                    self.canvas.select_ids(self.ids);self.objects.blockSignals(True)
+                    for i in range(self.objects.count()):self.objects.item(i).setSelected(self.objects.item(i).data(Qt.UserRole) in self.ids)
+                    self.objects.blockSignals(False);self.sync_tree()
+                finally:self.loading=False
+                self.status.setText('待套用輸入已保留於原選取；未更動物件。');return
         self.invalidate();self.loading=True;self.ids=list(ids);self.dirty.clear();self.canvas.select_ids(ids)
         self.objects.blockSignals(True)
         for i in range(self.objects.count()):self.objects.item(i).setSelected(self.objects.item(i).data(Qt.UserRole) in ids)
