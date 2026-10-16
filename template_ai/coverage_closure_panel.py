@@ -90,7 +90,8 @@ class CoverageClosurePanel(QWidget):
         for i,row in enumerate(self.rows):
             frozen=row['frozen'];values=(frozen['original_path'],f"{frozen['source_page_count']}登錄頁／{frozen['recorded_work_count']}作品紀錄",STATE_LABELS.get(row['check_state'],row['check_state']),row.get('source_error') or ('上次已存分組快照（需重核）：'+str(row.get('last_assessment_group')) if self.group_by.currentData()!='file' else '需核對全檔切分及七個獨立審核層'))
             for col,cell in enumerate(values):item=QTableWidgetItem(str(cell));item.setToolTip(str(cell));self.table.setItem(i,col,item)
-        self.status.setText(f"固定批次{self.batch['file_count']}檔／{self.batch['source_page_count']}來源頁；本頁{len(self.rows)}／符合{value['page']['total']}。真實全部作品／當前有效已審數未逐檔核對時均為未知，未宣稱100%。")
+        physical=self.batch.get('scope_details',{}).get('physical_path_count');location=f'／{physical}個明列實體位置' if physical is not None else ''
+        self.status.setText(f"固定批次{self.batch['file_count']}個來源檔案身分{location}／{self.batch['source_page_count']}來源頁；本頁{len(self.rows)}／符合{value['page']['total']}。真實全部作品／當前有效已審數未逐檔核對時均為未知，未宣稱100%。")
 
     def search(self):self.offset=0;self.load_batch()
     def page(self,delta):self.offset=max(0,self.offset+delta);self.load_batch()

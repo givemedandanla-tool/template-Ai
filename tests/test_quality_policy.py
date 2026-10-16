@@ -14,6 +14,9 @@ class QualityPolicyTests(unittest.TestCase):
     def plan(self):
         # Explicit synthetic fixture parameters, never shipping acceptance defaults.
         thresholds={domain:dict(minimum_independent_groups=2,minimum_gold_objects=3,minimum_precision=.9,minimum_recall=.8,maximum_group_failure_rate=.1) for domain in DOMAINS}
+        thresholds['physical_size'].pop('minimum_precision');thresholds['physical_size'].pop('minimum_recall');thresholds['physical_size']['maximum_absolute_error_mm']=.02
+        from template_ai.model import KINDS
+        thresholds['field_types']['required_classes']=list(KINDS)
         return self.policy().plan('Synthetic policy arithmetic fixture',thresholds,.5,.95,'Synthetic test-only numerical parameters','QA fixture,not production evidence','SYNTHETIC_SELF_CHECK')
 
     def test_no_default_policy_and_approval_never_claims_model_quality_or_activation(self):

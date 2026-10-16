@@ -67,7 +67,7 @@ class CoverageBatches(CoverageReviewMixin,CoverageClosureMixin,CoverageScopeMixi
         for ordinal,member in enumerate(current['members']):
             mid=digest(['coverage-member',identity,member['logical_file_key']]);member_digests.append(member['member_scope_digest'])
             self.store._write(MEMBER,mid,dict(batch_id=identity,ordinal=ordinal,frozen=member,check_state='DECLARED_PENDING_PROOF',last_check=None,source_error=None,review_state='UNKNOWN_NOT_YET_REVIEWED'),0,'coverage_member_boundary_declared')
-        details={key:copy.deepcopy(current[key]) for key in ('declared_paths','selected_source_ids','root_snapshot') if key in current}
+        details={key:copy.deepcopy(current[key]) for key in ('declared_paths','physical_path_count','selected_source_ids','root_snapshot') if key in current}
         return self.store._write(BATCH,identity,dict(schema_version=1,scope_kind=current['scope_kind'],scope_digest=current['scope_digest'],scope_details=details,member_manifest_digest=digest(member_digests),file_count=current['file_count'],source_page_count=current['source_page_count'],source_ids=current['source_ids'],state='BOUNDARY_FROZEN',actor=actor,created=time.time(),previous_batch_id=previous_id,whole_directory_claim=False,all_file_work_coverage_verified=False,closure_receipt=None),0,'coverage_batch_exact_boundary_created')
 
     def batch(self,identity):

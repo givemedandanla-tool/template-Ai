@@ -942,3 +942,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-16 00:23 UTC UI053 predeclared protocol WIP
 - 12 protocol+policy targets PASS：真正已有set/policy/actualpipeline快照，綁scheduler metadata fixture job/owner，content家族單pair使用、copyset不能洗曝光、explicitgold exposure、lateaudit原子回滾，無qualityrelease。
 - 下一保留無gold/unparsed來源分母、mm/perclass適用政策、domainjob與FIFO/GUI。另發現UI052 physicalpath重連aliases scope合併會保守阻擋，需logical與physical計數分開+實測；current全部144待重驗狀態已涵蓋，未維持虛假的目前已驗宣稱。
+
+### 2026-10-16 00:32 UTC logical source scope and domain policy WIP
+- UI052 samephysical relink2original aliases independent validated45cases；stronger originalclause6 regression saved without changing normative text/parent counts。
+- Quality rawscope56casesPASS含0gold1fileunknown、raw未解析不讀、不漏分母、scope外gold拒絕、新register/stat stalescope；Policy schema2明確physicalmm/perclassmetrics，12targetPASS。current144pending，尚未UI053domainjob/FIFO/GUI/fullformal。

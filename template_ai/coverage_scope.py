@@ -35,17 +35,26 @@ class CoverageScopeMixin:
         if selected_source_ids is not None and (not isinstance(selected_source_ids,list) or len(set(selected_source_ids))!=len(selected_source_ids) or len(selected_source_ids)>10000):raise ValueError('來源版本選擇需不重複且有界ID清單')
         selected=set(selected_source_ids) if selected_source_ids is not None else None
         self.db.create_function('coverage_normpath',1,norm,deterministic=True)
-        members=[];source_ids=[]
+        members=[];source_ids=[];groups={}
         for path in paths:
             ids=[r[0] for r in self.db.execute('SELECT s.id FROM sources s LEFT JOIN source_links l ON l.source_id=s.id WHERE coverage_normpath(COALESCE(l.current_path,s.original_path))=? ORDER BY s.id LIMIT 10001',(path,))]
             if len(ids)>10000:raise ValueError('單檔來源頁版本超過支援範圍，未靜默截斷')
             if selected is not None:ids=[identity for identity in ids if identity in selected]
             pins=[self.source_pin(identity) for identity in ids];source_ids+=ids
             if len(source_ids)>10000:raise ValueError('批次來源頁超過10000，請明確分組')
-            member=dict(logical_file_key=path,original_path=path,source_pins=pins,expected_hashes=sorted({pin['source_hash'] for pin in pins}),source_page_count=len(pins),recorded_work_count=sum(len(pin['works']) for pin in pins),registration_state='REGISTERED_PAGES' if pins else 'UNREGISTERED_OR_UNPARSED_REMAINS_IN_FILE_DENOMINATOR')
+            if not pins:
+                try:raw_state=dict(stat=list(fingerprint(Path(path).stat())),content_hash_verified=False)
+                except OSError as error:raw_state=dict(stat=None,error=str(error),content_hash_verified=False)
+                groups['UNREGISTERED_PATH:'+path]=dict(logical_file_key='UNREGISTERED_PATH:'+path,original_path=path,declared_physical_paths=[path],unregistered_file_snapshot=raw_state,source_pins=[])
+            for pin in pins:
+                key='REGISTERED_ORIGINAL:'+norm(pin['original_path']);member=groups.setdefault(key,dict(logical_file_key=key,original_path=pin['original_path'],declared_physical_paths=[],source_pins=[]))
+                if path not in member['declared_physical_paths']:member['declared_physical_paths'].append(path)
+                member['source_pins'].append(pin)
+        for key,member in sorted(groups.items()):
+            pins=member['source_pins'];member.update(expected_hashes=sorted({pin['source_hash'] for pin in pins}),source_page_count=len(pins),recorded_work_count=sum(len(pin['works']) for pin in pins),registration_state='REGISTERED_PAGES' if pins else 'UNREGISTERED_OR_UNPARSED_REMAINS_IN_FILE_DENOMINATOR')
             member['member_scope_digest']=digest(member);members.append(member)
         if selected is not None and selected!=set(source_ids):raise ValueError('選擇的來源頁不屬明列檔案位置，未跨來源混配')
-        result=dict(schema_version=1,scope_kind='EXACT_ROOT_FILTERED_SNAPSHOT' if root_snapshot else 'EXACT_DECLARED_SOURCE_FILES',declared_paths=paths,selected_source_ids=sorted(selected) if selected is not None else None,root_snapshot=root_snapshot,source_ids=sorted(source_ids),source_page_count=len(source_ids),file_count=len(members),members=members,whole_directory_claim=False,all_file_work_coverage_verified=False)
+        result=dict(schema_version=1,scope_kind='EXACT_ROOT_FILTERED_SNAPSHOT' if root_snapshot else 'EXACT_DECLARED_SOURCE_FILES',declared_paths=paths,physical_path_count=len(paths),selected_source_ids=sorted(selected) if selected is not None else None,root_snapshot=root_snapshot,source_ids=sorted(source_ids),source_page_count=len(source_ids),file_count=len(members),members=members,whole_directory_claim=False,all_file_work_coverage_verified=False)
         import json
         if len(json.dumps(result,ensure_ascii=False).encode())>32*1024*1024 or any(len(json.dumps(member,ensure_ascii=False).encode())>900000 for member in members):raise ValueError('範圍metadata過大，請明確分組；未靜默截斷')
         result['scope_digest']=digest(result);return result

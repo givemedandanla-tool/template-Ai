@@ -14,6 +14,9 @@ class QualityProtocolTests(unittest.TestCase):
         plan=fixtures.QualityGoldSetTests.plan(self);self.gold_record=self.gold.confirm(plan,'Synthetic reviewer',True)
         self.dataset=self.sets.create(self.sets.plan('Synthetic independent pair',[self.gold_record['id']],True,True,'Reviewed source and independent family as one group'),'Synthetic reviewer',True)
         self.policies=QualityPolicies(self.library);thresholds={d:dict(minimum_independent_groups=2,minimum_gold_objects=2,minimum_precision=.9,minimum_recall=.9,maximum_group_failure_rate=.1) for d in DOMAINS}
+        thresholds['physical_size'].pop('minimum_precision');thresholds['physical_size'].pop('minimum_recall');thresholds['physical_size']['maximum_absolute_error_mm']=.02
+        from template_ai.model import KINDS
+        thresholds['field_types']['required_classes']=list(KINDS)
         self.policy=self.policies.approve(self.policies.plan('Explicit synthetic fixture',thresholds,.5,.95,'Synthetic arithmetic fixture','Not production thresholds','SYNTHETIC_SELF_CHECK'),'Synthetic reviewer',True)
         pipelines=QualityPipelines(self.library);self.left=pipelines.freeze('Actual baseline',None,'Synthetic reviewer',True);self.right=pipelines.freeze('Actual candidate',None,'Synthetic reviewer',True);self.protocols=QualityProtocols(self.library)
 

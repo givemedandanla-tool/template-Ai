@@ -5,7 +5,7 @@ import time
 from .quality_gold import DOMAINS
 from .quality_metrics import VERSION,wilson_interval
 from .training_store import TrainingStore,digest,text
-from .model import new_id
+from .model import new_id,KINDS
 
 POLICY='QUALITY_POLICY'
 
@@ -18,15 +18,21 @@ class QualityPolicies:
         if scope not in ('SYNTHETIC_SELF_CHECK','AUTHORIZED_LOCAL_QUALITY_ACCEPTANCE'):raise ValueError('需明列合成自驗或已獲授權本機品質驗收範圍')
         if type(matching_iou) not in (int,float) or not math.isfinite(matching_iou) or not 0<matching_iou<=1:raise ValueError('需明確核准IoU配對口徑；沒有預設門檻')
         wilson_interval(0,1,confidence)
-        required={'minimum_independent_groups','minimum_gold_objects','minimum_precision','minimum_recall','maximum_group_failure_rate'}
         if not isinstance(thresholds,dict) or set(thresholds)!=set(DOMAINS):raise ValueError('九個領域需各自完整門檻與樣本數；沒有一個總準確率取代')
         for domain,values in thresholds.items():
+            required={'minimum_independent_groups','minimum_gold_objects','maximum_group_failure_rate'}
+            required |= {'maximum_absolute_error_mm'} if domain=='physical_size' else {'minimum_precision','minimum_recall'}
+            if domain=='field_types':required.add('required_classes')
             if not isinstance(values,dict) or set(values)!=required:raise ValueError('需明列每層獨立群組數／gold數／precision／recall／群組失敗率')
             for key in ('minimum_independent_groups','minimum_gold_objects'):
                 if type(values[key]) is not int or not 1<=values[key]<=1000000:raise ValueError('必要樣本數需明確正整數，不能靠空分母通過')
-            for key in ('minimum_precision','minimum_recall','maximum_group_failure_rate'):
+            for key in ({'minimum_precision','minimum_recall','maximum_group_failure_rate'} if domain!='physical_size' else {'maximum_group_failure_rate'}):
                 if type(values[key]) not in (int,float) or not math.isfinite(values[key]) or not 0<=values[key]<=1:raise ValueError('各類率門檻需明確有限0～1數值')
-        plan=dict(schema_version=1,name=name,thresholds=copy.deepcopy(thresholds),matching_iou=matching_iou,confidence=confidence,basis=basis,reference=reference,scope=scope,calculation_version=VERSION,critical_owner_logo_missing_work_errors_always_block=True,unknown_or_leaked_evidence_always_blocks=True,quality_policy_is_not_model_rule_publication=True,threshold_source='EXPLICIT_USER_REVIEWED_BASIS_NO_EMPIRICAL_DEFAULTS')
+            if domain=='physical_size' and (type(values['maximum_absolute_error_mm']) not in (int,float) or not math.isfinite(values['maximum_absolute_error_mm']) or values['maximum_absolute_error_mm']<0):raise ValueError('物理尺寸需明確非負毫米誤差口徑，不能拿分類precision當尺寸容差')
+            if domain=='field_types':
+                classes=values['required_classes']
+                if not isinstance(classes,list) or len(set(classes))!=len(classes) or not set(KINDS)<=set(classes) or not set(classes)<=set(KINDS)|{'ANNOTATION'}:raise ValueError('需逐類涵蓋全部已支援欄位，不以大量容易類別平均掩蓋稀少類別')
+        plan=dict(schema_version=2,name=name,thresholds=copy.deepcopy(thresholds),matching_iou=matching_iou,confidence=confidence,basis=basis,reference=reference,scope=scope,calculation_version=VERSION,critical_owner_logo_missing_work_errors_always_block=True,unknown_or_leaked_evidence_always_blocks=True,quality_policy_is_not_model_rule_publication=True,threshold_source='EXPLICIT_USER_REVIEWED_BASIS_NO_EMPIRICAL_DEFAULTS')
         plan['digest']=digest(plan);return plan
 
     def approve(self,plan,actor,approved=False):
@@ -42,8 +48,9 @@ class QualityPolicies:
         record=self.store.get(POLICY,policy_id) if policy_id else None
         if not record:return dict(state='UNCONFIGURED',valid=False,policy=None,reason='尚無明確核准的各類門檻／必要樣本量／依據，不能宣稱品質PASS')
         plan=copy.deepcopy(record['plan']);expected=plan.pop('digest',None)
-        valid=not self.store.get('QUALITY_POLICY_WITHDRAWAL',policy_id) and record['state']=='APPROVED_EXACT_POLICY_VERSION' and expected==digest(plan) and plan['calculation_version']==VERSION
-        return dict(state=record['state'] if valid else 'WITHDRAWN',valid=valid,policy=record,reason='政策核准不代表模型／驗收集／品質已通過')
+        withdrawn=self.store.get('QUALITY_POLICY_WITHDRAWAL',policy_id)
+        valid=not withdrawn and record['state']=='APPROVED_EXACT_POLICY_VERSION' and expected==digest(plan) and plan.get('schema_version')==2 and plan['calculation_version']==VERSION
+        return dict(state=record['state'] if valid else 'WITHDRAWN' if withdrawn else 'POLICY_SCHEMA_OR_CALCULATION_UNSUPPORTED',valid=valid,policy=record,reason='政策版本／撤回／計算口徑需有效；政策核准不代表模型／驗收集／品質已通過')
 
     def withdraw(self,policy_id,expected_revision,actor,reason,approved=False):
         if approved is not True:raise ValueError('需明確撤回此政策版本')

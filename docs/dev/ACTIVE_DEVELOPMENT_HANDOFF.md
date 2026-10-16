@@ -41,3 +41,9 @@
 - 明確看gold/逐案對照寫HOLDOUT_EXPOSED與group使用，保留舊gold/protocol/結果，不當新independentset；reservation+side同transaction lateaudit失敗回滾。12 protocol+policy targets PASS（EVAL_JOB為明示scheduler metadata fixture，尚未actual FIFO consumer，不冒稱完成）。
 - 重要下一缺口：QUALITY_SET目前由gold明列，需擴充declared raw/unparsed source scope以保留無gold來源分母；physical_size政策需適用mm口徑、fieldtypes按class防平均稀釋。actualdomainresults/FIFO/diagnosticGUI/seriouserror crossbatch尚未做；UI053原9未閉合，144currentclaims pending。
 - 自我盤點UI052 follow-up：explicit/root path scopes遇不同original filename alias重連同一physicalpath時，應保持logical sourcefile2與physicalpaths1另計；目前plan_source_files按physicalpath合併會保守阻擋此case，下一修正並補counterexample後全量重驗（舊milestone證據仍保留，current已pending）。
+
+### UI052 logical relink aliases fixed / UI053 raw-source denominator WIP
+- coverage_scope explicit/root now按registered originalpath身分分組，重連同physicalpath的A/B仍2 logical files/2page/1physical path，各自7層審核；root查核GUI另列實體位置。unregistered path保留metadata stat/error但明示無已驗hash。45 backend+GUI targets PASS；原UI052第6全文未變，補新alias regression到acceptance，144claims仍pending新source正式回歸。
+- QUALITY_SET可明列raw/unparsed/missing files，即使0gold也保存filedenominator/unknownwork，無gold不得讀原稿或冒充獨立/qualitypass；gold不得混入scope外；source registration/version/stat變更使舊scope失效，physical/logical各計。56 gold/protocol/sourcebatch targets PASS。
+- QualityPolicy schema2：physical_size採明確mm誤差口徑（不拿PR當尺寸），field_types明列各支援類別，no aggregate hiding；舊policy schema不假冒valid。12 policy/protocol targets PASS，仍全UI0539未閉合。
+- 下一actual per-domain source results/critical/unknown metrics，EVAL_JOB接既有FIFO/isolated worker，pairedAB result/answer曝光GUI與historical severe-error跨批重審；勿在這裡停止或關UI053。

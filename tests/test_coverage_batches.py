@@ -327,3 +327,15 @@ class CoverageBatchTests(unittest.TestCase):
         self.service.confirm_segmentation(self.service.segmentation_plan(member['id'],[work['id']],'Full source inspected'),'Reviewer',True)
         with self.assertRaisesRegex(ValueError,'客戶歸屬'):self.service.exclusion_plan(member['id'],'Cannot hide unresolved identity','Source proof')
         self.assertIn('CUSTOMER_IDENTITY_UNRESOLVED',{b['code'] for b in self.service.member_evidence(member['id'])['blockers']})
+
+    def test_two_original_aliases_relinked_to_one_physical_file_keep_independent_reviews(self):
+        from template_ai.source_links import verify_source
+        source,work,old_batch,old_member=self.work_member();path=self.root/'other-customer.svg';path.write_bytes(Path(source['original_path']).read_bytes())
+        alias=self.library.add_source(path,self.library.source(source['id']));other=self.library.create_artwork(alias['id'],'Other logical customer source',work['payload'])
+        shared=self.root/'shared-location.svg';shared.write_bytes(path.read_bytes());proof=verify_source(shared,source['hash'])
+        self.library.relink_sources([dict(source_id=s['id'],proof=proof,expected_revision=0) for s in (source,alias)],approved=True)
+        plan=self.service.plan_source_files([str(shared)]);self.assertEqual((plan['file_count'],plan['physical_path_count'],plan['source_page_count']),(2,1,2))
+        batch=self.service.create(plan,'Reviewer',True);members=self.service.members(batch['id'])['rows']
+        first=next(m for m in members if m['frozen']['source_pins'][0]['source_id']==source['id']);second=next(m for m in members if m['id']!=first['id'])
+        self.review_all(first,work);pending=self.service.closure_plan(batch['id']);self.assertEqual(pending['file_disposition_rate'],.5);self.assertFalse(pending['closure_allowed'])
+        self.review_all(second,other);self.assertTrue(self.service.closure_plan(batch['id'])['closure_allowed'])

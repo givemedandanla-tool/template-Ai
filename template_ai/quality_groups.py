@@ -107,7 +107,7 @@ class QualityGroups:
             for did,raw in self.rows("SELECT id,payload FROM training_records WHERE kind IN ('DATASET','QUALITY_SET') ORDER BY id"):
                 import json
                 dataset=json.loads(raw)
-                if any(entry['role']=='HOLDOUT' and entry['source_hash'] in affected for entry in dataset['entries']):
+                if any(entry['role']=='HOLDOUT' and entry['source_hash'] in affected for entry in dataset['entries']) or affected.intersection(dataset.get('manifest',{}).get('declared_content_hashes',[])):
                     prior=self.store.get('HOLDOUT_EXPOSED',did);exposed=copy.deepcopy(prior or {});exposed.update(dataset_id=did,reason='新核實關聯揭露跨角色洩漏，舊測試集不可恢復獨立資格',group_link_id=saved['id'],state='INVALID_INDEPENDENCE_REQUIRES_NEW_DATA',actor=actor,at=time.time())
                     self.store._write('HOLDOUT_EXPOSED',did,exposed,prior['revision'] if prior else 0,'quality_holdout_invalidated_by_group_leakage')
             return saved

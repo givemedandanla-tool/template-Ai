@@ -46,7 +46,7 @@ class QualityProtocols:
         contents=self.content_scope(dataset)
         if any(self.store.get(CONSUMED,sha) for sha in contents):raise ValueError('此來源／相關家族已供先前試驗或已揭露答案，需真正全新獨立群組；複製驗收集不會重置曝光')
         scope=dict(schema_version=1,name=name,dataset_id=dataset_id,dataset_revision=dataset['revision'],dataset_manifest_digest=dataset['manifest_digest'],policy_id=policy_id,policy_revision=policy['policy']['revision'],policy_digest=digest(policy['policy']),pipelines=versions,environment=copy.deepcopy(environment),calculation_files=calculation_files(),content_scope=contents,gold_work_count=dataset['manifest']['gold_work_count'],gold_object_count=dataset['manifest']['gold_object_count'],source_file_count=dataset['manifest']['file_count'],independent_groups=dataset['manifest']['independent_group_count'],reason=reason,source_only_predictions_required=True,predeclared_sides=list(SIDES),one_frozen_protocol_per_related_holdout_group=True)
-        result=dict(scope=scope,scope_digest=digest(scope),quality_pass_claim=False,independence_claim=dataset['manifest']['independence_reviewed'],whole_source_gold_complete=dataset['manifest']['whole_source_gold_complete'],complete_font_environment=bool(environment['fonts']['complete']))
+        result=dict(scope=scope,scope_digest=digest(scope),quality_pass_claim=False,independence_claim=dataset['manifest']['independence_scope_ready'],whole_source_gold_complete=dataset['manifest']['whole_source_gold_complete'],complete_font_environment=bool(environment['fonts']['complete']))
         result['digest']=digest(result);return result
 
     def freeze(self,plan,actor,approved=False):

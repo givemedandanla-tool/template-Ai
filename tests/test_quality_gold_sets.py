@@ -93,3 +93,24 @@ class QualityGoldSetTests(unittest.TestCase):
         groups.confirm_link(plan,'Reviewer',True)
         self.assertTrue(self.gold.validity(gold['id'])['valid']);self.assertFalse(self.sets.validity(dataset['id'])['valid']);self.assertIsNotNone(self.store.get('HOLDOUT_EXPOSED',dataset['id']))
         self.assertEqual(self.store.get('QUALITY_GOLD',gold['id']),gold)
+
+    def test_declared_unparsed_file_without_gold_stays_in_denominator_and_is_not_read(self):
+        gold=self.approved();unparsed=self.root/'not-yet-parsed.ai';unparsed.write_bytes(b'unknown source awaiting rights and parsing')
+        from template_ai.source_links import verify_source
+        reads=[]
+        def checked(path,sha):reads.append(str(path));return verify_source(path,sha)
+        with patch('template_ai.quality_sets.verify_source',side_effect=checked):plan=self.sets.plan('All declared sources',[gold['id']],True,True,'Reviewed known subset;unparsed remains unresolved',declared_paths=[self.source['original_path'],str(unparsed)])
+        manifest=plan['manifest'];self.assertEqual(manifest['file_count'],2);self.assertIn(str(unparsed),manifest['unregistered_or_unparsed_files']);self.assertNotIn(str(unparsed),reads)
+        self.assertIsNone(manifest['actual_whole_source_work_count']);self.assertFalse(manifest['whole_source_gold_complete']);self.assertFalse(manifest['independence_scope_ready'])
+        dataset=self.sets.create(plan,'Reviewer',True);self.assertTrue(self.sets.validity(dataset['id'])['valid']);self.assertFalse(dataset['quality_pass'])
+
+    def test_all_unparsed_scope_persists_unknown_instead_of_zero_over_zero_quality_pass(self):
+        path=self.root/'unregistered.ai';path.write_bytes(b'unparsed')
+        plan=self.sets.plan('No readable gold yet',[],declared_paths=[str(path)]);dataset=self.sets.create(plan,'Reviewer',True)
+        self.assertEqual((dataset['manifest']['file_count'],dataset['manifest']['gold_object_count']),(1,0));self.assertIsNone(dataset['manifest']['actual_whole_source_work_count']);self.assertFalse(dataset['quality_pass'])
+        path.write_bytes(b'changed unparsed version');self.assertFalse(self.sets.validity(dataset['id'])['valid'])
+
+    def test_gold_outside_exact_declared_file_scope_cannot_be_silently_mixed(self):
+        gold=self.approved();path=self.root/'different.ai';path.write_bytes(b'unknown')
+        plan=self.sets.plan('Wrong scope',[gold['id']],declared_paths=[str(path)]);self.assertTrue(plan['errors'])
+        with self.assertRaises(ValueError):self.sets.create(plan,'Reviewer',True)
