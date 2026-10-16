@@ -163,6 +163,9 @@ class Canvas(QGraphicsView):
         self.scene().clearSelection()
         for item in self.scene().items():
             if isinstance(item, Box) and item.slot.id == slot_id:
+                # Exact programmatic issue location is selectable even in pan;
+                # movement permission remains unchanged and viewport-only.
+                item.setFlag(QGraphicsItem.ItemIsSelectable,True)
                 item.setSelected(True)
                 self.ensureVisible(item)
 

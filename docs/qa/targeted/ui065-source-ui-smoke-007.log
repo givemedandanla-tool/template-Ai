@@ -1,0 +1,16 @@
+test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat (test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat) ... Fontconfig error: No writable cache directories
+FAIL
+
+======================================================================
+FAIL: test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat (test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_seventy_ui.py", line 89, in test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat
+    self.assertIn('ALREADY_APPLIED',d.details.toPlainText());self.assertEqual(self.w.library.artwork(work['id'])['revision'],revision+1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'ALREADY_APPLIED' not found in 'ARTWORK/c1882361c0494546abe5ed9d38d4f9f6；低風險；可核對套用\n來源版本 1\np1/name/11f08416c5f242f59d7dfa558e0dc4ec\n原 X 8／Y 6／寬 70／高 11 mm → 新 X 8／Y 6／寬 70／高 11 mm；固定字級 18 → 18 pt；對齊 left → center\n未提供實際人物文字；字形覆蓋、固定pt尺寸與可讀性仍須排版／正式輸出核驗'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.790s
+
+FAILED (failures=1)

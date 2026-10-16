@@ -85,8 +85,10 @@ class SeventyUiTests(unittest.TestCase):
         source,work=source_work(self.w.library,self.root);d=BatchObjectDialog(self.w);self.addCleanup(d.deleteLater);d.table.item(0,0).setCheckState(Qt.Checked);d.preview();self.assertIsNotNone(d.plan);revision=work['revision']
         with patch('template_ai.batch_objects.QMessageBox.question',return_value=QMessageBox.No):d.apply()
         self.assertEqual(self.w.library.artwork(work['id'])['revision'],revision)
-        with patch('template_ai.batch_objects.QMessageBox.question',return_value=QMessageBox.Yes):d.apply();d.apply()
-        self.assertIn('ALREADY_APPLIED',d.details.toPlainText());self.assertEqual(self.w.library.artwork(work['id'])['revision'],revision+1)
+        from gui_wait import wait_for_gui
+        with patch('template_ai.batch_objects.QMessageBox.question',return_value=QMessageBox.Yes):
+            d.apply();d.apply();self.assertIn('未重複提交',d.status.text());self.assertTrue(wait_for_gui(lambda:not d.running,5));d.apply();self.assertTrue(wait_for_gui(lambda:not d.running,5))
+        self.assertIn('核實原操作已保存',d.details.toPlainText());self.assertEqual(self.w.library.artwork(work['id'])['revision'],revision+1)
     def test_diagnostic_reuse_same_data_no_report_no_gate_mutation_and_convergence_75(self):
         generation=self.w.generation;self.assertEqual(open_diagnostic(self.w,'input'),'OUTPUT_INPUT_PROBLEMS');self.assertEqual(self.w.generation,generation)
         with self.assertRaises(ValueError):open_diagnostic(self.w,'pdf-report')

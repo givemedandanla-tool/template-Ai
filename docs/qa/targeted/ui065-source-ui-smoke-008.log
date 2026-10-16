@@ -1,0 +1,16 @@
+test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat (test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat) ... Fontconfig error: No writable cache directories
+FAIL
+
+======================================================================
+FAIL: test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat (test_seventy_ui.SeventyUiTests.test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_seventy_ui.py", line 91, in test_batch_actual_gui_exact_selection_diff_cancel_apply_and_no_repeat
+    self.assertIn('核實原操作已保存',d.details.toPlainText());self.assertEqual(self.w.library.artwork(work['id'])['revision'],revision+1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '核實原操作已保存' not found in 'ARTWORK/40fce1bd995443f4908977b769bc08a5：結果未核實\nSQLite objects created in a thread can only be used in that same thread. The object was created in thread id 139850197780288 and this is thread id 139850062595776.；結果未安全核實，不盲目重試'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.866s
+
+FAILED (failures=1)
