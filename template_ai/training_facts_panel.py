@@ -29,7 +29,17 @@ class FactsPanel(QWidget):
             button.clicked.connect(handler); bar.addWidget(button)
         outer.addLayout(bar); self.details = QPlainTextEdit(); self.details.setReadOnly(True); outer.addWidget(self.details, 1); self.reload()
         bar = QHBoxLayout(); self.exclude_button = QPushButton('只排除此作品的選中觀察'); self.remember_button = QPushButton('剔除並記住（待審候選）'); self.undo_noise_button = QPushButton('撤銷選中局部剔除'); self.exclude_button.clicked.connect(self.exclude); self.remember_button.clicked.connect(self.remember); self.undo_noise_button.clicked.connect(self.undo_noise); bar.addWidget(self.exclude_button); bar.addWidget(self.remember_button); bar.addWidget(self.undo_noise_button); outer.addLayout(bar); self.controls()
+        self.repair_button=QPushButton('以已保存原稿事實預覽局部修復問題');self.repair_button.clicked.connect(self.open_repair);outer.addWidget(self.repair_button)
         self._editor_baseline=self.observation('editor-state')
+
+    def open_repair(self):
+        try:
+            if not self.loaded or self.has_pending_observation():raise ValueError('先保存或保留待核對人工內容；不把未保存編輯當成修復真值')
+            parent=self.parentWidget()
+            while parent is not None and not hasattr(parent,'quality_panel'):parent=parent.parentWidget()
+            if parent is None:raise ValueError('請由既有訓練／品質中心開啟修復')
+            parent.quality_panel.open_repair(dict(origin='SOURCE_FACTS',origin_id=self.loaded['id'],work_id=self.loaded['id']))
+        except (ValueError,KeyError) as error:self.status.setText(str(error))
 
     def page(self, delta):
         self.offset = max(0, self.offset+delta); self.reload()
@@ -86,7 +96,8 @@ class FactsPanel(QWidget):
         if self.loaded and len(rows) == 1:
             item = self.loaded['observations'][rows[0]]; self.observed_text.setText(item['text']); self.object_type.setCurrentText(item['object_type']); self.classification.setCurrentText(item['classification']); self.slot_combo.setCurrentIndex(max(0, self.slot_combo.findData(item['slot_id'])))
             for spin, label in zip(self.coords, ('x', 'y', 'w', 'h')): spin.setValue(item['region'][label])
-            self._editor_baseline=self.observation('editor-state')
+            self.repair_button=QPushButton('以已保存原稿事實預覽局部修復問題');self.repair_button.clicked.connect(self.open_repair);outer.addWidget(self.repair_button)
+        self._editor_baseline=self.observation('editor-state')
 
     def has_pending_observation(self):
         current=self.observation('editor-state')

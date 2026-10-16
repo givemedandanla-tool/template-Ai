@@ -34,6 +34,7 @@ class QualityPanel(QWidget):
         layout.addLayout(bar)
         self.table=QTableWidget(0,4);self.table.setHorizontalHeaderLabels(['嚴重度／領域','來源／作品','分類／原因','位置／歸屬']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.SingleSelection);self.table.cellDoubleClicked.connect(lambda *_:self.guarded(self.detail));layout.addWidget(self.table,1)
         bar=QHBoxLayout();self.button(bar,'前50筆',lambda:self.cases(-50));self.button(bar,'後50筆',lambda:self.cases(50));self.button(bar,'原稿：人工真值 vs 實際AI框',self.detail);self.component=QComboBox();self.component.addItems(['PARSER','MODEL','RULE']);bar.addWidget(self.component);self.rule=QLineEdit();self.rule.setPlaceholderText('規則版本ID（僅規則重審）');bar.addWidget(self.rule);self.button(bar,'預覽UI-052跨歷史批次重審',self.recheck);layout.addLayout(bar)
+        bar=QHBoxLayout();self.repair_button=self.button(bar,'局部修復／正式版本／安全回退',self.open_repair);self.case_repair_button=self.button(bar,'將選中案例／重審項送入修復預覽',self.repair_selected);layout.addLayout(bar)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setMaximumHeight(155);layout.addWidget(self.details)
         bar=QHBoxLayout();self.quarantine_query=QLineEdit();self.quarantine_query.setPlaceholderText('全庫搜尋待重審作品／案例');self.quarantines=QComboBox();bar.addWidget(self.quarantine_query);bar.addWidget(self.quarantines,1);self.button(bar,'搜尋重審項（最多50）',self.list_quarantines);self.button(bar,'預覽逐件解除隔離',self.preview_resolution);self.button(bar,'開啟選中來源事實核對',self.source_facts);layout.addLayout(bar)
         self.review_evidence=QLineEdit();self.review_evidence.setPlaceholderText('逐件新事實與原稿對照證據（解除隔離必填；不解除模型品質隔離）');layout.addWidget(self.review_evidence);self.recheck_item=None;self.impact_rows=[];self.impact_offset=0;self.impact_mode=False
@@ -65,6 +66,29 @@ class QualityPanel(QWidget):
             except Exception as error:failed(error)
         try:self.window.run_job('本機品質核對',lambda:run_command(self.root,command,payload,cancel=cancel),JobCallbacks(done,failed,cancel))
         except Exception as error:failed(error)
+
+    def open_repair(self,entry=None):
+        from .quality_repair_dialog import QualityRepairDialog
+        dialog=QualityRepairDialog(self);self._repair_dialog=dialog
+        if entry:
+            dialog.source_work.setText(entry.get('work_id') or '')
+            dialog.description.setText(entry.get('description') or '從既有來源／例外／品質憑證核對局部問題')
+            if entry.get('origin')=='ACTUAL_QUALITY_CASE':dialog.guard(lambda:dialog.preview('REPAIR_QUALITY_PLAN',dict(protocol_id=entry['protocol_id'],side=entry['side'],row=entry['row'],work_id=entry.get('work_id')),'ISSUE'))
+            else:dialog.guard(lambda:dialog.source_issue(entry['origin'],entry['origin_id']))
+        try:dialog.exec()
+        finally:self._repair_dialog=None;dialog.deleteLater()
+
+    def repair_selected(self):
+        if self.recheck_item:
+            return self.open_repair(dict(origin='CROSS_BATCH_RECHECK',origin_id=self.recheck_item['case_id'],work_id=self.recheck_item['work_id']))
+        selected=self.table.selectionModel().selectedRows()
+        if not selected:raise ValueError('先選取實際案例或待重審作品；零錯誤來源總覽不是失敗')
+        index=selected[0].row()
+        if self.impact_mode:
+            row=self.impact_rows[self.impact_offset+index]
+            return self.open_repair(dict(origin='SOURCE_FACTS',origin_id=row['work_id'],work_id=row['work_id'],description='從既有影響預覽核對原稿，不將潛在影響當已證實失敗'))
+        row=self.rows[index]
+        self.open_repair(dict(origin='ACTUAL_QUALITY_CASE',protocol_id=self.selected(),side=self.side.currentData(),row=row,work_id=row['case'].get('work_id')))
 
     def setup(self):
         dialog=QualitySetupDialog(self)

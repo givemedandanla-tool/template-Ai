@@ -69,8 +69,9 @@ class QualityRepairs:
         text(description,'來源問題與可核對現象',2000)
         if origin=='CROSS_BATCH_RECHECK':
             record=self.store.get('QUALITY_MAJOR_RECHECK',origin_id)
-            if not record or work_id not in {r['work_id'] for r in record['plan']['rows']}:raise ValueError('作品不在既有重審影響清單')
-            reference=dict(kind='QUALITY_MAJOR_RECHECK',id=record['id'],digest=digest(record))
+            quarantine=self.store.get('QUALITY_WORK_QUARANTINE',digest([origin_id,work_id]))
+            if not record or not quarantine or quarantine['case_id']!=origin_id or quarantine['work_id']!=work_id:raise ValueError('作品不在既有持久重審影響清單')
+            reference=dict(kind='QUALITY_MAJOR_RECHECK',id=record['id'],digest=digest(record),quarantine=dict(id=quarantine['id'],revision=quarantine['revision'],digest=digest(quarantine)))
         elif origin=='SOURCE_FACTS':
             if origin_id!=work_id:raise ValueError('原稿入口必須精確對應同一作品')
             reference=dict(kind='FACTS',id=work_id,digest=digest(self.store.facts(work_id)))
