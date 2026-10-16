@@ -1846,19 +1846,20 @@ class MainWindow(QMainWindow):
     def refresh_candidate_views(self,row=None):
         if not hasattr(self,'qualified_candidates'):return
         from PySide6.QtWidgets import QListWidgetItem
-        signature=(self.generation,tuple((c.template.id,c.template.version,c.risk['digest'],c.generation,c.score) for c in self.candidates))
+        from .candidate_results import recommendation
+        recommendation_state=recommendation(self);assessments=recommendation_state['assessments']
+        signature=(self.generation,tuple((c.template.id,c.template.version,risk['digest'],c.generation,repr(c.score)) for c,risk in zip(self.candidates,assessments)))
         views=(self.qualified_candidates,self.review_candidates,self.blocked_candidates)
         for view in views:view.blockSignals(True)
         if signature!=getattr(self,'_candidate_view_signature',None):
             for view in views:view.clear()
             for index,c in enumerate(self.candidates):
-                risk=c.risk
+                risk=assessments[index]
                 view=self.review_candidates if c.generation!=self.generation else self.qualified_candidates if risk['formal_allowed'] else self.blocked_candidates if risk['state']=='HARD_BLOCKED' else self.review_candidates
-                item=QListWidgetItem(c.template.name+f' v{c.template.version}／{c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n'+('排序依據：'+str(c.score)+'；'+'；'.join(c.reasons) if c.formal_eligible else risk['label']+'；'+'；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS')+'；'+'；'.join(c.issues[:3])));item.setData(Qt.UserRole,index);view.addItem(item)
+                item=QListWidgetItem(c.template.name+f' v{c.template.version}／{c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n'+('排序依據：'+str(c.score)+'；'+'；'.join(c.reasons) if risk['formal_allowed'] else risk['label']+'；'+'；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS')+'；'+'；'.join(c.issues[:3])));item.setData(Qt.UserRole,index);view.addItem(item)
                 if c.generation!=self.generation:item.setText('待重驗：輸入世代已變，人工框位保留\n'+item.text())
             self._candidate_view_signature=signature
-        from .candidate_results import recommendation
-        recommendation_state=recommendation(self);self.result_recommendation.setText(recommendation_state['label']+'\n'+recommendation_state['scope_label']);self.recommended_button.setEnabled(recommendation_state['index'] is not None)
+        self.result_recommendation.setText(recommendation_state['label']+'\n'+recommendation_state['scope_label']);self.recommended_button.setEnabled(recommendation_state['index'] is not None)
         for view in views:
             view.clearSelection();view.setCurrentRow(-1)
             for index in range(view.count()):
@@ -1873,7 +1874,8 @@ class MainWindow(QMainWindow):
         try:
             from .candidate_risk import bind_source
             bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id'] not in ('SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES')],require_registered=True)
-            risk=c.risk;eligible=risk['formal_allowed'];self.refresh_candidate_views(row)
+            from .candidate_results import current_assessment
+            risk=current_assessment(self,row);eligible=risk['formal_allowed'];self.refresh_candidate_views(row)
             image = render_image(c, 150, not eligible)
             from .render import preview_height
             self.output_canvas.set_content(c.template.width_mm, preview_height(c) if not eligible else c.template.height_mm, image)
@@ -1974,7 +1976,10 @@ class MainWindow(QMainWindow):
         c = self.candidates[row]
         from .candidate_risk import bind_source
         bind_source(c,self.library,require_registered=True)
-        if not preview and not c.formal_eligible:self.error(c.risk['label']);self.export_button.setEnabled(False);return
+        from .candidate_results import current_assessment,selection_pin
+        current_risk=current_assessment(self,row)
+        if not preview and not current_risk['formal_allowed']:self.error(current_risk['label']);self.export_button.setEnabled(False);return
+        output_pin=selection_pin(self,row)
         name = f"{c.template.width_mm:g}x{c.template.height_mm:g}_{'PREVIEW' if preview else 'FINAL'}.png"
         path, _ = QFileDialog.getSaveFileName(self, "保存數位檔案（預設不覆寫）", name, "PNG (*.png);;PDF (*.pdf);;JPG (*.jpg)")
         if not path:
@@ -1982,6 +1987,7 @@ class MainWindow(QMainWindow):
         try:
             from .candidate_risk import bind_source
             bind_source(c,self.library,conditions=[x for x in c.risk_context.get('conditions',[]) if x['id'] not in ('SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES')],require_registered=True)
+            if not preview and (self.candidate_list.currentRow()!=row or selection_pin(self,row)!=output_pin or not current_assessment(self,row)['formal_allowed']):raise ValueError('目前資料／尺寸／來源或人工版本已改，正式輸出前須重新核對')
             export(c, path, self.dpi.value(), preview, self.generation)
             self.statusBar().showMessage("檔案已實際寫入：" + path)
         except Exception as e:

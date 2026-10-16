@@ -69,3 +69,36 @@ class CandidateResultsTests(unittest.TestCase):
             QTimer.singleShot(30,dialog,inspect);return real_exec(dialog)
         with patch.object(InputGraphDialog,'exec',inspect_exec):target=locate_problem(self.w,row)
         self.assertEqual(seen,[(target['field']['field_id'],'1234567890'*20)]);self.assertEqual(self.w.active_input_graph.data,before)
+
+    def test_old_size_recheck_cannot_open_formal_output_for_new_requested_size(self):
+        from unittest.mock import patch
+        from PySide6.QtWidgets import QFileDialog
+        from gui_wait import wait_candidate_edits
+        self.ready();self.w.out_w.setValue(100);self.w.recheck_candidate();wait_candidate_edits(self.w);self.assertEqual(self.w.candidates[0].template.width_mm,90)
+        with patch.object(QFileDialog,'getSaveFileName',return_value=('', '')) as save,patch.object(self.w,'error'):
+            self.w.export_current(False);save.assert_not_called()
+        self.assertFalse(self.w.export_button.isEnabled())
+
+    def test_actual_formal_png_uses_current_dimensions_and_preserves_official_template(self):
+        from unittest.mock import patch
+        from PySide6.QtWidgets import QFileDialog
+        from PySide6.QtGui import QImage
+        c=self.ready();target=self.root/'current-formal.png';published=self.w.library.object_snapshot('TEMPLATE',c.template.id)
+        with patch.object(QFileDialog,'getSaveFileName',return_value=(str(target),'PNG')),patch.object(self.w,'error') as error:
+            self.w.export_current(False);error.assert_not_called()
+        image=QImage(str(target));self.assertFalse(image.isNull());self.assertEqual((image.width(),image.height()),(round(90*self.w.dpi.value()/25.4),round(54*self.w.dpi.value()/25.4)));self.assertEqual(self.w.library.object_snapshot('TEMPLATE',c.template.id),published)
+    def test_input_change_inside_save_dialog_never_writes_old_formal_file(self):
+        from unittest.mock import patch
+        from PySide6.QtWidgets import QFileDialog
+        self.ready();target=self.root/'must-not-exist.png'
+        def chosen(*args):self.w.people.item(0,2).setText('1234567');return str(target),'PNG'
+        with patch.object(QFileDialog,'getSaveFileName',side_effect=chosen),patch.object(self.w,'error') as error:self.w.export_current(False);self.assertTrue(error.called)
+        self.assertFalse(target.exists())
+    def test_manual_change_inside_save_dialog_never_writes_earlier_geometry(self):
+        from unittest.mock import patch
+        from PySide6.QtWidgets import QFileDialog
+        from template_ai.candidate_edit import apply_candidate,plan_candidate
+        c=self.ready();target=self.root/'stale-manual-must-not-exist.png'
+        def chosen(*args):apply_candidate(self.w,plan_candidate(self.w,0,[c.template.slots[0].id],1,0),True);return str(target),'PNG'
+        with patch.object(QFileDialog,'getSaveFileName',side_effect=chosen),patch.object(self.w,'error') as error:self.w.export_current(False);self.assertTrue(error.called)
+        self.assertFalse(target.exists())

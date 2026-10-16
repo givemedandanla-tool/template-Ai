@@ -1,0 +1,19 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_old_size_recheck_cannot_open_formal_output_for_new_requested_size (test_candidate_results.CandidateResultsTests.test_old_size_recheck_cannot_open_formal_output_for_new_requested_size)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_results.py", line 79, in test_old_size_recheck_cannot_open_formal_output_for_new_requested_size
+    self.w.export_current(False);save.assert_not_called()
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'getSaveFileName' to not have been called. Called 1 times.
+Calls: [call(<template_ai.gui.MainWindow(0x235b3240) at 0x7f9c48da0980>, '保存數位檔案（預設不覆寫）', '90x54_FINAL.png', 'PNG (*.png);;PDF (*.pdf);;JPG (*.jpg)')].
+
+----------------------------------------------------------------------
+Ran 1 test in 1.685s
+
+FAILED (failures=1)

@@ -1,6 +1,6 @@
 {
   "id": "UI060A-EXECUTION-PLAN",
-  "status": "IMPLEMENTATION_IN_PROGRESS",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
   "parent": "UI-060A",
   "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
@@ -13,7 +13,7 @@
     "任何未通過當前實體尺寸完整硬性印前驗證的候選，不得正式輸出。"
   ],
   "normative_clause_count": 6,
-  "authorization": "User instruction to complete all28 supersedes old requirements-only footer; scope remains six approved clauses, not undecided original UI060 synchronization topic.",
+  "authorization": "User all28 instruction supersedes old requirements-only footer; UI060A approved six clauses only. Original synchronization topic is already approved as UI061, not an extra undecided duplicate.",
   "references": [
     {
       "name": "Qt6.8.3 QItemSelectionModel",
@@ -68,7 +68,7 @@
     "Controlled synthetic Linux verification; no actual reference Windows host/private Illustrator certification",
     "No model training/paid inference/new output engine/new customer categories/UI056D/UI048 scope"
   ],
-  "next_action": "Review all native0058 views, add capture runner hook/full original6 registration, run combined affected regression; then UI061.",
+  "next_action": "UI061 approved synchronization scope; UI059/UI060A await next immutable full batch.",
   "targeted_checks": [
     {
       "log": "docs/qa/targeted/ui060a-recommendation-001.log",
@@ -79,6 +79,16 @@
       "log": "docs/qa/targeted/ui060a-comparison-localization-003.log",
       "status": "PASS",
       "tests": 25
+    },
+    {
+      "log": "docs/qa/targeted/ui059-ui060a-combined-008.log",
+      "status": "PASS",
+      "tests": 90
+    },
+    {
+      "log": "docs/qa/targeted/ui060a-final-current-output-010.log",
+      "status": "PASS",
+      "tests": 33
     }
   ],
   "native_checks": [
@@ -92,7 +102,19 @@
       "log": "docs/qa/targeted/ui060a-native-005.log",
       "status": "PASS",
       "views": 8,
-      "visual_review": "PENDING; source now includes actual risk reasons and viewport-centre assertion for legacy field"
+      "visual_review": "All8 individually inspected and hashed: docs/qa/targeted/ui060a-native-005-visual-review.json"
+    }
+  ],
+  "diagnostics": [
+    {
+      "log": "docs/qa/targeted/ui060a-size-output-regression-007.log",
+      "status": "FAIL",
+      "finding": "After target dimension changes, recheck old-size candidate still opened formal file dialog; preserve actual failure and fix Main list/selection/pre-save gates to current_assessment"
+    },
+    {
+      "log": "docs/qa/targeted/ui060a-save-window-009.log",
+      "status": "FAIL",
+      "finding": "Positive formal PNG and input-change fence passed; manual mutation inside save dialog exported earlier geometry. Fixed exact selection/input/source/root/manual/risk token before/after dialog;01033PASS."
     }
   ]
 }

@@ -18501,25 +18501,97 @@
       "id": "UI-060A",
       "kind": "topic",
       "title": "UI-060 補充決策 A｜排版完成後結果呈現、多方案比較與問題定位",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
-      "scope": "推薦與候選對照、問題定位，未搜尋完整不稱最佳",
+      "scope": "Full approved sixclauses; current qualified finite-scope recommendation, nonformal comparison, exact typed issue location/correction routes, current per-size/manual-version output fence. Controlled synthetic Linux, no native Illustrator/reference-host qualification.",
       "phase": "P5",
       "decision_status": "需求已核准",
       "sources": [
         "https://github.com/givemedandanla-tool/template-Ai/blob/436ca2d7db10fab3de3d9700538dee701cd81a97/docs/decisions/UI-060A-RESULT-PRESENTATION.md"
       ],
       "parents": [],
-      "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+      "evidence_run": null,
       "acceptance": [
         {
-          "id": "UI-060A-FULL",
-          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：推薦與候選對照、問題定位，未搜尋完整不稱最佳",
-          "tests": []
+          "id": "UI-060A-CLAUSE-1",
+          "expected": "預設突出 AI 推薦的最佳排版，但若搜尋未完成或未有可證明的全域最佳，不得誤稱最優。",
+          "tests": [
+            "test_candidate_results.CandidateResultsTests.test_actual_completed_scope_recommends_only_current_qualified_rule_result",
+            "test_candidate_results.CandidateResultsTests.test_finite_score_tie_is_deterministic_without_mutating_candidates",
+            "test_candidate_results.CandidateResultsTests.test_high_scoring_hard_block_never_becomes_recommendation",
+            "test_candidate_results.CandidateResultsTests.test_invalid_company_input_is_explicit_unknown_without_gui_exception",
+            "test_candidate_results.CandidateResultsTests.test_nonfinite_score_is_not_ranked_as_safe_confidence",
+            "test_candidate_results.CandidateResultsTests.test_partial_scope_does_not_claim_global_optimum_or_complete_search",
+            "test_candidate_results.CandidateResultsTests.test_stale_generation_and_different_dimensions_never_recommend"
+          ]
+        },
+        {
+          "id": "UI-060A-CLAUSE-2",
+          "expected": "使用者可展開其他候選方案，檢視預覽、優缺點及驗證差異。",
+          "tests": [
+            "test_candidate_results.CandidateResultsTests.test_comparison_rejects_later_input_and_keeps_existing_manual_geometry",
+            "test_candidate_results.CandidateResultsTests.test_native_comparison_is_nonformal_and_safe_selection_never_erases_blocks"
+          ]
+        },
+        {
+          "id": "UI-060A-CLAUSE-3",
+          "expected": "明確區分正常、警告、阻擋；低把握草稿不得標示為正式合格。",
+          "tests": [
+            "test_candidate_results.CandidateResultsTests.test_high_scoring_hard_block_never_becomes_recommendation",
+            "test_candidate_results.CandidateResultsTests.test_native_comparison_is_nonformal_and_safe_selection_never_erases_blocks",
+            "test_candidate_results.CandidateResultsTests.test_required_unknown_has_explicit_source_route_instead_of_invented_slot",
+            "test_candidate_risk.CandidateRiskTests.test_real_width_failure_is_hard_and_high_confidence_or_accepted_label_cannot_export",
+            "test_candidate_risk.CandidateRiskTests.test_required_source_gap_never_claims_hard_pass_or_becomes_safe_by_accepting_risk"
+          ]
+        },
+        {
+          "id": "UI-060A-CLAUSE-4",
+          "expected": "點選問題可定位對應人物、公司、欄位及版面物件，並顯示原因與修正入口。",
+          "tests": [
+            "test_candidate_results.CandidateResultsTests.test_actual_problem_click_opens_existing_candidate_fix_entry",
+            "test_candidate_results.CandidateResultsTests.test_problem_from_old_generation_cannot_focus_reordered_current_input",
+            "test_candidate_results.CandidateResultsTests.test_required_unknown_has_explicit_source_route_instead_of_invented_slot",
+            "test_candidate_results.CandidateResultsTests.test_structured_input_problem_opens_exact_stable_field_without_adoption",
+            "test_candidate_results.CandidateResultsTests.test_typed_phone_problem_focuses_actual_legacy_owner_field_and_slot"
+          ]
+        },
+        {
+          "id": "UI-060A-CLAUSE-5",
+          "expected": "允許人工修正，遵守 UI-059 人工編輯保護、版本柵欄與重驗規則。",
+          "tests": [
+            "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_cancel_active_preserves_manual_pending_without_formal_release",
+            "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_changed_input_rejects_late_result_then_current_long_phone_rechecks",
+            "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_completed_comparison_cannot_overwrite_later_human_review",
+            "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_new_manual_review_during_worker_is_not_erased_by_late_result",
+            "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_undo_during_active_move_rejects_old_result_and_preserves_history",
+            "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write",
+            "test_candidate_edit_history.CandidateEditHistoryTests.test_late_result_rejected_even_when_manual_roundtrip_returns_exact_same_geometry",
+            "test_candidate_edit_history.CandidateEditHistoryTests.test_lock_resize_and_fixed_size_restriction_use_existing_proposal_engine",
+            "test_candidate_edit_history.CandidateEditHistoryTests.test_move_and_real_undo_preserve_input_other_candidate_and_official_template",
+            "test_candidate_edit_history.CandidateEditHistoryTests.test_required_unknown_is_preserved_by_both_move_and_undo",
+            "test_candidate_edit_history.CandidateEditHistoryTests.test_single_undo_keeps_earlier_different_object_change",
+            "test_candidate_edit_history.CandidateEditHistoryTests.test_undo_after_input_change_keeps_new_text_and_cannot_make_long_phone_safe",
+            "test_candidate_results.CandidateResultsTests.test_comparison_rejects_later_input_and_keeps_existing_manual_geometry",
+            "test_candidate_results.CandidateResultsTests.test_manual_change_inside_save_dialog_never_writes_earlier_geometry"
+          ]
+        },
+        {
+          "id": "UI-060A-CLAUSE-6",
+          "expected": "任何未通過當前實體尺寸完整硬性印前驗證的候選，不得正式輸出。",
+          "tests": [
+            "test_candidate_results.CandidateResultsTests.test_actual_formal_png_uses_current_dimensions_and_preserves_official_template",
+            "test_candidate_results.CandidateResultsTests.test_input_change_inside_save_dialog_never_writes_old_formal_file",
+            "test_candidate_results.CandidateResultsTests.test_manual_change_inside_save_dialog_never_writes_earlier_geometry",
+            "test_candidate_results.CandidateResultsTests.test_native_comparison_is_nonformal_and_safe_selection_never_erases_blocks",
+            "test_candidate_results.CandidateResultsTests.test_old_size_recheck_cannot_open_formal_output_for_new_requested_size",
+            "test_candidate_risk.CandidateRiskTests.test_clearing_diagnostics_cannot_skip_actual_engine_recheck",
+            "test_candidate_risk.CandidateRiskTests.test_mutated_input_template_placement_and_assets_require_regeneration"
+          ]
         }
       ],
-      "next_step": "補結果比較與選取狀態保留，測排序更新不悄悄覆蓋人工選擇、不宣稱部分搜尋為最優；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT"
+      "next_step": "Fresh immutable-source full batch/capture/publication Gate with UI059 and next UI061 packages; preserve actual007/009 regression failures and01033PASS.",
+      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
     },
     {
       "id": "UI-061",

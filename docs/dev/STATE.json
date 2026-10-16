@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI057-NEXT",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI060A-RECOMMENDATION-WIP.receipt.json",
-  "last_confirmed_commit": "ad5e171c35267f5abfeb9fc4e4245c7ba3157ac9",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI060A-COMPARISON-WIP.receipt.json",
+  "last_confirmed_commit": "c7e166dbfa877e137fa2e69e9d138e6b756e3e3b",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-UI060A-COMPARISON-WIP"
+    "CP-20261016-REMAINING28-UI060A-SIXCLAUSES-PENDING"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -538,7 +538,9 @@
     "UI-057",
     "UI-058",
     "UI-066-R1",
-    "UI-066-R2"
+    "UI-066-R2",
+    "UI-059",
+    "UI-060A"
   ],
   "last_formal_validation": {
     "id": "RUN-REMAINING28-LAYOUT-003",
@@ -662,7 +664,7 @@
       "counts_as_completed": false
     }
   ],
-  "active_work_package_plan": "docs/dev/UI060A_EXECUTION_PLAN.json",
+  "active_work_package_plan": "docs/dev/UI061_EXECUTION_PLAN.json",
   "formal_execution_watch": {
     "run_id": "RUN-REMAINING28-LAYOUT-003",
     "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
@@ -716,7 +718,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "UI060A current qualified finite-scope recommendation + nonformal side-by-side candidate Gate differences + typed slot/owner/legacy or stable graph-field localization.15newtests/1140catalog;00325PASS, native004/005both8viewsPASS0Qt.005all8visualreview pending. UI05947newtests/original10 pending next immutable batch. Historical12/28; continue UI061 after UI060A sixclause mapping.",
+  "current_work": "UI059 original10/47newtests andUI060A original6/19newtests implemented pending immutable batch.1144catalog;008combined90PASS and01033PASS; actual007old-size output and009save-dialog manual race failures fixed, positive PNG/current dimension/source/business isolation tested. NativeUI060A005all8 visually reviewed/hashes, capturehook added. Continue approvedUI06120normativeclauses with existing MultiSize/InputGraph/manual services. Historical12/28 retained.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -770,7 +772,7 @@
   ],
   "next_work_package_plan": "docs/dev/UI055_IMPLEMENTATION_MAP.json",
   "next_step": "Move product edit/undo/recheck to existing one-worker run_job, preserve provisional manual geometry and exact tokens while busy; connect dependency impact/recompute/difference choices and native tests",
-  "current_work_package": "UI060A plan/reuse review; UI059 pending batch",
+  "current_work_package": "UI061 synchronization plan; UI059/UI060A pending full batch",
   "checkpoint_cadence_note": "Latest watch checkpoint exceeded10minutes across completion/capture wait; deviation retained, no strict cadence PASS claim.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": "docs/qa/targeted/ui059-edit-undo-native-004.log",

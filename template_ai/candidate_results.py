@@ -27,7 +27,9 @@ def current_assessment(window,index):
 def selection_pin(window,index):
     from .candidate_edit import review_context_token
     c=window.candidates[index]
-    return digest(dict(index=index,generation=window.generation,candidate_generation=c.generation,template=c.template.to_dict(),risk=current_assessment(window,index),manual_context=review_context_token(c.risk_context)))
+    try:source=window.library.object_snapshot('TEMPLATE',c.template.id)['payload']
+    except (ValueError,OSError):source=None
+    return digest(dict(index=index,root=str(window.library.root),requested_dimensions=[window.out_w.value(),window.out_h.value()],source=source,generation=window.generation,candidate_generation=c.generation,template=c.template.to_dict(),risk=current_assessment(window,index),manual_context=review_context_token(c.risk_context)))
 
 
 def problem_rows(window,index):

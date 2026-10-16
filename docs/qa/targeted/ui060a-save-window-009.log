@@ -1,0 +1,22 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_manual_change_inside_save_dialog_never_writes_earlier_geometry (test_candidate_results.CandidateResultsTests.test_manual_change_inside_save_dialog_never_writes_earlier_geometry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_candidate_results.py", line 103, in test_manual_change_inside_save_dialog_never_writes_earlier_geometry
+    with patch.object(QFileDialog,'getSaveFileName',side_effect=chosen),patch.object(self.w,'error') as error:self.w.export_current(False);self.assertTrue(error.called)
+                                                                                                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.324s
+
+FAILED (failures=1)
