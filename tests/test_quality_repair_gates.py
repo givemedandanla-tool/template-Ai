@@ -20,12 +20,18 @@ from training_fixture import source_work
 class QualityRepairGateTests(unittest.TestCase):
     setUp=gold_fixture.QualityGoldSetTests.setUp
 
-    def prepare(self):
+    def prepare(self,full_chain=False):
         fixture=actual_positive_pair(self,execute=False);self.fixture=fixture;scope=fixture['protocol']['scope']
         package=Path(quality_pipeline.__file__).parent;faulty=self.root/'authored-faulty-parser';faulty.mkdir()
         for file in package.glob('*.py'):shutil.copyfile(file,faulty/file.name)
         parser=faulty/'source_analysis.py';parser.write_text(parser.read_text()+"\n_actual_analyse_source=analyse_source\ndef analyse_source(source,assets,semantic_model=None,model_context=None):\n    if source['hash']=="+repr(fixture['sources'][0]['hash'])+":return []\n    return _actual_analyse_source(source,assets,semantic_model,model_context)\n")
         config=self.store.get('QUALITY_PIPELINE',scope['pipelines']['BASELINE']['id'])['manifest']['mapping_configuration']
+        good_id=scope['pipelines']['CANDIDATE']['id']
+        if full_chain:
+            from quality_repair_acceptance_fixture import group
+            self.controls=group(self,'controls',multi=True);self.independent=group(self,'independent',portrait=True)
+            config=dict(config,customer_ids=config['customer_ids']+self.controls['customer_ids']+self.independent['customer_ids'])
+            good_id=QualityPipelines(self.library).freeze('Actual complete-scope repaired parser',None,'Reviewer',True,mapping_config=config,rule_versions=[])['id']
         with patch.object(quality_pipeline,'__file__',str(faulty/'quality_pipeline.py')):
             bad=QualityPipelines(self.library).freeze('Authored reproducible omitted-source defect',None,'Synthetic author',True,mapping_config=config,rule_versions=[])
         protocols=QualityProtocols(self.library);origin=protocols.freeze(protocols.plan('Actual faulty source run',scope['dataset_id'],scope['policy_id'],dict(BASELINE=bad['id'],CANDIDATE=bad['id']),'Run actual controlled faulty parser, no invented predictions'),'Reviewer',True)
@@ -37,7 +43,7 @@ class QualityRepairGateTests(unittest.TestCase):
         issue=repairs.create_quality_issue(plan,'Reviewer','Actual frozen parser loses one authored source',True)
         root=repairs.root_plan(issue['id'],'WORK_SEGMENTATION','Conditional parser branch returns no works for this source','Actual original, whole-source gold and conditional source branch reviewed',True,True)
         self.review=repairs.confirm_root(root,'Reviewer',True);self.gates=QualityRepairGates(self.library)
-        candidate_plan=self.gates.candidate_plan(self.review['id'],scope['pipelines']['CANDIDATE']['id'])
+        candidate_plan=self.gates.candidate_plan(self.review['id'],good_id)
         self.candidate=self.gates.register(candidate_plan,'Reviewer','Actual normal frozen parser removes the conditional source loss',True)
         self.policy_id=scope['policy_id'];self.dataset_id=scope['dataset_id']
 
@@ -72,3 +78,18 @@ class QualityRepairGateTests(unittest.TestCase):
     def test_identical_actual_pipeline_cannot_be_registered_as_repair_by_renaming(self):
         self.prepare();issue=self.store.get('QUALITY_REPAIR_ISSUE',self.review['plan']['issue_id'])
         with self.assertRaisesRegex(ValueError,'沒有變更'):self.gates.candidate_plan(self.review['id'],issue['evidence']['pipeline_id'])
+
+    def test_full_actual_ordered_control_independent_chain_and_repair_deployment(self):
+        from template_ai.quality_repair_releases import QualityRepairReleases
+        self.prepare(full_chain=True)
+        root=self.run_stage(self.gates.protocol_plan(self.candidate['id'],STAGES[0],self.dataset_id,self.policy_id,'Actual root correction first'))
+        self.assertTrue(root['plan']['passed'],root['plan']['blockers'])
+        controls=self.run_stage(self.gates.protocol_plan(self.candidate['id'],STAGES[1],self.controls['dataset']['id'],self.policy_id,'Unrelated two-column actual phone/person/logo/mm/customer and multi-panel controls',root['id']))
+        self.assertTrue(controls['plan']['passed'],controls['plan']['blockers'])
+        final=self.run_stage(self.gates.protocol_plan(self.candidate['id'],STAGES[2],self.independent['dataset']['id'],self.policy_id,'New authored portrait HOLDOUT, software state-machine safety only',controls['id']))
+        self.assertTrue(final['plan']['passed'],final['plan']['blockers']);self.assertTrue(final['plan']['independence_claim'])
+        decision=QualityReports(self.library).decide(final['plan']['report_id'],'Reviewer','Explicit intentionally lenient authored synthetic safety test; not production accuracy',True)
+        release=QualityRepairReleases(self.library);impact=release.confirm_impact(release.impact_plan(self.candidate['id']),'Reviewer','Inspect known impact and explicitly retain unknown history; no pending confirmed highrisk',True)
+        plan=release.plan(decision['id'],0,gate_id=final['id'],impact_review_id=impact['id'])
+        installed=release.confirm(plan,'Reviewer','Exact candidate passed ordered actual safety checks, remains human-review source recommendation',True)
+        self.assertEqual(release.pin()['event_id'],installed['event']['id']);self.assertEqual(release.pin()['pipeline_id'],self.candidate['plan']['pipeline_id'])

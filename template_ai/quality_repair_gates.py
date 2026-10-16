@@ -100,13 +100,19 @@ class QualityRepairGates:
         if current!=report['plan']:raise ValueError('雙側報告來源／版本／計算口徑已改變')
         protocol=QualityProtocols(self.library).get(current['protocol_id']);scope=protocol['scope'];binding=scope.get('repair_stage')
         if not binding:raise ValueError('這不是預先綁定順序的修復試驗，不接受事後補Gate')
-        context=self.stage_context(binding['candidate_id'],binding['stage'],binding['previous_gate_id'],scope['dataset_id'],{side:pin['id'] for side,pin in scope['pipelines'].items()})
-        if context!=binding:raise ValueError('修復階段憑證改變')
-        blockers=[];stage=binding['stage'];candidate=self.candidate(binding['candidate_id']);issue=self.store.get('QUALITY_REPAIR_ISSUE',candidate['plan']['issue_id'])
+        # QualityReports.plan -> protocol.validity -> check_metadata already
+        # freshly validates this exact stage/candidate and the entire prior
+        # gate chain. Repeating stage_context here branches that same chain
+        # exponentially; read immutable rows after that authoritative check.
+        blockers=[];stage=binding['stage'];candidate=self.store.get(CANDIDATE,binding['candidate_id'])
+        if not candidate:raise ValueError('修復候選憑證失聯')
+        issue=self.store.get('QUALITY_REPAIR_ISSUE',candidate['plan']['issue_id'])
+        if not issue:raise ValueError('原問題憑證失聯')
         if not current['fair_comparison']:blockers.append('原稿／真值／兩側來源分母仍不可核對')
         if current['new_critical_errors'] or current['class_regressions']:blockers.append('新增重大錯誤或既有類別退步')
         if binding['previous_gate_id']:
-            prior=self.checked_gate(binding['previous_gate_id'])
+            prior=self.store.get(GATE,binding['previous_gate_id'])
+            if not prior:raise ValueError('前置Gate憑證失聯')
             if protocol['declared_at']<prior['at']:blockers.append('試驗早於前一階段PASS，不能事後跳階')
         if stage==STAGES[0]:
             target=issue['evidence']['row']['case'];keys=('work_id','gold_id','reason','gold_kind','kind_error','critical_owner_error')
@@ -122,6 +128,9 @@ class QualityRepairGates:
                 for kind in kinds:
                     row=statistics['domains'][domain]['classes'].get(kind)
                     if not row or row['gold_objects']<1 or row['unknown_source_units']:blockers.append(domain+':'+kind+'關鍵對照缺少有效正例／有未知')
+                    before=current['results']['BASELINE']['statistics']['domains'][domain]['classes'].get(kind)
+                    if domain!='physical_size' and (not before or not (before.get('descriptive_counts') or {}).get('tp') or not row or not (row.get('descriptive_counts') or {}).get('tp')):blockers.append(domain+':'+kind+'缺少基準與候選均實際正確的關鍵對照')
+                    if domain=='physical_size' and (not before or before['failed_independent_groups'] or row and row['failed_independent_groups']):blockers.append('物理尺寸對照仍超出明確mm容差')
             pair=self.store.get('QUALITY_PROTOCOL_JOBS',protocol['id']);job=self.store.get('EVAL_JOB',pair['jobs']['CANDIDATE'])
             has_multi=any(self.store.get('QUALITY_EVAL_ITEM',item['result_id'])['facets']['multi_work']==['YES'] for item in job['items'] if item.get('result_id'))
             if not has_multi:blockers.append('缺少實際單檔多作品切分對照')

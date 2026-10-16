@@ -1,0 +1,23 @@
+test_full_actual_ordered_control_independent_chain_and_repair_deployment (test_quality_repair_gates.QualityRepairGateTests.test_full_actual_ordered_control_independent_chain_and_repair_deployment) ... ERROR
+
+======================================================================
+ERROR: test_full_actual_ordered_control_independent_chain_and_repair_deployment (test_quality_repair_gates.QualityRepairGateTests.test_full_actual_ordered_control_independent_chain_and_repair_deployment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_repair_gates.py", line 84, in test_full_actual_ordered_control_independent_chain_and_repair_deployment
+    self.prepare(full_chain=True)
+  File "/workspace/template-Ai/tests/test_quality_repair_gates.py", line 32, in prepare
+    self.controls=group(self,'controls',multi=True);self.independent=group(self,'independent',portrait=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/quality_repair_acceptance_fixture.py", line 63, in group
+    sets=QualitySets(library);dataset=sets.create(sets.plan('Authored '+label+' safety scope',[g['id'] for g in golds],True,True,'Known related variants stay together; separate synthetic layout group, no production generalization',evaluation_role=role),'Synthetic author',True)
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/quality_sets.py", line 72, in create
+    if expected!=digest(preview) or plan['errors']:raise ValueError('驗收集預覽已改變或有未解來源／真值／群組角色錯誤')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 驗收集預覽已改變或有未解來源／真值／群組角色錯誤
+
+----------------------------------------------------------------------
+Ran 1 test in 4.075s
+
+FAILED (errors=1)

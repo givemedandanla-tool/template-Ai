@@ -1,0 +1,19 @@
+test_full_actual_ordered_control_independent_chain_and_repair_deployment (test_quality_repair_gates.QualityRepairGateTests.test_full_actual_ordered_control_independent_chain_and_repair_deployment) ... FAIL
+
+======================================================================
+FAIL: test_full_actual_ordered_control_independent_chain_and_repair_deployment (test_quality_repair_gates.QualityRepairGateTests.test_full_actual_ordered_control_independent_chain_and_repair_deployment)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_repair_gates.py", line 84, in test_full_actual_ordered_control_independent_chain_and_repair_deployment
+    self.prepare(full_chain=True)
+  File "/workspace/template-Ai/tests/test_quality_repair_gates.py", line 32, in prepare
+    self.controls=group(self,'controls',multi=True);self.independent=group(self,'independent',portrait=True)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/quality_repair_acceptance_fixture.py", line 64, in group
+    case.assertFalse(preview['errors'],preview['errors'])
+AssertionError: ['01877649562f440ea0e036b0340a434a：來源作品集合已變更，完整作品真值尚未重核'] is not false : ['01877649562f440ea0e036b0340a434a：來源作品集合已變更，完整作品真值尚未重核']
+
+----------------------------------------------------------------------
+Ran 1 test in 4.238s
+
+FAILED (failures=1)
