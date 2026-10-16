@@ -38,3 +38,10 @@ def wait_for_gui(condition,seconds):
     finally:poll.stop();watchdog.stop()
     if errors:raise errors[0]
     return bool(condition())
+
+
+def wait_candidate_edits(window,seconds=10):
+    def finished():
+        manager=getattr(window,'candidate_edit_dispatcher',None)
+        return manager is not None and not window.busy and not manager.pending and manager.active is None
+    if not wait_for_gui(finished,seconds):raise AssertionError('Owned candidate edit recheck did not complete: '+job_diagnostics(window,'GEOMETRY'))

@@ -136,7 +136,7 @@ def _code_digest(name,mtime_ns,size):
 
 def engine_digest():
     from PySide6.QtCore import qVersion
-    names=('candidate_changes.py','candidate_edit.py','layout.py','render.py','candidate_risk.py','model.py','text_policy.py','text_metrics.py','font_catalog.py','font_evidence.py','fonts.py','logo_assets.py','background.py')
+    names=('candidate_edit_dispatch.py','candidate_changes.py','candidate_edit.py','layout.py','render.py','candidate_risk.py','model.py','text_policy.py','text_metrics.py','font_catalog.py','font_evidence.py','fonts.py','logo_assets.py','background.py')
     versions={}
     for name in names:
         stamp=(Path(__file__).parent/name).stat();versions[name]=_code_digest(name,stamp.st_mtime_ns,stamp.st_size)

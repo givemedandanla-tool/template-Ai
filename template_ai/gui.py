@@ -1890,14 +1890,9 @@ class MainWindow(QMainWindow):
         row=self.candidate_list.currentRow()
         if not 0<=row<len(self.candidates):return
         try:
-            from .candidate_risk import bind_source
-            from .layout import generate
-            old=self.candidates[row];people,companies,logos=self.input_data()
-            candidate=generate(copy.deepcopy(old.template),people,companies,logos,self.generation)
-            if old.risk_context.get('original_source_proof'):candidate.risk_context['original_source_proof']=copy.deepcopy(old.risk_context['original_source_proof'])
-            if old.risk_context.get('source_template_pin'):candidate.risk_context['source_template_pin']=copy.deepcopy(old.risk_context['source_template_pin'])
-            candidate.risk_context['conditions']=[copy.deepcopy(x) for x in old.risk_context.get('conditions',[]) if x.get('required',True) and x['id'] not in ('SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES')]
-            bind_source(candidate,self.library,require_registered=True);self.candidates[row]=candidate;self.choose_candidate(row)
+            from .candidate_edit import plan_recheck
+            from .candidate_edit_dispatch import dispatcher
+            dispatcher(self).submit(plan_recheck(self,row))
         except (ValueError,OSError) as error:self.error(str(error))
 
     def export_current(self, preview):

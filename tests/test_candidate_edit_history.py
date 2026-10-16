@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QMessageBox
 from PySide6.QtTest import QTest
 from PySide6.QtCore import Qt
 import test_seventy_ui as fixture
-from gui_wait import wait_layout
+from gui_wait import wait_layout,wait_candidate_edits
 from template_ai.candidate_edit import (plan_candidate,plan_operation,plan_undo,prepare_edit,calculate_edit,install_edit,apply_candidate,CandidateEditDialog)
 APP=fixture.APP
 
@@ -37,4 +37,4 @@ class CandidateEditHistoryTests(unittest.TestCase):
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(d.apply_button,Qt.LeftButton);APP.processEvents()
         self.assertEqual(self.w.candidates[0].template.slots[0].rect.x,before['slots'][0]['rect']['x']+1);QTest.mouseClick(d.undo_button,Qt.LeftButton);self.assertEqual(d.plan['request']['operation'],'UNDO')
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(d.apply_button,Qt.LeftButton);APP.processEvents()
-        self.assertEqual(self.w.candidates[0].template.to_dict(),before);self.assertEqual(self.w.library.object_snapshot('TEMPLATE',c.template.id)['payload'],before)
+        wait_candidate_edits(self.w);self.assertEqual(self.w.candidates[0].template.to_dict(),before);self.assertTrue(self.w.candidates[0].formal_eligible);self.assertEqual(self.w.library.object_snapshot('TEMPLATE',c.template.id)['payload'],before)

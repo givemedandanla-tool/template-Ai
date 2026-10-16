@@ -30,18 +30,38 @@ def plan_undo(window,index):
     return dict(index=index,generation=window.generation,manual_revision=c.risk_context.get('manual_revision',0),before_digest=digest(c.template.to_dict()),template_id=c.template.id,size=[c.template.width_mm,c.template.height_mm],request=dict(operation='UNDO',receipt_id=receipt['id']),after=result['template'],changes=result['actual_changes'],warnings=['只復原這筆實際屬性，保留其他變動；仍需以目前輸入重驗整張作品'],scope='ONLY_THIS_CANDIDATE_SIZE',unaffected_candidates=len(window.candidates)-1)
 
 
+def plan_recheck(window,index):
+    if not 0<=index<len(window.candidates):raise ValueError('候選不存在')
+    c=window.candidates[index]
+    return dict(index=index,generation=window.generation,manual_revision=c.risk_context.get('manual_revision',0),before_digest=digest(c.template.to_dict()),template_id=c.template.id,size=[c.template.width_mm,c.template.height_mm],request=dict(operation='RECHECK'),after=c.template.to_dict(),changes=[],warnings=['保留人工框位，以目前輸入與來源重新核實整張作品'],scope='ONLY_THIS_CANDIDATE_SIZE',unaffected_candidates=len(window.candidates)-1)
+
+
+def manual_metadata(envelope):
+    from .candidate_changes import manual_delta
+    from .training_store import digest as pin_digest
+    before=envelope['before'];plan=envelope['plan'];operation=plan['request']['operation'];history=copy.deepcopy(before.risk_context.get('manual_history',[]))
+    if operation=='UNDO':
+        for row in history:
+            if row['id']==plan['request']['receipt_id']:row['undone']=True;row['digest']=pin_digest({k:v for k,v in row.items() if k!='digest'})
+    elif operation!='RECHECK':history.append(manual_delta(before.template.to_dict(),envelope['after']))
+    result=dict(conditions=[copy.deepcopy(row) for row in before.risk_context.get('conditions',[]) if row['id']!='MANUAL_RECHECK_PENDING'],manual_history=history[-20:],manual_revision=plan['manual_revision']+(operation!='RECHECK'))
+    if operation!='RECHECK':result['manual_edit_receipt']=copy.deepcopy(plan)
+    elif before.risk_context.get('manual_edit_receipt'):result['manual_edit_receipt']=copy.deepcopy(before.risk_context['manual_edit_receipt'])
+    return result
+
+
 def prepare_edit(window,plan):
-    fresh=plan_undo(window,plan['index']) if plan['request']['operation']=='UNDO' else plan_operation(window,plan['index'],plan['request'])
+    fresh=plan_undo(window,plan['index']) if plan['request']['operation']=='UNDO' else plan_recheck(window,plan['index']) if plan['request']['operation']=='RECHECK' else plan_operation(window,plan['index'],plan['request'])
     if fresh!=plan:raise ValueError('候選／人工版本或輸入已改變，重新預覽')
     c=copy.deepcopy(window.candidates[plan['index']]);local=c.template.to_dict();local['state']='draft'
-    after=copy.deepcopy(plan['after']) if plan['request']['operation']=='UNDO' else propose(local,'TEMPLATE',plan['request'])['after'];after['state']=c.template.state
+    after=copy.deepcopy(plan['after']) if plan['request']['operation'] in ('UNDO','RECHECK') else propose(local,'TEMPLATE',plan['request'])['after'];after['state']=c.template.state
     if not c.risk_context.get('source_template_pin'):
         from .training_store import digest as pin_digest
         try:base=window.library.object_snapshot('TEMPLATE',c.template.id)['payload']
         except ValueError:base=None
         if base and base['state']=='published' and pin_digest(base)==pin_digest(c.template.to_dict()):c.risk_context['source_template_pin']=dict(id=base['id'],version=base['version'],digest=pin_digest(base))
     inputs=copy.deepcopy(window.input_data())
-    return dict(plan=copy.deepcopy(plan),before=c,after=after,people=inputs[0],companies=inputs[1],logos=inputs[2],input_digest=digest(inputs),root=str(window.library.root))
+    envelope=dict(plan=copy.deepcopy(plan),before=c,after=after,people=inputs[0],companies=inputs[1],logos=inputs[2],input_digest=digest(inputs),root=str(window.library.root));envelope['manual_metadata']=manual_metadata(envelope);return envelope
 
 
 def calculate_edit(envelope,library):
@@ -51,15 +71,18 @@ def calculate_edit(envelope,library):
     plan=envelope['plan'];before=envelope['before'];t=Template.from_dict(copy.deepcopy(envelope['after']));result=generate(t,envelope['people'],envelope['companies'],envelope['logos'],plan['generation'])
     for key in ('source_template_pin','original_source_proof','approved_base'):
         if key in before.risk_context:result.risk_context[key]=copy.deepcopy(before.risk_context[key])
-    result.risk_context['conditions']=[copy.deepcopy(row) for row in before.risk_context.get('conditions',[]) if row['id']!='MANUAL_RECHECK_PENDING'];history=copy.deepcopy(before.risk_context.get('manual_history',[]))
-    if plan['request']['operation']=='UNDO':
-        for row in history:
-            if row['id']==plan['request']['receipt_id']:row['undone']=True;row['digest']=pin_digest({k:v for k,v in row.items() if k!='digest'})
-    else:history.append(manual_delta(before.template.to_dict(),result.template.to_dict()))
-    result.risk_context.update(manual_history=history[-20:],manual_revision=plan['manual_revision']+1,manual_edit_receipt=copy.deepcopy(plan))
+    result.risk_context.update(copy.deepcopy(envelope['manual_metadata']))
     try:verify_original_source(result,library)
     except (ValueError,OSError):pass
-    bind_source(result,library,require_registered=True);result.reasons.append('僅當次候選的明確屬性變動，已以目前輸入重新檢查整張作品；未改模板、客戶或其他候選')
+    bind_source(result,library,require_registered=True)
+    from .candidate_changes import affected
+    old=before.risk_context.get('input_snapshot',{});nodes=[('SLOT',row.get('object_id',row.get('id'))) for row in plan['changes']]
+    for slot in t.slots:
+        if slot.kind=='logo' and old.get('logos',{}).get(slot.owner)!=envelope['logos'].get(slot.owner):nodes.append(('LOGO',slot.owner,(t.width_mm,t.height_mm)))
+    if any(row['status']!='PASS' for row in before.risk['conditions'] if row['id']=='SNAPSHOT_FRESHNESS'):nodes.extend(('SLOT',slot.id) for slot in t.slots)
+    result.risk_context['recompute_impact']=affected(t,old.get('people',[]),old.get('companies',[]),envelope['people'],envelope['companies'],nodes)
+    result.risk_context['edit_state']='MANUAL_INPUT_CONFLICT' if not result.valid and result.risk_context.get('manual_edit_receipt') else 'RECHECKED'
+    result.reasons.append('僅當次候選的明確屬性變動，已以目前輸入重新檢查整張作品；未改模板、客戶或其他候選')
     return result
 
 
@@ -86,6 +109,12 @@ class CandidateEditDialog(QDialog):
         bar=QHBoxLayout();self.dx=QDoubleSpinBox();self.dy=QDoubleSpinBox()
         for spin in (self.dx,self.dy):spin.setRange(-2000,2000);spin.setDecimals(4);spin.setSuffix(' mm');bar.addWidget(spin)
         b=QPushButton('預覽exact差異');b.clicked.connect(self.preview);bar.addWidget(b);self.apply_button=QPushButton('確認當次局部套用');self.apply_button.clicked.connect(self.apply);bar.addWidget(self.apply_button);self.undo_button=QPushButton('預覽復原本次單筆變動');self.undo_button.clicked.connect(self.preview_undo);bar.addWidget(self.undo_button);l.addLayout(bar);self.details=QPlainTextEdit();self.details.setReadOnly(True);l.addWidget(self.details);self.resize(900,650)
+        from .candidate_edit_dispatch import dispatcher
+        dispatcher(window).completed.connect(self.edit_completed);dispatcher(window).failed.connect(self.edit_failed)
+    def edit_completed(self,index,candidate):
+        if index==self.index:self.status.setText('整張重驗完成：'+candidate.risk['label']+'；未改模板、客戶或其他候選')
+    def edit_failed(self,index,message):
+        if index==self.index:self.status.setText('人工版面保留：'+message)
     def preview(self):
         try:self.plan=plan_candidate(self.window,self.index,[i.data(Qt.UserRole) for i in self.objects.selectedItems()],self.dx.value(),self.dy.value());self.details.setPlainText(json.dumps(self.plan,ensure_ascii=False,indent=2));self.status.setText('差異待確認；其他候選／尺寸不受影響')
         except Exception as e:self.plan=None;self.status.setText('未預覽：'+str(e))
@@ -98,5 +127,6 @@ class CandidateEditDialog(QDialog):
             current=plan_undo(self.window,self.index) if self.plan['request']['operation']=='UNDO' else plan_candidate(self.window,self.index,[i.data(Qt.UserRole) for i in self.objects.selectedItems()],self.dx.value(),self.dy.value())
             if current!=self.plan:raise ValueError('控制值已變，重新預覽')
             if QMessageBox.question(self,'當次作用範圍',self.details.toPlainText())!=QMessageBox.Yes:return
-            apply_candidate(self.window,self.plan,True);self.plan=None;self.status.setText('僅當次候選已改並重驗；未改模板及其他候選')
+            from .candidate_edit_dispatch import dispatcher
+            dispatcher(self.window).submit(self.plan);self.plan=None;self.status.setText('人工版面已保留，等待原單一worker整張重驗；未通過前禁止正式輸出')
         except Exception as e:self.status.setText('未套用：'+str(e))
