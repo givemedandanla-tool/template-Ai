@@ -227,6 +227,10 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
     extension = target.suffix.lower()
     if extension not in (".pdf", ".png", ".jpg", ".jpeg"):
         raise ValueError("本版只輸出 PDF／PNG／JPG")
+    format_pin=None
+    if not preview:
+        from .digital_final import before
+        format_pin=before(candidate,extension,dpi)
     fd, name = tempfile.mkstemp(prefix=".template-ai-", suffix=extension, dir=target.parent)
     os.close(fd)
     temporary = Path(name)
@@ -241,6 +245,7 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
             writer.setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout.Millimeter)
             writer.setTitle("PREVIEW / 非正式" if preview else "矩形排版數位輸出")
             p = QPainter(writer)
+            p.setRenderHint(QPainter.LosslessImageRendering,True)
             if not p.isActive():
                 raise ValueError("PDF 編碼器無法啟動")
             p.scale(600 / 25.4, 600 / 25.4)
@@ -257,6 +262,11 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
                 raise ValueError("影像編碼失敗")
         if temporary.stat().st_size == 0:
             raise ValueError("輸出檔案為空")
+        if not preview:
+            from .digital_final import after
+            after(candidate,format_pin,temporary)
+            from .candidate_risk import assert_formal
+            assert_formal(candidate)
         # 核准／來源在編碼途中變動也不能發布；舊候選必須重新產生。
         from .logo_assets import errors as logo_errors
         for item in candidate.items:
@@ -267,7 +277,10 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
         # 同目錄完整暫存檔以硬連結排他發布；正式檔名不暴露半寫入內容。
         # Windows NTFS／Linux 支援；不支援的磁碟明確失敗，不退回危險覆寫。
         from .safe_publish import publish_complete
-        publish_complete(temporary, target)
+        if format_pin is not None:
+            from .digital_preflight import validate_scope
+            publish_complete(temporary,target,lambda:validate_scope(candidate,format_pin))
+        else:publish_complete(temporary,target)
         created = True
         return target
     except BaseException:
