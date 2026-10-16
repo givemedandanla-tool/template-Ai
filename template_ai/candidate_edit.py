@@ -71,6 +71,14 @@ def dependency_token(window,template,logos):
     return digest(dict(engine=engine_digest(),assets=layout_dependency(template,logos),source=source,link=link))
 
 
+def review_context_token(context):
+    """Human review/policy changes fence results even with identical geometry."""
+    protected=copy.deepcopy(context)
+    for key in ('edit_state','recompute_impact','last_verified_issue_codes'):protected.pop(key,None)
+    protected['conditions']=[row for row in protected.get('conditions',[]) if row['id']!='MANUAL_RECHECK_PENDING']
+    return digest(protected)
+
+
 def prepare_edit(window,plan):
     fresh=plan_undo(window,plan['index']) if plan['request']['operation']=='UNDO' else plan_recheck(window,plan['index']) if plan['request']['operation']=='RECHECK' else plan_original(window,plan['index']) if plan['request']['operation']=='ORIGINAL_GEOMETRY' else plan_operation(window,plan['index'],plan['request'])
     if fresh!=plan:raise ValueError('候選／人工版本或輸入已改變，重新預覽')
@@ -82,7 +90,7 @@ def prepare_edit(window,plan):
         except ValueError:base=None
         if base and base['state']=='published' and pin_digest(base)==pin_digest(c.template.to_dict()):c.risk_context['source_template_pin']=dict(id=base['id'],version=base['version'],digest=pin_digest(base))
     inputs=copy.deepcopy(window.input_data())
-    envelope=dict(plan=copy.deepcopy(plan),before=c,after=after,people=inputs[0],companies=inputs[1],logos=inputs[2],input_digest=digest(inputs),root=str(window.library.root));envelope['manual_metadata']=manual_metadata(envelope);envelope['dependency_token']=dependency_token(window,Template.from_dict(after),inputs[2]);return envelope
+    envelope=dict(plan=copy.deepcopy(plan),before=c,after=after,people=inputs[0],companies=inputs[1],logos=inputs[2],input_digest=digest(inputs),root=str(window.library.root),before_context_token=review_context_token(window.candidates[plan['index']].risk_context));envelope['manual_metadata']=manual_metadata(envelope);envelope['dependency_token']=dependency_token(window,Template.from_dict(after),inputs[2]);return envelope
 
 
 def calculate_edit(envelope,library):
@@ -113,6 +121,7 @@ def install_edit(window,envelope,result):
     if dependency_token(window,result.template,envelope['logos'])!=envelope['dependency_token']:raise ValueError('來源／字型／Logo／規則版本已更新，過期結果已忽略')
     if not 0<=index<len(window.candidates):raise ValueError('候選清單已改變，過期結果已忽略')
     current=window.candidates[index]
+    if review_context_token(current.risk_context)!=envelope['before_context_token']:raise ValueError('較新的人工核對／必要條件已存在，過期結果已忽略')
     if current.template.id!=plan['template_id'] or digest(current.template.to_dict())!=plan['before_digest'] or current.risk_context.get('manual_revision',0)!=plan['manual_revision']:raise ValueError('目前已有較新的人工修改，過期結果已忽略')
     window.candidates[index]=result;window.choose_candidate(index);return result
 

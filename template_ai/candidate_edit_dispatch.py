@@ -6,7 +6,7 @@ and explicitly UNKNOWN until a current whole-card result can be installed.
 import copy,threading
 from PySide6.QtCore import QObject,QTimer,Signal
 from .customers import digest
-from .candidate_edit import prepare_edit,calculate_edit,dependency_token
+from .candidate_edit import prepare_edit,calculate_edit,dependency_token,review_context_token
 from .model import Template
 
 
@@ -30,7 +30,7 @@ class CandidateEditDispatcher(QObject):
         super().__init__(window);self.window=window;self.pending={};self.active=None;self.timer=QTimer(self);self.timer.setInterval(50);self.timer.timeout.connect(self.tick)
     def submit(self,plan):
         if len(self.pending)>=200 and plan['index'] not in self.pending:raise ValueError('超過當次200候選重驗預算')
-        envelope=prepare_edit(self.window,plan);candidate=provisional(envelope);envelope.update(target_revision=candidate.risk_context['manual_revision'],target_digest=digest(candidate.template.to_dict()),cancel=threading.Event());self.pending[plan['index']]=envelope;self.window.candidates[plan['index']]=candidate;self.window.choose_candidate(plan['index']);self.timer.start();return candidate
+        envelope=prepare_edit(self.window,plan);candidate=provisional(envelope);envelope.update(target_revision=candidate.risk_context['manual_revision'],target_digest=digest(candidate.template.to_dict()),context_token=review_context_token(candidate.risk_context),cancel=threading.Event());self.pending[plan['index']]=envelope;self.window.candidates[plan['index']]=candidate;self.window.choose_candidate(plan['index']);self.timer.start();return candidate
     def current(self,envelope):
         w=self.window;p=envelope['plan'];index=p['index']
         try:
@@ -39,10 +39,11 @@ class CandidateEditDispatcher(QObject):
         except (ValueError,OSError,TypeError,KeyError):return False
         if not 0<=index<len(w.candidates):return False
         candidate=w.candidates[index]
+        if review_context_token(candidate.risk_context)!=envelope['context_token']:return False
         return candidate.template.id==p['template_id'] and candidate.risk_context.get('manual_revision',0)==envelope['target_revision'] and digest(candidate.template.to_dict())==envelope['target_digest']
     def preview(self,plan):
         if len(self.pending)>=200 and (plan['index'],'COMPARE_ONLY') not in self.pending:raise ValueError('超過當次200候選重驗預算')
-        envelope=prepare_edit(self.window,plan);envelope.update(mode='COMPARE_ONLY',target_revision=plan['manual_revision'],target_digest=plan['before_digest'],cancel=threading.Event());self.pending[(plan['index'],'COMPARE_ONLY')]=envelope;self.timer.start();return envelope
+        envelope=prepare_edit(self.window,plan);envelope.update(mode='COMPARE_ONLY',target_revision=plan['manual_revision'],target_digest=plan['before_digest'],context_token=envelope['before_context_token'],cancel=threading.Event());self.pending[(plan['index'],'COMPARE_ONLY')]=envelope;self.timer.start();return envelope
     def adopt_preview(self,envelope,result):
         from .candidate_risk import bind_source
         if envelope.get('mode')!='COMPARE_ONLY' or envelope['cancel'].is_set() or not self.current(envelope):raise ValueError('比較已過期或取消，請重新比較')

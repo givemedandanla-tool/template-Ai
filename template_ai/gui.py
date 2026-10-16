@@ -644,7 +644,8 @@ class MainWindow(QMainWindow):
         self.button("修正後重新檢查當前候選",self.recheck_candidate,candidate_layout)
         self.button('重新計算受影響候選',self.recheck_affected_candidates,candidate_layout)
         self.dependency_notice=QLabel('選取候選可檢視變更依賴與受影響框位');self.dependency_notice.setWordWrap(True);self.dependency_notice.setMinimumHeight(96);candidate_layout.addWidget(self.dependency_notice)
-        split.addWidget(candidate_panel)
+        candidate_layout.removeWidget(self.dependency_notice);candidate_layout.insertWidget(0,self.dependency_notice)
+        self.candidate_scroll=QScrollArea();self.candidate_scroll.setWidgetResizable(True);self.candidate_scroll.setWidget(candidate_panel);self.candidate_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff);self.candidate_scroll.setMinimumWidth(270);split.addWidget(self.candidate_scroll)
         self.output_canvas = Canvas()
         self.output_canvas.setMinimumHeight(240)
         split.addWidget(self.output_canvas)
@@ -1905,12 +1906,13 @@ class MainWindow(QMainWindow):
     def recheck_affected_candidates(self):
         from .candidate_edit import plan_recheck
         from .candidate_edit_dispatch import dispatcher
+        from .candidate_changes import candidate_impact
         if len(self.candidates)>200:self.inform('超過當次200候選重驗預算，請縮小目前集合');return
         manager=dispatcher(self);count=0
         for index,candidate in enumerate(self.candidates):
             # Conservative admission: unchanged current candidates reuse measurements;
             # stale generations are explicit user-triggered jobs, never per keystroke.
-            if candidate.generation==self.generation and candidate.risk_context.get('edit_state') not in ('PENDING_MANUAL_RECHECK','RECOMPUTING') and candidate.formal_eligible:continue
+            if candidate.generation==self.generation and not candidate_impact(self,index)['needs_recheck']:continue
             manager.submit(plan_recheck(self,index));count+=1
         self.statusBar().showMessage('已排程'+str(count)+'個候選完整重驗；共用單worker，人工框位保留')
 

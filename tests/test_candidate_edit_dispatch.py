@@ -103,3 +103,20 @@ class CandidateEditDispatchTests(unittest.TestCase):
         with patch.object(self.w.runtime,'admit',return_value=SimpleNamespace(allowed=False,reasons=['SYNTHETIC_HIGH_LOAD'])),patch('template_ai.candidate_edit_dispatch.calculate_edit') as work:
             self.move();self.assertTrue(wait_for_gui(lambda:bool(self.w._waiting_launches),2));self.assertFalse(work.called);self.assertIn('等待資源',self.w.statusBar().currentMessage());self.assertFalse(self.w.candidates[0].formal_eligible);manager.cancel(0);wait_candidate_edits(self.w);self.assertFalse(work.called)
         self.assertEqual(self.w.candidates[0].risk_context['edit_state'],'PENDING_MANUAL_RECHECK')
+
+    def test_new_manual_review_during_worker_is_not_erased_by_late_result(self):
+        from PySide6.QtWidgets import QInputDialog
+        self.ready();started,release,calls,guard=self.blocked();reason='Synthetic newly confirmed review stays pending'
+        with guard:
+            self.move();self.assertTrue(wait_for_gui(started.is_set,2))
+            with patch.object(QInputDialog,'getText',return_value=(reason,True)):self.w.keep_review_draft()
+            release.set();wait_candidate_edits(self.w)
+        self.assertTrue(any(row['reason']==reason for row in self.w.candidates[0].risk_context['conditions']));self.assertFalse(self.w.candidates[0].formal_eligible)
+
+    def test_completed_comparison_cannot_overwrite_later_human_review(self):
+        from PySide6.QtWidgets import QInputDialog
+        self.ready();self.move();wait_candidate_edits(self.w);manager=dispatcher(self.w);ready=[];manager.preview_ready.connect(lambda index,envelope,result:ready.append((envelope,result)));manager.preview(plan_original(self.w,0));wait_candidate_edits(self.w)
+        with patch.object(QInputDialog,'getText',return_value=('Synthetic review after comparison',True)):self.w.keep_review_draft()
+        current=self.w.candidates[0]
+        with self.assertRaisesRegex(ValueError,'過期'):manager.adopt_preview(*ready[0])
+        self.assertIs(self.w.candidates[0],current);self.assertFalse(current.formal_eligible)
