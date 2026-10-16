@@ -81,7 +81,7 @@ def load(record):
     return importlib.import_module(prefix+'.source_analysis')
 
 
-def execute(record,source,assets,model_record,context,mapping_catalog=None):
+def execute(record,source,assets,model_record,context,mapping_catalog=None,rule_records=None):
     module=load(record);model=None
     prefix=module.__package__
     try:
@@ -92,6 +92,8 @@ def execute(record,source,assets,model_record,context,mapping_catalog=None):
         result=module.analyse_source(source,assets,model,context)
         mapping=importlib.import_module(prefix+'.quality_mapping')
         for work in result:work['mapping_prediction']=mapping.predict(source,work,mapping_catalog)
+        rules=importlib.import_module(prefix+'.quality_rules')
+        for work in result:rules.evaluate(source,work,rule_records or [])
         verify(record)
         return result
     finally:

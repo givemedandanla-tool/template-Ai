@@ -1,0 +1,41 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+ERROR: test_actual_frozen_rules_execute_scope_checks_and_keep_unknown_without_gold (test_quality_rules.QualityRuleTests.test_actual_frozen_rules_execute_scope_checks_and_keep_unknown_without_gold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_rules.py", line 24, in test_actual_frozen_rules_execute_scope_checks_and_keep_unknown_without_gold
+    self.assertEqual(note['rule_diagnostics']['matches'][0]['id'],rule['id'])
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_historical_approved_rule_version_can_execute_but_not_be_current_production_evidence (test_quality_rules.QualityRuleTests.test_historical_approved_rule_version_can_execute_but_not_be_current_production_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_rules.py", line 32, in test_historical_approved_rule_version_can_execute_but_not_be_current_production_evidence
+    plan=self.store.rule_review_plan([rule['id']]);self.store.review_rules(plan,'DEFER','Reviewer','Keep historical comparison but stop trusting current rule',True,True)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/noise_review.py", line 80, in review_rules
+    if any(r['state'] not in ('PENDING', 'DEFERRED') for r in current['rows']): raise ValueError('只能審核目前PENDING或DEFERRED版本')
+                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 只能審核目前PENDING或DEFERRED版本
+
+======================================================================
+ERROR: test_noise_review (unittest.loader._FailedTest.test_noise_review)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_noise_review
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+ModuleNotFoundError: No module named 'test_noise_review'
+
+
+----------------------------------------------------------------------
+Ran 31 tests in 16.627s
+
+FAILED (errors=3)

@@ -110,6 +110,9 @@ class NoiseMixin:
                 item = self.evidence_ref(ref['work_id'], ref['observation_id'])
                 if not self.protected_observation(ref['work_id'], item['observation']): raise ValueError('反例需人工確認應保留的真實欄位或Logo')
                 negatives.append(item)
+            from .quality_groups import QualityGroups
+            groups=QualityGroups(self.library)
+            if groups.role_conflicts([(ref['pins']['source_hash'],'TRAIN') for ref in positives+negatives]):raise ValueError('規則支持／反例不能使用HOLDOUT或跨角色相關家族，避免把驗收答案吸收為規則')
             rule = {'state': 'PENDING', 'action': 'EXCLUDE', 'literal': observation['text'], 'normalization': normalization, 'normalization_approved': normalization_approved,
                     'scope': {'source_extension': Path(self.library.source(work['source_id'])['original_path']).suffix.lower(), 'object_type': observation['object_type'], 'classification': 'ANNOTATION', 'zone': zone},
                     'positive_examples': positives, 'counterexamples': sorted(negatives, key=lambda r: (r['work_id'], r['observation_id'])), 'author': actor, 'created': time.time(), 'review': None}

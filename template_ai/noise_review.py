@@ -84,6 +84,10 @@ class RuleReviewMixin:
                 if any(r['risk'] == 'HIGH' for r in current['rows']) and (len(current['rows']) != 1 or detail_reviewed is not True): raise ValueError('HIGH風險需逐條詳審')
             result = []
             for row in current['rows']:
+                if action=='APPROVE':
+                    from .quality_groups import QualityGroups
+                    refs=row['rule']['positive_examples']+row['rule']['counterexamples']
+                    if QualityGroups(self.library).role_conflicts([(ref['pins']['source_hash'],'TRAIN') for ref in refs]):raise ValueError('規則核准不能吸收HOLDOUT／跨角色家族，需真正獨立新訓練來源')
                 record = copy.deepcopy(row['rule']); record['state'] = {'APPROVE': 'ACTIVE', 'REJECT': 'REJECTED', 'DEFER': 'DEFERRED'}[action]
                 record['review'] = {'actor': actor, 'reason': reason, 'decision': action, 'reviewed_revision': row['revision'], 'plan_digest': current['digest'], 'risk': row['risk'], 'impact': row['matches'], 'timestamp': time.time(), 'detail_reviewed': detail_reviewed}
                 result.append(self._write('RULE', row['id'], record, row['revision'], 'rule_'+action.lower()))

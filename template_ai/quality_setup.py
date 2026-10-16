@@ -114,13 +114,14 @@ class QualitySetupDialog(QDialog):
 
     def version_form(self):
         form=self.tab('實際可執行版本');self.version_name=self.line(form,'版本名稱');self.model=self.picker(form,'實際語意模型版本','SEMANTIC_MODEL',True)
+        self.rules_mode=QComboBox();self.rules_mode.addItem('當前已核實正式規則（保存exact版本）',True);self.rules_mode.addItem('不使用正式規則（作固定A/B比較）',False);form.addRow('規則執行版本',self.rules_mode)
         self.mapping_enabled=QCheckBox('使用預先明列的既有客戶目錄映射');form.addRow(self.mapping_enabled);self.pattern=QComboBox();self.pattern.addItems([r'(?P<code>.+)',r'(?P<code>[0-9]+)',r'(?P<code>[^_]+)_.+',r'(?P<code>[A-Za-z0-9-]+)']);form.addRow('已支援的完整檔名規則',self.pattern);self.catalog_ids=self.line(form,'明列主客戶ID（空白分隔）');self.tolerance=self.line(form,'明確映射尺寸容差mm')
         self.button(form,'保存實際解析器／模型執行版本（不核准品質）',self.freeze_version)
 
     def freeze_version(self):
         config=None
         if self.mapping_enabled.isChecked():config=dict(code_pattern=self.pattern.currentText(),maximum_size_error_mm=float(self.tolerance.text()),customer_ids=self.catalog_ids.text().split())
-        self.submit('FREEZE_PIPELINE',dict(name=self.version_name.text(),model_id=self.model.currentData(),actor=self.panel.actor.text(),approved=True,mapping_config=config))
+        self.submit('FREEZE_PIPELINE',dict(name=self.version_name.text(),model_id=self.model.currentData(),actor=self.panel.actor.text(),approved=True,mapping_config=config,rule_versions=None if self.rules_mode.currentData() else []))
 
     def protocol_form(self):
         form=self.tab('先固定雙側試驗');self.protocol_name=self.line(form,'試驗名稱');self.dataset=self.picker(form,'固定獨立驗收集','QUALITY_SET');self.policy=self.picker(form,'明確品質政策','QUALITY_POLICY');self.baseline=self.picker(form,'基準實際版本','QUALITY_PIPELINE');self.candidate=self.picker(form,'候選實際版本','QUALITY_PIPELINE');self.protocol_reason=self.line(form,'預先固定比較目的／條件')

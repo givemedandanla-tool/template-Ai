@@ -67,6 +67,10 @@ class QualityReports:
                         and results['CANDIDATE']['statistics']['policy_scope'] == 'AUTHORIZED_LOCAL_QUALITY_ACCEPTANCE')
         quarantined={side:bool(self.store.get('QUALITY_PIPELINE_QUARANTINE',scope['pipelines'][side]['id'])) for side in SIDES}
         eligible = eligible and not quarantined['CANDIDATE']
+        from .quality_rules import production_current
+        candidate_pipeline=self.store.get('QUALITY_PIPELINE',scope['pipelines']['CANDIDATE']['id'])
+        rules_current=production_current(self.store,candidate_pipeline['manifest'].get('rule_records',[]))
+        eligible=eligible and rules_current
         plan = dict(protocol_id=protocol_id, protocol_scope_digest=protocol['scope_digest'],
                     fixed_conditions=copy.deepcopy(scope), results=results, denominators=denominators[0],
                     fair_comparison=fair, current_errors=checked['errors'],
@@ -75,6 +79,7 @@ class QualityReports:
                     unresolved_cases=[cases['CANDIDATE'][key] for key in sorted(cases['CANDIDATE'].keys() & cases['BASELINE'].keys())],
                     critical_errors=critical, new_critical_errors=new_critical, class_regressions=regressions,
                     version_quarantined=quarantined,
+                    candidate_rules_current_for_production=rules_current,
                     candidate_decision_eligible=eligible, automatic_publication=False,
                     conclusion='NEEDS_EXPLICIT_LOCAL_DECISION' if eligible else 'BLOCKED_OR_EVIDENCE_INSUFFICIENT',
                     fewer_observed_errors_is_not_statistical_superiority=True)

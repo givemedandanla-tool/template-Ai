@@ -1,0 +1,23 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+======================================================================
+FAIL: test_historical_approved_rule_version_can_execute_but_not_be_current_production_evidence (test_quality_rules.QualityRuleTests.test_historical_approved_rule_version_can_execute_but_not_be_current_production_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_rules.py", line 44, in test_historical_approved_rule_version_can_execute_but_not_be_current_production_evidence
+    self.assertIn([self.source['hash'],'TRAIN'],roles)
+AssertionError: ['2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3', 'TRAIN'] not found in [('2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3', 'TRAIN')]
+
+----------------------------------------------------------------------
+Ran 46 tests in 28.213s
+
+FAILED (failures=1)
