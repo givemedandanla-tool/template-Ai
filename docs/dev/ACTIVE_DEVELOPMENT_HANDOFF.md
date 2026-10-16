@@ -11,3 +11,5 @@
 - SourceA20早期失敗：SQLite thread→worker-owned Library修；native pan空Undo→原Canvas interactivepan+movable beforemove修。詳細歷史見history/HANDOFF_BEFORE_UI052_REVIEW_20261016.md與UI065 plan；不要重跑任何FINALIZE_*歷史腳本。
 - 最新ACK以STATE.last_confirmed_commit/receipt為準。所有owned jobs已exit。每個可恢復階段/約10min GitHub checkpoint與exact tree/blob readback；歷史節奏非strictPASS，不補造時間或宣稱全程合規。
 - 外部真缺口：Windows16GB RTX5050/VivoBook、實際IME/輔具/裝置、授權非空原生Illustrator corpus；先完成不相依軟體，Linux合成不冒充。原125附件問題+9件明確例外保留，新證據普通Git保存。
+
+UI052-REVIEW plan original9+baseline已持久化；NetworkX3.5 bfs/descendants actualsource/hash、Microsoft SQL2016 official historical temporal current/history validity concept actualmain下載/read/hash，live404保留。現有QualityRechecks source graph+pipeline重大隔離已找出；尚未改UI052 productcode。下一步看source-only major workflow/current candidate/trust/closure gaps，直接實作原系統，不另開長篇設計。
