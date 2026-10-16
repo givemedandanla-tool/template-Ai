@@ -39,3 +39,12 @@ class SyncWorkflowTests(unittest.TestCase):
         with patch.object(f.w.runtime,'admit',return_value=SimpleNamespace(allowed=False,reasons=['SYNTHETIC_HIGH_LOAD'])):
             f.d.sync_source();self.assertTrue(wait_for_gui(lambda:bool(f.w._waiting_launches),2));QTest.keyClick(f.d,Qt.Key_Escape);self.assertTrue(f.d.isVisible());self.assertTrue(f.d.stop.is_set());f.wait()
         self.assertFalse(f.d.running)
+
+    def test_explicit_logo_from_different_same_named_company_cannot_match_by_string(self):
+        from sync_workflow_fixture import REVIEW
+        f=self.fx;other=f.store.create_company(f.registry[0]['name'],'Different legal synthetic identity with equal display label',True);plan=f.store.propose(f.payloads[0],90,54,company_id=other['id']);wrong=f.store.approve(plan['id'],plan['revision'],other['id'],REVIEW,True);graph=f.w.active_input_graph.clone();entity=graph.data['companies'][0]['id'];graph.apply(graph.preview('edit_logo',company_id=entity,logo_id=wrong['id']),True);f.w.adopt_input_graph(graph.data,history=graph);f.sync()
+        for name in ('A90','B90'):
+            self.assertFalse(f.candidate(name).formal_eligible);self.assertIsNone(next(item.logo for item in f.candidate(name).items if item.slot.kind=='logo' and item.slot.owner=='c1'))
+        self.assertEqual(f.entry('A90')['logo_states']['c1'],'SELECTION_INVALID_NO_REPLACEMENT')
+    def test_explicit_logo_without_confirmed_entity_binding_stays_unverified(self):
+        f=self.fx;entity=f.w.active_input_graph.data['companies'][0]['id'];f.w.library.db.execute('DELETE FROM logo_entity_bindings WHERE entity_id=?',(entity,));f.w.library.db.commit();f.w.invalidate();f.sync();self.assertFalse(f.candidate('A90').formal_eligible);self.assertEqual(f.entry('A90')['logo_states']['c1'],'IDENTITY_REVIEW_REQUIRED')

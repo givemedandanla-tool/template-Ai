@@ -39,6 +39,25 @@ def bind_source(candidate,library,conditions=None,require_registered=False):
     try:library._template_provenance(candidate.template)
     except (ValueError,OSError) as error:context['conditions'].append(dict(id='SOURCE_AND_QUALITY_TRUST',status='UNKNOWN',reason=str(error)))
     else:context['conditions'].append(dict(id='SOURCE_AND_QUALITY_TRUST',status='PASS',reason='現行模板與來源／標記／必要用途已核對'))
+    # Stable input roots use the existing LogoStore identity FK, including
+    # explicit asset choices. Equal company labels never override that binding.
+    context['conditions']=[row for row in context['conditions'] if row['id']!='CURRENT_LOGO_IDENTITY']
+    logo_failures=[];logo_checks=0;companies=context.get('input_snapshot',{}).get('companies',[])
+    for placed in candidate.items:
+        if placed.slot.kind!='logo' or not placed.logo:continue
+        try:
+            index=int(placed.slot.owner[1:])-1
+            if index<0:raise ValueError('公司歸屬不合法')
+            company=companies[index];entity=company.get('source_entity_id')
+            if not entity:continue  # Legacy explicit caller-owned mapping has no stable-root assertion.
+            logo_checks+=1
+            if not placed.logo.get('id'):raise ValueError('缺可追溯Logo資產ID')
+            from .logo_store import LogoStore
+            label=company.get('name','');label=label[0] if isinstance(label,list) and label else label
+            found=LogoStore(library).match(entity,label,candidate.template.width_mm,candidate.template.height_mm,selected_id=placed.logo['id'])
+            if found['selected'] is None or found['selected']['id']!=placed.logo['id']:raise ValueError(found['reason'])
+        except (ValueError,KeyError,IndexError,TypeError) as error:logo_failures.append(str(error))
+    if logo_checks or logo_failures:context['conditions'].append(dict(id='CURRENT_LOGO_IDENTITY',status='UNKNOWN' if logo_failures else 'PASS',reason='；'.join(logo_failures) if logo_failures else '實際已放置Logo的來源公司實體、資產公司ID與此尺寸確切版本一致'))
     pinned=context.get('source_template_pin')
     if require_registered or pinned:
         try:

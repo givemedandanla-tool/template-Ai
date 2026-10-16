@@ -81,7 +81,7 @@ def source_dependency_pin(source,library):
     from .candidate_edit import dependency_token
     from .candidate_risk import bind_source
     checked=deepcopy(source);bind_source(checked,library,require_registered=True)
-    ids={'SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES','SNAPSHOT_FRESHNESS','PUBLISHED_BASE_APPROVAL'}
+    ids={'SOURCE_AND_QUALITY_TRUST','EXACT_PUBLISHED_SOURCE_VERSION','ORIGINAL_SOURCE_BYTES','SNAPSHOT_FRESHNESS','PUBLISHED_BASE_APPROVAL','CURRENT_LOGO_IDENTITY'}
     if any(row['status']!='PASS' for row in checked.risk['conditions'] if row['id'] in ids):raise ValueError('跨候選來源版本／資產／核准依據已改或未核實，先重驗來源')
     return dependency_token(SimpleNamespace(library=library),source.template,source.risk_context['input_snapshot']['logos'])
 

@@ -50,10 +50,10 @@ class MultiSizeWorkflow:
                 old=self.original_logos.get(port)
                 if not pin and old and abs(old['width_mm']-width)<1e-5 and abs(old['height_mm']-height)<1e-5:pin=old['id']
                 if pin:
-                    asset=assets.get(pin)
-                    if asset and asset.get('approved') and asset['company']==company['name'] and abs(asset['width_mm']-width)<1e-5 and abs(asset['height_mm']-height)<1e-5 and not errors(asset):
-                        logos[port]=deepcopy(asset);entry['logo_states'][port]='EXACT_VERSION_PENDING_OUTPUT'
-                    else:entry['logo_states'][port]='SELECTION_INVALID_NO_REPLACEMENT'
+                    found=self.store.match(entity,company['name'],width,height,selected_id=pin)
+                    if found['selected']:
+                        logos[port]=deepcopy(found['selected']);entry['logo_states'][port]='EXACT_VERSION_PENDING_OUTPUT'
+                    else:entry['logo_states'][port]='IDENTITY_REVIEW_REQUIRED' if found['state']=='IDENTITY_REVIEW_REQUIRED' else 'SELECTION_INVALID_NO_REPLACEMENT'
                 else:
                     found=self.store.match(entity,company['name'],width,height)
                     entry['logo_states'][port]=found['state']
@@ -134,6 +134,9 @@ class MultiSizeWorkflow:
         current={a['id']:a for a in self.library.logos()}
         for asset in logos.values():
             if asset['id'] not in current or digest(current[asset['id']])!=digest(asset) or errors(asset):raise ValueError('Logo來源／版本已變更，不輸出舊候選')
+        for port,asset in logos.items():
+            index=int(port[1:])-1;entity=self.graph.data['companies'][index]['id'];found=self.store.match(entity,self.companies[index]['name'],*entry['size_mm'],selected_id=asset['id'])
+            if found['selected'] is None or found['selected']['id']!=asset['id']:raise ValueError('此公司實體與Logo資產身分／尺寸綁定未核實；不按同名字串放行')
         from types import SimpleNamespace
         from .candidate_edit import plan_recheck,prepare_edit,calculate_edit
         adapter=SimpleNamespace(library=self.library,candidates=[candidate],generation=self.generation,input_data=lambda:deepcopy((self.people,self.companies,logos)))
