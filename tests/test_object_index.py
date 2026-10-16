@@ -1,3 +1,4 @@
+from gui_wait import close_property_dialog
 import copy
 import hashlib
 import json
@@ -52,7 +53,7 @@ class ObjectIndexGuiTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.window=MainWindow(Path(self.temp.name)/'data');self.addCleanup(self.window.close)
         t=demo_template();t.slots.append(Slot('logo','c1',Rect(60,5,20,10),id='shared-logo'));t.capacity=2;t.company_bindings={'p1':'c1','p2':'c1'};self.window.library.save_template(t);self.t=t
-        self.dialog=ObjectToolsDialog(self.window,'TEMPLATE',t.id);self.dialog.show();APP.processEvents();self.addCleanup(self.dialog.close)
+        self.dialog=ObjectToolsDialog(self.window,'TEMPLATE',t.id);self.dialog.show();APP.processEvents();self.addCleanup(close_property_dialog,self.dialog)
     def test_actual_shared_tree_click_list_and_view_filter_selection(self):
         d=self.dialog;leaves=[n for n in d.tree_nodes if n.data(0,Qt.UserRole)==['shared-logo']];self.assertGreaterEqual(len(leaves),3)
         d.index_tree.scrollToItem(leaves[0]);APP.processEvents()
@@ -75,7 +76,7 @@ class ObjectIndexGuiTests(unittest.TestCase):
         from template_ai.importer import import_file
         p=Path(self.temp.name)/'anon.svg';p.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="90mm" height="54mm"><g id="actual"><rect width="10" height="10"/></g></svg>')
         source=self.window.library.add_source(p,import_file(p,self.window.library.assets));work=self.window.library.create_artwork(source['id'],'Anon',{'crop':Rect(0,0,90,54).__dict__,'work_width':90,'work_height':54,'slots':[self.t.slots[0].__dict__ | {'rect':self.t.slots[0].rect.__dict__}],'visual_confirmed':False})
-        other=ObjectToolsDialog(self.window,'ARTWORK',work['id']);self.addCleanup(other.close);other.show();APP.processEvents();self.assertEqual(other.structure['status'],'VERIFIED_DERIVATIVE')
+        other=ObjectToolsDialog(self.window,'ARTWORK',work['id']);self.addCleanup(close_property_dialog,other);other.show();APP.processEvents();self.assertEqual(other.structure['status'],'VERIFIED_DERIVATIVE')
         other.select_ids([self.t.slots[0].id]);other.index_mode.setCurrentIndex(1);node=next(n for n in other.tree_nodes if not n.data(0,Qt.UserRole));other.index_tree.clearSelection();node.setSelected(True);self.assertEqual(other.ids,[self.t.slots[0].id])
         self.assertEqual(other.snapshot['payload']['slots'][0]['owner'],'p1');self.assertEqual(len(self.window.library.list_sources()),1)
     def test_hidden_locked_intended_member_blocks_visible_group_drag(self):

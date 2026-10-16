@@ -45,3 +45,16 @@ def wait_candidate_edits(window,seconds=10):
         manager=getattr(window,'candidate_edit_dispatcher',None)
         return manager is not None and not window.busy and not manager.pending and manager.active is None
     if not wait_for_gui(finished,seconds):raise AssertionError('Owned candidate edit recheck did not complete: '+job_diagnostics(window,'GEOMETRY'))
+def close_property_dialog(dialog):
+    """Test actor explicitly discards owned pending fields before fixture teardown."""
+    from PySide6.QtCore import QTimer
+    from PySide6.QtWidgets import QApplication,QMessageBox
+    from shiboken6 import isValid
+    if not isValid(dialog):return
+    if dialog.dirty or getattr(dialog,'retained_patch',None):
+        def discard():
+            box=next(w for w in QApplication.topLevelWidgets() if isinstance(w,QMessageBox) and w.isVisible() and w.windowTitle()=='目前物件有待套用輸入')
+            next(button for button in box.buttons() if button.text()=='放棄未套用輸入並關閉').click()
+        QTimer.singleShot(0,dialog,discard)
+    dialog.close()
+

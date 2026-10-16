@@ -1,3 +1,4 @@
+from gui_wait import close_property_dialog
 """Independent geometry oracles and real transactional persistence, then Qt end-to-end."""
 import copy
 import json
@@ -78,7 +79,7 @@ class ObjectToolsTests(unittest.TestCase):
     def test_persistent_apply_undo_redo_reopen_and_unselected_identity(self):
         record=self.apply(self.request('MOVE',dx=1,dy=1));self.assertEqual(len(record['plan']['changes']),2)
         self.assertEqual(record['after']['slots'][2:],self.snap['payload']['slots'][2:])
-        other=Library(self.root/'data');self.addCleanup(other.close)
+        other=Library(self.root/'data');self.addCleanup(close_property_dialog,other)
         self.assertEqual(other.object_edit_history('TEMPLATE',self.t.id)[0]['id'],record['id'])
         undone=other.object_history_action(record['id'],'UNDO',True);self.assertEqual(other.object_snapshot('TEMPLATE',self.t.id)['payload'],self.snap['payload'])
         redone=other.object_history_action(record['id'],'REDO',True);self.assertEqual(redone['phase'],'APPLIED');self.assertEqual(other.object_snapshot('TEMPLATE',self.t.id)['payload'],record['after'])
@@ -142,7 +143,7 @@ class ObjectToolsGuiTests(unittest.TestCase):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)
         self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
         self.t=demo_template();self.t.slots[1].color='#123456';self.w.library.save_template(self.t);self.w.refresh_templates(self.t.id);self.w.tabs.setCurrentIndex(1)
-        self.d=ObjectToolsDialog(self.w,'TEMPLATE',self.t.id);self.addCleanup(self.d.close);self.d.show();APP.processEvents();self.d.canvas.fit()
+        self.d=ObjectToolsDialog(self.w,'TEMPLATE',self.t.id);self.addCleanup(close_property_dialog,self.d);self.d.show();APP.processEvents();self.d.canvas.fit()
         self.ids=[s.id for s in self.t.slots];self.yes=patch('template_ai.object_dialog.QMessageBox.question',return_value=__import__('PySide6.QtWidgets',fromlist=['QMessageBox']).QMessageBox.Yes);self.yes.start();self.addCleanup(self.yes.stop)
     def selected(self):return sorted(i.data(__import__('PySide6.QtCore',fromlist=['Qt']).Qt.UserRole) for i in self.d.objects.selectedItems())
 
@@ -223,7 +224,7 @@ class ObjectToolsGuiTests(unittest.TestCase):
         source=self.w.library.add_source(path,import_file(path,self.w.library.assets));work=self.w.library.create_artwork(source['id'],'anon',{'crop':Rect(0,0,90,54).__dict__,'work_width':90,'work_height':54,'slots':[s.__dict__|{'rect':s.rect.__dict__} for s in self.t.slots],'visual_confirmed':True})
         self.w.template=None;self.w.refresh_sources(source['id']);self.w.load_work(work);self.w.tabs.setCurrentIndex(0)
         with patch.object(ObjectToolsDialog,'exec',return_value=0) as execute:self.w.object_tools();execute.assert_called_once()
-        d=ObjectToolsDialog(self.w,'ARTWORK',work['id']);self.addCleanup(d.close);d.select_ids(self.ids[:2]);d.preview_request({'operation':'MOVE','ids':d.ids,'dx':1,'dy':1});d.apply()
+        d=ObjectToolsDialog(self.w,'ARTWORK',work['id']);self.addCleanup(close_property_dialog,d);d.select_ids(self.ids[:2]);d.preview_request({'operation':'MOVE','ids':d.ids,'dx':1,'dy':1});d.apply()
         self.assertEqual(self.w.work['revision'],2);self.assertFalse(self.w.visual.isChecked());self.assertEqual(self.w.slots[0].rect.x,9)
         d.history.selectRow(0);d.history_action('UNDO');self.assertEqual(self.w.slots[0].rect.x,8);self.assertTrue(self.w.visual.isChecked())
 

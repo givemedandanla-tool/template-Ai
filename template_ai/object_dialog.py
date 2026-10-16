@@ -174,7 +174,7 @@ def canvas_controls(canvas,library=None):
 class ObjectToolsDialog(QDialog):
     def __init__(self,window,kind,entity_id,parent=None):
         super().__init__(parent or window);self.window=window;self.library=window.library;self.kind=kind;self.entity_id=entity_id
-        self.ids=[];self.dirty=set();self.loading=True;self.plan=None;self.request=None;self.generation=0;self._preview_generation=None
+        self.ids=[];self.dirty=set();self.loading=True;self.plan=None;self.request=None;self.generation=0;self._preview_generation=None;self.retained_patch=None
         self.hidden_ids=set();self.dim_ids=set();self.structure={'status':'UNKNOWN','nodes':[]};self.tree_nodes=[]
         self.setWindowTitle('安全多選／精確對齊 · 候選、鎖定與持久歷史');self.resize(1450,1000)
         layout=QVBoxLayout(self);self.status=QLabel();self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status)
@@ -199,7 +199,9 @@ class ObjectToolsDialog(QDialog):
         layout.addWidget(canvas_controls(self.canvas,self.library))
         right=QWidget();form=QFormLayout(right);self.context_form=form;self.editors={}
         self.context_status=QLabel('未選取／未知上下文');self.context_status.setWordWrap(True);form.addRow(self.context_status)
-        self.pin_text=QCheckBox('釘選文字工具（不適用仍禁止操作）');self.pin_text.toggled.connect(self.update_context);form.addRow(self.pin_text)
+        from .property_context import load_tool_pins
+        self.pin_text=QCheckBox('釘選文字工具（不適用仍禁止操作）');self.pin_text.setChecked('text' in load_tool_pins(self.library));self.pin_text.toggled.connect(self.pin_changed);form.addRow(self.pin_text)
+        self.retained_button=QPushButton('查看舊版本未套用屬性');self.retained_button.clicked.connect(self.inspect_pending);self.retained_button.hide();form.addRow(self.retained_button)
         self.all_properties=QCheckBox('展開全部屬性');self.all_properties.toggled.connect(self.update_context);form.addRow(self.all_properties)
         for key,name in (('x','X'),('y','Y'),('w','寬'),('h','高'),('size_pt','固定字級pt'),('min_scale','水平比例下限')):
             spin=QDoubleSpinBox();spin.setRange(-2001,2000);spin.setDecimals(4);spin.setSpecialValueText('混合／未提供');spin.valueChanged.connect(lambda value,k=key:self.changed(k));self.editors[key]=spin;form.addRow(name,spin)
@@ -251,6 +253,10 @@ class ObjectToolsDialog(QDialog):
         if self.loading:return
         self.dirty.add(key);self.invalidate();self.status.setText('輸入中／待套用：只屬目前明確選取，先預覽差異再確認。')
     def reload(self):
+        if self.dirty or self.retained_patch:
+            from .property_context import discard_pending_selection
+            if not discard_pending_selection(self,'重新載入'):return
+            self.dirty.clear();self.retained_patch=None;self.retained_button.hide()
         try:
             self.snapshot=self.library.object_snapshot(self.kind,self.entity_id);self.invalidate();self.loading=True
             self.objects.clear();payload=self.snapshot['payload'];self.canvas.readonly=self.kind=='TEMPLATE' and payload['state']!='draft'
@@ -332,6 +338,7 @@ class ObjectToolsDialog(QDialog):
         self.filter_index();self.status.setText('只改檢視框；原稿背景與 DB／正式 Gate 全量範圍不變。隱藏不等於解鎖。')
     def select_ids(self,ids):
         if self.loading:return
+        if not self.context_current():self.update_context();return
         known={s['id'] for s in self.snapshot['payload']['slots']}
         if len(ids)!=len(set(ids)) or any(i not in known for i in ids):self.status.setText('物件身份不唯一／上下文不符，未變更選取');return
         if self.dirty:
@@ -345,7 +352,7 @@ class ObjectToolsDialog(QDialog):
                     self.objects.blockSignals(False);self.sync_tree()
                 finally:self.loading=False
                 self.status.setText('待套用輸入已保留於原選取；未更動物件。');return
-        self.invalidate();self.loading=True;self.ids=list(ids);self.dirty.clear();self.canvas.select_ids(ids)
+        self.invalidate();self.loading=True;self.ids=list(ids);self.dirty.clear();self.cross.setChecked(False);self.canvas.select_ids(ids)
         self.objects.blockSignals(True)
         for i in range(self.objects.count()):self.objects.item(i).setSelected(self.objects.item(i).data(Qt.UserRole) in ids)
         self.objects.blockSignals(False);self.reference.clear();self.reference.addItem('請明確指定基準',None);self.reference.addItem('選取邊界','SELECTION')
@@ -381,12 +388,72 @@ class ObjectToolsDialog(QDialog):
 
     def update_context(self, *_):
         rows=[s for s in self.snapshot['payload']['slots'] if s['id'] in self.ids] if hasattr(self,'snapshot') else []
+        if hasattr(self,'snapshot') and not self.context_current():
+            if self.dirty and self.retained_patch is None:self.retained_patch=dict(kind=self.kind,entity_id=self.entity_id,revision=self.snapshot['revision'],ids=self.ids.copy(),patch=self.current_patch())
+            was_loading=self.loading;self.loading=True
+            try:
+                self.ids=[];self.canvas.select_ids([])
+                for editor in self.editors.values():
+                    editor.setEnabled(False)
+                    if isinstance(editor,QDoubleSpinBox):editor.setValue(editor.minimum())
+                    elif isinstance(editor,QComboBox):editor.setCurrentIndex(-1)
+                    elif isinstance(editor,QLineEdit):editor.clear()
+                    else:editor.setTristate(True);editor.setCheckState(Qt.PartiallyChecked)
+                self.font_choice.setEnabled(False);self.margin.setEnabled(False);self.margin_button.setEnabled(False);self.apply_button.setEnabled(False)
+            finally:self.loading=was_loading
+            self.context_status.setText('來源版本已失效；屬性已清空，請重新載入並選取。');self.retained_button.setVisible(self.retained_patch is not None);return
         text=bool(rows) and all(s['kind']!='logo' for s in rows)
+        locked=any(s.get('locked',False) for s in rows)
         label='未選取／過期時無可用值' if not rows else '多選（混合值逐欄判斷）' if len(rows)>1 else '完整Logo；文字工具不適用' if not text else '文字物件；固定字級'
+        if locked:label+='；包含鎖定物件，須先明確解鎖'
         self.context_status.setText(label+'／'+self.kind+' '+self.entity_id)
+        for key,editor in self.editors.items():editor.setEnabled(bool(rows) and not locked and not self.canvas.readonly and (text or key not in ('size_pt','min_scale','align','color')) and (len(rows)==1 or key not in ('kind','owner','index')))
+        self.font_choice.setEnabled(bool(rows) and text and not locked and not self.canvas.readonly)
         for key in ('size_pt','min_scale','align','color'):
             editor=self.editors[key];self.context_form.setRowVisible(editor,text or self.pin_text.isChecked() or self.all_properties.isChecked())
             if not text:editor.setEnabled(False)
+    def context_current(self):
+        if not hasattr(self,'snapshot') or self.library.closed or self.window.library is not self.library:return False
+        try:
+            current=self.library.object_snapshot(self.kind,self.entity_id)
+            return current['revision']==self.snapshot['revision'] and fingerprint(current['payload'])==fingerprint(self.snapshot['payload'])
+        except (ValueError,OSError):return False
+    def current_patch(self):
+        patch={}
+        for key in self.dirty:
+            if key=='font_asset':
+                if self.font_choice.currentData():patch.update(copy.deepcopy(self.font_choice.currentData()))
+                continue
+            editor=self.editors[key]
+            patch[key]=editor.currentData() if isinstance(editor,QComboBox) else editor.text().strip() if isinstance(editor,QLineEdit) else editor.isChecked() if isinstance(editor,QCheckBox) else int(editor.value()) if key=='index' else editor.value()
+        return patch
+    def pin_changed(self,checked):
+        from .property_context import load_tool_pins,save_tool_pins
+        from PySide6.QtCore import QSignalBlocker
+        pins=load_tool_pins(self.library);pins.add('text') if checked else pins.discard('text')
+        try:save_tool_pins(self.library,pins)
+        except Exception:self.status.setText('工具偏好未保存；當次顯示保留，未變更物件。')
+        context=getattr(self.window,'right_context',None)
+        if context is not None:
+            context.pins=pins
+            with QSignalBlocker(self.window.property_pin_checks['text']):self.window.property_pin_checks['text'].setChecked(checked)
+            context.sync()
+        self.update_context()
+    def inspect_pending(self):
+        if not self.retained_patch:return
+        box=QMessageBox(self);box.setWindowTitle('舊版本未套用屬性（唯讀）');box.setText('原版本已改變；這份輸入未套至任何新物件。重新載入或關閉前可明確放棄。');box.setDetailedText(json.dumps(self.retained_patch,ensure_ascii=False,indent=2));box.exec()
+    def reject(self):
+        if self.dirty or self.retained_patch:
+            from .property_context import discard_pending_selection
+            if not discard_pending_selection(self,'關閉'):return
+            self.dirty.clear();self.retained_patch=None
+        super().reject()
+    def closeEvent(self,event):
+        if self.dirty or self.retained_patch:
+            from .property_context import discard_pending_selection
+            if not discard_pending_selection(self,'關閉'):event.ignore();return
+            self.dirty.clear();self.retained_patch=None
+        super().closeEvent(event)
     def focus_selection(self):
         items=[i for i in self.canvas.scene().items() if isinstance(i,Box) and i.slot.id in self.ids]
         if items:
@@ -396,17 +463,11 @@ class ObjectToolsDialog(QDialog):
     def preview_lock(self,locked):self.preview_request({'operation':'LOCK','ids':self.ids,'locked':locked})
     def preview_margin(self):self.preview_request(dict(operation='SAFETY_ZONE',ids=[s['id'] for s in self.snapshot['payload']['slots']],margin_mm=self.margin.value()))
     def preview_patch(self):
-        patch={}
-        for key in self.dirty:
-            if key=='font_asset':
-                if self.font_choice.currentData():patch.update(copy.deepcopy(self.font_choice.currentData()))
-                continue
-            e=self.editors[key]
-            patch[key]=e.currentData() if isinstance(e,QComboBox) else e.text().strip() if isinstance(e,QLineEdit) else e.isChecked() if isinstance(e,QCheckBox) else int(e.value()) if key=='index' else e.value()
-        self.preview_request({'operation':'PATCH','ids':self.ids,'patch':patch})
+        self.preview_request({'operation':'PATCH','ids':self.ids,'patch':self.current_patch()})
     def preview_geometry(self):
         op,axis=self.direction.currentData();self.preview_request({'operation':op,'axis':axis,'reference':self.reference.currentData(),'ids':self.ids})
     def preview_request(self,request):
+        if not self.context_current():self.update_context();self.status.setText('來源版本已變更，先重新載入；未建立舊版本提議。');return
         self.invalidate();request=copy.deepcopy(request);request['cross_owner']=self.cross.isChecked()
         try:
             self.plan=propose(self.snapshot['payload'],self.kind,request);self.request=copy.deepcopy(request);self._preview_generation=self.generation;self.canvas.show_preview(self.plan)
@@ -421,6 +482,7 @@ class ObjectToolsDialog(QDialog):
             self.status.setText('綠框僅候選，藍框為原位置；尚未寫入。可取消或核對範圍後套用。')
         except Exception as error:self.plan=None;self.request=None;self.status.setText('候選拒絕：'+str(error));self.apply_button.setEnabled(False)
     def after_write(self):
+        self.dirty.clear();self.retained_patch=None;self.retained_button.hide()
         w=self.window
         if self.kind=='TEMPLATE' and w.template and w.template.id==self.entity_id:w.template=None;w.refresh_templates(self.entity_id)
         elif self.kind=='ARTWORK' and w.work and w.work['id']==self.entity_id:w.load_work(self.library.artwork(self.entity_id))
@@ -437,6 +499,7 @@ class ObjectToolsDialog(QDialog):
             candidate=w.make_slot(Rect(*(spin.value() for spin in w.coords)),preserve=True);candidate.id=w.current_slot.id
             if candidate!=w.current_slot:raise ValueError('主屬性面板有未套用手工內容，未覆蓋')
     def apply(self):
+        if not self.context_current():self.update_context();self.status.setText('來源版本已變更，未套用。');return
         if self.request is None or self.plan is None or self._preview_generation!=self.generation:return
         if QMessageBox.question(self,'核對差異與精確範圍',self.summary.toPlainText()+'\n物件：'+', '.join(self.request['ids'])+'\n確定僅套用本候選？不等於發布／正式輸出PASS。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
         if self.request is None or self._preview_generation!=self.generation:return

@@ -20,11 +20,11 @@ def pending_main(window):
     return bool(window.current_slot and baseline is not None and window._property_mode==window.tabs.currentIndex() and property_values(window)!=baseline)
 
 
-def discard_pending_selection(parent):
+def discard_pending_selection(parent,action='切換'):
     box=QMessageBox(parent);box.setWindowTitle('目前物件有待套用輸入')
     box.setText('目前輸入尚未套用至原物件。切換選取不會把這些值套用至另一個物件。')
     stay=box.addButton('返回目前物件繼續編輯',QMessageBox.RejectRole)
-    discard=box.addButton('放棄未套用輸入並切換',QMessageBox.DestructiveRole)
+    discard=box.addButton('放棄未套用輸入並'+action,QMessageBox.DestructiveRole)
     box.setDefaultButton(stay);box.exec();return box.clickedButton()==discard
 
 
