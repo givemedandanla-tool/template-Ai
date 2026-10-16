@@ -57,7 +57,10 @@ def execute(library,command,payload):
         from .training_store import digest
         if not result or digest(result)!=unit.get('analysis_digest') or result['case_id']!=unit['case_id'] or unit['work_id'] not in result['work_ids']:raise ValueError('舊新對照憑證已變更，未混配其他來源')
         wid=unit['work_id'];current=store.pins(wid)==result['source_pins'][wid];raw=library.db.execute('SELECT payload FROM artwork_revisions WHERE artwork_id=? AND revision=?',(wid,unit['pins']['work_revision'])).fetchone()
-        return dict(unit=unit,analysis=result,current=current,original_work=json.loads(raw[0]) if raw else None,formal_eligible=False)
+        from .automatic_training import AutomaticTraining
+        job=store.get('AUTO_JOB',result['job_id'])
+        phase=AutomaticTraining(library).phase(job) if job and job.get('operation')=='MAJOR_SOURCE_RECHECK' and job.get('scope',{}).get('case_id')==unit['case_id'] else 'UNVERIFIED_MISSING_JOB'
+        return dict(unit=unit,analysis=result,current=current,job_phase=phase,original_work=json.loads(raw[0]) if raw else None,formal_eligible=False)
     offset=payload.get('offset',0);query=payload.get('query','')
     if type(offset) is not int or offset<0 or not isinstance(query,str) or len(query)>500:raise ValueError('重大重審搜尋範圍無效')
     if command=='CASES':

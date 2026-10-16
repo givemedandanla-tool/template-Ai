@@ -1,0 +1,80 @@
+{
+  "parent": "UI-019",
+  "status": "PLANNED_BEFORE_CODE_WAITING_UI052_COHERENT",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "original_clauses": [
+    "使用者選擇 **D｜印刷預檢工作台＋即時診斷＋安全輸出**。",
+    "中央提供**可縮放、可平移的完整排版預覽**，支援放大檢查姓名、公司名稱、細小文字、邊緣及**公司 Logo 細節**；可切換裁切線、安全區、印刷範圍等參考疊圖，顯示倍率與實際尺寸。螢幕放大預覽不能冒充實際印刷品質證據。",
+    "右側顯示印前檢查清單、檢查結果（未檢查／通過／警告／阻擋）、實測原因、受影響欄位或物件與可直接定位的修正入口。檢查包含尺寸、裁切、安全區、文字完整、UI-013 的**固定欄位字級**、水平縮放比例與可讀性、字型可用性/嵌入、人物／公司歸屬、物件重疊及格式可輸出性。",
+    "輸出設定提供實際尺寸、所需解析度與 PDF／PNG／JPG 格式等；以使用者選擇的尺寸和輸出格式進行相應的最終驗證。正式輸出前必須以目前有效資料、模板版本、字型、Logo 資產及目標格式取得新鮮驗證結果；驗證失敗則停用正式輸出，只保留標記為診斷用途的預覽。",
+    "**使用者補充且列為必要驗證：可放大查看文字細節，尤其公司 Logo 細節必須保持高保真，不可失真。**",
+    "盡可能使用並保留來源的**原生向量 Logo／輪廓**，PDF 等可支援向量的輸出不得無理由提前點陣化；不得把 Logo 轉成較差品質的低解析預覽資產再當正式輸出來源。",
+    "對 PNG/JPG 或只能取得點陣來源的情況，必須以**實體印刷尺寸下的有效像素密度、邊緣清晰度、幾何比例及實際匯出結果**驗證；不能以插值放大或單純提高檔案 DPI 標記假裝增加原圖不存在的細節。",
+    "保持 Logo 長寬比例、線條、曲線與構圖，不得任意拉伸、平滑、過度壓縮、重畫或改變來源細節。向量化/清晰化若屬推測重建，只能作明確標示、需人工審核的候選，不得宣稱與原圖完全一致。",
+    "需支援選取 Logo 進行**局部放大／實際輸出品質比對**，列出 Logo 來源類型（向量／點陣／未知）、來源可用性與品質檢查結果；介面顯示清晰不代表 PDF 或點陣輸出一定無失真。",
+    "Logo 原始來源不足、缺失、在預定尺寸或格式下細節無法驗證或已確認明顯劣化，須明確警告並依硬性品質條件**阻擋正式輸出**，引導使用者提供更高品質原始 Logo／正確向量來源或採其他合法方案；不得默默用 AI 虛構 Logo 筆畫。",
+    "各格式有不同物理特性：PDF 可保留向量，PNG/JPG 本質是點陣，不能保證任何倍率下永不像素化；驗收目標是符合經驗證的**指定輸出尺寸與印刷用途**且不引入不可接受的細節劣化。具體品質門檻、工具及可達性待實際 PoC／樣張測試後確定，不任意捏造 DPI 下限。",
+    "輸出預檢沿用 UI-014、UI-015、UI-018 的風險／硬性阻擋與候選排序規範；預覽、儲存草稿、顯示檢查清單均**不等於通過驗證或已輸出**。"
+  ],
+  "normative_clause_count": 12,
+  "clause_count_method": "All12 approved bullets including six nested Logo requirements and selected option; omit header and superseded historical no-development footer",
+  "scope_revision": "Digital visual/output validation now; physical printer/material work remains deferred by original gap-report/REV03 and is not a UI019 software blocker",
+  "references": [
+    {
+      "url": "https://raw.githubusercontent.com/opencv/opencv_contrib/4.11.0/modules/quality/src/qualitymse.cpp",
+      "version": "OpenCV contrib4.11.0 public source; reference only, not installed",
+      "bytes": 1708,
+      "sha256": "2da623d301db1f0097f94899f74df06c445c7c78a74fbec87e073cfc782719bb",
+      "review": "Actually read subtract, multiply square, channel mean; report measured MSE/absolute errors without inventing perceptual or printed-quality thresholds"
+    },
+    {
+      "url": "https://github.com/py-pdf/pypdf",
+      "version": "Installed pypdf5.9.0 PageObject.get_contents source actually read",
+      "bytes": 697,
+      "sha256": "3d16e3c7de8a5bd830d26777bfa5b277efb977c07986f3c52d568c2dc2a04c6e",
+      "review": "Reuse original mature PDF ContentStream/resources parser, actual PDF page/embedded font/vector/image evidence; do not build another PDF parser"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/adobe/pdfservices-python-sdk-samples/main/README.md",
+      "version": "Actual fetched public Adobe SDK examples README; content-hash pinned, not current-product certification",
+      "bytes": 26001,
+      "sha256": "8aed35f9e78e08c251bc0f4c3ed941f7294b89ed9e9c8554fe88fcfc52b9a5ed",
+      "review": "Actually read Create Tagged PDF caveat: generating output does not guarantee standards compliance; independent downstream checks remain necessary. Apply separation of output generation, validation and human proof. Reference only; no SDK/API/credential/payment used"
+    }
+  ],
+  "reference_failure": "Official Acrobat Preflight help retrieval returned tunnel403; do not claim that page read. Public Adobe repository read instead.",
+  "math": [
+    "Contain whole mark: scale=min(frameW/cropW,frameH/cropH), preserve exact original group and aspect ratio",
+    "Effective raster sampling PPI=available_source_crop_pixels/(actual_placed_mm/25.4); output sampling demand derives from explicit chosen DPI, not a fabricated universal print threshold",
+    "MSE=sum((reference-output)^2)/(channels*pixels), MAE/max error and exact dimensions reported; no similarity score alone authorizes fidelity",
+    "Exact before/after candidate/input/template/source/font/Logo/size/format/DPI pins and measured encoded readback; bounded pixel budget, no interpolated detail claim"
+  ],
+  "reuse": [
+    "Existing Main.output_canvas, viewport controls, result problem routing/current candidate Gate and single run_job worker; add bounded checklist/detail views, no second editable workbench",
+    "Existing render.draw_logo vector QSvgRenderer/QPdfWriter or exact image; original source contain/crop geometry and logo approvals",
+    "Existing render.export exclusive temporary staging, exact PDF page box and target font-rights Gate; extend final format-specific checks rather than parallel exporter",
+    "Existing pypdf and QtPdf for actual encoded file resources/page/raster readback; Qt images/buffers for measured image differences"
+  ],
+  "audit_findings": [
+    "Original zoom/pan canvas and current candidate Gate exist; complete named digital checklist with exact locator and trim/safe/page overlays missing",
+    "logo_output_proof only checks encoding/dimensions, explicitly not independent fidelity; GUI shows paths rather than selectable actual output crop comparison",
+    "Formal render export rechecks current formal/font/Logo dependencies but lacks complete target-DPI actual encoded quality proof and stale-proof rejection"
+  ],
+  "packages": [
+    "A exact scope/service/formats/checklist/locators and immutable output proof plan",
+    "B original output canvas overlays + current problem routes and full Logo/source/output detail comparison",
+    "C real PDF vector/embedded-font and raster physical sampling/readback safeguards through original exporter",
+    "D authored composite vector/raster/corrupt/upsampled/cross-format PoC, GUI/native individual review, full12 map and current-source regression"
+  ],
+  "planned_tests": [
+    "Current candidate/source/font/Logo/input/size/format/DPI change cannot reuse old proof or enable formal output",
+    "Named checks give exact slots and measured reason; hard failures stay blocked, preview remains explicitly nonformal",
+    "Original vector curves/text-detail composite survive PDF without needless raster XObject; PNG/JPG actual decoding and sampling/geometry compared at selected physical size",
+    "Missing/unknown/raster-upsampled sources do not gain detail via DPI metadata; lossy difference reported rather than hidden",
+    "Original zoom/pan/magnification/actual size and trim/safe/page overlay toggles; selected exact Logo crop source and encoded outputs navigable",
+    "Bounded worker/cancel/stale result/disk failure do not freeze main GUI or claim saved output",
+    "All12 original clauses mapped, original output/Logo/risk regression and actual native images reviewed"
+  ],
+  "checkpoint": "Plan/reference checkpoint before product changes; each recoverable stage and10min persistence"
+}

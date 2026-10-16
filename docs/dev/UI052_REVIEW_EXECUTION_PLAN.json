@@ -1,6 +1,6 @@
 {
   "parent": "UI-052-REVIEW",
-  "status": "IMPLEMENTATION_WIP_PENDING_FULL9_MAP_AND_COHERENT_REGRESSION",
+  "status": "FULL9_MAPPED_PENDING_COHERENT_AND_IMMUTABLE_FULL_VERIFICATION",
   "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
   "original_clauses": [
@@ -135,5 +135,13 @@
     "failed_runs": "039 empty authored facts;04017steps but cleanup prompt, exact owned process verified then SIGTERM143 retained in outcome;041 capture exit0 but visual CHANGES_REQUIRED retained",
     "formal_runner_hook": true,
     "limits": "Authored Linux Qt only; no Windows hardware/native Illustrator/model/global/output qualification"
+  },
+  "full_original_mapping": "docs/dev/UI052_REVIEW_CLAUSE_COVERAGE.json",
+  "coherent_failure_and_fix": {
+    "evidence": "docs/qa/targeted/ui052-review-full9-regression-046.log",
+    "actual": "exit1:127 tests,126PASS,1FAIL hidden-page job label RUNNING after actual completion",
+    "fix": "Original MAJOR_ANALYSIS reads persisted AUTO_JOB effective phase; explicit analysis readback updates combo independent of hidden automatic refresh",
+    "verification": "docs/qa/targeted/ui052-review-hidden-readback-047.log:6PASS actualexit0",
+    "next": "Full coherent rerun then immutable full source/native/publication Gate"
   }
 }

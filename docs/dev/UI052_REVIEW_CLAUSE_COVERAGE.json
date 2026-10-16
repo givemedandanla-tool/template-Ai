@@ -1,0 +1,139 @@
+{
+  "parent": "UI-052-REVIEW",
+  "status": "IMPLEMENTED_MAPPED_PENDING_COHERENT_AND_IMMUTABLE_FULL_VERIFICATION",
+  "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
+  "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
+  "normative_clause_count": 9,
+  "clauses": [
+    {
+      "id": "UI-052-REVIEW-CLAUSE-1",
+      "expected": "- **使用者新增正式需求（2026-10-12）**：即使某來源、獨立作品、AI 標記、客戶歸屬、核准規則或版型候選**先前已通過審核，甚至所屬批次已結案**，當使用者發現**嚴重錯誤可能廣泛存在於已通過檔案**，必須能主動發起**跨檔案／跨作品／跨既有批次的受控重審**。**已審核不是永久豁免重審，也不能只對當前發現的單張作品修正後便認定其他已通過項目安全**。本要求是 UI-052 D 的正式必要功能，不需新增平行審核系統。",
+      "tests": [
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_closed_batch_entry_pins_current_work_and_preserves_old_closure",
+        "test_major_review_findings.MajorReviewFindingTests.test_explicit_reopen_preserves_history_and_requires_facts_newer_than_reopen",
+        "test_quality_rechecks.QualityRecheckTests.test_actual_critical_result_finds_closed_historical_batch_and_quarantines_it"
+      ]
+    },
+    {
+      "id": "UI-052-REVIEW-CLAUSE-2",
+      "expected": "- **發起入口與證據**：在 UI-052 整批審核總覽、個別來源／作品詳情、UI-004／UI-005 例外與 UI-040／UI-041 規則追溯提供「**發現重大共通錯誤 → 發起重審**」入口。由使用者指定問題類別、最早發現的來源／作品／欄位、正確與錯誤的可驗證例子及嚴重程度；例如**姓名／電話跨人物錯配、公司 Logo 圖文切損或被當普通文字、同一類 AI 作品切分漏件、錯誤雜訊排除規則、客戶編號誤歸屬、跨卡片實體尺寸錯用 Logo**。AI 可協助提出相似問題或受影響規則，但不得將相似度推斷冒充已證實誤判，也不因一個個案未經分析便擅自發布全域修正規則。",
+      "tests": [
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_source_entry_pins_work_and_dirty_editor_blocks_it",
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_exception_entry_keeps_original_receipt_and_work_ids",
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_rule_trace_entry_does_not_claim_proven_global_cause",
+        "test_major_review_entries.MajorReviewEntryTests.test_overview_opens_actual_major_page_without_creating_any_record",
+        "test_major_review_entries.MajorReviewEntryTests.test_source_evidence_save_routes_same_dialog_to_major_page_without_auto_start",
+        "test_quality_source_review.QualitySourceReviewTests.test_examples_and_literal_approval_are_required",
+        "test_major_review_gui.MajorReviewGuiTests.test_changed_evidence_after_preview_invalidates_consent_and_never_starts_case"
+      ]
+    },
+    {
+      "id": "UI-052-REVIEW-CLAUSE-3",
+      "expected": "- **受影響範圍（blast radius）溯源**：使用既有 `source_files`、`content_blobs`、`artworks`、候選標記／人物／公司歸屬、`customer_card_styles`／`style_version_id`、規則／模型／解析器版本、來源校正／人工核准與結案快照，反向找出**引用同一有疑義規則、模型版本、標記模式、Logo 資產／實體尺寸、來源或語意條件**的所有已通過及待審對象，**包含其他批次及歷史已結案項目**。總覽按確定直接依賴／高度疑似／資訊不足分類，逐層顯示**已檢索分母、受影響來源檔數、作品數、規則版本、客戶與版型版本**；不能把一個檔案含多作品、位元相同而客戶來源獨立等情況混算，也不能因只檢索正在顯示的一頁就冒稱「全庫掃描完成」。若依賴資料不足，顯示覆蓋範圍不足／待補核對，不假裝沒有其他受影響項。",
+      "tests": [
+        "test_quality_source_review.QualitySourceReviewTests.test_source_and_work_denominators_keep_equal_bytes_as_distinct_logical_records",
+        "test_quality_source_review.QualitySourceReviewTests.test_unknown_other_source_stays_quarantined_without_claiming_complete_safety",
+        "test_quality_repair_impact.QualityRepairImpactTests.test_actual_training_producer_and_historical_templates_reach_customer_without_writes",
+        "test_quality_repair_impact.QualityRepairImpactTests.test_missing_producer_revision_is_potential_and_cannot_be_presented_as_exact",
+        "test_major_review_dependencies.MajorModelDependencyTests.test_actual_source_training_quarantines_same_parameter_model_aliases",
+        "test_quality_rechecks.QualityRecheckTests.test_legacy_review_without_version_snapshot_is_potential_impact_not_guessed_exact"
+      ]
+    },
+    {
+      "id": "UI-052-REVIEW-CLAUSE-4",
+      "expected": "- **隔離有風險的既有通過結果**：一旦使用者確認啟動重大錯誤重審，對**有明確依賴證據**或依安全策略應阻擋的受影響結果標註「**原通過狀態待重新驗證／暫停信任（REVIEW_REQUIRED）**」，阻止其作為**新工作的自動可信學習輸入、版型正式推薦或不經再次確認的印前合格依據**，直至重新檢查合格；高度疑似及無法確認者列為「待核對／可能受影響」，依風險阻擋危險使用，不能直接視為已證實錯誤或一律刪除。**保留舊版通過／批次結案紀錄及原始 AI、正式模板與已輸出成品不變**，但相關既有發布版型的可用性應顯示醒目風險與必要重驗；已在外部使用或已交付的成品只能標記需人工評估／聯繫，不可聲稱已撤回或自動修改。",
+      "tests": [
+        "test_quality_source_review.QualitySourceReviewTests.test_existing_qualified_candidate_loses_current_trust_without_template_mutation",
+        "test_quality_source_review.QualitySourceReviewTests.test_new_major_case_invalidates_cached_batch_ready_before_installing_any_geometry",
+        "test_quality_source_review.QualitySourceReviewTests.test_explicit_new_correction_draft_is_editable_but_cannot_be_published_under_quarantine",
+        "test_major_template_review.MajorTemplateReviewTests.test_work_only_release_does_not_release_old_template_family_or_new_source_alias",
+        "test_major_template_review.MajorTemplateReviewTests.test_registered_template_cannot_change_family_and_version_to_evade_quarantine",
+        "test_major_review_dependencies.MajorRuleDependencyTests.test_actual_rule_evidence_quarantines_equivalent_approved_rule_ids",
+        "test_major_review_dependencies.MajorGoldDeploymentTests.test_source_gold_dependency_suspends_existing_accepted_runtime_without_rewriting_it",
+        "test_major_review_findings.MajorReviewFindingTests.test_pending_error_and_unknown_findings_retain_quarantine",
+        "test_major_review_findings.MajorReviewFindingTests.test_verified_exclusion_does_not_turn_lost_source_into_trusted_work"
+      ]
+    },
+    {
+      "id": "UI-052-REVIEW-CLAUSE-5",
+      "expected": "- **重審流程與審核政策**：GUI 提供「問題證據 → 候選影響清單與版本快照 → 使用者確認重審範圍與隔離策略 → 依 UI-051 低配公平佇列執行增量重新分析 → 依 UI-038／UI-039／UI-040／UI-041 既有畫布與規則中心審核 → 顯示舊判定／新判定及原因 → 驗收與受控解除隔離」的工作流。低風險且依**新核准／仍有效的規則**可確實自動核驗者可以批次完成；牽涉人物／客戶、公司 Logo、作品漏切分等高風險項目須逐項人工確認。不能用「重審開始」冒充「重審已完成」，也不能靠高 AI 信心、舊核准標籤或錯誤規則自我核准。",
+      "tests": [
+        "test_major_review_job_gui.MajorReviewJobGuiTests.test_actual_original_fifo_submit_and_saved_old_new_analysis_never_auto_approve",
+        "test_major_review_finding_gui.MajorFindingGuiTests.test_actual_gui_new_confirmed_facts_release_only_this_work_not_case_or_model",
+        "test_major_review_finding_gui.MajorFindingGuiTests.test_old_or_unconfirmed_facts_cannot_preview_safe_conclusion",
+        "test_major_review_finding_gui.MajorFindingGuiTests.test_selection_or_evidence_change_prevents_manual_release",
+        "test_major_review_template_gui.MajorTemplateGuiTests.test_actual_template_clearance_is_explicit_and_does_not_rewrite_original_version",
+        "test_major_review_template_gui.MajorTemplateGuiTests.test_missing_manual_check_or_current_input_failure_never_clears_template",
+        "test_major_review_template_gui.MajorTemplateGuiTests.test_current_input_change_after_template_preview_does_not_use_old_qa"
+      ]
+    },
+    {
+      "id": "UI-052-REVIEW-CLAUSE-6",
+      "expected": "- **訂正規則與可控擴散**：先修正個別錯誤與其真實根因候選；**單例人工修正只對單例有效**。若要修訂通用 AI／雜訊／欄位判讀規則，須延用 UI-007／UI-008／UI-041 的**新規則候選、影響預覽、明確核准、可追溯版本、反例驗證及安全回滾**，不可藉重審直接隱性改寫所有模板或客戶資料。需要實際改動客戶主檔、合併／拆分或既有模板時，仍分別走 UI-045／UI-046、UI-010 的明確核准與版本保護。",
+      "tests": [
+        "test_quality_repairs.QualityRepairIssueTests.test_actual_source_issue_and_reviewed_hypothesis_do_not_change_formal_data_or_claim_proven_root",
+        "test_quality_repairs.QualityRepairIssueTests.test_disputed_truth_and_missing_review_flags_remain_manual_without_candidate",
+        "test_quality_repair_rules.QualityRepairRuleTests.test_shared_high_risk_policy_and_root_layer_cannot_be_bypassed",
+        "test_quality_repair_gates.QualityRepairGateTests.test_actual_root_is_fixed_without_independent_pass_and_cannot_skip_controls",
+        "test_quality_repair_gates.QualityRepairGateTests.test_identical_actual_pipeline_cannot_be_registered_as_repair_by_renaming",
+        "test_quality_repair_full_chain.QualityRepairFullChainTests.test_full_actual_ordered_control_independent_chain_and_repair_deployment",
+        "test_major_review_closure.MajorReviewClosureTests.test_explicit_current_source_repair_draft_preserves_old_publication_and_provenance"
+      ]
+    },
+    {
+      "id": "UI-052-REVIEW-CLAUSE-7",
+      "expected": "- **重審進度與完成 Gate**：總覽分開列「需重審總數／已檢查／確認無誤／確認錯誤待修／修正已重新核准／待人工／阻擋／無法判定／未掃描」，可按來源／作品／規則／模型／版型版本與原批次搜尋；呈現**受影響既有批次的最新有效審核狀態**，原已結案憑證仍保留且被標註「後續重審已發起／原結論不可直接沿用」。只有指定範圍內各項都經重新核實、必要錯誤已經修正或有獲准且可核對的排除，且來源與規則版本仍有效，才能**正式結束重審與解除隔離**；尚有未知受影響範圍或已確認風險不得宣告全庫安全。重審完成**不代表 AI 模型已通過 UI-053 的獨立品質驗證**，也不等於任何既有或新稿可略過印前 Gate。",
+      "tests": [
+        "test_major_review_closure.MajorReviewClosureTests.test_unchecked_case_cannot_close_but_current_human_work_scope_can",
+        "test_major_review_closure.MajorReviewClosureTests.test_exclusion_can_complete_defined_scope_while_source_remains_untrusted",
+        "test_major_review_closure.MajorReviewClosureTests.test_scope_version_change_after_closure_preview_is_refused",
+        "test_major_review_closure.MajorReviewClosureTests.test_case_completion_does_not_hide_unreviewed_template_and_can_reopen_exact_unit",
+        "test_major_review_closure.MajorReviewClosureTests.test_reviewed_repair_version_can_complete_case_and_new_doubt_reopens_with_history",
+        "test_major_review_gui.MajorReviewGuiTests.test_actual_case_filter_reports_loaded_scope_and_unscanned_state",
+        "test_major_review_entries.MajorReviewEntryTests.test_actual_closed_batch_entry_pins_current_work_and_preserves_old_closure",
+        "test_major_review_findings.MajorReviewFindingTests.test_new_source_work_or_fact_revision_invalidates_old_release_receipt"
+      ]
+    },
+    {
+      "id": "UI-052-REVIEW-CLAUSE-8",
+      "expected": "- **不中斷／可恢復與低配相容**：重審排程重用 UI-042 檢查點、UI-051 資源限制與公平工作佇列；只重算真正受影響的來源／作品／規則依賴，未受影響且版本有效的成果保留。開始、暫停、程式當機、斷電、版本競爭及解除隔離都應有真實持久證據與可查詢狀態；在無法落盤、來源失聯或版本衝突時 Fail-Closed，不可默默把已失效結果標成安全。重審不得讓 GUI 在低配電腦上無法正常啟動、長時間無回應，也不因有問題項目阻擋其他無關工作。",
+      "tests": [
+        "test_major_review_jobs.MajorReviewJobTests.test_real_original_parser_job_saves_comparison_and_keeps_business_data_and_quarantine",
+        "test_major_review_jobs.MajorReviewJobTests.test_actual_cancel_after_first_keeps_checkpoint_and_resume_skips_already_saved_source",
+        "test_major_review_jobs.MajorReviewJobTests.test_missing_source_failure_does_not_contaminate_other_success",
+        "test_major_review_jobs.MajorReviewJobTests.test_selected_subset_leaves_other_case_work_unscanned",
+        "test_major_review_jobs.MajorReviewJobTests.test_stale_or_tampered_scope_never_enters_original_worker",
+        "test_major_review_jobs.MajorReviewJobTests.test_shared_fifo_claims_source_jobs_in_original_order_and_preserves_other_source",
+        "test_major_review_jobs.MajorReviewJobTests.test_real_owned_process_exit_is_interrupted_and_requires_explicit_resume",
+        "test_major_review_jobs.MajorReviewJobTests.test_restored_missing_source_has_saved_current_analysis_and_still_requires_manual_review",
+        "test_major_review_jobs.MajorReviewJobTests.test_completed_analysis_cannot_be_claimed_as_new_training_or_review_approval",
+        "test_quality_source_review.QualitySourceReviewTests.test_midtransaction_storage_failure_rolls_back_quarantine_and_case_together",
+        "test_quality_source_review.QualitySourceReviewTests.test_modified_scope_or_changed_source_after_preflight_does_not_create_case"
+      ]
+    },
+    {
+      "id": "UI-052-REVIEW-CLAUSE-9",
+      "expected": "- **最小擴充、不新增影子審核庫**：以既有審核事件／規則版本／批次結案快照增補必要的**重審案件 ID、根因、影響依賴快照、原核准版本、各對象重審狀態與解除隔離憑證**；持久資料本機保護，不上傳真實聯絡方式／原稿至 GitHub。UI-048 完整權限管理仍最後實作，前期只能用合成或去識別資料驗證。",
+      "tests": [
+        "test_quality_source_review.QualitySourceReviewTests.test_source_evidence_can_start_without_quality_protocol_and_preserves_original_records",
+        "test_quality_source_review.QualitySourceReviewTests.test_restart_reads_same_persistent_case_and_runtime_guard",
+        "test_quality_source_review.QualitySourceReviewTests.test_exact_case_retry_is_idempotent_even_after_another_manual_edit",
+        "test_major_review_findings.MajorReviewFindingTests.test_idempotent_finding_readback_does_not_duplicate_approval_events",
+        "test_major_review_closure.MajorReviewClosureTests.test_explicit_current_source_repair_draft_preserves_old_publication_and_provenance"
+      ]
+    }
+  ],
+  "native_capture": "docs/qa/targeted/ui052-review-native-044-visual-review.json",
+  "architecture_audit": [
+    "Original TrainingStore typed records, original QualityRechecks/QualityRepairDialog and source facts editor; no second review DB",
+    "Original AUTO_JOB/RuntimeQueue/owned process/resource admission; no second pool",
+    "Original NetworkX dependency traversal and exact component fingerprints; temporal history stays immutable",
+    "Original template generation/layout/candidate whole-card gate and controlled new draft/provenance",
+    "Original GOLD invalidation suspends dependent old quality approvals/deployment; not an unproved global parser fault"
+  ],
+  "limits": [
+    "Case completion only pins original source/work/template unit scope, not whole-corpus/model/output qualification",
+    "Missing/unrecorded dependencies remain UNKNOWN; source facts and manual review are individually explicit",
+    "Windows16GB RTX5050/VivoBook, IME/accessibility and authorized native Illustrator corpus remain external gaps"
+  ]
+}

@@ -91,6 +91,7 @@ class MajorJobPageMixin:
         if len(rows)!=1 or rows[0]['kind']!='QUALITY_WORK_QUARANTINE':raise ValueError('請明確選取一件有已保存分析的作品')
         row=rows[0]
         def loaded(value):
+            self.update_job_label(dict(id=value['analysis']['job_id']),value['job_phase'])
             result=value['analysis'];lines=['此為已保存的原／新判定對照；'+('目前作品來源版次仍一致。' if value['current'] else '目前來源／作品已改變，以下為歷史對照，不能當目前核准。'),'原判定：']
             old=next(item for item in result['original_facts'] if item['work_id']==row['work_id']);lines.append('事實版次 '+str(old['facts_revision']))
             if old['missing_prior_facts']:lines.append('缺原人工事實紀錄，維持未知，不補造舊核准。')
