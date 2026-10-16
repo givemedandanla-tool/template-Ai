@@ -26,6 +26,18 @@ def execute(library,command,payload):
     if command=='CONFIRM_TEMPLATE':
         from .major_template_review import confirm
         return confirm(service,**payload)
+    if command=='CLOSURE_PLAN':
+        from .major_review_closure import plan
+        return plan(service,**payload)
+    if command=='CLOSE_SCOPE':
+        from .major_review_closure import confirm
+        return confirm(service,**payload)
+    if command=='REPAIR_DRAFT_PLAN':
+        from .major_template_review import repair_plan
+        return repair_plan(service,**payload)
+    if command=='CREATE_REPAIR_DRAFT':
+        from .major_template_review import repair
+        return repair(service,**payload)
     if command=='JOB_PLAN':
         from .major_review_jobs import plan
         return plan(library,**payload)

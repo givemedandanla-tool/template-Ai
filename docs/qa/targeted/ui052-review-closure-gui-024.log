@@ -1,0 +1,38 @@
+test_case_completion_does_not_hide_unreviewed_template_and_can_reopen_exact_unit (test_major_review_closure.MajorReviewClosureTests.test_case_completion_does_not_hide_unreviewed_template_and_can_reopen_exact_unit) ... Fontconfig error: No writable cache directories
+ok
+test_exclusion_can_complete_defined_scope_while_source_remains_untrusted (test_major_review_closure.MajorReviewClosureTests.test_exclusion_can_complete_defined_scope_while_source_remains_untrusted) ... ok
+test_explicit_current_source_repair_draft_preserves_old_publication_and_provenance (test_major_review_closure.MajorReviewClosureTests.test_explicit_current_source_repair_draft_preserves_old_publication_and_provenance) ... ok
+test_reviewed_repair_version_can_complete_case_and_new_doubt_reopens_with_history (test_major_review_closure.MajorReviewClosureTests.test_reviewed_repair_version_can_complete_case_and_new_doubt_reopens_with_history) ... ok
+test_scope_version_change_after_closure_preview_is_refused (test_major_review_closure.MajorReviewClosureTests.test_scope_version_change_after_closure_preview_is_refused) ... ok
+test_unchecked_case_cannot_close_but_current_human_work_scope_can (test_major_review_closure.MajorReviewClosureTests.test_unchecked_case_cannot_close_but_current_human_work_scope_can) ... ok
+test_actual_current_source_repair_saves_new_draft_and_keeps_old_reference_history (test_major_review_template_gui.MajorTemplateGuiTests.test_actual_current_source_repair_saves_new_draft_and_keeps_old_reference_history) ... ok
+test_actual_source_only_scope_closes_with_unknown_corpus_and_model_quality_held_apart (test_major_review_template_gui.MajorTemplateGuiTests.test_actual_source_only_scope_closes_with_unknown_corpus_and_model_quality_held_apart) ... ok
+test_actual_template_clearance_is_explicit_and_does_not_rewrite_original_version (test_major_review_template_gui.MajorTemplateGuiTests.test_actual_template_clearance_is_explicit_and_does_not_rewrite_original_version) ... ERROR
+test_current_input_change_after_template_preview_does_not_use_old_qa (test_major_review_template_gui.MajorTemplateGuiTests.test_current_input_change_after_template_preview_does_not_use_old_qa) ... ok
+test_missing_manual_check_or_current_input_failure_never_clears_template (test_major_review_template_gui.MajorTemplateGuiTests.test_missing_manual_check_or_current_input_failure_never_clears_template) ... FAIL
+
+======================================================================
+ERROR: test_actual_template_clearance_is_explicit_and_does_not_rewrite_original_version (test_major_review_template_gui.MajorTemplateGuiTests.test_actual_template_clearance_is_explicit_and_does_not_rewrite_original_version)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_major_review_template_gui.py", line 30, in test_actual_template_clearance_is_explicit_and_does_not_rewrite_original_version
+    self.make();before=self.library.object_snapshot('TEMPLATE',self.template.id);self.select_template();self.fill();self.page.preview_template();self.wait();self.assertIsNotNone(self.page.template_plan,self.d.status.text());self.assertTrue(self.page.template_plan['can_release'],self.page.template_plan['blockers']);self.save();self.library._template_provenance(self.template);self.assertEqual(self.library.object_snapshot('TEMPLATE',self.template.id),before);self.assertIn('修正後重新核准',self.page.counts.text())
+                                                                                                                                                                                                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/storage.py", line 374, in _template_provenance
+    if not (allow_quarantined_draft is True and t.state=='draft') and source_or_template_blocked(self,t,exact_content=for_publication):raise ValueError('重大共通錯誤重審尚未核准此來源／模板版本，暫停可信使用')
+                                                                                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 重大共通錯誤重審尚未核准此來源／模板版本，暫停可信使用
+
+======================================================================
+FAIL: test_missing_manual_check_or_current_input_failure_never_clears_template (test_major_review_template_gui.MajorTemplateGuiTests.test_missing_manual_check_or_current_input_failure_never_clears_template)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_major_review_template_gui.py", line 34, in test_missing_manual_check_or_current_input_failure_never_clears_template
+    self.fill();self.w.people.item(0,0).setText('W'*150);self.page.preview_template();self.wait();self.assertIsNotNone(self.page.template_plan);self.assertFalse(self.page.template_plan['can_release']);self.d.consent.setChecked(True)
+                                                                                                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 11 tests in 17.754s
+
+FAILED (failures=1, errors=1)

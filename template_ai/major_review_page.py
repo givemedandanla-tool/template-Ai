@@ -4,11 +4,12 @@ from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,Q
 from .customers import digest
 from .major_review_job_ui import MajorJobPageMixin
 from .major_review_finding_ui import MajorFindingPageMixin
+from .major_review_template_ui import MajorTemplatePageMixin
 
 STATES={'UNSCANNED':'未掃描','UNKNOWN':'無法判定','REAPPROVED':'修正後重新核准','CHECKED_OK':'確認無誤','ERROR_NEEDS_FIX':'確認錯誤待修','NEEDS_MANUAL':'待人工','BLOCKED':'阻擋','PROCESSING':'正在分析','INTERRUPTED':'中斷待明確接續','CANCELLED':'已取消／尚未完成','EXCLUDED_VERIFIED':'核准排除／仍暫停信任','STALE_REVIEW':'重審憑證已過期'}
 
 
-class MajorReviewPage(MajorFindingPageMixin,MajorJobPageMixin,QWidget):
+class MajorReviewPage(MajorTemplatePageMixin,MajorFindingPageMixin,MajorJobPageMixin,QWidget):
     def __init__(self,dialog):
         super().__init__(dialog);self.dialog=dialog;self.plan=None;self.plan_pin=None;self.offset=0;self.case_offset=0;self.rows=[];self.case=None
         layout=QVBoxLayout(self);notice=QLabel('發現重大共通錯誤 → 以目前選定的既有問題發起重審。先核對來源、正反例與影響範圍；開始隔離不等於完成重審，未知依賴不算全庫安全。');notice.setWordWrap(True);layout.addWidget(notice)
@@ -26,12 +27,14 @@ class MajorReviewPage(MajorFindingPageMixin,MajorJobPageMixin,QWidget):
         self.cases.currentIndexChanged.connect(lambda *_:setattr(self,'offset',0))
         self.init_job_controls(layout)
         self.init_finding_controls(layout)
+        self.init_template_controls(layout)
     def button(self,bar,title,action):
         button=QPushButton(title);button.clicked.connect(lambda:self.dialog.guard(action));bar.addWidget(button);return button
     def invalidate(self,*_):
         self.plan=None;self.plan_pin=None
         self.job_plan=None;self.job_pin=None
         self.finding_plan=None;self.finding_pin=None
+        self.template_plan=None;self.template_plan_pin=None
         if hasattr(self.dialog,'consent'):self.dialog.consent.setChecked(False)
     def form(self):return dict(issue_id=self.dialog.issue_id(),category=self.category.currentText(),correct_example=self.correct.toPlainText(),wrong_example=self.wrong.toPlainText(),severity=self.severity.currentData())
     def pin(self):return digest(dict(form=self.form(),actor=self.dialog.actor.text(),reason=self.dialog.reason.text()))
@@ -49,6 +52,7 @@ class MajorReviewPage(MajorFindingPageMixin,MajorJobPageMixin,QWidget):
             d.details.setPlainText('\n'.join(lines));d.status.setText('影響預覽完成，尚未啟動。核對未知範圍及下方明確確認，再按「確認並保存所選預覽」。')
         d.request('MAJOR_PLAN',form,loaded)
     def confirm(self):
+        if self.pending_action=='TEMPLATE':return self.confirm_template_action()
         if self.pending_action=='FINDING':return self.confirm_finding()
         if self.pending_action=='JOB':return self.confirm_job()
         d=self.dialog

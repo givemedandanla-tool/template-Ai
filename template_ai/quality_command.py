@@ -19,6 +19,10 @@ def execute(root,command,payload):
         store=TrainingStore(library)
         if command.startswith('MAJOR_'):
             from .major_review_commands import execute as major_execute
+            # Exact template QA uses the original Qt font metrics in this owned
+            # subprocess too; the desktop application's instance is not shared.
+            from PySide6.QtGui import QGuiApplication
+            font_app=QGuiApplication.instance() or QGuiApplication([])
             return major_execute(library,command.removeprefix('MAJOR_'),payload)
         if command.startswith('REPAIR_'):
             from .quality_repair_commands import execute as repair_execute
