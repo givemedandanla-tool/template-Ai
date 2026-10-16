@@ -1,5 +1,6 @@
 import tempfile,time,threading,unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 from PySide6.QtTest import QTest,QSignalSpy
 from PySide6.QtWidgets import QApplication
@@ -26,7 +27,7 @@ class SourceWatchServiceTests(unittest.TestCase):
         APP.processEvents()
 
     def enable(self):
-        self.watch=configure_root(self.store,self.watch,mode='AUTO_PRECHECK',enabled=True);self.service.sync();self.service.dispatch();self.wait(lambda:not self.service.running and not self.window.busy)
+        self.watch=configure_root(self.store,self.watch,mode='AUTO_PRECHECK',enabled=True);self.service.sync();self.service.dispatch();self.wait(lambda:self.service.last_result is not None and not self.service.running and not self.window.busy)
         self.watch=self.store.get('SCAN_ROOT',self.watch['id'])
 
     def test_real_qt_directory_notification_creates_exact_new_candidates_and_preserves_alias_identity(self):
@@ -47,7 +48,13 @@ class SourceWatchServiceTests(unittest.TestCase):
         self.watch=configure_root(self.store,self.watch,mode='AUTO_PRECHECK',enabled=True);self.window.busy=True;self.service.sync()
         for _ in range(100):self.service.hint(str(self.directory))
         self.service.dispatch();self.assertFalse(self.service.running);self.assertEqual(list(self.service.pending),[self.watch['id']]);self.assertEqual(candidate_page(self.store),[])
-        self.window.busy=False;self.service.dispatch();self.wait(lambda:not self.service.running and not self.window.busy)
+        self.window.busy=False
+        # An idle worker can still be waiting for resource admission. Preserve the
+        # FIFO request through that state, then await the actual scan outcome.
+        with patch.object(self.window.runtime,'admit',return_value=SimpleNamespace(allowed=False,reasons=('SYNTHETIC_PRESSURE',))):
+            self.service.dispatch()
+        self.assertFalse(self.service.running);self.assertEqual(list(self.service.pending),[self.watch['id']]);self.assertEqual(candidate_page(self.store),[])
+        self.service.dispatch();self.wait(lambda:len(candidate_page(self.store))==1 and not self.service.running and not self.window.busy)
         self.assertEqual(len(candidate_page(self.store)),1)
 
     def test_pause_during_real_worker_cancels_before_candidate_commit_then_disables_future_work(self):
@@ -67,7 +74,7 @@ class SourceWatchServiceTests(unittest.TestCase):
             return result
         self.watch=configure_root(self.store,self.watch,mode='AUTO_PRECHECK',enabled=True)
         with patch('template_ai.source_watch.scan_files',side_effect=changed):
-            self.service.sync();self.service.dispatch();self.wait(lambda:not self.service.running and not self.window.busy)
+            self.service.sync();self.service.dispatch();self.wait(lambda:self.service.last_result is not None and not self.service.running and not self.window.busy)
         self.assertIn('索引',self.service.last_result['error']);self.assertEqual(candidate_page(self.store),[]);self.assertEqual(len(self.window.library.list_sources()),1);self.assertIsNone(self.store.get('SCAN_ROOT',self.watch['id'])['last_success'])
 
     def test_shutdown_stops_qt_watchers_and_timers_before_library_close(self):

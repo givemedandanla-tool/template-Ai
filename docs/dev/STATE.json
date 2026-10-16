@@ -28,7 +28,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261016-REMAINING28-UI053-QUALITY-SOURCE-002"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-COVERAGE.json",
@@ -567,7 +569,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-QUALITY-001",
+  "planned_evidence_run": "RUN-REMAINING28-QUALITY-002",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -635,7 +637,8 @@
   },
   "latest_verification": "docs/dev/REMAINING28_WATCH_VERIFICATION.json",
   "failed_evidence_runs": [
-    "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json"
+    "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json",
+    "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json"
   ],
   "active_work_package_plan": "docs/dev/UI051_EXECUTION_PLAN.json",
   "formal_execution_watch": {
@@ -656,5 +659,18 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "Frozen source233e9ea4edc8d8927e482c3f0d362a78bd2ced5d actual formal running; 653/935 passed so far, no completion claim; UI054 read-only plan11 original clauses"
+  "current_work": "935-test quality001 preservedFAIL934PASS/1legacywatch synchronization failure; all11watch003PASS after test-only actual-completion waits; freeze002 source next; historical6of28 unchanged",
+  "last_formal_failure": {
+    "run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
+    "source_commit": "233e9ea4edc8d8927e482c3f0d362a78bd2ced5d",
+    "tests": 935,
+    "passed": 934,
+    "failed": 1,
+    "unhandled_runtime_errors": 0,
+    "source_unchanged": true,
+    "actual_exit_code": 1,
+    "capture_executed": false,
+    "capture_exit_code_sentinel": 1,
+    "reason": "Existing watch test equated idle with finished although real resource admission can leave FIFO pending; production guards unchanged"
+  }
 }
