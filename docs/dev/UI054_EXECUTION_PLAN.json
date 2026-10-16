@@ -1,6 +1,6 @@
 {
   "id": "UI054-ROOT-CAUSE-REPAIR-EXACT11",
-  "status": "READ_ONLY_PLAN_PENDING_UI053_FORMAL_NOT_IMPLEMENTED",
+  "status": "UNEXECUTED_DRAFT_ONLY_PENDING_UI053_FORMAL",
   "original_clauses": [
     "**使用者決策 D｜根因分析＋安全增量修復＋獨立再驗收＋版本回退**。沿用 UI-052 已確認的「重大錯誤跨批次重審與暫停信任」、UI-053 獨立樣本分類品質驗收及 UI-051 低配公平佇列，形成**發現問題 → 查證根因 → 產生隔離修復候選 → 有界增量驗證／訓練 → 獨立品質再驗收 → 人工批准啟用／維持舊版 → 可追溯安全回退**的 GUI 閉環。**任何 AI 自行提出的修復不得直接改寫正式模型、核准規則、原始 Illustrator、客戶主檔或已發布模板**。這是 GUI 需求決策，不代表已實作。",
     "**問題輸入與對應證據**：可從 UI-053 分類誤判／漏判詳情、UI-052 重大錯誤重審、UI-004／UI-005 例外中心及 UI-038／UI-039 原畫布開啟既有修復工作台。保留實際錯誤來源、`source_file_id`、`content_id`、`artwork_id`、人物／公司／複合 Logo／標記框、受影響客戶及確切 `style_version_id`、模型／解析器／OCR／正式規則版本、可核實的人工正確答案與發生條件；依類型顯示**根因候選及證據充足程度**，不能把 AI 推測當成已找到根因。",
@@ -63,7 +63,7 @@
     "Source/Gold ambiguity or missing original blocks automatic repair; safe manual correction route remains available"
   ],
   "nonclaims": [
-    "No code edited during UI053 frozen-source formal",
+    "No application/test/tool/acceptance edits during UI053 frozen-source formal; documentation drafts unexecuted",
     "No parent completion from this plan",
     "No paid API/model/server, new service, EXE, main merge or subagent",
     "No production accuracy calibration, actual native Illustrator corpus/Windows/referencehardware or independent review"
@@ -76,6 +76,17 @@
     "Bounded selected-scope semantic retraining should reuse shared FIFO/process supervisor and SemanticLearning.train, preferably one explicit new job adapter with atomic candidate/job/lease receipt; no duplicate scheduler. No warm-start claim unless actual counts delta is implemented; bounded selected-scope retrain is distinct from fullhistory retrain.",
     "Potential positive synthetic fixture: actual known baseline cannot classify an unprefixed unseen Chinese jobtitle; separately authored TRAIN/VALIDATION title/address examples train existing CharacterModel. Exposed failed root truth is never passed to trainer. New frozen model should fix actual source prediction; same authored source includes unaffected Name/contact/company/wholeLogo/mm/customer controls. Synthetic lenient explicit policy exercises state transitions only, not production calibration.",
     "Use existing QualityRechecks exact/legacy-potential history impacts and new explicit human FACTS resolution, preserving historical quarantine and closed receipts. A repaired row alone never clears model/component quarantine; new effective params/version required.",
-    "Keep parser/model/rule fingerprints (not IDs/names), Gold rights/currentsource proofs, finite schema validation, 50row pagination, canonical case receipts and unsaved-fact navigation guards."
+    "Keep parser/model/rule fingerprints (not IDs/names), Gold rights/currentsource proofs, finite schema validation, 50row pagination, canonical case receipts and unsaved-fact navigation guards.",
+    "Chosen reuse: semantic repair training is an explicit operation on existing AUTO_JOB (scope includes training/root-review digests), reusing AutomaticTraining claim/finish, shared worker lease, runtime child supervisor, cancel/pause/restart/restore; no fourth job kind/new queue. Model+candidate+finaljob+lease atomic commit; exact bounded TRAIN/VALIDATION inputs only. Draft unexecuted, must integrate and test."
+  ],
+  "drafts": [
+    "docs/dev/wip/UI054_QUALITY_REPAIRS_DRAFT.py",
+    "docs/dev/wip/UI054_REPAIR_TRAINING_DRAFT.py"
+  ],
+  "draft_limits": [
+    "Only ast.parse syntax checked; never imported/executed or copied into actual application",
+    "Issue draft still needs current Gold/domain truth and external exception integration tests; no completeness claim",
+    "Training draft reuses actual AUTO_JOB claim/finish/sharedlease/child/runtime protocol; integration into claim/run plus mode scope validation still NOT DONE",
+    "Need all root/control/replay/independent receipts, actual isolated rule selection and runtime deployment/rollback, GUI/entrypoints/negative tests before full11 acceptance"
   ]
 }
