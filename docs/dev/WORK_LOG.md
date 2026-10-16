@@ -958,3 +958,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-16 01:01 UTC actual evaluation worker runtime WIP
 - 18 targetsPASS，actual stdlib isolated children bothsides FIFO+sharedlease，resourcepartialresume只跑未完成，cancel/resume，auditfailure item/pred/jobresult全回滾；oldruntime cases仍PASS。Source rights pre-predict、final scope/cache/stat proof與最後timeout unknownreceipt已補，後者需nextkill/GUI tests。
 - Checkpoint實際cadence：DOMAIN→BRIDGE 609.9s，超10分鐘9.9s；prepared/remote receipts均保留，未虛稱嚴格每段都≤600s，後續以約8分鐘預留持久化。
+
+### 2026-10-16 01:13 UTC actual dispatcher / timeout / backup restore WIP
+- Actual GUI dispatch/launchfailure/owned stalledchild timeout plus EvalJobs 8 PASS; dispatch/pipeline/encryptedrestore regression 27 PASS (overlap, not 35 unique). Last-source timeout preserves source/gold denominators and unknown result without predictions. Restore resets EVAL_JOB owner/token and requires explicit resume; pipeline executable metadata does not package system binary.
+- UI053 remains incomplete: independent-group statistical Gate/pairedAB, complete Logo/mapping Oracle adapters, diagnostic/exposure GUI, severe historical review and full formal. Current144 claims pending; historical6/28 milestone unchanged. Checkpoint time exceeded600s again; record actual receipts, reserve earlier checkpoint budget next.

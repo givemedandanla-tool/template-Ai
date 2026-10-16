@@ -62,3 +62,7 @@
 - 18 combined EvalJobs+oldRuntimeQueue/Worker PASS：2 actual isolated children FIFO baseline→candidate，sharedlease/atomicQueue claim、partial resourcepause後不重做DONE source、cancel beforefirstSource explicitresume、resultaudit failure全rollback無pred/ITEM/fakeDONE。首輪只最後queue.page list當dict測試假設1error，原log保留，修測試依實際API。
 - complete已加protocol/current-scope outsideproof+鎖內source/cache重核，stale只保留observedreport不qualitypass；timeout最後failed且缺ITEM時明確補DURABLE_FAILED_UNIT_NO_PREDICTION unknownreceipt，不虛構模型輸出。新timeout補收據分支尚需actualkill/restart及GUI dispatcher tests；source rights撤回在predict前檢查。
 - 尚無statisticalGate/aggregate fairAB、Logo/mapping完整Oracle/pred adapters、qualityGUI/exposure/severehistoryreview或fullformal；current144claims pending，歷史6/28保留，UI0539未完成。下一先actual GUI/timeout/backuprestore sanitize EVAL_JOBOwner，then remaining work。
+
+### UI053 dispatcher / restore tested WIP
+- 8 actual dispatch+jobs and27 dispatch+pipeline+restore targets PASS (overlap). EVAL_JOB restore owner/token cleared, explicit resume; actual owned-child timeout rollback then persisted unknown denominator receipt. Logs docs/qa/targeted/ui053-*.
+- Next independent-group statistical Gate/pairedAB; complete Logo/mapping Oracle adapters, diagnostic/exposure GUI and severe historical review, original9 full-source formal. UI053 not closed;144 currentclaims pending, historical6/28.
