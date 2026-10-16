@@ -1,0 +1,32 @@
+test_candidate_mutation_during_encoding_cannot_publish_stale_approval (test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval) ... ok
+test_codec_success_flag_with_corrupt_png_bytes_does_not_publish (test_final_digital_preflight.FinalDigitalPreflightTests.test_codec_success_flag_with_corrupt_png_bytes_does_not_publish) ... ok
+test_corrupt_pdf_after_page_box_writer_cannot_publish (test_final_digital_preflight.FinalDigitalPreflightTests.test_corrupt_pdf_after_page_box_writer_cannot_publish) ... ok
+test_current_source_pixel_shortfall_blocks_final_but_retains_marked_preview (test_final_digital_preflight.FinalDigitalPreflightTests.test_current_source_pixel_shortfall_blocks_final_but_retains_marked_preview) ... ok
+test_pdf_boolean_sampling_setting_is_not_silently_ignored (test_final_digital_preflight.FinalDigitalPreflightTests.test_pdf_boolean_sampling_setting_is_not_silently_ignored) ... ok
+test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card (test_final_digital_preflight.FinalDigitalPreflightTests.test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card) ... FAIL
+test_sufficient_actual_pixels_and_original_gate_can_publish_exact_png (test_final_digital_preflight.FinalDigitalPreflightTests.test_sufficient_actual_pixels_and_original_gate_can_publish_exact_png) ... ok
+test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise (test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise) ... FAIL
+test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone (test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone) ... ok
+
+======================================================================
+FAIL: test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card (test_final_digital_preflight.FinalDigitalPreflightTests.test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_final_digital_preflight.py", line 66, in test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card
+    with self.assertRaises(ValueError):export(c,target,96,False,7)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise (test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_final_digital_preflight.py", line 57, in test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise
+    with self.assertRaises(ValueError):export(c,target,96,False,7)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.692s
+
+FAILED (failures=2)

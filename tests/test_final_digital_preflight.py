@@ -50,4 +50,20 @@ class FinalDigitalPreflightTests(unittest.TestCase):
     def test_pdf_boolean_sampling_setting_is_not_silently_ignored(self):
         with self.assertRaises(ValueError):export(self.candidate(),self.root/'invalid-FINAL.pdf',True,False,7)
 
+    def test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise(self):
+        c=self.logo_candidate(1000);target=self.root/'wrong-FINAL.jpg';original=QImage.save
+        def wrong(image,path,*args):bad=QImage(image.size(),image.format());bad.fill(0xff000000);return original(bad,path,*args)
+        with patch('template_ai.render.QImage.save',new=wrong):
+            with self.assertRaises(ValueError):export(c,target,96,False,7)
+        self.assertFalse(target.exists())
+    def test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card(self):
+        from pypdf import PdfWriter
+        c=self.candidate();target=self.root/'blank-FINAL.pdf'
+        def blank(path,width,height):
+            writer=PdfWriter();writer.add_blank_page(width=width*72/25.4,height=height*72/25.4)
+            with open(path,'wb') as file:writer.write(file)
+        with patch('template_ai.pdf_geometry.exact_page_box',side_effect=blank):
+            with self.assertRaises(ValueError):export(c,target,96,False,7)
+        self.assertFalse(target.exists())
+
 if __name__=='__main__':unittest.main()
