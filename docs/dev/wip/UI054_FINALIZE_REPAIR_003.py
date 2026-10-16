@@ -11,6 +11,9 @@ assert Path('docs/qa/targeted/remaining28-repair-003-parent-exit.txt').read_text
 assert run['status']=='PASS' and run['test_count']==1001 and run['passed']==1001
 assert len(records)==1001 and len({r['id'] for r in records})==1001 and all(r['status']=='PASS' for r in records)
 assert run['source_unchanged'] and run['capture_exit_code']==0 and run['unhandled_runtime_errors']==0
+assert run['planned_test_count']==1001 and run['not_completed_test_count']==0
+modules=read(F/'test-modules.json');assert modules['completed_tests']==1001
+assert all(m.get('exit_code')==0 for m in modules['modules'])
 assert manifest_digest(manifest(code_only=True))==run['source_manifest_sha256']
 parent_audit=read(F/'remaining28-full-parent-audit.json');assert parent_audit['verified_count']==8 and not parent_audit['all_28_complete']
 claims=read(F/'claims.json');state=read(D/'STATE.json');registry=read(D/'REQUIREMENTS.json');ids=state['pending_revalidation_ids'];assert len(set(ids))==146 and rid in ids

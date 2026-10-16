@@ -27,7 +27,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261016-REMAINING28-REPAIR003-LIVE-002"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261016-REMAINING28-QUALITY.json",
@@ -649,14 +651,14 @@
     "status": "RUNNING",
     "progress": {
       "phase": "RUNNING_OWNED_TEST_MODULE",
-      "current_test": "test_quality_jobs.QualityJobTests.test_actual_fifo_isolated_children_execute_both_sides_and_keep_quality_insufficient",
-      "started": 615,
-      "completed": 614,
-      "passed": 614,
+      "current_test": "test_quality_roles",
+      "started": 747,
+      "completed": 747,
+      "passed": 747,
       "failed_ids": [],
       "planned_tests": 1001,
       "formal_complete": false,
-      "updated_at": "2026-10-16T08:03:34.303072+00:00"
+      "updated_at": "2026-10-16T08:09:35.044417+00:00"
     },
     "source_frozen": true,
     "do_not_finalize_before_actual_exit_zero": true
@@ -721,7 +723,7 @@
       "reason": "First readback correctly rejected two generated progress files omitted from commit; f3609df adds exact prepared files, original prepared manifest preserved and ACK succeeded; delay exceeds10min, no false cadencePASS."
     }
   ],
-  "next_work_package_plan": "docs/dev/UI055_EXECUTION_PLAN.json",
+  "next_work_package_plan": "docs/dev/UI055_IMPLEMENTATION_MAP.json",
   "next_step": "修正 REPAIR002 Qt selected NameError，實際點選+索引治理回歸後重新freeze跑REPAIR003；UI054未完成，成功後UI055/rest20。",
   "current_work_package": "UI054 REPAIR002 actual Qt callback correction, pending REPAIR003",
   "checkpoint_cadence_note": "REPAIR002 failure triage exceeded ten minutes since last remote checkpoint; saving immediately, no strict cadence PASS claim."

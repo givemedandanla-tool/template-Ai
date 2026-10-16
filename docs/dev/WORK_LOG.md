@@ -1169,3 +1169,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ## 2026-10-16 UI054 REPAIR002 failure and actual callback repair
 
 REPAIR002 source eee91b160e11685f05543e4f05843dbfd345bc77: 999 unittest assertions PASS but 5 uncaught Qt NameError exceptions in FactsPanel.selected; parent exit1, source unchanged, capture not run. Preserve original failed run. Removed only duplicate repair-button construction in selection callback; actual QTest row clicks now check captured exceptions, stable single button and dirty editor. Added full-parent secondary-index count guard restricted to remaining28 targets, and UI054 clause_count11. Pending full REPAIR003, no parent completion claimed. Checkpoint elapsed exceeded ten minutes while diagnosing failed full run; cadence is not a strict PASS.
+
+## UI055 draft during immutable REPAIR003
+
+Only docs/wip draft authored; active app/tests/tools/acceptance frozen. Draft reuses FACTS/SAMPLE/model snapshots and adds metadata-only correction refs, 50-item explicit batch review, same-content truth conflict checks, purpose stop-use, and narrowly selected local training-text/history logical redaction with retained hashes. Not installed or tested, no completion claim. Remaining20 queue and actual external evidence gaps persisted.

@@ -64,5 +64,12 @@
     "No implied automatic holdout demotion or reset of consumption",
     "No true production/native Illustrator/Windows reference hardware accuracy claim"
   ],
-  "next_action": "Implement after UI054 formal PASS/publication Gate; targeted meaningful tests then batch remaining unblocked parents before next complete formal where contract allows"
+  "next_action": "Implement after UI054 formal PASS/publication Gate; targeted meaningful tests then batch remaining unblocked parents before next complete formal where contract allows",
+  "privacy_implementation_notes": {
+    "semantic_storage": "SemanticLearning stores exact selected text examples in plan and reconstructs CharacterModel counts; no opaque serialized weights file currently",
+    "redaction": "Explicit narrowly scoped local training-copy redaction may replace selected SAMPLE positive/negative payload and corresponding historical PII copies with minimal hashes; revoke trust before redaction. Semantic source scopes remain for actual-use proof while exact example text is removed and model unusable. Must not falsely claim raw source, unrelated FACTS/business data, external backups, filesystem secure erasure or deployed copies were deleted.",
+    "required_checks": "All affected dependent datasets/models/pipelines unavailable after source-purpose stop; historical privacy redaction must have exact record IDs/revisions/hashes, explicit approval, transactional rollback and retained minimal use proof; ordinary sample revocation keeps full immutable history"
+  },
+  "draft": "docs/dev/wip/UI055_SAMPLE_POOL.py",
+  "draft_status": "SYNTAX_ONLY_NOT_INSTALLED_NOT_TESTED_NOT_A_COMPLETED_FEATURE"
 }
