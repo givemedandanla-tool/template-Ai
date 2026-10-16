@@ -163,11 +163,13 @@ def capture(folder):
         runtime=capture_runtime(folder)
         from capture_coverage import capture_coverage
         coverage=capture_coverage(folder)
+        from capture_quality import capture_quality
+        quality=capture_quality(folder)
         if errors:raise RuntimeError('Unhandled Qt capture error: '+str(errors))
         report=dict(status='PASS',kind='ACTUAL_QT_AND_SQLITE_SYNTHETIC_CAPTURE',
                     parent='UI-046',merged=True,split=True,original_template_payload_unchanged=True,
                     foreign_keys='PASS',runtime_errors=errors,local_export_has_only_synthetic_people=True,
-                    windows_verified=False,independent_review=False,backup_parent_self_capture=backup['status'],relink_parent_self_capture=relink['status'],watch_parent_self_capture=watch['status'],runtime_parent_self_capture=runtime['status'],coverage_parent_self_capture=coverage['status'])
+                    windows_verified=False,independent_review=False,backup_parent_self_capture=backup['status'],relink_parent_self_capture=relink['status'],watch_parent_self_capture=watch['status'],runtime_parent_self_capture=runtime['status'],coverage_parent_self_capture=coverage['status'],quality_parent_self_capture=quality['status'])
         (folder/'remaining28-identity-capture.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
         return report
     finally:
