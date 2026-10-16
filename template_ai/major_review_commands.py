@@ -8,6 +8,12 @@ def execute(library,command,payload):
     service=QualityRechecks(library);store=service.store
     if command=='PLAN':return service.source_plan(**payload)
     if command=='CONFIRM':return service.confirm_source(**payload)
+    if command=='FINDING_PLAN':
+        from .major_review_findings import plan
+        return plan(service,**payload)
+    if command=='CONFIRM_FINDING':
+        from .major_review_findings import confirm
+        return confirm(service,**payload)
     if command=='JOB_PLAN':
         from .major_review_jobs import plan
         return plan(library,**payload)
@@ -51,7 +57,10 @@ def execute(library,command,payload):
         rows=[]
         for kind,identity,revision,raw in library.db.execute("SELECT kind,id,revision,payload FROM training_records WHERE kind IN ('QUALITY_WORK_QUARANTINE','QUALITY_TEMPLATE_QUARANTINE') AND json_extract(payload,'$.case_id')=? ORDER BY kind,id",(case['id'],)):
             row=json.loads(raw);row.update(kind=kind,id=identity,revision=revision)
-            state='REAPPROVED' if row['state']=='RESOLVED_AFTER_NEW_HUMAN_FACTS' else row.get('review_state','UNSCANNED')
+            state=row.get('review_state','UNSCANNED')
+            if row['state']=='RESOLVED_AFTER_NEW_HUMAN_FACTS':
+                from .major_review_findings import resolution_current
+                state=row.get('review_state','REAPPROVED') if resolution_current(library.db,row) else 'STALE_REVIEW'
             if state=='UNSCANNED' and row.get('precheck')=='SOURCE_UNKNOWN':state='UNKNOWN'
             if state=='PROCESSING' and row.get('analysis_job_id'):
                 from .automatic_training import AutomaticTraining
@@ -59,5 +68,5 @@ def execute(library,command,payload):
                 if phase!='RUNNING':state='INTERRUPTED' if phase in ('INTERRUPTED','FAILED_SYSTEM') else 'CANCELLED' if phase=='CANCELLED' else 'NEEDS_MANUAL'
             row['effective_state']=state;rows.append(row)
         counts=dict(Counter(row['effective_state'] for row in rows));filtered=[row for row in rows if all(term in json.dumps(row,ensure_ascii=False).casefold() for term in query.casefold().split())]
-        return dict(case=case,summary=dict(total=len(rows),checked=sum(count for state,count in counts.items() if state not in ('UNSCANNED','UNKNOWN','PROCESSING','INTERRUPTED','CANCELLED')),states=counts,whole_corpus_safe=False,unknown_unrecorded_dependencies=True),total=len(filtered),rows=filtered[offset:offset+50],offset=offset,coverage=case['plan']['coverage'])
+        return dict(case=case,summary=dict(total=len(rows),checked=sum(count for state,count in counts.items() if state not in ('UNSCANNED','UNKNOWN','PROCESSING','INTERRUPTED','CANCELLED','STALE_REVIEW')),states=counts,whole_corpus_safe=False,unknown_unrecorded_dependencies=True),total=len(filtered),rows=filtered[offset:offset+50],offset=offset,coverage=case['plan']['coverage'])
     raise ValueError('重大重審命令不支援')

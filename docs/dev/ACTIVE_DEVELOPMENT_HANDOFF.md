@@ -1,7 +1,7 @@
 # 當前接手：直接續做，不帶整串聊天
 
 - 使用者目標仍原28父題至完整軟體自驗證；branch dev/v0.1-first-version／PR#2。無agents、EXE、worktree、mainmerge、付費服務。原CAS/單worker/FIFO/資料庫，勿平行造系統。每可恢復包/約10mincheckpoint+push+exact readback；歷史cadence不宣稱strictPASS。
-- 歷史12/28及120條款 @RUN-REMAINING28-LAYOUT-003；不是目前來源完成。UI059/060A/061/062/063/064/065七父題完整原條款實作/映射但全IMPLEMENTED_PENDING_VERIFICATION，等新不可變全批/native審閱/普通GitHub證據Gate。1383known tests。
+- 歷史12/28及120條款 @RUN-REMAINING28-LAYOUT-003；不是目前來源完成。UI059/060A/061/062/063/064/065七父題完整原條款實作/映射但全IMPLEMENTED_PENDING_VERIFICATION，等新不可變全批/native審閱/普通GitHub證據Gate。1390known tests。
 - 當前UI052-REVIEW原9義務，plan/baseline+NetworkX3.5 BFS/descendants及Microsoft SQL2016 historical temporal reference實讀/hash @92bf979。下一步別重設計：manual unit findings/新facts與模板版次release/family與model-rule guards/舊入口/native/full9，再UI019/032/031/066/067/REV01/02/04，最後不可變全回歸。
 - Source核心quality_source_rechecks.py+原QualityRechecks.source_plan/confirm_source：user源證據/正反例/嚴重度、exact issue/source/version/graph pins；原QUALITY_MAJOR_RECHECK/WORK_QUARANTINE和同DB typed TEMPLATE_QUARANTINE，atomicCAS/idempotentcaseID，不改原稿、發布版/客戶。未知歷史/未記錄依賴不假安全。候選risk對原SQLite readonly即時CURRENT_MAJOR_REVIEW_TRUST；舊候選即時受阻。
 - _template_provenance allow_quarantined_draft=True僅原save/clone/object-write，publish/bind仍嚴格；005真draft-state-only造成publish未阻擋已修。原batch candidate cachedREADY install前重新formal_eligible，majorcase晚到不改版面。source11tests，00325PASS/00629PASS；002錯Storepatch及005fixture key失敗全保留。
@@ -11,3 +11,5 @@
 - 最重要未完：source/template flags僅exact templateID/version，work解除後新family版可能繞過，需明確受控template替代/clearance與原版本保留風險。rule/model已記錄nodes應用原quality_trust.components/blockers actualfingerprint，不能displayID換殼。trained-reference clone仍被原dataset trust擋，須明確安全修正路徑。case現在不會自行完成；需原新facts+全必要Gate再scoped解除，未知範圍whole_corpus_safe仍False。
 - UI065 full25 @dded9eb，58newtests、04225PASS、04329actualnative/0Qt/all29逐張hash；原工作台source/候選/尺寸、安全重試/舊receipt部分inverse、原Canvas唯讀差異、LayoutRecovery typed batch4MiB/AESGCM/24h/byte讀回。RAM失去原origin未核實，不重播位移、不假整Main已存。capture_batch_correction已入runner。詳細history/HANDOFF_BEFORE_UI052_REVIEW_RELEASE_20261016.md。勿重跑任何FINALIZE_*歷史腳本。
 - 最新ACK看STATE receipt/commit。Windows16GB RTX5050/VivoBook、實際IME/輔具、授權非空原生Illustrator corpus為真外部缺口；Linux合成不冒充。原125附件問題+9件精確例外不改，新證據普通Git。
+
+UI052 finding API WIP40newtests/catalog1390；major_review_findings plan/confirm pins case/unit/Work/currentfacts/source proof，CHECKED_OK/REAPPROVED只新CONFIRMEDfacts；ERROR/MANUAL/BLOCKED/UNKNOWN不解，EXCLUDED_HOLD范围排除仍暂停信任。原QualityRechecks.resolve新增optional review_state/expectedfacts/pins/planDigest一次CAS；blocked对全部work quarantine优先pending/excluded，再用当前FACTS+SQL source/work/link pins+source stat证明至少一当前resolved（旧后续facts改变不能沿用），STATUS可STALE_REVIEW。017新7+旧rechecks/source=23PASS actualexit0。尚未接finding GUI/reopen/close；下一步立即接原page.confirm新action，旧review过期需显式reopen cutoff后新facts；然后template/family/model-rule/current source release。无jobs在跑，父题未晋升。

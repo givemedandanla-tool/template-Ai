@@ -7,7 +7,14 @@ from .model import new_id
 
 
 def blocked(store, work_id):
-    return bool(store.db.execute("SELECT 1 FROM training_records WHERE kind='QUALITY_WORK_QUARANTINE' AND json_extract(payload,'$.work_id')=? AND json_extract(payload,'$.state')='REVIEW_REQUIRED' LIMIT 1",(work_id,)).fetchone())
+    import json
+    rows=[json.loads(row[0]) for row in store.db.execute("SELECT payload FROM training_records WHERE kind='QUALITY_WORK_QUARANTINE' AND json_extract(payload,'$.work_id')=?",(work_id,))]
+    if any(row['state'] in ('REVIEW_REQUIRED','EXCLUDED_HOLD') for row in rows):return True
+    resolved=[row for row in rows if row['state']=='RESOLVED_AFTER_NEW_HUMAN_FACTS']
+    if resolved:
+        from .major_review_findings import resolution_current
+        return not any(resolution_current(store.db,row) for row in resolved)
+    return False
 
 
 class QualityRechecks:
@@ -195,8 +202,9 @@ class QualityRechecks:
             header={key:copy.deepcopy(value) for key,value in plan.items() if key!='rows'}
             return self.store._write('QUALITY_MAJOR_RECHECK',case_id,dict(plan=header,affected_works=len(plan['rows']),actor=actor,reason=reason,state='REVIEW_REQUIRED',at=time.time(),old_closure_receipts_preserved=True,models_decontaminated=False),0,'quality_major_cross_batch_recheck_confirmed')
 
-    def resolve(self,quarantine_id,revision,actor,reason,evidence,approved=False):
+    def resolve(self,quarantine_id,revision,actor,reason,evidence,approved=False,*,review_state='REAPPROVED',expected_facts_digest=None,expected_pins=None,review_plan_digest=None):
         if approved is not True:raise ValueError('需逐件完成新來源事實審核，明確解除此件隔離')
+        if review_state not in ('CHECKED_OK','REAPPROVED'):raise ValueError('解除只接受目前已完整核實的結論')
         text(actor,'重審人',120);text(reason,'逐件重審結論',2000);text(evidence,'修正及原稿對照證據',2000)
         row=self.store.get('QUALITY_WORK_QUARANTINE',quarantine_id)
         if not row:raise ValueError('作品重審項不存在')
@@ -206,6 +214,8 @@ class QualityRechecks:
             if current!=row or current['revision']!=revision or current['state']!='REVIEW_REQUIRED':raise ValueError('重審版次已變更')
             self.store.checked(row['work_id'],proof)
             facts=self.store.facts(row['work_id'])
+            if expected_facts_digest is not None and digest(facts)!=expected_facts_digest:raise ValueError('人工事實已變更，未套用舊解除預覽')
+            if expected_pins is not None and self.store.pins(row['work_id'])!=expected_pins:raise ValueError('作品／來源已變更，未套用舊解除預覽')
             if facts['revision']<=row['facts_revision'] or self.store.facts_state(row['work_id'])!='CONFIRMED':raise ValueError('需比隔離時更新且已人工確認的來源事實；保留舊版不等於已修正')
-            current.update(state='RESOLVED_AFTER_NEW_HUMAN_FACTS',review_actor=actor,review_reason=reason,review_evidence=evidence,resolved_at=time.time(),resolved_facts_revision=facts['revision'])
+            current.update(state='RESOLVED_AFTER_NEW_HUMAN_FACTS',review_state=review_state,review_actor=actor,review_reason=reason,review_evidence=evidence,resolved_at=time.time(),resolved_facts_revision=facts['revision'],resolved_facts_digest=digest(facts),resolved_source_pins=self.store.pins(row['work_id']),finding_plan_digest=review_plan_digest)
             return self.store._write('QUALITY_WORK_QUARANTINE',quarantine_id,current,revision,'quality_single_historical_work_rereviewed_not_model_release')

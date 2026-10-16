@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,Q
 from .customers import digest
 from .major_review_job_ui import MajorJobPageMixin
 
-STATES={'UNSCANNED':'未掃描','UNKNOWN':'無法判定','REAPPROVED':'修正後重新核准','CHECKED_OK':'確認無誤','ERROR_NEEDS_FIX':'確認錯誤待修','NEEDS_MANUAL':'待人工','BLOCKED':'阻擋','PROCESSING':'正在分析','INTERRUPTED':'中斷待明確接續','CANCELLED':'已取消／尚未完成'}
+STATES={'UNSCANNED':'未掃描','UNKNOWN':'無法判定','REAPPROVED':'修正後重新核准','CHECKED_OK':'確認無誤','ERROR_NEEDS_FIX':'確認錯誤待修','NEEDS_MANUAL':'待人工','BLOCKED':'阻擋','PROCESSING':'正在分析','INTERRUPTED':'中斷待明確接續','CANCELLED':'已取消／尚未完成','EXCLUDED_VERIFIED':'核准排除／仍暫停信任','STALE_REVIEW':'重審憑證已過期'}
 
 
 class MajorReviewPage(MajorJobPageMixin,QWidget):
