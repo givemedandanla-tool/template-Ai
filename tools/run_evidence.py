@@ -121,22 +121,13 @@ def main():
     write_json(folder / "source-manifest.json", before)
     log = io.StringIO()
     live=ROOT/'.checkpoints'/'formal-live'/args.run_id;live.mkdir(parents=True,exist_ok=False)
-    progress_path=live/'test-progress.json';stack_log=(live/'timeout-stacks.log').open('w',encoding='utf-8')
-    runner = unittest.TextTestRunner(stream=log, verbosity=2, resultclass=lambda *values:EvidenceResult(*values,progress_path=progress_path))
-    runtime_errors=[];previous_hook=sys.excepthook
-    def runtime_hook(kind,value,tb):
-        runtime_errors.append(dict(type=kind.__name__,message=str(value),traceback=''.join(traceback.format_exception(kind,value,tb))))
-        previous_hook(kind,value,tb)
-    sys.excepthook=runtime_hook
-    faulthandler.enable(file=stack_log,all_threads=True);faulthandler.dump_traceback_later(60,repeat=True,file=stack_log)
-    try:
-        result = runner.run(unittest.defaultTestLoader.discover(str(ROOT / "tests")))
-        result.progress(None,'FLUSHING_QT_EVENTS')
-        from PySide6.QtWidgets import QApplication
-        from PySide6.QtCore import QCoreApplication,QEvent
-        if QApplication.instance():QApplication.instance().processEvents();QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete)
-    finally:
-        sys.excepthook=previous_hook;faulthandler.cancel_dump_traceback_later();faulthandler.disable();stack_log.close()
+    def test_catalog(suite):
+        for test in suite:
+            if isinstance(test,unittest.TestSuite):yield from test_catalog(test)
+            else:yield test.id()
+    from evidence_modules import run_modules
+    result,runtime_errors,module_log=run_modules(list(test_catalog(unittest.defaultTestLoader.discover(str(ROOT/'tests')))),live)
+    log.write(module_log)
     for diagnostic in live.iterdir():
         if diagnostic.is_file():shutil.copy2(diagnostic,folder/diagnostic.name)
     write_json(folder/'runtime-errors.json',runtime_errors)
@@ -277,6 +268,7 @@ def main():
            "command": "python tools/run_evidence.py --run-id " + args.run_id + " --source-commit " + args.source_commit + " --commit-json <readback> --tree-json <readback>",
            "review_level": "SELF_VERIFIED", "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
            "not_verified": ["真實私人 Illustrator 全面視覺一致", "VivoBook／RTX 5050", "實體印刷", "Windows EXE", "獨立覆核"]}
+    run.update(test_execution_strategy='SERIAL_OWNED_FRESH_MODULE_PROCESSES',test_module_count=len(result.modules),planned_test_count=len(result.expected),not_completed_test_count=len(result.expected)-len(result.records))
     write_json(folder / "run.json", run)
     print(json.dumps({"run": args.run_id, "status": status, "tests": len(records), "passed": run["passed"], "attachments": len(attachments)}))
     return 0 if status == "PASS" else 1

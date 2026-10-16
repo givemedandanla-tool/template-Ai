@@ -174,5 +174,37 @@
       "url": "https://www.sqlite.org/lang_transaction.html",
       "result": "HTTP403; not claimed read; SQLite transaction reuse also covered by prior engineering basis"
     }
-  ]
+  ],
+  "native_test_isolation_basis": {
+    "references": [
+      {
+        "project": "CPython unittest",
+        "version": "3.12.14",
+        "source": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py",
+        "upstream": "https://github.com/python/cpython/blob/v3.12.14/Lib/unittest/loader.py",
+        "bytes": 21116,
+        "sha256": "7f0af414bfa7fe8612a424b14cfcf8a3c34fcac999d976461beb738ef8b211b8",
+        "status": "ACTUAL_INSTALLED_STDLIB_SOURCE_REVIEWED",
+        "reuse": "Reuse loadTestsFromNames and TextTestRunner/EvidenceResult exactly; owned fresh serial interpreter isolates native Qt lifetime; no pytest/plugin/dependency install"
+      },
+      {
+        "project": "CPython unittest",
+        "version": "3.12.14",
+        "source": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py",
+        "upstream": "https://github.com/python/cpython/blob/v3.12.14/Lib/unittest/runner.py",
+        "bytes": 10368,
+        "sha256": "76d9beb9c21d0d367a1b040a921ad43f90b7971fcc8cacfccd6f9760bedf1ce2",
+        "status": "ACTUAL_INSTALLED_STDLIB_SOURCE_REVIEWED",
+        "reuse": "Reuse loadTestsFromNames and TextTestRunner/EvidenceResult exactly; owned fresh serial interpreter isolates native Qt lifetime; no pytest/plugin/dependency install"
+      }
+    ],
+    "actual_failure": "QUALITY002 exit139 after684PASS; exactrootcauseunconfirmed",
+    "verification": "3actual worker failure/deadline tests plus3-module15PASS actualintegration, nativeabortcore0, stoppedonlyownedsession",
+    "invariants": [
+      "ExactuniqueplannedIDset equals actualPASSIDset before success",
+      "No result for unexecuted tests; missingIDs explicitly block",
+      "Serialmodulechild, actualexit/runtimeexceptions/stacks persisted",
+      "No nativefailure convertedtoPASS or testskip"
+    ]
+  }
 }
