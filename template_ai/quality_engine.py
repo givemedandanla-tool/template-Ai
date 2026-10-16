@@ -81,7 +81,7 @@ def load(record):
     return importlib.import_module(prefix+'.source_analysis')
 
 
-def execute(record,source,assets,model_record,context,mapping_catalog=None,rule_records=None):
+def execute(record,source,assets,model_record,context,mapping_catalog=None,rule_records=None,ocr_record=None):
     module=load(record);model=None
     prefix=module.__package__
     try:
@@ -89,7 +89,10 @@ def execute(record,source,assets,model_record,context,mapping_catalog=None,rule_
             fields=importlib.import_module(prefix+'.semantic_fields')
             model=fields.CharacterModel([e for e in model_record['plan']['examples'] if e['role']=='TRAIN'])
             if digest({key:dict(value) for key,value in model.counts.items()})!=model_record['weights_digest']:raise ValueError('凍結版本實際模型權重不一致')
-        result=module.analyse_source(source,assets,model,context)
+        if ocr_record:
+            ocr=importlib.import_module(prefix+'.quality_ocr')
+            result=ocr.analyse(source,assets,model,context,ocr_record,module.analyse_source)
+        else:result=module.analyse_source(source,assets,model,context)
         mapping=importlib.import_module(prefix+'.quality_mapping')
         for work in result:work['mapping_prediction']=mapping.predict(source,work,mapping_catalog)
         rules=importlib.import_module(prefix+'.quality_rules')

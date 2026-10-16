@@ -16,7 +16,9 @@ def predicted_objects(work):
     slots={row['id']:row for row in work.get('slots',[])};result=[]
     for observation in work.get('observations',[]):
         slot=slots.get(observation.get('slot_id'));kind=slot['kind'] if slot else observation.get('classification','UNKNOWN')
-        result.append(dict(id=observation['id'],kind=kind,owner=slot.get('owner') if slot else None,rect=observation['region'],object_type=observation.get('object_type'),text=observation.get('text',''),component_prediction=observation.get('component_prediction')))
+        obj=dict(id=observation['id'],kind=kind,owner=slot.get('owner') if slot else None,rect=observation['region'],object_type=observation.get('object_type'),text=observation.get('text',''),component_prediction=observation.get('component_prediction'))
+        if 'component_text_predictions' in observation:obj['component_text_predictions']=observation['component_text_predictions']
+        result.append(obj)
     return result
 
 
@@ -24,6 +26,8 @@ def text_boxes(objects, prediction=False):
     result=[];complete=True
     for obj in objects:
         if obj['kind']=='logo':
+            if prediction and 'component_text_predictions' in obj:
+                result.extend(dict(id=part['id'],rect=part['rect']) for part in obj['component_text_predictions']);continue
             evidence=obj.get('component_prediction' if prediction else 'component_truth') or {}
             if not evidence.get('complete') or not prediction and (not evidence.get('manually_verified') or not evidence.get('text_content_manually_reviewed')):complete=False;continue
             for identity in evidence['text_component_ids']:

@@ -43,23 +43,27 @@ class QualityPipelines:
         service=object.__new__(SemanticLearning);service.library=self.library;service.store=self.store
         return service.checked_model(model_id)
 
-    def current_manifest(self,model_id=None,mapping_config=None,rule_versions=None):
+    def current_manifest(self,model_id=None,mapping_config=None,rule_versions=None,ocr_record=None):
         row,model=self.semantic(model_id);executable=inkscape_path()
         if not executable:raise ValueError('實際Inkscape解析器不可用，不接受自行輸入版本冒充執行證據')
         version=subprocess.run([executable,'--version'],capture_output=True,text=True,timeout=10)
         if version.returncode:raise ValueError('實際解析器版本讀回失敗')
-        base=Path(__file__).parent;names=('quality_pipeline.py','quality_rules.py','noise_review.py','noise.py','quality_mapping.py','customer_candidates.py','quality_logo.py','source_analysis.py','source_text_evidence.py','semantic_fields.py','importer.py','background.py')
+        base=Path(__file__).parent;names=('quality_pipeline.py','quality_ocr.py','quality_rules.py','noise_review.py','noise.py','quality_mapping.py','customer_candidates.py','quality_logo.py','source_analysis.py','source_text_evidence.py','semantic_fields.py','importer.py','background.py')
         from .quality_rules import snapshots
         active=snapshots(self.store,rule_versions)
         from .quality_mapping import catalog
         mapping_catalog=catalog(self.library,mapping_config)
-        return dict(schema_version=1,mapping_catalog=mapping_catalog,mapping_configuration=mapping_config,analyser_version=ANALYSER_VERSION,source_modules={name:file_digest(base/name) for name in names},semantic_model_id=model_id,semantic_model_revision=row['revision'] if row else None,semantic_model_digest=digest(row) if row else None,semantic_weights_digest=row['weights_digest'] if row else None,model_training_scopes=[dict(source_hash=s['pins']['source_hash'],role=s['role'],work_id=s['work_id']) for s in row['plan']['scopes']] if row else [],renderer=dict(executable=str(Path(executable).resolve()),sha256=file_digest(executable),version=version.stdout.strip()[:1000]),rules=[dict(id=r['id'],revision=r['revision'],digest=digest(r)) for r in active],rule_selection=[dict(id=r['id'],revision=r['revision']) for r in active],rule_records=copy.deepcopy(active),rules_execution='ACTUAL_FROZEN_SCOPE_MATCHES_AND_SOURCE_PROTECTION_NO_GOLD',ocr_execution='NOT_EXECUTED_BY_VECTOR_SOURCE_PIPELINE',native_illustrator_mapping='UNVERIFIED_NOT_CERTIFIED',environment=dict(python=platform.python_version(),system=platform.platform(),qt=qt_version,networkx=networkx.__version__,fonts=font_environment()),prediction_inputs='ORIGINAL_SOURCE_AND_TRAINED_WEIGHTS_ONLY_NO_HOLDOUT_GOLD_LABELS')
+        from .quality_ocr import verify
+        verify(ocr_record)
+        return dict(schema_version=1,ocr=copy.deepcopy(ocr_record),mapping_catalog=mapping_catalog,mapping_configuration=mapping_config,analyser_version=ANALYSER_VERSION,source_modules={name:file_digest(base/name) for name in names},semantic_model_id=model_id,semantic_model_revision=row['revision'] if row else None,semantic_model_digest=digest(row) if row else None,semantic_weights_digest=row['weights_digest'] if row else None,model_training_scopes=[dict(source_hash=s['pins']['source_hash'],role=s['role'],work_id=s['work_id']) for s in row['plan']['scopes']] if row else [],renderer=dict(executable=str(Path(executable).resolve()),sha256=file_digest(executable),version=version.stdout.strip()[:1000]),rules=[dict(id=r['id'],revision=r['revision'],digest=digest(r)) for r in active],rule_selection=[dict(id=r['id'],revision=r['revision']) for r in active],rule_records=copy.deepcopy(active),rules_execution='ACTUAL_FROZEN_SCOPE_MATCHES_AND_SOURCE_PROTECTION_NO_GOLD',ocr_execution='ACTUAL_LOCAL_TESSERACT_SOURCE_IMAGE_ONLY' if ocr_record else 'NOT_EXECUTED_BY_VECTOR_SOURCE_PIPELINE',native_illustrator_mapping='UNVERIFIED_NOT_CERTIFIED',environment=dict(python=platform.python_version(),system=platform.platform(),qt=qt_version,networkx=networkx.__version__,fonts=font_environment()),prediction_inputs='ORIGINAL_SOURCE_AND_TRAINED_WEIGHTS_ONLY_NO_HOLDOUT_GOLD_LABELS')
 
-    def freeze(self,name,model_id,actor,approved=False,*,mapping_config=None,rule_versions=None):
+    def freeze(self,name,model_id,actor,approved=False,*,mapping_config=None,rule_versions=None,ocr_config=None):
         if approved is not True:raise ValueError('需明確核對實際可執行pipeline範圍；不自動放行模型')
         text(name,'pipeline名稱',120);text(actor,'版本保存者',120)
         # Executable/model verification happens outside the SQLite write lock.
-        manifest=self.current_manifest(model_id,mapping_config,rule_versions)
+        from .quality_ocr import freeze as freeze_ocr
+        ocr_record=freeze_ocr(self.library.assets,ocr_config)
+        manifest=self.current_manifest(model_id,mapping_config,rule_versions,ocr_record)
         from .quality_engine import freeze
         manifest['engine']=freeze(self.library.assets,Path(__file__).parent)
         with self.store.transaction():
@@ -71,7 +75,7 @@ class QualityPipelines:
         if not record:return dict(valid=False,errors=['實際pipeline版本不存在'],pipeline=None)
         errors=[]
         try:
-            current=self.current_manifest(record['manifest']['semantic_model_id'],record['manifest'].get('mapping_configuration'),record['manifest'].get('rule_selection'))
+            current=self.current_manifest(record['manifest']['semantic_model_id'],record['manifest'].get('mapping_configuration'),record['manifest'].get('rule_selection'),record['manifest'].get('ocr'))
             from .quality_engine import verify
             verify(record['manifest']['engine'])
             for name,sha in record['manifest']['source_modules'].items():
@@ -92,7 +96,7 @@ class QualityPipelines:
         proof=verify_source(source['current_path'],source['hash']);stamps=cache_stamps(source);source_digest=digest(source)
         context=dict(state='FROZEN_EVALUATION_MODEL',model_id=row['id'],model_revision=row['revision'],weights_digest=row['weights_digest']) if row else None
         from .quality_engine import execute
-        predictions=execute(pipeline['manifest']['engine'],source,self.library.assets,row,context,pipeline['manifest']['mapping_catalog'],pipeline['manifest']['rule_records'])
+        predictions=execute(pipeline['manifest']['engine'],source,self.library.assets,row,context,pipeline['manifest']['mapping_catalog'],pipeline['manifest']['rule_records'],pipeline['manifest'].get('ocr'))
         check_verified(proof,source['hash'])
         if digest(self.library.source(source_id))!=source_digest or cache_stamps(source)!=stamps or not self.validity(pipeline_id)['valid']:raise ValueError('推論期間來源／cache／實際pipeline依賴改變，未採用過期結果')
-        return dict(pipeline_id=pipeline_id,pipeline_manifest_digest=pipeline['manifest_digest'],source_id=source_id,source_hash=source['hash'],source_page=source['page'],source_dependency_digest=source_digest,source_proof=dict(path=proof.path,hash=proof.hash,stat=list(proof.stat)),source_cache_stamps=stamps,prediction_origin='ACTUAL_EXECUTED_SOURCE_ANALYSIS_NO_GOLD_ARGUMENT',predictions=predictions,capabilities=dict(rule_processor_executed=True,rule_scope_checks_without_gold=True,ocr_executed=False,native_illustrator_mapping_verified=False,noise_rules_applied_using_holdout_gold=False),quality_pass=None)
+        return dict(pipeline_id=pipeline_id,pipeline_manifest_digest=pipeline['manifest_digest'],source_id=source_id,source_hash=source['hash'],source_page=source['page'],source_dependency_digest=source_digest,source_proof=dict(path=proof.path,hash=proof.hash,stat=list(proof.stat)),source_cache_stamps=stamps,prediction_origin='ACTUAL_EXECUTED_SOURCE_ANALYSIS_NO_GOLD_ARGUMENT',predictions=predictions,capabilities=dict(rule_processor_executed=True,rule_scope_checks_without_gold=True,ocr_executed=any(w.get('evidence',{}).get('ocr',{}).get('executed',False) for w in predictions),native_illustrator_mapping_verified=False,noise_rules_applied_using_holdout_gold=False),quality_pass=None)
