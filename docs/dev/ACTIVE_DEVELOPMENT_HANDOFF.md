@@ -1,3 +1,5 @@
+> 最新05:28：UI054 quality_repairs＋sharedQualityRechecks.dependencies 已15targetPASS（含legacymajor＋realprovenance），950catalog/145pending，historical7/28。canonicalcase/Gold/source-facts/root flags/stale/dispute/lateaudit/50paging已做；metadata-onlyimpact不可majorconfirm。下一真正AUTO_JOB semanticrepair operation，reuseclaim/finish/lease/child，atomicmodel/candidate/job/lease及holdout/pause/cancel/resume。其余replay/newHLD/isolatedrules/真部署rollback/七页未做，不可闭合UI054。
+
 > 最新05:20：已完成7/28的943PASS與publicationGate／收據push再Gate；現在UI054原11 START，145舊claims已pending，最新證據移previous QUALITY005，不能把舊PASS用到新code。先canonical issue/source-humanfacts-Gold/root候選/impact共用，然後AUTOcandidate/replay/freshHLD/部署rollback/七頁全部做完；original11不縮scope。準備CP-UI054-START後才搬用reviewed drafts並測試。
 
 > 出版核對已實查PASS：metadataCP00b32b6ec9371f2185cb75188acf5f8914344c86、145claims全驗；41文字attachment＋run/政策GitHub，125media按精確policy留local。收據/state follow-up與再Gate後直接UI054 START（先145pending再改source）。

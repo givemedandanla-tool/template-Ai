@@ -103,6 +103,13 @@
       "Stale preview / invented case / late audit transaction rollback /50row paging",
       "Then extract/reuse existing major impact resolver for generic repair scope"
     ],
-    "checkpoint": "CP-20261016-REMAINING28-UI054-START"
-  }
+    "checkpoint": "CP-20261016-REMAINING28-UI054-START",
+    "status": "IMPLEMENTED_TARGETED_15PASS_PENDING_FULL_ORIGINAL11",
+    "actual_implementation": [
+      "template_ai/quality_repairs.py",
+      "template_ai/quality_rechecks.py"
+    ],
+    "targeted_evidence": "docs/qa/targeted/ui054-issue-impact-002.log"
+  },
+  "next_package": "Actualsemantic candidate operation on existingAUTO_JOB claim/finish/sharedlease/ownedchild;source-check/model/candidate/job/lease atomicity,holdoutguard,pause/cancel/resume/restore"
 }

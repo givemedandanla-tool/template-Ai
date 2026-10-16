@@ -13,14 +13,11 @@ def blocked(store, work_id):
 class QualityRechecks:
     def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library);self.db=library.db
 
-    def plan(self,protocol_id,side,component,rule_id=None):
-        if side not in ('BASELINE','CANDIDATE') or component not in ('PARSER','MODEL','RULE'):raise ValueError('需選明確試驗側及解析器／模型／規則版本')
-        protocol=QualityProtocols(self.library).get(protocol_id);pair=self.store.get('QUALITY_PROTOCOL_JOBS',protocol_id)
-        job=self.store.get('EVAL_JOB',pair['jobs'][side]) if pair else None
-        result=self.store.get('QUALITY_EVAL_RESULT',job.get('result_id','')) if job else None
-        if not result or digest(result)!=job.get('result_digest') or not any(result['critical_errors'].values()):raise ValueError('需實際執行且已保存的重大錯誤結果，不以猜測擴大隔離')
-        pipeline=self.store.get('QUALITY_PIPELINE',protocol['scope']['pipelines'][side]['id']);manifest=pipeline['manifest']
-        if pipeline['manifest_digest']!=protocol['scope']['pipelines'][side]['manifest_digest'] or digest(manifest)!=pipeline['manifest_digest']:raise ValueError('重大結果對應的實際版本已改變，未隔離其他程式冒充原版本')
+    def dependencies(self,pipeline_id,component,rule_id=None):
+        if component not in ('PARSER','MODEL','RULE'):raise ValueError('需明列解析器／模型／規則影響種類')
+        pipeline=self.store.get('QUALITY_PIPELINE',pipeline_id)
+        if not pipeline or digest(pipeline['manifest'])!=pipeline['manifest_digest']:raise ValueError('實際固定版本不存在或已被修改')
+        manifest=pipeline['manifest']
         rule=next((r for r in manifest['rules'] if r['id']==rule_id),None)
         if component=='MODEL' and not manifest['semantic_model_id']:raise ValueError('此版本沒有已執行語意模型')
         if component=='RULE' and not rule:raise ValueError('exact規則不在已固定版本集合')
@@ -56,14 +53,28 @@ class QualityRechecks:
             equivalent=component=='MODEL' and work[2] in model_ids and work[2]!=manifest['semantic_model_id']
             unknown=bool(legacy or component=='PARSER' and work[3] or equivalent)
             rows.append(dict(work_id=work_id,work_revision=work[0],source_id=work[1],facts_revision=facts[0] if facts else 0,samples=samples,batch_ids=batch_ids,source_semantic_model_id=work[2],dependency_match='POTENTIAL_SAME_WEIGHTS_OTHER_MODEL_VERSION' if equivalent else 'POTENTIAL_LEGACY_VERSION_UNKNOWN' if unknown else 'RECORDED_VERSION_DEPENDENCY',legacy_dependency_versions_unknown=unknown))
-        plan=dict(protocol_id=protocol_id,side=side,component=component,rule_id=rule_id,pipeline_id=pipeline['id'],
-                  pipeline_digest=digest(pipeline),component_fingerprint=fingerprint,result_id=result['id'],result_digest=digest(result),critical_errors=result['critical_errors'],
+        plan=dict(component=component,rule_id=rule_id,pipeline_id=pipeline['id'],
+                  pipeline_digest=digest(pipeline),component_fingerprint=fingerprint,
                   rows=rows,missing_historical_work_ids=missing,complete=not missing,
                   scope='EXACT_DEPENDENCIES_AND_POTENTIAL_LEGACY_REVIEWS_WITHOUT_VERSION_SNAPSHOT_INCLUDING_CLOSED_BATCHES',
                   unknown_unrecorded_dependencies=True,original_and_published_data_modified=False)
         plan['digest']=digest(plan);return plan
 
+    def plan(self,protocol_id,side,component,rule_id=None):
+        if side not in ('BASELINE','CANDIDATE') or component not in ('PARSER','MODEL','RULE'):raise ValueError('需選明確試驗側及解析器／模型／規則版本')
+        protocol=QualityProtocols(self.library).get(protocol_id);pair=self.store.get('QUALITY_PROTOCOL_JOBS',protocol_id)
+        job=self.store.get('EVAL_JOB',pair['jobs'][side]) if pair else None
+        result=self.store.get('QUALITY_EVAL_RESULT',job.get('result_id','')) if job else None
+        if not result or digest(result)!=job.get('result_digest') or not any(result['critical_errors'].values()):raise ValueError('需實際執行且已保存的重大錯誤結果，不以猜測擴大隔離')
+        pipeline=self.store.get('QUALITY_PIPELINE',protocol['scope']['pipelines'][side]['id']);manifest=pipeline['manifest']
+        if pipeline['manifest_digest']!=protocol['scope']['pipelines'][side]['manifest_digest'] or digest(manifest)!=pipeline['manifest_digest']:raise ValueError('重大結果對應的實際版本已改變，未隔離其他程式冒充原版本')
+        dependencies=self.dependencies(pipeline['id'],component,rule_id)
+        dependencies.pop('digest')
+        plan=dict(dependencies,protocol_id=protocol_id,side=side,result_id=result['id'],result_digest=digest(result),critical_errors=result['critical_errors'])
+        plan['digest']=digest(plan);return plan
+
     def confirm(self,plan,actor,reason,approved=False):
+        if 'protocol_id' not in plan or 'result_id' not in plan:raise ValueError('純影響清單不是重大錯誤憑證，不能據此隔離歷史')
         if approved is not True:raise ValueError('需核對重大錯誤／歷史影響並明確發起重審與隔離')
         text(actor,'重審發起人',120);text(reason,'共通嚴重錯誤確認依據',2000)
         with self.store.transaction():
