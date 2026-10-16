@@ -1231,3 +1231,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 2026-10-16 UI057/058 WIP: default foreground async81PASS; single-worker backpressure/partial/cancel/resume/manual/restart native22PASS; exact source/byteproof36PASS. Source uses actual SHA/length/stat and exact published template pin, no confidence bypass. No parents marked complete; source adversarial/capture/fullclauses pending.
 
 2026-10-16 UI057/058 combined57PASS and actual4source adversariesPASS;1073catalog. Actual11viewcapture0020Qt visually reviewed; clipped entry fixed and00311view0Qt, finalvisual pending. Kept001publication refusal fixturefailure. No parent markedcomplete; original9+10 registration/frozenformal pending.
+
+2026-10-16 UI0579/UI05810 full original clauses registered pending batch,123support IDs each;150claims/1075catalog. Finaltarget01572PASS, capture00411images0Qt all visually inspected. SourceAPI unknown cannot bypass via direct export. Freeze next RUN-REMAINING28-LAYOUT-001; expected12parents120clauses only after actual completePASS+exit0+publication. Historical8 unchanged.

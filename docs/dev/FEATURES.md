@@ -60,8 +60,8 @@
 | UI-054 | 品質失敗根因分析、受控局部修復、獨立再驗收與安全回退 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 根因候選隔離、回歸及獨立再驗收，兩版有問題不假退回安全 | [run](../../docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json) |
 | UI-055 | 人工修正可信訓練樣本池、標記版本與資料污染防護 | IMPLEMENTED_PENDING_VERIFICATION | 否 | UI055原11完整軟體：實際來源/原判定/人工標記候選、受控批次准入、衝突/相關群組/holdout防洩漏、精確manifest與實際用途追溯、用途停止及本機訓練文字最小化、原生GUI；Linux合法合成流程，不宣稱生產準確率/nativeAI/Windows參考實機/外部備份或安全擦除。 | 無有效新版證據 |
 | UI-056 | 訓練樣本類別覆蓋儀表板、缺口提醒與資料分布透明化 | IMPLEMENTED_PENDING_VERIFICATION | 否 | UI056正式C原8完整軟體：明確用途/精確Manifest分流、目前准入資格、SHA+長度+標記去重、重疊分母與未知、可追溯中性提醒、持久歷史快照/過期與來源安全返回、50筆owned-worker原生GUI；無補樣建議/品質通過或實機/原生AI精度宣稱。 | 無有效新版證據 |
-| UI-057 | AI 未涵蓋情境的分級風險提示、安全草稿與硬性無解阻擋 | PARTIAL | 否 | 低把握、缺證據、已證實無解區別，忽略警告不能放行 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-058 | 當次自動排版的真實進度、低負載執行、安全取消與候選恢復 | PARTIAL | 否 | 真實進度、短期恢復；按指定參考機實測 RAM、VRAM 與 CPU／GPU 路徑；既有標記歷史是 UI-038 子能力，不能充當當次排版候選恢復已完成 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-057 | AI 未涵蓋情境的分級風險提示、安全草稿與硬性無解阻擋 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Full original normative clauses; source/version/three-way gates and single existing foreground session. Authored synthetic Linux evidence; no native Illustrator/reference Windows hardware certification. | 無有效新版證據 |
+| UI-058 | 當次自動排版的真實進度、低負載執行、安全取消與候選恢復 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Full original normative clauses; source/version/three-way gates and single existing foreground session. Authored synthetic Linux evidence; no native Illustrator/reference Windows hardware certification. | 無有效新版證據 |
 | UI-059 | 當次排版變更依賴局部重算、人工編輯保護與版本衝突防護 | PARTIAL | 否 | 局部失效、人工位置保護，舊運算結果不可覆寫新版 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-060A | UI-060 補充決策 A｜排版完成後結果呈現、多方案比較與問題定位 | PARTIAL | 否 | 推薦與候選對照、問題定位，未搜尋完整不稱最佳 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-061 | UI-061｜多候選與多尺寸修改同步、套用範圍及局部回復（正式決策） | PARTIAL | 否 | 來源內容依 ID 同步，幾何分候選尺寸，跨目標先比對 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |

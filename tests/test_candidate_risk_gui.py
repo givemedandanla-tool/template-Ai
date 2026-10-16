@@ -30,3 +30,6 @@ class CandidateRiskGuiTests(unittest.TestCase):
         self.seed();self.assertTrue(self.w.export_button.isEnabled())
         with patch.object(self.w.library,'_template_provenance',side_effect=ValueError('Actual current source no longer valid')):self.w.choose_candidate(0)
         self.assertFalse(self.w.export_button.isEnabled());self.assertEqual(self.w.review_candidates.count(),1);self.assertIn('來源',self.w.issues.text());self.assertFalse(self.w.candidates[0].risk['known_hard_conditions_passed'])
+
+    def test_explicit_recheck_cannot_clear_unresolved_required_evidence_by_acceptance(self):
+        self.seed();candidate=self.w.candidates[0];candidate.risk_context.setdefault('conditions',[]).append(dict(id='ESSENTIAL_SOURCE_REVIEW',status='UNKNOWN',required=True,reason='Actual essential evidence is unresolved'));self.w.choose_candidate(0);self.assertFalse(self.w.export_button.isEnabled());self.w.recheck_candidate();self.assertFalse(self.w.export_button.isEnabled());self.assertEqual(self.w.candidates[0].risk['state'],'EVIDENCE_REQUIRED');self.assertTrue(any(c['id']=='ESSENTIAL_SOURCE_REVIEW' for c in self.w.candidates[0].risk['conditions']))

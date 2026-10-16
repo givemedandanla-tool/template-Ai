@@ -182,6 +182,8 @@ class FirstVersionTests(unittest.TestCase):
         self.assertEqual(len(results), 1)
         self.assertTrue(results[0].valid)
         self.assertIn("標記", "；".join(learned.reasons))
+        from template_ai.candidate_risk import verify_original_source,bind_source
+        verify_original_source(results[0],self.library);bind_source(results[0],self.library,require_registered=True)
         export(results[0], self.root / "learned.pdf")
         self.assertEqual(match(self.library.templates(True), 91, 54, DATA, [], {}), [])
 

@@ -53,3 +53,10 @@ class CandidateRiskTests(unittest.TestCase):
     def test_fresh_source_binding_does_not_silently_drop_explicit_review(self):
         candidate=transient_draft(self.candidate(),'Explicit unresolved style review')
         bind_source(candidate,self.library);self.assertEqual(candidate.risk['state'],'REVIEW_DRAFT');self.assertFalse(candidate.formal_eligible)
+
+    def test_engine_or_rule_version_change_invalidates_old_candidate_and_requires_regeneration(self):
+        candidate=self.candidate();self.assertTrue(candidate.formal_eligible)
+        with patch('template_ai.candidate_risk.engine_digest',return_value='changed-explicit-rules'):
+            self.assertFalse(candidate.formal_eligible);self.assertEqual(candidate.risk['state'],'EVIDENCE_REQUIRED')
+            with self.assertRaises(ValueError):export(candidate,self.root/'old-engine-FINAL.png',150,False,7)
+        self.assertTrue(candidate.formal_eligible)

@@ -1,4 +1,4 @@
-# 當前接續：UI057；歷史8/28，UI055與UI056完整實作等批次正式驗證
+# 當前接續：UI055–UI058批次正式驗證；歷史8/28，4父題完整實作待formal
 
 - 使用者目標28父題全部自我驗證；不要停在里程碑。無EXE／mainmerge／多代理。新對話先resume_status，只讀STATE與精簡交接，按需搜檔，勿展開整倉庫/聊天/大型日誌。
 - UI054 REPAIR003 source c87fa8323fa387929d470e874f3c07ee11942c08：1001/1001、126healthy modules、0Qt/capture0/sourceunchanged/parentexit0，174附件正常GitHub保存。CP ba60136338a06adedde518e04687427d88fc7027，receipt/Gate followup55903990b12ef622c08175b0b531c515eae9990c。publication Gate實際PASS。歷史8/28/82原條；勿重跑已執行UI053/UI054finalizer，REPAIR001/002失敗保留。
@@ -29,3 +29,9 @@ Default async00681PASS (all prior assertions retained, bounded GUI event wait); 
 ## UI057/058 source adversaries/capture WIP
 
 Actual4source tests PASS: missingproof unknown, realSHA makes current source safe, originalbytechange and catalogchange invalidate oldpins, legal manualgeometry restoresagainstexactbase. Combined01257PASS (risk/native/source/session/recovery/multisize/output/custom/navigation), catalog1073. Capture00211PNG/0Qt all visually inspected; found clipped top progress action, shortened label and Chinese stage/recoverylabels. Capture00311PNG/0Qt PASS,231186432B RSS/maxgap457.45ms controlledfixture NOTreferencehardware, finalvisualreview pending. Capture001failed because uninstalledfont is correctly prohibited atpublication; replacedfixturewithlegallypublishedthenactualoriginalsourcefilemissing, retainedfailedlog/screens. Main/source/proof/registeredpins and per-size flow tightened, customCassowarydraft nowactualapprovedbase evidence. Next finish visible per-condition/exactengine pins, finalcapture, original9+10 registration thenbatch formal (4newparents pending;8historical unchanged).
+
+## UI055–UI058 original38 clauses registered; freeze RUN-REMAINING28-LAYOUT-001
+
+UI05511/UI0568/UI0579/UI05810 full registered;150claims pending,1075catalog, historical8/28 unchanged. UI057123support IDs/20new, UI058123support/11new. Final01572PASS; requiredUnknown native0144PASS; engineTrace01330PASS. Missing source proof also UNKNOWN in direct render API; existing learned-source export test now explicitly verifies actual original proof before same export assertions. Candidate code/Qt/font/source/template/input/asset pins and visible allGate conditions; no inference model in this rule/template path. Finalcapture00411views/0Qt all visually reviewed;231–232MB RSS/maxgap459.89ms controlledworkflow, no Windowsreferencebenchmark. Source001capture failure retained;002review found clipped entry fixed,003/004 preserved.
+
+Now freeze/push/readback then run RUN-REMAINING28-LAYOUT-001 using exact nativecommit/tree files. Expect1075tests/150claims/12originalparents120clauses IF all actualPASS/captures0/sourceunchanged/parentexit0/publicationGate. Do not execute any old UI053/UI054 finalizer; new batch finalizer must enforce actual1075records, all owned module exit0/healthy,150contract hashes, normal publication and no newmediaexception. Keep source/tests/tools/examples frozen while active formal; only docs/log/checkpoint updates. After actual full closure proceed UI059 and remaining16 unimplemented parents without stopping at milestone.

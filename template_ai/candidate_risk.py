@@ -1,5 +1,7 @@
 """Evidence-based three-valued candidate gates, never confidence/sample-count permission."""
 import copy
+from functools import lru_cache
+from pathlib import Path
 from dataclasses import asdict
 from .training_store import digest
 
@@ -27,7 +29,7 @@ def assess(candidate):
     trust=conjunction([c['status'] for c in evidence if c.get('required',True)]);review=any(c['status']!='PASS' for c in evidence if not c.get('required',True));basis_approved=approval=='PASS' or valid_approved_base(context.get('approved_base'))
     if not basis_approved:conditions.append(dict(id='APPROVED_OR_REVIEWED_BASE',status='UNKNOWN',reason='尚無已核准基準的可核對憑證'))
     state='HARD_BLOCKED' if hard else 'EVIDENCE_REQUIRED' if physical=='UNKNOWN' or trust!='PASS' or not basis_approved else 'REVIEW_DRAFT' if approval!='PASS' or review else 'SAFE_RECOMMENDATION'
-    result=dict(state=state,label=LABELS[state],conditions=conditions,known_hard_conditions_passed=physical=='PASS' and trust=='PASS' and basis_approved,formal_allowed=state=='SAFE_RECOMMENDATION' and candidate.valid,score_kind='RULE_FITNESS_NOT_CALIBRATED_CONFIDENCE',generation=candidate.generation,template_id=candidate.template.id,template_version=candidate.template.version,dimensions=[candidate.template.width_mm,candidate.template.height_mm],template_digest=digest(candidate.template.to_dict()),input_digest=context.get('input_digest'),dependency_stamp=candidate.dependency_stamp,basis=context.get('basis',['EXPLICIT_PUBLISHED_RULE_TEMPLATE'] if approval=='PASS' else ['UNAPPROVED_CANDIDATE_ONLY']),supplementation=False,automatic_learning=False,accept_risk_is_not_a_gate=True)
+    result=dict(state=state,label=LABELS[state],conditions=conditions,known_hard_conditions_passed=physical=='PASS' and trust=='PASS' and basis_approved,formal_allowed=state=='SAFE_RECOMMENDATION' and candidate.valid,score_kind='RULE_FITNESS_NOT_CALIBRATED_CONFIDENCE',generation=candidate.generation,template_id=candidate.template.id,template_version=candidate.template.version,dimensions=[candidate.template.width_mm,candidate.template.height_mm],template_digest=digest(candidate.template.to_dict()),input_digest=context.get('input_digest'),engine_digest=context.get('engine_digest'),models_used=['EXPLICIT_RULE_TEMPLATE_NO_INFERENCE_MODEL'],dependency_stamp=candidate.dependency_stamp,basis=context.get('basis',['EXPLICIT_PUBLISHED_RULE_TEMPLATE'] if approval=='PASS' else ['UNAPPROVED_CANDIDATE_ONLY']),supplementation=False,automatic_learning=False,accept_risk_is_not_a_gate=True)
     result['digest']=digest(result);return result
 
 
@@ -88,14 +90,16 @@ def placement_digest(candidate):
 
 def pin_inputs(candidate,people,companies,logos):
     snapshot=copy.deepcopy(dict(people=people,companies=companies,logos=logos))
-    candidate.risk_context.update(input_snapshot=snapshot,input_digest=digest(snapshot),template_snapshot_digest=digest(candidate.template.to_dict()),placement_snapshot_digest=placement_digest(candidate))
+    candidate.risk_context.update(engine_digest=engine_digest(),input_snapshot=snapshot,input_digest=digest(snapshot),template_snapshot_digest=digest(candidate.template.to_dict()),placement_snapshot_digest=placement_digest(candidate))
 
 def freshness_conditions(candidate):
     context=candidate.risk_context;reasons=[]
+    if context.get('engine_digest')!=engine_digest():reasons.append('排版引擎／語意與安全規則版本已變更')
     if 'input_snapshot' not in context:return [dict(id='SNAPSHOT_FRESHNESS',status='UNKNOWN',reason='缺當次輸入快照，需重新排版')]
     if digest(context['input_snapshot'])!=context.get('input_digest'):reasons.append('輸入快照已變更')
     if digest(candidate.template.to_dict())!=context.get('template_snapshot_digest'):reasons.append('模板內容已變更')
     if placement_digest(candidate)!=context.get('placement_snapshot_digest'):reasons.append('已量測的文字／框位／Logo已變更')
+    if candidate.template.source_id and not context.get('original_source_proof'):reasons.append('來源模板缺原稿內容核實憑證，需先背景核對')
     if context.get('original_source_proof'):
         from .source_links import fingerprint
         from pathlib import Path
@@ -123,3 +127,17 @@ def verify_original_source(candidate,library,cache=None):
         if proof.stat[2]!=source['byte_size']:raise ValueError('原稿byte長度與內容目錄不符')
         if cache is not None:cache[identity]=proof
     candidate.risk_context['original_source_proof']=dict(path=proof.path,hash=proof.hash,stat=list(proof.stat),link_revision=source['link_revision'])
+
+
+@lru_cache(maxsize=128)
+def _code_digest(name,mtime_ns,size):
+    from .background import file_digest
+    return file_digest(Path(__file__).parent/name)
+
+def engine_digest():
+    from PySide6.QtCore import qVersion
+    names=('layout.py','render.py','candidate_risk.py','model.py','text_policy.py','text_metrics.py','font_catalog.py','font_evidence.py','fonts.py','logo_assets.py','background.py')
+    versions={}
+    for name in names:
+        stamp=(Path(__file__).parent/name).stat();versions[name]=_code_digest(name,stamp.st_mtime_ns,stamp.st_size)
+    return digest(dict(qt=qVersion(),code=versions,algorithm='EXPLICIT_FIXED_FONT_LOSSLESS_RULE_TEMPLATE'))
