@@ -1,6 +1,6 @@
 {
   "parent": "UI-062",
-  "status": "IMPLEMENTATION_IN_PROGRESS",
+  "status": "IMPLEMENTED_PENDING_VERIFICATION",
   "source": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "source_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
   "original_clauses": [
@@ -52,11 +52,27 @@
       "sha256": "93c81b917f4036ee579cd1a8c93d05cfa2cce8372041f85ace912c08d2ebbef4",
       "bytes": 57517,
       "review": "Read compare/restore and bounded entries; reuse explicit return without duplicate business data."
+    },
+    {
+      "name": "Qt QScrollArea6.8.3",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/widgets/widgets/qscrollarea.cpp",
+      "bytes": 15945,
+      "sha256": "141f71e6e73fe895afcf0e21f996493c6312f0c0f06699edc50e0a12929bfe83",
+      "local": "/tmp/ui062-reference-review/qt-qscrollarea-6.8.3.txt"
+    },
+    {
+      "name": "Qt QGraphicsView6.8.3",
+      "url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/widgets/graphicsview/qgraphicsview.cpp",
+      "bytes": 135658,
+      "sha256": "b9e4b0fae39acc7d807bc3ada021e544f53f8bd2c4424cb5334319fbf2f74033",
+      "local": "/tmp/ui062-reference-review/qt-qgraphicsview-6.8.3.txt"
     }
   ],
   "actually_reviewed": [
     "Qt6.8.3 qtabwidget.cpp currentChanged after stack change; preserve existing mode memory",
-    "Microsoft VSCode1.66 Timeline explicit compare/restore and bounded history"
+    "Microsoft VSCode1.66 Timeline explicit compare/restore and bounded history",
+    "QScrollArea6.8.3 ensureWidgetVisible uses overridden ImCursorRectangle: reveal actual canvas rectangle centre with ensureVisible",
+    "QGraphicsView6.8.3 resizeEvent preserves lastCenterPoint via resizeAnchor; use existing AnchorViewCenter, removed unsuccessful extra deferred callbacks."
   ],
   "math": [
     "Finite state mode/root/generation/exactobject-version fence; validreturn iff capturedpin==currentpin",
@@ -75,7 +91,7 @@
     "Nativecontrolled captures and original26 coverage; no reference Windows/corpus claim"
   ],
   "checkpoint": "CP-20261016-REMAINING28-UI062-NAVIGATION-WIP",
-  "next_action": "Actual960x640 visiblecanvas regression/layoutrepair, recapture/review12, runnerhook/full26 mapping thenUI063",
+  "next_action": "UI063 full original contract; UI059/UI060A/UI061/UI062 await immutable fullbatch/native/publication Gate before promotion.",
   "targeted_checks": [
     {
       "log": "docs/qa/targeted/ui062-navigation-001.log",
@@ -142,6 +158,67 @@
       "log": "docs/qa/targeted/ui062-visual-fixed-014.log",
       "status": "PASS",
       "tests": 31
+    },
+    {
+      "log": "docs/qa/targeted/ui062-small-viewport-regression-016.log",
+      "status": "FAIL",
+      "tests": 1,
+      "reason": "Actual35px visiblecanvas"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-small-viewport-fixed-017.log",
+      "status": "FAIL",
+      "tests": 43,
+      "reason": "42PASS, viewport143px stillfailed"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-small-viewport-fixed-019.log",
+      "status": "FAIL",
+      "tests": 2,
+      "reason": "Microfocus stillfailed"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-small-viewport-fixed-020.log",
+      "status": "PASS",
+      "tests": 2,
+      "reason": "Actualcoordinate reveal and typedinputfocus"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-coherent-021.log",
+      "status": "PASS",
+      "tests": 43,
+      "reason": "Coherent before strengthening settled-view centre"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-settled-view-023.log",
+      "status": "FAIL",
+      "tests": 1,
+      "reason": "Actual7.5mmcentreshift afterQt settles"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-settled-view-fixed-024.log",
+      "status": "FAIL",
+      "tests": 1,
+      "reason": "Deferredtimerattempt insufficient"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-settled-view-fixed-025.log",
+      "status": "FAIL",
+      "tests": 1,
+      "reason": "Deferredtimerattempt stillinsufficient"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-resize-anchor-027.log",
+      "status": "PASS",
+      "tests": 1,
+      "reason": "Qt native AnchorViewCenter fixescentre"
+    },
+    {
+      "log": "docs/qa/targeted/ui062-coherent-final-028.log",
+      "status": "PASS",
+      "tests": 43,
+      "reason": "Simplified properQtAnchor; no customdeferredrestore; post-layoutcentretolerance unchanged"
     }
-  ]
+  ],
+  "coverage": "docs/dev/UI062_CLAUSE_COVERAGE.json"
 }

@@ -100,6 +100,7 @@ class Canvas(QGraphicsView):
         self.setRenderHint(QPainter.Antialiasing)
         self.setBackgroundBrush(QColor("#e8edf5"))
         self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+        self.setResizeAnchor(QGraphicsView.AnchorViewCenter)
         self.setDragMode(QGraphicsView.ScrollHandDrag)
         self.mode = "pan"
         self.start = None

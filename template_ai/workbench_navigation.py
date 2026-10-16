@@ -23,7 +23,7 @@ def work_token(window):
 class WorkbenchNavigation:
     def __init__(self,window,label,back):
         self.window=window;self.label=label;self.back=back;self.locations=[]
-        self.route=None;self.notice='';self.recovery=None;self.save_error=None;self.restoring=False;self.return_serial=0
+        self.route=None;self.notice='';self.recovery=None;self.save_error=None;self.restoring=False
         self.back.clicked.connect(self.return_to_work)
         window.tabs.currentChanged.connect(self.update)
         window.inputs_invalidated.connect(self.update)
@@ -37,7 +37,6 @@ class WorkbenchNavigation:
     def pin(self,mode):
         w=self.window
         if mode==2:
-            from .candidate_results import selection_pin
             index=w.candidate_list.currentRow()
             if not 0<=index<len(w.candidates):return ('EMPTY',w.generation)
             return ('CANDIDATE',w.candidates[index].template.id,self.candidate_pin(index))
@@ -105,7 +104,6 @@ class WorkbenchNavigation:
                     scroll=[origin.table.horizontalScrollBar().value(),origin.table.verticalScrollBar().value()])
 
     def remember(self,mode=None,origin=None):
-        self.return_serial+=1
         try:location=self.capture_multi(origin) if origin is not None else self.capture(mode)
         except (ValueError,OSError,KeyError,TypeError):
             self.notice='目前物件尚無可核對的返回位置；修正後請由原列表重新選取。'
@@ -170,17 +168,6 @@ class WorkbenchNavigation:
             if mode==2:
                 w.output_page_scroll.horizontalScrollBar().setValue(location['page_scroll'][0])
                 w.output_page_scroll.verticalScrollBar().setValue(location['page_scroll'][1])
-            # QTabWidget applies its new page layout after currentChanged. Its
-            # late viewport resize can move the scene centre despite identical
-            # zoom. Restore once after that layout, fenced against newer work.
-            self.return_serial+=1;serial=self.return_serial
-            def settled_view():
-                if serial!=self.return_serial or w.library.closed or w.generation!=location['generation'] or w.tabs.currentIndex()!=mode:return
-                if canvas.transform()!=location['transform'] or self.pin(mode)!=location['pin'] or self.form_pin(mode)!=location['form_pin']:return
-                canvas.centerOn(location['centre']);canvas.view_changed.emit()
-                if mode==2:
-                    w.output_page_scroll.horizontalScrollBar().setValue(location['page_scroll'][0]);w.output_page_scroll.verticalScrollBar().setValue(location['page_scroll'][1])
-            QTimer.singleShot(0,w,settled_view)
             self.notice='已返回原工作視角；正式輸出仍依當前尺寸檢查。'
         except (ValueError,OSError,KeyError,TypeError) as error:
             reason=str(error);w.tabs.setCurrentIndex(mode)

@@ -22,10 +22,10 @@ def capture(folder):
     try:
         case.ready();w.resize(1360,940);w.foreground_layout_session.hide();app.processEvents();c=w.candidates[0]
         box=Box(copy.deepcopy(c.template.slots[0]),lambda *args:None);w.output_canvas.scene().addItem(box);box.setSelected(True);w.output_canvas.set_zoom(12);view=w.output_canvas.transform()
-        original=c.template.to_dict();shot(w,'01-current-candidate-context')
+        QTest.qWait(30);original=c.template.to_dict();shot(w,'01-current-candidate-context');centre=w.output_canvas.mapToScene(w.output_canvas.viewport().rect().center())
         def logo_cancel():
             dialog=next(d for d in w.findChildren(LogoLibraryDialog) if d.isVisible());shot(dialog,'02-existing-logo-correction');QTest.keyClick(dialog,Qt.Key_Escape)
-        QTimer.singleShot(0,logo_cancel);w.logo_center();w.tabs.setCurrentIndex(1);assert w.navigation.return_to_work();assert w.output_canvas.transform()==view;assert w.candidates[0].template.to_dict()==original
+        QTimer.singleShot(0,logo_cancel);w.logo_center();w.tabs.setCurrentIndex(1);assert w.navigation.return_to_work();QTest.qWait(30);assert w.output_canvas.transform()==view;assert (w.output_canvas.mapToScene(w.output_canvas.viewport().rect().center())-centre).manhattanLength()<.2;assert w.candidates[0].template.to_dict()==original
         shot(w,'03-exact-candidate-view-return')
         def close_stay():
             dialog=next(d for d in QApplication.topLevelWidgets() if isinstance(d,QMessageBox) and d.isVisible());shot(dialog,'04-real-unsaved-close-choices');click_message('返回繼續編輯')
