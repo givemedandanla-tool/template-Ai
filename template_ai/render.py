@@ -184,6 +184,12 @@ def render_image(candidate: Candidate, dpi: int = 150, preview: bool = False) ->
     return image
 
 
+def card_view_image(candidate: Candidate,dpi: int=100) -> QImage:
+    """Card-only viewport; UI supplies explicit preview/risk labels separately."""
+    image=render_image(candidate,dpi=dpi,preview=True)
+    return image.copy(0,0,image.width(),max(1,round(candidate.template.height_mm*dpi/25.4)))
+
+
 def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bool = False, expected_generation: int | None = None) -> Path:
     """同目錄暫存與排他建立；任何錯誤不留下冒充成功的半成品，也不覆寫既有檔。"""
     target = Path(target)

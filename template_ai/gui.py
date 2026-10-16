@@ -594,7 +594,7 @@ class MainWindow(QMainWindow):
         self.button("清除當次輸入並回到簡易表格", self.clear_input_graph, graph_bar)
         layout.addLayout(graph_bar)
         self.legacy_input_panel=QGroupBox('相容表格輸入／輸入問題（展開或收合）');self.legacy_input_panel.setCheckable(True)
-        table_container=QWidget();table_layout=QVBoxLayout(table_container);table_scroll=QScrollArea();table_scroll.setWidgetResizable(True);table_scroll.setWidget(table_container);table_scroll.setMaximumHeight(260)
+        table_container=QWidget();table_layout=QVBoxLayout(table_container);table_scroll=QScrollArea();table_scroll.setWidgetResizable(True);table_scroll.setWidget(table_container);table_scroll.setMaximumHeight(260);self.legacy_table_scroll=table_scroll
         group_layout=QVBoxLayout(self.legacy_input_panel);group_layout.addWidget(table_scroll);self.legacy_input_panel.toggled.connect(table_scroll.setVisible);self.legacy_input_panel.setChecked(False);layout.addWidget(self.legacy_input_panel)
         self.people = QTableWidget(1, 8)
         self.people.setHorizontalHeaderLabels(["姓名", "職稱", "電話", "Email", "LINE", "IG", "地址", "公司序號"])
@@ -647,6 +647,9 @@ class MainWindow(QMainWindow):
         candidate_layout.removeWidget(self.dependency_notice);candidate_layout.insertWidget(0,self.dependency_notice)
         self.result_recommendation=QLabel('尚無已驗證候選');self.result_recommendation.setWordWrap(True);candidate_layout.insertWidget(0,self.result_recommendation)
         self.recommended_button=QPushButton('查看目前合格推薦');self.recommended_button.clicked.connect(self.select_recommended_candidate);candidate_layout.insertWidget(1,self.recommended_button)
+        self.button('展開候選比較／驗證差異',self.compare_candidate_results,candidate_layout)
+        self.result_problem_items=QListWidget();self.result_problem_items.setMaximumHeight(140);self.result_problem_items.itemClicked.connect(self.locate_result_problem);candidate_layout.addWidget(self.result_problem_items)
+        self.button('由此問題開啟既有修正入口',self.fix_result_problem,candidate_layout)
         self.candidate_scroll=QScrollArea();self.candidate_scroll.setWidgetResizable(True);self.candidate_scroll.setWidget(candidate_panel);self.candidate_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff);self.candidate_scroll.setMinimumWidth(270);split.addWidget(self.candidate_scroll)
         self.output_canvas = Canvas()
         self.output_canvas.setMinimumHeight(240)
@@ -1711,12 +1714,13 @@ class MainWindow(QMainWindow):
                 table.removeRow(table.currentRow())
                 self.invalidate()
 
-    def edit_input_graph(self):
+    def edit_input_graph(self,*,focus_field_id=None,focus_entity_id=None):
         if self.busy:
             self.error("背景工作中，待完成後編輯當次輸入");return
         from .input_graph_dialog import InputGraphDialog
         try:
             dialog=InputGraphDialog(self)
+            if focus_field_id:QTimer.singleShot(0,dialog,lambda:dialog.focus_field(focus_field_id,focus_entity_id))
             if dialog.exec()==QDialog.Accepted:self.adopt_input_graph(dialog.graph.data,history=dialog.graph)
         except (ValueError,TypeError) as error:self.error(str(error))
 
@@ -1877,6 +1881,7 @@ class MainWindow(QMainWindow):
             self.output_canvas.fit()
             current = c.generation == self.generation
             self.refresh_dependency_notice()
+            self.refresh_result_problems(row)
             self.export_button.setEnabled(eligible and current)
             self.preview_button.setEnabled(current)
             self.output_properties.setPlainText(f"目前候選：{c.template.name} v{c.template.version}\nID {c.template.id}\n尺寸 {c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n"+('已驗證合格（有效版本）' if eligible and current else risk['label'] if current else '候選過期：禁止正式輸出')+'\n排序為規則適配，非審美保證\n'+'；'.join(c.reasons)+'\n問題：\n'+'\n'.join(c.issues[:20]))
@@ -1897,6 +1902,33 @@ class MainWindow(QMainWindow):
             from .candidate_risk import transient_draft
             self.candidates[row]=transient_draft(self.candidates[row],reason);self.choose_candidate(row)
         except ValueError as error:self.error(str(error))
+
+    def compare_candidate_results(self):
+        from .candidate_results import ResultComparisonDialog
+        dialog=ResultComparisonDialog(self)
+        try:dialog.exec()
+        finally:dialog.deleteLater()
+
+    def refresh_result_problems(self,index):
+        from PySide6.QtWidgets import QListWidgetItem
+        from .candidate_results import problem_rows
+        self.result_problem_items.clear()
+        for row in problem_rows(self,index):
+            owner=('人物' if row['owner'].startswith('p') else '公司')+row['owner'][1:] if row['owner'] else '整張／來源'
+            item=QListWidgetItem(owner+'／'+KINDS.get(row['kind'],'相關條件')+'：'+row['reason']);item.setData(Qt.UserRole,row);item.setToolTip(row['code']+'\n'+'、'.join(row['slot_ids']));self.result_problem_items.addItem(item)
+
+    def locate_result_problem(self,item):
+        from .candidate_results import locate_problem
+        if item is None:return
+        try:return locate_problem(self,item.data(Qt.UserRole))
+        except (ValueError,OSError,TypeError,KeyError,IndexError) as error:self.statusBar().showMessage('問題待重新核對：'+str(error))
+
+    def fix_result_problem(self):
+        from .candidate_results import fix_problem
+        item=self.result_problem_items.currentItem()
+        if item is None:self.statusBar().showMessage('先選取一項具名問題');return
+        try:fix_problem(self,item.data(Qt.UserRole))
+        except (ValueError,OSError,TypeError,KeyError,IndexError) as error:self.statusBar().showMessage('未開啟修正：'+str(error))
 
     def select_recommended_candidate(self):
         from .candidate_results import recommendation

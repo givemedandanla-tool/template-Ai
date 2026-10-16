@@ -73,6 +73,11 @@ class InputGraphDialog(QDialog):
         editor=self.field_editors.get(eid)
         if editor:self.scroll.ensureWidgetVisible(editor);editor.setFocus()
 
+    def focus_field(self,field_id,entity_id=None):
+        editor=self.field_locations.get((field_id,entity_id)) or self.field_editors.get(field_id)
+        if editor is None:self.status.setText('欄位版本已改，無法推測位置');return False
+        self.scroll.ensureWidgetVisible(editor);editor.setFocus();editor.selectAll();self.selected_id=field_id;return True
+
     def choose(self,title,entries):
         if not entries:self.status.setText('沒有適用對象；未變更資料');return None
         labels=[name+' · '+eid for eid,name in entries]

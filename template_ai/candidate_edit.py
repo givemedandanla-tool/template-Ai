@@ -173,13 +173,9 @@ class CandidateEditDialog(QDialog):
     def show_canvas(self,canvas,candidate):
         from .gui import Box
         from PySide6.QtWidgets import QGraphicsItem
-        from .render import render_image
+        from .render import card_view_image
         try:
-            image=render_image(candidate,dpi=100,preview=True)
-            # The canvas shows the card at its physical coordinate system.
-            # Risk notes already have visible UI text; the export footer must
-            # never be squeezed into card height and misalign the object overlay.
-            image=image.copy(0,0,image.width(),max(1,round(candidate.template.height_mm*100/25.4)))
+            image=card_view_image(candidate)
         except (ValueError,OSError):image=None
         canvas.set_content(candidate.template.width_mm,candidate.template.height_mm,image,candidate.template.slots)
         for item in canvas.scene().items():
