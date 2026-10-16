@@ -18,6 +18,7 @@ ITEM_KEYS=('sample_id','sample_revision','scope_digest','source_pins','name','pr
 def scope_digest(kind,job):
     scope={k:job.get(k) for k in ('id','dataset_id','dataset_revision','manifest_digest','purpose','scope')}
     scope['kind']=kind;scope['items']=[{k:item.get(k) for k in ITEM_KEYS} for item in job['items']]
+    if kind=='AUTO_JOB' and job.get('operation') is not None:scope['operation']=job['operation']
     if kind=='EVAL_JOB':
         scope.update(protocol_id=job['protocol_id'],protocol_scope_digest=job['protocol_scope_digest'],side=job['side'],pipeline_id=job['pipeline_id'],pipeline_manifest_digest=job['pipeline_manifest_digest'])
         scope['items']=[{k:item.get(k) for k in (*ITEM_KEYS,'id','source_id','gold_ids','logical_file_keys')} for item in job['items']]

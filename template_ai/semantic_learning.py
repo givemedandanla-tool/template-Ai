@@ -55,22 +55,29 @@ class SemanticLearning:
             if predicted!=expected:cell['errors'].append(dict(sample_id=row['sample_id'],predicted=predicted))
         return result
 
+    @classmethod
+    def bind(cls,library):
+        obj=object.__new__(cls);obj.library=library;obj.store=TrainingStore.bind(library);return obj
+
     def train(self,plan,actor,approved=False):
+        with self.store.transaction():return self.train_in_transaction(plan,actor,approved)
+
+    def train_in_transaction(self,plan,actor,approved=False):
         if approved is not True:raise ValueError('需明確授權所列確認文字作本機語意分類訓練；不沿用僅幾何授權')
         text(actor,'訓練者',120)
-        with self.store.transaction():
-            fresh=self.plan(plan['work_roles'])
-            if fresh['digest']!=plan.get('digest'):raise ValueError('語意訓練來源／確認版已變更')
-            for scope in fresh['scopes']:self.store.checked(scope['work_id'],self.store.source_proof(scope['work_id']))
-            model=CharacterModel([e for e in fresh['examples'] if e['role']=='TRAIN'])
-            metrics=self.evaluate(model,[e for e in fresh['examples'] if e['role']=='VALIDATION'])
-            baseline=self.evaluate(None,[e for e in fresh['examples'] if e['role']=='VALIDATION'])
-            for scope in fresh['scopes']:
-                sha=scope['pins']['source_hash']
-                if not self.store.get('GROUP_ROLE',sha):self.store._write('GROUP_ROLE',sha,dict(role=scope['role'],source_hash=sha,basis='SEMANTIC_MODEL_ACTUAL_SOURCE_USE',actor=actor),0,'semantic_model_source_role_locked')
-            return self.store._write('SEMANTIC_MODEL',new_id(),dict(state='PENDING',plan=fresh,actor=actor,created=time.time(),metrics=metrics,baseline_metrics=baseline,
-                parameter_count=sum(len(v) for v in model.counts.values())+len(model.documents),vocabulary_size=len(model.vocabulary),
-                weights_digest=digest({k:dict(v) for k,v in model.counts.items()}),score_kind='UNCALIBRATED_LOG_LIKELIHOOD_MARGIN',scope='LOCAL_TEXT_ONLY; NO_NEURAL_ARCHITECTURE_CHANGE'),0,'semantic_model_candidate_trained_not_activated')
+        if not self.store.db.in_transaction:raise ValueError('模型候選與所屬工作需明確共同交易')
+        fresh=self.plan(plan['work_roles'])
+        if fresh['digest']!=plan.get('digest'):raise ValueError('語意訓練來源／確認版已變更')
+        for scope in fresh['scopes']:self.store.checked(scope['work_id'],self.store.source_proof(scope['work_id']))
+        model=CharacterModel([e for e in fresh['examples'] if e['role']=='TRAIN'])
+        metrics=self.evaluate(model,[e for e in fresh['examples'] if e['role']=='VALIDATION'])
+        baseline=self.evaluate(None,[e for e in fresh['examples'] if e['role']=='VALIDATION'])
+        for scope in fresh['scopes']:
+            sha=scope['pins']['source_hash']
+            if not self.store.get('GROUP_ROLE',sha):self.store._write('GROUP_ROLE',sha,dict(role=scope['role'],source_hash=sha,basis='SEMANTIC_MODEL_ACTUAL_SOURCE_USE',actor=actor),0,'semantic_model_source_role_locked')
+        return self.store._write('SEMANTIC_MODEL',new_id(),dict(state='PENDING',plan=fresh,actor=actor,created=time.time(),metrics=metrics,baseline_metrics=baseline,
+            parameter_count=sum(len(v) for v in model.counts.values())+len(model.documents),vocabulary_size=len(model.vocabulary),
+            weights_digest=digest({k:dict(v) for k,v in model.counts.items()}),score_kind='UNCALIBRATED_LOG_LIKELIHOOD_MARGIN',scope='LOCAL_TEXT_ONLY; NO_NEURAL_ARCHITECTURE_CHANGE'),0,'semantic_model_candidate_trained_not_activated')
 
     def checked_model(self,identity):
         row=self.store.get('SEMANTIC_MODEL',identity)

@@ -87,6 +87,9 @@ class AutomaticTraining:
         with self.store.transaction():
             row=self.get(identity)
             if row['revision']!=revision:raise ValueError('工作版本已更新')
+            if row.get('operation') or (row.get('scope') or {}).get('operation'):
+                from .quality_repair_training import check
+                check(self,row)
             for worker in ('geometry-worker','automatic-worker'):
                 lease=self.store.get('WORKER',worker)
                 if lease and lease.get('active') and owner_alive(lease.get('owner')):raise ValueError('已有訓練worker執行，不重複啟動')
@@ -106,15 +109,18 @@ class AutomaticTraining:
         return row
 
     def finish(self,identity,token,phase,error=None):
-        with self.store.transaction():
-            row=self.owned(identity,token);row.update(phase=phase,finished=time.time(),system_error=error)
-            if phase in ('CANCELLED','PAUSED_RESOURCES','FAILED_SYSTEM'):
-                for item in row['items']:
-                    if item['state']=='RUNNING':item.update(state='READY',error=error)
-            result=self.store._write('AUTO_JOB',identity,row,row['revision'],'automatic_job_'+phase.lower())
-            lease=self.store.get('WORKER','automatic-worker');lease['active']=False
-            self.store._write('WORKER','automatic-worker',lease,lease['revision'],'automatic_worker_released')
-            return result
+        with self.store.transaction():return self.finish_in_transaction(identity,token,phase,error)
+
+    def finish_in_transaction(self,identity,token,phase,error=None):
+        if not self.db.in_transaction:raise ValueError('工作結果與lease釋放需明確共同交易')
+        row=self.owned(identity,token);row.update(phase=phase,finished=time.time(),system_error=error)
+        if phase in ('CANCELLED','PAUSED_RESOURCES','FAILED_SYSTEM'):
+            for item in row['items']:
+                if item['state']=='RUNNING':item.update(state='READY',error=error)
+        result=self.store._write('AUTO_JOB',identity,row,row['revision'],'automatic_job_'+phase.lower())
+        lease=self.store.get('WORKER','automatic-worker');lease['active']=False
+        self.store._write('WORKER','automatic-worker',lease,lease['revision'],'automatic_worker_released')
+        return result
 
     def work_signature(self,work):
         from .source_analysis import ANALYSER_VERSION
@@ -234,6 +240,10 @@ def run_automatic(root,identity,token,cancel=None,progress=None,admission=None):
     library=Library(root);service=AutomaticTraining(library)
     try:
         job=service.owned(identity,token)
+        if job.get('operation') or (job.get('scope') or {}).get('operation'):
+            from .quality_repair_training import run,check
+            check(service,job)
+            return run(service,job,token,cancel,progress,admission)
         for index in range(len(job['items'])):
             job=service.owned(identity,token);item=job['items'][index]
             if cancel and cancel.is_set():return service.finish(identity,token,'CANCELLED')
