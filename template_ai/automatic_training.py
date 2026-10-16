@@ -30,12 +30,15 @@ class AutomaticTraining:
         for item in report['items']:
             matching=self.library.sources_for_content(item.get('expected_hash'),item['page'],item['path'],limit=1)
             item['existing_source_id']=matching[0]['id'] if matching else None
+        from .quality_repair_releases import QualityRepairReleases
+        report['pipeline_deployment']=QualityRepairReleases(self.library).pin()
         return report
 
     def create(self,report,actor,approved=False,cancel=None):
         if approved is not True:raise ValueError('需先核對預檢並明確開始訓練')
         text(actor,'啟動者',120)
         fresh=self.preflight([i['path'] for i in report['items']],report['page'],compare=False,all_pages=report.get('all_pages',False),cancel=cancel)
+        if fresh.get('pipeline_deployment')!=report.get('pipeline_deployment'):raise ValueError('正式推論版本在預檢後改變，請重新核對exact版本')
         files={item['path']:item for item in fresh['items']};expanded=[];seen=set()
         for old in report['items']:
             item=deepcopy(files[old['path']]);key=(old['path'],old['page'])
@@ -54,7 +57,7 @@ class AutomaticTraining:
         # Duplicate bytes keep separate source identities / customer-code evidence.
         rows=[dict(path=i['path'],page=i['page'],expected_page_count=i.get('available_pages'),source_hash=i.get('expected_hash'),state='READY' if i['status'] in ('READY','SKIPPED') else 'FAILED',
             source_id=i.get('existing_source_id'),error=None if i['status'] in ('READY','SKIPPED') else i['reason'],unit_ids=[],attempts=0) for i in fresh['items']]
-        with self.store.transaction():return self.store._write('AUTO_JOB',new_id(),dict(phase='READY',items=rows,actor=actor,created=time.time(),owner=None,cancel_requested=False),0,'automatic_pipeline_preflight_confirmed')
+        with self.store.transaction():return self.store._write('AUTO_JOB',new_id(),dict(phase='READY',items=rows,actor=actor,created=time.time(),owner=None,cancel_requested=False,pipeline_deployment=deepcopy(report.get('pipeline_deployment'))),0,'automatic_pipeline_preflight_confirmed')
 
     def get(self,identity):
         row=self.store.get('AUTO_JOB',identity)
@@ -90,6 +93,10 @@ class AutomaticTraining:
             if row.get('operation') or isinstance(row.get('scope'),dict) and row['scope'].get('operation'):
                 from .quality_repair_training import check
                 check(self,row)
+            if row.get('pipeline_deployment'):
+                from .quality_repair_releases import QualityRepairReleases
+                QualityRepairReleases(self.library).check_pin(row['pipeline_deployment'])
+                row.pop('restore_state',None)
             for worker in ('geometry-worker','automatic-worker'):
                 lease=self.store.get('WORKER',worker)
                 if lease and lease.get('active') and owner_alive(lease.get('owner')):raise ValueError('已有訓練worker執行，不重複啟動')
@@ -171,6 +178,10 @@ class AutomaticTraining:
         from .runtime_admission import require_resources
         require_resources(admission)
         from .source_analysis import analyse_source
+        deployment=job.get('pipeline_deployment')
+        if deployment:
+            from .quality_repair_releases import QualityRepairReleases
+            QualityRepairReleases(self.library).check_pin(deployment)
         path=Path(item['path']);verify_source(path,item['source_hash'])
         def link_registered(value):
             current=self.owned(job['id'],job['owner']['token'])
@@ -195,9 +206,15 @@ class AutomaticTraining:
             works=[w for w in works if w['id'] in item['work_scope']]
             if {w['id'] for w in works}!=set(item['work_scope']):raise ValueError('作品不屬確認來源')
         if not item.get('work_scope') and (not works or all(w['payload'].get('analysis_key') for w in works)):
-            from .semantic_learning import SemanticLearning
-            model,model_context=SemanticLearning(self.library).active()
-            hypotheses=analyse_source(source,self.library.assets,model,model_context)
+            if deployment:
+                from .quality_pipeline import QualityPipelines
+                QualityRepairReleases(self.library).check_pin(deployment)
+                hypotheses=QualityPipelines(self.library).predict_source(deployment['pipeline_id'],source['id'])['predictions']
+                for hypothesis in hypotheses:hypothesis['evidence']['quality_deployment']=deepcopy(deployment)
+            else:
+                from .semantic_learning import SemanticLearning
+                model,model_context=SemanticLearning(self.library).active()
+                hypotheses=analyse_source(source,self.library.assets,model,model_context)
             for number,hypothesis in enumerate(hypotheses,1):
                 if cancel and cancel.is_set():break
                 require_resources(admission)

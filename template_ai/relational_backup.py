@@ -409,6 +409,8 @@ def restore_bundle(archive,target,password,trusted=False,allow_partial=False,can
                         new.update(consent_session=None,consent_owner=None,owner=None,restore_state='EXPLICIT_RESUME_REQUIRED')
                         if new.get('state') in ('WAITING','RUNNING','PAUSED_RESOURCES'):new['state']='INTERRUPTED'
                     if table=='templates' and new.get('background'):new['background']['restore_revalidation_required']=True
+                    if kind=='QUALITY_PIPELINE_ACTIVE':new.update(restore_state='EXPLICIT_DEPLOYMENT_REVALIDATION_REQUIRED')
+                    if kind=='AUTO_JOB' and new.get('pipeline_deployment'):new.update(owner=None,restore_state='EXPLICIT_DEPLOYMENT_REVALIDATION_REQUIRED')
                     if kind=='SCAN_ROOT':new.update(mode='MANUAL_ONLY',enabled=False,restore_state='RECONNECT_REQUIRED')
                     if kind=='WORKER' and new.get('active'):new.update(active=False,owner=None,restore_state='INTERRUPTED')
                     if kind in ('JOB','AUTO_JOB','EVAL_JOB','AUTO_UNIT','TRAINING_JOB','TRAINING_UNIT'):

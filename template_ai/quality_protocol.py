@@ -18,7 +18,7 @@ REPAIR='EXPOSED_HOLDOUT_REPAIR_DIAGNOSTIC'
 
 def calculation_files():
     root=Path(__file__).parent
-    names=('quality_metrics.py','quality_domains.py','quality_facets.py','quality_diagnostics.py','quality_rechecks.py','quality_trust.py','coverage_evidence.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_rules.py','quality_ocr.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py','quality_repairs.py','quality_repair_training.py','quality_repair_rules.py','quality_repair_gates.py','quality_repair_truth.py')
+    names=('quality_metrics.py','quality_domains.py','quality_facets.py','quality_diagnostics.py','quality_rechecks.py','quality_trust.py','coverage_evidence.py','quality_statistics.py','quality_reports.py','quality_mapping.py','quality_logo.py','quality_pipeline.py','quality_rules.py','quality_ocr.py','quality_engine.py','quality_jobs.py','quality_gold.py','quality_sets.py','quality_groups.py','quality_protocol.py','quality_evaluation.py','quality_repairs.py','quality_repair_training.py','quality_repair_rules.py','quality_repair_gates.py','quality_repair_truth.py','quality_repair_releases.py')
     return {name:file_digest(root/name) for name in names}
 
 
