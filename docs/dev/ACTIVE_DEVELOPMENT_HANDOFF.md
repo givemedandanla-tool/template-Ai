@@ -1,3 +1,12 @@
+# 現行：UI054實際完成8/28；立即UI055及剩餘20
+
+剩餘28已完成UI046/UI047/UI049/UI050/UI051/UI052/UI053/UI054八題，共82原條款；1001/1001正式PASS、0skip/0Qt錯誤、capture0、source unchanged。全75：52 VERIFIED／20 PARTIAL／3 DEFERRED；固定70：50閉合／20仍部分。CORE87／GOV7另計。
+
+- 正式run REPAIR003 source c87fa8323fa387929d470e874f3c07ee11942c08；實際parent exit0，全部原始附件須正常保存GitHub，新run不增媒體例外。先完成publication checkpoint/native ACK與require-evidence publication-scope Gate。
+- 原REPAIR001/002失敗完整保留；不得覆寫。003實際證明selected回呼與治理索引修復。
+- 下一UI055_EXECUTION_PLAN.json：原11規範、實際LabelStudio1.21.0參考。沿用FACTS/SAMPLE/RULE/DATASET/MODEL，無新DB／新付費服務；完成軟體再處理外部原稿與參考硬體證明。
+- 不停milestone、不合併main、不做EXE、不啟動多代理。
+
 # REPAIR003 正在正式驗證；凍結 source/tests/tools/驗收
 
 - source c87fa8323fa387929d470e874f3c07ee11942c08，實際1001測試；目前 614 completed，[] failures。實際最終結果仍待定。

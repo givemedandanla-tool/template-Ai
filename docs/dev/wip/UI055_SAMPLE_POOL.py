@@ -28,7 +28,7 @@ class TrustedSamplePool:
 
     def exact_scope(self,work_id):
         work=self.library.artwork(work_id);source=self.library.source(work['source_id']);payload=work['payload']
-        return digest([source['hash'],source['byte_size'],work['page'],payload['crop'],payload['work_width'],payload['work_height']])
+        return digest([source['hash'],source['byte_size'],source.get('page',1),payload['crop'],payload['work_width'],payload['work_height']])
 
     def labels(self,work_id):
         work=self.library.artwork(work_id);facts=self.store.facts(work_id)
@@ -36,7 +36,7 @@ class TrustedSamplePool:
 
     def conflicts(self,work_id):
         work=self.library.artwork(work_id);source=self.library.source(work['source_id']);scope=self.exact_scope(work_id);labels=self.labels(work_id);conflicts=[]
-        rows=list(self.db.execute('SELECT a.id FROM artworks a JOIN source_files s ON s.id=a.source_id WHERE s.hash=? ORDER BY a.id LIMIT 201',(source['hash'],)))
+        rows=list(self.db.execute('SELECT a.id FROM artworks a JOIN sources s ON s.id=a.source_id WHERE s.hash=? ORDER BY a.id LIMIT 201',(source['hash'],)))
         if len(rows)>200:return dict(conflicting_work_ids=[],complete=False,reason='超過200同內容作品，縮小範圍或明確逐批核實')
         for row in rows:
             other=row[0]
@@ -168,3 +168,23 @@ class TrustedSamplePool:
             receipt=dict(plan=current,actor=actor,at=time.time(),scope=current['scope'],original_payload_hashes_retained=True,logical_local_training_copy_redaction=True,source_files_deleted=False,business_facts_deleted=False,external_backups_deleted=False,filesystem_secure_erasure=False,model_decontaminated=False)
             self.store._write('TRAINING_PRIVACY_REDACTION',receipt_id,receipt,0,'training_copy_minimization_receipt')
             return dict(receipt=self.store.get('TRAINING_PRIVACY_REDACTION',receipt_id),records=saved)
+
+    def directory(self,collection='PENDING',offset=0,query=''):
+        filters=('PENDING','ADMITTED','CONFLICTS','DATASETS','POLLUTED','LINEAGE')
+        if collection not in filters or type(offset) is not int or offset<0 or not isinstance(query,str) or len(query)>500:raise ValueError('樣本目錄需有效篩選及50筆分頁')
+        where="t.kind=?";args=[CANDIDATE]
+        for token in query.casefold().split():
+            where+=" AND instr(training_casefold(t.id||' '||a.name||' '||s.original_path),?)>0";args.append(token)
+        base=" FROM training_records t JOIN artworks a ON a.id=json_extract(t.payload,'$.work_id') JOIN sources s ON s.id=a.source_id WHERE "+where
+        total=self.db.execute('SELECT count(*)'+base,args).fetchone()[0]
+        candidates=list(self.db.execute('SELECT t.id'+base+' ORDER BY t.rowid DESC LIMIT 50 OFFSET ?',(*args,offset)));rows=[]
+        for (identity,) in candidates:
+            detail=self.detail(identity);candidate=detail['candidate'];sample=candidate.get('sample_id');usage=detail['usage'] or {};state=candidate['state']
+            semantic=[r[0] for r in self.db.execute("SELECT DISTINCT m.id FROM training_records m,json_each(m.payload,'$.plan.scopes') s WHERE m.kind='SEMANTIC_MODEL' AND json_extract(s.value,'$.work_id')=? ORDER BY m.id LIMIT 51",(candidate['work_id'],))]
+            match=dict(PENDING=state in ('COLLECTED','DEFERRED'),ADMITTED=state=='ADMITTED',CONFLICTS=bool(detail['conflict']['conflicting_work_ids']),DATASETS=bool(usage.get('dataset_ids')),POLLUTED=bool(detail['errors']) or detail['sample_state'] not in (None,'APPROVED'),LINEAGE=bool(usage.get('dataset_ids') or usage.get('template_ids') or semantic))[collection]
+            if match:rows.append(dict(id=identity,revision=candidate['revision'],work_id=candidate['work_id'],label=detail['work_label'],source_label=detail['source_label'],state=state,current_sample_state=detail['sample_state'],risk=detail['risk'],errors=detail['errors'],sample_id=sample,semantic_model_ids=semantic[:50],semantic_lineage_complete=len(semantic)<=50))
+        return dict(rows=rows,total_candidates=total,scanned=len(candidates),offset=offset,next_offset=offset+len(candidates),complete_scan=offset+len(candidates)>=total,scope='MATCHES_IN_THIS_SCANNED_CANDIDATE_PAGE; NOT_GLOBAL_MATCH_COUNT',collection=collection,images_loaded=False,model_weights_loaded=False,training_started=False)
+
+    def comparison(self,identity):
+        detail=self.detail(identity);row=detail['candidate'];history={h['revision']:h['after'] for h in self.store.history('FACTS',row['work_id'])};previous=history.get(row['previous_facts_revision']);selected=history.get(row['facts_revision'])
+        return dict(detail=detail,previous_human_label_version=previous,current_candidate_label_version=selected,current_confirmed_facts=self.store.facts(row['work_id']),prior_AI_prediction='UNKNOWN_UNLESS_LINKED_ACTUAL_PREDICTION_RECEIPT',user_supplied_prior_predictions=[dict(observation_id=o['id'],prediction=o['prior_prediction'],evidence='USER_REPORTED_DIAGNOSTIC_ONLY_NOT_TRAINING_TRUTH') for o in (selected or {}).get('observations',[]) if o.get('prior_prediction') is not None],history_complete=selected is not None and (row['previous_facts_revision']==0 or previous is not None),model_prediction_is_gold=False)

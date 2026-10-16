@@ -1,0 +1,56 @@
+{
+  "id": "UI056-EXACT8-APPROVED-COVERAGE-C",
+  "status": "DESIGN_ONLY_NO_APP_EDITS_DURING_FORMAL",
+  "original_parent_sha256": "7ed53d2d00d59b239e2619ca69a421df377b85d592e4cc19e4b6c65c7f7e8807",
+  "original_clauses": [
+    "**使用者正式選擇 C｜樣本覆蓋儀表板＋缺口提醒**。**不得擅自升級為 D「多維度失衡診斷＋系統化補樣建議」**。本項只有可解讀、可追溯的分布統計與資料量／代表性**提示**：不建立自動挑選補樣、補樣任務候選、素材搜尋推薦、樣本生成、按 AI 建議擴充來源、強制平衡配額或背景補樣排程。即便某類樣本少，也不自動判定已不合格或要求使用者補交資料。",
+    "**既有訓練中心的資料覆蓋儀表板**：以 UI-055 已核准且訓練用途有效的樣本與**exact 樣本集版本／Manifest**為統計依據；清楚標示本次查看的是「已核准可訓練」「候選待審」「已排除／污染隔離」「調參驗證」「UI-053 獨立保留測試」中的哪個**資料集合／快照**，預設不將待審、失聯、用途未授權、已隔離、保留測試集混計為正式訓練樣本數。各類別可按**卡片實體尺寸、人數（1／2／3+）、公司數量、Logo 類型（純圖形／完整複合圖文）、Illustrator 原生文字／特殊效果與 OCR 補救、單檔多作品**等已經有可靠標記的欄位分組查看；分類不明時顯示「未知／待標記」，不能硬猜。",
+    "**統計口徑透明**：總覽顯示**來源文件數、獨立作品數、已核准訓練樣本數、可核對的獨立內容或來源群組數**；同位元異名檔可重用解析與標記，不能被當成多個完全獨立的訓練例而灌大代表性；但 `source_files` 中不同來源檔名／客戶編號／原有身份關聯仍完整保留，不因統計去重而合併客戶。高度相似的作品可列為「近似或相關群組」並明示依據、暫不算完全獨立證據；不能僅因外觀近似就宣稱相同來源／客戶。**一件作品可同時屬於「雙人」「複合 Logo」「特殊 AI 文字效果」**，各分類件數相加不必等於總件數，GUI 必須顯示重疊分類及可解讀的分母。",
+    "**缺口提醒，但不提供補樣方案**：當某尺寸／多人／多公司／Logo 類型等**相對其他類別明顯稀少、完全無核准樣本，或無法計數**時，可展示中性的「樣本較少／尚無有效樣本／代表性尚無法判定」提醒並可連到現有樣本清單檢視其證據。對是否要亮提醒、比較基準、門檻與「多寡」的界定，日後必須依實際資料與合理使用情境研究確認，現階段**不預設任意最少 10 件、20%、或資料失衡等同模型不合格**。缺口訊息不可變成「建議上傳某些客戶原稿」「推薦蒐集某品牌 Logo」「應補 N 件」或自動產生補樣工作；若使用者自行新增資料，仍走 UI-050 來源發現與 UI-055 樣本准入。",
+    "**追溯與細節檢視**：點選任一分類可看該類的來源與作品清單、原始實體卡尺寸、樣本標記版本、`artwork_id`、資料集角色及是否已核准；由既有 UI-038／UI-039 原畫布及 UI-055 样本詳情查驗。樣本在 UI-055 被撤銷／隔離、UI-052 發起重大重審、原始來源在 UI-049／UI-050 失聯或改版，下一次計算必須以**當下版本化有效清單**更新數值並標示不能使用舊統計結果；保留舊快照作對帳但不可假稱當前資料仍有效。若樣本來源群組、標籤、卡片物理尺寸未核准，顯示「未明／資料不足」，不灌進已知類別。",
+    "**與品質 Gate 分離**：UI-056 C 是**資料分布透明與提醒介面**，不是 UI-053 的獨立泛化測試，也不是 UI-052 的審核覆蓋率或 UI-054 的修復流程。樣本稀少不自動阻斷模型／模板發布；反過來**數量足夠也不代表 AI 辨識品質已達標**，嚴重錯判仍以 UI-053 的有效品質 Gate 與 UI-052 重大錯誤重審處理。不得以單一長條圖或整體大數量掩蓋某尺寸／多人物組合資料稀少，但也不得以提示為由自行調整正式 AI 規則或訓練模型。",
+    "**低配置與隱私要求**：分組統計應利用 UI-042／UI-055 既有持久索引、標記與資料集 Manifest 做**增量或分頁查詢**，不在打開儀表板時載入全部大型 `.ai`、OCR 模型與原稿，以免影響 UI-051 低配置 Windows 啟動和前景排版。儀表板只顯示必要分類／計數，涉及客戶編號、私人電話／LINE／IG 或原圖稿的詳情只在受控本機環境展開，不傳送個資／Logo 至 GitHub 或外部。UI-048 完整登入權限最後才實作，前期測試仍只用合成／去識別資料。",
+    "**原系統重用與限制**：以既有 `source_files`、`content_blobs`、`artworks`、UI-055 標記／資料集版本和 `training_checkpoints` 取數，不另建重複的樣本／客戶資料庫。不更改 UI-043「曾設計／已確認購買」不存在的分類、UI-020／UI-023 各尺寸 Logo 庫、UI-013 字級限制、UI-010 模板核准或正式印前 Gate。**UI-056 選擇 C** 的「沒有系統化補樣建議」是已核准的正式範圍限制，不得於 UI-057 或後續開發默默變成 D。"
+  ],
+  "historical_status_footer": "**狀態**：本次只有 GUI 選項 C 的設計及未來驗收要求，**沒有實際統計、讀取客戶原稿、啟動補樣、蒐集訓練資料、AI 訓練、執行測試或程式開發**。",
+  "historical_footer_is_not_functional_acceptance": true,
+  "reuse": [
+    "TrainingStore.coverage_report",
+    "CoveragePanel",
+    "SAMPLE effective validity",
+    "DATASET exact manifests",
+    "QualityGroups actual relation graph",
+    "QualitySet independent HOLDOUT manifests",
+    "Existing quality command owned worker"
+  ],
+  "required_change": "Add bounded sample-based collection/manifest view; existing all-artworks inventory remains separately labelled as inventory. Do not represent every saved artwork as admitted training.",
+  "collections": [
+    "APPROVED_TRAINABLE",
+    "CANDIDATE_PENDING",
+    "EXCLUDED_OR_RESTRICTED",
+    "DEVELOPMENT_VALIDATION",
+    "INDEPENDENT_QUALITY_HOLDOUT",
+    "EXACT_DATASET_MANIFEST"
+  ],
+  "math": [
+    "Per-axis descriptive Counter with explicitly overlapping facets, source/work/sample/unique-content/group denominators separate",
+    "Exact bytes-length and approved label equivalence, retain distinct source filenames/customer links; related family graph is not automatic customer merging",
+    "No arbitrary count minimum or percentage threshold; zero valid count and observed descriptive counts are neutral notices, never model pass/fail",
+    "Bounded page is explicitly partial; immutable exact manifests show frozen membership and current per-row validity separately"
+  ],
+  "unknowns": [
+    "Logo whole-composite type unknown without explicit verified source-object evidence",
+    "Native text/effect/OCR classifications use actual persisted evidence only; no guessing from extension or labelled logo slot",
+    "Unreviewed family independence or source/size/label validity stays unknown"
+  ],
+  "checks": [
+    "Default trainable page excludes candidate/unlicensed/quarantined/stale/VALIDATION/HOLDOUT",
+    "Two aliases count two sources but one exact content and one deduplicated approved label weight",
+    "One two-person composite-logo work may occur on multiple axes; no sum of facet counts as independent total",
+    "Revocation/recheck/source change marks prior digest stale and updates current rows",
+    "No images/OCR/model loading or background supplementation tasks",
+    "Actual native collection selector/filter paging/source-return with pending-editor guard"
+  ],
+  "references_reused": "docs/dev/REMAINING28_ENGINEERING_BASIS.json: previously fetched exact sklearn group-isolation, NetworkX grouping and MLflow version provenance; no new service",
+  "next_action": "Implement with UI055-dependent source-purpose restrictions, meaningful targeted backend/Qt tests, then full-source batch validation"
+}

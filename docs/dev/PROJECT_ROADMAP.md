@@ -1,8 +1,8 @@
 # 全75父題狀態與接續順序
 
-剩餘28已完成UI046/UI047/UI049/UI050/UI051/UI052/UI053七題，共71原條款；943/943正式PASS、0skip/0Qt錯誤、capture0、source unchanged。全75：51 VERIFIED／21 PARTIAL／3 DEFERRED；固定70：49閉合／21仍部分。CORE87／GOV7另計。
+剩餘28已完成UI046/UI047/UI049/UI050/UI051/UI052/UI053/UI054八題，共82原條款；1001/1001正式PASS、0skip/0Qt錯誤、capture0、source unchanged。全75：52 VERIFIED／20 PARTIAL／3 DEFERRED；固定70：50閉合／20仍部分。CORE87／GOV7另計。
 
-下一UI054根因／受控局部修復／獨立再驗收／安全回退。無新增父題；UI048最後、UI056D/REV03延後，無EXE/多代理/main合併。
+下一UI055可信樣本／來源驗證／版本與污染防護；持續剩餘20。
 
 |順序組|原父題|名稱|狀態|下一步／證據|
 |---|---|---|---|---|
@@ -71,7 +71,7 @@
 |5|UI-052|全來源與作品審核覆蓋率、風險分級與安全批次結案|VERIFIED|原10完整軟體SELF；當前Linux合成/host測量，非Windows參考實機/真AI全面/獨立覆核或模型品質PASS。下一UI053獨立品質。|
 |5|UI-052-REVIEW|重大共通錯誤跨歷史批次重審追加核准|PARTIAL|補跨家族直接／間接依賴與逐項重審結論，測舊通過保留歷史、原成品不刪、新證據不足不自動恢復；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
 |5|UI-053|獨立樣本品質驗收、分類誤判診斷、版本比較與品質阻擋|VERIFIED|原9完整軟體SELF；actualsource-only推論/九域/反洩漏/公平A-B/原稿診斷/批准撤回/重大隔離。Linux合成與host測量，不宣稱真實準確率/nativeAI/Windows參考實機/獨立覆核。下一UI054。|
-|5|UI-054|品質失敗根因分析、受控局部修復、獨立再驗收與安全回退|PARTIAL|補受控候選執行及反向退步測試，測舊測試用於修復後需新holdout、兩版均差不可聲稱退回安全；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
+|5|UI-054|品質失敗根因分析、受控局部修復、獨立再驗收與安全回退|VERIFIED|原11完整軟體SELF；可重現順序修復/再驗收/顯式部署回退與七頁GUI。Linux合成/currenthost，不宣稱真實準確率/nativeAI/Windows參考實機/獨立覆核。下一UI055。|
 |5|UI-056|訓練樣本類別覆蓋儀表板、缺口提醒與資料分布透明化|PARTIAL|補已核准C的可追溯分類與門檻依據／未知處理；測重疊類別不灌大總數、不自動產生補樣任務；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
 |5|UI-066|template-Ai｜UI-066 去重決策 A：重用既有診斷 GUI，僅保留獨立報告格式與安全交接補充規格|PARTIAL|完成原六項→現有證據對帳；可被既有證據涵蓋者直接結案，不另造新功能或要求所有其他父題先完成；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
 |5|UI-067|template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策）|PARTIAL|補逐條規格→元件→測試→證據矩陣與過期引用修訂；純治理不算新軟體功能；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|

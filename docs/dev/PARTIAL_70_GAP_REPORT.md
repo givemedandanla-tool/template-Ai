@@ -1,4 +1,5 @@
-> 正文保留4238ebc固定70歷史缺口；最新[FULL70_PROGRESS](FULL70_PROGRESS.md)：49完整軟體條款SELF／21仍部分。本輪剩餘28完成七題，原前輪28保留。
+> 正文保留4238ebc固定70歷史缺口；最新[FULL70_PROGRESS](FULL70_PROGRESS.md)：50完整軟體條款SELF／20仍部分。本輪剩餘28完成八題。
+
 
 
 
