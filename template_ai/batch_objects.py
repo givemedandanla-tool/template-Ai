@@ -33,8 +33,85 @@ def batch_plan(library,targets,align='left'):
 
 
 def validate_request(request):
-    if request.get('operation') not in ('PATCH','MOVE','ALIGN','DISTRIBUTE') or request.get('cross_owner') is not False:raise ValueError('批次不能解鎖、刪除或跨人物公司；請逐筆人工核對')
+    if request.get('operation') not in ('PATCH','PATCH_EACH','MOVE','ALIGN','DISTRIBUTE') or request.get('cross_owner') is not False:raise ValueError('批次不能解鎖、刪除或跨人物公司；請逐筆人工核對')
     if request['operation']=='PATCH' and (not request.get('patch') or set(request['patch'])-{'align','color','x','y','w','h'}):raise ValueError('批次不可修改人物／公司／字級／字型／文字下限或Logo')
+
+
+def fit_width_request(candidate,ids,ratio):
+    import math
+    if type(ratio) not in (int,float) or not math.isfinite(ratio) or not 0<ratio<=1:raise ValueError('X比例需為有限且大於0、至多100%')
+    slots=select_slots(candidate.template.to_dict(),ids);patches={}
+    for slot in slots:
+        if slot.kind=='logo' or slot.locked or ratio<slot.min_scale:raise ValueError('固定字級／X下限／完整Logo或鎖定條件不可放寬')
+        rows=[row for row in candidate.measurements if row.get('slot_ids')==[slot.id]]
+        width=rows[0].get('parameters',{}).get('text_width_mm') if len(rows)==1 else None
+        if type(width) not in (float,int) or not math.isfinite(width) or width<=0:raise ValueError('此確切文字框缺原引擎字寬量測，不猜測比例')
+        patches[slot.id]=dict(w=width*ratio)
+    return dict(operation='PATCH_EACH',ids=list(ids),patches=patches,cross_owner=False)
+
+
+def candidate_target_seal(target):
+    from .layout_recovery import encode_candidate
+    envelope=target['envelope']
+    return digest(dict(key=target['target_key'],references=target['references'],before_pin=target['before_pin'],envelope={k:(encode_candidate(v) if k=='before' else v) for k,v in envelope.items()}))
+
+
+def candidate_origin_key(window,index):
+    owner=getattr(window,'owner',window)
+    if not hasattr(owner,'_batch_scope_id'):owner._batch_scope_id=new_id()
+    parts=['MAIN',owner._batch_scope_id]
+    if hasattr(window,'entry'):
+        service=window.service
+        if not hasattr(service,'_batch_scope_id'):service._batch_scope_id=new_id()
+        parts=['SIZE',owner._batch_scope_id,service._batch_scope_id,window.entry['key']]
+    return ':'.join(parts+[str(index),window.candidates[index].template.id])
+
+
+def prepare_candidate_target(window,index,request,*,key=None,cross_confirmed=False):
+    from .candidate_edit import plan_operation,prepare_edit
+    from .candidate_sync import candidate_pin,field_reference
+    if window.library.closed or not 0<=index<len(window.candidates):raise ValueError('候選來源不可用')
+    origin=candidate_origin_key(window,index)
+    if key is not None and key!=origin:raise ValueError('候選工作視窗／尺寸來源標識不符')
+    candidate=window.candidates[index];slots=select_slots(candidate.template.to_dict(),request.get('ids'));request=copy.deepcopy(request)
+    if any(s.kind=='logo' or s.locked for s in slots):raise ValueError('完整Logo／鎖定框須逐筆核對，不自動核准')
+    references=[field_reference(candidate,slot) for slot in slots]
+    if request.get('cross_owner') is True and cross_confirmed is not True:raise ValueError('跨人物公司範圍尚未明確核對')
+    validate_request({**request,'cross_owner':False})
+    snapshot=candidate.risk_context.get('input_snapshot',{});inputs=window.input_data()
+    if digest(inputs)!=digest(tuple(snapshot.get(k) for k in ('people','companies','logos'))):raise ValueError('當前資料與候選人物／欄位快照不一致，先同步重驗')
+    plan=plan_operation(window,index,request);envelope=prepare_edit(window,plan)
+    target=dict(kind='CANDIDATE',id=candidate.template.id,index=index,target_key=origin,size=[candidate.template.width_mm,candidate.template.height_mm],before_pin=candidate_pin(candidate),references=references,envelope=envelope)
+    target['seal']=candidate_target_seal(target);return target
+
+
+def calculate_candidate_target(target,library):
+    from .candidate_edit import calculate_edit
+    from .layout_recovery import encode_candidate
+    if target['seal']!=candidate_target_seal(target) or str(library.root)!=target['envelope']['root']:raise ValueError('候選預檢來源／精確範圍已變更')
+    result=calculate_edit(copy.deepcopy(target['envelope']),library);outcome='READY' if result.formal_eligible else 'NEEDS_MANUAL_REVIEW'
+    checked=dict(target=copy.deepcopy(target),candidate=result,outcome=outcome,formal_eligible=False)
+    checked['seal']=digest(dict(target=target['seal'],candidate=encode_candidate(result),outcome=outcome));return checked
+
+
+def install_candidate_target(window,checked,approved=False):
+    from .candidate_edit import install_edit,dependency_token
+    from .candidate_sync import candidate_pin
+    from .layout_recovery import encode_candidate
+    if approved is not True:raise ValueError('需明確確認此候選與尺寸差異')
+    target=checked['target'];envelope=target['envelope'];index=target['index']
+    if target['seal']!=candidate_target_seal(target) or checked['seal']!=digest(dict(target=target['seal'],candidate=encode_candidate(checked['candidate']),outcome=checked['outcome'])):raise ValueError('預檢差異或結果已變更，未套用')
+    if checked['outcome']!='READY':raise ValueError('未完成合法整卡預檢，不自動核准硬性失敗／缺證據')
+    if window.library.closed or str(window.library.root)!=envelope['root'] or window.generation!=envelope['plan']['generation'] or not 0<=index<len(window.candidates):raise ValueError('來源／候選世代已變更')
+    if candidate_origin_key(window,index)!=target['target_key']:raise ValueError('候選工作視窗／尺寸服務已換代，未套至其他實體')
+    current=window.candidates[index];expected=envelope['manual_metadata']['manual_history'][-1];history=current.risk_context.get('manual_history',[]);existing=next((r for r in history if r['id']==expected['id']),None)
+    if existing:
+        if existing.get('undone'):raise ValueError('此批操作已回復；安全重試不能盲目重做')
+        unchanged=existing==expected and candidate_pin(current)==candidate_pin(checked['candidate']) and digest(window.input_data())==envelope['input_digest'] and dependency_token(window,current.template,envelope['logos'])==envelope['dependency_token']
+        return dict(target_key=target['target_key'],outcome='ALREADY_APPLIED' if unchanged else 'APPLIED_BUT_CURRENT_CHANGED',formal_eligible=False,receipt_id=existing['id'])
+    if candidate_pin(current)!=target['before_pin']:raise ValueError('較新人工變更／核對已存在，不覆寫舊預檢')
+    result=install_edit(window,copy.deepcopy(envelope),copy.deepcopy(checked['candidate']))
+    return dict(target_key=target['target_key'],outcome='APPLIED_VALIDATED' if result.formal_eligible else 'APPLIED_BLOCKED',formal_eligible=result.formal_eligible,receipt_id=expected['id'])
 
 
 def check_batch(library,plan,approved):

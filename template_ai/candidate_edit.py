@@ -11,7 +11,7 @@ def plan_operation(window,index,request,*,allow_stale=False):
     if not 0<=index<len(window.candidates):raise ValueError('候選不存在')
     c=window.candidates[index]
     if c.generation!=window.generation and not allow_stale:raise ValueError('候選版本已過期')
-    if request.get('operation') not in ('MOVE','PATCH','LOCK'):raise ValueError('此處只處理當次幾何、屬性與明確鎖定')
+    if request.get('operation') not in ('MOVE','PATCH','PATCH_EACH','ALIGN','DISTRIBUTE','LOCK'):raise ValueError('此處只處理當次幾何、屬性與明確鎖定')
     if request.get('operation')=='PATCH' and set(request.get('patch',{}))&{'size_pt','font','font_asset','font_style','kind','owner','index'}:raise ValueError('不能在當次快速編輯修改固定字級、字型來源或人物歸屬；請用既有核對入口')
     before=c.template.to_dict();local=copy.deepcopy(before);local['state']='draft';proposal=propose(local,'TEMPLATE',request)
     return dict(index=index,generation=window.generation,manual_revision=c.risk_context.get('manual_revision',0),before_digest=digest(before),template_id=c.template.id,size=[c.template.width_mm,c.template.height_mm],request=copy.deepcopy(request),changes=proposal['changes'],warnings=proposal['warnings'],scope='ONLY_THIS_CANDIDATE_SIZE',unaffected_candidates=len(window.candidates)-1)
@@ -21,10 +21,10 @@ def plan_candidate(window,index,ids,dx,dy):
     return plan_operation(window,index,dict(operation='MOVE',ids=list(ids),dx=dx,dy=dy,cross_owner=False))
 
 
-def plan_undo(window,index):
+def plan_undo(window,index,receipt_id=None):
     from .candidate_changes import inverse_delta
     if not 0<=index<len(window.candidates):raise ValueError('候選不存在')
-    c=window.candidates[index];history=c.risk_context.get('manual_history',[]);receipt=next((row for row in reversed(history) if not row.get('undone')),None)
+    c=window.candidates[index];history=c.risk_context.get('manual_history',[]);receipt=next((row for row in reversed(history) if not row.get('undone') and (receipt_id is None or row['id']==receipt_id)),None)
     if receipt is None:raise ValueError('此候選沒有可核對的未復原單筆變動')
     result=inverse_delta(c.template.to_dict(),receipt)
     return dict(index=index,generation=window.generation,manual_revision=c.risk_context.get('manual_revision',0),before_digest=digest(c.template.to_dict()),template_id=c.template.id,size=[c.template.width_mm,c.template.height_mm],request=dict(operation='UNDO',receipt_id=receipt['id']),after=result['template'],changes=result['actual_changes'],warnings=['只復原這筆實際屬性，保留其他變動；仍需以目前輸入重驗整張作品'],scope='ONLY_THIS_CANDIDATE_SIZE',unaffected_candidates=len(window.candidates)-1)
@@ -95,7 +95,7 @@ def review_context_token(context):
 
 def prepare_edit(window,plan):
     operation=plan['request']['operation']
-    if operation=='UNDO':fresh=plan_undo(window,plan['index'])
+    if operation=='UNDO':fresh=plan_undo(window,plan['index'],plan['request']['receipt_id'])
     elif operation=='RECHECK':fresh=plan_recheck(window,plan['index'])
     elif operation=='ORIGINAL_GEOMETRY':fresh=plan_original(window,plan['index'])
     elif operation=='CROSS_PROPERTIES':fresh=plan_cross_properties(window,plan['index'],plan['after'],plan['request']['source_pin'])

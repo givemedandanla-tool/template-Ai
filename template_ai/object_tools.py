@@ -82,6 +82,19 @@ def propose(payload,kind,request):
     if len({s.owner for s in selected})>1 and request.get('cross_owner') is not True:raise ValueError('跨人物／公司或共享關聯需明確核對範圍')
     if operation!='LOCK' and any(s.locked for s in selected):raise ValueError('範圍包含鎖定物件；整組拒絕，不自動排除')
     by_id={s.id:copy.deepcopy(s) for s in selected};gap=None;reference=None
+    if operation=='PATCH_EACH':
+        patches=request.get('patches')
+        if not isinstance(patches,dict) or set(patches)!=set(by_id) or any(not isinstance(patch,dict) or not patch or set(patch)-{'w','h'} for patch in patches.values()):raise ValueError('逐框尺寸差異必須完整對應確切ID，只允許各自寬／高')
+        after=copy.deepcopy(payload)
+        for identity in request['ids']:
+            try:after=propose(after,kind,dict(operation='PATCH',ids=[identity],patch=patches[identity],cross_owner=False))['after']
+            except NoObjectChange:pass
+        changes=[];final={s['id']:s for s in after['slots']}
+        for slot in selected:
+            before=next(s for s in payload['slots'] if s['id']==slot.id);new=final[slot.id]
+            if before!=new:changes.append(dict(id=slot.id,owner=slot.owner,kind=slot.kind,before=copy.deepcopy(before),after=copy.deepcopy(new),dx=new['rect']['x']-slot.rect.x,dy=new['rect']['y']-slot.rect.y))
+        if not changes:raise NoObjectChange('沒有實際差異；不建立空歷史')
+        return dict(before_hash=fingerprint(payload),after=after,request=request,changes=changes,warnings=warnings_for(after,kind),gap_mm=None,reference_rect=None,scope=dict(ids=request['ids'],owners=sorted({s.owner for s in selected}),locked=[]))
     if operation=='LOCK':
         if type(request.get('locked')) is not bool:raise ValueError('需明確鎖定／解鎖動作')
         for s in by_id.values():s.locked=request['locked']

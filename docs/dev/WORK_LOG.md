@@ -1281,3 +1281,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 - 2026-10-16 UI065 source pan invariant013 actualFAIL emptyUndo→nativeQt interactivepan/movable beforemove fix;01435PASS,01510modules103PASS actualexit0.19newtests/catalog1311. Native/B/C/full25 pending; no completion claim.
 
 - 2026-10-16 UI065 A source native02012actualPASS/0Qt/all12 reviewed/hash;017 readability defects fixed,0181PASS proves Qt deferred layout,0198GUI PASS.20newtests/catalog1312; source-stage only, no B/C/full25 assertion. Candidate adapter reuse design persisted; proceed B after checkpoint, not more hypothetical source expansion.
+
+- 2026-10-16 UI065 B foundation WIP: existing PATCH composition for per-object dimensions, exact stable source fields and sealed prepare/calc/install adapter, original manual receipt idempotency and explicit old-receipt inverse support.022 authored A90 phone align smoke READY→APPLIED_VALIDATED,actualexit0; later origin/service/review fences pending targeted regressions. No B GUI/full25 claim.
