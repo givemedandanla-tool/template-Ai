@@ -97,7 +97,7 @@
     "No geometry scaling/fuzzy name inference/published template/business customer/Logo/train writes/new permanent drafts",
     "Resource budget and single existing worker; no untested reference Windows performance claim"
   ],
-  "next_action": "Write tools/capture_sync_workflow.py for actual authoredscope (manual/source phone, crossGate partial, independent Logo update, sourceundo, singleundo, Esc); inspect eachnativeview and map original20, freshcombinedregression thenUI062.",
+  "next_action": "Recapture native after actual visualfixes (all source static/no running tests), inspect13 individually and hashreview; hookrunner/original20mapping and fresh coherent regression, thenUI062.",
   "targeted_checks": [
     {
       "log": "docs/qa/targeted/ui061-exact-target-plan-001.log",
@@ -200,6 +200,18 @@
       "status": "PASS",
       "tests": 6,
       "reason": "Correct authored fixture namebox11mm/phone positions, retain18pt and allGate constraints; actual2people2companies/3candidates/2sizes/sourcephone exactID/sharedprop/undo/lockedlongtext/Esc"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-visual-state-company-mapping-027.log",
+      "status": "PASS_BASELINE_ONLY",
+      "tests": 16,
+      "reason": "Edit script precondition assertion failed before any write; ran unchanged baseline, not evidence of intended visual fixes"
+    },
+    {
+      "log": "docs/qa/targeted/ui061-visual-state-company-mapping-028.log",
+      "status": "PASS",
+      "tests": 24,
+      "reason": "Actual stale row labels/historical details/outputmode reset and candidate combo consistency; fixture adds independent companyname10pt slots, preserves Logo and name18pt/fullGate"
     }
   ],
   "implementation_limits": [
@@ -242,5 +254,28 @@
     "New controller/source sync UI is not yet covered by new specific native tests; existing34 regression PASS only",
     "Known pending source-sync state edge: current is_current does not compare service generation, so failed recalc could leave oldservice incorrectly current after request metadata advances; add regression and fix, use separate context_current for callback admission",
     "Current start only checked sizes; must retain all existing size instances on source sync, including unchecked previous manual rows"
-  ]
+  ],
+  "native_capture_review": {
+    "026": {
+      "status": "CAPTURE_PASS_DIAGNOSTIC_VISUAL_CHANGES_REQUIRED",
+      "views": 13,
+      "qt_uncaught": 0,
+      "individual_views_opened": 13,
+      "findings": [
+        "Stale global context still displayed previous VALID row/body without per-row stale marker; now corrected",
+        "Programmatic selectedcandidate didnot update combo text; now synchronized",
+        "Cross target name column too narrow; now explicitwidth",
+        "Authored company name omitted as independent textslot causing input-source preflight warning despiteapprovedLogo; fixture now explicitly provides companyname+Logo slots,24targetPASS"
+      ],
+      "actual_verified": [
+        "Phones Aonly/Bsamevalue separate",
+        "ManualAonly+independentB,C",
+        "Explicitcross B90pass/C100keepsold",
+        "ExplicitAlpha90markversionchanged Beta90/Alpha100unaffected",
+        "Sourceundo3consumer modal thenlocaldraft/globalunchanged untiladopt",
+        "Actualsingleundo targetB preservescurrentphone/sourceA",
+        "RealPNG qualified90FINAL andfailed100PREVIEW separate"
+      ]
+    }
+  }
 }

@@ -28,7 +28,7 @@ class SyncWorkflowFixture:
         for index,company in enumerate(graph.data['companies']):self.store.bind(company['id'],self.registry[index]['id'],self.registry[index]['name'],True)
         self.w.adopt_input_graph(graph.data,history=graph);self.templates={}
         for name,width,height,x,logo_x in (('A90',90,54,3,62),('B90',90,54,5,62),('C100',100,60,6,72)):
-            slots=[Slot('name','p1',Rect(x,3,44,11),size_pt=18),Slot('phone','p1',Rect(x,16,44,6),size_pt=10),Slot('name','p2',Rect(x,28,44,11),size_pt=18),Slot('phone','p2',Rect(x,41,44,6),size_pt=10),Slot('logo','c1',Rect(logo_x,3,20,12)),Slot('logo','c2',Rect(logo_x,30,20,12))];template=Template('Synthetic '+name,width,height,slots,capacity=2,company_bindings=dict(p1='c1',p2='c2'));self.w.library.publish(template);self.templates[name]=template
+            slots=[Slot('name','p1',Rect(x,3,44,11),size_pt=18),Slot('phone','p1',Rect(x,16,44,6),size_pt=10),Slot('name','p2',Rect(x,28,44,11),size_pt=18),Slot('phone','p2',Rect(x,41,44,6),size_pt=10),Slot('logo','c1',Rect(logo_x,3,20,12)),Slot('logo','c2',Rect(logo_x,30,20,12)),Slot('company','c1',Rect(logo_x-5,17,30,6),size_pt=10),Slot('company','c2',Rect(logo_x-5,44,30,6),size_pt=10)];template=Template('Synthetic '+name,width,height,slots,capacity=2,company_bindings=dict(p1='c1',p2='c2'));self.w.library.publish(template);self.templates[name]=template
         self.d=MultiSizeDialog(self.w);self.d.show()
         for row in range(self.d.table.rowCount()):self.d.table.item(row,0).setCheckState(Qt.Checked)
         self.d.start();self.wait();self.select('A90')

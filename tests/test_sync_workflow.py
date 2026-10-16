@@ -15,11 +15,11 @@ from gui_wait import wait_for_gui
 class SyncWorkflowTests(unittest.TestCase):
     def setUp(self):self.fx=SyncWorkflowFixture();self.addCleanup(self.fx.close)
     def test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo(self):
-        f=self.fx;self.assertEqual(len(f.w.active_input_graph.data['people']),2);self.assertEqual(len(f.w.active_input_graph.data['companies']),2);self.assertEqual(sum(len(e['candidates']) for e in f.d.service.entries),3);self.assertTrue(f.candidate('A90').formal_eligible);self.assertTrue(f.candidate('B90').formal_eligible);self.assertFalse(f.candidate('C100').formal_eligible);self.assertTrue(any(r['code']=='LOGO_MISSING' and r['owner']=='c2' for r in f.candidate('C100').diagnostics))
+        f=self.fx;self.assertEqual(len(f.w.active_input_graph.data['people']),2);self.assertEqual(len(f.w.active_input_graph.data['companies']),2);self.assertEqual(sum(len(e['candidates']) for e in f.d.service.entries),3);self.assertTrue(f.candidate('A90').formal_eligible);self.assertTrue(f.candidate('B90').formal_eligible);self.assertEqual(f.d.table.cellWidget(0,2).currentData(),f.templates['A90'].id);self.assertFalse(f.candidate('C100').formal_eligible);self.assertTrue(any(r['code']=='LOGO_MISSING' and r['owner']=='c2' for r in f.candidate('C100').diagnostics))
     def test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged(self):
         f=self.fx;before=copy.deepcopy(f.w.active_input_graph.data);field=f.change_phone('+12025550999');rows=source_change_impact([(name,f.candidate(name)) for name in f.templates],before,f.w.active_input_graph.data);self.assertEqual(len(rows),3)
         for row,name in zip(rows,f.templates):self.assertEqual(row['affected_slot_ids'],[f.candidate(name).template.slots[1].id])
-        self.assertFalse(f.d.is_current());f.sync()
+        self.assertFalse(f.d.is_current());self.assertTrue(all('待重驗' in f.d.table.item(row,3).text() for row in range(f.d.table.rowCount())));self.assertIn('歷史結果',f.d.details.toPlainText());f.sync()
         for name in f.templates:
             phones={item.slot.owner:item.text for item in f.candidate(name).items if item.slot.kind=='phone'};self.assertEqual(phones,dict(p1='+12025550999',p2='+12025550100'))
     def test_manual_a_only_and_single_undo_after_source_update_keep_b_c_geometry_and_current_phone(self):
