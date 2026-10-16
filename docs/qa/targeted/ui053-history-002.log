@@ -1,0 +1,21 @@
+This plugin does not support propagateSizeHints()
+======================================================================
+ERROR: test_no_new_human_fact_review_cannot_clear_quarantine_or_restore_safe_model (test_quality_rechecks.QualityRecheckTests.test_no_new_human_fact_review_cannot_clear_quarantine_or_restore_safe_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_rechecks.py", line 67, in test_no_new_human_fact_review_cannot_clear_quarantine_or_restore_safe_model
+    confirmed(self.store,self.library.artwork(self.work['id']))
+  File "/workspace/template-Ai/tests/test_noise_authoring.py", line 20, in confirmed
+    facts = store.save_facts(work['id'], observations(work), 0, work['revision'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/training_store.py", line 157, in save_facts
+    saved = self._write('FACTS', work_id, {'observations': checked, 'confirmation': None, 'state': 'PENDING', 'pins': pins}, expected_revision, 'facts_saved')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/training_store.py", line 86, in _write
+    raise ValueError('資料版次已變更，請重新載入')
+ValueError: 資料版次已變更，請重新載入
+
+----------------------------------------------------------------------
+Ran 57 tests in 21.337s
+
+FAILED (errors=1)

@@ -54,6 +54,10 @@ def work_context(service, work_id):
     unresolved_observations = [o['id'] for o in observations if o.get('classification')=='UNKNOWN' or o.get('review',{}).get('state') in ('REJECTED','QUARANTINED')]
     from .training_quality import analyse_work
     quality_blockers=[row for row in analyse_work(work,service.library.source(work['source_id'])) if row['severity']=='BLOCK' and row['code']!='NO_LABELS']
+    from .quality_rechecks import blocked
+    quarantine=blocked(store,work_id)
+    context['major_quality_quarantine']=quarantine
+    if quarantine:quality_blockers.append(dict(code='MAJOR_QUALITY_RECHECK_REQUIRED',severity='BLOCK',reason='重大共通錯誤影響此件，包含歷史結案；需新人工來源事實與逐件重審'))
     analysis_states=[dict(id=row[1],revision=row[2],state=json.loads(row[3]).get('state'),issues=json.loads(row[3]).get('issues',[])) for row in related if row[0]=='AUTO_UNIT']
     people = sorted({str(slot.get('owner')) for slot in slots if slot.get('kind')=='name'})
     companies = sorted({str(slot.get('owner')) for slot in slots if slot.get('kind')=='company'})

@@ -104,6 +104,7 @@ class CoverageReviewMixin:
             if member['revision']!=plan['member_revision'] or batch['revision']!=plan['batch_revision'] or work_context(self,plan['work_id'])['context_digest']!=plan['context_digest']: raise ValueError('審核所依來源／規則／事實／歸屬／模板版本已改變')
             self.recheck_member_proofs(member,plan['source_proofs'])
             record = {key:copy.deepcopy(plan[key]) for key in ('member_id','batch_id','work_id','layer','decision','reason','evidence','context_digest','source_proofs','impact')}
+            record['dependency_versions']=copy.deepcopy(plan['context']['context'])
             record.update(actor=actor,at=time.time(),state='MANUALLY_REVIEWED_EXACT_LAYER')
             return self.store._write(REVIEW,plan['review_id'],record,plan['prior_revision'],'coverage_high_risk_layer_individually_reviewed')
 

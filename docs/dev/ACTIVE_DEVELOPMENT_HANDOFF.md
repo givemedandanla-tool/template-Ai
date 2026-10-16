@@ -78,3 +78,7 @@
 ### UI053 executable parser snapshots WIP
 - Frozen code under local library.assets/quality-engines/codeDigest; actual namespace execution, byte/hash verified, versions do not silently use current liveparser, module graphs freed, noGold/credentials/DB copied.27 targets PASS after one fixture current_path error (bothlogs retained). Mapping execute just moved into frozen namespace AFTER27PASS, rerun required.
 - Next paged native quality setup/diagnostics/exposure GUI via existing isolated command transport, historical severe crossbatch review/trustguards, original9/sourceformal. Current144pending/historical6of28, UI053 incomplete.
+
+### UI053 historical recheck WIP (latest)
+- 57 targets PASS (thirdrun), original first2failed logs preserved. Actual historical closed batch invalidated atomically after confirmed severe real-source inference; old receipt retained. New individual FACTS+manual confirmation needed to resolve work; pipeline quality quarantine persists. sample admission/state and semantic training reject quarantined works. New COVERAGE_REVIEW dependency_versions stored; legacy lacks them explicitly potential/unknown impact, not fabricated exactmatches.
+- Inactive drafts docs/dev/wip/UI053_QUALITY_{DIAGNOSTICS,COMMAND,SETUP}_DRAFT.py: native forms, SQL50-casepages and explicitGoldexposure, transport command adapters; untested, not integrated. Next finish command transport/pagedqualitypanel/sourceGoldvsAI canvases, prediction digest/facets; more legacy/critical guards; original9 full source formal. Current144pending/historical6of28.

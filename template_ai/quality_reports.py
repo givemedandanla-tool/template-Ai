@@ -65,6 +65,8 @@ class QualityReports:
         fair = bool(checked['valid'] and all(row['source_current'] for row in results.values()))
         eligible = bool(fair and results['CANDIDATE']['quality_pass'] and not new_critical and not regressions
                         and results['CANDIDATE']['statistics']['policy_scope'] == 'AUTHORIZED_LOCAL_QUALITY_ACCEPTANCE')
+        quarantined={side:bool(self.store.get('QUALITY_PIPELINE_QUARANTINE',scope['pipelines'][side]['id'])) for side in SIDES}
+        eligible = eligible and not quarantined['CANDIDATE']
         plan = dict(protocol_id=protocol_id, protocol_scope_digest=protocol['scope_digest'],
                     fixed_conditions=copy.deepcopy(scope), results=results, denominators=denominators[0],
                     fair_comparison=fair, current_errors=checked['errors'],
@@ -72,6 +74,7 @@ class QualityReports:
                     new_cases=[cases['CANDIDATE'][key] for key in sorted(cases['CANDIDATE'].keys() - cases['BASELINE'].keys())],
                     unresolved_cases=[cases['CANDIDATE'][key] for key in sorted(cases['CANDIDATE'].keys() & cases['BASELINE'].keys())],
                     critical_errors=critical, new_critical_errors=new_critical, class_regressions=regressions,
+                    version_quarantined=quarantined,
                     candidate_decision_eligible=eligible, automatic_publication=False,
                     conclusion='NEEDS_EXPLICIT_LOCAL_DECISION' if eligible else 'BLOCKED_OR_EVIDENCE_INSUFFICIENT',
                     fewer_observed_errors_is_not_statistical_superiority=True)
@@ -111,3 +114,18 @@ class QualityReports:
             return self.store._write('QUALITY_DECISION_WITHDRAWAL', decision_id,
                                      dict(actor=actor, reason=reason, at=time.time(), fallback_assumed_safe=False),
                                      prior['revision'] if prior else 0, 'quality_version_decision_withdrawn_history_retained')
+
+    def recommendation_status(self,decision_id):
+        decision=self.store.get('QUALITY_VERSION_DECISION',decision_id)
+        errors=[]
+        if not decision:errors.append('沒有明確品質接受憑證')
+        elif self.store.get('QUALITY_DECISION_WITHDRAWAL',decision_id):errors.append('品質接受已撤回；不自動信任舊版')
+        elif self.store.get('QUALITY_PIPELINE_QUARANTINE',decision['pipeline_id']):errors.append('此版本重大共通錯誤隔離中；不自動信任回退版')
+        else:
+            report=self.store.get('QUALITY_PAIR_REPORT',decision['report_id'])
+            try:
+                current=self.plan(report['plan']['protocol_id'])
+                if current!=report['plan'] or not current['candidate_decision_eligible']:errors.append('品質來源／政策／版本／獨立性證據已改變')
+            except (OSError,ValueError,KeyError,TypeError) as error:errors.append(str(error))
+        return dict(quality_verified_recommendation_allowed=not errors,errors=errors,
+                    automatic_template_or_rule_publication=False,fallback_assumed_safe=False)

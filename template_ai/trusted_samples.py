@@ -22,6 +22,8 @@ class TrustedSampleMixin:
     def sample_approval_plan(self,work_id,rights,bindings=None):
         from .training_store import digest,text
         work=self.library.artwork(work_id);source=self.library.source(work['source_id']);facts=self.facts(work_id);errors=[];bindings=copy.deepcopy(bindings or {});rights=copy.deepcopy(rights);quality=analyse_work(work,source)
+        from .quality_rechecks import blocked
+        if blocked(self,work_id):errors.append('重大品質跨批次重審尚未完成，不能重新准入繞過隔離')
         if not isinstance(rights,dict) or set(rights)!={'basis','reference','use'} or rights.get('basis') not in ('OWNED','AUTHORIZED','OPEN_LICENSE') or rights.get('use')!='GEOMETRY_TRAINING_LOCAL':errors.append('權利及用途必須明確，沒有神經模型／外傳授权')
         else:
             try:text(rights['reference'],'權利參考')
@@ -62,6 +64,9 @@ class TrustedSampleMixin:
             return self._write('SAMPLE',new_id(),record,0,'sample_admitted')
 
     def sample_state(self,sample_id):
+        from .quality_rechecks import blocked
+        record=self.get('SAMPLE',sample_id)
+        if record and blocked(self,record['work_id']):return 'QUARANTINED_QUALITY_RECHECK'
         from .training_store import digest
         record=self.get('SAMPLE',sample_id)
         if not record:return 'MISSING'

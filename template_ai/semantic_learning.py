@@ -17,6 +17,8 @@ class SemanticLearning:
         if not isinstance(work_roles,dict) or not 2<=len(work_roles)<=200 or set(work_roles.values())!={'TRAIN','VALIDATION'}:raise ValueError('需明確列出2～200作品及TRAIN／VALIDATION角色')
         scopes=[];examples=[];source_roles={};literal_roles={};source_sizes={}
         for wid,role in sorted(work_roles.items()):
+            from .quality_rechecks import blocked
+            if blocked(self.store,wid):raise ValueError('重大品質跨批次重審尚未完成，不能重新訓練吸收受影響作品')
             work=self.library.artwork(wid);facts=self.store.facts(wid);pins=self.store.pins(wid)
             if work['payload'].get('segmentation_state')=='SUPERSEDED' or not work['payload'].get('visual_confirmed') or self.store.facts_state(wid)!='CONFIRMED':raise ValueError('只收現行、來源有效、已視覺核對與明確確認的文字事實')
             source_hash=pins['source_hash']
