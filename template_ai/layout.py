@@ -32,6 +32,15 @@ class Candidate:
     diagnostics: list[dict] = field(default_factory=list)
     measurements: list[dict] = field(default_factory=list)
     dependency_stamp: str = ""
+    risk_context: dict = field(default_factory=dict)
+
+    @property
+    def risk(self):
+        from .candidate_risk import assess
+        return assess(self)
+
+    @property
+    def formal_eligible(self):return self.risk['formal_allowed']
 
     @property
     def valid(self) -> bool:

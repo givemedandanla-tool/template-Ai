@@ -113,9 +113,11 @@ def preview_footer(candidate):
     font=QFont();font.setFamilies(['DejaVu Sans','Arial']);font.setPixelSize(1000)
     factor=6*MM_PER_POINT/1000
     document=QTextDocument();document.setDocumentMargin(0);document.setDefaultFont(font)
+    risk=candidate.risk
+    risk_note=risk['label']+'；'+'；'.join(c['reason'] for c in risk['conditions'] if c['status']!='PASS') if not risk['formal_allowed'] else ''
     document.setPlainText('PREVIEW / 非正式 / Logo 占位或待驗證\n'+
         f'{candidate.template.width_mm:g}×{candidate.template.height_mm:g} mm\n'+
-        ('\n'.join(candidate.issues) if candidate.issues else '數位檢查通過；本檔仍為預覽，未作實體印刷驗收。'))
+        ('\n'.join(candidate.issues)+('\n'+risk_note if risk_note else '') if candidate.issues else risk_note or '數位檢查通過；本檔仍為預覽，未作實體印刷驗收。'))
     document.setTextWidth(max(.1,candidate.template.width_mm-4)/factor)
     return document,factor,max(14,document.size().height()*factor+4)
 
@@ -197,6 +199,8 @@ def export(candidate: Candidate, target: str | Path, dpi: int = 300, preview: bo
     if not preview and not candidate.valid:
         raise ValueError("正式數位輸出被阻擋：" + "；".join(candidate.issues))
     if not preview:
+        from .candidate_risk import assert_formal
+        assert_formal(candidate)
         from .font_evidence import output_rights_errors
         rights_issues=[];checked_rights=set()
         for item in candidate.items:
