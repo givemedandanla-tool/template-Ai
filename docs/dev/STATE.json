@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI053-COMPLETE-NEXT-UI054",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI053-FORMAL005-RUNNING.receipt.json",
-  "last_confirmed_commit": "3c200f02977f5ee5ee36a50421ac2f33f823f94d",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI053-VERIFIED.receipt.json",
+  "last_confirmed_commit": "00b32b6ec9371f2185cb75188acf5f8914344c86",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,9 +28,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261016-REMAINING28-UI053-VERIFIED"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261016-REMAINING28-QUALITY.json",
@@ -408,10 +406,14 @@
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
   "publication_status": {
     "run": "RUN-REMAINING28-QUALITY-005",
-    "text_metadata_remote_verified": false,
-    "publication_scope_gate": "PENDING_ACTUAL_CHECK",
+    "text_metadata_remote_verified": true,
+    "publication_scope_gate": "PASS",
     "local_media_count": 125,
-    "strict_all_attachment_publication": false
+    "strict_all_attachment_publication": false,
+    "verified_checkpoint": "CP-20261016-REMAINING28-UI053-VERIFIED",
+    "journal_manifest_verified": true,
+    "verification_command": "python tools/dev_governance.py check --require-evidence --publication-scope",
+    "source_commit": "6cd038cb6aca4544a0a9458eac859289496dc613"
   },
   "cloud_environment_configuration": {
     "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
@@ -511,7 +513,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "UI053 original9 actual943/943PASS/111normalmodules/0skip/Qt0/capture0/sourceunchanged;7of28 software milestone,publication checkpoint+Gate pending;nextUI054 original11",
+  "current_work": "UI053 fulloriginal9 completed7of28,943PASS/111normalmodules/sourceunchanged,capture0;metadata remoteverified and actualpublicationGatePASS;continueUI054 original11",
   "last_formal_failure": {
     "run": "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
     "source_commit": "233e9ea4edc8d8927e482c3f0d362a78bd2ced5d",

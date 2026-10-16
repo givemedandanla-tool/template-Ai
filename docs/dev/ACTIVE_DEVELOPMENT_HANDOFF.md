@@ -1,3 +1,5 @@
+> 出版核對已實查PASS：metadataCP00b32b6ec9371f2185cb75188acf5f8914344c86、145claims全驗；41文字attachment＋run/政策GitHub，125media按精確policy留local。收據/state follow-up與再Gate後直接UI054 START（先145pending再改source）。
+
 # 當前接續（2026-10-16 UTC）
 
 - `/workspace/template-Ai`，`dev/v0.1-first-version`／PR2，不合併main。目標：完成剩餘28原父題完整軟體條款並SELF驗證；**現在7/28，尚有21**，不可在7/28停工。全75=51 VERIFIED/21 PARTIAL/3 DEFERRED；固定70=49閉合/21部分；CORE87/GOV7另計，沒有新增父題。
@@ -5,9 +7,9 @@
 
 ## 立即完成出版核對，再繼續開發
 
-1. 新完整PASS `docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json`：source `6cd038cb6aca4544a0a9458eac859289496dc613`／tree `5f8fe4457cc1aec6e2521b9233428c0d95c4d251`；**943/943PASS、111owned modules正常、0skip/0unhandled、capture0、sourceunchangedTrue、actualexit0**。7parents/71原條、145requirements claims digest均吻合。
+1. 最新完整PASS `docs/evidence/runs/RUN-REMAINING28-QUALITY-005/run.json`：source `6cd038cb6aca4544a0a9458eac859289496dc613`／tree `5f8fe4457cc1aec6e2521b9233428c0d95c4d251`；**943/943PASS、111owned modules正常、0skip/0unhandled、capture0、sourceunchangedTrue、actualexit0**。7parents/71原條、145requirements claims digest均吻合。
 2. 守衛finalizer005已成功執行，**不可重跑**（media archive已存在）。Registry145已VERIFIED、render/progress snapshot已成；`PROGRESS-20261016-REMAINING28-QUALITY` 對BEGIN：新增0／scope修訂7／完成7。已完成 UI046/047/049/050/051/052/053。
-3. 目前publication_status仍PENDING。正在準備 `CP-20261016-REMAINING28-UI053-VERIFIED`：完整run文字、FULL70_PUBLICATION exactsource/hash/bytes、所有計數/進度/收據都必須push/nativeACK後，實際 `tools/dev_governance.py check --require-evidence --publication-scope` PASS，才可STATE publicationPASS；收據push再Gate。所有metadata保存GitHub，**125PNG/PDF媒體留local** `.checkpoints/formal-media/RUN-REMAINING28-QUALITY-005/`；41attachment文字＋run metadata。這是精確FULL70 policy，不套任意9附件例外，不宣稱strict全媒體已上傳。
+3. publication-scope Gate已實際PASS145；收據/state正在follow-up push。已完成 `CP-20261016-REMAINING28-UI053-VERIFIED`：完整run文字、FULL70_PUBLICATION exactsource/hash/bytes、所有計數/進度/收據都必須push/nativeACK後，實際 `tools/dev_governance.py check --require-evidence --publication-scope` PASS，才可STATE publicationPASS；收據push再Gate。所有metadata保存GitHub，**125PNG/PDF媒體留local** `.checkpoints/formal-media/RUN-REMAINING28-QUALITY-005/`；41attachment文字＋run metadata。這是精確FULL70 policy，不套任意9附件例外，不宣稱strict全媒體已上傳。
 4. 然後開發**UI054原11**；修改app前將145已VERIFIED改pending保留previous evidence，render並保存START checkpoint，nextwork `UI054-ROOT-CAUSE-REPAIR-EXACT11`。不能從28目標改成只完成下一題。
 
 ## UI053現在的實作與界線
