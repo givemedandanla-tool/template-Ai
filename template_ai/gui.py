@@ -1163,7 +1163,7 @@ class MainWindow(QMainWindow):
             try:style=raw_asset(asset).styleName()
             except ValueError:pass  # 保留pin與既有Gate，不能暗借系統字型。
         return Slot(self.kind.currentData() or defaults.kind, self.owner.currentData() or defaults.owner, rect, self.index.value()-1 if self.index.lineEdit().text().strip() else defaults.index,
-                    family, self.pt.value() if self.pt.lineEdit().text().strip() else defaults.size_pt, self.scale.value()/100 if self.scale.lineEdit().text().strip() else defaults.min_scale,
+                    family, self.pt.value() if self.pt.cleanText().strip() else defaults.size_pt, self.scale.value()/100 if self.scale.cleanText().strip() else defaults.min_scale,
                     self.align.currentData() or defaults.align, self.required.isChecked() if self.current_slot else defaults.required, color=self.text_color.text().strip() or defaults.color,
                     font_asset=asset,font_style=style,locked=self.current_slot.locked if preserve and self.current_slot else False,
                     **({key:copy.deepcopy(getattr(self.current_slot,key)) for key in ('tracking_mm','tracking_min_mm','tracking_max_mm','distribution_approval')} if preserve and self.current_slot else {}))

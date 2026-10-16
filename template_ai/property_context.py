@@ -80,6 +80,7 @@ class RightPropertyContext:
         window.property_conflict.clicked.connect(self.inspect_conflict)
         window.tabs.currentChanged.connect(self.schedule);window.inputs_invalidated.connect(self.schedule)
         window.candidate_list.currentRowChanged.connect(self.schedule);window.output_canvas.scene().selectionChanged.connect(self.schedule)
+        window.result_problem_items.currentRowChanged.connect(self.schedule)
         self.loading=False;self.sync()
 
     def schedule(self,*args):
@@ -167,7 +168,7 @@ class RightPropertyContext:
                 group.setTitle({'text':'文字工具'+('（不適用／唯讀）' if not text else ''),'geometry':'框位與完整比例','identity':'類型與人物／公司歸屬'}[key])
                 for control in self.controls[key]:control.setEnabled(editable and (key!='text' or text))
             w.property_button.setEnabled(editable);w.property_object_tools.setEnabled(bool(rows) and fresh and w.tabs.currentIndex()!=2)
-            w.property_candidate_edit.setVisible(w.tabs.currentIndex()==2);w.property_candidate_edit.setEnabled(fresh and bool(w.candidates) and not w.busy)
+            w.property_candidate_edit.setVisible(w.tabs.currentIndex()==2);w.property_candidate_edit.setEnabled(fresh and bool(w.candidates))
             w.property_problem.setVisible(w.tabs.currentIndex()==2);w.property_problem.setEnabled(fresh and w.result_problem_items.currentItem() is not None)
             w.property_conflict.setVisible(w.pending_property_conflict is not None)
             if pending_main(w):state='輸入中／待套用：仍屬目前物件，切選不會自動轉移。'
