@@ -404,7 +404,7 @@ class ObjectToolsDialog(QDialog):
             if self.dirty and self.retained_patch is None:self.retained_patch=dict(kind=self.kind,entity_id=self.entity_id,revision=self.snapshot['revision'],ids=self.ids.copy(),patch=self.current_patch(),incomplete=dict(self.incomplete_inputs))
             was_loading=self.loading;self.loading=True
             try:
-                self.ids=[];self.canvas.select_ids([]);self.objects.blockSignals(True);self.objects.clearSelection();self.objects.blockSignals(False);self.sync_tree()
+                self.ids=[];self.canvas.readonly=True;self.canvas.set_mode('pan');self.canvas.select_ids([]);self.objects.blockSignals(True);self.objects.clearSelection();self.objects.blockSignals(False);self.sync_tree()
                 for editor in self.editors.values():
                     editor.setEnabled(False)
                     if isinstance(editor,QDoubleSpinBox):editor.setValue(editor.minimum())

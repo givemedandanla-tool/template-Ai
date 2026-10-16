@@ -1,0 +1,17 @@
+test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies (test_property_lifecycle.PropertyLifecycleTests.test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies) ... Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+FAIL
+
+======================================================================
+FAIL: test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies (test_property_lifecycle.PropertyLifecycleTests.test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_property_lifecycle.py", line 29, in test_stale_source_clears_active_selection_preserves_typed_patch_and_never_previews_or_applies
+    d.update_context();self.assertEqual(d.ids,[]);self.assertTrue(d.canvas.readonly);self.assertFalse(d.editors['x'].isEnabled());self.assertEqual(d.editors['x'].value(),d.editors['x'].minimum());self.assertEqual(d.retained_patch['patch']['x'],77);self.assertEqual(d.retained_patch['ids'],[self.ids[0]])
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.491s
+
+FAILED (failures=1)

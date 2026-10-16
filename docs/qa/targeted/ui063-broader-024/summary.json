@@ -1,0 +1,56 @@
+{
+  "status": "FAIL_OR_INCOMPLETE",
+  "expected_modules": [
+    "test_property_selection",
+    "test_property_context",
+    "test_property_lifecycle",
+    "test_property_form_versions",
+    "test_object_tools",
+    "test_object_index",
+    "test_workbench_navigation",
+    "test_workbench_multi_navigation",
+    "test_parent_navigation",
+    "test_seventy_ui",
+    "test_candidate_edit_history",
+    "test_candidate_edit_dispatch",
+    "test_candidate_results",
+    "test_first_version"
+  ],
+  "modules": [
+    {
+      "module": "test_property_selection",
+      "exit": 0,
+      "timeout": false,
+      "seconds": 2.371,
+      "log": "docs/qa/targeted/ui063-broader-024/test_property_selection.log"
+    },
+    {
+      "module": "test_property_context",
+      "exit": 0,
+      "timeout": false,
+      "seconds": 6.787,
+      "log": "docs/qa/targeted/ui063-broader-024/test_property_context.log"
+    },
+    {
+      "module": "test_property_lifecycle",
+      "exit": 0,
+      "timeout": false,
+      "seconds": 3.274,
+      "log": "docs/qa/targeted/ui063-broader-024/test_property_lifecycle.log"
+    },
+    {
+      "module": "test_property_form_versions",
+      "exit": 0,
+      "timeout": false,
+      "seconds": 2.922,
+      "log": "docs/qa/targeted/ui063-broader-024/test_property_form_versions.log"
+    },
+    {
+      "module": "test_object_tools",
+      "exit": "TIMEOUT_OWNED_SUBPROCESS_KILLED",
+      "timeout": true,
+      "seconds": 90.011,
+      "log": "docs/qa/targeted/ui063-broader-024/test_object_tools.log"
+    }
+  ]
+}
