@@ -1,0 +1,71 @@
+{
+  "id": "UI054-ROOT-CAUSE-REPAIR-EXACT11",
+  "status": "READ_ONLY_PLAN_PENDING_UI053_FORMAL_NOT_IMPLEMENTED",
+  "original_clauses": [
+    "**使用者決策 D｜根因分析＋安全增量修復＋獨立再驗收＋版本回退**。沿用 UI-052 已確認的「重大錯誤跨批次重審與暫停信任」、UI-053 獨立樣本分類品質驗收及 UI-051 低配公平佇列，形成**發現問題 → 查證根因 → 產生隔離修復候選 → 有界增量驗證／訓練 → 獨立品質再驗收 → 人工批准啟用／維持舊版 → 可追溯安全回退**的 GUI 閉環。**任何 AI 自行提出的修復不得直接改寫正式模型、核准規則、原始 Illustrator、客戶主檔或已發布模板**。這是 GUI 需求決策，不代表已實作。",
+    "**問題輸入與對應證據**：可從 UI-053 分類誤判／漏判詳情、UI-052 重大錯誤重審、UI-004／UI-005 例外中心及 UI-038／UI-039 原畫布開啟既有修復工作台。保留實際錯誤來源、`source_file_id`、`content_id`、`artwork_id`、人物／公司／複合 Logo／標記框、受影響客戶及確切 `style_version_id`、模型／解析器／OCR／正式規則版本、可核實的人工正確答案與發生條件；依類型顯示**根因候選及證據充足程度**，不能把 AI 推測當成已找到根因。",
+    "**先辨識問題在哪一層**：區分來源損壞／不完整、作品切分邊界錯誤、原生 Illustrator 文字與效果解析、OCR 誤判、欄位／人物／公司語意配對、雜訊規則誤排除、完整公司 Logo 圖文損壞、跨尺寸 Logo 庫錯用、來源客戶身分／模板版次混配、模型本身辨識退步及測試標註真值有疑義。GUI 提供「檢查原稿與真值」「檢視相關規則／模型版本」「分析來源依賴與影響」；**若真值不明或來源不可驗，停止自動修復並交人工核對**，不能透過錯誤答案反向污染模型。",
+    "**影響範圍與修復計畫預覽**：由既有來源索引、規則／模型版本、`training_checkpoints`、標記修正及已發布模板來源反查**直接依賴、可能受影響、證據不足及未掃描的歷史來源／作品／尺寸／客戶關聯**；展示候選修改內容、預計重驗／重訓樣本、需要人工審核的項目、與未受影響快取／已核准模板的差異、資源預估與不可自動修復的阻斷。對疑似**嚴重且普遍存在於歷史已核准作品**的錯誤，提議並經使用者確認後啟動 UI-052 跨批次重審及暫停信任，不能只修一筆訓練樣本就讓已受污染的正式來源繼續自動推薦。",
+    "**修復候選與正式版本隔離**：人工更正一個人物電話或 Logo 框位，只修正已確認的作品／來源標記，不會自動變成全部檔案通用規則。若提出可重用的 OCR／欄位配對／雜訊規則或新模型，應產生**新的不可混淆候選版本**，記錄與既有核准基準的差異、來源證據、適用條件、正反例與相依版本；規則仍遵守 UI-007／UI-008／UI-041 的獨立核准及安全回滾。禁止在候選驗證前覆寫唯一的已接受模型、正式規則、原始 `.ai`、已確認客戶或發布樣式。",
+    "**安全增量修復及再訓練**：依根因與依賴版本，優先只重分析／重訓**真正受影響的來源、作品、規則與必要回歸對照**；不可為修一個欄位在低配電腦上無條件重新訓練整個歷史庫。對共享內容但不同客戶編號的來源，解析快取可以共用，**客戶歸屬／人工核准證據不得互相複製**。受 UI-051 有界工作數、CPU／RAM／磁碟背壓及 UI-042 持久檢查點約束，可暫停、失敗隔離、重試和重啟續跑；硬碟寫入失敗或中斷不得把半完成候選說成驗證合格。",
+    "**避免訓練／驗收污染**：從 UI-053 的**訓練集、調參集、真正獨立保留測試集**分離出修復用可核准資料；不得因某個 holdout 失敗就直接將其人工真值偷偷寫回同一輪訓練，再用同一保留集宣稱改善。若保留測試集被用來調整候選，其獨立性已破壞，須明確標註**該保留測試已失效／需要新獨立資料**，並以相同且可核實口徑比較前後模型；標註不足、樣本數過少或高風險真值不明只能顯示證據不足。",
+    "**驗收順序與不可略過的 Gate**：候選修復完成先執行針對根因的可重現回歸案例，再對未受影響的關鍵既有類別做**反向退步檢查**（人物／電話歸屬、單檔多作品切分、完整複合 Logo、卡片物理尺寸、客戶來源版本）；最後依 UI-053 正規流程執行有效獨立資料集驗收。GUI 分開顯示**原問題是否修復／是否產生新嚴重錯誤／新舊版本各分類表現／保留測試有效性／仍待 UI-052 重審的歷史項目**。**修好了原錯誤不等於品質 PASS；UI-052 重審完成也不等於 UI-053 新模型獨立驗收 PASS**。",
+    "**正式採用、維持及安全回退**：品質未達標、重要類別退步、標註或獨立測試不足、需人工審核的歷史高風險項目未解時，維持**候選 FAIL／REVIEW_REQUIRED／NOT_VERIFIED**，阻擋候選作為已接受的自動正式推薦／永久學習規則，不自動合併或覆寫舊版。只有相關規則核准、必要 UI-052 影響重審、UI-053 有效獨立品質驗收以及人工選定的 exact 候選版本均符合條件，才可提出**明確的正式啟用確認**並保存模型＋規則＋解析器＋資料集／標註＋來源／Gate 的版本憑證。若新版本部署後暴露退步，顯示**安全回退候選**與受影響版型／作品預覽，核對目標舊版本**本身仍有有效證據且不存在已確認的系統性嚴重錯誤**，才能恢復到可信狀態；若舊版也有問題，兩版皆不得冒充安全，應保留阻斷與待人工處置。",
+    "**人機介面與風險提示**：在同一既有訓練／例外／品質中心提供「待修問題」「根因與影響」「候選修復計畫」「增量處理進度」「前後品質差異」「可核准／阻擋原因」「回退／恢復」分頁；每項含來源定位、負面案例、必要人工核對、狀態及下一步。避免新增與 UI-052 重審或 UI-053 評估重複的另一套真實資料庫／品質引擎；只以既有 `review_events`、`training_checkpoints`、內容／來源索引及核准規則／模型版本增加必要修復憑證。",
+    "**發布與資料安全界線**：任何模型修復／回退都**不代表已輸出成品、正式 Illustrator 原稿、客戶主檔、已發布模板會被無聲改寫**，亦不能略過 UI-010 模板核准、UI-013 固定字級、UI-019／UI-023 公司 Logo 及印前 Gate。若修復涉及客戶資料變更仍走 UI-045／UI-046 受控修訂。UI-043 不增設購買分類，UI-048 完整登入／權限 GUI 仍留到最後功能階段；測試資料本機保存並以合成／合法去識別樣本為主，不上傳原稿及個資至 GitHub。"
+  ],
+  "original_parent_sha256": "13e2c0f1dee610fa6485a53f806bef1dadacd9f0c920a32953851121af942498",
+  "references": [
+    {
+      "url": "https://raw.githubusercontent.com/scikit-learn/scikit-learn/1.7.2/sklearn/naive_bayes.py",
+      "version": "1.7.2",
+      "bytes": 55949,
+      "sha256": "ee265c08217b2b4a0543bd984cb11a962b4d2f4c9a8150332e84f1364b5d37ec",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "reuse": "Reuse existing local CharacterModel sufficient-count classifier; train only explicitly approved affected/control text scope, never blindly rescan wholehistory or copyholdout labels; do not install sklearn"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mlflow/mlflow/v2.22.0/mlflow/entities/model_registry/model_version.py",
+      "version": "2.22.0",
+      "bytes": 6602,
+      "sha256": "6dd9f72f4cb36ba92fe096fa18b083d435e11c749b0625e00e1b46eb612bcb37",
+      "status": "ACTUALLY_FETCHED_AND_RELEVANT_SECTIONS_REVIEWED",
+      "reuse": "Use actual model version identifiers distinct from movable approved deployment references; reuse existing TrainingStore append-only history and CAS, no MLflow installation/server/parallel registry"
+    }
+  ],
+  "existing_references": "docs/dev/REMAINING28_ENGINEERING_BASIS.json:NetworkX3.5 connected dependency groups and AWS ModelQualityMonitor separated truth/baseline/constraints",
+  "reuse": [
+    "TrainingStore sameSQLite append-only events/CAS and existing source/FACTS/sample/model/rule identities",
+    "QualityDiagnostics exact source/result/Gold evidence; QualityRechecks historical impact/quarantine",
+    "QualityPipelines real executable/versioned parameters; QualityProtocols/Sets explicit diagnostic vs independent use",
+    "EvaluationJobs existing shared FIFO/process isolation/resource admission/pause/cancel/restart",
+    "SemanticLearning selected confirmed TRAIN/VALIDATION scopes; no generic architecture mutation",
+    "Existing source-facts/noise/exception/customer editing flows, not direct repair writes"
+  ],
+  "math": [
+    "Directed dependency reachability defines bounded affected set; unknown historical dependencies remain explicit potential/unscanned, not safe",
+    "Ordered state machine requires reproducible root-case regression then unaffected critical controls then fresh independent holdout; no average score erases critical regression",
+    "One immutable candidate/version with optimistic CAS approval pointer; rollback revalidates target evidence, does not presume older safe",
+    "Independent groups retain UI053 whole-source correlation and Wilson uncertainty; training/diagnostic subsets never qualify independent quality"
+  ],
+  "packages": [
+    "Exact immutable issue evidence and root-cause hypotheses with explicit uncertainty/source checks",
+    "Impact and bounded explicit repair plan; critical system-wide problems invoke existing UI052 confirmed recheck",
+    "Isolated real model/parser/OCR/rule candidate versions and bounded training/reanalysis jobs; no early production mutation",
+    "Ordered actual diagnostic root case, negative controls and independent evaluation receipts; holdout-exposure permanently retained",
+    "Explicit exact-version activation and trustworthy rollback pointer; actual future-source pipeline routing with fail-closed runtime",
+    "Same-center lazy paged native GUI with all existing entrypoints; persistence/cancel/disk/audit/clone safety regression"
+  ],
+  "unresolved_design": [
+    "Need isolated approved rule candidates that actual quality inference can execute before permanent activation, while existing normal ACTIVE rules remain exact and historical support refs valid",
+    "Deployment must route actual automatic source analysis through frozen accepted pipeline, not merely save a display-only pointer",
+    "Candidate training must use explicit limited confirmed text scope in shared bounded worker, without reusing exposed holdout as TRAIN",
+    "Source/Gold ambiguity or missing original blocks automatic repair; safe manual correction route remains available"
+  ],
+  "nonclaims": [
+    "No code edited during UI053 frozen-source formal",
+    "No parent completion from this plan",
+    "No paid API/model/server, new service, EXE, main merge or subagent",
+    "No production accuracy calibration, actual native Illustrator corpus/Windows/referencehardware or independent review"
+  ]
+}
