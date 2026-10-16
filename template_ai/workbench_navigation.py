@@ -72,11 +72,11 @@ class WorkbenchNavigation:
             form=dict(kind=w.kind.currentData(),owner=w.owner.currentData(),index=w.index.value(),
                       coords=[s.value() for s in w.coords],font=w.font.currentFont().family(),
                       pt=w.pt.value(),color=w.text_color.text(),scale=w.scale.value(),
-                      align=w.align.currentData(),required=w.required.isChecked())
+                      align=w.align.currentData(),required=w.required.isChecked(),incomplete=dict(w._property_raw_inputs))
             return digest(dict(slot=w.current_slot.id,form=form))
         selected,undo,redo,stored=w._mode_memory.get(mode,(None,[],[],None))
         if not selected or not stored:return None
-        form={k:v for k,v in stored.items() if k not in ('font','font_display')};form['font']=stored['font'].family()
+        form={k:v for k,v in stored.items() if k not in ('font','font_display','source_pin','object_pin','pending')};form['font']=stored['font'].family()
         return digest(dict(slot=selected,form=form))
 
     def multi_pin(self,candidate):
@@ -238,6 +238,7 @@ class WorkbenchNavigation:
 
     @staticmethod
     def form_matches(slot,form):
+        if form.get('incomplete'):return False
         displayed=form.get('font_display')
         family=form['font'].family()
         same_font=family==slot.font or bool(displayed and displayed['slot_id']==slot.id and family==displayed['display'])

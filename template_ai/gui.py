@@ -235,7 +235,7 @@ class MainWindow(QMainWindow):
         self.generation = 0
         self.undo_stack, self.redo_stack = [], []
         self._mode_memory={};self._active_mode=0
-        self._property_mode=0;self.pending_property_conflict=None
+        self._property_mode=0;self.pending_property_conflict=None;self._property_raw_inputs={}
         self.busy = False
         self._background_jobs = {}
         self._waiting_launches={}
@@ -1187,11 +1187,14 @@ class MainWindow(QMainWindow):
         from dataclasses import asdict
         if pending_main(self):
             same_version=digest(asdict(old))==getattr(self,'_property_loaded_pin',None)
-            if selected is old and same_version:return True
+            if selected is old and same_version:
+                from .property_context import restore_incomplete
+                restore_incomplete(self);return True
             if old.id in {s.id for s in self.current_slots()} and same_version and (selected is None or selected.id!=old.id):
                 if not discard_pending_selection(self):restore_main_selection(self);return False
             else:retain_pending_main(self)
         self.current_slot=selected;self._property_mode=self.tabs.currentIndex()
+        self._property_raw_inputs={}
         s = self.current_slot
         self.property_button.setEnabled(s is not None and not s.locked and self.tabs.currentIndex() != 2 and (self.tabs.currentIndex()==0 or (self.template and self.template.state=='draft')))
         if not s:
@@ -1221,6 +1224,8 @@ class MainWindow(QMainWindow):
         elif self.tabs.currentIndex()==1 and self.template:
             errors=template_errors(self.template);self.selected_info.setText(self.selected_info.text()+'\n設計安全邊距：'+str(self.template.safe_margin_mm)+'mm\n'+('驗證待修復：'+'；'.join(errors[:8]) if errors else '幾何／語意檢查通過；仍依實際資料驗證字形及輸出。'))
         self._property_form_baseline=property_values(self);self._property_loaded_pin=digest(asdict(s))
+        from .property_context import source_pin
+        self._property_loaded_source=source_pin(self,self.tabs.currentIndex())
         if hasattr(self,'right_context'):self.right_context.schedule()
         return True
 
@@ -1299,6 +1304,8 @@ class MainWindow(QMainWindow):
     def apply_properties(self):
         if not self.current_slot or not self.editable():
             return
+        from .property_context import numeric_controls
+        if self._property_raw_inputs or any(not control.hasAcceptableInput() for control in numeric_controls(self).values()):self.error('數字輸入尚未完成；請先完成或明確放棄，未套用舊值。');return
         if self.current_slot.locked:self.error('物件已鎖定；請在安全多選工具明確解鎖');return
         import re
         if not re.fullmatch(r"#[0-9a-fA-F]{6}", self.text_color.text().strip()):
@@ -2103,16 +2110,28 @@ class MainWindow(QMainWindow):
         index=self.tabs.currentIndex() if index is None else index
         if hasattr(self,'navigation') and not self.navigation.restoring:self.navigation.remember(self._active_mode)
         form=dict(kind=self.kind.currentData(),owner=self.owner.currentData(),index=self.index.value(),coords=[s.value() for s in self.coords],font=self.font.currentFont(),pt=self.pt.value(),color=self.text_color.text(),scale=self.scale.value(),align=self.align.currentData(),required=self.required.isChecked(),font_display=copy.deepcopy(getattr(self,'_selected_font_display',None)))
+        from .property_context import pending_main,source_pin
+        form.update(incomplete=copy.deepcopy(self._property_raw_inputs),pending=pending_main(self,self._active_mode),object_pin=getattr(self,'_property_loaded_pin',None),source_pin=getattr(self,'_property_loaded_source',None) if self.current_slot else source_pin(self,self._active_mode))
         self._mode_memory[self._active_mode]=(self.current_slot.id if self.current_slot else None,self.undo_stack,self.redo_stack,form)
         self._active_mode=index
         self.function_stack.setCurrentIndex(index)
         selected,self.undo_stack,self.redo_stack,form=self._mode_memory.get(index,(None,[],[],None))
         self.select_slot(next((s for s in self.current_slots() if s.id==selected),None))
+        if form and (form.get('source_pin')!=source_pin(self,index) or (self.current_slot and form.get('object_pin')!=getattr(self,'_property_loaded_pin',None))):
+            self.undo_stack=[];self.redo_stack=[]
+            if form.get('pending') or form.get('incomplete'):
+                values={key:copy.deepcopy(form[key]) for key in ('kind','owner','index','coords','pt','color','scale','align','required','incomplete') if key in form};values['font']=form['font'].family()
+                self.pending_property_conflict=dict(slot_id=selected,mode=index,root=str(self.library.root),values=values,source_pin=form.get('source_pin'))
+            self.statusBar().showMessage('原工作或物件版本已更新；舊表單與復原歷史未套入新版本。')
+            form=None
         if form and self.current_slot:
             for combo,key in ((self.kind,'kind'),(self.owner,'owner'),(self.align,'align')):combo.setCurrentIndex(combo.findData(form[key]))
             self.index.setValue(form['index'])
             for spin,value in zip(self.coords,form['coords']):spin.setValue(value)
             self.font.setCurrentFont(form['font']);self.pt.setValue(form['pt']);self.text_color.setText(form['color']);self.scale.setValue(form['scale']);self.required.setChecked(form['required']);self._selected_font_display=form['font_display']
+            self._property_raw_inputs=copy.deepcopy(form.get('incomplete',{}))
+            from .property_context import restore_incomplete
+            restore_incomplete(self)
 
     def repair_font(self):
         if self.busy:

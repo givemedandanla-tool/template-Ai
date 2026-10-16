@@ -12,12 +12,34 @@ def property_values(window):
     if slot and display and display['slot_id']==slot.id and family==display['display']:family=slot.font
     return dict(coords=[s.value() for s in window.coords],kind=window.kind.currentData(),owner=window.owner.currentData(),
                 index=window.index.value(),font=family,pt=window.pt.value(),color=window.text_color.text().strip(),
-                scale=window.scale.value(),align=window.align.currentData(),required=window.required.isChecked())
+                scale=window.scale.value(),align=window.align.currentData(),required=window.required.isChecked(),incomplete=dict(getattr(window,'_property_raw_inputs',{})))
 
 
-def pending_main(window):
+def pending_main(window,mode=None):
     baseline=getattr(window,'_property_form_baseline',None)
-    return bool(window.current_slot and baseline is not None and window._property_mode==window.tabs.currentIndex() and property_values(window)!=baseline)
+    mode=window.tabs.currentIndex() if mode is None else mode
+    return bool(window.current_slot and baseline is not None and window._property_mode==mode and property_values(window)!=baseline)
+
+
+def numeric_controls(window):return dict(zip(('x','y','w','h'),window.coords),pt=window.pt,scale=window.scale,index=window.index)
+
+
+def capture_incomplete(window,key):
+    if window.current_slot is None:return
+    control=numeric_controls(window)[key]
+    if control.hasAcceptableInput():window._property_raw_inputs.pop(key,None)
+    else:window._property_raw_inputs[key]=control.lineEdit().text()[:80]
+
+
+def restore_incomplete(window):
+    for key,text in window._property_raw_inputs.items():
+        if key in numeric_controls(window):numeric_controls(window)[key].lineEdit().setText(text)
+
+
+def source_pin(window,mode):
+    if mode==0 and window.work:return [str(window.library.root),'ARTWORK',window.work['id'],window.work['revision']]
+    if mode==1 and window.template:return [str(window.library.root),'TEMPLATE',window.template.id,window.template_revision,window.template_base_hash]
+    return None
 
 
 def discard_pending_selection(parent,action='切換'):
@@ -37,6 +59,7 @@ def restore_main_selection(window):
         with QSignalBlocker(window.edit_canvas):window.edit_canvas.select_ids([slot.id])
         with QSignalBlocker(window.editor_tree):
             for item in getattr(window,'editor_tree_nodes',[]):item.setSelected(item.data(0,Qt.UserRole)==[slot.id])
+    restore_incomplete(window)
 
 
 def retain_pending_main(window):
@@ -77,6 +100,8 @@ class RightPropertyContext:
                 for name in ('currentFontChanged','valueChanged','textChanged','currentIndexChanged','stateChanged'):
                     signal=getattr(control,name,None)
                     if signal is not None:signal.connect(self.schedule);break
+        for key,control in numeric_controls(window).items():
+            control.lineEdit().textEdited.connect(lambda text,k=key:self.numeric_edited(k))
         window.property_conflict.clicked.connect(self.inspect_conflict)
         window.tabs.currentChanged.connect(self.schedule);window.inputs_invalidated.connect(self.schedule)
         window.candidate_list.currentRowChanged.connect(self.schedule);window.output_canvas.scene().selectionChanged.connect(self.schedule)
@@ -85,6 +110,9 @@ class RightPropertyContext:
 
     def schedule(self,*args):
         if not self.loading:self.timer.start(0)
+
+    def numeric_edited(self,key):
+        if not self.loading:capture_incomplete(self.w,key);self.schedule()
 
     def pin(self,key,checked):
         self.pins.add(key) if checked else self.pins.discard(key)
@@ -159,15 +187,18 @@ class RightPropertyContext:
             w.property_context_label.setText(title+suffix)
             if assessment:
                 w.property_context_label.setText(w.property_context_label.text()+'\n'+assessment['label']+'；輸出前仍須核對目前作品。')
-            w.property_fields.setVisible(True);w.property_pinned_box.setVisible(bool(self.pins))
+            w.property_fields.setVisible(bool(rows) or bool(self.pins) or w.all_property_tools.isChecked());w.property_pinned_box.setVisible(bool(self.pins))
             order=['text','geometry','identity'] if text else ['geometry','identity','text']
+            positions=dict(pinned=0,context=0)
             for key in order:
-                group=w.property_groups[key];w.property_pinned_layout.removeWidget(group);w.property_context_layout.removeWidget(group)
-                (w.property_pinned_layout if key in self.pins else w.property_context_layout).addWidget(group)
+                group=w.property_groups[key];area='pinned' if key in self.pins else 'context';target=w.property_pinned_layout if key in self.pins else w.property_context_layout
+                if target.indexOf(group)!=positions[area]:
+                    w.property_pinned_layout.removeWidget(group);w.property_context_layout.removeWidget(group);target.insertWidget(positions[area],group)
+                positions[area]+=1
                 group.setVisible(key in self.pins or w.all_property_tools.isChecked() or (bool(rows) and (key!='text' or text)))
                 group.setTitle({'text':'文字工具'+('（不適用／唯讀）' if not text else ''),'geometry':'框位與完整比例','identity':'類型與人物／公司歸屬'}[key])
                 for control in self.controls[key]:control.setEnabled(editable and (key!='text' or text))
-            w.property_button.setEnabled(editable);w.property_object_tools.setEnabled(bool(rows) and fresh and w.tabs.currentIndex()!=2)
+            w.property_button.setEnabled(editable and not w._property_raw_inputs and all(control.hasAcceptableInput() for control in numeric_controls(w).values()));w.property_object_tools.setEnabled(bool(rows) and fresh and w.tabs.currentIndex()!=2)
             w.property_candidate_edit.setVisible(w.tabs.currentIndex()==2);w.property_candidate_edit.setEnabled(fresh and bool(w.candidates))
             w.property_problem.setVisible(w.tabs.currentIndex()==2);w.property_problem.setEnabled(fresh and w.result_problem_items.currentItem() is not None)
             w.property_conflict.setVisible(w.pending_property_conflict is not None)
