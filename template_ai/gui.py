@@ -1327,6 +1327,10 @@ class MainWindow(QMainWindow):
             self.undo_stack.pop();self.error('完整Logo不能改成一般文字或不等比變形');return
         s.id = self.current_slot.id
         self.current_slot.__dict__.update(s.__dict__)
+        # This validated explicit Apply owns the mutation. Refreshing the view
+        # must not misclassify its accepted values as an external replacement.
+        from .property_context import property_values
+        self._property_form_baseline=property_values(self);self._property_loaded_pin=digest(asdict(self.current_slot))
         if self.tabs.currentIndex() == 0:
             self.refresh_training()
             self.save_labels(silent=True)
@@ -1670,6 +1674,8 @@ class MainWindow(QMainWindow):
     def save_draft(self):
         if not self.template or not self.editable():
             return
+        from .property_context import pending_main
+        if pending_main(self):self.statusBar().showMessage('欄位仍待套用；請先套用或明確放棄，未保存這些輸入。');return
         try:
             self.save_current_template()
             self.refresh_templates(self.template.id)

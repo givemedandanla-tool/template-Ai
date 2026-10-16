@@ -48,3 +48,8 @@ class PropertyFormVersionTests(unittest.TestCase):
     def test_identical_same_source_model_refresh_rebinds_pointer_and_keeps_unapplied_values(self):
         w=self.w;w.coords[0].setValue(77);w.template=copy.deepcopy(w.template);w.right_context.sync()
         self.assertIs(w.current_slot,w.template.slots[0]);self.assertEqual(w.coords[0].value(),77);self.assertTrue(w.navigation.pending_form());self.assertIsNone(w.pending_property_conflict)
+    def test_successful_explicit_apply_does_not_archive_its_own_values_as_a_version_conflict(self):
+        w=self.w;w.coords[0].setValue(9);w.apply_properties();APP.processEvents();self.assertEqual(w.template.slots[0].rect.x,9);self.assertIsNone(w.pending_property_conflict);self.assertFalse(w.navigation.pending_form())
+    def test_save_draft_with_unapplied_fields_keeps_them_pending_without_claiming_saved(self):
+        w=self.w;before=w.library.object_snapshot('TEMPLATE',self.draft.id);w.coords[0].setValue(10);w.save_draft();APP.processEvents()
+        self.assertEqual(w.coords[0].value(),10);self.assertTrue(w.navigation.pending_form());self.assertEqual(w.library.object_snapshot('TEMPLATE',self.draft.id),before);self.assertIn('待套用',w.statusBar().currentMessage())

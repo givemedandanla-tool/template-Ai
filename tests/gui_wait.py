@@ -58,3 +58,10 @@ def close_property_dialog(dialog):
         QTimer.singleShot(0,dialog,discard)
     dialog.close()
 
+def dispose_main_window(window):
+    """Dispose a test-owned window without autosaving a deliberately stale draft."""
+    from PySide6.QtCore import QCoreApplication,QEvent
+    from PySide6.QtWidgets import QApplication
+    window.input_timer.stop();window.execution_queue.cancel_event.set();window.pool.waitForDone(5000);QApplication.processEvents()
+    window.font_manager.close();window.library.close();window.deleteLater();QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete)
+

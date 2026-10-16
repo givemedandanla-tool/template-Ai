@@ -1,4 +1,4 @@
-from gui_wait import close_property_dialog
+from gui_wait import close_property_dialog,dispose_main_window
 """Independent geometry oracles and real transactional persistence, then Qt end-to-end."""
 import copy
 import json
@@ -79,7 +79,7 @@ class ObjectToolsTests(unittest.TestCase):
     def test_persistent_apply_undo_redo_reopen_and_unselected_identity(self):
         record=self.apply(self.request('MOVE',dx=1,dy=1));self.assertEqual(len(record['plan']['changes']),2)
         self.assertEqual(record['after']['slots'][2:],self.snap['payload']['slots'][2:])
-        other=Library(self.root/'data');self.addCleanup(close_property_dialog,other)
+        other=Library(self.root/'data');self.addCleanup(other.close)
         self.assertEqual(other.object_edit_history('TEMPLATE',self.t.id)[0]['id'],record['id'])
         undone=other.object_history_action(record['id'],'UNDO',True);self.assertEqual(other.object_snapshot('TEMPLATE',self.t.id)['payload'],self.snap['payload'])
         redone=other.object_history_action(record['id'],'REDO',True);self.assertEqual(redone['phase'],'APPLIED');self.assertEqual(other.object_snapshot('TEMPLATE',self.t.id)['payload'],record['after'])
@@ -141,7 +141,7 @@ class ObjectToolsGuiTests(unittest.TestCase):
         from template_ai.gui import MainWindow
         from template_ai.object_dialog import ObjectToolsDialog
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)
-        self.w=MainWindow(self.root/'data');self.addCleanup(self.w.close);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
+        self.w=MainWindow(self.root/'data');self.addCleanup(dispose_main_window,self.w);self.errors=[];self.w.error=lambda text:self.errors.append(text);self.w.inform=lambda text:self.errors.append(text)
         self.t=demo_template();self.t.slots[1].color='#123456';self.w.library.save_template(self.t);self.w.refresh_templates(self.t.id);self.w.tabs.setCurrentIndex(1)
         self.d=ObjectToolsDialog(self.w,'TEMPLATE',self.t.id);self.addCleanup(close_property_dialog,self.d);self.d.show();APP.processEvents();self.d.canvas.fit()
         self.ids=[s.id for s in self.t.slots];self.yes=patch('template_ai.object_dialog.QMessageBox.question',return_value=__import__('PySide6.QtWidgets',fromlist=['QMessageBox']).QMessageBox.Yes);self.yes.start();self.addCleanup(self.yes.stop)
@@ -195,7 +195,7 @@ class ObjectToolsGuiTests(unittest.TestCase):
         reopen.history.selectRow(0);reopen.history_action('REDO');self.assertEqual(self.w.template.slots[0].rect.x,9)
         self.d.reload();self.d.select_ids(self.ids[:2]);self.d.preview_request({'operation':'MOVE','ids':self.d.ids,'dx':1,'dy':0});self.d.editors['color'].setText('#abcdef');self.assertIsNone(self.d.plan);self.assertFalse(self.d.apply_button.isEnabled())
         self.d.preview_patch();other=copy.deepcopy(self.w.template);other.name='external edit';self.w.library.save_template(other);self.d.apply()
-        self.assertIn('變更',self.d.status.text());self.assertTrue(self.d.apply_button.isEnabled());self.assertEqual(len(self.w.library.object_edit_history('TEMPLATE',self.t.id)),1)
+        self.assertIn('變更',self.d.status.text());self.assertFalse(self.d.apply_button.isEnabled());self.assertTrue(self.d.canvas.readonly);self.assertEqual(self.d.retained_patch['patch']['color'],'#abcdef');self.assertEqual(len(self.w.library.object_edit_history('TEMPLATE',self.t.id)),1)
 
     def test_late_failure_retry_publication_and_no_selection_do_not_write(self):
         before=self.w.library.object_snapshot('TEMPLATE',self.t.id);self.d.preview_lock(True);self.assertIsNone(self.d.plan)
