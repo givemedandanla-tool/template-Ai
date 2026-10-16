@@ -1,4 +1,6 @@
-# 當前：UI055–UI058待LAYOUT002完整正式驗證；歷史8/28
+# 當前：RUN-REMAINING28-LAYOUT-003正式執行中；歷史8/28
+
+**最新優先**：LAYOUT003 source842392433a96d09633fa051e41eb19fdfc48c82f／tree5d0a096faa2b165d1b46b7b57dbb65cf2670e93f，exec session47907；精確owned PID/create_time見STATE.formal_execution_watch。保持source/tests/tools/examples凍結，預期1078/140/150claims。actual parent-exit必須讀remaining28-layout-003-parent-exit.txt。001中止/002失敗均保留，未執行任何finalizer。
 
 - 使用者目標28父題全部自我驗證，勿停里程碑。無EXE、main merge、多代理；dev/v0.1-first-version／PR#2。按需搜尋/1600token輸出；零例行問答，工作靠GitHub/STATE/本檔接續，不讀整聊天/倉庫/大日誌。
 - 歷史UI046/047/049/050/051/052/053/054共8父題82原條已SELF；REPAIR003source c87fa8323fa387929d470e874f3c07ee11942c08，1001PASS/0Qt/capture0/sourceunchanged/parentexit0，174附件正常GitHub，publicationGatePASS。勿重跑任何UI053/UI054舊finalizer。
@@ -25,3 +27,7 @@ Observed954/952PASS/two waitfail, source still immutable86cf4bc. OutputBatchGuiT
 ## LAYOUT002 actualFAIL; diagnostic repair and freeze003
 
 Actual full002:1078executed/1076PASS/2FAIL,140modules(2unhealthy),0missing/0Qt/sourceunchanged, capture not run because failedtests, actualparentexit1. Allrawrun retained. APPLY_GUI_TIMEOUT_DIAGNOSTICS.py alreadyEXECUTED once; doNOT rerun (guard rejectsduplicates). Controlled output resources+failure diagnostics alone still2FAIL/17cases in42.831s. Stacks003 show active/admitted worker inengine_digest Path.stat and coldNetworkXmoduleget_data, not waitingadmission. Replaced only the two waithelpers with realQEventLoop/10mspoll+watchdog, same5s/10s budgets;017casesPASS19.197s(log layout002-real-qt-event-loop-004). Productionlogic/gates unchanged; no increasedtimeout orpressurebypass. Next sourcefreeze003/full1078/140/150claims; strictFINALIZE_LAYOUT_BATCH.py notrun andrefuses001/002. UI059prototype pure7 only, no parentcompletion. CurrentGITHUB sourceACK before003 stillf5dd89b94849e103655d2fad494743877a27831b; source003mustuseactualnextnativeACK.
+
+## LAYOUT003 green watch; UI059 prototype only
+
+Current full003 observed725/725 with0fail, exactcode source unchanged842392433a96d09633fa051e41eb19fdfc48c82f. Both previouslyfailedmodules AutomaticTraining15 and OutputBatchGui2 nowallPASS. Parent stillactive/session47907/owned527766 create1792149834.72; requireactualcompleteexit0/captures beforefinalizer. Source/tests/tools/examples remainfrozen. UI059 prototype extended metadata-only delta/inverse, syntaxchecked;4pure tamper/fixedpoint/latermanualguardcasesPASS in ui059-delta-guard-prototype-002 plusprevious7math. ValidGUIundo/recompute/integration notimplemented/notparentcomplete. Keep noEXE/mainmerge/agents. Nextstrict FINALIZE_LAYOUT_BATCH.py ONLYafteractualsuccess (never001/002), then normalallattachmentsGitHubGate andUI059.

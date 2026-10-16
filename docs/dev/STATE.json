@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI057-NEXT",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-LAYOUT002-LATE-WATCH.receipt.json",
-  "last_confirmed_commit": "f5dd89b94849e103655d2fad494743877a27831b",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-LAYOUT003-SOURCE-FREEZE.receipt.json",
+  "last_confirmed_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-LAYOUT003-SOURCE-FREEZE"
+    "CP-20261016-REMAINING28-LAYOUT003-GREEN-WATCH"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -662,49 +662,45 @@
   ],
   "active_work_package_plan": "docs/dev/UI058_EXECUTION_PLAN.json",
   "formal_execution_watch": {
-    "run_id": "RUN-REMAINING28-LAYOUT-002",
-    "source_commit": "86cf4bc06d7c3093be475a606eee8df072285b1b",
-    "status": "COMPLETED_FAIL_ACTUAL_EXIT_1",
+    "run_id": "RUN-REMAINING28-LAYOUT-003",
+    "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
+    "status": "RUNNING_PASS_TO_DATE",
     "owners": [
       {
-        "create_time": 1792148479.48,
-        "ppid": 499560,
+        "pid": 527766,
+        "create_time": 1792149834.72,
         "cmdline": [
           ".venv/bin/python",
           "tools/run_evidence.py",
           "--run-id",
-          "RUN-REMAINING28-LAYOUT-002",
+          "RUN-REMAINING28-LAYOUT-003",
           "--source-commit",
-          "86cf4bc06d7c3093be475a606eee8df072285b1b",
+          "842392433a96d09633fa051e41eb19fdfc48c82f",
           "--commit-json",
           ".checkpoints/native-readback/commit.json",
           "--tree-json",
           ".checkpoints/native-readback/tree.json"
         ],
-        "pid": 499566
+        "ppid": 527760
       }
     ],
-    "source_frozen": false,
+    "source_frozen": true,
     "do_not_finalize_before_actual_exit_zero": true,
-    "parent_log": "docs/qa/targeted/remaining28-layout-002-parent.log",
-    "parent_exit": "docs/qa/targeted/remaining28-layout-002-parent-exit.txt",
-    "live_directory": ".checkpoints/formal-live/RUN-REMAINING28-LAYOUT-002",
+    "parent_log": "docs/qa/targeted/remaining28-layout-003-parent.log",
+    "parent_exit": "docs/qa/targeted/remaining28-layout-003-parent-exit.txt",
+    "live_directory": ".checkpoints/formal-live/RUN-REMAINING28-LAYOUT-003",
     "progress": {
       "phase": "RUNNING_OWNED_TEST_MODULE",
-      "current_test": "test_source_watch_service.SourceWatchServiceTests.test_pause_during_real_worker_cancels_before_candidate_commit_then_disables_future_work",
-      "started": 979,
-      "completed": 978,
-      "passed": 976,
-      "failed_ids": [
-        "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
-        "test_output_batch_gui.OutputBatchGuiTests.test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults"
-      ],
+      "current_test": "test_quality_protocol.QualityProtocolTests.test_exact_predeclared_pair_does_not_claim_quality_or_consume_holdout_early",
+      "started": 726,
+      "completed": 725,
+      "passed": 725,
+      "failed_ids": [],
       "planned_tests": 1078,
       "formal_complete": false,
-      "updated_at": "2026-10-16T11:16:20.281715+00:00"
+      "updated_at": "2026-10-16T11:31:33.021086+00:00"
     },
-    "source_manifest_unchanged_now": true,
-    "actual_parent_exit": 1
+    "source_manifest_unchanged_now": true
   },
   "abandoned_preparations": [
     {
@@ -713,16 +709,8 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "LAYOUT002 actual FAIL1076/1078,140modules,2GUI wait timeouts,0Qt/sourceunchanged/parent1 retained. Guarded diagnostics applied; controlled output fixture alone still2FAIL17cases. Stack probe showed admitted active workers in cold NetworkX import/pathstat. Replaced tight QTest polling with actual Qt QEventLoop+QTimer watchdog preserving5/10s budgets;17module tests PASS in19.197s. Production resource and output gates unchanged.1078catalog/150claims pending; freezeLAYOUT003 next.",
-  "last_formal_failure": {
-    "run": "RUN-REMAINING28-REPAIR-002",
-    "status": "FAIL",
-    "assertions_passed": 999,
-    "unhandled_runtime_errors": 5,
-    "parent_exit": 1,
-    "capture_executed": false,
-    "reason": "FactsPanel.selected duplicate initialization referenced constructor local outer"
-  },
+  "current_work": "LAYOUT003 active on source842392433a96d09633fa051e41eb19fdfc48c82f, expected1078tests/140modules/150claims. Keep app/tests/tools/examples frozen until actual full exit. Preserve001controlled interruption and002actualFAIL1076/1078; Qt eventloop fix targeted17PASS withsame5/10s budgets. Historical8/28, UI055–58stillpending; no finalizer executed.",
+  "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
       "folder": "docs/evidence/runs/RUN-REMAINING28-QUALITY-002",
@@ -774,8 +762,8 @@
     }
   ],
   "next_work_package_plan": "docs/dev/UI055_IMPLEMENTATION_MAP.json",
-  "next_step": "Run immutable LAYOUT0031078/140 with all captures; only finalize after actualPASS/exits0/sourceunchanged/claim and attachment checks, then publish/readback/Gate and UI059",
-  "current_work_package": "Freeze corrected GUI test event-loop harness for LAYOUT003",
+  "next_step": "Keep source frozen until actual LAYOUT003 full exit; audit all1078/140/captures/150claims/attachments, only then strict finalizer and normal GitHub publicationGate. UI059 pure DAG+delta prototype7+4scenarios not active/complete.",
+  "current_work_package": "Immutable LAYOUT003 full formal active",
   "checkpoint_cadence_note": "REPAIR002 failure triage exceeded ten minutes since last remote checkpoint; saving immediately, no strict cadence PASS claim.",
   "implementation_pending_original_parents": [
     "UI-055",

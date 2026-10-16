@@ -1241,3 +1241,5 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 2026-10-16 LAYOUT002 latewatch954completed/952PASS/twoGUIwaitfail, exactsourceunchanged. Prepared guarded diagnostic patch (notapplied), strictfuturefinalizer (notrun), pureUI059DAG/threewayprototype7scenariosPASS (notapp/fullscope). OutputGUI fixture uncovered uncontrolledresources; startupcauseunknown after3isolatedPASS. Preserve allfailures, no completion change.
 
 2026-10-16 LAYOUT002actual1076/1078FAIL/parent1/0Qt/sourceunchanged. Diagnostic patch002still2FAIL withworkersactive; stack003coldimport/statblocked under tightQTestpoll. RealQtEventLoop withunchanged5s/10swatchdogs00417PASS19.197s; productiongatesunchanged. Persist fullfailedrun/probes andfreezeLAYOUT003, no completionclaim.
+
+2026-10-16 LAYOUT003 greenwatch 725/725 nofailed; source unchanged; both priorfailingGUI modules nowPASS. UI059metadata delta prototype4pureguardsPASS+7prior, notactiveapp. Saveprogress/receipts; parentstillrunning, no completioncountchange.
