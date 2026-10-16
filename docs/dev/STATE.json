@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "REMAINING28-UI057-NEXT",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-LAYOUT002-SOURCE-FREEZE.receipt.json",
-  "last_confirmed_commit": "86cf4bc06d7c3093be475a606eee8df072285b1b",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-LAYOUT002-FAILURE-WATCH.receipt.json",
+  "last_confirmed_commit": "77130d299790266835e0e27736fca115f1a54d57",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-LAYOUT002-FAILURE-WATCH"
+    "CP-20261016-REMAINING28-LAYOUT002-LATE-WATCH"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -648,7 +648,7 @@
   "formal_execution_watch": {
     "run_id": "RUN-REMAINING28-LAYOUT-002",
     "source_commit": "86cf4bc06d7c3093be475a606eee8df072285b1b",
-    "status": "RUNNING_WITH_OBSERVED_TEST_FAILURES",
+    "status": "RUNNING_WITH_TWO_GUI_WAIT_FAILURES",
     "owners": [
       {
         "create_time": 1792148479.48,
@@ -675,17 +675,17 @@
     "live_directory": ".checkpoints/formal-live/RUN-REMAINING28-LAYOUT-002",
     "progress": {
       "phase": "RUNNING_OWNED_TEST_MODULE",
-      "current_test": "test_quality_panel.QualityPanelTests.test_actual_answer_exposure_paged_diagnosis_and_readonly_source_canvas",
-      "started": 708,
-      "completed": 707,
-      "passed": 705,
+      "current_test": "test_source_watch_service.SourceWatchServiceTests.test_pause_during_real_worker_cancels_before_candidate_commit_then_disables_future_work",
+      "started": 979,
+      "completed": 978,
+      "passed": 976,
       "failed_ids": [
         "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
         "test_output_batch_gui.OutputBatchGuiTests.test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults"
       ],
       "planned_tests": 1078,
       "formal_complete": false,
-      "updated_at": "2026-10-16T11:08:15.257209+00:00"
+      "updated_at": "2026-10-16T11:16:20.281715+00:00"
     },
     "source_manifest_unchanged_now": true
   },
@@ -757,7 +757,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/UI055_IMPLEMENTATION_MAP.json",
-  "next_step": "Launch full immutable LAYOUT002:1078 tests/140 modules/150 claims; audit actual exit0/0Qt/captures/sourceunchanged/GitHub Gate, then UI059+remaining16 without stopping",
+  "next_step": "Await actual full LAYOUT002 exit; apply guarded GUI timeout diagnostic/controlled output fixture patch only after full exit; preserve failures, source freeze for next full run. UI059 pure prototype7scenarios not active code.",
   "current_work_package": "Freeze corrected UI055–UI058 batch for RUN-REMAINING28-LAYOUT-002",
   "checkpoint_cadence_note": "REPAIR002 failure triage exceeded ten minutes since last remote checkpoint; saving immediately, no strict cadence PASS claim.",
   "implementation_pending_original_parents": [

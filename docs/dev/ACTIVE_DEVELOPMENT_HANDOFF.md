@@ -17,3 +17,7 @@
 ## LAYOUT002 active watch: do not finalize
 
 Observed two actual GUI wait timeouts: AutomaticTraining startupadmission and OutputBatch firstdelivery. Isolated startup probe3PASS, root cause not established. Keep full run, do not relax timeout or overwrite failures. Current source/tests/tools/examples still frozen at86cf4bc06d7c3093be475a606eee8df072285b1b. Actual parent exit not yet observed; run session65193, ownedparent499566 fromSTATE. Next inspect complete evidence and improve failure diagnostics before new freeze; no completion count change.
+
+## LAYOUT002 late watch / next diagnostic patch
+
+Observed954/952PASS/two waitfail, source still immutable86cf4bc. OutputBatchGuiTests.dialog lacks controlled_resources unlike other workflowfixtures; add same deterministic fixture without relaxing5s wait. Startupfixture alreadycontrolled; isolated probe3PASS, rootcause unknown, do not claim fixed. docs/dev/wip/APPLY_GUI_TIMEOUT_DIAGNOSTICS.py is syntaxchecked NOT applied; guard requiresactualLAYOUT002parentexit1 +sourceunchangedFAIL, thenadds boundedfailure status/admission/active/waiting diagnostics to two helpers andcontrolsoutputfixture. Keep app/tests/tools frozen until actualexit. Future FINALIZE_LAYOUT_BATCH.py syntaxchecked NOTexecuted; refusesLAYOUT001/002 andrequiresalltests/modules/exit0/capture13/claimhashes/attachments/source. UI059_DEPENDENCY_PROTOTYPE.py pure NetworkX/three-way/locked/fixedsize math7scenarios PASS only, NOT activeapp/fullGUI/parentcompletion. Prototype andUI059plan canbe reused after current source repairs.
