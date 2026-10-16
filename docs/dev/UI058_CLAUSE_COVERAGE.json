@@ -1,6 +1,6 @@
 {
   "parent": "UI-058",
-  "status": "IMPLEMENTED_PENDING_VERIFICATION",
+  "status": "SELF_VERIFIED_SOFTWARE",
   "source_clauses_sha256": "8e4b587c67ce54313884ab104693443b8572ceb487e06ef9fa56103d580c2d04",
   "clauses": [
     {
@@ -486,36 +486,12 @@
     "test_layout_session_extended.LayoutSessionExtendedTests.test_resume_rechecks_changed_input_and_template_instead_of_clearing_paused_flag",
     "test_layout_session_extended.LayoutSessionExtendedTests.test_save_after_input_change_never_claims_stale_session_is_current_saved_work"
   ],
-  "native_capture": "docs/qa/ui057-ui058-native-capture-005/layout-risk-session-capture.json",
+  "native_capture": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/layout-risk-session-capture.json",
   "all_thirteen_capture_views_visually_reviewed": true,
   "controlled_workflow_profile": {
-    "status": "PASS",
-    "screens": [
-      "layout-risk-session-01-safe-current-gates.png",
-      "layout-risk-session-02-hard-blocked.png",
-      "layout-risk-session-03-review-draft-marked.png",
-      "layout-risk-session-04-evidence-required.png",
-      "layout-risk-session-05-real-resource-wait-pending-scope.png",
-      "layout-risk-session-06-partial-preview-only.png",
-      "layout-risk-session-07-cancelled-valid-partial.png",
-      "layout-risk-session-08-encrypted-safe-save.png",
-      "layout-risk-session-09-explicit-restore-prompt.png",
-      "layout-risk-session-10-restored-current-not-auto-adopted.png",
-      "layout-risk-session-11-explicit-local-clear.png",
-      "layout-risk-session-12-existing-manual-preserved-differences.png",
-      "layout-risk-session-13-encrypted-current-manual-geometry.png"
-    ],
-    "qt_uncaught": [],
-    "scope": "CONTROLLED_SYNTHETIC_NATIVE_WORKFLOW_NOT_REFERENCE_HARDWARE",
-    "peak_rss_bytes": 237502464,
-    "max_gui_timer_gap_ms": 488.9980360021582,
-    "timer_ticks": 53,
-    "source_preparation_excluded": true,
-    "actual_source": "Authored synthetic templates/input; no private Illustrator or production customer data",
-    "automatic_training": false,
-    "paid_services": false,
-    "preexisting_manual_layout_protected": true,
-    "encrypted_recovery_preserves_current_manual_geometry": true
+    "peak_rss_bytes": 238784512,
+    "max_gui_timer_gap_ms": 530.1957129995571,
+    "timer_ticks": 49
   },
   "limits": [
     "Actual authored synthetic Linux workflow; no reference Windows hardware or production/native Illustrator certification",
@@ -523,5 +499,14 @@
     "One password-protected local opt-in recovery snapshot, visible24h technical expiry; no permanent customer/order/history DB or cloud sync",
     "No inference model is used for this explicit template/rule layout path; code/font/source/version pins preserved",
     "Historical footer is not functional acceptance; parent remains pending actual batch formal"
-  ]
+  ],
+  "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+  "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
+  "preformal_native_capture": "docs/qa/ui057-ui058-native-capture-005/layout-risk-session-capture.json",
+  "formal_native_visual_review": {
+    "run": "RUN-REMAINING28-LAYOUT-003",
+    "all_reviewed": true,
+    "views": 13,
+    "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f"
+  }
 }

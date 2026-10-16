@@ -1,8 +1,6 @@
 # 全75父題狀態與接續順序
 
-剩餘28已完成UI046/UI047/UI049/UI050/UI051/UI052/UI053/UI054八題，共82原條款；1001/1001正式PASS、0skip/0Qt錯誤、capture0、source unchanged。全75：52 VERIFIED／20 PARTIAL／3 DEFERRED；固定70：50閉合／20仍部分。CORE87／GOV7另計。
-
-下一UI055可信樣本／來源驗證／版本與污染防護；持續剩餘20。
+剩餘28已完成12父題／120原條款；1078/1078正式PASS、140健康owned modules、0skip/0Qt、capture0、source unchanged、actual parent exit0。全75：56 VERIFIED／16 PARTIAL／3 DEFERRED；固定70：54閉合／16仍部分。CORE87／GOV7另計。下一UI059與剩餘16，總目標尚未完成。
 
 |順序組|原父題|名稱|狀態|下一步／證據|
 |---|---|---|---|---|
@@ -36,7 +34,7 @@
 |2|UI-040|智慧標記完整性衝突檢查與可重用雜訊剔除規則|VERIFIED|完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。|
 |2|UI-041|雜訊規則庫、命中追溯、例外白名單與安全回滾|VERIFIED|完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。|
 |2|UI-042|訓練可恢復進度、精確去重與客戶資料庫重訂關聯|VERIFIED|完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。|
-|2|UI-055|人工修正可信訓練樣本池、標記版本與資料污染防護|PARTIAL|補可核實相關群組、防洩漏與各用途消費紀錄，測隔離後所有真正依賴失效且原資料保留；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
+|2|UI-055|人工修正可信訓練樣本池、標記版本與資料污染防護|VERIFIED|完整原軟體條款SELF；docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json。Linux匿名合成，非指定Windows/nativeAI/生產效能資格；下一UI059。|
 |3|UI-014|文字框無解診斷與輸入密度分級提醒|VERIFIED|完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。|
 |3|UI-015|使用者資料輸入警告介面|VERIFIED|完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。|
 |3|UI-016|新增人物、公司與多筆聯絡資料|VERIFIED|完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。|
@@ -55,8 +53,8 @@
 |3|UI-029|批次輸出清單、智慧命名與安全儲存|VERIFIED|完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。|
 |3|UI-030|批次輸出失敗診斷與安全重試|VERIFIED|完整原軟體條款已通過本輪具名自我驗證；Windows／私人AI全面／實體印刷／獨立覆核尚未驗證。|
 |3|UI-051|低配置友善、公平審核佇列與安全續跑|VERIFIED|完整8原軟體條款SELF；實際Windows/參考硬體/真AI全面/獨立覆核未驗，完整來源覆蓋另由UI052處理。|
-|3|UI-057|AI 未涵蓋情境的分級風險提示、安全草稿與硬性無解阻擋|PARTIAL|補安全草稿與分尺寸風險理由，測忽略警告不放行、缺經驗不自動宣稱無解；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
-|3|UI-058|當次自動排版的真實進度、低負載執行、安全取消與候選恢復|PARTIAL|補合法短期恢復及exact依賴核對／明確放棄，測異常／滿碟不能冒稱落盤；不建永久訂單庫；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
+|3|UI-057|AI 未涵蓋情境的分級風險提示、安全草稿與硬性無解阻擋|VERIFIED|完整原軟體條款SELF；docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json。Linux匿名合成，非指定Windows/nativeAI/生產效能資格；下一UI059。|
+|3|UI-058|當次自動排版的真實進度、低負載執行、安全取消與候選恢復|VERIFIED|完整原軟體條款SELF；docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json。Linux匿名合成，非指定Windows/nativeAI/生產效能資格；下一UI059。|
 |3|UI-059|當次排版變更依賴局部重算、人工編輯保護與版本衝突防護|PARTIAL|補增量排程、保留手工布局與新舊差異選擇，測舊worker不能覆蓋新版、局部重算仍需整體驗證；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
 |3|UI-060A|UI-060 補充決策 A｜排版完成後結果呈現、多方案比較與問題定位|PARTIAL|補結果比較與選取狀態保留，測排序更新不悄悄覆蓋人工選擇、不宣稱部分搜尋為最優；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
 |3|UI-061|UI-061｜多候選與多尺寸修改同步、套用範圍及局部回復（正式決策）|PARTIAL|補精確目標／可套用屬性比較與獨立幾何重算，測跨尺寸不直接複製座標、回復不動其他人工修改；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
@@ -72,7 +70,7 @@
 |5|UI-052-REVIEW|重大共通錯誤跨歷史批次重審追加核准|PARTIAL|補跨家族直接／間接依賴與逐項重審結論，測舊通過保留歷史、原成品不刪、新證據不足不自動恢復；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
 |5|UI-053|獨立樣本品質驗收、分類誤判診斷、版本比較與品質阻擋|VERIFIED|原9完整軟體SELF；actualsource-only推論/九域/反洩漏/公平A-B/原稿診斷/批准撤回/重大隔離。Linux合成與host測量，不宣稱真實準確率/nativeAI/Windows參考實機/獨立覆核。下一UI054。|
 |5|UI-054|品質失敗根因分析、受控局部修復、獨立再驗收與安全回退|VERIFIED|原11完整軟體SELF；可重現順序修復/再驗收/顯式部署回退與七頁GUI。Linux合成/currenthost，不宣稱真實準確率/nativeAI/Windows參考實機/獨立覆核。下一UI055。|
-|5|UI-056|訓練樣本類別覆蓋儀表板、缺口提醒與資料分布透明化|PARTIAL|補已核准C的可追溯分類與門檻依據／未知處理；測重疊類別不灌大總數、不自動產生補樣任務；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
+|5|UI-056|訓練樣本類別覆蓋儀表板、缺口提醒與資料分布透明化|VERIFIED|完整原軟體條款SELF；docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json。Linux匿名合成，非指定Windows/nativeAI/生產效能資格；下一UI059。|
 |5|UI-066|template-Ai｜UI-066 去重決策 A：重用既有診斷 GUI，僅保留獨立報告格式與安全交接補充規格|PARTIAL|完成原六項→現有證據對帳；可被既有證據涵蓋者直接結案，不另造新功能或要求所有其他父題先完成；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
 |5|UI-067|template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策）|PARTIAL|補逐條規格→元件→測試→證據矩陣與過期引用修訂；純治理不算新軟體功能；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|
 |6|REV-04|16 GB＋RTX 5050 至 ASUS VivoBook 效能範圍|PARTIAL|取得可用參考環境後測冷啟動、尖峰RAM／VRAM、GUI反應與取消；16GB是整機上限而非程式可占滿；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT|

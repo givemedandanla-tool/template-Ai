@@ -255,7 +255,7 @@
     },
     {
       "parent": "UI-046",
-      "status": "SELF_VERIFIED",
+      "status": "VERIFIED",
       "tests": [
         "test_customer_candidates.CustomerCandidateTests.test_same_content_different_source_codes_keep_two_customers_and_independent_entities",
         "test_customer_candidates.CustomerCandidateTests.test_shared_contact_conflicts_show_both_people_without_merging_and_late_conflict_blocks",
@@ -274,12 +274,12 @@
       ],
       "unresolved": [],
       "clause_count": 11,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08"
     },
     {
       "parent": "UI-047",
-      "status": "SELF_VERIFIED",
+      "status": "VERIFIED",
       "tests": [
         "test_backup_center.BackupCenterTests.test_actual_background_cancel_keeps_user_files_and_releases_shared_worker",
         "test_backup_center.BackupCenterTests.test_partial_scope_and_shared_database_dependency_never_become_silent_full_success",
@@ -316,12 +316,12 @@
       ],
       "unresolved": [],
       "clause_count": 10,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08"
     },
     {
       "parent": "UI-049",
-      "status": "SELF_VERIFIED",
+      "status": "VERIFIED",
       "tests": [
         "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
         "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids",
@@ -353,12 +353,12 @@
       ],
       "unresolved": [],
       "clause_count": 11,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08"
     },
     {
       "parent": "UI-050",
-      "status": "SELF_VERIFIED",
+      "status": "VERIFIED",
       "tests": [
         "test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units",
         "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
@@ -396,12 +396,12 @@
       ],
       "unresolved": [],
       "clause_count": 12,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08"
     },
     {
       "parent": "UI-051",
-      "status": "SELF_VERIFIED",
+      "status": "VERIFIED",
       "tests": [
         "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
         "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
@@ -453,12 +453,12 @@
       ],
       "unresolved": [],
       "clause_count": 8,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08"
     },
     {
       "parent": "UI-052",
-      "status": "SELF_VERIFIED",
+      "status": "VERIFIED",
       "tests": [
         "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
         "test_coverage_batches.CoverageBatchTests.test_600_files_paged_and_global_search_before_limit",
@@ -501,12 +501,12 @@
       ],
       "unresolved": [],
       "clause_count": 10,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08"
     },
     {
       "parent": "UI-053",
-      "status": "SELF_VERIFIED",
+      "status": "VERIFIED",
       "tests": [
         "test_quality_commands.QualityCommandTests.test_actual_cancelled_owned_command_does_not_commit_gold_or_leave_busy_connection",
         "test_quality_commands.QualityCommandTests.test_actual_empty_directory_paging_is_bounded_and_not_a_quality_pass",
@@ -635,12 +635,12 @@
       ],
       "unresolved": [],
       "clause_count": 9,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08"
     },
     {
       "parent": "UI-054",
-      "status": "SELF_VERIFIED",
+      "status": "VERIFIED",
       "tests": [
         "test_quality_provenance.QualityProducerProvenanceTests.test_actual_auto_parser_and_model_provenance_are_found_and_quarantined",
         "test_quality_provenance.QualityProducerProvenanceTests.test_actual_model_reapproval_changes_review_context_but_not_independent_truth_dependencies",
@@ -724,16 +724,14 @@
         "test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure",
         "test_runtime_queue.RuntimeQueueTests.test_scope_changed_request_is_blocked_and_next_eligible_is_not_starved"
       ],
-      "unresolved": [
-        "Full frozen-source formal test/capture and publication Gate pending"
-      ],
+      "unresolved": [],
       "clause_count": 11,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-REPAIR-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08"
     },
     {
       "parent": "UI-055",
-      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "status": "VERIFIED",
       "tests": [
         "test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation",
         "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
@@ -935,14 +933,13 @@
         "test_trusted_samples.TrustedSamplesTests.test_rights_visual_unknown_missing_coverage_and_unapproved_admission_blocked",
         "test_trusted_samples.TrustedSamplesTests.test_source_work_facts_and_cache_changes_invalidate_approved_sample"
       ],
-      "unresolved": [
-        "Pending next frozen full formal execution, actual process exit/captures and GitHub publication Gate"
-      ],
-      "clause_count": 11
+      "unresolved": [],
+      "clause_count": 11,
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json"
     },
     {
       "parent": "UI-056",
-      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "status": "VERIFIED",
       "tests": [
         "test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation",
         "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
@@ -1139,14 +1136,13 @@
         "test_trusted_sample_privacy.TrustedSemanticPrivacyTests.test_redaction_requires_actual_matching_source_and_prior_purpose_stop",
         "test_trusted_sample_privacy.TrustedSemanticPrivacyTests.test_selected_model_text_and_all_its_history_are_logically_redacted_without_decontamination_claim"
       ],
-      "unresolved": [
-        "Await next immutable full-source batch formal, actual parent exit/captures/claim hashes/GitHub publication Gate"
-      ],
-      "clause_count": 8
+      "unresolved": [],
+      "clause_count": 8,
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json"
     },
     {
       "parent": "UI-057",
-      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "status": "VERIFIED",
       "tests": [
         "test_candidate_risk.CandidateRiskTests.test_acceptance_flag_is_not_a_published_baseline_receipt",
         "test_candidate_risk.CandidateRiskTests.test_actual_source_provenance_rejection_is_required_unknown_without_mutating_template",
@@ -1275,14 +1271,13 @@
         "test_trusted_sample_privacy.TrustedSemanticPrivacyTests.test_redaction_requires_actual_matching_source_and_prior_purpose_stop",
         "test_trusted_sample_privacy.TrustedSemanticPrivacyTests.test_selected_model_text_and_all_its_history_are_logically_redacted_without_decontamination_claim"
       ],
-      "unresolved": [
-        "Await immutable full-source batch formal, actual owned parent exit/captures/claim hashes/GitHub publication Gate"
-      ],
-      "clause_count": 9
+      "unresolved": [],
+      "clause_count": 9,
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json"
     },
     {
       "parent": "UI-058",
-      "status": "IMPLEMENTED_PENDING_VERIFICATION",
+      "status": "VERIFIED",
       "tests": [
         "test_candidate_risk.CandidateRiskTests.test_acceptance_flag_is_not_a_published_baseline_receipt",
         "test_candidate_risk.CandidateRiskTests.test_actual_source_provenance_rejection_is_required_unknown_without_mutating_template",
@@ -1411,10 +1406,9 @@
         "test_trusted_sample_privacy.TrustedSemanticPrivacyTests.test_redaction_requires_actual_matching_source_and_prior_purpose_stop",
         "test_trusted_sample_privacy.TrustedSemanticPrivacyTests.test_selected_model_text_and_all_its_history_are_logically_redacted_without_decontamination_claim"
       ],
-      "unresolved": [
-        "Await immutable full-source batch formal, actual owned parent exit/captures/claim hashes/GitHub publication Gate"
-      ],
-      "clause_count": 10
+      "unresolved": [],
+      "clause_count": 10,
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json"
     },
     {
       "parent": "UI-059",
@@ -1495,6 +1489,6 @@
       "unresolved": []
     }
   ],
-  "verified_parent_count": 8,
-  "remaining_parent_count": 20
+  "verified_parent_count": 12,
+  "remaining_parent_count": 16
 }

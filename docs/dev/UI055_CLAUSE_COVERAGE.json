@@ -1,6 +1,6 @@
 {
   "parent": "UI-055",
-  "status": "FULL11_IMPLEMENTED_PENDING_FROZEN_FORMAL_NOT_COMPLETE",
+  "status": "SELF_VERIFIED_SOFTWARE",
   "source_clauses_sha256": "c1ce876c8721c99d6d1eab975d42283bab8fbf148b154e556c9e291df54d6e5d",
   "clauses": [
     {
@@ -454,7 +454,7 @@
     "template_ai/semantic_learning.py",
     "template_ai/datasets.py"
   ],
-  "native_capture": "docs/qa/ui055-native-capture-002/trusted-samples-capture.json",
+  "native_capture": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/trusted-samples-capture.json",
   "all_seven_capture_pages_visually_reviewed": true,
   "capture_parent_rss": 170278912,
   "capture_max_gui_gap_ms": 61.65583000984043,
@@ -463,5 +463,19 @@
     "Explicit selected local training-text logical redaction; no original/business-data/external-backup/secure-erasure/model-decontamination claim",
     "No HOLDOUT to TRAIN promotion API; related heldout and historical exposures remain blocked, never reset",
     "All existing accepted scopes are pending fresh full-source revalidation; historical8of28 unchanged"
-  ]
+  ],
+  "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+  "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
+  "preformal_native_capture": "docs/qa/ui055-native-capture-002/trusted-samples-capture.json",
+  "formal_native_visual_review": {
+    "run": "RUN-REMAINING28-LAYOUT-003",
+    "all_reviewed": true,
+    "views": 7,
+    "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f"
+  },
+  "controlled_workflow_profile": {
+    "parent_rss_peak": 170074112,
+    "max_gui_gap_ms": 66.0329820093466,
+    "gui_ticks": 189
+  }
 }

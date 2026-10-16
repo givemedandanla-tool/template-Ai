@@ -1,6 +1,6 @@
 {
   "parent": "UI-056",
-  "status": "FULL8_IMPLEMENTED_PENDING_FROZEN_FORMAL_NOT_COMPLETE",
+  "status": "SELF_VERIFIED_SOFTWARE",
   "source_clauses_sha256": "7ed53d2d00d59b239e2619ca69a421df377b85d592e4cc19e4b6c65c7f7e8807",
   "clauses": [
     {
@@ -388,12 +388,12 @@
     "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_saved_history_is_not_current_and_revoke_updates_new_counts",
     "test_qualified_coverage_gui.QualifiedCoverageGuiTests.test_source_return_preserves_pending_editor_then_returns_exact_work_after_explicit_discard"
   ],
-  "native_capture": "docs/qa/ui056-native-capture-002/qualified-coverage-capture.json",
+  "native_capture": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/qualified-coverage-capture.json",
   "all_seven_capture_views_visually_reviewed": true,
   "controlled_workflow_profile": {
-    "parent_rss_peak": 172535808,
-    "max_gui_gap_ms": 94.76461900339928,
-    "gui_ticks": 139
+    "parent_rss_peak": 171659264,
+    "max_gui_gap_ms": 90.33647101023234,
+    "gui_ticks": 132
   },
   "limits": [
     "Current Linux authored synthetic/source workflow; not native Illustrator corpus or reference Windows hardware certification",
@@ -401,5 +401,14 @@
     "Per-page scope explicit, related groups not proven independent and heldout usage never grants new acceptance",
     "Unknown native editability/true outlines/effect types stay unknown; actual derived-path/OCR recording not native verification",
     "Historical snapshots contain IDs/counts/digests rather than copied private labels; do not claim current validity"
-  ]
+  ],
+  "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+  "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
+  "preformal_native_capture": "docs/qa/ui056-native-capture-002/qualified-coverage-capture.json",
+  "formal_native_visual_review": {
+    "run": "RUN-REMAINING28-LAYOUT-003",
+    "all_reviewed": true,
+    "views": 7,
+    "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f"
+  }
 }

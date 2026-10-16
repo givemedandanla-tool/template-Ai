@@ -1243,3 +1243,7 @@ Read actual original9+statusfooter and current Candidate.valid/GUI two buckets/r
 2026-10-16 LAYOUT002actual1076/1078FAIL/parent1/0Qt/sourceunchanged. Diagnostic patch002still2FAIL withworkersactive; stack003coldimport/statblocked under tightQTestpoll. RealQtEventLoop withunchanged5s/10swatchdogs00417PASS19.197s; productiongatesunchanged. Persist fullfailedrun/probes andfreezeLAYOUT003, no completionclaim.
 
 2026-10-16 LAYOUT003 greenwatch 725/725 nofailed; source unchanged; both priorfailingGUI modules nowPASS. UI059metadata delta prototype4pureguardsPASS+7prior, notactiveapp. Saveprogress/receipts; parentstillrunning, no completioncountchange.
+
+## Actual layout batch self-verification
+
+剩餘28已完成12父題／120原條款；1078/1078正式PASS、140健康owned modules、0skip/0Qt、capture0、source unchanged、actual parent exit0。全75：56 VERIFIED／16 PARTIAL／3 DEFERRED；固定70：54閉合／16仍部分。CORE87／GOV7另計。下一UI059與剩餘16，總目標尚未完成。 Source 842392433a96d09633fa051e41eb19fdfc48c82f; exact150claim hashes and all attachments verified; pending ordinary remote publication Gate. Continue UI059.
