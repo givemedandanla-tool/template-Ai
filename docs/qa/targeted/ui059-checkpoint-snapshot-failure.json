@@ -1,0 +1,10 @@
+{
+  "checkpoint": "CP-20261016-REMAINING28-UI059-NATIVE-DEPENDENCY-WIP",
+  "status": "READBACK_FAILED",
+  "pushed_commit": "fc486182d4f29ddd7a179fb5230531039a0cd55c",
+  "mismatched_path": "docs/qa/targeted/ui059-native-019.log",
+  "cause": "Capture was still appending log during snapshot prepare; snapshot and complete log differ",
+  "action": "Retain old checkpoint unacknowledged, explicitly supersede with fresh stable snapshot",
+  "replacement": "CP-20261016-REMAINING28-UI059-NATIVE-SNAPSHOT-REPAIR",
+  "strict_cadence_pass": false
+}

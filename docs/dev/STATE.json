@@ -28,7 +28,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261016-REMAINING28-UI059-NATIVE-DEPENDENCY-WIP"
+    "CP-20261016-REMAINING28-UI059-NATIVE-SNAPSHOT-REPAIR"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -773,5 +773,13 @@
   "current_work_package": "UI059 dependency/manual protection/native comparison WIP",
   "checkpoint_cadence_note": "Latest watch checkpoint exceeded10minutes across completion/capture wait; deviation retained, no strict cadence PASS claim.",
   "implementation_pending_original_parents": [],
-  "latest_targeted_verification": "docs/qa/targeted/ui059-edit-undo-native-004.log"
+  "latest_targeted_verification": "docs/qa/targeted/ui059-edit-undo-native-004.log",
+  "checkpoint_superseded": [
+    {
+      "id": "CP-20261016-REMAINING28-UI059-NATIVE-DEPENDENCY-WIP",
+      "status": "READBACK_FAILED_MUTABLE_CAPTURE_LOG",
+      "replacement": "CP-20261016-REMAINING28-UI059-NATIVE-SNAPSHOT-REPAIR",
+      "reason": "Capture019 log completed after snapshot preparation; actual latest source pushed at fc486182d4f29ddd7a179fb5230531039a0cd55c but old snapshot unacknowledged. Preserve immutable failed record; fresh stable snapshot supersedes pending obligation."
+    }
+  ]
 }
