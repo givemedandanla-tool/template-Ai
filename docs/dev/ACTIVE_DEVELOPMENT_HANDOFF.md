@@ -57,3 +57,8 @@
 - quality_jobs同TrainingStore EVAL_JOB/QUALITY_EVAL_ITEM/PREDICTED_WORK/RESULT，predeclared pair、shared automatic-worker lease、per-source持久BEGIN/atomic predictions+metrics+progress，noGold/raw不讀來源保留unknown；實際source-only backend smoke輸出COMPLETED/result5f810038e3bf473bafbd084bdd470f41，qualityGate EVIDENCE_INSUFFICIENT/quality_passFalse，非品質放行。
 - RuntimeQueue/worker/parser/dispatch/panel已初接EVAL_JOB，scope含sourceID/goldIDs/side/protocol/pipeline；120s generic timeout EVAL保留CONTINUATION_PENDING待補正式結果。僅py_compile與direct backend actual smoke，尚未真FIFO/isolated child/timeout/restart測試，不能當橋接已驗證。
 - 下一最優先meaningful EvalJob/actual FIFO/child/cancel/disk/restart tests，修final scope/stat/receipt & timeout-missingITEM補unknown，then statistical aggregate/pairedcomparison/Logo+mapping Oracle adapters/GUI/跨批review；原9未完成，144currentclaims pending。
+
+### UI053 actual EVAL_JOB runtime targets WIP
+- 18 combined EvalJobs+oldRuntimeQueue/Worker PASS：2 actual isolated children FIFO baseline→candidate，sharedlease/atomicQueue claim、partial resourcepause後不重做DONE source、cancel beforefirstSource explicitresume、resultaudit failure全rollback無pred/ITEM/fakeDONE。首輪只最後queue.page list當dict測試假設1error，原log保留，修測試依實際API。
+- complete已加protocol/current-scope outsideproof+鎖內source/cache重核，stale只保留observedreport不qualitypass；timeout最後failed且缺ITEM時明確補DURABLE_FAILED_UNIT_NO_PREDICTION unknownreceipt，不虛構模型輸出。新timeout補收據分支尚需actualkill/restart及GUI dispatcher tests；source rights撤回在predict前檢查。
+- 尚無statisticalGate/aggregate fairAB、Logo/mapping完整Oracle/pred adapters、qualityGUI/exposure/severehistoryreview或fullformal；current144claims pending，歷史6/28保留，UI0539未完成。下一先actual GUI/timeout/backuprestore sanitize EVAL_JOBOwner，then remaining work。

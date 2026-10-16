@@ -83,6 +83,7 @@ class EvaluationJobs:
     def evaluate_item(self,row,item):
         dataset=self.store.get('QUALITY_SET',row['dataset_id']);policy=self.store.get('QUALITY_POLICY',self.protocols.get(row['protocol_id'])['scope']['policy_id'])['plan']
         if not item['source_id'] or not item['gold_ids']:return None,evaluate_source([],None,policy,unresolved_reason='來源未解析／沒有本機品質用途與人工gold，未讀原稿，仍保留分母')
+        if any(self.store.get('QUALITY_GOLD_INVALIDATION',gid) for gid in item['gold_ids']):raise ValueError('品質用途／gold已撤回，未重新讀取原稿或執行推論')
         if digest(self.library.source(item['source_id']))!=item['expected_pins']['source_digest']:raise ValueError('來源頁版本已改變，未改用新來源')
         # Only this source and trained weights enter prediction. Gold is read afterwards.
         prediction=QualityPipelines(self.library).predict_source(row['pipeline_id'],item['source_id'])
@@ -114,16 +115,28 @@ class EvaluationJobs:
             return self.store._write(JOB,identity,row,row['revision'],'quality_source_result_and_progress_committed')
 
     def complete(self,identity,token):
+        initial=self.owned(identity,token);scope_check=self.protocols.validity(initial['protocol_id'],verify_sources=False);scope_errors=list(scope_check['errors'])
         with self.store.transaction():
             row=self.owned(identity,token)
             if any(item['state'] in ('READY','RUNNING') for item in row['items']):raise ValueError('仍有未執行來源，不能將工作標完成')
             critical=Counter();unknown=set();references=[]
             for item in row['items']:
                 result=self.store.get(ITEM,item.get('result_id',''))
-                if not result:unknown.add('SOURCE_RESULT_MISSING');continue
+                if not result:
+                    if item['state']!='FAILED':raise ValueError('已完成來源缺正式收據，不能假裝有評估結果')
+                    iid=digest([identity,item['id']]);evaluation=evaluate_source([],None,{},unresolved_reason=item.get('error') or '持久來源單位失敗／逾時；沒有模型預測，仍在分母')
+                    result=self.store._write(ITEM,iid,dict(job_id=identity,item_id=item['id'],source_id=item['source_id'],source_hash=item['source_hash'],protocol_scope_digest=row['protocol_scope_digest'],pipeline_manifest_digest=row['pipeline_manifest_digest'],prediction_ids=[],evaluation=evaluation,state='UNRESOLVED',origin='DURABLE_FAILED_UNIT_NO_PREDICTION',source_proof=None,source_cache_stamps=None),0,'quality_failed_unit_unknown_receipt_saved')
+                    item.update(result_id=iid,result_digest=digest(result))
                 if digest(result)!=item['result_digest']:raise ValueError('來源結果收據已改變')
+                if result.get('source_proof'):
+                    from .source_links import check_verified,VerifiedSource
+                    from .trusted_samples import cache_stamps
+                    try:
+                        p=result['source_proof'];check_verified(VerifiedSource(p['path'],p['hash'],tuple(p['stat'])),p['hash'])
+                        if cache_stamps(self.library.source(item['source_id']))!=result['source_cache_stamps'] or digest(self.library.source(item['source_id']))!=item['expected_pins']['source_digest']:raise ValueError('來源／cache／位置metadata已變更')
+                    except (OSError,ValueError) as error:scope_errors.append(str(error))
                 critical.update(result['evaluation']['critical_errors']);unknown.update(name for name,domain in result['evaluation']['domains'].items() if domain['state']!='MEASURED_DESCRIPTIVE_ONLY');references.append(dict(id=result['id'],digest=digest(result)))
-            result_id=new_id();result=self.store._write(RESULT,result_id,dict(job_id=identity,protocol_id=row['protocol_id'],side=row['side'],dataset_id=row['dataset_id'],dataset_manifest_digest=row['manifest_digest'],pipeline_manifest_digest=row['pipeline_manifest_digest'],protocol_scope_digest=row['protocol_scope_digest'],source_results=references,critical_errors=dict(critical),unmeasured_domains=sorted(unknown),quality_gate='FAILED_CRITICAL' if any(critical.values()) else 'EVIDENCE_INSUFFICIENT' if unknown else 'PENDING_STATISTICAL_POLICY_CHECK',quality_pass=False,automatic_recommendation_allowed=False,origin='ACTUAL_FIFO_SOURCE_EVALUATION',finished_at=time.time(),immutable=True),0,'quality_fixed_side_result_saved_not_release')
+            result_id=new_id();result=self.store._write(RESULT,result_id,dict(job_id=identity,protocol_id=row['protocol_id'],side=row['side'],dataset_id=row['dataset_id'],dataset_manifest_digest=row['manifest_digest'],pipeline_manifest_digest=row['pipeline_manifest_digest'],protocol_scope_digest=row['protocol_scope_digest'],source_results=references,critical_errors=dict(critical),unmeasured_domains=sorted(unknown),scope_current=not scope_errors,scope_errors=sorted(set(scope_errors)),quality_gate='EVIDENCE_INSUFFICIENT_CHANGED_SCOPE' if scope_errors else 'FAILED_CRITICAL' if any(critical.values()) else 'EVIDENCE_INSUFFICIENT' if unknown else 'PENDING_STATISTICAL_POLICY_CHECK',quality_pass=False,automatic_recommendation_allowed=False,origin='ACTUAL_FIFO_SOURCE_EVALUATION',finished_at=time.time(),immutable=True),0,'quality_fixed_side_result_saved_not_release')
             use_id=digest([row['protocol_id'],row['side']]);use=self.store.get('QUALITY_PROTOCOL_USE',use_id)
             if not use or use['job_id']!=identity or use['owner_token']!=token or use['state']=='COMPLETED':raise ValueError('固定側別使用權已改變')
             use.update(state='COMPLETED',result_id=result_id,finished_at=time.time());self.store._write('QUALITY_PROTOCOL_USE',use_id,use,use['revision'],'quality_fixed_side_completed_with_immutable_result')

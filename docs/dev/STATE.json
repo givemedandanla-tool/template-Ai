@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "REMAINING28-UI053-DOMAIN-COUNTS-WIP",
+  "active_task": "REMAINING28-UI053-REAL-EVAL-RUNTIME-WIP",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261016-REMAINING28-UI053-EVAL-JOB-BRIDGE-WIP.receipt.json",
   "last_confirmed_commit": "a08a3367c9039d1e4102d714f485b58f8d1da747",
   "latest_evidence_run": null,
@@ -17,10 +17,10 @@
     "docs/dev/PROJECT_ROADMAP.md"
   ],
   "next_tasks": [
-    "Implement actual EVAL_JOB producer through existing RuntimeQueue/FIFO/isolated worker/lease/pause/timeout/restart",
-    "Aggregate per-domain independent-group/critical/unknown results and exact paired comparison",
-    "Complete Logo/component and customer-style truth/prediction adapters,diagnostic/exposure GUI and confirmed historical batch re-review",
-    "Register unchanged original9 only after complete,then fresh full source formal verification"
+    "Actual GUI dispatcher/launchfailure and real owned-child timeout finalization/restart tests",
+    "Sanitize EVAL_JOB owners on backuprestore and final-source evidence counterexamples",
+    "Per-domain independent-group statistical Gate and exact pairedAB reports",
+    "Complete Logo/mapping proof/pred adapters,diagnostic/exposure GUI,severe historicalreview,then original9 fullsource formal"
   ],
   "blocked": [],
   "deferred": [
@@ -28,7 +28,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261016-REMAINING28-UI053-REAL-EVAL-RUNTIME-WIP"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-COVERAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261015-REMAINING28-COVERAGE.json",

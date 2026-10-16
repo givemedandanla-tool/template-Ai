@@ -954,3 +954,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-16 00:51 UTC initial durable EVAL_JOB bridge WIP
 - py_compile PASS；實際backend smoke one source (explicit synthetic gold/policy,actualrenderer/source-only pipeline)COMPLETED，result5f810038e3bf473bafbd084bdd470f41品質EVIDENCE_INSUFFICIENT/False，非formal test/FIFO child證據。
 - runtime3-kind adapter已寫但未驗證；source/lease/BEGIN/atomic item+pred/report需下一counterexamples，statisticalGate/pairedreport/OracleGUI仍待。Checkpoint優先保存可恢復WIP，不提升父題。
+
+### 2026-10-16 01:01 UTC actual evaluation worker runtime WIP
+- 18 targetsPASS，actual stdlib isolated children bothsides FIFO+sharedlease，resourcepartialresume只跑未完成，cancel/resume，auditfailure item/pred/jobresult全回滾；oldruntime cases仍PASS。Source rights pre-predict、final scope/cache/stat proof與最後timeout unknownreceipt已補，後者需nextkill/GUI tests。
+- Checkpoint實際cadence：DOMAIN→BRIDGE 609.9s，超10分鐘9.9s；prepared/remote receipts均保留，未虛稱嚴格每段都≤600s，後續以約8分鐘預留持久化。

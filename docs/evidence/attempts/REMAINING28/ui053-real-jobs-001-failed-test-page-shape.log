@@ -1,0 +1,13 @@
+======================================================================
+ERROR: test_actual_fifo_isolated_children_execute_both_sides_and_keep_quality_insufficient (test_quality_jobs.QualityJobTests.test_actual_fifo_isolated_children_execute_both_sides_and_keep_quality_insufficient)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_quality_jobs.py", line 44, in test_actual_fifo_isolated_children_execute_both_sides_and_keep_quality_insufficient
+    self.assertEqual([r['state'] for r in queue.page()['rows']],['DONE','DONE']);self.assertEqual(self.store.count('SAMPLE'),0);self.assertEqual(self.library.templates(),[])
+                                          ~~~~~~~~~~~~^^^^^^^^
+TypeError: list indices must be integers or slices, not str
+
+----------------------------------------------------------------------
+Ran 5 tests in 10.642s
+
+FAILED (errors=1)
