@@ -98,7 +98,7 @@ class QualityGroups:
             saved=self.store._write(LINK,plan['link_id'],record,plan['prior_revision'],'quality_group_relation_confirmed_not_identity_merge')
             # Newly discovered truth is saved even when it reveals an old split was invalid.
             affected={sha for conflict in plan['conflicts'] for sha in conflict['content_hashes']}
-            for did,raw in self.rows("SELECT id,payload FROM training_records WHERE kind='DATASET' ORDER BY id"):
+            for did,raw in self.rows("SELECT id,payload FROM training_records WHERE kind IN ('DATASET','QUALITY_SET') ORDER BY id"):
                 import json
                 dataset=json.loads(raw)
                 if any(entry['role']=='HOLDOUT' and entry['source_hash'] in affected for entry in dataset['entries']):

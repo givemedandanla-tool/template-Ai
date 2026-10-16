@@ -1,0 +1,80 @@
+"""Immutable quality-only holdout manifests; no training admission or cloud upload."""
+import copy
+import time
+from .quality_gold import QualityGold
+from .quality_groups import QualityGroups
+from .training_store import TrainingStore,digest,text
+from .source_links import verify_source,check_verified,VerifiedSource
+from .model import Rect,new_id
+
+SET='QUALITY_SET'
+
+
+class QualitySets:
+    def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library);self.gold=QualityGold(library);self.groups=QualityGroups(library)
+
+    def plan(self,name,gold_ids,inventory_attested=False,independence_reviewed=False,review_reason='',*,verify_bytes=True):
+        text(name,'品質驗收集名稱',120)
+        if not isinstance(gold_ids,list) or not 1<=len(gold_ids)<=1000 or len(set(gold_ids))!=len(gold_ids):raise ValueError('品質驗收集需明列1～1000個不重複gold版本')
+        if type(inventory_attested) is not bool or type(independence_reviewed) is not bool:raise ValueError('需明確來源作品完整性／群組獨立性核對狀態')
+        if inventory_attested or independence_reviewed:text(review_reason,'完整性及近重複／家族核對依據',2000)
+        entries=[];errors=[];proofs={};work_ids=set();required_works=set();files={};objects=0;boxes={}
+        for gid in sorted(gold_ids):
+            validity=self.gold.validity(gid,verify_bytes=False);gold=validity['gold']
+            if not validity['valid']:errors += [gid+'：'+e for e in validity['errors']]
+            if not gold:continue
+            if gold['work_id'] in work_ids:raise ValueError('同一作品不能混入不同gold版本重複計分')
+            work_ids.add(gold['work_id']);required_works.update(gold['source_inventory_work_ids']);objects+=len(gold['objects'])
+            key=(gold['current_path'],gold['source_hash'])
+            if validity['valid'] and key not in proofs:
+                try:
+                    if verify_bytes:
+                        proof=verify_source(*key);proofs[key]=dict(path=proof.path,hash=proof.hash,stat=list(proof.stat))
+                    else:proofs[key]=copy.deepcopy(gold['source_proof'])
+                except (OSError,ValueError) as failure:errors.append(gid+'：'+str(failure))
+            file=files.setdefault(gold['original_path'],dict(pages=set(),page_counts=set(),source_ids=set(),source_hashes=set()))
+            file['pages'].add(gold['source_page']);file['page_counts'].add(gold['source_page_count']);file['source_ids'].add(gold['source_id']);file['source_hashes'].add(gold['source_hash'])
+            page_key=(gold['original_path'],gold['source_page']);crop=Rect(**gold['crop'])
+            if any(crop.intersects(other) for other in boxes.get(page_key,[])):errors.append('同頁gold作品切分框重複／跨界，真值仍有爭議')
+            boxes.setdefault(page_key,[]).append(crop)
+            entries.append(dict(gold_id=gid,gold_revision=gold['revision'],gold_digest=digest(gold),work_id=gold['work_id'],source_id=gold['source_id'],source_hash=gold['source_hash'],role='HOLDOUT'))
+        missing=sorted(required_works-work_ids);incomplete_pages=[]
+        for path,file in files.items():
+            if len(file['page_counts'])!=1 or next(iter(file['page_counts'])) is None or file['pages']!=set(range(1,next(iter(file['page_counts']))+1)) or len(file['source_hashes'])!=1:incomplete_pages.append(path)
+        assignments=[(e['source_hash'],'HOLDOUT') for e in entries];conflicts=self.groups.role_conflicts(assignments)
+        errors += [c['reason'] for c in conflicts]
+        graph,state,sha=self.groups.graph_state();content_nodes={'CONTENT:'+e['source_hash'] for e in entries}
+        import networkx as nx
+        relevant_components=[sorted(component) for component in nx.connected_components(graph) if component.intersection(content_nodes)]
+        manifest=dict(schema_version=1,name=name,entries=entries,purpose='INDEPENDENT_QUALITY_EVALUATION_LOCAL_ONLY',training_admission=False,cloud_upload_allowed=False,inventory_attested=inventory_attested,independence_reviewed=independence_reviewed,review_reason=review_reason,file_count=len(files),source_page_count=len({e['source_id'] for e in entries}),gold_work_count=len(work_ids),gold_object_count=objects,missing_gold_work_ids=missing,incomplete_source_pages=incomplete_pages,whole_source_gold_complete=inventory_attested and not missing and not incomplete_pages,independent_group_count=len(relevant_components),group_components=relevant_components,group_edges_digest=digest(state['edges']),unreviewed_near_duplicate_independence_unknown=not independence_reviewed)
+        result=dict(manifest=manifest,manifest_digest=digest(manifest),errors=sorted(set(errors)),source_proofs=list(proofs.values()),quality_pass_claim=False)
+        result['digest']=digest(result);return result
+
+    def create(self,plan,actor,approved=False):
+        if approved is not True:raise ValueError('需核對品質用途／固定gold與獨立群組範圍並明確建立')
+        text(actor,'驗收集建立者',120);preview=copy.deepcopy(plan);expected=preview.pop('digest',None)
+        if expected!=digest(preview) or plan['errors']:raise ValueError('驗收集預覽已改變或有未解來源／真值／群組角色錯誤')
+        manifest=plan['manifest']
+        with self.store.transaction():
+            for p in plan['source_proofs']:check_verified(VerifiedSource(p['path'],p['hash'],tuple(p['stat'])),p['hash'])
+            current=self.plan(manifest['name'],[e['gold_id'] for e in manifest['entries']],manifest['inventory_attested'],manifest['independence_reviewed'],manifest['review_reason'],verify_bytes=False)
+            if current['manifest_digest']!=plan['manifest_digest'] or current['errors']:raise ValueError('來源／真值／角色或家族關聯已變更')
+            for sha in sorted({e['source_hash'] for e in manifest['entries']}):
+                if not self.store.get('GROUP_ROLE',sha):self.store._write('GROUP_ROLE',sha,dict(role='HOLDOUT',source_hash=sha,basis='QUALITY_ONLY_HOLDOUT_WHOLE_SOURCE',actor=actor),0,'quality_set_source_group_locked_holdout')
+            return self.store._write(SET,new_id(),dict(state='FROZEN_QUALITY_HOLDOUT',manifest=copy.deepcopy(manifest),manifest_digest=plan['manifest_digest'],entries=copy.deepcopy(manifest['entries']),actor=actor,created=time.time(),quality_pass=False),0,'independent_quality_set_frozen_not_training')
+
+    def validity(self,identity,verify_bytes=True):
+        record=self.store.get(SET,identity)
+        if not record:return dict(valid=False,errors=['品質驗收集不存在'],dataset=None)
+        manifest=record['manifest'];errors=[]
+        if digest(manifest)!=record['manifest_digest'] or record['entries']!=manifest['entries']:errors.append('固定驗收集manifest不符')
+        if self.store.get('HOLDOUT_EXPOSED',identity):errors.append('此holdout已揭露答案／角色洩漏；需真正獨立新來源，不可當全新驗收集')
+        for entry in record['entries']:
+            current=self.gold.validity(entry['gold_id'],verify_bytes)
+            if not current['valid'] or digest(current['gold'])!=entry['gold_digest']:errors.append(entry['gold_id']+'gold／來源／用途許可已失效')
+        try:
+            graph,state,sha=self.groups.graph_state()
+            if digest(state['edges'])!=manifest['group_edges_digest']:errors.append('來源／客戶／家族群組關聯已變更，需增量核對後新版本')
+            errors += [r['reason'] for r in self.groups.role_conflicts([(e['source_hash'],'HOLDOUT') for e in record['entries']])]
+        except ValueError as error:errors.append(str(error))
+        return dict(valid=not errors,errors=sorted(set(errors)),dataset=record)

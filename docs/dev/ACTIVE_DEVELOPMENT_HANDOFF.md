@@ -22,3 +22,9 @@
 - quality_metrics NetworkX Edmonds maxcardinality+int12 maxIoU，class-agnostic避免semantic label挑對配對；TP/FP/FN/PRF分層zero-denominator None、anchor-basedROOT映射與critical/unknown owner另列，Wilson明列independent group數及user confidence，no production thresholds。
 - 25 combined target PASS含9既有dataset，另8 target含真SVG同設計異bytes TRAIN/HOLDOUT新關聯使舊holdout與newdataset API failclosed。尚無quality protocol/gold-rights/actual inference/job/GUI/AB/policy或fullsourceformal；不可當UI053父題完成。
 - latest current144claims pending，前6/28 Coverage001自驗里程碑保留；next quality gold explicit evaluation rights及predeclared protocol/approved policy、source-only inference/metrics、既有FIFO與GUI。
+
+### UI053 quality-only gold and immutable holdout sets WIP
+- quality_gold引用既有source/work/FACTS，不要求或產生SAMPLE admission；另明列INDEPENDENT_QUALITY_EVALUATION_LOCAL權利，9domain每層人工已核實/證據不足，visual/currentfacts/無爭議/actualsource+cache proof，最多200objects，immutable source-bound gold版本。模型候選改變不改gold真值；facts/cache/作品集合/rights撤回失效，withdrawal不重讀原稿。
+- quality_sets sameTrainingStore QUALITY_SET（distinct purpose，不偷當geometry DATASET），<=1000gold exactmanifest/全檔分頁及missingwork保留/重複跨界拒絕、samebytes alias2files1independentgroup、HOLDOUT GROUP_ROLE防train、不自動聲稱獨立/qualitypass/上傳；新near-group發現會invalid舊QUALITY_SET/HOLDOUT_EXPOSED但不改gold原標註。
+- 36 combined targets+10 withdrawal修正後重跑PASS（不相加當46unique）；第一輪gold note排序假設1fail原log保留，改exact observationID核對。currentknown825，144current claims仍pending；UI053原9尚未完成，前6/28 Coverage001里程碑保留。
+- 下一明確品質政策（預設UNCONFIGURED）、actual pipeline/version receipts/source-only inference、predeclared固定AB/exposure、FIFO jobs及paged diagnostics/跨批次重大重審；尚無完整UI053驗證或品質放行。

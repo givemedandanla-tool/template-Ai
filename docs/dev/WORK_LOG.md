@@ -930,3 +930,7 @@ CP-20261015-TWENTYEIGHT-COMPLETE已REMOTE_VERIFIED；快照commit 6262fe8b431733
 ### 2026-10-15 23:55 UTC UI053 correlation groups and mathematical metrics WIP
 - 25 combined group/metric/legacydataset PASS，另8 target真dataset近重複角色洩漏集成+數學counterexamples PASS。類別盲最佳配對避免貪婪漏切與挑對label偏差；ROOT交換合法但contact誤歸屬critical，無anchor ownerunknown；Wilson n=獨立群組、空分母None。
 - 同DB新增關聯+holdout失效原子/auditdiskrollback/staleCAS、撤回仍保歷史、不改identity或gold；資料集API接已知相關群組role guard。尚未完成UI053原9，144待fullsource回歸。
+
+### 2026-10-16 00:04 UTC UI053 quality gold/holdout WIP
+- 36 target/integration/legacydataset PASS；withdrawal早停原稿read修正後10相關case重跑PASS，不虛增unique。首次note list排序假設失敗已保留，按exact observationID核對。
+- Gold需單獨local-evaluation rights與manual/currentfacts/source/cache，模型變更不改真值，撤回只附加invalidation；QUALITY_SET roles/sharedgroup與immutable manifest/source缺口/independentgroup分母，近重複新發現使舊set失效保留gold。無SAMPLE/train/雲端upload sideeffect。尚未UI053全實作/全sourceformal，原6/28仍歷史已驗里程碑，144currentpending。
