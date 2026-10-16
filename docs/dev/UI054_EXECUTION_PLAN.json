@@ -156,5 +156,14 @@
       "docs/qa/targeted/ui054-exposed-replay-002.log"
     ],
     "scope": "Existing source-only FIFO evaluation; exact actual-failure/root-review/origin dataset; permanent HOLDOUT role/exposure/consumption untouched. Diagnostic output always quality_pass false, independent confidence suppressed; no fresh acceptance claim. Current source/truth/root/pipeline pins rechecked."
+  },
+  "source_impact_package": {
+    "status": "IMPLEMENTED_TARGETED13PASS_PENDING_FULL11",
+    "implementation": [
+      "template_ai/quality_rechecks.py",
+      "template_ai/quality_repairs.py"
+    ],
+    "evidence": "docs/qa/targeted/ui054-source-impact-001.log",
+    "scope": "Bounded NetworkX directed descendants: all same-content source works, actual historical TRAIN/VALIDATION model inputs, actual current/historical AUTO model producers, template versions/styles/customers; missing revisions and descendants POTENTIAL; unrecorded legacy UNKNOWN; source issues need no invented pipeline. No automatic writes/training/quarantine."
   }
 }

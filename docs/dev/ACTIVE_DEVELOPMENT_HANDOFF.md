@@ -43,3 +43,5 @@
 - .venv Python3.12.14/Qt6.8.3/NetworkX3.5；Tesseract5.5與local chi_tra/eng packs已installed。QT_QPA_PLATFORM=offscreen PYTHONPATH=tests XDG_CACHE_HOME=/workspace/.cache。Skills onboarding/runtime早已用過，當前catalog無需重查；正常Git/native_readback可用。
 
 2026-10-16T05:55Z UI054 replay: existing QualityProtocols purpose EXPOSED_HOLDOUT_REPAIR_DIAGNOSTIC bound actual failed issue/root and same exposed dataset. Original HOLDOUT/consumption immutable; actual shared-FIFO children recompute both sides, descriptive quality false/CI suppressed/acceptance blocked. 9targeted +36expanded PASS (overlap, not summed). Next ordered gates/root/control/fresh HLD, actual deployment/rollback, impact enrichment, seven-page GUI; 7/28 historical only.
+
+2026-10-16T05:57Z UI054 source impact13/13PASS: reused QualityRechecks.source_dependencies NetworkX bounded actual historical input→models→AUTO works→templates/customer graph; SOURCE_FACTS issue can read-only preview without fake producer. Missing modelrevision and descendants POTENTIAL, unrecorded legacy UNKNOWN. Next ordered gates, actualdeployment/rollback, seven pages/full11. 968known/145pending; 7/28 historical only.

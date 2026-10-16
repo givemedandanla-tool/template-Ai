@@ -13,6 +13,62 @@ def blocked(store, work_id):
 class QualityRechecks:
     def __init__(self,library):self.library=library;self.store=TrainingStore.bind(library);self.db=library.db
 
+    def source_dependencies(self,work_id):
+        """Bounded directed reachability over actual current and historical IDs."""
+        import networkx as nx
+        from .quality_groups import QualityGroups
+        work=self.library.artwork(work_id);source=self.library.source(work['source_id'])
+        graph=nx.DiGraph();potential=set();missing=set()
+        def rows(sql,args=()):
+            result=list(self.db.execute(sql,args).fetchmany(5001))
+            if len(result)>5000:raise ValueError('來源依賴掃描超過5000筆預算，未截斷／未宣稱完整')
+            return result
+        def edge(left,right,basis,uncertain=False):
+            graph.add_edge(left,right,basis=basis)
+            if uncertain:potential.add(right)
+            if graph.number_of_edges()>20000:raise ValueError('來源依賴超過20000條，需縮小核對範圍')
+        sources=rows('SELECT id,hash FROM sources ORDER BY id')
+        roots=['SOURCE:'+sid for sid,sha in sources if sha==source['hash']]
+        current_works={wid:(sid,revision) for wid,sid,revision in rows('SELECT id,source_id,revision FROM artworks ORDER BY id')}
+        for wid,(sid,revision) in current_works.items():edge('SOURCE:'+sid,'WORK:'+wid,'SAME_ACTUAL_SOURCE_CONTENT')
+        models=rows("SELECT DISTINCT h.id,h.revision,json_extract(s.value,'$.work_id'),json_extract(s.value,'$.role') FROM training_history h,json_each(h.after_json,'$.plan.scopes') s WHERE h.kind='SEMANTIC_MODEL' ORDER BY h.id,h.revision,3")
+        model_nodes={}
+        for mid,revision,wid,role in models:
+            node='MODEL:'+mid+':'+str(revision);model_nodes.setdefault(mid,set()).add(node)
+            edge('WORK:'+wid,node,'HISTORICAL_'+str(role)+'_MODEL_INPUT')
+            if wid not in current_works:missing.add('WORK:'+wid)
+        for wid,revision,mid,mrevision in rows("SELECT artwork_id,revision,json_extract(payload,'$.analysis_evidence.semantic_model.model_id'),json_extract(payload,'$.analysis_evidence.semantic_model.model_revision') FROM artwork_revisions WHERE json_type(payload,'$.analysis_evidence.semantic_model.model_id') IS NOT NULL ORDER BY artwork_id,revision"):
+            targets=['MODEL:'+mid+':'+str(mrevision)] if mrevision else sorted(model_nodes.get(mid,{'MODEL:'+mid+':UNKNOWN'}))
+            for model in targets:edge(model,'WORK:'+wid,'ACTUAL_HISTORICAL_AUTO_MODEL_PRODUCER',not mrevision)
+            if wid not in current_works:missing.add('WORK:'+wid)
+        templates=rows("SELECT id,family_id,version,json_extract(payload,'$.source_work_id') FROM templates ORDER BY id")
+        for tid,family,version,wid in templates:
+            if wid:
+                edge('WORK:'+wid,'TEMPLATE:'+tid+':'+str(version),'EXISTING_TEMPLATE_SOURCE_WORK')
+                edge('TEMPLATE:'+tid+':'+str(version),'STYLE:'+family,'EXISTING_TEMPLATE_FAMILY')
+                if wid not in current_works:missing.add('WORK:'+wid)
+        groups=QualityGroups(self.library)
+        if groups.has_table('customer_source_associations'):
+            for cid,wid,tid in rows('SELECT customer_id,artwork_id,template_id FROM customer_source_associations ORDER BY id'):
+                edge('WORK:'+wid,'CUSTOMER:'+cid,'CONFIRMED_CUSTOMER_SOURCE_ASSOCIATION')
+        if groups.has_table('customer_styles'):
+            versions={tid:version for tid,family,version,wid in templates}
+            for cid,tid in rows('SELECT customer_id,template_id FROM customer_styles ORDER BY id'):
+                edge('TEMPLATE:'+tid+':'+str(versions.get(tid,'UNKNOWN')),'CUSTOMER:'+cid,'CONFIRMED_CUSTOMER_STYLE')
+        graph.add_nodes_from(roots);reachable=set(roots)
+        for root in roots:reachable.update(nx.descendants(graph,root))
+        induced=graph.subgraph(reachable)
+        uncertain=set()
+        for node in potential.intersection(reachable):uncertain.add(node);uncertain.update(nx.descendants(induced,node))
+        result=dict(work_id=work_id,source_id=source['id'],source_hash=source['hash'],
+                    nodes=[dict(key=node,dependency_match='POTENTIAL_MISSING_MODEL_REVISION' if node in uncertain else 'RECORDED_DEPENDENCY') for node in sorted(reachable)],
+                    edges=[dict(left=a,right=b,basis=value['basis']) for a,b,value in sorted(induced.edges(data=True))],
+                    missing_historical_nodes=sorted(missing.intersection(reachable)),
+                    affected_work_ids=sorted(node[5:] for node in reachable if node.startswith('WORK:')),
+                    unknown_unrecorded_dependencies=True,unscanned_legacy_dependencies='UNKNOWN_NOT_ASSUMED_SAFE',
+                    complete_known_graph=not missing.intersection(reachable),automatic_training=False,original_and_published_data_modified=False)
+        result['digest']=digest(result);return result
+
     def dependencies(self,pipeline_id,component,rule_id=None):
         if component not in ('PARSER','MODEL','RULE'):raise ValueError('需明列解析器／模型／規則影響種類')
         pipeline=self.store.get('QUALITY_PIPELINE',pipeline_id)

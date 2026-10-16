@@ -101,11 +101,14 @@ class QualityRepairs:
         if not issue:raise ValueError('修復問題不存在')
         return issue
 
-    def impact_plan(self,identity,component,rule_id=None):
+    def impact_plan(self,identity,component='SOURCE',rule_id=None):
         from .quality_rechecks import QualityRechecks
         issue=self.current_issue(identity);pipeline_id=issue['evidence'].get('pipeline_id')
-        if not pipeline_id:raise ValueError('尚無可核對的實際版本；先從原稿／模型／規則依賴確認版本，不把未知說成已掃描')
-        dependencies=QualityRechecks(self.library).dependencies(pipeline_id,component,rule_id)
+        service=QualityRechecks(self.library)
+        if component=='SOURCE':dependencies=service.source_dependencies(issue['evidence']['work_id'])
+        else:
+            if not pipeline_id:raise ValueError('尚無可核對的實際版本；先從原稿／模型／規則依賴確認版本，不把未知說成已掃描')
+            dependencies=service.dependencies(pipeline_id,component,rule_id)
         result=dict(issue_id=identity,issue_revision=issue['revision'],issue_digest=digest(issue),
                     dependencies=dependencies,root_cause_proven=False,
                     automatic_quarantine=False,automatic_training=False,
