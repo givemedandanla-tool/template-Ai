@@ -83,6 +83,15 @@ class LogoLibraryDialog(QDialog):
         self.tree.blockSignals(False)
         self.selected()
 
+    def focus_size(self,width,height):
+        """Explicit caller-owned physical scope; never change Main's requested size."""
+        self.store._size(width,height);size=[width,height];self.reference.setChecked(False)
+        self.target_w.setValue(width);self.target_h.setValue(height)
+        item=next((self.tree.topLevelItem(i) for i in range(self.tree.topLevelItemCount()) if self.tree.topLevelItem(i).data(0,Qt.UserRole)==size),None)
+        if item is None:
+            item=QTreeWidgetItem([f'{width:g}×{height:g} mm']);item.setData(0,Qt.UserRole,size);self.tree.addTopLevelItem(item)
+        self.tree.setCurrentItem(item);self.selected()
+
     def selected(self,*_):
         if self.running:return
         size=self.selected_size();reference=self.reference.isChecked();query=self.query.text().casefold();view=self.views.currentIndex()

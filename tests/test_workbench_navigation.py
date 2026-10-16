@@ -110,6 +110,7 @@ class WorkbenchNavigationTests(unittest.TestCase):
         with patch.object(QInputDialog,'getText',return_value=('synthetic-navigation-password',True)),patch.object(session.recovery,'save',side_effect=OSError('Injected disk full')):
             session.save_recovery();self.assertTrue(wait_for_gui(lambda:not w.busy,10))
         self.assertFalse(session.recovery.pending());self.assertIn('保存失敗',w.work_context.text());self.assertFalse(w.navigation.recovery_current())
+        self.assertNotIn('背景執行中',w.statusBar().currentMessage())
         with patch.object(QInputDialog,'getText',return_value=('synthetic-navigation-password',True)):
             session.save_recovery();self.assertTrue(wait_for_gui(lambda:not w.busy,10))
         self.assertTrue(session.recovery.pending());self.assertTrue(w.navigation.recovery_current());self.assertIn('短期恢復已加密落盤',w.work_context.text())

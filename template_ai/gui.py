@@ -401,13 +401,14 @@ class MainWindow(QMainWindow):
         try:dialog.exec()
         finally:dialog.deleteLater()
 
-    def logo_center(self):
+    def logo_center(self,*,return_origin=None):
         if self.busy:
             self.inform('背景工作進行中，請保留目前作用範圍')
             return
         from .logo_library_dialog import LogoLibraryDialog
         dialog = LogoLibraryDialog(self)
-        self.navigation.begin('尺寸 Logo 管理')
+        if return_origin is not None:dialog.focus_size(*return_origin.entry()['size_mm'])
+        self.navigation.begin('尺寸 Logo 管理',origin=return_origin)
         try: dialog.exec()
         finally: dialog.deleteLater();self.navigation.finish()
 
@@ -806,6 +807,7 @@ class MainWindow(QMainWindow):
         def finished(value):
             self.busy = False
             self.import_button.setEnabled(True)
+            self.statusBar().showMessage(message+' · 背景步驟已結束；請核對目前工作結果')
             try:
                 callback(value)
             except Exception as e:
@@ -815,6 +817,7 @@ class MainWindow(QMainWindow):
         def failed(text):
             self.busy = False
             self.import_button.setEnabled(True)
+            self.statusBar().showMessage(message+' · 工作未完成；尚未宣稱保存成功')
             try:
                 (on_error or getattr(callback,'error',None) or self.error)(text)
             finally:
@@ -1722,11 +1725,11 @@ class MainWindow(QMainWindow):
                 table.removeRow(table.currentRow())
                 self.invalidate()
 
-    def edit_input_graph(self,*,focus_field_id=None,focus_entity_id=None):
+    def edit_input_graph(self,*,focus_field_id=None,focus_entity_id=None,return_origin=None):
         if self.busy:
             self.error("背景工作中，待完成後編輯當次輸入");return
         from .input_graph_dialog import InputGraphDialog
-        self.navigation.begin('人物與公司資料')
+        self.navigation.begin('人物與公司資料',origin=return_origin)
         try:
             dialog=InputGraphDialog(self)
             if focus_field_id:QTimer.singleShot(0,dialog,lambda:dialog.focus_field(focus_field_id,focus_entity_id))

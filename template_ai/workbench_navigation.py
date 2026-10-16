@@ -1,6 +1,7 @@
 """Bounded, transient return locations for the existing workbench, never work copies."""
-import copy
+import copy,json,sqlite3
 import time
+import weakref
 from dataclasses import asdict
 from PySide6.QtCore import QPointF,QSignalBlocker,QTimer
 from PySide6.QtGui import QTransform
@@ -50,16 +51,13 @@ class WorkbenchNavigation:
         return ('EMPTY',)
 
     def candidate_pin(self,index):
-        from .candidate_results import selection_pin
-        from .candidate_risk import bind_source
-        checked=copy.deepcopy(self.window.candidates[index])
-        bind_source(checked,self.window.library,require_registered=True)
-        return (selection_pin(self.window,index),checked.risk['digest'])
+        w=self.window
+        return (self.multi_pin(w.candidates[index]),w.out_w.value(),w.out_h.value())
 
     def capture(self,mode=None):
         w=self.window;mode=w.tabs.currentIndex() if mode is None else mode;canvas=self.canvas(mode)
         from .gui import Box
-        return dict(root=str(w.library.root),generation=w.generation,mode=mode,pin=self.pin(mode),
+        return dict(kind='MAIN',root=str(w.library.root),generation=w.generation,mode=mode,pin=self.pin(mode),
                     transform=QTransform(canvas.transform()),centre=QPointF(canvas.mapToScene(canvas.viewport().rect().center())),
                     selected=[item.slot.id for item in canvas.scene().selectedItems() if isinstance(item,Box)],
                     slot=w.current_slot.id if w.current_slot else None,
@@ -81,17 +79,41 @@ class WorkbenchNavigation:
         form={k:v for k,v in stored.items() if k not in ('font','font_display')};form['font']=stored['font'].family()
         return digest(dict(slot=selected,form=form))
 
-    def remember(self,mode=None):
-        try:location=self.capture(mode)
+    def multi_pin(self,candidate):
+        from .candidate_sync import candidate_pin
+        from .candidate_edit import dependency_token
+        w=self.window;snapshot=candidate.risk_context.get('input_snapshot',{})
+        # Navigation compares versions and known-file stat stamps only. Actual
+        # Logo hashing/quality and whole-card validation stay at existing gates.
+        assets=[];bindings=[]
+        for identity in sorted({item.logo['id'] for item in candidate.items if item.logo and item.logo.get('id')}):
+            row=w.library.db.execute('SELECT payload FROM logos WHERE id=?',(identity,)).fetchone()
+            assets.append([identity,json.loads(row[0]) if row else None])
+        for company in snapshot.get('companies',[]):
+            if not company.get('source_entity_id'):continue
+            try:row=w.library.db.execute('SELECT company_id,confirmed_name FROM logo_entity_bindings WHERE entity_id=?',(company['source_entity_id'],)).fetchone()
+            except sqlite3.OperationalError:row=None
+            bindings.append([company['source_entity_id'],list(row) if row else None])
+        return digest([candidate_pin(candidate),dependency_token(w,candidate.template,snapshot.get('logos',{})),assets,bindings])
+
+    def capture_multi(self,origin):
+        entry=origin.entry();candidate=origin.service.selected(entry)
+        if candidate is None:raise ValueError('此尺寸沒有可返回的候選')
+        return dict(kind='MULTI_SIZE',root=str(self.window.library.root),generation=self.window.generation,mode=2,
+                    pin=self.multi_pin(candidate),origin=weakref.ref(origin),key=entry['key'],candidate=candidate.template.id,
+                    scroll=[origin.table.horizontalScrollBar().value(),origin.table.verticalScrollBar().value()])
+
+    def remember(self,mode=None,origin=None):
+        try:location=self.capture_multi(origin) if origin is not None else self.capture(mode)
         except (ValueError,OSError,KeyError,TypeError):
             self.notice='目前物件尚無可核對的返回位置；修正後請由原列表重新選取。'
         else:
-            if not self.locations or any(location[k]!=self.locations[-1][k] for k in ('root','generation','mode','pin')):
+            if not self.locations or any(location[k]!=self.locations[-1][k] for k in ('kind','root','generation','mode','pin')):
                 self.locations.append(location);self.locations=self.locations[-8:]
         self.update()
 
-    def begin(self,route):
-        self.remember();self.route=route;self.update()
+    def begin(self,route,origin=None):
+        self.remember(origin=origin);self.route=route;self.update()
 
     def finish(self):
         self.route=None;self.update()
@@ -99,6 +121,17 @@ class WorkbenchNavigation:
     def return_to_work(self):
         if not self.locations:return False
         w=self.window;location=self.locations.pop();mode=location['mode'];reason=None;self.restoring=True
+        if location['kind']=='MULTI_SIZE':
+            try:self.return_multi(location)
+            except (ValueError,OSError,KeyError,TypeError,StopIteration) as error:
+                self.notice='無法還原原位置：'+str(error)+'。保留目前尺寸候選，請重新選取或同步重驗。'
+                from shiboken6 import isValid
+                origin=location['origin']()
+                if origin is not None and isValid(origin):origin.status.setText(self.notice)
+                else:w.tabs.setCurrentIndex(2);w.export_button.setEnabled(False)
+                reason=str(error)
+            finally:self.restoring=False
+            self.update();return reason is None
         try:
             if w.library.closed or str(w.library.root)!=location['root']:raise ValueError('工作資料位置已變更')
             if w.generation!=location['generation']:raise ValueError('當次人物資料或資產版本已改變，原候選需重新驗證')
@@ -114,8 +147,10 @@ class WorkbenchNavigation:
             # Never copy business data or a previously safe risk assessment back.
             w.tabs.setCurrentIndex(mode)
             if mode==2 and location['pin'][0]=='CANDIDATE':
-                w.candidate_list.setCurrentRow(index);w.choose_candidate(index)
+                if w.candidate_list.currentRow()!=index:w.candidate_list.setCurrentRow(index)
                 from .gui import Box
+                for item in list(w.output_canvas.scene().items()):
+                    if isinstance(item,Box):w.output_canvas.scene().removeItem(item)
                 slots={slot.id:slot for slot in w.candidates[index].template.slots}
                 if any(identity not in slots for identity in location['selected']):raise ValueError('原定位物件已不存在')
                 for identity in location['selected']:
@@ -139,6 +174,21 @@ class WorkbenchNavigation:
                 w.export_button.setEnabled(False);w.candidate_list.setFocus()
         finally:self.restoring=False
         self.update();return reason is None
+
+    def return_multi(self,location):
+        from shiboken6 import isValid
+        w=self.window;origin=location['origin']()
+        if origin is None or not isValid(origin):raise ValueError('原多尺寸視窗已關閉')
+        if w.library.closed or str(w.library.root)!=location['root']:raise ValueError('工作資料位置已變更')
+        if w.generation!=location['generation'] or not origin.is_current():raise ValueError('此尺寸所引用資料已變，需同步重驗')
+        entry=next(e for e in origin.service.entries if e['key']==location['key'])
+        matches=[c for c in entry['candidates'] if c.template.id==location['candidate']]
+        if len(matches)!=1 or self.multi_pin(matches[0])!=location['pin']:raise ValueError('原尺寸候選、人工編輯或資產版本已變更')
+        row=next(i for i,size in enumerate(origin.sizes) if size==entry['size_mm'])
+        origin.table.setCurrentCell(row,1);origin.select_candidate(entry['key'],location['candidate'])
+        origin.table.horizontalScrollBar().setValue(location['scroll'][0]);origin.table.verticalScrollBar().setValue(location['scroll'][1])
+        self.notice='已返回原尺寸候選；各尺寸正式輸出仍需目前版本完整檢查。'
+        origin.status.setText(self.notice);origin.show();origin.raise_()
 
     def recovery_started(self):
         self.save_error=None;self.notice='正在核實及寫入短期恢復資料；尚未保存。';self.update()

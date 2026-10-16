@@ -1,0 +1,75 @@
+{
+  "status": "NEEDS_REPAIR",
+  "screens_individually_opened": 12,
+  "files": [
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-01-current-candidate-context.png",
+      "sha256": "03cc8b20869fb92428c1d34a65bf77099005400daf2e1c779f48f59c113c2d97",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-02-existing-logo-correction.png",
+      "sha256": "5c74ae824fbb6b7c3db6aaa3a0b809aa7dec2731bd4666f6f9d5ab742f589cd7",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-03-exact-candidate-view-return.png",
+      "sha256": "9abd8cc0916d0218bd0a61dcce1a0009be815e1d15598420f1f27dd44a6bdc7a",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-04-real-unsaved-close-choices.png",
+      "sha256": "e1e3ff0c63da0eb46f063dc33d92db9429f4aa7e7e4cc9b7ade7ba6d0cb19668",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-05-actual-save-failure-not-saved.png",
+      "sha256": "8a7cd1680b9cf0f6370c94a8588661f3368b2f9143c20799c06925cb3c993c55",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-06-actual-encrypted-short-recovery.png",
+      "sha256": "3b008ea206ce94f99f9021b2f53bf224fbe4d3b3cc97e05b3ed59d10b03f9a6d",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-07-new-manual-version-safe-fallback.png",
+      "sha256": "ef05bdc9c7efa19fd3df23eee308a910eae25515619e70f786466613bf628146",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-08-small-window-current-work-return-visible.png",
+      "sha256": "237d2af43a612541926b912e074e8af8ace20ea502cab886223b289d577b2207",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-09-size100-existing-logo-correction.png",
+      "sha256": "e63172062dc36ce4a21f52452a7e1b07068f96f02ca2f769f80d738e8728e2d8",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-10-return-original100-blocked-candidate.png",
+      "sha256": "1c72a28c5903c130d15f9ccc7b42cf4cfdd6179bf9181d9c94ec1b3da9db2c53",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-11-changed-shared-source-size-pending.png",
+      "sha256": "f3f582fe1c2c2c98be731710d6f5a9c59bd831d3dd684dfd872be2cfd66fb28d",
+      "visually_reviewed": true
+    },
+    {
+      "path": "docs/qa/targeted/ui062-native-012/workbench-navigation-12-return-preserves-unapplied-property.png",
+      "sha256": "f716a1fb49816c70d12651e41155426e4401d9eb130d565ce185b7fa7979411b",
+      "visually_reviewed": true
+    }
+  ],
+  "findings": [
+    "Size100 origin Logo dialog stillopened90: actual013FAIL fixed014 via existing LogoLibraryDialog.focus_size; recapture required",
+    "Completed actualrecovery left globalstatus running: actual013FAIL fixed014 Main.run_job terminalstatus beforecallback",
+    "Lowresolution960x640 context/backvisible but canvas actualvisibleheight squeezed by existing fixed rows. Need controlledsmallviewport assertion/layoutrepair before full26coverage."
+  ],
+  "limits": [
+    "No Windows/privateIllustrator qualification",
+    "Capture assertions PASS is not visual PASS"
+  ]
+}
