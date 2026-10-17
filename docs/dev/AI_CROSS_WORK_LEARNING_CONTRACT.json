@@ -44,6 +44,11 @@
           "id": "AI-LEARN-01-A05",
           "expected": "重用TrainingStore歷史及交易，舊資料與原稿不改寫",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-01-A06",
+          "expected": "來源 text run／glyph cluster／baseline／pt／容器及四類風格觀察帶單位與可信來源，缺證據為UNKNOWN，預設值不當訓練真值",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
         }
       ],
       "depends_on": []
@@ -79,6 +84,11 @@
         {
           "id": "AI-LEARN-02-A04",
           "expected": "重估版本與成員對應可重現，不假稱partial_fit",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-02-A05",
+          "expected": "四類風格及角色／容器關係用於跨作品家族，來源去重與反例不被同座標或同字串掩蓋",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
         }
       ],
@@ -117,6 +127,26 @@
         {
           "id": "AI-LEARN-03-A04",
           "expected": "尺寸或內容證據不足不擬造回歸／外推可信度",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-03-A05",
+          "expected": "分開學字內／詞內與物件等距；語系、合法邊界、單字／零邊界與最後一行有明確規則，越權模式不自動啟用",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-03-A06",
+          "expected": "學真實pt及角色字級比例，固定當次已核准字級；不得用長度／字寬或其代理偷偷選較小字級解圍",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-03-A07",
+          "expected": "學角色／群組相對關係、baseline、gap及錨點，保留獨立來源支持與矛盾反例",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-03-A08",
+          "expected": "學容器欄列／label-value／optional-repeat-flow與欄位收合，保留資料ID、歸屬與完整內容，不列舉每案模板",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
         }
       ],
@@ -165,6 +195,21 @@
         {
           "id": "AI-LEARN-04-A06",
           "expected": "字型／Logo／鎖定／舊模板與現有輸出Gate完整回歸",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-04-A07",
+          "expected": "新風格子集由版本化政策編譯到同一Qt文字布局與Kiwi；舊模板固定pt、分散角色、Logo與正式Gate不回退",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-04-A08",
+          "expected": "受控SET_RELATION入口可處理合格稿，與原拓撲保留repair分開；同命令冪等、循環與歸屬衝突有原因，不修改全域模板",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-04-A09",
+          "expected": "跨候選／尺寸適配保留意圖與穩定映射，依UI-061預覽確認；高影響不可默默採用，客戶確認不冒充正式發布",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
         }
       ],
@@ -242,6 +287,11 @@
           "id": "AI-LEARN-06-A04",
           "expected": "來源與支持證據變動可失效並精確恢復受影響模型／結果",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-06-A05",
+          "expected": "保存前稿＋明確意圖＋後稿＋接受拒絕＋適用範圍，缺理由保持未知，個案接受不得直接改全域政策",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
         }
       ],
       "depends_on": [
@@ -279,6 +329,21 @@
         {
           "id": "AI-LEARN-07-A04",
           "expected": "程式／匿名指標／checkpoints保存GitHub；不自動上傳原稿／字型／個資",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-07-A05",
+          "expected": "客戶端先完整初稿，三階段可返回；不得加入字級／字寬／tracking／單雙排控制或必選模板庫，專業後台另維持既有能力",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-07-A06",
+          "expected": "網頁手機發同一語意操作契約，驗證資源權限／期望版本／冪等／晚到結果；拖曳中只代理回饋，放開核心精排，提供非拖曳等效操作",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-07-A07",
+          "expected": "確認綁定精確資料／結果，資料無解保留新值並標stale；撤回版面不退電話；正式封存依核准保存範圍，不把JSON重算當精確回播",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
         }
       ],
@@ -323,6 +388,11 @@
           "id": "AI-LEARN-08-A05",
           "expected": "多人／公司／字型／Logo／參考Windows與VivoBook資格依實際範圍驗收",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
+        },
+        {
+          "id": "AI-LEARN-08-A06",
+          "expected": "四類風格在獨立授權lineage封存集及長短／多語／多筆／多人／多公司情境分項驗證；網站／實體手機／印前各列證據，不以37項原型PASS代替",
+          "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
         }
       ],
       "depends_on": [
@@ -335,7 +405,7 @@
   "total_work_packages": 8,
   "next_work_package": "AI-LEARN-01",
   "planning_not_completion": true,
-  "acceptance_count": 36,
+  "acceptance_count": 50,
   "verified_acceptance_count": 0,
   "plan": "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
   "engineering_references": "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json",
@@ -377,7 +447,13 @@
       "optional",
       "flow",
       "wrap",
-      "font_hierarchy"
+      "font_hierarchy",
+      "distributed_unit_and_allowed_boundaries",
+      "font_role_log_ratios",
+      "container_tree_and_column_gutter",
+      "baseline_and_relation_graph",
+      "conditional_split_merge",
+      "intent_preservation"
     ],
     "hard_policy": [
       "required_data",
@@ -484,5 +560,21 @@
     "Default automatic learning creates observations/families rather than per-work templates",
     "Shared source measurement/rendering for new text-flow support",
     "All new model/testing status remains separate from historical CURRENT008 software scope"
-  ]
+  ],
+  "style_and_interface_review": "docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md",
+  "reference_review": "docs/qa/plans/CARD-INTERFACE-REVIEW-BASELINE-20261017.json",
+  "policy_boundaries": {
+    "customer_controls": "NO_FONT_SIZE_WIDTH_TRACKING_OR_ROW_COUNT_CONTROLS_OR_REQUIRED_TEMPLATE_LIBRARY",
+    "font_size": "Freeze approved design size; never select/change pt using input length/width proxies",
+    "distributed": "Current executable subset only approved title/address; observed broader patterns not activation authority",
+    "switching": "UI-061 preview/confirmation remains; low-impact automatic switch is OPEN",
+    "rule_publication": "Learning/acceptance does not confer formal eligibility",
+    "open_policies": [
+      "Moving protected name/title/company/Logo beyond approved scope",
+      "Font-size changes during configuration switching",
+      "Automatic low-impact cross-template adoption",
+      "Formal archive retention and cross-device service"
+    ]
+  },
+  "acceptance_revision_note": "2026-10-17: 36->50 planned clauses across same8packages; +14 design criteria, +0implementation, +0verified; historical completion unchanged"
 }

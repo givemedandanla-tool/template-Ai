@@ -47,3 +47,7 @@ GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須�
 ## 2026-10-17 核心產品定義澄清
 
 使用者明確拒絕一作品一模板作為Template AI目標；核心為跨作品學習共用設計規則、生成模板，對新輸入檢索最佳候選或合成自動排版。最新方案／契約見STATE.active_contract與AI_CROSS_WORK_LEARNING_PLAN.md；新學習8工作包目前0實作／0驗證。舊25/28與1549測試屬既有流程範圍，不能當新核心AI已完成。新方案及數值尚屬工程建議；不改寫舊不可變證據、不因規劃而增加完成數。
+
+## 2026-10-17 四類風格與 card-interface 對帳
+
+詳見docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md與有效contract：8包50規劃驗收，0實作／0驗證。先讀固定版本原型交接及最新核心／UI-013/061/062；區分重用、擴充、規格衝突、未驗證。客戶字級／字寬／tracking／單雙排控制已撤回；示例computePlan、70%與FNV不作正式排版／印前。觀察到新風格不等於有權取消固定pt、分散語意、預覽確認或正式Gate。
