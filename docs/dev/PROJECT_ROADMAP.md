@@ -1,3 +1,5 @@
+> **目前主線（2026-10-17使用者澄清）**：優先完成跨作品規則學習／模板生成／新輸入推薦，依[AI_CROSS_WORK_LEARNING_PLAN](AI_CROSS_WORK_LEARNING_PLAN.md)的01至04垂直切片、05至06排序回饋、07至08完整實測推進。8包／36新驗收目前0實作；以下原75題是歷史追蹤，不可代替核心AI目標。
+
 # 全75父題狀態與接續順序
 
 剩餘28已完成12父題／120原條款；1078/1078正式PASS、140健康owned modules、0skip/0Qt、capture0、source unchanged、actual parent exit0。全75：56 VERIFIED／16 PARTIAL／3 DEFERRED；固定70：54閉合／16仍部分。CORE87／GOV7另計。下一UI059與剩餘16，總目標尚未完成。

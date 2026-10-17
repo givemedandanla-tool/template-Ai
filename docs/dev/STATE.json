@@ -5,21 +5,22 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Design actual cross-work rule learning and conditional template generation; user rejects one-work-one-template as product goal",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT008-SOFTWARE-VERIFIED.receipt.json",
-  "last_confirmed_commit": "13eae441f6bd5b5ad9e42f87a4f7ed6d03901ada",
+  "active_task": "Concrete design ready for cross-work rule learning,shared design families,conditional template generation and input-conditioned ranking; implementation0of8",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-AI-CROSSWORK-DESIGN-BASELINE.receipt.json",
+  "last_confirmed_commit": "f6c0bbc448c3f82760bdae9155946c9683dcfd51",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
     "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
-    "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
+    "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
+    "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json"
   ],
   "next_tasks": [
-    "Finish concrete training/parameter/acceptance plan, then AI-LEARN-01 observation schema and01to04 multi-work-to-new-layout vertical slice",
-    "Keep historical169-row validation separate; do not call25of28 completion proof of cross-work AI",
-    "Actual authorized corpus qualification remains required for new-model production claims"
+    "ImplementAI-LEARN-01 observation/provenance/lineage schema and meaningful tests,then02families,03sharedrules,04conditional synthesis as first end-to-end vertical slice; no per-work-template completion substitute",
+    "M2:AI-LEARN-05/06 independent preference ranking and feedback/version lifecycle",
+    "M3:AI-LEARN-07/08 workflow and actual authorized heldout corpus/scale/reference-machine measurements"
   ],
   "blocked": [
     {
@@ -45,7 +46,7 @@
   ],
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
-    "CP-20261017-AI-CROSSWORK-DESIGN-BASELINE"
+    "CP-20261017-AI-CROSSWORK-IMPLEMENTATION-DESIGN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -665,7 +666,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Persist confirmed product definition, engineering references and concrete implementation/evaluation design; no core code changes",
+  "current_work": "Plan specifies math,training splits,parameter ownership,official versioned commercial/OSS references,8workpackages/36plannedacceptance; documentation only; no new model/core capability implemented",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -779,8 +780,8 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Finish concrete training/parameter/acceptance plan, then AI-LEARN-01 observation schema and01to04 multi-work-to-new-layout vertical slice",
-  "current_work_package": "AI-CROSS-WORK-DESIGN",
+  "next_step": "ImplementAI-LEARN-01 observation/provenance/lineage schema and meaningful tests,then02families,03sharedrules,04conditional synthesis as first end-to-end vertical slice; no per-work-template completion substitute",
+  "current_work_package": "AI-CROSSWORK-DESIGN-READY_FOR_IMPLEMENTATION",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": {
@@ -827,8 +828,20 @@
   "historical_active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "new_learning_progress": {
     "total": 8,
+    "planned_acceptance": 36,
     "implemented": 0,
     "verified": 0,
-    "status": "DESIGN_IN_PROGRESS"
-  }
+    "status": "DESIGNED_NOT_IMPLEMENTED",
+    "first_vertical_slice": [
+      "AI-LEARN-01",
+      "AI-LEARN-02",
+      "AI-LEARN-03",
+      "AI-LEARN-04"
+    ]
+  },
+  "new_goal_data_dependencies": {
+    "real_corpus": "Authorized representative source works/labels/reference needed for actual generalization claim; synthetic mechanics can be implemented now",
+    "reference_hardware": "Actual Windows16GBRTX5050/VivoBook needed only for hardware qualification; not a reason to block01to07 software implementation"
+  },
+  "design_consistency_check": "docs/qa/plans/AI-CROSSWORK-DESIGN-CHECK-20261017.json"
 }
