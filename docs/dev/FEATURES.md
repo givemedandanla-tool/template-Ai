@@ -22,7 +22,7 @@
 | UI-016 | 新增人物、公司與多筆聯絡資料 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 原UI-016全部已核准條款：人物ROOT卡片、stable圖、多公司與共享引用、安全複製解除刪除、Undo/Redo、當次資料及既有輸出Gate不放寬 | 無有效新版證據 |
 | UI-017 | 共享公司與聯絡資料編輯 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 原UI-017全部已核准條款：人物ROOT卡片、stable圖、多公司與共享引用、安全複製解除刪除、Undo/Redo、當次資料及既有輸出Gate不放寬 | 無有效新版證據 |
 | UI-018 | 自動排版結果與候選模板呈現 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
-| UI-019 | 印刷預檢與高保真 Logo 預覽輸出 | PARTIAL | 否 | 本輪修訂：數位視覺／輸出品質前期驗證；實體印刷分析移至軟體完善後 P10 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-019 | 印刷預檢與高保真 Logo 預覽輸出 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Original full approved clauses mapped in UI019_CLAUSE_COVERAGE.json; targeted/native reviewed, current immutable full Gate pending | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-020 | 複合公司 Logo 與來源品質管理 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
 | UI-021 | 複合 Logo 訓練校正、Logo 資料庫與缺圖占位 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
 | UI-022 | Logo 資料庫管理與審核介面 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
@@ -34,8 +34,8 @@
 | UI-028 | 黑底白字占位預覽檔格式與非正式標示 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
 | UI-029 | 批次輸出清單、智慧命名與安全儲存 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
 | UI-030 | 批次輸出失敗診斷與安全重試 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
-| UI-031 | 字型缺失與 Illustrator 特殊文字效果處理 | PARTIAL | 否 | 本輪修訂：Inkscape 等路徑視覺一致且可訓練可完成匯入；原生資訊缺失如實標記 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-032 | Windows 字型庫、智慧匹配、匯入與受控安裝介面 | PARTIAL | 否 | 程式載入與 Windows 安裝不同，系統安裝需明確同意 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-031 | 字型缺失與 Illustrator 特殊文字效果處理 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Original full approved clauses mapped in UI031_CLAUSE_COVERAGE.json; targeted/native reviewed, current immutable full Gate pending | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-032 | Windows 字型庫、智慧匹配、匯入與受控安裝介面 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Original full approved clauses mapped in UI032_CLAUSE_COVERAGE.json; targeted/native reviewed, current immutable full Gate pending | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-033 | 字型替代影響範圍與風險分級批次審核 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
 | UI-034 | 畫布、物件清單與屬性面板同步安全編輯 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
 | UI-035 | 語意樹、Illustrator 圖層與搜尋／鎖定管理介面 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 完整原始軟體條款；Linux合成／實際Qt及數位檔自我驗證。Windows、私人AI全面保真、實體印刷及獨立覆核另列未驗證，既定延後順序不變。 | 無有效新版證據 |
@@ -69,8 +69,8 @@
 | UI-063 | template-Ai｜UI-063 右側工作面板：智慧自適應、常用工具固定與問題提示（正式決策） | IMPLEMENTED_PENDING_VERIFICATION | 否 | Full original26: adaptive original property tools, current selection/type/version/source, existing preference pins, exact readonly text and problem navigation, mixed/locked/Logo safety, pending input lifecycle and explicit recovery; controlled Linux, external qualification gaps remain. | 無有效新版證據 |
 | UI-064 | template-Ai｜UI-064 畫布快捷鍵、滑鼠手勢與誤觸衝突防護（正式決策） | IMPLEMENTED_PENDING_VERIFICATION | 否 | Full original30: native Qt focus/IME/mode/current-target dispatch; no repeat/reentry; view-only pan/wheel and focused controls; finite conflict-validated preferences; existing exact-scope Undo/Redo and delete preview, action-version receipt and mouse/help routes. Provisional configurable profile; external Windows/IME/device/corpus qualification remains. | 無有效新版證據 |
 | UI-065 | template-Ai｜UI-065 多物件／多候選／多作品批次修正：風險分級、差異預覽與安全回復（正式決策） | IMPLEMENTED_PENDING_VERIFICATION | 否 | Full original25: exact source/candidate/size batch scopes; risk/current preflight and original read-only before-after canvases; explicit pinned confirmation, per-target original transactions/receipts, cancellation and safe selected inverse; typed encrypted stopped recovery, lost RAM unverified. External device/native corpus qualification remains. | 無有效新版證據 |
-| UI-066 | template-Ai｜UI-066 去重決策 A：重用既有診斷 GUI，僅保留獨立報告格式與安全交接補充規格 | PARTIAL | 否 | 既有診斷重用；獨立報告必要性格式交接尚 OPEN | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
-| UI-067 | template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策） | PARTIAL | 否 | 全面對帳只問真缺口，治理不算新產品功能 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-066 | template-Ai｜UI-066 去重決策 A：重用既有診斷 GUI，僅保留獨立報告格式與安全交接補充規格 | IMPLEMENTED_PENDING_VERIFICATION | 否 | Original full approved clauses mapped in UI066_CLAUSE_COVERAGE.json; targeted/native reviewed, current immutable full Gate pending | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| UI-067 | template-Ai｜UI-067 GUI 全面對帳、去重、衝突檢查與最少必要訪談（正式決策） | IMPLEMENTED_PENDING_VERIFICATION | 否 | Pure governance original7 strategy; original75 exact source/component/test/evidence trace and six historical conflicts reconciled, no new GUI feature | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-052-REVIEW | 重大共通錯誤跨歷史批次重審追加核准 | PARTIAL | 否 | 依賴追溯、暫停信任、逐項再審，保留歷史與原成品 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | UI-056-D | 進階分布失衡與系統化補樣 | DEFERRED | 否 | 正式版本完善後另行評估，不加入本期交付 | 無有效新版證據 |
 | UI-066-R1 | 獨立診斷報告內容、程式內閱讀與HTML／JSON安全封裝 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節 | 無有效新版證據 |

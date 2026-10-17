@@ -1,0 +1,39 @@
+{
+  "parent": "REV-02",
+  "status": "DESIGN_BEFORE_EXISTING_CAPABILITY_AUDIT",
+  "source": "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md",
+  "source_sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb",
+  "original_document_preserved": true,
+  "primary_section": 2,
+  "primary_original_text": "## 2. Inkscape 與匯入訓練完成標準\n\n使用者原文：「Illustrator 檔案解析可以利用inkscape來作為解套方法，總之只要確保視覺上無差別，可訓練就算完成任務。」\n\nInkscape 正式納入 .ai 匯入／轉 SVG／渲染等解套研究路徑；可搭配 PDF 相容層、輪廓、點陣標記與 OCR。可取得的原生資訊繼續保留，完整 Illustrator 私有結構與原生可編輯性不再是所有訓練來源的必要完成條件。\n\n修訂後匯入驗收需同時滿足：\n\n1. 有可信原稿參考，例如獲授權的原稿渲染／既有可信 PDF 或圖片；參考版本、範圍、尺寸和來源可追溯。\n2. 轉換結果在相同範圍、比例與渲染條件下，內容、字形、Logo、線條、遮罩、透明度、相對位置與細節視覺無可辨識差異。\n3. 可切分作品、建立欄位／完整 Logo 框、標記人物公司歸屬、量測可取得的幾何，並形成可版本化、可人工修正及可實際供模型／規則學習的有效資料。\n4. 必須以真實樣本及實際訓練資料管線證明可用；只有轉換檔存在或能顯示縮圖不能宣稱任務完成。\n5. 缺失的原始字型、字級、字寬百分比、效果結構或可編輯性標成未知／估算／衍生，不把 OCR 或輪廓推測冒稱原生事實。\n6. 原圖只讀；完整複合 Logo 保留，不以拆字、替換字型或重畫商標換取轉換成功。\n\n視覺驗證可使用配準、差異疊圖、像素／輪廓差異量測及人工局部放大核對。抗鋸齒和色彩渲染差異需要在同條件下判讀；不憑空指定相似度分數門檻，也不將「無可辨識視覺差異」直接等同跨引擎像素逐位元一致。\n\nInkscape 是否能處理每一類 .ai 仍須實測，尤其無 PDF 相容內容、缺字型和特定效果；不支援時保留例外，尋找其他合法轉換／參考路徑。來源任務只有通過上述視覺與訓練條件才完成。\n\n這次放寬的是訓練匯入的原生結構要求；生成新文字時仍需實際可用字型與定案字級下的量測，既有固定字級與無損排版規則继續有效。\n\n",
+  "other_normative_sections": {
+    "1": "REV-01",
+    "2": "REV-02",
+    "3": "REV03 physical-print P10 deferred; digital correctness still current",
+    "4": "REV-04",
+    "5": "UI067 newer explicit adopted R1/R2 overrides old OPEN only",
+    "6": "Core persistence/GitHub exact readback, all parent work packages"
+  },
+  "clause_count_method": "Parent title and original registry ownership define primary section; full shared revision document preserved/cross-referenced, no requirement removed.",
+  "reuse": [
+    "Same Rect/Slot/Template model, original layout/generate/quality/export",
+    "Existing Inkscape/source analysis/annotation/facts/real learning pipeline and reference comparison",
+    "Existing runtime resource/cgroup/GUI heartbeat/admission/FIFO/owned subprocess/cancel/recovery; no new job engine/DB"
+  ],
+  "math": "Physical rectangle coordinates and contain/affine geometry preserve groups; fixed-point actual-font metrics remain unchanged. Visual comparison requires trusted same-scope reference, not arbitrary score threshold. Measured host/cgroup headroom bounds admission; host16GB is not app budget.",
+  "references": [
+    "Qt6.8.3 geometry/text/rendering existing engine",
+    "Inkscape1.4 actual converter/query and current visual-background pipeline",
+    "psutil7.2.2 actual host/process measurement; CPU route remains supported; GPU optional/unqualified",
+    "Existing networkx/kiwisolver layout and version/quality provenance; engineering references in TWENTY_ENGINEERING_BASIS"
+  ],
+  "planned_tests": [
+    "REV01 actual arbitrary rectangle geometry/groups/multi-size/output tests; no separate namecard/access-card engine",
+    "REV02 existing actual conversion + reviewed trusted-reference/manual facts + actual learning tests; authorized real nativeAI qualification separate",
+    "REV04 existing measured host/cgroup/runtime/backpressure/GUI/cancel/recovery tests; record current actual cloud measurements and missing exact reference machines"
+  ],
+  "external_limits": [
+    "Authorized actual native Illustrator corpus and trusted reference absent; synthetic SVG not realAI qualification"
+  ],
+  "next": "Audit and verify existing reusable software; implement only concrete gaps. Preserve unmet realAI/hardware criteria as not verified. Then immutable all-current full regression/native/publication Gate."
+}

@@ -1,0 +1,39 @@
+{
+  "parent": "REV-04",
+  "status": "DESIGN_BEFORE_EXISTING_CAPABILITY_AUDIT",
+  "source": "docs/decisions/2026-10-12-RECTANGULAR-LAYOUT-VISUAL-IMPORT.md",
+  "source_sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb",
+  "original_document_preserved": true,
+  "primary_section": 4,
+  "primary_original_text": "## 4. 效能參考機與研究計畫\n\n使用者原文：「低配效能可以參考上限記憶體個人電腦16gb記憶體+nvdia rtx 5050,下限則是asus vivobook。」\n\n| 層級 | 已指定參考 | 尚待補齊 |\n| --- | --- | --- |\n| 上限參考機 | 16 GB 系統 RAM＋NVIDIA RTX 5050 | CPU、桌機／筆電形式、GPU VRAM、驅動與實際可用 RAM |\n| 下限參考機 | ASUS VivoBook | 完整型號、CPU、RAM、GPU、系統版本 |\n\nVivoBook 是系列，不推定其一定具備特定 RAM／GPU。這是參考測試範圍，尚不是已實測最低配置或所有該系列電腦的相容保證。16 GB 是整機記憶體參考上限，不代表程式可占用全數；程序預算需扣除作業系統和其他程序餘量。未指定整機 VRAM 上限，不把系統 RAM 當 GPU 記憶體。\n\n建議工程方向：\n\n- 核心功能可走 CPU；RTX 5050 為可選加速，模型／框架相容和加速效果需實測。\n- GUI 優先啟動，模型按需載入；分批、索引分頁、有界佇列和並行，資源緊張時降低負載。\n- 同一固定匿名樣本集與軟體版本，在兩類機器測量冷啟動、匯入／學習／排版耗時、GUI 回應、程序／整機峰值 RAM、VRAM、磁碟、取消續跑與崩潰恢復。\n- 比較不同資料量及 CPU／GPU 路徑，依真正數據決定模型大小、批次數、並行數與可用設定，不先承諾秒數或記憶體門檻。\n\n",
+  "other_normative_sections": {
+    "1": "REV-01",
+    "2": "REV-02",
+    "3": "REV03 physical-print P10 deferred; digital correctness still current",
+    "4": "REV-04",
+    "5": "UI067 newer explicit adopted R1/R2 overrides old OPEN only",
+    "6": "Core persistence/GitHub exact readback, all parent work packages"
+  },
+  "clause_count_method": "Parent title and original registry ownership define primary section; full shared revision document preserved/cross-referenced, no requirement removed.",
+  "reuse": [
+    "Same Rect/Slot/Template model, original layout/generate/quality/export",
+    "Existing Inkscape/source analysis/annotation/facts/real learning pipeline and reference comparison",
+    "Existing runtime resource/cgroup/GUI heartbeat/admission/FIFO/owned subprocess/cancel/recovery; no new job engine/DB"
+  ],
+  "math": "Physical rectangle coordinates and contain/affine geometry preserve groups; fixed-point actual-font metrics remain unchanged. Visual comparison requires trusted same-scope reference, not arbitrary score threshold. Measured host/cgroup headroom bounds admission; host16GB is not app budget.",
+  "references": [
+    "Qt6.8.3 geometry/text/rendering existing engine",
+    "Inkscape1.4 actual converter/query and current visual-background pipeline",
+    "psutil7.2.2 actual host/process measurement; CPU route remains supported; GPU optional/unqualified",
+    "Existing networkx/kiwisolver layout and version/quality provenance; engineering references in TWENTY_ENGINEERING_BASIS"
+  ],
+  "planned_tests": [
+    "REV01 actual arbitrary rectangle geometry/groups/multi-size/output tests; no separate namecard/access-card engine",
+    "REV02 existing actual conversion + reviewed trusted-reference/manual facts + actual learning tests; authorized real nativeAI qualification separate",
+    "REV04 existing measured host/cgroup/runtime/backpressure/GUI/cancel/recovery tests; record current actual cloud measurements and missing exact reference machines"
+  ],
+  "external_limits": [
+    "Actual Windows16GB RTX5050 and exact VivoBook reference machines absent; no hardware performance promise"
+  ],
+  "next": "Audit and verify existing reusable software; implement only concrete gaps. Preserve unmet realAI/hardware criteria as not verified. Then immutable all-current full regression/native/publication Gate."
+}
