@@ -42,6 +42,17 @@ class DiagnosticReportTests(unittest.TestCase):
         with zipfile.ZipFile(out,'w') as z:
             for n,b in entries.items():z.writestr(n,b)
         return out.getvalue()
+    def test_explicit_imported_font_keeps_real_metrics_private_and_report_nonformal(self):
+        from template_ai.demo import demo_template
+        from authored_font_fixture import bind_authored_fonts
+        template=demo_template();template.name='Authored explicit font diagnostic';bind_authored_fonts(template,self.w.font_manager);self.w.library.publish(template);self.w.refresh_templates();self.w.reorder_template_id=template.id
+        candidate=self.candidate();before=copy.deepcopy(candidate);gate=self.w.export_button.isEnabled();snapshot=make_snapshot(self.w,'candidate');body=encoded(snapshot.data)
+        self.assertTrue(candidate.valid,candidate.issues);self.assertTrue(snapshot.data['measurements']);self.assertTrue(any(r['parameters'].get('text_width_mm') is not None for r in snapshot.data['measurements']))
+        for slot in candidate.template.slots:
+            if slot.font_asset:
+                self.assertNotIn(slot.font_asset['path'].encode(),body);self.assertNotIn(slot.font_asset['hash'].encode(),body)
+        self.assertTrue(snapshot.data['historical']);self.assertTrue(snapshot.data['nonformal']);self.assertEqual(snapshot.data['model_quality'],'NOT_VERIFIED');self.assertEqual(snapshot.data['physical_print'],'NOT_VERIFIED');self.assertEqual(candidate,before);self.assertEqual(self.w.export_button.isEnabled(),gate);self.assertEqual(read_bundle(build_bundle(snapshot.data)),snapshot.data)
+
     def test_current_layout_progress_projects_only_public_denominators_not_internal_version_pins(self):
         self.candidate();private='FORBIDDEN_INTERNAL_TEMPLATE_PIN_831'
         self.w.last_layout_summary.update(generation=self.w.generation,scope_template_pins={private:private},future_private={'raw_path':str(self.root)})

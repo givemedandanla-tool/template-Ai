@@ -26,13 +26,15 @@ from gui_convergence import reconcile
 APP=QApplication.instance() or QApplication([])
 
 def pump_until(fn,seconds=5):
-    end=time.monotonic()+seconds
-    while not fn() and time.monotonic()<end:APP.processEvents();QTest.qWait(10)
-    if not fn():raise AssertionError('bounded GUI wait exceeded')
+    from gui_wait import wait_for_gui
+    if not wait_for_gui(fn,seconds):raise AssertionError('bounded GUI wait exceeded')
+
 
 class SeventyUiTests(unittest.TestCase):
-    def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'data');controlled_resources(self.w);self.addCleanup(SeventyUiTests.close_window,self);self.t=demo_template();bind_authored_fonts(self.t,self.w.font_manager);self.w.library.publish(self.t);self.w.people.setRowCount(1)
+    def setUp(self,with_font_source=False):
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'data');controlled_resources(self.w);self.addCleanup(SeventyUiTests.close_window,self);self.t=demo_template()
+        if with_font_source:bind_authored_fonts(self.t,self.w.font_manager)
+        self.w.library.publish(self.t);self.w.people.setRowCount(1)
         from PySide6.QtWidgets import QTableWidgetItem
         for j,v in enumerate(('Alex Example','Designer','+12025550100','alex@example.test','','','','')):self.w.people.setItem(0,j,QTableWidgetItem(v))
 

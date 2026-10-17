@@ -1,5 +1,5 @@
 {
-  "status": "PLAN_BEFORE_CURRENT006_REPAIR",
+  "status": "TARGETED_PASS_CURRENT_FULL_NOT_YET_RUN",
   "failed_run": {
     "id": "RUN-REMAINING28-CURRENT-006",
     "source_commit": "5650e3535f2a777d365c5ce6ee6adeeba734216d",
@@ -64,5 +64,52 @@
     "Native crash and all interrupted/failed runs remain immutable records",
     "Final full current-source all tests/native/publication Gate required; external5clauses remain unverified"
   ],
-  "next": "Checkpoint failed006 first, then bounded actual reproductions and targeted fixture repair"
+  "next": "Freeze source CURRENT007, remote verify, immutable full1549 plus native captures; no all28 completion claim.",
+  "actual_repro": {
+    "unchanged_015": {
+      "tests": 31,
+      "pass": 30,
+      "actual_exit": 1,
+      "diagnostic_reports_30": "PASS, native crash not reproduced",
+      "old_wait": "FAIL again"
+    },
+    "same_budget_real_loop_016": {
+      "diagnostic_only": true,
+      "pass": true,
+      "wait_seconds": [
+        0.4990488110051956,
+        0.407355903997086
+      ],
+      "budget_unchanged": 5
+    }
+  },
+  "before_code_decision": {
+    "wait": "Use original wait_for_gui in shared test pump with same5second deadline; no assertion or product change",
+    "font_fixture": "Base SeventyUi setUp optional explicit source fixture defaultFalse; CandidateResults class requestsTrue before fixture publication; diagnostic unknown-source tests retain their actual purpose. Add one actual imported-font report privacy/metrics case rather than registering/unregistering same largeCJKfont in every unrelated case.",
+    "native_fault": "Root cause unconfirmed; preserve-11. Repeated fresh diagnostic+explicit-font runs and final full suite required, no crash waiver or PASS claim."
+  },
+  "targeted_017": {
+    "planned": 61,
+    "passed": 61,
+    "module_exits": [
+      0,
+      0,
+      0
+    ],
+    "parent_exit_observation": "Process ended after PASS summary; original session response lost to output truncation, numeric parent exit not independently recovered",
+    "path": "docs/qa/targeted/current006-scoped-fixture-017"
+  },
+  "repeat_019": {
+    "actual_exit": 0,
+    "repeats": 2,
+    "tests_per_repeat": 31,
+    "all_pass": true,
+    "path": "docs/qa/targeted/current006-diagnostic-repeat-019"
+  },
+  "launcher_018": {
+    "actual_exit": 1,
+    "tests_executed": 0,
+    "error": "Missing root argument to test_ids; corrected019"
+  },
+  "native_fault_conclusion": "Original006 nativeexit-11 root cause remains unconfirmed. Fresh-process diagnostics31 pass three times after fixture scoping; no native crash waiver. Mandatory CURRENT007 full regression/native captures."
 }

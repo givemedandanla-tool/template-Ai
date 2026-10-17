@@ -9,7 +9,7 @@ from gui_wait import wait_layout
 
 
 class CandidateResultsTests(unittest.TestCase):
-    setUp=fixture.SeventyUiTests.setUp
+    def setUp(self):fixture.SeventyUiTests.setUp(self,with_font_source=True)
     close_window=fixture.SeventyUiTests.close_window
     def ready(self):self.w.generate();wait_layout(self.w);return self.w.candidates[0]
     def another(self,*,width=None):

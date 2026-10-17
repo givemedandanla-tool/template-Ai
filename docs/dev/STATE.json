@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "Continue original28; diagnose CURRENT006 one old wait failure and native diagnostic-report fault",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT-FULL-SOURCE006.receipt.json",
-  "last_confirmed_commit": "5650e3535f2a777d365c5ce6ee6adeeba734216d",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT006-FAILED-REPRO-PLAN.receipt.json",
+  "last_confirmed_commit": "28615bc13247ea0387d284246e3375afb58eb763",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -17,8 +17,8 @@
     "docs/dev/REMAINING28_EXTERNAL_QUALIFICATION.json"
   ],
   "next_tasks": [
-    "Implement bounded evidence and original diagnostic-to-font-centre context; self-test, actual native review, checkpoint; then UI066/UI067/REV01/REV02/REV04",
-    "Immutable current-source full regression and actual native/publication Gate for all28; external qualification remains explicit"
+    "Checkpoint/freeze CURRENT007 source; actual GitHub readback; immutable all1549/native capture; preserve failure honestly and close independent scopes only from exact complete claims.",
+    "Validate current publication scope, independent parent claims, preserve unavailable external Windows/nativeAI/hardware evidence explicitly"
   ],
   "blocked": [],
   "deferred": [
@@ -27,7 +27,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT006-FAILED-REPRO-PLAN"
+    "CP-20261017-REMAINING28-CURRENT-FULL-SOURCE007"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -814,7 +814,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "CURRENT006 actualexit1 source5650e35 unchanged:1541/1548completed1540PASS1waitFAIL,7missing from diagnostic_reports nativeexit-11, no native capture.197modules. All17fixture close repairs completed with no modal/teardown deadlines. Need minimize overbroad source-font fixture and verify actual native repro before app change; no owned jobs.",
+  "current_work": "CURRENT006 bounded fixture/event-loop repair targeted01761PASS;019two31PASS native modules actualexit0. Native-11 root cause unconfirmed; freeze CURRENT007 then full1549/native required.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -928,8 +928,8 @@
     }
   ],
   "next_work_package_plan": "docs/dev/REV01_EXECUTION_PLAN.json",
-  "next_step": "Save failed006 and plan; reproduce diagnostics30 and SeventyUI wait, isolate explicit source fixture to formal-output test owner if confirmed, reuse original real Qt wait without lowering assertions; current007 full all1548/native/pub required.",
-  "current_work_package": "UI-032 original10 shared font source identity/current glyph-license filters/separate Windows workflow",
+  "next_step": "Checkpoint/freeze CURRENT007 source; actual GitHub readback; immutable all1549/native capture; preserve failure honestly and close independent scopes only from exact complete claims.",
+  "current_work_package": "Original28 full software regression and external qualification",
   "checkpoint_cadence_note": "Cadence deviations during earliercriticaldiagnostics/UI063planning+implementation recorded; overallstrict10minute cadence notPASS.",
   "implementation_pending_original_parents": [
     "UI-059",
@@ -947,7 +947,15 @@
     "UI-067",
     "REV-01"
   ],
-  "latest_targeted_verification": "docs/qa/targeted/ui032-final-fixture-recheck-018.log",
+  "latest_targeted_verification": {
+    "tests_017": 61,
+    "passed_017": 61,
+    "repeat_019": 2,
+    "tests_each_019": 31,
+    "actual_exit_019": 0,
+    "native_fault_root_cause": "UNCONFIRMED",
+    "all28_complete": false
+  },
   "checkpoint_superseded": [
     {
       "id": "CP-20261016-REMAINING28-UI059-NATIVE-DEPENDENCY-WIP",
@@ -970,7 +978,7 @@
     "policy": "Keep latest8 confirmed plus all unacknowledged at original location; moved archives retained with exact SHA/manifest matched REMOTE_VERIFIED receipts. For old local restore copy verified archive back into original .checkpoints/ID/source.zip; remote Git remains authoritative.",
     "free_after_bytes": 4308742144
   },
-  "current_targeted_run": null,
+  "current_targeted_run": "docs/qa/targeted/current006-diagnostic-repeat-019",
   "local_checkpoint_cache_relocation_history": [
     {
       "journal": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261017.json",
