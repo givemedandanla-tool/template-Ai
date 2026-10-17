@@ -1,0 +1,40 @@
+{
+  "parent": "UI-067",
+  "status": "DESIGN_BEFORE_GOVERNANCE_UPDATE",
+  "source": "docs/decisions/UI-067-GUI-CONVERGENCE-GOVERNANCE.md",
+  "source_sha256": "36794fa5012bbe22a65409ce185bbe4f0dc70d5efba9c92c1aa5b6bc19bee77c",
+  "original_rules": [
+    "**先查再問**：每一道新 GUI 題目都要先比對 GitHub 的已核准決策、修訂優先權、需求基準與驗收計畫；已完整涵蓋者 **REUSE，直接跳過**，不得包裝成新功能或重新詢問同一選擇。",
+    "**只問最小真缺口**：只有現有決策無法可靠推導、且確實影響資料正確性、印前安全、關鍵操作或交接體驗的事項，才以**一題一決策**詢問；若多數內容重複，只保留未定的具體子題。",
+    "**五態清楚區分**：`APPROVED_REQUIREMENT`（既有核准）、`OPEN_HUMAN_DECISION`（真正需要 Human 取捨）、`RESEARCH_OR_TEST_NEEDED`（需來源／PoC／實機量測，不用抽象選項代替驗證）、`FUTURE_BACKLOG`（當前未授權）及 `CONFLICT_OR_STALE_REFERENCE`（待對帳）；各條另外註明軟體的 `NOT_IMPLEMENTED/NOT_VERIFIED` 狀態，兩者不可混淆。",
+    "**衝突處置**：以使用者有明確核准記錄且較新的正式修訂／決策優先，保留歷史原文，不假稱原始需求不存在；**不能僅憑後來文件舉例就擴大功能範圍**。不確定的新覆蓋範圍須標 `OPEN`，重要衝突由 Human 解決，不在文件稽核中擅自升級權限。",
+    "**重用既有單元**：GUI 預覽／候選／例外問題中心／訓練樣本／來源及 Logo／客戶資料／標記／印前 Gate／檔案保存優先沿用既有 UI-001～066 規格；禁止新造平行資料庫、訂單／未完成草稿歷史、新訓練引擎、第二套 Undo、第二套驗證與印前旁路。",
+    "**未來收斂交付**：形成「決策索引、重複對應、衝突及解法、真正未決與需要 Human 取捨、需技術研究的工作、低優先後續項、驗收追溯」。訪談以**必要問題處理完成**為終點，不受 UI-075 這個先前暫定檢查點限制，亦不能因題號已足夠就假稱全體規格完整。",
+    "**開發與安全邊界**：不開始程式開發、AI 訓練、正式名片／門禁卡排版、真實客戶資料處理或正式輸出。沒有完成技術 PoC、實機量測、獨立審查或最終規格驗收；其證據必須待正式工作階段另行建立。"
+  ],
+  "normative_rule_count": 7,
+  "baseline_matrix": "docs/audits/UI-067-GUI-CONVERGENCE-MATRIX.md",
+  "math": "Convergence is a directed provenance graph from original decisions through current implementation and exact test identities; decision approval is independent from implementation/verification state. Newer explicit revisions resolve conflicts without deleting history.",
+  "reuse": [
+    "tools/gui_convergence.py and existing75-topic REQUIREMENTS registry",
+    "All existing CLAUSE_COVERAGE execution plans; original decisions + adopted2026-10-15 report specification",
+    "Existing dev_governance test catalog and exact source/run checks; no new product/DB/queue"
+  ],
+  "references": [
+    "Original mature SQLite/Qt/NetworkX reuse choices recorded in TWENTY_ENGINEERING_BASIS",
+    "Python3.12 AST for exact test identities, closed decision-state enum; existing stdlib only",
+    "Adobe original/reference data distinction retained; no service usage"
+  ],
+  "planned_changes": [
+    "Expose each parent original acceptance -> actual component/test IDs/evidence pointer without promoting unverified source",
+    "Update stale UI066 report OPEN wording using already adopted explicit decision",
+    "Record original conflict resolutions and remaining real-AI/hardware research separate from any new human decision",
+    "Register UI019/UI031/UI032/UI066 original full acceptance tests in original parent IDs; no splitting completion denominators"
+  ],
+  "planned_tests": [
+    "Original75 IDs preserved; missing sources/duplicate topics rejected",
+    "Decision and implementation status independent; declared completed without accepted evidence not silently verified",
+    "Unknown test references and stale report adoption fail closed; conflicting history retained with current resolution"
+  ],
+  "next": "UI067 governance-only reconciliation, then REV01/02/04; immutable current full batch"
+}

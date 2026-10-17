@@ -184,7 +184,11 @@ def make_snapshot(window,kind,work_id=None,session=None):
                 locator={'kind':'candidate','index':index,'template_id':c.template.id,'slot_ids':row.get('slot_ids',[])} if data['status']!='STALE_RESULT' else None
                 add(row,'候選1',locator)
             for row in c.measurements:add(row,'候選1',measurement=True)
-            data['progress']=copy.deepcopy(getattr(window,'last_layout_summary',data['progress']))
+            summary=getattr(window,'last_layout_summary',None)
+            if isinstance(summary,dict):
+                # Version pins and internal identities are local context, never report fields.
+                data['progress']={key:copy.deepcopy(summary.get(key,default)) for key,default in data['progress'].items()}
+
     elif kind=='training':
         from .training_quality import analyse_work
         work=window.library.artwork(work_id)

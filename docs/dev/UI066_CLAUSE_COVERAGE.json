@@ -1,0 +1,136 @@
+{
+  "parent": "UI-066",
+  "status": "EXISTING_SOFTWARE_REPAIRED_TARGETED_NATIVE_REVIEWED_PENDING_IMMUTABLE",
+  "source": "docs/decisions/UI-066-DEDUP-REPORT-HANDOFF.md",
+  "source_sha256": "8f388f97d414091fc24f10305f6aa6fadd63965c59dcf8128c887874570b4759",
+  "normative_cross_decision_count": 6,
+  "clauses": [
+    {
+      "id": "UI-066-CLAUSE-1",
+      "expected": "原有 UI-014／015／057 的輸入錯誤、問題位置與分類保持完全相同；不因報告形式不同產生兩套真值。",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+        "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+        "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation"
+      ]
+    },
+    {
+      "id": "UI-066-CLAUSE-2",
+      "expected": "已證實無解與缺少證據的區別保持，報告要標示版本、時間與未完成搜尋條件；不能把預估風險寫成已確認硬性無解。",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_current_layout_progress_projects_only_public_denominators_not_internal_version_pins",
+        "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+        "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+        "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass"
+      ]
+    },
+    {
+      "id": "UI-066-CLAUSE-3",
+      "expected": "報告/非正式預覽與正式印刷輸出仍按 UI-027／028 區分，從報告返回畫布不得解除 Gate。",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate"
+      ]
+    },
+    {
+      "id": "UI-066-CLAUSE-4",
+      "expected": "去識別內容須完整覆蓋文案、來源圖片、路徑與附檔的敏感資訊；不得用只遮罩螢幕或刪掉電話字串就假稱已完整去識別。",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_current_layout_progress_projects_only_public_denominators_not_internal_version_pins",
+        "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+        "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+        "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected",
+        "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+        "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+        "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries"
+      ]
+    },
+    {
+      "id": "UI-066-CLAUSE-5",
+      "expected": "文件不存在、磁碟滿、權限失敗、命名衝突等按 UI-029／030 既有安全保存規則處理；不得回報已保存。",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+        "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls"
+      ]
+    },
+    {
+      "id": "UI-066-CLAUSE-6",
+      "expected": "不另建平行錯誤中心、永久病例／訂單資料庫、AI 診斷演算法、角色權限系統或上傳服務。",
+      "tests": [
+        "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+        "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+        "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+        "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+        "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report"
+      ]
+    }
+  ],
+  "adopted_R1_R2": {
+    "source": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",
+    "tests": [
+      "test_diagnostic_reports.DiagnosticReportTests.test_current_layout_progress_projects_only_public_denominators_not_internal_version_pins",
+      "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+      "test_diagnostic_reports.DiagnosticReportTests.test_input_empty_invalid_company_no_candidate_and_unknown_not_pass",
+      "test_diagnostic_reports.DiagnosticReportTests.test_missing_font_width_is_unknown_not_zero_or_substitute",
+      "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+      "test_diagnostic_reports.DiagnosticReportTests.test_privacy_allowlist_rejects_unknown_fields_types_and_unsafe_html",
+      "test_diagnostic_reports.DiagnosticReportTests.test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation",
+      "test_diagnostic_reports.DiagnosticReportTests.test_safe_save_collision_permission_disk_full_and_cleanup",
+      "test_diagnostic_reports.DiagnosticReportTests.test_save_race_and_preview_change_never_overwrite_or_report_success",
+      "test_diagnostic_reports.DiagnosticReportTests.test_locator_saved_readback_changed_library_and_manual_clear",
+      "test_diagnostic_reports.DiagnosticReportTests.test_locator_expiry_keeps_report_and_rejects_changed_input",
+      "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+      "test_diagnostic_reports.DiagnosticReportTests.test_exact_work_revision_duplicate_slots_and_dirty_navigation_are_protected",
+      "test_diagnostic_reports.DiagnosticReportTests.test_font_file_and_template_changes_invalidate_snapshot_without_gate_mutation",
+      "test_diagnostic_reports.DiagnosticReportTests.test_each_size_and_candidate_readonly_scope_never_unlocks_output",
+      "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+      "test_diagnostic_reports.DiagnosticReportTests.test_oversized_problem_set_is_explicit_partial_not_silent_success",
+      "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected",
+      "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+      "test_diagnostic_reports.DiagnosticReportTests.test_gui_actual_preview_save_reopen_json_and_cancel_flow",
+      "test_diagnostic_reports.DiagnosticReportTests.test_gui_stale_during_save_dialog_refuses_publication_and_can_refresh",
+      "test_diagnostic_reports.DiagnosticReportTests.test_gui_worker_start_encode_and_read_failures_restore_controls",
+      "test_diagnostic_reports.DiagnosticReportTests.test_gui_original_entry_points_training_template_and_candidate",
+      "test_diagnostic_reports.DiagnosticReportTests.test_missing_model_or_source_does_not_prevent_safe_text_report",
+      "test_diagnostic_reports.DiagnosticReportTests.test_saved_evaluation_metrics_share_same_denominators_but_no_model_pass",
+      "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+      "test_diagnostic_reports.DiagnosticReportTests.test_changed_font_since_generation_is_stale_without_mutating_candidate",
+      "test_diagnostic_reports.DiagnosticReportTests.test_large_library_scope_and_bad_source_schema_fail_truthfully_recover",
+      "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+      "test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success"
+    ],
+    "format": "Offline HTML + JSON + SHA256 manifest in bounded ZIP; local user handoff only; no PDF report/full private bundle/automatic transmission"
+  },
+  "dedup_sources": [
+    "UI-014",
+    "UI-015",
+    "UI-057",
+    "UI-027",
+    "UI-028",
+    "UI-029",
+    "UI-030",
+    "UI-048",
+    "UI-018",
+    "UI-034",
+    "UI-035",
+    "UI-059",
+    "UI-060A",
+    "UI-061",
+    "UI-062",
+    "UI-063",
+    "UI-065"
+  ],
+  "targeted_evidence": "docs/qa/targeted/ui066-reports-002.log",
+  "tests": 30,
+  "pass": 30,
+  "actual_process_exit": 0,
+  "native_review": "docs/qa/targeted/ui066-native-003-visual-review.json",
+  "prior_failure": "00129tests22PASS7ERROR: existing candidate report copied new private layout-summary keys; now explicit public progress projection; raw records retained",
+  "scope": "No roles/service/DB changes. Full current immutable and external qualifications not claimed."
+}

@@ -42,6 +42,17 @@ class DiagnosticReportTests(unittest.TestCase):
         with zipfile.ZipFile(out,'w') as z:
             for n,b in entries.items():z.writestr(n,b)
         return out.getvalue()
+    def test_current_layout_progress_projects_only_public_denominators_not_internal_version_pins(self):
+        self.candidate();private='FORBIDDEN_INTERNAL_TEMPLATE_PIN_831'
+        self.w.last_layout_summary.update(generation=self.w.generation,scope_template_pins={private:private},future_private={'raw_path':str(self.root)})
+        before=copy.deepcopy(self.w.last_layout_summary);snapshot=make_snapshot(self.w,'candidate');raw=build_bundle(snapshot.data)
+        self.assertEqual(set(snapshot.data['progress']),{'state','total','checked','calculated','failed','unstarted','global_unsolvable'})
+        self.assertEqual(snapshot.data['progress']['total'],before['total']);self.assertFalse(snapshot.data['progress']['global_unsolvable'])
+        with zipfile.ZipFile(io.BytesIO(raw)) as z:
+            for name in z.namelist():
+                content=z.read(name);self.assertNotIn(private.encode(),content);self.assertNotIn(str(self.root).encode(),content)
+        self.assertEqual(read_bundle(raw),snapshot.data);self.assertEqual(self.w.last_layout_summary,before)
+
     def test_snapshot_html_json_have_same_facts_width_and_historical_scope(self):
         self.w.people.item(0,0).setText('X'*200);c=self.candidate();before=copy.deepcopy(c)
         s=make_snapshot(self.w,'candidate');self.assertEqual(s.data['status'],'BLOCKED')
