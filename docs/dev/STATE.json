@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "Complete original28; unblocked software implemented, freeze current all-module regression with external evidence pending",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-UI067-FULL7-REV-PLAN.receipt.json",
-  "last_confirmed_commit": "65f5b945144c788e10faab5c267c324049848e8d",
+  "active_task": "Continue original28; repair CURRENT004 actual full regression failures before CURRENT005",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT-FULL-SOURCE004.receipt.json",
+  "last_confirmed_commit": "57f15cc810be18a0f13e16537ae6e8b5af18bea8",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -27,7 +27,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT-FULL-SOURCE004"
+    "CP-20261017-REMAINING28-CURRENT004-FAILED-REPAIR-PLAN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -646,7 +646,18 @@
     "latest_remote_commit": "e828c2e4ce1109b4254701c6806a3a98b85c9c4d",
     "reason": "GUI/source integration checkpoint exceeded 10 minutes; recorded actual gap, immediate WIP preservation; no claim cadence was met"
   },
-  "latest_verification": "docs/qa/targeted/layout003-publication-gate-001.log",
+  "latest_verification": {
+    "run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-004/run.json",
+    "source_commit": "57f15cc810be18a0f13e16537ae6e8b5af18bea8",
+    "status": "FAIL",
+    "test_count": 1534,
+    "passed": 1507,
+    "not_completed": 9,
+    "runtime_module_failures": 1,
+    "source_unchanged": true,
+    "actual_exit": 1,
+    "native_capture_executed": false
+  },
   "failed_evidence_runs": [
     "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json",
     "docs/evidence/runs/RUN-REMAINING28-QUALITY-001/run.json",
@@ -665,6 +676,18 @@
       "qt_uncaught": 0,
       "capture_not_run_due_failed_tests": true,
       "counts_as_completed": false
+    },
+    {
+      "run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-004/run.json",
+      "source_commit": "57f15cc810be18a0f13e16537ae6e8b5af18bea8",
+      "status": "FAIL",
+      "test_count": 1534,
+      "passed": 1507,
+      "not_completed": 9,
+      "runtime_module_failures": 1,
+      "source_unchanged": true,
+      "actual_exit": 1,
+      "native_capture_executed": false
     }
   ],
   "active_work_package_plan": "docs/dev/REMAINING28_EXECUTION_QUEUE.json",
@@ -721,7 +744,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "Revisions00263PASS after controlled-resource and real event-loop custom GUI fixture fix;00162PASS1fixtureFAIL retained. REV01 mapped; REV02realAI clauses1/2/4 and REV04 actual hardware remain empty-test NOT_VERIFIED. UI032 actual Windows installation clause5 likewise not discharged by fake adapters. All28 original clauses now indexed without source deletion or completion promotion.",
+  "current_work": "CURRENT004 actual exit1:1534/1543 completed,1507PASS27FAIL/ERROR,9notcompleted due training_quality cleanup modal deadline;0 native capture attempted;195modules; source57f15cc unchanged. No owned process now. Preserve failed run and repair.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -788,10 +811,17 @@
       "status": "DEVIATION_RECORDED",
       "reason": "Single70s targeted rerun plus original-clause/source-pin registration exceeded approximate10min checkpoint spacing; no strict cadence PASS claimed",
       "recovery": "Freeze and save checkpoint now; no running owned test/capture"
+    },
+    {
+      "date": "2026-10-17",
+      "scope": "RUN-REMAINING28-CURRENT-004 immutable full test execution",
+      "status": "DEVIATION_RECORDED",
+      "reason": "No source/docs/snapshot mutation during active full test/evidence writer; GitHub checkpoint saved at actual completion instead of mid-run unstable snapshot",
+      "strict_10min_pass_claimed": false
     }
   ],
   "next_work_package_plan": "docs/dev/REV01_EXECUTION_PLAN.json",
-  "next_step": "Checkpoint all current source/clauses, exact GitHub readback then run current full immutable evidence; repair actual failures and rerun. Do not claim all28 complete while original external clauses lack evidence.",
+  "next_step": "Diagnose actual TTC/raw-font vs shaping identity; explicitly bind authorized real sources in positive fixtures; inspect stale property-panel expectation and fix cleanup-only navigation modal. Targeted real worker tests then new immutable full run; external criteria remain unverified.",
   "current_work_package": "UI-032 original10 shared font source identity/current glyph-license filters/separate Windows workflow",
   "checkpoint_cadence_note": "Cadence deviations during earliercriticaldiagnostics/UI063planning+implementation recorded; overallstrict10minute cadence notPASS.",
   "implementation_pending_original_parents": [
