@@ -1,5 +1,5 @@
 {
-  "status": "PLAN_BEFORE_CODE",
+  "status": "CAPTURE_CHAIN_PARTIAL_19PASS_NEXT_REAL_FORMAT_REVIEW_REQUIRED",
   "failed_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "source_commit": "851fcd2619213aca744d228f4216e9d9a300492d",
   "actual_exit": 1,
@@ -16,6 +16,40 @@
     "Use existing owned fixture cleanup while QApplication lives; preserve actual item SUCCESS/output assertions",
     "Run all actual native capture chain targeted before source008 immutable all1549/full capture"
   ],
-  "next": "Checkpoint failure, then bounded unchanged capture reproduction and exact process/job diagnostics",
-  "original_goal_28_complete": false
+  "next": "Checkpoint WIP; update exact capture review; target remaining chain then full008",
+  "original_goal_28_complete": false,
+  "unchanged_021": {
+    "actual_capture_exit": 1,
+    "same_poll_wait_failed": true,
+    "native_abort_reproduced": false
+  },
+  "same_budget_in_memory_022": {
+    "actual_exit": 0,
+    "diagnostic_only": true,
+    "wait_seconds": [
+      0.605709,
+      0.884701,
+      2.091041
+    ],
+    "budget_seconds": 15,
+    "cleanup_unchanged": true,
+    "screenshots": 7
+  },
+  "before_code_decision": "Reuse existing wait_for_gui at same15seconds based on actual022. Reuse existing dispose_main_window for owned Qt fixture cleanup; no product guards or SUCCESS assertions changed. Native-6 root cause unconfirmed.",
+  "chain_023": {
+    "actual_exit": 1,
+    "processes_completed": 20,
+    "successful_processes": 19,
+    "failed": "capture_fixed70_ten.py",
+    "path": "docs/qa/targeted/current007-native-chain-023"
+  },
+  "fixed70_actual_rows_024": {
+    "actual_exit": 1,
+    "diagnostic_only": true,
+    "success": 4,
+    "failed_final_pdf_jpg": 2,
+    "reason": "Missing current format/size/DPI proof review; product correctly blocks",
+    "path": "docs/qa/targeted/current007-fixed70-export-diagnosis-024"
+  },
+  "before_next_code_decision": "Reuse tests.test_multi_size.approve_formats actual proof+explicit review at exact96DPI before six exports. Keep original6SUCCESS assertion and output-copy checks. Reuse existing owned GUI fixture disposal, no product Gate change."
 }

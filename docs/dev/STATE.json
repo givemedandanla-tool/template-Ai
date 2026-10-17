@@ -6,9 +6,9 @@
   "product_version": "0.1.28",
   "framework_status": "READY",
   "active_task": "Original28 CURRENT007 all1549PASS but capture-6 failure; repair actual capture waiting/cleanup, current full still not PASS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT-FULL-SOURCE007.receipt.json",
-  "last_confirmed_commit": "851fcd2619213aca744d228f4216e9d9a300492d",
-  "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT007-FAILED-CAPTURE-PLAN.receipt.json",
+  "last_confirmed_commit": "c8ecd1d42e5d6db5929e607467bde1b4169af087",
+  "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -27,9 +27,10 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-FAILED-CAPTURE-PLAN"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
   ],
-  "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+  "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261016-REMAINING28-LAYOUT.json",
   "progress_report": "docs/dev/PROGRESS.md",
@@ -565,7 +566,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-CURRENT-007",
+  "planned_evidence_run": "RUN-REMAINING28-CURRENT-008",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -803,9 +804,14 @@
       "checkpoint": "CP-20261016-REMAINING28-UI053-MAPPING-ADAPTER-WIP",
       "reason": "Incorrect unverified base SHA entered; no remote acknowledgement. Superseded by -002; original PREPARED manifest and local ZIP retained.",
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
+    },
+    {
+      "checkpoint": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+      "reason": "Precheckpoint governance correctly found latest failed007 stale after capture tool code change; source pending current008, no current valid run",
+      "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Actual CURRENT007 exit1,1549/1549PASS,197modules,0runtime errors,source unchanged; capture_next_twentyeight old polling timed out then Qt abort-6; no parent completion",
+  "current_work": "Captured original007failure saved. capture_next_twentyeight same15s Qt loop repair diagnostic022PASS; nativechain02319PASS,20th fixed70ten finalPDF/JPG correctly blocked for absent actual96DPI review;024exactrows retained.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -919,7 +925,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Save failed007 then diagnose capture pipeline, preserve all actual success/output assertions, targeted all native chain, freeze008 full regression",
+  "next_step": "Reuse existing exact format proof/review in fixed70 capture, then finish original native chain; freeze008 immutable all1549/native",
   "current_work_package": "Original28 full software regression and external qualification",
   "checkpoint_cadence_note": "CURRENT007 immutable full run held source frozen beyond10minutes; actual duration from owned timestamp and run metadata. Delayed checkpoint until all writers exited; no strict10minutePASS.",
   "implementation_pending_original_parents": [
@@ -969,7 +975,7 @@
     "policy": "Keep latest8 confirmed plus all unacknowledged at original location; moved archives retained with exact SHA/manifest matched REMOTE_VERIFIED receipts. For old local restore copy verified archive back into original .checkpoints/ID/source.zip; remote Git remains authoritative.",
     "free_after_bytes": 4308742144
   },
-  "current_targeted_run": "docs/qa/targeted/current006-diagnostic-repeat-019",
+  "current_targeted_run": "docs/qa/targeted/current007-native-chain-023",
   "local_checkpoint_cache_relocation_history": [
     {
       "journal": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261017.json",
@@ -977,5 +983,6 @@
       "bytes": 2145498863,
       "copies_retained": true
     }
-  ]
+  ],
+  "current_evidence_validity": "NO_CURRENT_COMPLETE_RUN: capture tool source changed after failed007; historical all1549PASS preserved,008 required"
 }
