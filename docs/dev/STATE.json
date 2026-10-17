@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "Continue original28; diagnose CURRENT006 one old wait failure and native diagnostic-report fault",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT006-FAILED-REPRO-PLAN.receipt.json",
-  "last_confirmed_commit": "28615bc13247ea0387d284246e3375afb58eb763",
-  "latest_evidence_run": null,
+  "active_task": "Original28 CURRENT007 all1549PASS but capture-6 failure; repair actual capture waiting/cleanup, current full still not PASS",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT-FULL-SOURCE007.receipt.json",
+  "last_confirmed_commit": "851fcd2619213aca744d228f4216e9d9a300492d",
+  "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -27,7 +27,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT-FULL-SOURCE007"
+    "CP-20261017-REMAINING28-CURRENT007-FAILED-CAPTURE-PLAN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -545,16 +545,7 @@
     "UI-059",
     "UI-060A"
   ],
-  "last_formal_validation": {
-    "id": "RUN-REMAINING28-LAYOUT-003",
-    "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
-    "tests": 1078,
-    "passed": 1078,
-    "skipped": 0,
-    "qt_uncaught": 0,
-    "capture_exit": 0,
-    "actual_parent_exit": 0
-  },
+  "last_formal_validation": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
   "publication_status": {
     "run": "RUN-REMAINING28-LAYOUT-003",
@@ -814,7 +805,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "CURRENT006 bounded fixture/event-loop repair targeted01761PASS;019two31PASS native modules actualexit0. Native-11 root cause unconfirmed; freeze CURRENT007 then full1549/native required.",
+  "current_work": "Actual CURRENT007 exit1,1549/1549PASS,197modules,0runtime errors,source unchanged; capture_next_twentyeight old polling timed out then Qt abort-6; no parent completion",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -927,10 +918,10 @@
       "reason": "Frozen all-source test/evidence writer until actual exit, checkpoint at completion; no strict10min claim"
     }
   ],
-  "next_work_package_plan": "docs/dev/REV01_EXECUTION_PLAN.json",
-  "next_step": "Checkpoint/freeze CURRENT007 source; actual GitHub readback; immutable all1549/native capture; preserve failure honestly and close independent scopes only from exact complete claims.",
+  "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
+  "next_step": "Save failed007 then diagnose capture pipeline, preserve all actual success/output assertions, targeted all native chain, freeze008 full regression",
   "current_work_package": "Original28 full software regression and external qualification",
-  "checkpoint_cadence_note": "Cadence deviations during earliercriticaldiagnostics/UI063planning+implementation recorded; overallstrict10minute cadence notPASS.",
+  "checkpoint_cadence_note": "CURRENT007 immutable full run held source frozen beyond10minutes; actual duration from owned timestamp and run metadata. Delayed checkpoint until all writers exited; no strict10minutePASS.",
   "implementation_pending_original_parents": [
     "UI-059",
     "UI-060A",

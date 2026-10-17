@@ -1,0 +1,21 @@
+{
+  "status": "PLAN_BEFORE_CODE",
+  "failed_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
+  "source_commit": "851fcd2619213aca744d228f4216e9d9a300492d",
+  "actual_exit": 1,
+  "tests": 1549,
+  "passed": 1549,
+  "not_completed": 0,
+  "runtime_errors": 0,
+  "source_unchanged": true,
+  "capture_exit": -6,
+  "observed_failure": "capture_next_twentyeight.py old processEvents/qWait15s polling exceeded worker wait, then QFontDatabase access after QGuiApplication teardown abort",
+  "root_cause": "Native abort root cause unconfirmed; waiting and cleanup require actual bounded reproduction, no waiver",
+  "scope": [
+    "Reuse existing Qt event-loop wait at original15s bound if confirmed; no product assertions weakened",
+    "Use existing owned fixture cleanup while QApplication lives; preserve actual item SUCCESS/output assertions",
+    "Run all actual native capture chain targeted before source008 immutable all1549/full capture"
+  ],
+  "next": "Checkpoint failure, then bounded unchanged capture reproduction and exact process/job diagnostics",
+  "original_goal_28_complete": false
+}
