@@ -1,6 +1,6 @@
 {
   "id": "FIXED70-REMAINING28-FULL",
-  "status": "IMPLEMENTING",
+  "status": "PARTIAL_EXTERNAL_QUALIFICATION_REQUIRED",
   "baseline_commit": "b6f11939816df78cc612bd6c168f025d1cf6c4f2",
   "target_parent_count": 28,
   "target_parent_ids": [
@@ -237,7 +237,7 @@
   "acceptance": [
     {
       "parent": "UI-019",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_batch_format_review.BatchFormatReviewTests.test_dpi_change_cannot_reuse_other_sampling_review",
         "test_batch_format_review.BatchFormatReviewTests.test_unreviewed_pdf_jpeg_are_blocked_while_png_and_marked_previews_complete",
@@ -285,11 +285,13 @@
       "unresolved": [],
       "clause_count": 12,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "7892aedc3c59994e5aa3d49a855cf4ecbe4544db7c6a6e561e50899fb7545d80"
+      "source_original_section_sha256": "7892aedc3c59994e5aa3d49a855cf4ecbe4544db7c6a6e561e50899fb7545d80",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 12
     },
     {
       "parent": "UI-031",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
         "test_annotation_gui.AnnotationGuiTests.test_actual_verified_svg_links_sync_index_search_without_claiming_native_illustrator_mapping",
@@ -419,11 +421,13 @@
       "unresolved": [],
       "clause_count": 10,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "6872acb0dda5af1d5a8c63b70bfa1674a6572605d9dabb54c66465a304c570fd"
+      "source_original_section_sha256": "6872acb0dda5af1d5a8c63b70bfa1674a6572605d9dabb54c66465a304c570fd",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 10
     },
     {
       "parent": "UI-032",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "PARTIAL_EXTERNAL_EVIDENCE_REQUIRED",
       "tests": [
         "test_dev_framework.DevFrameworkTests.test_checkpoint_manifest_excludes_private_capture_libraries_but_keeps_public_report",
         "test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval",
@@ -513,11 +517,13 @@
       "unfulfilled_external_clause_ids": [
         "UI-032-CLAUSE-5"
       ],
-      "source_original_section_sha256": "814e6d8bfc7943757c01477c2e8b107389fd9a0952eb718eb296b9ee6678480e"
+      "source_original_section_sha256": "814e6d8bfc7943757c01477c2e8b107389fd9a0952eb718eb296b9ee6678480e",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 9
     },
     {
       "parent": "UI-046",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_customer_candidates.CustomerCandidateTests.test_same_content_different_source_codes_keep_two_customers_and_independent_entities",
         "test_customer_candidates.CustomerCandidateTests.test_shared_contact_conflicts_show_both_people_without_merging_and_late_conflict_blocks",
@@ -536,14 +542,15 @@
       ],
       "unresolved": [],
       "clause_count": 11,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "17ff65fc95b81922ccfb02b63e83f81f38c6ba619aceccea59bb9cdab38d3938"
+      "source_original_section_sha256": "17ff65fc95b81922ccfb02b63e83f81f38c6ba619aceccea59bb9cdab38d3938",
+      "verified_clause_count": 11
     },
     {
       "parent": "UI-047",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_backup_center.BackupCenterTests.test_actual_background_cancel_keeps_user_files_and_releases_shared_worker",
         "test_backup_center.BackupCenterTests.test_partial_scope_and_shared_database_dependency_never_become_silent_full_success",
@@ -580,14 +587,15 @@
       ],
       "unresolved": [],
       "clause_count": 10,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "7de9686e5db8a16d8b448a897a5546998711930ab0e4584baf804a653b7c86b6"
+      "source_original_section_sha256": "7de9686e5db8a16d8b448a897a5546998711930ab0e4584baf804a653b7c86b6",
+      "verified_clause_count": 10
     },
     {
       "parent": "UI-049",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
         "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids",
@@ -619,14 +627,15 @@
       ],
       "unresolved": [],
       "clause_count": 11,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "3ec25ad750ac6f35d0346313a6949afe40946db9774da012d8a2b0471b19c12d"
+      "source_original_section_sha256": "3ec25ad750ac6f35d0346313a6949afe40946db9774da012d8a2b0471b19c12d",
+      "verified_clause_count": 11
     },
     {
       "parent": "UI-050",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units",
         "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
@@ -664,14 +673,15 @@
       ],
       "unresolved": [],
       "clause_count": 12,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "00ac05a8330d8cb404d428821a9b0f7d5299a91ae5aafbaf5667ef9ee55d15a6"
+      "source_original_section_sha256": "00ac05a8330d8cb404d428821a9b0f7d5299a91ae5aafbaf5667ef9ee55d15a6",
+      "verified_clause_count": 12
     },
     {
       "parent": "UI-051",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
         "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
@@ -723,14 +733,15 @@
       ],
       "unresolved": [],
       "clause_count": 8,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "16514fdbf129d127ed027892f0102c52d402e7a8c011e41046dffcec3882be56"
+      "source_original_section_sha256": "16514fdbf129d127ed027892f0102c52d402e7a8c011e41046dffcec3882be56",
+      "verified_clause_count": 8
     },
     {
       "parent": "UI-052",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
         "test_coverage_batches.CoverageBatchTests.test_600_files_paged_and_global_search_before_limit",
@@ -773,14 +784,15 @@
       ],
       "unresolved": [],
       "clause_count": 10,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "34b1d3c6e232687e2a3f14bf611ea14c8a8718ac456b0e22ee33572a896e8a93"
+      "source_original_section_sha256": "34b1d3c6e232687e2a3f14bf611ea14c8a8718ac456b0e22ee33572a896e8a93",
+      "verified_clause_count": 10
     },
     {
       "parent": "UI-053",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_quality_commands.QualityCommandTests.test_actual_cancelled_owned_command_does_not_commit_gold_or_leave_busy_connection",
         "test_quality_commands.QualityCommandTests.test_actual_empty_directory_paging_is_bounded_and_not_a_quality_pass",
@@ -909,14 +921,15 @@
       ],
       "unresolved": [],
       "clause_count": 9,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "d4f0f618dabbe7d17caff1eb61426641ae4dbe8a7b819312eb5a8cd85d396ed2"
+      "source_original_section_sha256": "d4f0f618dabbe7d17caff1eb61426641ae4dbe8a7b819312eb5a8cd85d396ed2",
+      "verified_clause_count": 9
     },
     {
       "parent": "UI-054",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_quality_provenance.QualityProducerProvenanceTests.test_actual_auto_parser_and_model_provenance_are_found_and_quarantined",
         "test_quality_provenance.QualityProducerProvenanceTests.test_actual_model_reapproval_changes_review_context_but_not_independent_truth_dependencies",
@@ -1002,14 +1015,15 @@
       ],
       "unresolved": [],
       "clause_count": 11,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "source_commit": "c87fa8323fa387929d470e874f3c07ee11942c08",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "13e2c0f1dee610fa6485a53f806bef1dadacd9f0c920a32953851121af942498"
+      "source_original_section_sha256": "13e2c0f1dee610fa6485a53f806bef1dadacd9f0c920a32953851121af942498",
+      "verified_clause_count": 11
     },
     {
       "parent": "UI-055",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation",
         "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
@@ -1213,13 +1227,14 @@
       ],
       "unresolved": [],
       "clause_count": 11,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "c1ce876c8721c99d6d1eab975d42283bab8fbf148b154e556c9e291df54d6e5d"
+      "source_original_section_sha256": "c1ce876c8721c99d6d1eab975d42283bab8fbf148b154e556c9e291df54d6e5d",
+      "verified_clause_count": 11
     },
     {
       "parent": "UI-056",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_canvas_compare.CanvasCompareTests.test_corrupt_source_background_target_budget_and_mid_render_mutation",
         "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
@@ -1418,13 +1433,14 @@
       ],
       "unresolved": [],
       "clause_count": 8,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "7ed53d2d00d59b239e2619ca69a421df377b85d592e4cc19e4b6c65c7f7e8807"
+      "source_original_section_sha256": "7ed53d2d00d59b239e2619ca69a421df377b85d592e4cc19e4b6c65c7f7e8807",
+      "verified_clause_count": 8
     },
     {
       "parent": "UI-057",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_candidate_risk.CandidateRiskTests.test_acceptance_flag_is_not_a_published_baseline_receipt",
         "test_candidate_risk.CandidateRiskTests.test_actual_source_provenance_rejection_is_required_unknown_without_mutating_template",
@@ -1555,13 +1571,14 @@
       ],
       "unresolved": [],
       "clause_count": 9,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "e2701cc05f048356b1be34712fe3af9973a456af94787d36fb350442714d4fa7"
+      "source_original_section_sha256": "e2701cc05f048356b1be34712fe3af9973a456af94787d36fb350442714d4fa7",
+      "verified_clause_count": 9
     },
     {
       "parent": "UI-058",
-      "status": "VERIFIED",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_candidate_risk.CandidateRiskTests.test_acceptance_flag_is_not_a_published_baseline_receipt",
         "test_candidate_risk.CandidateRiskTests.test_actual_source_provenance_rejection_is_required_unknown_without_mutating_template",
@@ -1692,13 +1709,14 @@
       ],
       "unresolved": [],
       "clause_count": 10,
-      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "8e4b587c67ce54313884ab104693443b8572ceb487e06ef9fa56103d580c2d04"
+      "source_original_section_sha256": "8e4b587c67ce54313884ab104693443b8572ceb487e06ef9fa56103d580c2d04",
+      "verified_clause_count": 10
     },
     {
       "parent": "UI-059",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_candidate_changes.CandidateChangeTests.test_capacity_change_conservatively_rechecks_all_slots",
         "test_candidate_changes.CandidateChangeTests.test_company_rebind_reaches_person_and_old_new_company_not_unrelated_company",
@@ -1759,11 +1777,13 @@
       "unresolved": [],
       "clause_count": 10,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "16bae7f57d2cf2d17063b6209d474910f489ba4a3dd05652d078e527622efe8e"
+      "source_original_section_sha256": "16bae7f57d2cf2d17063b6209d474910f489ba4a3dd05652d078e527622efe8e",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 10
     },
     {
       "parent": "UI-060A",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_cancel_active_preserves_manual_pending_without_formal_release",
         "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_changed_input_rejects_late_result_then_current_long_phone_rechecks",
@@ -1803,11 +1823,13 @@
       "unresolved": [],
       "clause_count": 6,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "307c7222ba2b9c58b04712c14b05722c4d8860b682fef4c699bc34dde78153bf"
+      "source_original_section_sha256": "307c7222ba2b9c58b04712c14b05722c4d8860b682fef4c699bc34dde78153bf",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 6
     },
     {
       "parent": "UI-061",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_candidate_results.CandidateResultsTests.test_actual_formal_png_uses_current_dimensions_and_preserves_official_template",
         "test_candidate_results.CandidateResultsTests.test_actual_problem_click_opens_existing_candidate_fix_entry",
@@ -1861,11 +1883,13 @@
       "unresolved": [],
       "clause_count": 20,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "9fa2646c6e0f5090e8209f7504383fa7782998cd268a460d4ee73d2f654b516a"
+      "source_original_section_sha256": "9fa2646c6e0f5090e8209f7504383fa7782998cd268a460d4ee73d2f654b516a",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 20
     },
     {
       "parent": "UI-062",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_candidate_results.CandidateResultsTests.test_actual_problem_click_opens_existing_candidate_fix_entry",
         "test_candidate_results.CandidateResultsTests.test_input_change_inside_save_dialog_never_writes_old_formal_file",
@@ -1899,11 +1923,13 @@
       "unresolved": [],
       "clause_count": 26,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "d3fc1231c68d3fb0d18eaa2ebb423efd6b7bb9c0fb30e0cb64c92fd4e88908a7"
+      "source_original_section_sha256": "d3fc1231c68d3fb0d18eaa2ebb423efd6b7bb9c0fb30e0cb64c92fd4e88908a7",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 26
     },
     {
       "parent": "UI-063",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_completed_comparison_cannot_overwrite_later_human_review",
         "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_new_manual_review_during_worker_is_not_erased_by_late_result",
@@ -1939,11 +1965,13 @@
       "unresolved": [],
       "clause_count": 26,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "8298bf19547d707586fc8e89d3e9c2a80a04bd782adf5c652da23d2368203a4a"
+      "source_original_section_sha256": "8298bf19547d707586fc8e89d3e9c2a80a04bd782adf5c652da23d2368203a4a",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 26
     },
     {
       "parent": "UI-064",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_annotation_gui.AnnotationGuiTests.test_actual_qt_source_canvas_selection_semantic_details_patch_undo_and_atomic_pending_save",
         "test_candidate_edit_dispatch.CandidateEditDispatchTests.test_new_manual_review_during_worker_is_not_erased_by_late_result",
@@ -1983,11 +2011,13 @@
       "unresolved": [],
       "clause_count": 30,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "0b96d619d38d0b78ad9ad1d8844dc988a928c01389142e12c8f3b18d55f1caa8"
+      "source_original_section_sha256": "0b96d619d38d0b78ad9ad1d8844dc988a928c01389142e12c8f3b18d55f1caa8",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 30
     },
     {
       "parent": "UI-065",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_blocked_size100_missing_own_logo_cannot_inherit_size90_pass",
         "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_changed_shared_input_after_preflight_never_retargets_old_field_or_installs",
@@ -2037,11 +2067,13 @@
       "unresolved": [],
       "clause_count": 25,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "d0d9e0809eabe78288adb37339598b40f6d64fc978a529e1a01f584e45535360"
+      "source_original_section_sha256": "d0d9e0809eabe78288adb37339598b40f6d64fc978a529e1a01f584e45535360",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 25
     },
     {
       "parent": "UI-066",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
         "test_diagnostic_reports.DiagnosticReportTests.test_current_layout_progress_projects_only_public_denominators_not_internal_version_pins",
@@ -2072,11 +2104,13 @@
       "unresolved": [],
       "clause_count": 6,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "8f388f97d414091fc24f10305f6aa6fadd63965c59dcf8128c887874570b4759"
+      "source_original_section_sha256": "8f388f97d414091fc24f10305f6aa6fadd63965c59dcf8128c887874570b4759",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 6
     },
     {
       "parent": "UI-067",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth",
         "test_gui_convergence_trace.GuiConvergenceTraceTests.test_completed_registry_claim_never_substitutes_for_current_source_evidence",
@@ -2089,11 +2123,13 @@
       "unresolved": [],
       "clause_count": 7,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "36794fa5012bbe22a65409ce185bbe4f0dc70d5efba9c92c1aa5b6bc19bee77c"
+      "source_original_section_sha256": "36794fa5012bbe22a65409ce185bbe4f0dc70d5efba9c92c1aa5b6bc19bee77c",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 7
     },
     {
       "parent": "UI-052-REVIEW",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_major_review_closure.MajorReviewClosureTests.test_case_completion_does_not_hide_unreviewed_template_and_can_reopen_exact_unit",
         "test_major_review_closure.MajorReviewClosureTests.test_exclusion_can_complete_defined_scope_while_source_remains_untrusted",
@@ -2160,11 +2196,13 @@
       "unresolved": [],
       "clause_count": 9,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "a8dcb34e58e350cdcd2246d5c2607619416f2353adc0523a767f54c7ac7ec8e0"
+      "source_original_section_sha256": "a8dcb34e58e350cdcd2246d5c2607619416f2353adc0523a767f54c7ac7ec8e0",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 9
     },
     {
       "parent": "REV-01",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "SELF_VERIFIED_ORIGINAL_CLAUSES",
       "tests": [
         "test_custom_layout.CustomLayoutTests.test_actual_gui_custom_preview_cancel_then_explicit_new_draft_does_not_publish",
         "test_custom_layout.CustomLayoutTests.test_existing_qualified_template_prevents_unnecessary_custom_and_stale_input_never_creates_version",
@@ -2210,11 +2248,13 @@
       "unresolved": [],
       "clause_count": 1,
       "unfulfilled_external_clause_ids": [],
-      "source_original_section_sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb"
+      "source_original_section_sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 1
     },
     {
       "parent": "REV-02",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "PARTIAL_EXTERNAL_EVIDENCE_REQUIRED",
       "tests": [
         "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
         "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source",
@@ -2261,26 +2301,34 @@
         "REV-02-CLAUSE-2",
         "REV-02-CLAUSE-4"
       ],
-      "source_original_section_sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb"
+      "source_original_section_sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 3
     },
     {
       "parent": "REV-04",
-      "status": "NOT_VERIFIED_CURRENT_IMMUTABLE_SOURCE",
+      "status": "PARTIAL_EXTERNAL_EVIDENCE_REQUIRED",
       "tests": [],
       "unresolved": [],
       "clause_count": 1,
       "unfulfilled_external_clause_ids": [
         "REV-04-CLAUSE-1"
       ],
-      "source_original_section_sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb"
+      "source_original_section_sha256": "506d679e42a6db782bc53b39b4b225214778c4d7c20782874e9497b529494aeb",
+      "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+      "verified_clause_count": 0
     }
   ],
-  "verified_parent_count": 12,
-  "remaining_parent_count": 16,
+  "verified_parent_count": 25,
+  "remaining_parent_count": 3,
   "registration_update": {
     "date": "2026-10-17",
     "prior_full_file_sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
     "prior_contract_snapshot": "docs/dev/history/FIXED70_REMAINING28_BEFORE_FULL_REGISTRATION_20261017.json",
     "scope": "Register original full clauses/external unmet evidence; original_clauses unchanged; no completion promotion"
-  }
+  },
+  "current_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+  "current_source_commit": "38700310960ad7c77a5f82a71a8798e03f5ae508",
+  "software_execution_status": "PASS",
+  "all28_complete": false
 }
