@@ -24,6 +24,7 @@ class FontCenterDialog(QDialog):
         self.query.textChanged.connect(self.filter_rows); top.addWidget(self.query,1)
         self.kind=QComboBox()
         for title,data in (("全部來源",None),("程式核准複本","ASSET"),("Qt可用候選","QT"),("模板待處理引用","REFERENCE")): self.kind.addItem(title,data)
+        self.kind.addItem('Windows已登錄來源（Qt字面另驗）','WINDOWS_SOURCE')
         self.kind.currentIndexChanged.connect(self.filter_rows); top.addWidget(self.kind)
         self.health=QComboBox(); self.health.addItem("全部狀態",None)
         for key,name in STATUS_NAMES.items(): self.health.addItem(name,key)
@@ -36,8 +37,8 @@ class FontCenterDialog(QDialog):
         for control in (self.rights,self.glyph):control.currentIndexChanged.connect(self.filter_rows);filters.addWidget(control)
         layout.addLayout(filters)
         source=QHBoxLayout();self.source_button=QPushButton('指定來源字型參考檔（只讀）');self.source_button.clicked.connect(self.choose_source_font);source.addWidget(self.source_button);self.identity_button=QPushButton('核對來源與選取字面的身分');self.identity_button.clicked.connect(self.verify_source_identity);self.identity_button.setEnabled(False);source.addWidget(self.identity_button);layout.addLayout(source)
-        self.source_label=QLabel('原稿字型未識別；名稱／外觀相似只作候選。');self.source_label.setWordWrap(True);layout.addWidget(self.source_label)
-        self.identity_label=QLabel('來源身分尚未核對；未變更來源或模板。');self.identity_label.setWordWrap(True);layout.addWidget(self.identity_label)
+        self.source_label=QLabel('原稿字型未識別；名稱／外觀相似只作候選。');self.source_label.setTextFormat(Qt.PlainText);self.source_label.setWordWrap(True);layout.addWidget(self.source_label)
+        self.identity_label=QLabel('來源身分尚未核對；未變更來源或模板。');self.identity_label.setTextFormat(Qt.PlainText);self.identity_label.setWordWrap(True);layout.addWidget(self.identity_label)
         self.status=QLabel("資產內容需核對；Qt可用不等於原稿身份已證實。查詢不變更模板。")
         self.status.setTextFormat(Qt.PlainText); self.status.setWordWrap(True); layout.addWidget(self.status)
         self.table=QTableWidget(0,6)
@@ -125,12 +126,16 @@ class FontCenterDialog(QDialog):
         assets=self.window.library.fonts(); templates=self.window.library.templates()
         hosts,partial=host_candidates()
         self.inventory=None;self.measurements.clear(); self.table.setRowCount(0); self.clear_result()
-        self.start("背景只讀核對字型身份與模板引用",lambda:build_inventory(assets,templates,hosts,partial),self.show_inventory)
+        def inventory():
+            from .windows_font_sources import windows_font_sources
+            return build_inventory(assets,templates,hosts,partial,windows_sources=windows_font_sources())
+        self.start("背景只讀核對字型身份與模板引用",inventory,self.show_inventory)
 
     def show_inventory(self,inventory):
         self.inventory=inventory
+        source_status={'COMPLETE':'本輪登錄檔案已核對','PARTIAL':'僅完成部分來源','STALE':'來源變更需重盤','UNAVAILABLE':'目前環境不可用','NOT_CHECKED':'尚未核對'}.get(inventory.get('windows_source_status','NOT_CHECKED'),'尚未核對')
         self.status.setText(("本輪核對完成" if inventory["status"]=="COMPLETE" else "部分核對，不能當全部資產可用")+
-                            f"；{len(inventory['rows'])} 個條目。Qt候選來源未核實，原稿字型未知仍保留未知。")
+                            f"；{len(inventory['rows'])} 個條目。Qt候選來源未核實，原稿字型未知仍保留未知。Windows登錄來源："+source_status+'；登錄不等於目前實際選字或使用授權。'+'；'.join(inventory.get('notes',[])[:3]))
         self.filter_rows()
 
     def filter_rows(self,*_):
@@ -210,9 +215,24 @@ class FontCenterDialog(QDialog):
         if self.busy or self.window.busy or not row or not self.source_reference:return
         from .source_text_evidence import identity_match
         reference=dict(self.source_reference);asset=row.get('asset') or {};face=asset.get('font_evidence',{});candidate={**asset,'family':face.get('family') or next(iter(row['families']),''),'postscript_name':face.get('postscript_name'),'unique_name':face.get('unique_name')};generation=self.analysis_generation
+        registered_only=False
+        if not asset and row.get('windows_sources'):
+            from PySide6.QtWidgets import QInputDialog
+            sources=row['windows_sources'];origin=sources[0]
+            if len(sources)>1:
+                choices=[v['path']+'／'+v['style']+'／字面'+str(v['face_index'])+'／'+','.join(v['registry_scopes']) for v in sources];choice,ok=QInputDialog.getItem(self,'核對確切Windows登錄來源','只核對此檔案／字面；不推定程式目前採用它',choices,0,False)
+                if not ok:return
+                origin=sources[choices.index(choice)]
+            current=self.selected()
+            if not current or current['id']!=row['id'] or generation!=self.analysis_generation:self.identity_label.setText('來源選取已改變，請重新核對。');return
+            candidate=dict(path=origin['path'],hash=origin['hash'],family=row['families'][0],font_evidence=dict(index=origin['face_index']));registered_only=True
         def loaded(report):
             if generation!=self.analysis_generation:self.identity_label.setText('核對期間資料已變更，未採用舊身分結果。');return
             self.identity_report=report;self.identity_label.setText({'PROVEN_SAME_EXTRACTED_FACE':'已核對來源集合之同一字面複本；原稿關聯及原生可編輯性仍待證據。','PROVEN_SAME_BYTES':'已核對同一檔案與字面；原稿字型關聯及原生可編輯性仍待證據。','POSSIBLE_ALIAS':'僅名稱可能別名，未證實原稿字型。','UNIDENTIFIED':'字型身分未識別；來源不足或已變更，未核准替換。'}[report['state']]+report.get('reason',''))
+            if registered_only:
+                report.update(comparison_scope='REGISTERED_WINDOWS_SOURCE_ONLY',actual_qt_face_verified=False)
+                if report['state'] in ('PROVEN_SAME_BYTES','PROVEN_SAME_EXTRACTED_FACE'):self.identity_label.setText('已核對所選Windows登錄檔案／字面與參考相同；程式目前實際採用字面、原稿關聯及用途授權仍待核對。')
+                else:self.identity_label.setText(self.identity_label.text()+' 此結果僅指所選Windows登錄檔案，程式目前實際採用字面仍待核對。')
         self.start('核對目前來源／選取檔案與確切字面',lambda:identity_match(reference,candidate),loaded)
 
     def show_analysis(self,result):

@@ -33,8 +33,15 @@ def capture(folder):
         r.open_detail();batch.wait();assert r.detail;shot(r.detail,'13-batch-source-and-actual-format');r.detail.close()
         r.actor.setText('SYNTHETIC_SOURCE_AUTHOR');r.evidence.setText('Selected batch row actual96DPI PDF/Logo source inspected');r.consent.setChecked(True);r.confirm();batch.wait();assert len(batch.workflow.format_reviews)==1;shot(r,'14-exact-batch-row-review')
         batch.d.dpi.setValue(150);r.confirm();assert '具名證據' in r.status.text();shot(r,'15-batch-new-dpi-rejects-old-snapshot')
+        font_row=next(i for i in range(p.table.rowCount()) if p.table.item(i,0).data(Qt.UserRole)['code']=='FONT_USE_RIGHTS');p.table.selectRow(font_row);shot(w,'16-current-font-source-and-use-rights')
+        # Authored lost-source metadata in the current candidate copy only;
+        # the published source/template and actual font bytes remain intact.
+        c=w.candidates[0];text=next(item for item in c.items if item.slot.kind!='logo' and item.text);text.slot.font_asset=None
+        for slot in c.template.slots:
+            if slot.id==text.slot.id:slot.font_asset=None
+        w.choose_candidate(0);main.inspect();font_row=next(i for i in range(p.table.rowCount()) if p.table.item(i,0).data(Qt.UserRole)['code']=='FONT_USE_RIGHTS');p.table.selectRow(font_row);assert p.table.item(font_row,0).data(Qt.UserRole)['status']=='BLOCKED';assert not w.export_button.isEnabled();shot(w,'17-unknown-font-source-blocks-current-output')
         assert not errors,errors
-        result=dict(status='PASS',screens=screens,actual_gui=True,qt_errors=errors,final_pdf=dict(fonts_embedded=pdf['all_fonts_embedded'],vector_operator_count=pdf['vector_operator_count']),scope='Authored Linux Qt original canvas/right pane/batch row only. Screen detail is not physical printing or Windows hardware qualification.',paid_services=False)
+        result=dict(status='PASS',screens=screens,actual_gui=True,qt_errors=errors,font_source_unknown_blocks_current_output=True,final_pdf=dict(fonts_embedded=pdf['all_fonts_embedded'],vector_operator_count=pdf['vector_operator_count']),scope='Authored Linux Qt original canvas/right pane/batch row only. Screen detail is not physical printing or Windows hardware qualification.',paid_services=False)
         (folder/'digital-preflight-metadata.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
     finally:
         sys.excepthook=previous

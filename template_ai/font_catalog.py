@@ -17,6 +17,9 @@ STATUS_NAMES = {"HEALTHY":"核准複本正常", "MISSING":"複本失聯", "MODIF
                 "REFERENCE_MISSING":"模板字型不可用", "REFERENCE_UNKNOWN":"模板引用未登錄", "NOT_CHECKED":"本輪預算內未核驗"}
 
 
+STATUS_NAMES['WINDOWS_SOURCE_UNRESOLVED']='Windows已登錄；目前字面未核對'
+
+
 def asset_health(asset):
     if not isinstance(asset, dict) or not isinstance(asset.get("hash"), str) or not re.fullmatch(r"[0-9a-f]{64}", asset["hash"]) or not isinstance(asset.get("families"), list) or not asset["families"] or not isinstance(asset.get("path"), str):
         return "INVALID", ["字型資產記錄不完整"]
@@ -48,7 +51,7 @@ def host_candidates(limit=1000):
     return [{"family": f, "styles": QFontDatabase.styles(f)} for f in families[:limit]], len(families) > limit
 
 
-def build_inventory(assets, templates, hosts, hosts_partial=False, max_assets=256, max_bytes=256*1024*1024):
+def build_inventory(assets, templates, hosts, hosts_partial=False, max_assets=256, max_bytes=256*1024*1024,windows_sources=None):
     asset_refs, family_refs = defaultdict(list), defaultdict(list)
     for template in templates:
         for slot in template.slots:
@@ -97,13 +100,28 @@ def build_inventory(assets, templates, hosts, hosts_partial=False, max_assets=25
         rows.append({"id":"reference:"+digest+":"+path, "kind":"REFERENCE", "families":sorted({r["family"] for r in refs}), "styles":[],
                      "status":"REFERENCE_UNKNOWN", "source":"模板指定複本未登錄", "references":refs,
                      "notes":["引用身份／位置未對應本機字型登錄，需核對；不借用系統同名字型"], "identity":digest+" · "+path})
+    origin_map={}
+    if windows_sources:
+        report['windows_source_status']=windows_sources['status'];report['notes'].extend(windows_sources.get('notes',[]))
+        report['notes'].extend(windows_sources.get('rejected',[])[:20])
+        if windows_sources['status'] in ('PARTIAL','STALE'):report['status']='PARTIAL'
+        for file in windows_sources['files']:
+            for face in file['faces']:
+                family=face['family'] or '來源未命名字面'
+                origin_map.setdefault(family,[]).append(dict(path=file['path'],hash=file['hash'],face_index=face['index'],style=face['style'],registry_scopes=file['registry_scopes']))
     host_families = set()
     for host in hosts:
         family = host["family"]; host_families.add(family)
         rows.append({"id":"qt:"+family, "kind":"QT", "families":[family], "styles":host["styles"], "status":"QT_AVAILABLE",
                      "source":"Qt 可用候選", "references":family_refs.get(family, []), "notes":["可用不等於已證實原稿字型或使用授權"], "identity":"未取得字型檔案身份"})
+        if family in origin_map:
+            rows[-1].update(windows_sources=origin_map[family],source='Windows已登錄來源／Qt另驗',identity='登錄檔案已核對；目前Qt實際選字／原稿關聯／授權仍未核實')
+            rows[-1]['notes'].extend(v['path']+'／來源字面'+str(v['face_index'])+'／'+','.join(v['registry_scopes']) for v in origin_map[family])
+    source_only=set(origin_map)-host_families
+    for family in sorted(source_only):
+        sources=origin_map[family];rows.append(dict(id='windows-source:'+family,kind='WINDOWS_SOURCE',families=[family],styles=sorted({v['style'] for v in sources}),status='WINDOWS_SOURCE_UNRESOLVED',source='Windows已登錄；Qt未核對可用',references=family_refs.get(family,[]),windows_sources=sources,notes=['登錄檔案存在不代表已載入或原稿身分／使用授權已確認']+[v['path'] for v in sources],identity='只讀登錄來源，未核准程式選字或正式輸出'))
     for family,refs in family_refs.items():
-        if family not in host_families:
+        if family not in host_families and family not in source_only:
             if unknown_count >= 2000:
                 report["status"] = "PARTIAL"; report["notes"].append("未知家族引用超出本輪預算"); break
             unknown_count += 1
@@ -134,7 +152,7 @@ def measured_glyph_state(row,measurements):
 def filter_inventory(rows, query="", kind=None, status=None,*,rights=None,glyph=None,measurements=None):
     if rights not in (None,'UNKNOWN','BLOCKED','PDF_RECORDED','RASTER_RECORDED') or glyph not in (None,'NOT_CHECKED','MISSING','COVERED'):raise ValueError('未知字形／授權篩選條件')
     needle = query.casefold().strip()
-    return [r for r in rows if (not kind or r["kind"]==kind) and (not status or r["status"]==status)
+    return [r for r in rows if (not kind or (bool(r.get('windows_sources')) if kind=='WINDOWS_SOURCE' else r["kind"]==kind)) and (not status or r["status"]==status)
             and (not rights or recorded_use_rights(r)==rights) and (not glyph or measured_glyph_state(r,measurements)==glyph)
             and (not needle or needle in " ".join([*r["families"],*r["styles"],r["source"],r["identity"],STATUS_NAMES[r["status"]],
                      *[v["template_name"] for v in r["references"]]]).casefold())]

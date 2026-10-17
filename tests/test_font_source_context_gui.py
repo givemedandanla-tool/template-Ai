@@ -30,4 +30,11 @@ class FontSourceContextGuiTests(unittest.TestCase):
             self.d.analyze();self.assertTrue(wait_for_gui(started.is_set,3));self.d.text.setText('New current input');release.set();self.wait()
         self.assertFalse(self.d.measurements);self.assertIn('未將舊診斷',self.d.status.text())
 
+    def test_registered_source_file_comparison_is_separate_from_current_qt_selected_face(self):
+        from template_ai.windows_font_sources import collect_registered_font_sources
+        from template_ai.font_catalog import build_inventory
+        origin=collect_registered_font_sources([dict(scope='MACHINE',file=str(fixture.FONT))],dict(MACHINE=fixture.FONT.parent))
+        family=origin['files'][0]['faces'][0]['family'];inventory=build_inventory([],[],[dict(family=family,styles=['Book'])],windows_sources=origin);self.d.kind.setCurrentIndex(self.d.kind.findData(None));self.d.show_inventory(inventory);self.d.kind.setCurrentIndex(self.d.kind.findData('WINDOWS_SOURCE'));self.d.table.selectRow(0);self.reference();self.d.verify_source_identity();self.wait()
+        self.assertEqual(self.d.identity_report['state'],'PROVEN_SAME_BYTES');self.assertEqual(self.d.identity_report['comparison_scope'],'REGISTERED_WINDOWS_SOURCE_ONLY');self.assertFalse(self.d.identity_report['actual_qt_face_verified']);self.assertIn('仍待核對',self.d.identity_label.text())
+
 if __name__=='__main__':unittest.main()

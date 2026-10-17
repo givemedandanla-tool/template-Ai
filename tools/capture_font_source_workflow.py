@@ -35,7 +35,11 @@ def capture(folder):
         rights_responses([('07-pdf-rights-explicit-yes',QMessageBox.Yes),('08-final-rights-explicit-yes',QMessageBox.Yes)])
         with patch.object(QInputDialog,'getText',side_effect=[('SYNTHETIC_SOURCE_AUTHOR',True),('Authored font source/use record for this synthetic workflow',True)]):d.attest_rights()
         case.wait();d.rights.setCurrentIndex(d.rights.findData('PDF_RECORDED'));assert len(d.visible_rows)==1;d.table.selectRow(0);shot(d,'09-recorded-rights-filter-original-template-unchanged')
-        assert [t.to_dict() for t in case.window.library.templates()]==before;assert not d.windows_button.isEnabled();d.open_windows_workflow();assert d.windows_receipt is None;shot(d,'10-linux-windows-action-unavailable-no-install')
+        assert [t.to_dict() for t in case.window.library.templates()]==before
+        if sys.platform!='win32':
+            assert not d.windows_button.isEnabled();d.open_windows_workflow();assert d.windows_receipt is None;shot(d,'10-linux-windows-action-unavailable-no-install')
+        else:
+            assert d.windows_button.isEnabled();assert d.windows_receipt is None;shot(d,'10-windows-action-separate-no-workflow-opened')
         assert not errors,errors
         result=dict(status='PASS',screens=screens,qt_errors=errors,actual_gui=True,original_templates_unchanged=True,actual_windows_system_install_verified=False,scope='Actual Linux original shared font centre, real source/face, current glyph filters and real defaultNo No/Yes rights dialogs. No native AI identity or Windows installation outcome qualified.',paid_services=False)
         (folder/'font-source-metadata.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
