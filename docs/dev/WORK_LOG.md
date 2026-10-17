@@ -1364,3 +1364,5 @@ UI032016wide30modules245cases actualexit1:243PASS2ERROR both FinalDigitalPreflig
 
 
 2026-10-17｜CARD-STYLE-REVIEW：依使用者指定順序讀card-interface@ebf3ccb0b3ab2e7ab602ce2f224186c401e29ea0與最新template-Ai@1260435/核准UI013/061/062，保存四分類矩陣、四類風格觀察／訓練／求解設計及其他學習缺口。原型本輪Chromium154.0.8037.57 37/37PASS、13文件31連結PASS；非正式核心／真手機／印前驗收。8包規劃驗收36→50，新增14設計條款、0實作／0驗證，原75題69VERIFIED/3PARTIAL/3DEFERRED、CORE87/GOV7不變。未改引擎／UI／測試／依賴／原型，不重跑1549或訓練，不新增付費／服務／主檔。Baseline checkpoint已實際push/readback ef9cd56；最後設計與收據續保存。
+
+CARD-STYLE publication：設計首次push1acd0c2後讀回拒絕檢查報告時間戳變動；保留失敗紀錄、從不可變prepared ZIP還原原報告，push7155f69後同checkpoint逐檔回讀成功（treebb3cca11，7036files）。收據及實際出版紀錄續持久化；並未將第一次失敗當成功。
