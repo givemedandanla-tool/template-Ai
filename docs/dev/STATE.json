@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "Continue original28; all004 repairs targeted and native checked; freeze CURRENT005 full source",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT004-REPAIR-WIP.receipt.json",
-  "last_confirmed_commit": "49697214359a325a7dcefdbad83ffeb12346af13",
+  "active_task": "Continue original28; CURRENT005 stopped for systematic fixture-only disposal repair",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT-FULL-SOURCE005.receipt.json",
+  "last_confirmed_commit": "6b01d84d4225cec31c13ff050d3a2c1540c88c88",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -27,7 +27,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT-FULL-SOURCE005"
+    "CP-20261017-REMAINING28-CURRENT005-INTERRUPT-DISPOSAL-PLAN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -574,7 +574,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-REMAINING28-CURRENT-005",
+  "planned_evidence_run": "RUN-REMAINING28-CURRENT-006",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -744,7 +744,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "Isolated004153/153complete152PASS one literal message failure (no runtime errors); corrected then005governance24PASS. Font0035PASS and actual different metrics still rejected. Native smoke7scripts completed0, primary49screens/6exports;19catalog tests after actual source thumbnail fit repair;15critical images individually reviewed. All immutable current005 still pending; external3parents remain unverified. No owned jobs now.",
+  "current_work": "Environment resumed same workspace, code source6b01d84 preserved. CURRENT005 intentionally interrupted130 after BackupCenter teardown busy modal/deadline;68progressPASS, not full proof, no native capture. All diagnostics copied, source unchanged, no owned module workers. Audit found17fixture close functions clearing test data then calling real MainWindow.close. Plan before cleanup-only changes.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -786,6 +786,30 @@
       "source_commit": "4bb32a98004fa7a55f535cf410714aa603971949",
       "audit": "docs/qa/targeted/remaining28-layout-001-controlled-interruption.json",
       "counts_as_completed": false
+    },
+    {
+      "status": "INTERRUPTED_NOT_VERIFIED",
+      "source_commit": "6b01d84d4225cec31c13ff050d3a2c1540c88c88",
+      "actual_exit": 130,
+      "source_unchanged_at_interruption": true,
+      "last_progress": {
+        "phase": "RUNNING_OWNED_TEST_MODULE",
+        "current_test": "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_per_object_width_composition_preserves_individual_sizes_and_fixed_font_owner",
+        "started": 69,
+        "completed": 68,
+        "passed": 68,
+        "failed_ids": [],
+        "planned_tests": 1548,
+        "formal_complete": false,
+        "updated_at": "2026-10-17T02:12:03.437122+00:00"
+      },
+      "owned_pid": 743063,
+      "create_time": 1792202899.73,
+      "exact_argv_verified_before_SIGINT": true,
+      "remaining_owned_module_workers": [],
+      "reason": "backup_center fixture tearDown enters original closeEvent busy information modal; module deadline already made current batch impossible to pass. Parent SIGINT uses original runner exception cleanup of its own child group.",
+      "diagnostics": "docs/qa/targeted/current005-interrupted-012",
+      "native_captures_executed": false
     }
   ],
   "checkpoint_cadence_events": [
@@ -828,7 +852,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/REV01_EXECUTION_PLAN.json",
-  "next_step": "Checkpoint source005, actual push exit and exact readback then all1548 tests plus native captures; use independent per-parent strict scope Gate without waiving any of5external clauses. Preserve failed004 and all target/native failures.",
+  "next_step": "Save interruption/17fixture cleanup plan; reuse existing dispose_main_window only in audited fixture cleanup, keep actual close/dirty/busy tests unchanged. Isolated affected modules, then frozen CURRENT006 all1548+native/pub/scoped Gate.",
   "current_work_package": "UI-032 original10 shared font source identity/current glyph-license filters/separate Windows workflow",
   "checkpoint_cadence_note": "Cadence deviations during earliercriticaldiagnostics/UI063planning+implementation recorded; overallstrict10minute cadence notPASS.",
   "implementation_pending_original_parents": [

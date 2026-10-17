@@ -1,0 +1,62 @@
+{
+  "status": "DESIGN_BEFORE_FIXTURE_ONLY_CHANGE",
+  "requirements": [
+    "UI-051",
+    "UI-058",
+    "UI-062",
+    "UI-066"
+  ],
+  "observed_failure": {
+    "status": "INTERRUPTED_NOT_VERIFIED",
+    "source_commit": "6b01d84d4225cec31c13ff050d3a2c1540c88c88",
+    "actual_exit": 130,
+    "source_unchanged_at_interruption": true,
+    "last_progress": {
+      "phase": "RUNNING_OWNED_TEST_MODULE",
+      "current_test": "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_per_object_width_composition_preserves_individual_sizes_and_fixed_font_owner",
+      "started": 69,
+      "completed": 68,
+      "passed": 68,
+      "failed_ids": [],
+      "planned_tests": 1548,
+      "formal_complete": false,
+      "updated_at": "2026-10-17T02:12:03.437122+00:00"
+    },
+    "owned_pid": 743063,
+    "create_time": 1792202899.73,
+    "exact_argv_verified_before_SIGINT": true,
+    "remaining_owned_module_workers": [],
+    "reason": "backup_center fixture tearDown enters original closeEvent busy information modal; module deadline already made current batch impossible to pass. Parent SIGINT uses original runner exception cleanup of its own child group.",
+    "diagnostics": "docs/qa/targeted/current005-interrupted-012",
+    "native_captures_executed": false
+  },
+  "scope": "17 manually inspected test cleanup functions only; none contains assertions testing MainWindow.close as product behavior",
+  "reuse": "tests/gui_wait.dispose_main_window: original cancellation/pool drain/event pump/font+library close/deleteLater; no app code or GUI guards changed",
+  "planned_change": "Replace close() only inside tearDown/cleanup/close/close_fixture helpers whose target was manually verified MainWindow; remove redundant deleteLater after helper already deletes. Preserve dialog/protocol shutdown and every test assertion. Actual product close calls in test_* bodies remain unchanged.",
+  "reviewed_modules": [
+    "test_coverage_closure_gui",
+    "test_trusted_samples",
+    "test_noise_authoring",
+    "test_rule_review",
+    "test_runtime_dispatch",
+    "test_training_pipeline",
+    "test_source_relink",
+    "test_dataset_learning",
+    "test_training_quality",
+    "test_quality_dispatch",
+    "test_quality_coverage",
+    "test_backup_center",
+    "test_noise_recovery",
+    "test_review_ledger",
+    "test_source_watch_center",
+    "test_training_facts",
+    "test_noise_hits"
+  ],
+  "planned_verification": [
+    "Original exact affected module tests in fresh owned processes; no runtime callbacks or missing cases",
+    "Unchanged MainWindow dirty-close/busy-close tests remain in final full catalog",
+    "Current source all1548 full fresh-module tests/native captures and exact GitHub publication; external5clauses unchanged"
+  ],
+  "no_product_change": true,
+  "no_test_skip_or_expected_outcome_change": true
+}
