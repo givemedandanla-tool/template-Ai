@@ -1,0 +1,68 @@
+{
+  "status": "PLAN_BEFORE_CURRENT006_REPAIR",
+  "failed_run": {
+    "id": "RUN-REMAINING28-CURRENT-006",
+    "source_commit": "5650e3535f2a777d365c5ce6ee6adeeba734216d",
+    "status": "FAIL",
+    "software_execution_status": "FAIL",
+    "test_count": 1541,
+    "passed": 1540,
+    "planned_test_count": 1548,
+    "not_completed_test_count": 7,
+    "unhandled_runtime_errors": 1,
+    "source_unchanged": true,
+    "capture_exit_code": 1,
+    "actual_exit": 1,
+    "native_capture_executed": false,
+    "failed_modules": [
+      {
+        "module": "test_diagnostic_reports",
+        "expected": 30,
+        "completed": 23,
+        "missing_test_ids": [
+          "test_diagnostic_reports.DiagnosticReportTests.test_session_partial_cancel_failed_and_unstarted_counts_are_real",
+          "test_diagnostic_reports.DiagnosticReportTests.test_snapshot_html_json_have_same_facts_width_and_historical_scope",
+          "test_diagnostic_reports.DiagnosticReportTests.test_source_and_free_note_privacy_all_zip_entries",
+          "test_diagnostic_reports.DiagnosticReportTests.test_source_changed_and_missing_still_readable_no_wrong_location",
+          "test_diagnostic_reports.DiagnosticReportTests.test_startup_cleans_expired_private_locator_without_deleting_saved_report",
+          "test_diagnostic_reports.DiagnosticReportTests.test_supplied_html_scripts_with_correct_checksum_are_never_loaded",
+          "test_diagnostic_reports.DiagnosticReportTests.test_zip_traversal_duplicate_symlink_extra_and_bombs_rejected"
+        ],
+        "exit_code": -11,
+        "timed_out": false
+      },
+      {
+        "module": "test_seventy_ui",
+        "expected": 11,
+        "completed": 11,
+        "missing_test_ids": [],
+        "exit_code": 1,
+        "timed_out": false
+      }
+    ]
+  },
+  "observations": [
+    {
+      "module": "test_seventy_ui",
+      "failure": "test_real_worker_boundary_pause_cancel_retains_partial_and_controls_recover: old5second polling helper did not observe completion on second start",
+      "hypotheses": [
+        "Global bind_authored_fonts was added to shared SeventyUi fixture solely for CandidateResults formal PNG test; unnecessary source parsing/Qt registrations for unrelated workers",
+        "Old processEvents/qWait loop may starve real asynchronous completion; reuse common wait_for_gui with existing budget before considering any budget change"
+      ]
+    },
+    {
+      "module": "test_diagnostic_reports",
+      "failure": "Native process-11 while global RuntimeSupervisor.eventFilter touches Qt widgets;7cases uncompleted",
+      "root_cause": "NOT_CONFIRMED; do not attribute native fault to app or fonts without reproducer",
+      "next": "Fresh-process entire30case diagnostic repro on unchanged source; then narrow source-font fixture if unnecessary. Existing actual-font integration tests still mandatory."
+    }
+  ],
+  "scope_boundaries": [
+    "No app guard or assertion removal",
+    "Keep all1548 tests, no skip or expected failure",
+    "Only tests that actually need formal source/use rights should request explicit positive font fixture; other diagnostics may keep source unknown and formal blocked",
+    "Native crash and all interrupted/failed runs remain immutable records",
+    "Final full current-source all tests/native/publication Gate required; external5clauses remain unverified"
+  ],
+  "next": "Checkpoint failed006 first, then bounded actual reproductions and targeted fixture repair"
+}
