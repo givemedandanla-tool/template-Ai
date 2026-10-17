@@ -1,3 +1,5 @@
+> **目前產品定義（2026-10-17使用者明確澄清）**：匯入多份作品，學習共用設計規則，自動產出模板，依新輸入選擇最佳可驗證候選或合成排版。一作品一模板不能滿足目標。新[實作方案](AI_CROSS_WORK_LEARNING_PLAN.md)／[契約](AI_CROSS_WORK_LEARNING_CONTRACT.json)尚未實作；下列歷史父題數不能代表此能力已完成。
+
 > 剩餘28已完成12父題／120原條款；1078/1078正式PASS、140健康owned modules、0skip/0Qt、capture0、source unchanged、actual parent exit0。全75：56 VERIFIED／16 PARTIAL／3 DEFERRED；固定70：54閉合／16仍部分。CORE87／GOV7另計。下一UI059與剩餘16，總目標尚未完成。
 
 
