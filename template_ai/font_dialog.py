@@ -7,7 +7,7 @@ from .font_catalog import STATUS_NAMES,analyze_font,build_inventory,filter_inven
 
 
 class FontCenterDialog(QDialog):
-    def __init__(self,window):
+    def __init__(self,window,source_context=None):
         super().__init__(window)
         self.window=window
         self.busy=False
@@ -19,6 +19,9 @@ class FontCenterDialog(QDialog):
         self.setWindowTitle("共用字型管理與文字診斷")
         self.resize(1180,760)
         layout=QVBoxLayout(self)
+        self.source_context=source_context
+        self.context_label=QLabel('');self.context_label.setTextFormat(Qt.PlainText);self.context_label.setWordWrap(True)
+        self.context_label.setVisible(bool(source_context));layout.addWidget(self.context_label)
         top=QHBoxLayout()
         self.query=QLineEdit(); self.query.setPlaceholderText("家族、款式、來源、狀態或模板名稱")
         self.query.textChanged.connect(self.filter_rows); top.addWidget(self.query,1)
@@ -70,6 +73,16 @@ class FontCenterDialog(QDialog):
         self.windows_button=QPushButton('安裝至Windows（另行確認）');self.windows_button.clicked.connect(self.open_windows_workflow);actions.addWidget(self.windows_button);self.update_windows_action()
         close=QDialogButtonBox(QDialogButtonBox.Close); close.button(QDialogButtonBox.Close).setText("關閉"); close.rejected.connect(self.reject); actions.addWidget(close)
         layout.addLayout(actions)
+        if source_context:
+            text=source_context.get('text','')
+            if not isinstance(text,str) or len(text)>4096:raise ValueError('來源文字超出診斷預算；未截斷或套用')
+            self.context_label.setText('來源定位：'+str(source_context.get('location',''))+'\n僅供本次唯讀診斷；衍生字型名稱是候選線索，原稿字型／字級／可編輯性未證實。')
+            self.text.setText(text)
+            hint=source_context.get('family_hint','')
+            if isinstance(hint,str) and len(hint)<=500:
+                # This is a search hint only, never a CSS resolution or identity proof.
+                self.query.setText(hint.split(',')[0].strip().strip("\"'"))
+
 
     def clear_result(self,*_):
         self.analysis_generation+=1

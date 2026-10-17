@@ -1,0 +1,51 @@
+{
+  "parent": "UI-066",
+  "status": "AUDIT_EXISTING_BEFORE_CHANGE",
+  "source": "docs/decisions/UI-066-DEDUP-REPORT-HANDOFF.md",
+  "source_sha256": "8f388f97d414091fc24f10305f6aa6fadd63965c59dcf8128c887874570b4759",
+  "original_six_cross_decision_acceptance": [
+    "原有 UI-014／015／057 的輸入錯誤、問題位置與分類保持完全相同；不因報告形式不同產生兩套真值。",
+    "已證實無解與缺少證據的區別保持，報告要標示版本、時間與未完成搜尋條件；不能把預估風險寫成已確認硬性無解。",
+    "報告/非正式預覽與正式印刷輸出仍按 UI-027／028 區分，從報告返回畫布不得解除 Gate。",
+    "去識別內容須完整覆蓋文案、來源圖片、路徑與附檔的敏感資訊；不得用只遮罩螢幕或刪掉電話字串就假稱已完整去識別。",
+    "文件不存在、磁碟滿、權限失敗、命名衝突等按 UI-029／030 既有安全保存規則處理；不得回報已保存。",
+    "不另建平行錯誤中心、永久病例／訂單資料庫、AI 診斷演算法、角色權限系統或上傳服務。"
+  ],
+  "adopted_R1_R2": "docs/decisions/2026-10-15-DIAGNOSTIC-REPORT-ADOPTED.md",
+  "dedup_sources": [
+    "UI-014",
+    "UI-015",
+    "UI-057",
+    "UI-027",
+    "UI-028",
+    "UI-029",
+    "UI-030",
+    "UI-048",
+    "UI-018",
+    "UI-034",
+    "UI-035",
+    "UI-059",
+    "UI-060A",
+    "UI-061",
+    "UI-062",
+    "UI-063",
+    "UI-065"
+  ],
+  "reuse": [
+    "diagnostic_schema safe allowlist",
+    "diagnostic_snapshot exact versions + local anonymous locators",
+    "diagnostic_bundle bounded deterministic JSON/HTML/manifest ZIP; no untrusted HTML execution",
+    "DiagnosticReportDialog original entries; existing atomic save/worker"
+  ],
+  "math": "SHA256 detects content changes, not authorship or a quality proof. Exact schema allowlist omits all original strings/paths/images and type-restricts numbers. Work denominators checked independently; unknown never becomes global-unsolvable.",
+  "references": [
+    "Python3.12 zipfile/json existing stdlib, bounded schema and actual archive member validation",
+    "Existing Qt6.8.3 original issue/readonly reader and atomic writer",
+    "Adobe public ExtractPDF structured data + rendition separation; reference only, no paid API"
+  ],
+  "planned_tests": [
+    "Existing29 test_diagnostic_reports tests, actual Qt save/reopen/stale and ZIP readback/privacy/unsafe inputs",
+    "Actual capture_diagnostics preview/save/reopen/stale/source missing; each image review"
+  ],
+  "next": "Run existing implementation checks, fix only actual gaps; map original6 plus adopted R1/R2. No new report product/database/service."
+}

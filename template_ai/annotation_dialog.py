@@ -4,7 +4,7 @@ from dataclasses import asdict
 from PySide6.QtCore import Qt,QRectF
 from PySide6.QtGui import QImage
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QSplitter,QWidget,QLabel,QPushButton,QComboBox,
-    QTableWidget,QTableWidgetItem,QPlainTextEdit,QLineEdit,QDoubleSpinBox,QCheckBox,QMessageBox,QInputDialog,QListWidget,QListWidgetItem,QTreeWidget,QTreeWidgetItem)
+    QScrollArea,QLayout,QTableWidget,QTableWidgetItem,QPlainTextEdit,QLineEdit,QDoubleSpinBox,QCheckBox,QMessageBox,QInputDialog,QListWidget,QListWidgetItem,QTreeWidget,QTreeWidgetItem)
 from .annotations import AnnotationSession,resegment
 from .object_dialog import ObjectCanvas,canvas_controls
 from .gui import Box,Canvas
@@ -19,7 +19,7 @@ class AnnotationDialog(QDialog):
         self.setWindowTitle('原作品直接標記／校正：只改學習中介資料');self.resize(1350,850)
         layout=QVBoxLayout(self);self.status=QLabel('作品邊界與欄位框不同；拖曳／改類型只存候選，明確確認才成作品事實。');self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout()
-        for label,fn in [('框選新增標記',lambda:self.canvas.set_mode('slot')),('選取／校正',lambda:self.canvas.set_mode('edit')),('視角平移',lambda:self.canvas.set_mode('pan')),('原稿／疊圖切換',self.toggle_overlay),('改前／改後比較',self.compare),('復原',self.undo),('重做',self.redo)]:self.button(bar,label,fn)
+        for label,fn in [('框選新增標記',lambda:self.canvas.set_mode('slot')),('選取／校正',lambda:self.canvas.set_mode('edit')),('視角平移',lambda:self.canvas.set_mode('pan')),('原稿／疊圖切換',self.toggle_overlay),('改前／改後比較',self.compare),('來源文字／字型診斷',self.source_font_diagnosis),('復原',self.undo),('重做',self.redo)]:self.button(bar,label,fn)
         layout.addLayout(bar);body=QSplitter();left=QWidget();left_layout=QVBoxLayout(left);self.index_mode=QComboBox();self.index_mode.addItems(['人物／公司語意樹','衍生來源結構（原生圖層未知）']);self.index_mode.currentIndexChanged.connect(self.rebuild_index);left_layout.addWidget(self.index_mode);self.index_tree=QTreeWidget();self.index_tree.setHeaderLabel('同一作品穩定物件／共享關聯');self.index_tree.setSelectionMode(QTreeWidget.ExtendedSelection);self.index_tree.itemSelectionChanged.connect(self.from_tree);left_layout.addWidget(self.index_tree,2);self.tree_nodes=[]
         self.objects=QListWidget();self.objects.setSelectionMode(QListWidget.ExtendedSelection);self.objects.itemSelectionChanged.connect(self.from_list);left_layout.addWidget(self.objects,1);body.addWidget(left)
         self.canvas=ObjectCanvas();self.canvas.selection_ids.connect(self.select);self.canvas.drag_proposal.connect(self.move);self.canvas.rectangle.connect(self.add);body.addWidget(self.canvas)
@@ -31,10 +31,11 @@ class AnnotationDialog(QDialog):
         self.coords=[]
         for key in ('x','y','w','h'):
             form.addWidget(QLabel(key+' mm'));spin=QDoubleSpinBox();spin.setRange(-2000,2000);spin.setDecimals(4);self.coords.append(spin);form.addWidget(spin)
+        self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setMinimumHeight(240);form.addWidget(self.details)
         for label,fn in [('將待審文字映射為所選類型',self.bind_observation),('套用此框屬性草稿',self.apply_properties),('刪除選定標記草稿',self.delete),('放棄未套用屬性',self.discard_forms),('所選來源觀察／剔除雜訊',self.noise_context),('保存草稿（未確認）',self.save),('確認所選作品事實',self.confirm),('拒絕所選候選',lambda:self.review_markers('REJECTED')),('疑義隔離所選',lambda:self.review_markers('QUARANTINED')),('恢復所選待確認',lambda:self.review_markers('HUMAN_PENDING_CONFIRMATION')),('改正作品邊界／拆分',self.split),('合併同來源明確作品',self.merge)]:
             b=QPushButton(label);b.clicked.connect(fn);form.addWidget(b)
         self.visual=QCheckBox('已核對目前原作品／完整圖文及物理尺寸');form.addWidget(self.visual)
-        self.details=QPlainTextEdit();self.details.setReadOnly(True);form.addWidget(self.details,1);body.addWidget(panel);body.setSizes([220,760,340]);layout.addWidget(body,1);self.overlay=True;self.refresh()
+        form.setSizeConstraint(QLayout.SetMinimumSize);self.properties_scroll=QScrollArea();self.properties_scroll.setWidgetResizable(True);self.properties_scroll.setMinimumWidth(400);self.properties_scroll.setWidget(panel);body.addWidget(self.properties_scroll);body.setSizes([220,760,420]);layout.addWidget(body,1);self.overlay=True;self.refresh()
 
     def button(self,layout,label,fn):
         button=QPushButton(label);button.clicked.connect(fn);layout.addWidget(button);return button
@@ -107,12 +108,29 @@ class AnnotationDialog(QDialog):
             self.details.setPlainText(str(observation.get('review',{}))+'\n'+f"作品 {self.session.base['id']}／來源 {self.session.base['source_id']}\n框 {ids[0]}／{slot['owner']}\n標記字型：{slot['font']}／{slot.get('font_style') or '款式未知'}／{slot['size_pt']}pt（標記值，原稿字型仍待核對）\n原生Illustrator對應未知；AI線索不等於真值。\n"+self.semantic_details(observation))
         else:self.details.setPlainText(f'明確選取{len(ids)}框。多選只允許適用操作，不以首框值覆蓋共同屬性。')
         if len(ids)==1:
-            import json
+            from .source_text_evidence import evidence_summary
             proof=self.session.base['payload'].get('analysis_evidence',{}).get('text_object_evidence',{}).get(ids[0])
-            self.details.appendPlainText('\n來源文字／效果證據（衍生SVG屬性不證明原生可編輯性；原稿字級未知不借標記值）：\n'+
-                (json.dumps(proof,ensure_ascii=False,indent=2) if proof else '目前無原物件證據，維持UNKNOWN；可開啟原稿／改後比較定位。'))
+            self.details.setPlainText('來源文字／效果證據：\n'+evidence_summary(proof)+'\n\n'+self.details.toPlainText())
 
         self.restore_form(ids)
+
+    def source_font_context(self):
+        if len(self.ids)!=1:raise ValueError('請先明確選取一個來源文字框')
+        identity=self.ids[0];slot=next(s for s in self.session.payload['slots'] if s['id']==identity)
+        if slot['kind']=='logo':raise ValueError('複合 Logo 受保護；請用原稿／改後比較，不替換內部字型')
+        proof=self.session.base['payload'].get('analysis_evidence',{}).get('text_object_evidence',{}).get(identity) or {}
+        observation=next((o for o in self.session.observations if o.get('slot_id')==identity),{})
+        return dict(location=f"作品 {self.session.base['id']}／來源 {self.session.base['source_id']}／物件 {proof.get('svg_object_id') or '未知'}／框 {identity}／{slot['owner']}",
+            text=observation.get('text',''),family_hint=proof.get('font_declarations',{}).get('font-family',''),proof=deepcopy(proof))
+
+    def source_font_diagnosis(self):
+        def action():
+            from .font_dialog import FontCenterDialog
+            context=self.source_font_context();self.cache_form()
+            dialog=FontCenterDialog(self.window,source_context=context)
+            try:dialog.refresh();dialog.exec()
+            finally:dialog.deleteLater()
+        self.guarded(action)
 
     def form_values(self):return dict(kind=self.kind.currentData(),owner=self.owner.text(),text=self.value.text(),coords=[spin.value() for spin in self.coords])
 

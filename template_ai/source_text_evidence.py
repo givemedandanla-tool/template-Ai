@@ -2,26 +2,45 @@
 from __future__ import annotations
 
 
+FONT_ATTRIBUTES=('font-family','font-size','font-style','font-weight','font-stretch',
+                 'letter-spacing','word-spacing','textLength','lengthAdjust')
+EFFECT_ATTRIBUTES=('transform','filter','stroke','stroke-width','paint-order','mask','clip-path','opacity')
+
+
 def text_evidence(source, elements, bounds, logo_members=()):
-    parents={child:parent for parent in elements for child in parent}
-    rows={}
-    for node in elements:
-        identity=node.get('id')
-        if not identity or node.tag.rsplit('}',1)[-1] not in ('text','path','g'):continue
-        chain=[];current=node
-        while current is not None:
-            chain.append(current);current=parents.get(current)
+    """Bound literal observations; never resolve CSS or native Illustrator semantics."""
+    elements=list(elements)
+    parents={child:parent for parent in elements[:4000] for child in parent}
+    stylesheet=any(e.tag.rsplit('}',1)[-1]=='style' for e in elements[:4000])
+    rows={};remaining=250_000;work_remaining=50_000
+    for node in elements[:4000]:
+        identity=node.get('id');kind=node.tag.rsplit('}',1)[-1]
+        if not identity or kind not in ('text','path','g'):continue
+        reasons=[];chain=[];current=node;seen=set()
+        while current is not None and len(chain)<64 and id(current) not in seen:
+            seen.add(id(current));chain.append(current);current=parents.get(current)
+        if current is not None:reasons.append('ANCESTRY_BUDGET_OR_CYCLE')
+        if len(elements)>4000:reasons.append('NODE_BUDGET')
         observed={};effects=[]
         for ancestor in reversed(chain):
-            attributes={k:ancestor.get(k) for k in ('font-family','font-size','font-style','font-weight','textLength','lengthAdjust','transform','filter','stroke') if ancestor.get(k) is not None}
-            for declaration in ancestor.get('style','').split(';'):
-                key,sep,value=declaration.partition(':')
-                if sep and key.strip() in ('font-family','font-size','font-style','font-weight','filter','stroke'):
-                    attributes[key.strip()]=value.strip()
-            observed.update({k:v[:500] for k,v in attributes.items() if k not in ('transform','filter','stroke')})
-            effects.extend(dict(object_id=ancestor.get('id'),attribute=k,value=v[:500]) for k,v in attributes.items() if k in ('transform','filter','stroke'))
-        kind=node.tag.rsplit('}',1)[-1]
+            if work_remaining<=0:reasons.append('ATTRIBUTE_WORK_BUDGET');break
+            work_remaining-=1
+            attributes={k:ancestor.get(k) for k in FONT_ATTRIBUTES+EFFECT_ATTRIBUTES if ancestor.get(k) is not None}
+            style=ancestor.get('style','')
+            if len(style)>8192:reasons.append('STYLE_BUDGET')
+            for declaration in style[:8192].split(';'):
+                key,sep,value=declaration.partition(':');key=key.strip()
+                if sep and key in FONT_ATTRIBUTES+EFFECT_ATTRIBUTES:attributes[key]=value.strip()
+            for key,value in attributes.items():
+                if len(value)>500:reasons.append('VALUE_BUDGET')
+                value=value[:500]
+                if remaining<len(value):reasons.append('TOTAL_CHARACTER_BUDGET');continue
+                remaining-=len(value)
+                if key in FONT_ATTRIBUTES:observed[key]=value
+                elif len(effects)<32:effects.append(dict(object_id=ancestor.get('id'),attribute=key,value=value))
+                else:reasons.append('EFFECT_BUDGET')
         rect=bounds.get(identity)
+        if identity in rows:reasons.append('DUPLICATE_OBJECT_ID')
         rows[identity]=dict(svg_object_id=identity,
             classification='DERIVATIVE_TEXT' if kind=='text' else 'VECTOR_PATH_TEXT_ORIGIN_UNKNOWN' if kind=='path' else 'DERIVATIVE_GROUP',
             native_editability='UNKNOWN',true_outline='UNKNOWN',native_effect_type='UNKNOWN',
@@ -31,8 +50,30 @@ def text_evidence(source, elements, bounds, logo_members=()):
             logo_protected=id(node) in logo_members,
             evidence_channel='INKSCAPE_SVG_DERIVATIVE',confidence='DIRECT_ATTRIBUTE_ONLY_NOT_NATIVE_AI',
             source_hash=source['hash'],derivative_hash=source.get('file_hashes',{}).get('svg'),
-            stylesheet_unresolved=any(e.tag.rsplit('}',1)[-1]=='style' for e in elements))
+            stylesheet_unresolved=stylesheet,literal_evidence_complete=not reasons,
+            evidence_limits=sorted(set(reasons)),native_provider='UNAVAILABLE_NOT_PARSED')
     return rows
+
+
+def evidence_summary(proof):
+    """Plain text for the original diagnostic pane; no invented measurements."""
+    if not proof:return '目前無來源物件證據；原生可編輯性、字型、轉曲及字級均未知。'
+    labels={'DERIVATIVE_TEXT':'衍生向量文字','VECTOR_PATH_TEXT_ORIGIN_UNKNOWN':'向量路徑；文字來源未知','DERIVATIVE_GROUP':'衍生物件群組'}
+    declarations=proof.get('font_declarations',{})
+    lines=['來源物件：'+str(proof.get('svg_object_id') or '未知'),
+        '可取得管道：Inkscape 衍生 SVG；Illustrator 原生私有資料尚未解析。',
+        '觀察類型：'+labels.get(proof.get('classification'),'來源不足，類型未知'),
+        '原生可編輯性／真正轉曲／原生效果：未知；外觀效果不證明轉曲或可編輯。',
+        '原稿實體字級／字寬：未知；下列文字屬性為衍生宣告值，不作原稿量測。']
+    lines.extend(key+'：'+str(value) for key,value in declarations.items())
+    effects=proof.get('observed_effect_attributes',[])
+    if effects:lines.append('觀察到的外觀／變形：'+ '; '.join(str(e.get('object_id') or '匿名')+'／'+str(e.get('attribute'))+'='+str(e.get('value')) for e in effects))
+    rect=proof.get('derivative_bounds_mm')
+    if rect:lines.append('衍生幾何包圍框（mm）：'+str(rect))
+    if proof.get('stylesheet_unresolved'):lines.append('含未解析樣式表；不能保證宣告值等於最終外觀。')
+    if not proof.get('literal_evidence_complete',False):lines.append('證據不完整／超出資源預算；需人工核對，不能當作完整來源證明。')
+    if proof.get('logo_protected'):lines.append('複合 Logo 受保護，不能當一般文字框替換字型。')
+    return '\n'.join(lines)
 
 
 def identity_match(reference, candidate):
