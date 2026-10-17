@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "Original28 CURRENT007 all1549PASS but capture-6 failure; repair actual capture waiting/cleanup, current full still not PASS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT007-FAILED-CAPTURE-PLAN.receipt.json",
-  "last_confirmed_commit": "c8ecd1d42e5d6db5929e607467bde1b4169af087",
+  "active_task": "Original28: targeted native pipeline passed after QA wait and explicit format-review repairs; freeze CURRENT008 full1549/native",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002.receipt.json",
+  "last_confirmed_commit": "cda679052a7fa04e3276a5dc1f136a6afdd7ffb7",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -28,7 +28,7 @@
   ],
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
+    "CP-20261017-REMAINING28-CURRENT-FULL-SOURCE008"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -811,7 +811,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Captured original007failure saved. capture_next_twentyeight same15s Qt loop repair diagnostic022PASS; nativechain02319PASS,20th fixed70ten finalPDF/JPG correctly blocked for absent actual96DPI review;024exactrows retained.",
+  "current_work": "Immutable007all1549PASS but captureFAIL preserved. Targeted023first19native exits0 +026tail4exits0 all required files;025sixactualformat exportsPASS.02715criticalimages individually viewedPASS, otherimages process-only. Current008 full mandatory.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -925,7 +925,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Reuse existing exact format proof/review in fixed70 capture, then finish original native chain; freeze008 immutable all1549/native",
+  "next_step": "Freeze CP-20261017-REMAINING28-CURRENT-FULL-SOURCE008, remote verify; run immutable CURRENT008 all1549+23actual native processes, then publication and independent scopes; missing external5 remain",
   "current_work_package": "Original28 full software regression and external qualification",
   "checkpoint_cadence_note": "CURRENT007 immutable full run held source frozen beyond10minutes; actual duration from owned timestamp and run metadata. Delayed checkpoint until all writers exited; no strict10minutePASS.",
   "implementation_pending_original_parents": [
@@ -945,12 +945,12 @@
     "REV-01"
   ],
   "latest_targeted_verification": {
-    "tests_017": 61,
-    "passed_017": 61,
-    "repeat_019": 2,
-    "tests_each_019": 31,
-    "actual_exit_019": 0,
-    "native_fault_root_cause": "UNCONFIRMED",
+    "native_023_first19": "PASS",
+    "native_026_tail4": "PASS",
+    "actual_exit_026": 0,
+    "actual_formats_025": 6,
+    "reviewed_images_027": 15,
+    "full_current_source": "PENDING008",
     "all28_complete": false
   },
   "checkpoint_superseded": [
@@ -975,7 +975,7 @@
     "policy": "Keep latest8 confirmed plus all unacknowledged at original location; moved archives retained with exact SHA/manifest matched REMOTE_VERIFIED receipts. For old local restore copy verified archive back into original .checkpoints/ID/source.zip; remote Git remains authoritative.",
     "free_after_bytes": 4308742144
   },
-  "current_targeted_run": "docs/qa/targeted/current007-native-chain-023",
+  "current_targeted_run": "docs/qa/targeted/current007-native-tail-026",
   "local_checkpoint_cache_relocation_history": [
     {
       "journal": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261017.json",

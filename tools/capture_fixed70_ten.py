@@ -15,7 +15,8 @@ from template_ai.logo_review_dialog import LogoReviewDialog
 from template_ai.multi_size_dialog import MultiSizeDialog
 from test_customer_candidates import CustomerCandidateTests
 from test_logo_workflow_gui import LogoWorkflowGuiTests
-from test_multi_size import MultiSizeTests
+from test_multi_size import MultiSizeTests,approve_formats
+from gui_wait import dispose_main_window
 
 
 def capture(root):
@@ -39,7 +40,7 @@ def capture(root):
         shot(sync,'fixed70-customer-selective-sync.png')
         assert customer.store.get(cid)==snapshot
     finally:
-        if w:w.input_timer.stop();w.font_manager.close();w.library.close();w.deleteLater()
+        if w:dispose_main_window(w)
         customer.tearDown()
     logo=LogoWorkflowGuiTests();logo.setUp()
     try:
@@ -56,12 +57,12 @@ def capture(root):
         dialog=MultiSizeDialog(w);dialog.inputs=matrix.inputs;dialog.graph=matrix.graph;dialog.service=matrix.workflow
         dialog.render_rows();assert [e['state'] for e in dialog.service.entries]==['VALID','BLOCKED']
         shot(dialog,'fixed70-multi-size-overview.png')
-        plan=matrix.workflow.plan(matrix.output,matrix.requests());results=matrix.workflow.execute(plan,True,True,dpi=96)
+        plan=matrix.workflow.plan(matrix.output,matrix.requests());approve_formats(matrix.workflow,plan,dpi=96);results=matrix.workflow.execute(plan,True,True,dpi=96)
         assert all(r['status']=='SUCCESS' for r in results) and len(results)==6
         import shutil
         for result in results:shutil.copyfile(result['path'],root/('fixed70-'+Path(result['path']).name))
     finally:
-        if w:w.input_timer.stop();w.font_manager.close();w.library.close();w.deleteLater()
+        if w:dispose_main_window(w)
         matrix.tearDown()
     audit=dict(kind='ACTUAL_QT_SYNTHETIC_TEN_PARENT_WORKFLOWS',source_candidates_do_not_write_master=True,
         selective_sync_default_unchecked_and_master_unchanged=True,logo_review_real_source_visible_flags_default_false=True,

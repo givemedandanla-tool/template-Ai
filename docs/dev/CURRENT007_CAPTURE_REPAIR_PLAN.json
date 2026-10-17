@@ -1,5 +1,5 @@
 {
-  "status": "CAPTURE_CHAIN_PARTIAL_19PASS_NEXT_REAL_FORMAT_REVIEW_REQUIRED",
+  "status": "TARGETED_NATIVE_CHAIN_PASS_CURRENT008_PENDING",
   "failed_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "source_commit": "851fcd2619213aca744d228f4216e9d9a300492d",
   "actual_exit": 1,
@@ -16,7 +16,7 @@
     "Use existing owned fixture cleanup while QApplication lives; preserve actual item SUCCESS/output assertions",
     "Run all actual native capture chain targeted before source008 immutable all1549/full capture"
   ],
-  "next": "Checkpoint WIP; update exact capture review; target remaining chain then full008",
+  "next": "Freeze current008 then immutable all1549 plus original full23native processes;5external evidence gaps remain unchanged.",
   "original_goal_28_complete": false,
   "unchanged_021": {
     "actual_capture_exit": 1,
@@ -51,5 +51,23 @@
     "reason": "Missing current format/size/DPI proof review; product correctly blocks",
     "path": "docs/qa/targeted/current007-fixed70-export-diagnosis-024"
   },
-  "before_next_code_decision": "Reuse tests.test_multi_size.approve_formats actual proof+explicit review at exact96DPI before six exports. Keep original6SUCCESS assertion and output-copy checks. Reuse existing owned GUI fixture disposal, no product Gate change."
+  "before_next_code_decision": "Reuse tests.test_multi_size.approve_formats actual proof+explicit review at exact96DPI before six exports. Keep original6SUCCESS assertion and output-copy checks. Reuse existing owned GUI fixture disposal, no product Gate change.",
+  "fixed70_025": {
+    "actual_exit": 0,
+    "all_six_exports_success": true,
+    "original_assertions_unchanged": true
+  },
+  "tail_026": {
+    "actual_exit": 0,
+    "processes": 4,
+    "all_exit_zero": true,
+    "original_required_artifacts_present": true,
+    "prior19": "023 actual exits0",
+    "not_formal_full_regression": true
+  },
+  "visual_027": {
+    "individually_viewed": 15,
+    "reviewed_scenarios": "PASS",
+    "other_images": "PROCESS_ONLY"
+  }
 }
