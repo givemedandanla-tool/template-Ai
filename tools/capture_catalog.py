@@ -16,10 +16,13 @@ from template_ai.importer import import_file
 from template_ai.input_graph import InputGraph
 from template_ai.customers import CustomerStore
 from template_ai.customer_catalog import CustomerStyleDialog
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tests'))
+from runtime_fixture import controlled_resources
+from gui_wait import dispose_main_window,wait_for_gui
 
 
 def capture(root):
-    app=QApplication.instance() or QApplication([]);root=Path(root);root.mkdir(parents=True,exist_ok=True);w=MainWindow(root/'catalog-local-data');templates=[]
+    app=QApplication.instance() or QApplication([]);root=Path(root);root.mkdir(parents=True,exist_ok=True);w=MainWindow(root/'catalog-local-data');controlled_resources(w);templates=[]
     people=[dict(name=['Alex Example'],title=['Designer'],phone=['020-000-0100'],email=['alex@example.test'])]
     for version,width,height in [(1,90,54),(2,100,60)]:
         t=demo_template();t.name='Synthetic Example Style';t.version=version;t.width_mm=width;t.height_mm=height
@@ -28,7 +31,9 @@ def capture(root):
         path=root/f'catalog-synthetic-source-v{version}.png';assert render_image(candidate).save(str(path))
         source=w.library.add_source(path,import_file(path,w.library.assets));crop=Rect(0,0,source['width_mm'],source['height_mm']);t.source_id=source['id'];t.artwork=crop
         work=w.library.create_artwork(source['id'],f'Anonymous Source Work {version}',dict(crop=asdict(crop),work_width=width,work_height=height,slots=[asdict(s) for s in t.slots],visual_confirmed=True));t.source_work_id=work['id'];t.source_work_revision=work['revision'];w.library.publish(t);templates.append(t)
-    w.refresh_templates();w.tabs.setCurrentIndex(1);w.show();c=w.template_catalog;c.selected_ids={templates[0].id};c.primary_id=templates[0].id;c.rebuild();app.processEvents();assert w.template_stack.currentIndex()==0;assert not w.property_panel.isEnabled();assert w.grab().save(str(root/'catalog-template-icons.png'))
+    w.refresh_templates();w.tabs.setCurrentIndex(1);w.show();c=w.template_catalog;c.selected_ids={templates[0].id};c.primary_id=templates[0].id;c.rebuild();app.processEvents();assert w.template_stack.currentIndex()==0;assert not w.property_button.isEnabled();assert all(not control.isEnabled() for control in w.coords);assert wait_for_gui(lambda:c.current_message(templates[0].id) is not None,10)
+    for width,height,name in [(1340,850,'catalog-narrow-source-preview.png'),(1780,1060,'catalog-template-icons.png')]:
+        w.resize(width,height);app.processEvents();app.processEvents();pixmap=c.picture.pixmap();area=c.picture.contentsRect();assert not pixmap.isNull() and pixmap.width()<=area.width() and pixmap.height()<=area.height();assert w.grab().save(str(root/name))
     c.mode.setCurrentIndex(1);app.processEvents();assert w.grab().save(str(root/'catalog-template-list.png'));assert c.selected_ids=={templates[0].id}
     c.open_editor();app.processEvents();assert w.edit_canvas.readonly;assert w.grab().save(str(root/'catalog-explicit-editor.png'));w.return_catalog()
     store=CustomerStore(w.library);g=InputGraph.from_legacy(people,[]);customer=store.create_graph('00123','Synthetic Example Client',g.data,templates[0].id,True);customer=store.link_style(customer,templates[1].id,True);dialog=CustomerStyleDialog(w,customer);dialog.show();ids={e['id'] for e in dialog.catalog.entries};dialog.catalog.selected_ids=ids;dialog.catalog.primary_id=dialog.catalog.entries[0]['id'];dialog.catalog.rebuild()
@@ -42,7 +47,7 @@ def capture(root):
     assert dialog.adopted and w.reorder_template_id==templates[1].id and w.out_w.value()==100;assert store.get(customer['id'])==customer
     comparison.close();dialog.hide();w.tabs.setCurrentIndex(2);app.processEvents();assert w.grab().save(str(root/'catalog-customer-prefilled.png'))
     audit=dict(schema_version=1,evidence_kind='ACTUAL_QT_CATALOG_SOURCE_COMPARE_EXACT_REORDER',anonymous_synthetic_only=True,actual_template_versions=2,actual_sizes_mm=[[90,54],[100,60]],views_preserve_same_selected_id=True,default_browse_does_not_enter_editor=True,explicit_editor_published_readonly=True,source_derivative_hashes_verified=True,source_preview_not_visual_or_print_certification=True,same_customer_only=True,exact_version_and_size_prefilled=True,master_unchanged=True,formal_output_still_disabled=not w.export_button.isEnabled(),raw_source_files_and_databases_exported=False)
-    (root/'catalog-gui-audit.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n');dialog.catalog.close_previews();w.template_catalog.close_previews();w.pool.waitForDone(6000);app.processEvents();w.input_timer.stop();w.library.db.close();w.hide();print(json.dumps(audit))
+    (root/'catalog-gui-audit.json').write_text(json.dumps(audit,ensure_ascii=False,indent=2)+'\n');dialog.catalog.close_previews();w.template_catalog.close_previews();dispose_main_window(w);print(json.dumps(audit))
 
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--artifacts-dir',required=True);capture(p.parse_args().artifacts_dir)

@@ -202,6 +202,8 @@
         "test_font_candidates.FontCandidateTests.test_search_preview_leave_published_pin_registry_and_source_bytes_unchanged",
         "test_font_candidates.FontCandidateTests.test_source_identity_precedes_width_rank_and_unknown_reference_has_no_score",
         "test_font_candidates.FontCandidateTests.test_unapproved_missing_modified_unknown_are_excluded_with_reasons",
+        "test_font_collection_shaping.FontCollectionShapingTests.test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face",
+        "test_font_collection_shaping.FontCollectionShapingTests.test_actual_same_family_with_changed_metric_table_is_still_rejected_for_shaping",
         "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
         "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
         "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style",
@@ -320,5 +322,11 @@
     "sha256": "dffa4b7e501d9c605f79f6a70f81d999dc2005820db6dc41a973a61db75bfa7c",
     "scope": "HISTORICAL_WHOLE_FILE"
   },
-  "source_hash_scope": "ORIGINAL_PARENT_SECTION"
+  "source_hash_scope": "ORIGINAL_PARENT_SECTION",
+  "current004_repair_evidence": {
+    "isolated_004": "docs/qa/targeted/current004-isolated-004/summary.json",
+    "governance_005": "docs/qa/targeted/current004-governance-005.log",
+    "native_smoke_011": "docs/qa/targeted/current005-native-smoke-011.json",
+    "full_current_source": "PENDING_CURRENT005"
+  }
 }

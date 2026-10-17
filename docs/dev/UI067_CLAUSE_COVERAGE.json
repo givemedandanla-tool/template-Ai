@@ -31,10 +31,13 @@
       "id": "UI-067-CLAUSE-3",
       "expected": "**五態清楚區分**：`APPROVED_REQUIREMENT`（既有核准）、`OPEN_HUMAN_DECISION`（真正需要 Human 取捨）、`RESEARCH_OR_TEST_NEEDED`（需來源／PoC／實機量測，不用抽象選項代替驗證）、`FUTURE_BACKLOG`（當前未授權）及 `CONFLICT_OR_STALE_REFERENCE`（待對帳）；各條另外註明軟體的 `NOT_IMPLEMENTED/NOT_VERIFIED` 狀態，兩者不可混淆。",
       "tests": [
+        "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth",
         "test_gui_convergence_trace.GuiConvergenceTraceTests.test_completed_registry_claim_never_substitutes_for_current_source_evidence",
         "test_gui_convergence_trace.GuiConvergenceTraceTests.test_duplicate_original_parent_or_missing_decision_source_is_refused",
         "test_gui_convergence_trace.GuiConvergenceTraceTests.test_unapproved_report_unblock_and_broken_test_link_are_refused",
-        "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth"
+        "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_any_failed_skipped_incomplete_or_unhealthy_execution_blocks_scope",
+        "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_complete_independent_scope_does_not_change_pending_overall_goal",
+        "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_missing_duplicate_stale_or_nonpass_clause_claims_cannot_complete_scope"
       ],
       "manual_governance_review": "Current matrix + six original resolved conflicts + research/future/human state separation; links do not prove feature implementation"
     },
@@ -64,10 +67,13 @@
       "id": "UI-067-CLAUSE-6",
       "expected": "**未來收斂交付**：形成「決策索引、重複對應、衝突及解法、真正未決與需要 Human 取捨、需技術研究的工作、低優先後續項、驗收追溯」。訪談以**必要問題處理完成**為終點，不受 UI-075 這個先前暫定檢查點限制，亦不能因題號已足夠就假稱全體規格完整。",
       "tests": [
+        "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth",
         "test_gui_convergence_trace.GuiConvergenceTraceTests.test_completed_registry_claim_never_substitutes_for_current_source_evidence",
         "test_gui_convergence_trace.GuiConvergenceTraceTests.test_duplicate_original_parent_or_missing_decision_source_is_refused",
         "test_gui_convergence_trace.GuiConvergenceTraceTests.test_unapproved_report_unblock_and_broken_test_link_are_refused",
-        "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth"
+        "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_any_failed_skipped_incomplete_or_unhealthy_execution_blocks_scope",
+        "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_complete_independent_scope_does_not_change_pending_overall_goal",
+        "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_missing_duplicate_stale_or_nonpass_clause_claims_cannot_complete_scope"
       ],
       "manual_governance_review": "Current matrix + six original resolved conflicts + research/future/human state separation; links do not prove feature implementation"
     },
@@ -90,5 +96,11 @@
   "pass": 15,
   "actual_process_exit": 0,
   "new_product_features": 0,
-  "independent_review": false
+  "independent_review": false,
+  "current004_repair_evidence": {
+    "isolated_004": "docs/qa/targeted/current004-isolated-004/summary.json",
+    "governance_005": "docs/qa/targeted/current004-governance-005.log",
+    "native_smoke_011": "docs/qa/targeted/current005-native-smoke-011.json",
+    "full_current_source": "PENDING_CURRENT005"
+  }
 }

@@ -9303,6 +9303,8 @@
             "test_font_candidates.FontCandidateTests.test_search_preview_leave_published_pin_registry_and_source_bytes_unchanged",
             "test_font_candidates.FontCandidateTests.test_source_identity_precedes_width_rank_and_unknown_reference_has_no_score",
             "test_font_candidates.FontCandidateTests.test_unapproved_missing_modified_unknown_are_excluded_with_reasons",
+            "test_font_collection_shaping.FontCollectionShapingTests.test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face",
+            "test_font_collection_shaping.FontCollectionShapingTests.test_actual_same_family_with_changed_metric_table_is_still_rejected_for_shaping",
             "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
             "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
             "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style",
@@ -9465,10 +9467,12 @@
           "id": "UI-032-CLAUSE-4",
           "expected": "**人工匯入字型檔**：提供使用者自本機選取其有權使用的字型來源，先檢查可解析格式、來源完整性、家族／款式、必要中文字／數字／符號覆蓋、字寬量測、授權及可能的安全風險；可讓使用者確認後在**程式自身可使用的範圍內**使用字型，**不應預設需要 Windows 系統安裝**。程式內字型載入能力、支援字型格式及 PDF 嵌入／轉出合法性仍待實作可行性驗證，不能將尚未核實的格式宣告為必然可用。",
           "tests": [
-            "test_font_evidence.FontEvidenceTests.test_collection_requires_face_then_persists_actual_selected_family_and_source_hash",
-            "test_font_evidence.FontEvidenceTests.test_font_change_after_attestation_is_still_rejected_by_health_gate",
             "test_font_center.FontCatalogTests.test_asset_identity_and_draft_published_template_impacts_preserved",
-            "test_font_center.FontCatalogTests.test_coverage_counts_unique_codepoints_and_missing_nonbmp_without_fallback"
+            "test_font_center.FontCatalogTests.test_coverage_counts_unique_codepoints_and_missing_nonbmp_without_fallback",
+            "test_font_collection_shaping.FontCollectionShapingTests.test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face",
+            "test_font_collection_shaping.FontCollectionShapingTests.test_actual_same_family_with_changed_metric_table_is_still_rejected_for_shaping",
+            "test_font_evidence.FontEvidenceTests.test_collection_requires_face_then_persists_actual_selected_family_and_source_hash",
+            "test_font_evidence.FontEvidenceTests.test_font_change_after_attestation_is_still_rejected_by_health_gate"
           ]
         },
         {
@@ -9535,33 +9539,37 @@
           "id": "UI-032-CLAUSE-8",
           "expected": "**遵守字級與 Logo 既定規則**：UI-013 先定案的欄位字級不得因字串長度或換字型而由系統偷偷更動；字型變更後須重新測量真實文字寬度、可允許的水平縮放／字距、中文字形與安全區、完整性／重疊／可讀性。UI-020 複合 Logo 內圖文仍須作為一個 Logo 資產保護，不能擅自替換 Logo 內的字型或拆字。",
           "tests": [
-            "test_font_center.FontCatalogTests.test_real_shaping_mm_scales_linearly_and_matches_independent_font_metrics",
-            "test_font_center.FontCatalogTests.test_horizontal_fit_boundary_does_not_change_size_or_drop_text",
+            "test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation",
             "test_font_center.FontCatalogTests.test_changed_asset_and_different_shaping_face_block_even_if_system_family_exists",
-            "test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation"
+            "test_font_center.FontCatalogTests.test_horizontal_fit_boundary_does_not_change_size_or_drop_text",
+            "test_font_center.FontCatalogTests.test_real_shaping_mm_scales_linearly_and_matches_independent_font_metrics",
+            "test_font_collection_shaping.FontCollectionShapingTests.test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face",
+            "test_font_collection_shaping.FontCollectionShapingTests.test_actual_same_family_with_changed_metric_table_is_still_rejected_for_shaping"
           ]
         },
         {
           "id": "UI-032-CLAUSE-9",
           "expected": "**輸出與授權 Gate**：正式 PDF／PNG／JPG 需依實際輸出格式、字型來源、字形涵蓋、授權／可嵌入性（適用時）、列印品質及最新驗證結果判定；即使程式內可預覽，亦不表示可合法嵌入 PDF 或正式印製。不足或未知時須明示原因並限制正式輸出，仍可在 UI-027／UI-028 規則下提供清楚標記問題的非正式診斷預覽。",
           "tests": [
-            "test_host_font_source_rights.HostFontSourceRightsTests.test_unknown_host_rights_are_not_empty_success_for_any_formal_format",
+            "test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval",
+            "test_final_digital_preflight.FinalDigitalPreflightTests.test_codec_success_flag_with_corrupt_png_bytes_does_not_publish",
+            "test_final_digital_preflight.FinalDigitalPreflightTests.test_corrupt_pdf_after_page_box_writer_cannot_publish",
+            "test_final_digital_preflight.FinalDigitalPreflightTests.test_current_source_pixel_shortfall_blocks_final_but_retains_marked_preview",
+            "test_final_digital_preflight.FinalDigitalPreflightTests.test_pdf_boolean_sampling_setting_is_not_silently_ignored",
+            "test_final_digital_preflight.FinalDigitalPreflightTests.test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card",
+            "test_final_digital_preflight.FinalDigitalPreflightTests.test_sufficient_actual_pixels_and_original_gate_can_publish_exact_png",
+            "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise",
+            "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone",
+            "test_font_collection_shaping.FontCollectionShapingTests.test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face",
+            "test_font_collection_shaping.FontCollectionShapingTests.test_actual_same_family_with_changed_metric_table_is_still_rejected_for_shaping",
+            "test_font_evidence.FontEvidenceTests.test_actual_export_blocks_unknown_rights_allows_labelled_preview_and_only_new_explicit_binding_gets_rights",
+            "test_font_evidence.FontEvidenceTests.test_approval_is_per_face_does_not_install_or_modify_templates_and_invalid_font_never_registers",
+            "test_font_evidence.FontEvidenceTests.test_collection_requires_face_then_persists_actual_selected_family_and_source_hash",
+            "test_font_evidence.FontEvidenceTests.test_font_change_after_attestation_is_still_rejected_by_health_gate",
+            "test_font_evidence.FontEvidenceTests.test_technical_embedding_flags_never_supply_legal_rights_and_pdf_restrictions_are_stricter",
             "test_host_font_source_rights.HostFontSourceRightsTests.test_actual_host_font_without_record_cannot_publish_but_can_mark_preview",
             "test_host_font_source_rights.HostFontSourceRightsTests.test_original_named_checklist_blocks_unknown_font_source_and_points_to_fields",
-            "test_font_evidence.FontEvidenceTests.test_collection_requires_face_then_persists_actual_selected_family_and_source_hash",
-            "test_font_evidence.FontEvidenceTests.test_technical_embedding_flags_never_supply_legal_rights_and_pdf_restrictions_are_stricter",
-            "test_font_evidence.FontEvidenceTests.test_approval_is_per_face_does_not_install_or_modify_templates_and_invalid_font_never_registers",
-            "test_font_evidence.FontEvidenceTests.test_font_change_after_attestation_is_still_rejected_by_health_gate",
-            "test_font_evidence.FontEvidenceTests.test_actual_export_blocks_unknown_rights_allows_labelled_preview_and_only_new_explicit_binding_gets_rights",
-            "test_final_digital_preflight.FinalDigitalPreflightTests.test_codec_success_flag_with_corrupt_png_bytes_does_not_publish",
-            "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone",
-            "test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval",
-            "test_final_digital_preflight.FinalDigitalPreflightTests.test_current_source_pixel_shortfall_blocks_final_but_retains_marked_preview",
-            "test_final_digital_preflight.FinalDigitalPreflightTests.test_sufficient_actual_pixels_and_original_gate_can_publish_exact_png",
-            "test_final_digital_preflight.FinalDigitalPreflightTests.test_corrupt_pdf_after_page_box_writer_cannot_publish",
-            "test_final_digital_preflight.FinalDigitalPreflightTests.test_pdf_boolean_sampling_setting_is_not_silently_ignored",
-            "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise",
-            "test_final_digital_preflight.FinalDigitalPreflightTests.test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card"
+            "test_host_font_source_rights.HostFontSourceRightsTests.test_unknown_host_rights_are_not_empty_success_for_any_formal_format"
           ]
         },
         {
@@ -20488,10 +20496,13 @@
           "id": "UI-067-CLAUSE-3",
           "expected": "**五態清楚區分**：`APPROVED_REQUIREMENT`（既有核准）、`OPEN_HUMAN_DECISION`（真正需要 Human 取捨）、`RESEARCH_OR_TEST_NEEDED`（需來源／PoC／實機量測，不用抽象選項代替驗證）、`FUTURE_BACKLOG`（當前未授權）及 `CONFLICT_OR_STALE_REFERENCE`（待對帳）；各條另外註明軟體的 `NOT_IMPLEMENTED/NOT_VERIFIED` 狀態，兩者不可混淆。",
           "tests": [
+            "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth",
             "test_gui_convergence_trace.GuiConvergenceTraceTests.test_completed_registry_claim_never_substitutes_for_current_source_evidence",
             "test_gui_convergence_trace.GuiConvergenceTraceTests.test_duplicate_original_parent_or_missing_decision_source_is_refused",
             "test_gui_convergence_trace.GuiConvergenceTraceTests.test_unapproved_report_unblock_and_broken_test_link_are_refused",
-            "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth"
+            "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_any_failed_skipped_incomplete_or_unhealthy_execution_blocks_scope",
+            "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_complete_independent_scope_does_not_change_pending_overall_goal",
+            "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_missing_duplicate_stale_or_nonpass_clause_claims_cannot_complete_scope"
           ]
         },
         {
@@ -20518,10 +20529,13 @@
           "id": "UI-067-CLAUSE-6",
           "expected": "**未來收斂交付**：形成「決策索引、重複對應、衝突及解法、真正未決與需要 Human 取捨、需技術研究的工作、低優先後續項、驗收追溯」。訪談以**必要問題處理完成**為終點，不受 UI-075 這個先前暫定檢查點限制，亦不能因題號已足夠就假稱全體規格完整。",
           "tests": [
+            "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth",
             "test_gui_convergence_trace.GuiConvergenceTraceTests.test_completed_registry_claim_never_substitutes_for_current_source_evidence",
             "test_gui_convergence_trace.GuiConvergenceTraceTests.test_duplicate_original_parent_or_missing_decision_source_is_refused",
             "test_gui_convergence_trace.GuiConvergenceTraceTests.test_unapproved_report_unblock_and_broken_test_link_are_refused",
-            "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth"
+            "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_any_failed_skipped_incomplete_or_unhealthy_execution_blocks_scope",
+            "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_complete_independent_scope_does_not_change_pending_overall_goal",
+            "test_independent_scope_evidence.IndependentScopeEvidenceTests.test_missing_duplicate_stale_or_nonpass_clause_claims_cannot_complete_scope"
           ]
         },
         {

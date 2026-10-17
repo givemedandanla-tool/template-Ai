@@ -72,7 +72,7 @@ def verify_acceptance(row,run,results,claims):
     expected=[a['id'] for a in acceptance];actual=[c['acceptance_id'] for c in matching]
     if not acceptance or len(actual)!=len(set(actual)) or sorted(actual)!=sorted(expected):raise ValueError('完整要求驗收證據不齊全：'+row['id'])
     if any(c.get('contract_sha256')!=contract_digest(row) for c in matching):raise ValueError('要求驗收範圍已變更，舊證據不可沿用：'+row['id'])
-    if not execution_passed(run,results):raise ValueError('沒有完整通過的軟體執行證據')
+    if not execution_passed(run,results):raise ValueError('軟體執行未完整逐項 PASS，不能完成任何要求')
     for clause in acceptance:
         claim=next(c for c in matching if c['acceptance_id']==clause['id'])
         if claim.get('status')!='PASS' or not clause['tests'] or any(results.get(t,{}).get('status')!='PASS' for t in clause['tests']):raise ValueError('驗收尚未逐項 PASS：'+row['id'])

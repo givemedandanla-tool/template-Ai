@@ -1,0 +1,188 @@
+{
+  "cancelled": {
+    "id": "930ee65f1ce14a5a98059e7ec317b4d7",
+    "revision": 4,
+    "phase": "CANCELLED",
+    "created": 1792202090.1365533,
+    "items": [
+      {
+        "id": "85832480c87c41d0a1d235bb42d0231e",
+        "path": "/tmp/current005-smoke-006/primary/synthetic-batch-input/duplicate.svg",
+        "page": 1,
+        "expected_hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7",
+        "status": "SUCCESS",
+        "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+        "attempts": 1,
+        "history": [
+          {
+            "action": "CLAIM",
+            "attempt": 1,
+            "hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7"
+          },
+          {
+            "action": "SUCCESS",
+            "attempt": 1,
+            "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+            "source_id": "3ce0796452604f7daf4465bd593adcf6"
+          }
+        ],
+        "source_id": "3ce0796452604f7daf4465bd593adcf6",
+        "reuse_source": null,
+        "bytes": 114
+      },
+      {
+        "id": "84b469dad826432ba5d4bdeb84f96bf2",
+        "path": "/tmp/current005-smoke-006/primary/synthetic-batch-input/first.svg",
+        "page": 1,
+        "expected_hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7",
+        "status": "SKIPPED",
+        "reason": "同批相同SHA-256／頁次；路徑證據保留，作品／模板相似仍UNKNOWN",
+        "attempts": 0,
+        "history": [],
+        "source_id": null,
+        "reuse_source": null,
+        "bytes": 114,
+        "duplicate_of": "85832480c87c41d0a1d235bb42d0231e"
+      },
+      {
+        "id": "eece2d1910714b90aa45d287268877e6",
+        "path": "/tmp/current005-smoke-006/primary/synthetic-batch-input/second.svg",
+        "page": 1,
+        "expected_hash": "6a5b6623511078fce67de16fccec317cf4982556bc40932df7112c9f6eb63c8d",
+        "status": "READY",
+        "reason": "待匯入；視覺／語意尚未核驗",
+        "attempts": 0,
+        "history": [],
+        "source_id": null,
+        "reuse_source": null,
+        "bytes": 115
+      }
+    ],
+    "owner": null,
+    "history": [
+      {
+        "action": "import_item_started",
+        "revision": 2,
+        "created": 1792202090.138297
+      },
+      {
+        "action": "import_item_result_saved",
+        "revision": 3,
+        "created": 1792202091.2783065
+      },
+      {
+        "action": "import_cancelled",
+        "revision": 4,
+        "created": 1792202091.2824857
+      }
+    ],
+    "scope": "只讀來源匯入；尚非自动語意辨識／學習／發布"
+  },
+  "resumed": {
+    "id": "930ee65f1ce14a5a98059e7ec317b4d7",
+    "revision": 7,
+    "phase": "DONE",
+    "created": 1792202090.1365533,
+    "items": [
+      {
+        "id": "85832480c87c41d0a1d235bb42d0231e",
+        "path": "/tmp/current005-smoke-006/primary/synthetic-batch-input/duplicate.svg",
+        "page": 1,
+        "expected_hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7",
+        "status": "SUCCESS",
+        "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+        "attempts": 1,
+        "history": [
+          {
+            "action": "CLAIM",
+            "attempt": 1,
+            "hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7"
+          },
+          {
+            "action": "SUCCESS",
+            "attempt": 1,
+            "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+            "source_id": "3ce0796452604f7daf4465bd593adcf6"
+          }
+        ],
+        "source_id": "3ce0796452604f7daf4465bd593adcf6",
+        "reuse_source": null,
+        "bytes": 114
+      },
+      {
+        "id": "84b469dad826432ba5d4bdeb84f96bf2",
+        "path": "/tmp/current005-smoke-006/primary/synthetic-batch-input/first.svg",
+        "page": 1,
+        "expected_hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7",
+        "status": "SKIPPED",
+        "reason": "同批相同SHA-256／頁次；路徑證據保留，作品／模板相似仍UNKNOWN",
+        "attempts": 0,
+        "history": [],
+        "source_id": null,
+        "reuse_source": null,
+        "bytes": 114,
+        "duplicate_of": "85832480c87c41d0a1d235bb42d0231e"
+      },
+      {
+        "id": "eece2d1910714b90aa45d287268877e6",
+        "path": "/tmp/current005-smoke-006/primary/synthetic-batch-input/second.svg",
+        "page": 1,
+        "expected_hash": "6a5b6623511078fce67de16fccec317cf4982556bc40932df7112c9f6eb63c8d",
+        "status": "SUCCESS",
+        "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+        "attempts": 1,
+        "history": [
+          {
+            "action": "CLAIM",
+            "attempt": 1,
+            "hash": "6a5b6623511078fce67de16fccec317cf4982556bc40932df7112c9f6eb63c8d"
+          },
+          {
+            "action": "SUCCESS",
+            "attempt": 1,
+            "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+            "source_id": "6b482e50792e4b82a40661f5a1217687"
+          }
+        ],
+        "source_id": "6b482e50792e4b82a40661f5a1217687",
+        "reuse_source": null,
+        "bytes": 115
+      }
+    ],
+    "owner": null,
+    "history": [
+      {
+        "action": "import_item_started",
+        "revision": 2,
+        "created": 1792202090.138297
+      },
+      {
+        "action": "import_item_result_saved",
+        "revision": 3,
+        "created": 1792202091.2783065
+      },
+      {
+        "action": "import_cancelled",
+        "revision": 4,
+        "created": 1792202091.2824857
+      },
+      {
+        "action": "import_item_started",
+        "revision": 5,
+        "created": 1792202091.3391278
+      },
+      {
+        "action": "import_item_result_saved",
+        "revision": 6,
+        "created": 1792202092.555045
+      },
+      {
+        "action": "import_run_stopped",
+        "revision": 7,
+        "created": 1792202092.558783
+      }
+    ],
+    "scope": "只讀來源匯入；尚非自动語意辨識／學習／發布"
+  },
+  "scope": "Actual anonymous GUI; procedure-confirmed source import only, no automatic semantic training/publication or independent review"
+}

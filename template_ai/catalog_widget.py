@@ -1,11 +1,11 @@
 """One read-only index, two views, and explicit edit/reorder actions."""
 from copy import deepcopy
 import sqlite3
-from PySide6.QtCore import Qt,QSize,QItemSelectionModel
+from PySide6.QtCore import Qt,QSize,QItemSelectionModel,QEvent
 from PySide6.QtGui import QIcon,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QSplitter,QLineEdit,QComboBox,QLabel,
     QPushButton,QTreeWidget,QTreeWidgetItem,QListWidget,QListWidgetItem,QAbstractItemView,QPlainTextEdit,
-    QDialog,QDialogButtonBox)
+    QDialog,QDialogButtonBox,QSizePolicy)
 from . import catalog
 from .catalog_preview import PreviewController
 
@@ -13,7 +13,7 @@ from .catalog_preview import PreviewController
 class CatalogWidget(QWidget):
     def __init__(self,window,customer=None,on_pick=None,allow_edit=True):
         super().__init__(window);self.window=window;self.customer=deepcopy(customer);self.on_pick=on_pick;self.allow_edit=allow_edit
-        self.entries=[];self.visible=[];self.byid={};self.selected_ids=set();self.primary_id=None;self.page=0;self.blocked=False;self.closed=False;self.source_results={};self.compare_dialogs=[]
+        self.entries=[];self.visible=[];self.byid={};self.selected_ids=set();self.primary_id=None;self.page=0;self.blocked=False;self.closed=False;self.source_results={};self.compare_dialogs=[];self.preview_pixmap=None
         self.controller=PreviewController(window,self);self.controller.result.connect(self.preview_done)
         layout=QVBoxLayout(self)
         bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('搜尋模板名稱／ID／版次／來源ID');bar.addWidget(self.query)
@@ -27,7 +27,7 @@ class CatalogWidget(QWidget):
         layout.addLayout(bar)
         split=QSplitter();self.tree=QTreeWidget();self.tree.setHeaderLabels(['實體尺寸 → 人物容量']);split.addWidget(self.tree)
         self.items=QListWidget();self.items.setSelectionMode(QAbstractItemView.ExtendedSelection);self.items.setResizeMode(QListWidget.Adjust);split.addWidget(self.items)
-        detail=QWidget();v=QVBoxLayout(detail);self.picture=QLabel('請選擇一個模板，瀏覽不進入編輯');self.picture.setTextFormat(Qt.PlainText);self.picture.setAlignment(Qt.AlignCenter);self.picture.setMinimumSize(240,150);v.addWidget(self.picture)
+        detail=QWidget();v=QVBoxLayout(detail);self.picture=QLabel('請選擇一個模板，瀏覽不進入編輯');self.picture.setTextFormat(Qt.PlainText);self.picture.setAlignment(Qt.AlignCenter);self.picture.setMinimumSize(240,150);self.picture.setSizePolicy(QSizePolicy.Ignored,QSizePolicy.Preferred);self.picture.installEventFilter(self);v.addWidget(self.picture)
         self.preview_state=QLabel('來源縮圖 UNKNOWN');self.preview_state.setTextFormat(Qt.PlainText);self.preview_state.setWordWrap(True);v.addWidget(self.preview_state)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);v.addWidget(self.details,1);split.addWidget(detail);split.setSizes([190,610,320]);layout.addWidget(split,1)
         bar=QHBoxLayout();self.previous=self.button(bar,'上一頁',lambda:self.change_page(-1));self.next=self.button(bar,'下一頁',lambda:self.change_page(1));self.button(bar,'清除全部選取',self.clear_selection);self.button(bar,'並排比較選中兩版',self.compare)
@@ -125,8 +125,8 @@ class CatalogWidget(QWidget):
         if self.primary_id not in self.byid:return
         entry=self.byid[self.primary_id];self.details.setPlainText(catalog.metadata(self.window.library,entry))
         if not self.customer:
-            self.picture.setPixmap(QPixmap.fromImage(catalog.frame_diagram(entry)));self.preview_state.setText('實際模板框位示意；不是原稿／新排版／品質證明')
-        else:self.picture.clear();self.picture.setText('來源縮圖讀取中／UNKNOWN')
+            self.set_preview_image(catalog.frame_diagram(entry));self.preview_state.setText('實際模板框位示意；不是原稿／新排版／品質證明')
+        else:self.set_preview_image(None);self.picture.setText('來源縮圖讀取中／UNKNOWN')
         if self.current_message(entry['id']):self.display_result(entry['id'],self.current_message(entry['id']))
         self.controller.prioritize(entry)
 
@@ -174,10 +174,26 @@ class CatalogWidget(QWidget):
             return True
         except (OSError,ValueError):return False
 
+    def set_preview_image(self,image):
+        self.preview_pixmap=QPixmap.fromImage(image) if image is not None else None
+        if self.preview_pixmap is None:self.picture.clear()
+        else:self.fit_preview(force=True)
+
+    def fit_preview(self,force=False):
+        if self.preview_pixmap is None:return
+        rect=self.picture.contentsRect();size=QSize(max(1,min(320,rect.width())),max(1,min(210,rect.height())))
+        fitted=self.preview_pixmap.scaled(size,Qt.KeepAspectRatio,Qt.SmoothTransformation)
+        current=self.picture.pixmap()
+        if force or current.isNull() or current.size()!=fitted.size():self.picture.setPixmap(fitted)
+
+    def eventFilter(self,watched,event):
+        if watched is self.picture and event.type()==QEvent.Resize:self.fit_preview()
+        return super().eventFilter(watched,event)
+
     def display_result(self,eid,message):
         result=message['result'];image=result.get('image')
-        if image is not None:self.picture.setPixmap(QPixmap.fromImage(image).scaled(QSize(320,210),Qt.KeepAspectRatio,Qt.SmoothTransformation))
-        elif self.customer:self.picture.clear();self.picture.setText('來源縮圖 '+result['status'])
+        if image is not None:self.set_preview_image(image)
+        elif self.customer:self.set_preview_image(None);self.picture.setText('來源縮圖 '+result['status'])
         self.preview_state.setText(('模板框位示意（非原稿）；' if not self.customer and image is None else '')+result['status']+'：'+result['reason'])
 
     def update_status(self,count):

@@ -1,0 +1,15 @@
+Fontconfig error: No writable cache directories
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/capture_candidate_results.py", line 43, in <module>
+    parser=argparse.ArgumentParser();parser.add_argument('--folder',required=True);args=parser.parse_args();result=capture(args.folder);print(json.dumps({k:v for k,v in result.items() if k!='screens'},ensure_ascii=False))
+                                                                                                                   ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_candidate_results.py", line 22, in capture
+    w.resize(1700,1060);w.show();w.tabs.setCurrentIndex(2);case.ready();w.foreground_layout_session.hide();assert recommendation(w)['scope_complete'];w.candidate_scroll.ensureWidgetVisible(w.result_recommendation);shot(w,'01-current-qualified-finite-recommendation');case.another(width=.1);w.generate();wait_layout(w);w.foreground_layout_session.hide();before=[c.template.to_dict() for c in w.candidates];assert recommendation(w)['index']==0
+                                                                                                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/capture_candidate_results.py", line 19, in shot
+    if widget is w:w.out_canvas.fit();app.processEvents()
+                   ^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'out_canvas'. Did you mean: 'edit_canvas'?
