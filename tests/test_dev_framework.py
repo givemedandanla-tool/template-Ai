@@ -60,7 +60,7 @@ class DevFrameworkTests(unittest.TestCase):
         write_json(folder / "commit.json", {"sha": "a" * 40, "tree": {"sha": "b" * 40}})
         write_json(folder / "tree.json", {"sha": "b" * 40, "truncated": False, "tree": [{"path": path, "type": "blob", "sha": item["git_blob_sha1"]} for path, item in files.items()]})
         write_json(folder / "tests.json", [{"id": "test_sample.SampleTests.test_ok", "status": status}])
-        write_json(folder / "claims.json", [{"requirement_id": "CORE-X", "contract_sha256": contract_digest(self.record)}])
+        write_json(folder / "claims.json", [{"requirement_id": "CORE-X", "acceptance_id": "CORE-X-A1", "status": status, "contract_sha256": contract_digest(self.record)}])
         attachment = folder / "actual.txt"
         attachment.write_text("合成實際附件", encoding="utf-8")
         write_json(folder / "run.json", {"source_commit": "a" * 40, "source_manifest_sha256": manifest_digest(files), "status": "PASS",

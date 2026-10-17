@@ -19,6 +19,7 @@ from template_ai.diagnostic_routes import open_diagnostic
 from template_ai.model import Slot,Rect
 from training_fixture import source_work
 from runtime_fixture import controlled_resources
+from authored_font_fixture import bind_authored_fonts
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
 from gui_convergence import reconcile
@@ -31,7 +32,7 @@ def pump_until(fn,seconds=5):
 
 class SeventyUiTests(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'data');controlled_resources(self.w);self.addCleanup(SeventyUiTests.close_window,self);self.t=demo_template();self.w.library.publish(self.t);self.w.people.setRowCount(1)
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'data');controlled_resources(self.w);self.addCleanup(SeventyUiTests.close_window,self);self.t=demo_template();bind_authored_fonts(self.t,self.w.font_manager);self.w.library.publish(self.t);self.w.people.setRowCount(1)
         from PySide6.QtWidgets import QTableWidgetItem
         for j,v in enumerate(('Alex Example','Designer','+12025550100','alex@example.test','','','','')):self.w.people.setItem(0,j,QTableWidgetItem(v))
 

@@ -68,6 +68,7 @@ class TrainingQualityGuiTests(unittest.TestCase):
         self.d = TrainingQualityDialog(self.window); self.addCleanup(self.d.close); self.d.show(); APP.processEvents()
     def close_fixture(self):
         # Explicitly discard test-only unsaved state after assertions; stale close normally asks the user.
+        self.window.navigation.confirm_close = lambda: True
         self.window.source = None; self.window.work = None; self.window.template = None; self.window.close()
     def select(self, code='BOUNDS'):
         i = next(i for i, r in enumerate(self.d.rows) if r['code'] == code); self.d.table.selectRow(i); APP.processEvents()

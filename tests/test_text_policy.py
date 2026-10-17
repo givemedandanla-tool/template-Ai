@@ -19,11 +19,12 @@ APP=QApplication.instance() or QApplication([])
 class TextPolicyTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.w=MainWindow(Path(self.temp.name)/'data');self.addCleanup(self.w.library.close);self.w.error=lambda message:None
-        self.t=demo_template();self.w.library.save_template(self.t);self.w.refresh_templates(self.t.id);self.w.tabs.setCurrentIndex(1);self.w.show();APP.processEvents();self.w.edit_canvas.fit()
+        self.t=demo_template();self.w.library.save_template(self.t);self.w.refresh_templates(self.t.id);self.w.open_catalog_editor(self.t.id);self.w.show();APP.processEvents();self.w.edit_canvas.fit()
 
     def test_main_canvas_tree_property_keyboard_resize_and_undo_are_one_draft(self):
         c=self.w.edit_canvas;slot=self.w.template.slots[0];original=deepcopy(self.w.template.to_dict());node=next(item for item in self.w.editor_tree_nodes if item.data(0,Qt.UserRole)==[slot.id]);self.w.editor_tree.clearSelection();node.setSelected(True)
         self.assertEqual(c.selection_intent,{slot.id});self.assertEqual(self.w.current_slot.id,slot.id)
+        c.setFocus(Qt.OtherFocusReason);APP.processEvents()
         QTest.keyClick(c,Qt.Key_Right);self.assertAlmostEqual(self.w.template.slots[0].rect.x,slot.rect.x+.1)
         current=self.w.template.slots[0];corner=c.mapFromScene(QPointF(current.rect.x+current.rect.w,current.rect.y+current.rect.h));end=c.mapFromScene(QPointF(current.rect.x+current.rect.w+1,current.rect.y+current.rect.h+1));QTest.mousePress(c.viewport(),Qt.LeftButton,pos=corner);QTest.mouseMove(c.viewport(),end);QTest.mouseRelease(c.viewport(),Qt.LeftButton,pos=end)
         self.assertGreater(self.w.template.slots[0].rect.w,original['slots'][0]['rect']['w']);self.assertEqual(self.w.template.slots[0].size_pt,18);self.assertEqual(self.w.library.template_snapshots()[0]['template'],original)

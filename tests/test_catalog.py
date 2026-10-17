@@ -17,6 +17,8 @@ from template_ai.customer_dialog import CustomerDialog
 from template_ai.catalog_widget import CatalogWidget
 from template_ai.catalog import rows,filtered,hierarchy,preview_request,source_preview
 from template_ai.importer import import_file
+from runtime_fixture import controlled_resources
+from gui_wait import dispose_main_window
 APP=QApplication.instance() or QApplication([])
 
 
@@ -32,7 +34,7 @@ def select(widget,ids):
 
 class CatalogTests(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'library');self.extra=[]
+        self.tmp=tempfile.TemporaryDirectory();self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'library');controlled_resources(self.w);self.extra=[]
         self.t=Template('Example style one',90,54,[Slot('name','p1',Rect(4,4,42,9))]);self.w.library.publish(self.t)
         self.t2=Template('Example style two',100,60,[Slot('name','p1',Rect(4,4,42,9)),Slot('logo','c1',Rect(4,20,30,12))],version=2,company_bindings={'p1':['c1']});self.w.library.publish(self.t2)
         self.draft=Template('Rare one-name-box capacity two',90,54,[Slot('name','p1',Rect(4,4,42,9))],capacity=2);self.w.library.save_template(self.draft);self.w.refresh_templates();self.addCleanup(self.cleanup)
@@ -41,7 +43,7 @@ class CatalogTests(unittest.TestCase):
             if hasattr(v,'catalog'):v.catalog.close_previews()
             elif hasattr(v,'close_previews'):v.close_previews()
             v.hide()
-        self.w.template_catalog.close_previews();self.w.pool.waitForDone(6000);APP.processEvents();self.w.input_timer.stop();self.w.library.db.close();self.w.hide();self.tmp.cleanup()
+        self.w.template_catalog.close_previews();dispose_main_window(self.w);self.tmp.cleanup()
     def customer(self,code='00123'):
         store=CustomerStore(self.w.library);g=InputGraph.from_legacy([dict(name=['Alex Example'],phone=['020-000-0100','+1 (202) 555-0100'],line=['example_line'],ig=['example_ig'],company='c1')],[dict(name='Example Company')]);c=store.create_graph(code,'Example Client',g.data,self.t.id,True);return store,store.link_style(c,self.t2.id,True)
     def source_template(self,right=False):
@@ -148,4 +150,11 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(len(empty.library.templates()),1);self.assertEqual(empty.template_stack.currentIndex(),0);self.assertEqual(empty.template_catalog.items.count(),1)
 
     def test_browse_disables_old_property_target_until_explicit_editor(self):
-        self.w.tabs.setCurrentIndex(1);self.assertEqual(self.w.template_stack.currentIndex(),0);self.assertFalse(self.w.property_panel.isEnabled());c=self.w.template_catalog;select(c,[self.t.id]);self.assertFalse(self.w.property_panel.isEnabled());c.open_editor();self.assertTrue(self.w.property_panel.isEnabled());self.w.return_catalog();self.assertFalse(self.w.property_panel.isEnabled());self.assertFalse(self.w.property_button.isEnabled())
+        before=self.w.library.template_snapshots();self.w.tabs.setCurrentIndex(1);APP.processEvents()
+        self.assertEqual(self.w.template_stack.currentIndex(),0);self.assertFalse(self.w.property_button.isEnabled());self.assertTrue(all(not c.isEnabled() for c in self.w.coords))
+        c=self.w.template_catalog;select(c,[self.t.id]);self.assertFalse(self.w.property_button.isEnabled());self.w.apply_properties();self.assertEqual(self.w.library.template_snapshots(),before)
+        c.open_editor();APP.processEvents();self.assertEqual(self.w.template.id,self.t.id);self.assertEqual(self.w.template_stack.currentIndex(),1)
+        self.w.select_slot(self.w.template.slots[0]);self.assertFalse(self.w.property_button.isEnabled())  # Published version stays read-only.
+        self.w.return_catalog();APP.processEvents();select(c,[self.draft.id]);c.open_editor();APP.processEvents();self.w.select_slot(self.w.template.slots[0]);APP.processEvents()
+        self.assertEqual(self.w.template.id,self.draft.id);self.assertTrue(self.w.property_button.isEnabled())
+        self.w.return_catalog();APP.processEvents();self.assertFalse(self.w.property_button.isEnabled());self.assertTrue(all(not control.isEnabled() for control in self.w.coords));self.w.apply_properties();self.assertEqual(self.w.library.template_snapshots(),before)

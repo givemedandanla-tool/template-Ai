@@ -18,6 +18,8 @@ from template_ai.logo_store import LogoStore
 from template_ai.model import Rect, Slot, Template
 from template_ai.render import draw_logo, export, render_image
 from template_ai.storage import Library
+from template_ai.fonts import FontManager
+from authored_font_fixture import bind_authored_fonts
 
 APP = QApplication.instance() or QApplication([])
 REVIEW = dict(identity_confirmed=True, whole_mark_confirmed=True, usage_authorized=True,
@@ -30,6 +32,7 @@ class LogoLifecycleTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
         self.library = Library(self.root / 'library')
+        self.source_font_manager = FontManager(self.library)
         self.store = LogoStore(self.library)
         self.company = self.store.create_company('Synthetic Brand', 'Synthetic independent identity', True)
         self.path = self.root / 'synthetic-logo.svg'
@@ -42,6 +45,7 @@ class LogoLifecycleTests(unittest.TestCase):
             source_hash=converted['hash'], crop=None)
 
     def tearDown(self):
+        self.source_font_manager.close()
         self.library.close()
         self.temp.cleanup()
 
@@ -56,6 +60,7 @@ class LogoLifecycleTests(unittest.TestCase):
         template = Template('Synthetic compound logo', 90, 54,
             [Slot('name', 'p1', Rect(5, 4, 60, 8)), Slot('logo', 'c1', Rect(5, 20, 30, 15))],
             company_bindings={'p1': 'c1'})
+        bind_authored_fonts(template,self.source_font_manager)
         self.library.publish(template)
         return generate(template, [{'name': ['Alex'], 'company': 'c1'}],
                         [{'name': 'Synthetic Brand'}], {'c1': asset} if asset else {})
@@ -99,7 +104,13 @@ class LogoLifecycleTests(unittest.TestCase):
         self.assertGreater(image.pixelColor(70, 70).red(), 200)
         for suffix in ('png', 'pdf', 'jpg'):
             target = self.root / ('Synthetic-FINAL.' + suffix)
-            export(candidate, target, dpi=96)
+            receipt=None
+            if suffix in ('pdf','jpg'):
+                from template_ai.digital_output_proof import build_proof
+                from template_ai.digital_review import confirm
+                proof=build_proof(candidate,suffix.upper(),96,self.root/'actual-format-proof')
+                receipt=confirm(candidate,proof,'SYNTHETIC_SOURCE_AUTHOR','Actual original-size authored compound mark and same-format snapshot reviewed for this fixture',True)
+            export(candidate, target, dpi=96,format_review=receipt)
             self.assertGreater(target.stat().st_size, 100)
         self.assertEqual([s.size_pt for s in candidate.template.slots], [10, 10])
 

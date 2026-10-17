@@ -52,6 +52,32 @@ def verify_run(root, run_path, current=True):
     return run, {test["id"]: test for test in tests}
 
 
+def execution_passed(run, results):
+    """Independent scope evidence requires a complete, clean software execution.
+
+    A different parent's external qualification may keep the overall goal FAIL;
+    it cannot turn failed/skipped/incomplete execution into usable evidence.
+    """
+    if not results or any(row.get('status')!='PASS' for row in results.values()):return False
+    if 'software_execution_status' not in run:return run.get('status')=='PASS'
+    if run.get('status') not in ('PASS','FAIL') or run.get('software_execution_status')!='PASS':return False
+    count=len(results)
+    for key,expected in [('test_count',count),('planned_test_count',count),('passed',count),('not_completed_test_count',0),('unhandled_runtime_errors',0),('capture_exit_code',0)]:
+        if type(run.get(key)) is not int or run[key]!=expected:return False
+    return run.get('source_unchanged') is True
+
+
+def verify_acceptance(row,run,results,claims):
+    acceptance=row['acceptance'];matching=[c for c in claims if c['requirement_id']==row['id']]
+    expected=[a['id'] for a in acceptance];actual=[c['acceptance_id'] for c in matching]
+    if not acceptance or len(actual)!=len(set(actual)) or sorted(actual)!=sorted(expected):raise ValueError('完整要求驗收證據不齊全：'+row['id'])
+    if any(c.get('contract_sha256')!=contract_digest(row) for c in matching):raise ValueError('要求驗收範圍已變更，舊證據不可沿用：'+row['id'])
+    if not execution_passed(run,results):raise ValueError('沒有完整通過的軟體執行證據')
+    for clause in acceptance:
+        claim=next(c for c in matching if c['acceptance_id']==clause['id'])
+        if claim.get('status')!='PASS' or not clause['tests'] or any(results.get(t,{}).get('status')!='PASS' for t in clause['tests']):raise ValueError('驗收尚未逐項 PASS：'+row['id'])
+
+
 def check(root=ROOT, require_evidence=False, publication_scope=False):
     require_evidence = require_evidence or publication_scope
     root = Path(root)
@@ -96,14 +122,7 @@ def check(root=ROOT, require_evidence=False, publication_scope=False):
             runs[run_path] = verify_run(root, run_path)
         run, results = runs[run_path]
         claims = read_json(safe_path(root, run_path).parent / "claims.json")
-        matching_claims = [claim for claim in claims if claim["requirement_id"] == row["id"]]
-        if not matching_claims or any(claim.get("contract_sha256") != contract_digest(row) for claim in matching_claims):
-            raise ValueError("要求驗收範圍已變更，舊證據不可沿用：" + row["id"])
-        if not row["acceptance"] or run["status"] != "PASS":
-            raise ValueError("沒有驗收條件或執行失敗")
-        for acceptance in row["acceptance"]:
-            if not acceptance["tests"] or any(results.get(test, {}).get("status") != "PASS" for test in acceptance["tests"]):
-                raise ValueError("驗收尚未逐項 PASS：" + row["id"])
+        verify_acceptance(row,run,results,claims)
     if state["exe_policy"] != "DEFERRED_NO_AUTOMATIC_BUILD":
         raise ValueError("EXE 政策與使用者要求不符")
     if "GOV-006" in ids:

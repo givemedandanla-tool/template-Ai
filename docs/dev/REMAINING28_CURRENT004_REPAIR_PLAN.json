@@ -67,5 +67,23 @@
     "Existing explicit authored source-rights helper and original runtime/native module isolation",
     "Original UI066 independent acceptance and zero routine dialogue/persistence policy"
   ],
-  "next": "Save full failed run checkpoint; diagnose and repair; targeted process-isolated tests; freeze CURRENT005 source and full regression"
+  "next": "Save full failed run checkpoint; diagnose and repair; targeted process-isolated tests; freeze CURRENT005 source and full regression",
+  "actual_font_diagnosis": {
+    "path": "docs/qa/targeted/current004-font-table-diagnosis-001.json",
+    "result": "Same family/style, all shaped glyph/metric tables identical except head offsets9/10/11 within four-byte checkSumAdjustment field8..11",
+    "basis": "FontTools4.60.1 SFNTWriter.writeMasterChecksum actual installed source",
+    "basis_sha256": "bd97495afdfde138d9bf022f7e28d076c279efbce4d617bb8de6021834f86411",
+    "fix": "Normalize only checkSumAdjustment in shaping table fingerprint; keep full actual asset file SHA and all other font table bytes mandatory"
+  },
+  "R6_concrete_before_code": {
+    "requirement": "UI066 independent full acceptance must not require unrelated REV04/realAI goal closure",
+    "problem": "All tests/captures/current source can PASS but run.status FAIL solely because another registered original parent has unfulfilled external clauses; existing check rejects otherwise fully covered independent parent",
+    "change": "Retain overall run FAIL and all28 IN_PROGRESS. Permit scoped completion only when explicit software_execution_status PASS is independently supported by nonzero exact planned/completed/all-PASS records, zero missing/runtime errors, capture0/source unchanged. Require exact parent acceptance claim IDs, current contract pins and PASS per claim; empty external-test clauses remain impossible to complete. Legacy PASS evidence keeps existing format support.",
+    "planned_tests": [
+      "External-only pending overall goal can coexist with independent complete parent evidence",
+      "Any failed/skipped/missing test, runtime error, capture failure, changed source or contradictory status blocks scoped use",
+      "Empty external acceptance, missing/duplicate parent claims or wrong current contract hash cannot complete parent"
+    ],
+    "no_waiver": "No execution/asset/publication/Windows/realAI criterion removed; overall all28 goal remains incomplete."
+  }
 }

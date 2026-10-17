@@ -166,6 +166,11 @@ def face_fingerprint(raw):
     digest = hashlib.sha256()
     for tag in TABLE_TAGS:
         data = bytes(raw.fontTable(tag))
+        if tag == 'head' and len(data) >= 12:
+            # OpenType checkSumAdjustment describes the file/container checksum,
+            # not glyphs or metrics. TTC face extraction changes these four bytes.
+            # Asset file SHA remains independently mandatory in font_errors.
+            data = data[:8] + b'\0' * 4 + data[12:]
         digest.update(tag.encode()); digest.update(len(data).to_bytes(8,"big")); digest.update(data)
     return digest.hexdigest()
 
