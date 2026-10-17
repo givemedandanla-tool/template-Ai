@@ -1,0 +1,206 @@
+{
+  "artifact": "index.html",
+  "html_sha256": "5212ca66171795e482f9fdf90fa07df5ee99f233b54cafbc5f11bd8cd748051a",
+  "executed_at": "2026-10-17T16:15:51.213827+00:00",
+  "test_method": "Chromium 對同一份 HTML 使用 set_content 載入；桌面滑鼠、手機尺寸及 CDP 觸控模擬。非實體手機，未整合 template-Ai。",
+  "browser": "154.0.8037.57",
+  "passed": 37,
+  "total": 37,
+  "results": [
+    {
+      "name": "三階段初始狀態與人物 ROOT 表單",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "未出現字級、字寬、行數或模板選擇控制",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "第一稿由隱藏候選產生",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "全部已輸入聯絡資料都有唯一物件",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "拖曳代理顯示類型、人物與末碼",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "拖曳中不更新正式幾何與排版版本",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "放開後換用另一個合格示例結構",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "新結構保留手機位於市話下方",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "換用結構未改動姓名、職稱、公司核心",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "拖曳前後字級保持來自相同政策",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "重複指定相同關係不累加位移",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "取消局部編輯不改資料、不重排",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "局部更正電話保留位置要求",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "撤回排列不撤回新電話",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "重做恢復位置而保持新電話",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "單純模式往返不重新生成",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "確認綁定當前資料與具體排版",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "確認後局部修改回到同一確認階段但不沿用舊確認",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "無法容納的新資料仍保存，未偷偷回退",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "舊預覽被標示為未反映新資料且阻止定稿",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "修正後可重新產生有效稿",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "非法落點不改結果或遺失資料",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "第二位人物未填姓名時阻止產稿",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "兩人各筆資料都有自己的歸屬",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "一個人物的重排不影響另一人聯絡區",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "跨人物意圖在核心入口被拒絕",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "匯出保留資料與語意關係而非僅螢幕座標",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "同一瀏覽器內重建相同輸出指紋",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "載入時拒絕重複識別碼",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "放大檢視提供獨立大幅預覽",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "320／390／768／1024／1440px 外框無橫向溢出",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "觸控模擬拖曳可提交相同上下關係",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "手機局部編輯以底部面板呈現",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "手機確認畫面不再顯示拖曳工具",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "手機資料輸入可返回且保留新電話",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "無外部網路請求",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "name": "未捕獲 JavaScript 執行錯誤",
+      "passed": true,
+      "detail": "[]"
+    }
+  ],
+  "page_errors": [],
+  "network_requests": [],
+  "limitations": [
+    "本測試以 set_content 載入相同 HTML；不宣稱已測試 file://、HTTP 部署或原生 App。",
+    "不包含 Qt/Kiwi、真實模板庫、印前、色彩、Logo 或正式定稿驗證。",
+    "跨裝置字型與視覺一致性未驗證。"
+  ],
+  "reviewed_repository_commit": "ebf3ccb0b3ab2e7ab602ce2f224186c401e29ea0",
+  "runner_sha256": "9007e104224094a75c4cda92635ae0b42695ec1347cdfa231586532a4c1fc0d1",
+  "evidence_scope": "Fresh prototype-only Chromium run; not core, physical phone or production preflight verification"
+}
