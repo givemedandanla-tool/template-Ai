@@ -316,6 +316,7 @@ def main():
     converter = inkscape_path()
     inkscape_version = subprocess.run([converter, "--version"], capture_output=True, text=True, timeout=10).stdout.strip() if converter else None
     status = "PASS" if result.wasSuccessful() and records and capture_code == 0 and source_unchanged and not runtime_errors else "FAIL"
+    software_execution_status = status  # Tests/captures/source stability, before unmet original contract evidence.
     tests_lookup = {item["id"]: item["status"] for item in records}
     registry = read_json(ROOT / "docs/dev/REQUIREMENTS.json")
     claims = []
@@ -370,6 +371,7 @@ def main():
                    for path in folder.iterdir() if path.is_file()}
     run = {"schema_version": 1, "id": args.run_id, "created_utc": datetime.now(timezone.utc).isoformat(), "source_commit": args.source_commit,
            "source_manifest_sha256": manifest_digest(before), "source_unchanged": source_unchanged, "status": status,
+           "software_execution_status": software_execution_status,
            "unhandled_runtime_errors":len(runtime_errors), "test_count": len(records), "passed": sum(r["status"] == "PASS" for r in records), "capture_exit_code": capture_code,
            "tests_sha256": digest((folder / "tests.json").read_bytes()), "attachments": attachments,
            "environment": {"python": platform.python_version(), "os": platform.platform(), "PySide6": qt_version, "inkscape": inkscape_version, "qt_platform": os.environ.get("QT_QPA_PLATFORM")},

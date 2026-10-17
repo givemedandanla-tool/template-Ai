@@ -75,7 +75,7 @@
 | UI-056-D | 進階分布失衡與系統化補樣 | DEFERRED | 否 | 正式版本完善後另行評估，不加入本期交付 | 無有效新版證據 |
 | UI-066-R1 | 獨立診斷報告內容、程式內閱讀與HTML／JSON安全封裝 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節 | 無有效新版證據 |
 | UI-066-R2 | 報告本機保存、去識別與人工交接 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 只處理真缺口，不重問診斷和預覽；2026-10-15已確認問題資訊需程式內可讀與程式外可保存，未採納提案全部細節 | 無有效新版證據 |
-| REV-01 | 矩形區域自動排版與模板 AI；X-04 結案 | PARTIAL | 否 | 同一矩形模型，名稱不再待決；既有客戶人物公司與資產功能沿用 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
+| REV-01 | 矩形區域自動排版與模板 AI；X-04 結案 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 同一矩形模型，名稱不再待決；既有客戶人物公司與資產功能沿用 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | REV-02 | Inkscape 等視覺一致且可訓練的 AI 匯入 | PARTIAL | 否 | 真實參考視覺無可辨識差異且有效可訓練；完整原生結構非共同必要條件 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |
 | REV-03 | 軟體完善後再做實體印刷分析 | DEFERRED | 否 | 前期數位輸出與幾何仍驗證，實體樣張／設備／材料條件後移 | 無有效新版證據 |
 | REV-04 | 16 GB＋RTX 5050 至 ASUS VivoBook 效能範圍 | PARTIAL | 否 | VivoBook 型號待補；16 GB 整機非程序可占滿預算，實測 CPU／GPU 與峰值資源 | [run](../../docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json) |

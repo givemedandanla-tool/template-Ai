@@ -5755,7 +5755,8 @@
           ]
         }
       ],
-      "next_step": "Current immutable all-clause regression/native/publication Gate; external limitations retained in clause coverage"
+      "next_step": "Current immutable all-clause regression/native/publication Gate; external limitations retained in clause coverage",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-020",
@@ -9398,7 +9399,8 @@
           ]
         }
       ],
-      "next_step": "Current immutable all-clause regression/native/publication Gate; external limitations retained in clause coverage"
+      "next_step": "Current immutable all-clause regression/native/publication Gate; external limitations retained in clause coverage",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-032",
@@ -9472,7 +9474,8 @@
         {
           "id": "UI-032-CLAUSE-5",
           "expected": "**Windows 系統安裝需要獨立明確授權**：只有使用者主動選擇「安裝至 Windows」並確認字型來源、授權、影響範圍（例如目前使用者／全系統）、可能管理員權限及可回復方法，才可嘗試操作；禁止匯入時自動安裝、因修復而靜默變更 Windows 字型、擅自搜尋下載未授權字型或替使用者接受使用條款。程式內使用與系統安裝在畫面上必須是**不同動作和狀態**。",
-          "tests": [
+          "tests": [],
+          "supporting_software_tests": [
             "test_windows_font_workflow.WindowsFontWorkflowTests.test_import_approval_never_supplies_nonliteral_or_missing_windows_consent",
             "test_windows_font_workflow.WindowsFontWorkflowTests.test_nonwindows_refuses_even_with_explicit_consent",
             "test_windows_font_workflow.WindowsFontWorkflowTests.test_confirmed_exact_current_font_opens_only_viewer_and_never_claims_installation",
@@ -9482,7 +9485,8 @@
             "test_windows_font_workflow_gui.WindowsFontWorkflowGuiTests.test_current_linux_action_stays_disabled_and_direct_call_does_not_launch",
             "test_windows_font_workflow_gui.WindowsFontWorkflowGuiTests.test_independent_default_no_and_final_decline_never_start_backend",
             "test_windows_font_workflow_gui.WindowsFontWorkflowGuiTests.test_confirmed_mock_os_handoff_keeps_pending_state_and_restores_owned_controls"
-          ]
+          ],
+          "external_requirement": "Actual authorized Windows viewer/install scope/elevation/undo and unchanged originals; Linux/fake launcher tests are support only"
         },
         {
           "id": "UI-032-CLAUSE-6",
@@ -9569,7 +9573,8 @@
           ]
         }
       ],
-      "next_step": "Current immutable all-clause regression/native/publication Gate; external limitations retained in clause coverage"
+      "next_step": "Current immutable all-clause regression/native/publication Gate; external limitations retained in clause coverage",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-033",
@@ -19028,7 +19033,8 @@
         }
       ],
       "next_step": "Fresh immutable-source batch regression/capture/publication Gate; original10 mapping docs/dev/UI059_CLAUSE_COVERAGE.json. Do not count full parent until successful batch.",
-      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-060A",
@@ -19124,7 +19130,8 @@
         }
       ],
       "next_step": "Fresh immutable-source full batch/capture/publication Gate with UI059 and next UI061 packages; preserve actual007/009 regression failures and01033PASS.",
-      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-061",
@@ -19330,7 +19337,8 @@
         }
       ],
       "next_step": "Fresh immutable source full regression/native capture/publication Gate with UI059/UI060A; target PASS alone does not close parent.",
-      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-062",
@@ -19601,7 +19609,8 @@
         }
       ],
       "next_step": "Fresh immutable full-source regression/native/publication Gate; next implementUI063, no targeted parent promotion.",
-      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-063",
@@ -19836,7 +19845,8 @@
         }
       ],
       "next_step": "Immutable current-source full regression/native review/ordinary GitHub publication Gate; target/native PASS is not parent completion.",
-      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-064",
@@ -20100,7 +20110,8 @@
         }
       ],
       "next_step": "Immutable current-source full regression/native review/ordinary GitHub evidence publication Gate; no target-only completion or Windows compatibility claim.",
-      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-065",
@@ -20348,7 +20359,8 @@
         }
       ],
       "next_step": "Immutable current-source full regression, native review, ordinary GitHub evidence publication Gate; do not promote from targeted checks",
-      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json"
+      "previous_evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-066",
@@ -20433,7 +20445,8 @@
           ]
         }
       ],
-      "next_step": "Current immutable all-clause regression/native/publication Gate; external limitations retained in clause coverage"
+      "next_step": "Current immutable all-clause regression/native/publication Gate; external limitations retained in clause coverage",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-067",
@@ -20522,7 +20535,8 @@
           ]
         }
       ],
-      "next_step": "Current full governance/source Gate; realAI/hardware research remains separate"
+      "next_step": "Current full governance/source Gate; realAI/hardware research remains separate",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-052-REVIEW",
@@ -20658,7 +20672,8 @@
           ]
         }
       ],
-      "next_step": "All original9 mapped and native044 reviewed; coherent then immutable current-source full regression and ordinary GitHub evidence Gate; not completed"
+      "next_step": "All original9 mapped and native044 reviewed; coherent then immutable current-source full regression and ordinary GitHub evidence Gate; not completed",
+      "full_acceptance_registered": true
     },
     {
       "id": "UI-056-D",
@@ -20882,9 +20897,9 @@
       "id": "REV-01",
       "kind": "topic",
       "title": "矩形區域自動排版與模板 AI；X-04 結案",
-      "status": "PARTIAL",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
-      "review_level": "NOT_REVIEWED",
+      "review_level": "SELF_VERIFIED_SUBSET_ONLY",
       "scope": "同一矩形模型，名稱不再待決；既有客戶人物公司與資產功能沿用",
       "phase": "P0～P9",
       "decision_status": "本輪使用者已核准",
@@ -20895,12 +20910,54 @@
       "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
       "acceptance": [
         {
-          "id": "REV-01-FULL",
-          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：同一矩形模型，名稱不再待決；既有客戶人物公司與資產功能沿用",
-          "tests": []
+          "id": "REV-01-CLAUSE-1",
+          "expected": "## 1. 產品抽象與名稱結案\n\n使用者原文：「『名片或是門禁卡』這個問題，將其抽象化為一個矩形方框中的自動排版與模板AI即可。」\n\n現行產品定義：矩形區域內的自動排版與模板 AI。共同模型使用矩形寬高、座標、物件、欄位／群組、語意、尺寸及版本；名片與門禁卡作應用名稱，X-04 名稱議題結案。既有客戶、人物、公司、Logo、固定字級、模板及重訂功能繼續適用。歷史異形／裁切資訊可作矩形區域內的附加遮罩或限制，不新增另一套商品排版引擎。\n\n",
+          "tests": [
+            "test_custom_layout.CustomLayoutTests.test_actual_gui_custom_preview_cancel_then_explicit_new_draft_does_not_publish",
+            "test_custom_layout.CustomLayoutTests.test_existing_qualified_template_prevents_unnecessary_custom_and_stale_input_never_creates_version",
+            "test_custom_layout.CustomLayoutTests.test_late_audit_failure_rolls_back_custom_geometry_version_and_provenance_together",
+            "test_custom_layout.CustomLayoutTests.test_missing_font_is_unknown_and_publication_does_not_silently_fallback",
+            "test_custom_layout.CustomLayoutTests.test_no_solution_and_unknown_font_never_become_qualified_custom_candidates",
+            "test_custom_layout.CustomLayoutTests.test_solver_bounded_geometry_keeps_owner_fonts_logo_and_source_then_requires_draft_publication",
+            "test_first_version.FirstVersionTests.test_actual_inkscape_svg_and_pdf_compatible_ai",
+            "test_first_version.FirstVersionTests.test_atomic_publish_failure_preserves_existing_file_and_cleans_temp",
+            "test_first_version.FirstVersionTests.test_empty_platform_font_database_has_clear_diagnostic",
+            "test_first_version.FirstVersionTests.test_export_all_formats_real_pdf_dimensions_and_no_overwrite",
+            "test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation",
+            "test_first_version.FirstVersionTests.test_geometric_overlap_and_outside_block_publication",
+            "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas",
+            "test_first_version.FirstVersionTests.test_missing_font_does_not_use_silent_fallback",
+            "test_first_version.FirstVersionTests.test_missing_logo_and_wrong_size_or_company_do_not_pass",
+            "test_first_version.FirstVersionTests.test_person_company_binding_is_not_inferred_from_strings",
+            "test_first_version.FirstVersionTests.test_pixel_comparison_reports_unknown_alignment",
+            "test_first_version.FirstVersionTests.test_published_templates_are_immutable_and_family_versions_safe",
+            "test_first_version.FirstVersionTests.test_source_dedupe_preserves_independent_registrations_and_reopen",
+            "test_first_version.FirstVersionTests.test_source_labels_to_learned_template_to_output",
+            "test_first_version.FirstVersionTests.test_stale_generation_and_unmarked_preview_block",
+            "test_first_version.FirstVersionTests.test_unused_contact_and_wrong_capacity_block",
+            "test_gui_convergence_trace.GuiConvergenceTraceTests.test_actual_original75_have_exact_links_and_resolved_history_without_product_growth",
+            "test_gui_convergence_trace.GuiConvergenceTraceTests.test_completed_registry_claim_never_substitutes_for_current_source_evidence",
+            "test_gui_convergence_trace.GuiConvergenceTraceTests.test_duplicate_original_parent_or_missing_decision_source_is_refused",
+            "test_gui_convergence_trace.GuiConvergenceTraceTests.test_unapproved_report_unblock_and_broken_test_link_are_refused",
+            "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files",
+            "test_multi_size.MultiSizeTests.test_bad_final_unknown_size_duplicate_requests_and_bad_prefix_are_rejected_before_write",
+            "test_multi_size.MultiSizeTests.test_cancel_and_missing_template_are_explicit_not_zero_test_success",
+            "test_multi_size.MultiSizeTests.test_existing_success_is_not_overwritten_and_late_failure_does_not_delete_other_files",
+            "test_multi_size.MultiSizeTests.test_input_change_before_and_between_files_never_produces_unconfirmed_new_output",
+            "test_multi_size.MultiSizeTests.test_omitted_size_and_all_known_reasons_remain_visible_in_confirmation",
+            "test_multi_size.MultiSizeTests.test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate",
+            "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
+            "test_multi_size.MultiSizeTests.test_revoked_or_changed_logo_and_template_block_only_affected_output",
+            "test_multi_size.MultiSizeTests.test_sizes_keep_independent_geometry_and_missing_logo_does_not_borrow_or_block_other_size",
+            "test_template_versions.TemplateVersionTests.test_actual_qt_difference_review_cancel_then_explicit_restore_keeps_published_usable",
+            "test_template_versions.TemplateVersionTests.test_late_audit_failure_rolls_back_new_version_and_its_clock",
+            "test_template_versions.TemplateVersionTests.test_restore_published_version_as_same_family_new_draft_with_complete_difference_and_provenance",
+            "test_template_versions.TemplateVersionTests.test_stale_family_version_and_unapproved_restore_write_nothing"
+          ]
         }
       ],
-      "next_step": "依既有UI要求逐包補齊並整體驗收；不重問名片／門禁卡，不增加第二套商品引擎；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT"
+      "next_step": "Immutable current software regression; external original evidence clauses remain NOT_VERIFIED, see clause coverage",
+      "full_acceptance_registered": true
     },
     {
       "id": "REV-02",
@@ -20908,7 +20965,7 @@
       "title": "Inkscape 等視覺一致且可訓練的 AI 匯入",
       "status": "PARTIAL",
       "completed": false,
-      "review_level": "NOT_REVIEWED",
+      "review_level": "SELF_VERIFIED_SUBSET_ONLY",
       "scope": "真實參考視覺無可辨識差異且有效可訓練；完整原生結構非共同必要條件",
       "phase": "P0、P2",
       "decision_status": "本輪使用者已核准",
@@ -20919,12 +20976,210 @@
       "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
       "acceptance": [
         {
-          "id": "REV-02-FULL",
-          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：真實參考視覺無可辨識差異且有效可訓練；完整原生結構非共同必要條件",
-          "tests": []
+          "id": "REV-02-CLAUSE-1",
+          "expected": "有可信原稿參考，例如獲授權的原稿渲染／既有可信 PDF 或圖片；參考版本、範圍、尺寸和來源可追溯。",
+          "tests": [],
+          "external_requirement": "Authorized real native Illustrator sample and trustworthy same-version/scope render/reference with actual training pipeline evidence",
+          "supporting_software_tests": [
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_worker_start_failure_releases_lease_and_busy_controls_without_publishing",
+            "test_automatic_training.AutomaticTrainingTests.test_bad_source_is_isolated_and_other_source_finishes",
+            "test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units",
+            "test_automatic_training.AutomaticTrainingTests.test_changed_source_cache_and_approved_work_revision_require_reanalysis",
+            "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+            "test_automatic_training.AutomaticTrainingTests.test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected",
+            "test_automatic_training.AutomaticTrainingTests.test_one_bad_work_is_isolated_and_same_source_other_work_continues",
+            "test_automatic_training.AutomaticTrainingTests.test_preflight_change_and_job_cas_do_not_overwrite_or_start",
+            "test_automatic_training.AutomaticTrainingTests.test_real_inkscape_two_work_hypotheses_keep_whole_logo_and_pending_facts",
+            "test_automatic_training.AutomaticTrainingTests.test_single_worker_lease_and_dead_owner_are_explicitly_recoverable",
+            "test_automatic_training.AutomaticTrainingTests.test_sqlite_or_late_audit_failure_stops_worker_without_false_success",
+            "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+            "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_logo_and_ambiguous_selection_cannot_enter_general_font_replacement",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_selected_source_context_preserves_unsaved_form_source_bytes_and_published_templates",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_shared_centre_rejects_overbudget_text_without_silent_truncation",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_deep_or_large_observation_has_explicit_incomplete_evidence_not_complete_proof",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_literal_tracking_transforms_and_effects_never_become_native_size_or_outline_proof",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_stylesheets_and_absent_source_remain_unresolved_plain_text",
+            "test_source_text_evidence.SourceTextEvidenceTests.test_effect_path_is_never_misclassified_as_outlined_text_and_unknown_native_metrics_stay_unknown",
+            "test_source_text_evidence.SourceTextEvidenceTests.test_logo_text_is_protected_and_names_or_visual_similarity_cannot_prove_original_identity",
+            "test_visual_background.VisualBackgroundTests.test_changed_background_after_candidate_blocks_and_cleans_export",
+            "test_visual_background.VisualBackgroundTests.test_decoration_in_preview_and_all_actual_exports",
+            "test_visual_background.VisualBackgroundTests.test_external_svg_resource_is_rejected_before_approval",
+            "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+            "test_visual_background.VisualBackgroundTests.test_missing_background_is_not_silently_rendered_white",
+            "test_visual_background.VisualBackgroundTests.test_raster_background_requires_matching_ratio",
+            "test_visual_background.VisualBackgroundTests.test_raster_choice_uses_approved_imported_pixels",
+            "test_visual_background.VisualBackgroundTests.test_real_background_review_dialog_saves_chosen_mode",
+            "test_visual_background.VisualBackgroundTests.test_reopen_version_and_old_schema_preserve_background",
+            "test_visual_background.VisualBackgroundTests.test_text_color_is_real_rendered_and_invalid_color_blocks",
+            "test_visual_background.VisualBackgroundTests.test_unapproved_and_wrong_size_background_block_publication"
+          ]
+        },
+        {
+          "id": "REV-02-CLAUSE-2",
+          "expected": "轉換結果在相同範圍、比例與渲染條件下，內容、字形、Logo、線條、遮罩、透明度、相對位置與細節視覺無可辨識差異。",
+          "tests": [],
+          "external_requirement": "Authorized real native Illustrator sample and trustworthy same-version/scope render/reference with actual training pipeline evidence",
+          "supporting_software_tests": [
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_worker_start_failure_releases_lease_and_busy_controls_without_publishing",
+            "test_automatic_training.AutomaticTrainingTests.test_bad_source_is_isolated_and_other_source_finishes",
+            "test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units",
+            "test_automatic_training.AutomaticTrainingTests.test_changed_source_cache_and_approved_work_revision_require_reanalysis",
+            "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+            "test_automatic_training.AutomaticTrainingTests.test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected",
+            "test_automatic_training.AutomaticTrainingTests.test_one_bad_work_is_isolated_and_same_source_other_work_continues",
+            "test_automatic_training.AutomaticTrainingTests.test_preflight_change_and_job_cas_do_not_overwrite_or_start",
+            "test_automatic_training.AutomaticTrainingTests.test_real_inkscape_two_work_hypotheses_keep_whole_logo_and_pending_facts",
+            "test_automatic_training.AutomaticTrainingTests.test_single_worker_lease_and_dead_owner_are_explicitly_recoverable",
+            "test_automatic_training.AutomaticTrainingTests.test_sqlite_or_late_audit_failure_stops_worker_without_false_success",
+            "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+            "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_logo_and_ambiguous_selection_cannot_enter_general_font_replacement",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_selected_source_context_preserves_unsaved_form_source_bytes_and_published_templates",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_shared_centre_rejects_overbudget_text_without_silent_truncation",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_deep_or_large_observation_has_explicit_incomplete_evidence_not_complete_proof",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_literal_tracking_transforms_and_effects_never_become_native_size_or_outline_proof",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_stylesheets_and_absent_source_remain_unresolved_plain_text",
+            "test_source_text_evidence.SourceTextEvidenceTests.test_effect_path_is_never_misclassified_as_outlined_text_and_unknown_native_metrics_stay_unknown",
+            "test_source_text_evidence.SourceTextEvidenceTests.test_logo_text_is_protected_and_names_or_visual_similarity_cannot_prove_original_identity",
+            "test_visual_background.VisualBackgroundTests.test_changed_background_after_candidate_blocks_and_cleans_export",
+            "test_visual_background.VisualBackgroundTests.test_decoration_in_preview_and_all_actual_exports",
+            "test_visual_background.VisualBackgroundTests.test_external_svg_resource_is_rejected_before_approval",
+            "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+            "test_visual_background.VisualBackgroundTests.test_missing_background_is_not_silently_rendered_white",
+            "test_visual_background.VisualBackgroundTests.test_raster_background_requires_matching_ratio",
+            "test_visual_background.VisualBackgroundTests.test_raster_choice_uses_approved_imported_pixels",
+            "test_visual_background.VisualBackgroundTests.test_real_background_review_dialog_saves_chosen_mode",
+            "test_visual_background.VisualBackgroundTests.test_reopen_version_and_old_schema_preserve_background",
+            "test_visual_background.VisualBackgroundTests.test_text_color_is_real_rendered_and_invalid_color_blocks",
+            "test_visual_background.VisualBackgroundTests.test_unapproved_and_wrong_size_background_block_publication"
+          ]
+        },
+        {
+          "id": "REV-02-CLAUSE-3",
+          "expected": "可切分作品、建立欄位／完整 Logo 框、標記人物公司歸屬、量測可取得的幾何，並形成可版本化、可人工修正及可實際供模型／規則學習的有效資料。",
+          "tests": [
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_worker_start_failure_releases_lease_and_busy_controls_without_publishing",
+            "test_automatic_training.AutomaticTrainingTests.test_bad_source_is_isolated_and_other_source_finishes",
+            "test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units",
+            "test_automatic_training.AutomaticTrainingTests.test_changed_source_cache_and_approved_work_revision_require_reanalysis",
+            "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+            "test_automatic_training.AutomaticTrainingTests.test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected",
+            "test_automatic_training.AutomaticTrainingTests.test_one_bad_work_is_isolated_and_same_source_other_work_continues",
+            "test_automatic_training.AutomaticTrainingTests.test_preflight_change_and_job_cas_do_not_overwrite_or_start",
+            "test_automatic_training.AutomaticTrainingTests.test_real_inkscape_two_work_hypotheses_keep_whole_logo_and_pending_facts",
+            "test_automatic_training.AutomaticTrainingTests.test_single_worker_lease_and_dead_owner_are_explicitly_recoverable",
+            "test_automatic_training.AutomaticTrainingTests.test_sqlite_or_late_audit_failure_stops_worker_without_false_success"
+          ]
+        },
+        {
+          "id": "REV-02-CLAUSE-4",
+          "expected": "必須以真實樣本及實際訓練資料管線證明可用；只有轉換檔存在或能顯示縮圖不能宣稱任務完成。",
+          "tests": [],
+          "external_requirement": "Authorized real native Illustrator sample and trustworthy same-version/scope render/reference with actual training pipeline evidence",
+          "supporting_software_tests": [
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_worker_start_failure_releases_lease_and_busy_controls_without_publishing",
+            "test_automatic_training.AutomaticTrainingTests.test_bad_source_is_isolated_and_other_source_finishes",
+            "test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units",
+            "test_automatic_training.AutomaticTrainingTests.test_changed_source_cache_and_approved_work_revision_require_reanalysis",
+            "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+            "test_automatic_training.AutomaticTrainingTests.test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected",
+            "test_automatic_training.AutomaticTrainingTests.test_one_bad_work_is_isolated_and_same_source_other_work_continues",
+            "test_automatic_training.AutomaticTrainingTests.test_preflight_change_and_job_cas_do_not_overwrite_or_start",
+            "test_automatic_training.AutomaticTrainingTests.test_real_inkscape_two_work_hypotheses_keep_whole_logo_and_pending_facts",
+            "test_automatic_training.AutomaticTrainingTests.test_single_worker_lease_and_dead_owner_are_explicitly_recoverable",
+            "test_automatic_training.AutomaticTrainingTests.test_sqlite_or_late_audit_failure_stops_worker_without_false_success",
+            "test_source_text_budget.SourceTextBudgetTests.test_oversized_text_is_explicitly_blocked_in_one_work_without_partial_observation_or_unsafe_publish",
+            "test_source_text_budget.SourceTextBudgetTests.test_supported_long_source_text_survives_analysis_property_edit_and_atomic_save_without_truncation",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_logo_and_ambiguous_selection_cannot_enter_general_font_replacement",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_selected_source_context_preserves_unsaved_form_source_bytes_and_published_templates",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_shared_centre_rejects_overbudget_text_without_silent_truncation",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_deep_or_large_observation_has_explicit_incomplete_evidence_not_complete_proof",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_literal_tracking_transforms_and_effects_never_become_native_size_or_outline_proof",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_stylesheets_and_absent_source_remain_unresolved_plain_text",
+            "test_source_text_evidence.SourceTextEvidenceTests.test_effect_path_is_never_misclassified_as_outlined_text_and_unknown_native_metrics_stay_unknown",
+            "test_source_text_evidence.SourceTextEvidenceTests.test_logo_text_is_protected_and_names_or_visual_similarity_cannot_prove_original_identity",
+            "test_visual_background.VisualBackgroundTests.test_changed_background_after_candidate_blocks_and_cleans_export",
+            "test_visual_background.VisualBackgroundTests.test_decoration_in_preview_and_all_actual_exports",
+            "test_visual_background.VisualBackgroundTests.test_external_svg_resource_is_rejected_before_approval",
+            "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+            "test_visual_background.VisualBackgroundTests.test_missing_background_is_not_silently_rendered_white",
+            "test_visual_background.VisualBackgroundTests.test_raster_background_requires_matching_ratio",
+            "test_visual_background.VisualBackgroundTests.test_raster_choice_uses_approved_imported_pixels",
+            "test_visual_background.VisualBackgroundTests.test_real_background_review_dialog_saves_chosen_mode",
+            "test_visual_background.VisualBackgroundTests.test_reopen_version_and_old_schema_preserve_background",
+            "test_visual_background.VisualBackgroundTests.test_text_color_is_real_rendered_and_invalid_color_blocks",
+            "test_visual_background.VisualBackgroundTests.test_unapproved_and_wrong_size_background_block_publication"
+          ]
+        },
+        {
+          "id": "REV-02-CLAUSE-5",
+          "expected": "缺失的原始字型、字級、字寬百分比、效果結構或可編輯性標成未知／估算／衍生，不把 OCR 或輪廓推測冒稱原生事實。",
+          "tests": [
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_logo_and_ambiguous_selection_cannot_enter_general_font_replacement",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_selected_source_context_preserves_unsaved_form_source_bytes_and_published_templates",
+            "test_source_text_diagnostics.SourceTextDiagnosticsGuiTests.test_shared_centre_rejects_overbudget_text_without_silent_truncation",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_deep_or_large_observation_has_explicit_incomplete_evidence_not_complete_proof",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_literal_tracking_transforms_and_effects_never_become_native_size_or_outline_proof",
+            "test_source_text_diagnostics.SourceTextDiagnosticsTests.test_stylesheets_and_absent_source_remain_unresolved_plain_text",
+            "test_source_text_evidence.SourceTextEvidenceTests.test_effect_path_is_never_misclassified_as_outlined_text_and_unknown_native_metrics_stay_unknown",
+            "test_source_text_evidence.SourceTextEvidenceTests.test_logo_text_is_protected_and_names_or_visual_similarity_cannot_prove_original_identity"
+          ]
+        },
+        {
+          "id": "REV-02-CLAUSE-6",
+          "expected": "原圖只讀；完整複合 Logo 保留，不以拆字、替換字型或重畫商標換取轉換成功。",
+          "tests": [
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_gui_preflight_waits_for_startup_admission_before_confirmation_cancel",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_confirmation_cancel_does_not_create_job_or_source",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_actual_qt_preflight_once_start_creates_two_pending_works_and_restores_controls",
+            "test_automatic_training.AutomaticTrainingGuiTests.test_worker_start_failure_releases_lease_and_busy_controls_without_publishing",
+            "test_automatic_training.AutomaticTrainingTests.test_bad_source_is_isolated_and_other_source_finishes",
+            "test_automatic_training.AutomaticTrainingTests.test_cancel_before_start_and_resume_then_incremental_cache_reuses_units",
+            "test_automatic_training.AutomaticTrainingTests.test_changed_source_cache_and_approved_work_revision_require_reanalysis",
+            "test_automatic_training.AutomaticTrainingTests.test_confirmed_train_sample_runs_learning_without_auto_publishing_or_re_admission",
+            "test_automatic_training.AutomaticTrainingTests.test_different_names_same_bytes_keep_source_ids_and_reuse_only_analysis_assets",
+            "test_automatic_training.AutomaticTrainingTests.test_exact_work_retry_does_not_reanalyse_other_source_work_and_stale_plan_is_rejected",
+            "test_automatic_training.AutomaticTrainingTests.test_one_bad_work_is_isolated_and_same_source_other_work_continues",
+            "test_automatic_training.AutomaticTrainingTests.test_preflight_change_and_job_cas_do_not_overwrite_or_start",
+            "test_automatic_training.AutomaticTrainingTests.test_real_inkscape_two_work_hypotheses_keep_whole_logo_and_pending_facts",
+            "test_automatic_training.AutomaticTrainingTests.test_single_worker_lease_and_dead_owner_are_explicitly_recoverable",
+            "test_automatic_training.AutomaticTrainingTests.test_sqlite_or_late_audit_failure_stops_worker_without_false_success",
+            "test_logo_lifecycle.LogoLifecycleTests.test_approval_late_failure_rolls_back_and_cleans_approval_file",
+            "test_logo_lifecycle.LogoLifecycleTests.test_company_name_is_only_clue_single_multiple_and_explicit_selection_states",
+            "test_logo_lifecycle.LogoLifecycleTests.test_contain_geometry_preserves_aspect_and_reports_blank_without_quality_threshold",
+            "test_logo_lifecycle.LogoLifecycleTests.test_entire_graphic_and_text_render_transparency_and_three_real_formats",
+            "test_logo_lifecycle.LogoLifecycleTests.test_hash_change_blocks_existing_candidate_and_does_not_leave_output",
+            "test_logo_lifecycle.LogoLifecycleTests.test_missing_logo_is_true_black_placeholder_without_formal_gate_bypass",
+            "test_logo_lifecycle.LogoLifecycleTests.test_nan_size_and_corrupt_approval_record_fail_closed",
+            "test_logo_lifecycle.LogoLifecycleTests.test_new_size_prediction_is_pending_then_independently_approved_and_normal_mode_stays_isolated",
+            "test_logo_lifecycle.LogoLifecycleTests.test_pending_rejection_and_incomplete_review_never_create_approved_logo",
+            "test_logo_lifecycle.LogoLifecycleTests.test_prediction_reference_revoked_before_target_approval_stays_pending",
+            "test_logo_lifecycle.LogoLifecycleTests.test_real_inkscape_transformed_group_candidate_uses_mm_and_keeps_text_with_graphic",
+            "test_logo_lifecycle.LogoLifecycleTests.test_revocation_invalidates_old_object_and_never_silently_selects_other_version",
+            "test_logo_lifecycle.LogoLifecycleTests.test_source_candidate_revision_and_cross_artwork_region_are_protected",
+            "test_logo_lifecycle.LogoLifecycleTests.test_version_is_new_immutable_id_and_unrelated_size_or_company_not_reused"
+          ]
         }
       ],
-      "next_step": "以獲授權匿名或合法替代真AI樣本逐例比對並真正進訓練管線；不能拿縮圖或合成SVG通過代替；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT"
+      "next_step": "Immutable current software regression; external original evidence clauses remain NOT_VERIFIED, see clause coverage",
+      "full_acceptance_registered": true
     },
     {
       "id": "REV-03",
@@ -20956,7 +21211,7 @@
       "title": "16 GB＋RTX 5050 至 ASUS VivoBook 效能範圍",
       "status": "PARTIAL",
       "completed": false,
-      "review_level": "NOT_REVIEWED",
+      "review_level": "SELF_VERIFIED_SUBSET_ONLY",
       "scope": "VivoBook 型號待補；16 GB 整機非程序可占滿預算，實測 CPU／GPU 與峰值資源",
       "phase": "P1、P7、P9",
       "decision_status": "本輪使用者已核准",
@@ -20967,12 +21222,47 @@
       "evidence_run": "docs/evidence/runs/RUN-DIAGNOSTIC-REPORTS-002/run.json",
       "acceptance": [
         {
-          "id": "REV-04-FULL",
-          "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：VivoBook 型號待補；16 GB 整機非程序可占滿預算，實測 CPU／GPU 與峰值資源",
-          "tests": []
+          "id": "REV-04-CLAUSE-1",
+          "expected": "## 4. 效能參考機與研究計畫\n\n使用者原文：「低配效能可以參考上限記憶體個人電腦16gb記憶體+nvdia rtx 5050,下限則是asus vivobook。」\n\n| 層級 | 已指定參考 | 尚待補齊 |\n| --- | --- | --- |\n| 上限參考機 | 16 GB 系統 RAM＋NVIDIA RTX 5050 | CPU、桌機／筆電形式、GPU VRAM、驅動與實際可用 RAM |\n| 下限參考機 | ASUS VivoBook | 完整型號、CPU、RAM、GPU、系統版本 |\n\nVivoBook 是系列，不推定其一定具備特定 RAM／GPU。這是參考測試範圍，尚不是已實測最低配置或所有該系列電腦的相容保證。16 GB 是整機記憶體參考上限，不代表程式可占用全數；程序預算需扣除作業系統和其他程序餘量。未指定整機 VRAM 上限，不把系統 RAM 當 GPU 記憶體。\n\n建議工程方向：\n\n- 核心功能可走 CPU；RTX 5050 為可選加速，模型／框架相容和加速效果需實測。\n- GUI 優先啟動，模型按需載入；分批、索引分頁、有界佇列和並行，資源緊張時降低負載。\n- 同一固定匿名樣本集與軟體版本，在兩類機器測量冷啟動、匯入／學習／排版耗時、GUI 回應、程序／整機峰值 RAM、VRAM、磁碟、取消續跑與崩潰恢復。\n- 比較不同資料量及 CPU／GPU 路徑，依真正數據決定模型大小、批次數、並行數與可用設定，不先承諾秒數或記憶體門檻。\n\n",
+          "tests": [],
+          "external_requirement": "Actual Windows16GB RTX5050 and exact ASUS VivoBook measurements for fixed corpus coldstart/import/learning/layout/GUI/peak RAM+VRAM+disk/cancel/crash recovery",
+          "supporting_software_tests": [
+            "test_layout_recovery.LayoutRecoveryTests.test_bounded_payload_normal_completion_and_symlink_rejected",
+            "test_layout_recovery.LayoutRecoveryTests.test_expiration_and_engine_change_purge_only_local_recovery",
+            "test_layout_recovery.LayoutRecoveryTests.test_injected_disk_publish_failure_does_not_claim_saved_or_leave_partial_target",
+            "test_layout_recovery.LayoutRecoveryTests.test_real_encrypted_restart_preserves_exact_computed_candidate_without_plain_pii_or_auto_adoption",
+            "test_layout_recovery.LayoutRecoveryTests.test_restore_invalidates_only_changed_template_and_never_copies_old_safe_label",
+            "test_layout_recovery.LayoutRecoveryTests.test_wrong_password_ciphertext_tamper_and_exclusive_conflict_leave_business_data_untouched",
+            "test_runtime_execution.RuntimeAutomaticExecutionTests.test_pause_commit_audit_failure_is_failure_and_keeps_recoverable_running_state",
+            "test_runtime_execution.RuntimeAutomaticExecutionTests.test_pressure_after_first_durable_unit_preserves_it_and_resume_reuses_without_duplicate_sources",
+            "test_runtime_execution.RuntimeAutomaticExecutionTests.test_pressure_before_first_source_releases_lease_and_does_not_register_or_approve",
+            "test_runtime_execution.RuntimeAutomaticExecutionTests.test_source_registration_and_job_pointer_roll_back_together_on_audit_failure",
+            "test_runtime_resources.RuntimeResourcesTests.test_actual_runtime_probe_returns_finite_metrics_without_claiming_reference_hardware",
+            "test_runtime_resources.RuntimeResourcesTests.test_applicable_unknown_container_limits_do_not_borrow_host_available_memory",
+            "test_runtime_resources.RuntimeResourcesTests.test_disk_cpu_gui_interaction_stale_and_unknown_resources_pause_instead_of_fake_completion",
+            "test_runtime_resources.RuntimeResourcesTests.test_first_cpu_sample_can_only_admit_one_bounded_worker_with_known_memory_and_disk",
+            "test_runtime_resources.RuntimeResourcesTests.test_host_and_container_memory_cpu_affinity_are_clamped_and_first_cpu_is_unknown",
+            "test_runtime_resources.RuntimeResourcesTests.test_hysteresis_counts_fresh_samples_not_repeated_checks_and_is_per_workload",
+            "test_runtime_resources.RuntimeResourcesTests.test_io_rates_are_measured_deltas_and_high_io_wait_pauses_new_work",
+            "test_runtime_resources.RuntimeResourcesTests.test_monitor_is_daemon_and_close_discards_late_blocked_volume_result",
+            "test_runtime_resources.RuntimeResourcesTests.test_probe_failure_publishes_unknown_metrics_and_never_an_uncaught_worker_exception",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_conflicting_other_window_policy_is_not_overwritten",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_delayed_input_events_do_not_touch_destroyed_widgets_or_closed_context",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_failed_policy_audit_rolls_back_persistence_but_keeps_safe_unpersisted_local_pause",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_gui_heartbeat_and_foreground_priority_are_measured_without_reading_key_text",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_invalid_persisted_policy_pauses_background_without_silently_resetting_it",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_library_close_and_project_switch_stop_admission_without_sqlite_from_worker",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_pause_is_persisted_and_read_by_another_supervisor_without_learning_epoch_changes",
+            "test_runtime_supervisor.RuntimeSupervisorTests.test_raw_sqlite_close_stops_probe_and_timer_without_late_ui_database_errors",
+            "test_runtime_worker.RuntimeWorkerTests.test_actual_stalled_process_is_killed_and_uncommitted_sqlite_write_rolls_back",
+            "test_runtime_worker.RuntimeWorkerTests.test_real_subprocess_pauses_at_boundary_and_reuses_saved_work_on_explicit_resume",
+            "test_runtime_worker.RuntimeWorkerTests.test_real_subprocess_runs_existing_engine_and_returns_only_verified_committed_job",
+            "test_runtime_worker.RuntimeWorkerTests.test_truncated_or_unbound_success_protocol_never_marks_real_job_completed"
+          ]
         }
       ],
-      "next_step": "取得可用參考環境後測冷啟動、尖峰RAM／VRAM、GUI反應與取消；16GB是整機上限而非程式可占滿；完整原FULL條款保留，見PARTIAL_70_GAP_REPORT"
+      "next_step": "Immutable current software regression; external original evidence clauses remain NOT_VERIFIED, see clause coverage",
+      "full_acceptance_registered": true
     },
     {
       "id": "CORE-001",

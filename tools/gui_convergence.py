@@ -75,7 +75,7 @@ def traceability(registry,root=ROOT):
                         candidate=root/(imported.replace('.','/')+'.py')
                         if candidate.is_file():components.add(str(candidate.relative_to(root)))
         row.update(exact_test_ids=sorted(tests),components_referenced_by_tests=sorted(components),
-                   acceptance_clause_count=len(acceptance),evidence_run=requirement.get('evidence_run'),
+                   acceptance_clause_count=len(acceptance),unverified_acceptance_ids=[a['id'] for a in acceptance if not a['tests']],evidence_run=requirement.get('evidence_run'),
                    trace_state='MAPPED_NOT_EXECUTION_VERIFIED' if tests else 'MISSING_EXACT_TEST_MAPPING')
     for conflict in CONFLICTS:
         if not (root/conflict['authority']).is_file():raise ValueError('Missing conflict authority')

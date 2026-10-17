@@ -42,10 +42,11 @@ class CustomLayoutTests(unittest.TestCase):
     def test_actual_gui_custom_preview_cancel_then_explicit_new_draft_does_not_publish(self):
         window=MainWindow(self.library.root);self.addCleanup(window.deleteLater);self.addCleanup(window.library.close);self.addCleanup(window.font_manager.close);self.addCleanup(window.input_timer.stop);window.people.setRowCount(1)
         for col,value in enumerate(('Alex Example','Designer','123','a@example.test','','','','')):window.people.setItem(0,col,QTableWidgetItem(value))
+        from runtime_fixture import controlled_resources
+        from gui_wait import wait_for_gui
+        controlled_resources(window)
         d=CustomLayoutDialog(window);self.addCleanup(d.deleteLater);d.limits['expand_mm'].setValue(40);d.reason.setText('SYNTHETIC bounded design');d.preview()
-        for _ in range(500):
-            APP.processEvents();QTest.qWait(10)
-            if not d.running:break
+        self.assertTrue(wait_for_gui(lambda:not d.running and not window.busy,10),'Owned custom preview did not finish: '+d.status.text())
         self.assertFalse(d.running);self.assertEqual(d.plan['status'],'FEASIBLE_DRAFT');d.approve.setChecked(True)
         with patch.object(QMessageBox,'question',return_value=QMessageBox.No):d.save()
         self.assertIsNone(d.created)
