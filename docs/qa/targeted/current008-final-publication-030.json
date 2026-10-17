@@ -1,8 +1,73 @@
 {
-  "status": "PENDING_REMOTE_PUBLICATION_CHECK",
-  "software_verification": "PASS",
+  "status": "PASS_CURRENT_SOFTWARE_AND_PUBLICATION",
   "overall28_complete": false,
+  "overall_run_status": "FAIL",
+  "overall_exit": 1,
+  "overall_exit_reason": "Five actual external qualification clauses NOT_VERIFIED; no software failure",
+  "software_execution_status": "PASS",
   "evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "source_commit": "38700310960ad7c77a5f82a71a8798e03f5ae508",
-  "no_code_changes_after_run": true
+  "tests": {
+    "planned": 1549,
+    "completed": 1549,
+    "passed": 1549,
+    "skipped": 0,
+    "not_completed": 0,
+    "fresh_modules": 197,
+    "runtime_errors": 0
+  },
+  "native_capture_exit": 0,
+  "source_unchanged": true,
+  "no_code_changes_after_run": true,
+  "original28": {
+    "verified": 25,
+    "partial": 3,
+    "clauses_total": 325,
+    "clauses_pass": 320,
+    "clauses_not_verified": 5
+  },
+  "registry": {
+    "total": 169,
+    "verified_scoped": 163,
+    "original_topics": {
+      "total": 75,
+      "verified": 69,
+      "partial": 3,
+      "deferred": 3
+    },
+    "core_verified": 87,
+    "governance_verified": 7
+  },
+  "native_images_individually_reviewed": 15,
+  "other_native_images": "PROCESS_ONLY",
+  "github_checkpoint": "CP-20261017-REMAINING28-CURRENT008-SOFTWARE-VERIFIED",
+  "github_snapshot_commit": "13eae441f6bd5b5ad9e42f87a4f7ed6d03901ada",
+  "github_tree": "a021a36173cb9c309b64c6148d057a8babe50862",
+  "remote_verification": "Native Git: fresh origin fetch, exact HEAD/tree and every checkpoint Git blob SHA; no REST API claim",
+  "gates": [
+    {
+      "command": "python tools/dev_governance.py check --require-evidence --publication-scope",
+      "actual_exit": 0,
+      "status": "PASS",
+      "log": "docs/qa/targeted/current008-publication-checks-030/publication-scope.log"
+    },
+    {
+      "command": "python tools/dev_governance.py check --require-evidence",
+      "actual_exit": 0,
+      "status": "PASS_CURRENT_RUN_ALL_ATTACHMENTS",
+      "log": "docs/qa/targeted/current008-publication-checks-030/full-current-evidence.log"
+    }
+  ],
+  "historical_nine_attachment_exceptions": "UNCHANGED, current008 has no new attachment waiver",
+  "frozen_run_seconds": 2440.906,
+  "checkpoint_cadence": "Immutable run exceeded10minute interval; honest deviation retained, strict cadence compliance not claimed",
+  "external_qualification": "docs/dev/REMAINING28_EXTERNAL_QUALIFICATION.json",
+  "not_verified": [
+    "Actual Windows font viewer/install/admin/undo qualification",
+    "Authorized real native Illustrator corpus/reference and actual training",
+    "Specified Windows16GBRTX5050 and ASUS VivoBook benchmark",
+    "Physical print",
+    "Independent review"
+  ],
+  "background_jobs_running": false
 }

@@ -6,15 +6,15 @@
   "product_version": "0.1.28",
   "framework_status": "SOFTWARE_SELF_VERIFIED_EXTERNAL_QUALIFICATION_PENDING",
   "active_task": "25of28 original parents self-verified on CURRENT008; remaining3 blocked by5actual external evidence clauses",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT-FULL-SOURCE008.receipt.json",
-  "last_confirmed_commit": "38700310960ad7c77a5f82a71a8798e03f5ae508",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT008-SOFTWARE-VERIFIED.receipt.json",
+  "last_confirmed_commit": "13eae441f6bd5b5ad9e42f87a4f7ed6d03901ada",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
-    "docs/dev/REMAINING28_EXECUTION_QUEUE.json",
-    "docs/dev/REMAINING28_EXTERNAL_QUALIFICATION.json"
+    "docs/dev/REMAINING28_EXTERNAL_QUALIFICATION.json",
+    "docs/qa/targeted/current008-final-publication-030.json"
   ],
   "next_tasks": [
     "Await actual authorized Windows font viewer/install scope/admin/undo qualification; Linux software clauses pass, clause5 remains unverified.",
@@ -44,8 +44,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
-    "CP-20261017-REMAINING28-CURRENT008-SOFTWARE-VERIFIED"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -412,17 +411,7 @@
   "pending_revalidation_ids": [],
   "last_formal_validation": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
-  "publication_status": {
-    "run": "RUN-REMAINING28-LAYOUT-003",
-    "remote_verified": true,
-    "publication_scope_gate": "PASS",
-    "publication_commit": "406699e23e0ad8597ecda7a6fdc3dd34dfee589d",
-    "publication_tree": "64807ab8fb1ce25ac14dcd8890ca9b89a465f177",
-    "new_run_all_attachments_published": true,
-    "attachment_count": 204,
-    "gate_log": "docs/qa/targeted/layout003-publication-gate-001.log",
-    "previous_explicit_media_exceptions_unchanged": true
-  },
+  "publication_status": "CURRENT008_ALL_ATTACHMENTS_REMOTE_VERIFIED_AND_CURRENT_REQUIRE_EVIDENCE_PASS",
   "cloud_environment_configuration": {
     "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
     "receipt": "docs/dev/CLOUD_CONFIG_DRAFT_RECEIPT.json",
@@ -519,7 +508,10 @@
       "deferred": 3
     },
     "core_verified": 87,
-    "governance_verified": 7
+    "governance_verified": 7,
+    "new_original_parents": 0,
+    "newly_verified_original_parent_count": 25,
+    "baseline_existing_parent_revalidation_count": 44
   },
   "checkpoint_cadence_deviation": {
     "last_checkpoint_verified_utc": "2026-10-15T17:28:24.486163+00:00",
@@ -786,9 +778,9 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Resume only after authorized actual external prerequisites arrive: UI032clause5,REV02clauses1/2/4,REV04clause1; preserve exact source/evidence, run actual qualification then affected/full regression as required.",
+  "next_step": "Await actual external prerequisites already requested; use current handoff and exact remaining5clauses. All unblocked software and current publication/self-validation finished, no owned background job.",
   "current_work_package": "Original28 external qualification; all unblocked software implementation/self-validation complete",
-  "checkpoint_cadence_note": "CURRENT008 source frozen through full tests/native captures beyond10minutes; checkpoint resumes after all owned writers exited. Actual times preserved; strict10minute cadence not claimed.",
+  "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": {
     "native_023_first19": "PASS",
