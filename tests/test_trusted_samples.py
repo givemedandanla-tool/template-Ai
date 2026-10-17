@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import copy
 from pathlib import Path
 import tempfile
@@ -59,7 +60,7 @@ class TrustedSamplesTests(unittest.TestCase):
 class TrustedSamplesGuiTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.window=MainWindow(self.root/'data');self.addCleanup(self.close);self.source,self.work=source_work(self.window.library,self.root);self.store=TrainingStore(self.window.library);confirmed(self.store,self.work);self.d=TrainingQualityDialog(self.window);self.p=self.d.samples_panel;self.addCleanup(self.d.close);self.d.show();self.d.tabs.setCurrentWidget(self.p);self.p.basis.setCurrentText('OWNED');self.p.reference.setText(RIGHTS['reference']);self.p.actor.setText('Synthetic Reviewer');APP.processEvents()
-    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;self.window.close()
+    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window)
     def wait(self):
         for _ in range(300):
             APP.processEvents()

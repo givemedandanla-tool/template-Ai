@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import copy
 from pathlib import Path
 import tempfile
@@ -41,7 +42,7 @@ class CoverageTests(unittest.TestCase):
 class CoverageGuiTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.window=MainWindow(self.root/'data');self.addCleanup(self.close);self.source,self.work=source_work(self.window.library,self.root);self.store=TrainingStore(self.window.library);confirmed(self.store,self.work);self.sample=admitted(self.store,self.work);self.d=TrainingQualityDialog(self.window);self.addCleanup(self.d.close);self.p=self.d.inventory_panel;self.d.show();self.d.tabs.setCurrentWidget(self.p);APP.processEvents()
-    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;self.window.close()
+    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window)
     def select_work(self):
         axis=self.p.tree.topLevelItem(0);group=axis.child(0);item=group.child(0);axis.setExpanded(True);group.setExpanded(True);self.p.tree.setCurrentItem(item);APP.processEvents()
     def test_actual_drilldown_source_locate_readonly_and_stale_guard(self):

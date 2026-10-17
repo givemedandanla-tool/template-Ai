@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import copy
 import os
 from pathlib import Path
@@ -62,7 +63,7 @@ class FactsGuiTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup); self.root = Path(self.tmp.name); self.window = MainWindow(self.root/'data'); self.addCleanup(self.close)
         self.source, self.work = source_work(self.window.library, self.root); self.d = TrainingQualityDialog(self.window); self.p = self.d.facts_panel; self.addCleanup(self.d.close); self.d.show(); self.d.tabs.setCurrentWidget(self.p); APP.processEvents()
     def close(self):
-        self.window.source = None; self.window.work = None; self.window.template = None; self.window.close()
+        self.window.source = None; self.window.work = None; self.window.template = None; dispose_main_window(self.window)
     def wait(self):
         for _ in range(300):
             APP.processEvents()

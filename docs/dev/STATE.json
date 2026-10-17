@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "READY",
-  "active_task": "Continue original28; CURRENT005 stopped for systematic fixture-only disposal repair",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT-FULL-SOURCE005.receipt.json",
-  "last_confirmed_commit": "6b01d84d4225cec31c13ff050d3a2c1540c88c88",
+  "active_task": "Continue original28; freeze CURRENT006 after systematic fixture-only close/admission cleanup",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261017-REMAINING28-CURRENT005-INTERRUPT-DISPOSAL-PLAN.receipt.json",
+  "last_confirmed_commit": "5e70a8a57492f1c7dba63d86c6bdb41f790d8623",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -27,7 +27,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT005-INTERRUPT-DISPOSAL-PLAN"
+    "CP-20261017-REMAINING28-CURRENT-FULL-SOURCE006"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-003/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -690,7 +690,7 @@
       "native_capture_executed": false
     }
   ],
-  "active_work_package_plan": "docs/dev/REMAINING28_CURRENT004_REPAIR_PLAN.json",
+  "active_work_package_plan": "docs/dev/CURRENT005_FIXTURE_DISPOSAL_PLAN.json",
   "formal_execution_watch": {
     "run_id": "RUN-REMAINING28-LAYOUT-003",
     "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
@@ -744,7 +744,7 @@
       "correct_verified_base": "4f93f0963f46bd148a96b22106bbf6a720e59eee"
     }
   ],
-  "current_work": "Environment resumed same workspace, code source6b01d84 preserved. CURRENT005 intentionally interrupted130 after BackupCenter teardown busy modal/deadline;68progressPASS, not full proof, no native capture. All diagnostics copied, source unchanged, no owned module workers. Audit found17fixture close functions clearing test data then calling real MainWindow.close. Plan before cleanup-only changes.",
+  "current_work": "Current005 intentionally interrupted130;68progressPASS not full proof, owned children cleaned, source unchanged.17cleanup modules moved to existing dispose_main_window; all assertions AST-verified unchanged, no app code altered.013133complete130PASS3backup waitFAIL no runtime error;014backup5PASS actual0 after controlled-resource/real-loop fixture fix. Freeze006 now, no owned jobs.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -852,7 +852,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/REV01_EXECUTION_PLAN.json",
-  "next_step": "Save interruption/17fixture cleanup plan; reuse existing dispose_main_window only in audited fixture cleanup, keep actual close/dirty/busy tests unchanged. Isolated affected modules, then frozen CURRENT006 all1548+native/pub/scoped Gate.",
+  "next_step": "Checkpoint current006 source and exact GitHub readback; all1548 serial isolated tests + native captures, then publish actual evidence and close only fulfilled exact per-parent scopes. Five realAI/Windows/hardware external clauses remain unverified.",
   "current_work_package": "UI-032 original10 shared font source identity/current glyph-license filters/separate Windows workflow",
   "checkpoint_cadence_note": "Cadence deviations during earliercriticaldiagnostics/UI063planning+implementation recorded; overallstrict10minute cadence notPASS.",
   "implementation_pending_original_parents": [

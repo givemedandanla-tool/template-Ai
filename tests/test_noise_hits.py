@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import copy
 from pathlib import Path
 import tempfile
@@ -58,7 +59,7 @@ class NoiseHitsTests(unittest.TestCase):
 class NoiseHitsGuiTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.window=MainWindow(self.root/'data');self.addCleanup(self.close);self.store=TrainingStore(self.window.library);self.source,self.work,self.rule=pending_rule(self.store,self.root);self.rule=activate(self.store,self.rule);self.future_source,self.future_work=source_work(self.window.library,self.root,'future.svg');self.d=TrainingQualityDialog(self.window);self.addCleanup(self.d.close);self.d.show();APP.processEvents()
-    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;self.window.close()
+    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window)
     def test_actual_future_confirm_one_fact_prompt_no_rule_reapproval_and_hits_navigation(self):
         p=self.d.facts_panel;p.store.save_facts(self.future_work['id'],observations(self.future_work),0,1);p.reload();p.work_combo.setCurrentIndex(p.work_combo.findData(self.future_work['id']));self.d.tabs.setCurrentWidget(p);p.table.selectAll();p.actor.setText('Synthetic Reviewer')
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes) as prompts:

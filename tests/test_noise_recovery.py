@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import copy
 from pathlib import Path
 import tempfile
@@ -58,7 +59,7 @@ class NoiseRecoveryTests(unittest.TestCase):
 class NoiseRecoveryGuiTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.window=MainWindow(self.root/'data');self.addCleanup(self.close);self.store=TrainingStore(self.window.library);self.source,self.work,self.rule=pending_rule(self.store,self.root);self.rule=activate(self.store,self.rule);_,self.future=source_work(self.window.library,self.root,'future.svg');self.facts=confirmed(self.store,self.future);self.d=TrainingQualityDialog(self.window);self.addCleanup(self.d.close);self.d.show();APP.processEvents()
-    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;self.window.close()
+    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window)
     def test_actual_keep_whitelist_approve_and_disabled_rollback_controls(self):
         hits=self.d.hits_panel;self.d.tabs.setCurrentWidget(hits);hits.search.setText(self.future['id']+' 已校稿');hits.table.selectRow(0)
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(hits.keep_button,Qt.LeftButton)

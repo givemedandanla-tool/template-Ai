@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import copy
 import os
 from pathlib import Path
@@ -89,7 +90,7 @@ class PipelineGuiTests(unittest.TestCase):
         APP.processEvents()
         from runtime_fixture import controlled_resources
         controlled_resources(self.window)
-    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;self.window.close()
+    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window)
     def wait(self):
         for _ in range(1000):
             APP.processEvents()

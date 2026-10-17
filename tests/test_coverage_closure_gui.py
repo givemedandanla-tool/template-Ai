@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import tempfile
 import unittest
 from pathlib import Path
@@ -28,7 +29,7 @@ class CoverageClosureGuiTests(unittest.TestCase):
         self.panel=CoverageClosurePanel(self.window);self.panel.resize(1200,900);self.panel.show()
 
     def tearDown(self):
-        self.panel.cancel();self.window.pool.waitForDone(5000);APP.processEvents();self.panel.close();self.window.source=None;self.window.work=None;self.window.template=None;self.window.close();self.tmp.cleanup()
+        self.panel.cancel();self.window.pool.waitForDone(5000);APP.processEvents();self.panel.close();self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window);self.tmp.cleanup()
 
     def wait(self,predicate):
         for _ in range(1000):

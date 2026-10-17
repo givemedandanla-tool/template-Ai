@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import copy
 from pathlib import Path
 import tempfile
@@ -70,7 +71,7 @@ class NoiseAuthorGuiTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.window=MainWindow(self.root/'data');self.addCleanup(self.close)
         self.source,self.work=source_work(self.window.library,self.root);self.store=TrainingStore(self.window.library);self.facts=confirmed(self.store,self.work);self.d=TrainingQualityDialog(self.window);self.addCleanup(self.d.close);self.p=self.d.facts_panel;self.d.show();self.d.tabs.setCurrentWidget(self.p);APP.processEvents();self.p.actor.setText('Synthetic Reviewer')
-    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;self.window.close()
+    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window)
     def select_note(self):self.p.table.selectRow(next(i for i,o in enumerate(self.p.loaded['observations']) if o['id']=='note'));APP.processEvents()
     def test_actual_local_confirm_cancel_and_rule_authoring(self):
         self.select_note()

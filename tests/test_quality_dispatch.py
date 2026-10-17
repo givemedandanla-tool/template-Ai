@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import subprocess
 import sys
 import unittest
@@ -23,7 +24,7 @@ class QualityDispatchTests(unittest.TestCase):
     def window(self):
         window=MainWindow(self.library.root);controlled_resources(window)
         def close():
-            window.execution_queue.cancel_event.set();window.pool.waitForDone(5000);APP.processEvents();window.source=None;window.work=None;window.template=None;window.close()
+            window.execution_queue.cancel_event.set();window.pool.waitForDone(5000);APP.processEvents();window.source=None;window.work=None;window.template=None;dispose_main_window(window)
         self.addCleanup(close);return window
 
     def wait(self,predicate,window):

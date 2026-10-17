@@ -1,4 +1,6 @@
 """Actual Qt, background SQLite connections, encrypted files and safe lifecycle."""
+from gui_wait import dispose_main_window,wait_for_gui
+from runtime_fixture import controlled_resources
 from pathlib import Path
 import sys
 import tempfile
@@ -22,7 +24,7 @@ PASSWORD='synthetic Qt backup password'
 class BackupCenterTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name)
-        self.window=MainWindow(self.root/'library');self.dialog=BackupManagerDialog(self.window)
+        self.window=MainWindow(self.root/'library');controlled_resources(self.window);self.dialog=BackupManagerDialog(self.window)
         self.errors=[];self.old_hook=sys.excepthook
         def hook(kind,value,tb):self.errors.append(str(value));self.old_hook(kind,value,tb)
         sys.excepthook=hook
@@ -30,18 +32,13 @@ class BackupCenterTests(unittest.TestCase):
     def tearDown(self):
         self.dialog.cancel_event.set();self.window.backup_scheduler.cancel_event.set()
         self.window.pool.waitForDone(30000);APP.processEvents()
-        self.dialog.reject();self.dialog.deleteLater();self.window.close();self.window.deleteLater()
+        self.dialog.reject();self.dialog.deleteLater();dispose_main_window(self.window)
         QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete);APP.processEvents()
         sys.excepthook=self.old_hook;self.temp.cleanup();self.assertEqual(self.errors,[])
 
     def wait(self,predicate=None):
-        deadline=time.monotonic()+15
         predicate=predicate or (lambda:not self.dialog.running and not self.window.busy)
-        while time.monotonic()<deadline:
-            APP.processEvents()
-            if predicate():return
-            time.sleep(.005)
-        self.fail('Qt background operation did not finish: '+self.dialog.status.text())
+        if not wait_for_gui(predicate,15):self.fail('Qt background operation did not finish: '+self.dialog.status.text())
 
     def data(self):
         case=fixture.CustomerCandidateTests();case.library=self.window.library;case.root=self.root

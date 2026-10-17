@@ -1,4 +1,5 @@
 """合成來源：內容身份、不可變原登錄、交易回滾及 GUI 背景重連。"""
+from gui_wait import dispose_main_window
 from dataclasses import asdict
 import os
 from pathlib import Path
@@ -135,7 +136,7 @@ class SourceRelinkTests(unittest.TestCase):
         def cleanup():
             # 明確重開後窗口已關閉；不再次保存到已關閉 SQLite。
             window.source, window.template = None, None
-            window.close()
+            dispose_main_window(window)
         self.addCleanup(cleanup)
         error_patch = patch.object(window, "error", side_effect=AssertionError)
         error_patch.start()

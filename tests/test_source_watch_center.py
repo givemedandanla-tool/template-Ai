@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import tempfile,time,unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -34,7 +35,7 @@ class SourceWatchCenterTests(unittest.TestCase):
         if child and child.running:child.cancel()
         if self.window.busy:self.wait(lambda:not self.window.busy)
         if child:child.close()
-        self.dialog.dirty=False;self.dialog.close();self.window.close()
+        self.dialog.dirty=False;self.dialog.close();dispose_main_window(self.window)
 
     def scan(self):self.dialog.scan();self.wait();self.dialog.render_current();return candidate_page(self.store,self.watch['id'])
     def select(self,predicate):

@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import copy
 from pathlib import Path
 import tempfile
@@ -66,7 +67,7 @@ class RuleReviewTests(unittest.TestCase):
 class RuleReviewGuiTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.window=MainWindow(self.root/'data');self.addCleanup(self.close);self.store=TrainingStore(self.window.library);self.source,self.work,self.rule=pending_rule(self.store,self.root);self.d=TrainingQualityDialog(self.window);self.p=self.d.rules_panel;self.addCleanup(self.d.close);self.d.show();self.d.tabs.setCurrentWidget(self.p);self.p.actor.setText('Synthetic Reviewer');self.p.reason.setText('source and examples checked');self.p.table.selectRow(0);APP.processEvents()
-    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;self.window.close()
+    def close(self):self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window)
     def test_actual_filter_details_cancel_approve_and_history(self):
         self.assertEqual(self.p.rows[0]['risk'],'LOW');self.assertIn('positive_examples',self.p.details.toPlainText())
         with patch.object(QMessageBox,'question',return_value=QMessageBox.No):QTest.mouseClick(self.p.approve_button,Qt.LeftButton)

@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import json,unittest
 from pathlib import Path
 import test_automatic_training as fixtures
@@ -66,7 +67,7 @@ class ReviewLedgerGuiTests(unittest.TestCase):
     def tearDown(self):
         self.dialog.close()
         if self.dialog.process:self.dialog.process.waitForFinished(2000)
-        self.window.source=None;self.window.work=None;self.window.template=None;self.window.close();fixtures.AutomaticTrainingTests.tearDown(self)
+        self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window);fixtures.AutomaticTrainingTests.tearDown(self)
 
     def wait(self,predicate):
         from PySide6.QtTest import QTest

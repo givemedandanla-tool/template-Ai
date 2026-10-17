@@ -1,3 +1,4 @@
+from gui_wait import dispose_main_window
 import unittest
 from unittest.mock import patch
 from PySide6.QtCore import Qt
@@ -20,7 +21,7 @@ class RuntimeDispatchTests(unittest.TestCase):
     def tearDown(self):
         self.dispatch.cancel_event.set();self.window.pool.waitForDone(5000);APP.processEvents()
         for panel in self.panels:panel.close()
-        self.window.source=None;self.window.work=None;self.window.template=None;self.window.close();fixtures.AutomaticTrainingTests.tearDown(self)
+        self.window.source=None;self.window.work=None;self.window.template=None;dispose_main_window(self.window);fixtures.AutomaticTrainingTests.tearDown(self)
 
     def wait(self,predicate):
         for _ in range(1500):

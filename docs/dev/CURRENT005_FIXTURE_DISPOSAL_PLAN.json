@@ -1,5 +1,5 @@
 {
-  "status": "DESIGN_BEFORE_FIXTURE_ONLY_CHANGE",
+  "status": "FIXTURE_CHANGES_TARGETED_VERIFIED_PENDING_CURRENT006",
   "requirements": [
     "UI-051",
     "UI-058",
@@ -58,5 +58,22 @@
     "Current source all1548 full fresh-module tests/native captures and exact GitHub publication; external5clauses unchanged"
   ],
   "no_product_change": true,
-  "no_test_skip_or_expected_outcome_change": true
+  "no_test_skip_or_expected_outcome_change": true,
+  "isolated_013": {
+    "planned": 133,
+    "completed": 133,
+    "pass": 130,
+    "runtime_errors": 0,
+    "actual_exit": 1,
+    "remaining": "Backup fixture depended on actual host admission and short event polling"
+  },
+  "backup_014": {
+    "tests": 5,
+    "pass": 5,
+    "actual_exit": 0,
+    "fix": "Existing controlled_resources in positive GUI fixture and wait_for_gui real event loop, same15second wait; product admission unchanged"
+  },
+  "assertion_audit": "docs/qa/targeted/current005-fixture-assertions-014.json",
+  "assertions_changed": 0,
+  "production_files_changed": 0
 }
