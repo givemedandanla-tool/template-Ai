@@ -51,7 +51,8 @@
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED"
         }
       ],
-      "depends_on": []
+      "depends_on": [],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md"
     },
     {
       "id": "AI-LEARN-02",
@@ -94,7 +95,8 @@
       ],
       "depends_on": [
         "AI-LEARN-01"
-      ]
+      ],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md"
     },
     {
       "id": "AI-LEARN-03",
@@ -152,7 +154,8 @@
       ],
       "depends_on": [
         "AI-LEARN-02"
-      ]
+      ],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md"
     },
     {
       "id": "AI-LEARN-04",
@@ -215,7 +218,8 @@
       ],
       "depends_on": [
         "AI-LEARN-03"
-      ]
+      ],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md"
     },
     {
       "id": "AI-LEARN-05",
@@ -397,7 +401,8 @@
       ],
       "depends_on": [
         "AI-LEARN-07"
-      ]
+      ],
+      "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md"
     }
   ],
   "implemented_count": 0,
@@ -576,5 +581,117 @@
       "Formal archive retention and cross-device service"
     ]
   },
-  "acceptance_revision_note": "2026-10-17: 36->50 planned clauses across same8packages; +14 design criteria, +0implementation, +0verified; historical completion unchanged"
+  "acceptance_revision_note": "2026-10-17: 36->50 planned clauses across same8packages; +14 design criteria, +0implementation, +0verified; historical completion unchanged",
+  "field_structure_learning_basis": {
+    "decision": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
+    "approval_status": "USER_CONFIRMED_DESIGN_PRINCIPLE",
+    "engineering_status": "PROPOSED_NOT_IMPLEMENTED",
+    "confirmed_on": "2026-10-18",
+    "principle": "Structure and typography constrain each other; conditionally equivalent roles and variable grammar increase layout flexibility and reduce duplicate templates",
+    "inference_dependencies": [
+      [
+        "segmentation_alignment_arrangement",
+        "container_space_and_relations"
+      ],
+      [
+        "container_space_and_relations",
+        "text_configuration_with_source_font_evidence"
+      ],
+      [
+        "text_measurement_needs",
+        "bounded_structure_reflow"
+      ],
+      [
+        "structure_typography_semantics_policy",
+        "conditional_equivalent_roles"
+      ],
+      [
+        "equivalent_roles_and_variable_grammar",
+        "reusable_family_generation"
+      ]
+    ],
+    "feature_groups": {
+      "structure": [
+        "container_tree",
+        "entity_roles",
+        "row_column_groups",
+        "observed_frame",
+        "measured_ink_bounds",
+        "inferred_available_space",
+        "padding_gutter",
+        "baseline_anchor_relations",
+        "allowed_extent"
+      ],
+      "typography": [
+        "font_face_hash",
+        "source_pt",
+        "role_size_ratios",
+        "cluster_advance",
+        "horizontal_scale",
+        "tracking",
+        "distribution_units_and_legal_boundaries",
+        "text_flow"
+      ],
+      "equivalence": [
+        "allowed_semantic_types",
+        "ownership_constraints",
+        "group_alignment_signature",
+        "capacity_conditions",
+        "asset_text_policy_version"
+      ],
+      "grammar": [
+        "conditional_substitution",
+        "optional",
+        "repeat",
+        "collapse",
+        "expand",
+        "approved_reflow"
+      ],
+      "evidence": [
+        "source_transform",
+        "value_provenance",
+        "independent_lineage_support",
+        "uncertainty",
+        "counterexamples",
+        "version"
+      ]
+    },
+    "equivalence_stages": [
+      "STRUCTURAL_ROLE_COMPATIBILITY",
+      "CURRENT_INPUT_BINDING_FEASIBILITY"
+    ],
+    "binding_requires": [
+      "semantic_type_allowed",
+      "stable_field_identity_and_owner",
+      "actual_text_font_measurement",
+      "approved_fixed_pt_and_scaling_policy",
+      "data_completeness",
+      "bounds_and_no_overlap",
+      "current_asset_and_formal_gate_evidence"
+    ],
+    "non_identifiability": "Geometry alone cannot uniquely recover pt/font/tracking/ScaleX; missing evidence stays unknown",
+    "policy_limits": [
+      "No content-length-driven point-size change",
+      "No reinstated customer font/width/tracking/row controls",
+      "No identity merge based on equal strings or boxes",
+      "No forced family merge solely to minimize template count",
+      "No observed style automatically grants execution or formal-output authority"
+    ],
+    "work_packages": [
+      "AI-LEARN-01",
+      "AI-LEARN-02",
+      "AI-LEARN-03",
+      "AI-LEARN-04",
+      "AI-LEARN-08"
+    ],
+    "evaluation_examples": [
+      "Same geometry different font/pt remains ambiguous",
+      "Same box name/contact not equivalent",
+      "Compatible contact role still rejects overflowing or disallowed Email",
+      "Two/three contacts share family without copying per-work templates",
+      "Optional collapse preserves all other data and identity",
+      "Incompatible families remain separate"
+    ],
+    "status_note": "Refines existing50criteria; no added work packages, no implementation or feature-test evidence"
+  }
 }

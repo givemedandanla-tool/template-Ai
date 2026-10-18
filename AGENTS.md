@@ -51,3 +51,7 @@ GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須�
 ## 2026-10-17 四類風格與 card-interface 對帳
 
 詳見docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md與有效contract：8包50規劃驗收，0實作／0驗證。先讀固定版本原型交接及最新核心／UI-013/061/062；區分重用、擴充、規格衝突、未驗證。客戶字級／字寬／tracking／單雙排控制已撤回；示例computePlan、70%與FNV不作正式排版／印前。觀察到新風格不等於有權取消固定pt、分散語意、預覽確認或正式Gate。
+
+## 2026-10-18 已確認的結構／文字共同學習
+
+設計依據見docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md及activecontract.field_structure_learning_basis：分割／對齊／排列與文字配置互相約束，條件等效角色及可變文法支持更靈活排列與更少重複模板。等效先核對角色／語意／歸屬／政策，再驗實際文字；同框不能唯一推定字級或任意交換資料。不強併家族、不改固定pt或正式Gate。這是已確認設計原則；仍8包50規劃條款0實作／0驗證。

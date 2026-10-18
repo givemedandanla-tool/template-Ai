@@ -206,3 +206,10 @@ HDBSCAN沒有本方案可直接依賴的partial_fit／任意query預測介面；
 使用者新增分散對齊、字級縮放／層級、相對位置、欄位分割與對齊學習，並指定核對card-interface。權威對帳與參數方案見[CARD_INTERFACE_STYLE_LEARNING_REVIEW.md](CARD_INTERFACE_STYLE_LEARNING_REVIEW.md)，包含REUSE/EXTEND/CONFLICT/UNVERIFIED與實際閱讀基準。原8包增加14條規劃驗收至50，仍0實作／0驗證；不重編舊父題。
 
 學到的字級／分散風格不自動取得執行權。現行UI-013固定pt（不得因字數／字寬改變）與text_policy核准職稱／地址子集維持；客戶端不恢復字級／字寬／單雙排／tracking控制。跨模板低影響自動切換與配置字級切換仍OPEN，UI-061差異預覽確認與既有Gate不被原型覆寫。實作順序仍01/02觀察與家族→03/04規則與合成→05/06排序回饋→07/08同核心前端及真實驗證。
+
+
+## 13. 已確認：結構與文字共同學習，條件等效促進模板重用（2026-10-18）
+
+使用者確認的[設計決策](../decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md)是參數／模型的依據：欄位分割、對齊、排列揭示容器與可用空間；空間與來源字型、字級、字寬縮放／tracking／分散方式互相約束。共同特徵形成條件規則與等效角色，再以optional/repeat/收合/reflow涵蓋新資料組合，減少重複固定模板。
+
+有效契約的field_structure_learning_basis保存機器可讀依賴／特徵組／兩階段等效性與驗證案例。先判結構角色、語意、歸屬及政策相容，再對當次實際文字量測與正式Gate重驗；不從同尺寸框推定等效或唯一字級。最小化模板數須受品質、完整性與真實heldout表現約束，不強併家族。原8包50條規劃驗收不變、0實作／0驗證，固定pt與客戶控制撤回政策不變。
