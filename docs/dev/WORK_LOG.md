@@ -1437,3 +1437,5 @@ INTERVIEW-REREVIEW保存：checkpoint逐檔讀回commit3ace58af8c01d60ef5c33bd7a
 2026-10-18｜AI-OBSERVATION-WIP：已實作typed scalar/node/edge圖、未知來源字級隔離／均勻仿射helper、人物公司／欄位／來源區域引用、TrainingStore CAS／冪等／歷史／失效與自動unit同交易引用。004實際18/18PASS、0skip，原檔／原標記／模板不改寫；002修正JSON指紋格式、003修正測試fixture current source檢視，失敗誠實保留。首輪code/test草擬約15分鐘後保存WIP，接著既有source/dataset/automatic廣回歸；不以機制測試宣稱原生AI恢復或已訓練。AI01partial，其餘7未實作、0/8完成／0驗證，原50條及3TODO完成數不變。
 
 WIP治理檢查如預期拒絕CURRENT008：程式／測試manifest已變，舊證據只屬歷史，不再宣稱當前source有效。先保存可恢復WIP，後續跑完整當前來源正式證據；不得以18項機制測試替代全回歸或跨作品AI驗證。
+
+AI01-WIP保存：5f1b3b13f6fb7dd5ea1e04ef83b99a6c3557acc7／tree376f8ace45383510f235091099ffe56b217e175d已fresh Git逐檔讀回，CP-20261018-AI-OBSERVATION-WIP為REMOTE_VERIFIED。18新測試PASS、既有相關及完整當前來源回歸待完成；收據續保存，不宣稱新AI包完成。
