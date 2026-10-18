@@ -1447,3 +1447,5 @@ AI01-RELATED保存：CP-20261018-AI-OBSERVATION-RELATED-PASS已fresh讀回5035db
 AI01完整回歸中途保存：522/1567已執行且PASS，尚無失敗；code_onlymanifest仍與固定659359f一致，非最終結果。另8舊REMOTE_VERIFIEDZIP經SHA／embedded manifest／已發布收據核對搬至/tmp，保留副本與原路徑symlink、最新8與未ACK保護；釋放791849704bytes，journal=docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T171020Z.json。
 
 AI01-FORMAL-PROGRESS保存：d4931cc2f70daad87b8cd8b1b786948185e62977已GitHub逐檔讀回並REMOTE_VERIFIED；收據續發布。正式1567項仍進行、current code保持固定659359f，沒有把中途結果當完整驗證。
+
+AI01完整回歸第二次中途保存：933/1567已完成、933PASS，當下失敗0；source仍固定659359f，正式run未結束、非完成證據。
