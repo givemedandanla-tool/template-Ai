@@ -1429,3 +1429,5 @@ AI-MULTISIZE-SOURCE保存：checkpoint逐檔讀回commit60192cbc08f1d800d29b7182
 AI-SHARED-ARTBOARD保存：checkpoint逐檔讀回commit3cf4321078f81c416463e18c51f3db3630f17e66/tree31012d73bec36952a1d50b3547902b5f3cc6ea30；12文件／來源／進度與快取查核及publicationGate PASS。第二輪跨尺寸內容／風格追問未答，無私人AI解析、程式修改或訓練；收據續保存。
 
 2026-10-18｜INTERVIEW-REREVIEW：使用者要求重新詳讀、避免重複問題。實際回讀原52題核心（排除重複UI追加）、原GUI17完整相關主題、8後續設計決策及授權脈絡；建立19項來源去重索引。UI016/017共享／多人、UI038同檔多作品、UI040/041雜訊、UI042/043客戶庫等已定案；撤回剛提出的多人欄位獨立／共用題，無待回答概念問題。找到UI043取代UI042交易分類，修正近期來源決策漏引，不修改歷史不可變證據／原要求登錄。保存新同人物＋多人加人事實，尺寸／人數／欄位量分開；實際字型／標記／配對列作品檢視，下一步直接schema工程。未改核心／測試、未訓練，3TODO0完成、8包50條0實作。
+
+INTERVIEW-REREVIEW保存：checkpoint逐檔讀回commit3ace58af8c01d60ef5c33bd7aba9ef8c33ad3fce/tree1adb382443ab88f337c3c8fed321ee4de1199210；15來源／取代／去重與狀態查核及publicationGate PASS。19項索引、無待答概念題、UI043訂正及人物增量事實已保存，收據續保存；未改核心／測試或訓練。
