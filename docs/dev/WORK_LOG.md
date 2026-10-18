@@ -1425,3 +1425,5 @@ TRAINING-CORPUS-CUSTOMER保存：checkpoint逐檔讀回commit92cc8784a475f07154e
 AI-MULTISIZE-SOURCE保存：checkpoint逐檔讀回commit60192cbc08f1d800d29b71829d7612abe35cee90/tree0b6196125abfe110ee4f220725829035f5ea3f30；10文件／來源／原進度查核與publicationGate PASS。畫板／工作區和邊界追問仍未答；無私人AI匯入或模型訓練，收據續保存。
 
 2026-10-18｜AI-SHARED-ARTBOARD：使用者確認多尺寸通常同畫板、框線不一定、尺寸文字通常有。第一輪來源組織已可形成規格；核對source_analysis矩形優先／整頁fallback缺口，設計文字／群組／留白／對齊與可選框線的候選分割，尺寸標記不自動當印刷內容或雜訊、墨跡框不當卡片邊界。第二輪已追問同檔跨尺寸內容／人物／風格是否對應，尚未答。工作磁碟剩約496MB，2份較舊已REMOTE_VERIFIED快照完成SHA／manifest／收據與副本核對搬至/tmp，保留原路徑symlink／最新8與未ACK、持久journal docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T160550Z.json，釋出187554280bytes。僅文件／快取維護，未改程式／測試、未讀私人AI或訓練，完成數不變。
+
+AI-SHARED-ARTBOARD保存：checkpoint逐檔讀回commit3cf4321078f81c416463e18c51f3db3630f17e66/tree31012d73bec36952a1d50b3547902b5f3cc6ea30；12文件／來源／進度與快取查核及publicationGate PASS。第二輪跨尺寸內容／風格追問未答，無私人AI解析、程式修改或訓練；收據續保存。
