@@ -1243,12 +1243,32 @@
     "within_file_structure": {
       "may_contain_multiple_dimensions_and_works": true,
       "source": "USER_REPLY_2026-10-18",
-      "artboard_vs_shared_canvas": "UNKNOWN",
-      "work_boundaries_and_physical_size_marks": "UNKNOWN",
+      "artboard_vs_shared_canvas": "USUALLY_SAME_ARTBOARD_USER_REPORTED",
+      "work_boundaries_and_physical_size_marks": {
+        "border": "NOT_ALWAYS_PRESENT",
+        "dimension_text": "USUALLY_PRESENT",
+        "not_universal": true,
+        "exact_notation_units_and_association": "UNKNOWN_PENDING_SAMPLE_INSPECTION"
+      },
       "historical_revision_storage": "UNKNOWN",
       "same_file_implies_same_family": false,
       "same_file_must_not_be_split_across_train_and_test": true,
-      "reuse": "Existing artworks/crop/work_mm/artwork_revisions in Library SQLite;automatic native AI segmentation not verified"
+      "reuse": "Existing artworks/crop/work_mm/artwork_revisions in Library SQLite;automatic native AI segmentation not verified",
+      "segmentation_design": {
+        "status": "PROPOSED_NOT_IMPLEMENTED",
+        "basis": [
+          "Source groups and object relationships",
+          "Whitespace and alignment",
+          "Dimension-text candidates and conditional work association",
+          "Optional borders"
+        ],
+        "no_frame_or_one_artboard_assumption": true,
+        "ink_bounds_are_not_card_bounds": true,
+        "dimension_annotation_role_requires_evidence": true,
+        "unknown_unit_or_conflicting_label_not_forced": true,
+        "manual_correction_reuses_existing_non_destructive_records": true,
+        "current_gap": "source_analysis rect-first regions with whole-page fallback;native AI multiwork segmentation unverified"
+      }
     }
   }
 }
