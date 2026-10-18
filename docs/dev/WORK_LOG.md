@@ -1465,3 +1465,5 @@ AI01正式結果：1567/1567PASS、198healthy modules、0skip／0runtime error�
 AI01最終採認：verify_run／execution_passed及163完成要求逐項verify_acceptance全部通過，166既有證據引用換綁當前formal，scope／status／完成數不變。原75題69VERIFIED/3PARTIAL/3DEFERRED、CORE87/GOV7不變；新8包1partial、0完整／驗證、50原驗收及3TODO0完成。正式366附件已在ee407377eae2b8b86ed8dc9e5926c2450ae5c54b逐檔讀回；2張native抽查另存。最後進度→正式結果checkpoint實際603.417秒、初始code drafting也超10min，STATE保存精確間隔，不宣稱嚴格10min達標。
 
 最終本機查核：publication-scope require-evidence治理PASS（169登錄／163完成scope／1567具名tests）；原50AI驗收ID／文字與8包／0完整／1partial一致、source manifest仍精確對應formal659359f，進度快照無新增／刪除／範圍／狀態／新增完成差異。接著保存最終metadata checkpoint並再讀回，不重跑已通過測試。
+
+AI01最後確認：CP-20261018-AI-OBSERVATION-FOUNDATION-VERIFIED在f081bac3ba665070716c96e3e20cf84bb54eb41e／tree67c7b19a112403795faf0d18ec3642b48ab6897a逐檔讀回；收據與STATE於d8aa558dae3e9eeb406a5eadc9a6e5065c910e4a再fresh讀回，當前require-evidence publication Gate PASS、工作樹乾淨。最後附加log腳本曾誤讀snapshot_tree而KeyError，未影響已發布的STATE／收據或功能驗證；改用實際tree_sha補上本紀錄。正式來源659359f未改，1567PASS／366附件、既有163完成scope、新AI1partial／0完整及5外部資格缺口均不變。
