@@ -1224,5 +1224,21 @@
     "runtime_policy_change": false,
     "training_executed": false,
     "final_schema_and_real_corpus_validation_pending": true
+  },
+  "training_corpus_basis": {
+    "decision": "docs/decisions/2026-10-18-AI-CORPUS-CUSTOMER-IDENTITY-AND-REVIEW.md",
+    "status": "USER_REPORTED_PARTIAL_FACTS_NO_PRIVATE_CORPUS_INSPECTED",
+    "primary_format": ".ai",
+    "filename_convention": "Filename identifies customer code;preserve raw name and code as text;ambiguous suffix/identity still follows UI-042 confirmation rules",
+    "qualification": "Mostly qualified per user;exceptions often have informal nonstandard annotations;initial partial human review/noise/auxiliary labels may be needed",
+    "database": "Reuse Library SQLite/CustomerStore/TrainingStore/customer candidates and associations;no parallel customer database",
+    "identity_is_not_style_family": true,
+    "unknown": [
+      "Original text/font/layer/group availability",
+      "Related versions and multiple-work storage layout",
+      "Informal mark location/meaning and reviewed subset",
+      "Actual qualified corpus and independent lineage coverage"
+    ],
+    "runtime_implementation_or_training": false
   }
 }
