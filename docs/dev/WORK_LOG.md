@@ -1376,3 +1376,6 @@ FIELD-STRUCTURE-BASIS保存完成：CP-20261018-FIELD-STRUCTURE-LEARNING-BASIS�
 2026-10-18｜CORE-FIRST-DELIVERY：使用者明確先將功能做進Template AI本體，網頁／手機端延後；card-interface作為持久保存的未來需求／互動與核心準備參考。新增範圍決策，修正AI07/M3、各條款delivery_scope/scope_parts與主方案／roadmap／交接，保留50原驗收文字／ID及0/8狀態；核心階段不被前端條款阻擋，後續需求不刪除或當完成。基準3b7d411；驗收為範圍分類／連結／契約與狀態一致、無程式或測試變更、GitHub逐檔讀回。舊75題69VERIFIED/3PARTIAL/3DEFERRED、CORE87/GOV7不變。
 
 CORE-FIRST保存：checkpoint逐檔讀回commitb2d0e552b7d9d8e185022eb6f10ed47ec430b985/treeeaede2a8463fa3af56a0ddc94ebc9f362be7e3bf（7049files）；18個連結及範圍分類／原50驗收／狀態不變檢查PASS、既有publicationGatePASS。收據及出版紀錄一併持久化，無功能測試／訓練／前端實作。
+
+
+2026-10-18｜DESKTOP-INTERACTION-GOAL：使用者確認保存本體可實際完成輸入／初稿／關係微調／更正返回／預覽確認／驗證輸出。新增設計目標及4規劃情境，澄清AI07 A05～A07本體範圍並修正前次全延後A05歧義；獨立網站／手機端仍延後。基準a99e64d、初始治理PASS／遠端相符；預計驗證JSON／scope／原50條與狀態不變、連結、無程式測試變更及GitHub逐檔讀回。不訓練、不執行功能測試、不聲稱互動已完成。新AI0/8；舊75題69VERIFIED/3PARTIAL/3DEFERRED，CORE87/GOV7不變。

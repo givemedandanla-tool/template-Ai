@@ -386,8 +386,11 @@
           "id": "AI-LEARN-07-A05",
           "expected": "客戶端先完整初稿，三階段可返回；不得加入字級／字寬／tracking／單雙排控制或必選模板庫，專業後台另維持既有能力",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
-          "delivery_scope": "DEFERRED_FRONTEND",
-          "deferral_reason": "Customer three-stage frontend comes after core; retain withdrawn-control constraints for later implementation"
+          "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
+          "scope_parts": {
+            "current_core": "Operable desktop input/complete draft/edit/return/review flow; no forced template library or font/width/row tuning; existing professional editing remains",
+            "deferred_frontend": "Independent web/mobile customer screens and device-specific presentation"
+          }
         },
         {
           "id": "AI-LEARN-07-A06",
@@ -395,8 +398,8 @@
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
           "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
           "scope_parts": {
-            "current_core": "Reusable semantic operation contract,ownership,expected revisions,idempotency and stale-result protection as exercised by the existing application",
-            "deferred_frontend": "Web/mobile clients,customer authentication/transport deployment,drag proxies,drop feedback and non-drag input UI"
+            "current_core": "Actual desktop relative-position interaction with feedback,core semantic operations and verified reflow; owner/revision/idempotency/stale-result protection; functions/contracts alone are insufficient",
+            "deferred_frontend": "Independent web/mobile client transport,device-specific touch gestures and frontend authentication UI"
           }
         },
         {
@@ -405,15 +408,16 @@
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
           "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
           "scope_parts": {
-            "current_core": "Precise data/result version binding,stale marking,data-preserving failure,layout undo semantics and existing approved recovery/persistence; archive policy remains scoped/open",
-            "deferred_frontend": "Customer confirmation UI and hosted/cross-device final archive service"
+            "current_core": "Actual desktop local content correction/return/layout undo/current result review and confirmation; preserve new data,mark stale results and validate exact output; use existing approved persistence",
+            "deferred_frontend": "Independent web/mobile confirmation screens and hosted/cross-device archive service; permanent archive policy remains scoped/open"
           }
         }
       ],
       "depends_on": [
         "AI-LEARN-06"
       ],
-      "current_delivery_phase": "CORE_APPLICATION"
+      "current_delivery_phase": "CORE_APPLICATION",
+      "interaction_delivery_basis": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md"
     },
     {
       "id": "AI-LEARN-08",
@@ -776,7 +780,8 @@
       "Rule learning and input-conditioned template/layout generation",
       "Retrieval and preference ranking",
       "Scoped feedback and model/version lifecycle",
-      "Existing-application workflow,persistence and core self-validation"
+      "Existing-application workflow,persistence and core self-validation",
+      "Operable input/draft/relative edit/content correction/return/preview/confirmation/validated export in the existing desktop application"
     ],
     "deferred": [
       "New customer web/PWA frontend",
@@ -795,6 +800,75 @@
     "core_completion_not_blocked_by_future_frontend": true,
     "retained_roadmap_criteria": 50,
     "deferred_is_not_complete": true,
-    "report_core_phase_and_full_retained_roadmap_separately": true
+    "report_core_phase_and_full_retained_roadmap_separately": true,
+    "body_interaction_decision": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
+    "existing_application_interaction_is_current_delivery": true
+  },
+  "body_interaction_goal": {
+    "decision": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
+    "status": "USER_CONFIRMED_NOT_IMPLEMENTED",
+    "application": "Existing Template AI desktop application with necessary workflow improvements",
+    "flow": [
+      "INPUT_PERSON_COMPANY_DATA",
+      "COMPLETE_INITIAL_DRAFT",
+      "RELATIVE_POSITION_EDIT",
+      "LOCAL_CONTENT_CORRECTION_AND_RETURN",
+      "PREVIEW_AND_CONFIRM_EXACT_RESULT",
+      "VALIDATE_AND_EXPORT"
+    ],
+    "must_be_operable_in_application": true,
+    "only_functions_or_contracts_do_not_satisfy_goal": true,
+    "shared_future_behavior": [
+      "Stable field and owner identity",
+      "Core semantic intent and measurement/solver behavior",
+      "Data/layout version separation",
+      "Same result/evidence binding before output"
+    ],
+    "acceptance_scenarios": [
+      {
+        "id": "BODY-FLOW-01",
+        "expected": "Input -> actual core initial draft -> preview without manual layout -> formal output only when all current Gates pass",
+        "status": "PLANNED_NOT_EXECUTED"
+      },
+      {
+        "id": "BODY-FLOW-02",
+        "expected": "Move mobile below landline -> correct phone -> return preserving relation -> undo layout preserving corrected phone -> preview/confirm exact result",
+        "status": "PLANNED_NOT_EXECUTED"
+      },
+      {
+        "id": "BODY-FLOW-03",
+        "expected": "New input infeasible retains new data; old preview stale and cannot confirm/export new revision; no truncation or point-size change",
+        "status": "PLANNED_NOT_EXECUTED"
+      },
+      {
+        "id": "BODY-FLOW-04",
+        "expected": "Preview,confirmation,output and recovery bind exact data/layout/asset/model/policy revisions; late results never overwrite current edits",
+        "status": "PLANNED_NOT_EXECUTED"
+      }
+    ],
+    "scenario_count_is_not_additional_acceptance_or_completion": true,
+    "current_work_packages": [
+      "AI-LEARN-07",
+      "AI-LEARN-08"
+    ],
+    "core_capabilities_depend_on": [
+      "AI-LEARN-01",
+      "AI-LEARN-02",
+      "AI-LEARN-03",
+      "AI-LEARN-04",
+      "AI-LEARN-05",
+      "AI-LEARN-06"
+    ],
+    "deferred": [
+      "Separate web/PWA frontend",
+      "Mobile App and physical touch adaptation",
+      "Hosted public API,cross-device accounts and synchronization"
+    ],
+    "policy_limits": [
+      "No reintroduced customer font/width/tracking/row controls",
+      "Keep existing approved professional editing scope",
+      "Actual fixed-pt/font/Logo/source/formal Gates remain authoritative",
+      "Confirmation is result adoption,not rule/template publication or prepress exemption"
+    ]
   }
 }

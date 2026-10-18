@@ -59,3 +59,7 @@ GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須�
 ## 2026-10-18 最新排程：本體先行，網頁／手機延後
 
 使用者指令見docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md。先在既有Template AI本體完成學習、規則／等效欄位、生成／排版、排序回饋與持久驗證。card-interface是保存的未來使用情境及核心設計參考；網頁／手機實作與裝置驗收延後。可準備共用資料／操作／結果與版本邊界，不提前搭前端或公開API平台。契約delivery_priority及條款delivery_scope/scope_parts區分當前核心與保留後續需求；延後不等於完成，未來前端不阻擋本體工作。
+
+## 2026-10-18 已確認：本體端到端互動必須交付
+
+見docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md與contract.body_interaction_goal。本體需可實際輸入→初稿→微調相對位置→局部更正返回→預覽確認→驗證輸出；底層函式或契約本身不足。延後的是獨立網站／手機／裝置適配，不是本體必要互動。AI07 A05/A06/A07範圍已釐清，4情境為原50驗收細化且尚未執行；不取消固定pt、資料歸屬、來源／資產／正式Gate或恢復已撤回客戶控制。
