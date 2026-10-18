@@ -1025,7 +1025,7 @@
         "Direction and preconditions",
         "Semantic type and owner preservation",
         "Actual measurement feasibility",
-        "PROPOSED_PENDING_INTERVIEW for cross-type learning"
+        "AUTHORIZED_DESIGN_TODO; exact cross-type applicability unconfirmed"
       ],
       "relative_relation_graph": [
         "above/below/left/right",
@@ -1053,7 +1053,7 @@
         "Data/model/rule/policy dependency versions"
       ]
     },
-    "equivalence_representation": "Same-role grouping plus directional conditional substitution is a proposed representation; exact semantic scope remains for interview",
+    "equivalence_representation": "User authorized design TODOs for data requirements,field capabilities and their conditional relations; exact equivalence/substitution memberships,thresholds and runtime permissions remain to design",
     "do_not_infer": [
       "Global capacity from separate scalar maxima",
       "Unconditional exchangeability from equal frame dimensions",
@@ -1061,6 +1061,134 @@
       "Qualified corpus availability from unanswered question"
     ],
     "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
-    "next_model_topic": "Same-type equivalents only versus additionally learning cross-type conditional substitutions"
+    "next_model_topic": "Same-type equivalents only versus additionally learning cross-type conditional substitutions",
+    "training_design_todos": "training_design_todos"
+  },
+  "training_design_todos": {
+    "request_decision": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
+    "human_view": "docs/dev/AI_TRAINING_DESIGN_TODOS.md",
+    "status": "PENDING_DESIGN",
+    "scope": "Design tasks only; not implementation,training or feature completion",
+    "source_of_truth": "This active contract; Markdown is a rendered view",
+    "conceptual_views": [
+      "Data-type-centered requirements",
+      "Field/container-centered capabilities"
+    ],
+    "deployed_model_architecture": "TO_DESIGN; logical views do not require two separate neural networks",
+    "common_design_requirements": [
+      "Define typed inputs/outputs,units,source confidence,UNKNOWN handling and dependency versions",
+      "Separate learned features from approved hard policies and training/runtime hyperparameters",
+      "Compare mathematical methods,mature OSS and public commercial ideas with source/version/hash/license and reuse reasons",
+      "Define TRAIN/VALIDATION/sealed TEST lineage isolation,fit targets,baselines,negative cases and evaluation criteria",
+      "Reuse existing source parser,Qt/fontTools,TrainingStore,graph/solver/version mechanisms; no parallel engine/database",
+      "Derive required outputs from future uses without designing input/output interaction now"
+    ],
+    "tasks": [
+      {
+        "id": "TRAIN-DESIGN-01",
+        "title": "以資料種類為主體的需求模型設計",
+        "status": "TODO_DESIGN",
+        "completed": false,
+        "depends_on": [],
+        "work_packages": [
+          "AI-LEARN-01",
+          "AI-LEARN-03"
+        ],
+        "objective": "Design how semantic data types and roles learn their conditional text/layout requirements across qualified works",
+        "inputs": [
+          "Qualified TRAIN work observations and lineage",
+          "Semantic type,person/company role and group context",
+          "Actual font face/pt/shape metrics and source confidence",
+          "Size,family and style conditions"
+        ],
+        "expected_deliverables": [
+          "DataRequirementProfile schema and missing-data policy",
+          "Conditional features for text occupied space,tracking,distribution,legal line flow and role hierarchy",
+          "Fit/parameter/evaluation design and examples; no numeric thresholds assumed"
+        ],
+        "validation_cases": [
+          "Same character count with different actual font widths",
+          "Source-unknown font/pt not converted to default truth",
+          "Same data type in different roles/styles not forcibly merged",
+          "No memorization of private strings/owner IDs as style clusters"
+        ]
+      },
+      {
+        "id": "TRAIN-DESIGN-02",
+        "title": "以欄位／容器為主體的承接能力模型設計",
+        "status": "TODO_DESIGN",
+        "completed": false,
+        "depends_on": [],
+        "work_packages": [
+          "AI-LEARN-01",
+          "AI-LEARN-02",
+          "AI-LEARN-03"
+        ],
+        "objective": "Design how fields,roles and containers learn capacity,style and relational constraints independently of current content",
+        "inputs": [
+          "Field/group/container/run graph",
+          "Physical and normalized geometry,anchors,alignment,baseline,gaps",
+          "Qualified style regions and logical/rendered instance counts",
+          "Label/icon fixed-versus-data-bound properties,ownership and policy evidence"
+        ],
+        "expected_deliverables": [
+          "FieldCapabilityProfile and group/relative-relation graph schemas",
+          "Conditional role/type capability and joint count/text-space capacity representation",
+          "Observed/recommended/validated ranges with support,unknown and applicability",
+          "Training/parameter/reference/evaluation design"
+        ],
+        "validation_cases": [
+          "Equal frame size does not establish equal semantic/owner capability",
+          "Fixed TEL label cannot silently host Email; label/value linkage must be represented",
+          "Shared source printed more than once still consumes space",
+          "Individual range compliance does not prove whole-layout feasibility"
+        ]
+      },
+      {
+        "id": "TRAIN-DESIGN-03",
+        "title": "資料需求與欄位能力的條件相容、等效及替代模型設計",
+        "status": "TODO_DESIGN",
+        "completed": false,
+        "depends_on": [
+          "TRAIN-DESIGN-01",
+          "TRAIN-DESIGN-02"
+        ],
+        "work_packages": [
+          "AI-LEARN-03",
+          "AI-LEARN-04",
+          "AI-LEARN-08"
+        ],
+        "objective": "Design how the two views connect into supported matches,equivalent roles and directional conditional substitutions",
+        "inputs": [
+          "DataRequirementProfile",
+          "FieldCapabilityProfile",
+          "Qualified cross-work role/group evidence and counterexamples",
+          "Font/size/semantic/owner/label/policy conditions"
+        ],
+        "expected_deliverables": [
+          "Conditioned match/data-field compatibility representation",
+          "Same-role equivalent-group signature and separate directional substitution relation",
+          "Relative-position/applicability/evidence output needed for future reuse",
+          "Bilateral interchange checks and training/validation design; exact category permissions remain to design"
+        ],
+        "validation_cases": [
+          "A can fit B does not imply reverse fit or transitive substitution",
+          "Swap requires both destination bindings and complete semantic/owner/label conditions",
+          "Cross-type candidates need evidence and conditions,not unconditional phone/Email exchange",
+          "Positive-source or synthetic labels do not substitute independent evaluation",
+          "Incompatible or unknown bindings remain explicit; no fake calibrated confidence"
+        ]
+      }
+    ],
+    "total_design_todos": 3,
+    "completed_design_todos": 0,
+    "no_new_parent_or_acceptance_count": true,
+    "related_existing_work_packages": [
+      "AI-LEARN-01",
+      "AI-LEARN-02",
+      "AI-LEARN-03",
+      "AI-LEARN-04",
+      "AI-LEARN-08"
+    ]
   }
 }

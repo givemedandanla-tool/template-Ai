@@ -75,3 +75,7 @@ GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須�
 ## 2026-10-18 最新訪談範圍：模型／資料處理先行
 
 見docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md與contract.model_first_interview_scope。先談資料表示／模型輸出／參數及訓練驗證；交互設計待結果再談，既有需求反推等效群／條件替代／相對關係／聯合容量等必要模型資訊。AI08改依賴06，移除07交互前置；07最終目標保留，等可檢查結果再恢復討論。下一題談等效群的語意粒度，未回答的合格集合題暫緩，不代選。仍8包50條0實作／0驗證。
+
+## 2026-10-18 新增3項訓練設計待辦
+
+依使用者指令，activecontract.training_design_todos登錄TRAIN-DESIGN-01資料需求、02欄位／容器能力、03條件相容／等效／替代；人類清單docs/dev/AI_TRAINING_DESIGN_TODOS.md。目前3項TODO_DESIGN、0完成；設計子待辦不增加原8包50驗收或功能完成數。先做schema／特徵／參數／訓練／參照與驗證設計，再實作；兩個邏輯視角不預設兩個獨立模型，類別／閾值與跨類權限留待設計。交互仍待訓練結果再談。

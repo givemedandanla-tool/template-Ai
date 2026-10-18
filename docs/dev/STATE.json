@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Model/data/parameter interview first; inverse required outputs from known interactions; interaction discussion deferred until training results",
+  "active_task": "Design TODOs: data requirements,field capabilities and conditional relations;3pending0done,8learningpackages0implemented",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-MODEL-FIRST-INVERSE-REQUIREMENTS.receipt.json",
   "last_confirmed_commit": "92dbd28ef0f690448ada5e0bdd1f9d1943716d92",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -13,21 +13,17 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+    "docs/dev/AI_TRAINING_DESIGN_TODOS.md",
+    "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
+    "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
     "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
     "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
-    "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
-    "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
-    "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md",
-    "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
-    "docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md",
-    "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
-    "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
     "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json"
   ],
   "next_tasks": [
-    "Model interview: semantic scope of equivalent groups and conditional substitution; then AI-LEARN-01 representations/02families/03rules/04training results; no interaction redesign now",
-    "M2:AI-LEARN-05/06 model retrieval/ranking/feedback/versioning",
-    "AI-LEARN-08 core evaluation independently of07; resume body interaction discussion after inspectable training results,independent clients later"
+    "Complete TRAIN-DESIGN-01 data requirements and02field capability designs,then03conditional relations; implement AI-LEARN-01 after design; no interaction redesign now",
+    "Keep50retainedcriteria and8learningpackages separate from3newdesignTODOs; all0completed/implemented",
+    "Versioned training/evaluation results before body interaction discussion; independent web/mobile later"
   ],
   "blocked": [
     {
@@ -52,7 +48,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-TRAINING-DESIGN-TODOS"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -672,7 +669,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Model-first interview/inverse-output requirements saved/readback92dbd28;08model evaluation independent of07interaction; no implementation or training",
+  "current_work": "User-authorized3training design TODOs added and linked; no actual model design completion,implementation or training",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -786,8 +783,8 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Model interview: semantic scope of equivalent groups and conditional substitution; then AI-LEARN-01 representations/02families/03rules/04training results; no interaction redesign now",
-  "current_work_package": "AI-TRAINING-INTERVIEW-MODEL-FIRST-INVERSE",
+  "next_step": "Complete TRAIN-DESIGN-01 data requirements and02field capability designs,then03conditional relations; implement AI-LEARN-01 after design; no interaction redesign now",
+  "current_work_package": "AI-TRAINING-DESIGN-TODOS-DATA-FIELD-COMPATIBILITY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": {
@@ -875,19 +872,27 @@
   "capacity_learning_decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
   "training_interview": {
     "status": "IN_PROGRESS",
-    "last_confirmed_decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
+    "last_confirmed_decision": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
     "first_reorder_question": "Replaced by capacity-first direction; A/B/C not selected",
-    "next_topic": "Model representation: same-type equivalent groups versus cross-type conditional substitution",
+    "next_topic": "Design feature/condition/schema and validation details for3training design TODOs",
     "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
     "quality_reference": "Qualified training works evidenced style features define suitable region",
     "current_scope": "DATA_PROCESSING_MODELS_PARAMETERS",
     "interaction_discussion": "DEFERRED_UNTIL_TRAINING_RESULTS",
-    "corpus_availability_question": "UNANSWERED_DEFERRED; no A/B/C choice inferred"
+    "corpus_availability_question": "UNANSWERED_DEFERRED; no A/B/C choice inferred",
+    "two_view_design_authorization": "User authorized pending design tasks; exact semantic class memberships,thresholds and runtime permissions remain to design"
   },
   "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json",
   "qualified_style_region_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
   "checkpoint_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T094322Z.json",
   "qualified_style_region_publication": "docs/qa/plans/QUALIFIED-STYLE-REGION-PUBLICATION-20261018.json",
   "model_first_interview_decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
-  "model_first_interview_publication": "docs/qa/plans/MODEL-FIRST-INVERSE-PUBLICATION-20261018.json"
+  "model_first_interview_publication": "docs/qa/plans/MODEL-FIRST-INVERSE-PUBLICATION-20261018.json",
+  "training_design_todos_decision": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
+  "training_design_todos_view": "docs/dev/AI_TRAINING_DESIGN_TODOS.md",
+  "training_design_todo_progress": {
+    "total": 3,
+    "pending_design": 3,
+    "completed": 0
+  }
 }
