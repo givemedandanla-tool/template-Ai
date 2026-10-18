@@ -1439,3 +1439,5 @@ INTERVIEW-REREVIEW保存：checkpoint逐檔讀回commit3ace58af8c01d60ef5c33bd7a
 WIP治理檢查如預期拒絕CURRENT008：程式／測試manifest已變，舊證據只屬歷史，不再宣稱當前source有效。先保存可恢復WIP，後續跑完整當前來源正式證據；不得以18項機制測試替代全回歸或跨作品AI驗證。
 
 AI01-WIP保存：5f1b3b13f6fb7dd5ea1e04ef83b99a6c3557acc7／tree376f8ace45383510f235091099ffe56b217e175d已fresh Git逐檔讀回，CP-20261018-AI-OBSERVATION-WIP為REMOTE_VERIFIED。18新測試PASS、既有相關及完整當前來源回歸待完成；收據續保存，不宣稱新AI包完成。
+
+2026-10-18｜AI01-RELATED-005：18新＋既有來源／dataset／automatic／pipeline共56/56PASS，0runtime error，5個fresh owned module；完整正式1567項＋native captures已啟動，固定659359faf6bea269e1fba65416788735ffab1121。首次CLI手填SHA不符被入口拒絕，尚未建立run／執行測試；改用實際git/readback一致SHA，原錯誤保留/tmp/ai-observation-formal-001-20261018.log。正式run未完成前不採認新證據、不修改程式／測試／tools。

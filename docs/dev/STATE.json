@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_OBSERVATION_FOUNDATION_PARTIAL_REGRESSION_PENDING",
-  "active_task": "AI01 foundation implemented18unitPASS;freezeWIP before broader source/dataset/automatic regression",
+  "active_task": "AI01 foundation:18 new unit and56 related regression PASS;1567 current-source formal tests/captures running on frozen659359f",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-AI-OBSERVATION-WIP.receipt.json",
   "last_confirmed_commit": "5f1b3b13f6fb7dd5ea1e04ef83b99a6c3557acc7",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -49,7 +49,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-AI-OBSERVATION-RELATED-PASS"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -424,7 +425,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": null,
+  "planned_evidence_run": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/run.json",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -792,7 +793,7 @@
     }
   ],
   "next_work_package_plan": "docs/qa/plans/AI-OBSERVATION-FOUNDATION-20261018.json",
-  "next_step": "Run coherent unit plus existing source/dataset/automatic regression with .venv;fix failures,save current-source evidence and final checkpoint",
+  "next_step": "Finish immutable RUN-AI-OBSERVATION-FOUNDATION-001;inspect tests/captures,adopt only exact passing scopes,final checkpoint",
   "current_work_package": "AI-LEARN-01_OBSERVATION_FOUNDATION",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -819,7 +820,7 @@
     "policy": "Keep latest8 confirmed plus all unacknowledged at original location; moved archives retained with exact SHA/manifest matched REMOTE_VERIFIED receipts. For old local restore copy verified archive back into original .checkpoints/ID/source.zip; remote Git remains authoritative.",
     "free_after_bytes": 4308742144
   },
-  "current_targeted_run": "docs/qa/targeted/AI-OBSERVATION-UNIT-004-20261018.json",
+  "current_targeted_run": "docs/qa/targeted/AI-OBSERVATION-RELATED-005-20261018.json",
   "local_checkpoint_cache_relocation_history": [
     {
       "journal": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261017.json",
