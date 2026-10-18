@@ -1,6 +1,6 @@
 # Active development handoff
 
-CURRENT user priority: DATA PROCESSING / MODELS / PARAMETERS FIRST. Infer training outputs from known future uses; discuss input/output interaction after inspectable training results. Body end-to-end goal retained; independent web/mobile clients remain deferred.
+CURRENT:MODEL/DATA FIRST;body interaction after inspectable training results,web/mobile deferred. User started interview2026-10-18. STATE.training_interview.round1 has3asked questions(formats/fonts,qualified subset,lineage);answersNULL,pending,never infer preselected options. Round2 representative examples planned. Source review found outlined preview SVG is insufficient original text/font truth;preserve separate original-evidence extraction path in upcoming design. No code/data training yet.
 
 LATEST2026-10-18 user requested comprehensive tailored analysis beyond fixed/data-bound A/B. Proposal:docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md. Recommendation:shared typed hierarchical scene graph,data-requirement/field-capability conditional views,binding/variation evidence,family grammar and measured solver verification. Observation evidence,policy permission and per-instance feasibility are independent. Engineering recommendation,not approved new runtime policy or implementation.
 

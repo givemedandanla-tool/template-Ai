@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Comprehensive training analysis drafted; complete typed schemas and real-source validation design before AI-LEARN-01 implementation",
+  "active_task": "Training interview round1 started;await corpus facts while preparing schemas and preserved text/font provenance design",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-TRAINING-COMPREHENSIVE-DESIGN.receipt.json",
   "last_confirmed_commit": "2fa84169a1379bd39812343f0b8dcef673160805",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -21,9 +21,9 @@
     "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json"
   ],
   "next_tasks": [
-    "Complete formal schemas/migrations and real-source mapping for TRAIN-DESIGN-01/02/03 using comprehensive proposal; calibrate on independent lineage data; no interaction redesign now",
-    "Preserve all8packages50acceptance and3designTODO status; engineering proposal is not model training or completion",
-    "AI01 observations then02families/03rules/04synthesis; training/evaluation before body interaction; web/mobile deferred"
+    "Read pending round1 answers without inferring preselected choices;confirm corpus readiness and lineage,then representative-work round2;source/schema preparation can proceed independently",
+    "Preserve original text/font/group evidence separately from outlined preview derivatives;reuse existing source/TrainingStore mechanisms",
+    "Keep3designTODOs pending and8packages50acceptance0implemented;do not train on unconfirmed corpus or synthetic-only truth"
   ],
   "blocked": [
     {
@@ -48,7 +48,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-TRAINING-INTERVIEW-ROUND1-START"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -787,7 +788,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Complete formal schemas/migrations and real-source mapping for TRAIN-DESIGN-01/02/03 using comprehensive proposal; calibrate on independent lineage data; no interaction redesign now",
+  "next_step": "Read pending round1 answers without inferring preselected choices;confirm corpus readiness and lineage,then representative-work round2;source/schema preparation can proceed independently",
   "current_work_package": "AI-TRAINING-COMPREHENSIVE-DESIGN-ANALYSIS",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -875,17 +876,76 @@
   "body_interaction_publication": "docs/qa/plans/DESKTOP-INTERACTION-GOAL-PUBLICATION-20261018.json",
   "capacity_learning_decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
   "training_interview": {
-    "status": "IN_PROGRESS",
+    "status": "ROUND1_AWAITING_USER_DATA_FACTS",
     "last_confirmed_decision": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
     "first_reorder_question": "Replaced by capacity-first direction; A/B/C not selected",
-    "next_topic": "Use comprehensive proposal to specify schemas,source recoverability and calibration; no fixed-versus-variable A/B selection required",
+    "next_topic": "Round1 corpus formats/fonts,qualified subset and design lineage; pending answers are not default selections",
     "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
     "quality_reference": "Qualified training works evidenced style features define suitable region",
     "current_scope": "DATA_PROCESSING_MODELS_PARAMETERS",
     "interaction_discussion": "DEFERRED_UNTIL_TRAINING_RESULTS",
     "corpus_availability_question": "UNANSWERED_DEFERRED; no A/B/C choice inferred",
     "two_view_design_authorization": "User authorized pending design tasks; exact semantic class memberships,thresholds and runtime permissions remain to design",
-    "comprehensive_analysis": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md"
+    "comprehensive_analysis": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+    "user_instruction": "2026-10-18 user said 開始吧 after two-round interview recommendation",
+    "round1": {
+      "status": "ASKED_AWAITING_ANSWERS",
+      "questions": [
+        {
+          "id": "TRAIN-INTERVIEW-R1-01",
+          "topic": "First corpus formats and original font/text/layer/group availability",
+          "answer": null
+        },
+        {
+          "id": "TRAIN-INTERVIEW-R1-02",
+          "topic": "Qualified versus unreviewed corpus readiness",
+          "answer": null
+        },
+        {
+          "id": "TRAIN-INTERVIEW-R1-03",
+          "topic": "Related design variants and identifiable lineage",
+          "answer": null
+        }
+      ],
+      "no_option_selection_inferred": true
+    },
+    "round2": {
+      "status": "PLANNED_NOT_ASKED",
+      "topics": [
+        "Representative source examples: semantic/group/owner relationships",
+        "Label/icon/value variation evidence and UNKNOWN",
+        "Gold-positive and clear-counterexample acceptance cases"
+      ],
+      "depends_on": "Round1 corpus facts and representative sample availability"
+    },
+    "result_review": {
+      "status": "LATER_AFTER_REAL_RESULTS",
+      "does_not_block_development": true
+    },
+    "independent_preparation": {
+      "source_review_status": "READ_CURRENT_CODE_NOT_NEW_IMPORT_VALIDATION",
+      "findings": [
+        {
+          "path": "template_ai/importer.py:157",
+          "finding": "Inkscape derived SVG export requests text-to-path; training needs a separate preserved original semantic/font evidence path"
+        },
+        {
+          "path": "template_ai/source_analysis.py:23",
+          "finding": "Current vector hypotheses read the registered derivative SVG; outlined text cannot be treated as recovered original font/text"
+        },
+        {
+          "path": "template_ai/datasets.py:25",
+          "finding": "Reuse existing source group/role conflict checks; design-family and near-duplicate lineage need cross-work validation"
+        },
+        {
+          "path": "template_ai/datasets.py:109",
+          "finding": "Current geometry draft is per-source sample,not cross-work learning"
+        }
+      ],
+      "code_changed": false,
+      "training_executed": false
+    },
+    "start_check": "docs/qa/plans/TRAINING-INTERVIEW-ROUND1-START-20261018.json"
   },
   "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json",
   "qualified_style_region_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
