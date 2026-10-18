@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Persist round1 corpus facts and reuse existing customer database;await same-customer work/version storage detail",
+  "active_task": "Persist same-AI multi-size-work fact;reuse multi-artwork storage,clarify work boundaries and dimensions",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-TRAINING-CORPUS-CUSTOMER-FACTS.receipt.json",
   "last_confirmed_commit": "92cc8784a475f07154e2721df14472b1c641b533",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -22,9 +22,9 @@
     "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json"
   ],
   "next_tasks": [
-    "Receive same-customer work/version storage answer;design source/customer/work/revision/annotation links in existing SQLite,then representative-work review;preserve UNKNOWN fonts/marks",
-    "Finish TRAIN-DESIGN-01/02/03 schemas and source-preserving observation path;use current CustomerStore/TrainingStore,not a parallel database",
-    "Keep8learningpackages50acceptance0implemented and3designTODOs0completed;user-reported mostly-qualified is not per-sample approval"
+    "Read pending artboard/shared-canvas and work-boundary answer;specify source-preserving multiwork observations using existing artworks/crop/mm/revisions and source-level split grouping",
+    "Keep intra-file size counterparts as candidate learning relations,not automatic same-family or equal-scale truth;verify source roles/labels",
+    "Finish3typed design specs before AI01;preserve source fonts UNKNOWN,3designTODO0done,8packages50acceptance0implemented"
   ],
   "blocked": [
     {
@@ -49,7 +49,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-AI-MULTISIZE-SOURCE"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -669,7 +670,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "AI corpus mostly qualified per user,informal exception markings;filename=customer code verified in UI-042;source/font/lineage facts partial,no corpus inspected or training",
+  "current_work": "Confirmed possible multiple size works in one customer-number AI;source/page/work/revision distinguished;no native AI auto-segmentation or training claim",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -788,7 +789,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Receive same-customer work/version storage answer;design source/customer/work/revision/annotation links in existing SQLite,then representative-work review;preserve UNKNOWN fonts/marks",
+  "next_step": "Read pending artboard/shared-canvas and work-boundary answer;specify source-preserving multiwork observations using existing artworks/crop/mm/revisions and source-level split grouping",
   "current_work_package": "AI-TRAINING-COMPREHENSIVE-DESIGN-ANALYSIS",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -876,10 +877,10 @@
   "body_interaction_publication": "docs/qa/plans/DESKTOP-INTERACTION-GOAL-PUBLICATION-20261018.json",
   "capacity_learning_decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
   "training_interview": {
-    "status": "ROUND1_PARTIAL_FACTS_RECEIVED",
+    "status": "ROUND1_MULTIWORK_FACT_RECORDED_BOUNDARY_QUESTION_PENDING",
     "last_confirmed_decision": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
     "first_reorder_question": "Replaced by capacity-first direction; A/B/C not selected",
-    "next_topic": "Await same-customer multiwork/version storage facts;source text/font availability remains unknown;then representative-source review",
+    "next_topic": "Await source work placement/boundary facts;preserve unknown original fonts/text and historical revision relations",
     "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
     "quality_reference": "Qualified training works evidenced style features define suitable region",
     "current_scope": "DATA_PROCESSING_MODELS_PARAMETERS",
@@ -889,7 +890,7 @@
     "comprehensive_analysis": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
     "user_instruction": "2026-10-18 user said 開始吧 after two-round interview recommendation",
     "round1": {
-      "status": "PARTIAL_FACTS_RECEIVED_AWAITING_VERSION_STORAGE",
+      "status": "PARTIAL_FACTS_RECEIVED_AWAITING_WORK_BOUNDARIES",
       "questions": [
         {
           "id": "TRAIN-INTERVIEW-R1-01",
@@ -919,7 +920,8 @@
             "filename_is_customer_code": true,
             "customer_database": "Existing UI-042 requirement verified;reuse current SQLite",
             "same_customer_variant_lineage": "UNKNOWN_NOT_ANSWERED",
-            "source": "USER_REMINDER_2026-10-18_AND_REPOSITORY_UI042"
+            "source": "USER_REMINDER_2026-10-18_AND_REPOSITORY_UI042",
+            "within_file_multi_size_works": "User confirmed possible;family/revision correspondence not yet verified"
           },
           "status": "PARTIALLY_ANSWERED"
         }
@@ -928,6 +930,17 @@
       "follow_up": {
         "id": "TRAIN-INTERVIEW-R1-04",
         "topic": "How same-customer dimensions/designs/revisions are stored:single AI multiple works,folders,suffixes,overwrite,or mixed",
+        "status": "ANSWERED_PARTIAL_MULTI_SIZE_WORKS_IN_SAME_AI",
+        "answer": {
+          "user_statement": "同一個ai檔裡面可能有多個尺寸的作品",
+          "may_contain_multiple_size_works": true,
+          "artboard_layout": "UNKNOWN",
+          "historical_revisions": "UNKNOWN"
+        }
+      },
+      "follow_up_work_boundaries": {
+        "id": "TRAIN-INTERVIEW-R1-05",
+        "topic": "Different artboards versus shared canvas/workspace;presence of work-boundary and physical-size markers",
         "status": "ASKED_AWAITING_ANSWER",
         "answer": null
       }
@@ -971,7 +984,7 @@
     "start_check": "docs/qa/plans/TRAINING-INTERVIEW-ROUND1-START-20261018.json",
     "latest_confirmed_corpus_decision": "docs/decisions/2026-10-18-AI-CORPUS-CUSTOMER-IDENTITY-AND-REVIEW.md",
     "filename_customer_convention": "Confirmed by user reminder and existing UI-042;do not confuse customer code with design family",
-    "latest_fact_check": "docs/qa/plans/TRAINING-INTERVIEW-CORPUS-CUSTOMER-CHECK-20261018.json"
+    "latest_fact_check": "docs/qa/plans/AI-MULTISIZE-SOURCE-FACT-CHECK-20261018.json"
   },
   "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json",
   "qualified_style_region_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",

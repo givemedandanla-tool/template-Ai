@@ -1419,3 +1419,5 @@ TRAINING-INTERVIEW-ROUND1保存：checkpoint逐檔讀回commita9f7a31b8a3e20a81b
 2026-10-18｜TRAINING-CORPUS-CUSTOMER：第一輪使用者答覆.ai、基本合格且例外多有不定式隨筆標記，初期可能人工審核／標雜訊與輔助標記；提醒檔名即客戶編號。已核對UI-042既有要求與CustomerStore／候選關聯／Library SQLite，不重建平行資料庫；身份／來源／作品版次／設計家族分層。已追問同客戶多尺寸／設計／修改版保存方式，尚未答覆；字型／文字結構仍未知。保存事實及前置設計，不自動全樣本准入、不修改原AI、不將編號當風格特徵；未改核心／測試／訓練，原進度不變。
 
 TRAINING-CORPUS-CUSTOMER保存：checkpoint逐檔讀回commit92cc8784a475f07154e2721df14472b1c641b533/tree23454c8f3dc1858688fcf79456be18a9414cc26b，10文件／既有原碼／進度不變查核與publicationGate PASS。客戶編號規則已確認；版本保存追問未答，無私人作品匯入或訓練；收據續保存。
+
+2026-10-18｜AI-MULTISIZE-SOURCE：使用者確認同AI可能有多尺寸作品；補入既有資料來源決策／contract／訪談狀態。核對Library同source多artworks、各自crop/mm/修訂基礎可重用；來源頁／畫板≠作品，跨尺寸配對是候選而非自動同家族／等比縮放。同檔保持同切分避免洩漏。已追問畫板／工作區與邊界／尺寸標示，尚未回答；歷史版本及字型未知。僅文件，未檢視私人AI、未改程式／測試／訓練或完成數。
