@@ -1457,3 +1457,5 @@ AI01完整回歸第三次中途保存：1199/1567已完成、1199PASS，當下�
 AI01-FORMAL-PROGRESS-3保存：b9b14330358a04f197b6d2452384e7136ad2ab66已fresh逐檔讀回、REMOTE_VERIFIED並發布收據；正式測試仍在執行、無程式變更。
 
 AI01完整回歸第四次中途保存：1390/1567已完成、1390PASS，正式native尚未結束、非完成證據。8舊已ACK ZIP逐一SHA／embedded manifest／已發布收據驗證搬至/tmp，副本及原路徑symlink保留、最新8與未ACK保護，釋放805221322bytes；journal=docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T173234Z.json。source仍固定659359f。
+
+AI01-FORMAL-PROGRESS-4保存：87aec1da70a7472e79c3cde44a1a8e56cd5cf123已fresh逐檔讀回並REMOTE_VERIFIED，收據續發布；固定source完整測試尚未結束，不增加任何父題完成數。
