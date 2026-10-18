@@ -1427,3 +1427,5 @@ AI-MULTISIZE-SOURCE保存：checkpoint逐檔讀回commit60192cbc08f1d800d29b7182
 2026-10-18｜AI-SHARED-ARTBOARD：使用者確認多尺寸通常同畫板、框線不一定、尺寸文字通常有。第一輪來源組織已可形成規格；核對source_analysis矩形優先／整頁fallback缺口，設計文字／群組／留白／對齊與可選框線的候選分割，尺寸標記不自動當印刷內容或雜訊、墨跡框不當卡片邊界。第二輪已追問同檔跨尺寸內容／人物／風格是否對應，尚未答。工作磁碟剩約496MB，2份較舊已REMOTE_VERIFIED快照完成SHA／manifest／收據與副本核對搬至/tmp，保留原路徑symlink／最新8與未ACK、持久journal docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T160550Z.json，釋出187554280bytes。僅文件／快取維護，未改程式／測試、未讀私人AI或訓練，完成數不變。
 
 AI-SHARED-ARTBOARD保存：checkpoint逐檔讀回commit3cf4321078f81c416463e18c51f3db3630f17e66/tree31012d73bec36952a1d50b3547902b5f3cc6ea30；12文件／來源／進度與快取查核及publicationGate PASS。第二輪跨尺寸內容／風格追問未答，無私人AI解析、程式修改或訓練；收據續保存。
+
+2026-10-18｜INTERVIEW-REREVIEW：使用者要求重新詳讀、避免重複問題。實際回讀原52題核心（排除重複UI追加）、原GUI17完整相關主題、8後續設計決策及授權脈絡；建立19項來源去重索引。UI016/017共享／多人、UI038同檔多作品、UI040/041雜訊、UI042/043客戶庫等已定案；撤回剛提出的多人欄位獨立／共用題，無待回答概念問題。找到UI043取代UI042交易分類，修正近期來源決策漏引，不修改歷史不可變證據／原要求登錄。保存新同人物＋多人加人事實，尺寸／人數／欄位量分開；實際字型／標記／配對列作品檢視，下一步直接schema工程。未改核心／測試、未訓練，3TODO0完成、8包50條0實作。

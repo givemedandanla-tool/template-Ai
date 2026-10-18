@@ -1,0 +1,317 @@
+{
+  "status": "CURRENT_INTERVIEW_SCOPE_REREVIEWED",
+  "checked_utc": "2026-10-18T16:23:10.281821+00:00",
+  "requirements_source_of_truth": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
+  "purpose": "Read index,not new requirements/progress registry",
+  "coverage": {
+    "baseline": "Core bullets excluding repeated dated UI appendices;sections1-8",
+    "full_ui_sections": [
+      "UI-016",
+      "UI-017",
+      "UI-038",
+      "UI-039",
+      "UI-040",
+      "UI-041",
+      "UI-042",
+      "UI-043",
+      "UI-055",
+      "UI-056",
+      "UI-003",
+      "UI-004",
+      "UI-007",
+      "UI-008",
+      "UI-031",
+      "UI-052",
+      "UI-053"
+    ],
+    "ui_historical_next-question_footers": "Excluded from active pending topics;later answers take precedence",
+    "later_design_decisions_full_read": [
+      "docs/decisions/2026-10-17-TEMPLATE-AI-CROSS-WORK-LEARNING.md",
+      "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
+      "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
+      "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
+      "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
+      "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
+      "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md",
+      "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md"
+    ],
+    "read_pages": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "baseline_core_pages": [
+      0,
+      1,
+      2
+    ],
+    "current_conversation": "Visible messages including latest same-person/additional-people reply",
+    "unavailable_local_chat": "Not recovered;no claim to have read inaccessible chatgpt.com/local history"
+  },
+  "source_hashes": {
+    "docs/UI_DECISIONS.md": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232",
+    "docs/REQUIREMENTS_BASELINE.md": "04e66735b59cda8a769288710807282b662661ea8f2414494a5e724f3dbe3462",
+    "docs/decisions/2026-10-17-TEMPLATE-AI-CROSS-WORK-LEARNING.md": "cd5a0f9e53cc9fda57d6e5c6fe95dbf23530406de6ebe6f8cbba0066effe6898",
+    "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md": "e269e17783f07b66951f5caf076a6db2d1c4f918e0109efb43f9613b523fab9f",
+    "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md": "604d1ad7f5591a054d9bc4374858a0a95e2d87b07fc2ad5410c08b9bc03f26c1",
+    "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md": "cd21dc6bb4d77e533fda820fe242115001439962e77e81357d79315f71ef3ee5",
+    "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md": "103ad03572e18a56d1ad53e6b15a0343bc07091a0e65e548dac34cd4baa3a45f",
+    "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md": "658ba09d643d8f69cd1e93ac7207fc75dbd2abd0e74de9a2c9a8e7da6c3da185",
+    "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md": "a936430ea37e138fe6c10da0ee6a4bba9becf8319745194b6687436125a34ba4",
+    "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md": "67eacd5f936b270bdeb761b197e3ab5f6ee2f20e0b0c0673ef6f2af67bb64375",
+    "docs/decisions/2026-10-12-FIRST-VERSION-AUTHORIZATION.md": "7e0f5e16e4f5bc1d1696dff513b8b180098b1c71f502dde3f59f662c4a271481",
+    "docs/decisions/2026-10-13-CONTINUED-DEVELOPMENT.md": "b2566209ca42ed38b6cf3d9bfc9bd3179d826a023e34802ecf529db965c68686"
+  },
+  "entries": [
+    {
+      "id": "IV-01",
+      "fact": "AI is primary input;one file/canvas/artboard can hold multiple mixed-size works,notes and drafts",
+      "sources": [
+        "docs/REQUIREMENTS_BASELINE.md §2",
+        "docs/UI_DECISIONS.md UI-038"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-02",
+      "fact": "Customer-number filenames and persistent customer/size/style links already authorized",
+      "sources": [
+        "docs/UI_DECISIONS.md UI-042/UI-043"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-03",
+      "fact": "Customer/person/company/content/source/work/version/family are different identities",
+      "sources": [
+        "docs/UI_DECISIONS.md UI-016/UI-017/UI-043"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-04",
+      "fact": "Multiple people and companies supported;person is semantic root,Logo belongs to company",
+      "sources": [
+        "docs/UI_DECISIONS.md UI-016/UI-017",
+        "docs/REQUIREMENTS_BASELINE.md §2"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-05",
+      "fact": "Shared entity references and independent copies differ;equal string is not identity",
+      "sources": [
+        "docs/UI_DECISIONS.md UI-017"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-06",
+      "fact": "Work boundary and field annotations are separate,correctable and non-destructive",
+      "sources": [
+        "docs/UI_DECISIONS.md UI-038/UI-039"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-07",
+      "fact": "Noise rules can be approved once then applied within scope;local corrections do not auto-publish global rules",
+      "sources": [
+        "docs/UI_DECISIONS.md UI-007/UI-008/UI-040/UI-041"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-08",
+      "fact": "Complete unused proposals and real/fake/placeholder designs may be training examples;incomplete drafts/notes differ;qualified style evidence remains required",
+      "sources": [
+        "docs/REQUIREMENTS_BASELINE.md §2",
+        "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-09",
+      "fact": "Capacity and string-space ranges are learned conditionally,jointly;not fixed by user guesses",
+      "sources": [
+        "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-10",
+      "fact": "Suitable region defined by qualified TRAIN works evidenced style features",
+      "sources": [
+        "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-11",
+      "fact": "Structure,typography,relative layout,equivalence and variable grammar already required",
+      "sources": [
+        "docs/REQUIREMENTS_BASELINE.md §3/§4",
+        "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-12",
+      "fact": "Data requirements and field capabilities are logical views,linked by conditional compatibility",
+      "sources": [
+        "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-13",
+      "fact": "Models/data first;body workflow retained;web/mobile later;card-interface example not formal print engine",
+      "sources": [
+        "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
+        "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md",
+        "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-14",
+      "fact": "Real train/validation/sealed-test lineage and source gold are distinct;synthetic mechanics not real quality proof",
+      "sources": [
+        "docs/UI_DECISIONS.md UI-052/UI-053/UI-055/UI-056"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-15",
+      "fact": "No designed/purchased/transaction classification or required purchase proof;UI043 supersedes UI042 old wording",
+      "sources": [
+        "docs/UI_DECISIONS.md UI-043",
+        "docs/REQUIREMENTS_BASELINE.md §1/§7"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-16",
+      "fact": "Original source/font evidence before OCR;UNKNOWN allowed;defaults not source truth",
+      "sources": [
+        "docs/UI_DECISIONS.md UI-031",
+        "docs/REQUIREMENTS_BASELINE.md §2/§5"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not re-interview;use existing contract/source"
+    },
+    {
+      "id": "IV-17",
+      "fact": "Current corpus mostly qualified with informally marked exceptions;usually shared artboard,optional borders,usual size text",
+      "sources": [
+        "docs/decisions/2026-10-18-AI-CORPUS-CUSTOMER-IDENTITY-AND-REVIEW.md"
+      ],
+      "status": "USER_REPORTED_NOT_PRIVATE_CORPUS_INSPECTED",
+      "next_action": "Inspect representative sources;do not re-ask global concept"
+    },
+    {
+      "id": "IV-18",
+      "fact": "Same base person across related works;two/multi-person cards add people",
+      "sources": [
+        "docs/decisions/2026-10-18-AI-CORPUS-CUSTOMER-IDENTITY-AND-REVIEW.md"
+      ],
+      "status": "USER_REPORTED_NOT_PRIVATE_CORPUS_INSPECTED",
+      "next_action": "Condition separately on size/person-count/field-composition;verify person mapping from evidence"
+    },
+    {
+      "id": "IV-19",
+      "fact": "Architecture/hyperparameters,notation parsing and corpus co-occurrence are engineering or source-measurement tasks",
+      "sources": [
+        "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+        "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md"
+      ],
+      "status": "ENGINEERING_NOT_USER_QUESTION",
+      "next_action": "Implement/calibrate;keep unknown source features without blocking schema work"
+    }
+  ],
+  "supersessions": [
+    {
+      "current": "docs/UI_DECISIONS.md UI-043",
+      "supersedes": "docs/UI_DECISIONS.md UI-042 transaction categories",
+      "result": "Association-only customer sizes/styles;no designed/purchased flags or purchase-proof flow"
+    },
+    {
+      "current": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
+      "supersedes": "Earlier pending quality-source interview",
+      "result": "Qualified style definition resolved"
+    },
+    {
+      "current": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
+      "supersedes": "Earlier same-type-only versus cross-type A/B pending question",
+      "result": "Both views and conditional substitution design registered;no forced A/B"
+    },
+    {
+      "current": "Current goal and later development authorization",
+      "supersedes": "Old planning-time not-developed/not-authorized notes",
+      "result": "Old status text is historical;retain current actual evidence and0new-learning counts"
+    }
+  ],
+  "withdrawn_question": {
+    "id": "TRAIN-INTERVIEW-R2-02",
+    "topic": "Which multi-person fields are individual or shared",
+    "reason": "Capability/ownership rules already established in UI016/017/043;actual frequencies and grouping are to be learned or inspected,not forced into a global rule",
+    "user_answer_required": false
+  },
+  "pending_user_questions": [],
+  "remaining_work": [
+    {
+      "kind": "ENGINEERING",
+      "task": "Finalize typed observations/provenance/ownership/group/dimension schema and versioned storage mapping for AI01;then two profiles/conditional relations"
+    },
+    {
+      "kind": "SOURCE_INSPECTION",
+      "task": "Actual text/font/units/mark semantics/person/style correspondence;UNKNOWN until evidence available"
+    },
+    {
+      "kind": "DATA_TRAINING",
+      "task": "Actual qualified corpus and gold/lineage validation before claims;no private corpus inspected yet"
+    }
+  ],
+  "new_question_rule": "Search semantic duplicates and supersession first;do not ask about existing rules,engineering choices or facts recoverable from source inspection;only materially blocking new user decisions warrant a question",
+  "feature_completion_changed": false
+}

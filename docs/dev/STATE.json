@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Round1 source organization recorded;design multiwork segmentation without mandatory borders;round2 content/style correspondence pending",
+  "active_task": "Interview rereview and duplicate removal;next finalize source observation schemas without further concept interview",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-AI-SHARED-ARTBOARD-SOURCE.receipt.json",
   "last_confirmed_commit": "3cf4321078f81c416463e18c51f3db3630f17e66",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -13,18 +13,18 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
-    "docs/decisions/2026-10-18-AI-CORPUS-CUSTOMER-IDENTITY-AND-REVIEW.md",
+    "docs/dev/AI_TRAINING_INTERVIEW_REVIEW.md",
+    "docs/dev/AI_TRAINING_INTERVIEW_DECISION_INDEX.json",
+    "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
     "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
     "docs/dev/AI_TRAINING_DESIGN_TODOS.md",
-    "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
-    "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
-    "docs/dev/AI_TRAINING_COMPREHENSIVE_REFERENCES.json",
-    "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json"
+    "docs/decisions/2026-10-18-AI-CORPUS-CUSTOMER-IDENTITY-AND-REVIEW.md",
+    "docs/dev/AI_TRAINING_COMPREHENSIVE_REFERENCES.json"
   ],
   "next_tasks": [
-    "Read round2 same-file cross-size correspondence answer;finish source observation schema and evidence-based multiwork/dimension association before first learning implementation",
-    "Use text/group/whitespace/alignment with optional borders;dimension labels are candidate metadata,not automatic printed content or removable noise",
-    "Complete3typed design specs;actual units/fonts/source marks pending sample inspection,8packages50criteria0implemented"
+    "Finalize AI01 typed observations/provenance/person/group/dimension/source mappings and validation specs using review index;source unknowns handled by inspection,not more generic questions",
+    "Complete3training design specs,then AI01 implementation;reuse existing Library/TrainingStore/InputGraph and checked algorithms",
+    "Keep8packages50clauses0implemented/verified and3TODO0done;real corpus/model evidence still pending"
   ],
   "blocked": [
     {
@@ -49,7 +49,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-AI-INTERVIEW-REREVIEW"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -669,7 +670,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "User reports usually same artboard,optional borders,usual size text;rect-first whole-page fallback gap documented;no actual AI inspected,code changed or training",
+  "current_work": "Read original52core,17UIsections,8later decisions;UI043 supersession corrected;new base-person/add-people fact recorded;shared-field question withdrawn,0newlearning implementation",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -788,7 +789,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Read round2 same-file cross-size correspondence answer;finish source observation schema and evidence-based multiwork/dimension association before first learning implementation",
+  "next_step": "Finalize AI01 typed observations/provenance/person/group/dimension/source mappings and validation specs using review index;source unknowns handled by inspection,not more generic questions",
   "current_work_package": "AI-TRAINING-COMPREHENSIVE-DESIGN-ANALYSIS",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -877,10 +878,10 @@
   "body_interaction_publication": "docs/qa/plans/DESKTOP-INTERACTION-GOAL-PUBLICATION-20261018.json",
   "capacity_learning_decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
   "training_interview": {
-    "status": "ROUND2_RELATIONSHIP_QUESTION_PENDING",
+    "status": "PRIOR_INTERVIEWS_REVIEWED_NO_NEW_QUESTION_PENDING",
     "last_confirmed_decision": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
     "first_reorder_question": "Replaced by capacity-first direction; A/B/C not selected",
-    "next_topic": "Round2 cross-size content/style correspondence;do not infer same family from shared file/customer",
+    "next_topic": "No question scheduled;finalize schemas and inspect sources when available;do not re-open settled concepts",
     "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
     "quality_reference": "Qualified training works evidenced style features define suitable region",
     "current_scope": "DATA_PROCESSING_MODELS_PARAMETERS",
@@ -952,7 +953,7 @@
       }
     },
     "round2": {
-      "status": "IN_PROGRESS_RELATIONSHIP_QUESTION_ASKED",
+      "status": "CONCEPT_INTERVIEW_CONVERGED_SOURCE_DETAILS_PENDING_INSPECTION",
       "topics": [
         "Representative source examples: semantic/group/owner relationships",
         "Label/icon/value variation evidence and UNKNOWN",
@@ -963,8 +964,24 @@
         {
           "id": "TRAIN-INTERVIEW-R2-01",
           "topic": "Whether different-size works in same AI share content/style,or may have different people,data and styles",
-          "status": "ASKED_AWAITING_ANSWER",
-          "answer": null
+          "status": "ANSWERED_PERSON_VARIANTS_STYLE_DETAILS_DEFERRED_TO_INSPECTION",
+          "answer": {
+            "user_statement": "同一人物，但如果是雙人或多人門禁卡，就會在那一個人之外再加人。",
+            "base_person_repeated_additional_people_possible": true,
+            "size_person_count_field_count_separate": true,
+            "person_mapping": "EVIDENCE_REQUIRED_NOT_POSITION_OR_STRING_IDENTITY",
+            "style_and_exact_values_correspondence": "UNKNOWN_PENDING_SOURCE_INSPECTION"
+          }
+        },
+        {
+          "id": "TRAIN-INTERVIEW-R2-02",
+          "topic": "Which multi-person fields are individual/shared",
+          "status": "WITHDRAWN_DUPLICATE_EXISTING_RULES_AND_EMPIRICAL_DATA",
+          "answer_required": false,
+          "answer": null,
+          "sources": [
+            "docs/UI_DECISIONS.md UI-016/UI-017/UI-043"
+          ]
         }
       ]
     },
@@ -998,7 +1015,11 @@
     "start_check": "docs/qa/plans/TRAINING-INTERVIEW-ROUND1-START-20261018.json",
     "latest_confirmed_corpus_decision": "docs/decisions/2026-10-18-AI-CORPUS-CUSTOMER-IDENTITY-AND-REVIEW.md",
     "filename_customer_convention": "Confirmed by user reminder and existing UI-042;do not confuse customer code with design family",
-    "latest_fact_check": "docs/qa/plans/AI-SHARED-ARTBOARD-SOURCE-CHECK-20261018.json"
+    "latest_fact_check": "docs/qa/plans/AI-SHARED-ARTBOARD-SOURCE-CHECK-20261018.json",
+    "review_index": "docs/dev/AI_TRAINING_INTERVIEW_DECISION_INDEX.json",
+    "review": "docs/dev/AI_TRAINING_INTERVIEW_REVIEW.md",
+    "pending_user_questions": [],
+    "review_check": "docs/qa/plans/AI-INTERVIEW-REREVIEW-CHECK-20261018.json"
   },
   "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json",
   "qualified_style_region_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",

@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-10-18T16:26:06.209960+00:00",
+  "baseline_commit": "97830ed3948ced85aa765d66b8d0140f83b8d550",
+  "scope": "Interview rereview,semantic deduplication,supersession and persistence consistency;not feature tests",
+  "review": "docs/dev/AI_TRAINING_INTERVIEW_REVIEW.md",
+  "decision_index": "docs/dev/AI_TRAINING_INTERVIEW_DECISION_INDEX.json",
+  "checks": {
+    "all_work_packages_acceptance_unchanged": true,
+    "3design_todos_unchanged": true,
+    "8packages50criteria0implemented": true,
+    "17full_ui_sections8later_decisions": true,
+    "19entries_with_sources": true,
+    "reviewed_original_source_hashes_match": true,
+    "no_pending_user_question": true,
+    "shared_question_withdrawn": true,
+    "new_person_fact_recorded": true,
+    "old_trade_classification_corrected": true,
+    "stale_active_next_model_question_cleared": true,
+    "review_paths_exist": true,
+    "handoff_bounded": true,
+    "requirements_registry_unchanged": true,
+    "no_product_code_tests_changed": true
+  },
+  "new_functional_tests": 0,
+  "feature_implementation": 0,
+  "model_training": 0,
+  "design_todos_completed": 0,
+  "limitations": [
+    "Read scope declared in index;inaccessible ChatGPT local conversation not recovered",
+    "No real private AI corpus inspected or learned performance measured"
+  ]
+}
