@@ -1443,3 +1443,5 @@ AI01-WIP保存：5f1b3b13f6fb7dd5ea1e04ef83b99a6c3557acc7／tree376f8ace45383510
 2026-10-18｜AI01-RELATED-005：18新＋既有來源／dataset／automatic／pipeline共56/56PASS，0runtime error，5個fresh owned module；完整正式1567項＋native captures已啟動，固定659359faf6bea269e1fba65416788735ffab1121。首次CLI手填SHA不符被入口拒絕，尚未建立run／執行測試；改用實際git/readback一致SHA，原錯誤保留/tmp/ai-observation-formal-001-20261018.log。正式run未完成前不採認新證據、不修改程式／測試／tools。
 
 AI01-RELATED保存：CP-20261018-AI-OBSERVATION-RELATED-PASS已fresh讀回5035db0ca86a51120af89c8bb459777a2095f590／tree335676b120d4e6663254d8e3b1058d32c331e3f2。56相關PASS證據與正式run固定來源metadata已持久化；正式結果仍待執行完成。
+
+AI01完整回歸中途保存：522/1567已執行且PASS，尚無失敗；code_onlymanifest仍與固定659359f一致，非最終結果。另8舊REMOTE_VERIFIEDZIP經SHA／embedded manifest／已發布收據核對搬至/tmp，保留副本與原路徑symlink、最新8與未ACK保護；釋放791849704bytes，journal=docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T171020Z.json。

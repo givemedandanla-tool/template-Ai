@@ -49,7 +49,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-AI-OBSERVATION-FORMAL-PROGRESS"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -416,7 +417,7 @@
   "pending_revalidation_ids": [],
   "last_formal_validation": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
-  "publication_status": "OBSERVATION_SOURCE_WIP_PENDING_REMOTE_VERIFICATION; historical CURRENT008 publication retained, current evidence stale",
+  "publication_status": "AI01_SOURCE_AND56_RELATED_REMOTE_VERIFIED;full1567formalRUNNING;oldCURRENT008stale_for_current_source",
   "cloud_environment_configuration": {
     "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
     "receipt": "docs/dev/CLOUD_CONFIG_DRAFT_RECEIPT.json",
@@ -828,7 +829,8 @@
       "copies_retained": true
     },
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T160550Z.json",
-    "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T163835Z.json"
+    "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T163835Z.json",
+    "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T171020Z.json"
   ],
   "current_evidence_validity": "STALE_FOR_CURRENT_SOURCE: app/test changes invalidate CURRENT008 manifest; historical results preserved, formal current-source revalidation pending",
   "historical_active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
@@ -1017,7 +1019,7 @@
   },
   "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json",
   "qualified_style_region_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
-  "checkpoint_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T163835Z.json",
+  "checkpoint_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T171020Z.json",
   "qualified_style_region_publication": "docs/qa/plans/QUALIFIED-STYLE-REGION-PUBLICATION-20261018.json",
   "model_first_interview_decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
   "model_first_interview_publication": "docs/qa/plans/MODEL-FIRST-INVERSE-PUBLICATION-20261018.json",
@@ -1039,5 +1041,6 @@
     "source_code_changed": false,
     "publication_check": "docs/qa/plans/COMPREHENSIVE-TRAINING-DESIGN-PUBLICATION-20261018.json",
     "remote_verified_snapshot": "2fa84169a1379bd39812343f0b8dcef673160805"
-  }
+  },
+  "formal_run_progress_snapshot": "docs/qa/targeted/AI-OBSERVATION-FORMAL-PROGRESS-001-20261018.json"
 }
