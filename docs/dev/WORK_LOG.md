@@ -1384,3 +1384,5 @@ DESKTOP-INTERACTION保存：checkpoint逐檔讀回commitdacc4bfbacb1056f5c264215
 
 
 2026-10-18｜TRAINING-INTERVIEW-CAPACITY：使用者指示先根據訓練結果取得欄位允許容量／字串適宜區間，再做互動限制引導。保存決策及條件化profile參數／三類區間／證據與聯合驗證，標明原A/B/C未選、最適品質目標待訪談。基準10d8b78；驗收為決策連結／JSON／原50驗收與狀態不變／無程式測試變更及GitHub回讀。未訓練／未定數值／未執行功能測試；新AI0/8；舊75題69VERIFIED/3PARTIAL/3DEFERRED，CORE87/GOV7不變。
+
+CAPACITY訪談保存：checkpoint逐檔讀回commit182600481163e1bfae3aa19605fd56a6d1adfa0f/treee78ec5f8756832fe9e92a4233521d6aa97904f5a（7061files）；8連結、JSON、原50驗收與狀態一致檢查PASS，既有publicationGatePASS。收據／出版紀錄續保存。下一題先明確最適區間的品質參考／標籤來源，再談品質與容量取捨；原A/B/C重排自由度仍未定案。
