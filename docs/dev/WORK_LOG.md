@@ -1394,3 +1394,5 @@ QUALIFIED-STYLE保存：checkpoint逐檔讀回commitc348f07693c35acb6a2a22699d84
 
 
 2026-10-18｜MODEL-FIRST-INVERSE：使用者要求訪談先聚焦資料處理模型／參數，先有訓練結果再討論輸入輸出交互；以已知拖動／相對移動／容量需求反推模型必須輸出的資訊。保存決策及model_first_interview_scope、更新目標／交接；AI08依賴07→06以解除互動前置，AI07後續本體目標保留。基準fbb39e9；驗收為JSON／輸出對照／DAG／原50條與未實作狀態不變／無程式測試變更／GitHub回讀。未訓練、未定數值；舊75題69VERIFIED/3PARTIAL/3DEFERRED、CORE87/GOV7不變。
+
+MODEL-FIRST保存：checkpoint逐檔讀回commit92dbd28ef0f690448ada5e0bdd1f9d1943716d92/treecac71e89ea5e25597123bc199606d4d97b7ab3e4（7074files）；19連結、8組模型輸出、DAG及原50條／狀態與硬政策不變檢查PASS，既有publicationGatePASS。收據／出版紀錄續保存；無功能測試或訓練。下一題只談模型等效群的語意粒度。
