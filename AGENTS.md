@@ -71,3 +71,7 @@ GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須�
 ## 2026-10-18 訪談已定義：合格訓練風格為適合區間
 
 見docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md及contract.qualified_training_style_region。以合格TRAIN作品的有證據風格特徵學條件／聯合區域，保留多種與低支持合格風格；UNKNOWN不當真值、封存資料不回填擬合。品質來源已決，合格集合／標記及准入證據待訪談。適合區間不豁免正式Gate，未定數值／未訓練／未新增完成數。
+
+## 2026-10-18 最新訪談範圍：模型／資料處理先行
+
+見docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md與contract.model_first_interview_scope。先談資料表示／模型輸出／參數及訓練驗證；交互設計待結果再談，既有需求反推等效群／條件替代／相對關係／聯合容量等必要模型資訊。AI08改依賴06，移除07交互前置；07最終目標保留，等可檢查結果再恢復討論。下一題談等效群的語意粒度，未回答的合格集合題暫緩，不代選。仍8包50條0實作／0驗證。

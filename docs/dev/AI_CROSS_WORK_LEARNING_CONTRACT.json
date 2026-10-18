@@ -417,7 +417,8 @@
         "AI-LEARN-06"
       ],
       "current_delivery_phase": "CORE_APPLICATION",
-      "interaction_delivery_basis": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md"
+      "interaction_delivery_basis": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
+      "interaction_design_start_condition": "Versioned training results with stated validation scope available; later body interaction goal retained"
     },
     {
       "id": "AI-LEARN-08",
@@ -474,10 +475,11 @@
         }
       ],
       "depends_on": [
-        "AI-LEARN-07"
+        "AI-LEARN-06"
       ],
       "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
-      "current_delivery_phase": "CORE_APPLICATION"
+      "current_delivery_phase": "CORE_APPLICATION",
+      "dependency_change_basis": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md"
     }
   ],
   "implemented_count": 0,
@@ -596,10 +598,10 @@
     {
       "id": "M3",
       "scope": [
-        "AI-LEARN-07",
-        "AI-LEARN-08"
+        "AI-LEARN-08",
+        "AI-LEARN-07"
       ],
-      "deliverable": "Existing Template AI application workflow,persistence and actual core corpus/hardware/scale validation; new web/mobile delivery deferred",
+      "deliverable": "Core model validation before interaction design; resume existing-app workflow discussion after inspectable training results; independent clients deferred",
       "status": "NOT_IMPLEMENTED"
     }
   ],
@@ -802,7 +804,10 @@
     "deferred_is_not_complete": true,
     "report_core_phase_and_full_retained_roadmap_separately": true,
     "body_interaction_decision": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
-    "existing_application_interaction_is_current_delivery": true
+    "existing_application_interaction_is_current_delivery": true,
+    "current_focus": "DATA_PROCESSING_MODELS_PARAMETERS_AND_TRAINING_RESULTS",
+    "interaction_design_discussion": "DEFER_UNTIL_VERSIONED_TRAINING_RESULTS",
+    "inverse_model_requirement_decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md"
   },
   "body_interaction_goal": {
     "decision": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
@@ -987,5 +992,75 @@
       "AI-LEARN-07",
       "AI-LEARN-08"
     ]
+  },
+  "model_first_interview_scope": {
+    "decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
+    "status": "USER_DIRECTED_NOT_IMPLEMENTED",
+    "current_scope": [
+      "Data representation and preprocessing",
+      "Model input/output and learnable targets",
+      "Feature/parameter dependencies and identifiability",
+      "Training/validation and versioned result evidence"
+    ],
+    "deferred_discussion": [
+      "Input/output interaction policy and screens",
+      "Drag/preview/confirmation control design",
+      "Web/mobile or new customer frontend"
+    ],
+    "future_interactions_used_as_inverse_requirements": true,
+    "resume_interaction_discussion_when": "Versioned training results and stated validation scope are available to inspect,without requiring all external hardware qualifications to close",
+    "model_outputs": {
+      "typed_field_group_graph": [
+        "Stable semantic/owner identity",
+        "Container/group/field/run relationships",
+        "mm and normalized frames",
+        "font/glyph/baseline provenance"
+      ],
+      "equivalent_field_groups": [
+        "Role/group compatibility signature",
+        "Conditional capacity and policy applicability",
+        "Source/support/counterexamples"
+      ],
+      "conditional_substitution_relations": [
+        "Direction and preconditions",
+        "Semantic type and owner preservation",
+        "Actual measurement feasibility",
+        "PROPOSED_PENDING_INTERVIEW for cross-type learning"
+      ],
+      "relative_relation_graph": [
+        "above/below/left/right",
+        "ordering",
+        "align-edge/baseline",
+        "gap/anchor/inside",
+        "variability/applicability"
+      ],
+      "style_regions": [
+        "Qualified TRAIN joint/multimodal style features",
+        "Conditions and uncertainty"
+      ],
+      "joint_capacity_profile": [
+        "Conditional field count and string-length/occupied-space combinations",
+        "Best-found/validated/unknown status"
+      ],
+      "variable_grammar": [
+        "optional/repeat/collapse/expand/reflow",
+        "Legal topology and role mapping"
+      ],
+      "evidence_and_versions": [
+        "Lineage support",
+        "Source confidence",
+        "Counterexamples/validation scope",
+        "Data/model/rule/policy dependency versions"
+      ]
+    },
+    "equivalence_representation": "Same-role grouping plus directional conditional substitution is a proposed representation; exact semantic scope remains for interview",
+    "do_not_infer": [
+      "Global capacity from separate scalar maxima",
+      "Unconditional exchangeability from equal frame dimensions",
+      "Model accuracy/probability from uncalibrated support",
+      "Qualified corpus availability from unanswered question"
+    ],
+    "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
+    "next_model_topic": "Same-type equivalents only versus additionally learning cross-type conditional substitutions"
   }
 }

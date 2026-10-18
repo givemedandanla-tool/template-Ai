@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Interview: suitable region defined by qualified training styles; qualification corpus/labels next;0of8implemented",
+  "active_task": "Model/data/parameter interview first; inverse required outputs from known interactions; interaction discussion deferred until training results",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-QUALIFIED-STYLE-SUITABLE-REGION.receipt.json",
   "last_confirmed_commit": "c348f07693c35acb6a2a22699d84e954bbd28b69",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -13,6 +13,7 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+    "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
     "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
     "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
     "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
@@ -24,9 +25,9 @@
     "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json"
   ],
   "next_tasks": [
-    "ImplementAI-LEARN-01 in existing Template AI application,then02families03joint rules/equivalent roles04generation; no new web/mobile frontend prerequisite",
-    "M2:AI-LEARN-05/06 core retrieval/ranking and scoped feedback/version lifecycle",
-    "M3:AI-LEARN-07/08 operable desktop input/draft/edit/correction/return/review/validated export plus actual corpus/scale/hardware validation; independent web/mobile deferred"
+    "Model interview: semantic scope of equivalent groups and conditional substitution; then AI-LEARN-01 representations/02families/03rules/04training results; no interaction redesign now",
+    "M2:AI-LEARN-05/06 model retrieval/ranking/feedback/versioning",
+    "AI-LEARN-08 core evaluation independently of07; resume body interaction discussion after inspectable training results,independent clients later"
   ],
   "blocked": [
     {
@@ -51,7 +52,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-MODEL-FIRST-INVERSE-REQUIREMENTS"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -671,7 +673,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Qualified-training style definition saved/readbackc348f07; protected old cache relocation completed; no numerical limits or model implementation",
+  "current_work": "User-directed interview/model information scope and08dependency clarification only; no code/training/feature completion",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -785,8 +787,8 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "ImplementAI-LEARN-01 in existing Template AI application,then02families03joint rules/equivalent roles04generation; no new web/mobile frontend prerequisite",
-  "current_work_package": "AI-TRAINING-INTERVIEW-QUALIFIED-STYLE-REGION",
+  "next_step": "Model interview: semantic scope of equivalent groups and conditional substitution; then AI-LEARN-01 representations/02families/03rules/04training results; no interaction redesign now",
+  "current_work_package": "AI-TRAINING-INTERVIEW-MODEL-FIRST-INVERSE",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": {
@@ -874,14 +876,18 @@
   "capacity_learning_decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
   "training_interview": {
     "status": "IN_PROGRESS",
-    "last_confirmed_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
+    "last_confirmed_decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
     "first_reorder_question": "Replaced by capacity-first direction; A/B/C not selected",
-    "next_topic": "Existing qualified corpus/labels and admission evidence; no assumed import-success or formal-output equivalence",
+    "next_topic": "Model representation: same-type equivalent groups versus cross-type conditional substitution",
     "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
-    "quality_reference": "Qualified training works evidenced style features define suitable region"
+    "quality_reference": "Qualified training works evidenced style features define suitable region",
+    "current_scope": "DATA_PROCESSING_MODELS_PARAMETERS",
+    "interaction_discussion": "DEFERRED_UNTIL_TRAINING_RESULTS",
+    "corpus_availability_question": "UNANSWERED_DEFERRED; no A/B/C choice inferred"
   },
   "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json",
   "qualified_style_region_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
   "checkpoint_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T094322Z.json",
-  "qualified_style_region_publication": "docs/qa/plans/QUALIFIED-STYLE-REGION-PUBLICATION-20261018.json"
+  "qualified_style_region_publication": "docs/qa/plans/QUALIFIED-STYLE-REGION-PUBLICATION-20261018.json",
+  "model_first_interview_decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md"
 }
