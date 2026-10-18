@@ -1401,3 +1401,6 @@ MODEL-FIRST保存：checkpoint逐檔讀回commit92dbd28ef0f690448ada5e0bdd1f9d19
 2026-10-18｜TRAINING-DESIGN-TODOS：使用者要求將以資料種類／欄位為主體學習及條件關聯的訓練設計新增待辦並持久化。新增TRAIN-DESIGN-01/02/03至既有activecontract（唯一狀態來源），生成人類清單／決策，連結原工作包及輸入／輸出／參數／參照／驗證目標；3TODO_DESIGN、0完成，原8包50條0實作不變。精簡ACTIVE_HANDOFF並歸檔舊版、縮短STATE.read_next，保持0對話接續。基準7556bc6；驗收為TODO唯一ID／DAG／原50與狀態不變／Markdown對應／連結／無程式測試改動／GitHub讀回。未設計完成／訓練／執行功能測試；舊75題69VERIFIED/3PARTIAL/3DEFERRED、CORE87/GOV7不變。
 
 TRAINING-DESIGN待辦保存：checkpoint逐檔讀回commitecef8601eae50577a24be369f43e235df0f51fc6/treee670dbc6f921c87b9c8a0be65aef8f08fbdc28a0（7082files）；3未勾選待辦與JSON唯一ID／依賴／12連結／原50條與未實作狀態不變檢查PASS，既有publicationGatePASS。收據／出版紀錄續保存；3待設計0完成，無功能測試或訓練。
+
+
+2026-10-18｜COMPREHENSIVE-TRAINING-RESEARCH：使用者要求全面分析，不能只限A/B。基準57651a3，核對現有解析／語意／Slot／逐作品草稿／品質規則／Qt／儲存／Kiwi缺口；實際讀8份官方固定來源（6份與前次SHA相符、2份Qt6.8.3新查核），保存來源hash／選讀範圍。下一步提出完整結構化共享模型方案及訓練／參數／驗證，仍3設計TODO0完成、8包50條0實作。未改核心／測試或訓練，不將研究當完成證據。
