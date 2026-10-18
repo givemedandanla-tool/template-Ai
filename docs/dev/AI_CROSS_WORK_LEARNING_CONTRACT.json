@@ -10,20 +10,20 @@
     {
       "id": "AI-LEARN-01",
       "title": "作品與可學習觀察資料",
-      "status": "NOT_IMPLEMENTED",
+      "status": "PARTIALLY_IMPLEMENTED",
       "completed": false,
       "planned_tests": [
         {
           "module": "test_design_observation",
-          "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
+          "status": "EXISTS_18_UNIT_PASS_BROADER_REGRESSION_PENDING"
         }
       ],
-      "actual_evidence": null,
+      "actual_evidence": "docs/qa/targeted/AI-OBSERVATION-UNIT-004-20261018.json",
       "acceptance": [
         {
           "id": "AI-LEARN-01-A01",
           "expected": "已知字級與均勻變換可核實；未知字型／點陣估計不變成10pt真值",
-          "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
+          "status": "PARTIAL_IMPLEMENTATION_TARGETED_MECHANICS_PASS",
           "delivery_scope": "CURRENT_CORE"
         },
         {
@@ -35,31 +35,50 @@
         {
           "id": "AI-LEARN-01-A03",
           "expected": "相同來源的角色／群組／圖形分層有可追溯觀察版本",
-          "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
+          "status": "PARTIAL_IMPLEMENTATION_TARGETED_MECHANICS_PASS",
           "delivery_scope": "CURRENT_CORE"
         },
         {
           "id": "AI-LEARN-01-A04",
           "expected": "資料／來源修訂失效與批次取消續行保持精確身份",
-          "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
+          "status": "PARTIAL_IMPLEMENTATION_TARGETED_MECHANICS_PASS",
           "delivery_scope": "CURRENT_CORE"
         },
         {
           "id": "AI-LEARN-01-A05",
           "expected": "重用TrainingStore歷史及交易，舊資料與原稿不改寫",
-          "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
+          "status": "PARTIAL_IMPLEMENTATION_TARGETED_MECHANICS_PASS",
           "delivery_scope": "CURRENT_CORE"
         },
         {
           "id": "AI-LEARN-01-A06",
           "expected": "來源 text run／glyph cluster／baseline／pt／容器及四類風格觀察帶單位與可信來源，缺證據為UNKNOWN，預設值不當訓練真值",
-          "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
+          "status": "PARTIAL_IMPLEMENTATION_TARGETED_MECHANICS_PASS",
           "delivery_scope": "CURRENT_CORE"
         }
       ],
       "depends_on": [],
       "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
-      "current_delivery_phase": "CORE_APPLICATION"
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "schema": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
+        "modules": [
+          "template_ai/design_observation.py",
+          "template_ai/design_observation_store.py"
+        ],
+        "implemented": [
+          "Typed unit/evidence graph and source-pt similarity helper",
+          "Work-scoped role/person/company nodes and references",
+          "Existing transaction/history,CAS,idempotency,currency checks",
+          "Atomic automatic unit observation references and extractor-version cache pin"
+        ],
+        "remaining": [
+          "Real source font/glyph/baseline extraction",
+          "Full cross-file lineage/dataset linkage validation",
+          "Shared families/rules/model training"
+        ],
+        "not_package_complete": true
+      }
     },
     {
       "id": "AI-LEARN-02",

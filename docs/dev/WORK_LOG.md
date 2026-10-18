@@ -1433,3 +1433,7 @@ AI-SHARED-ARTBOARD保存：checkpoint逐檔讀回commit3cf4321078f81c416463e18c5
 INTERVIEW-REREVIEW保存：checkpoint逐檔讀回commit3ace58af8c01d60ef5c33bd7aba9ef8c33ad3fce/tree1adb382443ab88f337c3c8fed321ee4de1199210；15來源／取代／去重與狀態查核及publicationGate PASS。19項索引、無待答概念題、UI043訂正及人物增量事實已保存，收據續保存；未改核心／測試或訓練。
 
 2026-10-18｜AI-OBSERVATION-FOUNDATION pre-code：依使用者開始指令，正式v1觀察schema與工作計畫已保存；先完成來源／人物／群組／尺寸及證據型別與既有交易整合，不等待兩個下游profile全部校準。對應AI01 A01/A03/A05/A06基礎，不冒稱整包／真實字型glyph／lineage泛化完成。預計test_design_observation及既有source/dataset/automatic針對回歸；無新依賴／前端／模型訓練。
+
+2026-10-18｜AI-OBSERVATION-WIP：已實作typed scalar/node/edge圖、未知來源字級隔離／均勻仿射helper、人物公司／欄位／來源區域引用、TrainingStore CAS／冪等／歷史／失效與自動unit同交易引用。004實際18/18PASS、0skip，原檔／原標記／模板不改寫；002修正JSON指紋格式、003修正測試fixture current source檢視，失敗誠實保留。首輪code/test草擬約15分鐘後保存WIP，接著既有source/dataset/automatic廣回歸；不以機制測試宣稱原生AI恢復或已訓練。AI01partial，其餘7未實作、0/8完成／0驗證，原50條及3TODO完成數不變。
+
+WIP治理檢查如預期拒絕CURRENT008：程式／測試manifest已變，舊證據只屬歷史，不再宣稱當前source有效。先保存可恢復WIP，後續跑完整當前來源正式證據；不得以18項機制測試替代全回歸或跨作品AI驗證。

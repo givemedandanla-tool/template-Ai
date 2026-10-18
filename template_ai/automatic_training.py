@@ -131,9 +131,10 @@ class AutomaticTraining:
 
     def work_signature(self,work):
         from .source_analysis import ANALYSER_VERSION
+        from .design_observation import EXTRACTOR_VERSION
         facts=self.store.facts(work['id']);source=self.library.source(work['source_id'])
         samples=list(self.db.execute("SELECT id,revision FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id",(work['id'],)))
-        return digest([ANALYSER_VERSION,self.store.pins(work['id']),facts,self.store.noise_signature(work['id']),samples,source['file_hashes']])
+        return digest([ANALYSER_VERSION,EXTRACTOR_VERSION,self.store.pins(work['id']),facts,self.store.noise_signature(work['id']),samples,source['file_hashes']])
 
     def work_unit(self,work_id):
         identity=digest(['automatic-work-unit',work_id]);row=self.store.get('AUTO_UNIT',identity)
@@ -145,7 +146,7 @@ class AutomaticTraining:
     def process_work(self,work,job):
         from .source_analysis import ANALYSER_VERSION
         identity,before=self.work_unit(work['id']);signature=self.work_signature(work)
-        if before and (before['state']=='EXCLUDED' or before['input_signature']==signature and before['state'] in ('WAITING_REVIEW','DRAFT_READY')):
+        if before and (before['state']=='EXCLUDED' or before['input_signature']==signature and before['state'] in ('WAITING_REVIEW','DRAFT_READY') and self.store.design_observation_state(work['id'])=='CURRENT'):
             return before,True
         proof=self.store.source_proof(work['id']);self.store.checked(work['id'],proof)
         from .semantic_fields import review_issues
@@ -172,7 +173,12 @@ class AutomaticTraining:
             noise=noise,template_ids=sorted(set(templates)),analysis_version=ANALYSER_VERSION,
             stages=dict(geometry='CHECKED',facts='CONFIRMED' if self.store.facts_state(work['id'])=='CONFIRMED' else 'NEEDS_REVIEW',noise='EVALUATED',learning='DRAFT_ONLY' if templates else 'WAITING_SAMPLE_AND_TRAIN_AUTHORIZATION'),
             reason='只使用有效已准入TRAIN與已核對事實；候選結果從不自動發布',created=time.time())
-        with self.store.transaction():return self.store._write('AUTO_UNIT',identity,payload,before['revision'] if before else 0,'automatic_work_analysed'),False
+        with self.store.transaction():
+            self.store.checked(work['id'],proof)
+            observation=self.store.refresh_design_observation_in_transaction(work['id'],job['actor'])
+            payload['design_observation_ref']=dict(id=observation['id'],revision=observation['revision'],document_digest=observation['document_digest'])
+            payload['stages']['design_observation']='RECORDED_NOT_TRAINING_ADMISSION'
+            return self.store._write('AUTO_UNIT',identity,payload,before['revision'] if before else 0,'automatic_work_analysed'),False
 
     def run_source(self,item,job,cancel=None,admission=None):
         from .runtime_admission import require_resources

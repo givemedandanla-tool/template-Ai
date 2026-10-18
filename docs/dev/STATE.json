@@ -4,10 +4,10 @@
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
   "product_version": "0.1.28",
-  "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Implement AI01 observation foundation from finalized v1 slice schema;no further concept interview",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-AI-INTERVIEW-REREVIEW.receipt.json",
-  "last_confirmed_commit": "3ace58af8c01d60ef5c33bd7aba9ef8c33ad3fce",
+  "framework_status": "AI01_OBSERVATION_FOUNDATION_PARTIAL_REGRESSION_PENDING",
+  "active_task": "AI01 foundation implemented18unitPASS;freezeWIP before broader source/dataset/automatic regression",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-AI-OBSERVATION-FOUNDATION-PLAN.receipt.json",
+  "last_confirmed_commit": "e1b8d17ff8887026ade4e98bb86866c6dd63c5e3",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -22,9 +22,9 @@
     "docs/dev/AI_TRAINING_COMPREHENSIVE_REFERENCES.json"
   ],
   "next_tasks": [
-    "Finalize AI01 typed observations/provenance/person/group/dimension/source mappings and validation specs using review index;source unknowns handled by inspection,not more generic questions",
-    "Complete3training design specs,then AI01 implementation;reuse existing Library/TrainingStore/InputGraph and checked algorithms",
-    "Keep8packages50clauses0implemented/verified and3TODO0done;real corpus/model evidence still pending"
+    "Save current AI01 source WIP and exact GitHub readback;18 new unit tests PASS,broader regression pending",
+    "Run isolated existing source/dataset/automatic regression,then full immutable current-source evidence;fix actual regressions without rewriting history",
+    "Complete real source font/glyph extraction and lineage/dataset integration before claiming AI01 complete;new8packages0fully implemented/verified,3designTODO0done"
   ],
   "blocked": [
     {
@@ -50,7 +50,7 @@
   ],
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
-    "CP-20261018-AI-OBSERVATION-FOUNDATION-PLAN"
+    "CP-20261018-AI-OBSERVATION-WIP"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -61,7 +61,7 @@
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
-  "next_work_package": "Immutable current-source complete regression/native/publication Gate",
+  "next_work_package": "AI01 related regression and immutable current-source full evidence",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -417,7 +417,7 @@
   "pending_revalidation_ids": [],
   "last_formal_validation": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
-  "publication_status": "CURRENT008_ALL_ATTACHMENTS_REMOTE_VERIFIED_AND_CURRENT_REQUIRE_EVIDENCE_PASS",
+  "publication_status": "OBSERVATION_SOURCE_WIP_PENDING_REMOTE_VERIFICATION; historical CURRENT008 publication retained, current evidence stale",
   "cloud_environment_configuration": {
     "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
     "receipt": "docs/dev/CLOUD_CONFIG_DRAFT_RECEIPT.json",
@@ -670,7 +670,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Pre-code schema/plan for typed observations and existing-store integration;three designTODOs remain pending,AI01 not yet claimed complete",
+  "current_work": "Typed observation graph/store and automatic refs implemented;18synthetic unit testsPASS;new-learning packages0complete,AI01partial;broader regressions pending",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -786,22 +786,18 @@
       "utc": "2026-10-18T12:02:00Z",
       "event": "Research checkpoint11:50:35; comprehensive draft captured after about12minutes while consolidating analysis; final design checkpoint follows immediately",
       "no_unpublished_code_or_training": true
+    },
+    {
+      "utc": "2026-10-18T16:56:03.404425+00:00",
+      "event": "First code+tests drafted about15minutes after plan checkpoint;WIPnow18unitPASS before broad regression;no package completion claim"
     }
   ],
-  "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Implement and verify typed graph plus transactional observation snapshots and automatic-work refs;preserve unknown source metrics",
-  "current_work_package": "AI-TRAINING-COMPREHENSIVE-DESIGN-ANALYSIS",
+  "next_work_package_plan": "docs/qa/plans/AI-OBSERVATION-FOUNDATION-20261018.json",
+  "next_step": "Run coherent unit plus existing source/dataset/automatic regression with .venv;fix failures,save current-source evidence and final checkpoint",
+  "current_work_package": "AI-LEARN-01_OBSERVATION_FOUNDATION",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
-  "latest_targeted_verification": {
-    "native_023_first19": "PASS",
-    "native_026_tail4": "PASS",
-    "actual_exit_026": 0,
-    "actual_formats_025": 6,
-    "reviewed_images_027": 15,
-    "full_current_source": "PENDING008",
-    "all28_complete": false
-  },
+  "latest_targeted_verification": "docs/qa/targeted/AI-OBSERVATION-UNIT-004-20261018.json",
   "checkpoint_superseded": [
     {
       "id": "CP-20261016-REMAINING28-UI059-NATIVE-DEPENDENCY-WIP",
@@ -824,7 +820,7 @@
     "policy": "Keep latest8 confirmed plus all unacknowledged at original location; moved archives retained with exact SHA/manifest matched REMOTE_VERIFIED receipts. For old local restore copy verified archive back into original .checkpoints/ID/source.zip; remote Git remains authoritative.",
     "free_after_bytes": 4308742144
   },
-  "current_targeted_run": "docs/qa/targeted/current008-native-visual-review-029.json",
+  "current_targeted_run": "docs/qa/targeted/AI-OBSERVATION-UNIT-004-20261018.json",
   "local_checkpoint_cache_relocation_history": [
     {
       "journal": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261017.json",
@@ -835,20 +831,15 @@
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T160550Z.json",
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T163835Z.json"
   ],
-  "current_evidence_validity": "CURRENT_CODE_TEST_FIXTURE_MANIFEST_MATCHES_IMMUTABLE008; no code changes after source3870031",
+  "current_evidence_validity": "STALE_FOR_CURRENT_SOURCE: app/test changes invalidate CURRENT008 manifest; historical results preserved, formal current-source revalidation pending",
   "historical_active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "new_learning_progress": {
-    "total": 8,
-    "planned_acceptance": 50,
+    "total_work_packages": 8,
     "implemented": 0,
     "verified": 0,
-    "status": "DESIGNED_NOT_IMPLEMENTED",
-    "first_vertical_slice": [
-      "AI-LEARN-01",
-      "AI-LEARN-02",
-      "AI-LEARN-03",
-      "AI-LEARN-04"
-    ]
+    "partially_implemented": 1,
+    "acceptance_count": 50,
+    "verified_acceptance": 0
   },
   "new_goal_data_dependencies": {
     "real_corpus": "Authorized representative source works/labels/reference needed for actual generalization claim; synthetic mechanics can be implemented now",
@@ -857,9 +848,10 @@
   "design_consistency_check": "docs/qa/plans/AI-CROSSWORK-DESIGN-CHECK-20261017.json",
   "design_publication_check": "docs/qa/plans/AI-CROSSWORK-DESIGN-PUBLICATION-20261017.json",
   "active_goal_validation": {
-    "status": "DESIGNED_NOT_IMPLEMENTED",
+    "status": "PARTIAL_FOUNDATION_IMPLEMENTATION_NOT_MODEL_TRAINING",
     "packages": 8,
-    "planned_acceptance": 36,
+    "planned_acceptance": 50,
+    "partially_implemented": 1,
     "implemented": 0,
     "verified": 0,
     "legacy_CURRENT008_is_new_goal_evidence": false
