@@ -1371,3 +1371,6 @@ CARD-STYLE publication：設計首次push1acd0c2後讀回拒絕檢查報告時�
 2026-10-18｜FIELD-STRUCTURE-BASIS：使用者確認並要求保存「欄位結構↔文字配置→條件等效欄位→彈性排列→減少重複模板」。新增正式設計決策、activecontract機器可讀特徵／依賴／兩階段等效／驗證案例，連結主方案、card對帳、AGENTS與精簡接手。基準7ee844f，初始治理PASS、遠端分支相符。驗收為決策／JSON／連結／狀態一致、原50條與registry不變、無核心／測試／依賴變更、實際GitHub push與逐檔回讀；不是功能測試。8包50規劃0實作／0驗證；原75題69VERIFIED/3PARTIAL/3DEFERRED，CORE87/GOV7不變。
 
 FIELD-STRUCTURE-BASIS保存完成：CP-20261018-FIELD-STRUCTURE-LEARNING-BASIS已push並逐檔讀回commit0ff9e11049957939c82458d1a9e8c8b5591b05f2/treec37b6481bef6ec35099331a1bbda841913dc8741（7043files）；11個文件連結與JSON/原驗收/狀態一致檢查PASS、既有治理publicationGatePASS。收據／出版紀錄續保存；未執行功能測試或訓練，不新增功能完成數。
+
+
+2026-10-18｜CORE-FIRST-DELIVERY：使用者明確先將功能做進Template AI本體，網頁／手機端延後；card-interface作為持久保存的未來需求／互動與核心準備參考。新增範圍決策，修正AI07/M3、各條款delivery_scope/scope_parts與主方案／roadmap／交接，保留50原驗收文字／ID及0/8狀態；核心階段不被前端條款阻擋，後續需求不刪除或當完成。基準3b7d411；驗收為範圍分類／連結／契約與狀態一致、無程式或測試變更、GitHub逐檔讀回。舊75題69VERIFIED/3PARTIAL/3DEFERRED、CORE87/GOV7不變。

@@ -55,3 +55,7 @@ GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須�
 ## 2026-10-18 已確認的結構／文字共同學習
 
 設計依據見docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md及activecontract.field_structure_learning_basis：分割／對齊／排列與文字配置互相約束，條件等效角色及可變文法支持更靈活排列與更少重複模板。等效先核對角色／語意／歸屬／政策，再驗實際文字；同框不能唯一推定字級或任意交換資料。不強併家族、不改固定pt或正式Gate。這是已確認設計原則；仍8包50規劃條款0實作／0驗證。
+
+## 2026-10-18 最新排程：本體先行，網頁／手機延後
+
+使用者指令見docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md。先在既有Template AI本體完成學習、規則／等效欄位、生成／排版、排序回饋與持久驗證。card-interface是保存的未來使用情境及核心設計參考；網頁／手機實作與裝置驗收延後。可準備共用資料／操作／結果與版本邊界，不提前搭前端或公開API平台。契約delivery_priority及條款delivery_scope/scope_parts區分當前核心與保留後續需求；延後不等於完成，未來前端不阻擋本體工作。

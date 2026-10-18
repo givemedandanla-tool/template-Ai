@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Confirmed joint structure/typography and conditional-equivalence design persisted;8packages50plannedcriteria0implemented",
+  "active_task": "CORE FIRST: implement shared learning/generation in Template AI application; new web/mobile deferred;8packages0implemented",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-FIELD-STRUCTURE-LEARNING-BASIS.receipt.json",
   "last_confirmed_commit": "0ff9e11049957939c82458d1a9e8c8b5591b05f2",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -13,6 +13,7 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+    "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md",
     "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
     "docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md",
     "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
@@ -20,9 +21,9 @@
     "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json"
   ],
   "next_tasks": [
-    "ImplementAI-LEARN-01 joint structure/space and source-typography observations,then02family features03conditional equivalent roles04input binding and synthesis; preserve fixedpt and formal Gates",
-    "M2:AI-LEARN-05/06 independent preference ranking and feedback/version lifecycle",
-    "M3:AI-LEARN-07/08 workflow and actual authorized heldout corpus/scale/reference-machine measurements"
+    "ImplementAI-LEARN-01 in existing Template AI application,then02families03joint rules/equivalent roles04generation; no new web/mobile frontend prerequisite",
+    "M2:AI-LEARN-05/06 core retrieval/ranking and scoped feedback/version lifecycle",
+    "M3:AI-LEARN-07/08 existing-application end-to-end persistence and actual core corpus/scale/hardware validation; web/mobile UI and device delivery deferred"
   ],
   "blocked": [
     {
@@ -47,7 +48,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-CORE-FIRST-DELIVERY-SCOPE"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -667,7 +669,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Confirmed joint field-structure/typography and conditional-equivalence basis saved/readback0ff9e11; documentation only;8packages50plannedcriteria0implemented/verified",
+  "current_work": "User-directed phase clarification only; card-interface retained as future usage/core design reference; no engine/frontend/test/dependency changes",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -781,8 +783,8 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "ImplementAI-LEARN-01 joint structure/space and source-typography observations,then02family features03conditional equivalent roles04input binding and synthesis; preserve fixedpt and formal Gates",
-  "current_work_package": "AI-CROSSWORK-FIELD-STRUCTURE-BASIS",
+  "next_step": "ImplementAI-LEARN-01 in existing Template AI application,then02families03joint rules/equivalent roles04generation; no new web/mobile frontend prerequisite",
+  "current_work_package": "AI-CROSSWORK-CORE-FIRST-DELIVERY-SCOPE",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": {
@@ -857,5 +859,11 @@
   "style_learning_review": "docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md",
   "style_design_publication": "docs/qa/plans/CARD-STYLE-DESIGN-PUBLICATION-20261017.json",
   "field_structure_learning_decision": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
-  "field_structure_learning_publication": "docs/qa/plans/FIELD-STRUCTURE-BASIS-PUBLICATION-20261018.json"
+  "field_structure_learning_publication": "docs/qa/plans/FIELD-STRUCTURE-BASIS-PUBLICATION-20261018.json",
+  "core_first_delivery_decision": "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md",
+  "deferred_frontend_scope": [
+    "Web/PWA customer frontend",
+    "Mobile client/touch UI",
+    "Website deployment and physical-phone frontend qualification"
+  ]
 }
