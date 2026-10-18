@@ -1,0 +1,33 @@
+{
+  "status": "PLANNED_BEFORE_PRODUCT_CODE_CHANGE",
+  "created_utc": "2026-10-18T16:40:05.911762+00:00",
+  "baseline_commit": "4ea96ccc1c1a40e6cae0de51aa20abc7533fb73f",
+  "requirement": "AI-LEARN-01",
+  "scope": "Typed design observation graph,source/unit provenance and existing transactional storage/automatic-work integration",
+  "schema": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
+  "acceptance_focus": [
+    "AI-LEARN-01-A01 source metric and transform mechanics",
+    "AI-LEARN-01-A03 scoped/versioned role-group observations",
+    "AI-LEARN-01-A05 existing history/transaction reuse",
+    "AI-LEARN-01-A06 typed fields and UNKNOWN/default separation"
+  ],
+  "not_complete_claim": [
+    "Full lineage-disjoint real corpus evaluation",
+    "Native AI font/glyph recovery",
+    "Cross-work families or model training",
+    "All six acceptance clauses or three downstream design TODOs"
+  ],
+  "tests": [
+    "test_design_observation typed metric and graph negative cases",
+    "test_design_observation persistence/stale/CAS/reopen/rollback",
+    "Existing source evidence/dataset/automatic training tests and cancellation paths"
+  ],
+  "reuse": [
+    "Python dataclasses/math",
+    "Existing TrainingStore and Library",
+    "InputGraph ownership concepts",
+    "Existing Qt/source evidence;no new parser or DB"
+  ],
+  "reference_manifest": "docs/dev/AI_TRAINING_COMPREHENSIVE_REFERENCES.json",
+  "progress_completion_changed": false
+}

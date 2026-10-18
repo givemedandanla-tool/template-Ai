@@ -1431,3 +1431,5 @@ AI-SHARED-ARTBOARD保存：checkpoint逐檔讀回commit3cf4321078f81c416463e18c5
 2026-10-18｜INTERVIEW-REREVIEW：使用者要求重新詳讀、避免重複問題。實際回讀原52題核心（排除重複UI追加）、原GUI17完整相關主題、8後續設計決策及授權脈絡；建立19項來源去重索引。UI016/017共享／多人、UI038同檔多作品、UI040/041雜訊、UI042/043客戶庫等已定案；撤回剛提出的多人欄位獨立／共用題，無待回答概念問題。找到UI043取代UI042交易分類，修正近期來源決策漏引，不修改歷史不可變證據／原要求登錄。保存新同人物＋多人加人事實，尺寸／人數／欄位量分開；實際字型／標記／配對列作品檢視，下一步直接schema工程。未改核心／測試、未訓練，3TODO0完成、8包50條0實作。
 
 INTERVIEW-REREVIEW保存：checkpoint逐檔讀回commit3ace58af8c01d60ef5c33bd7aba9ef8c33ad3fce/tree1adb382443ab88f337c3c8fed321ee4de1199210；15來源／取代／去重與狀態查核及publicationGate PASS。19項索引、無待答概念題、UI043訂正及人物增量事實已保存，收據續保存；未改核心／測試或訓練。
+
+2026-10-18｜AI-OBSERVATION-FOUNDATION pre-code：依使用者開始指令，正式v1觀察schema與工作計畫已保存；先完成來源／人物／群組／尺寸及證據型別與既有交易整合，不等待兩個下游profile全部校準。對應AI01 A01/A03/A05/A06基礎，不冒稱整包／真實字型glyph／lineage泛化完成。預計test_design_observation及既有source/dataset/automatic針對回歸；無新依賴／前端／模型訓練。

@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Interview rereview and duplicate removal;next finalize source observation schemas without further concept interview",
+  "active_task": "Implement AI01 observation foundation from finalized v1 slice schema;no further concept interview",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-AI-INTERVIEW-REREVIEW.receipt.json",
   "last_confirmed_commit": "3ace58af8c01d60ef5c33bd7aba9ef8c33ad3fce",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -49,7 +49,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-AI-OBSERVATION-FOUNDATION-PLAN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -610,7 +611,7 @@
       ]
     }
   ],
-  "active_work_package_plan": "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
+  "active_work_package_plan": "docs/qa/plans/AI-OBSERVATION-FOUNDATION-20261018.json",
   "formal_execution_watch": {
     "run_id": "RUN-REMAINING28-LAYOUT-003",
     "source_commit": "842392433a96d09633fa051e41eb19fdfc48c82f",
@@ -669,7 +670,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Read original52core,17UIsections,8later decisions;UI043 supersession corrected;new base-person/add-people fact recorded;shared-field question withdrawn,0newlearning implementation",
+  "current_work": "Pre-code schema/plan for typed observations and existing-store integration;three designTODOs remain pending,AI01 not yet claimed complete",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -788,7 +789,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Finalize AI01 typed observations/provenance/person/group/dimension/source mappings and validation specs using review index;source unknowns handled by inspection,not more generic questions",
+  "next_step": "Implement and verify typed graph plus transactional observation snapshots and automatic-work refs;preserve unknown source metrics",
   "current_work_package": "AI-TRAINING-COMPREHENSIVE-DESIGN-ANALYSIS",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -831,7 +832,8 @@
       "bytes": 2145498863,
       "copies_retained": true
     },
-    "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T160550Z.json"
+    "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T160550Z.json",
+    "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T163835Z.json"
   ],
   "current_evidence_validity": "CURRENT_CODE_TEST_FIXTURE_MANIFEST_MATCHES_IMMUTABLE008; no code changes after source3870031",
   "historical_active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
@@ -1024,7 +1026,7 @@
   },
   "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json",
   "qualified_style_region_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
-  "checkpoint_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T160550Z.json",
+  "checkpoint_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T163835Z.json",
   "qualified_style_region_publication": "docs/qa/plans/QUALIFIED-STYLE-REGION-PUBLICATION-20261018.json",
   "model_first_interview_decision": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
   "model_first_interview_publication": "docs/qa/plans/MODEL-FIRST-INVERSE-PUBLICATION-20261018.json",
