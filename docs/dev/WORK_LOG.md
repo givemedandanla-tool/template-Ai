@@ -1421,3 +1421,5 @@ TRAINING-INTERVIEW-ROUND1保存：checkpoint逐檔讀回commita9f7a31b8a3e20a81b
 TRAINING-CORPUS-CUSTOMER保存：checkpoint逐檔讀回commit92cc8784a475f07154e2721df14472b1c641b533/tree23454c8f3dc1858688fcf79456be18a9414cc26b，10文件／既有原碼／進度不變查核與publicationGate PASS。客戶編號規則已確認；版本保存追問未答，無私人作品匯入或訓練；收據續保存。
 
 2026-10-18｜AI-MULTISIZE-SOURCE：使用者確認同AI可能有多尺寸作品；補入既有資料來源決策／contract／訪談狀態。核對Library同source多artworks、各自crop/mm/修訂基礎可重用；來源頁／畫板≠作品，跨尺寸配對是候選而非自動同家族／等比縮放。同檔保持同切分避免洩漏。已追問畫板／工作區與邊界／尺寸標示，尚未回答；歷史版本及字型未知。僅文件，未檢視私人AI、未改程式／測試／訓練或完成數。
+
+AI-MULTISIZE-SOURCE保存：checkpoint逐檔讀回commit60192cbc08f1d800d29b71829d7612abe35cee90/tree0b6196125abfe110ee4f220725829035f5ea3f30；10文件／來源／原進度查核與publicationGate PASS。畫板／工作區和邊界追問仍未答；無私人AI匯入或模型訓練，收據續保存。
