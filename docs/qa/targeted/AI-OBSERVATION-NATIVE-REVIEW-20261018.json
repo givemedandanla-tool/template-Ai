@@ -1,0 +1,23 @@
+{
+  "kind": "BOUNDED_SELF_VISUAL_REVIEW_OF_EXISTING_NATIVE_CAPTURE_REGRESSION",
+  "run": "RUN-AI-OBSERVATION-FOUNDATION-001",
+  "reviewed": [
+    {
+      "path": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/remaining28-runtime-human-review.png",
+      "sha256": "b383452ebef3d476b8be69759476db7678afad7ce27d1b3de9e03c9e1baec8a9",
+      "finding": "Two separate work rows; VERIFIED_REUSABLE_ANALYSIS shown independently from WAITING_HUMAN_REVIEW/customer ownership. Cache verification is not human approval."
+    },
+    {
+      "path": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/next28-fixed-point-tracking-preview.png",
+      "sha256": "af11a2f1cc3ecb8b4a7d0e4ede47b78276649c73d584a6bc83b26f466c350b21",
+      "finding": "Fixed11pt shown; approved title-only tracking range and explicit apply; sample labelled not-original truth and preview not full prepress PASS. No new customer controls added by observation slice."
+    }
+  ],
+  "scope": "Only these two images inspected; remaining captures validated by their actual scripts and hashes after formal completion,not claimed individually visually reviewed",
+  "not_verified": [
+    "Native private AI visual fidelity",
+    "Real source font/glyph extraction",
+    "Physical printing",
+    "New model training or end-to-end learning completion"
+  ]
+}

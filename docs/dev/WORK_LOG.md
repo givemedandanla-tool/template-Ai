@@ -1459,3 +1459,5 @@ AI01-FORMAL-PROGRESS-3保存：b9b14330358a04f197b6d2452384e7136ad2ab66已fresh�
 AI01完整回歸第四次中途保存：1390/1567已完成、1390PASS，正式native尚未結束、非完成證據。8舊已ACK ZIP逐一SHA／embedded manifest／已發布收據驗證搬至/tmp，副本及原路徑symlink保留、最新8與未ACK保護，釋放805221322bytes；journal=docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T173234Z.json。source仍固定659359f。
 
 AI01-FORMAL-PROGRESS-4保存：87aec1da70a7472e79c3cde44a1a8e56cd5cf123已fresh逐檔讀回並REMOTE_VERIFIED，收據續發布；固定source完整測試尚未結束，不增加任何父題完成數。
+
+AI01正式結果：1567/1567PASS、198healthy modules、0skip／0runtime error、native capture exit0、source固定659359faf6bea269e1fba65416788735ffab1121且未變；366附件已逐檔核對。overall FAIL只來自保留的UI032/REV02/REV04共5外部資格條款，不冒稱28父題全完成。先保存正式結果checkpoint，再逐項驗證既有163完成要求後換綁當前證據；新AI仍1partial、0/8完整、0/50驗收、未訓練。
