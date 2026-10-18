@@ -1441,3 +1441,5 @@ WIP治理檢查如預期拒絕CURRENT008：程式／測試manifest已變，舊�
 AI01-WIP保存：5f1b3b13f6fb7dd5ea1e04ef83b99a6c3557acc7／tree376f8ace45383510f235091099ffe56b217e175d已fresh Git逐檔讀回，CP-20261018-AI-OBSERVATION-WIP為REMOTE_VERIFIED。18新測試PASS、既有相關及完整當前來源回歸待完成；收據續保存，不宣稱新AI包完成。
 
 2026-10-18｜AI01-RELATED-005：18新＋既有來源／dataset／automatic／pipeline共56/56PASS，0runtime error，5個fresh owned module；完整正式1567項＋native captures已啟動，固定659359faf6bea269e1fba65416788735ffab1121。首次CLI手填SHA不符被入口拒絕，尚未建立run／執行測試；改用實際git/readback一致SHA，原錯誤保留/tmp/ai-observation-formal-001-20261018.log。正式run未完成前不採認新證據、不修改程式／測試／tools。
+
+AI01-RELATED保存：CP-20261018-AI-OBSERVATION-RELATED-PASS已fresh讀回5035db0ca86a51120af89c8bb459777a2095f590／tree335676b120d4e6663254d8e3b1058d32c331e3f2。56相關PASS證據與正式run固定來源metadata已持久化；正式結果仍待執行完成。
