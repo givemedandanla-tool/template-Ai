@@ -1389,3 +1389,5 @@ CAPACITY訪談保存：checkpoint逐檔讀回commit182600481163e1bfae3aa19605fd5
 
 
 2026-10-18｜QUALIFIED-STYLE-REGION：使用者定義合格訓練作品呈現的風格特徵為適合區間。保存決策及條件／聯合／多模態區域schema，將前題品質來源由OPEN改已定義；合格集合／標記待訪談，未選A/B/C、未造數值、未訓練。基準4f48e97；驗收JSON／連結／原50條與狀態不變、無程式測試變更及GitHub回讀。因root僅371MiB，依既有快取流程搬移24個exactZIP/manifest/REMOTE_VERIFIED匹配的舊快照至/tmp，原路徑保留symlink、最新8與未ACK保護；釋放約2.04GiB，日誌docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T094322Z.json。新AI0/8；舊75題69VERIFIED/3PARTIAL/3DEFERRED，CORE87/GOV7不變。
+
+QUALIFIED-STYLE保存：checkpoint逐檔讀回commitc348f07693c35acb6a2a22699d84e954bbd28b69/tree16e2f6d930da2fb89fedc963c215bf0da0d77d95（7068files）；13連結、定義／原50驗收／狀態一致與24舊快取copy/hash/manifest/路徑檢查PASS，既有publicationGatePASS。收據／出版紀錄續保存，無功能測試／訓練。下一題確認合格作品集合／標記狀況。
