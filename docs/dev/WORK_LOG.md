@@ -1413,3 +1413,5 @@ COMPREHENSIVE-DESIGN文件查核：22項一致性／來源hash／原50條與3TOD
 COMPREHENSIVE-DESIGN保存：checkpoint逐檔讀回commit2fa84169a1379bd39812343f0b8dcef673160805/tree4e363a65eda9615ba9fc6b05a84d2310d1a29fe9；22文件／來源查核PASS，原50驗收與3TODO未完成狀態不變。研究收據亦已在同一提交保存；本收據與出版紀錄續保存。未改核心／測試／依賴，未訓練，未合併main。
 
 2026-10-18｜TRAINING-INTERVIEW-ROUND1：使用者指示開始，已提出格式／字型結構、合格集合、系列lineage三題；答案均尚未收到，不以預選項代答。獨立核對現有匯入會輸出text-to-path衍生SVG，訓練需保留原始文字／字型／結構證據的獨立路徑；重用既有來源／樣本／資料集隔離機制。僅保存訪談狀態與前置缺口，未改程式／測試、未匯入私人資料、未訓練；3TODO0完成、8包50條0實作。
+
+TRAINING-INTERVIEW-ROUND1保存：checkpoint逐檔讀回commita9f7a31b8a3e20a81b34f84a5d31960a934620b9/tree94816bbee1b01f32fcd3548b2841a036193ce46a，6項訪談狀態／計數／來源查核及既有publicationGate PASS。3題仍未回答；收據續保存，未改程式或訓練。
