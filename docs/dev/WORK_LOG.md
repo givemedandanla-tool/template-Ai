@@ -1381,3 +1381,6 @@ CORE-FIRST保存：checkpoint逐檔讀回commitb2d0e552b7d9d8e185022eb6f10ed47ec
 2026-10-18｜DESKTOP-INTERACTION-GOAL：使用者確認保存本體可實際完成輸入／初稿／關係微調／更正返回／預覽確認／驗證輸出。新增設計目標及4規劃情境，澄清AI07 A05～A07本體範圍並修正前次全延後A05歧義；獨立網站／手機端仍延後。基準a99e64d、初始治理PASS／遠端相符；預計驗證JSON／scope／原50條與狀態不變、連結、無程式測試變更及GitHub逐檔讀回。不訓練、不執行功能測試、不聲稱互動已完成。新AI0/8；舊75題69VERIFIED/3PARTIAL/3DEFERRED，CORE87/GOV7不變。
 
 DESKTOP-INTERACTION保存：checkpoint逐檔讀回commitdacc4bfbacb1056f5c2642150b7a58fe24fcc067/treed39f59bb1300cb227c8e5a00b7ebe8d4e41564ed（7055files）；26文件連結、4情境與scope／原50條文字ID／狀態一致檢查PASS，既有publicationGatePASS。收據及出版紀錄續保存；未執行功能／GUI測試或訓練，未將交付目標當已完成。
+
+
+2026-10-18｜TRAINING-INTERVIEW-CAPACITY：使用者指示先根據訓練結果取得欄位允許容量／字串適宜區間，再做互動限制引導。保存決策及條件化profile參數／三類區間／證據與聯合驗證，標明原A/B/C未選、最適品質目標待訪談。基準10d8b78；驗收為決策連結／JSON／原50驗收與狀態不變／無程式測試變更及GitHub回讀。未訓練／未定數值／未執行功能測試；新AI0/8；舊75題69VERIFIED/3PARTIAL/3DEFERRED，CORE87/GOV7不變。

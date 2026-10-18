@@ -63,3 +63,7 @@ GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須�
 ## 2026-10-18 已確認：本體端到端互動必須交付
 
 見docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md與contract.body_interaction_goal。本體需可實際輸入→初稿→微調相對位置→局部更正返回→預覽確認→驗證輸出；底層函式或契約本身不足。延後的是獨立網站／手機／裝置適配，不是本體必要互動。AI07 A05/A06/A07範圍已釐清，4情境為原50驗收細化且尚未執行；不取消固定pt、資料歸屬、來源／資產／正式Gate或恢復已撤回客戶控制。
+
+## 2026-10-18 訪談：先學容量與字串區間再引導輸入
+
+見docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md及contract.learned_capacity_input_policy。容量／區間依尺寸、家族、角色組合、字型固定pt與資產條件化，經驗證後供本體輸入引導／限制。訓練最大值不直接當硬上限，單欄區間不能證明聯合可行；保留UNKNOWN與實際Gate。A/B/C重排範圍尚未選定；下一題釐清最適品質目標。未訓練、未定數值、未新增完成數。

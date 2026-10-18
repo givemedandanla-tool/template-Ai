@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Core-first includes operable desktop input/draft/edit/return/preview/confirm/export; independent web/mobile still deferred;0of8implemented",
+  "active_task": "Interview: learn conditional field capacity/text intervals then body input guidance; optimality preference pending;0of8implemented",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-DESKTOP-INTERACTION-GOAL.receipt.json",
   "last_confirmed_commit": "dacc4bfbacb1056f5c2642150b7a58fe24fcc067",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -13,6 +13,7 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+    "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
     "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
     "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md",
     "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
@@ -49,7 +50,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-LEARNED-CAPACITY-INTERVIEW"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -669,7 +671,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Confirmed desktop end-to-end interaction goal saved/readbackdacc4bf; actual application interaction required,independent web/mobile deferred; no feature implementation",
+  "current_work": "User-confirmed interview direction documented; no numeric limits,training,code or feature test changes",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -784,7 +786,7 @@
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
   "next_step": "ImplementAI-LEARN-01 in existing Template AI application,then02families03joint rules/equivalent roles04generation; no new web/mobile frontend prerequisite",
-  "current_work_package": "AI-CROSSWORK-DESKTOP-INTERACTION-GOAL",
+  "current_work_package": "AI-TRAINING-INTERVIEW-LEARNED-CAPACITY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": {
@@ -868,5 +870,13 @@
   ],
   "core_first_delivery_publication": "docs/qa/plans/CORE-FIRST-DELIVERY-PUBLICATION-20261018.json",
   "body_interaction_decision": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
-  "body_interaction_publication": "docs/qa/plans/DESKTOP-INTERACTION-GOAL-PUBLICATION-20261018.json"
+  "body_interaction_publication": "docs/qa/plans/DESKTOP-INTERACTION-GOAL-PUBLICATION-20261018.json",
+  "capacity_learning_decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
+  "training_interview": {
+    "status": "IN_PROGRESS",
+    "last_confirmed_decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
+    "first_reorder_question": "Replaced by capacity-first direction; A/B/C not selected",
+    "next_topic": "Meaning of optimal: design quality/style versus information capacity under existing hard conditions",
+    "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED"
+  }
 }
