@@ -1451,3 +1451,5 @@ AI01-FORMAL-PROGRESS保存：d4931cc2f70daad87b8cd8b1b786948185e62977已GitHub�
 AI01完整回歸第二次中途保存：933/1567已完成、933PASS，當下失敗0；source仍固定659359f，正式run未結束、非完成證據。
 
 AI01-FORMAL-PROGRESS-2保存：4d5d8585f86c7a48d8faa11b0278d65cda9c12f4已fresh逐檔讀回、收據發布；中途947/1567PASS，正式結果仍待完成，未變更程式或已驗證功能數。
+
+AI01完整回歸第三次中途保存：1199/1567已完成、1199PASS，當下失敗0；code_only來源仍固定659359f。正式run／native附件未結束，不採認完整驗證。
