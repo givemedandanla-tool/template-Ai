@@ -5,25 +5,25 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Design TODOs: data requirements,field capabilities and conditional relations;3pending0done,8learningpackages0implemented",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-TRAINING-DESIGN-TODOS.receipt.json",
-  "last_confirmed_commit": "ecef8601eae50577a24be369f43e235df0f51fc6",
+  "active_task": "Comprehensive training analysis drafted; complete typed schemas and real-source validation design before AI-LEARN-01 implementation",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-TRAINING-COMPREHENSIVE-RESEARCH.receipt.json",
+  "last_confirmed_commit": "5dbcfb108af89d611ba3572a1f91d07bb1f57d0e",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+    "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
     "docs/dev/AI_TRAINING_DESIGN_TODOS.md",
     "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
     "docs/dev/AI_CROSS_WORK_LEARNING_PLAN.md",
-    "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
-    "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
+    "docs/dev/AI_TRAINING_COMPREHENSIVE_REFERENCES.json",
     "docs/dev/AI_CROSS_WORK_ENGINEERING_REFERENCES.json"
   ],
   "next_tasks": [
-    "Complete TRAIN-DESIGN-01 data requirements and02field capability designs,then03conditional relations; implement AI-LEARN-01 after design; no interaction redesign now",
-    "Keep50retainedcriteria and8learningpackages separate from3newdesignTODOs; all0completed/implemented",
-    "Versioned training/evaluation results before body interaction discussion; independent web/mobile later"
+    "Complete formal schemas/migrations and real-source mapping for TRAIN-DESIGN-01/02/03 using comprehensive proposal; calibrate on independent lineage data; no interaction redesign now",
+    "Preserve all8packages50acceptance and3designTODO status; engineering proposal is not model training or completion",
+    "AI01 observations then02families/03rules/04synthesis; training/evaluation before body interaction; web/mobile deferred"
   ],
   "blocked": [
     {
@@ -49,7 +49,7 @@
   ],
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
-    "CP-20261018-TRAINING-COMPREHENSIVE-RESEARCH"
+    "CP-20261018-TRAINING-COMPREHENSIVE-DESIGN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -669,7 +669,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Registered3pending training-design TODOs saved/readbackecef860;0designs completed,8learningpackages/50criteria unchanged,0implemented",
+  "current_work": "Comprehensive proposal beyond A/B: shared structure,conditional profiles/bindings,grammar,capacity and validation;3TODOs still pending,8packages50criteria0implemented",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -780,11 +780,16 @@
       "scope": "Immutable CURRENT006 full execution",
       "status": "DEVIATION_RECORDED",
       "reason": "Frozen all-source test/evidence writer until actual exit, checkpoint at completion; no strict10min claim"
+    },
+    {
+      "utc": "2026-10-18T12:02:00Z",
+      "event": "Research checkpoint11:50:35; comprehensive draft captured after about12minutes while consolidating analysis; final design checkpoint follows immediately",
+      "no_unpublished_code_or_training": true
     }
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
-  "next_step": "Complete TRAIN-DESIGN-01 data requirements and02field capability designs,then03conditional relations; implement AI-LEARN-01 after design; no interaction redesign now",
-  "current_work_package": "AI-TRAINING-DESIGN-TODOS-DATA-FIELD-COMPATIBILITY",
+  "next_step": "Complete formal schemas/migrations and real-source mapping for TRAIN-DESIGN-01/02/03 using comprehensive proposal; calibrate on independent lineage data; no interaction redesign now",
+  "current_work_package": "AI-TRAINING-COMPREHENSIVE-DESIGN-ANALYSIS",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": {
@@ -874,13 +879,14 @@
     "status": "IN_PROGRESS",
     "last_confirmed_decision": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
     "first_reorder_question": "Replaced by capacity-first direction; A/B/C not selected",
-    "next_topic": "Design feature/condition/schema and validation details for3training design TODOs",
+    "next_topic": "Use comprehensive proposal to specify schemas,source recoverability and calibration; no fixed-versus-variable A/B selection required",
     "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
     "quality_reference": "Qualified training works evidenced style features define suitable region",
     "current_scope": "DATA_PROCESSING_MODELS_PARAMETERS",
     "interaction_discussion": "DEFERRED_UNTIL_TRAINING_RESULTS",
     "corpus_availability_question": "UNANSWERED_DEFERRED; no A/B/C choice inferred",
-    "two_view_design_authorization": "User authorized pending design tasks; exact semantic class memberships,thresholds and runtime permissions remain to design"
+    "two_view_design_authorization": "User authorized pending design tasks; exact semantic class memberships,thresholds and runtime permissions remain to design",
+    "comprehensive_analysis": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md"
   },
   "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json",
   "qualified_style_region_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
@@ -895,5 +901,14 @@
     "pending_design": 3,
     "completed": 0
   },
-  "training_design_todos_publication": "docs/qa/plans/TRAINING-DESIGN-TODOS-PUBLICATION-20261018.json"
+  "training_design_todos_publication": "docs/qa/plans/TRAINING-DESIGN-TODOS-PUBLICATION-20261018.json",
+  "training_comprehensive_proposal": {
+    "path": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+    "references": "docs/dev/AI_TRAINING_COMPREHENSIVE_REFERENCES.json",
+    "status": "ENGINEERING_PROPOSAL_DRAFT",
+    "design_check": "docs/qa/plans/COMPREHENSIVE-TRAINING-DESIGN-CHECK-20261018.json",
+    "research_checkpoint": "docs/checkpoints/CP-20261018-TRAINING-COMPREHENSIVE-RESEARCH.receipt.json",
+    "training_executed": false,
+    "source_code_changed": false
+  }
 }

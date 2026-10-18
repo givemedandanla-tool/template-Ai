@@ -1404,3 +1404,8 @@ TRAINING-DESIGN待辦保存：checkpoint逐檔讀回commitecef8601eae50577a24be3
 
 
 2026-10-18｜COMPREHENSIVE-TRAINING-RESEARCH：使用者要求全面分析，不能只限A/B。基準57651a3，核對現有解析／語意／Slot／逐作品草稿／品質規則／Qt／儲存／Kiwi缺口；實際讀8份官方固定來源（6份與前次SHA相符、2份Qt6.8.3新查核），保存來源hash／選讀範圍。下一步提出完整結構化共享模型方案及訓練／參數／驗證，仍3設計TODO0完成、8包50條0實作。未改核心／測試或訓練，不將研究當完成證據。
+
+
+2026-10-18｜COMPREHENSIVE-TRAINING-DESIGN：依使用者要求完成超越A/B的工程分析稿：共享階層結構圖、資料需求／欄位能力、觀察／政策／可行性三狀態、綁定與變化、群組文法、分散／字寬／基線／容量、成熟演算法分工及lineage獨立驗證。8固定來源研究checkpoint5dbcfb1已讀回。正式schema／真實樣本對映／校準仍待辦，3TODO0完成、8包50條0實作。僅規劃文件與狀態，未改核心／測試／依賴、未訓練；checkpoint約12分鐘保存一次，本輪無未保存程式變更。
+
+COMPREHENSIVE-DESIGN文件查核：22項一致性／來源hash／原50條與3TODO狀態保留及6份文件連結檢查PASS；既有governance publication-scope actualexit0。這是文件／來源查核，不是功能、模型品質或正式設計完成證據。準備checkpoint後不再重寫本輪查核報告。

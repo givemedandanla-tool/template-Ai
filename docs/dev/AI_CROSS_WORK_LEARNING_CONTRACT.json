@@ -1111,6 +1111,13 @@
           "Source-unknown font/pt not converted to default truth",
           "Same data type in different roles/styles not forcibly merged",
           "No memorization of private strings/owner IDs as style clusters"
+        ],
+        "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+        "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
+        "remaining_design_work": [
+          "Formal typed schema and migration into current models/store",
+          "Actual source-example and gold-annotation mapping",
+          "Validation-calibrated class conditions,thresholds and heldout acceptance plan"
         ]
       },
       {
@@ -1142,6 +1149,13 @@
           "Fixed TEL label cannot silently host Email; label/value linkage must be represented",
           "Shared source printed more than once still consumes space",
           "Individual range compliance does not prove whole-layout feasibility"
+        ],
+        "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+        "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
+        "remaining_design_work": [
+          "Formal typed schema and migration into current models/store",
+          "Actual source-example and gold-annotation mapping",
+          "Validation-calibrated class conditions,thresholds and heldout acceptance plan"
         ]
       },
       {
@@ -1177,6 +1191,13 @@
           "Cross-type candidates need evidence and conditions,not unconditional phone/Email exchange",
           "Positive-source or synthetic labels do not substitute independent evaluation",
           "Incompatible or unknown bindings remain explicit; no fake calibrated confidence"
+        ],
+        "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+        "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
+        "remaining_design_work": [
+          "Formal typed schema and migration into current models/store",
+          "Actual source-example and gold-annotation mapping",
+          "Validation-calibrated class conditions,thresholds and heldout acceptance plan"
         ]
       }
     ],
@@ -1189,6 +1210,19 @@
       "AI-LEARN-03",
       "AI-LEARN-04",
       "AI-LEARN-08"
-    ]
+    ],
+    "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
+    "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md"
+  },
+  "comprehensive_training_proposal": {
+    "path": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+    "references": "docs/dev/AI_TRAINING_COMPREHENSIVE_REFERENCES.json",
+    "status": "ENGINEERING_PROPOSAL_NOT_IMPLEMENTED",
+    "user_request": "Comprehensive tailored analysis beyond fixed versus data-bound A/B",
+    "recommended_architecture": "Shared hierarchical typed scene graph; conditional data-requirement and field-capability views; binding/variation evidence; grammar and measured solver validation",
+    "observation_policy_feasibility_are_separate": true,
+    "runtime_policy_change": false,
+    "training_executed": false,
+    "final_schema_and_real_corpus_validation_pending": true
   }
 }
