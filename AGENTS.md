@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 目前實作狀態（2026-10-18）
+
+AI01觀察資料／儲存／自動分析基礎已部分實作；18新增測試包含於當前1567項正式回歸，全數PASS、198程序正常、native附件通過。新8工作包仍1partial、0完整完成／驗證，3訓練設計待辦0完成，尚未訓練；舊段落的0實作為先前歷史。以STATE與ACTIVE_DEVELOPMENT_HANDOFF為準，下一步可信來源字型／glyph與完整lineage，不再重問已決訪談。
+
 ## 核心宗旨
 
 - 每個工作包需參照數學演算法、成熟開源與商用軟體公開思路；保存實際來源／版本／hash、重用選擇及驗證，不重造已有引擎或平行資料庫。本輪具體依據見`docs/dev/TWENTY_ENGINEERING_BASIS.json`。

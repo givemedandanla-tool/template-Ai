@@ -1461,3 +1461,7 @@ AI01完整回歸第四次中途保存：1390/1567已完成、1390PASS，正式na
 AI01-FORMAL-PROGRESS-4保存：87aec1da70a7472e79c3cde44a1a8e56cd5cf123已fresh逐檔讀回並REMOTE_VERIFIED，收據續發布；固定source完整測試尚未結束，不增加任何父題完成數。
 
 AI01正式結果：1567/1567PASS、198healthy modules、0skip／0runtime error、native capture exit0、source固定659359faf6bea269e1fba65416788735ffab1121且未變；366附件已逐檔核對。overall FAIL只來自保留的UI032/REV02/REV04共5外部資格條款，不冒稱28父題全完成。先保存正式結果checkpoint，再逐項驗證既有163完成要求後換綁當前證據；新AI仍1partial、0/8完整、0/50驗收、未訓練。
+
+AI01最終採認：verify_run／execution_passed及163完成要求逐項verify_acceptance全部通過，166既有證據引用換綁當前formal，scope／status／完成數不變。原75題69VERIFIED/3PARTIAL/3DEFERRED、CORE87/GOV7不變；新8包1partial、0完整／驗證、50原驗收及3TODO0完成。正式366附件已在ee407377eae2b8b86ed8dc9e5926c2450ae5c54b逐檔讀回；2張native抽查另存。最後進度→正式結果checkpoint實際603.417秒、初始code drafting也超10min，STATE保存精確間隔，不宣稱嚴格10min達標。
+
+最終本機查核：publication-scope require-evidence治理PASS（169登錄／163完成scope／1567具名tests）；原50AI驗收ID／文字與8包／0完整／1partial一致、source manifest仍精確對應formal659359f，進度快照無新增／刪除／範圍／狀態／新增完成差異。接著保存最終metadata checkpoint並再讀回，不重跑已通過測試。
