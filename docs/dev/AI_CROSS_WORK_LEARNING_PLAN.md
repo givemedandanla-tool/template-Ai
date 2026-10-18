@@ -234,3 +234,10 @@ HDBSCAN沒有本方案可直接依賴的partial_fit／任意query預測介面；
 使用者確認先由訓練結果得到欄位容量及字串適宜區間，再由互動端引導與限制。詳見[訪談結論](../decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md)及contract.learned_capacity_input_policy。以尺寸／家族／角色組合／字型與固定pt／資產／政策條件化，區分observed、recommended、validated_admission；筆數與長度聯合驗證，訓練最大值不直接當硬上限，字數不取代實際量測。
 
 先在本體使用同一版本profile，保留資料與Gate，獨立前端仍延後。最適區間的品質／容量取捨仍待下一題；本輪未定數值、未訓練、不改字級政策。原8包50條／0實作0驗證不變。
+
+
+## 17. 訪談定義：合格訓練作品的風格特徵就是適合區間（2026-10-18）
+
+使用者已確認[品質參考定義](../decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md)。以合格TRAIN作品的有證據風格特徵形成條件／聯合區域，保留不同家族與多種合格風格；不僅是字數，也不強制單一平均／分位數裁切。contract.qualified_training_style_region保存參數與資料角色要求，learned_capacity_input_policy已連結此定義。
+
+此結論取代第16節待定的品質參考來源，尚未定數值閾值或多候選排序權重。合格標記／准入方式待下一題；不假定匯入即合格，UNKNOWN不當真值，TRAIN以外的封存資料不回填擬合。適合區間不等於免驗放行，正式Gate與獨立前端延後不變；仍8包50條0實作／0驗證。

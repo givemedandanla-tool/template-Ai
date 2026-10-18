@@ -67,3 +67,7 @@ GitHub 操作可用正常 Git CLI 或連接器。來源 commit 與 tree 必須�
 ## 2026-10-18 訪談：先學容量與字串區間再引導輸入
 
 見docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md及contract.learned_capacity_input_policy。容量／區間依尺寸、家族、角色組合、字型固定pt與資產條件化，經驗證後供本體輸入引導／限制。訓練最大值不直接當硬上限，單欄區間不能證明聯合可行；保留UNKNOWN與實際Gate。A/B/C重排範圍尚未選定；下一題釐清最適品質目標。未訓練、未定數值、未新增完成數。
+
+## 2026-10-18 訪談已定義：合格訓練風格為適合區間
+
+見docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md及contract.qualified_training_style_region。以合格TRAIN作品的有證據風格特徵學條件／聯合區域，保留多種與低支持合格風格；UNKNOWN不當真值、封存資料不回填擬合。品質來源已決，合格集合／標記及准入證據待訪談。適合區間不豁免正式Gate，未定數值／未訓練／未新增完成數。

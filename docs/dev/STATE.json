@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "CORE_AI_PRODUCT_REDESIGN_PLANNING_NOT_IMPLEMENTED",
-  "active_task": "Interview: learn conditional field capacity/text intervals then body input guidance; optimality preference pending;0of8implemented",
+  "active_task": "Interview: suitable region defined by qualified training styles; qualification corpus/labels next;0of8implemented",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261018-LEARNED-CAPACITY-INTERVIEW.receipt.json",
   "last_confirmed_commit": "182600481163e1bfae3aa19605fd56a6d1adfa0f",
   "latest_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
@@ -13,6 +13,7 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+    "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
     "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
     "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
     "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md",
@@ -50,7 +51,8 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP"
+    "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
+    "CP-20261018-QUALIFIED-STYLE-SUITABLE-REGION"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261015-REMAINING28-BEGIN.json",
@@ -670,7 +672,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Capacity-first interview direction saved/readback1826004; numerical limits unlearned/unvalidated;0of8implemented",
+  "current_work": "User-confirmed style-region definition only; no numerical limits,model training or feature implementation",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -785,7 +787,7 @@
   ],
   "next_work_package_plan": "docs/dev/CURRENT007_CAPTURE_REPAIR_PLAN.json",
   "next_step": "ImplementAI-LEARN-01 in existing Template AI application,then02families03joint rules/equivalent roles04generation; no new web/mobile frontend prerequisite",
-  "current_work_package": "AI-TRAINING-INTERVIEW-LEARNED-CAPACITY",
+  "current_work_package": "AI-TRAINING-INTERVIEW-QUALIFIED-STYLE-REGION",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": {
@@ -873,10 +875,13 @@
   "capacity_learning_decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
   "training_interview": {
     "status": "IN_PROGRESS",
-    "last_confirmed_decision": "docs/decisions/2026-10-18-LEARNED-CAPACITY-INPUT-GUIDANCE.md",
+    "last_confirmed_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
     "first_reorder_question": "Replaced by capacity-first direction; A/B/C not selected",
-    "next_topic": "Quality reference/label source for optimal recommended intervals; quality/capacity tradeoffs remain open",
-    "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED"
+    "next_topic": "Existing qualified corpus/labels and admission evidence; no assumed import-success or formal-output equivalence",
+    "numeric_parameters": "NOT_LEARNED_NOT_VALIDATED",
+    "quality_reference": "Qualified training works evidenced style features define suitable region"
   },
-  "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json"
+  "capacity_interview_publication": "docs/qa/plans/LEARNED-CAPACITY-INTERVIEW-PUBLICATION-20261018.json",
+  "qualified_style_region_decision": "docs/decisions/2026-10-18-QUALIFIED-TRAINING-STYLE-SUITABLE-REGION.md",
+  "checkpoint_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T094322Z.json"
 }
