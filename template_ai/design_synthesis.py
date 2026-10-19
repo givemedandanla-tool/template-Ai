@@ -128,7 +128,9 @@ def _font_options(profile, key, width, height, value=None, policy=None, semantic
                 candidate['id']=digest(candidate);options[candidate['id']]=candidate
     if (policy or {}).get('prefer_supported_size_domain',True) and any(row.get('size_admission')=='LEARNED_JOINT_DOMAIN' for row in options.values()):
         options={key:row for key,row in options.items() if row.get('size_admission')!='UNVERIFIED_SIZE_PREVIEW_ONLY'}
-    return sorted(options.values(),key=lambda row:(row.get('size_admission')=='UNVERIFIED_SIZE_PREVIEW_ONLY',-row['support'],
+    preferred=profile.get('editor_preferred_sources',{}).get(key)
+    return sorted(options.values(),key=lambda row:(row.get('size_admission')=='UNVERIFIED_SIZE_PREVIEW_ONLY',
+        bool(preferred and preferred not in row.get('source_refs',[row.get('source_ref')])),-row['support'],
         abs(row['source_dimension_mm'][0]-width)+abs(row['source_dimension_mm'][1]-height),row['id']))
 
 
@@ -208,6 +210,12 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
             fact['kind']='logo';fact['role_key']=logo_key
     from collections import Counter
     pattern=dict(Counter(fact['owner_port']+':'+fact['kind'] for fact in facts))
+    allowed_patterns=profile['grammar'].get('editor_allowed_patterns')
+    if allowed_patterns is not None and digest(pattern) not in allowed_patterns:
+        missing.append(dict(reason='EDITOR_JOINT_PATTERN_RESTRICTION'))
+    present_roles={fact['role_key'] for fact in facts}
+    if set(profile['grammar'].get('editor_required_roles',[]))-present_roles:
+        missing.append(dict(reason='EDITOR_REQUIRED_ROLE_MISSING'))
     conditioned=next((row for row in profile.get('conditional_geometry',[])
         if row['pattern']==pattern and row['independent_support']>=5),None)
     if conditioned:
@@ -372,9 +380,12 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                     distribution=relation['residuals'].get(metric,{})
                     if distribution.get('centre') is None or distribution.get('support',0)<5:continue
                     strength=kiwi.strength.strong if metric=='baseline_delta' else kiwi.strength.medium
-                    solver.addConstraint((expression==distribution['centre']*dimension)|strength)
+                    from .family_rules import relation_key,add_relation_constraint
+                    override=profile.get('editor_relation_strengths',{}).get(relation_key(relation['left'],relation['right'],metric))
+                    if not add_relation_constraint(solver,expression,distribution['centre']*dimension,override,strength):continue
                     applied.append(dict(left=a,right=b,metric=metric,independent_support=distribution['support'],
-                        source_refs=relation.get('source_refs',[]),strength='SOFT_BASELINE_STRONG_OTHER_MEDIUM_BELOW_HARD_INTENT'))
+                        source_refs=relation.get('source_refs',[]),target_mm=distribution['centre']*dimension,
+                        strength=override or 'SOFT_BASELINE_STRONG_OTHER_MEDIUM_BELOW_HARD_INTENT'))
             from .design_object_spacing import apply_object_spacing
             apply_object_spacing(solver,variables,facts,profile.get('object_spacing_rules',[]),width,height)
             solver.updateVariables()

@@ -168,7 +168,7 @@ def _code_digest(name,mtime_ns,size):
 
 def engine_digest():
     from PySide6.QtCore import qVersion
-    names=('candidate_edit_dispatch.py','candidate_changes.py','candidate_edit.py','layout.py','render.py','candidate_risk.py','model.py','text_policy.py','text_metrics.py','font_catalog.py','font_evidence.py','fonts.py','logo_assets.py','background.py','design_synthesis.py','design_style.py','design_profiles.py','design_joint.py','design_family.py','design_ranking.py','design_learning.py','design_source_binding.py','design_qualification.py','design_instances.py','design_evaluation.py','design_rank_evaluation.py','design_text_flow.py','design_feedback.py','design_assignment.py')
+    names=('candidate_edit_dispatch.py','candidate_changes.py','candidate_edit.py','layout.py','render.py','candidate_risk.py','model.py','text_policy.py','text_metrics.py','font_catalog.py','font_evidence.py','fonts.py','logo_assets.py','background.py','design_synthesis.py','design_style.py','design_profiles.py','design_joint.py','design_family.py','design_ranking.py','design_learning.py','design_source_binding.py','design_qualification.py','design_instances.py','design_evaluation.py','design_rank_evaluation.py','design_text_flow.py','design_feedback.py','design_assignment.py','family_rules.py')
     versions={}
     for name in names:
         stamp=(Path(__file__).parent/name).stat();versions[name]=_code_digest(name,stamp.st_mtime_ns,stamp.st_size)

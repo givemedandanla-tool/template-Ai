@@ -126,6 +126,9 @@ def owned_example(index):
 
 
 def execute_item(library,job,index):
+    if job['kind'] in ('FAMILY_CASE_REVIEW','FAMILY_RULE_BATCH','FAMILY_RULE_UNDO'):
+        from .family_batch import execute_family_item
+        return execute_family_item(library,job,index)
     if job['kind']=='OWNED_SOURCE_FILE_BENCHMARK':
         from .design_source_benchmark import source_benchmark_item
         return source_benchmark_item(library,job['plan'],index)
@@ -195,6 +198,9 @@ def execute_item(library,job,index):
 
 
 def summarize_job(library,job,results):
+    if job['kind'] in ('FAMILY_CASE_REVIEW','FAMILY_RULE_BATCH','FAMILY_RULE_UNDO'):
+        from .family_batch import summarize_family_job
+        return summarize_family_job(results)
     if job['kind']=='OWNED_SOURCE_FILE_BENCHMARK':
         from .design_source_benchmark import summarize_source_benchmark
         return summarize_source_benchmark(library,job,results)

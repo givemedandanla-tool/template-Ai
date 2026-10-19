@@ -62,7 +62,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-TEMPLATE-EDITOR-BACKEND-WIP"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -1337,5 +1339,13 @@
     "snapshot_commit": "4bb862d82b2e6e6b83f316ead6ba3626b94c03b8",
     "receipt": "docs/checkpoints/CP-20261019-TEMPLATE-EDITING-RESEARCH.receipt.json"
   },
-  "editor_tools_contract": "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json"
+  "editor_tools_contract": "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json",
+  "editor_tools_progress": {
+    "phase": "BACKEND_WIP",
+    "completed_tool_acceptance": 0,
+    "total_tool_acceptance": 16,
+    "targeted_tests_passed": 15,
+    "targeted_evidence": "docs/qa/targeted/template-editor/stage1-workspace-rules.log",
+    "next": "finish scenario/batch target tests;native existing-Canvas family workbench GUI;full regression"
+  }
 }

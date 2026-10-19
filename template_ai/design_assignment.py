@@ -25,7 +25,11 @@ def assign_fields(profile,facts,policy,options_for):
         containers=role.get('confirmed_container_keys',[])
         target=containers[0] if len(containers)==1 else key
         columns[target].append(key)
-    targets=sorted(columns);text_facts=[row for row in facts if row['kind']!='logo']
+    targets=sorted(columns)
+    if profile.get('editor_default_order'):
+        ranks={key:i for i,key in enumerate(profile['grammar']['default_order'])}
+        targets.sort(key=lambda target:(min(ranks.get(key,len(ranks)) for key in columns[target]),target))
+    text_facts=[row for row in facts if row['kind']!='logo']
     if not text_facts:return dict(status='ASSIGNED',assignments=[],basis='NO_TEXT_FIELDS')
     if len(text_facts)>len(targets):return dict(status='UNSUPPORTED_FIELD_CAPACITY',assignments=[])
     default=set(profile['grammar']['default_order']);cost=np.full((len(text_facts),len(targets)),1e9);selected={}
@@ -36,6 +40,9 @@ def assign_fields(profile,facts,policy,options_for):
             for key in keys:
                 role=roles[key]
                 if role['owner_port']!=fact['owner_port'] or role['kind']!=fact['kind']:continue
+                restriction=profile.get('editor_container_types',{}).get(target)
+                semantic=fact.get('semantic_observation',{}).get('semantic_type',fact['kind'])
+                if restriction is not None and semantic not in restriction:continue
                 if (len(kinds)>1 and key not in default and policy.get('allow_observed_container_substitution') is not True):continue
                 options=options_for(fact,key)
                 if not options:continue
