@@ -1,0 +1,26 @@
+{
+  "pdfminer": {
+    "package": "pdfminer.six",
+    "version": "20260107",
+    "license": "MIT",
+    "source_commit": "9e1243c4ad000bf9bbe60e81fc8dde2fccc0ed3b",
+    "source": "https://github.com/pdfminer/pdfminer.six/tree/9e1243c4ad000bf9bbe60e81fc8dde2fccc0ed3b",
+    "reused": [
+      "PDFPageInterpreter",
+      "PDFTextDevice.render_string",
+      "PDFPageAggregator.render_char",
+      "font CMap and metrics"
+    ],
+    "limits": "PDF compatibility layer;nominal metric boxes,not original ink/container or Illustrator-private editability"
+  },
+  "joint": {
+    "engine": "scikit-learn==1.7.2",
+    "license": "BSD-3-Clause",
+    "algorithms": [
+      "multioutput Ridge alpha1",
+      "GaussianMixture BIC modes with independent group support",
+      "joint nearest-support abstention"
+    ],
+    "separation": "TRAIN fit residuals are not heldout calibration;rare observations retained;formal gate independent"
+  }
+}

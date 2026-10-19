@@ -1,3 +1,4 @@
+from copy import deepcopy
 from pathlib import Path
 import tempfile
 import unittest
@@ -54,3 +55,20 @@ class SourceTypographyBindingTests(unittest.TestCase):
         facts=self.store.facts(self.work['id'])
         self.store.save_facts(self.work['id'],facts['observations'],facts['revision'],self.work['revision'])
         with self.assertRaises(ValueError):self.service.confirm(plan,'Reviewer',True)
+
+    def test_hidden_original_text_is_not_a_visible_source_font_binding(self):
+        from unittest.mock import patch
+        original=deepcopy(self.store._design_observation_document(self.work['id']))
+        original['original_text_evidence']['runs'][0]['visibility']='NONPAINTING_TEXT'
+        with patch.object(self.service.store,'_design_observation_document',return_value=original):
+            with self.assertRaisesRegex(ValueError,'Hidden'):
+                self.service.plan(self.work['id'],self.slot['id'],self.run['id'],self.asset,self.review)
+
+    def test_measured_parameter_cannot_overwrite_known_original_source_value(self):
+        from unittest.mock import patch
+        original=deepcopy(self.store._design_observation_document(self.work['id']))
+        original['original_text_evidence']['runs'][0]['horizontal_scale']={
+            'value':.8,'unit':'ratio','status':'OBSERVED','basis':'ORIGINAL_PDF_TZ','evidence_refs':[self.run['id']]}
+        with patch.object(self.service.store,'_design_observation_document',return_value=original):
+            with self.assertRaisesRegex(ValueError,'contradicts'):
+                self.service.plan(self.work['id'],self.slot['id'],self.run['id'],self.asset,self.review)

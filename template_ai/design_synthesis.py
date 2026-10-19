@@ -34,7 +34,7 @@ def input_facts(graph):
     return facts
 
 
-def _font_options(profile, key, width, height):
+def _font_options(profile, key, width, height, value=None, policy=None):
     options={}
     for data in profile['data_requirement_profiles']:
         for sample in data['presentation_evidence']:
@@ -51,6 +51,31 @@ def _font_options(profile, key, width, height):
             identity=digest({k:v for k,v in candidate.items() if k!='source_ref'})
             if identity not in options:options[identity]=dict(candidate,id=identity,support=0)
             options[identity]['support']+=1
+    if value is not None and (policy or {}).get('enable_joint_prediction') is True:
+        from .design_joint import predict_joint
+        role=next(row for row in profile['roles'] if row['key']==key)
+        joint_model=role.get('conditional_joint_model',{})
+        measured={}
+        for mode in joint_model.get('modes',[]):
+            condition=mode['condition'];asset=condition['font_asset'];label=condition['label_binding']
+            if label.get('status')!='CONFIRMED' or label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX'):continue
+            display=label.get('prefix','')+value if label.get('kind')=='DYNAMIC_PREFIX' else value
+            identity=digest([asset,display])
+            if identity not in measured:
+                measured[identity]=text_geometry(asset['families'][0],12.,display,
+                    (asset.get('styles') or [''])[0],asset,0.)
+            advance,_,errors=measured[identity]
+            if errors or advance<=0:continue
+            for prediction in predict_joint(joint_model,width,height,advance/12.):
+                if prediction['mode_id']!=mode['id']:continue
+                vector=prediction['joint']
+                if not (1<=vector['source_pt']<=200 and .05<=vector['horizontal_scale']<=1
+                        and 0<=vector['tracking_mm']<=2 and vector['frame_width_mm']>0 and vector['frame_height_mm']>0):continue
+                candidate=dict(font_asset=deepcopy(asset),size_pt=vector['source_pt'],scale=vector['horizontal_scale'],
+                    tracking_mm=vector['tracking_mm'],width_mm=vector['frame_width_mm'],height_mm=vector['frame_height_mm'],
+                    source_dimension_mm=[width,height],label_binding=deepcopy(label),source_ref='JOINT:'+mode['id'],
+                    support=prediction['support'],joint_prediction=prediction)
+                candidate['id']=digest(candidate);options[candidate['id']]=candidate
     return sorted(options.values(),key=lambda row:(-row['support'],
         abs(row['source_dimension_mm'][0]-width)+abs(row['source_dimension_mm'][1]-height),row['id']))
 
@@ -95,7 +120,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
     for fact in facts:
         if fact['role_key'] not in roles:
             missing.append(dict(render_id=fact['render_id'],reason='UNSUPPORTED_ROLE_OR_REPEAT_COUNT'));continue
-        rows=_font_options(profile,fact['role_key'],width,height)
+        rows=_font_options(profile,fact['role_key'],width,height,fact['value'],policy)
         if not rows:missing.append(dict(render_id=fact['render_id'],reason='SOURCE_JOINT_TYPOGRAPHY_OR_FONT_IDENTITY_UNKNOWN'))
         options.append(rows)
     base=dict(version=VERSION,family_id=profile['family_id'],input_digest=digest(graph.data),

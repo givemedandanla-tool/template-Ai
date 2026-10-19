@@ -105,3 +105,26 @@ class CrossWorkLearningTests(unittest.TestCase):
             loaded=CrossWorkLearning(reopened).checked_model(model['id'])[0]
             self.assertEqual(loaded['weights_digest'],model['weights_digest'])
         finally:reopened.db.close()
+
+    def test_cross_work_dataset_cannot_be_used_for_single_work_geometry_learning(self):
+        dataset=self.dataset()
+        with self.assertRaisesRegex(ValueError,'跨作品'):
+            self.store.geometry_learning_plan(dataset['id'],self.samples[0]['id'],'Forbidden per-work template')
+
+    def test_model_exposure_is_retained_after_group_role_record_is_removed(self):
+        self.model()
+        sha=self.sources[0]['hash']
+        self.store.db.execute("DELETE FROM training_records WHERE kind='GROUP_ROLE' AND id=?",(sha,))
+        self.store.db.commit()
+        conflicts=QualityGroups(self.library).role_conflicts([(sha,'HOLDOUT')])
+        self.assertTrue(conflicts)
+        self.assertEqual(conflicts[0]['roles'],['HOLDOUT','TRAIN'])
+
+    def test_source_withdrawal_lists_actual_shared_models_and_stales_them(self):
+        model=self.model();sid=self.samples[0]['id']
+        impact=self.store.sample_usage_impact(sid)
+        self.assertEqual(impact['design_model_ids'],[model['id']])
+        self.assertTrue(impact['current_cross_work_training_use'])
+        self.store.transition_sample(self.store.sample_transition_plan(sid,'REVOKE'),
+            'Source author','Withdraw authored test design',True)
+        with self.assertRaises(ValueError):self.learning.checked_model(model['id'])

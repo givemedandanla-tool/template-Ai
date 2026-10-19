@@ -75,9 +75,16 @@ class DatasetMixin:
 
     def geometry_learning_plan(self,dataset_id,sample_id,name):
         from .training_store import text,digest
-        text(name,'模板草稿名稱',120);validity=self.dataset_validity(dataset_id,[sample_id])
+        text(name,'模板草稿名稱',120)
+        record=self.get('DATASET',dataset_id)
+        if record and record.get('manifest',{}).get('purpose')!='GEOMETRY_TRAINING_LOCAL':
+            raise ValueError('跨作品規則資料集不能交給單作品幾何模板學習')
+        validity=self.dataset_validity(dataset_id,[sample_id])
         if not validity['valid']:raise ValueError('資料集目前不可用：'+'；'.join(validity['errors']))
-        dataset=validity['dataset'];entry=next((e for e in dataset['entries'] if e['sample_id']==sample_id),None)
+        dataset=validity['dataset']
+        if dataset.get('manifest',{}).get('purpose')!='GEOMETRY_TRAINING_LOCAL':
+            raise ValueError('跨作品規則資料集不能交給單作品幾何模板學習')
+        entry=next((e for e in dataset['entries'] if e['sample_id']==sample_id),None)
         if not entry or entry['role']!='TRAIN':raise ValueError('只有本資料集的有效TRAIN樣本可明確啟動幾何學習')
         existing=self.existing_geometry_result(dataset_id,sample_id)
         if existing:raise ValueError('此資料集／樣本版已有幾何成果，復用或編輯既有版本：'+existing)

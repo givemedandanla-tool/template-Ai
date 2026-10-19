@@ -10,6 +10,7 @@ from statistics import median
 
 from .training_store import digest
 from .design_family import number, source_point
+from .design_joint import fit_joint
 
 VERSION = 'cross-work-profiles-1'
 
@@ -117,6 +118,8 @@ def learn_profiles(family_artifact, examples):
                 frame_distributions=[summary(column) for column in normalized],
                 joint_configurations=[configurations[k] for k in sorted(configurations)],
                 joint_region='OBSERVED_CONFIGURATIONS_NOT_INDEPENDENT_MINMAX',
+                prediction_region='CONDITIONAL_JOINT_RIDGE_PROPOSAL_REQUIRES_ACTUAL_LAYOUT',
+                conditional_joint_model=fit_joint(samples),
                 typography_known_examples=sum(sample['joint']['source_pt'] is not None for sample in samples),
                 font_identity_known_examples=sum(sample['source_font_ref'] is not None for sample in samples),
                 admission='REQUIRES_POLICY_AND_ACTUAL_LAYOUT_VERIFICATION'))

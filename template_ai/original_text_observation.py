@@ -15,7 +15,7 @@ import xml.etree.ElementTree as ET
 from .design_observation import ObservedScalar, canonical_digest, effective_point_size, unknown
 from .source_links import verify_source
 
-VERSION = 'original-text-observation-1'
+VERSION = 'original-text-observation-2-pdf-glyphs'
 MAX_BYTES = 32_000_000
 MAX_NODES = 4000
 MAX_RUNS = 512
@@ -276,6 +276,18 @@ def original_text_observation(source):
             channel, rows = 'UNSUPPORTED_ORIGINAL_FORMAT', []
         document.update(channel=channel, runs=rows,
                         state='OBSERVED' if rows else 'NO_READABLE_TEXT' if channel != 'UNSUPPORTED_ORIGINAL_FORMAT' else 'UNSUPPORTED')
+        if data.startswith(b'%PDF-'):
+            from .original_pdf_glyphs import extract_pdf_glyphs, GlyphBudget
+            try:
+                glyphs=extract_pdf_glyphs(source,data)
+                document['pdf_glyph_evidence']={k:v for k,v in glyphs.items() if k!='runs'}
+                document['pdf_glyph_evidence']['run_ids']=[row['id'] for row in glyphs['runs']]
+                document['runs'].extend(glyphs['runs'])
+                if glyphs['runs']:document['state']='OBSERVED'
+            except GlyphBudget:
+                document['pdf_glyph_evidence']=dict(state='BUDGET_EXCEEDED',runs=[],reason='NO_PARTIAL_GLYPH_RESULT')
+            except Exception as error:
+                document['pdf_glyph_evidence']=dict(state='UNAVAILABLE',runs=[],reason=type(error).__name__)
     except EvidenceBudget:
         document.update(state='BUDGET_EXCEEDED', reason='BOUNDED_EXTRACTION_NO_PARTIAL_RESULT')
     except Exception as error:

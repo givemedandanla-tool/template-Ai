@@ -8,7 +8,7 @@ import hashlib
 import math
 
 from .training_store import TrainingStore, digest, text
-from .design_observation import ObservedScalar, unknown
+from .design_observation import ObservedScalar, unknown, canonical_digest
 from .fonts import font_errors
 
 
@@ -36,6 +36,14 @@ class SourceTypographyReview:
         run=next((row for row in original['runs'] if row['id']==source_run_id),None)
         if not run or run['text_sha256']!=hashlib.sha256(matches[0]['text'].encode()).hexdigest():
             raise ValueError('Complete original text run does not match this reviewed field;composite spans remain unknown')
+        if run.get('visibility')=='NONPAINTING_TEXT' or run.get('unicode_status','MAPPED')!='MAPPED':
+            raise ValueError('Hidden or unmapped source glyphs cannot establish a visible field')
+        if run.get('writing_mode','HORIZONTAL')!='HORIZONTAL':
+            raise ValueError('Vertical source text needs a supported shaping path')
+        if run.get('source_locator',{}).get('kind')=='PDF_ORIGINAL_GLYPH_RUN':
+            page=original.get('pdf_glyph_evidence',{})
+            if page.get('source_canvas_mapping')!='VERIFIED_PHYSICAL_VIEWPORT':
+                raise ValueError('Original PDF glyph viewport does not match the confirmed source')
         point=run['source_pt']['value']
         if point is None:
             point=review.get('physical_source_pt')
@@ -47,11 +55,18 @@ class SourceTypographyReview:
             raise ValueError('Source pt must be a finite measured positive value')
         key=digest([work_id,slot_id]);before=self.store.get('DESIGN_SOURCE_BINDING',key)
         refs=(source_run_id,'EXPERT_SOURCE_REVIEW:'+digest(review))
-        typography=dict(font_asset_ref=deepcopy(font_asset),source_font_status='EXPERT_CONFIRMED_EXACT_ASSET',
+        typography=dict(font_asset_ref=deepcopy(font_asset),source_font_status='HUMAN_CONFIRMED_SOURCE_ASSOCIATION',
             source_pt=ObservedScalar(point,'pt','OBSERVED','ORIGINAL_RUN_AND_EXPERT_SOURCE_FONT_REVIEW',refs).to_dict(),
             horizontal_scale=unknown('ratio'),tracking=unknown('mm'),shaped_advance=unknown('mm'),
             glyph_runs=dict(status='UNKNOWN',basis='ORIGINAL_GLYPH_POSITIONS_NOT_RECOVERED'))
+        if run.get('glyphs'):
+            typography['glyph_runs']=dict(status='OBSERVED_SOURCE_GLYPH_PLACEMENT',source_run_ref=source_run_id,
+                glyph_digest=canonical_digest(run['glyphs']),
+                bounds_basis=run.get('bounds_basis'),font_correspondence='HUMAN_CONFIRMED_NOT_BINARY_IDENTITY_PROOF')
         for name,unit in [('horizontal_scale','ratio'),('tracking','mm')]:
+            original_parameter=run.get(name,{})
+            if original_parameter.get('status') in ('OBSERVED','DERIVED') and original_parameter.get('value') is not None:
+                typography[name]=deepcopy(original_parameter)
             measured=review.get(name)
             if measured is not None:
                 if not review.get('parameter_measurement_refs'):
@@ -60,6 +75,9 @@ class SourceTypographyReview:
                     raise ValueError('Invalid measured source parameter')
                 if (name=='horizontal_scale' and not 0<measured<=10) or (name=='tracking' and not -100<measured<100):
                     raise ValueError('Source parameter processing range exceeded')
+                known=typography[name].get('value')
+                if known is not None and not math.isclose(known,measured,rel_tol=1e-7,abs_tol=1e-9):
+                    raise ValueError('Review contradicts known original source parameter')
                 typography[name]=ObservedScalar(measured,unit,'OBSERVED','EXPERT_MEASURED_SOURCE_PARAMETER',refs).to_dict()
         # Natural demand at the reviewed source font/pt is derived from Qt;
         # it is not claimed to recover original source kerning/glyph positions.
