@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/run_evidence.py", line 404, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/workspace/template-Ai/tools/run_evidence.py", line 131, in main
+    result,runtime_errors,module_log=run_modules(list(test_catalog(unittest.defaultTestLoader.discover(str(ROOT/'tests')))),live,module_timeout=args.module_timeout,workers=args.module_workers)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/evidence_modules.py", line 57, in run_modules
+    if not 0<module_timeout<=600:raise ValueError('Test module deadline must be bounded')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: Test module deadline must be bounded
