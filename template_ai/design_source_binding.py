@@ -68,16 +68,17 @@ class SourceTypographyReview:
         point=run['source_pt']['value']
         if point is None:
             point=review.get('physical_source_pt')
-            if not review.get('physical_measurement_refs'):
+            if point is not None and not review.get('physical_measurement_refs'):
                 raise ValueError('Unknown physical source pt needs external measured-source evidence')
         elif review.get('physical_source_pt') is not None and not math.isclose(point,review['physical_source_pt'],rel_tol=1e-7):
             raise ValueError('Review contradicts known original physical source pt')
-        if type(point) not in (int,float) or not math.isfinite(point) or not 0<point<10000:
+        if point is not None and (type(point) not in (int,float) or not math.isfinite(point) or not 0<point<10000):
             raise ValueError('Source pt must be a finite measured positive value')
         crop=work['payload']['crop']
         sx=work['payload']['work_width']/crop['w'];sy=work['payload']['work_height']/crop['h']
         refs=(source_run_id,'EXPERT_SOURCE_REVIEW:'+digest(review))
-        source_point=ObservedScalar(point,'pt','OBSERVED','ORIGINAL_RUN_OR_MEASURED_SOURCE_PAGE_PT',refs)
+        source_point=(ObservedScalar(point,'pt','OBSERVED','ORIGINAL_RUN_OR_MEASURED_SOURCE_PAGE_PT',refs)
+            if point is not None else ObservedScalar(None,'pt','UNKNOWN','ORIGINAL_SOURCE_PAGE_PT_UNKNOWN',refs))
         work_point=effective_point_size(source_point,[sx,0,0,sy,-crop['x']*sx,-crop['y']*sy])
         uniform=math.isclose(sx,sy,rel_tol=1e-9)
         measured_work=review.get('physical_work_pt')
@@ -90,7 +91,8 @@ class SourceTypographyReview:
             work_point=ObservedScalar(measured_work,'pt','OBSERVED','EXPERT_MEASURED_WORK_PT',
                 tuple(review['physical_work_measurement_refs'])+refs)
         if work_point.value is None:
-            raise ValueError('Anisotropic work transform has unknown scalar pt;explicit measured work pt is required')
+            reason='Anisotropic work transform' if not uniform else 'Unknown source physical pt'
+            raise ValueError(reason+' has unknown scalar pt;explicit measured work pt is required')
         point=work_point.value
         key=digest([work_id,slot_id]);before=self.store.get('DESIGN_SOURCE_BINDING',key)
         typography=dict(font_asset_ref=deepcopy(font_asset),source_font_status='HUMAN_CONFIRMED_SOURCE_ASSOCIATION',
@@ -121,6 +123,13 @@ class SourceTypographyReview:
                 if known is not None and not math.isclose(known,measured,rel_tol=1e-7,abs_tol=1e-9):
                     raise ValueError('Review contradicts known original source parameter')
                 typography[name]=ObservedScalar(measured,unit,'OBSERVED','EXPERT_MEASURED_SOURCE_PARAMETER',refs).to_dict()
+        spacing=(review.get('source_text_flow') or {}).get('spacing_rule',{})
+        name={'WORDS':'word_spacing','CHARACTERS':'tracking'}.get(spacing.get('mode'))
+        if name and typography[name].get('value') is not None:
+            supplied=spacing.get('value_mm')
+            if (type(supplied) not in (int,float) or not math.isfinite(supplied) or not math.isclose(
+                    typography[name]['value'],supplied,rel_tol=1e-7,abs_tol=1e-9)):
+                raise ValueError('Reviewed flow spacing contradicts measured original parameter in work coordinates')
         anchor=run.get('baseline_anchor_mm')
         if isinstance(anchor,dict) and all(type(anchor.get(k)) in (int,float) for k in ('x','y')):
             typography['source_anchor_work_mm']=dict(x=(anchor['x']-crop['x'])*sx,

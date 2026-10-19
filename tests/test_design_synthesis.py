@@ -17,6 +17,26 @@ from test_design_family import example
 APP=QApplication.instance() or QApplication([])
 
 class DesignSynthesisTests(unittest.TestCase):
+    def test_supported_baseline_rule_uses_actual_render_metrics_after_font_change(self):
+        graph=InputGraph.from_legacy([dict(name='Alex Example',phone='0123456789')],[])
+        frames={'p1:name:0':[8/90,5/54,30/90,8/54],'p1:phone:0':[50/90,6/54,30/90,6/54]}
+        for role in self.profile['roles']:
+            if role['key'] in frames:role['frame_centre']=frames[role['key']]
+        for data in self.profile['data_requirement_profiles']:
+            for sample in data['presentation_evidence']:
+                if sample['role_key'] in frames:
+                    sample['frame']=frames[sample['role_key']]
+                    sample['joint']['source_pt']=12. if sample['kind']=='name' else 10.
+        self.profile['relations']=[dict(left='p1:name:0',right='p1:phone:0',support=8,
+            source_refs=['authored baseline correspondence'],residuals={'baseline_delta':dict(centre=0.,support=8)})]
+        result=synthesize(self.profile,graph,90,54,self.policy)
+        self.assertEqual(result['status'],'FEASIBLE_PREVIEW')
+        chosen=result['candidates'][0];candidate=chosen['candidate']
+        offsets={row['render_id']:row['baseline_offset_mm'] for row in chosen['measurements']}
+        baselines=[item.slot.rect.y+offsets[item.slot.id] for item in candidate.items]
+        self.assertAlmostEqual(baselines[0],baselines[1],places=6)
+        self.assertEqual(candidate.risk_context['design_geometry_basis']['soft_relations'][0]['metric'],'baseline_delta')
+
     def test_same_appearance_different_review_ids_merges_but_unlearned_size_stays_preview(self):
         from template_ai.design_synthesis import _font_options
         key=self.profile['roles'][0]['key']

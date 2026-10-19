@@ -109,6 +109,12 @@ def _font_options(profile, key, width, height, value=None, policy=None, semantic
                     align=condition['align'] if condition['align'] in ('left','center','right','distributed') else 'left',
                     source_alignment_status='REVIEWED' if condition['align']!='UNKNOWN' else 'UNKNOWN_PREVIEW_FALLBACK',
                     distribution=deepcopy(condition['distribution']),text_flow=deepcopy(condition.get('text_flow')))
+                spacing=(candidate.get('text_flow') or {}).get('spacing_rule')
+                if spacing and spacing.get('mode')=='WORDS':
+                    word_value=vector.get('word_spacing_mm')
+                    if word_value is None or not 0<=word_value<=2:continue
+                    spacing['value_mm']=word_value
+                elif spacing and spacing.get('mode')=='CHARACTERS':spacing['value_mm']=vector['tracking_mm']
                 candidate['id']=digest(candidate);options[candidate['id']]=candidate
     return sorted(options.values(),key=lambda row:(row.get('size_admission')=='UNVERIFIED_SIZE_PREVIEW_ONLY',-row['support'],
         abs(row['source_dimension_mm'][0]-width)+abs(row['source_dimension_mm'][1]-height),row['id']))
@@ -180,7 +186,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
     by_render={row['render_id']:row for row in facts}
     if any(by_render[intent['subject']]['owner_port']!=by_render[intent['object']]['owner_port'] for intent in intents):
         raise ValueError('Cross-owner relative editing needs separately supported group correspondence')
-    roles={role['key']:role for role in profile['roles']};missing=[];options=[]
+    roles={role['key']:deepcopy(role) for role in profile['roles']};missing=[];options=[]
     people,companies,compiled_logos=graph.compile()
     logos=deepcopy(logos if logos is not None else compiled_logos)
     company_entities={row['id']:row for row in graph.data['companies']}
@@ -188,6 +194,13 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
         logo_key=fact['owner_port']+':logo:0'
         if fact['kind']=='company' and logo_key in roles:
             fact['kind']='logo';fact['role_key']=logo_key
+    from collections import Counter
+    pattern=dict(Counter(fact['owner_port']+':'+fact['kind'] for fact in facts))
+    conditioned=next((row for row in profile.get('conditional_geometry',[])
+        if row['pattern']==pattern and row['independent_support']>=5),None)
+    if conditioned:
+        for key,frame in conditioned['frames'].items():
+            if key in roles:roles[key]['frame_centre']=deepcopy(frame)
     from .design_assignment import assign_fields
     assignment=assign_fields(profile,facts,policy,lambda fact,key:_font_options(profile,key,width,height,
         fact['value'],policy,fact['semantic_observation']['semantic_type']))
@@ -229,7 +242,6 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
     if any(company['logo_id'] and 'c'+str(i+1) not in represented for i,company in enumerate(graph.data['companies'])):
         return dict(base,status='ASSET_ADAPTATION_REQUIRED',issues=[dict(reason='SELECTED_LOGO_NOT_REPRESENTED_BY_FAMILY')],
                     candidates=[],searched=0,complete_search=False)
-    from collections import Counter
     joint_counts=dict(Counter(fact['owner_port']+':'+fact['kind'] for fact in facts))
     observed_patterns=[row['pattern'] for row in profile['grammar'].get('observed_joint_counts',[])]
     style_admission='OBSERVED_JOINT_ROLE_COUNTS' if not observed_patterns or joint_counts in observed_patterns else 'UNVERIFIED_JOINT_ROLE_COMBINATION_PREVIEW_ONLY'
@@ -268,18 +280,26 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                     shaped=shape_flow(display,family,configuration['size_pt'],configuration['scale'],w,asset,
                         style,configuration['tracking_mm'],flow,fact['kind'])
                     tw,th=shaped['width_mm']/configuration['scale'],shaped['height_mm']
+                    baseline_offset=(h-th)/2+shaped['first_baseline_mm'] if shaped['first_baseline_mm'] is not None else None
+                else:
+                    from .render import prepared_text_metrics
+                    _,ink,factor=prepared_text_metrics(display,family,configuration['size_pt'],style,asset,configuration['tracking_mm'])
+                    baseline_offset=(h-ink['height']*factor)/2+ink['ascent']*factor
                 if tw*configuration['scale']>w+1e-7 or th>h+1e-7:failure='MEASURED_TEXT_EXCEEDS_JOINT_CONFIGURATION';break
                 rid=fact['render_id'];x,y=kiwi.Variable(rid+'-x'),kiwi.Variable(rid+'-y');variables[rid]=(x,y,w,h)
                 for constraint in (x>=margin,y>=margin,x+w<=width-margin,y+h<=height-margin):solver.addConstraint(constraint)
-                solver.addConstraint((x==frame[0]*width)|kiwi.strength.strong)
-                solver.addConstraint((y==frame[1]*height)|kiwi.strength.strong)
+                source_baselines=any(row.get('residuals',{}).get('baseline_delta',{}).get('support',0)>=5
+                    for row in profile.get('relations',[]))
+                anchor_strength=kiwi.strength.medium if source_baselines else kiwi.strength.strong
+                solver.addConstraint((x==frame[0]*width)|anchor_strength)
+                solver.addConstraint((y==frame[1]*height)|anchor_strength)
                 slots.append(Slot(fact['kind'],fact['owner_port'],Rect(frame[0]*width,frame[1]*height,w,h),
                     index=fact['index'],font=family,font_style=style,size_pt=configuration['size_pt'],
                     min_scale=min(1.,configuration['scale']),font_asset=deepcopy(asset),id=rid,tracking_mm=configuration['tracking_mm'],
                     align=configuration.get('align','left'),distribution_approval=deepcopy(configuration.get('distribution')) if isinstance(configuration.get('distribution'),dict) else None,
                     tracking_min_mm=configuration['tracking_mm'],tracking_max_mm=configuration['tracking_mm'],text_flow=deepcopy(flow)))
                 measurements.append(dict(render_id=rid,text=display,width_mm=tw,height_mm=th,
-                    scale=configuration['scale'],configuration_id=configuration['id']))
+                    scale=configuration['scale'],configuration_id=configuration['id'],baseline_offset_mm=baseline_offset))
             if failure:
                 attempts.append(dict(reason=failure,configuration_ids=[row['id'] for row in selected]));continue
             # Preserve unaffected pair topology; incident edges can be replaced
@@ -324,6 +344,25 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                         elif af[0]+af[2]<=bf[0]+1e-9:solver.addConstraint(ax+aw<=bx)
                         elif bf[0]+bf[2]<=af[0]+1e-9:solver.addConstraint(bx+bw<=ax)
                         else:raise ValueError('No learned separation branch;not a proof of global infeasibility')
+            # Source distributions are preferences, not guessed print tolerances.
+            # Explicitly moved fields and all hard ownership/topology gates win.
+            measured={row['render_id']:row for row in measurements};role_ids={row['role_key']:row['render_id'] for row in facts}
+            applied=[]
+            for relation in profile.get('relations',[]):
+                a=role_ids.get(relation['left']);b=role_ids.get(relation['right'])
+                if not a or not b or a in moved or b in moved or relation['support']<5:continue
+                ax,ay,aw,ah=variables[a];bx,by,bw,bh=variables[b]
+                expressions=dict(left_delta=(bx-ax,width),right_delta=(bx+bw-ax-aw,width),
+                    centre_delta=(bx+bw/2-ax-aw/2,width),vertical_gap=(by-ay-ah,height),horizontal_gap=(bx-ax-aw,width))
+                ba=measured[a].get('baseline_offset_mm');bb=measured[b].get('baseline_offset_mm')
+                if ba is not None and bb is not None:expressions['baseline_delta']=(by+bb-ay-ba,height)
+                for metric,(expression,dimension) in expressions.items():
+                    distribution=relation['residuals'].get(metric,{})
+                    if distribution.get('centre') is None or distribution.get('support',0)<5:continue
+                    strength=kiwi.strength.strong if metric=='baseline_delta' else kiwi.strength.medium
+                    solver.addConstraint((expression==distribution['centre']*dimension)|strength)
+                    applied.append(dict(left=a,right=b,metric=metric,independent_support=distribution['support'],
+                        source_refs=relation.get('source_refs',[]),strength='SOFT_BASELINE_STRONG_OTHER_MEDIUM_BELOW_HARD_INTENT'))
             solver.updateVariables()
             for slot in slots:
                 x,y,w,h=variables[slot.id];slot.rect=Rect(x.value(),y.value(),w,h)
@@ -348,6 +387,9 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
             candidate.risk_context['design_size_admission']=('SOURCE_OR_LEARNED_DOMAIN' if all(
                 config.get('size_admission') in ('OBSERVED_EXACT_SIZE','LEARNED_JOINT_DOMAIN') for config in selected)
                 else 'UNVERIFIED_SIZE_PREVIEW_ONLY')
+            candidate.risk_context['design_geometry_basis']=dict(
+                kind='SHARED_CONDITIONAL_ROLE_PATTERN' if conditioned else 'GROUP_BALANCED_FAMILY_DEFAULT',
+                pattern=pattern,source_refs=conditioned['source_refs'] if conditioned else [],soft_relations=applied)
             candidate.risk_context['design_label_bindings']={fact['render_id']:deepcopy(config.get('label_binding'))
                 for fact,config in zip(facts,selected) if fact['kind']!='logo'}
             candidate.risk_context['design_relations']=[dict(subject=a,relation=relation,object=b)

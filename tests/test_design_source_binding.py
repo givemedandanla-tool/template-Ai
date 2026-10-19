@@ -17,6 +17,19 @@ from test_trusted_samples import admitted
 APP=QApplication.instance() or QApplication([])
 
 class SourceTypographyBindingTests(unittest.TestCase):
+    def test_unknown_source_pt_stays_unknown_when_work_pt_is_independently_measured(self):
+        from unittest.mock import patch
+        observation=deepcopy(self.store._design_observation_document(self.work['id']))
+        observation['original_text_evidence']['runs'][0]['source_pt'].update(value=None,status='UNKNOWN')
+        review=dict(self.review,physical_work_pt=17.,physical_work_measurement_refs=['authored work-space measurement'])
+        with patch.object(self.service.store,'_design_observation_document',return_value=observation):
+            plan=self.service.plan(self.work['id'],self.slot['id'],self.run['id'],self.asset,review)
+        self.assertEqual(plan['typography']['source_page_pt']['status'],'UNKNOWN')
+        self.assertEqual(plan['typography']['source_pt']['value'],17.)
+        contradictory=dict(self.review,word_spacing=.2,source_text_flow=dict(spacing_rule=dict(mode='WORDS',value_mm=.3)))
+        with self.assertRaisesRegex(ValueError,'contradicts'):
+            self.service.plan(self.work['id'],self.slot['id'],self.run['id'],self.asset,contradictory)
+
     def resized_work(self,sx,sy):
         payload=deepcopy(self.work['payload']);payload.update(work_width=90*sx,work_height=54*sy)
         for slot in payload['slots']:

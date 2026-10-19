@@ -23,7 +23,10 @@ def role_key(field):
 
 
 def summary(values, groups=None):
-    values = [number(value) for value in values if value is not None]
+    if groups is not None:
+        pairs=[(group,number(value)) for group,value in zip(groups,values) if value is not None]
+        groups=[group for group,value in pairs];values=[value for group,value in pairs]
+    else:values = [number(value) for value in values if value is not None]
     if not values:
         return dict(status='UNKNOWN', support=0, centre=None, mad=None, observed_min=None, observed_max=None)
     observed = values
@@ -112,11 +115,13 @@ def learn_profiles(family_artifact, examples):
                     if left >= right:
                         continue
                     a, b = _frame(fields[left], example), _frame(fields[right], example)
-                    relations[(left, right)].append(dict(lineage_group=example['lineage_group'],
+                    ba=_metric(fields[left],'baseline','mm');bb=_metric(fields[right],'baseline','mm')
+                    relations[(left, right)].append(dict(lineage_group=example['lineage_group'],example_id=example['id'],
                         dx=b[0]-a[0], dy=b[1]-a[1], left_delta=b[0]-a[0],
                         right_delta=b[0]+b[2]-a[0]-a[2],
                         centre_delta=b[0]+b[2]/2-a[0]-a[2]/2,
-                        vertical_gap=b[1]-a[1]-a[3], horizontal_gap=b[0]-a[0]-a[2]))
+                        vertical_gap=b[1]-a[1]-a[3], horizontal_gap=b[0]-a[0]-a[2],
+                        baseline_delta=(bb-ba)/example['height_mm'] if ba is not None and bb is not None else None))
         role_profiles = []
         for key, samples in sorted(roles.items()):
             normalized = list(zip(*(sample['frame'] for sample in samples)))
@@ -157,8 +162,9 @@ def learn_profiles(family_artifact, examples):
                 transformation_permission='NOT_GRANTED_BY_OBSERVATION', validated_admission=None))
         relation_profiles = [dict(left=key[0], right=key[1], support=len({sample['lineage_group'] for sample in samples}),
             observed_count=len(samples),
+            source_refs=sorted({sample['example_id'] for sample in samples}),
             residuals={metric:summary([sample[metric] for sample in samples],[sample['lineage_group'] for sample in samples])
-                for metric in samples[0] if metric!='lineage_group'},
+                for metric in samples[0] if metric not in ('lineage_group','example_id')},
             hard_alignment='NOT_INFERRED_FROM_UNCALIBRATED_TOLERANCE')
             for key, samples in sorted(relations.items())]
         pattern_groups=defaultdict(set)
@@ -171,10 +177,23 @@ def learn_profiles(family_artifact, examples):
         repeat_keys = sorted({key for row in counts for key in row})
         repeat = {key:dict(observed_counts=sorted({row.get(key, 0) for row in counts}),
                           validated_capacity=None, training_max_is_not_global_limit=True) for key in repeat_keys}
+        conditioned=[]
+        for pattern in sorted({tuple(sorted(count.items())) for count in counts}):
+            members=[row for row,count in zip(rows,counts) if tuple(sorted(count.items()))==pattern]
+            support=len({row['lineage_group'] for row in members});frames=defaultdict(list)
+            for example in members:
+                for field in example['fields']:
+                    frames[role_key(field)].append((example['lineage_group'],_frame(field,example)))
+            conditioned.append(dict(pattern=dict(pattern),independent_support=support,
+                admission='SHARED_CONDITIONAL_GEOMETRY' if support>=5 else 'RARE_OBSERVED_PATTERN_NOT_SHARED_RULE',
+                frames={key:[summary([item[1][i] for item in items],[item[0] for item in items])['centre']
+                    for i in range(4)] for key,items in sorted(frames.items())},
+                source_refs=sorted(row['id'] for row in members)))
         result.append(dict(family_id=family['id'], independent_support=family['independent_support'],
             observed_dimensions_mm=sorted(set(dimensions)), roles=role_profiles,
             data_requirement_profiles=data_profiles, field_capability_profiles=field_profiles,
-            relations=relation_profiles, grammar=dict(optional_roles=[r['key'] for r in role_profiles if r['observed_optional']],
+            relations=relation_profiles,conditional_geometry=conditioned,
+            grammar=dict(optional_roles=[r['key'] for r in role_profiles if r['observed_optional']],
                 observed_joint_counts=[dict(pattern=dict(pattern),independent_support=len({row['lineage_group'] for row,count in zip(rows,counts) if tuple(sorted(count.items()))==pattern})) for pattern in sorted({tuple(sorted(count.items())) for count in counts})],
                 repeated_groups=repeat, observed_orders=[dict(order=list(order), count=order_counts[order]) for order in sorted(order_counts)],
                 default_order=list(preferred),default_semantic_roles=dict(preferred_semantics),

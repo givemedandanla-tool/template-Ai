@@ -18,6 +18,21 @@ def observations(count=12):
 
 
 class JointRegressionTests(unittest.TestCase):
+    def test_reviewed_word_spacing_is_a_joint_response_not_one_mode_per_value(self):
+        rows=observations(8)
+        for i,row in enumerate(rows):
+            value=.1+i*.02;row['joint']['word_spacing_mm']=value
+            row['source_text_flow']=dict(status='HUMAN_CONFIRMED_SOURCE_RULE',evidence_refs=['flow-'+str(i)],
+                break_rule='WORD_WRAP',max_lines_observed=2,line_height_factor=1.,alignment='left',
+                spacing_rule=dict(status='HUMAN_CONFIRMED_SOURCE_RULE',evidence_refs=['words-'+str(i)],
+                    mode='WORDS',value_mm=value,allowed_scripts=['Latn'],boundary_policy='ASCII_SPACE_QT_WORD_SPACING',
+                    last_line='NATURAL',zero_boundaries='KEEP_NATURAL'))
+        artifact=fit_joint(rows)
+        self.assertEqual(len(artifact['modes']),1)
+        prediction=predict_joint(artifact,90.,54.,2.24)[0]['joint']
+        self.assertAlmostEqual(prediction['word_spacing_mm'],.16,delta=.012)
+        self.assertEqual(artifact['modes'][0]['independent_support'],8)
+
     def test_review_provenance_does_not_fragment_shared_style_or_duplicate_weight(self):
         rows=observations(8)
         for i,row in enumerate(rows):

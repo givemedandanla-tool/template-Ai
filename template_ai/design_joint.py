@@ -36,10 +36,20 @@ def fit_joint(samples):
         x = list(row['dimensions_mm']) + [advance / values[0]]
         if not all(_finite(value) and value > 0 for value in x):
             continue
+        flow=row.get('source_text_flow');spacing=(flow or {}).get('spacing_rule',{})
+        learn_words=spacing.get('mode')=='WORDS' and _finite(vector.get('word_spacing_mm'))
+        outputs=list(OUTPUTS)+(['word_spacing_mm'] if learn_words else [])
+        if learn_words:values.append(vector['word_spacing_mm'])
         condition = dict(font_asset=font, align=row['align'], distribution=row['distribution'],
                          label_binding=row['label_binding'], text_flow=row.get('source_text_flow'),
                          word_spacing_mm=vector.get('word_spacing_mm'))
-        groups[digest(style_identity(condition))].append((row, x, values, condition))
+        key=style_identity(condition)
+        if learn_words:
+            key['word_spacing_mm']='JOINT_LEARNED_OUTPUT'
+            key['text_flow']['spacing_rule'].pop('value_mm',None)
+        elif spacing.get('mode')=='CHARACTERS':key['text_flow']['spacing_rule'].pop('value_mm',None)
+        key['outputs']=outputs
+        groups[digest(key)].append((row, x, values, condition))
     modes = []
     for condition_id, rows in sorted(groups.items()):
         all_rows = rows
@@ -90,6 +100,7 @@ def fit_joint(samples):
             residuals = (my-response_centre)/response_scale - regressor.predict((mx-centre)/scale)
             selected_keys={digest([v[0]['lineage_group'],v[1],v[2]]) for v in selected}
             row = dict(condition_id=condition_id, condition=deepcopy(selected[0][3]),
+                outputs=list(OUTPUTS)+(['word_spacing_mm'] if len(selected[0][2])>len(OUTPUTS) else []),
                 independent_support=len({item[0]['lineage_group'] for item in selected}),
                 members=sorted(item[0]['example_id'] for item in selected),
                 source_refs=sorted(item[0]['example_id'] for item in all_rows
@@ -129,7 +140,7 @@ def predict_joint(artifact, width, height, natural_advance_per_pt):
         y = y*np.asarray(mode['y_scale']) + np.asarray(mode['y_centre'])
         if not np.isfinite(y).all():
             continue
-        predictions.append(dict(mode_id=mode['id'], joint=dict(zip(OUTPUTS, y.tolist())),
+        predictions.append(dict(mode_id=mode['id'], joint=dict(zip(mode.get('outputs',OUTPUTS), y.tolist())),
             condition=deepcopy(mode['condition']), support=mode['independent_support'],
             support_distance=distance, scope='MODEL_PROPOSAL_REQUIRES_WHOLE_LAYOUT_VERIFICATION'))
     return sorted(predictions, key=lambda row:(row['support_distance'], -row['support'], row['mode_id']))

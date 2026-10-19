@@ -31,6 +31,7 @@ class RankingEvaluation(DesignEvaluation):
         if type(k) is not int or not 1<=k<=10:raise ValueError('Ranking k must be from 1 to 10')
         job=self.jobs.current(job_id);rows=self.jobs.results(job_id);groups=defaultdict(list);unknown=0;queries=[]
         if job['kind']!='EVALUATE_LAYOUTS':raise ValueError('Ranking report requires actual layout evaluation')
+        if job['phase']!='COMPLETE':raise ValueError('Frozen ranking metrics require a complete evaluation job')
         for index,result in enumerate(rows):
             row=self.store.get('DESIGN_JOB_ITEM',self.jobs.item_key(job_id,index))
             slate=result['learned'].get('ranking_slate',[])

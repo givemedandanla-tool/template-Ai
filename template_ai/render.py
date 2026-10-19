@@ -15,7 +15,7 @@ from .background import background_errors
 from .model import Template
 
 
-def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scale: float, align: str, color: str = "#111827", style: str = "", asset: dict | None = None, tracking_mm: float = 0.0) -> None:
+def prepared_text_metrics(text,family,pt,style='',asset=None,tracking_mm=0.):
     font = QFontDatabase.font(family,style,1000) if style else QFont(family)
     font.setPixelSize(1000)
     if style or asset:
@@ -26,10 +26,14 @@ def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scal
         font=QFontDatabase.font(family,result["style"],1000);font.setPixelSize(1000)
         font.setStyleStrategy(QFont.NoFontMerging); font.setHintingPreference(QFont.PreferNoHinting)
     font.setLetterSpacing(QFont.AbsoluteSpacing,tracking_mm/(pt*MM_PER_POINT/1000))
-    metrics = QFontMetricsF(font)
     factor = pt * MM_PER_POINT / 1000
     from .text_metrics import ink_metrics
     ink=ink_metrics(font,text)
+    return font,ink,factor
+
+
+def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scale: float, align: str, color: str = "#111827", style: str = "", asset: dict | None = None, tracking_mm: float = 0.0) -> None:
+    font,ink,factor=prepared_text_metrics(text,family,pt,style,asset,tracking_mm)
     text_w=ink["width"]*factor*scale
     text_h=ink["height"]*factor
     x = rect.x()

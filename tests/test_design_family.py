@@ -62,6 +62,21 @@ class DesignFamilyTests(unittest.TestCase):
 
 
 class DesignProfileTests(unittest.TestCase):
+    def test_optional_field_patterns_learn_their_own_shared_geometry(self):
+        from template_ai.training_store import digest
+        rows=[example(i,extra=i>=6) for i in range(12)]
+        for row in rows[6:]:row['fields'][1]['rect']['y']=30.
+        family=dict(families=[dict(id='authored-reviewed-family',members=[row['id'] for row in rows],independent_support=12)])
+        family['digest']=digest(family)
+        profile=learn_profiles(family,rows)['families'][0]
+        rules=profile['conditional_geometry']
+        self.assertEqual(len(rules),2)
+        self.assertTrue(all(rule['independent_support']==6 for rule in rules))
+        positions={bool(rule['pattern'].get('p1:email')):rule['frames']['p1:phone:0'][1] for rule in rules}
+        self.assertAlmostEqual(positions[False],22/54)
+        self.assertAlmostEqual(positions[True],30/54)
+        self.assertEqual(profile['runtime_capacity'],'NOT_CALIBRATED')
+
     def test_correlated_versions_do_not_move_shared_geometry_or_default_order(self):
         from template_ai.training_store import digest
         rows=[example(i) for i in range(6)]

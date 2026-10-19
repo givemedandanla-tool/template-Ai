@@ -84,6 +84,8 @@ class DesignQualification:
                     if sample['kind']=='logo':continue
                     if not sample['source_font_ref'] or sample['joint']['source_pt'] is None or sample['align']=='UNKNOWN':
                         errors.append('SOURCE_STYLE_OR_FONT_UNKNOWN')
+                    if any(sample['joint'].get(key) is None for key in ('horizontal_scale','tracking_mm','word_spacing_mm')):
+                        errors.append('SOURCE_SPACING_OR_SCALE_UNKNOWN')
         if errors:raise ValueError('Qualification remains blocked: '+','.join(sorted(set(errors))))
         result=dict(job_id=job_id,job_revision=job['revision'],job_plan_digest=job['plan_digest'],
             summary_digest=digest(job['summary']),item_result_digests=[digest(row) for row in rows],

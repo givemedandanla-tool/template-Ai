@@ -21,7 +21,7 @@ def apply_spacing(font,text,factor,rule):
             or rule.get('last_line')!='NATURAL' or rule.get('zero_boundaries')!='KEEP_NATURAL'):
         raise ValueError('Unsupported or unreviewed spacing boundary/last-line rule')
     allowed=rule.get('allowed_scripts')
-    scripts={script(char) for char in text}-{ 'Zyyy','Zinh','Zzzz' }
+    scripts={script(char) for char in text}-{ 'Zyyy','Zinh' }
     if not isinstance(allowed,list) or not scripts.issubset(set(allowed)):
         raise ValueError('Input script has no reviewed spacing support')
     value=rule.get('value_mm')
@@ -96,7 +96,8 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     width=ink.width()*factor*scale;height=ink.height()*factor
     if width>width_mm+1e-6:raise ValueError('Unbreakable shaped text exceeds flow container')
     return dict(layout=layout,ink=ink,factor=factor,width_mm=width,height_mm=height,lines=lines,
-                text_length=len(text),source_rule=policy,spacing_rule=spacing_rule)
+                text_length=len(text),source_rule=policy,spacing_rule=spacing_rule,
+                first_baseline_mm=(layout.lineAt(0).position().y()+layout.lineAt(0).ascent()-ink.top())*factor if lines else None)
 
 
 def draw_flow(painter,rect,text,slot,scale,tracking_mm):
