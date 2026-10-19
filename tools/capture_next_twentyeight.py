@@ -8,7 +8,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication,QMessageBox,QTableWidgetItem
 from PySide6.QtTest import QTest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tests'))
-from gui_wait import wait_layout
+from gui_wait import wait_layout,wait_for_gui,dispose_main_window
 from runtime_fixture import controlled_resources
 
 from template_ai.gui import MainWindow
@@ -37,11 +37,9 @@ def capture(folder):
         if not dialog.grab().save(str(folder/name)):raise ValueError('Qt capture failed '+name)
         shots.append(name);dialog.hide()
     def wait(fn):
-        end=time.monotonic()+15
-        while not fn() and time.monotonic()<end:app.processEvents();QTest.qWait(10)
-        if not fn():raise ValueError('bounded worker wait failed')
+        if not wait_for_gui(fn,15):raise ValueError('bounded worker wait failed')
     def close(window):
-        if window:window.input_timer.stop();window.font_manager.close();window.library.close();window.deleteLater();app.processEvents()
+        if window:dispose_main_window(window)
     pages=page_fixture.AutomaticPagesTests();pages.setUp();window=None
     try:
         path=pages.pages();report=pages.service.preflight([path]);assert len(report['items'])==2
