@@ -163,6 +163,7 @@ def extract_pdf_glyphs(source,data,*,include_private_text=False):
             horizontal_scale=ObservedScalar(raw['horizontal_scale'],'ratio','OBSERVED','ORIGINAL_PDF_TZ',(ref,)).to_dict(),
             tracking=ObservedScalar(raw['charspace']*known_scale*MM_PER_POINT,'mm','DERIVED',
                 'PDF_TC_BEFORE_HORIZONTAL_SCALE',(ref,)).to_dict() if known_scale else unknown('mm'),
+            baseline_orientation='HORIZONTAL_FORWARD' if matrix[0]>0 and abs(matrix[1])<1e-9 and abs(matrix[2])<1e-9 and matrix[3]>0 else 'UNKNOWN_OR_UNSUPPORTED_ROTATED',
             wordspace_declared_pt=raw['wordspace'],visibility='NONPAINTING_TEXT' if raw['text_render_mode'] in (3,7) else 'PAINT_REQUEST_CLIP_AND_OCG_NOT_VERIFIED',
             text_render_mode=raw['text_render_mode'],writing_mode=glyphs[0]['writing_mode'],
             native_illustrator_editability='UNKNOWN',role_mapping='UNKNOWN')
@@ -174,3 +175,20 @@ def extract_pdf_glyphs(source,data,*,include_private_text=False):
         glyph_count=device.count,runs=runs,scope='SOURCE_PAGE_NOT_AUTOMATIC_WORK_OR_PERSON_MAPPING')
     result['document_digest']=canonical_digest(result)
     return result
+
+
+def resolve_glyph_run(source,reference):
+    """Retrieve addressed glyph detail on demand with exact content verification."""
+    from pathlib import Path
+    from .source_links import verify_source
+    verify_source(source['current_path'],source['hash'])
+    if source['hash']!=reference['source_hash'] or source.get('page',1)!=reference['page']:
+        raise ValueError('Glyph source reference differs')
+    path=Path(source['current_path'])
+    if path.stat().st_size>32_000_000:raise GlyphBudget('Original glyph source byte budget exceeded')
+    evidence=extract_pdf_glyphs(source,path.read_bytes())
+    row=next((row for row in evidence['runs'] if row['id']==reference['run_id']),None)
+    if not row or canonical_digest(row['glyphs'])!=reference['digest'] or len(row['glyphs'])!=reference['count']:
+        raise ValueError('Addressed source glyph detail differs')
+    verify_source(source['current_path'],source['hash'])
+    return row

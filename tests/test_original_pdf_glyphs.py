@@ -73,3 +73,19 @@ class OriginalPdfGlyphTests(unittest.TestCase):
         self.assertEqual(first,extract_pdf_glyphs(source,data))
         self.assertEqual(len(first['runs']),2)
         self.assertGreater(first['runs'][1]['baseline_anchor_mm']['x'],first['runs'][0]['baseline_anchor_mm']['x'])
+
+    def test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly(self):
+        from pathlib import Path
+        import tempfile
+        from template_ai.original_text_observation import original_text_observation
+        from template_ai.original_pdf_glyphs import resolve_glyph_run
+        data,source=self.pdf(b'BT /F1 12 Tf 1 0 0 1 24 70 Tm (Owned glyph reference) Tj ET')
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'owned.ai';path.write_bytes(data);source['current_path']=str(path)
+            doc=original_text_observation(source)
+            run=next(row for row in doc['runs'] if row['id'].startswith('PDF_GLYPH_RUN:'))
+            self.assertNotIn('glyphs',run);self.assertNotIn('_private_text',str(doc))
+            resolved=resolve_glyph_run(source,run['glyph_evidence'])
+            self.assertEqual(len(resolved['glyphs']),run['glyph_evidence']['count'])
+            bad=dict(run['glyph_evidence'],digest='0'*64)
+            with self.assertRaises(ValueError):resolve_glyph_run(source,bad)

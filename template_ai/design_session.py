@@ -59,11 +59,18 @@ class DesignSessions:
             raise ValueError('Session requires a versioned core policy')
         if any(type(v) not in (int,float) or not 0<v<=2000 for v in (width,height)):
             raise ValueError('Invalid physical dimensions')
+        ranker_ref=None
+        if policy.get('use_preference_ranker') is True:
+            from .design_feedback import DesignFeedback
+            active=self.store.get('DESIGN_RANKER_ACTIVE','local-preference')
+            if active:
+                ranker=DesignFeedback(self.library).checked_ranker(active['model_id'])
+                ranker_ref=dict(id=ranker['id'],weights_digest=ranker['weights_digest'])
         with self.store.transaction():
             return self.store._write('DESIGN_SESSION',new_id(),dict(schema=1,input_graph=deepcopy(graph.data),
                 width_mm=width,height_mm=height,actor=actor,model_id=model_id,model_revision=model['revision'],
                 weights_digest=model['weights_digest'],policy=policy,data_revision=1,layout_revision=0,
-                intents=[],layout_undo=[],result_id=None,result_state='NEEDS_SOLVE',confirmation=None),
+                ranker_ref=ranker_ref,intents=[],layout_undo=[],result_id=None,result_state='NEEDS_SOLVE',confirmation=None),
                 0,'design_session_created')
 
     def _edit(self,session_id,expected_revision,request_id,command,change):
@@ -153,10 +160,16 @@ class DesignSessions:
                         relation_changes=len(snapshot['intents']),joint_style_residual=0.),serialized=_serialize(candidate)))
             if previous_family==family['family_id'] and choices:
                 break  # A legal current-family variant precedes cross-family fallback.
-        ranking=rank(choices,dict(version=snapshot['policy']['version'],family_order=snapshot['policy'].get('family_order',[])))
+        preference=None
+        if snapshot.get('ranker_ref'):
+            from .design_feedback import DesignFeedback
+            ranker=DesignFeedback(self.library).checked_ranker(snapshot['ranker_ref']['id'])
+            if ranker['weights_digest']!=snapshot['ranker_ref']['weights_digest']:raise ValueError('Pinned preference weights differ')
+            preference=ranker['artifact']
+        ranking=rank(choices,dict(version=snapshot['policy']['version'],family_order=snapshot['policy'].get('family_order',[])),preference)
         selected=ranking['ranked'][0]['candidate'] if ranking['ranked'] else None
         body=dict(session_id=session_id,data_revision=snapshot['data_revision'],layout_revision=snapshot['layout_revision'],
-            input_digest=digest(graph.data),model_id=model['id'],model_revision=model['revision'],weights_digest=model['weights_digest'],
+            input_digest=digest(graph.data),input_graph=deepcopy(graph.data),ranker_ref=deepcopy(snapshot.get('ranker_ref')),model_id=model['id'],model_revision=model['revision'],weights_digest=model['weights_digest'],
             policy_version=snapshot['policy']['version'],status='FEASIBLE_PREVIEW' if selected else 'NO_SUPPORTED_CANDIDATE',
             selected=deepcopy(selected),attempts=attempts,ranking_scope=ranking['scope'],
             previous_family=previous_family,
@@ -181,6 +194,10 @@ class DesignSessions:
         if digest(body)!=result['content_digest']:raise ValueError('Saved result content differs')
         model,_=self.learning.checked_model(session['model_id'])
         if model['weights_digest']!=result['weights_digest']:raise ValueError('Model/source proof is stale')
+        if session.get('ranker_ref'):
+            from .design_feedback import DesignFeedback
+            ranker=DesignFeedback(self.library).checked_ranker(session['ranker_ref']['id'])
+            if ranker['weights_digest']!=session['ranker_ref']['weights_digest']:raise ValueError('Preference support changed')
         candidate=_candidate(result['selected']['serialized'])
         logos=self.resolve_logos(InputGraph(session['input_graph']),session['width_mm'],session['height_mm'])
         if candidate.dependency_stamp!=layout_dependency(candidate.template,logos):raise ValueError('Font/asset/engine dependencies changed')
@@ -208,6 +225,9 @@ class DesignSessions:
             body['content_digest']=digest(body)
             saved=self.store._write('DESIGN_RESULT',new_id(),body,0,'qualified_instance_result_preserved')
             value=deepcopy(_body(session));value.update(result_id=saved['id'],confirmation=None)
+            review=session.get('family_switch_review',{})
+            if review.get('result_id')==result['id'] and review.get('content_digest')==result['content_digest']:
+                value['family_switch_review']=dict(review,result_id=saved['id'],content_digest=saved['content_digest'],parent_review_result=result['id'])
             self.store._write('DESIGN_SESSION',session_id,value,session['revision'],'qualified_instance_installed_for_explicit_confirmation')
             return saved
 
@@ -226,6 +246,20 @@ class DesignSessions:
             value=deepcopy(_body(session));value['confirmation']=confirmation
             return self.store._write('DESIGN_SESSION',session_id,value,session['revision'],'exact_result_confirmed_without_rule_publication')
 
+    def accepted_key(self,graph,width,height,intents=None):
+        graph.validate(graph.data);data=deepcopy(graph.data);data.pop('revision',None)
+        ordered=sorted(deepcopy(intents or []),key=digest)
+        return digest(dict(input=data,width_mm=float(width),height_mm=float(height),intents=ordered))
+
+    def find_accepted(self,graph,width,height,intents=None,*,production=True):
+        key=self.accepted_key(graph,width,height,intents)
+        reference=self.store.get('DESIGN_OUTPUT_DEFAULT',digest([key,production]))
+        if not reference:return None
+        artifact=self.replay_artifact(reference['artifact_id'])
+        if artifact.get('accepted_input_key')!=key or artifact['production']!=production:
+            raise ValueError('Accepted output default reference differs')
+        return artifact
+
     def export(self,session_id,target,*,preview=True,dpi=150):
         with self.store.transaction():
             session,result,candidate=self.checked_result(session_id);confirmation=session.get('confirmation')
@@ -237,9 +271,16 @@ class DesignSessions:
             data=Path(path).read_bytes();artifact=dict(session_id=session_id,result_id=result['id'],
                 input_digest=result['input_digest'],content_digest=result['content_digest'],
                 path=str(Path(path).resolve()),sha256=hashlib.sha256(data).hexdigest(),bytes=len(data),
-                production=not preview,model_id=result['model_id'],weights_digest=result['weights_digest'])
+                production=not preview,model_id=result['model_id'],weights_digest=result['weights_digest'],
+                accepted_input_key=self.accepted_key(InputGraph(session['input_graph']),session['width_mm'],session['height_mm'],session['intents']),
+                accepted_candidate=_serialize(candidate),accepted_candidate_digest=digest(_serialize(candidate)),
+                supporting_source_hashes=[entry['source_hash'] for entry in self.learning.checked_model(result['model_id'])[1]['entries']])
             try:
-                return self.store._write('DESIGN_ACCEPTED_ARTIFACT',new_id(),artifact,0,'exact_output_artifact_retained')
+                saved=self.store._write('DESIGN_ACCEPTED_ARTIFACT',new_id(),artifact,0,'exact_output_artifact_retained')
+                key=digest([artifact['accepted_input_key'],artifact['production']])
+                prior=self.store.get('DESIGN_OUTPUT_DEFAULT',key)
+                if prior is None:self.store._write('DESIGN_OUTPUT_DEFAULT',key,dict(artifact_id=saved['id'],basis='FIRST_EXPLICITLY_CONFIRMED_OUTPUT_STABLE_UNTIL_EXPLICIT_REVIEW'),0,'accepted_output_default_fixed')
+                return saved
             except BaseException:
                 # Remove only our exact newly created file if recording fails.
                 output=Path(path)
@@ -253,4 +294,29 @@ class DesignSessions:
         path=Path(artifact['path'])
         if path.is_symlink() or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=artifact['sha256']:
             raise ValueError('Exact accepted artifact is unavailable;JSON recomputation is not replay')
+        if artifact.get('production'):
+            saved=artifact.get('accepted_candidate')
+            if not saved or digest(saved)!=artifact.get('accepted_candidate_digest'):
+                raise ValueError('Exact accepted output provenance is unavailable;do not regenerate')
+            from .trusted_sample_pool import source_restriction
+            for source_hash in artifact.get('supporting_source_hashes',[]):
+                if source_restriction(self.store,source_hash,'CROSS_WORK_RULE_LEARNING_LOCAL'):
+                    raise ValueError('Accepted artifact source rights are stopped;do not replace its layout')
+            candidate=_candidate(saved)
+            current_fonts={asset['hash']:asset for asset in self.library.fonts()}
+            for item in candidate.items:
+                if item.slot.kind!='logo':
+                    asset=item.slot.font_asset
+                    if not asset or asset['hash'] not in current_fonts:raise ValueError('Current output font-rights record missing')
+                    item.slot.font_asset=current_fonts[asset['hash']]
+            from .font_evidence import font_rights_diagnostics
+            problems=[reason for row in font_rights_diagnostics(candidate,path.suffix.lstrip('.')) for reason in row['reasons']]
+            if problems:raise ValueError('Current artifact reuse rights unavailable: '+'；'.join(problems))
+            reference=candidate.template.generation_reference or {}
+            graph=reference.get('input_graph')
+            if graph:
+                logos=self.resolve_logos(InputGraph(graph),candidate.template.width_mm,candidate.template.height_mm)
+                for item in candidate.items:
+                    if item.slot.kind=='logo' and (not item.logo or logos.get(item.slot.owner,{}).get('id')!=item.logo.get('id')):
+                        raise ValueError('Exact accepted Logo identity/version is no longer authorized')
         return artifact

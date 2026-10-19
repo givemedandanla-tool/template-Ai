@@ -117,7 +117,7 @@ class DesignLearningDialog(QDialog):
         row=QHBoxLayout();self.train_button=self.button(row,'建立共用規則候選',self.train)
         self.pause_button=self.button(row,'處理完目前項目後暫停',self.pause);layout.addLayout(row)
         row=QHBoxLayout();self.job_choices=QComboBox();row.addWidget(self.job_choices,1);self.button(row,'接續所選工作',self.resume_job);layout.addLayout(row)
-        row=QHBoxLayout();self.models=QComboBox();row.addWidget(self.models,1);self.button(row,'採用所選規則建立預覽',self.activate_preview);layout.addLayout(row)
+        row=QHBoxLayout();self.models=QComboBox();row.addWidget(self.models,1);self.button(row,'採用所選規則建立預覽',self.activate_preview);self.button(row,'啟用通過驗證的正式規則',self.activate_qualified);layout.addLayout(row)
         self.button(layout,'重新讀取已保存狀態',self.refresh)
     def _draft_tab(self):
         layout=self.page('當次稿件');row=QHBoxLayout();self.session_choices=QComboBox();row.addWidget(self.session_choices,1)
@@ -217,6 +217,15 @@ class DesignLearningDialog(QDialog):
         policy=dict(version='desktop-preview-1',basis='本機管理者檢視共用候選後採用預覽',production=False,enable_joint_prediction=True)
         self.learning.activate(identity,active['revision'] if active else 0,self.actor.text(),policy,True)
         self.say('已採用預覽規則；既有定稿與已確認輸出保持原版本。');self.tabs.setCurrentIndex(2)
+    def activate_qualified(self):
+        identity=self.models.currentData()
+        model,_=self.learning.checked_model(identity)
+        from .design_qualification import validate_certificate
+        certificate=validate_certificate(self.library,model)
+        policy=dict(certificate['plan']['layout_policy'],production=True,basis='本機管理者採用已驗證正式規則')
+        active=self.jobs.store.get('DESIGN_ACTIVE','local-layout')
+        self.learning.activate(identity,active['revision'] if active else 0,self.actor.text(),policy,True)
+        self.say('已採用通過驗證的正式規則；既有稿件保留原版本。')
     def save_workspace(self):
         with self.jobs.store.transaction():
             current=self.jobs.store.get('DESIGN_WORKSPACE','desktop')
@@ -273,7 +282,7 @@ class DesignLearningDialog(QDialog):
                 if artifact['session_id']==self.session_id:self.artifacts.addItem(artifact['path'],artifact['id'])
         self.switch_button.setVisible(bool(current and current.get('result_id') and self.jobs.store.get('DESIGN_RESULT',current['result_id']).get('family_switch_requires_review')))
         qualified_model=self.jobs.store.get('DESIGN_MODEL',current['model_id']) if current else None
-        self.formal_button.setEnabled(bool(candidate and qualified_model and qualified_model.get('formal_qualification')=='PASS'))
+        self.formal_button.setEnabled(bool(candidate and qualified_model and qualified_model.get('formal_qualification')=='PASS' and current['policy'].get('production') is True))
         self.formal_button.setToolTip('需要真實授權作品的獨立封存驗證及正式模型資格')
         self.canvas.show_candidate(candidate);self.confirm_button.setEnabled(candidate is not None)
         self.export_button.setEnabled(candidate is not None and bool(current and current.get('confirmation')))

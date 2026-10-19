@@ -123,6 +123,7 @@ def run_design_job(root,job_id,token,cancel=None,progress=None):
             result=execute_item(library,job,index)
             job=jobs.save_item(job_id,token,index,result,time.perf_counter()-started)
             if progress:progress(dict(job_id=job_id,done=job['next_index'],total=len(job['plan']['items'])))
+        if job['cancel_requested'] or cancel and cancel():return jobs.finish(job_id,token,'PAUSED')
         from .design_evaluation import summarize_job
         return jobs.finish(job_id,token,'COMPLETE',summary=summarize_job(library,job,jobs.results(job_id)))
     except Exception as error:

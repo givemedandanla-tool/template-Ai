@@ -15,7 +15,7 @@ import xml.etree.ElementTree as ET
 from .design_observation import ObservedScalar, canonical_digest, effective_point_size, unknown
 from .source_links import verify_source
 
-VERSION = 'original-text-observation-2-pdf-glyphs'
+VERSION = 'original-text-observation-3-addressed-glyphs'
 MAX_BYTES = 32_000_000
 MAX_NODES = 4000
 MAX_RUNS = 512
@@ -131,13 +131,13 @@ def _svg(source, data):
         viewport = None
     result, characters = [], 0
 
-    def walk(node, path, inherited, matrix, in_text=False):
+    def walk(node, path, inherited, matrix, in_text=False, hidden=False):
         nonlocal characters
         kind = node.tag.rsplit('}', 1)[-1]
         style = dict(inherited)
         style.update({k: v for k, v in node.attrib.items() if k in (
             'font-size', 'font-family', 'font-style', 'font-weight', 'writing-mode',
-            'baseline-shift', 'dominant-baseline', 'display', 'visibility')})
+            'baseline-shift', 'dominant-baseline', 'display', 'visibility','opacity')})
         for declaration in node.get('style', '').split(';'):
             key, separator, value = declaration.partition(':')
             if separator:
@@ -146,6 +146,7 @@ def _svg(source, data):
             matrix = _multiply(matrix, _transform(node.get('transform', ''))) if matrix else None
         except ValueError:
             matrix = None
+        hidden=hidden or style.get('display')=='none' or style.get('visibility') in ('hidden','collapse') or style.get('opacity') in ('0','0.0','0%')
         if kind == 'svg' and path:
             matrix = None  # Nested viewport semantics are not guessed.
         if kind in ('text', 'tspan') and node.text and node.text.strip():
@@ -153,6 +154,8 @@ def _svg(source, data):
             if len(result) >= MAX_RUNS or characters > MAX_TEXT:
                 raise EvidenceBudget('SVG text processing budget exceeded')
             row = _run(source, dict(kind='SVG_TEXT', tree_path=path, object_id=node.get('id')), node.text)
+            row['visibility']='NONPAINTING_TEXT' if hidden else 'PAINT_REQUEST_CLIP_NOT_VERIFIED'
+            row['baseline_orientation']='HORIZONTAL_FORWARD' if matrix and matrix[0]>0 and abs(matrix[1])<1e-9 and abs(matrix[2])<1e-9 and matrix[3]>0 else 'UNKNOWN_OR_UNSUPPORTED_ROTATED'
             row['font_declaration'] = {k: style[k][:500] for k in
                 ('font-family', 'font-size', 'font-style', 'font-weight') if k in style}
             safe = (not css and not any(k in style for k in ('font', 'font-size-adjust'))
@@ -184,11 +187,11 @@ def _svg(source, data):
                 except ValueError:
                     pass
             row['stylesheet_unresolved'] = css
-            row['visibility'] = ('UNKNOWN' if css else 'HIDDEN' if style.get('display') == 'none'
-                                 or style.get('visibility') in ('hidden', 'collapse') else 'DECLARED_VISIBLE')
+            row['visibility'] = ('UNKNOWN' if css else 'HIDDEN' if hidden else 'DECLARED_VISIBLE')
+            row['visibility_basis']='SOURCE_STYLE_REQUEST_NOT_CLIP_PROOF'
             result.append(row)
         for index, child in enumerate(node):
-            walk(child, path+[index], style, matrix, in_text or kind in ('text', 'tspan'))
+            walk(child, path+[index], style, matrix, in_text or kind in ('text', 'tspan'),hidden)
             if child.tail and child.tail.strip() and (in_text or kind in ('text', 'tspan')):
                 characters += len(child.tail)
                 if len(result) >= MAX_RUNS or characters > MAX_TEXT:
@@ -224,6 +227,8 @@ def _pdf(source, data):
         row['extraction_context'] = dict(cm=[_finite(v) for v in cm], tm=[_finite(v) for v in tm],
                                         basis='PYPDF_VISITOR_CONTEXT_NOT_EXACT_GLYPH_ORIGIN')
         if font:
+            row['visibility']='UNKNOWN_VISITOR_CONTEXT'
+            row['baseline_orientation']='UNKNOWN_VISITOR_CONTEXT'
             row['font_declaration'] = dict(base_font=str(font.get('/BaseFont', ''))[:500],
                                           subtype=str(font.get('/Subtype', ''))[:100])
             try:
@@ -282,7 +287,11 @@ def original_text_observation(source):
                 glyphs=extract_pdf_glyphs(source,data)
                 document['pdf_glyph_evidence']={k:v for k,v in glyphs.items() if k!='runs'}
                 document['pdf_glyph_evidence']['run_ids']=[row['id'] for row in glyphs['runs']]
-                document['runs'].extend(glyphs['runs'])
+                for row in glyphs['runs']:
+                    positions=row.pop('glyphs')
+                    row['glyph_evidence']=dict(digest=canonical_digest(positions),count=len(positions),
+                        resolver='original_pdf_glyphs.resolve_glyph_run',source_hash=source['hash'],page=source.get('page',1),run_id=row['id'])
+                    document['runs'].append(row)
                 if glyphs['runs']:document['state']='OBSERVED'
             except GlyphBudget:
                 document['pdf_glyph_evidence']=dict(state='BUDGET_EXCEEDED',runs=[],reason='NO_PARTIAL_GLYPH_RESULT')

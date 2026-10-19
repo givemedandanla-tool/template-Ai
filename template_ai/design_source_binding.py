@@ -36,7 +36,11 @@ class SourceTypographyReview:
         run=next((row for row in original['runs'] if row['id']==source_run_id),None)
         if not run or run['text_sha256']!=hashlib.sha256(matches[0]['text'].encode()).hexdigest():
             raise ValueError('Complete original text run does not match this reviewed field;composite spans remain unknown')
-        if run.get('visibility')=='NONPAINTING_TEXT' or run.get('unicode_status','MAPPED')!='MAPPED':
+        if run.get('source_locator',{}).get('kind')=='PDF_TEXT_VISITOR':
+            raise ValueError('Visitor context is not a visible glyph correspondence;select interpreted original glyph evidence')
+        if run.get('baseline_orientation','HORIZONTAL_FORWARD')!='HORIZONTAL_FORWARD':
+            raise ValueError('Rotated or unknown source text orientation needs supported output shaping')
+        if run.get('visibility') in ('NONPAINTING_TEXT','HIDDEN','UNKNOWN') or run.get('unicode_status','MAPPED')!='MAPPED':
             raise ValueError('Hidden or unmapped source glyphs cannot establish a visible field')
         if run.get('writing_mode','HORIZONTAL')!='HORIZONTAL':
             raise ValueError('Vertical source text needs a supported shaping path')
@@ -76,9 +80,9 @@ class SourceTypographyReview:
             source_pt=ObservedScalar(point,'pt','OBSERVED','ORIGINAL_RUN_AND_EXPERT_SOURCE_FONT_REVIEW',refs).to_dict(),
             horizontal_scale=unknown('ratio'),tracking=unknown('mm'),shaped_advance=unknown('mm'),
             glyph_runs=dict(status='UNKNOWN',basis='ORIGINAL_GLYPH_POSITIONS_NOT_RECOVERED'))
-        if run.get('glyphs'):
+        if run.get('glyphs') or run.get('glyph_evidence'):
             typography['glyph_runs']=dict(status='OBSERVED_SOURCE_GLYPH_PLACEMENT',source_run_ref=source_run_id,
-                glyph_digest=canonical_digest(run['glyphs']),
+                glyph_digest=run['glyph_evidence']['digest'] if run.get('glyph_evidence') else canonical_digest(run['glyphs']),
                 bounds_basis=run.get('bounds_basis'),font_correspondence='HUMAN_CONFIRMED_NOT_BINARY_IDENTITY_PROOF')
         for name,unit in [('horizontal_scale','ratio'),('tracking','mm')]:
             original_parameter=run.get(name,{})

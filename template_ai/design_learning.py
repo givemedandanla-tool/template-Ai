@@ -51,6 +51,7 @@ class CrossWorkLearning:
             for node in component:
                 if node.startswith('CONTENT:'):
                     component_ids[node.split(':', 1)[1]] = group_id
+        verified_font_assets=set()
         for sample_id, role in sorted(sample_roles.items()):
             identity(sample_id)
             sample = self.store.get('SAMPLE', sample_id)
@@ -79,6 +80,12 @@ class CrossWorkLearning:
                             or binding['state'] != 'APPROVED'):
                         raise ValueError('Source typography binding is stale or withdrawn')
                     typography = deepcopy(binding['typography'])
+                    asset=typography.get('font_asset_ref');asset_key=digest(asset)
+                    if asset_key not in verified_font_assets:
+                        from .fonts import font_errors
+                        if not asset or font_errors(asset,(asset.get('families') or [''])[0]):
+                            raise ValueError('Bound source font file is unavailable or changed')
+                        verified_font_assets.add(asset_key)
                     binding_refs.append(dict(id=binding['id'], revision=binding['revision'], digest=digest(binding)))
                 field = dict(id=slot['id'], kind=slot['kind'], owner=slot['owner'], index=slot['index'],
                     rect=deepcopy(slot['rect']), source_typography=typography,
@@ -271,4 +278,4 @@ class CrossWorkLearning:
             return self.store._write('DESIGN_FEEDBACK',new_id(),dict(before=deepcopy(before_ref),
                 intent=deepcopy(intent),after=deepcopy(after_ref),accepted=accepted,scope=scope,
                 actor=actor,reason=reason,reason_status='KNOWN' if reason else 'UNKNOWN',
-                global_policy_changed=False,created=time.time()),0,'scoped_design_feedback_recorded')
+                global_policy_changed=False,reference_status='UNVERIFIED_EXTERNAL_REPORT',preference_eligible=False,created=time.time()),0,'scoped_design_feedback_recorded')

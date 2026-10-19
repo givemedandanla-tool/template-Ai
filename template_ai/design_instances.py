@@ -24,6 +24,13 @@ def register_instance(library,session,result,candidate,actor):
     from .design_evaluation import check_layout
     store=TrainingStore.bind(library);model,_=CrossWorkLearning(library).checked_model(session['model_id'])
     certificate=validate_certificate(library,model)
+    if session['policy'].get('production') is not True or session.get('ranker_ref'):
+        raise ValueError('Formal instance needs approved production policy;experimental preference models remain preview-only')
+    expected=deepcopy(certificate['plan']['layout_policy'])
+    for key in ('production','basis','approved'):expected.pop(key,None)
+    current=deepcopy(session['policy'])
+    for key in ('production','basis','approved'):current.pop(key,None)
+    if expected!=current:raise ValueError('Session rules/defaults differ from qualified layout policy')
     if model['formal_qualification']!='PASS':raise ValueError('Production model qualification is incomplete')
     integrity=check_layout(candidate,InputGraph(session['input_graph']),session['intents'])
     if integrity['status']!='PASS':raise ValueError('Current whole layout failed independent checks')

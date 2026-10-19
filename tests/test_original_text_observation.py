@@ -141,3 +141,17 @@ class OriginalTextObservationTests(unittest.TestCase):
         self.assertEqual(first,original_text_observation(source))
         other=original_text_observation(dict(source,page=2))
         self.assertNotEqual(first['runs'][0]['id'],other['runs'][0]['id'])
+
+
+class SourceVisibilityOrientationTests(unittest.TestCase):
+    def test_hidden_and_rotated_original_svg_remain_explicitly_marked(self):
+        import tempfile,hashlib
+        from pathlib import Path
+        from template_ai.original_text_observation import original_text_observation
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)/'owned.svg'
+            path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="90mm" height="54mm" viewBox="0 0 90 54"><g display="none"><text id="hidden" x="5" y="10" font-size="4">Hidden</text></g><text id="turned" transform="rotate(90)" x="5" y="10" font-size="4">Turned</text></svg>')
+            source=dict(current_path=str(path),hash=hashlib.sha256(path.read_bytes()).hexdigest(),page=1,width_mm=90.,height_mm=54.)
+            runs=original_text_observation(source)['runs']
+            self.assertEqual(runs[0]['visibility'],'HIDDEN')
+            self.assertEqual(runs[1]['baseline_orientation'],'UNKNOWN_OR_UNSUPPORTED_ROTATED')
