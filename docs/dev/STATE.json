@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "TEMPLATE_EDITOR_IMPLEMENTATION",
+  "active_task": "TEMPLATE_EDITOR_SOFTWARE_COMPLETE_AWAITING_REMOTE_EVIDENCE_PUBLICATION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-TEMPLATE-EDITOR-CAPTURE-WIP.receipt.json",
   "last_confirmed_commit": "e51ba6046329c757cf1cf89759e2f2d15940237e",
-  "latest_evidence_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+  "latest_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -19,26 +19,9 @@
     "docs/dev/AI_TRAINING_DESIGN_TODOS.md"
   ],
   "next_tasks": [
-    {
-      "id": "CORE-088",
-      "status": "IN_PROGRESS",
-      "next": "Complete approved B01-B08/S01-S08 in existing local desktop;checkpoint every recoverable milestone"
-    },
-    {
-      "id": "LOCAL_SELFTEST",
-      "status": "READY_LOCAL",
-      "next": "Follow LOCAL_LEARNING_RECOVERY_GUIDE;private artworks/fonts/DB stay local,voluntary content-free diagnostics only"
-    },
-    {
-      "id": "REAL_DEVICE_CORPUS_QUALIFICATION",
-      "status": "NOT_RUN_LOCAL_ONLY",
-      "next": "Windows/private corpus/aesthetic/prepress verification remains local;do not ask to upload"
-    },
-    {
-      "id": "WEB_MOBILE_EXE",
-      "status": "DEFERRED",
-      "next": "Do not implement independent frontends/EXE without new authorization"
-    }
+    "Publish final editor evidence checkpoint and fresh Git readback;run require-evidence gate",
+    "Use16native tools through TEMPLATE_EDITING_USER_GUIDE.md",
+    "Keep originalAI8/50 real qualifications and private local data separate"
   ],
   "blocked": [
     {
@@ -62,10 +45,12 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
+  "pending_remote": [
+    "CP-20261019-TEMPLATE-EDITOR-FINAL"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-BASELINE.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-FINAL.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
   "goal_milestone": "Many works -> learned shared families/rules -> synthesized templates and best feasible input-conditioned layouts; new learning0of8 implemented",
@@ -180,7 +165,7 @@
     "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
-  "final_verification": "docs/qa/targeted/current008-final-publication-030.json",
+  "final_verification": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
   "checkpoint_cadence": "每個可恢復工作包及每10分鐘；如受工具等待影響，記錄實際間隔，不虛報達標。",
   "ten_packages": {
     "target": 10,
@@ -541,14 +526,14 @@
     "reason": "GUI/source integration checkpoint exceeded 10 minutes; recorded actual gap, immediate WIP preservation; no claim cadence was met"
   },
   "latest_verification": {
-    "run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-    "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
+    "run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
+    "source_commit": "a97819ee66a3e7ef86f212d855932510e99199f8",
     "software": "PASS",
     "overall": "FAIL",
-    "tests": 1733,
-    "passed": 1733,
-    "modules": 222,
-    "attachments": 369,
+    "tests": 1779,
+    "passed": 1779,
+    "modules": 229,
+    "attachments": 378,
     "scope": "SELF_VERIFIED_SOFTWARE_SYNTHETIC_NOT_REAL_PRODUCTION_QUALIFICATION"
   },
   "failed_evidence_runs": [
@@ -683,7 +668,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Local-only source/font recovery,shared learned rules,explicit spacing,capacity/ranker qualifications and content-free diagnostics implemented and self-verified on authored cases; real corpus/device qualifications separate.",
+  "current_work": "Approved16native family/template editing tools implemented and software self-verified;private corpus/device/prepress qualification separate",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -813,7 +798,7 @@
   ],
   "next_work_package_plan": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
   "next_step": "This local-only recovery/learning software subset is self-verified and remotely persisted. Use guide/local selftest;future diagnostics or core extensions use this checkpoint and current source. Original8/50full real qualification remainsPARTIAL;no private uploads or paid AI API.",
-  "current_work_package": "LOCAL_SELFTEST_READY",
+  "current_work_package": "TEMPLATE_EDITOR_SELFTEST_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": "docs/evidence/local-recovery/targeted-008/result.json",
@@ -853,7 +838,7 @@
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T173234Z.json",
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T034415Z.json"
   ],
-  "current_evidence_validity": "CURRENT_96B1EB9_CODE_TEST_FIXTURE_MANIFEST_MATCHES_FULL005",
+  "current_evidence_validity": "CURRENT_FROZEN_EDITOR_CODE_TEST_FIXTURE_MANIFEST_MATCHES_FULL006",
   "historical_active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "new_learning_progress": {
     "total_work_packages": 8,
@@ -1188,7 +1173,7 @@
       "recovery": "All source/staged work included in next exact snapshot"
     }
   ],
-  "current_source_verification": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+  "current_source_verification": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
   "current_source_regression_status": "COMPLETE_SOFTWARE_PASS_EXTERNAL_QUALIFICATION_SEPARATE",
   "last_checkpoint_cadence_note": "2026-10-19:feedback snapshot07:20 pushed/readback07:32;final-source freeze~07:44. Snapshot/readback windows exceeded10min during structural family correction;actual deviation recorded,not erased.",
   "ai_source_joint_focused_20261019": {
@@ -1254,7 +1239,7 @@
   },
   "ai_final_source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
   "user_corpus_training": "NOT_STARTED_LOCAL_ONLY_BY_USER_DECISION",
-  "current_scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
+  "current_scope_audit": "docs/dev/TEMPLATE_EDITING_16_CLAUSE_AUDIT_20261019.json",
   "last_observed_formal_progress": {
     "phase": "COMPLETE_SOFTWARE_SELF_VERIFIED_EXTERNAL_QUALIFICATION_PENDING",
     "formal_complete": true,
@@ -1273,25 +1258,12 @@
     "report": "docs/dev/history/HISTORICAL_PENDING_CHECKPOINT_ARCHIVES_20261019.json",
     "remaining_pending": []
   },
-  "latest_full_report": "docs/dev/AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.json",
+  "latest_full_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
   "remote_formal_evidence_publication": {
-    "status": "PASS",
-    "governance_require_evidence": {
-      "status": "PASS",
-      "requirements": 169,
-      "completed_scoped": 163,
-      "parent_topics": 75,
-      "tests_known": 1733
-    },
-    "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-    "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
-    "remote_evidence_commit": "f833541498230e8bf8a7e3014f3a818db2397162",
-    "checkpoint": "CP-20261019-LOCAL-RECOVERY-FINAL",
-    "checkpoint_receipt": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-FINAL.receipt.json",
-    "remote_attachment_git_blobs_verified": 369,
-    "verification": "Native fresh Git fetch, exact HEAD/tree plus every formal attachment Git blob SHA; no REST API claim",
-    "original_requirements_and_scopes_unchanged": true,
-    "real_production_qualification_not_claimed": true
+    "status": "PENDING",
+    "formal_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
+    "source_commit": "a97819ee66a3e7ef86f212d855932510e99199f8",
+    "all_attachments_local_hash_verified": true
   },
   "final_checkpoint_cadence_note": "Final native capture/publication review checkpoint interval exceeded10minutes;earlier live checkpoints and frozen source preserved;not a claim of strict cadence compliance",
   "local_recovery_decision": "docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md",
@@ -1326,31 +1298,83 @@
     "automatic_private_upload": false
   },
   "latest_editor_tools_research": {
-    "status": "APPROVED_IMPLEMENTATION_IN_PROGRESS",
+    "status": "IMPLEMENTED_SELF_VERIFIED_SOFTWARE_SCOPE",
     "report": "docs/dev/TEMPLATE_EDITING_TOOLS_RESEARCH_20261019.md",
     "sources": "docs/dev/TEMPLATE_EDITING_RESEARCH_SOURCES_20261019.json",
     "baseline_commit": "336adad792f337209533b93df9fa5d2f625bdf7e",
-    "runtime_changed": false,
-    "requirements_or_completion_changed": false,
-    "next_step": "User reviews research proposal;map accepted increments to original requirements before implementation;reuse existing tools;no web/mobile/EXE",
+    "runtime_changed": true,
+    "requirements_or_completion_changed": true,
+    "next_step": "Use local desktop tools;real corpus/Windows/prepress qualifications remain separate",
     "publication_status": "REMOTE_VERIFIED",
     "snapshot_commit": "4bb862d82b2e6e6b83f316ead6ba3626b94c03b8",
     "receipt": "docs/checkpoints/CP-20261019-TEMPLATE-EDITING-RESEARCH.receipt.json"
   },
   "editor_tools_contract": "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json",
   "editor_tools_progress": {
-    "phase": "ALL1779_TESTS_PASS_NATIVE_CAPTURE_RUNNING",
-    "completed_tool_acceptance": 0,
+    "phase": "FULL_SOFTWARE_PASS_PUBLICATION_PENDING",
+    "completed_tool_acceptance": 16,
     "total_tool_acceptance": 16,
-    "targeted_tests_passed": 15,
-    "targeted_evidence": "docs/qa/targeted/template-editor/stage1-workspace-rules.log",
-    "next": "Wait original006native capture;do not snapshot mutable capture files;then audit/publish all evidence",
-    "scenario_batch_tests_passed": 6,
-    "native_worker_case_passed": true,
-    "all_family_targeted_previous": 29,
-    "source_form_tests_passed": 2,
-    "targeted_unique_new_tests": 45,
+    "next": "Publish all final attachments/checkpoint;fresh native Git readback;require-evidence governance check",
     "live_progress_snapshot": "docs/evidence/template-editor/full006-progress-002.json",
-    "unit_stage": "docs/evidence/template-editor/full006-unit-stage.json"
-  }
+    "unit_stage": "docs/evidence/template-editor/full006-unit-stage.json",
+    "evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
+    "source_commit": "a97819ee66a3e7ef86f212d855932510e99199f8",
+    "early_targeted_history": {
+      "targeted_tests_passed": 15,
+      "targeted_evidence": "docs/qa/targeted/template-editor/stage1-workspace-rules.log",
+      "scenario_batch_tests_passed": 6,
+      "native_worker_case_passed": true,
+      "all_family_targeted_previous": 29,
+      "source_form_tests_passed": 2,
+      "targeted_unique_new_tests": 45
+    },
+    "full_tests_passed": 1779,
+    "new_unique_tests_passed": 46,
+    "new_family_unique_tests_passed": 45
+  },
+  "previous_remote_formal_evidence_publication": {
+    "status": "PASS",
+    "governance_require_evidence": {
+      "status": "PASS",
+      "requirements": 169,
+      "completed_scoped": 163,
+      "parent_topics": 75,
+      "tests_known": 1733
+    },
+    "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+    "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
+    "remote_evidence_commit": "f833541498230e8bf8a7e3014f3a818db2397162",
+    "checkpoint": "CP-20261019-LOCAL-RECOVERY-FINAL",
+    "checkpoint_receipt": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-FINAL.receipt.json",
+    "remote_attachment_git_blobs_verified": 369,
+    "verification": "Native fresh Git fetch, exact HEAD/tree plus every formal attachment Git blob SHA; no REST API claim",
+    "original_requirements_and_scopes_unchanged": true,
+    "real_production_qualification_not_claimed": true
+  },
+  "previous_next_tasks": [
+    {
+      "id": "CORE-088",
+      "status": "IN_PROGRESS",
+      "next": "Complete approved B01-B08/S01-S08 in existing local desktop;checkpoint every recoverable milestone"
+    },
+    {
+      "id": "LOCAL_SELFTEST",
+      "status": "READY_LOCAL",
+      "next": "Follow LOCAL_LEARNING_RECOVERY_GUIDE;private artworks/fonts/DB stay local,voluntary content-free diagnostics only"
+    },
+    {
+      "id": "REAL_DEVICE_CORPUS_QUALIFICATION",
+      "status": "NOT_RUN_LOCAL_ONLY",
+      "next": "Windows/private corpus/aesthetic/prepress verification remains local;do not ask to upload"
+    },
+    {
+      "id": "WEB_MOBILE_EXE",
+      "status": "DEFERRED",
+      "next": "Do not implement independent frontends/EXE without new authorization"
+    }
+  ],
+  "original_ai_scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
+  "editor_tools_acceptance_audit": "docs/dev/TEMPLATE_EDITING_16_CLAUSE_AUDIT_20261019.json",
+  "editor_tools_user_guide": "docs/dev/TEMPLATE_EDITING_USER_GUIDE.md",
+  "editor_tools_final_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json"
 }

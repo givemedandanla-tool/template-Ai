@@ -1,17 +1,19 @@
 # Template AI 精簡接續
 
-目前任務：CORE-088家族與專業規則工作台已實作，16項驗收測試已綁定，完整回歸尚未完成，不能宣稱VERIFIED。先讀STATE.editor_tools_progress、TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json與TEMPLATE_EDITING_USER_GUIDE.md；最新原始碼以STATE.last_confirmed_checkpoint為準。45個家族新增測試加1個掃描資源暫停／恢復回歸，合計46個新增測試，並非完整真實作品資格。001啟動參數被拒絕0測試；002完整1778項為1776PASS/2FAIL，未採用。已修正測試資源前提及真實掃描待資源狀態。下一步凍結修正來源、執行RUN-TEMPLATE-EDITOR-ALL-003、逐項審核及GitHub保存。以下96b1eb9與1733PASS為前一輪基準。
+執行 `python tools/resume_status.py`，讀STATE及本文件。當前核准的家族管理／單一規則編輯16工具已實作並在Linux本體及自製來源自我驗證。分支 `dev/v0.1-first-version`／PR #2，未合併main；網頁／手機／EXE仍延後。不要重新展開完整聊天或大型倉庫。
 
-程式來源 `96b1eb9dc23fe39fd5233d17513cc42f8ed547f8`；分支 `dev/v0.1-first-version`／PR #2，未合併main。完整 `docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json`：1733/1733 PASS、222健康獨立模組程序、0未處理runtime error、原生capture exit0、369附件逐件hash通過、來源未變。保留原1685個ID，新增48；不累加歷史／目標測試。整體FAIL僅5外部資格未驗證（Windows安裝、實際原生AI1/2/4人、VivoBook），軟體PASS分開判讀。
+程式凍結來源 `a97819ee66a3e7ef86f212d855932510e99199f8`；完整 `RUN-TEMPLATE-EDITOR-ALL-006`：1779/1779 PASS、229健康模組、3受控worker、原生擷取exit0、378附件hash核對、來源未變。原1733個測試ID全保留，新增46個唯一測試（45家族工具＋1掃描資源暫停／恢復），不累計重跑。整體FAIL僅5既有外部資格未驗證，軟體PASS分開判讀。
 
-執行 `python tools/resume_status.py`，讀STATE及[本輪報告](AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.md)、[本地指引](LOCAL_LEARNING_RECOVERY_GUIDE.md)、[8包50條核對](AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.md)。模型參數見 LOCAL_LEARNING_MODEL_DETAILS.md。GitHub最後snapshot/receipt以STATE.last_confirmed_checkpoint及pending_remote為準；若仍在發布，只補完保存／require-evidence檢查，不重跑已通過測試。
+先讀[TEMPLATE_EDITING_FINAL_REPORT_20261019.md](TEMPLATE_EDITING_FINAL_REPORT_20261019.md)、[16條核對](TEMPLATE_EDITING_16_CLAUSE_AUDIT_20261019.md)及[操作指引](TEMPLATE_EDITING_USER_GUIDE.md)。入口：模板目錄→「家族與共用規則」，或設計學習視窗第4頁「家族與專業規則」。精確下一步看STATE.editor_tools_progress；若仍發布中，僅補GitHub保存／讀回／require-evidence，不因文件變動重跑已通過測試。
 
-本輪已實作本地雙路復原、OCR/字面比對、跨作品共同規則、複合字面/標籤/圖示、明確詞/塑形群分散、物件等距、容量CI、排序資格及私密診斷。語意/外觀證據各綁實際管道/hash，查詢ID可重建且不改原稿。缺證據為UNKNOWN/拒絕，不把預設10pt當真值。進階複合來源標註、容量校準及正式資格有後台API，尚非完整GUI精靈。本體支援輸入→完整稿→相對微調→局部更正→預覽確認→輸出/重開，確認稿重複下單保留精確檔案。
+大量工具：健康／條件搜尋、智慧工作集、並排原稿及功能差異、固定版本批次／局部回復、來源／字型影響、代表與完整TRAIN案例重播、暫停接續及既有本地備份。單一家族：角色／畫布同步、資料與容器相容、來源支持關係強度、已支持變體／預設排列、整組字面風格、完整run／字型／標籤／圖示核對、案例與本體會話往返、草稿／新候選／明確採用與回退。沿用ObjectCanvas、TrainingStore、DesignJobs與核心塑形／Kiwi，不建立平行真值。
 
-22件合成作品（12TRAIN/6VALIDATION/4HOLDOUT）→2共用家族、0逐作品全域模板、10件評估/容量校準/穩定輸出。1000/3000 PDF相容AI實際匯入/原始glyph/字面量測/fit PASS：739.731s/2186.786s；17件暫停重開前綴一致、原稿不變。性能跨診斷/UI修訂，與固定來源回歸分列，不含私人AI結構、完整Windows字庫搜尋或指定設備資格。
+原稿事實、共用家族、固定模板、單次實例與確認稿分開。規則候選不繼承資格，不任意修改擬合係數；正式Gate、歸屬、資產／權利及來源過期防護保留。工程案例不自動成為訓練真值，代表抽樣不作全庫美學保證。3000家族descriptor測的是metadata查詢／分頁／重開，來源故意STALE，與既有1000／3000份PDF相容AI匯入fit證據分開。
 
-歷史001/002主動中斷、003/004有真實來源管道/Logo真值失敗，四輪均未採用；原因與結果在各run/interruption.json，兩個失敗ID在005均PASS。詳細修正及目標測試在WORK_LOG/targeted-009/010，不重寫原失敗。原8包50條完整資格仍8部分/0完整真實資格；舊28題25完整/3部分；原75主題69驗證/3部分/3延後，CORE87/GOV7同範圍重驗，169registry的163scoped完成數不變。
+原75主題69驗證／3部分／3延後；CORE87→88（只新增CORE-088），GOV7；170登錄、scoped完成163→164。原AI8包50條仍8部分／0完整真實資格，舊28題25完整／3部分。既有169項狀態與驗收範圍未變，只更新同範圍證據。原AI軟體／模型／私密診斷及50條細節見AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.md與LOCAL_LEARNING_MODEL_DETAILS.md。
 
-私人作品/字型/DB/模型/確認稿留本機，不再索取上傳；本機資料需本地備份，GitHub不代存。無付費AI API/自動上傳；診斷僅由使用者自願匯出固定代碼/數量/版本白名單。客戶只表達相對位置，pt/hscale/欄框/切齊/分散由核心控制。網站/手機/EXE延後，card-interface只作情境參考。按需讀檔，新對話只帶版本與交接；無明確指令不啟動代理、不合併main。checkpoint節奏偏差與capture期間先保存靜態測試Git提交的原因已如實記錄。
+001啟動參數被拒絕0測試；002完整1778項有2FAIL；003有1品質佇列FAIL及工作台原生退出造成1缺漏，均保留且未採用。固定工作流程資源前提、掃描PAUSED_RESOURCES真實狀態、測試自有視窗釋放順序及20秒原生事件等待後才跑004。004同樣在60秒堆疊診斷點退出，1778PASS／1779計畫仍FAIL；只保留fatal捕捉的同案例2PASS70.759s後，改成真正逾時才要求堆疊，保留fatal及600秒上限、native／缺漏必敗。7項基礎設施含真實abort／逾時擷取PASS，再跑005；005批次匯入測試清理卡在提示框，721結果PASS時主動中斷並保存，不採用。補齊該測試資源隔離、原生事件等待與有界清理後才跑006。精確原生根因未完全證明；資料見TEMPLATE_EDITOR_DIAGNOSTIC_TIMER_REVIEW_20261019.json及TEMPLATE_EDITOR_QT_LIFECYCLE_REVIEW_20261019.json。單獨重跑或診斷PASS未替換原失敗。
 
-2026-10-19編輯工具方案已獲使用者明確授權實作：TEMPLATE_EDITING_TOOLS_RESEARCH_20261019.md／TEMPLATE_EDITING_RESEARCH_SOURCES_20261019.json。回讀23項訪談索引與相關程式／測試；提出大量家族管理及單一家族規則編輯，既有目錄／畫布／批次／版本沿用。目前CORE-088 IN_PROGRESS，契約TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json，16項工具驗收(B01-B08/S01-S08)。沿用原工具，持續本體實作與驗證；原75主題及AI8包50條不變，新增CORE功能分開計數。網頁／手機／EXE維持延後。
+私人作品、字型、DB、模型及確認稿留本機，不索取上傳；GitHub保存程式與匿名證據，本地私人庫須自行本地備份。無新付費API／自動上傳。客戶只調必要相對位置，pt／字寬／框／切齊／分散由核心控制；不恢復已撤回細參數控制。Windows／VivoBook、真實私人原生AI全面還原及物理印前資格另行本地驗收。
+
+每可恢復階段與每10分鐘checkpoint，遠端新鮮讀回才REMOTE_VERIFIED；具體以STATE.last_confirmed_checkpoint／pending_remote為準。零例行問答；沒有明確指令不啟動代理、不合併main、不擅自擴充網站或EXE。歷史交接已分檔保存。

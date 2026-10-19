@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 當前：家族編輯工具已完成軟體自我驗證
+
+先以STATE／ACTIVE_DEVELOPMENT_HANDOFF及TEMPLATE_EDITING_FINAL_REPORT_20261019.md接續。CORE-088的16工具已在本體實作，來源a97819e、1779PASS／229健康模組／378附件；實際GitHub發布是否完成看STATE。原AI8包50條完整真實資格仍8部分／0完整，原75主題與既有169項驗收狀態未變；CORE新增1項，勿把16子驗收當新增工作包。入口及限制見TEMPLATE_EDITING_USER_GUIDE.md。以下96b1eb9／1733PASS等為歷史基準，以當前精簡交接為準。已完成驗證後只補保存與讀回，不因文檔修訂重跑整套測試。
+
 ## 2026-10-19最新實作入口
 
 最新本地還原實作已超過下列851ef2a歷史範圍：先讀STATE／ACTIVE_DEVELOPMENT_HANDOFF／LOCAL_LEARNING_RECOVERY_GUIDE.md。私人作品不提供雲端是已確認要求，不能以此停工或反覆索取；完整新回歸以STATE最新run為準，合成PASS不當真實生產資格。

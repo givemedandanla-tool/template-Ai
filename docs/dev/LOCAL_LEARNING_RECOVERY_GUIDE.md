@@ -1,5 +1,7 @@
 # 本地學習、來源還原與除錯
 
+目前已有本體『家族與專業規則』工作台：可用圖形介面核對完整文字run／混合字型／固定標籤／欄位圖示、管理家族規則草稿及案例試排；入口與範圍見[TEMPLATE_EDITING_USER_GUIDE.md](TEMPLATE_EDITING_USER_GUIDE.md)。容量校準及正式資格建立仍依原有後台流程與Gate；下列模型／原生AI限制保留，原始001–005本地復原報告是歷史基準。
+
 本輪依據：`docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md`。不需要把私人作品或字型提供給 Codex。原稿、字型、資料庫、模型、訓練與確認稿都留在本機；程式沒有把它們自動上傳 GitHub 或 AI 服務。依賴套件／OCR 語言檔安裝可能需要下載，不會因此上傳作品。
 
 本輪實作、完整測試及未驗證範圍見 [本輪交付報告](AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.md)。
@@ -31,7 +33,7 @@ $env:TEMPLATE_AI_TESSDATA = "C:\Program Files\Tesseract-OCR\tessdata"
 4. 選擇候選後帶回來源核對草稿；核對狀態預設不勾選，不自動授予印製／嵌入權利。沒有原生文字資訊時，可明確採用已核對的影像字型／幾何候選。推估作品字級標為 DERIVED，原生字級仍可為 UNKNOWN；未知詞距也不假造為零。
 5. 依既有流程核對來源、作品／欄位、雜訊、用途與資料分組，再在共用學習頁指定 TRAIN／VALIDATION／HOLDOUT、建立共用模型。模型訓練與預覽在本地進行。正式數位輸出資格須依本地隔離驗證與來源／字型／政策取得；不需要上傳私人驗收資料。
 
-多 run／多字型、分離標籤與向量欄位圖示的後台 API：`SourceTypographyReview.plan_composite`、`plan` 的 `source_text_flow.presentation`。字元分段需完整、不重疊；可核對字詞切分或固定前綴規則，未核對的字元區間只允許原文字回播。這些進階結構目前透過後台 API／合成案例建立，尚非完整圖形化標註精靈。公司 Logo 仍走既有 LogoStore；欄位圖示不能冒充公司身份。
+多 run／多字型、分離標籤與向量欄位圖示的後台 API：`SourceTypographyReview.plan_composite`、`plan` 的 `source_text_flow.presentation`。字元分段需完整、不重疊；可核對字詞切分或固定前綴規則，未核對的字元區間只允許原文字回播。這些已支持的進階結構也可由家族工作台的來源核對表單建立；後台API保留，未支持的新結構仍需另外驗證。公司 Logo 仍走既有 LogoStore；欄位圖示不能冒充公司身份。
 
 參數、學習流程與數學方法見 [本地模型細節](LOCAL_LEARNING_MODEL_DETAILS.md)。
 

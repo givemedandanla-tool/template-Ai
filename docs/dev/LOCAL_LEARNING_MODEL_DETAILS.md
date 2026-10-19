@@ -1,6 +1,8 @@
 # 本地模型、參數與學習邊界
 
-對應程式來源：`96b1eb9dc23fe39fd5233d17513cc42f8ed547f8`。操作見 [本地學習復原指引](LOCAL_LEARNING_RECOVERY_GUIDE.md)，證據及未驗證範圍見 [本輪報告](AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.md)。
+目前已有本體『家族與專業規則』工作台：可用圖形介面核對完整文字run／混合字型／固定標籤／欄位圖示、管理家族規則草稿及案例試排；入口與範圍見[TEMPLATE_EDITING_USER_GUIDE.md](TEMPLATE_EDITING_USER_GUIDE.md)。容量校準及正式資格建立仍依原有後台流程與Gate；下列模型／原生AI限制保留，原始001–005本地復原報告是歷史基準。
+
+模型架構基準來源（當前程式來源以STATE為準）：`96b1eb9dc23fe39fd5233d17513cc42f8ed547f8`。操作見 [本地學習復原指引](LOCAL_LEARNING_RECOVERY_GUIDE.md)，證據及未驗證範圍見 [本輪報告](AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.md)。
 
 ## 資料如何變成共用模型
 
