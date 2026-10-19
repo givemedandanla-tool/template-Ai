@@ -1,6 +1,6 @@
 # Template AI 精簡接續
 
-目前任務：CORE-088家族與專業規則工作台已實作，16項驗收測試已綁定，完整回歸尚未完成，不能宣稱VERIFIED。先讀STATE.editor_tools_progress、TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json與TEMPLATE_EDITING_USER_GUIDE.md；最新原始碼以STATE.last_confirmed_checkpoint為準。45個新增測試分為44項目標套件及1項3000家族metadata索引測試，並非完整真實作品資格。下一步凍結來源、執行RUN-TEMPLATE-EDITOR-ALL-001、逐項審核及GitHub保存。以下96b1eb9與1733PASS為前一輪基準。
+目前任務：CORE-088家族與專業規則工作台已實作，16項驗收測試已綁定，完整回歸尚未完成，不能宣稱VERIFIED。先讀STATE.editor_tools_progress、TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json與TEMPLATE_EDITING_USER_GUIDE.md；最新原始碼以STATE.last_confirmed_checkpoint為準。45個家族新增測試加1個掃描資源暫停／恢復回歸，合計46個新增測試，並非完整真實作品資格。001啟動參數被拒絕0測試；002完整1778項為1776PASS/2FAIL，未採用。已修正測試資源前提及真實掃描待資源狀態。下一步凍結修正來源、執行RUN-TEMPLATE-EDITOR-ALL-003、逐項審核及GitHub保存。以下96b1eb9與1733PASS為前一輪基準。
 
 程式來源 `96b1eb9dc23fe39fd5233d17513cc42f8ed547f8`；分支 `dev/v0.1-first-version`／PR #2，未合併main。完整 `docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json`：1733/1733 PASS、222健康獨立模組程序、0未處理runtime error、原生capture exit0、369附件逐件hash通過、來源未變。保留原1685個ID，新增48；不累加歷史／目標測試。整體FAIL僅5外部資格未驗證（Windows安裝、實際原生AI1/2/4人、VivoBook），軟體PASS分開判讀。
 

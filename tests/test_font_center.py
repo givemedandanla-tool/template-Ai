@@ -192,6 +192,8 @@ class BackgroundJobTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory(); self.addCleanup(self.temp.cleanup)
         self.window=MainWindow(Path(self.temp.name)/'gui'); self.addCleanup(self.window.close)
+        from runtime_fixture import controlled_resources
+        controlled_resources(self.window)
         self.errors=[]
         self.window.error=lambda text:self.errors.append((text,threading.get_ident()))
         self.owner=threading.get_ident()

@@ -23,6 +23,8 @@ VERSIONS=dict(model='synthetic-model-1',parser='synthetic-parser-1',ocr='synthet
 class QualityOperationsTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name);self.w=MainWindow(self.root/'data');self.addCleanup(self.w.library.db.close);self.store=TrainingStore(self.w.library);self.source,self.work=source_work(self.w.library,self.root);confirmed(self.store,self.work);self.sample=admitted(self.store,self.work);self.dataset=frozen(self.store,[self.sample],'HOLDOUT')
+        from runtime_fixture import controlled_resources
+        controlled_resources(self.w)
         self.predictions=[{'sample_id':self.sample['id'],'slot_id':s['id'],'kind':s['kind'],'owner':s['owner']} for s in self.sample['label_slots']]
     def evaluate(self,predictions=None,versions=None):
         p=evaluation_plan(self.store,self.dataset['id'],versions or VERSIONS,self.predictions if predictions is None else predictions);return save_evaluation(self.store,p,'Synthetic Reviewer',True)
@@ -96,3 +98,22 @@ class QualityOperationsTests(unittest.TestCase):
         self.assertEqual(self.store.sample_state(sample['id']),'APPROVED')
         with patch('template_ai.quality_evaluation_panel.QMessageBox.question',return_value=QMessageBox.Yes):recheck.start()
         self.assertEqual(self.store.sample_state(sample['id']),'QUARANTINED');self.assertIn('REVIEW_REQUIRED',recheck.status.text())
+
+    def test_resource_pause_keeps_scan_pending_and_resume_returns_actual_result(self):
+        from dataclasses import replace
+        from gui_wait import wait_for_gui
+        directory=self.root/'pressure-scan';directory.mkdir();(directory/'input.svg').write_text('owned scan candidate')
+        root=register_root(self.store,directory);dialog=SourceScanDialog(self.w);self.addCleanup(dialog.deleteLater)
+        dialog.roots.setCurrentIndex(dialog.roots.findData(root['id']))
+        snapshot=self.w.runtime.monitor.snapshot
+        self.w.runtime.monitor.snapshot=lambda:replace(snapshot(),cpu_percent=100)
+        dialog.scan();self.w.source_watch.debounce.stop();self.w.source_watch.dispatch()
+        self.assertTrue(dialog.running);self.assertFalse(dialog.scan_button.isEnabled())
+        self.assertIn(root['id'],self.w.source_watch.pending);self.assertFalse(self.w.source_watch.running)
+        self.assertIsNone(self.store.get('SCAN_ROOT',root['id'])['last_success'])
+        self.assertEqual(self.store.count('SCAN_CANDIDATE'),0);self.assertIn('CPU_PRESSURE',dialog.status.text())
+        self.w.runtime.monitor.snapshot=snapshot
+        self.assertTrue(wait_for_gui(lambda:not dialog.running,5),'resource recovery did not finish real scan')
+        self.assertTrue(dialog.scan_button.isEnabled());self.assertFalse(self.w.busy)
+        self.assertIsNotNone(self.store.get('SCAN_ROOT',root['id'])['last_success'])
+        self.assertEqual(self.store.count('SCAN_CANDIDATE'),1);self.assertIn('新來源候選',dialog.details.toPlainText())

@@ -112,7 +112,7 @@ class SourceScanDialog(QDialog):
             if payload['state'] in ('REMOVED','PAUSED'):
                 if payload['state']=='REMOVED':self.dirty=False
                 self.reload()
-            if payload['state'] not in ('SCANNING','WAITING_BACKGROUND_SLOT','PAUSING'):
+            if payload['state'] not in ('SCANNING','WAITING_BACKGROUND_SLOT','PAUSING','PAUSED_RESOURCES'):
                 self.running=False;self.render_current()
             self.scan_button.setEnabled(not self.running)
         except sqlite3.Error as error:
