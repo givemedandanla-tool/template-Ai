@@ -1,0 +1,33 @@
+{
+  "id": "AI-ORIGINAL-TEXT-LINEAGE-20261019",
+  "status": "TARGETED_MECHANICS_PASS_NOT_FULL_PACKAGE_OR_REAL_CORPUS",
+  "executed_utc": "2026-10-19T05:17:14.305289+00:00",
+  "command": "QT_QPA_PLATFORM=offscreen PYTHONPATH=tests .venv/bin/python -m unittest test_original_text_observation test_design_observation test_quality_groups test_source_text_evidence test_automatic_training -q",
+  "tests": 59,
+  "passed": 59,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 24.268,
+  "initial_diagnostic": "New embedded-program test fixture initially omitted a Type1 Encoding section; corrected authored fixture, subsequent 12/12 and combined59/59 pass. No product test suppression.",
+  "scope": [
+    "Original authored SVG font declarations and physical transforms",
+    "Original PDF-compatible .ai text state and embedded program hash; not Illustrator private editability",
+    "Source-page evidence never inferred as field/person/font-asset truth",
+    "Known cross-file correlation changes stale observation plans",
+    "Original hash verification,bounded parsing,unknowns,idempotency and existing automatic workflow"
+  ],
+  "not_verified": [
+    "Private native Illustrator corpus",
+    "Exact PDF glyph positions/shaping or physical source pt from visitor context",
+    "Full near-duplicate discovery/real-corpus lineage qualification",
+    "Model training or complete AI01 acceptance"
+  ],
+  "source_files": {
+    "template_ai/original_text_observation.py": "36875db9800118dfecdb2ca63d56a6814a1e1ab5bf8ba5325ff624b24e6f311b",
+    "template_ai/design_observation.py": "255e58b284a97d510f3aba40932fa61451eee8d8a12371e8743f1b64f93fa603",
+    "template_ai/design_observation_store.py": "884945432fa826422293d05131c1bfa2caf8b7229ac6c424facf08e27dd8bc2d",
+    "tests/test_original_text_observation.py": "a38fc2090bf791ef55c19c3b3a736ba56e171c8422bd861bd6b73ea395fa0314",
+    "tests/test_design_observation.py": "2635ad16fafd5a61340a8c7af703f3bec0567830fb6eac9ed56b04078983c956"
+  }
+}

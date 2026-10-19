@@ -12,7 +12,7 @@ import math
 import re
 
 SCHEMA_VERSION = 1
-EXTRACTOR_VERSION = 'design-observation-1'
+EXTRACTOR_VERSION = 'design-observation-2-original-text'
 MAX_SLOTS = 512  # Processing budget, not learned card/person capacity.
 MAX_NODES = 2000
 MAX_EDGES = 4000

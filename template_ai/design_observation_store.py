@@ -21,6 +21,24 @@ class DesignObservationMixin:
             'rule_matches', 'local_revision', 'invalid_rule_ids')} for r in noise])
         result = build_observation(work, source, facts, pins, self.facts_state(work_id),
                                    noise_signature, noise)
+        from .original_text_observation import original_text_observation
+        original = original_text_observation(source)
+        result['original_text_evidence'] = original
+        from .quality_groups import QualityGroups
+        try:
+            lineage = QualityGroups(self.library).projection([source['hash']])
+            members = sorted({node.split(':', 1)[1] for component in lineage['components']
+                              for node in component if node.startswith('CONTENT:')})
+            result['lineage'].update(independence_state='KNOWN_RELATIONS_PROJECTED',
+                independence_evidence_digest=lineage['digest'], correlated_source_hashes=members,
+                unreviewed_near_duplicates='UNKNOWN')
+        except ValueError:
+            result['lineage'].update(independence_state='UNKNOWN_BUDGET_OR_RELATION_ERROR',
+                                    unreviewed_near_duplicates='UNKNOWN')
+        # Original page evidence is not automatically assigned to this work's
+        # fields/owners, including when several works share the same artboard.
+        result['input_signature'] = canonical_digest([
+            result['input_signature'], original['document_digest'], result['lineage']])
         if self.pins(work_id) != pins or self.facts(work_id) != facts:
             raise ValueError('建立觀察計畫期間標記事實已變更')
         return result

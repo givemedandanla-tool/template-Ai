@@ -90,6 +90,36 @@ class DesignObservationStoreTests(unittest.TestCase):
             [r['id'] for r in self.facts['observations']], self.facts['revision'],
             self.facts['pins'], self.store.source_proof(self.work['id']), 'Synthetic Reviewer', True)
 
+    def test_original_page_text_evidence_does_not_become_annotated_role_font_truth(self):
+        graph = self.save()
+        original = graph['original_text_evidence']
+        self.assertEqual(original['channel'], 'ORIGINAL_SVG')
+        self.assertEqual(original['scope'], 'SOURCE_PAGE_NOT_WORK_OR_FIELD')
+        self.assertTrue(any(r['source_pt']['value'] is not None for r in original['runs']))
+        self.assertTrue(all(r['font_asset_identity'] == 'UNKNOWN' for r in original['runs']))
+        for node in graph['nodes']:
+            if node['kind'] == 'FIELD_ROLE':
+                self.assertEqual(node['properties']['typography']['source_pt']['status'], 'UNKNOWN')
+        self.assertEqual(self.store.design_observation_state(self.work['id']), 'CURRENT')
+
+    def test_newly_confirmed_cross_file_lineage_stales_existing_observation_and_old_plan(self):
+        from template_ai.quality_groups import QualityGroups
+        first = self.save(); plan = self.store.design_observation_plan(self.work['id'])
+        other, _ = source_work(self.library, self.root, name='revision.svg', note_text='Authored revision')
+        groups = QualityGroups(self.library)
+        self.assertEqual(self.store.design_observation_state(self.work['id']), 'CURRENT')
+        link = groups.link_plan('CONTENT:'+self.source['hash'], 'CONTENT:'+other['hash'],
+            'NEAR_DUPLICATE', 'Authored related revision', 'Synthetic source author confirms relation')
+        groups.confirm_link(link, 'Synthetic Reviewer', True)
+        self.assertEqual(self.store.design_observation_state(self.work['id']), 'STALE')
+        with self.assertRaises(ValueError):
+            self.store.save_design_observation(plan, 'Synthetic Reviewer')
+        updated = self.save()
+        self.assertEqual(updated['revision'], first['revision']+1)
+        self.assertEqual(set(updated['lineage']['correlated_source_hashes']),
+                         {self.source['hash'], other['hash']})
+        self.assertEqual(updated['lineage']['unreviewed_near_duplicates'], 'UNKNOWN')
+
     def test_default_typography_not_learned_and_no_source_or_training_records_rewritten(self):
         raw = Path(self.source['current_path']).read_bytes()
         work, facts, epoch = deepcopy(self.work), deepcopy(self.facts), self.store.epoch

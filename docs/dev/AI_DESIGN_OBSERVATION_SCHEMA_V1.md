@@ -41,3 +41,8 @@
 針對未知字級、均勻／非均勻仿射、座標框、多尺寸與多人隔離、共享公司關聯、確定性ID、CAS／重開／失效／交易回滾、既有自動流程引用與取消重用測試。只用合成／去識別來源；不以此宣稱原生AI全面恢復、真實glyph抽取、完整lineage泛化或已訓練模型。
 
 處理預算與1MiB metadata上限是工程限制，不是學到的欄位／人物容量。缺少來源或超出預算明示原因，不靜默截斷。本輪不做網頁／手機或新的標記UI。
+
+
+## 2026-10-19 original source and lineage slice
+
+Extractor version design-observation-2-original-text adds original_text_evidence: hash-verified original SVG declarations/physical similarity transforms or pinned pypdf5.9.0 PDF-compatible AI text-state/font-program evidence. Page scope is explicit: no automatic work/field/person assignment; exact glyphs, original font-asset identity and unsupported native data remain UNKNOWN. PDF visitor matrices are context, never exact glyph baselines; SVG declared anchors are not glyph ink origins. The source-page evidence digest participates in observation signatures. Existing QualityGroups projections also pin known cross-file correlation and invalidate stale plans without merging identities. Unsupported/budget-limited inputs retain explicit states with no pretend-complete truncated runs. Targeted59 checks pass; real corpus/full AI01 qualification and full current-source regression remain pending.

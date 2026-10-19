@@ -1482,3 +1482,8 @@ SWAP-DEFAULT保存完成：978cf42779c06551fcc8559eff8315529c3e03b6／tree7eb2d0
 ## 2026-10-19 AI-ALL8 execution authorized
 
 User explicitly authorized sustained development of all eight AI learning packages. Baseline 5bde520; original8/50 scope retained, AI01 partial and no trained model. Execution/first source-provenance acceptance plan: docs/dev/AI_LEARNING_EXECUTION.md. Source/font truth, scoped qualification and checkpoint rules retained.
+
+
+## 2026-10-19 AI01 original text and known-lineage slice
+
+Implemented original_text_observation and existing observation-store integration;12 new source tests plus2 integration tests,59 related checks pass. Initial malformed authored embedded-font fixture corrected; no product gate disabled. Known cross-file QualityGroups relations now invalidate stale observation plans. Existing8/50 counts unchanged,1partial,0complete; no real corpus or model training. Pinned pypdf5.9.0 sources/license recorded.20 older acknowledged snapshot archives retained and hash-verified on /tmp with logical symlinks; latest8 and unacknowledged protected; journal in STATE. Continue all8 packages.

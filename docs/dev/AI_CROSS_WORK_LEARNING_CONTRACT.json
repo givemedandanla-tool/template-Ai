@@ -16,6 +16,10 @@
         {
           "module": "test_design_observation",
           "status": "18_NEW_TESTS_AND_FULL1567_CURRENT_SOURCE_REGRESSION_PASS_PARTIAL_AI_ACCEPTANCE"
+        },
+        {
+          "module": "test_original_text_observation",
+          "status": "12_SOURCE_MECHANICS_TESTS_PASS_NOT_REAL_CORPUS"
         }
       ],
       "actual_evidence": "docs/qa/targeted/AI-OBSERVATION-FORMAL-SUMMARY-20261018.json",
@@ -64,22 +68,26 @@
         "schema": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
         "modules": [
           "template_ai/design_observation.py",
-          "template_ai/design_observation_store.py"
+          "template_ai/design_observation_store.py",
+          "template_ai/original_text_observation.py"
         ],
         "implemented": [
           "Typed unit/evidence graph and source-pt similarity helper",
           "Work-scoped role/person/company nodes and references",
           "Existing transaction/history,CAS,idempotency,currency checks",
-          "Atomic automatic unit observation references and extractor-version cache pin"
+          "Atomic automatic unit observation references and extractor-version cache pin",
+          "Hash-verified original SVG declarations/physical transforms and PDF compatibility text/font-program evidence; source-page scope only",
+          "Existing QualityGroups correlation projection invalidates revised source-observation lineage plans"
         ],
         "remaining": [
-          "Real source font/glyph/baseline extraction",
-          "Full cross-file lineage/dataset linkage validation",
+          "Exact glyph/baseline/font-asset mapping from native sources to work/person/field",
+          "Complete reviewed cross-file lineage/dataset qualification on real authorized corpus",
           "Shared families/rules/model training"
         ],
         "not_package_complete": true,
         "formal_evidence": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/run.json",
-        "verification_scope": "Synthetic observation/storage/automatic mechanics and existing regression;not native AI extraction,real corpus learning or full AI01 acceptance"
+        "verification_scope": "Synthetic observation/storage/automatic mechanics and existing regression;not native AI extraction,real corpus learning or full AI01 acceptance",
+        "current_targeted_evidence": "docs/qa/targeted/AI-ORIGINAL-TEXT-LINEAGE-20261019.json"
       }
     },
     {
