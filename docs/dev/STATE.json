@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "LOCAL_RECOVERY_SOURCE_FREEZE_AND_FULL_SELF_VERIFICATION",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-SOURCE-FROZEN.receipt.json",
-  "last_confirmed_commit": "defc8ebba9a78d0202f8bce3f93a331870f9b2a7",
+  "active_task": "LOCAL_RECOVERY_FIRST_FILE_TARGETED_THEN_FINAL_FULL_RUN",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-CLUSTER-FROZEN.receipt.json",
+  "last_confirmed_commit": "acb87a47899d643076efa94f701d90e11be64942",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -46,7 +46,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261019-LOCAL-RECOVERY-CLUSTER-FROZEN"
+    "CP-20261019-LOCAL-RECOVERY-FIRST-FILE-FROZEN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
@@ -425,7 +425,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": null,
+  "planned_evidence_run": "RUN-LOCAL-RECOVERY-ALL8-003",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -736,6 +736,12 @@
       "reason": "backup_center fixture tearDown enters original closeEvent busy information modal; module deadline already made current batch impossible to pass. Parent SIGINT uses original runner exception cleanup of its own child group.",
       "diagnostics": "docs/qa/targeted/current005-interrupted-012",
       "native_captures_executed": false
+    },
+    {
+      "id": "RUN-LOCAL-RECOVERY-ALL8-001",
+      "status": "INTERRUPTED_NOT_ADOPTED",
+      "progress": "653 PASS of1723 planned; not a completed run",
+      "evidence": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-001/interruption.json"
     }
   ],
   "checkpoint_cadence_events": [
@@ -793,7 +799,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
-  "next_step": "Continue trustworthy AI01 source metrics/lineage and3pending profile designs using the new joint/swap/default requirements;no frontend or background auto-adoption implementation yet",
+  "next_step": "Complete first-file targeted test,checkpoint/readback,freeze code,run final full003,rebind scoped registry and publish scope audit/receipts without real-qualification inflation.",
   "current_work_package": "SWAP-DEFAULT-TRAINING-DESIGN",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -838,11 +844,12 @@
   "historical_active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "new_learning_progress": {
     "total_work_packages": 8,
+    "partially_implemented": 8,
     "implemented": 0,
     "verified": 0,
-    "partially_implemented": 1,
     "acceptance_count": 50,
-    "verified_acceptance": 0
+    "verified_acceptance": 0,
+    "scope": "Original full acceptance unchanged; current local-only supported software subset being formally reverified; actual corpus not provided by design"
   },
   "new_goal_data_dependencies": {
     "real_corpus": "Authorized representative source works/labels/reference needed for actual generalization claim; synthetic mechanics can be implemented now",
@@ -1128,11 +1135,11 @@
   "latest_evidence_scope": "Current851ef2a:1685PASS,215healthy modules,capture0,366attachments;all8partial/0full;user corpus absent",
   "latest_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T061258Z.json",
   "frozen_formal_run": {
-    "id": "RUN-AI-ORIGINAL-TEXT-LINEAGE-001",
-    "source_commit": "4812d51df5c42ac25a9947b0356a837ed02a1cbc",
-    "status": "COMPLETE_SOFTWARE_PASS_EXTERNAL_QUALIFICATION_PENDING",
-    "progress_path": ".checkpoints/formal-live/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/test-progress.json",
-    "code_must_remain_frozen_until_run_completes": false
+    "id": "RUN-LOCAL-RECOVERY-ALL8-002",
+    "source_commit": "acb87a47899d643076efa94f701d90e11be64942",
+    "status": "RUNNING",
+    "progress_path": ".checkpoints/formal-live/RUN-LOCAL-RECOVERY-ALL8-002/test-progress.json",
+    "code_must_remain_frozen_until_run_completes": true
   },
   "staged_ai_implementation": {
     "path": "docs/dev/wip/ai-learning-stage",
@@ -1250,6 +1257,10 @@
   },
   "final_checkpoint_cadence_note": "Final native capture/publication review checkpoint interval exceeded10minutes;earlier live checkpoints and frozen source preserved;not a claim of strict cadence compliance",
   "local_recovery_decision": "docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md",
-  "local_recovery_targeted_evidence": "docs/evidence/local-recovery/targeted-002/result.json",
-  "local_recovery_guide": "docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md"
+  "local_recovery_targeted_evidence": "docs/evidence/local-recovery/targeted-007/result.json",
+  "local_recovery_guide": "docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md",
+  "local_recovery_source_file_scales": [
+    "docs/evidence/local-recovery/source-file-scales/scale-1000.json",
+    "docs/evidence/local-recovery/source-file-scales/scale-3000.json"
+  ]
 }

@@ -168,6 +168,37 @@ class VisualFontMatchingTests(unittest.TestCase):
 
 
 class RecoveryDialogTests(unittest.TestCase):
+    def test_first_unreadable_file_is_diagnosable_from_an_empty_library(self):
+        from template_ai.storage import Library
+        from template_ai.design_learning_dialog import DesignLearningDialog
+        from template_ai.recovery_dialog import RecoveryDialog
+        from PySide6.QtTest import QTest
+        from time import monotonic
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);library=Library(root/'data')
+            class Window(QDialog):pass
+            window=Window();window.library=library
+            learning=DesignLearningDialog(window);opened=[]
+            def exercise(dialog):
+                opened.append(dialog)
+                self.assertIsNone(dialog.source)
+                source=root/'private-customer-invalid.svg';source.write_text('<svg><broken')
+                dialog.path.setText(str(source));dialog.import_source()
+                deadline=monotonic()+30
+                while dialog.worker is not None and monotonic()<deadline:
+                    APP.processEvents();QTest.qWait(10)
+                self.assertIsNone(dialog.worker)
+                public=dialog.public.toPlainText()
+                self.assertIn('CONVERSION_FAILED',public)
+                self.assertNotIn(str(root),public);self.assertNotIn(source.name,public)
+                self.assertFalse(dialog.verified.isChecked())
+                dialog.close()
+                return 0
+            try:
+                with patch.object(RecoveryDialog,'exec',exercise):learning.open_recovery()
+                self.assertEqual(len(opened),1)
+            finally:learning.close();window.close();library.close()
+
     def test_local_diagnostic_dialog_crops_field_and_exports_only_public_projection(self):
         from template_ai.storage import Library
         from template_ai.recovery_dialog import RecoveryDialog

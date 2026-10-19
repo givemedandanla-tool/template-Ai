@@ -84,7 +84,14 @@ class RecoveryDialog(QDialog):
     def import_source(self):
         from .importer import import_file
         path=self.path.text();assets=self.window.library.assets
-        self.start(lambda worker:dict(import_file(path,assets),current_path=path),self.show_source)
+        def recover(worker):
+            try:return dict(import_file(path,assets),current_path=path)
+            except Exception as error:
+                if not getattr(error,'recovery_report',None):
+                    error.recovery_report=dict(semantic_status='FAILED',fidelity_status='UNKNOWN',
+                        issues=[issue('CONVERSION_FAILED')])
+                raise
+        self.start(recover,self.show_source)
 
     def show_source(self,source,work=None,field=None):
         self.source=deepcopy(source);self.report=deepcopy(source.get('recovery',{}));self.last_match=None

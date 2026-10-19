@@ -168,7 +168,9 @@ class DesignLearningDialog(QDialog):
     def open_recovery(self):
         from .recovery_dialog import RecoveryDialog
         work_id=self.source_work.currentData()
-        if not work_id:raise ValueError('請先選擇作品')
+        if not work_id:
+            RecoveryDialog(self.window).exec()
+            return
         work=self.library.artwork(work_id);source=self.library.source(work['source_id'])
         fact=self.source_fields.currentData();slot_id=fact['slot_id'] if fact else None
         slot=next((row for row in work['payload']['slots'] if row['id']==slot_id),None)

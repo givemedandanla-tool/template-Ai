@@ -14,6 +14,8 @@
 
 ## 開啟與快速試用
 
+本地 AI 學習與診斷操作／合成驗收見 [本地學習復原指引](docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md)。私人作品、字型與模型留在本機，無需提供給 Codex。
+
 目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新來源綁定驗收見 [STATE](docs/dev/STATE.json) 與 [進度](docs/dev/PROGRESS.md)，證明媒體保存例外見 [本輪清單](docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json)；程式／測試／文字證據完整保存，原附件及hash清單保留。
 
 原始碼：安裝 Python 3.11 後，Windows 雙擊 `START_WINDOWS.bat`；或安裝 `requirements-lock.txt`，執行 `python app.py`。
