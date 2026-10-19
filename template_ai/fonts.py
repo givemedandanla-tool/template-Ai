@@ -42,6 +42,10 @@ def font_asset_errors(slots) -> list[str]:
     errors = []
     seen = set()
     for slot in slots:
+        for part in (slot.text_flow or {}).get('rich_text',{}).get('segments',[]):
+            extra=part.get('font_asset')
+            family=(extra.get('families') or [''])[0] if isinstance(extra,dict) else ''
+            errors.extend('複合文字：'+error for error in font_errors(extra,family))
         asset = slot.font_asset
         if asset is None:
             continue
@@ -78,15 +82,18 @@ class FontManager:
                 self.loaded[asset["hash"]] = (font_id, asset)
 
     def ensure_slots(self,slots):
+        assets=[]
         for slot in slots:
-            asset=slot.font_asset
+            assets.append(slot.font_asset)
+            assets.extend(part.get('font_asset') for part in (slot.text_flow or {}).get('rich_text',{}).get('segments',[]))
+        for asset in assets:
             if not asset:continue
             if not isinstance(asset,dict):self.issues.append('選中字型資產記錄不完整');continue
             if asset.get('hash') in self.loaded:continue
-            errors=font_errors(asset,slot.font)
+            errors=font_errors(asset,(asset.get('families') or [''])[0])
             if errors:self.issues.extend(errors);continue
             font_id=QFontDatabase.addApplicationFont(asset['path'])
-            if font_id<0:self.issues.append('選中字型無法載入：'+slot.font)
+            if font_id<0:self.issues.append('選中字型無法載入：'+(asset.get('families') or [''])[0])
             else:self.loaded[asset['hash']]=(font_id,asset)
 
     def asset_for_family(self, family: str) -> dict | None:

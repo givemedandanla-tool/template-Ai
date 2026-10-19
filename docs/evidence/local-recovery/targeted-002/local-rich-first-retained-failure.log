@@ -1,0 +1,20 @@
+...E
+======================================================================
+ERROR: test_wrong_coverage_stale_source_and_missing_secondary_font_are_rejected (test_design_rich_text.CompositeSourceTests.test_wrong_coverage_stale_source_and_missing_secondary_font_are_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_design_rich_text.py", line 77, in test_wrong_coverage_stale_source_and_missing_secondary_font_are_rejected
+    with self.assertRaises(ValueError):self.service.confirm(plan,'Author',True)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_source_binding.py", line 223, in confirm
+    fresh=self.plan_composite(plan['work_id'],plan['slot_id'],plan['spans'],plan['composite_review'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_source_binding.py", line 170, in plan_composite
+    selected=set(facts['confirmation']['observation_ids'])
+                 ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.142s
+
+FAILED (errors=1)

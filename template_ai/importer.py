@@ -161,15 +161,26 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
     recovery = dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN',
                     counts={}, issues=[issue('NO_EDITABLE_TEXT')])
     semantic_svg = ''
+    converted = conversion_failed = False
     if suffix in (".ai", ".eps", ".svg", ".pdf") and converter:
-        args = [str(path), "--export-text-to-path", "--export-plain-svg", "--export-type=svg", "--export-filename=" + str(svg_path)]
-        if is_pdf:
-            args.extend([f"--pages={page}", "--pdf-poppler"])
-        _run(converter, args, folder)
-        if not svg_path.is_file():
-            raise ValueError("Inkscape 未建立可用 SVG，請提供可信 PDF／SVG／圖片參考")
-        width, height = svg_size(svg_path)
-        _run(converter, [str(svg_path), "--export-type=png", "--export-width=1600", "--export-background=white", "--export-background-opacity=1", "--export-filename=" + str(image_path)], folder)
+        try:
+            args = [str(path), "--export-text-to-path", "--export-plain-svg", "--export-type=svg", "--export-filename=" + str(svg_path)]
+            if is_pdf:
+                args.extend([f"--pages={page}", "--pdf-poppler"])
+            _run(converter, args, folder)
+            if not svg_path.is_file():
+                raise ValueError("Inkscape 未建立可用 SVG")
+            width, height = svg_size(svg_path)
+            _run(converter, [str(svg_path), "--export-type=png", "--export-width=1600", "--export-background=white", "--export-background-opacity=1", "--export-filename=" + str(image_path)], folder)
+            converted = True
+        except (ValueError, OSError, subprocess.TimeoutExpired):
+            if not is_pdf and suffix != '.svg':
+                error = ValueError('Inkscape 無法還原此來源；需要 PDF 相容內容或本地可信外觀參考。')
+                error.recovery_report = dict(source_kind='OTHER', semantic_status='FAILED', fidelity_status='UNKNOWN', issues=[issue('CONVERSION_FAILED')])
+                raise error from None
+            conversion_failed = True
+            svg_path.unlink(missing_ok=True);image_path.unlink(missing_ok=True)
+    if converted:
         svg, engine = str(svg_path), "Inkscape " + IMPORT_VERSION
         semantic_svg, recovery = recover_semantics(path, folder, page, is_pdf, converter, run=_run)
     elif is_pdf:
@@ -210,6 +221,8 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         engine = "點陣來源；毫米尺寸待使用者標定"
     else:
         raise ValueError("此來源需 Inkscape 或 PDF 相容內容；可改提供 PDF／SVG／PNG／JPG")
+    if conversion_failed:
+        recovery['issues'].append(issue('CONVERSION_FAILED'))
     image = QImage(str(image_path))
     if image.isNull() or image.width() * image.height() > MAX_PIXELS:
         raise ValueError("轉換未產生可用預覽")

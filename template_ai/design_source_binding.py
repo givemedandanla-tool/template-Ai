@@ -1,7 +1,7 @@
 """Explicit expert source/field/font correspondence, never customer fine tuning.
 
-Only a complete single original text run is supported here. Ambiguous composite
-runs remain unbound; equal strings alone never create a binding automatically.
+Complete original runs can be explicitly bound as a reviewed composite field.
+Every character and source run must have unambiguous ownership and coverage.
 """
 from copy import deepcopy
 import hashlib
@@ -18,6 +18,9 @@ class SourceTypographyReview:
         self.store=TrainingStore.bind(library) if library.db.in_transaction else TrainingStore(library)
 
     def plan(self,work_id,slot_id,source_run_id,font_asset,review):
+        return self._plan_run(work_id,slot_id,source_run_id,font_asset,review)
+
+    def _plan_run(self,work_id,slot_id,source_run_id,font_asset,review,span=None):
         if not isinstance(review,dict) or review.get('source_identity_confirmed') is not True:
             raise ValueError('Explicit expert source/font identity review is required;names do not prove identity')
         text(review.get('basis'),'Source correspondence evidence',2048)
@@ -34,7 +37,13 @@ class SourceTypographyReview:
         if not slot or len(matches)!=1:raise ValueError('Need an unambiguous confirmed field')
         observation=self.store._design_observation_document(work_id);original=observation['original_text_evidence']
         run=next((row for row in original['runs'] if row['id']==source_run_id),None)
-        if not run or run['text_sha256']!=hashlib.sha256(matches[0]['text'].encode()).hexdigest():
+        field_text=matches[0]['text']
+        if span is not None:
+            start,end=span
+            if type(start) is not int or type(end) is not int or not 0<=start<end<=len(field_text):
+                raise ValueError('Composite span range is invalid')
+            field_text=field_text[start:end]
+        if not run or run['text_sha256']!=hashlib.sha256(field_text.encode()).hexdigest():
             raise ValueError('Complete original text run does not match this reviewed field;composite spans remain unknown')
         if run.get('source_locator',{}).get('kind')=='PDF_TEXT_VISITOR':
             raise ValueError('Visitor context is not a visible glyph correspondence;select interpreted original glyph evidence')
@@ -142,7 +151,7 @@ class SourceTypographyReview:
         # it is not claimed to recover original source kerning/glyph positions.
         if 1<=point<=200:
             from .font_catalog import analyze_font
-            measurement=analyze_font(dict(kind='ASSET',asset=font_asset),matches[0]['text'],point,2000,.05,
+            measurement=analyze_font(dict(kind='ASSET',asset=font_asset),field_text,point,2000,.05,
                                      (font_asset.get('styles') or [None])[0])
             if measurement.get('measurement_verified'):
                 typography['shaped_advance']=ObservedScalar(measurement['advance_width_mm'],'mm','DERIVED',
@@ -153,11 +162,67 @@ class SourceTypographyReview:
             review=deepcopy(review),typography=typography)
         plan['digest']=digest(plan);return plan
 
+    def plan_composite(self,work_id,slot_id,spans,review):
+        from .design_rich_text import resolve_segments
+        if not isinstance(spans,list) or not 2<=len(spans)<=32:
+            raise ValueError('Composite fields need two to thirty-two explicit source runs')
+        if self.store.facts_state(work_id)!='CONFIRMED':raise ValueError('Composite field facts need confirmation first')
+        facts=self.store.facts(work_id)
+        selected=set(facts['confirmation']['observation_ids'])
+        fields=[row for row in facts['observations'] if row['id'] in selected and row.get('slot_id')==slot_id
+                and row['classification']=='FIELD' and row['object_type']=='TEXT']
+        if len(fields)!=1:raise ValueError('Composite field correspondence is ambiguous')
+        value=fields[0]['text'];cursor=0;parts=[];segments=[];seen=set()
+        for span in spans:
+            start,end=span.get('start'),span.get('end');run_id=span.get('source_run_id')
+            if start!=cursor or type(end) is not int or end<=start or end>len(value) or run_id in seen:
+                raise ValueError('Composite source ranges must be unique and cover every character in order')
+            seen.add(run_id);cursor=end
+            child_review={k:deepcopy(v) for k,v in review.items() if k!='source_text_flow'}
+            child_review.update(span.get('review',{}))
+            part=self._plan_run(work_id,slot_id,run_id,span['font_asset'],child_review,(start,end))
+            parts.append(part)
+            point=part['typography']['source_pt']['value'];base=parts[0]['typography']['source_pt']['value']
+            tracking=part['typography']['tracking'].get('value')
+            horizontal=part['typography']['horizontal_scale'].get('value')
+            base_horizontal=parts[0]['typography']['horizontal_scale'].get('value')
+            if tracking is None or horizontal is None or base_horizontal is None:
+                raise ValueError('Composite source run needs evidenced tracking and horizontal scale')
+            segments.append(dict(selector=deepcopy(span.get('selector',dict(kind='EXACT_SOURCE_RANGE',start=start,end=end))),
+                font_asset=deepcopy(span['font_asset']),pt_ratio=point/base,tracking_mm=tracking,
+                horizontal_scale_ratio=horizontal/base_horizontal,source_run_ref=run_id,
+                evidence_refs=[run_id,'EXPERT_COMPOSITE_REVIEW:'+digest(review)]))
+        if cursor!=len(value):raise ValueError('Composite source does not cover the full field text')
+        rich=dict(status='HUMAN_CONFIRMED_SOURCE_RULE',evidence_refs=[p['source_run_id'] for p in parts],
+            source_text_sha256=hashlib.sha256(value.encode()).hexdigest(),segments=segments)
+        resolved=resolve_segments(value,rich)
+        if [(p['start'],p['end']) for p in resolved]!=[(s['start'],s['end']) for s in spans]:
+            raise ValueError('Reviewed selectors do not match original source spans')
+        plan=deepcopy(parts[0]);plan.pop('digest',None);plan['source_run_id']=None
+        plan.update(source_run_ids=[p['source_run_id'] for p in parts],spans=deepcopy(spans),review=deepcopy(review),composite_review=deepcopy(review))
+        flow=deepcopy(review.get('source_text_flow') or dict(status='HUMAN_CONFIRMED_SOURCE_RULE',
+            break_rule='NO_WRAP',max_lines_observed=1,line_height_factor=1.,alignment='left',evidence_refs=rich['evidence_refs']))
+        flow['rich_text']=rich;plan['review']['source_text_flow']=flow
+        plan['typography']['rich_text']=rich
+        plan['typography']['source_components']=[dict(source_run_ref=p['source_run_id'],typography=deepcopy(p['typography'])) for p in parts]
+        # Measure the complete, mixed-face text through the same output path.
+        from .design_text_flow import shape_flow
+        work=self.library.artwork(work_id);slot=next(s for s in work['payload']['slots'] if s['id']==slot_id)
+        primary=plan['typography'];asset=plan['font_asset']
+        measured=shape_flow(value,asset['families'][0],primary['source_pt']['value'],
+            primary['horizontal_scale']['value'],2000,asset,(asset.get('styles') or [''])[0],
+            primary['tracking']['value'],flow,slot['kind'])
+        primary['shaped_advance']=ObservedScalar(measured['natural_advance_mm'],'mm','DERIVED',
+            'QT_COMPLETE_REVIEWED_COMPOSITE_NATURAL_ADVANCE',tuple(rich['evidence_refs'])).to_dict()
+        plan['digest']=digest(plan);return plan
+
     def confirm(self,plan,actor,approved=False):
         if approved is not True:raise ValueError('Explicit expert correspondence confirmation is required')
         text(actor,'Source reviewer',120)
         with self.store.transaction():
-            fresh=self.plan(plan['work_id'],plan['slot_id'],plan['source_run_id'],plan['font_asset'],plan['review'])
+            if plan.get('spans'):
+                fresh=self.plan_composite(plan['work_id'],plan['slot_id'],plan['spans'],plan['composite_review'])
+            else:fresh=self.plan(plan['work_id'],plan['slot_id'],plan['source_run_id'],plan['font_asset'],plan['review'])
             if fresh!=plan:raise ValueError('Source/font/facts/binding version changed during review')
             value={k:deepcopy(v) for k,v in plan.items() if k not in ('id','expected_revision','digest','font_asset')}
             value.update(state='APPROVED',actor=actor)

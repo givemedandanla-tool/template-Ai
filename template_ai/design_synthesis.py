@@ -271,8 +271,6 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                     display=prefix+fact['value']
                 else:display=fact['value']
                 configuration=_adapt_distribution(profile,fact['role_key'],configuration,display,fact['kind'])
-                tw,th,errors=text_geometry(family,configuration['size_pt'],display,style,asset,configuration['tracking_mm'])
-                if errors:failure='FONT_MEASUREMENT_UNVERIFIED';break
                 w,h=configuration['width_mm'],configuration['height_mm']
                 flow=configuration.get('text_flow')
                 if flow:
@@ -282,6 +280,8 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                     tw,th=shaped['width_mm']/configuration['scale'],shaped['height_mm']
                     baseline_offset=(h-th)/2+shaped['first_baseline_mm'] if shaped['first_baseline_mm'] is not None else None
                 else:
+                    tw,th,errors=text_geometry(family,configuration['size_pt'],display,style,asset,configuration['tracking_mm'])
+                    if errors:failure='FONT_MEASUREMENT_UNVERIFIED';break
                     from .render import prepared_text_metrics
                     _,ink,factor=prepared_text_metrics(display,family,configuration['size_pt'],style,asset,configuration['tracking_mm'])
                     baseline_offset=(h-ink['height']*factor)/2+ink['ascent']*factor

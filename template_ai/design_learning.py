@@ -80,8 +80,10 @@ class CrossWorkLearning:
                             or binding['state'] != 'APPROVED'):
                         raise ValueError('Source typography binding is stale or withdrawn')
                     typography = deepcopy(binding['typography'])
-                    asset=typography.get('font_asset_ref');asset_key=digest(asset)
-                    if asset_key not in verified_font_assets:
+                    assets=[typography.get('font_asset_ref')]+[part.get('font_asset') for part in typography.get('rich_text',{}).get('segments',[])]
+                    for asset in assets:
+                        asset_key=digest(asset)
+                        if asset_key in verified_font_assets:continue
                         from .fonts import font_errors
                         if not asset or font_errors(asset,(asset.get('families') or [''])[0]):
                             raise ValueError('Bound source font file is unavailable or changed')

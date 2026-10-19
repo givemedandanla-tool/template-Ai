@@ -145,7 +145,7 @@ def match_fonts(crop, text_candidates, faces, *, pixels_per_mm=None, max_faces=6
         value=candidate.get('text')
         if not isinstance(value,str) or not value.strip() or len(value)>512 or any(ord(c)<32 for c in value):
             raise ValueError('Invalid text candidate')
-        if candidate.get('origin') not in ('ORIGINAL_TEXT','OCR','REVIEWED_TEXT'):
+        if candidate.get('origin') not in ('ORIGINAL_TEXT','OCR','REVIEWED_TEXT','UNREVIEWED_TEXT'):
             raise ValueError('Unknown text evidence origin')
     target, bounds = _ink(image_gray(crop))
     if target.size>2_000_000:

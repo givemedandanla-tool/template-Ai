@@ -88,10 +88,13 @@ class SourceCacheTests(unittest.TestCase):
         self.assertEqual(path.read_bytes(), expected)
 
     @unittest.skipUnless(inkscape_path(), "需要實際 Inkscape 快取及轉換失敗驗證")
-    def test_failed_regeneration_does_not_restore_corrupt_cache_as_success(self):
+    def test_failed_regeneration_uses_verified_original_svg_not_corrupt_cache(self):
         original = Path(__file__).parents[1] / "examples/synthetic-source.svg"
         first = import_file(original, self.assets)
         Path(first["svg"]).write_text("corrupted cached SVG", encoding="utf-8")
         with patch("template_ai.importer._run", side_effect=ValueError("模擬轉換器失敗")):
-            with self.assertRaisesRegex(ValueError, "轉換器失敗"):
-                import_file(original, self.assets)
+            recovered=import_file(original, self.assets)
+        self.assertFalse(recovered['reused'])
+        self.assertEqual(Path(recovered['svg']).read_bytes(),original.read_bytes())
+        self.assertIn('CONVERSION_FAILED',[row['code'] for row in recovered['recovery']['issues']])
+        self.assertIn('Qt SVG',recovered['engine'])

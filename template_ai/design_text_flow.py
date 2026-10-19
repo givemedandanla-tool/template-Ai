@@ -45,9 +45,11 @@ def apply_spacing(font,text,factor,rule):
 
 def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, policy, kind):
     import math
-    if kind not in ALLOWED_KINDS or policy.get('status')!='HUMAN_CONFIRMED_SOURCE_RULE':
+    rich=policy.get('rich_text')
+    single_line=policy.get('break_rule')=='NO_WRAP' and policy.get('max_lines_observed')==1
+    if (kind not in ALLOWED_KINDS and not (rich and single_line)) or policy.get('status')!='HUMAN_CONFIRMED_SOURCE_RULE':
         raise ValueError('Multiline flow requires supported role and source-reviewed rule')
-    if policy.get('break_rule') not in ('WORD_WRAP','WORD_OR_ANYWHERE') or not policy.get('evidence_refs'):
+    if policy.get('break_rule') not in ('WORD_WRAP','WORD_OR_ANYWHERE','NO_WRAP') or not policy.get('evidence_refs'):
         raise ValueError('Unknown or unreferenced source break rule')
     maximum=policy.get('max_lines_observed');leading=policy.get('line_height_factor')
     if type(maximum) is not int or not 1<=maximum<=16:
@@ -58,7 +60,11 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
         raise ValueError('Invalid physical flow size')
     if font_errors(asset,family):raise ValueError('Flow font asset changed or is unavailable')
     from .font_catalog import analyze_font
-    check=analyze_font(dict(kind='ASSET',asset=asset),text.replace('\n',' '),pt,2000,.05,style or None,
+    first_text=text.replace('\n',' ')
+    if rich:
+        from .design_rich_text import resolve_segments
+        first_text=resolve_segments(text,rich)[0]['text']
+    check=analyze_font(dict(kind='ASSET',asset=asset),first_text,pt,2000,.05,style or None,
                        tracking_mm=tracking_mm)
     if not check.get('measurement_verified') or check.get('family')!=family:
         raise ValueError('Flow glyph coverage and exact font face must be verified')
@@ -68,7 +74,7 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     font.setLetterSpacing(QFont.AbsoluteSpacing,tracking_mm/factor)
     spacing_rule=apply_spacing(font,text,factor,policy.get('spacing_rule'))
     option=QTextOption()
-    option.setWrapMode(QTextOption.WordWrap if policy['break_rule']=='WORD_WRAP' else QTextOption.WrapAtWordBoundaryOrAnywhere)
+    option.setWrapMode(QTextOption.NoWrap if single_line else QTextOption.WordWrap if policy['break_rule']=='WORD_WRAP' else QTextOption.WrapAtWordBoundaryOrAnywhere)
     alignment=policy.get('alignment','left')
     alignments={'left':Qt.AlignLeft,'center':Qt.AlignHCenter,'right':Qt.AlignRight,'justify':Qt.AlignJustify}
     if alignment not in alignments:raise ValueError('Unsupported learned flow alignment')
@@ -77,6 +83,10 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     if policy.get('spacing_rule') and spacing_rule['boundary_count']==0 and alignment=='justify':
         alignment='left' # No implicit CJK/character justification in a word-only rule.
     option.setAlignment(alignments[alignment]);layout=QTextLayout(text,font);layout.setTextOption(option)
+    rich_proof=[]
+    if rich:
+        from .design_rich_text import formats
+        rich_formats,rich_proof=formats(text,pt,rich);layout.setFormats(rich_formats)
     spacing=QFontMetricsF(font).lineSpacing()*leading;lines=[];ink=None
     layout.beginLayout()
     try:
@@ -87,6 +97,9 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
             line.setLineWidth(width_mm/(factor*scale));line.setPosition(QPointF(0,len(lines)*spacing))
             lines.append(dict(start=line.textStart(),length=line.textLength(),natural_width_mm=line.naturalTextWidth()*factor*scale))
     finally:layout.endLayout()
+    if rich:
+        from .design_rich_text import verify_layout
+        verify_layout(layout,rich_proof)
     for run in layout.glyphRuns():
         raw=run.rawFont()
         for glyph,position in zip(run.glyphIndexes(),run.positions()):
@@ -96,6 +109,7 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     width=ink.width()*factor*scale;height=ink.height()*factor
     if width>width_mm+1e-6:raise ValueError('Unbreakable shaped text exceeds flow container')
     return dict(layout=layout,ink=ink,factor=factor,width_mm=width,height_mm=height,lines=lines,
+                natural_advance_mm=max((line['natural_width_mm']/scale for line in lines),default=0.),
                 text_length=len(text),source_rule=policy,spacing_rule=spacing_rule,
                 first_baseline_mm=(layout.lineAt(0).position().y()+layout.lineAt(0).ascent()-ink.top())*factor if lines else None)
 

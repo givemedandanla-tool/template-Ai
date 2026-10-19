@@ -95,6 +95,7 @@ class DesignLearningDialog(QDialog):
     def _source_tab(self):
         layout=self.page('來源核對');row=QHBoxLayout();self.source_work=QComboBox();row.addWidget(self.source_work,1)
         self.button(row,'讀取欄位與原稿文字',self.load_source);layout.addLayout(row)
+        self.button(layout,'本地來源還原／字型影像診斷',self.open_recovery)
         self.source_fields=QComboBox();layout.addWidget(self.source_fields);self.source_fields.currentIndexChanged.connect(lambda:self.load_source_runs())
         self.source_runs=QComboBox();layout.addWidget(self.source_runs);self.source_fonts=QComboBox();layout.addWidget(self.source_fonts)
         self.source_basis=QLineEdit();self.source_basis.setPlaceholderText('原稿、欄位與字型對應的核對依據');layout.addWidget(self.source_basis)
@@ -162,6 +163,13 @@ class DesignLearningDialog(QDialog):
         self.source_fonts.clear()
         for asset in self.library.fonts():self.source_fonts.addItem(' / '.join(asset.get('families',[]))+' · '+asset.get('original_name',''),asset)
         self.load_source();self.refresh_draft()
+    def open_recovery(self):
+        from .recovery_dialog import RecoveryDialog
+        work_id=self.source_work.currentData()
+        if not work_id:raise ValueError('請先選擇作品')
+        work=self.library.artwork(work_id);source=self.library.source(work['source_id'])
+        RecoveryDialog(self.window,source,work=work,field=self.source_fields.currentData()).exec()
+
     def load_source(self):
         self.source_fields.clear();work_id=self.source_work.currentData()
         if not work_id:return

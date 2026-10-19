@@ -5,9 +5,9 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from PySide6.QtCore import QRectF
-from PySide6.QtGui import QColor, QFont, QImage, QPainter
-from PySide6.QtWidgets import QApplication
+from PySide6.QtCore import QMarginsF, QRectF, QSizeF
+from PySide6.QtGui import QColor, QFont, QImage, QPainter, QPageLayout, QPageSize, QPdfWriter
+from PySide6.QtWidgets import QApplication, QDialog
 
 from template_ai.background import file_digest
 from template_ai.importer import import_file
@@ -63,6 +63,22 @@ class LocalRecoveryTests(unittest.TestCase):
         self.assertEqual(semantic,'');self.assertEqual(report['semantic_status'],'FAILED')
         self.assertNotIn('private raw error',json.dumps(shareable_report(report)))
 
+    def test_actual_pdf_compatible_ai_has_two_recovery_channels_and_fallback(self):
+        source=self.root/'authored-pdf-compatible.ai'
+        writer=QPdfWriter(str(source));writer.setPageSize(QPageSize(QSizeF(90,54),QPageSize.Millimeter))
+        writer.setPageMargins(QMarginsF(0,0,0,0),QPageLayout.Millimeter);writer.setResolution(120)
+        painter=QPainter(writer);font=QFont('DejaVu Sans');font.setPixelSize(28);painter.setFont(font)
+        painter.drawText(20,80,'Authored PDF 123');painter.end();del writer
+        before=source.read_bytes();result=import_file(source,self.root/'assets')
+        self.assertTrue(result['semantic_svg']);self.assertEqual(result['recovery']['semantic_status'],'DERIVATIVE_TEXT')
+        self.assertGreater(result['recovery']['counts']['text_nodes'],0)
+        self.assertIn('visual_comparison',result['recovery'])
+        with patch('template_ai.importer._run',side_effect=ValueError('authored converter failure')):
+            fallback=import_file(source,self.root/'fallback-assets')
+        self.assertIn('Qt PDF',fallback['engine'])
+        self.assertIn('CONVERSION_FAILED',[row['code'] for row in fallback['recovery']['issues']])
+        self.assertEqual(source.read_bytes(),before)
+
 
 class VisualFontMatchingTests(unittest.TestCase):
     def faces(self):
@@ -111,3 +127,34 @@ class VisualFontMatchingTests(unittest.TestCase):
         self.assertFalse(broken['search_complete']);self.assertEqual(broken['status'],'NO_MATCH')
         cancelled=match_fonts(self.reference(),[dict(text='MONO',origin='OCR')],faces,cancelled=lambda:True)
         self.assertEqual(cancelled['checked_faces'],0);self.assertFalse(cancelled['search_complete'])
+
+    def test_actual_local_tesseract_text_then_font_matching(self):
+        from template_ai.quality_ocr import freeze
+        from template_ai.visual_font_match import ocr_text_candidates
+        with tempfile.TemporaryDirectory() as directory:
+            record=freeze(Path(directory),dict(languages=['eng'],psm=6))
+            crop=self.reference('MONO 1234',hscale=1.)
+            rows=ocr_text_candidates(crop,record)
+            self.assertEqual(len(rows),1,rows);self.assertEqual(rows[0]['text'],'MONO 1234')
+            result=match_fonts(crop,rows,self.faces(),tracking_options=(0.,))
+        self.assertEqual(result['candidates'][0]['family'],'DejaVu Sans Mono')
+        self.assertIn('OCR_REVIEW_REQUIRED',[row['code'] for row in result['issues']])
+
+
+class RecoveryDialogTests(unittest.TestCase):
+    def test_local_diagnostic_dialog_crops_field_and_exports_only_public_projection(self):
+        from template_ai.storage import Library
+        from template_ai.recovery_dialog import RecoveryDialog
+        from training_fixture import source_work
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);library=Library(root/'data')
+            class Window(QDialog):pass
+            window=Window();window.library=library
+            source,work=source_work(library,root)
+            dialog=RecoveryDialog(window,source,work=work,field=work['payload']['slots'][0])
+            try:
+                self.assertGreater(dialog.crop().width(),0)
+                self.assertIn('NO_SOURCE_TEXT_PATH',dialog.public.toPlainText())
+                self.assertNotIn(str(root),dialog.public.toPlainText())
+                self.assertFalse(dialog.verified.isChecked())
+            finally:dialog.close();window.close();library.close()
