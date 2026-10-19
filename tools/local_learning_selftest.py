@@ -48,7 +48,7 @@ def run(directory,font_path=None,*,progress=lambda message:None):
     if not font_path.is_file():raise ValueError('No supported local test font;specify --font with an installed regular TTF/OTF')
     sources_dir=directory/'authored-sources';sources_dir.mkdir()
     library=Library(directory/'isolated-data');manager=FontManager(library)
-    result=dict(schema='LOCAL_SYNTHETIC_LEARNING_ACCEPTANCE_V1',status='RUNNING',private_data_read=False,
+    result=dict(schema='LOCAL_SYNTHETIC_LEARNING_ACCEPTANCE_V1',status='RUNNING',customer_artwork_read=False,local_font_read=True,
         network_or_upload_used=False,production_qualification='NOT_GRANTED_SYNTHETIC_ONLY',
         independence_scope='CONTROLLED_SYNTHETIC_EXPERIMENTAL_UNITS_NOT_REAL_DESIGN_LINEAGE_PROOF')
     try:
@@ -98,7 +98,7 @@ def run(directory,font_path=None,*,progress=lambda message:None):
         model=learning.train(dataset['id'],'SYNTHETIC_KNOWN_TRUTH',approved=True)
         families=model['artifact']['profile_model']['families']
         if len(families)!=2:raise AssertionError('Expected two shared structural families,got '+str(len(families)))
-        policy=dict(version='synthetic-known-layout-1',candidate_budget=32,safe_margin_mm=0.,production=False,
+        policy=dict(version='synthetic-known-layout-1',candidate_budget=32,safe_margin_mm=0.,production=False,enable_joint_prediction=True,
                     approved=True,basis='Owned synthetic known-parameter layout self-test')
         evaluation=DesignEvaluation(library);jobs=DesignJobs(library)
         job=evaluation.create(model['id'],cases,policy,'SYNTHETIC_KNOWN_TRUTH',origin='AUTHORED_SYNTHETIC',review_refs=['Controlled experimental units,not real-design independence'],approved=True)

@@ -18,6 +18,20 @@ def observations(count=12):
 
 
 class JointRegressionTests(unittest.TestCase):
+    def test_continuous_size_response_is_not_fragmented_into_discrete_size_modes(self):
+        rows=observations(30)
+        for i,row in enumerate(rows):
+            width=90.+i%3*5;demand=2.+(i//3)*.05
+            row['dimensions_mm']=[width,54.]
+            row['joint'].update(source_pt=10.+(width-90.)*.1,horizontal_scale=.98,
+                shaped_advance_mm=demand*(10.+(width-90.)*.1),tracking_mm=0.,
+                frame_width_mm=30.+(width-90.)*.3,frame_height_mm=6.)
+        model=fit_joint(rows)
+        self.assertEqual(len(model['modes']),1)
+        predicted=predict_joint(model,97.5,54.,2.2)
+        self.assertTrue(predicted)
+        self.assertAlmostEqual(predicted[0]['joint']['source_pt'],10.75,delta=.1)
+
     def test_reviewed_word_spacing_is_a_joint_response_not_one_mode_per_value(self):
         rows=observations(8)
         for i,row in enumerate(rows):

@@ -15,7 +15,7 @@ from .candidate_risk import pin_inputs
 from .training_store import digest
 from .design_style import style_identity, font_identity
 
-VERSION='cross-work-synthesis-2-domain-admission'
+VERSION='cross-work-synthesis-3-supported-domain-priority'
 RELATIONS={'ABOVE','BELOW','LEFT_OF','RIGHT_OF'}
 
 
@@ -126,6 +126,8 @@ def _font_options(profile, key, width, height, value=None, policy=None, semantic
                     spacing['value_mm']=word_value
                 elif spacing and spacing.get('mode')=='CHARACTERS':spacing['value_mm']=vector['tracking_mm']
                 candidate['id']=digest(candidate);options[candidate['id']]=candidate
+    if (policy or {}).get('prefer_supported_size_domain',True) and any(row.get('size_admission')=='LEARNED_JOINT_DOMAIN' for row in options.values()):
+        options={key:row for key,row in options.items() if row.get('size_admission')!='UNVERIFIED_SIZE_PREVIEW_ONLY'}
     return sorted(options.values(),key=lambda row:(row.get('size_admission')=='UNVERIFIED_SIZE_PREVIEW_ONLY',-row['support'],
         abs(row['source_dimension_mm'][0]-width)+abs(row['source_dimension_mm'][1]-height),row['id']))
 

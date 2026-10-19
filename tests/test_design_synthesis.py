@@ -53,6 +53,25 @@ class DesignSynthesisTests(unittest.TestCase):
         self.assertTrue(all(row['candidate'].risk_context['design_size_admission']=='UNVERIFIED_SIZE_PREVIEW_ONLY'
             for row in result['candidates']))
 
+    def test_supported_new_size_prediction_is_not_displaced_by_unverified_source_copy(self):
+        from template_ai.design_synthesis import _font_options
+        from template_ai.design_joint import fit_joint
+        from template_ai.layout import text_geometry
+        key='p1:name:0';samples=[]
+        for data in self.profile['data_requirement_profiles']:
+            for i,sample in enumerate(data['presentation_evidence']):
+                if sample['role_key']!=key:continue
+                width=90.+i%2*10.;point=10.+i%2
+                sample['dimensions_mm']=[width,54.];sample['joint']['source_pt']=point
+                sample['joint']['frame_width_mm']=sample['frame'][2]*width
+                asset=sample['source_font_ref']
+                sample['joint']['shaped_advance_mm']=text_geometry(asset['families'][0],point,'Alex','',asset)[0]
+                samples.append(sample)
+        role=next(row for row in self.profile['roles'] if row['key']==key);role['conditional_joint_model']=fit_joint(samples)
+        choices=_font_options(self.profile,key,95.,54.,'Alex',dict(enable_joint_prediction=True))
+        self.assertTrue(choices)
+        self.assertTrue(all(row['size_admission']=='LEARNED_JOINT_DOMAIN' for row in choices))
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.library=Library(Path(self.temp.name)/'data');self.addCleanup(self.library.db.close)

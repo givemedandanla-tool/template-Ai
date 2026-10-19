@@ -13,6 +13,8 @@
 
 ## 2026-10-19最新實作入口
 
+最新本地還原實作已超過下列851ef2a歷史範圍：先讀STATE／ACTIVE_DEVELOPMENT_HANDOFF／LOCAL_LEARNING_RECOVERY_GUIDE.md。私人作品不提供雲端是已確認要求，不能以此停工或反覆索取；完整新回歸以STATE最新run為準，合成PASS不當真實生產資格。
+
 目前8包皆PARTIAL、0完整驗收；實際.ai作品與字型使用者已確認尚未提供。讀STATE及docs/dev/AI_CORE_IMPLEMENTATION_20261019.md，不把下方歷史0實作／1partial當最新。共用核心、實際桌面互動、來源glyph、條件指派／聯合參數、回饋與持久評估已實作候選；run001已主動中止留存478PASS；run002在851ef2a完成1685PASS、原生擷取exit0及全部附件hash核對。最新完整結果與未支援子集見AI_ALL8_FINAL_REPORT_20261019.md；不把軟體PASS當真實訓練合格。合成和mocked憑證機制不是真實訓練資格。
 
 ## 2026-10-19最新設計澄清

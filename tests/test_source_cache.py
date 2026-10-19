@@ -88,7 +88,7 @@ class SourceCacheTests(unittest.TestCase):
         self.assertEqual(path.read_bytes(), expected)
 
     @unittest.skipUnless(inkscape_path(), "需要實際 Inkscape 快取及轉換失敗驗證")
-    def test_failed_regeneration_uses_verified_original_svg_not_corrupt_cache(self):
+    def test_failed_regeneration_does_not_restore_corrupt_cache_as_success(self):
         original = Path(__file__).parents[1] / "examples/synthetic-source.svg"
         first = import_file(original, self.assets)
         Path(first["svg"]).write_text("corrupted cached SVG", encoding="utf-8")

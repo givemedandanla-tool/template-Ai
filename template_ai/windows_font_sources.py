@@ -6,7 +6,7 @@ from .font_evidence import inspect_font,MAX_FONT_BYTES
 
 SCOPE='REGISTERED_FILES_NOT_ACTIVE_QT_FACE_OR_LICENCE'
 
-def collect_registered_font_sources(records,roots,*,max_files=128,max_bytes=128*1024**2,max_faces=512):
+def collect_registered_font_sources(records,roots,*,max_files=128,max_bytes=128*1024**2,max_faces=512,allow_registered_absolute_local=False):
     if type(max_files) is not int or not 1<=max_files<=256 or type(max_bytes) is not int or not 0<=max_bytes<=256*1024**2 or type(max_faces) is not int or not 1<=max_faces<=1024:raise ValueError('Windows字型來源盤點預算無效')
     report=dict(status='COMPLETE',scope=SCOPE,files=[],rejected=[],source_bytes_budgeted=0,notes=[]);seen={};faces_left=max_faces
     def reject(reason):report['status']='PARTIAL';report['rejected'].append(str(reason)[:500])
@@ -20,7 +20,9 @@ def collect_registered_font_sources(records,roots,*,max_files=128,max_bytes=128*
             value=os.path.expandvars(value);root=Path(roots[scope])
             if str(root).startswith(('\\\\','//')) or value.startswith(('\\\\','//')):raise ValueError('不讀取網路字型來源')
             source=Path(value);source=source if source.is_absolute() else root/source
-            if source.is_symlink() or not source.resolve().is_relative_to(root.resolve()):raise ValueError('字型來源超出已核對字型目錄')
+            registered_absolute=Path(value).is_absolute() and allow_registered_absolute_local is True
+            if source.is_symlink() or (not source.resolve().is_relative_to(root.resolve()) and not registered_absolute):raise ValueError('字型來源超出已核對字型目錄')
+            if str(source.resolve()).startswith(('\\\\','//')):raise ValueError('不讀取網路字型來源')
             source=source.resolve()
             if source.suffix.lower() not in ('.ttf','.otf','.ttc'):raise ValueError('此來源格式未經目前字型解析器核對')
             if source in seen:
@@ -85,7 +87,7 @@ def scan_registered_pages(records,roots,*,cancelled=lambda:False,progress=lambda
                   next_offset=0,total_records=len(records));seen={}
     for offset in range(0,len(records),4):
         if cancelled():combined['status']='PAUSED';break
-        page=collect_registered_font_sources(records[offset:offset+4],roots,max_files=4,max_bytes=256*1024**2,max_faces=1024)
+        page=collect_registered_font_sources(records[offset:offset+4],roots,max_files=4,max_bytes=256*1024**2,max_faces=1024,allow_registered_absolute_local=True)
         if page['status']!='COMPLETE':combined['status']='PARTIAL'
         combined['source_bytes_budgeted']+=page['source_bytes_budgeted'];combined['rejected'].extend(page['rejected'])
         for row in page['files']:

@@ -126,6 +126,9 @@ def owned_example(index):
 
 
 def execute_item(library,job,index):
+    if job['kind']=='OWNED_SOURCE_FILE_BENCHMARK':
+        from .design_source_benchmark import source_benchmark_item
+        return source_benchmark_item(library,job['plan'],index)
     plan=job['plan'];kind=job['kind'];item=plan['items'][index]
     if kind=='TRAIN_SHARED_MODEL':
         model=CrossWorkLearning(library).train(plan['dataset_id'],job['actor'],plan.get('settings'),True,
@@ -192,6 +195,9 @@ def execute_item(library,job,index):
 
 
 def summarize_job(library,job,results):
+    if job['kind']=='OWNED_SOURCE_FILE_BENCHMARK':
+        from .design_source_benchmark import summarize_source_benchmark
+        return summarize_source_benchmark(library,job,results)
     if job['kind']=='TRAIN_SHARED_MODEL':return dict(model_id=results[0]['model_id'],scope='CANDIDATE_NOT_ACTIVATED')
     common=dict(process_platform=platform.platform(),elapsed_item_seconds=job['elapsed_seconds'],
         items=len(results),hardware_scope='CURRENT_PROCESS_CURRENT_HOST_ONLY',

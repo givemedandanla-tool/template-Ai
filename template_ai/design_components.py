@@ -32,6 +32,8 @@ def frame(value):
 
 def checked_icon(asset):
     if not isinstance(asset,dict) or not isinstance(asset.get('path'),str):raise ValueError('Local icon evidence missing')
+    if asset.get('semantic_scope')!='DECORATIVE_FIELD_SYMBOL' or asset.get('company_id'):
+        raise ValueError('Static field symbols cannot bypass the company LogoStore identity contract')
     path=Path(asset['path'])
     if path.is_symlink() or not path.is_file() or path.stat().st_size>2_000_000 or file_digest(path)!=asset.get('hash'):
         raise ValueError('Source icon changed,missing or oversized')

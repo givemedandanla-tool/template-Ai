@@ -11,7 +11,7 @@ from .model import new_id
 from .training_store import TrainingStore,digest,text
 from .training_pipeline import LIVE_OWNERS,owner_alive
 
-KINDS={'TRAIN_SHARED_MODEL','EVALUATE_LAYOUTS','OWNED_DESCRIPTOR_BENCHMARK'}
+KINDS={'TRAIN_SHARED_MODEL','EVALUATE_LAYOUTS','OWNED_DESCRIPTOR_BENCHMARK','OWNED_SOURCE_FILE_BENCHMARK'}
 
 
 class DesignJobs:

@@ -1,5 +1,15 @@
 # Active development handoff
 
+LATEST 2026-10-19 LOCAL-ONLY RECOVERY: User authorizes private originals/fonts/models stay local; do not ask for real corpus or wait for it. Decision: docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md. Guide: docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md. Current work supersedes historical "next when real materials available" wording below. Original8/50 retained; software/synthetic verification separate from local-real/device qualification.
+
+Current implementation:dual appearance/semantic Inkscape plus Qt fallback;source glyphs;actual local outline-font search/OCR/global page merge;strict content-free support report;visual-match evidence to source binding with inferred/native UNKNOWN distinguished;multi-run/face selectors;separate label/vector-icon components;word-only justification/object-gap learning;conditional capacity calibrated from actual VALIDATION outputs;local production preference certificate/activation. No paid AI,web/mobile,EXE,agents,worktree or main merge. Advanced composite annotation and model-qualification/calibration APIs are present;no complete graphical expert wizard claimed.
+
+Latest targeted45PASS;isolated22-source pipeline2families/0globaltemplates,10actual layout/data checks and actual capacity calibrationPASS;6-source mixed face+static label/icon training to novel inputPASS. Six actual PDF-compatible.ai source-file benchmarkPASS with pause/reopen and original glyphs;1000/3000running. Full new frozen-source regression pending;old1685evidence stale for changed current source. Keep failures/attempts,never sum overlapping targeted totals. Final result must publish fresh source/run and truthful remaining scopes.
+
+Next:finish new acceptance/capture checks,freeze source,push/fresh Git readback,run full evidence and rebind163 scoped registry rows without status inflation,collect actual1000/3000results,update current8/50 audit and final report,checkpoint+GitHub readback. Checkpoint cadence exceeded10min in integrated work;deviation logged,do not claim strict compliance. Existing private DB/assets need local backup,never GitHub upload.
+
+Historical baseline (before this implementation):
+
 User authorizes sustained8AI packages/50 retained clauses. Current source851ef2ac62a49f865bac52b524c66c31371d0942;branch dev/v0.1-first-version/PR2. Actual.ai corpus and corresponding fonts explicitly NOT_PROVIDED;do not ask again. All8PARTIAL,0complete/full-verified;user-corpus training NOT_STARTED,real production models0. Read AI_ALL8_FINAL_REPORT_20261019.md and50-clause audit for scope/gaps.
 
 Full RUN-AI-SHARED-CORE-ALL8-002:1685/1685PASS,215healthy fresh module processes,capture exit0,366attachment hashes verified,source unchanged. OverallFAIL only5legacy external clauses:Windows install,real nativeAI1/2/4-person sources,VivoBook. Scoped163completed registry rows reverified/rebound with unchanged counts:topic69verified/3partial/3deferred,CORE87verified,GOV7verified. Old28 remains25complete/3partial. Earlier run001 was explicitly interrupted478PASS and never adopted;do not sum targeted/history totals.

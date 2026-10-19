@@ -6,11 +6,14 @@ the shareable projection. The full local report remains in the source cache.
 from collections import Counter
 import json
 from pathlib import Path
+import re
+import sys
 
 VERSION = 'local-recovery-diagnostics-1'
 ISSUES = {
     'CONVERTER_UNAVAILABLE': ('CONVERSION', 'Inkscape 不可用', '安裝或指定本機 Inkscape，或使用 PDF 相容內容。'),
     'CONVERSION_FAILED': ('CONVERSION', '外觀轉換失敗', '檢查本機轉換器；可用時改走原始 PDF／SVG 渲染。'),
+    'CONVERTER_VARIANT_UNAVAILABLE': ('CONVERSION', '此版本不支援指定文字匯入策略', '已嘗試相容模式；可更新 Inkscape 或使用原始 PDF／OCR 線索。'),
     'SEMANTIC_CONVERSION_FAILED': ('TEXT', '可編輯文字轉換失敗', '保留外觀參考；以原始文字或 OCR 加本機字型比對補足。'),
     'NO_EDITABLE_TEXT': ('TEXT', '未取得可編輯文字', '可能已轉外框或為圖片；對選定文字區使用 OCR 與字型比對。'),
     'DERIVATIVE_TEXT_ONLY': ('TEXT', '僅有轉換後文字資訊', '核對外觀與原稿；轉換字型宣告不能直接當原始字型真值。'),
@@ -30,7 +33,10 @@ def issue(code, *, count=1):
     if code not in ISSUES or type(count) is not int or not 1 <= count <= 100000:
         raise ValueError('Unknown recovery issue or invalid count')
     stage, message, remedy = ISSUES[code]
-    return dict(code=code, stage=stage, count=count, message=message, remedy=remedy)
+    impact={'CONVERSION':'來源還原可能不完整，需後備路線或核對。','TEXT':'文字內容或結構尚不能作為完整訓練真值。',
+            'FIDELITY':'外觀一致性尚未核實，不能自動採作合格來源。','FONT':'字型或文字幾何仍需核對，保留候選／未知。',
+            'BUDGET':'目前結果只涵蓋已檢查範圍。','OCR':'辨識內容尚未取得或確認。','STRUCTURE':'受影響結構保留未知，不靜默套用預設。'}[stage]
+    return dict(code=code, stage=stage, count=count, message=message, impact=impact,remedy=remedy)
 
 
 def shareable_report(local):
@@ -56,7 +62,21 @@ def shareable_report(local):
     counters = local.get('counts', {})
     result['counts'] = {key: counters[key] for key in ('text_nodes', 'path_nodes', 'checked_faces', 'omitted_faces')
                         if type(counters.get(key)) is int and 0 <= counters[key] <= 100000}
+    result['software_versions']=software_versions(local.get('software_versions',{}))
     return result
+
+
+def software_versions(supplied=None):
+    from importlib.metadata import version,PackageNotFoundError
+    from PySide6.QtCore import qVersion
+    values=dict(python='.'.join(map(str,sys.version_info[:3])),qt=qVersion())
+    for key,package in [('fonttools','fonttools'),('scipy','scipy'),('sklearn','scikit-learn'),('pdfminer','pdfminer.six')]:
+        try:values[key]=version(package)
+        except PackageNotFoundError:pass
+    for key in ('inkscape','tesseract'):
+        value=(supplied or {}).get(key)
+        if isinstance(value,str) and re.fullmatch(r'[0-9]{1,8}(?:\.[0-9]{1,8}){0,3}(?:[a-z]{1,3}[0-9]{0,3})?',value):values[key]=value
+    return values
 
 
 def export_shareable(local, target):

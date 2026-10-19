@@ -26,7 +26,7 @@ class SeparateComponentTests(unittest.TestCase):
         self.font=self.manager.import_font('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',True,usage_rights=rights)
         self.label_font=self.manager.import_font('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf',True,usage_rights=rights)
         self.icon=self.root/'authored-icon.svg';self.icon.write_text('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><path d="M1 1 L9 1 L9 9 L1 9 Z" fill="black"/></svg>')
-        self.asset=dict(path=str(self.icon),hash=file_digest(self.icon),source_hash='owned-source',reviewed_source_association=True,usage_rights=dict(print_export=True))
+        self.asset=dict(path=str(self.icon),hash=file_digest(self.icon),semantic_scope='DECORATIVE_FIELD_SYMBOL',source_hash='owned-source',reviewed_source_association=True,usage_rights=dict(print_export=True))
         self.presentation=dict(status='HUMAN_CONFIRMED_SOURCE_RULE',evidence_refs=['authored label-value and icon frames'],
             value_frame=[.34,0.,.66,.20],components=[
                 dict(kind='STATIC_TEXT',text='TEL',font_asset=self.label_font,pt_ratio=.8,frame=[.10,0.,.2,.18]),
@@ -59,6 +59,11 @@ class SeparateComponentTests(unittest.TestCase):
         self.assertTrue(font_rights_diagnostics(candidate,'PDF'))
         self.icon.write_text('<svg/>')
         self.assertTrue(font_asset_errors([self.slot]))
+
+    def test_static_icon_cannot_claim_company_logo_identity(self):
+        policy=deepcopy(self.policy)
+        policy['presentation']['components'][1]['asset']['company_id']='company-not-a-decoration'
+        with self.assertRaisesRegex(ValueError,'LogoStore'):self.shape(policy=policy)
 
     def test_long_values_do_not_overwrite_or_move_static_components_silently(self):
         with self.assertRaises(ValueError):self.shape('1234567890'*20)

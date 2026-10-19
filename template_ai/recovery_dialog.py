@@ -49,6 +49,7 @@ class RecoveryDialog(QDialog):
         row=QHBoxLayout();self.candidate_choices=QComboBox();row.addWidget(self.candidate_choices)
         draft=self.add_button(row,'將候選加入來源核對草稿（不授予印製權）',self.use_candidate);draft.setEnabled(on_candidate is not None);layout.addLayout(row)
         self.public=QTextEdit();self.public.setReadOnly(True);layout.addWidget(QLabel('以下為可分享診斷預覽，不含原稿文字、路徑、字型名、圖片或原稿雜湊：'));layout.addWidget(self.public)
+        self.summary=QLabel();self.summary.setWordWrap(True);self.summary.setTextFormat(Qt.PlainText);layout.addWidget(self.summary)
         row=QHBoxLayout();self.add_button(row,'匯出上述診斷 JSON',self.export)
         self.add_button(row,'取消目前工作',self.cancel);self.add_button(row,'關閉',self.close);layout.addLayout(row)
         self.status=QLabel();self.status.setWordWrap(True);layout.addWidget(self.status)
@@ -133,8 +134,12 @@ class RecoveryDialog(QDialog):
         from .quality_ocr import freeze
         from .visual_font_match import ocr_text_candidates
         crop=self.crop();assets=self.window.library.assets;languages=self.ocr_language.currentData()
-        def run(worker):return ocr_text_candidates(crop,freeze(assets,dict(languages=languages,psm=6)))
-        def done(rows):
+        def run(worker):
+            import re
+            frozen=freeze(assets,dict(languages=languages,psm=6));match=re.search(r'tesseract ([0-9]+(?:\.[0-9]+){1,3})',frozen['runtime']['version'])
+            return dict(rows=ocr_text_candidates(crop,frozen),version=match[1] if match else None)
+        def done(payload):
+            rows=payload['rows'];self.report.setdefault('software_versions',{})['tesseract']=payload['version']
             self.verified.setChecked(False)
             if len(rows)==1:self.text.setText(rows[0]['text'])
             self.report.setdefault('issues',[]).append(issue('OCR_REVIEW_REQUIRED'));self.show_report()
@@ -167,7 +172,9 @@ class RecoveryDialog(QDialog):
         if self.offset>=len(self.faces):raise ValueError('所選字型批次已完成；可擴充候選來源。')
         self.match(reset=False)
 
-    def show_report(self):self.public.setPlainText(json.dumps(shareable_report(self.report),ensure_ascii=False,indent=2))
+    def show_report(self):
+        public=shareable_report(self.report);self.public.setPlainText(json.dumps(public,ensure_ascii=False,indent=2))
+        self.summary.setText('\n'.join(row['message']+'。影響：'+row['impact']+' 建議：'+row['remedy'] for row in public['issues'][:3]))
 
     def use_candidate(self):
         if not self.on_candidate or not self.candidate_choices.currentData():raise ValueError('請先選擇本機比對候選')

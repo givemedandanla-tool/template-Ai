@@ -6,6 +6,9 @@ artifacts stay local; diagnostics use the fixed vocabulary shared by the UI.
 from pathlib import Path
 import shutil
 import subprocess
+import os
+import re
+import tempfile
 import xml.etree.ElementTree as ET
 
 import numpy as np
@@ -15,6 +18,23 @@ from PySide6.QtPdf import QPdfDocument
 
 from .background import file_digest
 from .recovery_diagnostics import VERSION, issue
+
+_CONVERTER_VERSIONS={}
+
+
+def converter_version(executable):
+    if not executable:return None
+    try:
+        stat=Path(executable).stat();key=(str(executable),stat.st_mtime_ns,stat.st_size)
+        if key not in _CONVERTER_VERSIONS:
+            with tempfile.TemporaryDirectory(prefix='template-ai-version-') as folder:
+                env=os.environ.copy();env['INKSCAPE_PROFILE_DIR']=folder
+                result=subprocess.run([executable,'--version'],capture_output=True,text=True,timeout=10,env=env,
+                    creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+            match=re.search(r'Inkscape ([0-9]+(?:\.[0-9]+){1,3})',result.stdout)
+            _CONVERTER_VERSIONS[key]=match[1] if result.returncode==0 and match else None
+        return _CONVERTER_VERSIONS[key]
+    except (OSError,subprocess.TimeoutExpired):return None
 
 
 def image_gray(image):
@@ -47,6 +67,7 @@ def recover_semantics(path, directory, page, is_pdf, converter, *, run):
     target = directory/'semantic.svg'
     report = dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower()=='.svg' else 'OTHER',
                   semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})
+    report['software_versions']=dict(inkscape=converter_version(converter))
     try:
         if path.suffix.lower()=='.svg':
             shutil.copyfile(path, target)
@@ -56,7 +77,12 @@ def recover_semantics(path, directory, page, is_pdf, converter, *, run):
             if is_pdf:
                 # Internal importer preserves text; Poppler route serves appearance.
                 arguments += [f'--pages={page}', '--pdf-font-strategy=keep']
-            run(converter, arguments, directory)
+            try:run(converter, arguments, directory)
+            except ValueError as error:
+                if not is_pdf or '--pdf-font-strategy' not in str(error):raise
+                target.unlink(missing_ok=True)
+                run(converter,[arg for arg in arguments if not arg.startswith('--pdf-font-strategy')],directory)
+                report['issues'].append(issue('CONVERTER_VARIANT_UNAVAILABLE'))
             report['semantic_status'] = 'DERIVATIVE_TEXT'
             report['issues'].append(issue('DERIVATIVE_TEXT_ONLY'))
         else:

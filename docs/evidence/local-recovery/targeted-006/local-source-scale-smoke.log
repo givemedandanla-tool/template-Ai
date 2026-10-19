@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/run_source_file_scale.py", line 57, in <module>
+    args=parser.parse_args();print(json.dumps(run(args.directory,args.count,args.font),ensure_ascii=False))
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/run_source_file_scale.py", line 39, in run
+    paused=run_design_job(library.root,job['id'],claimed['owner']['token'],
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_jobs.py", line 123, in run_design_job
+    result=execute_item(library,job,index)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_evaluation.py", line 131, in execute_item
+    return source_benchmark_item(library,job['plan'],index)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_source_benchmark.py", line 39, in source_benchmark_item
+    raise ValueError('Actual original PDF glyphs/physical point size were not recovered')
+ValueError: Actual original PDF glyphs/physical point size were not recovered

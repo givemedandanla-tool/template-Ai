@@ -102,6 +102,7 @@ def main():
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--commit-json", type=Path, required=True)
     parser.add_argument("--tree-json", type=Path, required=True)
+    parser.add_argument('--module-timeout',type=int,default=180)
     args = parser.parse_args()
     valid_id(args.run_id)
     folder = ROOT / "docs/evidence/runs" / args.run_id
@@ -126,7 +127,7 @@ def main():
             if isinstance(test,unittest.TestSuite):yield from test_catalog(test)
             else:yield test.id()
     from evidence_modules import run_modules
-    result,runtime_errors,module_log=run_modules(list(test_catalog(unittest.defaultTestLoader.discover(str(ROOT/'tests')))),live)
+    result,runtime_errors,module_log=run_modules(list(test_catalog(unittest.defaultTestLoader.discover(str(ROOT/'tests')))),live,module_timeout=args.module_timeout)
     log.write(module_log)
     for diagnostic in live.iterdir():
         if diagnostic.is_file():shutil.copy2(diagnostic,folder/diagnostic.name)
@@ -292,6 +293,13 @@ def main():
             extra=subprocess.run([sys.executable,str(ROOT / "tools/capture_catalog.py"),"--artifacts-dir",str(generated)],cwd=ROOT,capture_output=True,text=True,encoding="utf-8",errors="replace",timeout=60)
             with capture_log.open("a") as log:log.write(extra.stdout+extra.stderr)
             capture_code=extra.returncode
+        if capture_code == 0:
+            extra=subprocess.run([sys.executable,str(ROOT/'tools/capture_local_recovery.py'),'--folder',str(generated)],cwd=ROOT,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=60)
+            with capture_log.open('a') as log:log.write(extra.stdout+extra.stderr)
+            capture_code=extra.returncode
+            if capture_code==0:
+                for path in generated.glob('local-recovery-*'):
+                    if path.is_file():shutil.copyfile(path,folder/path.name)
         if capture_code == 0:
             for name in ("output-workspace.png", "training-workspace.png", "template-workspace.png", "decorated-output-workspace.png", "multiple-artworks-workspace.png", "batch-source-preview.png", "font-center-workspace.png", "font-center-diagnostics.png",
                          "font-candidates-ranked.png", "font-candidates-preview.png", "font-candidate-line.png", "font-candidates-report.json",

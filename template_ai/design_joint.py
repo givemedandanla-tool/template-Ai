@@ -11,7 +11,7 @@ import math
 from .training_store import digest
 from .design_style import style_identity
 
-VERSION = 'joint-ridge-2-functional-lineage-balanced'
+VERSION = 'joint-ridge-3-conditional-residual-modes'
 INPUTS = ('width_mm', 'height_mm', 'natural_advance_per_pt_mm')
 OUTPUTS = ('source_pt', 'horizontal_scale', 'tracking_mm', 'frame_width_mm', 'frame_height_mm')
 
@@ -69,22 +69,38 @@ def fit_joint(samples):
         y_mean = np.average(y, axis=0, weights=fit_weights)
         y_scale = np.maximum(np.sqrt(np.average((y-y_mean)**2, axis=0, weights=fit_weights)), 1e-6)
         normalized = (y - y_mean) / y_scale
-        # BIC only proposes modes; each fitted mode still needs independent support.
+        # Size/text responses are continuous. Only unexplained residuals may
+        # propose discrete styles; clustering raw Y would fragment size ranges.
+        pilot_centre=np.average(x,axis=0,weights=fit_weights)
+        pilot_scale=np.maximum(np.sqrt(np.average((x-pilot_centre)**2,axis=0,weights=fit_weights)),1e-6)
+        pilot_x=(x-pilot_centre)/pilot_scale
+        pilot=Ridge(alpha=1e-6,fit_intercept=True).fit(pilot_x,normalized,sample_weight=fit_weights)
+        unexplained=normalized-pilot.predict(pilot_x)
+        # Compare mixture-of-regression proposals, not raw-output cluster BIC.
+        # Both raw and residual proposals are needed: a step in style may be
+        # correlated with text demand and partially explained by the pilot.
         assignments = np.zeros(len(rows), dtype=int)
-        if len(weights) >= 10 and len(rows) >= 10 and np.unique(normalized, axis=0).shape[0] >= 2:
-            # BIC proposals see one representative per independent lineage.
-            # Every observed configuration remains available outside regression.
-            proposal=np.asarray([np.mean([normalized[i] for i,row in enumerate(rows)
-                if row[0]['lineage_group']==group],axis=0) for group in sorted(weights)])
-            choices = []
-            for count in range(1, min(3, len(weights) // 5) + 1):
-                model = GaussianMixture(count, random_state=0, n_init=3, reg_covar=1e-4).fit(proposal)
-                labels = model.predict(normalized)
-                if all(len({rows[i][0]['lineage_group'] for i in range(len(rows)) if labels[i] == k}) >= 5
-                       for k in range(count)):
-                    choices.append((float(model.bic(proposal)), count, labels))
-            if choices:
-                assignments = min(choices, key=lambda item: (item[0], item[1]))[2]
+        def regression_bic(labels):
+            error=0.;parameters=0
+            for label in sorted(set(labels)):
+                selected=labels==label;mx=pilot_x[selected];my=normalized[selected];mw=fit_weights[selected]
+                fitted=Ridge(alpha=1e-6,fit_intercept=True).fit(mx,my,sample_weight=mw)
+                error+=float(np.sum(mw[:,None]*(my-fitted.predict(mx))**2))
+                parameters+=int(np.linalg.matrix_rank(np.column_stack([np.ones(len(mx)),mx])))*my.shape[1]
+            count=len(set(labels));n=len(weights);responses=normalized.shape[1]
+            return n*responses*math.log(max(error/(n*responses),1e-8))+(parameters+count)*math.log(n)
+        choices=[(regression_bic(assignments),1,assignments)]
+        if len(weights)>=10:
+            for proposal_values in (normalized,unexplained):
+                if np.max(np.ptp(proposal_values,axis=0))<=1e-4:continue
+                proposal=np.asarray([np.mean([proposal_values[i] for i,row in enumerate(rows)
+                    if row[0]['lineage_group']==group],axis=0) for group in sorted(weights)])
+                for count in range(2,min(3,len(weights)//5)+1):
+                    model=GaussianMixture(count,random_state=0,n_init=3,reg_covar=1e-4).fit(proposal)
+                    labels=model.predict(proposal_values)
+                    if all(len({rows[i][0]['lineage_group'] for i in range(len(rows)) if labels[i]==k})>=5 for k in range(count)):
+                        choices.append((regression_bic(labels),count,labels))
+        assignments=min(choices,key=lambda item:(item[0],item[1]))[2]
         for label in sorted(set(assignments)):
             selected = [row for i, row in enumerate(rows) if assignments[i] == label]
             mx = np.asarray([row[1] for row in selected]); my = np.asarray([row[2] for row in selected])
@@ -111,7 +127,8 @@ def fit_joint(samples):
                 y_centre=response_centre.tolist(), y_scale=response_scale.tolist(),
                 coefficients=regressor.coef_.tolist(), intercept=regressor.intercept_.tolist(),
                 fit_residual_rms=np.sqrt((residuals**2).mean(axis=0)).tolist(),
-                quality_scope='TRAIN_FIT_DIAGNOSTIC_ONLY_NOT_CALIBRATED', alpha=1.)
+                quality_scope='TRAIN_FIT_DIAGNOSTIC_ONLY_NOT_CALIBRATED', alpha=1.,
+                mode_basis='GROUP_BALANCED_MIXTURE_OF_REGRESSIONS_BIC_PROPOSALS')
             row['id'] = digest(row); modes.append(row)
     return dict(version=VERSION, inputs=list(INPUTS), outputs=list(OUTPUTS), modes=modes,
                 absent_or_rare='RETAIN_OBSERVED_CONFIGURATIONS_NO_INVENTED_PARAMETERS')

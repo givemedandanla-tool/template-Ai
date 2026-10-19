@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "LOCAL_ONLY_RECOVERY_AND_SYNTHETIC_ACCEPTANCE_IMPLEMENTATION",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-COMPONENTS-RECOVERY.receipt.json",
-  "last_confirmed_commit": "63a7585dd1ba2846372b013a5d1d51659a63c1c7",
+  "active_task": "LOCAL_RECOVERY_SOURCE_FREEZE_AND_FULL_SELF_VERIFICATION",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-VISUAL-LEARNING.receipt.json",
+  "last_confirmed_commit": "6cd740ef79e2e23729aac8c052578f6887fe96a5",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -19,9 +19,9 @@
     "docs/dev/AI_TRAINING_DESIGN_TODOS.md"
   ],
   "next_tasks": [
-    "Finish actual-output capacity calibration and composite cross-work end-to-end tests",
-    "Freeze final source,run full regression and rebind stale governance evidence",
-    "Publish local recovery/model guide and checkpoint;never request private originals/fonts"
+    "Run frozen full evidence and diagnose any failures without claiming old source PASS",
+    "Collect actual owned1000/3000 source benchmark results and scope",
+    "Rebind scoped evidence/update8-package audit and final checkpoint;private corpus stays local"
   ],
   "blocked": [
     {
@@ -46,7 +46,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261019-LOCAL-VISUAL-LEARNING"
+    "CP-20261019-LOCAL-RECOVERY-SOURCE-FROZEN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
@@ -1124,7 +1124,7 @@
   "swap_default_checkpoint_interval_seconds": 400.238,
   "ai_execution_plan": "docs/dev/AI_LEARNING_EXECUTION.md",
   "ai_execution_baseline": "docs/dev/progress/PROGRESS-20261019-AI-ALL8-BEGIN.json",
-  "latest_targeted_evidence": "docs/evidence/local-recovery/targeted-005/result.json",
+  "latest_targeted_evidence": "docs/evidence/local-recovery/targeted-006/result.json",
   "latest_evidence_scope": "Current851ef2a:1685PASS,215healthy modules,capture0,366attachments;all8partial/0full;user corpus absent",
   "latest_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T061258Z.json",
   "frozen_formal_run": {
@@ -1165,7 +1165,7 @@
     }
   ],
   "current_source_verification": "CHANGED_AFTER1581_FORMAL_SOURCE;36_TARGETED_PASS;FULL_CURRENT_REGRESSION_PENDING",
-  "current_source_regression_status": "SOFTWARE_PASS_1685_NATIVE_CAPTURE0;OVERALL_FAIL_5_EXTERNAL_CLAUSES",
+  "current_source_regression_status": "PENDING_NEW_FULL_FROZEN_RUN;OLD1685_STALE_FOR_CURRENT_SOURCE",
   "last_checkpoint_cadence_note": "2026-10-19:feedback snapshot07:20 pushed/readback07:32;final-source freeze~07:44. Snapshot/readback windows exceeded10min during structural family correction;actual deviation recorded,not erased.",
   "ai_source_joint_focused_20261019": {
     "native_parser_related": {
@@ -1250,5 +1250,6 @@
   },
   "final_checkpoint_cadence_note": "Final native capture/publication review checkpoint interval exceeded10minutes;earlier live checkpoints and frozen source preserved;not a claim of strict cadence compliance",
   "local_recovery_decision": "docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md",
-  "local_recovery_targeted_evidence": "docs/evidence/local-recovery/targeted-002/result.json"
+  "local_recovery_targeted_evidence": "docs/evidence/local-recovery/targeted-002/result.json",
+  "local_recovery_guide": "docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md"
 }
