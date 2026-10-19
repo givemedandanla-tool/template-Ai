@@ -1,10 +1,10 @@
 # 本地分析、規則學習與除錯交付
 
-狀態：`PENDING_FULL_FORMAL_RUN`；正式程式來源 `a288b1e294f1108ab4cebaf0d99e477e87e2e7f0`。
+狀態：`PENDING_FULL_FORMAL_RUN`；正式程式來源 `274fdc22121e415d0f465a2ea22d86ade15695de`。
 
 已實作 Inkscape／Qt 雙路復原、本機 OCR／字面影像比對、來源核對後共用學習、複合文字與標籤／圖示、明確分散、聯合適合區域及本機診斷。重用成熟開源元件與統計方法，不調用付費 AI 服務。
 
-[本地操作／重跑指引](LOCAL_LEARNING_RECOVERY_GUIDE.md) · [8 包 50 條核對](AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.md) · [正式回歸](../../docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/run.json)
+[本地操作／重跑指引](LOCAL_LEARNING_RECOVERY_GUIDE.md) · [8 包 50 條核對](AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.md) · [正式回歸](../../docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-004/run.json)
 
 完整合成流程使用 22 件自製作品（12 TRAIN／6 VALIDATION／4 HOLDOUT），實際匯入、綁定、訓練成兩個共用家族，零個逐作品全域模板；十件評估、容量校準、重複輸入一致性、預覽、來源／權重未改寫均有測試。測試作品及字型均不來自使用者私人資料。
 
@@ -19,4 +19,4 @@
 
 完整私人 Illustrator 還原、真實本地美學、Windows／VivoBook與物理印前尚未驗證；不要求你為此上傳作品。進階複合來源標註、容量校準及正式資格目前有後台 API，尚非完整圖形化引導。原始 8 包／50 條完整資格與舊 28 題完成數不因此虛增。網站／手機／EXE維持延後。
 
-開發途中 run001 在653 PASS／1723計畫時為補齊字元分散而主動中斷，未當正式通過。目標測試與歷史結果不累加進本輪分母。GitHub保存程式、匿名指標、精簡交接與 checkpoints；本機私人資料仍需本地備份。
+開發途中 run001 在653 PASS／1723計畫、run002在101 PASS／1726計畫時為補齊字元分散及空庫診斷而中斷。run003在1301件完成、1300 PASS與1件來源分類ERROR時中斷，保留真實失敗；已修正語意／外觀證據管道、hash、物件對應及統計，53相關測試與7程序並行測試通過後，才以修正版重跑完整004。三輪均未採用為最終通過。目標測試與歷史結果不累加進本輪分母。GitHub保存程式、匿名指標、精簡交接與 checkpoints；本機私人資料仍需本地備份。

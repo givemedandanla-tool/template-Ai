@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "LOCAL_RECOVERY_CHANNEL_CORRECTION_AND_PARALLEL_SOURCE_FREEZE",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-FULL003-MID2.receipt.json",
-  "last_confirmed_commit": "dc252e854da5279fb3efeae0718ffff0c687288e",
+  "active_task": "LOCAL_RECOVERY_FULL004_FROZEN_VERIFICATION",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-PINNED-CHANNEL-FROZEN.receipt.json",
+  "last_confirmed_commit": "274fdc22121e415d0f465a2ea22d86ade15695de",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -20,19 +20,14 @@
   ],
   "next_tasks": [
     {
-      "id": "LOCAL-RECOVERY-FULL003",
+      "id": "LOCAL-RECOVERY-FULL004",
       "status": "RUNNING",
-      "next": "Read existing progress; keep code/tests/tools frozen; never combine interrupted001/002counts"
-    },
-    {
-      "id": "LOCAL-RECOVERY-FINALIZATION",
-      "status": "WAITING_FULL003",
-      "next": "After softwarePASS,verify attachments,rebind163unchanged scoped rows,finalize audit/progress/checkpoint/readback/receipt"
+      "next": "Keep source frozen while full0041732tests run in4independent owned module processes. After complete softwarePASS,verify all attachments,scope-preserving registry rebind,progress/audit/guide/checkpoint and receipts. Full003 actual failure preserved,never adopt its counts."
     },
     {
       "id": "LOCAL-PRIVATE-DATA",
       "status": "LOCAL_ONLY_BY_USER_DECISION",
-      "next": "No private-file requests; use local guide/selftest and voluntary content-free diagnostics; web/mobile/EXE deferred"
+      "next": "No private-file requests,paid AI API or frontends/EXE; guide and content-free diagnostics are local"
     }
   ],
   "blocked": [
@@ -57,9 +52,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261019-LOCAL-RECOVERY-PINNED-CHANNEL-FROZEN"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -682,7 +675,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Local source/font recovery and shared-rule learning implemented; full003 frozen1727test regression running. Last37text/structure tests and17recovery/GUI testsPASS; actual1000/3000file source pipelinePASS. Full result pending; do not ask for private artwork.",
+  "current_work": "Corrected semantic/appearance derivative hash lineage and object mappings:53related testsPASS;7bounded parallel orchestration testsPASS. Frozen274fdc2 full0041732tests running with4owned processes; original8/50complete qualification unchanged,private data local only.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -811,7 +804,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
-  "next_step": "Corrected semantic-channel source references and object-index IDs:53targetedPASS. Bounded parallel evidence runner7PASS. Freeze corrected code,push/readback,run full004 workers4 with exact catalog; then rebind scope/audit and persist receipts. Do not ask for private originals.",
+  "next_step": "Keep source frozen while full0041732tests run in4independent owned module processes. After complete softwarePASS,verify all attachments,scope-preserving registry rebind,progress/audit/guide/checkpoint and receipts. Full003 actual failure preserved,never adopt its counts.",
   "current_work_package": "SWAP-DEFAULT-TRAINING-DESIGN",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -852,7 +845,7 @@
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T173234Z.json",
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T034415Z.json"
   ],
-  "current_evidence_validity": "NEW_A288B1E_FULL003_PENDING;OLD1685_NOT_CURRENT_FOR_CHANGED_CODE",
+  "current_evidence_validity": "NEW_274FDC2_FULL004_PENDING;FULL003_ACTUAL_FAILURE_RETAINED_NOT_ADOPTED",
   "historical_active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "new_learning_progress": {
     "total_work_packages": 8,
@@ -1147,11 +1140,13 @@
   "latest_evidence_scope": "Current851ef2a:1685PASS,215healthy modules,capture0,366attachments;all8partial/0full;user corpus absent",
   "latest_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T061258Z.json",
   "frozen_formal_run": {
-    "id": "RUN-LOCAL-RECOVERY-ALL8-003",
-    "source_commit": "a288b1e294f1108ab4cebaf0d99e477e87e2e7f0",
-    "status": "FAILED_AND_INTERRUPTED_NOT_ADOPTED",
-    "progress_path": ".checkpoints/formal-live/RUN-LOCAL-RECOVERY-ALL8-003/test-progress.json",
-    "code_must_remain_frozen_until_run_completes": false
+    "id": "RUN-LOCAL-RECOVERY-ALL8-004",
+    "source_commit": "274fdc22121e415d0f465a2ea22d86ade15695de",
+    "status": "RUNNING",
+    "progress_path": ".checkpoints/formal-live/RUN-LOCAL-RECOVERY-ALL8-004/test-progress.json",
+    "code_must_remain_frozen_until_run_completes": true,
+    "module_workers": 4,
+    "module_timeout_seconds": 300
   },
   "staged_ai_implementation": {
     "path": "docs/dev/wip/ai-learning-stage",

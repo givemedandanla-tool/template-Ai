@@ -1,6 +1,6 @@
 # 本地模型、參數與學習邊界
 
-對應程式來源：`a288b1e294f1108ab4cebaf0d99e477e87e2e7f0`。操作見 [本地學習復原指引](LOCAL_LEARNING_RECOVERY_GUIDE.md)，證據及未驗證範圍見 [本輪報告](AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.md)。
+對應程式來源：`274fdc22121e415d0f465a2ea22d86ade15695de`。操作見 [本地學習復原指引](LOCAL_LEARNING_RECOVERY_GUIDE.md)，證據及未驗證範圍見 [本輪報告](AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.md)。
 
 ## 資料如何變成共用模型
 
