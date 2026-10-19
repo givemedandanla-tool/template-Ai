@@ -49,7 +49,8 @@ class QualityGold:
             from .quality_logo import validate_truth
             root,elements,bounds=vector_objects(source,self.library.assets)
             for obj in objects:
-                if obj['id'] in logo_truth:obj['component_truth']=validate_truth(logo_truth[obj['id']],source,elements,bounds)
+                if obj['id'] in logo_truth:obj['component_truth']=validate_truth(logo_truth[obj['id']],source,elements,bounds,
+                    svg_channel='semantic_svg' if source.get('semantic_svg') else 'svg')
         proof=verify_source(source['current_path'],source['hash'])
         if not healthy_source(source):raise ValueError('原稿／渲染來源cache健康不足，不能把畫面當黃金答案')
         inventory=[row[0] for row in self.db.execute("SELECT id FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED' ORDER BY id LIMIT 2001",(source['id'],))]

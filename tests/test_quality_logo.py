@@ -9,6 +9,16 @@ import test_quality_gold_sets as source_fixture
 
 
 class QualityLogoTests(unittest.TestCase):
+    def test_reviewed_semantic_logo_truth_and_prediction_use_the_same_derivative(self):
+        node,bounds,source,truth=self.structure();source['file_hashes']['semantic_svg']='2'*64
+        reviewed=validate_truth(truth,source,list(node.iter()),bounds,svg_channel='semantic_svg')
+        predicted=components(node,source,bounds,svg_channel='semantic_svg')
+        self.assertEqual(reviewed['svg_channel'],predicted['svg_channel'])
+        self.assertEqual(reviewed['svg_hash'],predicted['svg_hash'])
+        self.assertNotEqual(reviewed['svg_hash'],components(node,source,bounds)['svg_hash'])
+        self.assertEqual(reviewed['component_ids'],predicted['component_ids'])
+        self.assertTrue(reviewed['manually_verified'])
+
     def structure(self):
         node = ET.fromstring('<g id="brand"><path id="mark"/><text id="label">Synthetic</text></g>')
         bounds = dict(mark=Rect(1, 1, 2, 2), label=Rect(3, 1, 3, 1))

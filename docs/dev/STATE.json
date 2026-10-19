@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "LOCAL_RECOVERY_FULL004_FROZEN_VERIFICATION",
+  "active_task": "LOCAL_RECOVERY_GOLD_CHANNEL_SOURCE_FREEZE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-PINNED-CHANNEL-FROZEN.receipt.json",
   "last_confirmed_commit": "274fdc22121e415d0f465a2ea22d86ade15695de",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
@@ -52,7 +52,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-LOCAL-RECOVERY-GOLD-CHANNEL-FROZEN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -430,7 +432,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-LOCAL-RECOVERY-ALL8-004",
+  "planned_evidence_run": "RUN-LOCAL-RECOVERY-ALL8-005",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -804,7 +806,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
-  "next_step": "Keep source frozen while full0041732tests run in4independent owned module processes. After complete softwarePASS,verify all attachments,scope-preserving registry rebind,progress/audit/guide/checkpoint and receipts. Full003 actual failure preserved,never adopt its counts.",
+  "next_step": "103related source/quality/acceptance/release/withdrawal testsPASS after propagating semantic channel into manually reviewed logo gold. Freeze/push/readback corrected source,full0051733tests4workers,then final verification/persistence; no private files required.",
   "current_work_package": "SWAP-DEFAULT-TRAINING-DESIGN",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -1142,9 +1144,9 @@
   "frozen_formal_run": {
     "id": "RUN-LOCAL-RECOVERY-ALL8-004",
     "source_commit": "274fdc22121e415d0f465a2ea22d86ade15695de",
-    "status": "RUNNING",
+    "status": "FAILED_AND_INTERRUPTED_NOT_ADOPTED",
     "progress_path": ".checkpoints/formal-live/RUN-LOCAL-RECOVERY-ALL8-004/test-progress.json",
-    "code_must_remain_frozen_until_run_completes": true,
+    "code_must_remain_frozen_until_run_completes": false,
     "module_workers": 4,
     "module_timeout_seconds": 300
   },
@@ -1274,12 +1276,13 @@
   },
   "final_checkpoint_cadence_note": "Final native capture/publication review checkpoint interval exceeded10minutes;earlier live checkpoints and frozen source preserved;not a claim of strict cadence compliance",
   "local_recovery_decision": "docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md",
-  "local_recovery_targeted_evidence": "docs/evidence/local-recovery/targeted-009/result.json",
+  "local_recovery_targeted_evidence": "docs/evidence/local-recovery/targeted-010/result.json",
   "local_recovery_guide": "docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md",
   "local_recovery_source_file_scales": [
     "docs/evidence/local-recovery/source-file-scales/scale-1000.json",
     "docs/evidence/local-recovery/source-file-scales/scale-3000.json"
   ],
   "local_recovery_live_checkpoint_evidence": "docs/evidence/local-recovery/full003-progress-002.json",
-  "local_recovery_failed_full003": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/interruption.json"
+  "local_recovery_failed_full003": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/interruption.json",
+  "local_recovery_failed_full004": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-004/interruption.json"
 }

@@ -26,7 +26,7 @@ def components(node, source, bounds, *, svg_channel='svg'):
                 channel='ACTUAL_SVG_STRUCTURE_NOT_NATIVE_AI_TRUTH', original_correspondence='REQUIRES_HUMAN_REVIEW')
 
 
-def validate_truth(evidence, source, elements, bounds):
+def validate_truth(evidence, source, elements, bounds, *, svg_channel='svg'):
     if not isinstance(evidence, dict) or not {'root_id','component_ids','review_reason','original_correspondence_confirmed'}<=set(evidence) or not set(evidence)<={'root_id','component_ids','review_reason','original_correspondence_confirmed','text_component_ids'}:
         raise ValueError('Logo真值需明列原稿群組、完整構件及人工對照理由')
     text(evidence['review_reason'], '完整Logo原稿圖文對照依據', 2000)
@@ -36,7 +36,7 @@ def validate_truth(evidence, source, elements, bounds):
         raise ValueError('需逐項完整Logo構件ID，不能空白／重複／超限')
     roots = [node for node in elements if node.get('id') == evidence['root_id']]
     if len(roots) != 1: raise ValueError('原稿Logo群組ID不唯一或失聯')
-    actual = components(roots[0], source, bounds)
+    actual = components(roots[0], source, bounds,svg_channel=svg_channel)
     if not actual['complete'] or set(ids) != set(actual['component_ids']): raise ValueError('人工完整構件與已核對向量群組不一致／尚有外部或未知構件')
     semantic_ids=evidence.get('text_component_ids')
     if semantic_ids is not None:
