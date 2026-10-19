@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
   "active_task": "LOCAL_RECOVERY_FULL003_FROZEN_VERIFICATION",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-FULL003-LIVE.receipt.json",
-  "last_confirmed_commit": "1175c0b9a6bbcb11bb316d73a1ed60e0c2c414a3",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-FULL003-MID.receipt.json",
+  "last_confirmed_commit": "0ff7edc89745ad55251c352560e569a0ad70d628",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -58,7 +58,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261019-LOCAL-RECOVERY-FULL003-MID"
+    "CP-20261019-LOCAL-RECOVERY-FULL003-MID2"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
@@ -1256,14 +1256,14 @@
   "current_scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
   "last_observed_formal_progress": {
     "phase": "RUNNING_OWNED_TEST_MODULE",
-    "current_test": "test_digital_preflight_gui.DigitalPreflightGuiTests.test_text_detail_keeps_verified_font_drawing_and_selected_scope_without_layout_edits",
-    "started": 653,
-    "completed": 652,
-    "passed": 652,
+    "current_test": "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_shared_name_update_keeps_manual_geometry_and_other_size_independent",
+    "started": 1031,
+    "completed": 1030,
+    "passed": 1030,
     "failed_ids": [],
     "planned_tests": 1727,
     "formal_complete": false,
-    "updated_at": "2026-10-19T12:50:53.665967+00:00"
+    "updated_at": "2026-10-19T13:00:43.549657+00:00"
   },
   "historical_prepared_checkpoint_archive_resolution": {
     "resolved_utc": "2026-10-19T09:07:21.313888+00:00",
@@ -1285,5 +1285,5 @@
     "docs/evidence/local-recovery/source-file-scales/scale-1000.json",
     "docs/evidence/local-recovery/source-file-scales/scale-3000.json"
   ],
-  "local_recovery_live_checkpoint_evidence": "docs/evidence/local-recovery/full003-progress-001.json"
+  "local_recovery_live_checkpoint_evidence": "docs/evidence/local-recovery/full003-progress-002.json"
 }
