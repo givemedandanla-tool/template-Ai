@@ -1477,3 +1477,8 @@ SWAP-DEFAULT設計寫入：新增使用者決策與專項訓練計畫，修訂6�
 SWAP-DEFAULT核對完成：原50AI驗收ID／8工作包保持、只修訂計畫允許的6條未驗收文字；原13個訪談來源hash、23項索引與5個新Markdown連結PASS。code/tests/fixture manifest與legacy REQUIREMENTS SHA均未變，require-evidence publication治理PASS（169登錄／163完成scope／1567具名測試）。只執行文件／契約／治理核對，未重跑產品測試、未訓練。原75題69完成／3部分／3延後、CORE87/GOV7及新8包1partial0完整／驗證、3TODO0完成不變；進度快照無新增／範圍／狀態／完成差異。PLAN checkpoint已fresh讀回6fa5badf6465d2d1bf19798fcec1af7259180e75，收據一併保存。
 
 SWAP-DEFAULT保存完成：978cf42779c06551fcc8559eff8315529c3e03b6／tree7eb2d006cf6bbabe856cedaefe31fc71ae84be7e已fresh逐檔讀回，CP-20261019-SWAP-DEFAULT-DESIGN-VERIFIED為REMOTE_VERIFIED，require-evidence publication Gate PASS；本輪PLAN至設計checkpoint實際400.238秒。收據／狀態續發布後再fresh讀回；只保存規劃與已確認原則，未執行模型訓練或新增功能完成。
+
+
+## 2026-10-19 AI-ALL8 execution authorized
+
+User explicitly authorized sustained development of all eight AI learning packages. Baseline 5bde520; original8/50 scope retained, AI01 partial and no trained model. Execution/first source-provenance acceptance plan: docs/dev/AI_LEARNING_EXECUTION.md. Source/font truth, scoped qualification and checkpoint rules retained.
