@@ -52,7 +52,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-LOCAL-RECOVERY-FULL005-MID"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -1250,15 +1252,15 @@
   "user_corpus_training": "NOT_STARTED_NOT_PROVIDED",
   "current_scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
   "last_observed_formal_progress": {
-    "phase": "RUNNING_OWNED_TEST_MODULE",
-    "current_test": "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_shared_name_update_keeps_manual_geometry_and_other_size_independent",
-    "started": 1031,
-    "completed": 1030,
-    "passed": 1030,
+    "phase": "RUNNING_OWNED_TEST_MODULES",
+    "current_test": "test_quality_panel.QualityPanelTests.test_actual_source_sample_view_and_live_invalidity_badge_after_exposure, test_quality_protocol.QualityProtocolTests.test_late_audit_failure_rolls_back_content_reservation_and_side_start, test_quality_provenance.QualityProducerProvenanceTests.test_actual_model_reapproval_changes_review_context_but_not_independent_truth_dependencies, test_quality_rechecks.QualityRecheckTests.test_explicit_approval_and_disk_failure_cannot_partially_quarantine_history",
+    "started": 1305,
+    "completed": 1301,
+    "passed": 1301,
     "failed_ids": [],
-    "planned_tests": 1727,
+    "planned_tests": 1733,
     "formal_complete": false,
-    "updated_at": "2026-10-19T13:00:43.549657+00:00"
+    "updated_at": "2026-10-19T13:34:48.068449+00:00"
   },
   "historical_prepared_checkpoint_archive_resolution": {
     "resolved_utc": "2026-10-19T09:07:21.313888+00:00",
@@ -1280,7 +1282,7 @@
     "docs/evidence/local-recovery/source-file-scales/scale-1000.json",
     "docs/evidence/local-recovery/source-file-scales/scale-3000.json"
   ],
-  "local_recovery_live_checkpoint_evidence": "docs/evidence/local-recovery/full003-progress-002.json",
+  "local_recovery_live_checkpoint_evidence": "docs/evidence/local-recovery/full005-progress-001.json",
   "local_recovery_failed_full003": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/interruption.json",
   "local_recovery_failed_full004": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-004/interruption.json"
 }
