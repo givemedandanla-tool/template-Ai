@@ -62,7 +62,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-TEMPLATE-EDITOR-FROZEN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -1339,15 +1341,16 @@
   },
   "editor_tools_contract": "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json",
   "editor_tools_progress": {
-    "phase": "REVIEW_EXTENSIONS_AND_NATIVE_GUI_INTEGRATION",
+    "phase": "SOURCE_FREEZE_AND_FULL_REGRESSION",
     "completed_tool_acceptance": 0,
     "total_tool_acceptance": 16,
     "targeted_tests_passed": 15,
     "targeted_evidence": "docs/qa/targeted/template-editor/stage1-workspace-rules.log",
-    "next": "run final target suites/new guards;native screenshot inspection;freeze code and full regression",
+    "next": "Publish frozen source;run RUN-TEMPLATE-EDITOR-ALL-001;do not claim full production qualification",
     "scenario_batch_tests_passed": 6,
     "native_worker_case_passed": true,
     "all_family_targeted_previous": 29,
-    "source_form_tests_passed": 2
+    "source_form_tests_passed": 2,
+    "targeted_unique_new_tests": 45
   }
 }

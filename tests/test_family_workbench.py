@@ -70,6 +70,33 @@ class FamilyWorkbenchTests(FamilyFixture):
             self.assertEqual(reopened.family_workbench.query.text(),'email')
         finally:reopened.close()
 
+    def test_body_case_roundtrip_preserves_explicit_relative_intents(self):
+        graph=InputGraph.from_legacy(*self.parent.input_data())
+        from template_ai.design_synthesis import input_facts
+        facts={f['kind']:f for f in input_facts(graph)}
+        intents=[dict(subject=facts['phone']['render_id'],relation='BELOW',object=facts['email']['render_id'])]
+        case=self.pane.scenarios.save(self.ref,'Relative replay',graph,90,54,'Reviewer',intents=intents)
+        self.pane.reload_cases(case['id']);self.pane.create_session()
+        session=self.dialog.sessions.current(self.dialog.session_id)
+        self.assertEqual(session['intents'],intents)
+        self.pane.capture_session()
+        restored=self.pane.scenarios.current(self.pane.case_choice.currentData())
+        self.assertEqual(restored['intents'],intents)
+        self.assertEqual(restored['input_graph'],graph.data)
+
+    def test_container_restriction_and_default_semantics_are_actual_draft_commands(self):
+        self.pane.containers.selectRow(0);self.pane.limit_container()
+        self.assertEqual(self.pane.draft['operations'][0]['kind'],'CONTAINER_TYPES')
+        self.pane.default_semantic()
+        self.assertEqual(self.pane.draft['operations'][1]['kind'],'DEFAULT_SEMANTIC')
+
+    def test_recovery_entry_uses_selected_family_source_and_exact_role(self):
+        self.pane.sources.selectRow(len(self.pane.source_rows)-1)
+        expected=self.pane.selected_source()['work_id']
+        with patch.object(self.dialog,'open_recovery') as opened:self.pane.open_recovery()
+        self.assertEqual(self.dialog.source_work.currentData(),expected)
+        opened.assert_called_once()
+
     def test_graphical_batch_preflight_preserves_exact_selection_and_requires_confirmation(self):
         self.pane.apply_operation(self.reorder());self.pane.preview_batch()
         self.assertGreater(self.pane.batch_table.rowCount(),0)

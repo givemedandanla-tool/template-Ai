@@ -1,5 +1,7 @@
 # Template AI 精簡接續
 
+目前任務：CORE-088家族與專業規則工作台已實作，16項驗收測試已綁定，完整回歸尚未完成，不能宣稱VERIFIED。先讀STATE.editor_tools_progress、TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json與TEMPLATE_EDITING_USER_GUIDE.md；最新原始碼以STATE.last_confirmed_checkpoint為準。45個新增測試分為44項目標套件及1項3000家族metadata索引測試，並非完整真實作品資格。下一步凍結來源、執行RUN-TEMPLATE-EDITOR-ALL-001、逐項審核及GitHub保存。以下96b1eb9與1733PASS為前一輪基準。
+
 程式來源 `96b1eb9dc23fe39fd5233d17513cc42f8ed547f8`；分支 `dev/v0.1-first-version`／PR #2，未合併main。完整 `docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json`：1733/1733 PASS、222健康獨立模組程序、0未處理runtime error、原生capture exit0、369附件逐件hash通過、來源未變。保留原1685個ID，新增48；不累加歷史／目標測試。整體FAIL僅5外部資格未驗證（Windows安裝、實際原生AI1/2/4人、VivoBook），軟體PASS分開判讀。
 
 執行 `python tools/resume_status.py`，讀STATE及[本輪報告](AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.md)、[本地指引](LOCAL_LEARNING_RECOVERY_GUIDE.md)、[8包50條核對](AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.md)。模型參數見 LOCAL_LEARNING_MODEL_DETAILS.md。GitHub最後snapshot/receipt以STATE.last_confirmed_checkpoint及pending_remote為準；若仍在發布，只補完保存／require-evidence檢查，不重跑已通過測試。

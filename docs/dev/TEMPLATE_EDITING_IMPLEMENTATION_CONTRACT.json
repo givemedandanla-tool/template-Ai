@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "APPROVED_IMPLEMENTATION_IN_PROGRESS",
+  "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
   "authorized_by": "USER_EXPLICIT_IMPLEMENT_UNTIL_COMPLETE",
   "decision": "docs/decisions/2026-10-19-TEMPLATE-EDITING-IMPLEMENTATION.md",
   "research": "docs/dev/TEMPLATE_EDITING_TOOLS_RESEARCH_20261019.md",
@@ -15,132 +15,249 @@
       "title": "家族目錄與健康概覽",
       "expected": "以家族看可用尺寸、人物與欄位組合、來源支持、規則版本、字型／Logo、待審與不可用原因；下鑽來源、固定版本及生成實例",
       "reuse_and_increment": "沿用目錄、分頁、預覽與 Library；新增學習家族的唯讀索引投影，不複製模型真值",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workspace.FamilyWorkspaceTests.test_readonly_family_projection_keeps_sources_templates_and_instances_distinct",
+        "test_family_workspace.FamilyWorkspaceTests.test_search_filters_semantic_physical_dimensions_and_unknown_without_sql",
+        "test_family_workspace.FamilyWorkspaceTests.test_stale_or_fabricated_family_reference_cannot_open_or_freeze",
+        "test_family_workbench.FamilyWorkbenchTests.test_actual_native_entry_reuses_canvas_and_keeps_customer_controls_unchanged",
+        "test_family_index_scale.FamilyIndexScaleTests.test_actual_sqlite_three_thousand_metadata_rows_page_filter_reopen_without_source_claims"
+      ]
     },
     {
       "id": "B02",
       "title": "智慧工作集",
       "expected": "保存「待核對字型」「某尺寸、某資料組合」「支持不足」「來源失聯」等條件，下次打開得到最新符合項目",
       "reuse_and_increment": "沿用搜尋與問題篩選；新增版本化保存查詢。動態工作集與批次執行的固定目標快照分開",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workspace.FamilyWorkspaceTests.test_saved_workset_reopens_as_query_and_frozen_selection_stays_exact",
+        "test_family_workbench.FamilyWorkbenchTests.test_native_physical_filters_saved_workset_and_joint_variant_views",
+        "test_family_index_scale.FamilyIndexScaleTests.test_actual_sqlite_three_thousand_metadata_rows_page_filter_reopen_without_source_claims"
+      ]
     },
     {
       "id": "B03",
       "title": "家族與近似作品對照",
       "expected": "同時看代表作品、低支持風格、邊界例；比較結構、字面與容器對應，指出可共用或不該合併之處",
       "reuse_and_increment": "沿用 HDBSCAN／來源群與去重；新增對照視圖與 correspondence 審核。近似只產生候選，不自動合併或刪來源",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workspace.FamilyWorkspaceTests.test_representatives_preserve_independence_and_never_sample_validation_or_holdout",
+        "test_family_workspace.FamilyWorkspaceTests.test_functional_comparison_includes_joint_styles_grammar_and_relations",
+        "test_family_workbench.FamilyWorkbenchTests.test_native_family_comparison_uses_verified_source_crops_without_global_templates"
+      ]
     },
     {
       "id": "B04",
       "title": "同類問題批次處理",
       "expected": "一次處理已核實的同類雜訊、來源／字型／欄位標記問題；逐項排除例外，查看已套用、跳過、失敗及回復",
       "reuse_and_increment": "沿用 UI-033/041/065 與交易引擎；擴充學習證據、角色／容器對應等受控操作，不用「高信心」直接批准",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_scenarios_batch.FamilyScenarioBatchTests.test_batch_preview_mixed_eligibility_cancel_resume_and_local_undo",
+        "test_family_scenarios_batch.FamilyScenarioBatchTests.test_batch_undo_preserves_later_manual_edits_and_plan_tampering_is_refused",
+        "test_family_workbench.FamilyWorkbenchTests.test_graphical_batch_preflight_preserves_exact_selection_and_requires_confirmation",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_twelve_of_thirty_exact_sources_keep_same_text_entities_and_other_eighteen_unchanged",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_eight_applied_two_failed_one_manual_counts_are_exact_and_not_global_pass",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_cancel_after_first_preserves_applied_result_and_cancels_only_unstarted",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_relative_move_retry_reads_existing_operation_instead_of_moving_twice",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_replay_after_newer_manual_change_is_explicit_and_preserves_new_values",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_partial_undo_keeps_new_manual_edit_and_reverts_only_other_reversible_item",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_single_explicit_inverse_does_not_undo_other_success_and_retry_cannot_redo_undone",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_scope_or_library_changed_rejects_before_any_write",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_locked_unknown_cross_person_logo_and_fixed_font_change_never_auto_approve",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_noop_target_does_not_create_revision_or_history",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_template_and_artwork_with_same_id_are_different_exact_undo_targets",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_false_or_truthy_nonboolean_approval_does_not_execute",
+        "test_batch_source_relink.BatchSourceTests.test_one_candidate_hashed_once_for_independent_same_content_registrations",
+        "test_batch_source_relink.BatchSourceTests.test_size_prefilter_same_name_different_bytes_and_ambiguous_copies",
+        "test_batch_source_relink.BatchSourceTests.test_limits_cancel_unreadable_and_missing_fingerprint_are_explicit",
+        "test_batch_source_relink.BatchSourceTests.test_search_does_not_follow_symlink_outside_selected_root",
+        "test_batch_source_relink.BatchSourceTests.test_candidate_count_is_bounded_and_partial_not_all_found",
+        "test_batch_source_relink.BatchSourceTests.test_resolved_directory_outside_root_not_entered_even_without_symlink_flag",
+        "test_batch_source_relink.BatchSourceTests.test_batch_requires_approval_and_preserves_source_payload_and_ids",
+        "test_batch_source_relink.BatchSourceTests.test_late_revision_conflict_and_event_failure_roll_back_entire_batch",
+        "test_batch_source_relink.BatchSourceTests.test_candidate_changed_after_background_verify_does_not_partially_commit",
+        "test_batch_source_relink.BatchSourceTests.test_undo_verifies_old_paths_creates_new_revisions_and_keeps_history",
+        "test_batch_source_relink.BatchSourceTests.test_undo_missing_original_wrong_position_or_later_revision_rejected",
+        "test_batch_source_relink.BatchSourceTests.test_empty_duplicate_and_same_current_location_are_not_fake_updates",
+        "test_batch_source_relink.BatchSourceTests.test_later_relink_revision_is_not_overwritten_by_old_batch_undo",
+        "test_batch_source_relink.BatchSourceTests.test_final_batch_audit_failure_rolls_back_links_histories_and_reviews",
+        "test_batch_source_relink.BatchSourceGuiTests.test_background_preview_is_unselected_and_cancel_confirmation_writes_nothing",
+        "test_batch_source_relink.BatchSourceGuiTests.test_selected_batch_apply_and_gui_undo_preserve_work",
+        "test_batch_source_relink.BatchSourceGuiTests.test_cancelled_scan_or_worker_error_never_enables_commit"
+      ]
     },
     {
       "id": "B05",
       "title": "變更影響預覽",
       "expected": "改一個來源標記、字型或規則提案前，列出受影響樣本、家族、模型、候選稿件及正式資格",
       "reuse_and_increment": "沿用依賴 pin、過期防護與版本差異；補家族規則依賴圖。既有定稿檔維持原內容，權利停止仍會阻擋其重用",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workspace.FamilyWorkspaceTests.test_compare_is_readonly_and_impact_retains_accepted_bytes",
+        "test_family_review_extensions.FamilyReviewExtensionTests.test_font_impact_includes_other_versions_and_refuses_unrelated_font",
+        "test_family_workbench.FamilyWorkbenchTests.test_recovery_entry_uses_selected_family_source_and_exact_role"
+      ]
     },
     {
       "id": "B06",
       "title": "代表案例與回歸試排",
       "expected": "自動挑選常見、邊界、少見、多尺寸／多人案例供人工看；對受影響集合跑適用的完整硬性檢查",
       "reuse_and_increment": "沿用品質／覆蓋率與實測排版；新增代表案例選取及對照。抽樣美觀不等於全庫合格；缺證據項保持未驗證",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workspace.FamilyWorkspaceTests.test_representatives_preserve_independence_and_never_sample_validation_or_holdout",
+        "test_family_review_extensions.FamilyReviewExtensionTests.test_full_source_review_freezes_all_members_and_resumes_after_actual_first_layout",
+        "test_family_scenarios_batch.FamilyScenarioBatchTests.test_case_review_job_uses_actual_layout_and_reports_checks_without_qualification",
+        "test_family_review_extensions.FamilyReviewExtensionTests.test_hard_source_relation_is_solved_and_independently_rechecked_after_geometry_tamper"
+      ]
     },
     {
       "id": "B07",
       "title": "家族／模型版本比較與採用",
       "expected": "看新舊角色、容器承接、順序、字面模式、容量區域及失敗案例差異；確認後啟用，必要時回退",
       "reuse_and_increment": "沿用訓練、資格、啟用／回退生命週期；新增語意差異介面，不直接覆寫係數或已發布版本",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workspace.FamilyWorkspaceTests.test_functional_comparison_includes_joint_styles_grammar_and_relations",
+        "test_family_rules.FamilyRuleTests.test_candidate_is_new_pending_version_and_never_inherits_production_qualification",
+        "test_family_workbench.FamilyWorkbenchTests.test_rule_candidate_requires_review_and_formal_activation_is_still_blocked",
+        "test_family_rules.FamilyRuleTests.test_rebase_preserves_original_and_invalid_new_family_ref_is_refused",
+        "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_actual_result_feedback_retains_unknown_reason_and_cannot_change_global_policy",
+        "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_curated_actual_train_pairs_fit_preview_ranker_and_withdrawal_invalidates_support",
+        "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_synthetic_evaluation_cannot_obtain_real_corpus_certificate",
+        "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_forged_qualification_state_or_generated_reference_cannot_enable_formal_output",
+        "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_current_instance_output_mechanics_with_mocked_external_certificate_boundary"
+      ]
     },
     {
       "id": "B08",
       "title": "工作續接與資產維護",
       "expected": "從中斷處繼續、只重試失敗項，處理字型／來源失聯、檢查備份及定稿檔完整性",
       "reuse_and_increment": "沿用既有 worker、job、備份與復原；補導覽／家族引用。私人庫的備份在本地，GitHub保存程式與交接",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workbench.FamilyWorkbenchTests.test_saved_workspace_reopens_same_draft_and_query",
+        "test_family_workbench.FamilyWorkbenchTests.test_close_during_worker_waits_for_boundary_and_leaves_resumable_job",
+        "test_family_workbench.FamilyWorkbenchTests.test_worker_start_failure_releases_existing_job_lease",
+        "test_family_workspace.FamilyWorkspaceTests.test_existing_record_iterator_does_not_silently_stop_at_two_hundred",
+        "test_backup_center.BackupCenterTests.test_real_gui_backup_receipt_test_restore_and_new_copy_keep_original_customer_and_template",
+        "test_backup_center.BackupCenterTests.test_partial_scope_and_shared_database_dependency_never_become_silent_full_success",
+        "test_backup_center.BackupCenterTests.test_actual_background_cancel_keeps_user_files_and_releases_shared_worker",
+        "test_backup_center.BackupCenterTests.test_schedule_waits_for_key_and_idle_runs_one_real_backup_and_stops_before_library_close",
+        "test_backup_center.BackupCenterTests.test_wrong_password_attempts_are_bounded_across_tabs_without_writes"
+      ]
     },
     {
       "id": "S01",
       "title": "三向同步編輯與關係覆蓋圖",
       "expected": "選欄位時，同時看到人物／公司、容器、鄰接群、來源與版面；保留原有對齊、群移、鎖定等工具",
       "reuse_and_increment": "基礎 REUSE；增加家族角色／容器與關係覆蓋圖",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workbench.FamilyWorkbenchTests.test_role_tree_and_canvas_selection_are_synchronized",
+        "test_family_workbench.FamilyWorkbenchTests.test_actual_native_entry_reuses_canvas_and_keeps_customer_controls_unchanged",
+        "test_canvas_controls.CanvasControlTests.test_actual_resize_handle_previews_without_writing_and_applies_through_existing_history",
+        "test_canvas_controls.CanvasControlTests.test_keyboard_millimetre_nudge_space_pan_preserves_selection_and_lock_blocks_changes",
+        "test_canvas_controls.CanvasControlTests.test_snap_projection_is_mm_based_toggleable_and_hiding_boundary_never_disables_validation",
+        "test_canvas_controls.CanvasControlTests.test_design_safety_zone_is_versioned_undoable_and_publish_gate_ignores_overlay_visibility",
+        "test_canvas_controls.CanvasControlTests.test_shared_settings_persist_view_defaults_and_sync_controls_without_changing_template"
+      ]
     },
     {
       "id": "S02",
       "title": "角色—容器相容表",
       "expected": "顯示某容器可承接哪些資料，各組合的來源支持、標籤／圖示、歸屬、政策許可與實測結果",
       "reuse_and_increment": "兩種 profile／指派引擎 REUSE；新建檢視與受控對應／政策草稿入口。市話／手機是語意細類，不能憑相同 `phone` 或相同框大直接批准",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workbench.FamilyWorkbenchTests.test_container_restriction_and_default_semantics_are_actual_draft_commands",
+        "test_family_rules.FamilyRuleTests.test_typed_operations_cannot_invent_roles_semantics_styles_or_patterns",
+        "test_family_review_extensions.FamilyReviewExtensionTests.test_explicit_joint_style_default_precedes_lexical_config_id_among_legal_results"
+      ]
     },
     {
       "id": "S03",
       "title": "相對關係與影響範圍編輯",
       "expected": "查看左右／上下、切齊、基線、間距、群組及硬／軟約束；預覽移動會牽動哪些欄位，以及哪些關係必須保留",
       "reuse_and_increment": "沿用相對意圖／Kiwi；補專業規則視圖及衝突解釋。不把「不受影響」等同所有絕對坐標／大小凍結",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_rules.FamilyRuleTests.test_relation_strength_requires_source_support_and_same_owner",
+        "test_family_review_extensions.FamilyReviewExtensionTests.test_hard_source_relation_is_solved_and_independently_rechecked_after_geometry_tamper",
+        "test_family_workbench.FamilyWorkbenchTests.test_body_case_roundtrip_preserves_explicit_relative_intents"
+      ]
     },
     {
       "id": "S04",
       "title": "條件變體檢視",
       "expected": "比較可選／重複欄位、分組、分割、收合、合法交換；按尺寸、人數與資料組合顯示實際有支持的版本",
       "reuse_and_increment": "沿用 grammar／conditional_geometry；補可視核對及規則提案。未支持的任意新文法須另行開發／驗證，不當成現有萬用編輯器",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workbench.FamilyWorkbenchTests.test_native_physical_filters_saved_workset_and_joint_variant_views",
+        "test_family_review_extensions.FamilyReviewExtensionTests.test_optional_and_joint_pattern_restrictions_reject_without_losing_input",
+        "test_family_rules.FamilyRuleTests.test_source_supported_joint_preference_and_pattern_subset_compile_without_refitting"
+      ]
     },
     {
       "id": "S05",
       "title": "聯合文字風格檢視",
       "expected": "同時看字型、pt、字寬、框大小、字距、詞／字元分散、換行、混合字面與標籤／圖示；比較已支持的整組配置",
       "reuse_and_increment": "沿用 joint／text_flow／rich_text／components；補聯合區域與來源證據視圖，不提供客戶獨立數值滑桿",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_workbench.FamilyWorkbenchTests.test_native_physical_filters_saved_workset_and_joint_variant_views",
+        "test_family_source_forms.FamilySourceFormTests.test_actual_composite_form_preserves_complete_runs_and_two_local_faces",
+        "test_family_rules.FamilyRuleTests.test_source_supported_joint_preference_and_pattern_subset_compile_without_refitting"
+      ]
     },
     {
       "id": "S06",
       "title": "原稿對照與證據補救",
       "expected": "來源區域、完整文字 run、字面／字型檔、容器、標籤／圖示對應；顯示原生已知、推導及 UNKNOWN，定位缺失與補救",
       "reuse_and_increment": "沿用原稿對照／本地恢復；進階複合對應從現有 API 補圖形入口，不再造 OCR 或字型匹配引擎",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_source_forms.FamilySourceFormTests.test_actual_composite_form_preserves_complete_runs_and_two_local_faces",
+        "test_family_source_forms.FamilySourceFormTests.test_static_label_requires_exact_source_text_and_explicit_measurement",
+        "test_family_workbench.FamilyWorkbenchTests.test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model",
+        "test_family_workbench.FamilyWorkbenchTests.test_recovery_entry_uses_selected_family_source_and_exact_role"
+      ]
     },
     {
       "id": "S07",
       "title": "案例試排與穩定性檢查",
       "expected": "用短長文字、多筆聯絡、多人、多尺寸、合法交換與局部移動試排；比較內容完整、關係保持、字面、碰撞、容量與預選穩定性",
       "reuse_and_increment": "沿用實際 shaping／solver／evaluation；新增可重開案例面板。工程壓力案例不回填成合格 TRAIN 美學真值",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_scenarios_batch.FamilyScenarioBatchTests.test_actual_source_case_shapes_checks_and_repeats_exactly_without_training",
+        "test_family_scenarios_batch.FamilyScenarioBatchTests.test_case_change_and_draft_change_invalidate_current_results_but_preserve_history",
+        "test_family_workbench.FamilyWorkbenchTests.test_saved_case_runs_in_worker_and_renders_actual_preview",
+        "test_family_workbench.FamilyWorkbenchTests.test_body_case_roundtrip_preserves_explicit_relative_intents",
+        "test_family_review_extensions.FamilyReviewExtensionTests.test_source_replay_uses_reviewed_text_and_ports_without_creating_training_labels"
+      ]
     },
     {
       "id": "S08",
       "title": "差異、驗證與版本保存",
       "expected": "看這次改了什麼、哪些規則／資產導致結果；存草稿、比較、審核、明確採用／發布或回退",
       "reuse_and_increment": "固定模板版本工作流 REUSE；家族規則走新模型／政策候選及資格，不把某次成功稿發布成全域通用模板",
-      "status": "NOT_IMPLEMENTED",
-      "tests": []
+      "status": "IMPLEMENTED_PENDING_FULL_VERIFICATION",
+      "tests": [
+        "test_family_rules.FamilyRuleTests.test_persistent_draft_undo_redo_and_branch_preserve_original_model",
+        "test_family_rules.FamilyRuleTests.test_command_is_idempotent_and_stale_commands_cannot_overwrite_manual_edits",
+        "test_family_workbench.FamilyWorkbenchTests.test_graphical_order_save_undo_redo_and_difference_review",
+        "test_family_workbench.FamilyWorkbenchTests.test_rule_candidate_requires_review_and_formal_activation_is_still_blocked"
+      ]
     }
   ],
   "implementation_scope": "EXISTING_DESKTOP_LOCAL_CORE_ONLY",
   "external_qualification": "PRIVATE_REAL_CORPUS_WINDOWS_PREPRESS_NOT_CLAIMED",
   "private_data": "LOCAL_ONLY",
-  "paid_services": false
+  "paid_services": false,
+  "verification_scope": "Linux native desktop and authored local fixtures;real artwork/Windows/prepress qualification remains separate"
 }

@@ -11,7 +11,7 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QFormLayout,
     QComboBox, QCheckBox, QLineEdit, QDoubleSpinBox, QSpinBox, QPlainTextEdit,
     QPushButton, QTableWidget, QTableWidgetItem, QLabel, QTabWidget, QWidget,
-    QFileDialog, QDialogButtonBox)
+    QFileDialog, QDialogButtonBox, QScrollArea)
 
 from .design_source_binding import SourceTypographyReview
 from .training_store import digest
@@ -49,7 +49,8 @@ class FamilySourceDialog(QDialog):
         document=self.store._design_observation_document(work_id)
         self.runs=document.get('original_text_evidence',{}).get('runs',[])
         for i,run in enumerate(self.runs):
-            label=run['id'][:24]+' · '+str(run.get('decoded_character_count','未知'))+' 字 · pt '+str(run.get('source_pt',{}).get('value','未知'))
+            point=run.get('source_pt',{}).get('value')
+            label=run['id'][:24]+' · '+str(run.get('decoded_character_count','未知'))+' 字 · 原生pt '+(f'{point:g}' if type(point) in (float,int) else '未知')
             self.run_choice.addItem(label,i);self.label_run.addItem(label,i)
         self.run_choice.currentIndexChanged.connect(self.suggest_range)
         for asset in self.library.fonts():
@@ -65,7 +66,8 @@ class FamilySourceDialog(QDialog):
         except Exception as error:self.status.setText(str(error));return None
 
     def tab(self,name):
-        widget=QWidget();layout=QVBoxLayout(widget);self.tabs.addTab(widget,name);return layout
+        widget=QWidget();layout=QVBoxLayout(widget);scroll=QScrollArea();scroll.setWidgetResizable(True)
+        scroll.setWidget(widget);self.tabs.addTab(scroll,name);return layout
 
     def build_runs(self):
         layout=self.tab('完整文字與來源 run')
@@ -77,11 +79,15 @@ class FamilySourceDialog(QDialog):
         form.addRow('在完整文字中的起點',self.start);form.addRow('終點（不包含）',self.end);layout.addLayout(form)
         metrics=QHBoxLayout();self.metrics=QCheckBox('字寬與字距有獨立量測');metrics.addWidget(self.metrics)
         self.scale=number(.05,10,1);self.tracking=number(-99,99)
+        self.scale.setEnabled(False);self.tracking.setEnabled(False)
+        self.metrics.toggled.connect(self.scale.setEnabled);self.metrics.toggled.connect(self.tracking.setEnabled)
         metrics.addWidget(QLabel('水平比例'));metrics.addWidget(self.scale);metrics.addWidget(QLabel('字距 mm'));metrics.addWidget(self.tracking);layout.addLayout(metrics)
         word=QHBoxLayout();self.word_review=QCheckBox('原稿詞距已量測');self.word=number(-99,99)
         word.addWidget(self.word_review);word.addWidget(self.word);layout.addLayout(word)
+        self.word.setEnabled(False);self.word_review.toggled.connect(self.word.setEnabled)
         work=QHBoxLayout();self.work_pt_review=QCheckBox('非等比來源的作品字級有獨立量測');self.work_pt=number(1,200,10)
         work.addWidget(self.work_pt_review);work.addWidget(self.work_pt);layout.addLayout(work)
+        self.work_pt.setEnabled(False);self.work_pt_review.toggled.connect(self.work_pt.setEnabled)
         self.spans_table=QTableWidget(0,5);self.spans_table.setHorizontalHeaderLabels(['來源run','起點','終點','字型','量測狀態'])
         layout.addWidget(self.spans_table,1)
         row=QHBoxLayout();self.button(row,'加入所選完整／分段來源',self.add_span)
@@ -120,6 +126,7 @@ class FamilySourceDialog(QDialog):
         self.label_font=QComboBox();self.label_font.addItem('固定文字的實際字型',None)
         self.label_text=QLineEdit()
         self.label_pt=number(1,200,10);self.label_measured=QCheckBox('固定文字作品字級已獨立量測')
+        self.label_pt.setEnabled(False);self.label_measured.toggled.connect(self.label_pt.setEnabled)
         form.addRow('固定文字來源',self.label_run);form.addRow('固定文字字型',self.label_font)
         form.addRow('固定文字（須與來源run完全相符）',self.label_text)
         form.addRow('固定文字字級 pt',self.label_pt);form.addRow(self.label_measured)
@@ -144,6 +151,7 @@ class FamilySourceDialog(QDialog):
         self.start.setMaximum(len(value));self.end.setMaximum(len(value))
         for control in (self.metrics,self.word_review,self.work_pt_review,self.flow_review,self.presentation_review,self.container_review):
             control.setChecked(False)
+        self.label_measured.setChecked(False);self.icon_rights.setChecked(False);self.label_text.clear()
         self.font.setCurrentIndex(0);self.label_font.setCurrentIndex(0);self.label_kind.setCurrentIndex(0)
         self.container.clear();self.prefix.clear();self.icon_asset=None;self.suggest_range()
 
@@ -190,7 +198,7 @@ class FamilySourceDialog(QDialog):
         if not path:return
         from .design_components import checked_icon
         asset=dict(path=str(Path(path).resolve()),hash=file_digest(path),semantic_scope='DECORATIVE_FIELD_SYMBOL')
-        checked_icon(asset);self.icon_asset=asset;self.icon_text.setText(Path(path).name);self.plan=None
+        checked_icon(asset);self.icon_asset=asset;self.icon_rights.setChecked(False);self.icon_text.setText(Path(path).name);self.plan=None
 
     def review(self):
         if not self.confirmed.isChecked() or not self.basis.text().strip():
@@ -259,8 +267,14 @@ class FamilySourceDialog(QDialog):
     def prepare(self):
         self.plan=self.assembled_plan()
         typography=self.plan['typography']
-        self.preview.setPlainText('完整文字來源已核對；分段 '+str(len(self.spans))+'\n作品字級：'+str(typography['source_pt'])+
-            '\n原生字級：'+str(typography.get('source_page_pt'))+'\n尚未保存；保存時再次核對來源、字型、事實與版本。')
+        def scalar(key):
+            row=typography.get(key) or {};value=row.get('value')
+            if value is None:return '未知'
+            status={'OBSERVED':'原稿證據','DERIVED':'有依據的推導','UNKNOWN':'未知'}.get(row.get('status'),row.get('status',''))
+            return f"{value:g} {row.get('unit','')}（{status}）"
+        self.preview.setPlainText('完整文字已核對；分段 '+str(len(self.spans))+'\n作品字級：'+scalar('source_pt')+
+            '；原生字級：'+scalar('source_page_pt')+'\n水平比例：'+scalar('horizontal_scale')+'；字距：'+scalar('tracking')+
+            '；詞距：'+scalar('word_spacing')+'\n尚未保存；保存時再次核對來源、字型、事實與版本。')
         self.status.setText('預檢通過；請確認後明確保存。')
 
     def commit(self):

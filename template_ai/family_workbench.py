@@ -95,8 +95,10 @@ class FamilyWorkbench(QWidget):
         self.filter_people=QSpinBox();self.filter_people.setRange(0,20);self.filter_people.setSpecialValueText('任意人物數')
         self.filter_fields=QSpinBox();self.filter_fields.setRange(0,256);self.filter_fields.setSpecialValueText('任意欄位數')
         self.filter_support=QSpinBox();self.filter_support.setRange(0,100000);self.filter_support.setSpecialValueText('不限獨立支持')
+        self.filter_unknown=QComboBox();self.filter_unknown.addItem('全部來源資訊',None);self.filter_unknown.addItem('有未知欄位',True);self.filter_unknown.addItem('無未知欄位',False)
         for label,widget in [('寬mm',self.filter_width),('高mm',self.filter_height),('人物',self.filter_people),('欄位',self.filter_fields),('最少支持',self.filter_support)]:
             filters.addWidget(QLabel(label));filters.addWidget(widget)
+        filters.addWidget(self.filter_unknown)
         layout.addLayout(filters)
         worksets = QHBoxLayout(); self.views = QComboBox(); worksets.addWidget(self.views)
         self.button(worksets, '開啟工作集', self.open_view); self.button(worksets, '保存目前篩選', self.save_view)
@@ -173,6 +175,7 @@ class FamilyWorkbench(QWidget):
         self.patterns = QListWidget(); layout.addWidget(self.patterns)
         self.patterns.currentItemChanged.connect(lambda item,old:self.attempt(lambda:self.show_pattern(item)))
         self.button(layout, '保存允許組合', lambda:self.apply_operation(dict(kind='ALLOWED_PATTERNS',patterns=checked_items(self.patterns))))
+        self.capacity_info=QLabel();self.capacity_info.setWordWrap(True);layout.addWidget(self.capacity_info)
 
     def build_typography(self):
         layout = self.tab('聯合字面')
@@ -190,7 +193,7 @@ class FamilyWorkbench(QWidget):
         layout.addWidget(self.sources, 1)
         self.button(layout, '原稿欄位標記', self.annotate_source)
         self.button(layout, '來源文字與複合字面核對', self.review_source)
-        self.button(layout, '本地還原與字型診斷', self.owner.open_recovery)
+        self.button(layout, '本地還原與字型診斷', self.open_recovery)
         for label, method in [('既有批次修正','batch_object_center'),('字型庫','font_center'),
                               ('來源重新連結','relink_source'),('本地備份與還原','backup_center')]:
             self.button(layout, label, lambda method=method:self.open_existing(method))
@@ -253,6 +256,7 @@ class FamilyWorkbench(QWidget):
         if self.filter_width.value():result['size']=[self.filter_width.value(),self.filter_height.value()]
         for key,widget in [('people',self.filter_people),('field_count',self.filter_fields),('min_support',self.filter_support)]:
             if widget.value():result[key]=widget.value()
+        if self.filter_unknown.currentData() is not None:result['has_unknown']=self.filter_unknown.currentData()
         return result
 
     def set_query(self,query):
@@ -261,6 +265,7 @@ class FamilyWorkbench(QWidget):
             index=widget.findData(query.get(key,''));widget.setCurrentIndex(max(0,index))
         self.filter_width.setValue(query.get('size',[0,0])[0]);self.filter_height.setValue(query.get('size',[0,0])[1])
         for key,widget in [('people',self.filter_people),('field_count',self.filter_fields),('min_support',self.filter_support)]:widget.setValue(query.get(key,0))
+        self.filter_unknown.setCurrentIndex(max(0,self.filter_unknown.findData(query.get('has_unknown'))))
 
     def search(self):
         self.page = 0; self.refresh()
@@ -400,6 +405,10 @@ class FamilyWorkbench(QWidget):
             key=digest(row['pattern']);item=QListWidgetItem('、'.join(k+' ×'+str(v) for k,v in sorted(row['pattern'].items()))+'；獨立支持 '+str(row['independent_support']))
             item.setData(Qt.UserRole,key);item.setFlags(item.flags()|Qt.ItemIsUserCheckable);item.setCheckState(Qt.Checked if allowed is None or key in allowed else Qt.Unchecked);self.patterns.addItem(item)
         self.patterns.blockSignals(False)
+        capacity=self.workspace.capacity(self.ref)
+        maxima=[r['maximum_validated_field_count'] for r in capacity if r['maximum_validated_field_count'] is not None]
+        self.capacity_info.setText(('原模型已驗證欄位數 '+str(max(maxima))+'；不是全域上限。' if maxima else '尚無此家族目前有效的容量校準區域。')+
+            (' 規則草稿另需重驗。' if self.draft else ' 來源最大值不當硬上限。'))
         self.source_rows=self.workspace.sources(self.ref)
         fill(self.sources,[[self.library.artwork(r['work_id'])['name'],r['role'],r['pins']['work_revision'],r['lineage_group'][:16]] for r in self.source_rows])
         self.rebase_choice.clear()
@@ -424,7 +433,7 @@ class FamilyWorkbench(QWidget):
         key=item.data(0,Qt.UserRole)
         if not key:return
         role=next(r for r in self.profile['roles'] if r['key']==key)
-        self.role_info.setText(f"{key}；獨立支持 {role['support']}；字面已知 {role['typography_known_examples']}／{role['present_examples']}；可選 {role['observed_optional']}。")
+        self.role_info.setText(f"{key}；獨立支持 {role['support']}；字面已知 {role['typography_known_examples']}／{role['present_examples']}；"+('曾有可選情況。' if role['observed_optional'] else '來源均有此欄位。'))
         if self.canvas.selection_intent!={key}:self.canvas.select_id(key)
         for widget in (self.semantic_role,self.style_role):
             index=widget.findData(key)
@@ -523,6 +532,19 @@ class FamilyWorkbench(QWidget):
         dialog=FamilySourceDialog(self.window,self.selected_source()['work_id'],self)
         dialog.exec()
 
+    def open_recovery(self):
+        entry=self.selected_source();work=self.library.artwork(entry['work_id'])
+        item=self.roles.currentItem();key=item.data(0,Qt.UserRole) if item else None
+        if not key:key=self.style_role.currentData()
+        slot=next((s for s in work['payload']['slots'] if s['owner']+':'+s['kind']+':'+str(s['index'])==key),None)
+        if not slot:raise ValueError('此來源沒有目前所選角色，請選擇對應來源／欄位')
+        index=self.owner.source_work.findData(work['id'])
+        if index<0:self.owner.source_work.addItem(work['name'],work['id']);index=self.owner.source_work.count()-1
+        self.owner.source_work.setCurrentIndex(index);self.owner.load_source()
+        selected=next((i for i in range(self.owner.source_fields.count()) if self.owner.source_fields.itemData(i).get('slot_id')==slot['id']),None)
+        if selected is None:raise ValueError('此來源欄位的確認事實不足，請先使用原稿標記工具')
+        self.owner.source_fields.setCurrentIndex(selected);self.owner.load_source_runs();self.owner.open_recovery()
+
     def open_existing(self,method):
         action=getattr(self.window,method,None)
         if action is None:raise ValueError('請由完整本體主視窗開啟此既有工具')
@@ -540,7 +562,8 @@ class FamilyWorkbench(QWidget):
         refs=list(self.selection.values())
         if len(refs)!=2:raise ValueError('請跨頁或同頁精確選擇兩個家族版本')
         result=self.workspace.compare(*refs)
-        self.report.setPlainText('家族比較：保留兩者來源，不自動合併。\n'+self.describe_differences(result['differences']))
+        self.report.setPlainText('家族比較：保留兩者來源，不自動合併。\n'+self.describe_differences(result['differences'])+
+            '\n容量校準前：'+str(result['capacity_before'])+'\n容量校準後：'+str(result['capacity_after']))
         self.details.setCurrentIndex(7)
         from .family_compare import FamilyComparisonDialog
         FamilyComparisonDialog(self.window,refs,self).exec()
@@ -694,8 +717,9 @@ class FamilyWorkbench(QWidget):
         session=self.owner.sessions.create(InputGraph(case['input_graph']),case['width_mm'],case['height_mm'],
             self.actor(),self.ref['model_id'],case['policy'])
         for intent in case['intents']:
-            session=self.owner.sessions.set_relation(session['id'],session['revision'],new_id(),
+            self.owner.sessions.set_relation(session['id'],session['revision'],new_id(),
                 intent['subject'],intent['relation'],intent['object'])
+            session=self.owner.sessions.current(session['id'])
         self.owner.session_id=session['id'];self.owner.refresh_draft();self.owner.save_workspace()
         self.owner.tabs.setCurrentIndex(2);self.say('已建立當次稿件；需重新求解、核對並確認輸出。')
 

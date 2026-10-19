@@ -228,7 +228,23 @@ class FamilyWorkspace:
     def compare(self, left_ref, right_ref):
         _, _, left = self.resolve(left_ref); _, _, right = self.resolve(right_ref)
         return dict(left=left_ref, right=right_ref, differences=profile_differences(left, right),
+                    capacity_before=self.capacity(left_ref),capacity_after=self.capacity(right_ref),
                     auto_merge=False, source_members_preserved=True)
+
+    def capacity(self,ref):
+        self.resolve(ref)
+        from .design_capacity import LocalCapacityCalibration
+        result=[]
+        for row in records(self.store,'DESIGN_CAPACITY'):
+            if row['model_id']!=ref['model_id']:continue
+            try:
+                LocalCapacityCalibration(self.library).checked(row['id']);current=True
+            except (ValueError,KeyError,OSError):current=False
+            cells=[deepcopy(c) for c in row['artifact']['cells'] if c['context'].get('family_id')==ref['family_id']]
+            if cells:result.append(dict(id=row['id'],revision=row['revision'],current=current,cells=cells,
+                maximum_validated_field_count=max((c['context']['field_count'] for c in cells if current and c['status']=='VALIDATED_EMPIRICAL_REGION'),default=None),
+                hard_global_capacity=None))
+        return result
 
     def impact(self, ref, *, source_hashes=None, font_hashes=None, page=0, page_size=100):
         """Source changes affect every model using that source, not just one family."""
