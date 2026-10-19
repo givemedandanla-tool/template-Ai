@@ -3,7 +3,7 @@ import os
 import time
 from unittest.mock import patch
 
-from PySide6.QtCore import Qt, QEventLoop, QTimer
+from PySide6.QtCore import Qt, QEventLoop, QTimer, QCoreApplication, QEvent
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QWidget, QDialog, QDoubleSpinBox
 
@@ -21,9 +21,19 @@ class FamilyWorkbenchTests(FamilyFixture):
         super().setUp()
         self.parent=QWidget();self.parent.library=self.library
         self.parent.input_data=lambda:([dict(name='Alex Example',title='Designer',phone='+1 202 555 0100',email='alex@example.test')],[],{})
-        self.addCleanup(self.parent.deleteLater)
-        self.dialog=DesignLearningDialog(self.parent);self.dialog.show();self.addCleanup(self.dialog.close)
+        self.dialog=DesignLearningDialog(self.parent);self.dialog.show();self.addCleanup(self.dispose_dialog)
         self.pane=self.dialog.family_workbench;self.dialog.tabs.setCurrentWidget(self.pane);APP.processEvents()
+
+    def dispose_dialog(self):
+        from gui_wait import wait_for_gui
+        from shiboken6 import isValid
+        if self.pane.worker:
+            self.pane.worker.cancel.set()
+            self.assertTrue(wait_for_gui(lambda:self.pane.worker is None,60))
+        self.dialog.close();self.parent.deleteLater()
+        # Finish owned Qt teardown before FamilyFixture closes DB/assets.
+        QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete)
+        self.assertFalse(isValid(self.parent));self.assertFalse(isValid(self.dialog))
 
     def test_actual_native_entry_reuses_canvas_and_keeps_customer_controls_unchanged(self):
         from template_ai.object_dialog import ObjectCanvas

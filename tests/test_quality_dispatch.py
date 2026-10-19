@@ -1,4 +1,4 @@
-from gui_wait import dispose_main_window
+from gui_wait import dispose_main_window,wait_for_gui,job_diagnostics
 import subprocess
 import sys
 import unittest
@@ -28,11 +28,8 @@ class QualityDispatchTests(unittest.TestCase):
         self.addCleanup(close);return window
 
     def wait(self,predicate,window):
-        for _ in range(2000):
-            APP.processEvents()
-            if predicate():return
-            QTest.qWait(10)
-        self.fail('actual dispatcher did not finish: '+str(window.execution_queue.error))
+        if not wait_for_gui(predicate,20):
+            self.fail('actual dispatcher did not finish: '+str(window.execution_queue.error)+';'+job_diagnostics(window))
 
     def test_actual_gui_dispatcher_uses_existing_fifo_worker_and_preserves_quality_boundary(self):
         jobs=self.build();window=self.window();dispatch=window.execution_queue

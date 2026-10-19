@@ -1,0 +1,37 @@
+{
+  "kind": "PINNED_PUBLIC_OPEN_SOURCE_REVIEW",
+  "installed_pyside6": "6.8.3",
+  "source": "https://github.com/qt/qtbase/blob/v6.8.3/src/corelib/thread/qthread.cpp",
+  "raw_url": "https://raw.githubusercontent.com/qt/qtbase/v6.8.3/src/corelib/thread/qthread.cpp",
+  "sha256": "82195a348400e8341b19cb85a97882fac453191fcc57d3c4aa28c05bf269dbe3",
+  "bytes": 39192,
+  "reviewed_lines": [
+    {
+      "start": 352,
+      "end": 363,
+      "purpose": "finished signal and deferred deletion"
+    },
+    {
+      "start": 462,
+      "end": 470,
+      "purpose": "QThread destructor waits while finish is in progress"
+    },
+    {
+      "start": 852,
+      "end": 871,
+      "purpose": "wait completion semantics"
+    }
+  ],
+  "conclusion": "No demonstrated missing product QThread join;do not add speculative runtime changes. Correct test-owned QWidget deferred disposal before DB cleanup;reuse existing real Qt event-loop wait preserving20s. One native exit remains retained as history;exact root cause not conclusively established.",
+  "diagnostic_unique_workbench_tests": 15,
+  "diagnostic_repetitions": 2,
+  "diagnostic_executions": 30,
+  "diagnostic_seconds": 118.596,
+  "diagnostic_status": "PASS_WITH_EXPLICIT_QT_DISPOSAL",
+  "quality_dispatch_diagnostic": {
+    "tests": 4,
+    "seconds": 18.322,
+    "status": "PASS_WITH_EXISTING_NATIVE_EVENT_LOOP_HELPER"
+  },
+  "private_user_data": false
+}

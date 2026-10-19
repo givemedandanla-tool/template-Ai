@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "id": "RUN-TEMPLATE-EDITOR-ALL-003",
+  "created_utc": "2026-10-19T16:44:26.726768+00:00",
+  "source_commit": "3bfebdf0325256919354746cf9bba71a42fb202d",
+  "source_manifest_sha256": "9adcf49cfcf0ce4074f10908c8ecc9e72734947ad41ab817eb0053b21a30589d",
+  "source_unchanged": true,
+  "status": "FAIL",
+  "software_execution_status": "FAIL",
+  "unhandled_runtime_errors": 1,
+  "test_count": 1778,
+  "passed": 1777,
+  "capture_exit_code": 1,
+  "tests_sha256": "9e01d996ccaa758104626090379032d6909a7298372ffe55571c55ee7724abb2",
+  "attachments": {
+    "test-modules.json": {
+      "bytes": 118734,
+      "sha256": "bde76a734b29617b2a9e72dd52eee10190318e016bfc9414839540ba0e222370",
+      "mime": "application/json"
+    },
+    "claims.json": {
+      "bytes": 2530252,
+      "sha256": "78a803d91040eac4516f0c93197b66d66e54aa209c84f495ce23eaf3fd264bbd",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 1858906,
+      "sha256": "73ac29df2aa2404130f42e266346b8ae5c311fc8f6e3f1c6f1a0bc2e93b18a51",
+      "mime": "application/json"
+    },
+    "capture.log": {
+      "bytes": 55,
+      "sha256": "3bd6a10f7caf96e91bc85af78c0cae82c45f4a25f0f349f0379e44e25318b093",
+      "mime": "text/plain"
+    },
+    "fixed70-ten-parent-audit.json": {
+      "bytes": 346033,
+      "sha256": "8a0fbe861f48b5180f2de0a31e0ba9b89d9d9b35d72f41dd3623711b52fe92ac",
+      "mime": "application/json"
+    },
+    "seventy-parent-audit.json": {
+      "bytes": 34845,
+      "sha256": "c62b6b500313067fdfcaf633cda166c12cddc4b3be77851a07e62d70a8993b65",
+      "mime": "application/json"
+    },
+    "test-catalog.json": {
+      "bytes": 215940,
+      "sha256": "861e694690bbb6fa3c89a2aabe89560256180f46d6238d67787515ab9b9354ef",
+      "mime": "application/json"
+    },
+    "remaining28-full-parent-audit.json": {
+      "bytes": 760388,
+      "sha256": "c058e4b11e51e431e4927b2cb0e3e39f74c0571c8513e0b9ed45397f0254d4c2",
+      "mime": "application/json"
+    },
+    "source-manifest.json": {
+      "bytes": 118178,
+      "sha256": "19a2576c915a3c2832d664aa1a24f9965d1081b08f52649883c3b8dff8c35da6",
+      "mime": "application/json"
+    },
+    "tests.json": {
+      "bytes": 361969,
+      "sha256": "9e01d996ccaa758104626090379032d6909a7298372ffe55571c55ee7724abb2",
+      "mime": "application/json"
+    },
+    "test-progress.json": {
+      "bytes": 385,
+      "sha256": "057695d1e4cc57e0060949e2b51f8cd44e027dbfa6cbc468b0fd92d95b9d9f75",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 434645,
+      "sha256": "7f388dcd21ad7524f9e6d3572e1774b2a3111f6e77e05398989e3aa61bdce8a1",
+      "mime": "text/plain"
+    },
+    "junit.xml": {
+      "bytes": 360114,
+      "sha256": "31e5a34977ceb1906ebca00c4aa0d2bc87e823b219f76e06d2ee29aec6676304",
+      "mime": "application/xml"
+    },
+    "fixed70-twentyeight-parent-audit.json": {
+      "bytes": 1243329,
+      "sha256": "3ec33ab3f0d4c4dfb92c7e62fcb57050e7f1322ab5d74cb35004618535007188",
+      "mime": "application/json"
+    },
+    "runtime-errors.json": {
+      "bytes": 166,
+      "sha256": "c2122ce7d18a9b131f49be9b12281c9d44f9ba6dc888bd5fc4b93a0dfdcec1ec",
+      "mime": "application/json"
+    },
+    "test-progress.jsonl": {
+      "bytes": 321060,
+      "sha256": "6e3d179511cf2de2fc3a79a810f75a969f939b97a1570a1bf9ad7f9a8ebfdf4b",
+      "mime": "text/plain"
+    },
+    "timeout-stacks.log": {
+      "bytes": 24830,
+      "sha256": "be0636af130df0fa80995a1a8f621d57361d359f228513da66366675dcb4f732",
+      "mime": "text/plain"
+    },
+    "commit.json": {
+      "bytes": 178,
+      "sha256": "186c7f84ba705cd0b052e6729e76332782e83c1f0a87b0ab53012da68717dc1e",
+      "mime": "application/json"
+    }
+  },
+  "environment": {
+    "python": "3.12.14",
+    "os": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-TEMPLATE-EDITOR-ALL-003 --source-commit 3bfebdf0325256919354746cf9bba71a42fb202d --commit-json <readback> --tree-json <readback> --module-timeout 600 --module-workers 4",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ],
+  "test_execution_strategy": "PARALLEL_OWNED_FRESH_MODULE_PROCESSES",
+  "test_module_workers": 4,
+  "test_module_count": 229,
+  "planned_test_count": 1779,
+  "not_completed_test_count": 1
+}
