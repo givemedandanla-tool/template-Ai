@@ -5,6 +5,15 @@ from template_ai.source_text_evidence import text_evidence,identity_match
 
 
 class SourceTextEvidenceTests(unittest.TestCase):
+    def test_semantic_and_appearance_observations_pin_their_own_channel_without_native_claim(self):
+        root=ET.fromstring('<svg><text id="t">Example</text></svg>')
+        source=dict(hash='source',file_hashes=dict(svg='appearance',semantic_svg='semantic'))
+        for channel,expected in (('svg','appearance'),('semantic_svg','semantic')):
+            proof=text_evidence(source,list(root.iter()),{},svg_channel=channel)['t']
+            self.assertEqual(proof['derivative_hash'],expected);self.assertEqual(proof['derivative_channel'],channel)
+            self.assertEqual(proof['native_editability'],'UNKNOWN');self.assertIsNone(proof['source_font_size_pt'])
+        with self.assertRaises(ValueError):text_evidence(source,list(root.iter()),{},svg_channel='original_ai_native')
+
     def test_effect_path_is_never_misclassified_as_outlined_text_and_unknown_native_metrics_stay_unknown(self):
         root=ET.fromstring('<svg><g id="effect" style="font-family:Example;filter:url(#shadow)" transform="scale(2)"><text id="t" font-size="12pt">Example</text><path id="p" d="M0,0L1,1"/></g></svg>')
         nodes=list(root.iter());bounds={'t':Rect(1,2,30,5)}

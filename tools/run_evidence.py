@@ -103,6 +103,7 @@ def main():
     parser.add_argument("--commit-json", type=Path, required=True)
     parser.add_argument("--tree-json", type=Path, required=True)
     parser.add_argument('--module-timeout',type=int,default=180)
+    parser.add_argument('--module-workers',type=int,default=1,choices=(1,2,3,4))
     args = parser.parse_args()
     valid_id(args.run_id)
     folder = ROOT / "docs/evidence/runs" / args.run_id
@@ -127,7 +128,7 @@ def main():
             if isinstance(test,unittest.TestSuite):yield from test_catalog(test)
             else:yield test.id()
     from evidence_modules import run_modules
-    result,runtime_errors,module_log=run_modules(list(test_catalog(unittest.defaultTestLoader.discover(str(ROOT/'tests')))),live,module_timeout=args.module_timeout)
+    result,runtime_errors,module_log=run_modules(list(test_catalog(unittest.defaultTestLoader.discover(str(ROOT/'tests')))),live,module_timeout=args.module_timeout,workers=args.module_workers)
     log.write(module_log)
     for diagnostic in live.iterdir():
         if diagnostic.is_file():shutil.copy2(diagnostic,folder/diagnostic.name)
@@ -383,10 +384,10 @@ def main():
            "unhandled_runtime_errors":len(runtime_errors), "test_count": len(records), "passed": sum(r["status"] == "PASS" for r in records), "capture_exit_code": capture_code,
            "tests_sha256": digest((folder / "tests.json").read_bytes()), "attachments": attachments,
            "environment": {"python": platform.python_version(), "os": platform.platform(), "PySide6": qt_version, "inkscape": inkscape_version, "qt_platform": os.environ.get("QT_QPA_PLATFORM")},
-           "command": "python tools/run_evidence.py --run-id " + args.run_id + " --source-commit " + args.source_commit + " --commit-json <readback> --tree-json <readback>",
+           "command": "python tools/run_evidence.py --run-id " + args.run_id + " --source-commit " + args.source_commit + " --commit-json <readback> --tree-json <readback> --module-timeout "+str(args.module_timeout)+" --module-workers "+str(args.module_workers),
            "review_level": "SELF_VERIFIED", "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
            "not_verified": ["真實私人 Illustrator 全面視覺一致", "VivoBook／RTX 5050", "實體印刷", "Windows EXE", "獨立覆核"]}
-    run.update(test_execution_strategy='SERIAL_OWNED_FRESH_MODULE_PROCESSES',test_module_count=len(result.modules),planned_test_count=len(result.expected),not_completed_test_count=len(result.expected)-len(result.records))
+    run.update(test_execution_strategy='PARALLEL_OWNED_FRESH_MODULE_PROCESSES' if args.module_workers>1 else 'SERIAL_OWNED_FRESH_MODULE_PROCESSES',test_module_workers=args.module_workers,test_module_count=len(result.modules),planned_test_count=len(result.expected),not_completed_test_count=len(result.expected)-len(result.records))
     write_json(folder / "run.json", run)
     print(json.dumps({"run": args.run_id, "status": status, "tests": len(records), "passed": run["passed"], "attachments": len(attachments)}))
     return 0 if status == "PASS" else 1

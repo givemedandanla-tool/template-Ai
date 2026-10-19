@@ -4,7 +4,7 @@ from .training_store import digest, text
 PAINT = {'path', 'text', 'rect', 'circle', 'ellipse', 'polygon', 'polyline', 'line', 'image', 'use'}
 
 
-def components(node, source, bounds):
+def components(node, source, bounds, *, svg_channel='svg'):
     rows = []; unresolved = []
     for child in node.iter():
         tag = child.tag.rsplit('}', 1)[-1]
@@ -18,7 +18,7 @@ def components(node, source, bounds):
     if len(rows) > 200: raise ValueError('單Logo超過200構件，需明列較小品質範圍，不截斷')
     identities = [row['id'] for row in rows]
     if len(set(identities)) != len(identities): unresolved.append('DUPLICATE_SOURCE_OBJECT_ID')
-    return dict(root_id=node.get('id'), source_hash=source['hash'], svg_hash=source['file_hashes']['svg'],
+    return dict(root_id=node.get('id'), source_hash=source['hash'], svg_channel=svg_channel,svg_hash=source['file_hashes'][svg_channel],
                 component_ids=sorted(identities), text_component_ids=sorted(row['id'] for row in rows if row['text']),
                 component_regions={row['id']:vars(bounds[row['id']]) for row in rows},
                 component_types={row['id']:row['type'] for row in rows},

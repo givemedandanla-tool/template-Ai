@@ -168,6 +168,26 @@ class VisualFontMatchingTests(unittest.TestCase):
 
 
 class RecoveryDialogTests(unittest.TestCase):
+    def test_semantic_query_ids_and_object_index_do_not_link_through_other_svg_channel(self):
+        from template_ai.storage import Library
+        from template_ai.source_analysis import vector_objects
+        from template_ai.object_index import source_structure
+        from template_ai.source_derivative import QUERY_IDS_VERSION
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);library=Library(root/'data')
+            try:
+                path=root/'owned.svg';path.write_text('<svg xmlns="http://www.w3.org/2000/svg" width="90mm" height="54mm"><text x="10" y="20">Example</text></svg>')
+                added=library.add_source(path,import_file(path,library.assets));source=library.source(added['id'])
+                _,elements,_=vector_objects(source,library.assets)
+                identity=next(node.get('id') for node in elements if node.tag.endswith('text'))
+                reference=dict(source_hash=source['hash'],svg_channel='semantic_svg',svg_hash=source['file_hashes']['semantic_svg'],svg_object_id=identity)
+                payload=dict(slots=[dict(id='field')],analysis_evidence=dict(vector_channel='semantic_svg',query_ids_version=QUERY_IDS_VERSION,slot_source_map=dict(field=reference)))
+                result=source_structure(source,payload);self.assertEqual(result['linked_slot_ids'],['field'])
+                reference['svg_channel']='svg'
+                self.assertEqual(source_structure(source,payload)['linked_slot_ids'],[])
+                self.assertEqual(file_digest(path),source['hash'])
+            finally:library.close()
+
     def test_first_unreadable_file_is_diagnosable_from_an_empty_library(self):
         from template_ai.storage import Library
         from template_ai.design_learning_dialog import DesignLearningDialog

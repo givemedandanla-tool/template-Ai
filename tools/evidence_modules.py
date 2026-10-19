@@ -1,4 +1,4 @@
-"""Serial fresh processes isolate native Qt state without dropping any test ID."""
+"""Fresh owned processes isolate native Qt; optional bounded module concurrency."""
 from collections import OrderedDict
 from datetime import datetime,timezone
 import hashlib,json,os,re,signal,subprocess,sys,time
@@ -52,13 +52,17 @@ def file_hash(path):
     return value.hexdigest()
 
 
-def run_modules(expected,live,*,test_root=None,module_timeout=120):
+def run_modules(expected,live,*,test_root=None,module_timeout=120,workers=1):
     if not expected or len(expected)!=len(set(expected)):raise ValueError('Need a nonempty unique exact test catalog')
     if not 0<module_timeout<=600:raise ValueError('Test module deadline must be bounded')
+    if type(workers) is not int or not 1<=workers<=4:raise ValueError('Owned module workers must be1..4')
     groups=OrderedDict()
     for identity in expected:
         if not re.fullmatch(r'test_[A-Za-z0-9_]+(?:\.[A-Za-z_][A-Za-z0-9_]*){2,}',identity):raise ValueError('Invalid exact unittest ID')
         groups.setdefault(identity.split('.')[0],[]).append(identity)
+    if workers>1:
+        from evidence_parallel import run_parallel
+        return run_parallel(expected,groups,live,test_root=test_root,module_timeout=module_timeout,workers=workers)
     live=Path(live);live.mkdir(parents=True,exist_ok=True);workspace=live/'modules';workspace.mkdir(exist_ok=False)
     test_root=Path(test_root or ROOT/'tests');result=ModuleResults(expected);errors=[];log=[]
     write_json(live/'test-catalog.json',expected)

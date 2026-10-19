@@ -63,21 +63,30 @@ def source_structure(source,payload=None):
     if not source or not source.get('svg'):
         return {**unknown,'reason':'沒有可驗證 SVG 結構；既有語意物件仍可搜尋'}
     try:
+        channel=(payload or {}).get('analysis_evidence',{}).get('vector_channel','svg')
+        if channel not in ('svg','semantic_svg') or not source.get(channel):
+            raise ValueError('缺少明確且可讀的衍生SVG管道')
+        expected=source.get('file_hashes',{}).get(channel)
         original=Path(source.get('current_path',source['original_path']))
         if not original.is_file() or original.is_symlink() or original.stat().st_size > 50*1024*1024:
             raise ValueError('來源失聯／超出預算')
         from .source_links import verify_source,check_verified
         proof=verify_source(original,source['hash'])
-        path=Path(source['svg'])
+        path=Path(source[channel])
         if path.is_symlink() or path.stat().st_size>MAX_XML_BYTES:
             raise ValueError('SVG 超出結構預算／符號連結')
         with path.open('rb') as stream:data=stream.read(MAX_XML_BYTES+1)
         if len(data)>MAX_XML_BYTES:raise ValueError('SVG 超出結構預算')
-        if hashlib.sha256(data).hexdigest()!=source.get('file_hashes',{}).get('svg'):
+        if hashlib.sha256(data).hexdigest()!=expected:
             raise ValueError('SVG 快取內容已異動或沒有 hash 證據')
         if b'<!DOCTYPE' in data.upper() or b'<!ENTITY' in data.upper():
             raise ValueError('不接受 DTD／entity 的結構')
         root=ET.fromstring(data); count=0; seen=set()
+        if (payload or {}).get('analysis_evidence',{}).get('query_ids_version'):
+            from .source_derivative import assign_query_ids,QUERY_IDS_VERSION
+            if payload['analysis_evidence']['query_ids_version']!=QUERY_IDS_VERSION:
+                raise ValueError('不支援的衍生SVG查詢ID版本')
+            assign_query_ids(root)
         def visit(e,depth,address):
             nonlocal count
             count+=1
@@ -92,12 +101,12 @@ def source_structure(source,payload=None):
         mapping=(payload or {}).get('analysis_evidence',{}).get('slot_source_map',{});slot_ids={s['id'] for s in (payload or {}).get('slots',[])};linked=[]
         if isinstance(mapping,dict) and len(mapping)<=200:
             def link(node):
-                node['ids']=sorted(sid for sid,reference in mapping.items() if sid in slot_ids and isinstance(reference,dict) and reference.get('source_hash')==source['hash'] and reference.get('svg_hash')==source['file_hashes']['svg'] and reference.get('svg_object_id') and reference['svg_object_id']==node['source_id'])
+                node['ids']=sorted(sid for sid,reference in mapping.items() if sid in slot_ids and isinstance(reference,dict) and reference.get('source_hash')==source['hash'] and reference.get('svg_channel','svg')==channel and reference.get('svg_hash')==expected and reference.get('svg_object_id') and reference['svg_object_id']==node['source_id'])
                 if node['ids']:node['label']=node['label'].replace('對應 UNKNOWN','衍生SVG對應；原生Illustrator UNKNOWN');linked.extend(node['ids'])
                 for child in node['children']:link(child)
             for node in nodes:link(node)
         with path.open('rb') as stream:after_data=stream.read(MAX_XML_BYTES+1)
-        if len(after_data)>MAX_XML_BYTES or hashlib.sha256(after_data).hexdigest()!=source['file_hashes']['svg']:
+        if len(after_data)>MAX_XML_BYTES or hashlib.sha256(after_data).hexdigest()!=expected:
             raise ValueError('結構讀取期間檔案異動')
         check_verified(proof,source['hash'])
         return {**unknown,'status':'VERIFIED_DERIVATIVE','mapping':'VERIFIED_SVG_LINKS' if linked else 'UNKNOWN','reason':'只對已保存且來源／快取hash一致的衍生SVG連結；其餘slot及原生Illustrator對應UNKNOWN','nodes':nodes,'count':count,'linked_slot_ids':sorted(set(linked))}

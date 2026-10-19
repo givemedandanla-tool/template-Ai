@@ -17,7 +17,7 @@ from .source_links import verify_source
 from .training_store import digest
 from .semantic_fields import recognize
 
-ANALYSER_VERSION='source-hypotheses-7-original-glyph-size-clues'
+ANALYSER_VERSION='source-hypotheses-8-pinned-semantic-channel'
 
 
 def vector_objects(source,assets):
@@ -33,12 +33,8 @@ def vector_objects(source,assets):
     if not executable:raise ValueError('缺少Inkscape幾何引擎，保持待人工')
     # Original semantic SVG may lack object IDs. Add IDs only to a derivative
     # query copy; never mutate the source or its hash-pinned semantic cache.
-    names={node.get('id') for node in elements if node.get('id')}
-    for index,node in enumerate(elements):
-        if not node.get('id'):
-            key='ta-query-'+str(index)
-            while key in names:key+='-'
-            node.set('id',key);names.add(key)
+    from .source_derivative import assign_query_ids
+    assign_query_ids(root)
     query_dir=Path(assets)/'source-query-inputs';query_dir.mkdir(parents=True,exist_ok=True)
     query_path=query_dir/(digest([source['hash'],source.get('page',1),expected])+'-ids.svg')
     if query_path.is_symlink():raise ValueError('來源查詢位置不能為符號連結')
@@ -106,7 +102,9 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
         if all(sum(contains(crop,row[2]) for _,crop in proposed)==1 for row in content):
             regions=proposed
     from .source_text_evidence import text_evidence
-    text_proofs=text_evidence(source,elements,bounds,logo_members)
+    vector_channel='semantic_svg' if source.get('semantic_svg') else 'svg'
+    from .source_derivative import QUERY_IDS_VERSION
+    text_proofs=text_evidence(source,elements,bounds,logo_members,svg_channel=vector_channel)
     result=[]
     for key,crop in sorted(regions,key=lambda item:(item[1].y,item[1].x,item[0])):
         slots=[];observations=[];counts={};clues=[];companies=[];source_map={};oversized=[]
@@ -132,7 +130,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             if kind=='company':owner='c'+str(len(companies)+1);companies.append(owner)
             slot=Slot(kind,owner,local_rect,index=index,id=identity,required=kind=='name')
             slots.append(asdict(slot))
-            source_map[identity]=dict(svg_object_id=native,source_hash=source['hash'],svg_hash=source['file_hashes']['svg'],
+            source_map[identity]=dict(svg_object_id=native,source_hash=source['hash'],svg_channel=vector_channel,svg_hash=source['file_hashes'][vector_channel],
                 original_run_ref=native if native.startswith('PDF_GLYPH_RUN:') else None)
             observations.append(dict(id='obs-'+identity,slot_id=identity,text=value,object_type='TEXT',classification='FIELD',region=asdict(rect),prior_prediction='UNCONFIRMED_SOURCE_DERIVATIVE',semantic=semantic))
         for node in logos:
@@ -141,10 +139,10 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             owner='c'+str(len(companies)+1);companies.append(owner)
             identity='box-'+digest([source['hash'],source.get('page',1),key,node.get('id')])[:28]
             slots.append(asdict(Slot('logo',owner,Rect(rect.x-crop.x,rect.y-crop.y,rect.w,rect.h),id=identity)))
-            source_map[identity]=dict(svg_object_id=node.get('id'),source_hash=source['hash'],svg_hash=source['file_hashes']['svg'])
+            source_map[identity]=dict(svg_object_id=node.get('id'),source_hash=source['hash'],svg_channel=vector_channel,svg_hash=source['file_hashes'][vector_channel])
             observations.append(dict(id='obs-'+identity,slot_id=identity,text='完整複合Logo／公司身分待核對',object_type='LOGO_PART',classification='LOGO',region=asdict(rect),prior_prediction='UNCONFIRMED_WHOLE_GROUP'))
             from .quality_logo import components
-            observations[-1]['component_prediction']=components(node,source,bounds)
+            observations[-1]['component_prediction']=components(node,source,bounds,svg_channel=vector_channel)
         result.append(dict(key=digest([ANALYSER_VERSION,source['hash'],source.get('page',1),key,asdict(crop)]),
             source_id=source['id'],source_hash=source['hash'],source_page=source.get('page',1),source_object_id=key,
             crop=asdict(crop),work_width=crop.w,work_height=crop.h,slots=slots,observations=observations,
@@ -156,7 +154,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
                 confidence='UNVALIDATED_HEURISTIC',issues=sorted(set(clues)),oversized_text=oversized,
                 object_ids=[row[0] for row in local],source_unchanged=True,
                 semantic_model=model_context or dict(state='NONE'),
-                slot_source_map=source_map,
+                slot_source_map=source_map,vector_channel=vector_channel,query_ids_version=QUERY_IDS_VERSION,
                 text_object_evidence={identity:text_proofs[mapping['svg_object_id']] for identity,mapping in source_map.items() if mapping['svg_object_id'] in text_proofs},
                 semantic_candidates={o['id']:o['semantic'] for o in observations if o.get('semantic')})))
     verify_source(source['current_path'],source['hash'])

@@ -7,8 +7,10 @@ FONT_ATTRIBUTES=('font-family','font-size','font-style','font-weight','font-stre
 EFFECT_ATTRIBUTES=('transform','filter','stroke','stroke-width','paint-order','mask','clip-path','opacity')
 
 
-def text_evidence(source, elements, bounds, logo_members=()):
+def text_evidence(source, elements, bounds, logo_members=(), *, svg_channel='svg'):
     """Bound literal observations; never resolve CSS or native Illustrator semantics."""
+    if svg_channel not in ('svg','semantic_svg'):
+        raise ValueError('文字觀察缺少明確衍生管道')
     elements=list(elements)
     parents={child:parent for parent in elements[:4000] for child in parent}
     stylesheet=any(e.tag.rsplit('}',1)[-1]=='style' for e in elements[:4000])
@@ -49,7 +51,7 @@ def text_evidence(source, elements, bounds, logo_members=()):
             derivative_bounds_mm=vars(rect) if rect else None,
             logo_protected=id(node) in logo_members,
             evidence_channel='INKSCAPE_SVG_DERIVATIVE',confidence='DIRECT_ATTRIBUTE_ONLY_NOT_NATIVE_AI',
-            source_hash=source['hash'],derivative_hash=source.get('file_hashes',{}).get('svg'),
+            source_hash=source['hash'],derivative_channel=svg_channel,derivative_hash=source.get('file_hashes',{}).get(svg_channel),
             stylesheet_unresolved=stylesheet,literal_evidence_complete=not reasons,
             evidence_limits=sorted(set(reasons)),native_provider='UNAVAILABLE_NOT_PARSED')
     return rows

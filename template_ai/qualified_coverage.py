@@ -74,7 +74,7 @@ class QualifiedCoverage:
         if gold:
             from .quality_facets import describe
             described=describe([gold],dict(group_components=[],whole_source_gold_complete=False,evaluation_role='HOLDOUT'));values=described['logo'];logo=values[0] if len(values)==1 else 'MULTIPLE_VERIFIED_TYPES'
-        evidence=work['payload'].get('analysis_evidence',{});proofs=[p for p in evidence.get('text_object_evidence',{}).values() if p.get('source_hash')==source['hash'] and p.get('derivative_hash')==source.get('file_hashes',{}).get('svg') and p.get('evidence_channel')=='INKSCAPE_SVG_DERIVATIVE']
+        evidence=work['payload'].get('analysis_evidence',{});proofs=[p for p in evidence.get('text_object_evidence',{}).values() if p.get('source_hash')==source['hash'] and p.get('derivative_channel','svg') in ('svg','semantic_svg') and p.get('derivative_hash') and p.get('derivative_hash')==source.get('file_hashes',{}).get(p.get('derivative_channel','svg')) and p.get('evidence_channel')=='INKSCAPE_SVG_DERIVATIVE']
         native='DERIVATIVE_TEXT_NATIVE_UNVERIFIED' if any(p.get('classification')=='DERIVATIVE_TEXT' for p in proofs) else 'DERIVATIVE_PATH_NATIVE_TEXT_UNKNOWN' if any(p.get('classification')=='VECTOR_PATH_TEXT_ORIGIN_UNKNOWN' for p in proofs) else 'UNKNOWN'
         effects='DERIVATIVE_EFFECT_ATTRIBUTES_NATIVE_TYPE_UNKNOWN' if any(p.get('observed_effect_attributes') for p in proofs) else 'UNKNOWN'
         ocr=evidence.get('ocr',{});ocr_class='LOCAL_OCR_EXECUTION_RECORDED_NATIVE_UNKNOWN' if ocr.get('executed') is True and ocr.get('algorithm_version') and ocr.get('model_hashes') and work['payload'].get('analysis_key') else 'UNKNOWN'
