@@ -18,21 +18,26 @@ def conjunction(statuses):
 
 def assess(candidate):
     context=getattr(candidate,'risk_context',{}) or {};diagnostics=candidate.diagnostics;codes={row.get('code') for row in diagnostics};hard=sorted(codes&HARD_CODES);unknown=sorted(codes&UNKNOWN_CODES);approval='PASS' if candidate.template.state=='published' else 'UNKNOWN'
+    if candidate.template.generation_reference is not None:
+        from .design_instances import condition
+        generated=condition(candidate);approval=generated['status']
+    else:generated=None
     # Unclassified old-engine issues never become an unsatisfiability certificate.
     unexplained=bool(candidate.issues) and not hard and not unknown and codes!={'UNPUBLISHED'}
     physical='FAIL' if hard else 'UNKNOWN' if unknown or unexplained else 'PASS'
     evidence=copy.deepcopy(context.get('conditions',[]))
+    if generated:evidence.append(generated)
     from .quality_source_rechecks import current_condition
     evidence.extend(current_condition(candidate))
     if context.get('comparison_only'):evidence.append(dict(id='COMPARISON_ONLY',status='UNKNOWN',reason='非正式比較副本；尚未明確採用，不得正式輸出'))
     if any(not isinstance(c,dict) or c.get('status') not in ('PASS','FAIL','UNKNOWN') or not c.get('reason') for c in evidence):raise ValueError('風險條件需明確PASS／FAIL／UNKNOWN與具體原因')
-    conditions=[dict(id='ENGINE_REQUIRED_CONDITIONS',status=physical,reason='實際既有語意／固定字級／框位／Logo檢查',hard_failures=hard,unknown_conditions=unknown),dict(id='PUBLISHED_BASE_APPROVAL',status=approval,reason='目前模板已發布' if approval=='PASS' else '尚未完成模板發布核准')]+evidence
+    conditions=[dict(id='ENGINE_REQUIRED_CONDITIONS',status=physical,reason='實際既有語意／固定字級／框位／Logo檢查',hard_failures=hard,unknown_conditions=unknown),dict(id='QUALIFIED_CURRENT_INSTANCE_APPROVAL' if generated else 'PUBLISHED_BASE_APPROVAL',status=approval,reason=('目前實例資格已核對' if generated else '目前模板已發布') if approval=='PASS' else '尚未完成當次實例／模板核准')]+evidence
     conditions.extend(freshness_conditions(candidate))
     evidence += [c for c in conditions if c.get('id')=='SNAPSHOT_FRESHNESS']
     trust=conjunction([c['status'] for c in evidence if c.get('required',True)]);review=any(c['status']!='PASS' for c in evidence if not c.get('required',True));basis_approved=approval=='PASS' or valid_approved_base(context.get('approved_base'))
     if not basis_approved:conditions.append(dict(id='APPROVED_OR_REVIEWED_BASE',status='UNKNOWN',reason='尚無已核准基準的可核對憑證'))
     state='HARD_BLOCKED' if hard else 'EVIDENCE_REQUIRED' if physical=='UNKNOWN' or trust!='PASS' or not basis_approved else 'REVIEW_DRAFT' if approval!='PASS' or review else 'SAFE_RECOMMENDATION'
-    result=dict(state=state,label=LABELS[state],conditions=conditions,known_hard_conditions_passed=physical=='PASS' and trust=='PASS' and basis_approved,formal_allowed=state=='SAFE_RECOMMENDATION' and candidate.valid,score_kind='RULE_FITNESS_NOT_CALIBRATED_CONFIDENCE',generation=candidate.generation,template_id=candidate.template.id,template_version=candidate.template.version,dimensions=[candidate.template.width_mm,candidate.template.height_mm],template_digest=digest(candidate.template.to_dict()),input_digest=context.get('input_digest'),engine_digest=context.get('engine_digest'),models_used=['EXPLICIT_RULE_TEMPLATE_NO_INFERENCE_MODEL'],dependency_stamp=candidate.dependency_stamp,basis=context.get('basis',['EXPLICIT_PUBLISHED_RULE_TEMPLATE'] if approval=='PASS' else ['UNAPPROVED_CANDIDATE_ONLY']),supplementation=False,automatic_learning=False,accept_risk_is_not_a_gate=True)
+    result=dict(state=state,label=LABELS[state],conditions=conditions,known_hard_conditions_passed=physical=='PASS' and trust=='PASS' and basis_approved,formal_allowed=state=='SAFE_RECOMMENDATION' and candidate.valid,score_kind='RULE_FITNESS_NOT_CALIBRATED_CONFIDENCE',generation=candidate.generation,template_id=candidate.template.id,template_version=candidate.template.version,dimensions=[candidate.template.width_mm,candidate.template.height_mm],template_digest=digest(candidate.template.to_dict()),input_digest=context.get('input_digest'),engine_digest=context.get('engine_digest'),models_used=['CROSS_WORK_LAYOUT_MODEL:'+str(candidate.template.generation_reference.get('model_id'))] if generated else ['EXPLICIT_RULE_TEMPLATE_NO_INFERENCE_MODEL'],dependency_stamp=candidate.dependency_stamp,basis=context.get('basis',['EXPLICIT_PUBLISHED_RULE_TEMPLATE'] if approval=='PASS' else ['UNAPPROVED_CANDIDATE_ONLY']),supplementation=False,automatic_learning=False,accept_risk_is_not_a_gate=True)
     result['digest']=digest(result);return result
 
 
@@ -101,6 +106,10 @@ def transient_draft(candidate,reason):
 def assert_formal(candidate):
     result=assess(candidate)
     if not result['formal_allowed']:raise ValueError('正式輸出被分級風險Gate阻擋：'+result['label']+'；'+'；'.join(c['reason'] for c in result['conditions'] if c['status']!='PASS'))
+    if candidate.template.generation_reference is not None:
+        from .design_instances import verify_instance
+        verify_instance(candidate)
+        return result
     from .layout import generate
     snapshot=candidate.risk_context['input_snapshot']
     fresh=generate(candidate.template,**snapshot,generation=candidate.generation)
@@ -159,7 +168,7 @@ def _code_digest(name,mtime_ns,size):
 
 def engine_digest():
     from PySide6.QtCore import qVersion
-    names=('candidate_edit_dispatch.py','candidate_changes.py','candidate_edit.py','layout.py','render.py','candidate_risk.py','model.py','text_policy.py','text_metrics.py','font_catalog.py','font_evidence.py','fonts.py','logo_assets.py','background.py')
+    names=('candidate_edit_dispatch.py','candidate_changes.py','candidate_edit.py','layout.py','render.py','candidate_risk.py','model.py','text_policy.py','text_metrics.py','font_catalog.py','font_evidence.py','fonts.py','logo_assets.py','background.py','design_synthesis.py','design_profiles.py','design_joint.py','design_family.py','design_ranking.py','design_learning.py','design_source_binding.py','design_qualification.py','design_instances.py','design_evaluation.py','design_text_flow.py')
     versions={}
     for name in names:
         stamp=(Path(__file__).parent/name).stat();versions[name]=_code_digest(name,stamp.st_mtime_ns,stamp.st_size)

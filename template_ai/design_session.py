@@ -186,11 +186,39 @@ class DesignSessions:
         if candidate.dependency_stamp!=layout_dependency(candidate.template,logos):raise ValueError('Font/asset/engine dependencies changed')
         return session,result,candidate
 
+    def review_family_switch(self,session_id,expected_revision,actor):
+        text(actor,'Layout change reviewer',120)
+        with self.store.transaction():
+            session,result,_=self.checked_result(session_id)
+            if session['revision']!=expected_revision:raise ValueError('Layout review revision is stale')
+            body=deepcopy(_body(session));body['family_switch_review']=dict(result_id=result['id'],
+                content_digest=result['content_digest'],actor=actor)
+            return self.store._write('DESIGN_SESSION',session_id,body,session['revision'],'changed_family_explicitly_reviewed')
+
+    def qualify_result(self,session_id,expected_revision,actor):
+        text(actor,'Current instance reviewer',120)
+        with self.store.transaction():
+            session,result,candidate=self.checked_result(session_id)
+            if session['revision']!=expected_revision:raise ValueError('Instance review revision is stale')
+            from .design_instances import register_instance
+            candidate=register_instance(self.library,session,result,candidate,actor)
+            body=deepcopy(_body(result));body.pop('content_digest',None)
+            body['selected']['serialized']=_serialize(candidate);body['selected']['geometry_digest']=digest(candidate.template.to_dict())
+            body.update(production_qualification='CORE_DIGITAL_INSTANCE_QUALIFIED',parent_result_id=result['id'])
+            body['content_digest']=digest(body)
+            saved=self.store._write('DESIGN_RESULT',new_id(),body,0,'qualified_instance_result_preserved')
+            value=deepcopy(_body(session));value.update(result_id=saved['id'],confirmation=None)
+            self.store._write('DESIGN_SESSION',session_id,value,session['revision'],'qualified_instance_installed_for_explicit_confirmation')
+            return saved
+
     def confirm(self,session_id,expected_revision,actor,*,for_production=False):
         text(actor,'Confirmation actor',120)
         with self.store.transaction():
             session,result,candidate=self.checked_result(session_id)
             if session['revision']!=expected_revision:raise ValueError('Confirmation revision is stale')
+            review=session.get('family_switch_review',{})
+            if result.get('family_switch_requires_review') and (review.get('result_id')!=result['id'] or review.get('content_digest')!=result['content_digest']):
+                raise ValueError('Changed template family needs explicit review of this exact result')
             if for_production and not candidate.formal_eligible:raise ValueError('Production qualification is incomplete')
             confirmation=dict(result_id=result['id'],content_digest=result['content_digest'],
                 data_revision=session['data_revision'],layout_revision=session['layout_revision'],

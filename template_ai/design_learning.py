@@ -236,8 +236,10 @@ class CrossWorkLearning:
             model,_=self.checked_model(model_id)
             if not model['artifact']['family_model']['families']:
                 raise ValueError('No independently supported shared family')
-            if policy.get('production') is True and model['formal_qualification']!='PASS':
-                raise ValueError('Production activation needs actual independent layout/asset/source qualification')
+            if policy.get('production') is True:
+                if model['formal_qualification']!='PASS':raise ValueError('Production activation needs actual independent layout/asset/source qualification')
+                from .design_qualification import validate_certificate
+                validate_certificate(self.library,model)
             return self.store._write(ACTIVE,'local-layout',dict(model_id=model_id,
                 model_revision=model['revision'],weights_digest=model['weights_digest'],
                 manifest_digest=model['manifest_digest'],policy=dict(deepcopy(policy),approved=True),actor=actor,
@@ -251,6 +253,9 @@ class CrossWorkLearning:
             model,_=self.checked_model(row['model_id'])
             if model['revision']!=row['model_revision'] or model['weights_digest']!=row['weights_digest']:
                 raise ValueError('Active model version differs')
+            if row['policy'].get('production') is True:
+                from .design_qualification import validate_certificate
+                validate_certificate(self.library,model)
             return model,dict(row,state='ACTIVE')
         except (ValueError,OSError) as error:
             return None,dict(state='STALE',model_id=row['model_id'],reason=str(error))

@@ -99,9 +99,11 @@ class Template:
     source_work_revision: int = 0
     training_reference: dict | None = None
     safe_margin_mm: float = 0.0
+    generation_reference: dict | None = None
 
     def to_dict(self) -> dict:
         result=asdict(self)
+        if result.get('generation_reference') is None:result.pop('generation_reference',None)
         for slot in result['slots']:
             if slot.get('text_flow') is None:slot.pop('text_flow',None)
         return result

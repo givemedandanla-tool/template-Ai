@@ -35,7 +35,7 @@ def input_facts(graph):
 
 
 def _font_options(profile, key, width, height, value=None, policy=None):
-    options={}
+    options={};support_groups={}
     for data in profile['data_requirement_profiles']:
         for sample in data['presentation_evidence']:
             if sample['role_key']!=key:continue
@@ -47,10 +47,13 @@ def _font_options(profile, key, width, height, value=None, policy=None):
             candidate=dict(font_asset=deepcopy(asset),size_pt=vector['source_pt'],scale=vector['horizontal_scale'],
                 tracking_mm=vector['tracking_mm'],width_mm=sample['frame'][2]*width,
                 height_mm=sample['frame'][3]*height,source_dimension_mm=sample['dimensions_mm'],
-                label_binding=deepcopy(sample['label_binding']),text_flow=deepcopy(sample.get('source_text_flow')),source_ref=sample['example_id'])
+                label_binding=deepcopy(sample['label_binding']),align=sample['align'] if sample['align'] in ('left','center','right','distributed') else 'left',
+                source_alignment_status='REVIEWED' if sample['align']!='UNKNOWN' else 'UNKNOWN_PREVIEW_FALLBACK',
+                distribution=deepcopy(sample['distribution']),text_flow=deepcopy(sample.get('source_text_flow')),source_ref=sample['example_id'])
             identity=digest({k:v for k,v in candidate.items() if k!='source_ref'})
             if identity not in options:options[identity]=dict(candidate,id=identity,support=0)
-            options[identity]['support']+=1
+            support_groups.setdefault(identity,set()).add(sample['lineage_group'])
+            options[identity]['support']=len(support_groups[identity])
     if value is not None and (policy or {}).get('enable_joint_prediction') is True:
         from .design_joint import predict_joint
         role=next(row for row in profile['roles'] if row['key']==key)
@@ -78,6 +81,36 @@ def _font_options(profile, key, width, height, value=None, policy=None):
                 candidate['id']=digest(candidate);options[candidate['id']]=candidate
     return sorted(options.values(),key=lambda row:(-row['support'],
         abs(row['source_dimension_mm'][0]-width)+abs(row['source_dimension_mm'][1]-height),row['id']))
+
+
+def _adapt_distribution(profile,key,configuration,display,kind):
+    if configuration.get('align')!='distributed':return configuration
+    from .text_policy import tracking_geometry
+    groups=set();tracking=[]
+    for data in profile['data_requirement_profiles']:
+        for row in data['presentation_evidence']:
+            vector=row['joint'];approval=row['distribution']
+            if (row['role_key']!=key or row['align']!='distributed' or not isinstance(approval,dict)
+                    or approval.get('approved') is not True or not row['source_font_ref']):continue
+            if (digest(row['source_font_ref'])!=digest(configuration['font_asset'])
+                    or vector['source_pt']!=configuration['size_pt'] or vector['horizontal_scale']!=configuration['scale']
+                    or vector['tracking_mm'] is None):continue
+            original_width=row['frame'][2]*configuration['source_dimension_mm'][0]
+            original_height=row['frame'][3]*configuration['source_dimension_mm'][1]
+            if abs(original_width-configuration['width_mm'])>1e-5 or abs(original_height-configuration['height_mm'])>1e-5:continue
+            groups.add(row['lineage_group']);tracking.append(vector['tracking_mm'])
+    if len(groups)<5:return configuration
+    result=deepcopy(configuration);asset=result['font_asset']
+    slot=Slot(kind,'p1',Rect(0,0,result['width_mm']/result['scale'],result['height_mm']),
+        font=asset['families'][0],font_style=(asset.get('styles') or [''])[0],font_asset=asset,
+        size_pt=result['size_pt'],align='distributed',tracking_mm=result['tracking_mm'],
+        tracking_min_mm=min(tracking),tracking_max_mm=max(tracking),distribution_approval=result['distribution'])
+    _,_,errors,chosen,strategy=tracking_geometry(slot,display,text_geometry)
+    if errors:raise ValueError('Learned distribution measurement or semantic permission failed')
+    result['tracking_mm']=chosen;result['distribution_adaptation']=dict(strategy=strategy,
+        conditioned_tracking_range_mm=[min(tracking),max(tracking)],independent_support=len(groups),
+        basis='SAME_FONT_PT_SCALE_PHYSICAL_CONTAINER_AND_REVIEWED_SEMANTIC_POLICY')
+    return result
 
 
 def _relation_graph(relations, ids):
@@ -108,7 +141,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
     intents=deepcopy(intents or []);facts=input_facts(graph)
     if not 1<=len(facts)<=64:raise ValueError('Synthesis field processing budget exceeded;not a learned capacity')
     ids={row['render_id'] for row in facts};horizontal,vertical=_relation_graph(intents,ids)
-    moved={intent[key] for intent in intents for key in ('subject','object')}
+    moved={intent['subject'] for intent in intents}
     allowed=set(policy.get('movable_kinds',('phone','email','line','ig','address')))
     subjects={intent['subject'] for intent in intents}
     if any(row['render_id'] in subjects and row['kind'] not in allowed for row in facts):
@@ -179,6 +212,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                     if not isinstance(prefix,str) or len(prefix)>128:failure='LABEL_PREFIX_UNVERIFIED';break
                     display=prefix+fact['value']
                 else:display=fact['value']
+                configuration=_adapt_distribution(profile,fact['role_key'],configuration,display,fact['kind'])
                 tw,th,errors=text_geometry(family,configuration['size_pt'],display,style,asset,configuration['tracking_mm'])
                 if errors:failure='FONT_MEASUREMENT_UNVERIFIED';break
                 w,h=configuration['width_mm'],configuration['height_mm']
@@ -196,6 +230,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                 slots.append(Slot(fact['kind'],fact['owner_port'],Rect(frame[0]*width,frame[1]*height,w,h),
                     index=fact['index'],font=family,font_style=style,size_pt=configuration['size_pt'],
                     min_scale=configuration['scale'],font_asset=deepcopy(asset),id=rid,tracking_mm=configuration['tracking_mm'],
+                    align=configuration.get('align','left'),distribution_approval=deepcopy(configuration.get('distribution')) if isinstance(configuration.get('distribution'),dict) else None,
                     tracking_min_mm=configuration['tracking_mm'],tracking_max_mm=configuration['tracking_mm'],text_flow=deepcopy(flow)))
                 measurements.append(dict(render_id=rid,text=display,width_mm=tw,height_mm=th,
                     scale=configuration['scale'],configuration_id=configuration['id']))

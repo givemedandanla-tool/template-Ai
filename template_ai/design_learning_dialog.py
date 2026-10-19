@@ -54,6 +54,9 @@ class RelativeCanvas(QGraphicsView):
     def __init__(self,parent=None):
         super().__init__(parent);self.owner=parent;self.setScene(QGraphicsScene(self));self.boxes=[]
         self.setAccessibleName('完整稿件預覽；亦可用相對位置選單操作')
+    def resizeEvent(self,event):
+        super().resizeEvent(event)
+        if not self.sceneRect().isEmpty():self.fitInView(self.sceneRect(),Qt.KeepAspectRatio)
     def show_candidate(self,candidate):
         from .render import card_view_image
         self.scene().clear();self.boxes=[]
@@ -102,6 +105,9 @@ class DesignLearningDialog(QDialog):
         row.addWidget(QLabel('來源水平縮放'));row.addWidget(self.source_scale);row.addWidget(QLabel('來源字距 mm'));row.addWidget(self.source_tracking);layout.addLayout(row)
         row=QHBoxLayout();self.label_mode=QComboBox();self.label_mode.addItems(['原稿欄位沒有固定前綴','資料前有固定前綴'])
         self.label_prefix=QLineEdit();self.label_prefix.setPlaceholderText('例如 TEL：');row.addWidget(self.label_mode);row.addWidget(self.label_prefix);layout.addLayout(row)
+        self.source_alignment=QComboBox()
+        for label,code in [('來源切齊尚未確認','UNKNOWN'),('來源靠左','left'),('來源置中','center'),('來源靠右','right'),('來源為核准職稱／地址分散','distributed')]:self.source_alignment.addItem(label,code)
+        layout.addWidget(self.source_alignment)
         self.button(layout,'保存來源對應',self.bind_source);layout.addStretch()
     def _training_tab(self):
         layout=self.page('學習與版本');self.samples=QTableWidget(0,3);self.samples.setHorizontalHeaderLabels(['已核准作品','集合角色','樣本版本'])
@@ -124,8 +130,10 @@ class DesignLearningDialog(QDialog):
         for text,code in [('在左側','LEFT_OF'),('在右側','RIGHT_OF'),('在上方','ABOVE'),('在下方','BELOW')]:self.relation.addItem(text,code)
         for widget in (self.subject,self.relation,self.reference):row.addWidget(widget)
         self.button(row,'調整兩欄相對位置',lambda:self.set_relation(self.subject.currentData(),self.relation.currentData(),self.reference.currentData()));layout.addLayout(row)
-        row=QHBoxLayout();self.confirm_button=self.button(row,'確認目前完整預覽稿',self.confirm_preview)
+        row=QHBoxLayout();self.switch_button=self.button(row,'已檢視並採用變更版面',self.review_switch)
+        self.confirm_button=self.button(row,'確認目前完整預覽稿',self.confirm_preview)
         self.export_button=self.button(row,'輸出已確認預覽稿',self.export_preview);layout.addLayout(row)
+        row=QHBoxLayout();self.formal_button=self.button(row,'核對當次實例並確認正式稿',self.confirm_formal);self.button(row,'正式數位輸出',self.export_formal);layout.addLayout(row)
         row=QHBoxLayout();self.artifacts=QComboBox();row.addWidget(self.artifacts,1);self.button(row,'開啟已保存的相同檔案',self.replay);layout.addLayout(row)
     def refresh(self):
         current_model=self.models.currentData();self.models.clear();self.job_choices.clear();self.session_choices.clear();self.source_work.clear()
@@ -173,7 +181,8 @@ class DesignLearningDialog(QDialog):
         label=dict(status='CONFIRMED',kind='DYNAMIC_PREFIX' if self.label_mode.currentIndex() else 'NO_FIXED_LABEL',
                    evidence_refs=[self.source_basis.text()])
         if self.label_mode.currentIndex():label['prefix']=self.label_prefix.text()
-        review=dict(source_identity_confirmed=True,basis=self.source_basis.text(),label_binding=label)
+        review=dict(source_identity_confirmed=True,basis=self.source_basis.text(),label_binding=label,source_alignment=self.source_alignment.currentData())
+        if self.source_alignment.currentData()=='distributed':review['source_distribution']=dict(approved=True,actor=self.actor.text(),reason=self.source_basis.text())
         if self.parameter_review.isChecked():review.update(horizontal_scale=self.source_scale.value(),tracking=self.source_tracking.value(),parameter_measurement_refs=[self.source_basis.text()])
         service=SourceTypographyReview(self.library)
         service.confirm(service.plan(self.source_work.currentData(),field['slot_id'],self.source_runs.currentData(),asset,review),self.actor.text(),True)
@@ -250,7 +259,10 @@ class DesignLearningDialog(QDialog):
     def refresh_draft(self):
         self.subject.clear();self.reference.clear();self.artifacts.clear();candidate=None;current=None
         if self.session_id:
-            current=self.sessions.current(self.session_id);graph=InputGraph(current['input_graph']);movable=set(current['policy'].get('movable_kinds',('phone','email','line','ig','address')))
+            current=self.sessions.current(self.session_id)
+            index=self.session_choices.findData(self.session_id)
+            if index>=0:self.session_choices.setItemText(index,self.session_id+' · '+current['result_state'])
+            graph=InputGraph(current['input_graph']);movable=set(current['policy'].get('movable_kinds',('phone','email','line','ig','address')))
             for field in input_facts(graph):
                 label=field['owner_port']+' / '+field['kind']+' / '+field['value'][:35]
                 self.reference.addItem(label,field['render_id'])
@@ -259,9 +271,25 @@ class DesignLearningDialog(QDialog):
             except ValueError:pass
             for artifact in self.jobs.store.records('DESIGN_ACCEPTED_ARTIFACT',limit=200):
                 if artifact['session_id']==self.session_id:self.artifacts.addItem(artifact['path'],artifact['id'])
+        self.switch_button.setVisible(bool(current and current.get('result_id') and self.jobs.store.get('DESIGN_RESULT',current['result_id']).get('family_switch_requires_review')))
+        qualified_model=self.jobs.store.get('DESIGN_MODEL',current['model_id']) if current else None
+        self.formal_button.setEnabled(bool(candidate and qualified_model and qualified_model.get('formal_qualification')=='PASS'))
+        self.formal_button.setToolTip('需要真實授權作品的獨立封存驗證及正式模型資格')
         self.canvas.show_candidate(candidate);self.confirm_button.setEnabled(candidate is not None)
         self.export_button.setEnabled(candidate is not None and bool(current and current.get('confirmation')))
         self.out_w.setEnabled(True);self.out_h.setEnabled(True)
+    def review_switch(self):
+        row=self.sessions.current(self.session_id);self.sessions.review_family_switch(row['id'],row['revision'],self.actor.text())
+        self.say('已保存對目前變更版面的明確採用。')
+    def confirm_formal(self):
+        row=self.sessions.current(self.session_id);self.sessions.qualify_result(row['id'],row['revision'],self.actor.text())
+        self.refresh_draft();row=self.sessions.current(self.session_id)
+        self.sessions.confirm(row['id'],row['revision'],self.actor.text(),for_production=True)
+        self.refresh_draft();self.say('已核對並確認目前正式數位稿；輸出仍會再次核驗資產與格式。')
+    def export_formal(self):
+        path,_=QFileDialog.getSaveFileName(self,'保存已確認正式數位稿','design.png','PNG (*.png);;PDF (*.pdf);;SVG (*.svg)')
+        if not path:return
+        artifact=self.sessions.export(self.session_id,path,preview=False);self.refresh_draft();self.say('已保存正式數位檔與原版本憑證：'+artifact['path'])
     def confirm_preview(self):
         row=self.sessions.current(self.session_id);self.sessions.confirm(row['id'],row['revision'],self.actor.text());self.refresh_draft();self.say('已確認目前顯示的完整預覽稿。')
     def export_preview(self):

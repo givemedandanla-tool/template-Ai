@@ -370,6 +370,8 @@ class Library:
         t.state = "published"
 
     def _template_provenance(self, t: Template,*,allow_quarantined_draft=False,for_publication=False) -> None:
+        if t.generation_reference is not None:
+            raise ValueError('當次學習實例保存在DESIGN_INSTANCE，不能當成已發布全域模板')
         registered=self.db.execute('SELECT family_id,version FROM templates WHERE id=?',(t.id,)).fetchone()
         if registered and (registered[0],registered[1])!=(t.family_id,t.version):
             raise ValueError('同一模板ID的系列與版次不可改寫；請建立具新ID的明確版本草稿')

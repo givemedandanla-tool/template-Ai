@@ -44,6 +44,14 @@ class SourceTypographyReview:
             page=original.get('pdf_glyph_evidence',{})
             if page.get('source_canvas_mapping')!='VERIFIED_PHYSICAL_VIEWPORT':
                 raise ValueError('Original PDF glyph viewport does not match the confirmed source')
+        alignment=review.get('source_alignment','UNKNOWN')
+        if alignment not in ('UNKNOWN','left','center','right','distributed'):
+            raise ValueError('Unsupported reviewed source alignment')
+        if alignment=='distributed':
+            permission=review.get('source_distribution',{})
+            if (slot['kind'] not in ('title','address') or permission.get('approved') is not True
+                    or not permission.get('actor') or not permission.get('reason')):
+                raise ValueError('Distributed source style needs explicit semantic permission and source evidence')
         label=review.get('label_binding')
         if label is not None:
             if not isinstance(label,dict) or label.get('status')!='CONFIRMED' or not label.get('evidence_refs'):
