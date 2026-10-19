@@ -42,8 +42,9 @@ def font_asset_errors(slots) -> list[str]:
     errors = []
     seen = set()
     for slot in slots:
-        for part in (slot.text_flow or {}).get('rich_text',{}).get('segments',[]):
-            extra=part.get('font_asset')
+        from .design_components import component_fonts,presentation_errors
+        errors.extend(presentation_errors(slot.text_flow))
+        for extra in component_fonts(slot.text_flow):
             family=(extra.get('families') or [''])[0] if isinstance(extra,dict) else ''
             errors.extend('複合文字：'+error for error in font_errors(extra,family))
         asset = slot.font_asset
@@ -85,7 +86,8 @@ class FontManager:
         assets=[]
         for slot in slots:
             assets.append(slot.font_asset)
-            assets.extend(part.get('font_asset') for part in (slot.text_flow or {}).get('rich_text',{}).get('segments',[]))
+            from .design_components import component_fonts
+            assets.extend(component_fonts(slot.text_flow))
         for asset in assets:
             if not asset:continue
             if not isinstance(asset,dict):self.issues.append('選中字型資產記錄不完整');continue

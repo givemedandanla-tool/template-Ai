@@ -29,6 +29,7 @@ class SourceTypographyReview:
         errors=font_errors(font_asset,font_asset['families'][0])
         if errors:raise ValueError('；'.join(errors))
         work=self.library.artwork(work_id);pins=self.store.pins(work_id)
+        source=self.library.source(work['source_id'])
         if self.store.facts_state(work_id)!='CONFIRMED':raise ValueError('Field/source facts need confirmation first')
         slot=next((slot for slot in work['payload']['slots'] if slot['id']==slot_id),None)
         facts=self.store.facts(work_id);selected=set(facts['confirmation']['observation_ids'])
@@ -69,7 +70,7 @@ class SourceTypographyReview:
         if label is not None:
             if not isinstance(label,dict) or label.get('status')!='CONFIRMED' or not label.get('evidence_refs'):
                 raise ValueError('Source label mapping needs reviewed evidence')
-            if label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX'):
+            if label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX','SEPARATE_STATIC_LABEL'):
                 raise ValueError('Unsupported source label mapping')
             if label['kind']=='DYNAMIC_PREFIX' and (not isinstance(label.get('prefix'),str)
                     or not label['prefix'] or not matches[0]['text'].startswith(label['prefix'])):
@@ -156,6 +157,30 @@ class SourceTypographyReview:
             if measurement.get('measurement_verified'):
                 typography['shaped_advance']=ObservedScalar(measurement['advance_width_mm'],'mm','DERIVED',
                     'QT_NATURAL_ADVANCE_AT_REVIEWED_SOURCE_FONT_NOT_ORIGINAL_GLYPH_SPACING',refs).to_dict()
+        presentation=(review.get('source_text_flow') or {}).get('presentation')
+        if presentation:
+            from .design_components import validate_presentation
+            validate_presentation(presentation)
+            for part in presentation['components']:
+                if part['kind']=='STATIC_TEXT':
+                    reference=next((row for row in original['runs'] if row['id']==part.get('source_run_id')),None)
+                    if (not reference or reference['text_sha256']!=hashlib.sha256(part['text'].encode()).hexdigest()
+                            or reference.get('visibility') in ('HIDDEN','NONPAINTING_TEXT','UNKNOWN')):
+                        raise ValueError('Static label needs an exact visible original source run')
+                    asset=part['font_asset'];errors=font_errors(asset,(asset.get('families') or [''])[0])
+                    if errors:raise ValueError('Static label font is unavailable or changed')
+                    source_pt=reference['source_pt'].get('value')
+                    measured=part.get('physical_work_pt')
+                    expected_pt=source_pt*sx if source_pt is not None and uniform else None
+                    if expected_pt is None:
+                        if not part.get('physical_pt_measurement_refs'):raise ValueError('Static label point size needs independent measurement')
+                        expected_pt=measured
+                    if type(expected_pt) not in (int,float) or not math.isclose(expected_pt,point*part['pt_ratio'],rel_tol=1e-6):
+                        raise ValueError('Static label point ratio contradicts source/work evidence')
+                elif part['asset'].get('source_hash')!=source['hash'] or part['asset'].get('reviewed_source_association') is not True:
+                    raise ValueError('Static icon needs explicitly reviewed association with this source')
+        if label and label.get('kind')=='SEPARATE_STATIC_LABEL' and not presentation:
+            raise ValueError('Separate labels need source-reviewed component geometry')
         plan=dict(id=key,work_id=work_id,slot_id=slot_id,pins=pins,facts_revision=facts['revision'],
             original_evidence_digest=original['document_digest'],source_run_id=source_run_id,
             expected_revision=before['revision'] if before else 0,font_asset=deepcopy(font_asset),

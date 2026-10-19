@@ -89,7 +89,7 @@ def _font_options(profile, key, width, height, value=None, policy=None, semantic
             if condition.get('word_spacing_mm') not in (None,0,0.):
                 rule=(condition.get('text_flow') or {}).get('spacing_rule',{})
                 if rule.get('mode')!='WORDS' or rule.get('value_mm')!=condition['word_spacing_mm']:continue
-            if label.get('status')!='CONFIRMED' or label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX'):continue
+            if label.get('status')!='CONFIRMED' or label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX','SEPARATE_STATIC_LABEL'):continue
             display=label.get('prefix','')+value if label.get('kind')=='DYNAMIC_PREFIX' else value
             identity=digest([asset,display])
             if identity not in measured:
@@ -263,7 +263,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                     continue
                 family=asset['families'][0];style=(asset.get('styles') or [''])[0]
                 label=configuration['label_binding']
-                if label.get('status')!='CONFIRMED' or label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX'):
+                if label.get('status')!='CONFIRMED' or label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX','SEPARATE_STATIC_LABEL'):
                     failure='LABEL_BINDING_UNKNOWN';break
                 if label.get('kind')=='DYNAMIC_PREFIX':
                     prefix=label.get('prefix')

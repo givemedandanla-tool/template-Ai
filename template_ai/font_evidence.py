@@ -107,11 +107,15 @@ def font_rights_diagnostics(candidate,output_format):
     cache={};rows=[]
     for item in candidate.items:
         if item.slot.kind=='logo' or not item.text:continue
-        assets=[item.slot.font_asset]+[part.get('font_asset') for part in (item.slot.text_flow or {}).get('rich_text',{}).get('segments',[])]
+        from .design_components import component_fonts
+        assets=[item.slot.font_asset]+component_fonts(item.slot.text_flow)
         reasons=[]
         for asset in assets:
             key=(asset.get('hash'),asset.get('path'),repr(asset.get('usage_rights'))) if isinstance(asset,dict) else repr(asset)
             if key not in cache:cache[key]=output_rights_errors(asset,output_format)
             reasons.extend(cache[key])
+        for part in (item.slot.text_flow or {}).get('presentation',{}).get('components',[]):
+            if part.get('kind')=='SVG_ICON' and part.get('asset',{}).get('usage_rights',{}).get('print_export') is not True:
+                reasons.append('靜態圖示印製用途尚未核對')
         if reasons:rows.append(dict(slot_id=item.slot.id,owner=item.slot.owner,kind=item.slot.kind,reasons=sorted(set(reasons))))
     return rows

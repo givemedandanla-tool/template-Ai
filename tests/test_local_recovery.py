@@ -13,7 +13,7 @@ from template_ai.background import file_digest
 from template_ai.importer import import_file
 from template_ai.recovery_diagnostics import issue, shareable_report, export_shareable
 from template_ai.source_recovery import compare_images
-from template_ai.visual_font_match import match_fonts
+from template_ai.visual_font_match import match_fonts,merge_font_pages
 
 APP=QApplication.instance() or QApplication([])
 FONTS=Path('/usr/share/fonts/truetype/dejavu')
@@ -139,6 +139,32 @@ class VisualFontMatchingTests(unittest.TestCase):
             result=match_fonts(crop,rows,self.faces(),tracking_options=(0.,))
         self.assertEqual(result['candidates'][0]['family'],'DejaVu Sans Mono')
         self.assertIn('OCR_REVIEW_REQUIRED',[row['code'] for row in result['issues']])
+
+    def test_paged_search_merges_global_candidates_and_rejects_changed_inputs(self):
+        faces=self.faces();texts=[dict(text='MONO 1234 AV',origin='REVIEWED_TEXT')]
+        pages=[match_fonts(self.reference(),texts,faces,max_faces=1,offset=i,tracking_options=(0.,)) for i in range(3)]
+        self.assertFalse(pages[-1]['search_complete'])
+        combined=merge_font_pages(pages)
+        self.assertTrue(combined['search_complete']);self.assertEqual(combined['checked_faces'],3)
+        self.assertEqual(combined['candidates'][0]['family'],'DejaVu Sans Mono')
+        with self.assertRaises(ValueError):merge_font_pages([pages[0],pages[2]])
+        changed=dict(pages[1],search_signature='changed')
+        with self.assertRaises(ValueError):merge_font_pages([pages[0],changed])
+
+    def test_light_glyphs_on_dark_background_use_local_contrast(self):
+        from template_ai.source_recovery import image_gray
+        image=self.reference();image.invertPixels()
+        report=match_fonts(image,[dict(text='MONO 1234 AV',origin='REVIEWED_TEXT')],self.faces(),tracking_options=(0.,))
+        self.assertEqual(report['candidates'][0]['family'],'DejaVu Sans Mono')
+
+    def test_large_registered_catalogue_is_paged_and_cancellable(self):
+        from template_ai.windows_font_sources import scan_registered_pages
+        roots=dict(MACHINE=FONTS);records=[dict(scope='MACHINE',file='DejaVuSans.ttf') for _ in range(130)]
+        progress=[];report=scan_registered_pages(records,roots,progress=progress.append)
+        self.assertEqual(report['status'],'COMPLETE');self.assertEqual(report['next_offset'],130)
+        self.assertEqual(len(report['files']),1)
+        paused=scan_registered_pages(records,roots,cancelled=lambda:len(progress)>0)
+        self.assertEqual(paused['status'],'PAUSED');self.assertEqual(paused['next_offset'],0)
 
 
 class RecoveryDialogTests(unittest.TestCase):

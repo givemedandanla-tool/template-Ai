@@ -22,15 +22,30 @@ ANALYSER_VERSION='source-hypotheses-7-original-glyph-size-clues'
 
 def vector_objects(source,assets):
     verify_source(source['current_path'],source['hash'])
-    path=Path(source.get('svg') or '')
-    if not source.get('svg') or not path.is_file():raise ValueError('無可核對向量結構，請人工作品框選／本機OCR線索，不假稱已解析')
-    if path.is_symlink() or path.stat().st_size>2_000_000 or file_digest(path)!=source['file_hashes']['svg']:raise ValueError('向量來源已變更或超出2MB結構預算')
+    channel='semantic_svg' if source.get('semantic_svg') else 'svg'
+    path=Path(source.get(channel) or '')
+    if not source.get(channel) or not path.is_file():raise ValueError('無可核對向量結構，請人工作品框選／本機OCR線索，不假稱已解析')
+    expected=source['file_hashes'][channel]
+    if path.is_symlink() or path.stat().st_size>2_000_000 or file_digest(path)!=expected:raise ValueError('向量來源已變更或超出2MB結構預算')
     root=ET.parse(path).getroot();elements=list(root.iter())
     if len(elements)>4000:raise ValueError('來源超過4000物件，需按作品縮小分析範圍')
     executable=inkscape_path()
     if not executable:raise ValueError('缺少Inkscape幾何引擎，保持待人工')
+    # Original semantic SVG may lack object IDs. Add IDs only to a derivative
+    # query copy; never mutate the source or its hash-pinned semantic cache.
+    names={node.get('id') for node in elements if node.get('id')}
+    for index,node in enumerate(elements):
+        if not node.get('id'):
+            key='ta-query-'+str(index)
+            while key in names:key+='-'
+            node.set('id',key);names.add(key)
+    query_dir=Path(assets)/'source-query-inputs';query_dir.mkdir(parents=True,exist_ok=True)
+    query_path=query_dir/(digest([source['hash'],source.get('page',1),expected])+'-ids.svg')
+    if query_path.is_symlink():raise ValueError('來源查詢位置不能為符號連結')
+    ET.ElementTree(root).write(query_path,encoding='utf-8',xml_declaration=True)
+    query_digest=file_digest(query_path)
     environment=os.environ.copy();environment['INKSCAPE_PROFILE_DIR']=str(Path(assets)/'source-query')
-    process=subprocess.run([executable,'--query-all',str(path)],capture_output=True,text=True,timeout=30,env=environment,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    process=subprocess.run([executable,'--query-all',str(query_path)],capture_output=True,text=True,timeout=30,env=environment,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     if process.returncode or len(process.stdout)>1_048_576:raise ValueError('來源幾何查詢失敗／超出預算')
     bounds={}
     for row in csv.reader(process.stdout.splitlines()):
@@ -39,7 +54,7 @@ def vector_objects(source,assets):
                 rect=Rect(*(float(value)*25.4/96 for value in row[1:]))
                 if rect.valid():bounds[row[0]]=rect
             except ValueError:pass
-    if file_digest(path)!=source['file_hashes']['svg']:raise ValueError('幾何查詢期間來源變更')
+    if file_digest(path)!=expected or file_digest(query_path)!=query_digest:raise ValueError('幾何查詢期間來源變更')
     verify_source(source['current_path'],source['hash'])
     return root,elements,bounds
 

@@ -279,6 +279,24 @@ def original_text_observation(source):
             channel, rows = _svg(source, data)
         else:
             channel, rows = 'UNSUPPORTED_ORIGINAL_FORMAT', []
+            # Native private AI/EPS may have a usable Inkscape semantic route.
+            # Its declarations are explicitly derived, never original font truth.
+            semantic=source.get('semantic_svg')
+            if semantic:
+                from .background import file_digest
+                derived=Path(semantic)
+                if (derived.is_symlink() or not derived.is_file() or derived.stat().st_size>MAX_BYTES
+                        or file_digest(derived)!=source.get('file_hashes',{}).get('semantic_svg')):
+                    raise ValueError('Recovered semantic source changed or exceeds budget')
+                _,rows=_svg(source,derived.read_bytes())
+                channel='INKSCAPE_DERIVED_TEXT_NOT_ORIGINAL_DECLARATIONS'
+                document['derived_semantic_sha256']=file_digest(derived)
+                for row in rows:
+                    row['source_locator']=dict(kind='INKSCAPE_DERIVED_TEXT',derivative_locator=row['source_locator'])
+                    row['conversion_declared_pt']=row['source_pt']
+                    row['source_pt']=unknown('pt','DERIVED_CONVERSION_NOT_ORIGINAL_PHYSICAL_PT',(row['id'],)).to_dict()
+                    row['qualification']='EXPERT_VISUAL_FONT_AND_PHYSICAL_MEASUREMENT_REQUIRED'
+                if file_digest(derived)!=document['derived_semantic_sha256']:raise ValueError('Semantic source changed during observation')
         document.update(channel=channel, runs=rows,
                         state='OBSERVED' if rows else 'NO_READABLE_TEXT' if channel != 'UNSUPPORTED_ORIGINAL_FORMAT' else 'UNSUPPORTED')
         if data.startswith(b'%PDF-'):

@@ -46,8 +46,14 @@ def apply_spacing(font,text,factor,rule):
 def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, policy, kind):
     import math
     rich=policy.get('rich_text')
+    presentation=policy.get('presentation')
+    full_width_mm=width_mm
+    if presentation:
+        from .design_components import validate_presentation
+        validate_presentation(presentation)
+        width_mm*=presentation['value_frame'][2]
     single_line=policy.get('break_rule')=='NO_WRAP' and policy.get('max_lines_observed')==1
-    if (kind not in ALLOWED_KINDS and not (rich and single_line)) or policy.get('status')!='HUMAN_CONFIRMED_SOURCE_RULE':
+    if (kind not in ALLOWED_KINDS and not ((rich or presentation) and single_line)) or policy.get('status')!='HUMAN_CONFIRMED_SOURCE_RULE':
         raise ValueError('Multiline flow requires supported role and source-reviewed rule')
     if policy.get('break_rule') not in ('WORD_WRAP','WORD_OR_ANYWHERE','NO_WRAP') or not policy.get('evidence_refs'):
         raise ValueError('Unknown or unreferenced source break rule')
@@ -115,11 +121,15 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     ink=ink or QRectF()
     width=ink.width()*factor*scale;height=ink.height()*factor
     if width>width_mm+1e-6:raise ValueError('Unbreakable shaped text exceeds flow container')
-    return dict(layout=layout,ink=ink,factor=factor,width_mm=width,height_mm=height,lines=lines,
+    result=dict(layout=layout,ink=ink,factor=factor,width_mm=width,height_mm=height,lines=lines,
                 positioned_runs=positioned_runs,word_justification=justification,
                 natural_advance_mm=max((line['natural_width_mm']/scale for line in lines),default=0.),
                 text_length=len(text),source_rule=policy,spacing_rule=spacing_rule,
                 first_baseline_mm=(layout.lineAt(0).position().y()+layout.lineAt(0).ascent()-ink.top())*factor if lines else None)
+    if presentation:
+        from .design_components import compose
+        result=compose(result,full_width_mm,pt,scale,presentation)
+    return result
 
 
 def draw_flow(painter,rect,text,slot,scale,tracking_mm):
@@ -137,4 +147,7 @@ def draw_flow(painter,rect,text,slot,scale,tracking_mm):
         if result['positioned_runs'] is not None:
             for run in result['positioned_runs']:painter.drawGlyphRun(QPointF(0,0),run)
         else:result['layout'].draw(painter,QPointF(0,0))
+        for icon in result.get('static_icons',[]):
+            from .design_components import checked_icon
+            checked_icon(icon['asset']).render(painter,icon['layout_rect'])
     finally:painter.restore()

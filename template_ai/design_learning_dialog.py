@@ -168,7 +168,23 @@ class DesignLearningDialog(QDialog):
         work_id=self.source_work.currentData()
         if not work_id:raise ValueError('請先選擇作品')
         work=self.library.artwork(work_id);source=self.library.source(work['source_id'])
-        RecoveryDialog(self.window,source,work=work,field=self.source_fields.currentData()).exec()
+        fact=self.source_fields.currentData();slot_id=fact['slot_id'] if fact else None
+        slot=next((row for row in work['payload']['slots'] if row['id']==slot_id),None)
+        def accept_candidate(candidate):
+            if self.source_work.currentData()!=work_id or (self.source_fields.currentData() or {}).get('slot_id')!=slot_id:
+                raise ValueError('來源欄位已變更，請重新比對')
+            asset=self.font_manager.import_font(candidate['face']['path'],True,face_index=candidate['face'].get('face_index',0))
+            self.source_fonts.addItem(' / '.join(asset['families'])+' · 本機視覺候選',asset);self.source_fonts.setCurrentIndex(self.source_fonts.count()-1)
+            payload=work['payload'];sx=payload['work_width']/payload['crop']['w'];sy=payload['work_height']/payload['crop']['h']
+            self.parameter_space.setCurrentIndex(self.parameter_space.findData('WORK'))
+            if candidate['size_pt'] is not None:self.work_pt.setValue(candidate['size_pt']*sy)
+            self.source_scale.setValue(candidate['horizontal_scale']*sx/sy)
+            if candidate['size_pt'] is not None:self.source_tracking.setValue(candidate['tracking_em']*candidate['size_pt']*25.4/72*sx)
+            self.parameter_review.setChecked(False);self.work_pt_review.setChecked(False);self.source_confirm.setChecked(False)
+            self.source_basis.setText('本機影像比對候選，待核對；字面 '+candidate['face_fingerprint'][:16])
+        dialog=RecoveryDialog(self.window,source,work=work,field=slot,on_candidate=accept_candidate)
+        if fact:dialog.text.setText(fact.get('text',''))
+        dialog.exec()
 
     def load_source(self):
         self.source_fields.clear();work_id=self.source_work.currentData()

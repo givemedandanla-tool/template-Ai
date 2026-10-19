@@ -26,8 +26,10 @@ VERSION = 'local-outline-font-match-1'
 
 def registered_faces(report):
     """Use the existing Windows registry/file inventory; no second catalogue."""
-    return [dict(path=row['path'], sha256=row['hash'], face_index=face['index'])
-            for row in report.get('files', []) for face in row.get('faces', [])]
+    result={}
+    for row in report.get('files',[]):
+        for face in row.get('faces',[]):result.setdefault((row['hash'],face['index']),dict(path=row['path'],sha256=row['hash'],face_index=face['index']))
+    return list(result.values())
 
 
 @contextmanager
@@ -116,6 +118,15 @@ def _ink(gray):
         left=int(xs.min()), top=int(ys.min()), width=int(xs.max()-xs.min()+1), height=int(ys.max()-ys.min()+1))
 
 
+def foreground_gray(gray):
+    """Normalize either polarity against a locally uniform crop background."""
+    border=np.concatenate((gray[0],gray[-1],gray[:,0],gray[:,-1])).astype(float)
+    background=float(np.median(border));contrast=np.abs(gray.astype(float)-background)
+    maximum=float(contrast.max())
+    if maximum<24:raise ValueError('Crop has insufficient foreground/background contrast')
+    return np.clip(255*(1-contrast/maximum),0,255).astype(np.uint8)
+
+
 def shape_error(reference, candidate):
     a, b = reference < 180, candidate < 180
     if a.shape != b.shape or not a.any() or not b.any():
@@ -147,7 +158,7 @@ def match_fonts(crop, text_candidates, faces, *, pixels_per_mm=None, max_faces=6
             raise ValueError('Invalid text candidate')
         if candidate.get('origin') not in ('ORIGINAL_TEXT','OCR','REVIEWED_TEXT','UNREVIEWED_TEXT'):
             raise ValueError('Unknown text evidence origin')
-    target, bounds = _ink(image_gray(crop))
+    target, bounds = _ink(foreground_gray(image_gray(crop)))
     if target.size>2_000_000:
         raise ValueError('Font crop exceeds analysis pixel budget')
     report=dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[],
@@ -156,6 +167,9 @@ def match_fonts(crop, text_candidates, faces, *, pixels_per_mm=None, max_faces=6
                 policy=dict(maximum_error=maximum_error,minimum_margin=minimum_margin,scale_bounds=list(scale_bounds)),
                 identity='VISUAL_CANDIDATES_NOT_BINARY_SOURCE_IDENTITY_OR_LICENCE',
                 crop_digest=hashlib.sha256(image_gray(crop).tobytes()).hexdigest())
+    from .training_store import digest
+    report.update(offset=offset,total_faces=len(faces),search_signature=digest([
+        report['crop_digest'],text_candidates,faces,tracking_options,scale_bounds,maximum_error,minimum_margin,pixels_per_mm]))
     for index,face in enumerate(faces[offset:offset+max_faces],offset):
         if cancelled():
             report['omitted_faces']=len(faces)-index
@@ -198,7 +212,7 @@ def match_fonts(crop, text_candidates, faces, *, pixels_per_mm=None, max_faces=6
         if not choices[0]['text_verified']:report['issues'].append(issue('OCR_REVIEW_REQUIRED'))
     else:
         report['issues'].append(issue('FONT_NO_MATCH'))
-    if report['omitted_faces'] or report['exclusions']:
+    if offset or report['omitted_faces'] or report['exclusions']:
         report['issues'].append(issue('SEARCH_INCOMPLETE'))
         report['search_complete']=False
     else:
@@ -206,6 +220,31 @@ def match_fonts(crop, text_candidates, faces, *, pixels_per_mm=None, max_faces=6
     report['font_match_status']=report['status'] if report['search_complete'] else 'INCOMPLETE'
     report['candidates']=choices[:10]
     return report
+
+
+def merge_font_pages(pages):
+    if not pages:raise ValueError('No font search pages')
+    ordered=sorted(pages,key=lambda page:page['offset']);cursor=0
+    signature=ordered[0]['search_signature'];candidates=[];exclusions=[];checked=0
+    for page in ordered:
+        if page['search_signature']!=signature or page['offset']!=cursor:
+            raise ValueError('Font search pages have changed inputs,gaps or overlaps')
+        cursor=page['next_offset'];checked+=page['checked_faces'];candidates.extend(page['candidates']);exclusions.extend(page['exclusions'])
+    result=dict(ordered[-1]);result.update(offset=0,next_offset=cursor,checked_faces=checked,
+        omitted_faces=result['total_faces']-cursor,exclusions=exclusions)
+    candidates.sort(key=lambda row:(row['score'],row['face']['sha256'],row['face'].get('face_index',0),row['text']))
+    result['candidates']=candidates[:10];result['issues']=[]
+    result['status']='NO_MATCH'
+    if candidates and candidates[0]['score']<=result['policy']['maximum_error']:
+        ambiguous=len(candidates)>1 and candidates[1]['score']-candidates[0]['score']<result['policy']['minimum_margin']
+        result['status']='AMBIGUOUS' if ambiguous else 'CANDIDATE'
+        if ambiguous:result['issues'].append(issue('FONT_AMBIGUOUS'))
+        if not candidates[0]['text_verified']:result['issues'].append(issue('OCR_REVIEW_REQUIRED'))
+    else:result['issues'].append(issue('FONT_NO_MATCH'))
+    result['search_complete']=cursor==result['total_faces'] and not exclusions
+    if not result['search_complete']:result['issues'].append(issue('SEARCH_INCOMPLETE'))
+    result['font_match_status']=result['status'] if result['search_complete'] else 'INCOMPLETE'
+    return result
 
 
 def ocr_text_candidates(crop, record):

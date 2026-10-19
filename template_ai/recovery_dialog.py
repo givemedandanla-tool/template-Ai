@@ -24,9 +24,10 @@ class RecoveryWorker(QThread):
 
 
 class RecoveryDialog(QDialog):
-    def __init__(self, window, source=None, *, work=None, field=None):
+    def __init__(self, window, source=None, *, work=None, field=None,on_candidate=None):
         super().__init__(window);self.window=window;self.worker=None;self.source=deepcopy(source)
-        self.report=deepcopy((source or {}).get('recovery',{}));self.last_match=None;self.faces=[];self.offset=0
+        self.report=deepcopy((source or {}).get('recovery',{}));self.last_match=None;self.faces=[];self.offset=0;self.match_pages=[]
+        self.on_candidate=on_candidate
         self.setWindowTitle('本地來源還原與字型影像診斷');self.resize(1000,820)
         layout=QVBoxLayout(self)
         label=QLabel('原稿、影像、字型與辨識內容只在本機處理。外觀候選需核對；不自動修改模板或訓練真值。')
@@ -45,6 +46,8 @@ class RecoveryDialog(QDialog):
         self.add_button(row,'選擇本機字型檔',self.choose_fonts);self.add_button(row,'本機 OCR',self.ocr)
         self.add_button(row,'比較本批字型',self.match);self.add_button(row,'下一批字型',self.next_page);layout.addLayout(row)
         self.local=QTextEdit();self.local.setReadOnly(True);layout.addWidget(self.local)
+        row=QHBoxLayout();self.candidate_choices=QComboBox();row.addWidget(self.candidate_choices)
+        draft=self.add_button(row,'將候選加入來源核對草稿（不授予印製權）',self.use_candidate);draft.setEnabled(on_candidate is not None);layout.addLayout(row)
         self.public=QTextEdit();self.public.setReadOnly(True);layout.addWidget(QLabel('以下為可分享診斷預覽，不含原稿文字、路徑、字型名、圖片或原稿雜湊：'));layout.addWidget(self.public)
         row=QHBoxLayout();self.add_button(row,'匯出上述診斷 JSON',self.export)
         self.add_button(row,'取消目前工作',self.cancel);self.add_button(row,'關閉',self.close);layout.addLayout(row)
@@ -104,13 +107,13 @@ class RecoveryDialog(QDialog):
         return image.copy(x,y,w,h)
 
     def scan_fonts(self):
-        from .windows_font_sources import windows_font_sources
+        from .windows_font_sources import windows_font_sources_all
         from .visual_font_match import registered_faces
         def done(report):
             self.faces=registered_faces(report);self.offset=0
             self.catalog_complete=report.get('status')=='COMPLETE'
             self.status.setText(f'已核對 {len(self.faces)} 個本機字面；來源完整性：'+report['status'])
-        self.start(lambda worker:windows_font_sources(),done)
+        self.start(lambda worker:windows_font_sources_all(cancelled=worker.isInterruptionRequested),done)
 
     def choose_fonts(self):
         from .font_evidence import inspect_font
@@ -138,18 +141,22 @@ class RecoveryDialog(QDialog):
             self.status.setText('OCR 完成；'+('請核對此行完整文字。' if len(rows)==1 else '未取得唯一文字行，請縮小裁切區。'))
         self.start(run,done)
 
-    def match(self):
-        from .visual_font_match import match_fonts
+    def match(self,reset=True):
+        from .visual_font_match import match_fonts,merge_font_pages
         if not self.faces:raise ValueError('請先盤點或選擇本機字型檔')
+        if reset:self.offset=0;self.match_pages=[]
         crop=self.crop();texts=[dict(text=self.text.text(),origin='REVIEWED_TEXT' if self.verified.isChecked() else 'UNREVIEWED_TEXT')]
         faces=deepcopy(self.faces);offset=self.offset
         ppm=QImage(self.source['image']).width()/self.source['width_mm'] if self.source.get('calibrated') else None
         def done(result):
+            self.match_pages.append(result);result=merge_font_pages(self.match_pages)
             self.last_match=result;self.report['font_match_status']=result['font_match_status']
             self.report['issues']=[r for r in self.report.get('issues',[]) if r['stage'] not in ('FONT','BUDGET','OCR')]+result['issues']
             if not getattr(self,'catalog_complete',False):self.report['issues'].append(issue('SEARCH_INCOMPLETE'))
             self.report.setdefault('counts',{}).update(checked_faces=result['checked_faces'],omitted_faces=result['omitted_faces'])
             self.local.setPlainText(json.dumps(result,ensure_ascii=False,indent=2));self.show_report()
+            self.candidate_choices.clear()
+            for candidate in result['candidates']:self.candidate_choices.addItem(candidate['family']+' / '+candidate['style']+' · '+format(candidate['score'],'.4f'),candidate)
             self.status.setText('本批比對：'+result['status']+'；屬視覺候選，核對後才可作來源依據。')
         self.start(lambda worker:match_fonts(crop,texts,faces,pixels_per_mm=ppm,max_faces=64,offset=offset,
             cancelled=worker.isInterruptionRequested),done)
@@ -158,9 +165,15 @@ class RecoveryDialog(QDialog):
         if not self.last_match:raise ValueError('請先完成本批比對')
         self.offset=self.last_match['next_offset']
         if self.offset>=len(self.faces):raise ValueError('所選字型批次已完成；可擴充候選來源。')
-        self.match()
+        self.match(reset=False)
 
     def show_report(self):self.public.setPlainText(json.dumps(shareable_report(self.report),ensure_ascii=False,indent=2))
+
+    def use_candidate(self):
+        if not self.on_candidate or not self.candidate_choices.currentData():raise ValueError('請先選擇本機比對候選')
+        if self.worker and self.worker.isRunning():raise ValueError('請等待目前工作結束')
+        self.on_candidate(deepcopy(self.candidate_choices.currentData()))
+        self.status.setText('已帶回來源核對草稿；請核對來源、參數與完整文字後明確確認。')
 
     def export(self):
         target,_=QFileDialog.getSaveFileName(self,'匯出已預覽的無內容診斷','','JSON (*.json)')

@@ -81,7 +81,8 @@ def _run(executable: str, arguments: list[str], directory: Path) -> str:
 
 def svg_size(path: Path) -> tuple[float, float]:
     import re
-    root = ET.parse(path).getroot()
+    try:root = ET.parse(path).getroot()
+    except (ET.ParseError,OSError) as error:raise ValueError('SVG 結構無法解析，保留匯入例外以便修復') from error
     units = {"mm": 1, "cm": 10, "in": 25.4, "pt": 25.4 / 72, "px": 25.4 / 96, "": 25.4 / 96}
     def dimension(value: str) -> float:
         m = re.fullmatch(r"\s*([0-9.eE+-]+)\s*(mm|cm|in|pt|px)?\s*", value)

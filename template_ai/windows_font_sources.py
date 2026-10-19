@@ -57,7 +57,7 @@ def _registry_snapshot():
         try:
             with winreg.OpenKey(hive,r'SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts',0,winreg.KEY_READ|getattr(winreg,'KEY_WOW64_64KEY',0)) as key:
                 count=winreg.QueryInfoKey(key)[1]
-                take=min(count,1000-visited)
+                take=min(count,20000-visited)
                 for index in range(take):
                     visited+=1;name,value,kind=winreg.EnumValue(key,index)
                     if kind in (winreg.REG_SZ,winreg.REG_EXPAND_SZ):records.append(dict(scope=scope,file=value))
@@ -65,7 +65,7 @@ def _registry_snapshot():
                 if take<count:partial=True
         except FileNotFoundError:continue
         except OSError:partial=True;notes.append(scope+'字型登錄無法完整讀取')
-        if visited>=1000:partial=True;break
+        if visited>=20000:partial=True;break
     return dict(records=records,partial=partial,notes=notes)
 
 def windows_font_sources():
@@ -76,3 +76,33 @@ def windows_font_sources():
         elif first['partial'] or last['partial']:report['status']='PARTIAL'
         report['notes'].extend(first['notes']+last['notes']);return report
     except (OSError,ValueError,ImportError):return dict(status='UNAVAILABLE',scope=SCOPE,files=[],rejected=[],source_bytes_budgeted=0,notes=['Windows來源無法核對，未宣稱安裝或實際選字成功'])
+
+
+def scan_registered_pages(records,roots,*,cancelled=lambda:False,progress=lambda value:None):
+    """Bounded per-page I/O while permitting the complete installed catalogue."""
+    if not isinstance(records,list) or len(records)>20000:raise ValueError('Registered font catalogue exceeds explicit 20000-record budget')
+    combined=dict(status='COMPLETE',scope=SCOPE,files=[],rejected=[],notes=[],source_bytes_budgeted=0,
+                  next_offset=0,total_records=len(records));seen={}
+    for offset in range(0,len(records),4):
+        if cancelled():combined['status']='PAUSED';break
+        page=collect_registered_font_sources(records[offset:offset+4],roots,max_files=4,max_bytes=256*1024**2,max_faces=1024)
+        if page['status']!='COMPLETE':combined['status']='PARTIAL'
+        combined['source_bytes_budgeted']+=page['source_bytes_budgeted'];combined['rejected'].extend(page['rejected'])
+        for row in page['files']:
+            key=(row['path'],row['hash'])
+            if key in seen:
+                seen[key]['registry_scopes']=sorted(set(seen[key]['registry_scopes']+row['registry_scopes']))
+            else:seen[key]=row;combined['files'].append(row)
+        combined['next_offset']=min(offset+4,len(records));progress(combined['next_offset'])
+    return combined
+
+
+def windows_font_sources_all(*,cancelled=lambda:False):
+    if sys.platform!='win32':return windows_font_sources()
+    try:
+        first=_registry_snapshot();report=scan_registered_pages(first['records'],_native_roots(),cancelled=cancelled)
+        last=_registry_snapshot()
+        if first['records']!=last['records']:report.update(status='STALE',files=[]);report['notes'].append('盤點期間字型登錄改變，請重新盤點')
+        elif first['partial'] or last['partial']:report['status']='PARTIAL'
+        report['notes'].extend(first['notes']+last['notes']);return report
+    except (OSError,ValueError,ImportError):return dict(status='UNAVAILABLE',scope=SCOPE,files=[],rejected=[],source_bytes_budgeted=0,notes=['本機來源盤點未完成'])

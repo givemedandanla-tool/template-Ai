@@ -80,7 +80,8 @@ class CrossWorkLearning:
                             or binding['state'] != 'APPROVED'):
                         raise ValueError('Source typography binding is stale or withdrawn')
                     typography = deepcopy(binding['typography'])
-                    assets=[typography.get('font_asset_ref')]+[part.get('font_asset') for part in typography.get('rich_text',{}).get('segments',[])]
+                    from .design_components import component_fonts
+                    assets=[typography.get('font_asset_ref')]+component_fonts(binding.get('source_text_flow'))
                     for asset in assets:
                         asset_key=digest(asset)
                         if asset_key in verified_font_assets:continue
