@@ -1,0 +1,118 @@
+{
+  "schema": "AI_ALL8_FINAL_SCOPE_REPORT_V1",
+  "created_utc": "2026-10-19T09:19:01.785000+00:00",
+  "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+  "run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+  "software": {
+    "tests": 1685,
+    "passed": 1685,
+    "modules": 215,
+    "runtime_errors": 0,
+    "capture_exit_code": 0,
+    "source_unchanged": true,
+    "attachment_hashes_verified": 366
+  },
+  "overall_run_status": "FAIL",
+  "legacy_external_clauses": [
+    {
+      "requirement_id": "UI-032",
+      "acceptance_id": "UI-032-CLAUSE-5",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-02",
+      "acceptance_id": "REV-02-CLAUSE-1",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-02",
+      "acceptance_id": "REV-02-CLAUSE-2",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-02",
+      "acceptance_id": "REV-02-CLAUSE-4",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-04",
+      "acceptance_id": "REV-04-CLAUSE-1",
+      "status": "NOT_VERIFIED"
+    }
+  ],
+  "new_learning": {
+    "packages": 8,
+    "partial": 8,
+    "complete": 0,
+    "full_verified_acceptance": 0,
+    "total_acceptance": 50,
+    "user_corpus_training": "NOT_STARTED_NOT_PROVIDED",
+    "real_production_models": 0
+  },
+  "legacy28": {
+    "complete": 25,
+    "partial": 3,
+    "all_complete": false
+  },
+  "registry_groups": {
+    "topic": {
+      "total": 75,
+      "verified": 69,
+      "implemented_pending": 0,
+      "partial": 3,
+      "in_progress": 0,
+      "not_implemented": 0,
+      "blocked": 0,
+      "deferred": 3,
+      "not_complete": 6,
+      "has_implementation": 72
+    },
+    "core": {
+      "total": 87,
+      "verified": 87,
+      "implemented_pending": 0,
+      "partial": 0,
+      "in_progress": 0,
+      "not_implemented": 0,
+      "blocked": 0,
+      "deferred": 0,
+      "not_complete": 0,
+      "has_implementation": 87
+    },
+    "governance": {
+      "total": 7,
+      "verified": 7,
+      "implemented_pending": 0,
+      "partial": 0,
+      "in_progress": 0,
+      "not_implemented": 0,
+      "blocked": 0,
+      "deferred": 0,
+      "not_complete": 0,
+      "has_implementation": 7
+    }
+  },
+  "change_vs_historical1581": {
+    "added_unique_tests": 104,
+    "changed_requirement_completion_counts": false,
+    "new_complete_AI_packages": 0
+  },
+  "scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json",
+  "parameters": "docs/dev/AI_CORE_MODEL_PARAMETERS_20261019.md",
+  "owned_slate": "docs/qa/targeted/AI-OWNED-GRADED-SLATE-20261019.json",
+  "owned_slate_provenance": "docs/qa/targeted/AI-OWNED-GRADED-SLATE-PROVENANCE-20261019.json",
+  "owned_scale": [
+    "docs/qa/targeted/AI-OWNED-SCALE-1000-FROZEN002-20261019.json",
+    "docs/qa/targeted/AI-OWNED-SCALE-3000-FROZEN002-20261019.json"
+  ],
+  "historical_checkpoint_archives": "docs/dev/history/HISTORICAL_PENDING_CHECKPOINT_ARCHIVES_20261019.json",
+  "remaining": [
+    "Actual authorized .ai/font corpus and reviewed independent lineages/heldout aesthetic labels absent",
+    "Composite multi-run/multi-font field and separate static label/icon subset unsupported;word-only mixed justification unsupported",
+    "Preference ranker production promotion not granted;current activation preview-only",
+    "Windows/VivoBook/physical prepress qualifications unverified;web/mobile implementation deferred"
+  ],
+  "private_sources_fonts_database_uploaded": false,
+  "new_web_mobile_frontend_or_paid_AI_api": false,
+  "desktop_core_ui_implemented": true
+}
