@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "TEMPLATE_EDITOR_SOFTWARE_COMPLETE_AWAITING_REMOTE_EVIDENCE_PUBLICATION",
+  "active_task": "TEMPLATE_EDITOR_SOFTWARE_COMPLETE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-TEMPLATE-EDITOR-FINAL.receipt.json",
   "last_confirmed_commit": "05ec4c4cd098d19f74ae1879ea1b801445b2d88a",
   "latest_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
@@ -19,9 +19,8 @@
     "docs/dev/AI_TRAINING_DESIGN_TODOS.md"
   ],
   "next_tasks": [
-    "Publish final editor evidence checkpoint and fresh Git readback;run require-evidence gate",
-    "Use16native tools through TEMPLATE_EDITING_USER_GUIDE.md",
-    "Keep originalAI8/50 real qualifications and private local data separate"
+    "Use native family/template tools;see TEMPLATE_EDITING_USER_GUIDE.md",
+    "Local private-corpus/Windows/prepress qualification stays separate;safe diagnostic guide available"
   ],
   "blocked": [
     {
@@ -163,7 +162,7 @@
     "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
-  "final_verification": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
+  "final_verification": "docs/dev/TEMPLATE_EDITING_PUBLICATION_CHECK_20261019.json",
   "checkpoint_cadence": "每個可恢復工作包及每10分鐘；如受工具等待影響，記錄實際間隔，不虛報達標。",
   "ten_packages": {
     "target": 10,
@@ -1258,10 +1257,21 @@
   },
   "latest_full_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
   "remote_formal_evidence_publication": {
-    "status": "PENDING",
+    "status": "PASS",
+    "governance_require_evidence": {
+      "status": "PASS",
+      "requirements": 170,
+      "completed_scoped": 164,
+      "parent_topics": 75,
+      "tests_known": 1779
+    },
     "formal_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
     "source_commit": "a97819ee66a3e7ef86f212d855932510e99199f8",
-    "all_attachments_local_hash_verified": true
+    "remote_evidence_commit": "05ec4c4cd098d19f74ae1879ea1b801445b2d88a",
+    "receipt_commit": "e2189c25ebcda484e3d5085f96902fce96f1ec34",
+    "checkpoint": "CP-20261019-TEMPLATE-EDITOR-FINAL",
+    "checkpoint_receipt": "docs/checkpoints/CP-20261019-TEMPLATE-EDITOR-FINAL.receipt.json",
+    "all_attachments_verified": 378
   },
   "final_checkpoint_cadence_note": "Final native capture/publication review checkpoint interval exceeded10minutes;earlier live checkpoints and frozen source preserved;not a claim of strict cadence compliance",
   "local_recovery_decision": "docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md",
@@ -1309,10 +1319,10 @@
   },
   "editor_tools_contract": "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json",
   "editor_tools_progress": {
-    "phase": "FULL_SOFTWARE_PASS_PUBLICATION_PENDING",
+    "phase": "COMPLETE_REMOTE_VERIFIED",
     "completed_tool_acceptance": 16,
     "total_tool_acceptance": 16,
-    "next": "Publish all final attachments/checkpoint;fresh native Git readback;require-evidence governance check",
+    "next": "Use native desktop tools and guide;private corpus/Windows/prepress validation remains local and separate",
     "live_progress_snapshot": "docs/evidence/template-editor/full006-progress-002.json",
     "unit_stage": "docs/evidence/template-editor/full006-unit-stage.json",
     "evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
@@ -1328,7 +1338,8 @@
     },
     "full_tests_passed": 1779,
     "new_unique_tests_passed": 46,
-    "new_family_unique_tests_passed": 45
+    "new_family_unique_tests_passed": 45,
+    "publication_check": "docs/dev/TEMPLATE_EDITING_PUBLICATION_CHECK_20261019.json"
   },
   "previous_remote_formal_evidence_publication": {
     "status": "PASS",
