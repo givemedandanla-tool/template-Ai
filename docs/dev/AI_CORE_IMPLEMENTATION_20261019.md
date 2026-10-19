@@ -8,9 +8,9 @@
 |---|---|---|
 |01|original_text_observation/original_pdf_glyphs、source_region_hypotheses、design_source_binding及既有觀察Store；來源hash、原稿pt/矩陣、按需glyph、尺寸註記／無框線候選、既有lineage圖|PDF相容層不是Illustrator私有結構保真；字型人審對應不冒稱二進位身分證明；未提供實際來源與字型|
 |02|design_family：結構特徵、TRAIN-only robust處理、HDBSCAN及獨立來源支持、稀有／離群保留和版本對應|未在真實隔離資料驗證分群品質；工程預設不是印刷精度|
-|03|design_profiles/design_joint：資料需求／欄框能力、條件等效、相對結構、聯合角色筆數、語意預設、font/style分模式joint Ridge及來源條件分散|支持不足／未知／外推保留；真實合格風格區域與容量仍未驗證|
-|04|design_assignment/design_synthesis：SciPy穩定最小成本指派、Qt真實字形、Kiwi求解、同模板優先、未影響關係保留、全稿檢查；既有LogoStore完整公司／尺寸／版本；共用Qt多行|有限搜尋不宣稱全域最優或全域無解；未觀察聯合筆數只准預覽；正式仍須實際資格|
-|05|design_ranking/design_feedback：透明基準、經獨立人審之同輸入TRAIN比較、pairwise logistic、版本預選與穩定tie-break|未取得真實美學標註；偏好模型只可明確採用預覽，不自稱最佳美學|
+|03|design_profiles/design_joint：資料需求／欄框能力、條件等效、分來源群平衡統計、按欄位組合的布局／收合、基線／gap／錨點軟規則、聯合角色筆數、語意預設、font/style分模式joint Ridge及來源條件分散|支持不足／未知／外推保留；真實合格風格區域與容量仍未驗證|
+|04|design_assignment/design_synthesis：SciPy穩定最小成本指派、Qt真實字形、Kiwi求解、同模板優先、未影響關係保留、全稿檢查；既有LogoStore完整公司／尺寸／版本；共用Qt多行|有限搜尋不宣稱全域最優或全域無解；未觀察聯合筆數或缺尺寸支持只准預覽；正式仍須實際資格|
+|05|design_ranking/design_feedback：透明基準、實際top10候選獨立分級／top-K／NDCG／群bootstrap與基準比較、經獨立人審之同輸入TRAIN比較、pairwise logistic、版本預選與穩定tie-break|未取得真實美學標註；偏好模型只可明確採用預覽，不自稱最佳美學|
 |06|既有TrainingStore新增類型而非平行DB；用途、固定manifest、source-use、撤回、候選／評估／啟用／回退、精確前稿意圖後稿；design_qualification/design_instances|真實資格缺來源、字型及封存證據；mocked憑證測試只驗證邊界機制|
 |07|design_session/design_learning_dialog與MainWindow實際入口；資料／排版revision、冪等、CAS、undo、實例／預覽確認、檔案hash、相同有效輸入取回確切artifact|獨立網站／手機延後；本機資料另沿用既有備份，GitHub不存私人原稿／字型／DB|
 |08|design_jobs/design_evaluation、run_design_scale；持久逐筆、取消／重開、獨立資料完整／歸屬／碰撞／關係檢查、case及group分母與不確定性、基準和人工偏好分開|只有匿名自製描述資料規模實測；真實.ai／Windows／VivoBook／印前未驗收|
@@ -19,6 +19,8 @@
 
 相同有效輸入包含穩定實體／欄位身分、資料、尺寸、明確關係與資產版本，排除無關revision／新模型版本。不得由文字相等推定不同人的身分；取回既有確認檔案檢查實際bytes/hash及必要現行權利，不重新排版冒充重印。
 
-正式資格要求真實授權來源／lineage審查、至少5獨立封存群、逐案資料完整與硬錯誤、群平衡可行率、獨立偏好及明確版本政策。只有已核對來源字型／切齊的模型及匹配政策才能建立DESIGN_INSTANCE；不註冊成全域模板，沿用格式／字型／Logo輸出Gate。這僅限實測核心數位範圍，不等於物理印前能力。
+正式資格要求真實授權來源／lineage審查、至少5獨立封存群、逐案資料完整與硬錯誤、群平衡可行率、獨立偏好及明確版本政策。只有已核對來源字型／切齊／字距／詞距／縮放的模型及匹配政策才能建立DESIGN_INSTANCE；不註冊成全域模板，沿用格式／字型／Logo輸出Gate。這僅限實測核心數位範圍，不等於物理印前能力。
 
 第一輪1581正式軟體回歸是歷史來源4812d51；最新程式將另跑完整回歸。個別目標測試不同命令有重疊，不能相加當完整唯一測試數。實際私人資料未訓練；所有實作狀態以契約、STATE及正式證據為準。
+
+2026-10-19修正：功能風格鍵不含審查來源編號／人員／路徑；原完整引用仍保留。Ridge標準化與擬合、家族軟統計與偏好比較均按獨立lineage平衡，精確alias不增加支持。原稿頁面pt與作品有效pt分開保存；均勻變換依比例換算，非等比必須有作品實測，不能猜單一pt。PDF Tc與Tw分別保存，Qt文字flow區分字距／詞距、允許文字腳本／斷點／單字／末行；詞距可為聯合預測輸出。詞距專用規則不假稱支援Qt混合邊界的justify，未知模式拒絕。來源／作品量測參數僅在專業來源審查端，未加入客戶稿件控制。

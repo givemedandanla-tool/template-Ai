@@ -55,6 +55,11 @@ class SourceTypographyBindingTests(unittest.TestCase):
         plan=self.service.plan(work['id'],self.slot['id'],self.run['id'],self.asset,review)
         self.assertEqual(plan['typography']['horizontal_scale']['status'],'UNKNOWN')
         self.assertEqual(plan['typography']['tracking']['status'],'UNKNOWN')
+        measured=dict(review,work_horizontal_scale=.7,work_tracking=.12,work_word_spacing=.2)
+        plan=self.service.plan(work['id'],self.slot['id'],self.run['id'],self.asset,measured)
+        self.assertEqual(plan['typography']['horizontal_scale']['value'],.7)
+        self.assertEqual(plan['typography']['tracking']['value'],.12)
+        self.assertEqual(plan['typography']['word_spacing']['value'],.2)
 
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)

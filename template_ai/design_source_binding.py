@@ -110,7 +110,8 @@ class SourceTypographyReview:
                     and original_parameter.get('value') is not None):
                 value=original_parameter['value']*(sx if name!='horizontal_scale' else 1.)
                 typography[name]=ObservedScalar(value,unit,'DERIVED','SOURCE_PARAMETER_IN_WORK_PHYSICAL_SPACE',refs).to_dict()
-            measured=review.get(name if uniform else 'work_'+name)
+            work_measurement='work_'+name in review
+            measured=review.get('work_'+name) if work_measurement else review.get(name) if uniform else None
             if measured is not None:
                 if not review.get('parameter_measurement_refs'):
                     raise ValueError('Extra source parameters need explicit measured evidence')
@@ -118,7 +119,7 @@ class SourceTypographyReview:
                     raise ValueError('Invalid measured source parameter')
                 if (name=='horizontal_scale' and not 0<measured<=10) or (name!='horizontal_scale' and not -100<measured<100):
                     raise ValueError('Source parameter processing range exceeded')
-                if uniform and name!='horizontal_scale':measured*=sx
+                if uniform and not work_measurement and name!='horizontal_scale':measured*=sx
                 known=typography[name].get('value')
                 if known is not None and not math.isclose(known,measured,rel_tol=1e-7,abs_tol=1e-9):
                     raise ValueError('Review contradicts known original source parameter')

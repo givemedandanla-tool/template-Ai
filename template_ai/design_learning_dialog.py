@@ -99,7 +99,8 @@ class DesignLearningDialog(QDialog):
         self.source_runs=QComboBox();layout.addWidget(self.source_runs);self.source_fonts=QComboBox();layout.addWidget(self.source_fonts)
         self.source_basis=QLineEdit();self.source_basis.setPlaceholderText('原稿、欄位與字型對應的核對依據');layout.addWidget(self.source_basis)
         self.source_confirm=QCheckBox('已對照原稿，確認這個文字欄與實際字型檔的對應');layout.addWidget(self.source_confirm)
-        row=QHBoxLayout();self.parameter_review=QCheckBox('原稿字寬與字距已量測');row.addWidget(self.parameter_review)
+        self.parameter_space=QComboBox();self.parameter_space.addItem('量測使用原稿座標','SOURCE');self.parameter_space.addItem('量測使用作品座標（含非等比轉換）','WORK');layout.addWidget(self.parameter_space)
+        row=QHBoxLayout();self.parameter_review=QCheckBox('字寬與字距已量測');row.addWidget(self.parameter_review)
         self.source_scale=QDoubleSpinBox();self.source_scale.setRange(.05,10);self.source_scale.setValue(1);self.source_scale.setDecimals(4)
         self.source_tracking=QDoubleSpinBox();self.source_tracking.setRange(-99,99);self.source_tracking.setDecimals(4)
         row.addWidget(QLabel('來源水平縮放'));row.addWidget(self.source_scale);row.addWidget(QLabel('來源字距 mm'));row.addWidget(self.source_tracking);layout.addLayout(row)
@@ -189,8 +190,11 @@ class DesignLearningDialog(QDialog):
         if self.label_mode.currentIndex():label['prefix']=self.label_prefix.text()
         review=dict(source_identity_confirmed=True,basis=self.source_basis.text(),label_binding=label,source_alignment=self.source_alignment.currentData())
         if self.source_alignment.currentData()=='distributed':review['source_distribution']=dict(approved=True,actor=self.actor.text(),reason=self.source_basis.text())
-        if self.parameter_review.isChecked():review.update(horizontal_scale=self.source_scale.value(),tracking=self.source_tracking.value(),parameter_measurement_refs=[self.source_basis.text()])
-        if self.source_word_review.isChecked():review.update(word_spacing=self.source_word_spacing.value(),parameter_measurement_refs=[self.source_basis.text()])
+        parameter_prefix='work_' if self.parameter_space.currentData()=='WORK' else ''
+        if self.parameter_review.isChecked():
+            review.update({parameter_prefix+'horizontal_scale':self.source_scale.value(),parameter_prefix+'tracking':self.source_tracking.value(),
+                'parameter_measurement_refs':[self.source_basis.text()]})
+        if self.source_word_review.isChecked():review.update({parameter_prefix+'word_spacing':self.source_word_spacing.value(),'parameter_measurement_refs':[self.source_basis.text()]})
         if self.work_pt_review.isChecked():review.update(physical_work_pt=self.work_pt.value(),physical_work_measurement_refs=[self.source_basis.text()])
         service=SourceTypographyReview(self.library)
         service.confirm(service.plan(self.source_work.currentData(),field['slot_id'],self.source_runs.currentData(),asset,review),self.actor.text(),True)
