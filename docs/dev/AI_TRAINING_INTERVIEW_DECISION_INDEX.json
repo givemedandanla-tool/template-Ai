@@ -71,7 +71,8 @@
       2
     ],
     "current_conversation": "Visible messages including latest same-person/additional-people reply",
-    "unavailable_local_chat": "Not recovered;no claim to have read inaccessible chatgpt.com/local history"
+    "unavailable_local_chat": "Not recovered;no claim to have read inaccessible chatgpt.com/local history",
+    "latest_user_clarification": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md"
   },
   "source_hashes": {
     "docs/UI_DECISIONS.md": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232",
@@ -85,7 +86,8 @@
     "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md": "a936430ea37e138fe6c10da0ee6a4bba9becf8319745194b6687436125a34ba4",
     "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md": "67eacd5f936b270bdeb761b197e3ab5f6ee2f20e0b0c0673ef6f2af67bb64375",
     "docs/decisions/2026-10-12-FIRST-VERSION-AUTHORIZATION.md": "7e0f5e16e4f5bc1d1696dff513b8b180098b1c71f502dde3f59f662c4a271481",
-    "docs/decisions/2026-10-13-CONTINUED-DEVELOPMENT.md": "b2566209ca42ed38b6cf3d9bfc9bd3179d826a023e34802ecf529db965c68686"
+    "docs/decisions/2026-10-13-CONTINUED-DEVELOPMENT.md": "b2566209ca42ed38b6cf3d9bfc9bd3179d826a023e34802ecf529db965c68686",
+    "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md": "614992ecf7846a04e463b207a938e849819f7687fee16a90d08e881b9dc8e2f3"
   },
   "entries": [
     {
@@ -267,6 +269,42 @@
       ],
       "status": "ENGINEERING_NOT_USER_QUESTION",
       "next_action": "Implement/calibrate;keep unknown source features without blocking schema work"
+    },
+    {
+      "id": "IV-20",
+      "fact": "Customers express useful relative positions;typography,field dimensions,alignment and distribution are core-controlled,not customer fine controls",
+      "sources": [
+        "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not reintroduce controls or treat drag as precise numeric typography intent"
+    },
+    {
+      "id": "IV-21",
+      "fact": "Learn source-supported joint parameter regions;independent scalar ranges are insufficient",
+      "sources": [
+        "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Extend existing three design TODOs without marking them done"
+    },
+    {
+      "id": "IV-22",
+      "fact": "Prefer legal field swaps and variants within the current template family;fallback when unsuitable",
+      "sources": [
+        "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Validate both destinations,semantics,ownership,labels,actual metrics and joint capacity"
+    },
+    {
+      "id": "IV-23",
+      "fact": "Every multiple-legal-result decision has default preference and stable tie-break;explicit user intent wins;repeat accepted print results remain stable",
+      "sources": [
+        "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md"
+      ],
+      "status": "CONFIRMED",
+      "next_action": "Do not force global landline-left or override customer swaps;do not randomly regenerate repeat orders"
     }
   ],
   "supersessions": [
@@ -289,6 +327,11 @@
       "current": "Current goal and later development authorization",
       "supersedes": "Old planning-time not-developed/not-authorized notes",
       "result": "Old status text is historical;retain current actual evidence and0new-learning counts"
+    },
+    {
+      "current": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+      "supersedes": "Older new-learning fixed-pt-only wording and assistant interpretations that all gaps freeze or customers set alignment/spacing",
+      "result": "Core-controlled joint adaptation,same-template conditional swaps and defaults;legacy decision files,professional tools and accepted versions remain historical/unchanged"
     }
   ],
   "withdrawn_question": {
@@ -313,5 +356,6 @@
     }
   ],
   "new_question_rule": "Search semantic duplicates and supersession first;do not ask about existing rules,engineering choices or facts recoverable from source inspection;only materially blocking new user decisions warrant a question",
-  "feature_completion_changed": false
+  "feature_completion_changed": false,
+  "latest_clarification_utc": "2026-10-19T04:24:01.119660+00:00"
 }

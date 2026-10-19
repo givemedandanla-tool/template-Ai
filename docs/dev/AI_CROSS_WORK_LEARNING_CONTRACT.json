@@ -177,9 +177,11 @@
         },
         {
           "id": "AI-LEARN-03-A06",
-          "expected": "學真實pt及角色字級比例，固定當次已核准字級；不得用長度／字寬或其代理偷偷選較小字級解圍",
+          "expected": "學具來源的pt、角色字級比例及文字／容器聯動；新規則實例由核心依核准聯合條件調整字級、字寬與欄位尺寸，不提供客戶細參數控制，未知或越適用範圍不任意縮放",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
-          "delivery_scope": "CURRENT_CORE"
+          "delivery_scope": "CURRENT_CORE",
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
         },
         {
           "id": "AI-LEARN-03-A07",
@@ -189,9 +191,11 @@
         },
         {
           "id": "AI-LEARN-03-A08",
-          "expected": "學容器欄列／label-value／optional-repeat-flow與欄位收合，保留資料ID、歸屬與完整內容，不列舉每案模板",
+          "expected": "學容器欄列／label-value／optional-repeat-flow、欄位收合及同模板條件交換變體，保留資料ID、歸屬與完整內容，不列舉每案模板",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
-          "delivery_scope": "CURRENT_CORE"
+          "delivery_scope": "CURRENT_CORE",
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
         }
       ],
       "depends_on": [
@@ -257,9 +261,11 @@
         },
         {
           "id": "AI-LEARN-04-A08",
-          "expected": "受控SET_RELATION入口可處理合格稿，與原拓撲保留repair分開；同命令冪等、循環與歸屬衝突有原因，不修改全域模板",
+          "expected": "受控SET_RELATION優先在同模板合法交換／重排，超出適用能力再比較相容模板；同命令冪等、循環與歸屬衝突有原因，不修改全域模板",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
-          "delivery_scope": "CURRENT_CORE"
+          "delivery_scope": "CURRENT_CORE",
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
         },
         {
           "id": "AI-LEARN-04-A09",
@@ -307,9 +313,11 @@
         },
         {
           "id": "AI-LEARN-05-A04",
-          "expected": "最佳僅限已搜且已驗證範圍，未校準分數不當機率",
+          "expected": "最佳僅限已搜且已驗證範圍；所有複數合法結果含同分須有版本化預設優選與穩定決勝，客戶明確關係優先；未校準分數不當機率",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
-          "delivery_scope": "CURRENT_CORE"
+          "delivery_scope": "CURRENT_CORE",
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
         }
       ],
       "depends_on": [
@@ -405,13 +413,15 @@
         },
         {
           "id": "AI-LEARN-07-A05",
-          "expected": "客戶端先完整初稿，三階段可返回；不得加入字級／字寬／tracking／單雙排控制或必選模板庫，專業後台另維持既有能力",
+          "expected": "客戶端先完整初稿，三階段可返回；客戶表達必要相對位置，欄位尺寸／字級／字寬／切齊／分散與數值間距由核心規則控制，不加入客戶細參數、單雙排或必選模板庫；專業後台維持既有能力",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
           "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
           "scope_parts": {
             "current_core": "Operable desktop input/complete draft/edit/return/review flow; no forced template library or font/width/row tuning; existing professional editing remains",
             "deferred_frontend": "Independent web/mobile customer screens and device-specific presentation"
-          }
+          },
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
         },
         {
           "id": "AI-LEARN-07-A06",
@@ -425,13 +435,15 @@
         },
         {
           "id": "AI-LEARN-07-A07",
-          "expected": "確認綁定精確資料／結果，資料無解保留新值並標stale；撤回版面不退電話；正式封存依核准保存範圍，不把JSON重算當精確回播",
+          "expected": "確認綁定精確資料／結果；相同有效輸入重複下單沿用有效已確認版，不因多合法解或模型更新任意換印紋；新資料無解保留並標stale，撤回版面不退電話；正式封存不把JSON重算當精確回播",
           "status": "NOT_IMPLEMENTED_NOT_EXECUTED",
           "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
           "scope_parts": {
             "current_core": "Actual desktop local content correction/return/layout undo/current result review and confirmation; preserve new data,mark stale results and validate exact output; use existing approved persistence",
             "deferred_frontend": "Independent web/mobile confirmation screens and hosted/cross-device archive service; permanent archive policy remains scoped/open"
-          }
+          },
+          "clarification_decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+          "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
         }
       ],
       "depends_on": [
@@ -556,7 +568,11 @@
       "container_tree_and_column_gutter",
       "baseline_and_relation_graph",
       "conditional_split_merge",
-      "intent_preservation"
+      "intent_preservation",
+      "conditional_same_template_swaps",
+      "joint_typography_container_regions",
+      "default_role_position_preferences",
+      "stable_legal_candidate_tie_break"
     ],
     "hard_policy": [
       "required_data",
@@ -564,7 +580,7 @@
       "safe_margin",
       "font_use_rights",
       "whole_logo",
-      "fixed_point_size",
+      "core_controlled_joint_parameter_policy",
       "min_horizontal_scale",
       "locks"
     ],
@@ -667,19 +683,19 @@
   "style_and_interface_review": "docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md",
   "reference_review": "docs/qa/plans/CARD-INTERFACE-REVIEW-BASELINE-20261017.json",
   "policy_boundaries": {
-    "customer_controls": "NO_FONT_SIZE_WIDTH_TRACKING_OR_ROW_COUNT_CONTROLS_OR_REQUIRED_TEMPLATE_LIBRARY",
-    "font_size": "Freeze approved design size; never select/change pt using input length/width proxies",
+    "customer_controls": "RELATIVE_POSITION_INTENT_ONLY_NO_CUSTOMER_FONT_SIZE_WIDTH_FIELD_DIMENSION_ALIGNMENT_DISTRIBUTION_NUMERIC_GAP_TRACKING_OR_ROW_CONTROLS_OR_REQUIRED_TEMPLATE_LIBRARY",
+    "font_size": "New learned instances:core-controlled,source-supported,versioned joint typography/container rules;no customer fine controls or unsupported arbitrary shrinking. Legacy fixed-pt templates and accepted outputs retain their versions.",
     "distributed": "Current executable subset only approved title/address; observed broader patterns not activation authority",
     "switching": "UI-061 preview/confirmation remains; low-impact automatic switch is OPEN",
     "rule_publication": "Learning/acceptance does not confer formal eligibility",
     "open_policies": [
       "Moving protected name/title/company/Logo beyond approved scope",
-      "Font-size changes during configuration switching",
+      "Calibration of joint typography/container applicability and adaptation costs",
       "Automatic low-impact cross-template adoption",
       "Formal archive retention and cross-device service"
     ]
   },
-  "acceptance_revision_note": "2026-10-17: 36->50 planned clauses across same8packages; +14 design criteria, +0implementation, +0verified; historical completion unchanged",
+  "acceptance_revision_note": "2026-10-17: 36->50 planned clauses across same8packages; +14 design criteria, +0implementation, +0verified; historical completion unchanged 2026-10-19依使用者澄清修訂6條未驗收文字，50條原ID與完成數不變；核心聯動參數／同模板交換／預設優選詳見最新決策，舊固定pt規則保留於既有模板版本。",
   "field_structure_learning_basis": {
     "decision": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
     "approval_status": "USER_CONFIRMED_DESIGN_PRINCIPLE",
@@ -762,15 +778,15 @@
       "semantic_type_allowed",
       "stable_field_identity_and_owner",
       "actual_text_font_measurement",
-      "approved_fixed_pt_and_scaling_policy",
+      "approved_joint_parameter_policy_and_current_typography_measurement",
       "data_completeness",
       "bounds_and_no_overlap",
       "current_asset_and_formal_gate_evidence"
     ],
     "non_identifiability": "Geometry alone cannot uniquely recover pt/font/tracking/ScaleX; missing evidence stays unknown",
     "policy_limits": [
-      "No content-length-driven point-size change",
-      "No reinstated customer font/width/tracking/row controls",
+      "New learned instances adapt typography/container parameters only within source-supported joint policy;legacy fixed-pt versions and confirmed outputs remain protected",
+      "No customer font/width/field-dimension/alignment/distribution/numeric-gap/tracking/row controls;customer relative-position intent takes precedence over defaults",
       "No identity merge based on equal strings or boxes",
       "No forced family merge solely to minimize template count",
       "No observed style automatically grants execution or formal-output authority"
@@ -863,7 +879,7 @@
       },
       {
         "id": "BODY-FLOW-03",
-        "expected": "New input infeasible retains new data; old preview stale and cannot confirm/export new revision; no truncation or point-size change",
+        "expected": "New input infeasible under approved joint rules retains new data;old preview stale and cannot confirm/export new revision;no truncation,unsupported arbitrary shrinking or misuse of old confirmation",
         "status": "PLANNED_NOT_EXECUTED"
       },
       {
@@ -891,9 +907,9 @@
       "Hosted public API,cross-device accounts and synchronization"
     ],
     "policy_limits": [
-      "No reintroduced customer font/width/tracking/row controls",
+      "Customer relative-position intent only;core controls typography,field dimensions,alignment,distribution and spacing under versioned rules",
       "Keep existing approved professional editing scope",
-      "Actual fixed-pt/font/Logo/source/formal Gates remain authoritative",
+      "New learned joint-parameter policy plus actual font/Logo/source/formal Gates;legacy templates and accepted outputs retain their fixed versions",
       "Confirmation is result adoption,not rule/template publication or prepress exemption"
     ]
   },
@@ -975,7 +991,7 @@
     "condition_keys": [
       "physical_size",
       "design_family_and_role",
-      "font_face_and_fixed_pt",
+      "font_face_and_joint_typography_container_configuration",
       "person_company_grouping",
       "field_type_mix",
       "asset_occupancy",
@@ -1102,7 +1118,9 @@
       "Compare mathematical methods,mature OSS and public commercial ideas with source/version/hash/license and reuse reasons",
       "Define TRAIN/VALIDATION/sealed TEST lineage isolation,fit targets,baselines,negative cases and evaluation criteria",
       "Reuse existing source parser,Qt/fontTools,TrainingStore,graph/solver/version mechanisms; no parallel engine/database",
-      "Derive required outputs from future uses without designing input/output interaction now"
+      "Derive required outputs from future uses without designing input/output interaction now",
+      "Learn joint typography/container parameter regions;independent scalar bounds do not prove validity",
+      "Same-template conditional variants and defaults for every multiple-legal-result choice;preserve explicit user intent and accepted output binding"
     ],
     "tasks": [
       {
@@ -1125,13 +1143,16 @@
         "expected_deliverables": [
           "DataRequirementProfile schema and missing-data policy",
           "Conditional features for text occupied space,tracking,distribution,legal line flow and role hierarchy",
-          "Fit/parameter/evaluation design and examples; no numeric thresholds assumed"
+          "Fit/parameter/evaluation design and examples; no numeric thresholds assumed",
+          "Source-supported joint typography/container region and parameter co-variation schema"
         ],
         "validation_cases": [
           "Same character count with different actual font widths",
           "Source-unknown font/pt not converted to default truth",
           "Same data type in different roles/styles not forcibly merged",
-          "No memorization of private strings/owner IDs as style clusters"
+          "No memorization of private strings/owner IDs as style clusters",
+          "Independent scalar ranges pass while joint combination fails",
+          "Same legal effective input uses the same default typography configuration"
         ],
         "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
         "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
@@ -1139,7 +1160,8 @@
           "Formal typed schema and migration into current models/store",
           "Actual source-example and gold-annotation mapping",
           "Validation-calibrated class conditions,thresholds and heldout acceptance plan"
-        ]
+        ],
+        "joint_swap_default_training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
       },
       {
         "id": "TRAIN-DESIGN-02",
@@ -1163,13 +1185,16 @@
           "FieldCapabilityProfile and group/relative-relation graph schemas",
           "Conditional role/type capability and joint count/text-space capacity representation",
           "Observed/recommended/validated ranges with support,unknown and applicability",
-          "Training/parameter/reference/evaluation design"
+          "Training/parameter/reference/evaluation design",
+          "Bilateral same-template swap capability,adaptation envelope and template-fallback reasons"
         ],
         "validation_cases": [
           "Equal frame size does not establish equal semantic/owner capability",
           "Fixed TEL label cannot silently host Email; label/value linkage must be represented",
           "Shared source printed more than once still consumes space",
-          "Individual range compliance does not prove whole-layout feasibility"
+          "Individual range compliance does not prove whole-layout feasibility",
+          "Similar geometry but incompatible owner/label must not swap",
+          "Legal left/right swap retains the template family and both data identities"
         ],
         "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
         "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
@@ -1177,7 +1202,8 @@
           "Formal typed schema and migration into current models/store",
           "Actual source-example and gold-annotation mapping",
           "Validation-calibrated class conditions,thresholds and heldout acceptance plan"
-        ]
+        ],
+        "joint_swap_default_training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
       },
       {
         "id": "TRAIN-DESIGN-03",
@@ -1204,14 +1230,18 @@
           "Conditioned match/data-field compatibility representation",
           "Same-role equivalent-group signature and separate directional substitution relation",
           "Relative-position/applicability/evidence output needed for future reuse",
-          "Bilateral interchange checks and training/validation design; exact category permissions remain to design"
+          "Bilateral interchange checks and training/validation design; exact category permissions remain to design",
+          "Family-conditioned default assignment/order profile and stable candidate/tie-break provenance"
         ],
         "validation_cases": [
           "A can fit B does not imply reverse fit or transitive substitution",
           "Swap requires both destination bindings and complete semantic/owner/label conditions",
           "Cross-type candidates need evidence and conditions,not unconditional phone/Email exchange",
           "Positive-source or synthetic labels do not substitute independent evaluation",
-          "Incompatible or unknown bindings remain explicit; no fake calibrated confidence"
+          "Incompatible or unknown bindings remain explicit; no fake calibrated confidence",
+          "Two contact fields accepting landline/mobile use a stable default when unspecified",
+          "Explicit swap survives restart and is not overwritten by defaults",
+          "Same input repeat order retains accepted print result despite model upgrade"
         ],
         "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
         "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
@@ -1219,7 +1249,8 @@
           "Formal typed schema and migration into current models/store",
           "Actual source-example and gold-annotation mapping",
           "Validation-calibrated class conditions,thresholds and heldout acceptance plan"
-        ]
+        ],
+        "joint_swap_default_training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md"
       }
     ],
     "total_design_todos": 3,
@@ -1305,5 +1336,98 @@
     "decision_index": "docs/dev/AI_TRAINING_INTERVIEW_DECISION_INDEX.json",
     "status": "CURRENT_SCOPE_REVIEWED_NO_PENDING_USER_QUESTION",
     "no_new_parent_or_completion": true
+  },
+  "policy_revisions": [
+    {
+      "id": "CORE-SWAP-DEFAULT-20261019",
+      "decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+      "status": "USER_CONFIRMED_DESIGN_NOT_IMPLEMENTED",
+      "revised_acceptance": [
+        {
+          "id": "AI-LEARN-03-A06",
+          "previous_expected": "學真實pt及角色字級比例，固定當次已核准字級；不得用長度／字寬或其代理偷偷選較小字級解圍",
+          "expected": "學具來源的pt、角色字級比例及文字／容器聯動；新規則實例由核心依核准聯合條件調整字級、字寬與欄位尺寸，不提供客戶細參數控制，未知或越適用範圍不任意縮放"
+        },
+        {
+          "id": "AI-LEARN-03-A08",
+          "previous_expected": "學容器欄列／label-value／optional-repeat-flow與欄位收合，保留資料ID、歸屬與完整內容，不列舉每案模板",
+          "expected": "學容器欄列／label-value／optional-repeat-flow、欄位收合及同模板條件交換變體，保留資料ID、歸屬與完整內容，不列舉每案模板"
+        },
+        {
+          "id": "AI-LEARN-04-A08",
+          "previous_expected": "受控SET_RELATION入口可處理合格稿，與原拓撲保留repair分開；同命令冪等、循環與歸屬衝突有原因，不修改全域模板",
+          "expected": "受控SET_RELATION優先在同模板合法交換／重排，超出適用能力再比較相容模板；同命令冪等、循環與歸屬衝突有原因，不修改全域模板"
+        },
+        {
+          "id": "AI-LEARN-05-A04",
+          "previous_expected": "最佳僅限已搜且已驗證範圍，未校準分數不當機率",
+          "expected": "最佳僅限已搜且已驗證範圍；所有複數合法結果含同分須有版本化預設優選與穩定決勝，客戶明確關係優先；未校準分數不當機率"
+        },
+        {
+          "id": "AI-LEARN-07-A05",
+          "previous_expected": "客戶端先完整初稿，三階段可返回；不得加入字級／字寬／tracking／單雙排控制或必選模板庫，專業後台另維持既有能力",
+          "expected": "客戶端先完整初稿，三階段可返回；客戶表達必要相對位置，欄位尺寸／字級／字寬／切齊／分散與數值間距由核心規則控制，不加入客戶細參數、單雙排或必選模板庫；專業後台維持既有能力"
+        },
+        {
+          "id": "AI-LEARN-07-A07",
+          "previous_expected": "確認綁定精確資料／結果，資料無解保留新值並標stale；撤回版面不退電話；正式封存依核准保存範圍，不把JSON重算當精確回播",
+          "expected": "確認綁定精確資料／結果；相同有效輸入重複下單沿用有效已確認版，不因多合法解或模型更新任意換印紋；新資料無解保留並標stale，撤回版面不退電話；正式封存不把JSON重算當精確回播"
+        }
+      ],
+      "completion_changed": false,
+      "legacy_verified_registry_changed": false
+    }
+  ],
+  "joint_adaptation_and_default_preferences": {
+    "decision": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+    "training_plan": "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
+    "status": "USER_CONFIRMED_DESIGN_NOT_IMPLEMENTED",
+    "confirmed_on": "2026-10-19",
+    "same_template_first": true,
+    "swap_conditions": [
+      "both destinations supported and policy allowed",
+      "stable semantic identity and owner",
+      "label/icon binding",
+      "actual font/text measurement",
+      "joint capacity and surrounding layout",
+      "customer/protected relative relations preserved"
+    ],
+    "size_similarity_is_only_candidate_evidence": true,
+    "adaptation_parameters": [
+      "field_width_height",
+      "point_size",
+      "horizontal_scale",
+      "alignment",
+      "distribution",
+      "spacing"
+    ],
+    "parameters_are_core_controlled": true,
+    "default_required_for_all_multiple_legal_decisions": true,
+    "default_scope": [
+      "family_template",
+      "field_assignment",
+      "relative_order",
+      "structure_branch",
+      "joint_parameter_configuration",
+      "equal_score_tie_break"
+    ],
+    "customer_explicit_relations_override_defaults": true,
+    "defaults_conditioned_on_family_and_context": true,
+    "no_global_landline_left_assumption": true,
+    "stable_reprint": {
+      "effective_input": [
+        "data",
+        "stable identities and ownership",
+        "physical size",
+        "customer relative-position intent",
+        "necessary production conditions"
+      ],
+      "reuse_current_accepted_exact_result": true,
+      "no_silent_regeneration_due_to_model_upgrade": true
+    },
+    "background_automatic_adoption": "OPEN_NOT_AUTHORIZED_BY_THIS_DECISION",
+    "numeric_limits": "TO_CALIBRATE_NOT_INVENTED",
+    "legacy_runtime_and_verified_requirements": "UNCHANGED;new design policy not yet implemented",
+    "completion_changed": false
   }
 }

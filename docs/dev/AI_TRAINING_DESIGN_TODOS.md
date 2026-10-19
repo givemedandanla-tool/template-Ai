@@ -1,8 +1,10 @@
 # AI 訓練設計待辦
 
+> **2026-10-19最新已確認規則**：同模板合法交換優先；所有複數合法結果須有預設優選，客戶明確關係優先。字級／字寬／欄位尺寸／切齊／分散由核心聯動規則控制。詳見[新決策](../decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md)與[訓練計畫](SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md)。舊固定pt文字對新學習實例由此修正；既有模板／定稿版本保留。仍1包部分實作、0包完整／驗證、3設計待辦0完成，尚未訓練。
+
 2026-10-18｜使用者已授權加入待辦；目前3項待設計、0完成。這是[有效契約](AI_CROSS_WORK_LEARNING_CONTRACT.json)中`training_design_todos`的檢視，不是另一份狀態登錄。
 
-[需求決策](../decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md)。目前聚焦資料、模型與參數；交互設計待訓練結果。原8包／50驗收、0實作／0驗證不變。
+[需求決策](../decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md)。目前聚焦資料、模型與參數；交互設計待訓練結果。原8包／50驗收，1包部分實作、0完整／驗證。
 
 [綜合分析與推薦架構](AI_TRAINING_COMPREHENSIVE_PROPOSAL.md)已提出共享結構圖、條件profile、綁定／變化／政策分層、文法、訓練與驗證。這是設計草稿；正式schema／遷移、實際樣本標記對映及驗證校準仍待完成，3項保持未勾選。
 
@@ -48,3 +50,7 @@
 設計依賴：TRAIN-DESIGN-01、TRAIN-DESIGN-02。
 
 以上3項已有綜合方案建議，但正式schema／遷移、實際來源對映、精確類別相容範圍與驗證閾值尚未完成；未訓練、未新增功能完成數。
+
+## 2026-10-19：既有3項待辦共同擴充
+
+依[專項計畫](SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md)，01補聯合文字／容器配置；02補同模板雙向交換與適配範圍；03補預設綁定／相對順序、穩定決勝及客戶意圖優先。三項均保持TODO_DESIGN，0完成；不新增第4項或功能完成數。

@@ -1471,3 +1471,7 @@ AI01最後確認：CP-20261018-AI-OBSERVATION-FOUNDATION-VERIFIED在f081bac3ba66
 2026-10-19｜JOINT-ADAPTATION-POLICY前置：使用者確認客戶只調必要相對位置，欄位大小／字級／字寬／切齊／分散由核心規則控制；要求將聯動參數學習持久化，並澄清相同輸入不可反覆產不同印版。第3後台改善與第4有限／穩定選解需解說，尚不將工程提案當核准政策。僅更新新AI設計，保留legacy完成證據與50條ID／完成數；初始治理PASS。因root247MiB不足新快照，13個舊已發布REMOTE_VERIFIED ZIP經SHA/embedded manifest/receipt核對搬至/tmp，副本與原路徑symlink保留、最新8與未ACK保護，釋放1492197826bytes；journal=docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T034415Z.json。
 
 2026-10-19｜SWAP-DEFAULT重新授權保存：上一CP-JOINT-PARAM-PLAN準備後使用者要求暫停，未commit／push／ACK；原record／ZIP保留，不假稱已保存。現在使用者明確要求同模板基本欄位交換能力納入訓練，差異過大才考慮新模板，且所有複數合法解都有預設優選以穩定重用印版。合併先前已確認的核心參數控制／聯動學習／相同輸入穩定原則；自動採用背景新模板時機仍OPEN。僅更新設計與新AI未驗收條款，legacy要求／code／完成數保持不變。
+
+SWAP-DEFAULT設計寫入：新增使用者決策與專項訓練計畫，修訂6條未驗收AI文字但保留50原ID；3設計待辦補聯動配置、雙向同模板交換、預設綁定／排序／同分決勝與穩定重印。新規則實例核心可依聯合條件配置文字／欄位，客戶只指定相對位置；舊模板／定稿／legacy驗證要求與程式不改。新增4項訪談去重事實與精確取代關係，未授權背景自動採用新模板；不假稱已讀其他專案原文。狀態仍8包1partial0完整／驗證、3TODO0完成。
+
+SWAP-DEFAULT核對完成：原50AI驗收ID／8工作包保持、只修訂計畫允許的6條未驗收文字；原13個訪談來源hash、23項索引與5個新Markdown連結PASS。code/tests/fixture manifest與legacy REQUIREMENTS SHA均未變，require-evidence publication治理PASS（169登錄／163完成scope／1567具名測試）。只執行文件／契約／治理核對，未重跑產品測試、未訓練。原75題69完成／3部分／3延後、CORE87/GOV7及新8包1partial0完整／驗證、3TODO0完成不變；進度快照無新增／範圍／狀態／完成差異。PLAN checkpoint已fresh讀回6fa5badf6465d2d1bf19798fcec1af7259180e75，收據一併保存。
