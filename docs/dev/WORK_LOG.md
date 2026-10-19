@@ -1507,3 +1507,8 @@ Unapplied AI02/03 and partial AI06 implementation uses existing SAMPLE/DATASET/T
 ## 2026-10-19 current-source1581 formal regression complete
 
 RUN-AI-ORIGINAL-TEXT-LINEAGE-001 source4812d51 software PASS:1581 tests,199 healthy module processes,capture0,no runtime errors,stable source,366 attachment hashes verified. Two listed native images visually inspected. Overall FAIL retains original five external clauses;163 scoped verified requirements rebound with unchanged contracts/status/counts. All8 AI complete0;AI01 partial. Additional staged session5 checks pass16.268s,including real source-bound model->input->Qt/Kiwi preview->confirmation->PNG,undo keeps corrected phone,restart/idempotency,late result CAS and exact artifact reuse after model activation;not applied product evidence. Continue all8;native glyph extraction still pending. Actual checkpoint interval exceeded10minutes during staging/capture/readback,recorded truthfully in STATE.
+
+
+## 2026-10-19 shared core applied
+
+Applied13 source/test modules and7 pinned dependencies;36 actual-product targeted checks PASS59.184s. HDBSCAN/shared rule profiles,explicit source correspondence,pairwise preferences,SQLite lifecycle and persistent preview sessions function on authored fixtures.7/8 AI packages partial,AI08 not implemented,0complete/verified;50 acceptance IDs unchanged. Current source differs from last1581 formal source and requires new full regression after ongoing implementation. Known missing Logo/multiline/joint regression,formal generated-instance eligibility,actual desktop UI,real glyph/corpus/hardware qualification retained.25 older acknowledged ZIPs losslessly relocated with hashes/manifest/receipts;latest8 and unacknowledged retained,STATE journal updated. Continue all8.

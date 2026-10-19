@@ -1,6 +1,6 @@
 {
   "id": "AI-CROSS-WORK-LEARNING",
-  "status": "PARTIAL_OBSERVATION_FOUNDATION_NOT_MODEL_TRAINING",
+  "status": "PARTIAL_SHARED_LEARNING_CORE_AUTHORED_TESTS_ONLY",
   "target_parent_ids": [],
   "target_parent_ids_note": "New learning work packages are separate from historical75 original topics; no count inflation or aliasing. Register actual tests/requirements when each implementation package begins.",
   "product_decision": "docs/decisions/2026-10-17-TEMPLATE-AI-CROSS-WORK-LEARNING.md",
@@ -93,7 +93,7 @@
     {
       "id": "AI-LEARN-02",
       "title": "跨作品設計家族",
-      "status": "NOT_IMPLEMENTED",
+      "status": "PARTIALLY_IMPLEMENTED",
       "completed": false,
       "planned_tests": [
         {
@@ -101,7 +101,7 @@
           "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
         }
       ],
-      "actual_evidence": null,
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
       "acceptance": [
         {
           "id": "AI-LEARN-02-A01",
@@ -138,12 +138,20 @@
         "AI-LEARN-01"
       ],
       "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
-      "current_delivery_phase": "CORE_APPLICATION"
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "modules": [
+          "template_ai/design_family.py"
+        ],
+        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+        "not_package_complete": true,
+        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+      }
     },
     {
       "id": "AI-LEARN-03",
       "title": "可變規則與群組文法學習",
-      "status": "NOT_IMPLEMENTED",
+      "status": "PARTIALLY_IMPLEMENTED",
       "completed": false,
       "planned_tests": [
         {
@@ -151,7 +159,7 @@
           "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
         }
       ],
-      "actual_evidence": null,
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
       "acceptance": [
         {
           "id": "AI-LEARN-03-A01",
@@ -210,12 +218,21 @@
         "AI-LEARN-02"
       ],
       "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
-      "current_delivery_phase": "CORE_APPLICATION"
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "modules": [
+          "template_ai/design_profiles.py",
+          "template_ai/design_source_binding.py"
+        ],
+        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+        "not_package_complete": true,
+        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+      }
     },
     {
       "id": "AI-LEARN-04",
       "title": "條件式模板合成與約束求解",
-      "status": "NOT_IMPLEMENTED",
+      "status": "PARTIALLY_IMPLEMENTED",
       "completed": false,
       "planned_tests": [
         {
@@ -223,7 +240,7 @@
           "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
         }
       ],
-      "actual_evidence": null,
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
       "acceptance": [
         {
           "id": "AI-LEARN-04-A01",
@@ -286,12 +303,20 @@
         "AI-LEARN-03"
       ],
       "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
-      "current_delivery_phase": "CORE_APPLICATION"
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "modules": [
+          "template_ai/design_synthesis.py"
+        ],
+        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+        "not_package_complete": true,
+        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+      }
     },
     {
       "id": "AI-LEARN-05",
       "title": "輸入檢索與偏好排序",
-      "status": "NOT_IMPLEMENTED",
+      "status": "PARTIALLY_IMPLEMENTED",
       "completed": false,
       "planned_tests": [
         {
@@ -299,7 +324,7 @@
           "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
         }
       ],
-      "actual_evidence": null,
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
       "acceptance": [
         {
           "id": "AI-LEARN-05-A01",
@@ -331,12 +356,20 @@
       "depends_on": [
         "AI-LEARN-04"
       ],
-      "current_delivery_phase": "CORE_APPLICATION"
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "modules": [
+          "template_ai/design_ranking.py"
+        ],
+        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+        "not_package_complete": true,
+        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+      }
     },
     {
       "id": "AI-LEARN-06",
       "title": "回饋訓練與版本啟用",
-      "status": "NOT_IMPLEMENTED",
+      "status": "PARTIALLY_IMPLEMENTED",
       "completed": false,
       "planned_tests": [
         {
@@ -344,7 +377,7 @@
           "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
         }
       ],
-      "actual_evidence": null,
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
       "acceptance": [
         {
           "id": "AI-LEARN-06-A01",
@@ -380,12 +413,20 @@
       "depends_on": [
         "AI-LEARN-05"
       ],
-      "current_delivery_phase": "CORE_APPLICATION"
+      "current_delivery_phase": "CORE_APPLICATION",
+      "implementation_slice": {
+        "modules": [
+          "template_ai/design_learning.py"
+        ],
+        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+        "not_package_complete": true,
+        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+      }
     },
     {
       "id": "AI-LEARN-07",
       "title": "本體端到端流程與持久接續（網頁／手機實作延後）",
-      "status": "NOT_IMPLEMENTED",
+      "status": "PARTIALLY_IMPLEMENTED",
       "completed": false,
       "planned_tests": [
         {
@@ -393,7 +434,7 @@
           "status": "PLANNED_NOT_EXISTING_TEST_EVIDENCE"
         }
       ],
-      "actual_evidence": null,
+      "actual_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
       "acceptance": [
         {
           "id": "AI-LEARN-07-A01",
@@ -459,7 +500,15 @@
       ],
       "current_delivery_phase": "CORE_APPLICATION",
       "interaction_delivery_basis": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
-      "interaction_design_start_condition": "Versioned training results with stated validation scope available; later body interaction goal retained"
+      "interaction_design_start_condition": "Versioned training results with stated validation scope available; later body interaction goal retained",
+      "implementation_slice": {
+        "modules": [
+          "template_ai/design_session.py"
+        ],
+        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
+        "not_package_complete": true,
+        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+      }
     },
     {
       "id": "AI-LEARN-08",
@@ -1437,5 +1486,6 @@
     "numeric_limits": "TO_CALIBRATE_NOT_INVENTED",
     "legacy_runtime_and_verified_requirements": "UNCHANGED;new design policy not yet implemented",
     "completion_changed": false
-  }
+  },
+  "user_corpus_training": "NOT_STARTED"
 }
