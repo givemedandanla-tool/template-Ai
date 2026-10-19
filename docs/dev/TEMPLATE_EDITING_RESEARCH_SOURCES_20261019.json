@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "status": "PROPOSED_RESEARCHED_NOT_IMPLEMENTED",
+  "checked_utc": "2026-10-19T14:39:44.539243+00:00",
+  "repository_baseline": "336adad792f337209533b93df9fa5d2f625bdf7e",
+  "code_manifest_sha256": "6a433cd72309e4bbc60bc487cc38ff6dc1ac642c9cf0aad818ac4be2a370d6c8",
+  "code_files": 548,
+  "report": "docs/dev/TEMPLATE_EDITING_TOOLS_RESEARCH_20261019.md",
+  "records": [
+    {
+      "id": "figma",
+      "url": "https://raw.githubusercontent.com/figma/plugin-typings/dff4874ca083e18cd74835fd5afc5079d46866b7/plugin-api.d.ts",
+      "sha256": "46685808f4994664397367ff855ff87619f8177370da572f7d3acfd2553dc95a",
+      "bytes": 505244,
+      "http_status": 200,
+      "kind": "COMMERCIAL_PUBLIC_INTERFACE",
+      "license": "MIT",
+      "revision": "dff4874ca083e18cd74835fd5afc5079d46866b7",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "AutoLayoutMixin layoutMode及其副作用說明",
+        "componentPropertyDefinitions/addComponentProperty 9728-9737",
+        "ComponentSetNode/defaultVariant 11175-11195",
+        "ComponentNode及實例建立說明"
+      ],
+      "intended_reuse": "家族／有限變體／實例／預選的資料分工；不當印前引擎"
+    },
+    {
+      "id": "figma-license",
+      "url": "https://raw.githubusercontent.com/figma/plugin-typings/dff4874ca083e18cd74835fd5afc5079d46866b7/LICENSE",
+      "sha256": "47d92f1103b396b08991cb1237b99dfd96729d62952a64b5895c7ddf8af5a682",
+      "bytes": 1068,
+      "http_status": 200,
+      "kind": "LICENSE",
+      "license": "MIT",
+      "revision": "dff4874ca083e18cd74835fd5afc5079d46866b7",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "MIT permission與copyright heading"
+      ],
+      "intended_reuse": "僅記錄官方型別文件授權；本輪無來源碼複製"
+    },
+    {
+      "id": "kiwi",
+      "url": "https://raw.githubusercontent.com/nucleic/kiwi/728f5661fdd021c68dac1b914b3c8610a46b2e7e/README.rst",
+      "sha256": "9a4762e7639f1896584cf37679102be008a7e4e39a66c1e17f305672ce20c9c4",
+      "bytes": 1230,
+      "http_status": 200,
+      "kind": "OPEN_SOURCE_ALGORITHM",
+      "license": "BSD-3-Clause",
+      "revision": "728f5661fdd021c68dac1b914b3c8610a46b2e7e",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "README12-25 Cassowary與Python bindings；速度宣稱不作本案性能"
+      ],
+      "intended_reuse": "沿用本專案已安裝kiwisolver1.4.9"
+    },
+    {
+      "id": "fiftyone",
+      "revision": "aacfc8182fc5353296b5edd7475e63335fedb5cb",
+      "url": "https://raw.githubusercontent.com/voxel51/fiftyone/aacfc8182fc5353296b5edd7475e63335fedb5cb/README.md",
+      "http_status": 200,
+      "bytes": 19695,
+      "sha256": "376ab854bc14b1aa88072d775f61ab0deef15d2e613958ed55259657b24bf127",
+      "kind": "OPEN_SOURCE_WORKFLOW",
+      "license": "Apache-2.0",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "README檢視／標註、Advanced Data Curation及edge cases段"
+      ],
+      "intended_reuse": "只借工作流程，不導入其伺服器／資料庫或宣稱讀過全部演算法"
+    },
+    {
+      "id": "sqlite",
+      "revision": "b7defd99b3b4438b250ee9489036f1048e698ef9",
+      "url": "https://raw.githubusercontent.com/sqlite/sqlite/b7defd99b3b4438b250ee9489036f1048e698ef9/ext/fts5/fts5_aux.c",
+      "http_status": 200,
+      "bytes": 28009,
+      "sha256": "6dca73048734b7f38d6965b65d95d72757300f48bf58c676dd547e3ceb1723c7",
+      "kind": "OPEN_SOURCE_SEARCH",
+      "license": "Public domain SQLite source",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "fts5Bm25Function及BM25常數k1/b，約614-759行"
+      ],
+      "intended_reuse": "僅在量測需要且本機build支援時擴充既有SQLite搜尋；繁中tokenization待量測"
+    },
+    {
+      "id": "scipy",
+      "revision": "v1.16.3",
+      "url": "https://raw.githubusercontent.com/scipy/scipy/v1.16.3/scipy/optimize/_lsap.c",
+      "http_status": 200,
+      "bytes": 7006,
+      "sha256": "75c2a6c98963f6b1679a2b3e243276e066d0a14dcdb28130679e65fbe77dd5c6",
+      "kind": "OPEN_SOURCE_ALGORITHM",
+      "license": "BSD-3-Clause",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "linear_sum_assignment docstring約115-173行：成本、矩形指派、modified Jonker-Volgenant"
+      ],
+      "intended_reuse": "沿用已安裝SciPy1.16.3及design_assignment；不稱全域布局最優"
+    },
+    {
+      "id": "fiftyone-license",
+      "url": "https://raw.githubusercontent.com/voxel51/fiftyone/aacfc8182fc5353296b5edd7475e63335fedb5cb/LICENSE",
+      "revision": "aacfc8182fc5353296b5edd7475e63335fedb5cb",
+      "http_status": 200,
+      "bytes": 11349,
+      "sha256": "4103450ae46b27f086a55e075be160f57b06a534ee3d09b570050e0ec4b84a89",
+      "kind": "LICENSE",
+      "license": "Apache-2.0",
+      "status": "PINNED_SOURCE_SELECTED_SECTIONS_REVIEWED",
+      "reviewed_sections": [
+        "Apache License2.0標題與授權條款"
+      ],
+      "intended_reuse": "本輪不複製程式或引入依賴"
+    }
+  ],
+  "local_review_inventory": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "404d36f01cb9af1d83bd7ee653a517829641588058ef26106b243b7cdbc6f487",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "docs/dev/AI_TRAINING_INTERVIEW_REVIEW.md",
+      "sha256": "c7125e65ee7773d4e9ceb52aebef0e7562fdcb8d3bbb0e7de151f40cd8a4077f",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "docs/dev/AI_TRAINING_INTERVIEW_DECISION_INDEX.json",
+      "sha256": "704afaf840ba330bbd667883ce67078ffff3a768bcd995b3c63b4f9cf80b4691",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "docs/UI_DECISIONS.md",
+      "sha256": "7d043dbeb119acd0b3515a342b7365eda7a6040609e2219bb9e7064903563232",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "docs/dev/REQUIREMENTS.json",
+      "sha256": "460ae730012cf047612484afe7dc8ec923723cf78ab346e32272587919510b38",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "docs/dev/FEATURES.md",
+      "sha256": "2ab70d74d88515d10dd9e0e8f469b1a5dd9bbacc8dc5c748597147ee058af1ad",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "docs/dev/LOCAL_LEARNING_MODEL_DETAILS.md",
+      "sha256": "a9509930903dd866b56a53d804821df201f921db3d7c324c4885f4dac3eef7d0",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md",
+      "sha256": "03447cbf0a3551951f452369ff928bb8e0b94ccc2ffad476b8979b48b44736a2",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+      "sha256": "614992ecf7846a04e463b207a938e849819f7687fee16a90d08e881b9dc8e2f3",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "docs/decisions/2026-10-18-CORE-FIRST-DEFER-WEB-MOBILE.md",
+      "sha256": "a936430ea37e138fe6c10da0ee6a4bba9becf8319745194b6687436125a34ba4",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/catalog.py",
+      "sha256": "1cae0aec55a6615fba124b01382e9f9207ac4b647be44962497f74517a67819b",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "sha256": "1cf75ab5555567f72fd7ec9b80b9de934220f97112c15b2afabd7b99d2196dc6",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/model.py",
+      "sha256": "63a5b9709561f1e9cf20f3d916435f02601ccaf46ce5f03c8489380866a069ac",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/object_tools.py",
+      "sha256": "9ad6e44076f521c725d884d8f4463563657b70771c5db4d3b2e1f9c13c2b1247",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "sha256": "5da2179cb1b4ec75a560450f855d98c5d99a1da01dff545676b0e8b619a8d76f",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "sha256": "a27928ad28ee0c9e940d58a321fa8c3df53a75779e737cce5bf51792bc9989c3",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/candidate_sync.py",
+      "sha256": "937e525ec714ec2a009f4c9b83d46b4794e08092ae8c0353d5d83840cdd53b4e",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/template_versions.py",
+      "sha256": "0a1572369bd3700aa14a7012fc69c405203e2ad3de0b6cb3ca3201f0d2c8abe2",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "sha256": "fc2091ab70b17b1a5a3f0557d0502245a5f0deb65fe14bd7cafd294b0eeada2b",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_learning.py",
+      "sha256": "05e8895990a4ed675a0fc78f9f7831a868f709d8fb15fa45f0b2231eddd41fb1",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_profiles.py",
+      "sha256": "458461d9a75a5d6b74afbbd6c67bcbeca72a2f7ee09f9d91261d70f25322b0f7",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_family.py",
+      "sha256": "70c3949305b2a5888286a93ccab05e8855f58d3db342fe571a2e13c1f4c4fbfa",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_joint.py",
+      "sha256": "5791515767264d827ee3b26d01b08f726d18136719ca3a2666348d9d25bfc4ca",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_assignment.py",
+      "sha256": "c149085278ae308626860ba3c806ac9b7dec83558e205ade4f6904d772870ae5",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_session.py",
+      "sha256": "2d4c107072aa68a3dca490cccef214a479091c415393cb55b539e5827eec4a66",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_instances.py",
+      "sha256": "d3b7c8601c1cce003813992a5d74ba80a9fd2d2e42145b0c53fc13cd4a27ad6b",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_capacity.py",
+      "sha256": "3e0579f148a4b5a98710b3fe7c85008e58c44320d9660dbbecbd08658ce4fdd8",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "template_ai/design_source_binding.py",
+      "sha256": "9b26372110d2aa7c0ac191b4e54f00004a21622116aad050164f6cb4e7996763",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "tests/test_catalog.py",
+      "sha256": "4982a50bf17573378f055983942e96a23623269a6f0eeffffa96ec1d127d02d3",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "tests/test_object_tools.py",
+      "sha256": "0ba1632a9ea91c63fb3696dba47d612f5092f155bc7b343fcbb740234d1f1865",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "tests/test_template_versions.py",
+      "sha256": "70a1c33120e5914f6b2f423c9be1c96ebca52d0b8819406c248f863d459ae961",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "tests/test_batch_correction_gui.py",
+      "sha256": "dd076ca3cfef905ea3bce069ff44705d9442d597730bfa29866d690db3fa5b7f",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "tests/test_candidate_sync_batch.py",
+      "sha256": "bc4dcba74cc3cf096b89885c0e3a57ae39ab2f7c4403a6e21b970d00e890b99f",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "tests/test_design_family.py",
+      "sha256": "c2143d2d236811525bcaa9739487cacafa384caf934bbadc16b564da77c59644",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "tests/test_design_rule_extensions.py",
+      "sha256": "aea57155e685bea294a766044411120752533a193eb17a7c01228ad82a6368fa",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    },
+    {
+      "path": "tests/test_design_session.py",
+      "sha256": "efc70f54daeae0a426aedcd060745d531bec33ec0599c5deb0e706e349a9f2ef",
+      "scope": "SELECTED_RELEVANT_SECTIONS_OR_DEFINITIONS_NOT_FULL_HISTORY"
+    }
+  ],
+  "unavailable": [
+    {
+      "url": "https://helpx.adobe.com/bridge/using/collections-adobe-bridge.html",
+      "status": "NOT_READ",
+      "reason": "proxy tunnel403"
+    },
+    {
+      "url": "https://helpx.adobe.com/indesign/using/liquid-layouts-alternate-layouts.html",
+      "status": "NOT_READ_THIS_RESEARCH;previous_record_also_NOT_READ",
+      "reason": "same host network policy;not used as verified basis"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/voxel51/fiftyone/aacfc8182fc5353296b5edd7475e63335fedb5cb/fiftyone/brain/__init__.py",
+      "status": "NOT_READ",
+      "reason": "404;README workflow only used"
+    }
+  ],
+  "limits": [
+    "No ChatGPT-local transcript retrieval claim",
+    "No new runtime/tests/dependencies/model fitting",
+    "No private artwork/font/customer data accessed",
+    "No new approved requirements or completed feature counts",
+    "Future tool ideas are proposed,not implemented",
+    "Representative visual review never certifies whole corpus",
+    "AdobeDocs entry README is not a verified feature source"
+  ]
+}

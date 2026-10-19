@@ -11,3 +11,5 @@
 歷史001/002主動中斷、003/004有真實來源管道/Logo真值失敗，四輪均未採用；原因與結果在各run/interruption.json，兩個失敗ID在005均PASS。詳細修正及目標測試在WORK_LOG/targeted-009/010，不重寫原失敗。原8包50條完整資格仍8部分/0完整真實資格；舊28題25完整/3部分；原75主題69驗證/3部分/3延後，CORE87/GOV7同範圍重驗，169registry的163scoped完成數不變。
 
 私人作品/字型/DB/模型/確認稿留本機，不再索取上傳；本機資料需本地備份，GitHub不代存。無付費AI API/自動上傳；診斷僅由使用者自願匯出固定代碼/數量/版本白名單。客戶只表達相對位置，pt/hscale/欄框/切齊/分散由核心控制。網站/手機/EXE延後，card-interface只作情境參考。按需讀檔，新對話只帶版本與交接；無明確指令不啟動代理、不合併main。checkpoint節奏偏差與capture期間先保存靜態測試Git提交的原因已如實記錄。
+
+2026-10-19新增編輯工具研究：TEMPLATE_EDITING_TOOLS_RESEARCH_20261019.md／TEMPLATE_EDITING_RESEARCH_SOURCES_20261019.json。回讀23項訪談索引與相關程式／測試；提出大量家族管理及單一家族規則編輯，既有目錄／畫布／批次／版本沿用。狀態PROPOSED_RESEARCHED_NOT_IMPLEMENTED，尚未核准新增產品規格；無runtime/tests/model變更，原完成數與資格不變。先讓使用者核對方案，再依原需求對應增量工作，不自動開始前端或新工具實作。

@@ -57,7 +57,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-TEMPLATE-EDITING-RESEARCH"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -1319,5 +1321,14 @@
     "real_user_corpus_training": false,
     "paid_ai_api_used": false,
     "automatic_private_upload": false
+  },
+  "latest_editor_tools_research": {
+    "status": "PROPOSED_RESEARCHED_NOT_IMPLEMENTED",
+    "report": "docs/dev/TEMPLATE_EDITING_TOOLS_RESEARCH_20261019.md",
+    "sources": "docs/dev/TEMPLATE_EDITING_RESEARCH_SOURCES_20261019.json",
+    "baseline_commit": "336adad792f337209533b93df9fa5d2f625bdf7e",
+    "runtime_changed": false,
+    "requirements_or_completion_changed": false,
+    "next_step": "User reviews research proposal;map accepted increments to original requirements before implementation;reuse existing tools;no web/mobile/EXE"
   }
 }
