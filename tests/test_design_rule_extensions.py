@@ -42,6 +42,44 @@ class WordJustificationTests(unittest.TestCase):
         self.assertIsNone(single['positioned_runs'])
 
 
+class CharacterJustificationTests(unittest.TestCase):
+    setUp=flow_fixture.SourceConditionedFlowTests.setUp
+    shape=flow_fixture.SourceConditionedFlowTests.shape
+
+    def policy_for(self,**changes):
+        rule=dict(status='HUMAN_CONFIRMED_SOURCE_RULE',evidence_refs=['authored shaped-cluster reference'],
+            mode='CHARACTERS',value_mm=0.,allowed_scripts=['Hani','Latn'],
+            boundary_policy='QT_SHAPED_GRAPHEME_TRACKING',last_line='DISTRIBUTE',
+            zero_boundaries='KEEP_NATURAL',justification='SHAPED_CLUSTER_BOUNDARIES_ONLY',maximum_extra_gap_mm=20.)
+        rule.update(changes)
+        return dict(self.policy,break_rule='NO_WRAP',max_lines_observed=1,alignment='justify',spacing_rule=rule)
+
+    def test_actual_cjk_name_shaped_clusters_distribute_with_fixed_point_size(self):
+        for value in ('王小明','王小明君'):
+            result=self.shape(value=value,policy=self.policy_for(),kind='name')
+            row=result['boundary_justification'][0]
+            self.assertTrue(row['applied']);self.assertEqual(row['boundary_count'],len(value)-1)
+            actual_advance=result['lines'][0]['natural_width_mm']+row['extra_per_boundary_layout_units']*row['boundary_count']*result['factor']
+            self.assertAlmostEqual(actual_advance,30.)
+            self.assertLessEqual(result['width_mm'],30.+1e-6)
+            natural=self.shape(value=value,policy=self.policy_for(last_line='NATURAL'),kind='name')
+            self.assertLess(natural['width_mm'],result['width_mm'])
+            self.assertEqual(result['layout'].font().pixelSize(),natural['layout'].font().pixelSize())
+
+    def test_single_cluster_and_combining_mark_are_not_split(self):
+        for value in ('王','e\u0301'):
+            result=self.shape(value=value,policy=self.policy_for(),kind='name')
+            self.assertEqual(result['boundary_justification'][0]['boundary_count'],0)
+            self.assertIsNone(result['positioned_runs'])
+
+    def test_gap_limit_unreviewed_mode_and_inconsistent_alignment_are_rejected(self):
+        for changes in (dict(maximum_extra_gap_mm=.01),dict(maximum_extra_gap_mm=None),
+                        dict(justification='IMPLICIT_QT'),dict(maximum_extra_gap_mm=float('nan'))):
+            with self.assertRaises(ValueError):self.shape(value='王小明',policy=self.policy_for(**changes),kind='name')
+        with self.assertRaisesRegex(ValueError,'alignment'):
+            self.shape(value='王小明',policy=dict(self.policy_for(),alignment='left'),kind='name')
+
+
 class ObjectGapTests(unittest.TestCase):
     def examples(self,count=6):
         return [dict(id='source-'+str(i),role='TRAIN',lineage_group='independent-'+str(i),width_mm=100.,height_mm=50.,

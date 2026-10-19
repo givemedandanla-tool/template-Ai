@@ -53,7 +53,7 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
         validate_presentation(presentation)
         width_mm*=presentation['value_frame'][2]
     single_line=policy.get('break_rule')=='NO_WRAP' and policy.get('max_lines_observed')==1
-    if (kind not in ALLOWED_KINDS and not ((rich or presentation) and single_line)) or policy.get('status')!='HUMAN_CONFIRMED_SOURCE_RULE':
+    if (kind not in ALLOWED_KINDS and not single_line) or policy.get('status')!='HUMAN_CONFIRMED_SOURCE_RULE':
         raise ValueError('Multiline flow requires supported role and source-reviewed rule')
     if policy.get('break_rule') not in ('WORD_WRAP','WORD_OR_ANYWHERE','NO_WRAP') or not policy.get('evidence_refs'):
         raise ValueError('Unknown or unreferenced source break rule')
@@ -84,13 +84,15 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     alignment=policy.get('alignment','left')
     alignments={'left':Qt.AlignLeft,'center':Qt.AlignHCenter,'right':Qt.AlignRight,'justify':Qt.AlignJustify}
     if alignment not in alignments:raise ValueError('Unsupported learned flow alignment')
-    word_justify=policy.get('spacing_rule',{}).get('mode')=='WORDS' and alignment=='justify' and spacing_rule['boundary_count']
-    if word_justify:
-        if policy['spacing_rule'].get('justification')!='WORD_BOUNDARIES_ONLY':
-            raise ValueError('Word-only spacing cannot use Qt mixed-boundary justification')
+    reviewed_spacing=policy.get('spacing_rule',{})
+    if reviewed_spacing.get('last_line')=='DISTRIBUTE' and alignment!='justify':
+        raise ValueError('Distributed last line requires reviewed justify alignment')
+    manual_justify=bool(reviewed_spacing) and alignment=='justify'
+    if manual_justify:
+        expected={'WORDS':'WORD_BOUNDARIES_ONLY','CHARACTERS':'SHAPED_CLUSTER_BOUNDARIES_ONLY'}
+        if reviewed_spacing.get('justification')!=expected.get(reviewed_spacing.get('mode')):
+            raise ValueError('Source spacing cannot use Qt mixed-boundary justification')
         alignment='left' # Actual boundary-only positioning is applied after shaping.
-    if policy.get('spacing_rule') and spacing_rule['boundary_count']==0 and alignment=='justify':
-        alignment='left' # No implicit CJK/character justification in a word-only rule.
     option.setAlignment(alignments[alignment]);layout=QTextLayout(text,font);layout.setTextOption(option)
     rich_proof=[]
     if rich:
@@ -110,9 +112,11 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
         from .design_rich_text import verify_layout
         verify_layout(layout,rich_proof)
     positioned_runs=None;justification=[]
-    if word_justify:
+    if manual_justify:
         from .design_spacing import word_justified_runs
-        positioned_runs,justification=word_justified_runs(layout,text,lines,width_mm/(factor*scale),policy['spacing_rule'])
+        positioned_runs,justification=word_justified_runs(layout,text,lines,width_mm/(factor*scale),
+            reviewed_spacing,factor*scale)
+        if not any(row['applied'] for row in justification):positioned_runs=None
     for run in positioned_runs if positioned_runs is not None else layout.glyphRuns():
         raw=run.rawFont()
         for glyph,position in zip(run.glyphIndexes(),run.positions()):
@@ -123,6 +127,7 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     if width>width_mm+1e-6:raise ValueError('Unbreakable shaped text exceeds flow container')
     result=dict(layout=layout,ink=ink,factor=factor,width_mm=width,height_mm=height,lines=lines,
                 positioned_runs=positioned_runs,word_justification=justification,
+                boundary_justification=justification,
                 natural_advance_mm=max((line['natural_width_mm']/scale for line in lines),default=0.),
                 text_length=len(text),source_rule=policy,spacing_rule=spacing_rule,
                 first_baseline_mm=(layout.lineAt(0).position().y()+layout.lineAt(0).ascent()-ink.top())*factor if lines else None)
