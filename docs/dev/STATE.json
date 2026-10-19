@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "AI01 original-source text evidence and known-lineage projection implemented;59 related checks pass;continue all eight packages",
+  "active_task": "AI01 current-source full regression running;AI02/03 family and conditioned-profile implementation staged outside frozen source;continue all8",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-AI01-ORIGINAL-TEXT.receipt.json",
   "last_confirmed_commit": "4812d51df5c42ac25a9947b0356a837ed02a1cbc",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/run.json",
@@ -47,7 +47,8 @@
   ],
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
-    "CP-20261019-JOINT-PARAM-PLAN"
+    "CP-20261019-JOINT-PARAM-PLAN",
+    "CP-20261019-AI02-03-STAGED-WIP"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
@@ -1127,5 +1128,22 @@
   "ai_execution_baseline": "docs/dev/progress/PROGRESS-20261019-AI-ALL8-BEGIN.json",
   "latest_targeted_evidence": "docs/qa/targeted/AI-ORIGINAL-TEXT-LINEAGE-20261019.json",
   "latest_evidence_scope": "Previous formal1567 run is historical;current source slice has59 targeted passing checks,formal regression pending",
-  "latest_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T051508Z.json"
+  "latest_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T051508Z.json",
+  "frozen_formal_run": {
+    "id": "RUN-AI-ORIGINAL-TEXT-LINEAGE-001",
+    "source_commit": "4812d51df5c42ac25a9947b0356a837ed02a1cbc",
+    "status": "RUNNING_NOT_VERIFIED",
+    "progress_path": ".checkpoints/formal-live/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/module-progress.json",
+    "code_must_remain_frozen_until_run_completes": true
+  },
+  "staged_ai_implementation": {
+    "path": "docs/dev/wip/ai-learning-stage",
+    "status": "UNAPPLIED_DRAFT_NOT_PRODUCT_IMPLEMENTATION_OR_EXECUTED_TESTS",
+    "files": [
+      "design_family.py.txt",
+      "design_profiles.py.txt",
+      "test_design_family.py.txt"
+    ],
+    "next": "After source regression,apply staged modules,install pinned sklearn dependencies,run actual tests and integrate lifecycle/generation/desktop"
+  }
 }

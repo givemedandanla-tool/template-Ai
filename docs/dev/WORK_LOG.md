@@ -1487,3 +1487,8 @@ User explicitly authorized sustained development of all eight AI learning packag
 ## 2026-10-19 AI01 original text and known-lineage slice
 
 Implemented original_text_observation and existing observation-store integration;12 new source tests plus2 integration tests,59 related checks pass. Initial malformed authored embedded-font fixture corrected; no product gate disabled. Known cross-file QualityGroups relations now invalidate stale observation plans. Existing8/50 counts unchanged,1partial,0complete; no real corpus or model training. Pinned pypdf5.9.0 sources/license recorded.20 older acknowledged snapshot archives retained and hash-verified on /tmp with logical symlinks; latest8 and unacknowledged protected; journal in STATE. Continue all8 packages.
+
+
+## 2026-10-19 AI02/03 staged while AI01 source is frozen
+
+Formal RUN-AI-ORIGINAL-TEXT-LINEAGE-001 running against4812d51;415/1581 passed at05:28:53UTC,no failures yet,not complete. Shared schema plus HDBSCAN family,conditioned profiles/grammar and11 test drafts are staged as unapplied .txt under docs/dev/wip/ai-learning-stage. They are not imported by the product or counted as implementation/tests. Source code remains frozen. Next apply and test after full regression; continue all8 packages.
