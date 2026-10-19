@@ -1,6 +1,6 @@
 # 本地分析與合成驗收：原 8 包／50 條範圍核對
 
-來源 `acb87a47899d643076efa94f701d90e11be64942`；[正式回歸](../../docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-002/run.json)：`PENDING_FULL_FORMAL_RUN`。
+來源 `a288b1e294f1108ab4cebaf0d99e477e87e2e7f0`；[正式回歸](../../docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/run.json)：`PENDING_FULL_FORMAL_RUN`。
 
 私人作品與字型保持本地，未要求提供。原始完整驗收仍為 8 包 PARTIAL、0 包完整真實資格；這不等於本輪未開發，而是避免把合成／Linux 證據當成真實作品或裝置資格。原有 50 條不增加、不刪減。
 

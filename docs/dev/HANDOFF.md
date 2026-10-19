@@ -1,9 +1,9 @@
 # template-Ai 接續入口
 
-使用者明確定義核心：匯入多份作品，學習共用設計規則，自動生成模板，依新輸入選擇最佳可驗證候選或合成排版。一作品一模板不能算達成目標。
+先執行 `python tools/resume_status.py`，依輸出的 HEAD、Git狀態、checkpoint與最新run接續。先讀 [精簡交接](ACTIVE_DEVELOPMENT_HANDOFF.md)、[本地學習與診斷指引](LOCAL_LEARNING_RECOVERY_GUIDE.md)及 STATE 的當前欄位；不要展開整個倉庫或完整歷史日誌。
 
-先執行`python tools/resume_status.py`，讀[STATE](STATE.json)、[精簡交接](ACTIVE_DEVELOPMENT_HANDOFF.md)、[具體實作方案](AI_CROSS_WORK_LEARNING_PLAN.md)、[8工作包／36驗收契約](AI_CROSS_WORK_LEARNING_CONTRACT.json)及[版本化工程參照](AI_CROSS_WORK_ENGINEERING_REFERENCES.json)。新能力0實作／0驗證；下一包AI-LEARN-01，接續01至04先交付跨作品學習到新布局的垂直切片。
+核心是匯入作品→學共同規則→生成具適應力模板／新排版，不是一作品一全域模板。當前是本地復原／合成驗收交付，8包50原條款保留；完整RUN-LOCAL-RECOVERY-ALL8-003正在跑，程式來源a288b1e已凍結。最新[8/50核對](AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.md)與[報告](AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.md)分軟體範圍、合成／真實、後台API／圖形操作及延後裝置，不能用舊0實作或歷史1685PASS代替最新狀態。
 
-歷史CURRENT008的1549測試與25/28父題只驗證舊登錄流程；原75題69完成／3部分／3延後、CORE87／GOV7的原範圍證據保留，不代表新核心AI已完成。不可改寫舊run或靠規劃增加完成數。
+使用者不提供私人作品與字型是本地保密決策，不是再次提問或停止獨立工作的理由。模型、原稿、字型、DB及印紋封存留本機；程式、匿名指標及checkpoint保存GitHub。新對話只帶倉庫、版本與交接，不帶完整聊天。客戶只表達相對位置；字級／字寬／欄框／切齊／分散由核心控制。網站／手機／EXE延後，無使用者明確指令不啟動代理、不合併main、不新增付費服務。
 
-分支dev/v0.1-first-version／PR2，未合併main。無代理、EXE、工作樹或付費服務；零例行對話、按需讀檔、GitHub checkpoint／實際逐檔讀回。私人原稿／字型／個資不自動上傳；歷史詳細交接見history，不重貼聊天。
+分支dev/v0.1-first-version／PR #2。舊28題25完整/3部分、原75題69完成/3部分/3延後、CORE87／GOV7是各自範圍；原8包50條完整資格仍0完整／8部分，真實本地資料與Windows/VivoBook／物理印前證據另列。這些計數不因新目標測試增加。

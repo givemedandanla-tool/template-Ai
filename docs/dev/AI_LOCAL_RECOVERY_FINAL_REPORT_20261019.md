@@ -1,10 +1,10 @@
 # 本地分析、規則學習與除錯交付
 
-狀態：`PENDING_FULL_FORMAL_RUN`；正式程式來源 `acb87a47899d643076efa94f701d90e11be64942`。
+狀態：`PENDING_FULL_FORMAL_RUN`；正式程式來源 `a288b1e294f1108ab4cebaf0d99e477e87e2e7f0`。
 
 已實作 Inkscape／Qt 雙路復原、本機 OCR／字面影像比對、來源核對後共用學習、複合文字與標籤／圖示、明確分散、聯合適合區域及本機診斷。重用成熟開源元件與統計方法，不調用付費 AI 服務。
 
-[本地操作／重跑指引](LOCAL_LEARNING_RECOVERY_GUIDE.md) · [8 包 50 條核對](AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.md) · [正式回歸](../../docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-002/run.json)
+[本地操作／重跑指引](LOCAL_LEARNING_RECOVERY_GUIDE.md) · [8 包 50 條核對](AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.md) · [正式回歸](../../docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/run.json)
 
 完整合成流程使用 22 件自製作品（12 TRAIN／6 VALIDATION／4 HOLDOUT），實際匯入、綁定、訓練成兩個共用家族，零個逐作品全域模板；十件評估、容量校準、重複輸入一致性、預覽、來源／權重未改寫均有測試。測試作品及字型均不來自使用者私人資料。
 

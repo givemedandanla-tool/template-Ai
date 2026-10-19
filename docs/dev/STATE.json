@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "LOCAL_RECOVERY_FIRST_FILE_TARGETED_THEN_FINAL_FULL_RUN",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-CLUSTER-FROZEN.receipt.json",
-  "last_confirmed_commit": "acb87a47899d643076efa94f701d90e11be64942",
+  "active_task": "LOCAL_RECOVERY_FULL003_FROZEN_VERIFICATION",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-FIRST-FILE-FROZEN.receipt.json",
+  "last_confirmed_commit": "a288b1e294f1108ab4cebaf0d99e477e87e2e7f0",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -46,7 +46,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261019-LOCAL-RECOVERY-FIRST-FILE-FROZEN"
+    "CP-20261019-LOCAL-RECOVERY-FULL003-LIVE"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
@@ -799,7 +799,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
-  "next_step": "Complete first-file targeted test,checkpoint/readback,freeze code,run final full003,rebind scoped registry and publish scope audit/receipts without real-qualification inflation.",
+  "next_step": "Read full003 progress/results; do not modify runtime/tools/tests while frozen. If complete software PASS,verify attachments,rebind163 unchanged scoped requirements,render/snapshot,update local recovery audit/guide/handoff,checkpoint/push/readback/publish receipt. Do not request private corpus.",
   "current_work_package": "SWAP-DEFAULT-TRAINING-DESIGN",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -1135,10 +1135,10 @@
   "latest_evidence_scope": "Current851ef2a:1685PASS,215healthy modules,capture0,366attachments;all8partial/0full;user corpus absent",
   "latest_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T061258Z.json",
   "frozen_formal_run": {
-    "id": "RUN-LOCAL-RECOVERY-ALL8-002",
-    "source_commit": "acb87a47899d643076efa94f701d90e11be64942",
+    "id": "RUN-LOCAL-RECOVERY-ALL8-003",
+    "source_commit": "a288b1e294f1108ab4cebaf0d99e477e87e2e7f0",
     "status": "RUNNING",
-    "progress_path": ".checkpoints/formal-live/RUN-LOCAL-RECOVERY-ALL8-002/test-progress.json",
+    "progress_path": ".checkpoints/formal-live/RUN-LOCAL-RECOVERY-ALL8-003/test-progress.json",
     "code_must_remain_frozen_until_run_completes": true
   },
   "staged_ai_implementation": {
@@ -1241,14 +1241,14 @@
   },
   "ai_final_source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
   "user_corpus_training": "NOT_STARTED_NOT_PROVIDED",
-  "current_scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json",
+  "current_scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
   "last_observed_formal_progress": "docs/qa/targeted/AI-FULL002-PROGRESS-20261019T085940Z.json",
   "historical_prepared_checkpoint_archive_resolution": {
     "resolved_utc": "2026-10-19T09:07:21.313888+00:00",
     "report": "docs/dev/history/HISTORICAL_PENDING_CHECKPOINT_ARCHIVES_20261019.json",
     "remaining_pending": []
   },
-  "latest_full_report": "docs/dev/AI_ALL8_FINAL_REPORT_20261019.json",
+  "latest_full_report": "docs/dev/AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.json",
   "remote_formal_evidence_publication": {
     "report": "docs/qa/targeted/AI-ALL8-FINAL-REMOTE-PUBLICATION-20261019.json",
     "snapshot_commit": "6498f30c9c3ad36ac0828626ecd17876473e1482",
@@ -1257,7 +1257,7 @@
   },
   "final_checkpoint_cadence_note": "Final native capture/publication review checkpoint interval exceeded10minutes;earlier live checkpoints and frozen source preserved;not a claim of strict cadence compliance",
   "local_recovery_decision": "docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md",
-  "local_recovery_targeted_evidence": "docs/evidence/local-recovery/targeted-007/result.json",
+  "local_recovery_targeted_evidence": "docs/evidence/local-recovery/targeted-008/result.json",
   "local_recovery_guide": "docs/dev/LOCAL_LEARNING_RECOVERY_GUIDE.md",
   "local_recovery_source_file_scales": [
     "docs/evidence/local-recovery/source-file-scales/scale-1000.json",

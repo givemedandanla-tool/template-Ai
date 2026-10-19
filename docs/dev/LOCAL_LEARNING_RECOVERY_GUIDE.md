@@ -2,6 +2,23 @@
 
 本輪依據：`docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md`。不需要把私人作品或字型提供給 Codex。原稿、字型、資料庫、模型、訓練與確認稿都留在本機；程式沒有把它們自動上傳 GitHub 或 AI 服務。依賴套件／OCR 語言檔安裝可能需要下載，不會因此上傳作品。
 
+## Windows 準備
+
+取得 `dev/v0.1-first-version` 分支的原始碼；`main` 尚未合併本輪變更。安裝 Python 3.11 與 Python Launcher，雙擊 `START_WINDOWS.bat` 建立本機 `.venv`、安裝鎖定依賴並啟動。既有私人資料先保留本地備份，不放入公開 Git 倉庫。
+
+安裝 Inkscape；程式會檢查 PATH 及標準安裝路徑，非標準位置可設定 `TEMPLATE_AI_INKSCAPE` 為實際執行檔。要使用 OCR，另安裝本機 Tesseract 及 `eng.traineddata`／`chi_tra.traineddata`；沒有 OCR 時仍可走來源文字或人工核對路線。
+
+以下是 PowerShell 設定例，路徑按實際安裝修改；設定僅適用同一個視窗啟動的程式。若希望往後雙擊啟動也生效，可將相同名稱加入 Windows 使用者環境變數。
+
+```powershell
+$env:TEMPLATE_AI_TESSERACT = "C:\Program Files\Tesseract-OCR\tesseract.exe"
+$env:TEMPLATE_AI_TESSDATA = "C:\Program Files\Tesseract-OCR\tessdata"
+& $env:TEMPLATE_AI_TESSERACT --tessdata-dir $env:TEMPLATE_AI_TESSDATA --list-langs
+.venv\Scripts\python.exe app.py
+```
+
+語言清單需包含選用的 `eng`／`chi_tra`。此處是本機準備指引；本輪雲端 Linux 測試未冒充 Windows 安裝驗收。先跑下方隔離合成驗收，再匯入私人作品。
+
 ## 本體入口
 
 在「共用 AI 規則／當次稿件」的來源核對頁，開啟「本地來源還原／字型影像診斷」。有作品時先選擇作品與欄位；空資料庫也能直接開啟診斷、選擇第一份作品。即使完全無法匯入，仍可查看原因並匯出不含原稿資訊的診斷。
@@ -13,6 +30,8 @@
 5. 依既有流程核對來源、作品／欄位、雜訊、用途與資料分組，再在共用學習頁指定 TRAIN／VALIDATION／HOLDOUT、建立共用模型。模型訓練與預覽在本地進行。正式數位輸出資格須依本地隔離驗證與來源／字型／政策取得；不需要上傳私人驗收資料。
 
 多 run／多字型、分離標籤與向量欄位圖示的後台 API：`SourceTypographyReview.plan_composite`、`plan` 的 `source_text_flow.presentation`。字元分段需完整、不重疊；可核對字詞切分或固定前綴規則，未核對的字元區間只允許原文字回播。這些進階結構目前透過後台 API／合成案例建立，尚非完整圖形化標註精靈。公司 Logo 仍走既有 LogoStore；欄位圖示不能冒充公司身份。
+
+參數、學習流程與數學方法見 [本地模型細節](LOCAL_LEARNING_MODEL_DETAILS.md)。
 
 ## 已實作的模型與規則
 
