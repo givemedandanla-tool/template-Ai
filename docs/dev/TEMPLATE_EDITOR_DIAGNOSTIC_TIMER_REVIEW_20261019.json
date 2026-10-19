@@ -1,0 +1,32 @@
+{
+  "kind": "ACTUAL_DIAGNOSTIC_INSTRUMENTATION_INVESTIGATION",
+  "python": "3.12.14",
+  "periodic_watchdog_seconds": 60,
+  "original_worker_sha256": "969e1a5f8981ed5e75b9e3c7659ce388a2b190aff979b912220e9f1b8c05b8c9",
+  "observed_native_exits": [
+    {
+      "run": "RUN-TEMPLATE-EDITOR-ALL-003",
+      "module": "test_family_workbench",
+      "seconds": 60.154066,
+      "exit": -11,
+      "stack": "truncated during watchdog traceback"
+    },
+    {
+      "run": "RUN-TEMPLATE-EDITOR-ALL-004",
+      "module": "test_local_acceptance",
+      "seconds": 60.096974,
+      "exit": -11,
+      "stack": "truncated during watchdog traceback"
+    }
+  ],
+  "same_acceptance_module_fatal_only": {
+    "tests": 2,
+    "seconds": 70.759,
+    "status": "PASS",
+    "log": "docs/qa/targeted/template-editor/local-acceptance-fatal-only-001.log"
+  },
+  "causation_status": "STRONG_TIMING_CORRELATION_NOT_CONCLUSIVE_NATIVE_ROOT_CAUSE",
+  "planned_change": "No periodic stack timer during valid tests;retain fatal faulthandler,actual600s deadline and missing-result/native-exit failure;request on-demand stack only on actual deadline",
+  "infra_native_abort_and_deadline_tests": "EXISTING_TEST_IDS_TO_BE_STRENGTHENED_NOT_REMOVED",
+  "all_current_source_unchanged": true
+}

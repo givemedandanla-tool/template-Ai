@@ -62,7 +62,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-TEMPLATE-EDITOR-DIAGNOSTIC-WIP"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -1339,17 +1341,17 @@
   },
   "editor_tools_contract": "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json",
   "editor_tools_progress": {
-    "phase": "FULL004_ALL45_FAMILY_TESTS_PASS_REMAINDER_RUNNING",
+    "phase": "FULL004_DIAGNOSTIC_TIMER_INVESTIGATION",
     "completed_tool_acceptance": 0,
     "total_tool_acceptance": 16,
     "targeted_tests_passed": 15,
     "targeted_evidence": "docs/qa/targeted/template-editor/stage1-workspace-rules.log",
-    "next": "Continue same full004 producer through all1779tests and native capture;all45family tests healthy,no full acceptance claim yet",
+    "next": "Finish004 unchanged;fix periodic diagnostics only;retain fatal/timeout gates;test infrastructure and new frozen full005",
     "scenario_batch_tests_passed": 6,
     "native_worker_case_passed": true,
     "all_family_targeted_previous": 29,
     "source_form_tests_passed": 2,
     "targeted_unique_new_tests": 45,
-    "live_progress_snapshot": "docs/evidence/template-editor/full004-progress-002.json"
+    "live_progress_snapshot": "docs/evidence/template-editor/full004-progress-003.json"
   }
 }
