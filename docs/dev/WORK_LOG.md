@@ -1631,3 +1631,7 @@ TEMPLATE-EDITOR full005 explicitly interrupted at721completed PASS/1779planned d
 TEMPLATE-EDITOR full006 live:740/1779completed,740PASS,0unhealthy completed modules;corrected batch_import16healthy/no modal hang and diagnostic infrastructure healthy. Frozen565code files unchanged;static progress checkpoint only,not finalPASS or full16criteria claim.
 
 TEMPLATE-EDITOR full006 midpoint2:1402/1779completed,1402PASS,all completed modules healthy. All45family tests,16batch import,7infra,15native workbench,2long acceptance(68.350978s),4quality dispatch healthy. Frozen565files unchanged;only static snapshot persisted. Remaining original tests/capture still pending;not a final qualification claim.
+
+TEMPLATE-EDITOR full006 unit stage:1779/1779PASS,229/229healthy owned modules,no missing tests,565source manifest unchanged. Native capture still running,not finalsoftware/16criteria completion yet. Saved immutable unit-stage summary,avoid snapshotting mutable capture producer files;continue same run without source edits.
+
+TEMPLATE-EDITOR live native-capture checkpoint scope:all565runtime/test/tool files and completed unit result records/static handoff are preserved. Active006capture outputs remain pending and are intentionally absent from this WIP stability view,not waived from final publication. Final full checkpoint and require-evidence must include every finished attachment. Temporary orchestration filters only RUNNING output paths,does not edit frozen source or weaken test/evidence gates.
