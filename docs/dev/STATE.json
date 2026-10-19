@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "AI_ALL8_CORE_SELF_VERIFIED_1685PASS;8partial0complete;actual corpus/fonts NOT_PROVIDED;full scope and unsupported subsets in final report",
+  "active_task": "LOCAL_ONLY_RECOVERY_AND_SYNTHETIC_ACCEPTANCE_IMPLEMENTATION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-AI-ALL8-FORMAL002-FINAL.receipt.json",
   "last_confirmed_commit": "6498f30c9c3ad36ac0828626ecd17876473e1482",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
@@ -19,9 +19,9 @@
     "docs/dev/AI_TRAINING_DESIGN_TODOS.md"
   ],
   "next_tasks": [
-    "Actual authorized .ai/font corpus NOT_PROVIDED;do not repeat interview or pretend training finished;when available follow AI_CORE_MODEL_PARAMETERS_20261019.md and existing DB/rights/lineage review",
-    "Real grouped style/heldout evaluation plus unsupported source subsets and production preference promotion remain open;web/mobile/EXE deferred",
-    "Zero routine questions,bounded context and GitHub checkpoints;private app DB/artifacts require existing local backups;Windows/VivoBook/prepress separate"
+    "Implement Inkscape semantic/appearance dual recovery and local visual font matching with explicit uncertainty",
+    "Complete independent synthetic training/rules validation;real works/fonts remain local,not required from user",
+    "Persist privacy-whitelisted diagnostics and checkpoints;retain original8/50 scope and evidence categories"
   ],
   "blocked": [
     {
@@ -45,7 +45,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-LOCAL-RECOVERY-BEGIN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -1246,5 +1248,6 @@
     "attachments_verified": 366,
     "require_evidence": "PASS"
   },
-  "final_checkpoint_cadence_note": "Final native capture/publication review checkpoint interval exceeded10minutes;earlier live checkpoints and frozen source preserved;not a claim of strict cadence compliance"
+  "final_checkpoint_cadence_note": "Final native capture/publication review checkpoint interval exceeded10minutes;earlier live checkpoints and frozen source preserved;not a claim of strict cadence compliance",
+  "local_recovery_decision": "docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md"
 }
