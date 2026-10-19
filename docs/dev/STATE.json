@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "LOCAL_RECOVERY_FULL005_FROZEN_VERIFICATION",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-GOLD-CHANNEL-FROZEN.receipt.json",
-  "last_confirmed_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
+  "active_task": "LOCAL_RECOVERY_ALL1733_TESTS_PASS_NATIVE_CAPTURE_RUNNING",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-FULL005-MID.receipt.json",
+  "last_confirmed_commit": "e795bf556a1a4c9511d0ba915acf18db77fab0f7",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -52,9 +52,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261019-LOCAL-RECOVERY-FULL005-MID"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -1144,7 +1142,7 @@
   "frozen_formal_run": {
     "id": "RUN-LOCAL-RECOVERY-ALL8-005",
     "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
-    "status": "RUNNING",
+    "status": "ALL_TESTS_PASS_NATIVE_CAPTURE_PENDING",
     "progress_path": ".checkpoints/formal-live/RUN-LOCAL-RECOVERY-ALL8-005/test-progress.json",
     "code_must_remain_frozen_until_run_completes": true,
     "module_workers": 4,
@@ -1284,5 +1282,6 @@
   ],
   "local_recovery_live_checkpoint_evidence": "docs/evidence/local-recovery/full005-progress-001.json",
   "local_recovery_failed_full003": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/interruption.json",
-  "local_recovery_failed_full004": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-004/interruption.json"
+  "local_recovery_failed_full004": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-004/interruption.json",
+  "local_recovery_unit_stage_evidence": "docs/evidence/local-recovery/full005-unit-stage.json"
 }
