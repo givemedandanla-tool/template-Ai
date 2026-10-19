@@ -133,7 +133,7 @@ class DesignLearningDialog(QDialog):
         row=QHBoxLayout();self.switch_button=self.button(row,'已檢視並採用變更版面',self.review_switch)
         self.confirm_button=self.button(row,'確認目前完整預覽稿',self.confirm_preview)
         self.export_button=self.button(row,'輸出已確認預覽稿',self.export_preview);layout.addLayout(row)
-        row=QHBoxLayout();self.formal_button=self.button(row,'核對當次實例並確認正式稿',self.confirm_formal);self.button(row,'正式數位輸出',self.export_formal);layout.addLayout(row)
+        row=QHBoxLayout();self.formal_button=self.button(row,'核對當次實例並確認正式稿',self.confirm_formal);self.formal_export_button=self.button(row,'正式數位輸出',self.export_formal);layout.addLayout(row)
         row=QHBoxLayout();self.artifacts=QComboBox();row.addWidget(self.artifacts,1);self.button(row,'開啟已保存的相同檔案',self.replay);layout.addLayout(row)
     def refresh(self):
         current_model=self.models.currentData();self.models.clear();self.job_choices.clear();self.session_choices.clear();self.source_work.clear()
@@ -283,6 +283,7 @@ class DesignLearningDialog(QDialog):
         self.switch_button.setVisible(bool(current and current.get('result_id') and self.jobs.store.get('DESIGN_RESULT',current['result_id']).get('family_switch_requires_review')))
         qualified_model=self.jobs.store.get('DESIGN_MODEL',current['model_id']) if current else None
         self.formal_button.setEnabled(bool(candidate and qualified_model and qualified_model.get('formal_qualification')=='PASS' and current['policy'].get('production') is True))
+        self.formal_export_button.setEnabled(bool(candidate and current and (current.get('confirmation') or {}).get('for_production') and candidate.formal_eligible))
         self.formal_button.setToolTip('需要真實授權作品的獨立封存驗證及正式模型資格')
         self.canvas.show_candidate(candidate);self.confirm_button.setEnabled(candidate is not None)
         self.export_button.setEnabled(candidate is not None and bool(current and current.get('confirmation')))

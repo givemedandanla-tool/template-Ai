@@ -56,21 +56,26 @@ class DesignQualification:
         errors=[];feasible=sum(row['learned']['status']=='FEASIBLE' for row in rows)
         if any(row['learned']['status']=='HARD_ERROR' for row in rows):errors.append('HARD_LAYOUT_ERROR')
         if any(row['learned']['integrity'] and row['learned']['integrity']['data_integrity']!=1 for row in rows):errors.append('DATA_INTEGRITY')
-        if feasible/len(rows)<policy['minimum_feasible_rate']:errors.append('FEASIBILITY_BELOW_REVIEWED_POLICY')
+        from collections import Counter
+        group_counts=Counter(row['lineage_group'] for row in rows)
+        group_feasible=Counter(row['lineage_group'] for row in rows if row['learned']['status']=='FEASIBLE')
+        macro_feasible=sum(group_feasible[key]/count for key,count in group_counts.items())/len(group_counts)
+        if macro_feasible<policy['minimum_feasible_rate']:errors.append('FEASIBILITY_BELOW_REVIEWED_POLICY')
         reviews={}
         identifiers=self.store.db.execute("SELECT id FROM training_records WHERE kind='DESIGN_PREFERENCE_REVIEW' AND json_extract(payload,'$.job_id')=? ORDER BY id LIMIT 10001",(job_id,)).fetchall()
         if len(identifiers)>10000:raise ValueError('Preference review resource budget exceeded;not truncated')
         for (identity,) in identifiers:
             row=self.store.get('DESIGN_PREFERENCE_REVIEW',identity);reviews.setdefault(row['index'],[]).append(row)
-        preference_refs=[];wins=0
+        preference_refs=[];wins=0;group_wins=Counter()
         for index,result in enumerate(rows):
             item=self.store.get('DESIGN_JOB_ITEM',self.jobs.item_key(job_id,index))
             choices=reviews.get(index,[])
             if len(choices)!=1 or choices[0]['result_digest']!=item['result_digest']:
                 errors.append('INDEPENDENT_PREFERENCE_MISSING_OR_CONFLICTING');continue
             selected=choices[0];preference_refs.append(dict(id=selected['id'],revision=selected['revision'],digest=digest(selected)))
-            wins+=selected['winner'] in ('LEARNED','TIE')
-        if wins/len(rows)<policy['minimum_preference_win_or_tie_rate']:errors.append('PREFERENCE_BELOW_REVIEWED_POLICY')
+            won=selected['winner'] in ('LEARNED','TIE');wins+=won;group_wins[result['lineage_group']]+=won
+        macro_preference=sum(group_wins[key]/count for key,count in group_counts.items())/len(group_counts)
+        if macro_preference<policy['minimum_preference_win_or_tie_rate']:errors.append('PREFERENCE_BELOW_REVIEWED_POLICY')
         # UNKNOWN alignment/identity is retained in training, but cannot silently
         # establish a fully qualified production style.
         for family in model['artifact']['profile_model']['families']:

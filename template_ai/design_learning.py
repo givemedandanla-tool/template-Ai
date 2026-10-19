@@ -94,6 +94,9 @@ class CrossWorkLearning:
                     for key in ('container_binding', 'label_binding', 'icon_binding', 'source_alignment', 'source_distribution', 'source_text_flow'):
                         if key in binding:
                             field[key] = deepcopy(binding[key])
+                if label:
+                    from .design_assignment import semantic_observation
+                    field.update(semantic_observation(slot['kind'],label['text']))
                 fields.append(field)
             group_id = component_ids.get(source['hash'])
             if not group_id:

@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import sys
+import subprocess
 import time
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -20,7 +21,9 @@ from template_ai.design_jobs import DesignJobs,run_design_job
 def hashes():
     names=['design_jobs','design_evaluation','design_family','design_profiles','design_joint',
            'training_store','storage','model','datasets','quality_groups','training_pipeline']
-    return {name:hashlib.sha256((ROOT/'template_ai'/f'{name}.py').read_bytes()).hexdigest() for name in names}
+    result={name:hashlib.sha256((ROOT/'template_ai'/f'{name}.py').read_bytes()).hexdigest() for name in names}
+    result['tools/run_design_scale.py']=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+    return result
 
 
 def main():
@@ -28,7 +31,7 @@ def main():
     parser.add_argument('--data-root',type=Path,required=True);parser.add_argument('--report',type=Path,required=True)
     args=parser.parse_args()
     if args.report.exists():raise ValueError('Scale report IDs are immutable;choose a new path')
-    before=hashes();started=time.perf_counter();library=Library(args.data_root);jobs=DesignJobs(library)
+    before=hashes();source_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip();started=time.perf_counter();library=Library(args.data_root);jobs=DesignJobs(library)
     try:
         job=jobs.create('OWNED_DESCRIPTOR_BENCHMARK',dict(items=list(range(args.count)),
             origin='AUTHORED_SYNTHETIC',purpose='DESCRIPTOR_EXTRACTION_AND_SHARED_FAMILY_PROFILE_FIT'),
@@ -49,11 +52,11 @@ def main():
                              latency_ms=item['elapsed_seconds']*1000))
         import numpy as np
         after=hashes();report=dict(schema=1,origin='AUTHORED_SYNTHETIC',count=args.count,job_id=job['id'],
-            actual_pause_after=17,reopened_database=True,retained_prefix_unchanged=True,
+            source_commit=source_commit,actual_pause_after=17,reopened_database=True,retained_prefix_unchanged=True,
             ledger_item_count=jobs.store.count('DESIGN_JOB_ITEM'),source_hashes_before=before,source_hashes_after=after,
             source_unchanged=before==after,wall_seconds=time.perf_counter()-started,
             latency_percentiles_ms=dict(zip(['p50','p95','p99'],np.percentile([row['latency_ms'] for row in rows],[50,95,99]).tolist())),
-            summary=completed['summary'],items=rows,
+            summary=completed['summary'],items=rows,run_context='SHARED_CLOUD_HOST;OTHER_TESTS_OR_BENCHMARKS_MAY_OVERLAP;NOT_ISOLATED_DEVICE_PERFORMANCE',
             limits=['not real .ai parsing','not actual font/Logo fidelity','not Windows/VivoBook timing',
                     'not aesthetics or production qualification','per-item latency excludes ledger commit;wall time includes it'])
         if before!=after:raise ValueError('Measured implementation changed during workload')

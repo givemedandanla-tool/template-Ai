@@ -32,6 +32,8 @@ def register_instance(library,session,result,candidate,actor):
     for key in ('production','basis','approved'):current.pop(key,None)
     if expected!=current:raise ValueError('Session rules/defaults differ from qualified layout policy')
     if model['formal_qualification']!='PASS':raise ValueError('Production model qualification is incomplete')
+    if candidate.risk_context.get('design_style_admission')!='OBSERVED_JOINT_ROLE_COUNTS':
+        raise ValueError('Joint role combination has no trained style admission;preview does not imply formal permission')
     integrity=check_layout(candidate,InputGraph(session['input_graph']),session['intents'])
     if integrity['status']!='PASS':raise ValueError('Current whole layout failed independent checks')
     reference=dict(model_id=model['id'],weights_digest=model['weights_digest'],manifest_digest=model['manifest_digest'],

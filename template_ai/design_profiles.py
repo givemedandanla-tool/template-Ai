@@ -65,16 +65,17 @@ def learn_profiles(family_artifact, examples):
         if len({row['lineage_group'] for row in rows}) < 5:
             raise ValueError('Shared profiles need independent family support')
         roles, data, containers, relations = defaultdict(list), defaultdict(list), defaultdict(list), defaultdict(list)
-        counts, orders, dimensions = [], [], []
+        counts, orders, dimensions, semantic_patterns = [], [], [], []
         for example in rows:
             dimensions.append((example['width_mm'], example['height_mm']))
-            seen = set(); row_counts = Counter(); ordered = []
+            seen = set(); row_counts = Counter(); ordered = [];semantic_roles={}
             for field in example['fields']:
                 key = role_key(field)
                 if key in seen:
                     raise ValueError('Duplicate role/owner/index in a work observation')
                 seen.add(key); frame = _frame(field, example); row_counts[field['owner']+':'+field['kind']] += 1
                 semantic = field.get('semantic_type') or field['kind']
+                semantic_roles[key]=semantic
                 container, basis = _container_key(field)
                 point = source_point(field)
                 metrics = dict(source_pt=point, horizontal_scale=_metric(field, 'horizontal_scale', 'ratio'),
@@ -88,11 +89,12 @@ def learn_profiles(family_artifact, examples):
                     source_text_flow=deepcopy(field.get('source_text_flow')),
                     label_binding=deepcopy(field.get('label_binding', {'status':'UNKNOWN'})),
                     icon_binding=deepcopy(field.get('icon_binding', {'status':'UNKNOWN'})),
-                    container_basis=basis, joint=metrics,
+                    container_basis=basis,container_key=container,joint=metrics,
                     grapheme_count=field.get('measured_grapheme_count'),
                     dimensions_mm=[example['width_mm'], example['height_mm']])
                 roles[key].append(item); data[semantic].append(item); containers[container].append(item)
                 ordered.append((frame[1], frame[0], key))
+            semantic_patterns.append((example['lineage_group'],tuple(sorted(semantic_roles.items()))))
             counts.append(dict(row_counts)); orders.append(tuple(value[2] for value in sorted(ordered)))
             # Relative observations retain real residuals. No guessed print tolerance.
             fields = {role_key(field):field for field in example['fields']}
@@ -114,6 +116,7 @@ def learn_profiles(family_artifact, examples):
             configurations = {digest(sample['joint']):sample['joint'] for sample in samples}
             role_profiles.append(dict(key=key, kind=samples[0]['kind'], owner_port=samples[0]['owner_port'],
                 support=len({sample['lineage_group'] for sample in samples}),
+                confirmed_container_keys=sorted({sample['container_key'] for sample in samples if sample['container_basis']=='CONFIRMED_SOURCE_CORRESPONDENCE'}),
                 present_examples=len(samples), observed_optional=len(samples)<len(rows),
                 frame_centre=[median(column) for column in normalized],
                 frame_distributions=[summary(column) for column in normalized],
@@ -148,6 +151,9 @@ def learn_profiles(family_artifact, examples):
             residuals={metric:summary(sample[metric] for sample in samples) for metric in samples[0]},
             hard_alignment='NOT_INFERRED_FROM_UNCALIBRATED_TOLERANCE')
             for key, samples in sorted(relations.items())]
+        pattern_groups=defaultdict(set)
+        for group,pattern in semantic_patterns:pattern_groups[pattern].add(group)
+        preferred_semantics=sorted(pattern_groups,key=lambda pattern:(-len(pattern_groups[pattern]),pattern))[0]
         order_counts = Counter(orders)
         preferred = sorted(order_counts, key=lambda order:(-order_counts[order], order))[0]
         repeat_keys = sorted({key for row in counts for key in row})
@@ -157,8 +163,10 @@ def learn_profiles(family_artifact, examples):
             observed_dimensions_mm=sorted(set(dimensions)), roles=role_profiles,
             data_requirement_profiles=data_profiles, field_capability_profiles=field_profiles,
             relations=relation_profiles, grammar=dict(optional_roles=[r['key'] for r in role_profiles if r['observed_optional']],
+                observed_joint_counts=[dict(pattern=dict(pattern),independent_support=len({row['lineage_group'] for row,count in zip(rows,counts) if tuple(sorted(count.items()))==pattern})) for pattern in sorted({tuple(sorted(count.items())) for count in counts})],
                 repeated_groups=repeat, observed_orders=[dict(order=list(order), count=order_counts[order]) for order in sorted(order_counts)],
-                default_order=list(preferred), default_basis='CONDITIONAL_TRAIN_FREQUENCY_THEN_STABLE_ROLE_ORDER',
+                default_order=list(preferred),default_semantic_roles=dict(preferred_semantics),
+                semantic_pattern_support=[dict(roles=dict(pattern),independent_support=len(groups)) for pattern,groups in sorted(pattern_groups.items())],default_basis='CONDITIONAL_TRAIN_FREQUENCY_THEN_STABLE_ROLE_ORDER',
                 default_is_not_aesthetic_truth=True),
             source_members=family['members'], policy_status='PENDING_EXPLICIT_ACTIVATION',
             runtime_capacity='NOT_CALIBRATED'))

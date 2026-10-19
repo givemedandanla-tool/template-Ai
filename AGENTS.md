@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 2026-10-19最新實作入口
+
+目前8包皆PARTIAL、0完整驗收；實際.ai作品與字型使用者已確認尚未提供。讀STATE及docs/dev/AI_CORE_IMPLEMENTATION_20261019.md，不把下方歷史0實作／1partial當最新。共用核心、實際桌面互動、來源glyph、條件指派／聯合參數、回饋與持久評估已實作候選；正式全回歸即將凍結執行，不再改程式／測試／tools直到該run結束。合成和mocked憑證機制不是真實訓練資格。
+
 ## 2026-10-19最新設計澄清
 
 先讀docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md及docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md。同模板合法交換優先，所有多合法結果有預設優選，客戶明確關係優先。新實例字級／字寬／欄位尺寸／切齊／分散由核心規則聯動，無客戶細參數控制；舊模板／定稿版本保留。自動採用背景候選仍OPEN。這是未實作設計更新，不把歷史1567PASS當新能力已完成。

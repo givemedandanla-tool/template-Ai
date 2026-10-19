@@ -69,7 +69,9 @@ class ExactFeedbackQualificationTests(unittest.TestCase):
         active=self.feedback.activate(ranker['id'],0,'Reviewer',dict(version='owned-pref-1',production=False),True)
         self.assertEqual(active['model_id'],ranker['id'])
         with self.assertRaises(ValueError):self.feedback.activate(ranker['id'],active['revision'],'Reviewer',dict(version='invalid',production=True),True)
-        sample_id=selected[0]['sample_id'];self.feedback.store.transition_sample(
+        sample_id=selected[0]['sample_id']
+        self.assertIn(ranker['id'],self.feedback.store.sample_usage_impact(sample_id)['design_ranker_ids'])
+        self.feedback.store.transition_sample(
             self.feedback.store.sample_transition_plan(sample_id,'REVOKE'),'Author','Owned support withdrawal',True)
         with self.assertRaises(ValueError):self.feedback.checked_ranker(ranker['id'])
     def test_synthetic_evaluation_cannot_obtain_real_corpus_certificate(self):

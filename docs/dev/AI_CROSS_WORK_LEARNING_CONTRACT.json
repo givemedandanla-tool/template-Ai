@@ -65,29 +65,9 @@
       "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
       "current_delivery_phase": "CORE_APPLICATION",
       "implementation_slice": {
-        "schema": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
-        "modules": [
-          "template_ai/design_observation.py",
-          "template_ai/design_observation_store.py",
-          "template_ai/original_text_observation.py"
-        ],
-        "implemented": [
-          "Typed unit/evidence graph and source-pt similarity helper",
-          "Work-scoped role/person/company nodes and references",
-          "Existing transaction/history,CAS,idempotency,currency checks",
-          "Atomic automatic unit observation references and extractor-version cache pin",
-          "Hash-verified original SVG declarations/physical transforms and PDF compatibility text/font-program evidence; source-page scope only",
-          "Existing QualityGroups correlation projection invalidates revised source-observation lineage plans"
-        ],
-        "remaining": [
-          "Exact glyph/baseline/font-asset mapping from native sources to work/person/field",
-          "Complete reviewed cross-file lineage/dataset qualification on real authorized corpus",
-          "Shared families/rules/model training"
-        ],
-        "not_package_complete": true,
-        "formal_evidence": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
-        "verification_scope": "Synthetic observation/storage/automatic mechanics and existing regression;not native AI extraction,real corpus learning or full AI01 acceptance",
-        "current_targeted_evidence": "docs/qa/targeted/AI-ORIGINAL-TEXT-LINEAGE-20261019.json"
+        "status": "PARTIAL_CORE_CANDIDATE_SELF_TESTED_FULL_REGRESSION_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED"
       }
     },
     {
@@ -140,12 +120,9 @@
       "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
       "current_delivery_phase": "CORE_APPLICATION",
       "implementation_slice": {
-        "modules": [
-          "template_ai/design_family.py"
-        ],
-        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
-        "not_package_complete": true,
-        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+        "status": "PARTIAL_CORE_CANDIDATE_SELF_TESTED_FULL_REGRESSION_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED"
       }
     },
     {
@@ -220,13 +197,9 @@
       "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
       "current_delivery_phase": "CORE_APPLICATION",
       "implementation_slice": {
-        "modules": [
-          "template_ai/design_profiles.py",
-          "template_ai/design_source_binding.py"
-        ],
-        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
-        "not_package_complete": true,
-        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+        "status": "PARTIAL_CORE_CANDIDATE_SELF_TESTED_FULL_REGRESSION_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED"
       }
     },
     {
@@ -305,12 +278,9 @@
       "design_basis": "docs/decisions/2026-10-18-FIELD-STRUCTURE-TEXT-EQUIVALENCE-LEARNING.md",
       "current_delivery_phase": "CORE_APPLICATION",
       "implementation_slice": {
-        "modules": [
-          "template_ai/design_synthesis.py"
-        ],
-        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
-        "not_package_complete": true,
-        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+        "status": "PARTIAL_CORE_CANDIDATE_SELF_TESTED_FULL_REGRESSION_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED"
       }
     },
     {
@@ -358,12 +328,9 @@
       ],
       "current_delivery_phase": "CORE_APPLICATION",
       "implementation_slice": {
-        "modules": [
-          "template_ai/design_ranking.py"
-        ],
-        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
-        "not_package_complete": true,
-        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+        "status": "PARTIAL_CORE_CANDIDATE_SELF_TESTED_FULL_REGRESSION_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED"
       }
     },
     {
@@ -415,12 +382,9 @@
       ],
       "current_delivery_phase": "CORE_APPLICATION",
       "implementation_slice": {
-        "modules": [
-          "template_ai/design_learning.py"
-        ],
-        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
-        "not_package_complete": true,
-        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+        "status": "PARTIAL_CORE_CANDIDATE_SELF_TESTED_FULL_REGRESSION_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED"
       }
     },
     {
@@ -502,12 +466,9 @@
       "interaction_delivery_basis": "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
       "interaction_design_start_condition": "Versioned training results with stated validation scope available; later body interaction goal retained",
       "implementation_slice": {
-        "modules": [
-          "template_ai/design_session.py"
-        ],
-        "current_targeted_evidence": "docs/qa/targeted/AI-SHARED-CORE-APPLIED-20261019.json",
-        "not_package_complete": true,
-        "scope": "ENGINEERING_MECHANICS_ON_AUTHORED_SOURCES_ONLY;see report known_limits"
+        "status": "PARTIAL_CORE_CANDIDATE_SELF_TESTED_FULL_REGRESSION_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED"
       }
     },
     {
@@ -571,15 +532,9 @@
       "current_delivery_phase": "CORE_APPLICATION",
       "dependency_change_basis": "docs/decisions/2026-10-18-MODEL-FIRST-INVERSE-REQUIREMENTS.md",
       "implementation_slice": {
-        "modules": [
-          "design_jobs",
-          "design_evaluation"
-        ],
-        "evidence": [
-          "docs/qa/targeted/AI-OWNED-SCALE-1000-20261019.json",
-          "docs/qa/targeted/AI-OWNED-SCALE-3000-20261019.json"
-        ],
-        "scope": "Owned descriptor/family/profile benchmark and durable job mechanism only;actual authorized grouped corpus and device qualifications absent;all50 acceptance statuses retained"
+        "status": "PARTIAL_CORE_CANDIDATE_SELF_TESTED_FULL_REGRESSION_PENDING",
+        "source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
+        "actual_user_corpus": "NOT_PROVIDED"
       }
     }
   ],
@@ -1172,14 +1127,14 @@
   "training_design_todos": {
     "request_decision": "docs/decisions/2026-10-18-DATA-FIELD-COMPATIBILITY-DESIGN-TODOS.md",
     "human_view": "docs/dev/AI_TRAINING_DESIGN_TODOS.md",
-    "status": "PENDING_DESIGN",
+    "status": "PARTIAL_DESIGN_CANDIDATE_IMPLEMENTED_NOT_CORPUS_VALIDATED",
     "scope": "Design tasks only; not implementation,training or feature completion",
     "source_of_truth": "This active contract; Markdown is a rendered view",
     "conceptual_views": [
       "Data-type-centered requirements",
       "Field/container-centered capabilities"
     ],
-    "deployed_model_architecture": "TO_DESIGN; logical views do not require two separate neural networks",
+    "deployed_model_architecture": "No production deployment;shared structural HDBSCAN family,dual logical profiles/grammar,joint Ridge+style modes,Qt/Kiwi solver and curated pairwise logistic preview ranker",
     "common_design_requirements": [
       "Define typed inputs/outputs,units,source confidence,UNKNOWN handling and dependency versions",
       "Separate learned features from approved hard policies and training/runtime hyperparameters",
@@ -1332,7 +1287,8 @@
       "AI-LEARN-08"
     ],
     "analysis_status": "PROPOSAL_DRAFT_AVAILABLE",
-    "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md"
+    "analysis_proposal": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
+    "current_scope": "Core candidate implementations and owned mechanism checks;3design TODOs remain0fully completed pending actual source/rule/domain qualification"
   },
   "comprehensive_training_proposal": {
     "path": "docs/dev/AI_TRAINING_COMPREHENSIVE_PROPOSAL.md",
@@ -1498,5 +1454,6 @@
     "legacy_runtime_and_verified_requirements": "UNCHANGED;new design policy not yet implemented",
     "completion_changed": false
   },
-  "user_corpus_training": "NOT_STARTED"
+  "user_corpus_training": "NOT_STARTED",
+  "user_corpus_availability": "NOT_PROVIDED_CONFIRMED_BY_USER_2026-10-19"
 }

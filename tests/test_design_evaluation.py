@@ -38,7 +38,7 @@ class ActualLayoutEvaluationTests(unittest.TestCase):
         report=self.run_job(job)['summary']
         self.assertEqual(report['denominator'],2);self.assertEqual(report['hard_error_count'],0)
         self.assertEqual(report['statuses'],{'FEASIBLE':1,'UNKNOWN_OR_UNSUPPORTED':1})
-        self.assertEqual(report['feasible_rate'],.5);self.assertEqual(report['data_integrity_rate'],1.)
+        self.assertEqual(report['feasible_rate'],.5);self.assertEqual(report['group_macro_feasible_rate'],.5);self.assertEqual(report['data_integrity_denominator'],1); self.assertEqual(report['data_integrity_rate'],1.)
         self.assertEqual(report['origin'],'AUTHORED_SYNTHETIC')
         self.assertEqual(self.service.learning.checked_model(self.model['id'])[0]['weights_digest'],self.model['weights_digest'])
         self.assertTrue(self.service.store.count('DESIGN_HOLDOUT_EXPOSURE'))

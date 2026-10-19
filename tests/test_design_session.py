@@ -120,5 +120,8 @@ class DesignSessionTests(unittest.TestCase):
         learning=CrossWorkLearning(self.library);new=learning.train(self.dataset_id,'Author',approved=True)
         active=learning.store.get('DESIGN_ACTIVE','local-layout')
         learning.activate(new['id'],active['revision'] if active else 0,'Author',self.policy,True)
+        changed_revision=InputGraph(deepcopy(self.graph.data));changed_revision.data['revision']+=5
+        found=self.sessions.find_accepted(changed_revision,90,54,production=False)
+        self.assertEqual(found['id'],artifact['id'])
         replay=self.sessions.replay_artifact(artifact['id'])
         self.assertEqual(replay['sha256'],artifact['sha256']);self.assertEqual(replay['model_id'],self.model['id'])

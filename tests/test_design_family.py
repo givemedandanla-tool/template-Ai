@@ -56,7 +56,7 @@ class DesignFamilyTests(unittest.TestCase):
     def test_default_typography_stays_missing_in_preprocessing(self):
         rows=[example(i) for i in range(8)]; a=train_families(rows)
         from template_ai.design_family import FEATURES
-        index=FEATURES.index('name_pt')
+        index=FEATURES.index('position_0_pt_ratio')
         self.assertIsNone(feature_vector(rows[0])[index])
         self.assertEqual(a['preprocessing']['centres'][index],0)
 
@@ -117,3 +117,24 @@ class DesignProfileTests(unittest.TestCase):
         with self.assertRaises(ValueError):learn_profiles(changed,rows)
         rows[0]['role']='VALIDATION'
         with self.assertRaises(ValueError):learn_profiles(family,rows)
+
+
+class StructureBeforeSemanticFamilyTests(unittest.TestCase):
+    def test_equivalent_semantic_substitution_does_not_itself_split_geometry_families(self):
+        rows=[example(i) for i in range(12)]
+        for i,row in enumerate(rows):
+            if i%2:row['fields'][1]['kind']='email'
+        self.assertEqual(feature_vector(rows[0]),feature_vector(rows[1]))
+        artifact=train_families(rows)
+        self.assertEqual(len(artifact['families']),1)
+        self.assertEqual(artifact['families'][0]['independent_support'],12)
+        profile=learn_profiles(artifact,rows)['families'][0]
+        self.assertEqual(len(profile['grammar']['observed_joint_counts']),2)
+        self.assertTrue(any(row['semantic_type']=='email' for row in profile['data_requirement_profiles']))
+
+    def test_dense_minor_variants_share_three_structural_families_not_fifty_one(self):
+        from template_ai.design_evaluation import owned_example
+        rows=[owned_example(index) for index in range(300)]
+        artifact=train_families(rows)
+        self.assertEqual(len(artifact['families']),3)
+        self.assertEqual(sum(len(row['members']) for row in artifact['families']),300)

@@ -28,21 +28,24 @@ def input_facts(graph):
             kind='company' if entity in companies and row['kind']=='name' else row['kind']
             key=(entity,kind);index=counts.get(key,0);counts[key]=index+1
             if not row['value']:continue
-            facts.append(dict(field_id=row['id'],entity_id=entity,owner_port=ports[entity],kind=kind,
+            from .design_assignment import semantic_observation
+            facts.append(dict(semantic_observation=semantic_observation(kind,row['value']),field_id=row['id'],entity_id=entity,owner_port=ports[entity],kind=kind,
                 index=index,value=row['value'],role_key=ports[entity]+':'+kind+':'+str(index),
                 render_id='render-'+digest([row['id'],entity])[:32]))
     return facts
 
 
-def _font_options(profile, key, width, height, value=None, policy=None):
+def _font_options(profile, key, width, height, value=None, policy=None, semantic_type=None):
     options={};support_groups={}
     for data in profile['data_requirement_profiles']:
         for sample in data['presentation_evidence']:
             if sample['role_key']!=key:continue
+            observed=sample['semantic_type']
+            if semantic_type in ('mobile','landline') and observed in ('mobile','landline') and observed!=semantic_type:continue
             vector=sample['joint'];asset=sample['source_font_ref']
             if (not isinstance(asset,dict) or vector['source_pt'] is None
                     or vector['horizontal_scale'] is None or vector['tracking_mm'] is None):continue
-            if not 1<=vector['source_pt']<=200 or not .05<=vector['horizontal_scale']<=1 or not 0<=vector['tracking_mm']<=2:
+            if not 1<=vector['source_pt']<=200 or not .05<=vector['horizontal_scale']<=10 or not 0<=vector['tracking_mm']<=2:
                 continue  # Observed source facts survive; current output policy is narrower.
             candidate=dict(font_asset=deepcopy(asset),size_pt=vector['source_pt'],scale=vector['horizontal_scale'],
                 tracking_mm=vector['tracking_mm'],width_mm=sample['frame'][2]*width,
@@ -72,7 +75,7 @@ def _font_options(profile, key, width, height, value=None, policy=None):
             for prediction in predict_joint(joint_model,width,height,advance/12.):
                 if prediction['mode_id']!=mode['id']:continue
                 vector=prediction['joint']
-                if not (1<=vector['source_pt']<=200 and .05<=vector['horizontal_scale']<=1
+                if not (1<=vector['source_pt']<=200 and .05<=vector['horizontal_scale']<=10
                         and 0<=vector['tracking_mm']<=2 and vector['frame_width_mm']>0 and vector['frame_height_mm']>0):continue
                 candidate=dict(font_asset=deepcopy(asset),size_pt=vector['source_pt'],scale=vector['horizontal_scale'],
                     tracking_mm=vector['tracking_mm'],width_mm=vector['frame_width_mm'],height_mm=vector['frame_height_mm'],
@@ -157,6 +160,14 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
         logo_key=fact['owner_port']+':logo:0'
         if fact['kind']=='company' and logo_key in roles:
             fact['kind']='logo';fact['role_key']=logo_key
+    from .design_assignment import assign_fields
+    assignment=assign_fields(profile,facts,policy,lambda fact,key:_font_options(profile,key,width,height,
+        fact['value'],policy,fact['semantic_observation']['semantic_type']))
+    assigned={row['render_id']:row for row in assignment['assignments']}
+    if assignment['status']!='ASSIGNED':missing.append(dict(reason=assignment['status']))
+    for fact in facts:
+        if fact['render_id'] in assigned:
+            fact['input_role_key']=fact['role_key'];fact['role_key']=assigned[fact['render_id']]['source_role_key']
     base_scope='CURRENT_INPUT_PREVIEW_NOT_GLOBAL_TEMPLATE_OR_FORMAL_APPROVAL'
 
     for fact in facts:
@@ -174,11 +185,13 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
             configuration=dict(id=digest([asset,frame,width,height]),logo=deepcopy(asset),font_asset=None,
                 width_mm=frame[2]*width,height_mm=frame[3]*height,scale=1.,tracking_mm=0.,support=roles[fact['role_key']]['support'])
             rows=[configuration]
-        else:rows=_font_options(profile,fact['role_key'],width,height,fact['value'],policy)
+        else:rows=assigned.get(fact['render_id'],{}).get('options',[])
         if not rows:missing.append(dict(render_id=fact['render_id'],reason='SOURCE_JOINT_TYPOGRAPHY_OR_FONT_IDENTITY_UNKNOWN'))
         options.append(rows)
     base=dict(version=VERSION,family_id=profile['family_id'],input_digest=digest(graph.data),
         policy_version=policy['version'],intents=intents,field_refs=[{k:v for k,v in f.items() if k!='value'} for f in facts],
+        assignment={k:v for k,v in assignment.items() if k!='assignments'},
+        assigned_containers=[{k:v for k,v in row.items() if k!='options'} for row in assignment['assignments']],
         actual_template_objects_created=0,scope='CURRENT_INPUT_PREVIEW_NOT_GLOBAL_TEMPLATE_OR_FORMAL_APPROVAL')
     if missing:
         return dict(base,status='SOURCE_EVIDENCE_REQUIRED',issues=missing,candidates=[],searched=0,
@@ -187,6 +200,10 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
     if any(company['logo_id'] and 'c'+str(i+1) not in represented for i,company in enumerate(graph.data['companies'])):
         return dict(base,status='ASSET_ADAPTATION_REQUIRED',issues=[dict(reason='SELECTED_LOGO_NOT_REPRESENTED_BY_FAMILY')],
                     candidates=[],searched=0,complete_search=False)
+    from collections import Counter
+    joint_counts=dict(Counter(fact['owner_port']+':'+fact['kind'] for fact in facts))
+    observed_patterns=[row['pattern'] for row in profile['grammar'].get('observed_joint_counts',[])]
+    style_admission='OBSERVED_JOINT_ROLE_COUNTS' if not observed_patterns or joint_counts in observed_patterns else 'UNVERIFIED_JOINT_ROLE_COMBINATION_PREVIEW_ONLY'
     combinations=math.prod(len(row) for row in options);candidates=[];attempts=[]
     for selected in islice(product(*options),budget):
         solver=kiwi.Solver();variables={};slots=[];measurements=[];failure=None
@@ -229,7 +246,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                 solver.addConstraint((y==frame[1]*height)|kiwi.strength.strong)
                 slots.append(Slot(fact['kind'],fact['owner_port'],Rect(frame[0]*width,frame[1]*height,w,h),
                     index=fact['index'],font=family,font_style=style,size_pt=configuration['size_pt'],
-                    min_scale=configuration['scale'],font_asset=deepcopy(asset),id=rid,tracking_mm=configuration['tracking_mm'],
+                    min_scale=min(1.,configuration['scale']),font_asset=deepcopy(asset),id=rid,tracking_mm=configuration['tracking_mm'],
                     align=configuration.get('align','left'),distribution_approval=deepcopy(configuration.get('distribution')) if isinstance(configuration.get('distribution'),dict) else None,
                     tracking_min_mm=configuration['tracking_mm'],tracking_max_mm=configuration['tracking_mm'],text_flow=deepcopy(flow)))
                 measurements.append(dict(render_id=rid,text=display,width_mm=tw,height_mm=th,
@@ -298,6 +315,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                 diagnostics=[dict(code='UNPUBLISHED',severity='BLOCK')],
                 dependency_stamp=layout_dependency(template,logos))
             pin_inputs(candidate,people,companies,logos)
+            candidate.risk_context['design_style_admission']=style_admission
             candidate.risk_context['design_label_bindings']={fact['render_id']:deepcopy(config.get('label_binding'))
                 for fact,config in zip(facts,selected) if fact['kind']!='logo'}
             candidate.risk_context['design_relations']=[dict(subject=a,relation=relation,object=b)

@@ -155,7 +155,7 @@ class DesignSessions:
                 choices.append(dict(id=family['family_id']+':'+str(index),family_id=family['family_id'],
                     configuration_ids=row['configuration_ids'],geometry_digest=row['geometry_digest'],
                     legal_preview_geometry=True,formal_eligible=candidate.formal_eligible,
-                    features=dict(deviation=-candidate.score,scale_loss=sum(1-item.scale for item in candidate.items),
+                    features=dict(deviation=-candidate.score,scale_loss=sum(abs(1-item.scale) for item in candidate.items),
                         density=area/(snapshot['width_mm']*snapshot['height_mm']),
                         relation_changes=len(snapshot['intents']),joint_style_residual=0.),serialized=_serialize(candidate)))
             if previous_family==family['family_id'] and choices:

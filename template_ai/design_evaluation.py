@@ -178,10 +178,17 @@ def summarize_job(library,job,results):
             profile_count=len(profiles['families']),source_font_fidelity='NOT_MEASURED',production_qualification='NOT_EVALUATED')
     statuses=Counter(row['learned']['status'] for row in results);feasible=statuses['FEASIBLE']
     known=[row['learned']['integrity'] for row in results if row['learned']['integrity']]
-    groups=len({row['lineage_group'] for row in results})
+    group_counts=Counter(row['lineage_group'] for row in results)
+    group_feasible=Counter(row['lineage_group'] for row in results if row['learned']['status']=='FEASIBLE')
+    groups=len(group_counts)
+    macro=sum(group_feasible[key]/count for key,count in group_counts.items())/groups
+    all_feasible=sum(group_feasible[key]==count for key,count in group_counts.items())
     return dict(common,origin=job['plan']['origin'],denominator=len(results),independent_lineage_groups=groups,
         statuses=dict(statuses),feasible_rate=feasible/len(results),case_wilson_95=wilson(feasible,len(results)),
         uncertainty='CASE_INTERVAL_NOT_GROUP_BOOTSTRAP;MULTIPLE_CASES_IN_GROUP_ARE_CORRELATED',
+        group_macro_feasible_rate=macro,group_all_cases_feasible=all_feasible,
+        group_all_cases_feasible_wilson_95=wilson(all_feasible,groups),data_integrity_denominator=len(known),
+        group_statistics_scope='EQUAL_WEIGHT_KNOWN_LINEAGE_GROUPS;ALL_CASES_SUCCESS_INTERVAL_IS_DIFFERENT_FROM_CASE_RATE',
         hard_error_count=statuses['HARD_ERROR'],data_integrity_rate=min((row['data_integrity'] for row in known),default=None),
         baseline_feasible=sum(row['baseline']['status']=='FEASIBLE' for row in results),
         preference_quality='UNKNOWN_WITHOUT_INDEPENDENT_PAIR_REVIEW',production_qualification='NOT_EVALUATED')

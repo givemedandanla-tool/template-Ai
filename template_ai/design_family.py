@@ -10,10 +10,12 @@ from statistics import median
 
 from .training_store import digest
 
-VERSION = 'cross-work-family-1'
+VERSION = 'cross-work-family-2-structural'
 ROLES = ('name', 'title', 'company', 'phone', 'email', 'line', 'ig', 'address', 'logo')
-FEATURES = ('aspect', 'object_count', 'occupied_area') + tuple(
-    role+'_'+dimension for role in ROLES for dimension in ('count', 'x', 'y', 'w', 'h', 'pt'))
+SPATIAL_POSITIONS=16
+FEATURES=('aspect','object_count','occupied_area','owner_group_count')+tuple(
+    'grid_'+str(i) for i in range(16))+tuple('position_'+str(i)+'_'+dimension
+    for i in range(SPATIAL_POSITIONS) for dimension in ('x','y','w','h','pt_ratio'))
 MAX_EXAMPLES = 10000
 
 
@@ -37,22 +39,27 @@ def feature_vector(example):
     width, height = number(example['width_mm']), number(example['height_mm'])
     if width <= 0 or height <= 0 or not 1 <= len(example['fields']) <= 512:
         raise ValueError('Invalid observation dimensions or bounded field count')
-    grouped = defaultdict(list); area = 0
+    frames=[];area=0.;grid=[0.]*16
     for field in example['fields']:
-        role = field['kind']
-        if role not in ROLES:
-            raise ValueError('Unknown typed field role')
-        rect = field['rect']; x, y, w, h = (number(rect[k]) for k in ('x', 'y', 'w', 'h'))
-        if w <= 0 or h <= 0 or x < 0 or y < 0 or x+w > width+1e-6 or y+h > height+1e-6:
+        if field['kind'] not in ROLES:raise ValueError('Unknown typed field role')
+        rect=field['rect'];x,y,w,h=(number(rect[k]) for k in ('x','y','w','h'))
+        if w<=0 or h<=0 or x<0 or y<0 or x+w>width+1e-6 or y+h>height+1e-6:
             raise ValueError('Source observation is not an in-page field frame')
-        grouped[role].append((x/width, y/height, w/width, h/height, source_point(field)))
-        area += w*h/(width*height)
-    values = [width/height, float(len(example['fields'])), area]
-    for role in ROLES:
-        rows = grouped[role]; values.append(float(len(rows)))
-        values.extend(median(row[i] for row in rows) if rows else None for i in range(4))
-        points = [row[4] for row in rows if row[4] is not None]
-        values.append(median(points) if points else None)
+        frame=(x/width,y/height,w/width,h/height,source_point(field));frames.append(frame)
+        area+=w*h/(width*height)
+        for gy in range(4):
+            for gx in range(4):
+                overlap_x=max(0.,min(frame[0]+frame[2],(gx+1)/4)-max(frame[0],gx/4))
+                overlap_y=max(0.,min(frame[1]+frame[3],(gy+1)/4)-max(frame[1],gy/4))
+                grid[gy*4+gx]+=overlap_x*overlap_y
+    # Structure is the family view; semantic types belong in conditional profiles.
+    # All objects contribute to grid/count/area,even beyond the16 positional features.
+    measured_points=[row[4] for row in frames if row[4] is not None]
+    point_reference=median(measured_points) if measured_points else None
+    frames=[(*row[:4],row[4]/point_reference if row[4] is not None and point_reference else None) for row in frames]
+    frames.sort(key=lambda row:(row[1],row[0],row[2],row[3],row[4] if row[4] is not None else -1))
+    values=[width/height,float(len(frames)),area,float(len({field['owner'] for field in example['fields']}))]+grid
+    for index in range(SPATIAL_POSITIONS):values.extend(frames[index] if index<len(frames) else [None]*5)
     return values
 
 
@@ -75,7 +82,7 @@ def train_families(examples, settings=None, previous=None):
     if set(settings)-allowed:
         raise ValueError('Unknown family hyperparameter')
     configuration = dict(min_independent_support=5, min_cluster_size=5, min_samples=2,
-                         cluster_selection_epsilon=0.)
+                         cluster_selection_epsilon=.05)
     configuration.update(settings)
     for key in ('min_independent_support', 'min_cluster_size', 'min_samples'):
         if type(configuration[key]) is not int or not 2 <= configuration[key] <= 10000:

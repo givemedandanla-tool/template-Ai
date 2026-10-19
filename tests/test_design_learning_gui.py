@@ -37,6 +37,7 @@ class DesktopSharedLearningWorkflowTests(unittest.TestCase):
         self.assertTrue(self.dialog.confirm_button.isEnabled());self.assertTrue(self.dialog.canvas.boxes)
         QTest.mouseClick(self.dialog.confirm_button,Qt.LeftButton);APP.processEvents()
         self.assertTrue(self.dialog.export_button.isEnabled())
+        self.assertFalse(self.dialog.formal_export_button.isEnabled())
         target=self.root/('PREVIEW-gui-'+self.session['id']+'.png')
         with patch('template_ai.design_learning_dialog.QFileDialog.getSaveFileName',return_value=(str(target),'PNG')):
             QTest.mouseClick(self.dialog.export_button,Qt.LeftButton);APP.processEvents()
