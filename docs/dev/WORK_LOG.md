@@ -1497,3 +1497,8 @@ Formal RUN-AI-ORIGINAL-TEXT-LINEAGE-001 running against4812d51;415/1581 passed a
 ## 2026-10-19 staged shared model and lifecycle checks
 
 Unapplied AI02/03 and partial AI06 implementation uses existing SAMPLE/DATASET/TrainingStore,explicit new-purpose permissions,known-lineage separation,immutable artifacts,preview-only activation,scoped feedback and source-use ledgers.19 isolated authored-source checks pass in31.648s; source files remain unapplied pending frozen regression. New sklearn dependencies are pinned and installed only in /tmp isolated target,not the frozen product venv. Full source regression919/1581 passing at05:39UTC,no failure yet;not complete. No user corpus training or production qualification.
+
+
+## 2026-10-19 synthesis/ranking/source-binding staged checks
+
+10 additional isolated synthesis/ranking checks and2 expert source-binding checks pass: real Qt/font measurement and Kiwi,stable same-family relative exchange,hard-first ranking,explicit comparison labels and source/field correspondence. Total staged31 checks across separate groups;not yet product implementation. Full source regression1291/1581 passing at05:49UTC. Whole Logo synthesis,formal instance qualification,joint regression and native glyph/composite-run mapping remain unimplemented/pending;no full package completion. Continue all8.

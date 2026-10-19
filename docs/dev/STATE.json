@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "Full AI01 regression running;19 isolated family/profile/dataset/lifecycle draft checks pass;continue all8 with source frozen",
+  "active_task": "AI01 frozen full regression1291/1581 passing at05:49UTC;31 isolated staged learning/synthesis/ranking/source-binding checks pass;continue all8",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-AI-SHARED-MODEL-STAGED.receipt.json",
   "last_confirmed_commit": "a90e8d88b21321e17c3271e2421acaadde05e16f",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/run.json",
@@ -47,7 +47,8 @@
   ],
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
-    "CP-20261019-JOINT-PARAM-PLAN"
+    "CP-20261019-JOINT-PARAM-PLAN",
+    "CP-20261019-AI04-05-STAGED"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
@@ -1137,16 +1138,23 @@
   },
   "staged_ai_implementation": {
     "path": "docs/dev/wip/ai-learning-stage",
-    "status": "UNAPPLIED_DRAFT_WITH19_ISOLATED_MECHANICS_PASS_NOT_PRODUCT_IMPLEMENTATION",
+    "status": "UNAPPLIED_DRAFT_WITH31_ISOLATED_MECHANICS_PASS_NOT_PRODUCT_IMPLEMENTATION",
     "files": [
       "design_family.py.txt",
       "design_learning.py.txt",
       "design_profiles.py.txt",
+      "design_ranking.py.txt",
+      "design_source_binding.py.txt",
+      "design_synthesis.py.txt",
       "requirements-learning.txt",
       "test_design_family.py.txt",
-      "test_design_learning.py.txt"
+      "test_design_learning.py.txt",
+      "test_design_ranking.py.txt",
+      "test_design_source_binding.py.txt",
+      "test_design_synthesis.py.txt"
     ],
     "next": "After source regression,apply staged modules,install pinned sklearn dependencies,run actual tests and integrate lifecycle/generation/desktop",
-    "evidence": "docs/qa/targeted/AI-SHARED-MODEL-STAGED-20261019.json"
+    "evidence": "docs/qa/targeted/AI-SHARED-MODEL-STAGED-20261019.json",
+    "latest_evidence": "docs/qa/targeted/AI-SYNTHESIS-RANKING-STAGED-20261019.json"
   }
 }

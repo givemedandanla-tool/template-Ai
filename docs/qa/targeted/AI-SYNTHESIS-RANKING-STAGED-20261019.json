@@ -1,0 +1,50 @@
+{
+  "id": "AI-SYNTHESIS-RANKING-STAGED-20261019",
+  "executed_utc": "2026-10-19T05:49:51.829230+00:00",
+  "status": "STAGED_MECHANICS_PASS_NOT_APPLIED_PRODUCT_EVIDENCE",
+  "groups": [
+    {
+      "modules": [
+        "test_design_synthesis",
+        "test_design_ranking"
+      ],
+      "tests": 10,
+      "passed": 10,
+      "seconds": 8.54
+    },
+    {
+      "modules": [
+        "test_design_source_binding"
+      ],
+      "tests": 2,
+      "passed": 2,
+      "seconds": 4.326
+    }
+  ],
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "scope": "Unapplied isolated overlay;authored sources and actual Qt/Kiwi/verified local font assets;not private AI or production qualification",
+  "implementation_applied": false,
+  "files": {
+    "requirements-learning.txt": "376e3144ad940d0f9fcb839b460a7c934e2f2cd9844be0346233079058d87a8f",
+    "test_design_family.py.txt": "92c8c888face73847ff61bfbe8167a9b0e041c9cb951c5c77a4e8fc0a1318d3b",
+    "test_design_learning.py.txt": "26f954ee0bd1fbc0cedaab13bb5dab8ce18d1ff1d2f7b7e3dd1a0560f37debad",
+    "design_family.py.txt": "f7195c8e570dc5360dc21a88e36cf1abad1eaafbc64b05ca41c3c602de2b7b11",
+    "design_ranking.py.txt": "8c7a4b2338d8718a9e2d8dd9dc7b6ee6d2ffef5589e6314ab9e24f22d7177264",
+    "design_source_binding.py.txt": "9fb7f44760a9ba5d0c8e61c32de38c52c474ab5e0407e9b42a885c56d07c935b",
+    "test_design_source_binding.py.txt": "db536322b6a020def2b37b45737fe211132722e0f704f6faf353147ef66ada2c",
+    "test_design_ranking.py.txt": "ba634bc589e44a354a1900bae80ebd81eca2b8f4493ba15e72d871972148e268",
+    "design_synthesis.py.txt": "2499b5be8a9741da206d4b2ec91072565c6b8e2b3e8d2756f289af2a6f185470",
+    "design_profiles.py.txt": "7172b311d53865a14f3b82e2e918776bdc8096ae9a534764bc91c58cfc2b15e1",
+    "test_design_synthesis.py.txt": "713b9be15e73b5aeff969931f92f9e0ea2fdd9fd4975be80ec522bef0e6ed877",
+    "design_learning.py.txt": "fb6ba38b299e1f0e3f5206adcd87b53e5ac7fb7e11e35bfbab66dbf5247747e9"
+  },
+  "earlier_staged_evidence": "docs/qa/targeted/AI-SHARED-MODEL-STAGED-20261019.json",
+  "known_limits": [
+    "Whole size-specific Logo synthesis still explicitly abstains",
+    "Formal generated-instance qualification remains pending",
+    "Actual original glyph positions and composite text-run correspondence remain unknown",
+    "Full typography parameter regression/heldout quality calibration still pending"
+  ]
+}
