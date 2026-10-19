@@ -62,7 +62,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-TEMPLATE-EDITOR-FROZEN-005"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -440,7 +442,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-TEMPLATE-EDITOR-ALL-005",
+  "planned_evidence_run": "RUN-TEMPLATE-EDITOR-ALL-006",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -1339,12 +1341,12 @@
   },
   "editor_tools_contract": "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json",
   "editor_tools_progress": {
-    "phase": "FULL005_BATCH_FIXTURE_CLEANUP_INVESTIGATION",
+    "phase": "BATCH_QA_FIXTURE_PASS_FREEZING_FULL006",
     "completed_tool_acceptance": 0,
     "total_tool_acceptance": 16,
     "targeted_tests_passed": 15,
     "targeted_evidence": "docs/qa/targeted/template-editor/stage1-workspace-rules.log",
-    "next": "Keep source frozen while005producer collects;modal-free controlled-resource batch fixture diagnostic pending;do not ignore hung case/missing result",
+    "next": "New frozen full006with3workers/600s;all1779tests and capture before acceptance;005interrupted721PASS not adopted",
     "scenario_batch_tests_passed": 6,
     "native_worker_case_passed": true,
     "all_family_targeted_previous": 29,

@@ -7,6 +7,8 @@ import threading
 import time
 import unittest
 from unittest.mock import patch
+from gui_wait import wait_for_gui,dispose_main_window,job_diagnostics
+from runtime_fixture import controlled_resources
 os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
 from PySide6.QtCore import Qt
 from PySide6.QtTest import QTest
@@ -93,11 +95,20 @@ class BatchImportGuiTests(unittest.TestCase):
             QTest.mouseClick(self.dlg.start_button,Qt.LeftButton);self.wait_for(lambda:self.dlg.busy and self.window.busy);QTest.mouseClick(self.dlg.cancel_button,Qt.LeftButton);self.wait_for(lambda:not self.dlg.busy and not self.dlg.running)
         self.assertFalse(self.window.busy);self.assertEqual(self.window.library.list_sources(),[]);self.assertEqual(self.dlg.batch['phase'],'INTERRUPTED');self.assertTrue(self.dlg.choose_files.isEnabled());self.assertFalse(self.dlg.cancel_button.isEnabled())
     def setUp(self):
-        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.window=MainWindow(self.root/'data');self.addCleanup(lambda:self.window.close());self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')];self.dlg=BatchImportDialog(self.window);self.dlg.show();APP.processEvents();self.addCleanup(lambda:self.dlg.close())
+        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)
+        self.window=self.make_window();self.paths=[svg(self.root/'a.svg'),svg(self.root/'b.svg','blue')]
+        self.dlg=BatchImportDialog(self.window);self.dlg.show();APP.processEvents();self.addCleanup(self.cleanup_window)
+    def make_window(self):
+        window=MainWindow(self.root/'data');controlled_resources(window);return window
+    def cleanup_window(self):
+        self.dlg.cancel_event.set();self.window.cancel_waiting_jobs()
+        # Report the original failure rather than block in a teardown modal.
+        with patch.object(self.window,'inform'),patch.object(self.window,'error'):
+            if not wait_for_gui(lambda:not self.window.busy and not self.dlg.busy and not self.dlg.running,10):
+                self.fail('owned batch cleanup did not finish: '+job_diagnostics(self.window))
+            self.dlg.close();dispose_main_window(self.window)
     def wait_for(self,predicate,seconds=10):
-        end=time.monotonic()+seconds
-        while not predicate() and time.monotonic()<end:QTest.qWait(10)
-        self.assertTrue(predicate(),self.dlg.status.text())
+        if not wait_for_gui(predicate,seconds):self.fail(self.dlg.status.text()+';'+job_diagnostics(self.window))
     def scan(self):
         with patch.object(QFileDialog,'getOpenFileNames',return_value=([str(p) for p in self.paths],'')):QTest.mouseClick(self.dlg.choose_files,Qt.LeftButton)
         QTest.mouseClick(self.dlg.scan_button,Qt.LeftButton);self.wait_for(lambda:not self.dlg.busy);self.assertIsNotNone(self.dlg.report)
@@ -113,7 +124,7 @@ class BatchImportGuiTests(unittest.TestCase):
         with patch('template_ai.batch_dialog.convert_item',side_effect=gated):
             with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.dlg.start_button,Qt.LeftButton)
             self.wait_for(entered.is_set);self.dlg.reject();self.assertTrue(self.dlg.isVisible());self.assertTrue(self.dlg.cancel_requested);release.set();self.wait_for(lambda:not self.dlg.running and not self.dlg.busy)
-        bid=self.dlg.batch['id'];self.assertEqual([r['status'] for r in self.dlg.batch['items']],['SUCCESS','READY']);self.dlg.close();self.window.close();self.window=MainWindow(self.root/'data');self.dlg=BatchImportDialog(self.window);self.dlg.show();self.dlg.history.setCurrentIndex(self.dlg.history.findData(bid));self.assertTrue(self.dlg.resume_button.isEnabled())
+        bid=self.dlg.batch['id'];self.assertEqual([r['status'] for r in self.dlg.batch['items']],['SUCCESS','READY']);self.dlg.close();self.window.close();dispose_main_window(self.window);self.window=self.make_window();self.dlg=BatchImportDialog(self.window);self.dlg.show();self.dlg.history.setCurrentIndex(self.dlg.history.findData(bid));self.assertTrue(self.dlg.resume_button.isEnabled())
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(self.dlg.resume_button,Qt.LeftButton)
         self.wait_for(lambda:not self.dlg.running and not self.dlg.busy);self.assertEqual(self.dlg.batch['phase'],'DONE');self.assertEqual([r['attempts'] for r in self.dlg.batch['items']],[1,1]);self.assertEqual(len(self.window.library.list_sources()),2)
     def test_background_failure_isolated_and_preflight_failure_controls_recover(self):
