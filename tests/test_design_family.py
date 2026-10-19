@@ -62,6 +62,24 @@ class DesignFamilyTests(unittest.TestCase):
 
 
 class DesignProfileTests(unittest.TestCase):
+    def test_correlated_versions_do_not_move_shared_geometry_or_default_order(self):
+        from template_ai.training_store import digest
+        rows=[example(i) for i in range(6)]
+        rows[0]['fields'][0]['rect']['y']=30.
+        rows[0]['fields'][0]['rect']['x']=20.
+        def profiles(items):
+            family=dict(families=[dict(id='authored-fixed-membership',members=[row['id'] for row in items],
+                independent_support=6)])
+            family['digest']=digest(family)
+            return learn_profiles(family,items)['families'][0]
+        baseline=profiles(rows)
+        aliases=[dict(deepcopy(rows[0]),id='same-lineage-version-'+str(i)) for i in range(80)]
+        repeated=profiles(rows+aliases)
+        self.assertEqual(baseline['grammar']['default_order'],repeated['grammar']['default_order'])
+        self.assertEqual([r['frame_centre'] for r in baseline['roles']],[r['frame_centre'] for r in repeated['roles']])
+        self.assertEqual(repeated['relations'][0]['support'],6)
+        self.assertEqual(repeated['relations'][0]['observed_count'],86)
+
     def model(self, rows=None):
         rows=rows or [example(i) for i in range(8)]
         family=train_families(rows)

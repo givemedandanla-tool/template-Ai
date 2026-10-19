@@ -17,6 +17,24 @@ APP=QApplication.instance() or QApplication([])
 
 
 class SourceConditionedFlowTests(unittest.TestCase):
+    def test_word_spacing_keeps_single_word_natural_and_rejects_unreviewed_boundaries(self):
+        rule=dict(status='HUMAN_CONFIRMED_SOURCE_RULE',evidence_refs=['authored word spacing'],mode='WORDS',
+            value_mm=.6,allowed_scripts=['Latn'],boundary_policy='ASCII_SPACE_QT_WORD_SPACING',
+            last_line='NATURAL',zero_boundaries='KEEP_NATURAL')
+        policy=dict(self.policy,spacing_rule=rule)
+        plain=self.shape(value='Authored',policy=self.policy)
+        single=self.shape(value='Authored',policy=policy)
+        self.assertAlmostEqual(single['width_mm'],plain['width_mm'])
+        self.assertEqual(single['spacing_rule']['boundary_count'],0)
+        result=self.shape(value='North Road',policy=policy)
+        plain=self.shape(value='North Road',policy=self.policy)
+        self.assertGreater(result['width_mm'],plain['width_mm'])
+        self.assertEqual(result['spacing_rule']['boundary_count'],1)
+        for changed in (dict(rule,allowed_scripts=['Hani']),dict(rule,mode='OBJECT_GAPS'),dict(rule,last_line='FORCE')):
+            with self.assertRaises(ValueError):self.shape(policy=dict(self.policy,spacing_rule=changed))
+        with self.assertRaisesRegex(ValueError,'mixed-boundary'):
+            self.shape(value='North Road',policy=dict(policy,alignment='justify'))
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.library=Library(Path(self.temp.name)/'data');self.addCleanup(self.library.close)

@@ -34,6 +34,8 @@ def register_instance(library,session,result,candidate,actor):
     if model['formal_qualification']!='PASS':raise ValueError('Production model qualification is incomplete')
     if candidate.risk_context.get('design_style_admission')!='OBSERVED_JOINT_ROLE_COUNTS':
         raise ValueError('Joint role combination has no trained style admission;preview does not imply formal permission')
+    if candidate.risk_context.get('design_size_admission')!='SOURCE_OR_LEARNED_DOMAIN':
+        raise ValueError('Target size has no source or learned joint-domain admission;preview only')
     integrity=check_layout(candidate,InputGraph(session['input_graph']),session['intents'])
     if integrity['status']!='PASS':raise ValueError('Current whole layout failed independent checks')
     reference=dict(model_id=model['id'],weights_digest=model['weights_digest'],manifest_digest=model['manifest_digest'],

@@ -8,7 +8,7 @@ import hashlib
 import math
 
 from .training_store import TrainingStore, digest, text
-from .design_observation import ObservedScalar, unknown, canonical_digest
+from .design_observation import ObservedScalar, unknown, canonical_digest, effective_point_size
 from .fonts import font_errors
 
 
@@ -74,32 +74,60 @@ class SourceTypographyReview:
             raise ValueError('Review contradicts known original physical source pt')
         if type(point) not in (int,float) or not math.isfinite(point) or not 0<point<10000:
             raise ValueError('Source pt must be a finite measured positive value')
-        key=digest([work_id,slot_id]);before=self.store.get('DESIGN_SOURCE_BINDING',key)
+        crop=work['payload']['crop']
+        sx=work['payload']['work_width']/crop['w'];sy=work['payload']['work_height']/crop['h']
         refs=(source_run_id,'EXPERT_SOURCE_REVIEW:'+digest(review))
+        source_point=ObservedScalar(point,'pt','OBSERVED','ORIGINAL_RUN_OR_MEASURED_SOURCE_PAGE_PT',refs)
+        work_point=effective_point_size(source_point,[sx,0,0,sy,-crop['x']*sx,-crop['y']*sy])
+        uniform=math.isclose(sx,sy,rel_tol=1e-9)
+        measured_work=review.get('physical_work_pt')
+        if measured_work is not None:
+            if (type(measured_work) not in (int,float) or not math.isfinite(measured_work)
+                    or not 0<measured_work<10000 or not review.get('physical_work_measurement_refs')):
+                raise ValueError('Measured work pt requires finite value and work-space measurement evidence')
+            if work_point.value is not None and not math.isclose(work_point.value,measured_work,rel_tol=1e-7):
+                raise ValueError('Measured work pt contradicts the uniform source transform')
+            work_point=ObservedScalar(measured_work,'pt','OBSERVED','EXPERT_MEASURED_WORK_PT',
+                tuple(review['physical_work_measurement_refs'])+refs)
+        if work_point.value is None:
+            raise ValueError('Anisotropic work transform has unknown scalar pt;explicit measured work pt is required')
+        point=work_point.value
+        key=digest([work_id,slot_id]);before=self.store.get('DESIGN_SOURCE_BINDING',key)
         typography=dict(font_asset_ref=deepcopy(font_asset),source_font_status='HUMAN_CONFIRMED_SOURCE_ASSOCIATION',
-            source_pt=ObservedScalar(point,'pt','OBSERVED','ORIGINAL_RUN_AND_EXPERT_SOURCE_FONT_REVIEW',refs).to_dict(),
-            horizontal_scale=unknown('ratio'),tracking=unknown('mm'),shaped_advance=unknown('mm'),
+            source_pt=work_point.to_dict(),source_page_pt=source_point.to_dict(),
+            source_to_work=dict(scale_x=sx,scale_y=sy,crop=deepcopy(crop),unit='mm'),
+            horizontal_scale=unknown('ratio'),tracking=unknown('mm'),word_spacing=unknown('mm'),shaped_advance=unknown('mm'),
             glyph_runs=dict(status='UNKNOWN',basis='ORIGINAL_GLYPH_POSITIONS_NOT_RECOVERED'))
         if run.get('glyphs') or run.get('glyph_evidence'):
             typography['glyph_runs']=dict(status='OBSERVED_SOURCE_GLYPH_PLACEMENT',source_run_ref=source_run_id,
                 glyph_digest=run['glyph_evidence']['digest'] if run.get('glyph_evidence') else canonical_digest(run['glyphs']),
                 bounds_basis=run.get('bounds_basis'),font_correspondence='HUMAN_CONFIRMED_NOT_BINARY_IDENTITY_PROOF')
-        for name,unit in [('horizontal_scale','ratio'),('tracking','mm')]:
+        for name,unit in [('horizontal_scale','ratio'),('tracking','mm'),('word_spacing','mm')]:
             original_parameter=run.get(name,{})
-            if original_parameter.get('status') in ('OBSERVED','DERIVED') and original_parameter.get('value') is not None:
-                typography[name]=deepcopy(original_parameter)
-            measured=review.get(name)
+            if (uniform and original_parameter.get('status') in ('OBSERVED','DERIVED')
+                    and original_parameter.get('value') is not None):
+                value=original_parameter['value']*(sx if name!='horizontal_scale' else 1.)
+                typography[name]=ObservedScalar(value,unit,'DERIVED','SOURCE_PARAMETER_IN_WORK_PHYSICAL_SPACE',refs).to_dict()
+            measured=review.get(name if uniform else 'work_'+name)
             if measured is not None:
                 if not review.get('parameter_measurement_refs'):
                     raise ValueError('Extra source parameters need explicit measured evidence')
                 if type(measured) not in (int,float) or not math.isfinite(measured):
                     raise ValueError('Invalid measured source parameter')
-                if (name=='horizontal_scale' and not 0<measured<=10) or (name=='tracking' and not -100<measured<100):
+                if (name=='horizontal_scale' and not 0<measured<=10) or (name!='horizontal_scale' and not -100<measured<100):
                     raise ValueError('Source parameter processing range exceeded')
+                if uniform and name!='horizontal_scale':measured*=sx
                 known=typography[name].get('value')
                 if known is not None and not math.isclose(known,measured,rel_tol=1e-7,abs_tol=1e-9):
                     raise ValueError('Review contradicts known original source parameter')
                 typography[name]=ObservedScalar(measured,unit,'OBSERVED','EXPERT_MEASURED_SOURCE_PARAMETER',refs).to_dict()
+        anchor=run.get('baseline_anchor_mm')
+        if isinstance(anchor,dict) and all(type(anchor.get(k)) in (int,float) for k in ('x','y')):
+            typography['source_anchor_work_mm']=dict(x=(anchor['x']-crop['x'])*sx,
+                y=(anchor['y']-crop['y'])*sy,status=run.get('baseline_status','UNKNOWN'),evidence_refs=list(refs))
+            if run.get('baseline_status')=='ORIGINAL_PDF_TEXT_ORIGIN_PLUS_RISE':
+                typography['baseline']=ObservedScalar((anchor['y']-crop['y'])*sy,'mm','DERIVED',
+                    'ORIGINAL_PDF_BASELINE_IN_WORK_PHYSICAL_SPACE',refs).to_dict()
         # Natural demand at the reviewed source font/pt is derived from Qt;
         # it is not claimed to recover original source kerning/glyph positions.
         if 1<=point<=200:

@@ -17,6 +17,32 @@ from test_trusted_samples import admitted
 APP=QApplication.instance() or QApplication([])
 
 class SourceTypographyBindingTests(unittest.TestCase):
+    def resized_work(self,sx,sy):
+        payload=deepcopy(self.work['payload']);payload.update(work_width=90*sx,work_height=54*sy)
+        for slot in payload['slots']:
+            for key,scale in [('x',sx),('w',sx),('y',sy),('h',sy)]:slot['rect'][key]*=scale
+        work=self.library.create_artwork(self.source['id'],'Authored resized work',payload)
+        confirmed(self.store,work)
+        return work
+
+    def test_uniform_work_scale_changes_effective_pt_not_original_source_fact(self):
+        work=self.resized_work(.5,.5)
+        plan=self.service.plan(work['id'],self.slot['id'],self.run['id'],self.asset,self.review)
+        self.assertAlmostEqual(plan['typography']['source_pt']['value'],9.)
+        self.assertAlmostEqual(plan['typography']['source_page_pt']['value'],18.)
+        self.assertEqual(plan['typography']['source_pt']['status'],'DERIVED')
+        self.assertAlmostEqual(plan['typography']['source_anchor_work_mm']['y'],7.)
+        self.assertNotIn('baseline',plan['typography']) # SVG anchor is not recovered glyph baseline
+
+    def test_anisotropic_work_requires_work_measurements_instead_of_scalar_guess(self):
+        work=self.resized_work(.5,.75)
+        with self.assertRaisesRegex(ValueError,'Anisotropic'):
+            self.service.plan(work['id'],self.slot['id'],self.run['id'],self.asset,self.review)
+        review=dict(self.review,physical_work_pt=13.,physical_work_measurement_refs=['authored measured output'])
+        plan=self.service.plan(work['id'],self.slot['id'],self.run['id'],self.asset,review)
+        self.assertEqual(plan['typography']['horizontal_scale']['status'],'UNKNOWN')
+        self.assertEqual(plan['typography']['tracking']['status'],'UNKNOWN')
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.root=Path(self.temp.name);self.library=Library(self.root/'data');self.addCleanup(self.library.db.close)

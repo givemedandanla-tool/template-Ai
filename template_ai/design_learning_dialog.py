@@ -282,9 +282,10 @@ class DesignLearningDialog(QDialog):
                 if artifact['session_id']==self.session_id:self.artifacts.addItem(artifact['path'],artifact['id'])
         self.switch_button.setVisible(bool(current and current.get('result_id') and self.jobs.store.get('DESIGN_RESULT',current['result_id']).get('family_switch_requires_review')))
         qualified_model=self.jobs.store.get('DESIGN_MODEL',current['model_id']) if current else None
-        self.formal_button.setEnabled(bool(candidate and qualified_model and qualified_model.get('formal_qualification')=='PASS' and current['policy'].get('production') is True))
+        self.formal_button.setEnabled(bool(candidate and qualified_model and qualified_model.get('formal_qualification')=='PASS'
+            and current['policy'].get('production') is True and candidate.risk_context.get('design_size_admission')=='SOURCE_OR_LEARNED_DOMAIN'))
         self.formal_export_button.setEnabled(bool(candidate and current and (current.get('confirmation') or {}).get('for_production') and candidate.formal_eligible))
-        self.formal_button.setToolTip('需要真實授權作品的獨立封存驗證及正式模型資格')
+        self.formal_button.setToolTip('需要真實作品驗證及正式模型資格；尺寸須有來源或學習範圍支持')
         self.canvas.show_candidate(candidate);self.confirm_button.setEnabled(candidate is not None)
         self.export_button.setEnabled(candidate is not None and bool(current and current.get('confirmation')))
         self.out_w.setEnabled(True);self.out_h.setEnabled(True)

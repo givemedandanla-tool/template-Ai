@@ -78,7 +78,7 @@ class DesignEvaluation:
     def __init__(self,library):
         self.library=library;self.learning=CrossWorkLearning(library);self.jobs=DesignJobs(library);self.store=self.jobs.store
 
-    def create(self,model_id,cases,policy,actor,*,origin,review_refs,approved=False):
+    def create(self,model_id,cases,policy,actor,*,origin,review_refs,approved=False,ranker_id=None):
         if not approved or origin not in ('AUTHORED_SYNTHETIC','REAL_AUTHORIZED_CORPUS') or not review_refs:
             raise ValueError('Explicit corpus origin and independent source-review evidence required')
         model,dataset=self.learning.checked_model(model_id)
@@ -92,7 +92,12 @@ class DesignEvaluation:
             if not entry or entry['role'] not in ('VALIDATION','HOLDOUT'):raise ValueError('TRAIN sources cannot masquerade as independent evaluation')
             InputGraph(case['input_graph'])
             if not case.get('truth_refs'):raise ValueError('Independent input/source correspondence review is required')
-        return self.jobs.create('EVALUATE_LAYOUTS',dict(model_id=model_id,weights_digest=model['weights_digest'],
+        ranker_ref=None
+        if ranker_id:
+            from .design_feedback import DesignFeedback
+            ranker=DesignFeedback(self.library).checked_ranker(ranker_id)
+            ranker_ref=dict(id=ranker_id,weights_digest=ranker['weights_digest'])
+        return self.jobs.create('EVALUATE_LAYOUTS',dict(model_id=model_id,weights_digest=model['weights_digest'],ranker_ref=ranker_ref,
             manifest_digest=model['manifest_digest'],items=deepcopy(cases),policy=deepcopy(policy),
             origin=origin,review_refs=deepcopy(review_refs),independence='KNOWN_LINEAGE_GROUPS_ONLY;UNREVIEWED_NEAR_DUPLICATES_UNKNOWN'),actor,True)
 
@@ -145,12 +150,35 @@ def execute_item(library,job,index):
         for profile in model['artifact']['profile_model']['families']:
             result=synthesize(profile,graph,item['width_mm'],item['height_mm'],dict(policy,enable_joint_prediction=joint),item.get('intents'),logos)
             statuses.append(result['status']);choices.extend(result['candidates'])
-        choices.sort(key=lambda row:(-row['candidate'].score,row['geometry_digest']))
+        from .design_ranking import rank,candidate_features
+        ranked=[];actual={}
+        for choice in choices:
+            candidate=choice['candidate'];identity=placement_digest(candidate)
+            if identity in actual:continue
+            actual[identity]=choice
+            ranked.append(dict(id=identity,family_id=candidate.template.family_id,
+                configuration_ids=choice['configuration_ids'],geometry_digest=choice['geometry_digest'],
+                legal_preview_geometry=True,formal_eligible=False,
+                features=candidate_features(candidate,item['width_mm'],item['height_mm'],item.get('intents'))))
+        default=dict(version=policy['version'],family_order=policy.get('family_order',[]));preference=None
+        if plan.get('ranker_ref') and label=='learned':
+            from .design_feedback import DesignFeedback
+            ranker=DesignFeedback(library).checked_ranker(plan['ranker_ref']['id'])
+            if ranker['weights_digest']!=plan['ranker_ref']['weights_digest']:raise ValueError('Evaluation ranker changed')
+            preference=ranker['artifact']
+        ranking=rank(ranked,default,preference)
+        baseline_ranking=rank(ranked,default)
+        choices=[actual[row['candidate']['id']] for row in ranking['ranked']]
         if choices:
             candidate=choices[0]['candidate'];integrity=check_layout(candidate,graph,item.get('intents'))
             outputs[label]=dict(status='FEASIBLE' if integrity['status']=='PASS' else 'HARD_ERROR',integrity=integrity,
                 placement_digest=placement_digest(candidate),serialized=_serialize(candidate),
-                family_id=candidate.template.family_id)
+                family_id=candidate.template.family_id,
+                ranking_slate=[dict(id=placement_digest(choice['candidate']),serialized=_serialize(choice['candidate']),
+                    geometry_digest=choice['geometry_digest']) for choice in choices[:10]],
+                baseline_order=[row['candidate']['id'] for row in baseline_ranking['ranked']
+                    if row['candidate']['id'] in {placement_digest(choice['candidate']) for choice in choices[:10]}],
+                ranking_scope='TOP_10_SEARCHED_DISTINCT_ACTUAL_LAYOUTS_NOT_GLOBAL_OPTIMUM')
         else:outputs[label]=dict(status='UNKNOWN_OR_UNSUPPORTED',search_states=statuses,integrity=None)
     if entry['role']=='HOLDOUT':
         with learning.store.transaction():

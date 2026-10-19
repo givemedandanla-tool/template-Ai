@@ -9,6 +9,25 @@ import test_design_session as session_fixture
 
 
 class ActualLayoutEvaluationTests(unittest.TestCase):
+    def test_actual_ranking_slate_requires_independent_complete_grades_and_persists_unknowns(self):
+        from template_ai.design_rank_evaluation import RankingEvaluation
+        service=RankingEvaluation(self.library);job=self.create([self.case('ranking-query')])
+        with self.assertRaises(ValueError):service.review(job['id'],0,{},'Reviewer','No output',True)
+        self.run_job(job)
+        before=service.report(job['id'],k=1)
+        self.assertEqual(before['known_queries'],0);self.assertEqual(before['unknown_queries'],1)
+        result=self.jobs.results(job['id'])[0];slate=result['learned']['ranking_slate']
+        self.assertTrue(slate)
+        with self.assertRaises(ValueError):service.review(job['id'],0,{'invented-candidate':3},'Reviewer','No fabricated slate',True)
+        grades={item['id']:3 if index==0 else 1 for index,item in enumerate(slate)}
+        review=service.review(job['id'],0,grades,'Independent authored reviewer','Exact candidate previews inspected',True)
+        self.assertEqual(review['role'],'HOLDOUT')
+        after=service.report(job['id'],k=1)
+        self.assertEqual(after['known_queries'],int(len(slate)>=2))
+        self.assertEqual(after['production_qualification'],'NOT_GRANTED_BY_THIS_REPORT')
+        if len(slate)>=2:self.assertAlmostEqual(after['group_macro_ndcg_at_k'],1.)
+        with self.assertRaises(ValueError):service.review(job['id'],0,grades,'Reviewer','Frozen review',True)
+
     @classmethod
     def setUpClass(cls):
         cls.fixture=session_fixture.DesignSessionTests

@@ -10,7 +10,7 @@ import math
 
 from .design_observation import ObservedScalar,canonical_digest,effective_point_size,unknown
 
-VERSION='original-pdf-glyphs-1/pdfminer.six20260107'
+VERSION='original-pdf-glyphs-2-word-spacing/pdfminer.six20260107'
 MAX_GLYPHS=20000
 MAX_RUNS=512
 MAX_CONTENT_BYTES=16_000_000
@@ -163,6 +163,8 @@ def extract_pdf_glyphs(source,data,*,include_private_text=False):
             horizontal_scale=ObservedScalar(raw['horizontal_scale'],'ratio','OBSERVED','ORIGINAL_PDF_TZ',(ref,)).to_dict(),
             tracking=ObservedScalar(raw['charspace']*known_scale*MM_PER_POINT,'mm','DERIVED',
                 'PDF_TC_BEFORE_HORIZONTAL_SCALE',(ref,)).to_dict() if known_scale else unknown('mm'),
+            word_spacing=ObservedScalar(raw['wordspace']*known_scale*MM_PER_POINT,'mm','DERIVED',
+                'PDF_TW_BEFORE_HORIZONTAL_SCALE',(ref,)).to_dict() if known_scale else unknown('mm'),
             baseline_orientation='HORIZONTAL_FORWARD' if matrix[0]>0 and abs(matrix[1])<1e-9 and abs(matrix[2])<1e-9 and matrix[3]>0 else 'UNKNOWN_OR_UNSUPPORTED_ROTATED',
             wordspace_declared_pt=raw['wordspace'],visibility='NONPAINTING_TEXT' if raw['text_render_mode'] in (3,7) else 'PAINT_REQUEST_CLIP_AND_OCG_NOT_VERIFIED',
             text_render_mode=raw['text_render_mode'],writing_mode=glyphs[0]['writing_mode'],

@@ -17,6 +17,22 @@ from test_design_family import example
 APP=QApplication.instance() or QApplication([])
 
 class DesignSynthesisTests(unittest.TestCase):
+    def test_same_appearance_different_review_ids_merges_but_unlearned_size_stays_preview(self):
+        from template_ai.design_synthesis import _font_options
+        key=self.profile['roles'][0]['key']
+        for data in self.profile['data_requirement_profiles']:
+            for sample in data['presentation_evidence']:
+                sample['label_binding']['evidence_refs']=['unique-'+sample['example_id']]
+        options=_font_options(self.profile,key,90,54)
+        self.assertEqual(len(options),1)
+        self.assertEqual(options[0]['support'],8)
+        self.assertEqual(len(options[0]['source_refs']),8)
+        self.assertEqual(options[0]['size_admission'],'OBSERVED_EXACT_SIZE')
+        result=synthesize(self.profile,self.graph,180,108,self.policy)
+        self.assertEqual(result['status'],'FEASIBLE_PREVIEW')
+        self.assertTrue(all(row['candidate'].risk_context['design_size_admission']=='UNVERIFIED_SIZE_PREVIEW_ONLY'
+            for row in result['candidates']))
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.library=Library(Path(self.temp.name)/'data');self.addCleanup(self.library.db.close)

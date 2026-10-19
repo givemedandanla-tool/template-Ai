@@ -13,8 +13,9 @@ from .model import Template, Slot, Rect, template_errors
 from .layout import Candidate, Placed, text_geometry, layout_dependency
 from .candidate_risk import pin_inputs
 from .training_store import digest
+from .design_style import style_identity, font_identity
 
-VERSION='cross-work-synthesis-1'
+VERSION='cross-work-synthesis-2-domain-admission'
 RELATIONS={'ABOVE','BELOW','LEFT_OF','RIGHT_OF'}
 
 
@@ -47,16 +48,37 @@ def _font_options(profile, key, width, height, value=None, policy=None, semantic
                     or vector['horizontal_scale'] is None or vector['tracking_mm'] is None):continue
             if not 1<=vector['source_pt']<=200 or not .05<=vector['horizontal_scale']<=10 or not 0<=vector['tracking_mm']<=2:
                 continue  # Observed source facts survive; current output policy is narrower.
+            if vector.get('word_spacing_mm') not in (None,0,0.):
+                spacing=(sample.get('source_text_flow') or {}).get('spacing_rule',{})
+                if (spacing.get('mode')!='WORDS' or spacing.get('status')!='HUMAN_CONFIRMED_SOURCE_RULE'
+                        or spacing.get('value_mm')!=vector['word_spacing_mm']):
+                    continue # Never silently lose a known original word-spacing style.
             candidate=dict(font_asset=deepcopy(asset),size_pt=vector['source_pt'],scale=vector['horizontal_scale'],
                 tracking_mm=vector['tracking_mm'],width_mm=sample['frame'][2]*width,
                 height_mm=sample['frame'][3]*height,source_dimension_mm=sample['dimensions_mm'],
                 label_binding=deepcopy(sample['label_binding']),align=sample['align'] if sample['align'] in ('left','center','right','distributed') else 'left',
                 source_alignment_status='REVIEWED' if sample['align']!='UNKNOWN' else 'UNKNOWN_PREVIEW_FALLBACK',
                 distribution=deepcopy(sample['distribution']),text_flow=deepcopy(sample.get('source_text_flow')),source_ref=sample['example_id'])
-            identity=digest({k:v for k,v in candidate.items() if k!='source_ref'})
-            if identity not in options:options[identity]=dict(candidate,id=identity,support=0)
+            identity=digest(style_identity({k:v for k,v in candidate.items()
+                if k not in ('source_ref','source_dimension_mm')}))
+            if identity not in options:
+                options[identity]=dict(candidate,id=identity,support=0,source_refs=[],observed_dimensions_mm=[])
+            option=options[identity]
+            option['source_refs'].append(sample['example_id'])
+            if list(sample['dimensions_mm']) not in option['observed_dimensions_mm']:
+                option['observed_dimensions_mm'].append(list(sample['dimensions_mm']))
+            distance=lambda dimensions:abs(dimensions[0]-width)+abs(dimensions[1]-height)
+            if (distance(sample['dimensions_mm']),sample['example_id']) < (distance(option['source_dimension_mm']),option['source_ref']):
+                for name in ('source_dimension_mm','source_ref','font_asset','label_binding','distribution','text_flow'):
+                    option[name]=deepcopy(candidate[name])
             support_groups.setdefault(identity,set()).add(sample['lineage_group'])
-            options[identity]['support']=len(support_groups[identity])
+            option['support']=len(support_groups[identity])
+    for option in options.values():
+        option['source_refs']=sorted(set(option['source_refs']))
+        option['observed_dimensions_mm'].sort()
+        option['size_admission']=('OBSERVED_EXACT_SIZE' if any(
+            abs(d[0]-width)<1e-7 and abs(d[1]-height)<1e-7 for d in option['observed_dimensions_mm'])
+            else 'UNVERIFIED_SIZE_PREVIEW_ONLY')
     if value is not None and (policy or {}).get('enable_joint_prediction') is True:
         from .design_joint import predict_joint
         role=next(row for row in profile['roles'] if row['key']==key)
@@ -64,6 +86,9 @@ def _font_options(profile, key, width, height, value=None, policy=None, semantic
         measured={}
         for mode in joint_model.get('modes',[]):
             condition=mode['condition'];asset=condition['font_asset'];label=condition['label_binding']
+            if condition.get('word_spacing_mm') not in (None,0,0.):
+                rule=(condition.get('text_flow') or {}).get('spacing_rule',{})
+                if rule.get('mode')!='WORDS' or rule.get('value_mm')!=condition['word_spacing_mm']:continue
             if label.get('status')!='CONFIRMED' or label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX'):continue
             display=label.get('prefix','')+value if label.get('kind')=='DYNAMIC_PREFIX' else value
             identity=digest([asset,display])
@@ -80,9 +105,12 @@ def _font_options(profile, key, width, height, value=None, policy=None, semantic
                 candidate=dict(font_asset=deepcopy(asset),size_pt=vector['source_pt'],scale=vector['horizontal_scale'],
                     tracking_mm=vector['tracking_mm'],width_mm=vector['frame_width_mm'],height_mm=vector['frame_height_mm'],
                     source_dimension_mm=[width,height],label_binding=deepcopy(label),source_ref='JOINT:'+mode['id'],
-                    support=prediction['support'],joint_prediction=prediction)
+                    support=prediction['support'],joint_prediction=prediction,size_admission='LEARNED_JOINT_DOMAIN',
+                    align=condition['align'] if condition['align'] in ('left','center','right','distributed') else 'left',
+                    source_alignment_status='REVIEWED' if condition['align']!='UNKNOWN' else 'UNKNOWN_PREVIEW_FALLBACK',
+                    distribution=deepcopy(condition['distribution']),text_flow=deepcopy(condition.get('text_flow')))
                 candidate['id']=digest(candidate);options[candidate['id']]=candidate
-    return sorted(options.values(),key=lambda row:(-row['support'],
+    return sorted(options.values(),key=lambda row:(row.get('size_admission')=='UNVERIFIED_SIZE_PREVIEW_ONLY',-row['support'],
         abs(row['source_dimension_mm'][0]-width)+abs(row['source_dimension_mm'][1]-height),row['id']))
 
 
@@ -95,11 +123,11 @@ def _adapt_distribution(profile,key,configuration,display,kind):
             vector=row['joint'];approval=row['distribution']
             if (row['role_key']!=key or row['align']!='distributed' or not isinstance(approval,dict)
                     or approval.get('approved') is not True or not row['source_font_ref']):continue
-            if (digest(row['source_font_ref'])!=digest(configuration['font_asset'])
+            if (font_identity(row['source_font_ref'])!=font_identity(configuration['font_asset'])
                     or vector['source_pt']!=configuration['size_pt'] or vector['horizontal_scale']!=configuration['scale']
                     or vector['tracking_mm'] is None):continue
-            original_width=row['frame'][2]*configuration['source_dimension_mm'][0]
-            original_height=row['frame'][3]*configuration['source_dimension_mm'][1]
+            original_width=row['frame'][2]*row['dimensions_mm'][0]
+            original_height=row['frame'][3]*row['dimensions_mm'][1]
             if abs(original_width-configuration['width_mm'])>1e-5 or abs(original_height-configuration['height_mm'])>1e-5:continue
             groups.add(row['lineage_group']);tracking.append(vector['tracking_mm'])
     if len(groups)<5:return configuration
@@ -183,7 +211,8 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                 missing.append(dict(render_id=fact['render_id'],reason='EXACT_WHOLE_COMPANY_SIZE_LOGO_REQUIRED'));continue
             frame=roles[fact['role_key']]['frame_centre']
             configuration=dict(id=digest([asset,frame,width,height]),logo=deepcopy(asset),font_asset=None,
-                width_mm=frame[2]*width,height_mm=frame[3]*height,scale=1.,tracking_mm=0.,support=roles[fact['role_key']]['support'])
+                width_mm=frame[2]*width,height_mm=frame[3]*height,scale=1.,tracking_mm=0.,support=roles[fact['role_key']]['support'],
+                size_admission='OBSERVED_EXACT_SIZE')
             rows=[configuration]
         else:rows=assigned.get(fact['render_id'],{}).get('options',[])
         if not rows:missing.append(dict(render_id=fact['render_id'],reason='SOURCE_JOINT_TYPOGRAPHY_OR_FONT_IDENTITY_UNKNOWN'))
@@ -316,6 +345,9 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                 dependency_stamp=layout_dependency(template,logos))
             pin_inputs(candidate,people,companies,logos)
             candidate.risk_context['design_style_admission']=style_admission
+            candidate.risk_context['design_size_admission']=('SOURCE_OR_LEARNED_DOMAIN' if all(
+                config.get('size_admission') in ('OBSERVED_EXACT_SIZE','LEARNED_JOINT_DOMAIN') for config in selected)
+                else 'UNVERIFIED_SIZE_PREVIEW_ONLY')
             candidate.risk_context['design_label_bindings']={fact['render_id']:deepcopy(config.get('label_binding'))
                 for fact,config in zip(facts,selected) if fact['kind']!='logo'}
             candidate.risk_context['design_relations']=[dict(subject=a,relation=relation,object=b)

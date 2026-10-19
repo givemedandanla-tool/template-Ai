@@ -10,6 +10,13 @@ from template_ai.original_pdf_glyphs import extract_pdf_glyphs,GlyphBudget
 
 
 class OriginalPdfGlyphTests(unittest.TestCase):
+    def test_original_word_spacing_is_distinct_from_character_spacing(self):
+        data,source=self.pdf(b'BT /F1 12 Tf 50 Tz 1 Tc 4 Tw 1 0 0 1 24 70 Tm (A B) Tj ET')
+        run=extract_pdf_glyphs(source,data)['runs'][0]
+        self.assertAlmostEqual(run['tracking']['value'],25.4/72)
+        self.assertAlmostEqual(run['word_spacing']['value'],4*25.4/72)
+        self.assertNotEqual(run['tracking'],run['word_spacing'])
+
     def pdf(self,content,*,rotation=0,user_unit=1,second=None):
         writer=PdfWriter()
         for payload in ([content] if second is None else [content,second]):

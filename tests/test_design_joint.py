@@ -18,6 +18,23 @@ def observations(count=12):
 
 
 class JointRegressionTests(unittest.TestCase):
+    def test_review_provenance_does_not_fragment_shared_style_or_duplicate_weight(self):
+        rows=observations(8)
+        for i,row in enumerate(rows):
+            row['label_binding']['evidence_refs']=['unique-review-'+str(i)]
+            row['distribution']=dict(approved=True,mode='CHARACTERS',actor='reviewer-'+str(i),reason='source-'+str(i))
+        baseline=fit_joint(rows)
+        self.assertEqual(len(baseline['modes']),1)
+        self.assertEqual(baseline['modes'][0]['independent_support'],8)
+        aliases=[dict(deepcopy(rows[0]),example_id='alias-'+str(i)) for i in range(100)]
+        repeated=fit_joint(rows+aliases)
+        for key in ('x_centre','x_scale','y_centre','y_scale','coefficients','intercept'):
+            import numpy as np
+            np.testing.assert_allclose(baseline['modes'][0][key],repeated['modes'][0][key],atol=1e-12)
+        self.assertEqual(len(repeated['modes'][0]['source_refs']),108)
+        for row in rows[4:]:row['label_binding'].update(kind='DYNAMIC_PREFIX',prefix='Tel: ')
+        self.assertEqual(fit_joint(rows)['modes'],[]) # two genuinely distinct styles, each insufficient
+
     def test_joint_prediction_tracks_correlated_outputs_and_is_stable(self):
         artifact=fit_joint(observations())
         result=predict_joint(artifact,90.,54.,2.4)

@@ -13,7 +13,7 @@ from .input_graph import InputGraph
 from .layout import Candidate,Placed,layout_dependency
 from .design_learning import CrossWorkLearning
 from .design_synthesis import synthesize,input_facts,_relation_graph
-from .design_ranking import rank
+from .design_ranking import rank,candidate_features
 
 
 def _body(record):return {k:v for k,v in record.items() if k not in ('id','revision')}
@@ -151,13 +151,12 @@ class DesignSessions:
             attempts.append(dict(family_id=family['family_id'],status=result['status'],issues=result['issues'],
                                  searched=result['searched'],complete_search=result['complete_search']))
             for index,row in enumerate(result['candidates']):
-                candidate=row['candidate'];area=sum(item.slot.rect.w*item.slot.rect.h for item in candidate.items)
+                candidate=row['candidate']
                 choices.append(dict(id=family['family_id']+':'+str(index),family_id=family['family_id'],
                     configuration_ids=row['configuration_ids'],geometry_digest=row['geometry_digest'],
                     legal_preview_geometry=True,formal_eligible=candidate.formal_eligible,
-                    features=dict(deviation=-candidate.score,scale_loss=sum(abs(1-item.scale) for item in candidate.items),
-                        density=area/(snapshot['width_mm']*snapshot['height_mm']),
-                        relation_changes=len(snapshot['intents']),joint_style_residual=0.),serialized=_serialize(candidate)))
+                    features=candidate_features(
+                        candidate,snapshot['width_mm'],snapshot['height_mm'],snapshot['intents']),serialized=_serialize(candidate)))
             if previous_family==family['family_id'] and choices:
                 break  # A legal current-family variant precedes cross-family fallback.
         preference=None

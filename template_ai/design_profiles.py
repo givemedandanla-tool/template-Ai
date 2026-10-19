@@ -12,7 +12,7 @@ from .training_store import digest
 from .design_family import number, source_point
 from .design_joint import fit_joint
 
-VERSION = 'cross-work-profiles-1'
+VERSION = 'cross-work-profiles-2-lineage-balanced'
 
 
 def role_key(field):
@@ -22,14 +22,20 @@ def role_key(field):
     return owner+':'+field['kind']+':'+str(field.get('index', 0))
 
 
-def summary(values):
+def summary(values, groups=None):
     values = [number(value) for value in values if value is not None]
     if not values:
         return dict(status='UNKNOWN', support=0, centre=None, mad=None, observed_min=None, observed_max=None)
+    observed = values
+    if groups is not None:
+        by_group = defaultdict(list)
+        for group, value in zip(groups, values): by_group[group].append(value)
+        values = [median(set(items)) for items in by_group.values()]
     centre = median(values)
     return dict(status='OBSERVED_DISTRIBUTION_NOT_HARD_CAPACITY', support=len(values),
                 centre=centre, mad=median(abs(value-centre) for value in values),
-                observed_min=min(values), observed_max=max(values))
+                observed_min=min(observed), observed_max=max(observed), observed_count=len(observed),
+                weighting='INDEPENDENT_LINEAGE_MEDIANS' if groups is not None else 'OBSERVATIONS')
 
 
 def _metric(field, name, unit):
@@ -80,6 +86,7 @@ def learn_profiles(family_artifact, examples):
                 point = source_point(field)
                 metrics = dict(source_pt=point, horizontal_scale=_metric(field, 'horizontal_scale', 'ratio'),
                     tracking_mm=_metric(field, 'tracking', 'mm'), shaped_advance_mm=_metric(field, 'shaped_advance', 'mm'),
+                    word_spacing_mm=_metric(field, 'word_spacing', 'mm'),
                     frame_width_mm=number(field['rect']['w']), frame_height_mm=number(field['rect']['h']))
                 item = dict(example_id=example['id'], lineage_group=example['lineage_group'],
                     role_key=key, kind=field['kind'], owner_port=field['owner'], semantic_type=semantic,
@@ -105,7 +112,7 @@ def learn_profiles(family_artifact, examples):
                     if left >= right:
                         continue
                     a, b = _frame(fields[left], example), _frame(fields[right], example)
-                    relations[(left, right)].append(dict(
+                    relations[(left, right)].append(dict(lineage_group=example['lineage_group'],
                         dx=b[0]-a[0], dy=b[1]-a[1], left_delta=b[0]-a[0],
                         right_delta=b[0]+b[2]-a[0]-a[2],
                         centre_delta=b[0]+b[2]/2-a[0]-a[2]/2,
@@ -113,13 +120,14 @@ def learn_profiles(family_artifact, examples):
         role_profiles = []
         for key, samples in sorted(roles.items()):
             normalized = list(zip(*(sample['frame'] for sample in samples)))
+            frame_distributions=[summary(column,[sample['lineage_group'] for sample in samples]) for column in normalized]
             configurations = {digest(sample['joint']):sample['joint'] for sample in samples}
             role_profiles.append(dict(key=key, kind=samples[0]['kind'], owner_port=samples[0]['owner_port'],
                 support=len({sample['lineage_group'] for sample in samples}),
                 confirmed_container_keys=sorted({sample['container_key'] for sample in samples if sample['container_basis']=='CONFIRMED_SOURCE_CORRESPONDENCE'}),
                 present_examples=len(samples), observed_optional=len(samples)<len(rows),
-                frame_centre=[median(column) for column in normalized],
-                frame_distributions=[summary(column) for column in normalized],
+                frame_centre=[distribution['centre'] for distribution in frame_distributions],
+                frame_distributions=frame_distributions,
                 joint_configurations=[configurations[k] for k in sorted(configurations)],
                 joint_region='OBSERVED_CONFIGURATIONS_NOT_INDEPENDENT_MINMAX',
                 prediction_region='CONDITIONAL_JOINT_RIDGE_PROPOSAL_REQUIRES_ACTUAL_LAYOUT',
@@ -147,14 +155,18 @@ def learn_profiles(family_artifact, examples):
                 joint_occupations=[sample['joint'] for sample in samples],
                 support=len({sample['lineage_group'] for sample in samples}),
                 transformation_permission='NOT_GRANTED_BY_OBSERVATION', validated_admission=None))
-        relation_profiles = [dict(left=key[0], right=key[1], support=len(samples),
-            residuals={metric:summary(sample[metric] for sample in samples) for metric in samples[0]},
+        relation_profiles = [dict(left=key[0], right=key[1], support=len({sample['lineage_group'] for sample in samples}),
+            observed_count=len(samples),
+            residuals={metric:summary([sample[metric] for sample in samples],[sample['lineage_group'] for sample in samples])
+                for metric in samples[0] if metric!='lineage_group'},
             hard_alignment='NOT_INFERRED_FROM_UNCALIBRATED_TOLERANCE')
             for key, samples in sorted(relations.items())]
         pattern_groups=defaultdict(set)
         for group,pattern in semantic_patterns:pattern_groups[pattern].add(group)
         preferred_semantics=sorted(pattern_groups,key=lambda pattern:(-len(pattern_groups[pattern]),pattern))[0]
-        order_counts = Counter(orders)
+        order_groups=defaultdict(set)
+        for example,order in zip(rows,orders):order_groups[order].add(example['lineage_group'])
+        order_counts = {order:len(groups) for order,groups in order_groups.items()}
         preferred = sorted(order_counts, key=lambda order:(-order_counts[order], order))[0]
         repeat_keys = sorted({key for row in counts for key in row})
         repeat = {key:dict(observed_counts=sorted({row.get(key, 0) for row in counts}),

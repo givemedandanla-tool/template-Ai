@@ -8,6 +8,16 @@ def comparison(query):
                 evidence_refs=['authored-judge:'+query],winner=features(0),loser=features(1))
 
 class DesignRankingTests(unittest.TestCase):
+    def test_many_queries_from_one_lineage_cannot_outvote_independent_sources(self):
+        rows=[dict(comparison('q'+str(i)),source_group='g'+str(i)) for i in range(3)]
+        rows[0]['winner'],rows[0]['loser']=rows[0]['loser'],rows[0]['winner']
+        baseline=train_preferences(rows)
+        variants=[dict(deepcopy(rows[0]),query_id='variant-'+str(i)) for i in range(80)]
+        repeated=train_preferences(rows+variants)
+        for a,b in zip(baseline['weights'],repeated['weights']):self.assertAlmostEqual(a,b,places=6)
+        self.assertGreater(utility(features(0),repeated),utility(features(1),repeated))
+        self.assertEqual(repeated['weighting'],'EQUAL_LINEAGE_THEN_QUERY_THEN_COMPARISON')
+
     def test_hard_checks_precede_score_and_formal_checks_are_separate(self):
         good=dict(id='good',family_id='f',configuration_ids=['a'],geometry_digest='x',
                   features=features(1),legal_preview_geometry=True,formal_eligible=False)
