@@ -227,7 +227,7 @@ class CrossWorkLearning:
                 raise ValueError('Production activation needs actual independent layout/asset/source qualification')
             return self.store._write(ACTIVE,'local-layout',dict(model_id=model_id,
                 model_revision=model['revision'],weights_digest=model['weights_digest'],
-                manifest_digest=model['manifest_digest'],policy=deepcopy(policy),actor=actor,
+                manifest_digest=model['manifest_digest'],policy=dict(deepcopy(policy),approved=True),actor=actor,
                 scope='PRODUCTION' if policy.get('production') is True else 'EXPLORATORY_PREVIEW_ONLY'),
                 expected_active_revision,'cross_work_model_activated_or_rolled_back')
 

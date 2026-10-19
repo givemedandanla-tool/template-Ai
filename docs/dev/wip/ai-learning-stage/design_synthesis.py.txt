@@ -85,8 +85,12 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
     ids={row['render_id'] for row in facts};horizontal,vertical=_relation_graph(intents,ids)
     moved={intent[key] for intent in intents for key in ('subject','object')}
     allowed=set(policy.get('movable_kinds',('phone','email','line','ig','address')))
-    if any(row['render_id'] in moved and row['kind'] not in allowed for row in facts):
+    subjects={intent['subject'] for intent in intents}
+    if any(row['render_id'] in subjects and row['kind'] not in allowed for row in facts):
         raise ValueError('Requested protected role is outside approved relative-position policy')
+    by_render={row['render_id']:row for row in facts}
+    if any(by_render[intent['subject']]['owner_port']!=by_render[intent['object']]['owner_port'] for intent in intents):
+        raise ValueError('Cross-owner relative editing needs separately supported group correspondence')
     roles={role['key']:role for role in profile['roles']};missing=[];options=[]
     for fact in facts:
         if fact['role_key'] not in roles:
@@ -155,16 +159,18 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                     elif bf[0]+bf[2]<=af[0]+1e-9:hgraph.add_edge(bid,aid)
             if not nx.is_directed_acyclic_graph(vgraph) or not nx.is_directed_acyclic_graph(hgraph):
                 raise ValueError('Intent contradicts protected relative structure')
+            for a,b in sorted(horizontal.edges):
+                ax,ay,aw,ah=variables[a];bx,by,bw,bh=variables[b];solver.addConstraint(ax+aw<=bx)
+            for a,b in sorted(vertical.edges):
+                ax,ay,aw,ah=variables[a];bx,by,bw,bh=variables[b];solver.addConstraint(ay+ah<=by)
             vrank={rid:i for i,rid in enumerate(nx.lexicographical_topological_sort(vgraph,key=lambda rid:(preferred[rid],rid)))}
             hrank={rid:i for i,rid in enumerate(nx.lexicographical_topological_sort(hgraph,key=lambda rid:(preferred[rid],rid)))}
             vertical_edit=any(intent['relation'] in ('ABOVE','BELOW') for intent in intents)
             for i,a in enumerate(facts):
                 for b in facts[i+1:]:
                     aid,bid=a['render_id'],b['render_id'];ax,ay,aw,ah=variables[aid];bx,by,bw,bh=variables[bid]
-                    if horizontal.has_edge(aid,bid):solver.addConstraint(ax+aw<=bx)
-                    elif horizontal.has_edge(bid,aid):solver.addConstraint(bx+bw<=ax)
-                    elif vertical.has_edge(aid,bid):solver.addConstraint(ay+ah<=by)
-                    elif vertical.has_edge(bid,aid):solver.addConstraint(by+bh<=ay)
+                    if (horizontal.has_edge(aid,bid) or horizontal.has_edge(bid,aid)
+                            or vertical.has_edge(aid,bid) or vertical.has_edge(bid,aid)):continue
                     elif aid in moved or bid in moved:
                         if vertical_edit:
                             solver.addConstraint(ay+ah<=by if vrank[aid]<vrank[bid] else by+bh<=ay)

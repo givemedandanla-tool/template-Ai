@@ -1502,3 +1502,8 @@ Unapplied AI02/03 and partial AI06 implementation uses existing SAMPLE/DATASET/T
 ## 2026-10-19 synthesis/ranking/source-binding staged checks
 
 10 additional isolated synthesis/ranking checks and2 expert source-binding checks pass: real Qt/font measurement and Kiwi,stable same-family relative exchange,hard-first ranking,explicit comparison labels and source/field correspondence. Total staged31 checks across separate groups;not yet product implementation. Full source regression1291/1581 passing at05:49UTC. Whole Logo synthesis,formal instance qualification,joint regression and native glyph/composite-run mapping remain unimplemented/pending;no full package completion. Continue all8.
+
+
+## 2026-10-19 current-source1581 formal regression complete
+
+RUN-AI-ORIGINAL-TEXT-LINEAGE-001 source4812d51 software PASS:1581 tests,199 healthy module processes,capture0,no runtime errors,stable source,366 attachment hashes verified. Two listed native images visually inspected. Overall FAIL retains original five external clauses;163 scoped verified requirements rebound with unchanged contracts/status/counts. All8 AI complete0;AI01 partial. Additional staged session5 checks pass16.268s,including real source-bound model->input->Qt/Kiwi preview->confirmation->PNG,undo keeps corrected phone,restart/idempotency,late result CAS and exact artifact reuse after model activation;not applied product evidence. Continue all8;native glyph extraction still pending. Actual checkpoint interval exceeded10minutes during staging/capture/readback,recorded truthfully in STATE.

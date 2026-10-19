@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "AI01 frozen full regression1291/1581 passing at05:49UTC;31 isolated staged learning/synthesis/ranking/source-binding checks pass;continue all8",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-AI-SHARED-MODEL-STAGED.receipt.json",
-  "last_confirmed_commit": "a90e8d88b21321e17c3271e2421acaadde05e16f",
-  "latest_evidence_run": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/run.json",
+  "active_task": "AI01 original-source formal software regression complete;apply isolated-tested shared core then continue native glyph extraction,desktop and real-data evaluation across all8",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-AI04-05-STAGED.receipt.json",
+  "last_confirmed_commit": "6ea71782629cd3b3ded41c597068c6ea5b8b4611",
+  "latest_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -48,9 +48,9 @@
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
     "CP-20261019-JOINT-PARAM-PLAN",
-    "CP-20261019-AI04-05-STAGED"
+    "CP-20261019-AI01-SOURCE-FORMAL"
   ],
-  "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+  "previous_evidence_run": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
   "progress_report": "docs/dev/PROGRESS.md",
@@ -1126,15 +1126,15 @@
   "swap_default_checkpoint_interval_seconds": 400.238,
   "ai_execution_plan": "docs/dev/AI_LEARNING_EXECUTION.md",
   "ai_execution_baseline": "docs/dev/progress/PROGRESS-20261019-AI-ALL8-BEGIN.json",
-  "latest_targeted_evidence": "docs/qa/targeted/AI-ORIGINAL-TEXT-LINEAGE-20261019.json",
-  "latest_evidence_scope": "Previous formal1567 run is historical;current source slice has59 targeted passing checks,formal regression pending",
+  "latest_targeted_evidence": "docs/qa/targeted/AI-ORIGINAL-TEXT-FORMAL-SUMMARY-20261019.json",
+  "latest_evidence_scope": "Current4812d51 source:1581/1581 tests,199 healthy modules,capture0,366 attachment hashes verified;all8 AI completion still0;staged modules excluded",
   "latest_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T051508Z.json",
   "frozen_formal_run": {
     "id": "RUN-AI-ORIGINAL-TEXT-LINEAGE-001",
     "source_commit": "4812d51df5c42ac25a9947b0356a837ed02a1cbc",
-    "status": "RUNNING_NOT_VERIFIED",
+    "status": "COMPLETE_SOFTWARE_PASS_EXTERNAL_QUALIFICATION_PENDING",
     "progress_path": ".checkpoints/formal-live/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/test-progress.json",
-    "code_must_remain_frozen_until_run_completes": true
+    "code_must_remain_frozen_until_run_completes": false
   },
   "staged_ai_implementation": {
     "path": "docs/dev/wip/ai-learning-stage",
@@ -1156,5 +1156,14 @@
     "next": "After source regression,apply staged modules,install pinned sklearn dependencies,run actual tests and integrate lifecycle/generation/desktop",
     "evidence": "docs/qa/targeted/AI-SHARED-MODEL-STAGED-20261019.json",
     "latest_evidence": "docs/qa/targeted/AI-SYNTHESIS-RANKING-STAGED-20261019.json"
-  }
+  },
+  "checkpoint_cadence_deviations": [
+    {
+      "stage": "AI07 staged implementation while frozen formal captures completed",
+      "planned_minutes": 10,
+      "observed_approx_minutes": 18,
+      "reason": "Code preparation and frozen-run/source-snapshot readback took longer;not claimed within10minutes",
+      "recovery": "All source/staged work included in next exact snapshot"
+    }
+  ]
 }
