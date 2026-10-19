@@ -24,8 +24,15 @@ def register_instance(library,session,result,candidate,actor):
     from .design_evaluation import check_layout
     store=TrainingStore.bind(library);model,_=CrossWorkLearning(library).checked_model(session['model_id'])
     certificate=validate_certificate(library,model)
-    if session['policy'].get('production') is not True or session.get('ranker_ref'):
+    if session['policy'].get('production') is not True:
         raise ValueError('Formal instance needs approved production policy;experimental preference models remain preview-only')
+    ranker_ref=session.get('ranker_ref')
+    if ranker_ref:
+        from .design_rank_qualification import RankerQualification
+        RankerQualification(library).checked(ranker_ref.get('qualification_id','missing'),ranker_ref['id'])
+    compared_ranker={key:ranker_ref[key] for key in ('id','weights_digest')} if ranker_ref else None
+    if certificate['plan'].get('ranker_ref')!=compared_ranker:
+        raise ValueError('Session ranker differs from the core-qualified ranking policy')
     expected=deepcopy(certificate['plan']['layout_policy'])
     for key in ('production','basis','approved'):expected.pop(key,None)
     current=deepcopy(session['policy'])
@@ -40,6 +47,7 @@ def register_instance(library,session,result,candidate,actor):
     if integrity['status']!='PASS':raise ValueError('Current whole layout failed independent checks')
     reference=dict(model_id=model['id'],weights_digest=model['weights_digest'],manifest_digest=model['manifest_digest'],
         qualification_id=certificate['id'],input_digest=result['input_digest'],result_digest=result['content_digest'],
+        ranker_ref=deepcopy(ranker_ref),
         input_graph=deepcopy(session['input_graph']),intents=deepcopy(session['intents']),engine_digest=engine_digest())
     identity='generated-'+digest([reference,candidate.template.to_dict(),placement_digest(candidate)])
     reference['instance_id']=identity;candidate.template.generation_reference=reference;candidate.template.state='learned_instance'
@@ -71,6 +79,9 @@ def verify_instance(candidate,library=None):
                 or record['reference']!=reference or record['input_snapshot_digest']!=digest(candidate.risk_context['input_snapshot'])):
             raise ValueError('Generated geometry/data/provenance differs from exact approved instance')
         model,dataset=CrossWorkLearning(library).checked_model(reference['model_id'])
+        if reference.get('ranker_ref'):
+            from .design_rank_qualification import RankerQualification
+            ranker=reference['ranker_ref'];RankerQualification(library).checked(ranker.get('qualification_id','missing'),ranker['id'])
         certificate=validate_certificate(library,model)
         if (model['weights_digest']!=reference['weights_digest'] or model['manifest_digest']!=reference['manifest_digest']
                 or certificate['id']!=reference['qualification_id']):raise ValueError('Generated instance model qualification differs')

@@ -92,6 +92,7 @@ class DesignQualification:
             model_id=model['id'],weights_digest=model['weights_digest'],manifest_digest=dataset['manifest_digest'],
             corpus_review=dict(id=review['id'],revision=review['revision'],digest=digest(review)),
             preference_refs=preference_refs,policy=deepcopy(policy),layout_policy=deepcopy(job['plan']['policy']),engine_digest=engine_digest(),
+            ranker_ref=deepcopy(job['plan'].get('ranker_ref')),
             scope='MEASURED_CORE_DIGITAL_LAYOUT_ONLY;NOT_PHYSICAL_PREPRESS_OR_UNTESTED_DEVICES')
         result['digest']=digest(result);return result
 

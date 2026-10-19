@@ -18,7 +18,7 @@ def apply_spacing(font,text,factor,rule):
     import math
     if (rule.get('status')!='HUMAN_CONFIRMED_SOURCE_RULE' or not rule.get('evidence_refs')
             or rule.get('mode') not in ('WORDS','CHARACTERS')
-            or rule.get('last_line')!='NATURAL' or rule.get('zero_boundaries')!='KEEP_NATURAL'):
+            or rule.get('last_line') not in ('NATURAL','DISTRIBUTE') or rule.get('zero_boundaries')!='KEEP_NATURAL'):
         raise ValueError('Unsupported or unreviewed spacing boundary/last-line rule')
     allowed=rule.get('allowed_scripts')
     scripts={script(char) for char in text}-{ 'Zyyy','Zinh' }
@@ -40,7 +40,7 @@ def apply_spacing(font,text,factor,rule):
         while finder.toNextBoundary()!=-1:count+=1
         count=max(0,count)
         font.setLetterSpacing(QFont.AbsoluteSpacing,value/factor if count else 0.)
-    return dict(mode=rule['mode'],boundary_count=count,zero_boundary_action='KEEP_NATURAL',last_line='NATURAL')
+    return dict(mode=rule['mode'],boundary_count=count,zero_boundary_action='KEEP_NATURAL',last_line=rule['last_line'])
 
 
 def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, policy, kind):
@@ -78,8 +78,11 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     alignment=policy.get('alignment','left')
     alignments={'left':Qt.AlignLeft,'center':Qt.AlignHCenter,'right':Qt.AlignRight,'justify':Qt.AlignJustify}
     if alignment not in alignments:raise ValueError('Unsupported learned flow alignment')
-    if policy.get('spacing_rule',{}).get('mode')=='WORDS' and alignment=='justify' and spacing_rule['boundary_count']:
-        raise ValueError('Word-only spacing cannot use Qt mixed-boundary justification')
+    word_justify=policy.get('spacing_rule',{}).get('mode')=='WORDS' and alignment=='justify' and spacing_rule['boundary_count']
+    if word_justify:
+        if policy['spacing_rule'].get('justification')!='WORD_BOUNDARIES_ONLY':
+            raise ValueError('Word-only spacing cannot use Qt mixed-boundary justification')
+        alignment='left' # Actual boundary-only positioning is applied after shaping.
     if policy.get('spacing_rule') and spacing_rule['boundary_count']==0 and alignment=='justify':
         alignment='left' # No implicit CJK/character justification in a word-only rule.
     option.setAlignment(alignments[alignment]);layout=QTextLayout(text,font);layout.setTextOption(option)
@@ -100,7 +103,11 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     if rich:
         from .design_rich_text import verify_layout
         verify_layout(layout,rich_proof)
-    for run in layout.glyphRuns():
+    positioned_runs=None;justification=[]
+    if word_justify:
+        from .design_spacing import word_justified_runs
+        positioned_runs,justification=word_justified_runs(layout,text,lines,width_mm/(factor*scale),policy['spacing_rule'])
+    for run in positioned_runs if positioned_runs is not None else layout.glyphRuns():
         raw=run.rawFont()
         for glyph,position in zip(run.glyphIndexes(),run.positions()):
             box=raw.boundingRect(glyph).translated(position)
@@ -109,6 +116,7 @@ def shape_flow(text, family, pt, scale, width_mm, asset, style, tracking_mm, pol
     width=ink.width()*factor*scale;height=ink.height()*factor
     if width>width_mm+1e-6:raise ValueError('Unbreakable shaped text exceeds flow container')
     return dict(layout=layout,ink=ink,factor=factor,width_mm=width,height_mm=height,lines=lines,
+                positioned_runs=positioned_runs,word_justification=justification,
                 natural_advance_mm=max((line['natural_width_mm']/scale for line in lines),default=0.),
                 text_length=len(text),source_rule=policy,spacing_rule=spacing_rule,
                 first_baseline_mm=(layout.lineAt(0).position().y()+layout.lineAt(0).ascent()-ink.top())*factor if lines else None)
@@ -126,5 +134,7 @@ def draw_flow(painter,rect,text,slot,scale,tracking_mm):
         painter.translate(rect.x()+offset-ink.left()*factor*scale,
                           rect.y()+(rect.height()-result['height_mm'])/2-ink.top()*factor)
         painter.scale(factor*scale,factor);painter.setPen(QColor(slot.color))
-        result['layout'].draw(painter,QPointF(0,0))
+        if result['positioned_runs'] is not None:
+            for run in result['positioned_runs']:painter.drawGlyphRun(QPointF(0,0),run)
+        else:result['layout'].draw(painter,QPointF(0,0))
     finally:painter.restore()

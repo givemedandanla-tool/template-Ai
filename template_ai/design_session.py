@@ -66,6 +66,13 @@ class DesignSessions:
             if active:
                 ranker=DesignFeedback(self.library).checked_ranker(active['model_id'])
                 ranker_ref=dict(id=ranker['id'],weights_digest=ranker['weights_digest'])
+                if policy.get('production') is True:
+                    from .design_rank_qualification import RankerQualification
+                    if active['policy'].get('production') is not True:raise ValueError('Preview ranker cannot be used for a production session')
+                    qualification_id=active['policy'].get('qualification_id','missing')
+                    RankerQualification(self.library).checked(qualification_id,ranker['id'])
+                    ranker_ref['qualification_id']=qualification_id
+            elif policy.get('production') is True:raise ValueError('Requested production ranker is not active')
         with self.store.transaction():
             return self.store._write('DESIGN_SESSION',new_id(),dict(schema=1,input_graph=deepcopy(graph.data),
                 width_mm=width,height_mm=height,actor=actor,model_id=model_id,model_revision=model['revision'],

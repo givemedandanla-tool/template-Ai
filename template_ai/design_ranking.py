@@ -7,14 +7,23 @@ from copy import deepcopy
 import math
 from .training_store import digest
 
-VERSION='cross-work-preference-2-lineage-balanced'
+VERSION='cross-work-preference-3-measured-joint-style'
 FEATURES=('deviation','scale_loss','density','relation_changes','joint_style_residual')
 
 
 def candidate_features(candidate,width,height,intents):
+    references=candidate.risk_context.get('design_joint_style_reference',{})
+    residuals=[]
+    for item in candidate.items:
+        if item.slot.kind=='logo':continue
+        reference=references.get(item.slot.id)
+        if not reference:continue
+        observed=[item.slot.size_pt/height,item.scale,item.tracking_mm/(item.slot.size_pt*25.4/72),
+                  item.slot.rect.w/width,item.slot.rect.h/height]
+        residuals.append(min(math.sqrt(sum((a-b)**2 for a,b in zip(observed,row))/len(observed)) for row in reference))
     return dict(deviation=-candidate.score,scale_loss=sum(abs(1-item.scale) for item in candidate.items),
         density=sum(item.slot.rect.w*item.slot.rect.h for item in candidate.items)/(width*height),
-        relation_changes=len(intents or []),joint_style_residual=0.)
+        relation_changes=len(intents or []),joint_style_residual=sum(residuals)/len(residuals) if residuals else 0.)
 
 
 def vector(features):
@@ -72,7 +81,7 @@ def train_preferences(comparisons, *, regularization=1.):
 def utility(features, model=None):
     values=vector(features)
     if model:
-        if (model.get('features')!=list(FEATURES)
+        if (model.get('version')!=VERSION or model.get('features')!=list(FEATURES)
                 or digest({k:v for k,v in model.items() if k!='digest'})!=model.get('digest')):
             raise ValueError('Preference model is modified or incompatible')
         return sum(value*weight for value,weight in zip(values,model['weights']))

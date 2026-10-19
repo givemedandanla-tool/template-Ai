@@ -363,6 +363,8 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                     solver.addConstraint((expression==distribution['centre']*dimension)|strength)
                     applied.append(dict(left=a,right=b,metric=metric,independent_support=distribution['support'],
                         source_refs=relation.get('source_refs',[]),strength='SOFT_BASELINE_STRONG_OTHER_MEDIUM_BELOW_HARD_INTENT'))
+            from .design_object_spacing import apply_object_spacing
+            apply_object_spacing(solver,variables,facts,profile.get('object_spacing_rules',[]),width,height)
             solver.updateVariables()
             for slot in slots:
                 x,y,w,h=variables[slot.id];slot.rect=Rect(x.value(),y.value(),w,h)
@@ -384,6 +386,21 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                 dependency_stamp=layout_dependency(template,logos))
             pin_inputs(candidate,people,companies,logos)
             candidate.risk_context['design_style_admission']=style_admission
+            style_reference={}
+            for fact,config in zip(facts,selected):
+                if fact['kind']=='logo':continue
+                rows=[]
+                for data in profile['data_requirement_profiles']:
+                    for sample in data['presentation_evidence']:
+                        joint=sample['joint'];dimensions=sample['dimensions_mm']
+                        if (sample['role_key']==fact['role_key'] and joint['source_pt']
+                                and joint['horizontal_scale'] is not None and joint['tracking_mm'] is not None
+                                and font_identity(sample['source_font_ref'])==font_identity(config['font_asset'])):
+                            rows.append([joint['source_pt']/dimensions[1],joint['horizontal_scale'],
+                                joint['tracking_mm']/(joint['source_pt']*25.4/72),
+                                joint['frame_width_mm']/dimensions[0],joint['frame_height_mm']/dimensions[1]])
+                style_reference[fact['render_id']]=rows
+            candidate.risk_context['design_joint_style_reference']=style_reference
             candidate.risk_context['design_size_admission']=('SOURCE_OR_LEARNED_DOMAIN' if all(
                 config.get('size_admission') in ('OBSERVED_EXACT_SIZE','LEARNED_JOINT_DOMAIN') for config in selected)
                 else 'UNVERIFIED_SIZE_PREVIEW_ONLY')

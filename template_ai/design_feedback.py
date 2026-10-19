@@ -122,9 +122,13 @@ class DesignFeedback:
         return model
 
     def activate(self,identity,expected_revision,actor,policy,approved=False):
-        if not approved or policy.get('production') is not False:raise ValueError('Explicit preview-only preference activation required')
+        if not approved or type(policy.get('production')) is not bool:raise ValueError('Explicit preference activation scope required')
         text(actor,'Preference policy reviewer',120);text(policy.get('version'),'Preference policy version',128)
         with self.store.transaction():
             model=self.checked_ranker(identity)
+            if policy['production']:
+                from .design_rank_qualification import RankerQualification
+                RankerQualification(self.library).checked(policy.get('qualification_id','missing'),identity)
             return self.store._write('DESIGN_RANKER_ACTIVE','local-preference',dict(model_id=identity,
-                weights_digest=model['weights_digest'],actor=actor,policy=deepcopy(policy)),expected_revision,'preview_preference_model_activated')
+                weights_digest=model['weights_digest'],actor=actor,policy=deepcopy(policy)),expected_revision,
+                'qualified_production_preference_model_activated' if policy['production'] else 'preview_preference_model_activated')

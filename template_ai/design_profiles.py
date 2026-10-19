@@ -189,7 +189,9 @@ def learn_profiles(family_artifact, examples):
                 frames={key:[summary([item[1][i] for item in items],[item[0] for item in items])['centre']
                     for i in range(4)] for key,items in sorted(frames.items())},
                 source_refs=sorted(row['id'] for row in members)))
+        from .design_object_spacing import learn_object_spacing
         result.append(dict(family_id=family['id'], independent_support=family['independent_support'],
+            object_spacing_rules=learn_object_spacing(rows),
             observed_dimensions_mm=sorted(set(dimensions)), roles=role_profiles,
             data_requirement_profiles=data_profiles, field_capability_profiles=field_profiles,
             relations=relation_profiles,conditional_geometry=conditioned,
