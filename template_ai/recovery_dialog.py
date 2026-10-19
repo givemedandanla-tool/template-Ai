@@ -172,7 +172,8 @@ class RecoveryDialog(QDialog):
     def use_candidate(self):
         if not self.on_candidate or not self.candidate_choices.currentData():raise ValueError('請先選擇本機比對候選')
         if self.worker and self.worker.isRunning():raise ValueError('請等待目前工作結束')
-        self.on_candidate(deepcopy(self.candidate_choices.currentData()))
+        self.on_candidate(deepcopy(self.candidate_choices.currentData()),dict(report=deepcopy(self.last_match),
+            candidate_index=self.candidate_choices.currentIndex(),crop_rect=[box.value() for box in self.crop_controls]))
         self.status.setText('已帶回來源核對草稿；請核對來源、參數與完整文字後明確確認。')
 
     def export(self):

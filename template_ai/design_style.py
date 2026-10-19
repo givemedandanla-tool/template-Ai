@@ -10,6 +10,7 @@ _PROVENANCE = frozenset({
     'created_at', 'updated_at', 'source_ref', 'source_refs', 'example_id',
     'path', 'original_name', 'usage_rights', 'font_evidence',
     'source_run_ref', 'source_text_sha256',
+    'source_run_id', 'source_hash', 'reviewed_source_association',
 })
 
 

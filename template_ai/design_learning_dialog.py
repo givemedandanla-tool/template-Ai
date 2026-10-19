@@ -100,6 +100,8 @@ class DesignLearningDialog(QDialog):
         self.source_runs=QComboBox();layout.addWidget(self.source_runs);self.source_fonts=QComboBox();layout.addWidget(self.source_fonts)
         self.source_basis=QLineEdit();self.source_basis.setPlaceholderText('原稿、欄位與字型對應的核對依據');layout.addWidget(self.source_basis)
         self.source_confirm=QCheckBox('已對照原稿，確認這個文字欄與實際字型檔的對應');layout.addWidget(self.source_confirm)
+        self.use_visual=QCheckBox('使用已核對的本機影像字型／幾何候選（原生資訊可能未知）');layout.addWidget(self.use_visual)
+        self.visual_match_id=None
         self.parameter_space=QComboBox();self.parameter_space.addItem('量測使用原稿座標','SOURCE');self.parameter_space.addItem('量測使用作品座標（含非等比轉換）','WORK');layout.addWidget(self.parameter_space)
         row=QHBoxLayout();self.parameter_review=QCheckBox('字寬與字距已量測');row.addWidget(self.parameter_review)
         self.source_scale=QDoubleSpinBox();self.source_scale.setRange(.05,10);self.source_scale.setValue(1);self.source_scale.setDecimals(4)
@@ -170,10 +172,13 @@ class DesignLearningDialog(QDialog):
         work=self.library.artwork(work_id);source=self.library.source(work['source_id'])
         fact=self.source_fields.currentData();slot_id=fact['slot_id'] if fact else None
         slot=next((row for row in work['payload']['slots'] if row['id']==slot_id),None)
-        def accept_candidate(candidate):
+        def accept_candidate(candidate,evidence):
             if self.source_work.currentData()!=work_id or (self.source_fields.currentData() or {}).get('slot_id')!=slot_id:
                 raise ValueError('來源欄位已變更，請重新比對')
             asset=self.font_manager.import_font(candidate['face']['path'],True,face_index=candidate['face'].get('face_index',0))
+            from .local_font_recovery import LocalFontRecovery
+            match=LocalFontRecovery(self.library).record(work_id,slot_id,evidence['crop_rect'],evidence['report'],evidence['candidate_index'],self.actor.text(),True)
+            self.visual_match_id=match['id'];self.use_visual.setChecked(False)
             self.source_fonts.addItem(' / '.join(asset['families'])+' · 本機視覺候選',asset);self.source_fonts.setCurrentIndex(self.source_fonts.count()-1)
             payload=work['payload'];sx=payload['work_width']/payload['crop']['w'];sy=payload['work_height']/payload['crop']['h']
             self.parameter_space.setCurrentIndex(self.parameter_space.findData('WORK'))
@@ -197,6 +202,7 @@ class DesignLearningDialog(QDialog):
                 self.source_fields.addItem(row['text'][:80],row)
         self.load_source_runs()
     def load_source_runs(self):
+        self.visual_match_id=None;self.use_visual.setChecked(False)
         self.source_runs.clear();field=self.source_fields.currentData();work_id=self.source_work.currentData()
         if not field or not work_id:return
         original=self.jobs.store._design_observation_document(work_id)['original_text_evidence']
@@ -221,7 +227,11 @@ class DesignLearningDialog(QDialog):
         if self.source_word_review.isChecked():review.update({parameter_prefix+'word_spacing':self.source_word_spacing.value(),'parameter_measurement_refs':[self.source_basis.text()]})
         if self.work_pt_review.isChecked():review.update(physical_work_pt=self.work_pt.value(),physical_work_measurement_refs=[self.source_basis.text()])
         service=SourceTypographyReview(self.library)
-        service.confirm(service.plan(self.source_work.currentData(),field['slot_id'],self.source_runs.currentData(),asset,review),self.actor.text(),True)
+        if self.use_visual.isChecked():
+            review['visual_geometry_confirmed']=True
+            plan=service.plan_visual(self.source_work.currentData(),field['slot_id'],self.visual_match_id,asset,review)
+        else:plan=service.plan(self.source_work.currentData(),field['slot_id'],self.source_runs.currentData(),asset,review)
+        service.confirm(plan,self.actor.text(),True)
         self.say('已保存原稿對應；目前觀察仍不等於跨作品規則已通過驗證。')
     def train(self):
         if not self.rights.isChecked():raise ValueError('請核對本次跨作品規則學習用途')

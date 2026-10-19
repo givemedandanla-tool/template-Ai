@@ -117,3 +117,60 @@ class LocalCapacityCalibration:
         if digest({k:v for k,v in record['artifact'].items() if k!='digest'})!=record['artifact']['digest']:
             raise ValueError('Capacity calibration changed')
         return record
+
+    def review_case(self,job_id,index,qualified_style,actor,evidence,approved=False):
+        from .design_jobs import DesignJobs
+        if not approved or type(qualified_style) is not bool:raise ValueError('Explicit independent suitable-style review required')
+        text(actor,'Suitable-style reviewer',120);text(evidence,'Suitable-style evidence',2048)
+        jobs=DesignJobs(self.learning.library);job=jobs.current(job_id)
+        row=self.store.get('DESIGN_JOB_ITEM',jobs.item_key(job_id,index))
+        if job['phase']!='COMPLETE' or not row or row['result']['role']!='VALIDATION':
+            raise ValueError('Actual VALIDATION output must exist before capacity-style review')
+        identity=digest([job_id,index,row['result_digest']])
+        with self.store.transaction():
+            if self.store.get('DESIGN_STYLE_REVIEW',identity):raise ValueError('Suitable-style review is immutable')
+            return self.store._write('DESIGN_STYLE_REVIEW',identity,dict(job_id=job_id,index=index,
+                result_digest=row['result_digest'],qualified_style=qualified_style,actor=actor,evidence=evidence),0,'actual_validation_suitability_reviewed')
+
+    def from_evaluation(self,job_id,policy,actor,approved=False):
+        from .design_jobs import DesignJobs
+        from .design_session import _candidate
+        from .design_synthesis import input_facts
+        from .design_learning import grapheme_count
+        from .design_style import font_identity,functional
+        from .input_graph import InputGraph
+        from .layout import text_geometry
+        jobs=DesignJobs(self.learning.library);job=jobs.current(job_id)
+        if job['kind']!='EVALUATE_LAYOUTS' or job['phase']!='COMPLETE':raise ValueError('Complete actual evaluation required for calibration')
+        rows=jobs.results(job_id);records=[]
+        for index,row in enumerate(rows):
+            if row['role']!='VALIDATION':continue # Sealed HOLDOUT never fits a boundary.
+            saved=self.store.get('DESIGN_JOB_ITEM',jobs.item_key(job_id,index))
+            review=self.store.get('DESIGN_STYLE_REVIEW',digest([job_id,index,saved['result_digest']]))
+            if not review or review['result_digest']!=saved['result_digest']:
+                raise ValueError('Every VALIDATION case needs an explicit suitable-style review')
+            if row['learned']['status']!='FEASIBLE':
+                raise ValueError('Unshaped validation case has unknown joint demand;cannot calibrate this cohort')
+            candidate=_candidate(row['learned']['serialized']);case=job['plan']['items'][index]
+            graph=InputGraph(case['input_graph']);facts=sorted(input_facts(graph),key=lambda value:value['role_key'])
+            items={item.slot.id:item for item in candidate.items};demand=[];fonts=[]
+            for fact in facts:
+                item=items[fact['render_id']];slot=item.slot
+                if slot.kind=='logo':continue
+                if slot.text_flow:
+                    from .design_text_flow import shape_flow
+                    measured=shape_flow(item.text,slot.font,slot.size_pt,item.scale,slot.rect.w,slot.font_asset,
+                        slot.font_style,item.tracking_mm,slot.text_flow,slot.kind)
+                    advance=measured['natural_advance_mm']
+                else:
+                    advance,_,errors=text_geometry(slot.font,slot.size_pt,item.text,slot.font_style,slot.font_asset,item.tracking_mm)
+                    if errors:raise ValueError('Calibration font measurement is unknown')
+                demand.extend([grapheme_count(fact['value']),advance/slot.size_pt])
+                fonts.append(dict(role=fact['role_key'],font=font_identity(slot.font_asset),flow=functional(slot.text_flow)))
+            context=dict(family_id=candidate.template.family_id,font_signature=digest(fonts),field_count=len(facts),
+                width_mm=case['width_mm'],height_mm=case['height_mm'],roles=[fact['role_key'] for fact in facts])
+            records.append(dict(id=row['case_id'],sample_id=row['sample_id'],role='VALIDATION',lineage_group=row['lineage_group'],
+                context=context,demand=demand,layout_pass=row['learned']['integrity']['status']=='PASS',
+                qualified_style=review['qualified_style'],evidence_refs=[job_id,saved['result_digest'],review['id']]))
+        if not records:raise ValueError('No reviewed independent VALIDATION cohort')
+        return self.save(job['plan']['model_id'],records,policy,actor,approved)

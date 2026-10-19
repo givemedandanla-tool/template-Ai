@@ -91,9 +91,19 @@ def _font_options(profile, key, width, height, value=None, policy=None, semantic
                 if rule.get('mode')!='WORDS' or rule.get('value_mm')!=condition['word_spacing_mm']:continue
             if label.get('status')!='CONFIRMED' or label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX','SEPARATE_STATIC_LABEL'):continue
             display=label.get('prefix','')+value if label.get('kind')=='DYNAMIC_PREFIX' else value
-            identity=digest([asset,display])
+            flow=condition.get('text_flow')
+            identity=digest([asset,display,flow])
             if identity not in measured:
-                measured[identity]=text_geometry(asset['families'][0],12.,display,
+                if flow and flow.get('rich_text'):
+                    from .design_text_flow import shape_flow
+                    ratios=[part['pt_ratio'] for part in flow['rich_text']['segments']]
+                    reference_pt=min(max(12.,1/min(ratios)),200/max(ratios))
+                    try:
+                        shaped=shape_flow(display,asset['families'][0],reference_pt,1.,2000.,asset,
+                            (asset.get('styles') or [''])[0],0.,flow,key.split(':')[1])
+                        measured[identity]=(shaped['natural_advance_mm']/reference_pt*12.,0.,[])
+                    except ValueError:measured[identity]=(0.,0.,['COMPOSITE_DEMAND_UNSUPPORTED'])
+                else:measured[identity]=text_geometry(asset['families'][0],12.,display,
                     (asset.get('styles') or [''])[0],asset,0.)
             advance,_,errors=measured[identity]
             if errors or advance<=0:continue

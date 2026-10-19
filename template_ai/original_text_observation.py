@@ -294,7 +294,7 @@ def original_text_observation(source):
                 for row in rows:
                     row['source_locator']=dict(kind='INKSCAPE_DERIVED_TEXT',derivative_locator=row['source_locator'])
                     row['conversion_declared_pt']=row['source_pt']
-                    row['source_pt']=unknown('pt','DERIVED_CONVERSION_NOT_ORIGINAL_PHYSICAL_PT',(row['id'],)).to_dict()
+                    row['source_pt']=unknown('pt','DERIVED_CONVERSION_NOT_ORIGINAL_PHYSICAL_PT',(row['id'],))
                     row['qualification']='EXPERT_VISUAL_FONT_AND_PHYSICAL_MEASUREMENT_REQUIRED'
                 if file_digest(derived)!=document['derived_semantic_sha256']:raise ValueError('Semantic source changed during observation')
         document.update(channel=channel, runs=rows,

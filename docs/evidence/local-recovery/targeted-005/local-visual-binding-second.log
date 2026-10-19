@@ -1,0 +1,20 @@
+.E.
+======================================================================
+ERROR: test_reproduced_visual_match_becomes_traceable_learning_evidence_without_native_truth (test_local_visual_binding.VisualSourceBindingTests.test_reproduced_visual_match_becomes_traceable_learning_evidence_without_native_truth)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_local_visual_binding.py", line 47, in test_reproduced_visual_match_becomes_traceable_learning_evidence_without_native_truth
+    plan=source.plan_visual(self.work['id'],self.slot.id,record['id'],self.asset,self.review)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_source_binding.py", line 25, in plan_visual
+    return LocalFontRecovery(self.library).plan_binding(work_id,slot_id,match_id,font_asset,review)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/local_font_recovery.py", line 103, in plan_binding
+    source_page_pt=unknown('pt','ORIGINAL_NATIVE_POINT_SIZE_UNAVAILABLE',refs).to_dict(),
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'to_dict'
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.586s
+
+FAILED (errors=1)

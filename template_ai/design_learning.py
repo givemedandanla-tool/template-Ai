@@ -75,12 +75,18 @@ class CrossWorkLearning:
                 typography = deepcopy(metadata['typography'])
                 label = labels.get(slot['id'])
                 if binding:
+                    if binding.get('visual_match_id'):
+                        from .local_font_recovery import LocalFontRecovery
+                        if digest(LocalFontRecovery(self.library).checked(binding['visual_match_id']))!=binding['visual_match_digest']:
+                            raise ValueError('Visual source correspondence changed')
                     if (binding['pins'] != sample['pins']
                             or binding['original_evidence_digest'] != observation['original_text_evidence']['document_digest']
                             or binding['state'] != 'APPROVED'):
                         raise ValueError('Source typography binding is stale or withdrawn')
                     typography = deepcopy(binding['typography'])
                     from .design_components import component_fonts
+                    from .design_components import presentation_errors
+                    if presentation_errors(binding.get('source_text_flow')):raise ValueError('Bound source component resource changed')
                     assets=[typography.get('font_asset_ref')]+component_fonts(binding.get('source_text_flow'))
                     for asset in assets:
                         asset_key=digest(asset)

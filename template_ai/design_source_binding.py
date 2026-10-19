@@ -20,6 +20,10 @@ class SourceTypographyReview:
     def plan(self,work_id,slot_id,source_run_id,font_asset,review):
         return self._plan_run(work_id,slot_id,source_run_id,font_asset,review)
 
+    def plan_visual(self,work_id,slot_id,match_id,font_asset,review):
+        from .local_font_recovery import LocalFontRecovery
+        return LocalFontRecovery(self.library).plan_binding(work_id,slot_id,match_id,font_asset,review)
+
     def _plan_run(self,work_id,slot_id,source_run_id,font_asset,review,span=None):
         if not isinstance(review,dict) or review.get('source_identity_confirmed') is not True:
             raise ValueError('Explicit expert source/font identity review is required;names do not prove identity')
@@ -245,7 +249,9 @@ class SourceTypographyReview:
         if approved is not True:raise ValueError('Explicit expert correspondence confirmation is required')
         text(actor,'Source reviewer',120)
         with self.store.transaction():
-            if plan.get('spans'):
+            if plan.get('visual_match_id'):
+                fresh=self.plan_visual(plan['work_id'],plan['slot_id'],plan['visual_match_id'],plan['font_asset'],plan['review'])
+            elif plan.get('spans'):
                 fresh=self.plan_composite(plan['work_id'],plan['slot_id'],plan['spans'],plan['composite_review'])
             else:fresh=self.plan(plan['work_id'],plan['slot_id'],plan['source_run_id'],plan['font_asset'],plan['review'])
             if fresh!=plan:raise ValueError('Source/font/facts/binding version changed during review')
