@@ -1,6 +1,6 @@
 {
   "schema": "LOCAL_RECOVERY_FINAL_REPORT_V1",
-  "status": "PENDING_FULL_FORMAL_RUN",
+  "status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
   "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
   "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
   "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
@@ -86,5 +86,76 @@
     "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-002/interruption.json",
     "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/interruption.json",
     "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-004/interruption.json"
-  ]
+  ],
+  "formal_summary": {
+    "path": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+    "status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+    "tests": 1733,
+    "passed": 1733,
+    "modules": 222,
+    "attachments": 369,
+    "overall": "FAIL",
+    "software": "PASS",
+    "source_unchanged": true
+  },
+  "registry_status": {
+    "topic": {
+      "VERIFIED": 69,
+      "PARTIAL": 3,
+      "DEFERRED": 3
+    },
+    "core": {
+      "VERIFIED": 87
+    },
+    "governance": {
+      "VERIFIED": 7
+    }
+  },
+  "registry_total": 169,
+  "registry_completed_scoped": 163,
+  "legacy28": {
+    "complete": 25,
+    "partial": 3
+  },
+  "progress_delta": {
+    "newly_completed_requirements": 0,
+    "removed_test_ids": [],
+    "baseline_test_count": 1685,
+    "new_unique_tests": 48
+  },
+  "retained_external_clauses": [
+    {
+      "requirement_id": "UI-032",
+      "acceptance_id": "UI-032-CLAUSE-5",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-02",
+      "acceptance_id": "REV-02-CLAUSE-1",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-02",
+      "acceptance_id": "REV-02-CLAUSE-2",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-02",
+      "acceptance_id": "REV-02-CLAUSE-4",
+      "status": "NOT_VERIFIED"
+    },
+    {
+      "requirement_id": "REV-04",
+      "acceptance_id": "REV-04-CLAUSE-1",
+      "status": "NOT_VERIFIED"
+    }
+  ],
+  "formal_execution_strategy": "PARALLEL_OWNED_FRESH_MODULE_PROCESSES",
+  "formal_module_workers": 4,
+  "authored_independent_selftest": "docs/evidence/local-recovery/targeted-006/synthetic-selftest-003.json",
+  "actual_regression_corrections": [
+    "Semantic/appearance derivative source identity and reproducible object IDs",
+    "Reviewed Logo gold uses the same actual derivative channel as prediction"
+  ],
+  "original_acceptance_scope": "All8original packages remainPARTIAL,50clauses retained; supported local software self-verified,not universal private-format or real production qualification"
 }

@@ -2,6 +2,8 @@
 
 本輪依據：`docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md`。不需要把私人作品或字型提供給 Codex。原稿、字型、資料庫、模型、訓練與確認稿都留在本機；程式沒有把它們自動上傳 GitHub 或 AI 服務。依賴套件／OCR 語言檔安裝可能需要下載，不會因此上傳作品。
 
+本輪實作、完整測試及未驗證範圍見 [本輪交付報告](AI_LOCAL_RECOVERY_FINAL_REPORT_20261019.md)。
+
 ## Windows 準備
 
 取得 `dev/v0.1-first-version` 分支的原始碼；`main` 尚未合併本輪變更。安裝 Python 3.11 與 Python Launcher，雙擊 `START_WINDOWS.bat` 建立本機 `.venv`、安裝鎖定依賴並啟動。既有私人資料先保留本地備份，不放入公開 Git 倉庫。

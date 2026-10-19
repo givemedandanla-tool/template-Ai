@@ -9,7 +9,7 @@
   "full_verified_acceptance": 0,
   "actual_user_corpus_training": "NOT_STARTED_LOCAL_ONLY_BY_USER_DECISION",
   "real_production_models": 0,
-  "formal_run_status": "PENDING_FULL_FORMAL_RUN",
+  "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
   "terminology": "原8包50條完整資格與當前本地軟體／合成自我驗證分列；不要求上傳私人作品，不虛增原父題完成數。",
   "package_notes": {
     "01": {
@@ -61,11 +61,20 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/original_text_observation.py",
-        "template_ai/original_pdf_glyphs.py",
-        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_observation.py",
         "template_ai/design_source_binding.py",
-        "template_ai/design_observation.py"
+        "template_ai/local_font_recovery.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/original_text_observation.py",
+        "template_ai/quality_gold.py",
+        "template_ai/quality_logo.py",
+        "template_ai/recovery_diagnostics.py",
+        "template_ai/source_derivative.py",
+        "template_ai/source_recovery.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/source_text_evidence.py",
+        "template_ai/visual_font_match.py",
+        "template_ai/windows_font_sources.py"
       ],
       "tests": [
         "tests/test_design_composite_learning.py",
@@ -75,13 +84,16 @@
         "tests/test_local_recovery.py",
         "tests/test_local_visual_binding.py",
         "tests/test_original_pdf_glyphs.py",
-        "tests/test_source_region_hypotheses.py"
+        "tests/test_qualified_coverage_evidence.py",
+        "tests/test_quality_logo.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_source_text_evidence.py"
       ],
       "limit": "私人 Illustrator 結構、無 PDF 相容或不可讀檔案、來源未標定與複雜書寫不保證還原。全字庫搜尋分批、可取消、有歧義／未完成提示；仍需本地來源與字型核對。複合結構標註目前有後台 API，尚非完整圖形化精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -91,11 +103,20 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/original_text_observation.py",
-        "template_ai/original_pdf_glyphs.py",
-        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_observation.py",
         "template_ai/design_source_binding.py",
-        "template_ai/design_observation.py"
+        "template_ai/local_font_recovery.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/original_text_observation.py",
+        "template_ai/quality_gold.py",
+        "template_ai/quality_logo.py",
+        "template_ai/recovery_diagnostics.py",
+        "template_ai/source_derivative.py",
+        "template_ai/source_recovery.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/source_text_evidence.py",
+        "template_ai/visual_font_match.py",
+        "template_ai/windows_font_sources.py"
       ],
       "tests": [
         "tests/test_design_composite_learning.py",
@@ -105,13 +126,16 @@
         "tests/test_local_recovery.py",
         "tests/test_local_visual_binding.py",
         "tests/test_original_pdf_glyphs.py",
-        "tests/test_source_region_hypotheses.py"
+        "tests/test_qualified_coverage_evidence.py",
+        "tests/test_quality_logo.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_source_text_evidence.py"
       ],
       "limit": "私人 Illustrator 結構、無 PDF 相容或不可讀檔案、來源未標定與複雜書寫不保證還原。全字庫搜尋分批、可取消、有歧義／未完成提示；仍需本地來源與字型核對。複合結構標註目前有後台 API，尚非完整圖形化精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -121,11 +145,20 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/original_text_observation.py",
-        "template_ai/original_pdf_glyphs.py",
-        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_observation.py",
         "template_ai/design_source_binding.py",
-        "template_ai/design_observation.py"
+        "template_ai/local_font_recovery.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/original_text_observation.py",
+        "template_ai/quality_gold.py",
+        "template_ai/quality_logo.py",
+        "template_ai/recovery_diagnostics.py",
+        "template_ai/source_derivative.py",
+        "template_ai/source_recovery.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/source_text_evidence.py",
+        "template_ai/visual_font_match.py",
+        "template_ai/windows_font_sources.py"
       ],
       "tests": [
         "tests/test_design_composite_learning.py",
@@ -135,13 +168,16 @@
         "tests/test_local_recovery.py",
         "tests/test_local_visual_binding.py",
         "tests/test_original_pdf_glyphs.py",
-        "tests/test_source_region_hypotheses.py"
+        "tests/test_qualified_coverage_evidence.py",
+        "tests/test_quality_logo.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_source_text_evidence.py"
       ],
       "limit": "私人 Illustrator 結構、無 PDF 相容或不可讀檔案、來源未標定與複雜書寫不保證還原。全字庫搜尋分批、可取消、有歧義／未完成提示；仍需本地來源與字型核對。複合結構標註目前有後台 API，尚非完整圖形化精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -151,11 +187,20 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/original_text_observation.py",
-        "template_ai/original_pdf_glyphs.py",
-        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_observation.py",
         "template_ai/design_source_binding.py",
-        "template_ai/design_observation.py"
+        "template_ai/local_font_recovery.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/original_text_observation.py",
+        "template_ai/quality_gold.py",
+        "template_ai/quality_logo.py",
+        "template_ai/recovery_diagnostics.py",
+        "template_ai/source_derivative.py",
+        "template_ai/source_recovery.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/source_text_evidence.py",
+        "template_ai/visual_font_match.py",
+        "template_ai/windows_font_sources.py"
       ],
       "tests": [
         "tests/test_design_composite_learning.py",
@@ -165,13 +210,16 @@
         "tests/test_local_recovery.py",
         "tests/test_local_visual_binding.py",
         "tests/test_original_pdf_glyphs.py",
-        "tests/test_source_region_hypotheses.py"
+        "tests/test_qualified_coverage_evidence.py",
+        "tests/test_quality_logo.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_source_text_evidence.py"
       ],
       "limit": "私人 Illustrator 結構、無 PDF 相容或不可讀檔案、來源未標定與複雜書寫不保證還原。全字庫搜尋分批、可取消、有歧義／未完成提示；仍需本地來源與字型核對。複合結構標註目前有後台 API，尚非完整圖形化精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -181,11 +229,20 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/original_text_observation.py",
-        "template_ai/original_pdf_glyphs.py",
-        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_observation.py",
         "template_ai/design_source_binding.py",
-        "template_ai/design_observation.py"
+        "template_ai/local_font_recovery.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/original_text_observation.py",
+        "template_ai/quality_gold.py",
+        "template_ai/quality_logo.py",
+        "template_ai/recovery_diagnostics.py",
+        "template_ai/source_derivative.py",
+        "template_ai/source_recovery.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/source_text_evidence.py",
+        "template_ai/visual_font_match.py",
+        "template_ai/windows_font_sources.py"
       ],
       "tests": [
         "tests/test_design_composite_learning.py",
@@ -195,13 +252,16 @@
         "tests/test_local_recovery.py",
         "tests/test_local_visual_binding.py",
         "tests/test_original_pdf_glyphs.py",
-        "tests/test_source_region_hypotheses.py"
+        "tests/test_qualified_coverage_evidence.py",
+        "tests/test_quality_logo.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_source_text_evidence.py"
       ],
       "limit": "私人 Illustrator 結構、無 PDF 相容或不可讀檔案、來源未標定與複雜書寫不保證還原。全字庫搜尋分批、可取消、有歧義／未完成提示；仍需本地來源與字型核對。複合結構標註目前有後台 API，尚非完整圖形化精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -211,11 +271,20 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/original_text_observation.py",
-        "template_ai/original_pdf_glyphs.py",
-        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_observation.py",
         "template_ai/design_source_binding.py",
-        "template_ai/design_observation.py"
+        "template_ai/local_font_recovery.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/original_text_observation.py",
+        "template_ai/quality_gold.py",
+        "template_ai/quality_logo.py",
+        "template_ai/recovery_diagnostics.py",
+        "template_ai/source_derivative.py",
+        "template_ai/source_recovery.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/source_text_evidence.py",
+        "template_ai/visual_font_match.py",
+        "template_ai/windows_font_sources.py"
       ],
       "tests": [
         "tests/test_design_composite_learning.py",
@@ -225,13 +294,16 @@
         "tests/test_local_recovery.py",
         "tests/test_local_visual_binding.py",
         "tests/test_original_pdf_glyphs.py",
-        "tests/test_source_region_hypotheses.py"
+        "tests/test_qualified_coverage_evidence.py",
+        "tests/test_quality_logo.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_source_text_evidence.py"
       ],
       "limit": "私人 Illustrator 結構、無 PDF 相容或不可讀檔案、來源未標定與複雜書寫不保證還原。全字庫搜尋分批、可取消、有歧義／未完成提示；仍需本地來源與字型核對。複合結構標註目前有後台 API，尚非完整圖形化精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -254,8 +326,8 @@
       "limit": "合成作品的家族真值由生成器事先指定；不能當真實客戶作品的分群或泛化品質。實際角色／群組／雜訊仍需來源觀察與核對。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -278,8 +350,8 @@
       "limit": "合成作品的家族真值由生成器事先指定；不能當真實客戶作品的分群或泛化品質。實際角色／群組／雜訊仍需來源觀察與核對。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -302,8 +374,8 @@
       "limit": "合成作品的家族真值由生成器事先指定；不能當真實客戶作品的分群或泛化品質。實際角色／群組／雜訊仍需來源觀察與核對。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -326,8 +398,8 @@
       "limit": "合成作品的家族真值由生成器事先指定；不能當真實客戶作品的分群或泛化品質。實際角色／群組／雜訊仍需來源觀察與核對。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -350,8 +422,8 @@
       "limit": "合成作品的家族真值由生成器事先指定；不能當真實客戶作品的分群或泛化品質。實際角色／群組／雜訊仍需來源觀察與核對。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -361,10 +433,15 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_profiles.py",
+        "template_ai/design_capacity.py",
+        "template_ai/design_components.py",
         "template_ai/design_joint.py",
-        "template_ai/design_text_flow.py",
-        "template_ai/design_source_binding.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_spacing.py",
+        "template_ai/design_text_flow.py"
       ],
       "tests": [
         "tests/test_design_components.py",
@@ -380,8 +457,8 @@
       "limit": "字元分散需明確塑形邊界及實體額外間距上限；RTL 分散、任意垂直／旋轉／Type3 複雜字面未普遍支援。label/圖示框與動態分段需已核對來源規則；不自動從未知像素推得全部文法。容量只代表已驗證條件，非全域欄位上限。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -391,10 +468,15 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_profiles.py",
+        "template_ai/design_capacity.py",
+        "template_ai/design_components.py",
         "template_ai/design_joint.py",
-        "template_ai/design_text_flow.py",
-        "template_ai/design_source_binding.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_spacing.py",
+        "template_ai/design_text_flow.py"
       ],
       "tests": [
         "tests/test_design_components.py",
@@ -410,8 +492,8 @@
       "limit": "字元分散需明確塑形邊界及實體額外間距上限；RTL 分散、任意垂直／旋轉／Type3 複雜字面未普遍支援。label/圖示框與動態分段需已核對來源規則；不自動從未知像素推得全部文法。容量只代表已驗證條件，非全域欄位上限。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -421,10 +503,15 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_profiles.py",
+        "template_ai/design_capacity.py",
+        "template_ai/design_components.py",
         "template_ai/design_joint.py",
-        "template_ai/design_text_flow.py",
-        "template_ai/design_source_binding.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_spacing.py",
+        "template_ai/design_text_flow.py"
       ],
       "tests": [
         "tests/test_design_components.py",
@@ -440,8 +527,8 @@
       "limit": "字元分散需明確塑形邊界及實體額外間距上限；RTL 分散、任意垂直／旋轉／Type3 複雜字面未普遍支援。label/圖示框與動態分段需已核對來源規則；不自動從未知像素推得全部文法。容量只代表已驗證條件，非全域欄位上限。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -451,10 +538,15 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_profiles.py",
+        "template_ai/design_capacity.py",
+        "template_ai/design_components.py",
         "template_ai/design_joint.py",
-        "template_ai/design_text_flow.py",
-        "template_ai/design_source_binding.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_spacing.py",
+        "template_ai/design_text_flow.py"
       ],
       "tests": [
         "tests/test_design_components.py",
@@ -470,8 +562,8 @@
       "limit": "字元分散需明確塑形邊界及實體額外間距上限；RTL 分散、任意垂直／旋轉／Type3 複雜字面未普遍支援。label/圖示框與動態分段需已核對來源規則；不自動從未知像素推得全部文法。容量只代表已驗證條件，非全域欄位上限。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -481,10 +573,15 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_profiles.py",
+        "template_ai/design_capacity.py",
+        "template_ai/design_components.py",
         "template_ai/design_joint.py",
-        "template_ai/design_text_flow.py",
-        "template_ai/design_source_binding.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_spacing.py",
+        "template_ai/design_text_flow.py"
       ],
       "tests": [
         "tests/test_design_components.py",
@@ -500,8 +597,8 @@
       "limit": "字元分散需明確塑形邊界及實體額外間距上限；RTL 分散、任意垂直／旋轉／Type3 複雜字面未普遍支援。label/圖示框與動態分段需已核對來源規則；不自動從未知像素推得全部文法。容量只代表已驗證條件，非全域欄位上限。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -511,10 +608,15 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_profiles.py",
+        "template_ai/design_capacity.py",
+        "template_ai/design_components.py",
         "template_ai/design_joint.py",
-        "template_ai/design_text_flow.py",
-        "template_ai/design_source_binding.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_spacing.py",
+        "template_ai/design_text_flow.py"
       ],
       "tests": [
         "tests/test_design_components.py",
@@ -530,8 +632,8 @@
       "limit": "字元分散需明確塑形邊界及實體額外間距上限；RTL 分散、任意垂直／旋轉／Type3 複雜字面未普遍支援。label/圖示框與動態分段需已核對來源規則；不自動從未知像素推得全部文法。容量只代表已驗證條件，非全域欄位上限。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -541,10 +643,15 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_profiles.py",
+        "template_ai/design_capacity.py",
+        "template_ai/design_components.py",
         "template_ai/design_joint.py",
-        "template_ai/design_text_flow.py",
-        "template_ai/design_source_binding.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_spacing.py",
+        "template_ai/design_text_flow.py"
       ],
       "tests": [
         "tests/test_design_components.py",
@@ -560,8 +667,8 @@
       "limit": "字元分散需明確塑形邊界及實體額外間距上限；RTL 分散、任意垂直／旋轉／Type3 複雜字面未普遍支援。label/圖示框與動態分段需已核對來源規則；不自動從未知像素推得全部文法。容量只代表已驗證條件，非全域欄位上限。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -571,10 +678,15 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_profiles.py",
+        "template_ai/design_capacity.py",
+        "template_ai/design_components.py",
         "template_ai/design_joint.py",
-        "template_ai/design_text_flow.py",
-        "template_ai/design_source_binding.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_spacing.py",
+        "template_ai/design_text_flow.py"
       ],
       "tests": [
         "tests/test_design_components.py",
@@ -590,8 +702,8 @@
       "limit": "字元分散需明確塑形邊界及實體額外間距上限；RTL 分散、任意垂直／旋轉／Type3 複雜字面未普遍支援。label/圖示框與動態分段需已核對來源規則；不自動從未知像素推得全部文法。容量只代表已驗證條件，非全域欄位上限。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -602,9 +714,12 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_assignment.py",
-        "template_ai/design_synthesis.py",
+        "template_ai/design_components.py",
         "template_ai/design_instances.py",
-        "template_ai/design_qualification.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_synthesis.py"
       ],
       "tests": [
         "tests/test_design_assignment.py",
@@ -618,8 +733,8 @@
       "limit": "有限搜尋不證明全域最優；未知尺寸、未觀察角色組合與無證據風格不取得正式資格。欄位圖示不代替公司 Logo 身份；既有來源、字型、Logo、權利與輸出 Gate 持續生效。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -630,9 +745,12 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_assignment.py",
-        "template_ai/design_synthesis.py",
+        "template_ai/design_components.py",
         "template_ai/design_instances.py",
-        "template_ai/design_qualification.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_synthesis.py"
       ],
       "tests": [
         "tests/test_design_assignment.py",
@@ -646,8 +764,8 @@
       "limit": "有限搜尋不證明全域最優；未知尺寸、未觀察角色組合與無證據風格不取得正式資格。欄位圖示不代替公司 Logo 身份；既有來源、字型、Logo、權利與輸出 Gate 持續生效。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -658,9 +776,12 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_assignment.py",
-        "template_ai/design_synthesis.py",
+        "template_ai/design_components.py",
         "template_ai/design_instances.py",
-        "template_ai/design_qualification.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_synthesis.py"
       ],
       "tests": [
         "tests/test_design_assignment.py",
@@ -674,8 +795,8 @@
       "limit": "有限搜尋不證明全域最優；未知尺寸、未觀察角色組合與無證據風格不取得正式資格。欄位圖示不代替公司 Logo 身份；既有來源、字型、Logo、權利與輸出 Gate 持續生效。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -686,9 +807,12 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_assignment.py",
-        "template_ai/design_synthesis.py",
+        "template_ai/design_components.py",
         "template_ai/design_instances.py",
-        "template_ai/design_qualification.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_synthesis.py"
       ],
       "tests": [
         "tests/test_design_assignment.py",
@@ -702,8 +826,8 @@
       "limit": "有限搜尋不證明全域最優；未知尺寸、未觀察角色組合與無證據風格不取得正式資格。欄位圖示不代替公司 Logo 身份；既有來源、字型、Logo、權利與輸出 Gate 持續生效。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -714,9 +838,12 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_assignment.py",
-        "template_ai/design_synthesis.py",
+        "template_ai/design_components.py",
         "template_ai/design_instances.py",
-        "template_ai/design_qualification.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_synthesis.py"
       ],
       "tests": [
         "tests/test_design_assignment.py",
@@ -730,8 +857,8 @@
       "limit": "有限搜尋不證明全域最優；未知尺寸、未觀察角色組合與無證據風格不取得正式資格。欄位圖示不代替公司 Logo 身份；既有來源、字型、Logo、權利與輸出 Gate 持續生效。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -742,9 +869,12 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_assignment.py",
-        "template_ai/design_synthesis.py",
+        "template_ai/design_components.py",
         "template_ai/design_instances.py",
-        "template_ai/design_qualification.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_synthesis.py"
       ],
       "tests": [
         "tests/test_design_assignment.py",
@@ -758,8 +888,8 @@
       "limit": "有限搜尋不證明全域最優；未知尺寸、未觀察角色組合與無證據風格不取得正式資格。欄位圖示不代替公司 Logo 身份；既有來源、字型、Logo、權利與輸出 Gate 持續生效。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -770,9 +900,12 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_assignment.py",
-        "template_ai/design_synthesis.py",
+        "template_ai/design_components.py",
         "template_ai/design_instances.py",
-        "template_ai/design_qualification.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_synthesis.py"
       ],
       "tests": [
         "tests/test_design_assignment.py",
@@ -786,8 +919,8 @@
       "limit": "有限搜尋不證明全域最優；未知尺寸、未觀察角色組合與無證據風格不取得正式資格。欄位圖示不代替公司 Logo 身份；既有來源、字型、Logo、權利與輸出 Gate 持續生效。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -798,9 +931,12 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_assignment.py",
-        "template_ai/design_synthesis.py",
+        "template_ai/design_components.py",
         "template_ai/design_instances.py",
-        "template_ai/design_qualification.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_synthesis.py"
       ],
       "tests": [
         "tests/test_design_assignment.py",
@@ -814,8 +950,8 @@
       "limit": "有限搜尋不證明全域最優；未知尺寸、未觀察角色組合與無證據風格不取得正式資格。欄位圖示不代替公司 Logo 身份；既有來源、字型、Logo、權利與輸出 Gate 持續生效。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -826,9 +962,12 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_assignment.py",
-        "template_ai/design_synthesis.py",
+        "template_ai/design_components.py",
         "template_ai/design_instances.py",
-        "template_ai/design_qualification.py"
+        "template_ai/design_object_spacing.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_rich_text.py",
+        "template_ai/design_synthesis.py"
       ],
       "tests": [
         "tests/test_design_assignment.py",
@@ -842,8 +981,8 @@
       "limit": "有限搜尋不證明全域最優；未知尺寸、未觀察角色組合與無證據風格不取得正式資格。欄位圖示不代替公司 Logo 身份；既有來源、字型、Logo、權利與輸出 Gate 持續生效。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -853,10 +992,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_ranking.py",
+        "template_ai/design_evaluation.py",
         "template_ai/design_feedback.py",
         "template_ai/design_rank_evaluation.py",
-        "template_ai/design_evaluation.py"
+        "template_ai/design_rank_qualification.py",
+        "template_ai/design_ranking.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -868,8 +1008,8 @@
       "limit": "自製偏好標記只證明機制，未提供真實美學偏好；未校準分數不是機率，最佳僅限搜尋與驗證範圍。真實資格需本地獨立封存結果，測試資格資料不當生產證書。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -879,10 +1019,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_ranking.py",
+        "template_ai/design_evaluation.py",
         "template_ai/design_feedback.py",
         "template_ai/design_rank_evaluation.py",
-        "template_ai/design_evaluation.py"
+        "template_ai/design_rank_qualification.py",
+        "template_ai/design_ranking.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -894,8 +1035,8 @@
       "limit": "自製偏好標記只證明機制，未提供真實美學偏好；未校準分數不是機率，最佳僅限搜尋與驗證範圍。真實資格需本地獨立封存結果，測試資格資料不當生產證書。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -905,10 +1046,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_ranking.py",
+        "template_ai/design_evaluation.py",
         "template_ai/design_feedback.py",
         "template_ai/design_rank_evaluation.py",
-        "template_ai/design_evaluation.py"
+        "template_ai/design_rank_qualification.py",
+        "template_ai/design_ranking.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -920,8 +1062,8 @@
       "limit": "自製偏好標記只證明機制，未提供真實美學偏好；未校準分數不是機率，最佳僅限搜尋與驗證範圍。真實資格需本地獨立封存結果，測試資格資料不當生產證書。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -931,10 +1073,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_ranking.py",
+        "template_ai/design_evaluation.py",
         "template_ai/design_feedback.py",
         "template_ai/design_rank_evaluation.py",
-        "template_ai/design_evaluation.py"
+        "template_ai/design_rank_qualification.py",
+        "template_ai/design_ranking.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -946,8 +1089,8 @@
       "limit": "自製偏好標記只證明機制，未提供真實美學偏好；未校準分數不是機率，最佳僅限搜尋與驗證範圍。真實資格需本地獨立封存結果，測試資格資料不當生產證書。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -957,10 +1100,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_learning.py",
         "template_ai/design_feedback.py",
+        "template_ai/design_jobs.py",
+        "template_ai/design_learning.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_qualification.py"
       ],
       "tests": [
         "tests/test_design_feedback_qualification.py",
@@ -972,8 +1116,8 @@
       "limit": "實際美學回饋與真實資料資格尚未建立。資格與容量的進階操作目前為後台 API，不是完整 GUI 引導；缺證據仍拒絕正式啟用，不透過合成案例繞過門檻。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -983,10 +1127,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_learning.py",
         "template_ai/design_feedback.py",
+        "template_ai/design_jobs.py",
+        "template_ai/design_learning.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_qualification.py"
       ],
       "tests": [
         "tests/test_design_feedback_qualification.py",
@@ -998,8 +1143,8 @@
       "limit": "實際美學回饋與真實資料資格尚未建立。資格與容量的進階操作目前為後台 API，不是完整 GUI 引導；缺證據仍拒絕正式啟用，不透過合成案例繞過門檻。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1009,10 +1154,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_learning.py",
         "template_ai/design_feedback.py",
+        "template_ai/design_jobs.py",
+        "template_ai/design_learning.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_qualification.py"
       ],
       "tests": [
         "tests/test_design_feedback_qualification.py",
@@ -1024,8 +1170,8 @@
       "limit": "實際美學回饋與真實資料資格尚未建立。資格與容量的進階操作目前為後台 API，不是完整 GUI 引導；缺證據仍拒絕正式啟用，不透過合成案例繞過門檻。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1035,10 +1181,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_learning.py",
         "template_ai/design_feedback.py",
+        "template_ai/design_jobs.py",
+        "template_ai/design_learning.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_qualification.py"
       ],
       "tests": [
         "tests/test_design_feedback_qualification.py",
@@ -1050,8 +1197,8 @@
       "limit": "實際美學回饋與真實資料資格尚未建立。資格與容量的進階操作目前為後台 API，不是完整 GUI 引導；缺證據仍拒絕正式啟用，不透過合成案例繞過門檻。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1061,10 +1208,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_learning.py",
         "template_ai/design_feedback.py",
+        "template_ai/design_jobs.py",
+        "template_ai/design_learning.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_qualification.py"
       ],
       "tests": [
         "tests/test_design_feedback_qualification.py",
@@ -1076,8 +1224,8 @@
       "limit": "實際美學回饋與真實資料資格尚未建立。資格與容量的進階操作目前為後台 API，不是完整 GUI 引導；缺證據仍拒絕正式啟用，不透過合成案例繞過門檻。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1087,9 +1235,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_session.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_learning_dialog.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_session.py",
+        "template_ai/local_font_recovery.py",
+        "template_ai/recovery_dialog.py"
       ],
       "tests": [
         "tests/test_design_jobs.py",
@@ -1102,8 +1252,8 @@
       "limit": "網站／手機／EXE 依使用者決策延後；未聲稱其介面／裝置已驗證。GitHub 不保存私人作品、字型或本機 DB，需自行備份本地資料。先進複合標註、容量校準與正式資格尚未全數做成圖形操作精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1113,9 +1263,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_session.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_learning_dialog.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_session.py",
+        "template_ai/local_font_recovery.py",
+        "template_ai/recovery_dialog.py"
       ],
       "tests": [
         "tests/test_design_jobs.py",
@@ -1128,8 +1280,8 @@
       "limit": "網站／手機／EXE 依使用者決策延後；未聲稱其介面／裝置已驗證。GitHub 不保存私人作品、字型或本機 DB，需自行備份本地資料。先進複合標註、容量校準與正式資格尚未全數做成圖形操作精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1139,9 +1291,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_session.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_learning_dialog.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_session.py",
+        "template_ai/local_font_recovery.py",
+        "template_ai/recovery_dialog.py"
       ],
       "tests": [
         "tests/test_design_jobs.py",
@@ -1154,8 +1308,8 @@
       "limit": "網站／手機／EXE 依使用者決策延後；未聲稱其介面／裝置已驗證。GitHub 不保存私人作品、字型或本機 DB，需自行備份本地資料。先進複合標註、容量校準與正式資格尚未全數做成圖形操作精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1165,9 +1319,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_session.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_learning_dialog.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_session.py",
+        "template_ai/local_font_recovery.py",
+        "template_ai/recovery_dialog.py"
       ],
       "tests": [
         "tests/test_design_jobs.py",
@@ -1180,8 +1336,8 @@
       "limit": "網站／手機／EXE 依使用者決策延後；未聲稱其介面／裝置已驗證。GitHub 不保存私人作品、字型或本機 DB，需自行備份本地資料。先進複合標註、容量校準與正式資格尚未全數做成圖形操作精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1191,9 +1347,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_session.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_learning_dialog.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_session.py",
+        "template_ai/local_font_recovery.py",
+        "template_ai/recovery_dialog.py"
       ],
       "tests": [
         "tests/test_design_jobs.py",
@@ -1206,8 +1364,8 @@
       "limit": "網站／手機／EXE 依使用者決策延後；未聲稱其介面／裝置已驗證。GitHub 不保存私人作品、字型或本機 DB，需自行備份本地資料。先進複合標註、容量校準與正式資格尚未全數做成圖形操作精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1217,9 +1375,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_session.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_learning_dialog.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_session.py",
+        "template_ai/local_font_recovery.py",
+        "template_ai/recovery_dialog.py"
       ],
       "tests": [
         "tests/test_design_jobs.py",
@@ -1232,8 +1392,8 @@
       "limit": "網站／手機／EXE 依使用者決策延後；未聲稱其介面／裝置已驗證。GitHub 不保存私人作品、字型或本機 DB，需自行備份本地資料。先進複合標註、容量校準與正式資格尚未全數做成圖形操作精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。",
       "delivery_scope_note": "共用操作契約與本體路徑有測試；獨立網頁／手機實作與裝置驗收延後。"
     },
@@ -1244,9 +1404,11 @@
       "engineering_status": "IMPLEMENTED_SUPPORTED_SUBSET",
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
-        "template_ai/design_session.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_learning_dialog.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_session.py",
+        "template_ai/local_font_recovery.py",
+        "template_ai/recovery_dialog.py"
       ],
       "tests": [
         "tests/test_design_jobs.py",
@@ -1259,8 +1421,8 @@
       "limit": "網站／手機／EXE 依使用者決策延後；未聲稱其介面／裝置已驗證。GitHub 不保存私人作品、字型或本機 DB，需自行備份本地資料。先進複合標註、容量校準與正式資格尚未全數做成圖形操作精靈。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1271,9 +1433,10 @@
       "full_acceptance": "REAL_LOCAL_CORPUS_VALIDATION_NOT_RUN",
       "modules": [
         "template_ai/design_evaluation.py",
-        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_source_benchmark.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -1284,8 +1447,8 @@
       "limit": "合成／Linux 結果不冒充真實授權作品泛化、美學、Windows/VivoBook 或物理印前。規模測試不包含私人 AI 私有結構或完整 Windows 字庫影像搜尋，並跨診斷／UI 修訂執行，未聲稱固定整個專案版本的效能。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1296,9 +1459,10 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_evaluation.py",
-        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_source_benchmark.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -1309,8 +1473,8 @@
       "limit": "合成／Linux 結果不冒充真實授權作品泛化、美學、Windows/VivoBook 或物理印前。規模測試不包含私人 AI 私有結構或完整 Windows 字庫影像搜尋，並跨診斷／UI 修訂執行，未聲稱固定整個專案版本的效能。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1321,9 +1485,10 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_evaluation.py",
-        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_source_benchmark.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -1334,8 +1499,8 @@
       "limit": "合成／Linux 結果不冒充真實授權作品泛化、美學、Windows/VivoBook 或物理印前。規模測試不包含私人 AI 私有結構或完整 Windows 字庫影像搜尋，並跨診斷／UI 修訂執行，未聲稱固定整個專案版本的效能。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1346,9 +1511,10 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_evaluation.py",
-        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_source_benchmark.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -1359,8 +1525,8 @@
       "limit": "合成／Linux 結果不冒充真實授權作品泛化、美學、Windows/VivoBook 或物理印前。規模測試不包含私人 AI 私有結構或完整 Windows 字庫影像搜尋，並跨診斷／UI 修訂執行，未聲稱固定整個專案版本的效能。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1371,9 +1537,10 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_evaluation.py",
-        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_source_benchmark.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -1384,8 +1551,8 @@
       "limit": "合成／Linux 結果不冒充真實授權作品泛化、美學、Windows/VivoBook 或物理印前。規模測試不包含私人 AI 私有結構或完整 Windows 字庫影像搜尋，並跨診斷／UI 修訂執行，未聲稱固定整個專案版本的效能。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     },
     {
@@ -1396,9 +1563,10 @@
       "full_acceptance": "NOT_FULLY_VERIFIED",
       "modules": [
         "template_ai/design_evaluation.py",
-        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_jobs.py",
         "template_ai/design_qualification.py",
-        "template_ai/design_jobs.py"
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_source_benchmark.py"
       ],
       "tests": [
         "tests/test_design_evaluation.py",
@@ -1409,8 +1577,8 @@
       "limit": "合成／Linux 結果不冒充真實授權作品泛化、美學、Windows/VivoBook 或物理印前。規模測試不包含私人 AI 私有結構或完整 Windows 字庫影像搜尋，並跨診斷／UI 修訂執行，未聲稱固定整個專案版本的效能。",
       "real_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN",
       "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-      "formal_run_status": "PENDING_FULL_FORMAL_RUN",
-      "synthetic_software_verification": "PENDING_FULL_FORMAL_RUN",
+      "formal_run_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+      "synthetic_software_verification": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
       "scope_evidence_note": "引用整個測試模組只代表對應機制的測試來源；不代表每個案例直接驗收整條原始要求。"
     }
   ],
@@ -1426,12 +1594,34 @@
   ],
   "formal_evidence": {
     "path": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
-    "status": "PENDING_FULL_FORMAL_RUN"
+    "status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
+    "tests": 1733,
+    "passed": 1733,
+    "modules": 222,
+    "attachments": 369,
+    "overall": "FAIL",
+    "software": "PASS",
+    "source_unchanged": true,
+    "strategy": "PARALLEL_OWNED_FRESH_MODULE_PROCESSES",
+    "workers": 4
   },
   "supersedes_for_current_source": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json",
-  "local_software_scope_status": "PENDING_FULL_FORMAL_RUN",
+  "local_software_scope_status": "SOFTWARE_EXECUTION_PASS_SCOPED_SYNTHETIC",
   "actual_source_file_scale_reports": [
     "docs/evidence/local-recovery/source-file-scales/scale-1000.json",
     "docs/evidence/local-recovery/source-file-scales/scale-3000.json"
-  ]
+  ],
+  "original_registry_status_unchanged": {
+    "topic": {
+      "VERIFIED": 69,
+      "PARTIAL": 3,
+      "DEFERRED": 3
+    },
+    "core": {
+      "VERIFIED": 87
+    },
+    "governance": {
+      "VERIFIED": 7
+    }
+  }
 }

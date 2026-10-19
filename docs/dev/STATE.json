@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "LOCAL_RECOVERY_ALL1733_TESTS_PASS_NATIVE_CAPTURE_RUNNING",
+  "active_task": "LOCAL_RECOVERY_SOFTWARE_SELF_VERIFIED_FINAL_PUBLICATION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-LOCAL-RECOVERY-FULL005-MID.receipt.json",
   "last_confirmed_commit": "e795bf556a1a4c9511d0ba915acf18db77fab0f7",
-  "latest_evidence_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+  "latest_evidence_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -20,14 +20,19 @@
   ],
   "next_tasks": [
     {
-      "id": "LOCAL-RECOVERY-FULL005",
-      "status": "RUNNING",
-      "next": "Keep runtime/tools/tests frozen for full005;after allsoftwarePASS verify every attachment,scope-preserving registry rebind,audit/progress/checkpoint/push/readback and receipt publication. No private corpus requests or paid AI services."
+      "id": "FINAL_PUBLICATION",
+      "status": "IN_PROGRESS",
+      "next": "Prepare final snapshot,push/fresh Git readback,publish ACK receipt and run require-evidence check"
     },
     {
-      "id": "PRIVATE-LOCAL-ACCEPTANCE",
-      "status": "LOCAL_ONLY",
-      "next": "Local guide/selftest and voluntary content-free diagnostics;frontends/EXE deferred"
+      "id": "LOCAL_SELFTEST",
+      "status": "READY_FOR_LOCAL_RUN",
+      "next": "Use LOCAL_LEARNING_RECOVERY_GUIDE on Windows,keep private data local;share content-free diagnostics only voluntarily"
+    },
+    {
+      "id": "DEFERRED_WEB_MOBILE_EXE",
+      "status": "DEFERRED",
+      "next": "No independent web/mobile/EXE without new user instruction"
     }
   ],
   "blocked": [
@@ -52,7 +57,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-LOCAL-RECOVERY-FINAL"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -420,7 +427,7 @@
   },
   "continuation_policy": "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
   "pending_revalidation_ids": [],
-  "last_formal_validation": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
+  "last_formal_validation": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
   "publication_status": "CONFIRMED_SWAP_DEFAULT_TRAINING_DESIGN_AND_CHECKPOINT_REMOTE_VERIFIED",
   "cloud_environment_configuration": {
@@ -531,17 +538,15 @@
     "reason": "GUI/source integration checkpoint exceeded 10 minutes; recorded actual gap, immediate WIP preservation; no claim cadence was met"
   },
   "latest_verification": {
-    "run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
-    "software_execution_status": "PASS",
-    "tests": 1549,
-    "passed": 1549,
-    "missing": 0,
-    "capture_exit": 0,
-    "runtime_errors": 0,
-    "source_unchanged": true,
-    "actual_exit": 1,
-    "actual_exit_reason": "5unverified actual external clauses; software clean",
-    "reviewed_screens": 15
+    "run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+    "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
+    "software": "PASS",
+    "overall": "FAIL",
+    "tests": 1733,
+    "passed": 1733,
+    "modules": 222,
+    "attachments": 369,
+    "scope": "SELF_VERIFIED_SOFTWARE_SYNTHETIC_NOT_REAL_PRODUCTION_QUALIFICATION"
   },
   "failed_evidence_runs": [
     "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json",
@@ -675,7 +680,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Explicit derivative channel identity propagated through text observations,object links,logo predictions and human-reviewed logo gold;103related testsPASS. Full0051733tests running on96b1eb9;do not adopt interrupted003/004 actual failures.",
+  "current_work": "Local-only source/font recovery,shared learned rules,explicit spacing,capacity/ranker qualifications and content-free diagnostics implemented and self-verified on authored cases; real corpus/device qualifications separate.",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -804,8 +809,8 @@
     }
   ],
   "next_work_package_plan": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
-  "next_step": "Keep runtime/tools/tests frozen for full005;after allsoftwarePASS verify every attachment,scope-preserving registry rebind,audit/progress/checkpoint/push/readback and receipt publication. No private corpus requests or paid AI services.",
-  "current_work_package": "SWAP-DEFAULT-TRAINING-DESIGN",
+  "next_step": "Final checkpoint/push/readback and receipt publication;require-evidence must PASS. Then local guide/selftest is ready;do not request private corpus or claim real production/Windows/prepress qualifications.",
+  "current_work_package": "LOCAL_RECOVERY_GITHUB_EVIDENCE_PUBLICATION",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": "docs/evidence/local-recovery/targeted-008/result.json",
@@ -845,7 +850,7 @@
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T173234Z.json",
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T034415Z.json"
   ],
-  "current_evidence_validity": "CURRENT_96B1EB9_FULL005_PENDING;PRIOR_ACTUAL_FAILURES_RETAINED_NOT_ADOPTED",
+  "current_evidence_validity": "CURRENT_96B1EB9_CODE_TEST_FIXTURE_MANIFEST_MATCHES_FULL005",
   "historical_active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "new_learning_progress": {
     "total_work_packages": 8,
@@ -863,13 +868,15 @@
   "design_consistency_check": "docs/qa/plans/AI-CROSSWORK-DESIGN-CHECK-20261017.json",
   "design_publication_check": "docs/qa/plans/AI-CROSSWORK-DESIGN-PUBLICATION-20261017.json",
   "active_goal_validation": {
-    "status": "PARTIAL_FOUNDATION_IMPLEMENTATION_NOT_MODEL_TRAINING",
+    "status": "SUPPORTED_LOCAL_SOFTWARE_SYNTHETIC_SELF_VERIFIED",
     "packages": 8,
-    "planned_acceptance": 50,
-    "partially_implemented": 1,
-    "implemented": 0,
-    "verified": 0,
-    "legacy_CURRENT008_is_new_goal_evidence": false
+    "retained_original_acceptance": 50,
+    "original_full_verified_packages": 0,
+    "original_partial_packages": 8,
+    "real_user_corpus_training": false,
+    "real_production_models": 0,
+    "formal_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+    "scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json"
   },
   "style_learning_review": "docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md",
   "style_design_publication": "docs/qa/plans/CARD-STYLE-DESIGN-PUBLICATION-20261017.json",
@@ -1137,14 +1144,14 @@
   "ai_execution_plan": "docs/dev/AI_LEARNING_EXECUTION.md",
   "ai_execution_baseline": "docs/dev/progress/PROGRESS-20261019-AI-ALL8-BEGIN.json",
   "latest_targeted_evidence": "docs/evidence/local-recovery/targeted-006/result.json",
-  "latest_evidence_scope": "Current851ef2a:1685PASS,215healthy modules,capture0,366attachments;all8partial/0full;user corpus absent",
+  "latest_evidence_scope": "Source 96b1eb9dc23fe39fd5233d17513cc42f8ed547f8: 1733/1733 PASS, 222 healthy modules, capture0, 369 hash-verified attachments. Original8partial/0full real acceptance; no private user corpus requested.",
   "latest_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T061258Z.json",
   "frozen_formal_run": {
     "id": "RUN-LOCAL-RECOVERY-ALL8-005",
     "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
-    "status": "ALL_TESTS_PASS_NATIVE_CAPTURE_PENDING",
+    "status": "COMPLETE_SOFTWARE_PASS_EXTERNAL_QUALIFICATION_SEPARATE",
     "progress_path": ".checkpoints/formal-live/RUN-LOCAL-RECOVERY-ALL8-005/test-progress.json",
-    "code_must_remain_frozen_until_run_completes": true,
+    "code_must_remain_frozen_until_run_completes": false,
     "module_workers": 4,
     "module_timeout_seconds": 300
   },
@@ -1178,8 +1185,8 @@
       "recovery": "All source/staged work included in next exact snapshot"
     }
   ],
-  "current_source_verification": "CHANGED_AFTER1581_FORMAL_SOURCE;36_TARGETED_PASS;FULL_CURRENT_REGRESSION_PENDING",
-  "current_source_regression_status": "PENDING_NEW_FULL_FROZEN_RUN;OLD1685_STALE_FOR_CURRENT_SOURCE",
+  "current_source_verification": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+  "current_source_regression_status": "COMPLETE_SOFTWARE_PASS_EXTERNAL_QUALIFICATION_SEPARATE",
   "last_checkpoint_cadence_note": "2026-10-19:feedback snapshot07:20 pushed/readback07:32;final-source freeze~07:44. Snapshot/readback windows exceeded10min during structural family correction;actual deviation recorded,not erased.",
   "ai_source_joint_focused_20261019": {
     "native_parser_related": {
@@ -1216,7 +1223,9 @@
     "acceptance_verified": 0,
     "retained_packages": 8,
     "retained_acceptance": 50,
-    "real_user_corpus_trained": false
+    "real_user_corpus_trained": false,
+    "supported_local_software_status": "SELF_VERIFIED",
+    "current_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json"
   },
   "ai_scale_current": {
     "1000_wall_seconds": 1.421223972007283,
@@ -1233,13 +1242,7 @@
     "count": 14,
     "free_after": 5821259776
   },
-  "user_corpus_status": {
-    "status": "NOT_PROVIDED",
-    "confirmed_utc_date": "2026-10-19",
-    "user_reply": "尚未提供",
-    "scope": "Actual authorized .ai artwork corpus and corresponding fonts",
-    "development_continues": "All independent engineering and owned mechanism verification;no real training/performance/quality qualification claims"
-  },
+  "user_corpus_status": "LOCAL_ONLY_NOT_PROVIDED_BY_DESIGN_DO_NOT_REQUEST",
   "ai_feedback_instance_targeted": {
     "initial_feedback_4": "2errors due test shared-source withdrawal;fixed isolated DB per test",
     "isolated_feedback_4": "PASS17.137s",
@@ -1247,18 +1250,20 @@
     "source_feedback_desktop_48": "47PASS1FAIL existing SVG visibility enum mismatch;fixed conservative HIDDEN semantics+binding exclusion;rerun pending"
   },
   "ai_final_source_guide": "docs/dev/AI_CORE_IMPLEMENTATION_20261019.md",
-  "user_corpus_training": "NOT_STARTED_NOT_PROVIDED",
+  "user_corpus_training": "NOT_STARTED_LOCAL_ONLY_BY_USER_DECISION",
   "current_scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
   "last_observed_formal_progress": {
-    "phase": "RUNNING_OWNED_TEST_MODULES",
-    "current_test": "test_quality_panel.QualityPanelTests.test_actual_source_sample_view_and_live_invalidity_badge_after_exposure, test_quality_protocol.QualityProtocolTests.test_late_audit_failure_rolls_back_content_reservation_and_side_start, test_quality_provenance.QualityProducerProvenanceTests.test_actual_model_reapproval_changes_review_context_but_not_independent_truth_dependencies, test_quality_rechecks.QualityRecheckTests.test_explicit_approval_and_disk_failure_cannot_partially_quarantine_history",
-    "started": 1305,
-    "completed": 1301,
-    "passed": 1301,
-    "failed_ids": [],
+    "phase": "COMPLETE_SOFTWARE_SELF_VERIFIED_EXTERNAL_QUALIFICATION_PENDING",
+    "formal_complete": true,
+    "completed": 1733,
+    "passed": 1733,
     "planned_tests": 1733,
-    "formal_complete": false,
-    "updated_at": "2026-10-19T13:34:48.068449+00:00"
+    "failed_ids": [],
+    "healthy_modules": 222,
+    "unhandled_runtime_errors": 0,
+    "capture_exit_code": 0,
+    "source_unchanged": true,
+    "run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json"
   },
   "historical_prepared_checkpoint_archive_resolution": {
     "resolved_utc": "2026-10-19T09:07:21.313888+00:00",
@@ -1283,5 +1288,25 @@
   "local_recovery_live_checkpoint_evidence": "docs/evidence/local-recovery/full005-progress-001.json",
   "local_recovery_failed_full003": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/interruption.json",
   "local_recovery_failed_full004": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-004/interruption.json",
-  "local_recovery_unit_stage_evidence": "docs/evidence/local-recovery/full005-unit-stage.json"
+  "local_recovery_unit_stage_evidence": "docs/evidence/local-recovery/full005-unit-stage.json",
+  "interrupted_local_recovery_runs": [
+    "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-001/interruption.json",
+    "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-002/interruption.json",
+    "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-003/interruption.json",
+    "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-004/interruption.json"
+  ],
+  "local_recovery_software_result": {
+    "status": "SUPPORTED_SUBSETS_SELF_VERIFIED",
+    "source_commit": "96b1eb9dc23fe39fd5233d17513cc42f8ed547f8",
+    "run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+    "tests": 1733,
+    "baseline_test_ids_retained": 1685,
+    "new_unique_tests": 48,
+    "healthy_modules": 222,
+    "attachments": 369,
+    "private_user_artwork_read": false,
+    "real_user_corpus_training": false,
+    "paid_ai_api_used": false,
+    "automatic_private_upload": false
+  }
 }
