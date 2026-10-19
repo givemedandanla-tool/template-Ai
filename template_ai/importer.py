@@ -17,7 +17,7 @@ from PySide6.QtPdf import QPdfDocument
 from PySide6.QtSvg import QSvgRenderer
 from .background import file_digest
 
-IMPORT_VERSION = "visual-import-0.1.3"
+IMPORT_VERSION = "visual-import-0.2.0-dual-recovery"
 MAX_PIXELS = 12_000_000
 
 
@@ -39,6 +39,8 @@ def cache_matches(payload: dict, folder: Path, source_hash: str, page: int) -> b
         names = {"image": "preview.png"}
         if payload.get("svg"):
             names["svg"] = "source.svg"
+        if payload.get("semantic_svg"):
+            names["semantic_svg"] = "semantic.svg"
         hashes = payload["file_hashes"]
         if set(hashes) != set(names):
             return False
@@ -139,7 +141,7 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         raise ValueError("此非 PDF 來源本版只支援第 1 頁，請另存目標畫板後匯入")
     folder = assets / f"{sha}-p{page}-{IMPORT_VERSION}"
     metadata = folder / "metadata.json"
-    if folder.is_symlink() or any((folder / name).is_symlink() for name in ("metadata.json", "preview.png", "source.svg")):
+    if folder.is_symlink() or any((folder / name).is_symlink() for name in ("metadata.json", "preview.png", "source.svg", "semantic.svg")):
         raise ValueError("快取位置含符號連結，無法安全重建；請改用正常本機資產目錄")
     if metadata.exists():
         try:
@@ -154,6 +156,11 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
     suffix = path.suffix.lower()
     svg = ""
     calibrated = True
+    from .recovery_diagnostics import issue
+    from .source_recovery import recover_semantics, compare_images, original_pdf_reference
+    recovery = dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN',
+                    counts={}, issues=[issue('NO_EDITABLE_TEXT')])
+    semantic_svg = ''
     if suffix in (".ai", ".eps", ".svg", ".pdf") and converter:
         args = [str(path), "--export-text-to-path", "--export-plain-svg", "--export-type=svg", "--export-filename=" + str(svg_path)]
         if is_pdf:
@@ -164,6 +171,7 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         width, height = svg_size(svg_path)
         _run(converter, [str(svg_path), "--export-type=png", "--export-width=1600", "--export-background=white", "--export-background-opacity=1", "--export-filename=" + str(image_path)], folder)
         svg, engine = str(svg_path), "Inkscape " + IMPORT_VERSION
+        semantic_svg, recovery = recover_semantics(path, folder, page, is_pdf, converter, run=_run)
     elif is_pdf:
         document = QPdfDocument()
         if document.load(str(path)) != QPdfDocument.Error.None_ or not 1 <= page <= document.pageCount():
@@ -177,11 +185,15 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         if not image.save(str(image_path), "PNG"):
             raise ValueError("PDF 預覽失敗")
         engine = "Qt PDF／PDF 相容層（點陣訓練參考）"
+        semantic_svg, recovery = recover_semantics(path, folder, page, is_pdf, None, run=_run)
+        # Original PDF text/glyph extraction is independent of Inkscape.
+        recovery['source_kind'] = 'PDF'
     elif suffix == ".svg":
         svg_path.write_bytes(path.read_bytes())
         width, height = svg_size(svg_path)
         render_svg(svg_path, image_path)
         svg, engine = str(svg_path), "Qt SVG（待與可信原稿比對）"
+        semantic_svg, recovery = recover_semantics(path, folder, page, False, None, run=_run)
     elif suffix in (".png", ".jpg", ".jpeg"):
         reader = QImageReader(str(path))
         size = reader.size()
@@ -201,13 +213,28 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
     image = QImage(str(image_path))
     if image.isNull() or image.width() * image.height() > MAX_PIXELS:
         raise ValueError("轉換未產生可用預覽")
+    if is_pdf:
+        try:
+            reference = original_pdf_reference(path, page, (image.width(), image.height()))
+            comparison = compare_images(reference, image)
+            recovery['visual_comparison'] = comparison
+            recovery['fidelity_status'] = comparison['status']
+            if comparison['status'] != 'WITHIN_POLICY':
+                recovery['issues'].append(issue('VISUAL_MISMATCH'))
+        except (ValueError, OSError):
+            recovery['issues'].append(issue('FIDELITY_UNKNOWN'))
+    else:
+        recovery['issues'].append(issue('FIDELITY_UNKNOWN'))
     payload = {"hash": sha, "image": str(image_path), "svg": svg, "width_mm": width,
                "height_mm": height, "page": page, "page_count": page_count, "engine": engine,
-               "calibrated": calibrated, "visual_confirmed": False, "reused": False}
+               "calibrated": calibrated, "visual_confirmed": False, "reused": False,
+               "semantic_svg": semantic_svg, "recovery": recovery}
     payload["cache_version"] = IMPORT_VERSION
     payload["file_hashes"] = {"image": file_digest(image_path)}
     if svg:
         payload["file_hashes"]["svg"] = file_digest(svg_path)
+    if semantic_svg:
+        payload["file_hashes"]["semantic_svg"] = file_digest(semantic_svg)
     payload["metadata_sha256"] = metadata_checksum(payload)
     temporary = folder / "metadata.tmp"
     temporary.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
