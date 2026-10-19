@@ -430,19 +430,24 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
             candidate.risk_context['design_geometry_basis']=dict(
                 kind='SHARED_CONDITIONAL_ROLE_PATTERN' if conditioned else 'GROUP_BALANCED_FAMILY_DEFAULT',
                 pattern=pattern,source_refs=conditioned['source_refs'] if conditioned else [],soft_relations=applied)
+            default_cost=sum(bool(profile.get('editor_preferred_sources',{}).get(fact['role_key'])
+                and profile['editor_preferred_sources'][fact['role_key']] not in config.get('source_refs',[config.get('source_ref')]))
+                for fact,config in zip(facts,selected))
+            candidate.risk_context['family_default_preference_cost']=default_cost
             candidate.risk_context['design_label_bindings']={fact['render_id']:deepcopy(config.get('label_binding'))
                 for fact,config in zip(facts,selected) if fact['kind']!='logo'}
             candidate.risk_context['design_relations']=[dict(subject=a,relation=relation,object=b)
                 for relation,edges in [('ABOVE',vgraph.edges),('LEFT_OF',hgraph.edges)] for a,b in sorted(edges)]
             candidates.append(dict(candidate=candidate,configuration_ids=[row['id'] for row in selected],
+                default_preference_cost=default_cost,
                 geometry_digest=digest(template.to_dict()),measurements=measurements,legal_preview_geometry=True,
                 formal_qualification='NOT_EVALUATED'))
         except (kiwi.UnsatisfiableConstraint,ValueError,KeyError) as error:
             attempts.append(dict(reason=type(error).__name__,message=str(error)))
-    candidates.sort(key=lambda row:(-row['candidate'].score,row['configuration_ids'],row['geometry_digest']))
+    candidates.sort(key=lambda row:(row['default_preference_cost'],-row['candidate'].score,row['configuration_ids'],row['geometry_digest']))
     searched=min(combinations,budget)
     return dict(base,status='FEASIBLE_PREVIEW' if candidates else 'SEARCH_EXHAUSTED' if combinations>budget else 'NO_SUPPORTED_CANDIDATE',
         candidates=candidates,searched=searched,complete_search=combinations<=budget,
         all_mathematical_layouts_enumerated=False,issues=attempts,
-        default_basis='MINIMUM_DEVIATION_THEN_STABLE_CONFIGURATION_AND_GEOMETRY',
+        default_basis='FAMILY_RULE_PREFERENCE_THEN_MINIMUM_DEVIATION_STABLE_CONFIGURATION_AND_GEOMETRY' if profile.get('editor_preferred_sources') else 'MINIMUM_DEVIATION_THEN_STABLE_CONFIGURATION_AND_GEOMETRY',
         best_scope='SEARCHED_SOURCE_SUPPORTED_CONFIGURATIONS_ONLY')

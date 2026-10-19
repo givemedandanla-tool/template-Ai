@@ -160,6 +160,7 @@ class DesignSessions:
             for index,row in enumerate(result['candidates']):
                 candidate=row['candidate']
                 choices.append(dict(id=family['family_id']+':'+str(index),family_id=family['family_id'],
+                    default_preference_cost=row.get('default_preference_cost',0),
                     configuration_ids=row['configuration_ids'],geometry_digest=row['geometry_digest'],
                     legal_preview_geometry=True,formal_eligible=candidate.formal_eligible,
                     features=candidate_features(
@@ -173,6 +174,12 @@ class DesignSessions:
             if ranker['weights_digest']!=snapshot['ranker_ref']['weights_digest']:raise ValueError('Pinned preference weights differ')
             preference=ranker['artifact']
         ranking=rank(choices,dict(version=snapshot['policy']['version'],family_order=snapshot['policy'].get('family_order',[])),preference)
+        minima={}
+        for row in ranking['ranked']:
+            choice=row['candidate'];family=choice['family_id'];cost=choice.get('default_preference_cost',0)
+            minima[family]=min(minima.get(family,cost),cost)
+        # Stable sort preserves cross-family ranking among preferred legal results.
+        ranking['ranked'].sort(key=lambda row:row['candidate'].get('default_preference_cost',0)>minima[row['candidate']['family_id']])
         selected=ranking['ranked'][0]['candidate'] if ranking['ranked'] else None
         body=dict(session_id=session_id,data_revision=snapshot['data_revision'],layout_revision=snapshot['layout_revision'],
             input_digest=digest(graph.data),input_graph=deepcopy(graph.data),ranker_ref=deepcopy(snapshot.get('ranker_ref')),model_id=model['id'],model_revision=model['revision'],weights_digest=model['weights_digest'],

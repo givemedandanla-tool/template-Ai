@@ -97,7 +97,7 @@ class FamilyScenarios:
                     record['companies']=[binding] if isinstance(binding,str) and binding else binding
                 target.append(record)
         graph=InputGraph.from_legacy(people,companies)
-        return self.save(ref,'來源試排 '+work['name'],graph,payload['width_mm'],payload['height_mm'],actor,case_id=identity)
+        return self.save(ref,'來源試排 '+work['name'],graph,payload['work_width'],payload['work_height'],actor,case_id=identity)
 
     def run(self, case_id, expected_revision, *, draft_id=None, draft_revision=None, request_id=None):
         case = self.current(case_id, expected_revision)

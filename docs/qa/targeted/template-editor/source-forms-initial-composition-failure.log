@@ -1,0 +1,25 @@
+.E
+======================================================================
+ERROR: test_static_label_requires_exact_source_text_and_explicit_measurement (test_family_source_forms.FamilySourceFormTests.test_static_label_requires_exact_source_text_and_explicit_measurement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_family_source_forms.py", line 65, in test_static_label_requires_exact_source_text_and_explicit_measurement
+    self.dialog.prepare();self.dialog.commit()
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/family_source_dialog.py", line 255, in prepare
+    review=self.review();first=self.make_plan(review)
+                               ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/family_source_dialog.py", line 249, in make_plan
+    if len(self.spans)>1:return self.reviewer.plan_composite(self.work_id,slot['id'],self.spans,review)
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_source_binding.py", line 212, in plan_composite
+    part=self._plan_run(work_id,slot_id,run_id,span['font_asset'],child_review,(start,end))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_source_binding.py", line 187, in _plan_run
+    raise ValueError('Separate labels need source-reviewed component geometry')
+ValueError: Separate labels need source-reviewed component geometry
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.481s
+
+FAILED (errors=1)

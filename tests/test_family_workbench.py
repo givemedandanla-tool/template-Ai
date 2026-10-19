@@ -11,6 +11,7 @@ from family_fixture import FamilyFixture
 from template_ai.design_learning_dialog import DesignLearningDialog
 from template_ai.family_source_dialog import FamilySourceDialog
 from template_ai.input_graph import InputGraph
+from template_ai.family_workspace import reference
 
 APP=QApplication.instance() or QApplication([])
 
@@ -74,6 +75,51 @@ class FamilyWorkbenchTests(FamilyFixture):
         self.assertGreater(self.pane.batch_table.rowCount(),0)
         with self.assertRaises(ValueError):self.pane.batches.submit(self.pane.batch_plan,'Reviewer',False)
         self.assertEqual(self.pane.batch_plan['items'][0]['ref'],self.pane.ref)
+
+    def test_native_physical_filters_saved_workset_and_joint_variant_views(self):
+        self.pane.filter_width.setValue(90);self.pane.filter_height.setValue(54)
+        self.pane.filter_people.setValue(1);self.pane.filter_fields.setValue(4);self.pane.filter_support.setValue(5)
+        self.pane.search();self.assertGreater(self.pane.result['total'],0)
+        view=self.workspace.save_view('Physical workset',self.pane.query_value(),'Reviewer')
+        self.pane.refresh();self.pane.views.setCurrentIndex(self.pane.views.findData(view['id']))
+        self.pane.filter_width.setValue(100);self.pane.open_view()
+        self.assertEqual(self.pane.filter_width.value(),90)
+        self.pane.show_pattern(self.pane.patterns.item(0))
+        self.assertIn('條件欄框',self.pane.scope.text())
+
+    def test_native_family_comparison_uses_verified_source_crops_without_global_templates(self):
+        from template_ai.family_compare import FamilyComparisonDialog
+        draft=self.apply(self.draft(),self.reorder())
+        candidate=self.rules.create_candidate(draft['id'],draft['revision'],'Reviewer',True)
+        new_ref=reference(candidate,candidate['artifact']['profile_model']['families'][0])
+        dialog=FamilyComparisonDialog(self.parent,[self.ref,new_ref],self.dialog)
+        try:
+            self.assertEqual(len(dialog.panes),2)
+            self.assertTrue(all(p['result']['image'] is not None for p in dialog.panes))
+            dialog.overlay.setChecked(True)
+            self.assertTrue(all(p['canvas'].readonly for p in dialog.panes))
+            self.assertEqual(len(self.library.templates()),0)
+        finally:dialog.close()
+
+    def test_worker_start_failure_releases_existing_job_lease(self):
+        graph=InputGraph.from_legacy(*self.parent.input_data())
+        case=self.pane.scenarios.save(self.ref,'Start failure',graph,90,54,'Reviewer')
+        job=self.pane.batches.cases([case['id']],'Reviewer')
+        with patch('template_ai.design_learning_dialog.DesignWorker',side_effect=RuntimeError('Owned start failure')):
+            with self.assertRaises(RuntimeError):self.pane.start_job(job)
+        self.assertIsNone(self.pane.worker)
+        self.assertEqual(self.pane.batches.jobs.current(job['id'])['phase'],'FAILED')
+        self.assertFalse(self.workspace.store.get('WORKER','design-worker')['active'])
+
+    def test_close_during_worker_waits_for_boundary_and_leaves_resumable_job(self):
+        graph=InputGraph.from_legacy(*self.parent.input_data())
+        case=self.pane.scenarios.save(self.ref,'Close boundary',graph,90,54,'Reviewer')
+        job=self.pane.batches.cases([case['id']],'Reviewer');self.pane.start_job(job)
+        loop=QEventLoop();timer=QTimer();timer.setSingleShot(True);timer.timeout.connect(loop.quit)
+        self.pane.worker.finished.connect(loop.quit);self.dialog.close();timer.start(60000);loop.exec();APP.processEvents();timer.stop()
+        self.assertIsNone(self.pane.worker)
+        self.assertIn(self.pane.batches.jobs.current(job['id'])['phase'],('PAUSED','COMPLETE'))
+        self.assertFalse(self.dialog.isVisible())
 
     def test_saved_case_runs_in_worker_and_renders_actual_preview(self):
         graph=InputGraph.from_legacy(*self.parent.input_data())

@@ -32,7 +32,9 @@ def check_layout(candidate,graph,intents=None):
     from .layout import text_geometry
     from .logo_assets import errors as logo_errors
     expected={row['render_id']:row for row in input_facts(graph)}
-    emitted={item.slot.id:item for item in candidate.items};errors=[]
+    emitted={item.slot.id:item for item in candidate.items};errors=[];baselines={}
+    hard_relations=[r for r in candidate.risk_context.get('design_geometry_basis',{}).get('soft_relations',[]) if r.get('strength')=='HARD']
+    baseline_ids={identity for r in hard_relations if r.get('metric')=='baseline_delta' for identity in (r.get('left'),r.get('right'))}
     if len(emitted)!=len(candidate.items):errors.append('DUPLICATE_RENDER_ID')
     if set(expected)!=set(emitted):errors.append('DATA_COVERAGE_MISMATCH')
     for identity,item in emitted.items():
@@ -53,10 +55,15 @@ def check_layout(candidate,graph,intents=None):
                     flow=shape_flow(item.text,slot.font,slot.size_pt,item.scale,slot.rect.w,slot.font_asset,
                         slot.font_style,item.tracking_mm,slot.text_flow,slot.kind)
                     width,height=flow['width_mm'],flow['height_mm'];issues=[]
+                    if flow['first_baseline_mm'] is not None:baselines[identity]=slot.rect.y+(slot.rect.h-height)/2+flow['first_baseline_mm']
                 except ValueError:width=height=0;issues=['FLOW_INVALID']
             else:
                 width,height,issues=text_geometry(slot.font,slot.size_pt,item.text,slot.font_style,slot.font_asset,item.tracking_mm)
                 width*=item.scale
+                if not issues and identity in baseline_ids:
+                    from .render import prepared_text_metrics
+                    _,ink,factor=prepared_text_metrics(item.text,slot.font,slot.size_pt,slot.font_style,slot.font_asset,item.tracking_mm)
+                    baselines[identity]=slot.rect.y+(slot.rect.h-ink['height']*factor)/2+ink['ascent']*factor
             if issues:errors.append('FONT_SHAPING_UNVERIFIED')
             if width>slot.rect.w+1e-6 or height>slot.rect.h+1e-6:errors.append('ACTUAL_TEXT_OVERFLOW')
     items=list(emitted.values())
@@ -69,6 +76,16 @@ def check_layout(candidate,graph,intents=None):
         okay={'ABOVE':a.y+a.h<=b.y+1e-6,'BELOW':b.y+b.h<=a.y+1e-6,
               'LEFT_OF':a.x+a.w<=b.x+1e-6,'RIGHT_OF':b.x+b.w<=a.x+1e-6}.get(intent['relation'],False)
         if not okay:errors.append('EXPLICIT_RELATION_VIOLATED')
+    for relation in hard_relations:
+        left,right=relation.get('left'),relation.get('right');target=relation.get('target_mm')
+        if left not in emitted or right not in emitted or type(target) not in (int,float) or not math.isfinite(target):
+            errors.append('FAMILY_HARD_RELATION_UNVERIFIED');continue
+        a=emitted[left].slot.rect;b=emitted[right].slot.rect
+        values=dict(left_delta=b.x-a.x,right_delta=b.x+b.w-a.x-a.w,centre_delta=b.x+b.w/2-a.x-a.w/2,
+                    vertical_gap=b.y-a.y-a.h,horizontal_gap=b.x-a.x-a.w)
+        if left in baselines and right in baselines:values['baseline_delta']=baselines[right]-baselines[left]
+        actual=values.get(relation.get('metric'))
+        if actual is None or abs(actual-target)>1e-6:errors.append('FAMILY_HARD_RELATION_VIOLATED')
     return dict(status='PASS' if not errors else 'FAIL',errors=sorted(set(errors)),
         expected_instances=len(expected),emitted_instances=len(emitted),
         data_integrity=1. if not any(code in errors for code in ('DUPLICATE_RENDER_ID','DATA_COVERAGE_MISMATCH','OWNER_CHANGED','DATA_CHANGED','LOGO_INTEGRITY')) else 0.)

@@ -2,7 +2,7 @@
 from copy import deepcopy
 import json
 
-from PySide6.QtCore import Qt, QItemSelectionModel
+from PySide6.QtCore import Qt, QItemSelectionModel, Slot as QtSlot
 from PySide6.QtGui import QColor, QPen
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel,
     QPushButton, QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox, QTabWidget, QSplitter,
@@ -90,6 +90,14 @@ class FamilyWorkbench(QWidget):
         for code, name in HEALTH.items():self.health.addItem(name, code)
         for widget in (self.model_choice, self.query, self.semantic, self.health):search.addWidget(widget)
         self.button(search, '查詢家族', self.search); layout.addLayout(search)
+        filters=QHBoxLayout();self.filter_width=QDoubleSpinBox();self.filter_height=QDoubleSpinBox()
+        for widget in (self.filter_width,self.filter_height):widget.setRange(0,2000);widget.setSpecialValueText('任意尺寸');widget.setDecimals(3)
+        self.filter_people=QSpinBox();self.filter_people.setRange(0,20);self.filter_people.setSpecialValueText('任意人物數')
+        self.filter_fields=QSpinBox();self.filter_fields.setRange(0,256);self.filter_fields.setSpecialValueText('任意欄位數')
+        self.filter_support=QSpinBox();self.filter_support.setRange(0,100000);self.filter_support.setSpecialValueText('不限獨立支持')
+        for label,widget in [('寬mm',self.filter_width),('高mm',self.filter_height),('人物',self.filter_people),('欄位',self.filter_fields),('最少支持',self.filter_support)]:
+            filters.addWidget(QLabel(label));filters.addWidget(widget)
+        layout.addLayout(filters)
         worksets = QHBoxLayout(); self.views = QComboBox(); worksets.addWidget(self.views)
         self.button(worksets, '開啟工作集', self.open_view); self.button(worksets, '保存目前篩選', self.save_view)
         self.button(worksets, '重新整理', self.refresh); self.button(worksets, '保存接續位置', self.remember)
@@ -104,6 +112,8 @@ class FamilyWorkbench(QWidget):
         self.summary = QLabel(); self.summary.setWordWrap(True); left.addWidget(self.summary)
         self.button(left, '比較兩個已選家族', self.compare_selected)
         self.button(left, '代表案例', self.representatives)
+        self.button(left, '代表來源實際試排', lambda:self.review_sources(True))
+        self.button(left, '完整檢查勾選家族來源與案例', lambda:self.review_sources(False))
         self.button(left, '清除全部家族勾選', self.clear_selection)
         split.addWidget(catalog)
         self.details = QTabWidget(); split.addWidget(self.details); split.setSizes([440, 740])
@@ -161,6 +171,7 @@ class FamilyWorkbench(QWidget):
         self.button(layout, '保存可選欄位', lambda:self.apply_operation(dict(kind='OPTIONAL_ROLES',roles=checked_items(self.optional))))
         layout.addWidget(QLabel('已觀察聯合欄位組合；未勾選的組合不在此草稿允許範圍。'))
         self.patterns = QListWidget(); layout.addWidget(self.patterns)
+        self.patterns.currentItemChanged.connect(lambda item,old:self.attempt(lambda:self.show_pattern(item)))
         self.button(layout, '保存允許組合', lambda:self.apply_operation(dict(kind='ALLOWED_PATTERNS',patterns=checked_items(self.patterns))))
 
     def build_typography(self):
@@ -168,6 +179,8 @@ class FamilyWorkbench(QWidget):
         self.style_role = QComboBox(); self.style_role.currentIndexChanged.connect(self.load_styles); layout.addWidget(self.style_role)
         self.styles = table(['來源例', '字型', '來源 pt', '水平比例', '字距 mm', '欄寬 mm', '欄高 mm', '對齊／文字流'])
         layout.addWidget(self.styles, 1); self.button(layout, '以此來源配置作預選', self.prefer_style)
+        self.modes=table(['模式','獨立支持','寬度支持域','高度支持域','字面需求／pt支持域'])
+        layout.addWidget(self.modes)
         self.joint_info = QLabel(); self.joint_info.setWordWrap(True); layout.addWidget(self.joint_info)
         layout.addWidget(QLabel('字級、字寬、欄框與間距以聯合配置核對；不是客戶細參數控制。'))
 
@@ -189,6 +202,7 @@ class FamilyWorkbench(QWidget):
         bar = QHBoxLayout(); self.case_choice = QComboBox(); self.case_choice.currentIndexChanged.connect(self.load_case)
         bar.addWidget(self.case_choice, 1); self.button(bar, '新增案例', lambda:self.edit_case(True))
         self.button(bar, '編輯案例資料', lambda:self.edit_case(False)); layout.addLayout(bar)
+        self.button(layout,'將目前稿件與位置意圖保存為案例',self.capture_session)
         dims = QHBoxLayout(); self.case_name = QLineEdit('案例一'); dims.addWidget(self.case_name)
         self.width = QDoubleSpinBox(); self.height = QDoubleSpinBox()
         for widget in (self.width,self.height):widget.setRange(.01,2000);widget.setDecimals(3);dims.addWidget(widget)
@@ -205,6 +219,8 @@ class FamilyWorkbench(QWidget):
         self.report = QPlainTextEdit(); self.report.setReadOnly(True); layout.addWidget(self.report, 1)
         self.button(layout, '查看草稿差異', self.show_differences)
         self.button(layout, '查看完整影響數量', self.show_impact)
+        self.impact_scope=QComboBox();self.impact_scope.addItems(['目前家族模型','來源頁所選檔案','字面頁所選字型'])
+        layout.addWidget(self.impact_scope)
         pages=QHBoxLayout();self.impact_page=0
         self.button(pages,'上一頁影響項目',lambda:self.show_impact(-1))
         self.button(pages,'下一頁影響項目',lambda:self.show_impact(1));layout.addLayout(pages)
@@ -233,7 +249,18 @@ class FamilyWorkbench(QWidget):
         if not result['semantic']:result.pop('semantic')
         if self.model_choice.currentData():result['model_id'] = self.model_choice.currentData()
         if self.health.currentData():result['health'] = self.health.currentData()
+        if bool(self.filter_width.value())!=bool(self.filter_height.value()):raise ValueError('尺寸篩選請同時填寫寬與高，或兩者留空')
+        if self.filter_width.value():result['size']=[self.filter_width.value(),self.filter_height.value()]
+        for key,widget in [('people',self.filter_people),('field_count',self.filter_fields),('min_support',self.filter_support)]:
+            if widget.value():result[key]=widget.value()
         return result
+
+    def set_query(self,query):
+        self.query.setText(query.get('text',''))
+        for widget,key in ((self.semantic,'semantic'),(self.health,'health'),(self.model_choice,'model_id')):
+            index=widget.findData(query.get(key,''));widget.setCurrentIndex(max(0,index))
+        self.filter_width.setValue(query.get('size',[0,0])[0]);self.filter_height.setValue(query.get('size',[0,0])[1])
+        for key,widget in [('people',self.filter_people),('field_count',self.filter_fields),('min_support',self.filter_support)]:widget.setValue(query.get(key,0))
 
     def search(self):
         self.page = 0; self.refresh()
@@ -291,9 +318,7 @@ class FamilyWorkbench(QWidget):
     def open_view(self):
         view=self.store.get('FAMILY_VIEW',self.views.currentData())
         if not view:raise ValueError('請選擇已保存工作集')
-        query=view['query'];self.query.setText(query.get('text',''))
-        for widget,key in ((self.semantic,'semantic'),(self.health,'health'),(self.model_choice,'model_id')):
-            index=widget.findData(query.get(key,''));widget.setCurrentIndex(max(0,index))
+        self.set_query(view['query'])
         self.page=0;self.refresh()
 
     def load_family(self,ref):
@@ -370,16 +395,29 @@ class FamilyWorkbench(QWidget):
             if role['observed_optional']:
                 item=QListWidgetItem(role['key']);item.setData(Qt.UserRole,role['key']);item.setFlags(item.flags()|Qt.ItemIsUserCheckable)
                 item.setCheckState(Qt.Checked if role['key'] in profile['grammar']['optional_roles'] else Qt.Unchecked);self.optional.addItem(item)
-        self.patterns.clear();allowed=profile['grammar'].get('editor_allowed_patterns')
+        self.patterns.blockSignals(True);self.patterns.clear();allowed=profile['grammar'].get('editor_allowed_patterns')
         for row in profile['grammar']['observed_joint_counts']:
             key=digest(row['pattern']);item=QListWidgetItem('、'.join(k+' ×'+str(v) for k,v in sorted(row['pattern'].items()))+'；獨立支持 '+str(row['independent_support']))
             item.setData(Qt.UserRole,key);item.setFlags(item.flags()|Qt.ItemIsUserCheckable);item.setCheckState(Qt.Checked if allowed is None or key in allowed else Qt.Unchecked);self.patterns.addItem(item)
+        self.patterns.blockSignals(False)
         self.source_rows=self.workspace.sources(self.ref)
         fill(self.sources,[[self.library.artwork(r['work_id'])['name'],r['role'],r['pins']['work_revision'],r['lineage_group'][:16]] for r in self.source_rows])
         self.rebase_choice.clear()
         for row in self.visible:self.rebase_choice.addItem(row['id'][:30],row['ref'])
         if profile['roles']:self.roles.setCurrentItem(groups[profile['roles'][0]['owner_port']].child(0))
         self.reviewed.setChecked(False)
+
+    def show_pattern(self,item):
+        if not item or not self.profile:return
+        row=next((r for r in self.profile['conditional_geometry'] if digest(r['pattern'])==item.data(Qt.UserRole)),None)
+        if not row:return
+        width,height=self.profile['observed_dimensions_mm'][0]
+        slots=[]
+        for role in self.profile['roles']:
+            frame=row['frames'].get(role['key'])
+            if frame:slots.append(Slot(role['kind'],role['owner_port'],Rect(frame[0]*width,frame[1]*height,frame[2]*width,frame[3]*height),id=role['key']))
+        self.canvas.set_content(width,height,slots=slots);self.canvas.fit();self.overlays=[]
+        self.scope.setText('所選聯合組合的條件欄框；獨立支持 '+str(row['independent_support'])+'；'+row['admission'])
 
     def role_selected(self, item, previous=None):
         if not item or not self.profile:return
@@ -458,6 +496,9 @@ class FamilyWorkbench(QWidget):
             str(s['align'])+'／'+str((s.get('source_text_flow') or {}).get('break_rule','未確認'))] for s in self.style_rows])
         role=next((r for r in self.profile['roles'] if r['key']==key),{})
         model=role.get('conditional_joint_model',{})
+        fill(self.modes,[[m['id'][:10],m['independent_support'],
+             f"{m['x_min'][0]:g}～{m['x_max'][0]:g}",f"{m['x_min'][1]:g}～{m['x_max'][1]:g}",
+             f"{m['x_min'][2]:g}～{m['x_max'][2]:g}"] for m in model.get('modes',[])])
         self.joint_info.setText('聯合模式 '+str(len(model.get('modes',[])))+'；輸出：字級、水平縮放、字距、欄寬與欄高。支持域外仍需實測，不能由各項最小最大值自由拼接。')
 
     def prefer_style(self):
@@ -501,6 +542,8 @@ class FamilyWorkbench(QWidget):
         result=self.workspace.compare(*refs)
         self.report.setPlainText('家族比較：保留兩者來源，不自動合併。\n'+self.describe_differences(result['differences']))
         self.details.setCurrentIndex(7)
+        from .family_compare import FamilyComparisonDialog
+        FamilyComparisonDialog(self.window,refs,self).exec()
 
     @staticmethod
     def describe_differences(rows):
@@ -508,8 +551,22 @@ class FamilyWorkbench(QWidget):
             data_requirement_profiles='資料需求',field_capability_profiles='容器能力',conditional_geometry='條件幾何',
             object_spacing_rules='物件間距',observed_dimensions_mm='已觀察尺寸',editor_relation_strengths='關係強度',
             editor_container_types='承接限制',editor_preferred_sources='預選字面')
-        return '\n\n'.join(names.get(row['section'],row['section'])+'\n修改前：'+json.dumps(row['before'],ensure_ascii=False,indent=2)+
-            '\n修改後：'+json.dumps(row['after'],ensure_ascii=False,indent=2) for row in rows) if rows else '沒有功能規則差異。'
+        def describe(section,value):
+            if value is None:return '未設定'
+            if section=='roles':
+                return '\n'.join(r['key']+'：欄框比例 '+str(r['frame_centre'])+'；獨立支持 '+str(r['support'])+
+                    '；已知字面 '+str(r['typography_known_examples'])+'；聯合模式 '+str(len(r.get('conditional_joint_model',{}).get('modes',[]))) for r in value)
+            if section=='field_capability_profiles':
+                return '\n'.join(r['container_key']+'：'+', '.join(SEMANTICS.get(t,t) for t in r['observed_semantic_types'])+'；歸屬 '+', '.join(r['owner_ports']) for r in value)
+            if section=='data_requirement_profiles':
+                return '\n'.join(SEMANTICS.get(r['semantic_type'],r['semantic_type'])+'：獨立支持 '+str(r['support'])+'；字數觀察 '+str(r['measured_graphemes']) for r in value)
+            if section=='grammar':
+                return '預設順序：'+' → '.join(value['default_order'])+'\n預設資料位置：'+str(value.get('default_semantic_roles',{}))+\
+                       '\n可選欄位：'+', '.join(value['optional_roles'])+'\n聯合欄位組合：'+str([r['pattern'] for r in value['observed_joint_counts']])+\
+                       '\n額外必要欄位：'+str(value.get('editor_required_roles',[]))+'\n限制組合：'+str(value.get('editor_allowed_patterns','未額外限制'))
+            return json.dumps(value,ensure_ascii=False,indent=2)
+        return '\n\n'.join(names.get(row['section'],row['section'])+'\n修改前：'+describe(row['section'],row['before'])+
+            '\n修改後：'+describe(row['section'],row['after']) for row in rows) if rows else '沒有功能規則差異。'
 
     def show_differences(self):
         if not self.draft:raise ValueError('先選擇草稿')
@@ -518,7 +575,13 @@ class FamilyWorkbench(QWidget):
     def show_impact(self,delta=0):
         if not self.ref:raise ValueError('先選擇家族')
         self.impact_page=max(0,self.impact_page+delta) if delta else 0
-        result=self.workspace.impact(self.ref,page=self.impact_page)
+        scope={}
+        if self.impact_scope.currentIndex()==1:scope['source_hashes']=[self.selected_source()['source_hash']]
+        elif self.impact_scope.currentIndex()==2:
+            index=self.styles.currentRow()
+            if not 0<=index<len(self.style_rows) or not self.style_rows[index].get('source_font_ref'):raise ValueError('先在字面頁選擇已知字型的來源配置')
+            scope['font_hashes']=[self.style_rows[index]['source_font_ref']['hash']]
+        result=self.workspace.impact(self.ref,page=self.impact_page,**scope)
         lines=[f"完整影響總數 {result['total']}；已確認輸出保留原檔，重用時仍核對權利。"]
         lines.extend(kind+'：'+str(count) for kind,count in sorted(result['counts'].items()))
         lines.append('影響項目第 '+str(self.impact_page+1)+' 頁；每頁100筆，可用上一頁／下一頁查看。')
@@ -602,9 +665,15 @@ class FamilyWorkbench(QWidget):
             job=self.batches.jobs.create('FAMILY_CASE_REVIEW',dict(items=[original,*items]),self.actor(),True)
         self.start_job(job)
 
+    def review_sources(self,representative_only):
+        refs=[self.ref] if representative_only and self.ref else list(self.selection.values())
+        self.start_job(self.batches.review_sources(refs,self.actor(),representative_only=representative_only))
+
     def show_run(self):
         identity=self.run_choice.currentData()
-        if not identity:return
+        if not identity:
+            self.case_canvas.set_content(max(.01,self.width.value()),max(.01,self.height.value()))
+            self.case_status.setText('尚無目前案例的已驗證試排；沒有沿用其他家族的畫面。');return
         try:
             run=self.scenarios.checked(identity)
             if run['candidate']:
@@ -624,8 +693,20 @@ class FamilyWorkbench(QWidget):
         from .input_graph import InputGraph
         session=self.owner.sessions.create(InputGraph(case['input_graph']),case['width_mm'],case['height_mm'],
             self.actor(),self.ref['model_id'],case['policy'])
+        for intent in case['intents']:
+            session=self.owner.sessions.set_relation(session['id'],session['revision'],new_id(),
+                intent['subject'],intent['relation'],intent['object'])
         self.owner.session_id=session['id'];self.owner.refresh_draft();self.owner.save_workspace()
         self.owner.tabs.setCurrentIndex(2);self.say('已建立當次稿件；需重新求解、核對並確認輸出。')
+
+    def capture_session(self):
+        if not self.ref or not self.owner.session_id:raise ValueError('先在當次稿件建立資料與位置意圖，再選擇相同模型的家族')
+        session=self.owner.sessions.current(self.owner.session_id)
+        if session['model_id']!=self.ref['model_id']:raise ValueError('目前稿件與所選家族的模型版本不同')
+        from .input_graph import InputGraph
+        case=self.scenarios.save(self.ref,self.case_name.text(),InputGraph(session['input_graph']),
+            session['width_mm'],session['height_mm'],self.actor(),intents=session['intents'],policy=session['policy'])
+        self.reload_cases(case['id']);self.remember();self.say('當次資料與相對位置意圖已保存為本地工程案例，不改動原稿件。')
 
     def preview_batch(self):
         if not self.last_operation:raise ValueError('先在單一家族保存一項規則操作，再預覽相同操作的適用範圍')
@@ -649,10 +730,21 @@ class FamilyWorkbench(QWidget):
         if self.worker is not None:raise ValueError('已有家族工作正在執行')
         from .design_learning_dialog import DesignWorker
         claimed=self.batches.jobs.claim(job['id'],job['revision']);self.active_job=job['id']
-        self.worker=DesignWorker(self.library.root,job['id'],claimed['owner']['token'])
-        self.worker.progress.connect(lambda p:self.job_status.setText('已完成 '+str(p['done'])+'／'+str(p['total'])))
-        self.worker.failed.connect(self.say);self.worker.finished.connect(self.worker_finished)
-        self.worker.start();self.remember()
+        try:
+            self.worker=DesignWorker(self.library.root,job['id'],claimed['owner']['token'],self)
+            self.worker.progress.connect(self.job_progress,Qt.QueuedConnection)
+            self.worker.failed.connect(self.say,Qt.QueuedConnection)
+            self.worker.finished.connect(self.worker_finished,Qt.QueuedConnection)
+            self.worker.start()
+        except BaseException as error:
+            self.batches.jobs.finish(job['id'],claimed['owner']['token'],'FAILED',str(error)[:512])
+            if self.worker:self.worker.deleteLater()
+            self.worker=None;raise
+        self.remember()
+
+    @QtSlot(object)
+    def job_progress(self,progress):
+        self.job_status.setText('已完成 '+str(progress['done'])+'／'+str(progress['total']))
 
     def worker_finished(self):
         worker=self.worker;self.worker=None
@@ -672,7 +764,10 @@ class FamilyWorkbench(QWidget):
     def pause_job(self):
         identity=self.active_job if self.worker else self.jobs.currentData()
         if not identity:raise ValueError('先選擇批次')
-        self.batches.jobs.request_cancel(identity);self.say('已要求完成目前原子項目後暫停。')
+        if self.worker:self.worker.cancel.set()
+        job=self.batches.jobs.current(identity)
+        if job['phase'] not in ('COMPLETE','FAILED'):self.batches.jobs.request_cancel(identity)
+        self.say('已要求完成目前原子項目後暫停。')
 
     def undo_batch(self):
         identity=self.jobs.currentData()
@@ -692,10 +787,7 @@ class FamilyWorkbench(QWidget):
         self.refresh()
         if not saved:return
         self.selection=deepcopy(saved['selection']);self.active_job=saved.get('active_job')
-        query=saved.get('query',{});self.query.setText(query.get('text',''))
-        for widget,key in ((self.semantic,'semantic'),(self.health,'health'),(self.model_choice,'model_id')):
-            self_index=widget.findData(query.get(key,''))
-            if self_index>=0:widget.setCurrentIndex(self_index)
+        self.set_query(saved.get('query',{}))
         self.page=saved.get('page',0);self.refresh()
         try:
             if saved['ref']:

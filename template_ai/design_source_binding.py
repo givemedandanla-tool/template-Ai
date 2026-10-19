@@ -209,6 +209,16 @@ class SourceTypographyReview:
             seen.add(run_id);cursor=end
             child_review={k:deepcopy(v) for k,v in review.items() if k!='source_text_flow'}
             child_review.update(span.get('review',{}))
+            presentation=(review.get('source_text_flow') or {}).get('presentation')
+            if not parts and presentation:
+                # Fixed components belong to the whole container, whose base pt
+                # is the first run. Verify their source evidence exactly once.
+                child_review['source_text_flow']=dict(status='HUMAN_CONFIRMED_SOURCE_RULE',
+                    break_rule='NO_WRAP',max_lines_observed=1,line_height_factor=1.,alignment='left',
+                    evidence_refs=review['source_text_flow']['evidence_refs'],presentation=deepcopy(presentation))
+            elif parts and presentation:
+                child_review['label_binding']=dict(status='CONFIRMED',kind='NO_FIXED_LABEL',
+                    evidence_refs=review.get('label_binding',{}).get('evidence_refs',[]))
             part=self._plan_run(work_id,slot_id,run_id,span['font_asset'],child_review,(start,end))
             parts.append(part)
             point=part['typography']['source_pt']['value'];base=parts[0]['typography']['source_pt']['value']

@@ -130,6 +130,7 @@ class FamilySourceDialog(QDialog):
             form.addRow(label+' x/y/w/h 比例',row)
         layout.addLayout(form);self.icon_text=QLabel('未選擇欄位圖示');layout.addWidget(self.icon_text)
         self.button(layout,'選擇純向量欄位圖示',self.choose_icon)
+        self.icon_rights=QCheckBox('已核對此欄位圖示的列印使用權');layout.addWidget(self.icon_rights)
         layout.addWidget(QLabel('此處只處理欄位裝飾圖示；完整公司 Logo 使用既有 Logo 庫。'));layout.addStretch()
 
     def load_slot(self):
@@ -230,13 +231,17 @@ class FamilySourceDialog(QDialog):
             value=self.label_text.text();run=self.runs[run_index]
             if hashlib.sha256(value.encode()).hexdigest()!=run['text_sha256']:
                 raise ValueError('固定文字與所選原生run的完整文字不符')
-            parts.append(dict(kind='STATIC_TEXT',text=value,font_asset=self.label_font.currentData(),
+            parts.append(dict(kind='STATIC_TEXT',text=value,font_asset=self.label_font.currentData(),source_run_id=run['id'],
+                physical_pt_measurement_refs=[self.basis.text()],
                 pt_ratio=self.label_pt.value()/base_pt,frame=[w.value() for w in self.frames['label']]))
         elif review['label_binding']['kind']=='SEPARATE_STATIC_LABEL':
             raise ValueError('請選擇獨立固定文字的實際來源run')
         if self.icon_asset:
-            parts.append(dict(kind='SVG_ICON',asset=self.icon_asset,frame=[w.value() for w in self.frames['icon']]))
-            review['icon_binding']=dict(status='CONFIRMED',evidence_refs=[self.basis.text()],asset=self.icon_asset)
+            asset=deepcopy(self.icon_asset)
+            asset.update(source_hash=self.library.source(self.library.artwork(self.work_id)['source_id'])['hash'],reviewed_source_association=True)
+            if self.icon_rights.isChecked():asset['usage_rights']=dict(print_export=True,actor=self.actor.text(),basis=self.basis.text())
+            parts.append(dict(kind='SVG_ICON',asset=asset,frame=[w.value() for w in self.frames['icon']]))
+            review['icon_binding']=dict(status='CONFIRMED',evidence_refs=[self.basis.text()],asset=asset)
         presentation=dict(status='HUMAN_CONFIRMED_SOURCE_RULE',evidence_refs=[self.basis.text()],
                           value_frame=[w.value() for w in self.frames['value']],components=parts)
         if run_index is not None:presentation['evidence_refs'].append(self.runs[run_index]['id'])
@@ -252,9 +257,7 @@ class FamilySourceDialog(QDialog):
         return self.reviewer.plan(self.work_id,slot['id'],span['source_run_id'],span['font_asset'],dict(review,**span['review']))
 
     def prepare(self):
-        review=self.review();first=self.make_plan(review)
-        self.add_presentation(review,first['typography']['source_pt']['value'])
-        self.plan=self.make_plan(review)
+        self.plan=self.assembled_plan()
         typography=self.plan['typography']
         self.preview.setPlainText('完整文字來源已核對；分段 '+str(len(self.spans))+'\n作品字級：'+str(typography['source_pt'])+
             '\n原生字級：'+str(typography.get('source_page_pt'))+'\n尚未保存；保存時再次核對來源、字型、事實與版本。')
@@ -262,12 +265,20 @@ class FamilySourceDialog(QDialog):
 
     def commit(self):
         if not self.plan:raise ValueError('請先產生對應預檢')
-        fresh_review=self.review();first=self.make_plan(fresh_review)
-        self.add_presentation(fresh_review,first['typography']['source_pt']['value'])
-        fresh=self.make_plan(fresh_review)
+        fresh=self.assembled_plan()
         if fresh!=self.plan:raise ValueError('預檢後的選項或來源已改變，請重新預檢')
         saved=self.reviewer.confirm(self.plan,self.actor.text(),True)
         self.status.setText('來源對應已保存 v'+str(saved['revision'])+'；受影響的舊模型需重建，不會被改寫。');self.plan=None
+
+    def assembled_plan(self):
+        review=self.review();measurement=deepcopy(review)
+        if self.presentation_review.isChecked():
+            # Obtain the dynamic run's evidenced base pt before constructing the
+            # fixed component ratios. This preliminary plan is never saved.
+            measurement['label_binding']=dict(status='CONFIRMED',kind='NO_FIXED_LABEL',evidence_refs=[self.basis.text()])
+        first=self.make_plan(measurement)
+        self.add_presentation(review,first['typography']['source_pt']['value'])
+        return self.make_plan(review)
 
     def open_annotation(self):
         from .annotation_dialog import AnnotationDialog
