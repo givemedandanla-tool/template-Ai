@@ -34,6 +34,14 @@ def stop_owned(process):
     except subprocess.TimeoutExpired:raise RuntimeError('Owned test process did not terminate')
 
 
+def request_deadline_stack(process):
+    """Only after the deadline is already failed; never a periodic valid-work signal."""
+    if os.name=='posix' and process.poll() is None:
+        try:os.kill(process.pid,signal.SIGUSR1)
+        except OSError:return
+        time.sleep(.1)  # bounded diagnostic grace; timed_out remains a failure
+
+
 def owned_descendants(process):
     if os.name!='posix':return []
     import psutil
@@ -80,7 +88,9 @@ def run_modules(expected,live,*,test_root=None,module_timeout=120,workers=1):
                     raw=read_bounded(output/'progress.json')
                     if raw and raw!=last_child:
                         progress(module,json.loads(raw));last_child=raw
-                    if time.monotonic()-started>module_timeout:timed_out=True;failure='MODULE_DEADLINE_EXCEEDED';stop_owned(process);break
+                    if time.monotonic()-started>module_timeout:
+                        timed_out=True;failure='MODULE_DEADLINE_EXCEEDED'
+                        request_deadline_stack(process);stop_owned(process);break
                     if stdout.stat().st_size>MAX_FILE:failure='MODULE_STDOUT_BUDGET_EXCEEDED';stop_owned(process);break
                     time.sleep(.05)
                 if process.returncode==0:

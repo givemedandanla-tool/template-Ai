@@ -62,6 +62,7 @@ class Case(unittest.TestCase):
         result,errors,log=self.execute(code,['test_a','test_b','test_c'])
         self.assertFalse(result.wasSuccessful());self.assertEqual(len(result.records),1);self.assertEqual(next(iter(result.records.values()))['status'],'PASS')
         self.assertEqual(result.modules[0]['exit_code'],-6 if os.name=='posix' else 7);self.assertEqual(len(result.modules[0]['missing_test_ids']),2);self.assertEqual(errors[0]['type'],'OWNED_TEST_MODULE_PROCESS_FAILURE')
+        if os.name=='posix':self.assertIn('Fatal Python error',(self.root/'live'/'timeout-stacks.log').read_text())
 
     def test_deadline_stops_only_owned_worker_and_descendant_without_success_receipt(self):
         marker=self.root/'child-pid'
@@ -69,6 +70,7 @@ class Case(unittest.TestCase):
         result,errors,_=self.execute(code,['test_a'],timeout=2)
         self.assertFalse(result.wasSuccessful());self.assertTrue(result.modules[0]['timed_out']);self.assertFalse(result.records);self.assertTrue(errors)
         self.assertTrue(marker.exists(),'real child must start before measured timeout')
+        if os.name=='posix':self.assertIn('test_owned_fixture.py',(self.root/'live'/'timeout-stacks.log').read_text())
         import psutil
         try:self.assertEqual(psutil.Process(int(marker.read_text())).status(),psutil.STATUS_ZOMBIE)
         except psutil.NoSuchProcess:pass

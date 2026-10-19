@@ -62,7 +62,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-TEMPLATE-EDITOR-FROZEN-004"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -440,7 +442,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-TEMPLATE-EDITOR-ALL-004",
+  "planned_evidence_run": "RUN-TEMPLATE-EDITOR-ALL-005",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -1339,12 +1341,12 @@
   },
   "editor_tools_contract": "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json",
   "editor_tools_progress": {
-    "phase": "FULL004_DIAGNOSTIC_TIMER_INVESTIGATION",
+    "phase": "CORRECTED_TOOLING_AND_ACCEPTANCE_PASS_FREEZING_FULL005",
     "completed_tool_acceptance": 0,
     "total_tool_acceptance": 16,
     "targeted_tests_passed": 15,
     "targeted_evidence": "docs/qa/targeted/template-editor/stage1-workspace-rules.log",
-    "next": "Finish004 unchanged;fix periodic diagnostics only;retain fatal/timeout gates;test infrastructure and new frozen full005",
+    "next": "Run new frozen full005with3workers/600s;all1779tests and full native capture required before completion",
     "scenario_batch_tests_passed": 6,
     "native_worker_case_passed": true,
     "all_family_targeted_previous": 29,

@@ -1,5 +1,5 @@
 """One owned unittest module; raw completion journal survives native crashes."""
-import argparse,faulthandler,io,json,os,re,sys,traceback,unittest
+import argparse,faulthandler,io,json,os,re,signal,sys,traceback,unittest
 from pathlib import Path
 from dev_common import ROOT,write_json
 
@@ -17,7 +17,11 @@ def main():
         errors.append(dict(type=kind.__name__,message=str(value),traceback=''.join(traceback.format_exception(kind,value,tb))))
         old(kind,value,tb)
     stacks=(args.output/'stacks.log').open('w',encoding='utf-8');sys.excepthook=hook
-    faulthandler.enable(file=stacks,all_threads=True);faulthandler.dump_traceback_later(60,repeat=True,file=stacks)
+    faulthandler.enable(file=stacks,all_threads=True)
+    # Do not interrupt valid long work with a periodic interpreter stack walk.
+    # Fatal faults still dump; the owner requests a stack on an actual deadline.
+    stack_signal=getattr(signal,'SIGUSR1',None) if os.name=='posix' else None
+    if stack_signal is not None:faulthandler.register(stack_signal,file=stacks,all_threads=True)
     try:
         if os.name=='posix':
             import resource
@@ -36,7 +40,9 @@ def main():
     except BaseException as error:
         errors.append(dict(type=type(error).__name__,message=str(error),traceback=traceback.format_exc()))
     finally:
-        sys.excepthook=old;faulthandler.cancel_dump_traceback_later();faulthandler.disable();stacks.close()
+        sys.excepthook=old
+        if stack_signal is not None:faulthandler.unregister(stack_signal)
+        faulthandler.disable();stacks.close()
         records=list(result.records.values()) if result else []
         write_json(args.output/'results.json',dict(records=records,runtime_errors=errors))
         (args.output/'unittest.log').write_text(log.getvalue(),encoding='utf-8')

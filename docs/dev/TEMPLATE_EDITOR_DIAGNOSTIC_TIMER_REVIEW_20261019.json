@@ -28,5 +28,28 @@
   "causation_status": "STRONG_TIMING_CORRELATION_NOT_CONCLUSIVE_NATIVE_ROOT_CAUSE",
   "planned_change": "No periodic stack timer during valid tests;retain fatal faulthandler,actual600s deadline and missing-result/native-exit failure;request on-demand stack only on actual deadline",
   "infra_native_abort_and_deadline_tests": "EXISTING_TEST_IDS_TO_BE_STRENGTHENED_NOT_REMOVED",
-  "all_current_source_unchanged": true
+  "all_current_source_unchanged": true,
+  "implementation": {
+    "periodic_stack_timer": false,
+    "fatal_faulthandler_enabled": true,
+    "posix_on_actual_deadline_signal": "SIGUSR1",
+    "module_timeout_bound_seconds": 600,
+    "diagnostic_grace_after_failed_deadline_seconds": 0.1,
+    "timeout_or_native_exit_or_missing_result_still_fails": true
+  },
+  "infrastructure_verification": {
+    "tests": 7,
+    "seconds": 6.118,
+    "status": "PASS",
+    "includes_actual_native_abort_and_on_demand_deadline_stack": true
+  },
+  "owned_worker_current_tooling_verification": {
+    "status": "PASS",
+    "tests": 2,
+    "seconds": 64.98948,
+    "exit_code": 0,
+    "missing_tests": 0,
+    "healthy": true,
+    "log": "docs/qa/targeted/template-editor/local-acceptance-owned-001.json"
+  }
 }
