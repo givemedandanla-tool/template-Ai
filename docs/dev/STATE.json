@@ -62,7 +62,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261019-TEMPLATE-EDITOR-FULL003-MID"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-SWAP-DEFAULT-DESIGN.json",
@@ -1339,17 +1341,17 @@
   },
   "editor_tools_contract": "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json",
   "editor_tools_progress": {
-    "phase": "RESOURCE_WAIT_CORRECTION_PENDING_FREEZE",
+    "phase": "FULL003_NATIVE_CRASH_INVESTIGATION",
     "completed_tool_acceptance": 0,
     "total_tool_acceptance": 16,
     "targeted_tests_passed": 15,
     "targeted_evidence": "docs/qa/targeted/template-editor/stage1-workspace-rules.log",
-    "next": "New frozen checkpoint and full003;full002 completed1776PASS/2FAIL and never adopted",
+    "next": "Keep original full003 producer;diagnose native workbench missing result;not a completePASS",
     "scenario_batch_tests_passed": 6,
     "native_worker_case_passed": true,
     "all_family_targeted_previous": 29,
     "source_form_tests_passed": 2,
     "targeted_unique_new_tests": 45,
-    "live_progress_snapshot": "docs/evidence/template-editor/full002-progress-001.json"
+    "live_progress_snapshot": "docs/evidence/template-editor/full003-progress-001.json"
   }
 }
