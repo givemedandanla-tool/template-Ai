@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "registry_sha256": "460ae730012cf047612484afe7dc8ec923723cf78ab346e32272587919510b38",
+  "registry_sha256": "c50e963c9a60e750755830ff9a876715c499c1ffb623592f6cdbf3ab8c47997c",
   "groups": {
     "topic": {
       "total": 75,
@@ -15,15 +15,15 @@
       "has_implementation": 72
     },
     "core": {
-      "total": 87,
+      "total": 88,
       "verified": 87,
       "implemented_pending": 0,
       "partial": 0,
-      "in_progress": 0,
+      "in_progress": 1,
       "not_implemented": 0,
       "blocked": 0,
       "deferred": 0,
-      "not_complete": 0,
+      "not_complete": 1,
       "has_implementation": 87
     },
     "governance": {
@@ -1222,6 +1222,13 @@
       "status": "VERIFIED",
       "completed": true,
       "contract_sha256": "02e8c688d82f59290565e3202a35386589bd03b5d996a6dd67afd64384b2dd07"
+    },
+    {
+      "id": "CORE-088",
+      "kind": "core",
+      "status": "IN_PROGRESS",
+      "completed": false,
+      "contract_sha256": "d9ba87a1bae090f1be6b350213927245a990ec80cb42ff41ebd7aad420d988ce"
     }
   ]
 }

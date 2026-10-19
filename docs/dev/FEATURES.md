@@ -173,5 +173,6 @@
 | CORE-085 | 正規化客戶語意關聯與當次資料逐欄整合 | VERIFIED | 是 | 單一CustomerStore穩定實體／外鍵、舊欄位ID安全遷移、exact版型預填、共享影響、三方CAS回寫、歷史值受控恢復；不宣稱自動AI建檔或全多尺寸縮圖／新增刪除主檔同步完成 | [run](../../docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json) |
 | CORE-086 | 實體尺寸容量目錄、同索引雙檢視與明確編輯 | VERIFIED | 是 | 單一模板庫尺寸→capacity、縮圖／列表、搜尋狀態版本篩選、跨分頁穩定多選、可讀詳情、實際框位示意／驗證來源圖，瀏覽停用舊物件編輯target；需明確進入既有編輯區 | [run](../../docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json) |
 | CORE-087 | 客戶尺寸版型來源並排與身份確認exact預填 | VERIFIED | 是 | 多類欄位／格式電話只讀搜尋、同名同電話保持獨立、身份確認只看該客戶確切款式、歷史來源hash裁切／未知／過期檢查、雙尺寸並排、確認前後CAS及來源新鮮度、僅改當次資料並保持原Gate | [run](../../docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json) |
+| CORE-088 | 家族管理與單一模板規則編輯本體工作台 | IN_PROGRESS | 否 | 16項研究工具B01-B08/S01-S08的本體增量；重用既有工具，私人真實美學/Windows/印前資格分開 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

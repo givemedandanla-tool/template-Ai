@@ -26229,6 +26229,114 @@
           "scope_and_status_unchanged": true
         }
       ]
+    },
+    {
+      "id": "CORE-088",
+      "kind": "core",
+      "title": "家族管理與單一模板規則編輯本體工作台",
+      "status": "IN_PROGRESS",
+      "completed": false,
+      "review_level": "NOT_VERIFIED",
+      "scope": "16項研究工具B01-B08/S01-S08的本體增量；重用既有工具，私人真實美學/Windows/印前資格分開",
+      "phase": "TEMPLATE_EDITOR_IMPLEMENTATION",
+      "decision_status": "APPROVED_REQUIREMENT",
+      "sources": [
+        "docs/decisions/2026-10-19-TEMPLATE-EDITING-IMPLEMENTATION.md",
+        "docs/dev/TEMPLATE_EDITING_TOOLS_RESEARCH_20261019.md",
+        "docs/dev/TEMPLATE_EDITING_IMPLEMENTATION_CONTRACT.json"
+      ],
+      "parents": [
+        "UI-010",
+        "UI-034",
+        "UI-035",
+        "UI-036",
+        "UI-061",
+        "UI-065"
+      ],
+      "evidence_run": null,
+      "acceptance": [
+        {
+          "id": "CORE-088-B01",
+          "expected": "家族目錄與健康概覽：以家族看可用尺寸、人物與欄位組合、來源支持、規則版本、字型／Logo、待審與不可用原因；下鑽來源、固定版本及生成實例",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-B02",
+          "expected": "智慧工作集：保存「待核對字型」「某尺寸、某資料組合」「支持不足」「來源失聯」等條件，下次打開得到最新符合項目",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-B03",
+          "expected": "家族與近似作品對照：同時看代表作品、低支持風格、邊界例；比較結構、字面與容器對應，指出可共用或不該合併之處",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-B04",
+          "expected": "同類問題批次處理：一次處理已核實的同類雜訊、來源／字型／欄位標記問題；逐項排除例外，查看已套用、跳過、失敗及回復",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-B05",
+          "expected": "變更影響預覽：改一個來源標記、字型或規則提案前，列出受影響樣本、家族、模型、候選稿件及正式資格",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-B06",
+          "expected": "代表案例與回歸試排：自動挑選常見、邊界、少見、多尺寸／多人案例供人工看；對受影響集合跑適用的完整硬性檢查",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-B07",
+          "expected": "家族／模型版本比較與採用：看新舊角色、容器承接、順序、字面模式、容量區域及失敗案例差異；確認後啟用，必要時回退",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-B08",
+          "expected": "工作續接與資產維護：從中斷處繼續、只重試失敗項，處理字型／來源失聯、檢查備份及定稿檔完整性",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-S01",
+          "expected": "三向同步編輯與關係覆蓋圖：選欄位時，同時看到人物／公司、容器、鄰接群、來源與版面；保留原有對齊、群移、鎖定等工具",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-S02",
+          "expected": "角色—容器相容表：顯示某容器可承接哪些資料，各組合的來源支持、標籤／圖示、歸屬、政策許可與實測結果",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-S03",
+          "expected": "相對關係與影響範圍編輯：查看左右／上下、切齊、基線、間距、群組及硬／軟約束；預覽移動會牽動哪些欄位，以及哪些關係必須保留",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-S04",
+          "expected": "條件變體檢視：比較可選／重複欄位、分組、分割、收合、合法交換；按尺寸、人數與資料組合顯示實際有支持的版本",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-S05",
+          "expected": "聯合文字風格檢視：同時看字型、pt、字寬、框大小、字距、詞／字元分散、換行、混合字面與標籤／圖示；比較已支持的整組配置",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-S06",
+          "expected": "原稿對照與證據補救：來源區域、完整文字 run、字面／字型檔、容器、標籤／圖示對應；顯示原生已知、推導及 UNKNOWN，定位缺失與補救",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-S07",
+          "expected": "案例試排與穩定性檢查：用短長文字、多筆聯絡、多人、多尺寸、合法交換與局部移動試排；比較內容完整、關係保持、字面、碰撞、容量與預選穩定性",
+          "tests": []
+        },
+        {
+          "id": "CORE-088-S08",
+          "expected": "差異、驗證與版本保存：看這次改了什麼、哪些規則／資產導致結果；存草稿、比較、審核、明確採用／發布或回退",
+          "tests": []
+        }
+      ],
+      "next_step": "Implement shared family workspace and native desktop tools;test all16criteria;full regression"
     }
   ]
 }
