@@ -1,0 +1,1148 @@
+{
+  "schema": "AI_ALL8_SCOPE_AUDIT_V1",
+  "contract_id": "AI-CROSS-WORK-LEARNING",
+  "source_commit": "851ef2ac62a49f865bac52b524c66c31371d0942",
+  "total_packages": 8,
+  "total_acceptance": 50,
+  "complete_packages": 0,
+  "partial_packages": 8,
+  "full_verified_acceptance": 0,
+  "actual_user_corpus_training": "NOT_STARTED_NOT_PROVIDED",
+  "real_production_models": 0,
+  "formal_run_status": "RUNNING",
+  "terminology": "候選機制已實作/測試通過不等於真實作品泛化或全部條款完整合格；不增加舊28/325或legacy registry完成數。",
+  "package_notes": {
+    "01": "PDF相容原稿／SVG可核實來源pt、Tc/Tw、按需glyph與來源→作品變換；原生Illustrator私有結構、複合多run/多字型對應和實際字型二進位身分未驗收。",
+    "02": "獨立lineage支持的結構HDBSCAN、稀有項保留、重估對應已實作；目前僅匿名自製資料，真實家族與四風格分群品質未知。",
+    "03": "聯合Ridge、條件欄位組合位置、baseline/gap/錨點軟偏好、字距/詞距與Qt flow已實作。詞距專用Qt混合justify、分離靜態label/圖示與多run字型組合仍不支援；不把未知標為已學成。",
+    "04": "Qt/Kiwi有限搜尋、等效容器指派、相對意圖、Logo與當次實例正式門檻已實作；無實際生產資格，未觀察欄位組合／不受支持尺寸只准預覽，有限搜尋不證全域最優。",
+    "05": "明確TRAIN偏好比較、群平衡pairwise logistic、穩定預選、實際候選top-K/NDCG/群bootstrap與基準比較已實作；真實偏好標註與效果仍未知，偏好模型目前只明確啟用於預覽。",
+    "06": "重用既有DB交易／版本／權利與撤回、回饋分類／精確前後稿／候選啟用與回退。正式核心模型資格已設門檻；生產偏好ranker資格提升不冒充完成。",
+    "07": "本體實際輸入→完整稿→相對拖動或選單→局部更正返回→預覽確認／輸出／重開；精確artifact重用。網站手機延後。本機私有DB/原稿/字型仍需既有備份，不由GitHub自動復原私人資料。",
+    "08": "實際核心檢查器、持久批次與本機匿名1000/3000實測已實作；真實授權隔離作品／字型、Windows/VivoBook與物理印前皆無驗收證據。"
+  },
+  "clauses": [
+    {
+      "id": "AI-LEARN-01-A01",
+      "expected": "已知字級與均勻變換可核實；未知字型／點陣估計不變成10pt真值",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/original_text_observation.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_observation.py"
+      ],
+      "tests": [
+        "tests/test_original_pdf_glyphs.py",
+        "tests/test_design_source_binding.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_design_observation.py"
+      ],
+      "limit": "PDF相容原稿／SVG可核實來源pt、Tc/Tw、按需glyph與來源→作品變換；原生Illustrator私有結構、複合多run/多字型對應和實際字型二進位身分未驗收。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-01-A02",
+      "expected": "去重與lineage拆分避免同作品改版跨TRAIN與TEST",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/original_text_observation.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_observation.py"
+      ],
+      "tests": [
+        "tests/test_original_pdf_glyphs.py",
+        "tests/test_design_source_binding.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_design_observation.py"
+      ],
+      "limit": "PDF相容原稿／SVG可核實來源pt、Tc/Tw、按需glyph與來源→作品變換；原生Illustrator私有結構、複合多run/多字型對應和實際字型二進位身分未驗收。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-01-A03",
+      "expected": "相同來源的角色／群組／圖形分層有可追溯觀察版本",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/original_text_observation.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_observation.py"
+      ],
+      "tests": [
+        "tests/test_original_pdf_glyphs.py",
+        "tests/test_design_source_binding.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_design_observation.py"
+      ],
+      "limit": "圖形層可追溯觀察不等於所有圖形已能重新生成；原生私有層未證明。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-01-A04",
+      "expected": "資料／來源修訂失效與批次取消續行保持精確身份",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/original_text_observation.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_observation.py"
+      ],
+      "tests": [
+        "tests/test_original_pdf_glyphs.py",
+        "tests/test_design_source_binding.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_design_observation.py"
+      ],
+      "limit": "PDF相容原稿／SVG可核實來源pt、Tc/Tw、按需glyph與來源→作品變換；原生Illustrator私有結構、複合多run/多字型對應和實際字型二進位身分未驗收。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-01-A05",
+      "expected": "重用TrainingStore歷史及交易，舊資料與原稿不改寫",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/original_text_observation.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_observation.py"
+      ],
+      "tests": [
+        "tests/test_original_pdf_glyphs.py",
+        "tests/test_design_source_binding.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_design_observation.py"
+      ],
+      "limit": "PDF相容原稿／SVG可核實來源pt、Tc/Tw、按需glyph與來源→作品變換；原生Illustrator私有結構、複合多run/多字型對應和實際字型二進位身分未驗收。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-01-A06",
+      "expected": "來源 text run／glyph cluster／baseline／pt／容器及四類風格觀察帶單位與可信來源，缺證據為UNKNOWN，預設值不當訓練真值",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/original_text_observation.py",
+        "template_ai/original_pdf_glyphs.py",
+        "template_ai/source_region_hypotheses.py",
+        "template_ai/design_source_binding.py",
+        "template_ai/design_observation.py"
+      ],
+      "tests": [
+        "tests/test_original_pdf_glyphs.py",
+        "tests/test_design_source_binding.py",
+        "tests/test_source_region_hypotheses.py",
+        "tests/test_design_observation.py"
+      ],
+      "limit": "只允許完整單一原稿run對應；SVG宣告anchor不冒充glyph baseline；跨run/多字型保留未知。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-02-A01",
+      "expected": "至少5不同設計lineage共同支持家族，禁止一作品一學成模板",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_family.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_style.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py"
+      ],
+      "limit": "獨立lineage支持的結構HDBSCAN、稀有項保留、重估對應已實作；目前僅匿名自製資料，真實家族與四風格分群品質未知。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-02-A02",
+      "expected": "同源重複不增加支持或洩漏內容身份特徵",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_family.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_style.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py"
+      ],
+      "limit": "獨立lineage支持的結構HDBSCAN、稀有項保留、重估對應已實作；目前僅匿名自製資料，真實家族與四風格分群品質未知。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-02-A03",
+      "expected": "HDBSCAN孤例／低可信保留，不強併／靜默丟棄",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_family.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_style.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py"
+      ],
+      "limit": "獨立lineage支持的結構HDBSCAN、稀有項保留、重估對應已實作；目前僅匿名自製資料，真實家族與四風格分群品質未知。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-02-A04",
+      "expected": "重估版本與成員對應可重現，不假稱partial_fit",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_family.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_style.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py"
+      ],
+      "limit": "獨立lineage支持的結構HDBSCAN、稀有項保留、重估對應已實作；目前僅匿名自製資料，真實家族與四風格分群品質未知。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-02-A05",
+      "expected": "四類風格及角色／容器關係用於跨作品家族，來源去重與反例不被同座標或同字串掩蓋",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_family.py",
+        "template_ai/design_profiles.py",
+        "template_ai/design_style.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py"
+      ],
+      "limit": "結構家族保留多風格profile/mode；四類風格在真實家族上的效果未驗證。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-03-A01",
+      "expected": "共用對齊／間距及可選／重複／流向由多作品資料學出",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_profiles.py",
+        "template_ai/design_joint.py",
+        "template_ai/design_text_flow.py",
+        "template_ai/design_source_binding.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py",
+        "tests/test_design_text_flow.py",
+        "tests/test_design_synthesis.py"
+      ],
+      "limit": "聯合Ridge、條件欄位組合位置、baseline/gap/錨點軟偏好、字距/詞距與Qt flow已實作。詞距專用Qt混合justify、分離靜態label/圖示與多run字型組合仍不支援；不把未知標為已學成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-03-A02",
+      "expected": "資料分布改變會改變規則，刪去支持導致降級",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_profiles.py",
+        "template_ai/design_joint.py",
+        "template_ai/design_text_flow.py",
+        "template_ai/design_source_binding.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py",
+        "tests/test_design_text_flow.py",
+        "tests/test_design_synthesis.py"
+      ],
+      "limit": "聯合Ridge、條件欄位組合位置、baseline/gap/錨點軟偏好、字距/詞距與Qt flow已實作。詞距專用Qt混合justify、分離靜態label/圖示與多run字型組合仍不支援；不把未知標為已學成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-03-A03",
+      "expected": "統計軟偏好與硬政策／來源信心分離且保存反例",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_profiles.py",
+        "template_ai/design_joint.py",
+        "template_ai/design_text_flow.py",
+        "template_ai/design_source_binding.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py",
+        "tests/test_design_text_flow.py",
+        "tests/test_design_synthesis.py"
+      ],
+      "limit": "聯合Ridge、條件欄位組合位置、baseline/gap/錨點軟偏好、字距/詞距與Qt flow已實作。詞距專用Qt混合justify、分離靜態label/圖示與多run字型組合仍不支援；不把未知標為已學成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-03-A04",
+      "expected": "尺寸或內容證據不足不擬造回歸／外推可信度",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_profiles.py",
+        "template_ai/design_joint.py",
+        "template_ai/design_text_flow.py",
+        "template_ai/design_source_binding.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py",
+        "tests/test_design_text_flow.py",
+        "tests/test_design_synthesis.py"
+      ],
+      "limit": "聯合Ridge、條件欄位組合位置、baseline/gap/錨點軟偏好、字距/詞距與Qt flow已實作。詞距專用Qt混合justify、分離靜態label/圖示與多run字型組合仍不支援；不把未知標為已學成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-03-A05",
+      "expected": "分開學字內／詞內與物件等距；語系、合法邊界、單字／零邊界與最後一行有明確規則，越權模式不自動啟用",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_profiles.py",
+        "template_ai/design_joint.py",
+        "template_ai/design_text_flow.py",
+        "template_ai/design_source_binding.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py",
+        "tests/test_design_text_flow.py",
+        "tests/test_design_synthesis.py"
+      ],
+      "limit": "支援受審查字距/詞距、腳本／邊界／零邊界／自然末行；詞距專用混合justify拒絕；物件間距目前是來源軟偏好。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-03-A06",
+      "expected": "學具來源的pt、角色字級比例及文字／容器聯動；新規則實例由核心依核准聯合條件調整字級、字寬與欄位尺寸，不提供客戶細參數控制，未知或越適用範圍不任意縮放",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_profiles.py",
+        "template_ai/design_joint.py",
+        "template_ai/design_text_flow.py",
+        "template_ai/design_source_binding.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py",
+        "tests/test_design_text_flow.py",
+        "tests/test_design_synthesis.py"
+      ],
+      "limit": "聯合Ridge、條件欄位組合位置、baseline/gap/錨點軟偏好、字距/詞距與Qt flow已實作。詞距專用Qt混合justify、分離靜態label/圖示與多run字型組合仍不支援；不把未知標為已學成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-03-A07",
+      "expected": "學角色／群組相對關係、baseline、gap及錨點，保留獨立來源支持與矛盾反例",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_profiles.py",
+        "template_ai/design_joint.py",
+        "template_ai/design_text_flow.py",
+        "template_ai/design_source_binding.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py",
+        "tests/test_design_text_flow.py",
+        "tests/test_design_synthesis.py"
+      ],
+      "limit": "聯合Ridge、條件欄位組合位置、baseline/gap/錨點軟偏好、字距/詞距與Qt flow已實作。詞距專用Qt混合justify、分離靜態label/圖示與多run字型組合仍不支援；不把未知標為已學成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-03-A08",
+      "expected": "學容器欄列／label-value／optional-repeat-flow、欄位收合及同模板條件交換變體，保留資料ID、歸屬與完整內容，不列舉每案模板",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_profiles.py",
+        "template_ai/design_joint.py",
+        "template_ai/design_text_flow.py",
+        "template_ai/design_source_binding.py"
+      ],
+      "tests": [
+        "tests/test_design_family.py",
+        "tests/test_design_joint.py",
+        "tests/test_design_text_flow.py",
+        "tests/test_design_synthesis.py"
+      ],
+      "limit": "前綴label、重複／可選組合及條件位置/收合已支援；分離靜態label/icon、多run合成仍未支援。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-04-A01",
+      "expected": "未見文案／欄位組合可生成非原庫複製的新實例",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_instances.py",
+        "template_ai/design_qualification.py"
+      ],
+      "tests": [
+        "tests/test_design_assignment.py",
+        "tests/test_design_synthesis.py",
+        "tests/test_design_logo_synthesis.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "Qt/Kiwi有限搜尋、等效容器指派、相對意圖、Logo與當次實例正式門檻已實作；無實際生產資格，未觀察欄位組合／不受支持尺寸只准預覽，有限搜尋不證全域最優。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-04-A02",
+      "expected": "在已學適用範圍內未見尺寸可由條件規則產生",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_instances.py",
+        "template_ai/design_qualification.py"
+      ],
+      "tests": [
+        "tests/test_design_assignment.py",
+        "tests/test_design_synthesis.py",
+        "tests/test_design_logo_synthesis.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "僅原尺寸或聯合支持域；新尺寸預測機制自製測試，不是真實尺寸泛化合格。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-04-A03",
+      "expected": "群組／文字多行量測與實際渲染一致且資料完整",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_instances.py",
+        "template_ai/design_qualification.py"
+      ],
+      "tests": [
+        "tests/test_design_assignment.py",
+        "tests/test_design_synthesis.py",
+        "tests/test_design_logo_synthesis.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "Qt/Kiwi有限搜尋、等效容器指派、相對意圖、Logo與當次實例正式門檻已實作；無實際生產資格，未觀察欄位組合／不受支持尺寸只准預覽，有限搜尋不證全域最優。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-04-A04",
+      "expected": "非凸拓撲分支與搜尋預算有完整性狀態，非法版面不放行",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_instances.py",
+        "template_ai/design_qualification.py"
+      ],
+      "tests": [
+        "tests/test_design_assignment.py",
+        "tests/test_design_synthesis.py",
+        "tests/test_design_logo_synthesis.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "Qt/Kiwi有限搜尋、等效容器指派、相對意圖、Logo與當次實例正式門檻已實作；無實際生產資格，未觀察欄位組合／不受支持尺寸只准預覽，有限搜尋不證全域最優。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-04-A05",
+      "expected": "多來源generation_reference核驗，不能偽造單一source或published狀態",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_instances.py",
+        "template_ai/design_qualification.py"
+      ],
+      "tests": [
+        "tests/test_design_assignment.py",
+        "tests/test_design_synthesis.py",
+        "tests/test_design_logo_synthesis.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "正式實例端到端測試有一次明確mock外部真實憑證邊界；不是生產模型資格證據。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-04-A06",
+      "expected": "字型／Logo／鎖定／舊模板與現有輸出Gate完整回歸",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_instances.py",
+        "template_ai/design_qualification.py"
+      ],
+      "tests": [
+        "tests/test_design_assignment.py",
+        "tests/test_design_synthesis.py",
+        "tests/test_design_logo_synthesis.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "Qt/Kiwi有限搜尋、等效容器指派、相對意圖、Logo與當次實例正式門檻已實作；無實際生產資格，未觀察欄位組合／不受支持尺寸只准預覽，有限搜尋不證全域最優。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-04-A07",
+      "expected": "新風格子集由版本化政策編譯到同一Qt文字布局與Kiwi；舊模板固定pt、分散角色、Logo與正式Gate不回退",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_instances.py",
+        "template_ai/design_qualification.py"
+      ],
+      "tests": [
+        "tests/test_design_assignment.py",
+        "tests/test_design_synthesis.py",
+        "tests/test_design_logo_synthesis.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "Qt/Kiwi有限搜尋、等效容器指派、相對意圖、Logo與當次實例正式門檻已實作；無實際生產資格，未觀察欄位組合／不受支持尺寸只准預覽，有限搜尋不證全域最優。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-04-A08",
+      "expected": "受控SET_RELATION優先在同模板合法交換／重排，超出適用能力再比較相容模板；同命令冪等、循環與歸屬衝突有原因，不修改全域模板",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_instances.py",
+        "template_ai/design_qualification.py"
+      ],
+      "tests": [
+        "tests/test_design_assignment.py",
+        "tests/test_design_synthesis.py",
+        "tests/test_design_logo_synthesis.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "Qt/Kiwi有限搜尋、等效容器指派、相對意圖、Logo與當次實例正式門檻已實作；無實際生產資格，未觀察欄位組合／不受支持尺寸只准預覽，有限搜尋不證全域最優。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-04-A09",
+      "expected": "跨候選／尺寸適配保留意圖與穩定映射，依UI-061預覽確認；高影響不可默默採用，客戶確認不冒充正式發布",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_assignment.py",
+        "template_ai/design_synthesis.py",
+        "template_ai/design_instances.py",
+        "template_ai/design_qualification.py"
+      ],
+      "tests": [
+        "tests/test_design_assignment.py",
+        "tests/test_design_synthesis.py",
+        "tests/test_design_logo_synthesis.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "Qt/Kiwi有限搜尋、等效容器指派、相對意圖、Logo與當次實例正式門檻已實作；無實際生產資格，未觀察欄位組合／不受支持尺寸只准預覽，有限搜尋不證全域最優。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-05-A01",
+      "expected": "依輸入能力檢索家族，硬Gate前置且所有結果可追溯",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_ranking.py",
+        "template_ai/design_feedback.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_evaluation.py"
+      ],
+      "tests": [
+        "tests/test_design_ranking.py",
+        "tests/test_design_evaluation.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "明確TRAIN偏好比較、群平衡pairwise logistic、穩定預選、實際候選top-K/NDCG/群bootstrap與基準比較已實作；真實偏好標註與效果仍未知，偏好模型目前只明確啟用於預覽。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-05-A02",
+      "expected": "偏好訓練按query分組，舊幾何規則評分不冒充獨立標註",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_ranking.py",
+        "template_ai/design_feedback.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_evaluation.py"
+      ],
+      "tests": [
+        "tests/test_design_ranking.py",
+        "tests/test_design_evaluation.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "明確TRAIN偏好比較、群平衡pairwise logistic、穩定預選、實際候選top-K/NDCG/群bootstrap與基準比較已實作；真實偏好標註與效果仍未知，偏好模型目前只明確啟用於預覽。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-05-A03",
+      "expected": "封存偏好topK／NDCG及基準比較有明確分母與信賴區間",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_ranking.py",
+        "template_ai/design_feedback.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_evaluation.py"
+      ],
+      "tests": [
+        "tests/test_design_ranking.py",
+        "tests/test_design_evaluation.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "只計已搜實際候選且完整獨立評級之query；無評級／單候選／全零等保持未知；真實封存品質尚無。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-05-A04",
+      "expected": "最佳僅限已搜且已驗證範圍；所有複數合法結果含同分須有版本化預設優選與穩定決勝，客戶明確關係優先；未校準分數不當機率",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_ranking.py",
+        "template_ai/design_feedback.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_evaluation.py"
+      ],
+      "tests": [
+        "tests/test_design_ranking.py",
+        "tests/test_design_evaluation.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "明確TRAIN偏好比較、群平衡pairwise logistic、穩定預選、實際候選top-K/NDCG/群bootstrap與基準比較已實作；真實偏好標註與效果仍未知，偏好模型目前只明確啟用於預覽。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-06-A01",
+      "expected": "回饋區分偏好／必要修正／政策，輸出成功不等於好看",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_learning.py",
+        "template_ai/design_feedback.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_learning.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "重用既有DB交易／版本／權利與撤回、回饋分類／精確前後稿／候選啟用與回退。正式核心模型資格已設門檻；生產偏好ranker資格提升不冒充完成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-06-A02",
+      "expected": "訓練／驗證／測試與來源權利／撤回版本不洩漏",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_learning.py",
+        "template_ai/design_feedback.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_learning.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "重用既有DB交易／版本／權利與撤回、回饋分類／精確前後稿／候選啟用與回退。正式核心模型資格已設門檻；生產偏好ranker資格提升不冒充完成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-06-A03",
+      "expected": "PENDING評估／明確政策啟用／回退不改寫舊模型",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_learning.py",
+        "template_ai/design_feedback.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_learning.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "正式核心資格與預覽ranker啟用分離；生產偏好模型資格流程仍待真實評估與擴充。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-06-A04",
+      "expected": "來源與支持證據變動可失效並精確恢復受影響模型／結果",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_learning.py",
+        "template_ai/design_feedback.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_learning.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "重用既有DB交易／版本／權利與撤回、回饋分類／精確前後稿／候選啟用與回退。正式核心模型資格已設門檻；生產偏好ranker資格提升不冒充完成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-06-A05",
+      "expected": "保存前稿＋明確意圖＋後稿＋接受拒絕＋適用範圍，缺理由保持未知，個案接受不得直接改全域政策",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_learning.py",
+        "template_ai/design_feedback.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_learning.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "重用既有DB交易／版本／權利與撤回、回饋分類／精確前後稿／候選啟用與回退。正式核心模型資格已設門檻；生產偏好ranker資格提升不冒充完成。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-07-A01",
+      "expected": "匯入->共用學習->家族->輸入->新排版為主流程，不逐作品建模板",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_session.py",
+        "template_ai/design_learning_dialog.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_session.py",
+        "tests/test_design_learning_gui.py",
+        "tests/test_design_jobs.py"
+      ],
+      "limit": "本體實際輸入→完整稿→相對拖動或選單→局部更正返回→預覽確認／輸出／重開；精確artifact重用。網站手機延後。本機私有DB/原稿/字型仍需既有備份，不由GitHub自動復原私人資料。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-07-A02",
+      "expected": "家族／暫態實例與低可信例外可理解，代表性抽查不逐件聊天",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_session.py",
+        "template_ai/design_learning_dialog.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_session.py",
+        "tests/test_design_learning_gui.py",
+        "tests/test_design_jobs.py"
+      ],
+      "limit": "本體實際輸入→完整稿→相對拖動或選單→局部更正返回→預覽確認／輸出／重開；精確artifact重用。網站手機延後。本機私有DB/原稿/字型仍需既有備份，不由GitHub自動復原私人資料。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-07-A03",
+      "expected": "工作暫停／重啟／新對話可依倉庫與本機持久資料接續",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_session.py",
+        "template_ai/design_learning_dialog.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_session.py",
+        "tests/test_design_learning_gui.py",
+        "tests/test_design_jobs.py"
+      ],
+      "limit": "本體實際輸入→完整稿→相對拖動或選單→局部更正返回→預覽確認／輸出／重開；精確artifact重用。網站手機延後。本機私有DB/原稿/字型仍需既有備份，不由GitHub自動復原私人資料。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-07-A04",
+      "expected": "程式／匿名指標／checkpoints保存GitHub；不自動上傳原稿／字型／個資",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_session.py",
+        "template_ai/design_learning_dialog.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_session.py",
+        "tests/test_design_learning_gui.py",
+        "tests/test_design_jobs.py"
+      ],
+      "limit": "本輪已實際push+fresh Git commit/tree逐檔ACK；程式/匿名證據保存，私有DB/字型/原稿不自動上傳。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-07-A05",
+      "expected": "客戶端先完整初稿，三階段可返回；客戶表達必要相對位置，欄位尺寸／字級／字寬／切齊／分散與數值間距由核心規則控制，不加入客戶細參數、單雙排或必選模板庫；專業後台維持既有能力",
+      "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_session.py",
+        "template_ai/design_learning_dialog.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_session.py",
+        "tests/test_design_learning_gui.py",
+        "tests/test_design_jobs.py"
+      ],
+      "limit": "本體實際輸入→完整稿→相對拖動或選單→局部更正返回→預覽確認／輸出／重開；精確artifact重用。網站手機延後。本機私有DB/原稿/字型仍需既有備份，不由GitHub自動復原私人資料。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-07-A06",
+      "expected": "網頁手機發同一語意操作契約，驗證資源權限／期望版本／冪等／晚到結果；拖曳中只代理回饋，放開核心精排，提供非拖曳等效操作",
+      "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_session.py",
+        "template_ai/design_learning_dialog.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_session.py",
+        "tests/test_design_learning_gui.py",
+        "tests/test_design_jobs.py"
+      ],
+      "limit": "本體實際輸入→完整稿→相對拖動或選單→局部更正返回→預覽確認／輸出／重開；精確artifact重用。網站手機延後。本機私有DB/原稿/字型仍需既有備份，不由GitHub自動復原私人資料。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-07-A07",
+      "expected": "確認綁定精確資料／結果；相同有效輸入重複下單沿用有效已確認版，不因多合法解或模型更新任意換印紋；新資料無解保留並標stale，撤回版面不退電話；正式封存不把JSON重算當精確回播",
+      "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_session.py",
+        "template_ai/design_learning_dialog.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_session.py",
+        "tests/test_design_learning_gui.py",
+        "tests/test_design_jobs.py"
+      ],
+      "limit": "實際確切檔案hash/bytes重用測試；不等於跨機永久私有封存服務。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-08-A01",
+      "expected": "真實授權lineage隔離封存集驗證跨作品泛化，合成結果另列",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_evaluation.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_evaluation.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "實際核心檢查器、持久批次與本機匿名1000/3000實測已實作；真實授權隔離作品／字型、Windows/VivoBook與物理印前皆無驗收證據。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-08-A02",
+      "expected": "硬錯誤0與資料完整100%；可行率分母及未知／搜尋狀態透明",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_evaluation.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_evaluation.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "實際核心檢查器、持久批次與本機匿名1000/3000實測已實作；真實授權隔離作品／字型、Windows/VivoBook與物理印前皆無驗收證據。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-08-A03",
+      "expected": "偏好驗收與基準比較獨立，缺標註不宣稱學成最佳美學",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_evaluation.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_evaluation.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "實際核心檢查器、持久批次與本機匿名1000/3000實測已實作；真實授權隔離作品／字型、Windows/VivoBook與物理印前皆無驗收證據。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-08-A04",
+      "expected": "1000／3000作品持久批次、資源／延遲／取消／恢復以實測保存",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "SUPPORTED_SUBSET_CANDIDATE",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_evaluation.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_evaluation.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "1000/3000為匿名描述抽取+共享fit與持久ledger；不是1000/3000份.ai字形渲染/真實訓練速度。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-08-A05",
+      "expected": "多人／公司／字型／Logo／參考Windows與VivoBook資格依實際範圍驗收",
+      "delivery_scope": "CURRENT_CORE",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_evaluation.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_evaluation.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "實際核心檢查器、持久批次與本機匿名1000/3000實測已實作；真實授權隔離作品／字型、Windows/VivoBook與物理印前皆無驗收證據。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    },
+    {
+      "id": "AI-LEARN-08-A06",
+      "expected": "四類風格在獨立授權lineage封存集及長短／多語／多筆／多人／多公司情境分項驗證；網站／實體手機／印前各列證據，不以37項原型PASS代替",
+      "delivery_scope": "CORE_PREPARATION_AND_DEFERRED_FRONTEND",
+      "engineering_status": "IMPLEMENTED_CANDIDATE_PENDING_FULL_RUN_AND_SCOPE_REVIEW",
+      "full_acceptance": "NOT_FULLY_VERIFIED",
+      "modules": [
+        "template_ai/design_evaluation.py",
+        "template_ai/design_rank_evaluation.py",
+        "template_ai/design_qualification.py",
+        "template_ai/design_jobs.py"
+      ],
+      "tests": [
+        "tests/test_design_evaluation.py",
+        "tests/test_design_jobs.py",
+        "tests/test_design_feedback_qualification.py"
+      ],
+      "limit": "實際核心檢查器、持久批次與本機匿名1000/3000實測已實作；真實授權隔離作品／字型、Windows/VivoBook與物理印前皆無驗收證據。",
+      "real_corpus_status": "NOT_PROVIDED",
+      "formal_run": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+      "formal_run_status": "RUNNING_NOT_YET_EVIDENCE"
+    }
+  ],
+  "owned_scale_reports": [
+    "docs/qa/targeted/AI-OWNED-SCALE-1000-FROZEN002-20261019.json",
+    "docs/qa/targeted/AI-OWNED-SCALE-3000-FROZEN002-20261019.json"
+  ],
+  "customer_interface_decisions": [
+    "docs/decisions/2026-10-18-DESKTOP-END-TO-END-INTERACTION.md",
+    "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
+    "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
+    "docs/dev/CARD_INTERFACE_STYLE_LEARNING_REVIEW.md"
+  ]
+}
