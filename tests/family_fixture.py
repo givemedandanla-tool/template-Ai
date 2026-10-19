@@ -1,5 +1,8 @@
 """Authored, locally rendered source fixture; no real customer corpus."""
 import unittest
+import tempfile
+import shutil
+from pathlib import Path
 import test_design_session as source_fixture
 
 from template_ai.storage import Library
@@ -18,7 +21,11 @@ class FamilyFixture(unittest.TestCase):
         cls.temp.cleanup()
 
     def setUp(self):
-        self.library = Library(self.root/'data')
+        local=tempfile.TemporaryDirectory(dir=self.root)
+        self.addCleanup(local.cleanup)
+        target=Path(local.name)/'data'
+        shutil.copytree(self.root/'data',target)
+        self.library = Library(target)
         self.addCleanup(self.library.close)
         self.workspace = FamilyWorkspace(self.library)
         self.rules = FamilyRuleDrafts(self.library)

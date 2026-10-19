@@ -56,6 +56,49 @@ class FamilyScenarios:
         InputGraph.validate(case['input_graph'])
         return case
 
+    def from_source(self,ref,sample_id,actor):
+        """Build an engineering replay from explicit reviewed field ports only."""
+        _,dataset,profile=self.workspace.resolve(ref)
+        entry=next((e for e in dataset['entries'] if e['sample_id']==sample_id and e['role']=='TRAIN'),None)
+        if not entry or sample_id not in profile['source_members']:
+            raise ValueError('Source replay requires this family TRAIN member;sealed data is not auto-opened')
+        identity='source-case-'+digest([ref,sample_id,'source-replay-1'])[:40]
+        existing=self.store.get('FAMILY_CASE',identity)
+        if existing:return self.current(identity)
+        work=self.library.artwork(entry['work_id']);payload=work['payload'];facts=self.store.facts(work['id'])
+        if self.store.facts_state(work['id'])!='CONFIRMED':raise ValueError('Source field facts need explicit confirmation')
+        chosen=set(facts['confirmation']['observation_ids']);values={}
+        for slot in payload['slots']:
+            if slot['kind']=='logo':raise ValueError('WHOLE_LOGO_SELECTION_REQUIRED:use the existing input dialog to select the exact company asset')
+            matches=[r for r in facts['observations'] if r['id'] in chosen and r.get('slot_id')==slot['id'] and r['classification']=='FIELD']
+            if len(matches)!=1:raise ValueError('Source field text/ownership is ambiguous;create an explicit local scenario')
+            key=slot['owner']+':'+slot['kind']+':'+str(slot['index']);value=matches[0]['text']
+            presentation=next((s for d in profile['data_requirement_profiles'] for s in d['presentation_evidence']
+                               if s['example_id']==sample_id and s['role_key']==key),None)
+            binding=(presentation or {}).get('label_binding',{})
+            if binding.get('status')!='CONFIRMED':raise ValueError('Source fixed-label relationship is unknown')
+            if binding.get('kind')=='DYNAMIC_PREFIX':
+                prefix=binding.get('prefix')
+                if not isinstance(prefix,str) or not value.startswith(prefix):raise ValueError('Source prefix correspondence differs')
+                value=value[len(prefix):]
+            values.setdefault(slot['owner'],{}).setdefault(slot['kind'],[]).append((slot['index'],value))
+        people=[];companies=[]
+        for prefix,target in [('p',people),('c',companies)]:
+            owners=sorted((owner for owner in values if owner.startswith(prefix)),key=lambda owner:int(owner[1:]))
+            if owners and owners!=[prefix+str(i+1) for i in range(len(owners))]:raise ValueError('Source owner ports have gaps;explicit input mapping required')
+            for owner in owners:
+                record={}
+                for kind,items in values[owner].items():
+                    items.sort()
+                    if [i for i,v in items]!=list(range(len(items))):raise ValueError('Source repeat indexes need explicit mapping')
+                    record['name' if prefix=='c' and kind=='company' else kind]=[v for i,v in items]
+                if prefix=='p':
+                    binding=payload.get('company_bindings',{}).get(owner,[])
+                    record['companies']=[binding] if isinstance(binding,str) and binding else binding
+                target.append(record)
+        graph=InputGraph.from_legacy(people,companies)
+        return self.save(ref,'來源試排 '+work['name'],graph,payload['width_mm'],payload['height_mm'],actor,case_id=identity)
+
     def run(self, case_id, expected_revision, *, draft_id=None, draft_revision=None, request_id=None):
         case = self.current(case_id, expected_revision)
         _, _, profile = self.workspace.resolve(case['ref'])

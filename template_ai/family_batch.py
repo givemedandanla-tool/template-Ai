@@ -67,12 +67,34 @@ class FamilyBatches:
             raise ValueError('No committed rule edits in this batch')
         return self.jobs.create('FAMILY_RULE_UNDO', dict(items=items, original_job=job_id), actor, True)
 
+    def review_sources(self,refs,actor,*,representative_only=False):
+        frozen=self.workspace.freeze_selection(refs)
+        items=[]
+        for i,ref in enumerate(frozen['refs']):
+            _,_,profile=self.workspace.resolve(ref)
+            members=[r['example_id'] for r in self.workspace.representatives(ref)['selected']] if representative_only else profile['source_members']
+            items.extend(dict(ref_index=i,sample_id=sample) for sample in sorted(members))
+            if not representative_only:
+                from .family_workspace import records
+                for case in records(self.workspace.store,'FAMILY_CASE'):
+                    if case['ref']==ref:items.append(dict(ref_index=i,case_id=case['id'],case_revision=case['revision']))
+        return self.jobs.create('FAMILY_SOURCE_REVIEW',dict(items=items,refs=frozen['refs'],
+            scope='REPRESENTATIVE_TRAIN_REPLAYS' if representative_only else 'ALL_SELECTED_TRAIN_MEMBERS_AND_SAVED_CASES',
+            aesthetic_qualification=False),actor,True)
+
 
 def execute_family_item(library, job, index):
     item = job['plan']['items'][index]
+    if 'ref_index' in item:item=dict(item,ref=job['plan']['refs'][item['ref_index']])
     key = digest([job['id'], index]); workspace = FamilyWorkspace(library)
     try:
         workspace.resolve(item['ref'])
+        if job['kind']=='FAMILY_SOURCE_REVIEW':
+            scenarios=FamilyScenarios(library)
+            case=scenarios.from_source(item['ref'],item['sample_id'],job['actor']) if 'sample_id' in item else scenarios.current(item['case_id'],item['case_revision'])
+            run=scenarios.run(case['id'],case['revision'],request_id=key)
+            return dict(status=run['status'],ref=item['ref'],run_id=run['id'],integrity=run['integrity'],
+                        placement_digest=run['placement_digest'],source_replay=True,aesthetic_qualification=False)
         if job['kind'] == 'FAMILY_CASE_REVIEW':
             run = FamilyScenarios(library).run(item['case_id'], item['case_revision'], draft_id=item['draft_id'],
                     draft_revision=item['draft_revision'], request_id=key)

@@ -1,0 +1,22 @@
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+FThis plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.
+======================================================================
+FAIL: test_saved_case_runs_in_worker_and_renders_actual_preview (test_family_workbench.FamilyWorkbenchTests.test_saved_case_runs_in_worker_and_renders_actual_preview)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_family_workbench.py", line 87, in test_saved_case_runs_in_worker_and_renders_actual_preview
+    self.assertIsNone(self.pane.worker,self.dialog.status.text())
+AssertionError: <template_ai.design_learning_dialog.DesignWorker(0x413c0a30) at 0x7f9fc3f4a9c0> is not None : 案例資料已保存於本地；不會變成訓練美學真值。
+
+----------------------------------------------------------------------
+Ran 8 tests in 85.274s
+
+FAILED (failures=1)
+QThread: Destroyed while thread is still running

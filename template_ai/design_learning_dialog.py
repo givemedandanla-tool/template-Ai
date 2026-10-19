@@ -82,6 +82,9 @@ class DesignLearningDialog(QDialog):
         layout=QVBoxLayout(self);self.status=QLabel();self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText)
         layout.addWidget(self.status);self.tabs=QTabWidget();layout.addWidget(self.tabs,1)
         self._source_tab();self._training_tab();self._draft_tab();self.refresh()
+        from .family_workbench import FamilyWorkbench
+        self.family_workbench=FamilyWorkbench(self)
+        self.tabs.addTab(self.family_workbench,'家族與專業規則')
         self.say('先核對來源字型與文字規則，再學習共用版面。未通過正式資格的規則可建立預覽稿。')
 
     def say(self,value):self.status.setText(value)
@@ -363,6 +366,8 @@ class DesignLearningDialog(QDialog):
         from PySide6.QtGui import QDesktopServices
         QDesktopServices.openUrl(QUrl.fromLocalFile(artifact['path']))
     def closeEvent(self,event):
+        if hasattr(self,'family_workbench') and not self.family_workbench.request_close():
+            event.ignore();return
         if self.worker and self.worker.isRunning():
             self.close_after_worker=True;self.pause();event.ignore();return
         self.font_manager.close();event.accept()

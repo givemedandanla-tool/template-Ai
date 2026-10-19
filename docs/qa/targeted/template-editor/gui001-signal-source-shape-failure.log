@@ -1,0 +1,45 @@
+This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+EThis plugin does not support propagateSizeHints()
+.This plugin does not support propagateSizeHints()
+E
+======================================================================
+ERROR: test_saved_case_runs_in_worker_and_renders_actual_preview (test_family_workbench.FamilyWorkbenchTests.test_saved_case_runs_in_worker_and_renders_actual_preview)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_family_workbench.py", line 85, in test_saved_case_runs_in_worker_and_renders_actual_preview
+    self.pane.run_case();deadline=time.monotonic()+60
+    ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/family_workbench.py", line 603, in run_case
+    self.start_job(job)
+  File "/workspace/template-Ai/template_ai/family_workbench.py", line 653, in start_job
+    self.worker.progressed.connect(lambda p:self.job_status.setText('已完成 '+str(p['done'])+'／'+str(p['total'])))
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DesignWorker' object has no attribute 'progressed'. Did you mean: 'progress'?
+
+======================================================================
+ERROR: test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model (test_family_workbench.FamilyWorkbenchTests.test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_family_workbench.py", line 94, in test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model
+    dialog=FamilySourceDialog(self.parent,entry['work_id'],self.dialog)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/family_source_dialog.py", line 57, in __init__
+    self.slots.currentIndexChanged.connect(self.load_slot);self.load_slot()
+                                                           ^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/family_source_dialog.py", line 144, in load_slot
+    self.container.clear();self.prefix.clear();self.icon_asset=None;self.suggest_range()
+                                                                    ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/family_source_dialog.py", line 149, in suggest_range
+    self.end.setValue(min(len(self.field_text.toPlainText()),self.start.value()+len(self.runs[selected]['text'])))
+                                                                                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^
+KeyError: 'text'
+
+----------------------------------------------------------------------
+Ran 8 tests in 23.724s
+
+FAILED (errors=2)

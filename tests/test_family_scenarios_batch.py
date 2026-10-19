@@ -18,8 +18,8 @@ class FamilyScenarioBatchTests(FamilyFixture):
         return self.scenarios.save(self.ref, 'Authored case', self.graph, 90, 54, 'Reviewer')
 
     def run_job(self, job, cancel=None):
-        claimed, token = self.batches.jobs.claim(job['id'], job['revision'])
-        return run_design_job(self.library.root, job['id'], token, cancel)
+        claimed = self.batches.jobs.claim(job['id'], job['revision'])
+        return run_design_job(self.library.root, job['id'], claimed['owner']['token'], cancel)
 
     def test_actual_source_case_shapes_checks_and_repeats_exactly_without_training(self):
         case = self.case(); model = deepcopy(self.current_model)

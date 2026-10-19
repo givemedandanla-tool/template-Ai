@@ -24,6 +24,7 @@ class CatalogWidget(QWidget):
         self.refresh_button=self.button(bar,'重新整理',self.reload)
         if allow_edit:
             self.button(bar,'新增空白矩形模板',window.new_template);self.button(bar,'加入合成示範模板',window.add_demo)
+            self.button(bar,'家族與共用規則',lambda:window.shared_design_learning(family_tools=True))
         layout.addLayout(bar)
         split=QSplitter();self.tree=QTreeWidget();self.tree.setHeaderLabels(['實體尺寸 → 人物容量']);split.addWidget(self.tree)
         self.items=QListWidget();self.items.setSelectionMode(QAbstractItemView.ExtendedSelection);self.items.setResizeMode(QListWidget.Adjust);split.addWidget(self.items)

@@ -77,6 +77,16 @@ def profile_differences(left, right):
             for key in groups if digest(left.get(key)) != digest(right.get(key))]
 
 
+def profile_fonts(profile):
+    from .design_components import component_fonts
+    hashes=set()
+    for data in profile['data_requirement_profiles']:
+        for sample in data['presentation_evidence']:
+            assets=[sample.get('source_font_ref'),*component_fonts(sample.get('source_text_flow') or {})]
+            hashes.update(asset['hash'] for asset in assets if isinstance(asset,dict) and asset.get('hash'))
+    return hashes
+
+
 class FamilyWorkspace:
     def __init__(self, library):
         self.library = library
@@ -220,19 +230,23 @@ class FamilyWorkspace:
         return dict(left=left_ref, right=right_ref, differences=profile_differences(left, right),
                     auto_merge=False, source_members_preserved=True)
 
-    def impact(self, ref, *, source_hashes=None, page=0, page_size=100):
+    def impact(self, ref, *, source_hashes=None, font_hashes=None, page=0, page_size=100):
         """Source changes affect every model using that source, not just one family."""
-        _, dataset, _ = self.resolve(ref)
+        _, dataset, selected_profile = self.resolve(ref)
         if type(page) is not int or page < 0 or type(page_size) is not int or not 1 <= page_size <= 200:
             raise ValueError('Invalid impact page')
         hashes = set(source_hashes or [])
+        fonts=set(font_hashes or [])
         if not hashes <= {e['source_hash'] for e in dataset['entries']}:
             raise ValueError('Impact source is outside the pinned model')
+        if not fonts<=profile_fonts(selected_profile):
+            raise ValueError('Impact font is outside the selected family')
         model_ids = {ref['model_id']}
-        if hashes:
+        if hashes or fonts:
             for model in records(self.store, 'DESIGN_MODEL'):
                 data = self.store.get('DATASET', model['dataset_id'])
-                if data and any(e['source_hash'] in hashes for e in data['entries']):
+                uses_font=bool(fonts) and any(profile_fonts(p)&fonts for p in model['artifact']['profile_model']['families'])
+                if uses_font or data and any(e['source_hash'] in hashes for e in data['entries']):
                     model_ids.add(model['id'])
         rows = []
         kinds = ('DESIGN_MODEL', 'DESIGN_SESSION', 'DESIGN_INSTANCE', 'DESIGN_ACCEPTED_ARTIFACT',
@@ -250,4 +264,5 @@ class FamilyWorkspace:
         counts = dict(Counter(r['kind'] for r in rows))
         return dict(models=sorted(model_ids), counts=counts, total=len(rows), page=page,
                     rows=rows[page*page_size:(page+1)*page_size],
+                    source_hashes=sorted(hashes),font_hashes=sorted(fonts),
                     accepted_output_bytes_changed=False, auto_activation=False)
