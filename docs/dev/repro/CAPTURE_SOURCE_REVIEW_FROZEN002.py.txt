@@ -1,0 +1,14 @@
+import sys
+from pathlib import Path
+sys.path.insert(0,'/workspace/template-Ai')
+from PySide6.QtWidgets import QApplication,QWidget
+from template_ai.storage import Library
+from template_ai.fonts import FontManager
+from template_ai.design_learning_dialog import DesignLearningDialog
+app=QApplication([]);library=Library(Path('/tmp/ai-all8-graded-slate-owned-002-20261019/data'));fonts=FontManager(library)
+parent=QWidget();parent.library=library;dialog=DesignLearningDialog(parent);dialog.resize(1180,900);dialog.tabs.setCurrentIndex(0);dialog.show();app.processEvents()
+assert not dialog.parameter_review.isChecked() and not dialog.source_word_review.isChecked() and not dialog.work_pt_review.isChecked()
+assert dialog.parameter_space.currentData()=='SOURCE'
+assert dialog.grab().save('/tmp/ai-source-review-frozen002.png')
+dialog.close();dialog.deleteLater();parent.deleteLater();app.processEvents();library.close()
+print('actual source-review UI captured;source/workspace explicit;measurement checkboxes default unchecked')
