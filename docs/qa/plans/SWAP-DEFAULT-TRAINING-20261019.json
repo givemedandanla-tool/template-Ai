@@ -1,0 +1,241 @@
+{
+  "id": "SWAP-DEFAULT-TRAINING-20261019",
+  "created_utc": "2026-10-19T04:19:04.337962+00:00",
+  "base_commit": "29b0e929ff4bf698debbdd63ad05ac7c1fd38dc0",
+  "scope": "Confirmed design/training-plan changes only;no application implementation or model training",
+  "earlier_local_plan": "JOINT-ADAPTATION-POLICY-20261019",
+  "earlier_checkpoint_not_published_due_user_pause": "CP-20261019-JOINT-PARAM-PLAN",
+  "confirmed_now": [
+    "Prefer supported field swaps/variants within the same template family;use a different compatible template when current-family adaptation is unsuitable",
+    "Every multiple-legal-result decision requires a versioned default preference and stable tie-break;retain user-selected relative positions",
+    "Core controls field dimensions,pt,horizontal scale,alignment and distribution;no customer fine-parameter controls",
+    "Learn joint conditional parameter rules from qualified works;independent scalar ranges do not establish validity",
+    "Stable same-input print results and re-use of the accepted exact output"
+  ],
+  "not_approved": [
+    "Background automatic cross-template adoption timing",
+    "Arbitrary geometry-only swaps",
+    "Unbounded continuous random generation",
+    "A universal numeric size-similarity threshold",
+    "New customer font/alignment/spacing controls"
+  ],
+  "expected_text_revision_ids": [
+    "AI-LEARN-03-A06",
+    "AI-LEARN-03-A08",
+    "AI-LEARN-04-A08",
+    "AI-LEARN-05-A04",
+    "AI-LEARN-07-A05",
+    "AI-LEARN-07-A07"
+  ],
+  "planned_checks": [
+    "50 original acceptance IDs retained;only declared expected-text revisions",
+    "8packages1partial0complete0verified;3designTODO0done",
+    "Legacy REQUIREMENTS hash and code/test/fixture manifest unchanged",
+    "Markdown references and decision index hashes",
+    "Governance publication-scope PASS;GitHub checkpoint/readback/receipt"
+  ],
+  "baseline_code_manifest_sha256": "b487e6a0b573c280063af3d3efd2c037f1133a370a25b3c1b8b713a4d8f2751a",
+  "baseline_requirements_sha256": "a9cda86353f3722203d282d9a4b99d4b4813774bb474fb45dfaea771d8aae848",
+  "baseline_acceptance": [
+    {
+      "id": "AI-LEARN-01-A01",
+      "expected": "已知字級與均勻變換可核實；未知字型／點陣估計不變成10pt真值"
+    },
+    {
+      "id": "AI-LEARN-01-A02",
+      "expected": "去重與lineage拆分避免同作品改版跨TRAIN與TEST"
+    },
+    {
+      "id": "AI-LEARN-01-A03",
+      "expected": "相同來源的角色／群組／圖形分層有可追溯觀察版本"
+    },
+    {
+      "id": "AI-LEARN-01-A04",
+      "expected": "資料／來源修訂失效與批次取消續行保持精確身份"
+    },
+    {
+      "id": "AI-LEARN-01-A05",
+      "expected": "重用TrainingStore歷史及交易，舊資料與原稿不改寫"
+    },
+    {
+      "id": "AI-LEARN-01-A06",
+      "expected": "來源 text run／glyph cluster／baseline／pt／容器及四類風格觀察帶單位與可信來源，缺證據為UNKNOWN，預設值不當訓練真值"
+    },
+    {
+      "id": "AI-LEARN-02-A01",
+      "expected": "至少5不同設計lineage共同支持家族，禁止一作品一學成模板"
+    },
+    {
+      "id": "AI-LEARN-02-A02",
+      "expected": "同源重複不增加支持或洩漏內容身份特徵"
+    },
+    {
+      "id": "AI-LEARN-02-A03",
+      "expected": "HDBSCAN孤例／低可信保留，不強併／靜默丟棄"
+    },
+    {
+      "id": "AI-LEARN-02-A04",
+      "expected": "重估版本與成員對應可重現，不假稱partial_fit"
+    },
+    {
+      "id": "AI-LEARN-02-A05",
+      "expected": "四類風格及角色／容器關係用於跨作品家族，來源去重與反例不被同座標或同字串掩蓋"
+    },
+    {
+      "id": "AI-LEARN-03-A01",
+      "expected": "共用對齊／間距及可選／重複／流向由多作品資料學出"
+    },
+    {
+      "id": "AI-LEARN-03-A02",
+      "expected": "資料分布改變會改變規則，刪去支持導致降級"
+    },
+    {
+      "id": "AI-LEARN-03-A03",
+      "expected": "統計軟偏好與硬政策／來源信心分離且保存反例"
+    },
+    {
+      "id": "AI-LEARN-03-A04",
+      "expected": "尺寸或內容證據不足不擬造回歸／外推可信度"
+    },
+    {
+      "id": "AI-LEARN-03-A05",
+      "expected": "分開學字內／詞內與物件等距；語系、合法邊界、單字／零邊界與最後一行有明確規則，越權模式不自動啟用"
+    },
+    {
+      "id": "AI-LEARN-03-A06",
+      "expected": "學真實pt及角色字級比例，固定當次已核准字級；不得用長度／字寬或其代理偷偷選較小字級解圍"
+    },
+    {
+      "id": "AI-LEARN-03-A07",
+      "expected": "學角色／群組相對關係、baseline、gap及錨點，保留獨立來源支持與矛盾反例"
+    },
+    {
+      "id": "AI-LEARN-03-A08",
+      "expected": "學容器欄列／label-value／optional-repeat-flow與欄位收合，保留資料ID、歸屬與完整內容，不列舉每案模板"
+    },
+    {
+      "id": "AI-LEARN-04-A01",
+      "expected": "未見文案／欄位組合可生成非原庫複製的新實例"
+    },
+    {
+      "id": "AI-LEARN-04-A02",
+      "expected": "在已學適用範圍內未見尺寸可由條件規則產生"
+    },
+    {
+      "id": "AI-LEARN-04-A03",
+      "expected": "群組／文字多行量測與實際渲染一致且資料完整"
+    },
+    {
+      "id": "AI-LEARN-04-A04",
+      "expected": "非凸拓撲分支與搜尋預算有完整性狀態，非法版面不放行"
+    },
+    {
+      "id": "AI-LEARN-04-A05",
+      "expected": "多來源generation_reference核驗，不能偽造單一source或published狀態"
+    },
+    {
+      "id": "AI-LEARN-04-A06",
+      "expected": "字型／Logo／鎖定／舊模板與現有輸出Gate完整回歸"
+    },
+    {
+      "id": "AI-LEARN-04-A07",
+      "expected": "新風格子集由版本化政策編譯到同一Qt文字布局與Kiwi；舊模板固定pt、分散角色、Logo與正式Gate不回退"
+    },
+    {
+      "id": "AI-LEARN-04-A08",
+      "expected": "受控SET_RELATION入口可處理合格稿，與原拓撲保留repair分開；同命令冪等、循環與歸屬衝突有原因，不修改全域模板"
+    },
+    {
+      "id": "AI-LEARN-04-A09",
+      "expected": "跨候選／尺寸適配保留意圖與穩定映射，依UI-061預覽確認；高影響不可默默採用，客戶確認不冒充正式發布"
+    },
+    {
+      "id": "AI-LEARN-05-A01",
+      "expected": "依輸入能力檢索家族，硬Gate前置且所有結果可追溯"
+    },
+    {
+      "id": "AI-LEARN-05-A02",
+      "expected": "偏好訓練按query分組，舊幾何規則評分不冒充獨立標註"
+    },
+    {
+      "id": "AI-LEARN-05-A03",
+      "expected": "封存偏好topK／NDCG及基準比較有明確分母與信賴區間"
+    },
+    {
+      "id": "AI-LEARN-05-A04",
+      "expected": "最佳僅限已搜且已驗證範圍，未校準分數不當機率"
+    },
+    {
+      "id": "AI-LEARN-06-A01",
+      "expected": "回饋區分偏好／必要修正／政策，輸出成功不等於好看"
+    },
+    {
+      "id": "AI-LEARN-06-A02",
+      "expected": "訓練／驗證／測試與來源權利／撤回版本不洩漏"
+    },
+    {
+      "id": "AI-LEARN-06-A03",
+      "expected": "PENDING評估／明確政策啟用／回退不改寫舊模型"
+    },
+    {
+      "id": "AI-LEARN-06-A04",
+      "expected": "來源與支持證據變動可失效並精確恢復受影響模型／結果"
+    },
+    {
+      "id": "AI-LEARN-06-A05",
+      "expected": "保存前稿＋明確意圖＋後稿＋接受拒絕＋適用範圍，缺理由保持未知，個案接受不得直接改全域政策"
+    },
+    {
+      "id": "AI-LEARN-07-A01",
+      "expected": "匯入->共用學習->家族->輸入->新排版為主流程，不逐作品建模板"
+    },
+    {
+      "id": "AI-LEARN-07-A02",
+      "expected": "家族／暫態實例與低可信例外可理解，代表性抽查不逐件聊天"
+    },
+    {
+      "id": "AI-LEARN-07-A03",
+      "expected": "工作暫停／重啟／新對話可依倉庫與本機持久資料接續"
+    },
+    {
+      "id": "AI-LEARN-07-A04",
+      "expected": "程式／匿名指標／checkpoints保存GitHub；不自動上傳原稿／字型／個資"
+    },
+    {
+      "id": "AI-LEARN-07-A05",
+      "expected": "客戶端先完整初稿，三階段可返回；不得加入字級／字寬／tracking／單雙排控制或必選模板庫，專業後台另維持既有能力"
+    },
+    {
+      "id": "AI-LEARN-07-A06",
+      "expected": "網頁手機發同一語意操作契約，驗證資源權限／期望版本／冪等／晚到結果；拖曳中只代理回饋，放開核心精排，提供非拖曳等效操作"
+    },
+    {
+      "id": "AI-LEARN-07-A07",
+      "expected": "確認綁定精確資料／結果，資料無解保留新值並標stale；撤回版面不退電話；正式封存依核准保存範圍，不把JSON重算當精確回播"
+    },
+    {
+      "id": "AI-LEARN-08-A01",
+      "expected": "真實授權lineage隔離封存集驗證跨作品泛化，合成結果另列"
+    },
+    {
+      "id": "AI-LEARN-08-A02",
+      "expected": "硬錯誤0與資料完整100%；可行率分母及未知／搜尋狀態透明"
+    },
+    {
+      "id": "AI-LEARN-08-A03",
+      "expected": "偏好驗收與基準比較獨立，缺標註不宣稱學成最佳美學"
+    },
+    {
+      "id": "AI-LEARN-08-A04",
+      "expected": "1000／3000作品持久批次、資源／延遲／取消／恢復以實測保存"
+    },
+    {
+      "id": "AI-LEARN-08-A05",
+      "expected": "多人／公司／字型／Logo／參考Windows與VivoBook資格依實際範圍驗收"
+    },
+    {
+      "id": "AI-LEARN-08-A06",
+      "expected": "四類風格在獨立授權lineage封存集及長短／多語／多筆／多人／多公司情境分項驗證；網站／實體手機／印前各列證據，不以37項原型PASS代替"
+    }
+  ]
+}

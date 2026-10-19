@@ -1467,3 +1467,7 @@ AI01最終採認：verify_run／execution_passed及163完成要求逐項verify_a
 最終本機查核：publication-scope require-evidence治理PASS（169登錄／163完成scope／1567具名tests）；原50AI驗收ID／文字與8包／0完整／1partial一致、source manifest仍精確對應formal659359f，進度快照無新增／刪除／範圍／狀態／新增完成差異。接著保存最終metadata checkpoint並再讀回，不重跑已通過測試。
 
 AI01最後確認：CP-20261018-AI-OBSERVATION-FOUNDATION-VERIFIED在f081bac3ba665070716c96e3e20cf84bb54eb41e／tree67c7b19a112403795faf0d18ec3642b48ab6897a逐檔讀回；收據與STATE於d8aa558dae3e9eeb406a5eadc9a6e5065c910e4a再fresh讀回，當前require-evidence publication Gate PASS、工作樹乾淨。最後附加log腳本曾誤讀snapshot_tree而KeyError，未影響已發布的STATE／收據或功能驗證；改用實際tree_sha補上本紀錄。正式來源659359f未改，1567PASS／366附件、既有163完成scope、新AI1partial／0完整及5外部資格缺口均不變。
+
+2026-10-19｜JOINT-ADAPTATION-POLICY前置：使用者確認客戶只調必要相對位置，欄位大小／字級／字寬／切齊／分散由核心規則控制；要求將聯動參數學習持久化，並澄清相同輸入不可反覆產不同印版。第3後台改善與第4有限／穩定選解需解說，尚不將工程提案當核准政策。僅更新新AI設計，保留legacy完成證據與50條ID／完成數；初始治理PASS。因root247MiB不足新快照，13個舊已發布REMOTE_VERIFIED ZIP經SHA/embedded manifest/receipt核對搬至/tmp，副本與原路徑symlink保留、最新8與未ACK保護，釋放1492197826bytes；journal=docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T034415Z.json。
+
+2026-10-19｜SWAP-DEFAULT重新授權保存：上一CP-JOINT-PARAM-PLAN準備後使用者要求暫停，未commit／push／ACK；原record／ZIP保留，不假稱已保存。現在使用者明確要求同模板基本欄位交換能力納入訓練，差異過大才考慮新模板，且所有複數合法解都有預設優選以穩定重用印版。合併先前已確認的核心參數控制／聯動學習／相同輸入穩定原則；自動採用背景新模板時機仍OPEN。僅更新設計與新AI未驗收條款，legacy要求／code／完成數保持不變。
