@@ -142,13 +142,25 @@ class CrossWorkLearning:
             raise ValueError('Dataset source/scope/rights/lineage is stale')
         return row
 
-    def train(self, dataset_id, actor, settings=None, approved=False):
+    def train(self, dataset_id, actor, settings=None, approved=False, *, origin_job=None, previous_model_id=None):
         if approved is not True:
             raise ValueError('Explicit local cross-work training authorization is required')
         text(actor, 'Training actor', 120)
         dataset = self.checked_dataset(dataset_id)
+        request_digest=digest([dataset_id,dataset['manifest_digest'],settings or {},previous_model_id])
+        if origin_job:
+            row=self.store.db.execute("SELECT id FROM training_records WHERE kind='DESIGN_MODEL' AND json_extract(payload,'$.origin_job')=?",(origin_job,)).fetchone()
+            if row:
+                existing,_=self.checked_model(row[0])
+                if existing.get('training_request_digest')!=request_digest:raise ValueError('Training job request changed')
+                return existing
+        previous=None
+        if previous_model_id:
+            prior=self.store.get(MODEL,previous_model_id)
+            if not prior or digest(prior['artifact'])!=prior['weights_digest']:raise ValueError('Previous family correspondence proof differs')
+            previous=prior['artifact']['family_model']
         selected = [row for row in dataset['manifest']['examples'] if row['role'] == 'TRAIN']
-        families = train_families(selected, settings)
+        families = train_families(selected, settings, previous=previous)
         profiles = learn_profiles(families, selected)
         artifact = dict(version=VERSION, family_model=families, profile_model=profiles)
         with self.store.transaction():
@@ -159,7 +171,8 @@ class CrossWorkLearning:
                 manifest_digest=dataset['manifest_digest'], plan=dict(scopes=deepcopy(dataset['manifest']['scopes'])),
                 artifact=artifact, weights_digest=digest(artifact), settings=deepcopy(settings or {}),
                 created=time.time(), actual_template_objects_created=0,
-                formal_qualification='NOT_EVALUATED', evaluation_ids=[]), 0,
+                formal_qualification='NOT_EVALUATED', evaluation_ids=[],origin_job=origin_job,
+                training_request_digest=request_digest,previous_model_id=previous_model_id), 0,
                 'cross_work_family_and_rule_candidate_trained_not_activated')
             for entry in dataset['entries']:
                 self.store._write('DESIGN_USE',new_id(),dict(model_id=saved['id'],dataset_id=dataset_id,

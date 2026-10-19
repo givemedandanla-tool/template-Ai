@@ -215,13 +215,13 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                     af=roles[a['role_key']]['frame_centre'];bf=roles[b['role_key']]['frame_centre']
                     if af[1]+af[3]<=bf[1]+1e-9:vgraph.add_edge(aid,bid)
                     elif bf[1]+bf[3]<=af[1]+1e-9:vgraph.add_edge(bid,aid)
-                    elif af[0]+af[2]<=bf[0]+1e-9:hgraph.add_edge(aid,bid)
+                    if af[0]+af[2]<=bf[0]+1e-9:hgraph.add_edge(aid,bid)
                     elif bf[0]+bf[2]<=af[0]+1e-9:hgraph.add_edge(bid,aid)
             if not nx.is_directed_acyclic_graph(vgraph) or not nx.is_directed_acyclic_graph(hgraph):
                 raise ValueError('Intent contradicts protected relative structure')
-            for a,b in sorted(horizontal.edges):
+            for a,b in sorted(hgraph.edges):
                 ax,ay,aw,ah=variables[a];bx,by,bw,bh=variables[b];solver.addConstraint(ax+aw<=bx)
-            for a,b in sorted(vertical.edges):
+            for a,b in sorted(vgraph.edges):
                 ax,ay,aw,ah=variables[a];bx,by,bw,bh=variables[b];solver.addConstraint(ay+ah<=by)
             vrank={rid:i for i,rid in enumerate(nx.lexicographical_topological_sort(vgraph,key=lambda rid:(preferred[rid],rid)))}
             hrank={rid:i for i,rid in enumerate(nx.lexicographical_topological_sort(hgraph,key=lambda rid:(preferred[rid],rid)))}
@@ -263,6 +263,10 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                 diagnostics=[dict(code='UNPUBLISHED',severity='BLOCK')],
                 dependency_stamp=layout_dependency(template,logos))
             pin_inputs(candidate,people,companies,logos)
+            candidate.risk_context['design_label_bindings']={fact['render_id']:deepcopy(config.get('label_binding'))
+                for fact,config in zip(facts,selected) if fact['kind']!='logo'}
+            candidate.risk_context['design_relations']=[dict(subject=a,relation=relation,object=b)
+                for relation,edges in [('ABOVE',vgraph.edges),('LEFT_OF',hgraph.edges)] for a,b in sorted(edges)]
             candidates.append(dict(candidate=candidate,configuration_ids=[row['id'] for row in selected],
                 geometry_digest=digest(template.to_dict()),measurements=measurements,legal_preview_geometry=True,
                 formal_qualification='NOT_EVALUATED'))

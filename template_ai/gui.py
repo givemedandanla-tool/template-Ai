@@ -346,7 +346,7 @@ class MainWindow(QMainWindow):
         for label,index in [('訓練與原稿',0),('模板／Logo',1),('排版與輸出',2)]:
             button=QPushButton(label);button.clicked.connect(lambda _,i=index:self.navigate_mode(i));rail_layout.addWidget(button)
         self.function_stack=QStackedWidget()
-        groups=[ [('一鍵來源分析',self.automatic_training),('來源／作品總覽',self.work_overview),('品質／規則／學習',self.training_center)],
+        groups=[ [('一鍵來源分析',self.automatic_training),('來源／作品總覽',self.work_overview),('品質／規則／學習',self.training_center),('共用AI規則／當次稿件',self.shared_design_learning)],
                  [('模板瀏覽',self.return_catalog),('新版本草稿',self.new_version),('物件／精確對齊',self.object_tools),('版本差異／回退',self.template_versions),('尺寸Logo庫',self.logo_center)],
                  [('人物／公司輸入',self.edit_input_graph),('產生排版候選',self.generate),('預覽數位輸出',lambda:self.export_current(True)),('正式數位輸出',lambda:self.export_current(False))] ]
         for group in groups:
@@ -1412,6 +1412,12 @@ class MainWindow(QMainWindow):
             require_clean_navigation(self)
             open_repair_center(self,dict(origin='SOURCE_FACTS',origin_id=self.work['id'],work_id=self.work['id'],description='從原畫布核對此作品的來源、人工真值與局部問題'))
         except (ValueError,KeyError) as error:self.statusBar().showMessage(str(error))
+
+    def shared_design_learning(self):
+        if self.busy:
+            self.error('請待目前背景工作完成後開啟共用設計工作');return
+        from .design_learning_dialog import DesignLearningDialog
+        dialog=DesignLearningDialog(self);dialog.exec()
 
     def training_center(self):
         from .training_quality_dialog import TrainingQualityDialog

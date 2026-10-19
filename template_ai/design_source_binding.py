@@ -44,6 +44,15 @@ class SourceTypographyReview:
             page=original.get('pdf_glyph_evidence',{})
             if page.get('source_canvas_mapping')!='VERIFIED_PHYSICAL_VIEWPORT':
                 raise ValueError('Original PDF glyph viewport does not match the confirmed source')
+        label=review.get('label_binding')
+        if label is not None:
+            if not isinstance(label,dict) or label.get('status')!='CONFIRMED' or not label.get('evidence_refs'):
+                raise ValueError('Source label mapping needs reviewed evidence')
+            if label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX'):
+                raise ValueError('Unsupported source label mapping')
+            if label['kind']=='DYNAMIC_PREFIX' and (not isinstance(label.get('prefix'),str)
+                    or not label['prefix'] or not matches[0]['text'].startswith(label['prefix'])):
+                raise ValueError('Fixed source prefix must actually occur in the reviewed original field')
         point=run['source_pt']['value']
         if point is None:
             point=review.get('physical_source_pt')

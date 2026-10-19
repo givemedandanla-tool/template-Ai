@@ -1,0 +1,281 @@
+"""Desktop body for shared-rule learning and persistent relative-layout drafts."""
+from copy import deepcopy
+import hashlib
+import threading
+
+from PySide6.QtCore import Qt,QThread,Signal
+from PySide6.QtGui import QPixmap,QPen,QColor,QBrush
+from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTabWidget,QWidget,
+    QComboBox,QTableWidget,QTableWidgetItem,QLineEdit,QCheckBox,QDoubleSpinBox,QGraphicsView,
+    QGraphicsScene,QGraphicsRectItem,QFileDialog,QMessageBox,QSplitter)
+
+from .design_learning import CrossWorkLearning,USE
+from .design_source_binding import SourceTypographyReview
+from .design_session import DesignSessions
+from .design_synthesis import input_facts
+from .design_jobs import DesignJobs,run_design_job
+from .fonts import FontManager
+from .input_graph import InputGraph
+from .model import new_id
+
+
+class DesignWorker(QThread):
+    progress=Signal(object);completed=Signal(object);failed=Signal(str)
+    def __init__(self,root,job,token,parent=None):
+        super().__init__(parent);self.root=root;self.job=job;self.token=token;self.cancel=threading.Event()
+    def run(self):
+        try:self.completed.emit(run_design_job(self.root,self.job,self.token,self.cancel.is_set,self.progress.emit))
+        except Exception as error:self.failed.emit(str(error)[:1000])
+
+
+class RelativeBox(QGraphicsRectItem):
+    def __init__(self,identity,rect,canvas):
+        super().__init__(0,0,rect.w,rect.h);self.identity=identity;self.canvas=canvas
+        self.setPos(rect.x,rect.y);self.start_position=self.pos()
+        self.setFlags(QGraphicsRectItem.ItemIsMovable|QGraphicsRectItem.ItemIsSelectable)
+        self.setPen(QPen(QColor('#2563eb'),.2));self.setBrush(QBrush(Qt.NoBrush))
+        self.setToolTip('拖至另一欄附近，調整兩欄的相對位置')
+    def mousePressEvent(self,event):self.start_position=self.pos();super().mousePressEvent(event)
+    def mouseReleaseEvent(self,event):
+        super().mouseReleaseEvent(event)
+        if self.pos()==self.start_position:return
+        centre=self.sceneBoundingRect().center()
+        others=[box for box in self.canvas.boxes if box is not self]
+        if not others:self.setPos(self.start_position);return
+        target=min(others,key=lambda box:((box.sceneBoundingRect().center()-centre).manhattanLength(),box.identity))
+        delta=centre-target.sceneBoundingRect().center()
+        relation=('LEFT_OF' if delta.x()<0 else 'RIGHT_OF') if abs(delta.x())>abs(delta.y()) else ('ABOVE' if delta.y()<0 else 'BELOW')
+        self.setPos(self.start_position)
+        self.canvas.requested.emit(self.identity,relation,target.identity)
+
+
+class RelativeCanvas(QGraphicsView):
+    requested=Signal(str,str,str)
+    def __init__(self,parent=None):
+        super().__init__(parent);self.owner=parent;self.setScene(QGraphicsScene(self));self.boxes=[]
+        self.setAccessibleName('完整稿件預覽；亦可用相對位置選單操作')
+    def show_candidate(self,candidate):
+        from .render import card_view_image
+        self.scene().clear();self.boxes=[]
+        if candidate is None:return
+        image=card_view_image(candidate,120);item=self.scene().addPixmap(QPixmap.fromImage(image))
+        item.setScale(candidate.template.width_mm/image.width());item.setZValue(-1)
+        movable=set(self.owner.current_policy().get('movable_kinds',('phone','email','line','ig','address')))
+        for placed in candidate.items:
+            if placed.slot.kind not in movable:continue
+            box=RelativeBox(placed.slot.id,placed.slot.rect,self);self.scene().addItem(box);self.boxes.append(box)
+        self.setSceneRect(0,0,candidate.template.width_mm,candidate.template.height_mm)
+        self.fitInView(self.sceneRect(),Qt.KeepAspectRatio)
+
+
+class DesignLearningDialog(QDialog):
+    def __init__(self,window):
+        super().__init__(window);self.window=window;self.library=window.library
+        self.learning=CrossWorkLearning(self.library);self.sessions=DesignSessions(self.library);self.jobs=DesignJobs(self.library)
+        self.font_manager=FontManager(self.library);self.worker=None;self.session_id=None;self.close_after_worker=False
+        workspace=self.jobs.store.get('DESIGN_WORKSPACE','desktop')
+        if workspace and self.jobs.store.get('DESIGN_SESSION',workspace.get('session_id','')):self.session_id=workspace['session_id']
+        self.setWindowTitle('共用設計規則與當次稿件');self.resize(1180,800)
+        layout=QVBoxLayout(self);self.status=QLabel();self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText)
+        layout.addWidget(self.status);self.tabs=QTabWidget();layout.addWidget(self.tabs,1)
+        self._source_tab();self._training_tab();self._draft_tab();self.refresh()
+        self.say('先核對來源字型與文字規則，再學習共用版面。未通過正式資格的規則可建立預覽稿。')
+
+    def say(self,value):self.status.setText(value)
+    def attempt(self,action):
+        try:return action()
+        except (ValueError,OSError,KeyError,TypeError) as error:self.say(str(error));return None
+    def button(self,layout,text,action):
+        button=QPushButton(text);button.clicked.connect(lambda:self.attempt(action));layout.addWidget(button);return button
+    def page(self,label):
+        page=QWidget();layout=QVBoxLayout(page);self.tabs.addTab(page,label);return layout
+    def _source_tab(self):
+        layout=self.page('來源核對');row=QHBoxLayout();self.source_work=QComboBox();row.addWidget(self.source_work,1)
+        self.button(row,'讀取欄位與原稿文字',self.load_source);layout.addLayout(row)
+        self.source_fields=QComboBox();layout.addWidget(self.source_fields);self.source_fields.currentIndexChanged.connect(lambda:self.load_source_runs())
+        self.source_runs=QComboBox();layout.addWidget(self.source_runs);self.source_fonts=QComboBox();layout.addWidget(self.source_fonts)
+        self.source_basis=QLineEdit();self.source_basis.setPlaceholderText('原稿、欄位與字型對應的核對依據');layout.addWidget(self.source_basis)
+        self.source_confirm=QCheckBox('已對照原稿，確認這個文字欄與實際字型檔的對應');layout.addWidget(self.source_confirm)
+        row=QHBoxLayout();self.parameter_review=QCheckBox('原稿字寬與字距已量測');row.addWidget(self.parameter_review)
+        self.source_scale=QDoubleSpinBox();self.source_scale.setRange(.05,10);self.source_scale.setValue(1);self.source_scale.setDecimals(4)
+        self.source_tracking=QDoubleSpinBox();self.source_tracking.setRange(-99,99);self.source_tracking.setDecimals(4)
+        row.addWidget(QLabel('來源水平縮放'));row.addWidget(self.source_scale);row.addWidget(QLabel('來源字距 mm'));row.addWidget(self.source_tracking);layout.addLayout(row)
+        row=QHBoxLayout();self.label_mode=QComboBox();self.label_mode.addItems(['原稿欄位沒有固定前綴','資料前有固定前綴'])
+        self.label_prefix=QLineEdit();self.label_prefix.setPlaceholderText('例如 TEL：');row.addWidget(self.label_mode);row.addWidget(self.label_prefix);layout.addLayout(row)
+        self.button(layout,'保存來源對應',self.bind_source);layout.addStretch()
+    def _training_tab(self):
+        layout=self.page('學習與版本');self.samples=QTableWidget(0,3);self.samples.setHorizontalHeaderLabels(['已核准作品','集合角色','樣本版本'])
+        layout.addWidget(self.samples,1);self.actor=QLineEdit('本機管理者');layout.addWidget(self.actor)
+        self.rights_basis=QLineEdit();self.rights_basis.setPlaceholderText('本次跨作品規則學習的用途與授權依據');layout.addWidget(self.rights_basis)
+        self.rights=QCheckBox('已核對所選作品允許本機跨作品規則學習；原稿、個資與字型留在本機');layout.addWidget(self.rights)
+        row=QHBoxLayout();self.train_button=self.button(row,'建立共用規則候選',self.train)
+        self.pause_button=self.button(row,'處理完目前項目後暫停',self.pause);layout.addLayout(row)
+        row=QHBoxLayout();self.job_choices=QComboBox();row.addWidget(self.job_choices,1);self.button(row,'接續所選工作',self.resume_job);layout.addLayout(row)
+        row=QHBoxLayout();self.models=QComboBox();row.addWidget(self.models,1);self.button(row,'採用所選規則建立預覽',self.activate_preview);layout.addLayout(row)
+        self.button(layout,'重新讀取已保存狀態',self.refresh)
+    def _draft_tab(self):
+        layout=self.page('當次稿件');row=QHBoxLayout();self.session_choices=QComboBox();row.addWidget(self.session_choices,1)
+        self.button(row,'接續稿件',self.resume_session);self.button(row,'建立新稿件',self.new_session);layout.addLayout(row)
+        row=QHBoxLayout();self.out_w=QDoubleSpinBox();self.out_h=QDoubleSpinBox()
+        for spin,value in ((self.out_w,90),(self.out_h,54)):spin.setRange(1,2000);spin.setValue(value);spin.setSuffix(' mm');row.addWidget(spin)
+        self.button(row,'輸入／局部更正資料',self.edit_data);self.button(row,'產生完整稿件',self.solve);self.button(row,'復原相對位置',self.undo_layout);layout.addLayout(row)
+        self.canvas=RelativeCanvas(self);self.canvas.requested.connect(lambda a,r,b:self.attempt(lambda:self.set_relation(a,r,b)))
+        layout.addWidget(self.canvas,1);row=QHBoxLayout();self.subject=QComboBox();self.reference=QComboBox();self.relation=QComboBox()
+        for text,code in [('在左側','LEFT_OF'),('在右側','RIGHT_OF'),('在上方','ABOVE'),('在下方','BELOW')]:self.relation.addItem(text,code)
+        for widget in (self.subject,self.relation,self.reference):row.addWidget(widget)
+        self.button(row,'調整兩欄相對位置',lambda:self.set_relation(self.subject.currentData(),self.relation.currentData(),self.reference.currentData()));layout.addLayout(row)
+        row=QHBoxLayout();self.confirm_button=self.button(row,'確認目前完整預覽稿',self.confirm_preview)
+        self.export_button=self.button(row,'輸出已確認預覽稿',self.export_preview);layout.addLayout(row)
+        row=QHBoxLayout();self.artifacts=QComboBox();row.addWidget(self.artifacts,1);self.button(row,'開啟已保存的相同檔案',self.replay);layout.addLayout(row)
+    def refresh(self):
+        current_model=self.models.currentData();self.models.clear();self.job_choices.clear();self.session_choices.clear();self.source_work.clear()
+        samples=[row for row in self.jobs.store.records('SAMPLE',limit=200) if self.jobs.store.sample_state(row['id'])=='APPROVED']
+        self.samples.setRowCount(len(samples));self.sample_ids=[]
+        for index,sample in enumerate(samples):
+            work=self.library.artwork(sample['work_id']);self.sample_ids.append(sample['id']);self.source_work.addItem(work['name'],work['id'])
+            self.samples.setItem(index,0,QTableWidgetItem(work['name']));self.samples.setItem(index,2,QTableWidgetItem(str(sample['revision'])))
+            combo=QComboBox();combo.addItems(['UNASSIGNED','TRAIN','VALIDATION','HOLDOUT'])
+            role=self.jobs.store.get('GROUP_ROLE',sample['pins']['source_hash'])
+            if role:combo.setCurrentText(role['role'])
+            self.samples.setCellWidget(index,1,combo)
+        for model in self.jobs.store.records('DESIGN_MODEL',limit=200):
+            self.models.addItem(model['id']+' · '+model['formal_qualification'],model['id'])
+        if self.models.findData(current_model)>=0:self.models.setCurrentIndex(self.models.findData(current_model))
+        for job in self.jobs.store.records('DESIGN_JOB',limit=200):
+            if job['kind']=='TRAIN_SHARED_MODEL' and job['phase']!='COMPLETE':self.job_choices.addItem(job['id']+' · '+self.jobs.state(job['id']),job['id'])
+        for session in self.jobs.store.records('DESIGN_SESSION',limit=200):self.session_choices.addItem(session['id']+' · '+session['result_state'],session['id'])
+        self.source_fonts.clear()
+        for asset in self.library.fonts():self.source_fonts.addItem(' / '.join(asset.get('families',[]))+' · '+asset.get('original_name',''),asset)
+        self.load_source();self.refresh_draft()
+    def load_source(self):
+        self.source_fields.clear();work_id=self.source_work.currentData()
+        if not work_id:return
+        facts=self.jobs.store.facts(work_id)
+        if self.jobs.store.facts_state(work_id)!='CONFIRMED':return
+        selected=set(facts['confirmation']['observation_ids'])
+        for row in facts['observations']:
+            if row['id'] in selected and row.get('slot_id') and row['classification']=='FIELD':
+                self.source_fields.addItem(row['text'][:80],row)
+        self.load_source_runs()
+    def load_source_runs(self):
+        self.source_runs.clear();field=self.source_fields.currentData();work_id=self.source_work.currentData()
+        if not field or not work_id:return
+        original=self.jobs.store._design_observation_document(work_id)['original_text_evidence']
+        rows=sorted(original['runs'],key=lambda row:('PDF_GLYPH_RUN' not in row['id'],row['id']))
+        match=hashlib.sha256(field['text'].encode()).hexdigest()
+        for row in rows:
+            if row['text_sha256']!=match:continue
+            self.source_runs.addItem(str(row.get('source_locator'))+' · pt='+str(row['source_pt']['value']),row['id'])
+    def bind_source(self):
+        if not self.source_confirm.isChecked():raise ValueError('請先核對原稿、欄位與字型來源')
+        field=self.source_fields.currentData();asset=self.source_fonts.currentData()
+        if not field or not asset or not self.source_runs.currentData():raise ValueError('尚無可明確對應的欄位、原稿文字或字型')
+        label=dict(status='CONFIRMED',kind='DYNAMIC_PREFIX' if self.label_mode.currentIndex() else 'NO_FIXED_LABEL',
+                   evidence_refs=[self.source_basis.text()])
+        if self.label_mode.currentIndex():label['prefix']=self.label_prefix.text()
+        review=dict(source_identity_confirmed=True,basis=self.source_basis.text(),label_binding=label)
+        if self.parameter_review.isChecked():review.update(horizontal_scale=self.source_scale.value(),tracking=self.source_tracking.value(),parameter_measurement_refs=[self.source_basis.text()])
+        service=SourceTypographyReview(self.library)
+        service.confirm(service.plan(self.source_work.currentData(),field['slot_id'],self.source_runs.currentData(),asset,review),self.actor.text(),True)
+        self.say('已保存原稿對應；目前觀察仍不等於跨作品規則已通過驗證。')
+    def train(self):
+        if not self.rights.isChecked():raise ValueError('請核對本次跨作品規則學習用途')
+        roles={sid:self.samples.cellWidget(i,1).currentText() for i,sid in enumerate(self.sample_ids)
+               if self.samples.cellWidget(i,1).currentText()!='UNASSIGNED'}
+        permission=dict(use=USE,actor=self.actor.text(),basis=self.rights_basis.text())
+        dataset=self.learning.freeze_dataset(self.learning.dataset_plan(roles,permission),self.actor.text(),True)
+        job=self.jobs.create('TRAIN_SHARED_MODEL',dict(dataset_id=dataset['id'],items=[dict(dataset_id=dataset['id'])]),self.actor.text(),True)
+        self.start_job(job)
+    def start_job(self,job):
+        if self.worker and self.worker.isRunning():raise ValueError('目前已有學習工作')
+        claimed=self.jobs.claim(job['id'],job['revision']);self.worker=DesignWorker(self.library.root,job['id'],claimed['owner']['token'],self)
+        self.worker.progress.connect(lambda row:self.say(f"已保存 {row['done']} / {row['total']} 個工作項目"))
+        self.worker.completed.connect(lambda row:self.say('已完成候選學習；請檢視後採用預覽規則。' if row['phase']=='COMPLETE' else '已暫停；可從保存位置接續。'))
+        self.worker.failed.connect(self.say);self.worker.finished.connect(self.worker_finished);self.train_button.setEnabled(False);self.worker.start()
+    def worker_finished(self):
+        self.train_button.setEnabled(True);self.refresh()
+        if self.close_after_worker:self.close()
+    def pause(self):
+        if self.worker and self.worker.isRunning():self.worker.cancel.set();self.say('將在完整處理完目前項目後暫停。')
+    def resume_job(self):
+        identity=self.job_choices.currentData()
+        if not identity:raise ValueError('沒有待接續的學習工作')
+        self.start_job(self.jobs.current(identity))
+    def activate_preview(self):
+        identity=self.models.currentData()
+        if not identity:raise ValueError('先建立共用規則候選')
+        active=self.jobs.store.get('DESIGN_ACTIVE','local-layout')
+        policy=dict(version='desktop-preview-1',basis='本機管理者檢視共用候選後採用預覽',production=False,enable_joint_prediction=True)
+        self.learning.activate(identity,active['revision'] if active else 0,self.actor.text(),policy,True)
+        self.say('已採用預覽規則；既有定稿與已確認輸出保持原版本。');self.tabs.setCurrentIndex(2)
+    def save_workspace(self):
+        with self.jobs.store.transaction():
+            current=self.jobs.store.get('DESIGN_WORKSPACE','desktop')
+            self.jobs.store._write('DESIGN_WORKSPACE','desktop',dict(session_id=self.session_id),
+                current['revision'] if current else 0,'desktop_design_workspace_saved')
+    def current_policy(self):
+        if self.session_id:return self.sessions.current(self.session_id)['policy']
+        return {}
+    def input_data(self):
+        if self.session_id:return InputGraph(self.sessions.current(self.session_id)['input_graph']).compile(self.library.logos())
+        return [dict(name='')],[],{}
+    def new_session(self):
+        from .input_graph_dialog import InputGraphDialog
+        dialog=InputGraphDialog(self,InputGraph.from_legacy([dict(name='')],[]).data)
+        if dialog.exec()!=QDialog.Accepted:return
+        saved=self.sessions.create(dialog.graph,self.out_w.value(),self.out_h.value(),self.actor.text())
+        self.session_id=saved['id'];self.save_workspace();self.refresh();self.say('資料已保存；可以產生完整稿件。')
+    def resume_session(self):
+        identity=self.session_choices.currentData()
+        if not identity:raise ValueError('沒有已保存稿件')
+        self.session_id=identity;self.save_workspace();row=self.sessions.current(identity)
+        self.out_w.setValue(row['width_mm']);self.out_h.setValue(row['height_mm']);self.refresh_draft()
+    def edit_data(self):
+        if not self.session_id:return self.new_session()
+        from .input_graph_dialog import InputGraphDialog
+        current=self.sessions.current(self.session_id);self.out_w.setValue(current['width_mm']);self.out_h.setValue(current['height_mm']);dialog=InputGraphDialog(self,current['input_graph'])
+        if dialog.exec()!=QDialog.Accepted:return
+        self.sessions.replace_input(current['id'],current['revision'],new_id(),dialog.graph);self.refresh_draft()
+        self.say('更正資料已保存；原相對位置意圖保留，請重新產生稿件。')
+    def solve(self):
+        if not self.session_id:raise ValueError('請先建立或接續稿件')
+        row=self.sessions.current(self.session_id);result=self.sessions.solve(row['id'],row['revision']);self.refresh_draft()
+        self.say('已產生完整預覽稿；請檢視後確認。' if result['selected'] else '目前規則或來源資料不足，尚無可完整承接這筆資料的稿件。')
+    def set_relation(self,subject,relation,reference):
+        if not self.session_id or not subject or not reference or subject==reference:raise ValueError('請選擇兩個不同欄位')
+        row=self.sessions.current(self.session_id);self.sessions.set_relation(row['id'],row['revision'],new_id(),subject,relation,reference);self.solve()
+    def undo_layout(self):
+        if not self.session_id:return
+        row=self.sessions.current(self.session_id);self.sessions.undo_layout(row['id'],row['revision'],new_id());self.solve()
+    def refresh_draft(self):
+        self.subject.clear();self.reference.clear();self.artifacts.clear();candidate=None;current=None
+        if self.session_id:
+            current=self.sessions.current(self.session_id);graph=InputGraph(current['input_graph']);movable=set(current['policy'].get('movable_kinds',('phone','email','line','ig','address')))
+            for field in input_facts(graph):
+                label=field['owner_port']+' / '+field['kind']+' / '+field['value'][:35]
+                self.reference.addItem(label,field['render_id'])
+                if field['kind'] in movable:self.subject.addItem(label,field['render_id'])
+            try:_,_,candidate=self.sessions.checked_result(self.session_id)
+            except ValueError:pass
+            for artifact in self.jobs.store.records('DESIGN_ACCEPTED_ARTIFACT',limit=200):
+                if artifact['session_id']==self.session_id:self.artifacts.addItem(artifact['path'],artifact['id'])
+        self.canvas.show_candidate(candidate);self.confirm_button.setEnabled(candidate is not None)
+        self.export_button.setEnabled(candidate is not None and bool(current and current.get('confirmation')))
+        self.out_w.setEnabled(True);self.out_h.setEnabled(True)
+    def confirm_preview(self):
+        row=self.sessions.current(self.session_id);self.sessions.confirm(row['id'],row['revision'],self.actor.text());self.refresh_draft();self.say('已確認目前顯示的完整預覽稿。')
+    def export_preview(self):
+        path,_=QFileDialog.getSaveFileName(self,'保存已確認預覽稿','PREVIEW-design.png','PNG (*.png);;PDF (*.pdf);;SVG (*.svg)')
+        if not path:return
+        artifact=self.sessions.export(self.session_id,path,preview=True);self.refresh_draft();self.say('已保存相同稿件的檔案與完整性憑證：'+artifact['path'])
+    def replay(self):
+        identity=self.artifacts.currentData()
+        if not identity:raise ValueError('尚無已確認並保存的檔案')
+        artifact=self.sessions.replay_artifact(identity)
+        from PySide6.QtCore import QUrl
+        from PySide6.QtGui import QDesktopServices
+        QDesktopServices.openUrl(QUrl.fromLocalFile(artifact['path']))
+    def closeEvent(self,event):
+        if self.worker and self.worker.isRunning():
+            self.close_after_worker=True;self.pause();event.ignore();return
+        self.font_manager.close();event.accept()
