@@ -1492,3 +1492,8 @@ Implemented original_text_observation and existing observation-store integration
 ## 2026-10-19 AI02/03 staged while AI01 source is frozen
 
 Formal RUN-AI-ORIGINAL-TEXT-LINEAGE-001 running against4812d51;415/1581 passed at05:28:53UTC,no failures yet,not complete. Shared schema plus HDBSCAN family,conditioned profiles/grammar and11 test drafts are staged as unapplied .txt under docs/dev/wip/ai-learning-stage. They are not imported by the product or counted as implementation/tests. Source code remains frozen. Next apply and test after full regression; continue all8 packages.
+
+
+## 2026-10-19 staged shared model and lifecycle checks
+
+Unapplied AI02/03 and partial AI06 implementation uses existing SAMPLE/DATASET/TrainingStore,explicit new-purpose permissions,known-lineage separation,immutable artifacts,preview-only activation,scoped feedback and source-use ledgers.19 isolated authored-source checks pass in31.648s; source files remain unapplied pending frozen regression. New sklearn dependencies are pinned and installed only in /tmp isolated target,not the frozen product venv. Full source regression919/1581 passing at05:39UTC,no failure yet;not complete. No user corpus training or production qualification.

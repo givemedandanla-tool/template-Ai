@@ -1,0 +1,30 @@
+{
+  "id": "AI-SHARED-MODEL-STAGED-20261019",
+  "executed_utc": "2026-10-19T05:39:22.805208+00:00",
+  "status": "STAGED_19_CHECKS_PASS_NOT_APPLIED_PRODUCT_EVIDENCE",
+  "tests": 19,
+  "passed": 19,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 31.648,
+  "scope": "Isolated overlay of unapplied .py.txt modules; authored source fixtures only; ephemeral test models not a trained user-corpus deployment",
+  "dependencies": {
+    "scikit-learn": "1.7.2",
+    "numpy": "2.3.5",
+    "scipy": "1.16.3",
+    "joblib": "1.5.2",
+    "threadpoolctl": "3.6.0"
+  },
+  "dependency_location": "/tmp/template-ai-learning-deps; main frozen venv unchanged",
+  "implementation_applied": false,
+  "files": {
+    "requirements-learning.txt": "376e3144ad940d0f9fcb839b460a7c934e2f2cd9844be0346233079058d87a8f",
+    "test_design_family.py.txt": "92c8c888face73847ff61bfbe8167a9b0e041c9cb951c5c77a4e8fc0a1318d3b",
+    "test_design_learning.py.txt": "26f954ee0bd1fbc0cedaab13bb5dab8ce18d1ff1d2f7b7e3dd1a0560f37debad",
+    "design_family.py.txt": "f7195c8e570dc5360dc21a88e36cf1abad1eaafbc64b05ca41c3c602de2b7b11",
+    "design_profiles.py.txt": "7172b311d53865a14f3b82e2e918776bdc8096ae9a534764bc91c58cfc2b15e1",
+    "design_learning.py.txt": "fb6ba38b299e1f0e3f5206adcd87b53e5ac7fb7e11e35bfbab66dbf5247747e9"
+  },
+  "next": "Finish frozen regression,then install/apply these modules and rerun actual product checks;continue synthesis/ranking/desktop/evaluation"
+}

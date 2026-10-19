@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "AI01 current-source full regression running;AI02/03 family and conditioned-profile implementation staged outside frozen source;continue all8",
+  "active_task": "Full AI01 regression running;19 isolated family/profile/dataset/lifecycle draft checks pass;continue all8 with source frozen",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-AI02-03-STAGED-WIP.receipt.json",
   "last_confirmed_commit": "4beb4319073faf027c93374b8a7ca34b3684327e",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/run.json",
@@ -47,7 +47,8 @@
   ],
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
-    "CP-20261019-JOINT-PARAM-PLAN"
+    "CP-20261019-JOINT-PARAM-PLAN",
+    "CP-20261019-AI-SHARED-MODEL-STAGED"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
@@ -1137,12 +1138,16 @@
   },
   "staged_ai_implementation": {
     "path": "docs/dev/wip/ai-learning-stage",
-    "status": "UNAPPLIED_DRAFT_NOT_PRODUCT_IMPLEMENTATION_OR_EXECUTED_TESTS",
+    "status": "UNAPPLIED_DRAFT_WITH19_ISOLATED_MECHANICS_PASS_NOT_PRODUCT_IMPLEMENTATION",
     "files": [
       "design_family.py.txt",
+      "design_learning.py.txt",
       "design_profiles.py.txt",
-      "test_design_family.py.txt"
+      "requirements-learning.txt",
+      "test_design_family.py.txt",
+      "test_design_learning.py.txt"
     ],
-    "next": "After source regression,apply staged modules,install pinned sklearn dependencies,run actual tests and integrate lifecycle/generation/desktop"
+    "next": "After source regression,apply staged modules,install pinned sklearn dependencies,run actual tests and integrate lifecycle/generation/desktop",
+    "evidence": "docs/qa/targeted/AI-SHARED-MODEL-STAGED-20261019.json"
   }
 }
