@@ -112,23 +112,35 @@ class DesignSessions:
             value['intents']=value['layout_undo'].pop();value['layout_revision']+=1
         return self._edit(session_id,expected_revision,request_id,dict(action='UNDO_LAYOUT'),change)
 
+    def resolve_logos(self,graph,width,height):
+        from .logo_store import LogoStore
+        logo_store=LogoStore(self.library);resolved_logos={}
+        for i,entity in enumerate(graph.data['companies']):
+            if not entity['logo_id']:continue
+            label=next((field['value'] for field in graph.data['fields']
+                if field['kind']=='name' and entity['id'] in field['users']),'')
+            match=logo_store.match(entity['id'],label,width,height,selected_id=entity['logo_id'])
+            if match['selected']:resolved_logos['c'+str(i+1)]=dict(match['selected'],design_entity_ref=entity['id'])
+        return resolved_logos
+
     def solve(self,session_id,expected_revision):
         snapshot=self.current(session_id,expected_revision)
         model,_=self.learning.checked_model(snapshot['model_id'])
         if model['revision']!=snapshot['model_revision'] or model['weights_digest']!=snapshot['weights_digest']:
             raise ValueError('Pinned session model differs;do not silently replace it')
         graph=InputGraph(snapshot['input_graph']);cache=self.store.get('DESIGN_RESULT',snapshot.get('result_id') or 'missing')
+        resolved_logos=self.resolve_logos(graph,snapshot['width_mm'],snapshot['height_mm'])
         if (cache and snapshot['result_state']=='CURRENT' and cache['data_revision']==snapshot['data_revision']
                 and cache['layout_revision']==snapshot['layout_revision']):
             if cache.get('selected'):
                 old=_candidate(cache['selected']['serialized'])
-                if old.dependency_stamp==layout_dependency(old.template,{}):return cache
+                if old.dependency_stamp==layout_dependency(old.template,resolved_logos):return cache
         choices=[];attempts=[]
         previous_family=cache['selected']['family_id'] if cache and cache.get('selected') else None
         families=sorted(model['artifact']['profile_model']['families'],
                         key=lambda row:(row['family_id']!=previous_family,row['family_id']))
         for family in families:
-            result=synthesize(family,graph,snapshot['width_mm'],snapshot['height_mm'],snapshot['policy'],snapshot['intents'])
+            result=synthesize(family,graph,snapshot['width_mm'],snapshot['height_mm'],snapshot['policy'],snapshot['intents'],resolved_logos)
             attempts.append(dict(family_id=family['family_id'],status=result['status'],issues=result['issues'],
                                  searched=result['searched'],complete_search=result['complete_search']))
             for index,row in enumerate(result['candidates']):
@@ -170,7 +182,8 @@ class DesignSessions:
         model,_=self.learning.checked_model(session['model_id'])
         if model['weights_digest']!=result['weights_digest']:raise ValueError('Model/source proof is stale')
         candidate=_candidate(result['selected']['serialized'])
-        if candidate.dependency_stamp!=layout_dependency(candidate.template,{}):raise ValueError('Font/asset/engine dependencies changed')
+        logos=self.resolve_logos(InputGraph(session['input_graph']),session['width_mm'],session['height_mm'])
+        if candidate.dependency_stamp!=layout_dependency(candidate.template,logos):raise ValueError('Font/asset/engine dependencies changed')
         return session,result,candidate
 
     def confirm(self,session_id,expected_revision,actor,*,for_production=False):

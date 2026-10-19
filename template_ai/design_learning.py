@@ -84,7 +84,7 @@ class CrossWorkLearning:
                     rect=deepcopy(slot['rect']), source_typography=typography,
                     measured_grapheme_count=grapheme_count(label['text']) if label else None)
                 if binding:
-                    for key in ('container_binding', 'label_binding', 'icon_binding', 'source_alignment', 'source_distribution'):
+                    for key in ('container_binding', 'label_binding', 'icon_binding', 'source_alignment', 'source_distribution', 'source_text_flow'):
                         if key in binding:
                             field[key] = deepcopy(binding[key])
                 fields.append(field)

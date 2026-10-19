@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "Continue all8:original PDF glyphs and source/data-use guards implemented,joint Ridge proposals staged in actual core;focused verification in progress;0complete",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-AI-SHARED-CORE-APPLIED.receipt.json",
-  "last_confirmed_commit": "21d460cbced15bf27758afc589513ece5ba9e00d",
+  "active_task": "Continue all8:native unframed source proposals,exact size/identity Logo adaptation,and Qt multiline implemented;focused checks15+21+19+15+2;desktop/evaluation next",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-AI-NATIVE-GLYPHS-JOINT-WIP.receipt.json",
+  "last_confirmed_commit": "c8718707fb0f6533be733457e81cc1f7ad9073a8",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-ORIGINAL-TEXT-LINEAGE-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -19,9 +19,9 @@
     "docs/dev/AI_TRAINING_DESIGN_TODOS.md"
   ],
   "next_tasks": [
-    "Verify source/lifecycle guards and joint model,then finish native source-region proposals",
-    "Implement Logo/text-flow/generated-instance qualification and actual desktop interaction",
-    "Implement grouped evaluation and scale runs;new full regression required"
+    "Finish production-instance provenance and independent evaluation/lifecycle feedback",
+    "Deliver actual desktop training and editable draft workflow",
+    "Run resumable1000/3000 benchmarks and full regression;real private corpus remains absent"
   ],
   "blocked": [
     {
@@ -48,7 +48,7 @@
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
     "CP-20261019-JOINT-PARAM-PLAN",
-    "CP-20261019-AI-NATIVE-GLYPHS-JOINT-WIP"
+    "CP-20261019-AI-SOURCE-ASSETS-FLOW"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
@@ -1168,5 +1168,33 @@
   ],
   "current_source_verification": "CHANGED_AFTER1581_FORMAL_SOURCE;36_TARGETED_PASS;FULL_CURRENT_REGRESSION_PENDING",
   "current_source_regression_status": "CURRENT_SOURCE_REGRESSION_PENDING",
-  "last_checkpoint_cadence_note": "2026-10-19:shared-core-applied snapshot06:19;next source/joint checkpoint about06:35;~16min interval while integrating parser/guards;deviation retained"
+  "last_checkpoint_cadence_note": "2026-10-19:shared-core-applied snapshot06:19;next source/joint checkpoint about06:35;~16min interval while integrating parser/guards;deviation retained",
+  "ai_source_joint_focused_20261019": {
+    "native_parser_related": {
+      "passed": 19,
+      "log": "/tmp/ai-original-pdf-glyph-tests.log"
+    },
+    "source_lifecycle_guards": {
+      "passed": 15,
+      "log": "/tmp/ai-source-lifecycle-guards-rerun.log"
+    },
+    "joint_family_synthesis": {
+      "passed": 21,
+      "log": "/tmp/ai-joint-regression-tests-rerun.log"
+    },
+    "native_region_auto_integration": {
+      "passed": 26,
+      "note": "Includes7 imported duplicate parser cases;import changed to module alias to avoid duplicate future counts",
+      "log": "/tmp/ai-native-region-integration-tests.log"
+    },
+    "flow_synthesis_session": {
+      "passed": 15,
+      "log": "/tmp/ai-flow-synthesis-session-tests.log"
+    },
+    "whole_logo": {
+      "passed": 2,
+      "log": "/tmp/ai-whole-logo-synthesis-tests-rerun.log"
+    },
+    "scope": "Owned/synthetic mechanism evidence only;not summed as unique full regression;new tests after these runs still need regression"
+  }
 }

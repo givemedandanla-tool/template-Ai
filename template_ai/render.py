@@ -157,7 +157,11 @@ def paint_candidate(p: QPainter, candidate: Candidate, preview: bool = False) ->
                 p.drawText(QRectF(0, 0, rect.width() / factor, rect.height() / factor), Qt.AlignCenter, item.text or "Logo")
                 p.restore()
         elif item.text:
-            draw_text(p, rect, item.text, s.font, s.size_pt, item.scale, s.align, s.color, s.font_style, s.font_asset,item.tracking_mm)
+            if s.text_flow:
+                from .design_text_flow import draw_flow
+                draw_flow(p,rect,item.text,s,item.scale,item.tracking_mm)
+            else:
+                draw_text(p, rect, item.text, s.font, s.size_pt, item.scale, s.align, s.color, s.font_style, s.font_asset,item.tracking_mm)
     if preview:
         # 附註位於矩形本體外，矩形內的幾何與比例不改動。
         document,factor,_=preview_footer(candidate)

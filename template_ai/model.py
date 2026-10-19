@@ -76,6 +76,7 @@ class Slot:
     tracking_min_mm: float = 0.0
     tracking_max_mm: float = 0.0
     distribution_approval: dict | None = None
+    text_flow: dict | None = None
 
 
 @dataclass
@@ -100,7 +101,10 @@ class Template:
     safe_margin_mm: float = 0.0
 
     def to_dict(self) -> dict:
-        return asdict(self)
+        result=asdict(self)
+        for slot in result['slots']:
+            if slot.get('text_flow') is None:slot.pop('text_flow',None)
+        return result
 
     @classmethod
     def from_dict(cls, data: dict) -> Template:

@@ -102,7 +102,7 @@ class SourceTypographyReview:
             if fresh!=plan:raise ValueError('Source/font/facts/binding version changed during review')
             value={k:deepcopy(v) for k,v in plan.items() if k not in ('id','expected_revision','digest','font_asset')}
             value.update(state='APPROVED',actor=actor)
-            for key in ('container_binding','label_binding','icon_binding','source_alignment','source_distribution'):
+            for key in ('container_binding','label_binding','icon_binding','source_alignment','source_distribution','source_text_flow'):
                 if key in plan['review']:value[key]=deepcopy(plan['review'][key])
             return self.store._write('DESIGN_SOURCE_BINDING',plan['id'],value,plan['expected_revision'],
                                      'source_field_typography_explicitly_bound_by_expert')

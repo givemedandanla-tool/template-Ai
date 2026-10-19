@@ -85,6 +85,7 @@ def learn_profiles(family_artifact, examples):
                     frame=frame, source_font_ref=field.get('source_typography', {}).get('font_asset_ref'),
                     align=field.get('source_alignment', 'UNKNOWN'),
                     distribution=field.get('source_distribution', 'UNKNOWN'),
+                    source_text_flow=deepcopy(field.get('source_text_flow')),
                     label_binding=deepcopy(field.get('label_binding', {'status':'UNKNOWN'})),
                     icon_binding=deepcopy(field.get('icon_binding', {'status':'UNKNOWN'})),
                     container_basis=basis, joint=metrics,

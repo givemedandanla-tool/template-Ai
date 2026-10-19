@@ -47,7 +47,7 @@ def _font_options(profile, key, width, height, value=None, policy=None):
             candidate=dict(font_asset=deepcopy(asset),size_pt=vector['source_pt'],scale=vector['horizontal_scale'],
                 tracking_mm=vector['tracking_mm'],width_mm=sample['frame'][2]*width,
                 height_mm=sample['frame'][3]*height,source_dimension_mm=sample['dimensions_mm'],
-                label_binding=deepcopy(sample['label_binding']),source_ref=sample['example_id'])
+                label_binding=deepcopy(sample['label_binding']),text_flow=deepcopy(sample.get('source_text_flow')),source_ref=sample['example_id'])
             identity=digest({k:v for k,v in candidate.items() if k!='source_ref'})
             if identity not in options:options[identity]=dict(candidate,id=identity,support=0)
             options[identity]['support']+=1
@@ -117,10 +117,31 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
     if any(by_render[intent['subject']]['owner_port']!=by_render[intent['object']]['owner_port'] for intent in intents):
         raise ValueError('Cross-owner relative editing needs separately supported group correspondence')
     roles={role['key']:role for role in profile['roles']};missing=[];options=[]
+    people,companies,compiled_logos=graph.compile()
+    logos=deepcopy(logos if logos is not None else compiled_logos)
+    company_entities={row['id']:row for row in graph.data['companies']}
+    for fact in facts:
+        logo_key=fact['owner_port']+':logo:0'
+        if fact['kind']=='company' and logo_key in roles:
+            fact['kind']='logo';fact['role_key']=logo_key
+    base_scope='CURRENT_INPUT_PREVIEW_NOT_GLOBAL_TEMPLATE_OR_FORMAL_APPROVAL'
+
     for fact in facts:
         if fact['role_key'] not in roles:
             missing.append(dict(render_id=fact['render_id'],reason='UNSUPPORTED_ROLE_OR_REPEAT_COUNT'));continue
-        rows=_font_options(profile,fact['role_key'],width,height,fact['value'],policy)
+        if fact['kind']=='logo':
+            from .logo_assets import errors as logo_errors
+            asset=logos.get(fact['owner_port']);entity=company_entities.get(fact['entity_id'],{})
+            if (not asset or entity.get('logo_id')!=asset.get('id') or asset.get('company')!=fact['value']
+                    or asset.get('design_entity_ref')!=fact['entity_id']
+                    or abs(asset.get('width_mm',0)-width)>1e-5 or abs(asset.get('height_mm',0)-height)>1e-5
+                    or logo_errors(asset)):
+                missing.append(dict(render_id=fact['render_id'],reason='EXACT_WHOLE_COMPANY_SIZE_LOGO_REQUIRED'));continue
+            frame=roles[fact['role_key']]['frame_centre']
+            configuration=dict(id=digest([asset,frame,width,height]),logo=deepcopy(asset),font_asset=None,
+                width_mm=frame[2]*width,height_mm=frame[3]*height,scale=1.,tracking_mm=0.,support=roles[fact['role_key']]['support'])
+            rows=[configuration]
+        else:rows=_font_options(profile,fact['role_key'],width,height,fact['value'],policy)
         if not rows:missing.append(dict(render_id=fact['render_id'],reason='SOURCE_JOINT_TYPOGRAPHY_OR_FONT_IDENTITY_UNKNOWN'))
         options.append(rows)
     base=dict(version=VERSION,family_id=profile['family_id'],input_digest=digest(graph.data),
@@ -129,11 +150,9 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
     if missing:
         return dict(base,status='SOURCE_EVIDENCE_REQUIRED',issues=missing,candidates=[],searched=0,
                     complete_search=False)
-    people,companies,compiled_logos=graph.compile()
-    logos=deepcopy(logos if logos is not None else compiled_logos)
-    # Whole Logo graphics cannot be silently omitted or fabricated as text.
-    if any(role['kind']=='logo' for role in profile['roles']) or any(row['logo_id'] for row in graph.data['companies']):
-        return dict(base,status='ASSET_ADAPTATION_REQUIRED',issues=[dict(reason='WHOLE_SIZE_SPECIFIC_LOGO_RULE_REQUIRED')],
+    represented={fact['owner_port'] for fact in facts if fact['kind']=='logo'}
+    if any(company['logo_id'] and 'c'+str(i+1) not in represented for i,company in enumerate(graph.data['companies'])):
+        return dict(base,status='ASSET_ADAPTATION_REQUIRED',issues=[dict(reason='SELECTED_LOGO_NOT_REPRESENTED_BY_FAMILY')],
                     candidates=[],searched=0,complete_search=False)
     combinations=math.prod(len(row) for row in options);candidates=[];attempts=[]
     for selected in islice(product(*options),budget):
@@ -141,6 +160,16 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
         try:
             for fact,configuration in zip(facts,selected):
                 role=roles[fact['role_key']];frame=role['frame_centre'];asset=configuration['font_asset']
+                if fact['kind']=='logo':
+                    rid=fact['render_id'];w,h=configuration['width_mm'],configuration['height_mm']
+                    x,y=kiwi.Variable(rid+'-x'),kiwi.Variable(rid+'-y');variables[rid]=(x,y,w,h)
+                    for constraint in (x>=margin,y>=margin,x+w<=width-margin,y+h<=height-margin):solver.addConstraint(constraint)
+                    solver.addConstraint((x==frame[0]*width)|kiwi.strength.strong)
+                    solver.addConstraint((y==frame[1]*height)|kiwi.strength.strong)
+                    slots.append(Slot('logo',fact['owner_port'],Rect(frame[0]*width,frame[1]*height,w,h),id=rid))
+                    measurements.append(dict(render_id=rid,text=fact['value'],scale=1.,logo=configuration['logo'],
+                        width_mm=w,height_mm=h,configuration_id=configuration['id']))
+                    continue
                 family=asset['families'][0];style=(asset.get('styles') or [''])[0]
                 label=configuration['label_binding']
                 if label.get('status')!='CONFIRMED' or label.get('kind') not in ('NO_FIXED_LABEL','DYNAMIC_PREFIX'):
@@ -153,6 +182,12 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                 tw,th,errors=text_geometry(family,configuration['size_pt'],display,style,asset,configuration['tracking_mm'])
                 if errors:failure='FONT_MEASUREMENT_UNVERIFIED';break
                 w,h=configuration['width_mm'],configuration['height_mm']
+                flow=configuration.get('text_flow')
+                if flow:
+                    from .design_text_flow import shape_flow
+                    shaped=shape_flow(display,family,configuration['size_pt'],configuration['scale'],w,asset,
+                        style,configuration['tracking_mm'],flow,fact['kind'])
+                    tw,th=shaped['width_mm']/configuration['scale'],shaped['height_mm']
                 if tw*configuration['scale']>w+1e-7 or th>h+1e-7:failure='MEASURED_TEXT_EXCEEDS_JOINT_CONFIGURATION';break
                 rid=fact['render_id'];x,y=kiwi.Variable(rid+'-x'),kiwi.Variable(rid+'-y');variables[rid]=(x,y,w,h)
                 for constraint in (x>=margin,y>=margin,x+w<=width-margin,y+h<=height-margin):solver.addConstraint(constraint)
@@ -161,7 +196,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
                 slots.append(Slot(fact['kind'],fact['owner_port'],Rect(frame[0]*width,frame[1]*height,w,h),
                     index=fact['index'],font=family,font_style=style,size_pt=configuration['size_pt'],
                     min_scale=configuration['scale'],font_asset=deepcopy(asset),id=rid,tracking_mm=configuration['tracking_mm'],
-                    tracking_min_mm=configuration['tracking_mm'],tracking_max_mm=configuration['tracking_mm']))
+                    tracking_min_mm=configuration['tracking_mm'],tracking_max_mm=configuration['tracking_mm'],text_flow=deepcopy(flow)))
                 measurements.append(dict(render_id=rid,text=display,width_mm=tw,height_mm=th,
                     scale=configuration['scale'],configuration_id=configuration['id']))
             if failure:
@@ -219,7 +254,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
             errors=template_errors(template)
             if errors:
                 attempts.append(dict(reason='WHOLE_TEMPLATE_CHECK_FAILED',details=errors));continue
-            items=[Placed(slot,measurement['text'],measurement['scale'],slot.tracking_mm)
+            items=[Placed(slot,measurement['text'],measurement['scale'],slot.tracking_mm,measurement.get('logo'))
                    for slot,measurement in zip(slots,measurements)]
             candidate=Candidate(template,items,['新學習實例尚待正式來源／模型資格核實'],
                 score=-sum(abs(slot.rect.x-roles[fact['role_key']]['frame_centre'][0]*width)

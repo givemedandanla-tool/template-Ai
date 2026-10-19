@@ -17,7 +17,7 @@ from .source_links import verify_source
 from .training_store import digest
 from .semantic_fields import recognize
 
-ANALYSER_VERSION='source-hypotheses-6-logo-component-evidence'
+ANALYSER_VERSION='source-hypotheses-7-original-glyph-size-clues'
 
 
 def vector_objects(source,assets):
@@ -76,6 +76,20 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
         value=node.get('aria-label') or (''.join(node.itertext()) if node.tag.rsplit('}',1)[-1]=='text' else '')
         rect=bounds.get(node.get('id'))
         if value.strip() and rect:texts.append((node.get('id'),value.strip(),rect))
+    from .source_region_hypotheses import original_pdf_texts,region_hypotheses,size_note
+    native_texts,native_evidence=original_pdf_texts(source)
+    # Exact original runs supplement outlined derivatives; no proximity-based identity merge.
+    for native,value,rect in native_texts:
+        if any(contains(bounds[node.get('id')],rect) for node in logos):continue
+        if any(value==old_value and contains(old_rect,rect,tolerance=.5) for _,old_value,old_rect in texts):continue
+        texts.append((native,value,rect))
+    region_evidence=region_hypotheses(texts,page)
+    if regions==[('page-region-hypothesis',page)] and region_evidence['candidates']:
+        proposed=[(row['key'],Rect(**row['crop'])) for row in region_evidence['candidates']]
+        content=[row for row in texts if not size_note(row[1])]
+        # Uncovered or ambiguously covered data keeps the whole-page fallback.
+        if all(sum(contains(crop,row[2]) for _,crop in proposed)==1 for row in content):
+            regions=proposed
     from .source_text_evidence import text_evidence
     text_proofs=text_evidence(source,elements,bounds,logo_members)
     result=[]
@@ -103,7 +117,8 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             if kind=='company':owner='c'+str(len(companies)+1);companies.append(owner)
             slot=Slot(kind,owner,local_rect,index=index,id=identity,required=kind=='name')
             slots.append(asdict(slot))
-            source_map[identity]=dict(svg_object_id=native,source_hash=source['hash'],svg_hash=source['file_hashes']['svg'])
+            source_map[identity]=dict(svg_object_id=native,source_hash=source['hash'],svg_hash=source['file_hashes']['svg'],
+                original_run_ref=native if native.startswith('PDF_GLYPH_RUN:') else None)
             observations.append(dict(id='obs-'+identity,slot_id=identity,text=value,object_type='TEXT',classification='FIELD',region=asdict(rect),prior_prediction='UNCONFIRMED_SOURCE_DERIVATIVE',semantic=semantic))
         for node in logos:
             rect=bounds[node.get('id')]
@@ -121,11 +136,13 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             company_bindings={'p1':companies} if name_used else {},visual_confirmed=False,
             analysis_version=ANALYSER_VERSION,review_state='AI_PENDING_REVIEW',
             evidence=dict(method='INKSCAPE_TRANSFORMED_BOUNDS_AND_SOURCE_LABELS',native_illustrator_mapping='UNKNOWN',
-                physical_size='SOURCE_GEOMETRY_HYPOTHESIS_REQUIRES_CONFIRMATION',font_size='DEFAULT_REQUIRES_SOURCE_REVIEW',
+                physical_size='SOURCE_GEOMETRY_HYPOTHESIS_REQUIRES_CONFIRMATION',
+                original_glyph_analysis=native_evidence,unframed_region_hypotheses=region_evidence,font_size='DEFAULT_REQUIRES_SOURCE_REVIEW',
                 confidence='UNVALIDATED_HEURISTIC',issues=sorted(set(clues)),oversized_text=oversized,
                 object_ids=[row[0] for row in local],source_unchanged=True,
                 semantic_model=model_context or dict(state='NONE'),
                 slot_source_map=source_map,
                 text_object_evidence={identity:text_proofs[mapping['svg_object_id']] for identity,mapping in source_map.items() if mapping['svg_object_id'] in text_proofs},
                 semantic_candidates={o['id']:o['semantic'] for o in observations if o.get('semantic')})))
+    verify_source(source['current_path'],source['hash'])
     return result
