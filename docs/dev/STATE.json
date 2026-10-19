@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "Confirmed training plan updated:same-template swaps,joint parameter adaptation and stable defaults;publication checkpoint pending",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-SWAP-DEFAULT-PLAN.receipt.json",
-  "last_confirmed_commit": "6fa5badf6465d2d1bf19798fcec1af7259180e75",
+  "active_task": "Confirmed same-template swap,joint parameter and stable-default requirements persisted;implementation/model training still pending",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-SWAP-DEFAULT-DESIGN-VERIFIED.receipt.json",
+  "last_confirmed_commit": "978cf42779c06551fcc8559eff8315529c3e03b6",
   "latest_evidence_run": "docs/evidence/runs/RUN-AI-OBSERVATION-FOUNDATION-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -47,8 +47,7 @@
   ],
   "pending_remote": [
     "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP",
-    "CP-20261019-JOINT-PARAM-PLAN",
-    "CP-20261019-SWAP-DEFAULT-DESIGN-VERIFIED"
+    "CP-20261019-JOINT-PARAM-PLAN"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-JOINT-PARAM-BEGIN.json",
@@ -419,7 +418,7 @@
   "pending_revalidation_ids": [],
   "last_formal_validation": "docs/evidence/runs/RUN-REMAINING28-CURRENT-008/run.json",
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
-  "publication_status": "NEW_CONFIRMED_SWAP_DEFAULT_TRAINING_DESIGN_CHECKED_PENDING_REMOTE_VERIFICATION",
+  "publication_status": "CONFIRMED_SWAP_DEFAULT_TRAINING_DESIGN_AND_CHECKPOINT_REMOTE_VERIFIED",
   "cloud_environment_configuration": {
     "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
     "receipt": "docs/dev/CLOUD_CONFIG_DRAFT_RECEIPT.json",
@@ -1122,5 +1121,6 @@
     "joint_parameter_learning": "USER_CONFIRMED",
     "background_automatic_adoption": "OPEN",
     "functional_tests_for_new_policy": "NOT_EXECUTED"
-  }
+  },
+  "swap_default_checkpoint_interval_seconds": 400.238
 }
