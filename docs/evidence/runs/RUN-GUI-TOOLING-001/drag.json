@@ -15,5 +15,9 @@
       "Code Example Bad": "drag handle only",
       "Severity": "High"
     }
-  ]
+  ],
+  "project_review": {
+    "accepted": "Dragging requires a usable point/click or keyboard alternative",
+    "status": "Existing relative-position dropdown already reuses core and has GUI regression coverage;retain it in the modern workspace and separately verify keyboard usability. Concept tool does not implement production dragging."
+  }
 }

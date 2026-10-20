@@ -1,13 +1,11 @@
-# Template AI 目前接續點
+# Template AI 當前接續點（完整005待驗）
 
-先跑 `python tools/resume_status.py`。本輪先完成舊內部輸入／新學習稿件接線，再接入能設計現代直觀面板的工具及研究商用／開源方案。私人作品留本地、網頁／手機／EXE延後、不合併main、不擅自多代理。
+本輪內部輸入整合CORE-089九條，1779原測試保留、新19、總1798／230模組。最新STATE與接口表為準。
 
-CORE-089契約9條／原1779測試保留／新19／總1798、230模組待完整回歸。原164已完成列暫轉待重驗，通過後依baseline恢復並加CORE089；原AI8／50完整真實資格仍8部分／0完整。接口表見INPUT_LEARNING_INTERFACE_MAP.md。
+完整004來源3634393已完成1798條：1797PASS／1FAIL，小視窗預覽外框可見高度未達原驗收；capture因測試未全過停止，不採用。詳細INPUT-FULL-004-SMALL-WINDOW-FAILED.log。實際重現：canvas兩側因內容寬而被裁，捲動定位把下框剛好放在viewport exclusive邊界，visibleRegion僅剩上框1px。改navigate_mode的外框定位邊距加2px，保留原尺寸標準，再加真正canvas viewport可見高度檢查。不是提高等待時間或移除舊驗收。
 
-完整001在300PASS主動中斷補Logo host，002在953PASS主動中斷補身分／畫面接線。003在1082完成／1081PASS／1ERROR主動中斷：local_acceptance真實合成端到端發現結果metadata超過1MiB。原因是完整候選重複存同一筆；已改不可變DESIGN_CHOICE加hash參照、保留原1MiB限制，候選變更拒絕選用且保留現稿。2條本地來源端到端PASS，另外29條輸入／session／feedback PASS。第一個29條指令漏PYTHONPATH有3載入錯誤，保留紀錄，不掩蓋成PASS。
+最新viewport／input／navigation局部38條PASS（INPUT-VIEWPORT-38-001.log）；現在建立CP-20261020-INPUT-VIEWPORT-SOURCE、原生Git讀回，啟動完整RUN-INPUT-INTEGRATION-ALL-005。原始001／002主動中斷、003metadata過大失敗保留，003不可變候選hash參照已在004本地端到端PASS。
 
-下一個完整run RUN-INPUT-INTEGRATION-ALL-004：先新checkpoint／原生Git讀回凍結來源，再啟動。完整證據須1798全PASS、230健康模組、capture0、來源未變、全部附件hash正確。不可再改來源，除非有實際失敗需修正。文件與GUI工具驗證可獨立繼續。
+GUI skill／Qt Designer／QUiLoader／Xvfb／xdotool接入及乾淨工具重建已PASS；GUI_PANEL_DESIGN_PLAN_20261020.md、GUI_TOOLING_READINESS_20261020.md與INTERNAL_DRAFT_INPUT_QUICK_GUIDE.md已整理。Concept不是正式新面板；原生QUiLoader可預覽、Designer快捷預覽未證實。既有相對位置選單保留，避免重複開發。
 
-GUI：docs/dev/gui_tooling/SKILL.md 專案適配層＋UI/UX Pro Max MIT固定版已本地接入；Qt Designer6.8.3／Xvfb／xdotool真實開窗及QUiLoader輸入／回復PASS。首次Designer檢查錯把MDI檔名當原生視窗title，第二次無window manager焦點失敗，均保留，第三次以owned windowfocus通過。Concept .ui只作設計工具驗證，未接正式核心。RUN-GUI-TOOLING-001是工具證據目錄，非1798正式回歸或真實新手訪測。商用／開源研究及方案接續保存。
-
-固定舊款式／已確認稿保留版本；固定模板多尺寸批次維持舊路徑，學習稿按實際尺寸個別驗證，不混稱家族批次。PNG/PDF/JPG維持。詳情／限制與最終證據以本輪final report為準。空間曾滿，只刪已hash核對且GitHub收據REMOTE_VERIFIED的舊ZIP快取；記錄INPUT-ENVIRONMENT-SPACE-RECOVERY-20261020.json。GitHub內容／原始來源／永久證據保留，不聲稱原ZIP位元可還原。
+私人資料留本地；網頁／手機／EXE延後，不合併main。原AI8包50完整真實資格仍8部分／0完整。171登錄原164完成暫待完整重驗，未把局部當完整PASS。完成005後才執行/tmp/adopt_input_evidence.py、/tmp/finalize_input_gui_docs.py，驗證當前來源／完整附件，再保存最終GitHub checkpoint。

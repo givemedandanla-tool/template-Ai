@@ -2314,8 +2314,12 @@ class MainWindow(QMainWindow):
                 # QGraphicsView's input-method focus rectangle is not the whole
                 # canvas. Reveal its actual widget rectangle in page coordinates.
                 centre=canvas.mapTo(scroll.widget(),canvas.rect().center())
-                xmargin=max(0,min(canvas.width()//2,scroll.viewport().width()//2-12))
-                ymargin=max(0,min(canvas.height()//2,scroll.viewport().height()//2-12))
+                # Include the outer frame: QRect.center() rounds down, while
+                # ensureVisible() treats the far edge as exclusive. Without
+                # padding a wide canvas can lose both side borders and its
+                # bottom border at the scroll boundary.
+                xmargin=max(0,min(canvas.width()//2+2,scroll.viewport().width()//2-12))
+                ymargin=max(0,min(canvas.height()//2+2,scroll.viewport().height()//2-12))
                 scroll.ensureVisible(centre.x(),centre.y(),xmargin,ymargin)
             QTimer.singleShot(0,self,reveal)
 

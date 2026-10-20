@@ -45,7 +45,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261020-INPUT-VIEWPORT-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-BASELINE.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-FINAL.json",
@@ -423,7 +425,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-TEMPLATE-EDITOR-ALL-006",
+  "planned_evidence_run": "RUN-INPUT-INTEGRATION-ALL-005",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -1389,7 +1391,7 @@
   "editor_tools_final_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
   "input_integration_contract": "docs/dev/INPUT_LEARNING_INTEGRATION_CONTRACT.json",
   "input_integration_progress": {
-    "status": "CANDIDATE_STORAGE_FIXED_AWAITING_COMPLETE_RUN",
+    "status": "VIEWPORT_FRAME_SCROLL_FIXED_AWAITING_COMPLETE_RUN",
     "contract": "INPUT-LEARNING-INTEGRATION-20261020",
     "baseline": "docs/dev/progress/PROGRESS-20261020-INPUT-INTEGRATION-BASELINE.json",
     "target": "CORE-089",
@@ -1405,8 +1407,13 @@
       "docs/qa/plans/INPUT-FULL-002-INTERRUPTED.json"
     ],
     "targeted_regression": "docs/qa/plans/INPUT-EXPANDED-91-002.log",
-    "pending_run": "RUN-INPUT-INTEGRATION-ALL-004",
+    "pending_run": "RUN-INPUT-INTEGRATION-ALL-005",
     "targeted_storage_tests": 29,
-    "local_end_to_end_tests": 2
+    "local_end_to_end_tests": 2,
+    "failed_full_runs": [
+      "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-004/run.json"
+    ],
+    "viewport_targeted_tests": 38,
+    "viewport_targeted_status": "PASS"
   }
 }

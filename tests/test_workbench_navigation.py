@@ -174,6 +174,7 @@ class WorkbenchNavigationTests(unittest.TestCase):
         self.assertTrue(wait_for_gui(lambda:w.output_canvas.visibleRegion().boundingRect().height()>=180,2))
         visible=w.output_canvas.visibleRegion().boundingRect()
         self.assertGreaterEqual(visible.height(),180);self.assertGreaterEqual(visible.width(),240)
+        self.assertGreaterEqual(w.output_canvas.viewport().visibleRegion().boundingRect().height(),180)
         self.assertTrue(w.rect().contains(w.return_work_button.mapTo(w,w.return_work_button.rect().center())))
         if hasattr(w,'output_page_scroll'):
             w.output_page_scroll.ensureWidgetVisible(w.preview_button);APP.processEvents();self.assertFalse(w.preview_button.visibleRegion().isEmpty())

@@ -11,13 +11,11 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
-## 當前：內部輸入整合回歸與 GUI 設計工具
+## 當前：內部輸入整合完整005待驗／GUI工具已接入
 
-以 STATE／ACTIVE_DEVELOPMENT_HANDOFF 為準。CORE-089（9條）接舊輸入到學習稿件，原1779測試保留、新19，完整1798待最新來源回歸；001／002主動中斷，003發現候選metadata過大而中斷並保留失敗。候選改為不可變獨立內容／hash參照，真實本地端到端2條及相關29條已PASS；不可把局部當完整通過。
+以STATE／ACTIVE_DEVELOPMENT_HANDOFF為準。CORE-089九條／原1779測試保留、新19、1798／230模組。完整004共1797PASS／1小視窗可視外框FAIL，未採用；已修正捲動邊界並保留原驗收，下一輪005待新來源完整重跑。001／002中斷、003metadata失敗及004小視窗失敗均保留，不能混作通過。
 
-GUI 設計時使用專案 skill [template-ai-gui](docs/dev/gui_tooling/SKILL.md)，再按需讀上游 UI/UX Pro Max；MIT 固定版／hash／LICENSE保存在gui_tooling。`python docs/dev/gui_tooling/bootstrap_gui.py --with-x11` 可重建本地技能入口及隔離的Linux視覺工具。Qt Designer已實際打開概念稿，原生QUiLoader輸入／錯誤恢復通過；概念稿未連正式排版，不代表已全面重做產品面板。網頁／手機／EXE延後；不得恢復客戶字級／字寬／單雙排控制。
-
-原AI8包50條完整真實資格仍8部分／0完整；原75主題與真實Windows／印前限制保留。新工具與子驗收不重算工作包。
+GUI設計使用專案skill [template-ai-gui](docs/dev/gui_tooling/SKILL.md)，再按需讀UI/UX Pro Max固定MIT版；hash／LICENSE保存在gui_tooling。bootstrap_gui.py --with-x11可重建本地入口與隔離Linux工具；Qt Designer實際開窗、QUiLoader原生互動及乾淨工具重建已PASS。概念稿不是正式新面板；完整方案見GUI_PANEL_DESIGN_PLAN_20261020.md。原AI8包50完整真實資格仍8部分／0完整，網頁／手機／EXE延後。
 
 ## 2026-10-19最新實作入口
 
