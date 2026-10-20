@@ -314,13 +314,16 @@
         "fingerprint": "1194dc3037641786a4e6baf8d7c6cd1535bdddb71aea7e96495a51debbd2a513"
       },
       "profile": "final-scan-application-003",
-      "status": "CONFIRMED_DEFECT",
+      "status": "FIXED_AND_VERIFIED",
       "severity": "P0_CONFIRMED_STALE_DRAFT_OVERWRITE",
-      "review": "CONFIRMED: apply does not handle a removed draft and only checks the draft before the confirmation event loop. Three real-dialog authored cases reproduce one AttributeError and two overwritten-draft failures. BUG-DRAFT-CONTEXT-007; fix pending until the current unchanged-source full run completes.",
+      "review": "Corrected oracle reaches confirmation exactly once: source92977b77 fails3; fixed policy passes3. Both removed-draft and after-confirmation exact draft id/content checks now protect the active draft. Related suite rerun pending; first invalid fixture does not count as proof.",
       "evidence": [
-        "text-policy-context-before.log"
+        "text-policy-context-before-corrected.log",
+        "text-policy-context-after-corrected.log",
+        "root7-isolated-before-source.json"
       ],
-      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source.",
+      "fix_commit": "bb7f65a9"
     },
     {
       "id": "N-application-03037",
@@ -336,13 +339,16 @@
         "fingerprint": "dc835c2d7339cff91e7a63f000dfd3a8ddac7e49dccd8971e918f0d84f550758"
       },
       "profile": "final-scan-application-003",
-      "status": "CONFIRMED_DEFECT",
+      "status": "FIXED_AND_VERIFIED",
       "severity": "P0_CONFIRMED_STALE_DRAFT_OVERWRITE",
-      "review": "CONFIRMED: apply does not handle a removed draft and only checks the draft before the confirmation event loop. Three real-dialog authored cases reproduce one AttributeError and two overwritten-draft failures. BUG-DRAFT-CONTEXT-007; fix pending until the current unchanged-source full run completes.",
+      "review": "Corrected oracle reaches confirmation exactly once: source92977b77 fails3; fixed policy passes3. Both removed-draft and after-confirmation exact draft id/content checks now protect the active draft. Related suite rerun pending; first invalid fixture does not count as proof.",
       "evidence": [
-        "text-policy-context-before.log"
+        "text-policy-context-before-corrected.log",
+        "text-policy-context-after-corrected.log",
+        "root7-isolated-before-source.json"
       ],
-      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source."
+      "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source.",
+      "fix_commit": "bb7f65a9"
     },
     {
       "id": "N-application-03293",

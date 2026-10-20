@@ -1,13 +1,19 @@
 {
   "id": "BUG-DRAFT-CONTEXT-007",
-  "status": "IMPLEMENTED_TARGETED_PENDING",
+  "status": "FIX_IMPLEMENTED_CORRECTED_ORACLE3PASS_RELATED_RERUN_PENDING",
   "before": {
     "FAIL": 2,
     "ERROR": 1,
     "PASS": 0
   },
-  "evidence": "text-policy-context-before.log",
+  "evidence": "text-policy-context-before-corrected.log",
   "severity": "P0_STALE_DRAFT_OVERWRITE",
   "fix": "Check exact draft id/content/tab both before and after confirmation; missing draft gives existing plain rejection; no broad exception swallowing",
-  "next": "Apply prepared patch after unchanged-source full005 completes, run real-dialog3 and existing text policy/related UI tests. Final overall audit remains OPEN."
+  "next": "Apply prepared patch after unchanged-source full005 completes, run real-dialog3 and existing text policy/related UI tests. Final overall audit remains OPEN.",
+  "after": {
+    "PASS": 3
+  },
+  "corrected_after_evidence": "text-policy-context-after-corrected.log",
+  "rejected_attempt": "First before/after fixture had tracking above its max and never reached confirmation. Those 2 comparison failures do not prove overwrite; retained as rejected fixture attempt. Corrected cases explicitly assert confirmation callback exactly once and real registered replacement draft navigation.",
+  "isolated_before": "root7-isolated-before-source.json"
 }
