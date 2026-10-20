@@ -1,25 +1,25 @@
 {
   "status": "RUNNING",
   "source_base": "83908944a907804a18a1d85feadddbc780644e4a",
-  "phase": "Full005 on92977b77 running; final native19PASS; remaining static contracts under review",
+  "phase": "Source-stable bounded type supplementation and final evidence preparation",
   "original_diagnostics": 11798,
-  "classified_tool_limitations": 888,
-  "unreviewed": 2453,
+  "classified_tool_limitations": 1824,
+  "unreviewed": 692,
   "confirmed_defects": 7,
   "fixed_defects": 7,
   "new_test_execution": null,
-  "original_1850_rerun": "Full004 all1877 assertions PASS but one runtime error, explicitly FAIL; root5 now repaired with6 targeted PASS; final complete rerun pending",
-  "next": "Calibrated exact expression AST type observation; remaining original diagnostics, fault/entry matrices, final1889 stock regression and restorable local delivery remain pending",
+  "original_1850_rerun": "Full005 source92977b77:1886PASS/243healthy/0runtime; root7 final1889 rerun pending",
+  "next": "Finish remaining type/source contracts; apply prepared capture helper fix after observer stops; final stock1889 and all scan profiles; restore-verified local bundle",
   "provenance": "LOCAL_ONLY",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
   "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
   "diagnostic_statuses": {
-    "TYPE_CONTRACT_GAP": 6794,
+    "TYPE_CONTRACT_GAP": 8555,
     "TOOL_LIMITATION": 1824,
     "FIXED_AND_VERIFIED": 727,
-    "UNREVIEWED": 2453
+    "UNREVIEWED": 692
   },
-  "fixed_defects_pending_full_regression": 2,
+  "fixed_defects_pending_full_regression": 1,
   "new_targeted_tests": {
     "PASS": 6
   },
@@ -115,5 +115,26 @@
     "original_test_ids_preserved": null,
     "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
     "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
-  }
+  },
+  "precise_ast_observation_001": {
+    "PASS": 387,
+    "healthy_modules": 141,
+    "runtime_errors": 0,
+    "observer_errors": 0,
+    "observed_original_occurrences": 1640,
+    "business_ast_equivalence_verified": true
+  },
+  "typed_contracts_newly_linked": 1220,
+  "active_supplement": "runtime-ast-observations-003:1502 remaining tests, worker1, immutable worker/points copies and per-worker SHA. 002 partial rejected because original helper edited mid-run.",
+  "gui_capture": {
+    "passed_jobs": 26,
+    "pending_exact_helper_fix": 1,
+    "source_unchanged": true,
+    "private_authored_workspaces": "Ignored .cache only"
+  },
+  "governance": {
+    "current": "BLOCKED_SOURCE_PROVENANCE",
+    "reason": "Historical evidence stale after actual fixes; new formal evidence requires genuine remote-read source JSON; cannot fabricate or trigger unknown-cost workflows"
+  },
+  "snapshot_commit": "ac49a1050adc0e0718ea1dbf0e43d62710582dcc"
 }

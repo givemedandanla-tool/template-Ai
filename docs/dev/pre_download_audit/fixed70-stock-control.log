@@ -1,0 +1,10 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tools/capture_fixed70_ten.py", line 78, in <module>
+    capture(parser.parse_args().artifacts_dir)
+  File "/workspace/template-Ai/tools/capture_fixed70_ten.py", line 50, in capture
+    library=LogoLibraryDialog(logo.host_window);library.views.setCurrentIndex(2)
+                              ^^^^^^^^^^^^^^^^
+AttributeError: 'LogoWorkflowGuiTests' object has no attribute 'host_window'

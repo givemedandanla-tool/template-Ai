@@ -1,0 +1,12 @@
+{
+  "id": "AUDIT-REGRESSION-TOOL-003",
+  "status": "CONFIRMED_FIX_PREPARED",
+  "introduced_by": "045517e Qt host rename",
+  "component": "Local authored capture helper, not the product window",
+  "cause": "LogoWorkflowGuiTests is a plain unittest.TestCase and still owns window; only actual Qt widgets use host_window. Two fixture references were over-renamed.",
+  "before": "gui-capture-audit-001/20-capture_fixed70_ten.log",
+  "fix": "prepared-fixes/AUDIT-REGRESSION-TOOL-003.patch",
+  "apply_after": "Unchanged-source observation003 completes; avoid changing a source hash during a running audit",
+  "original_sha256": "7d9f50909e71288b2f380ddef00a70d32984719c6329404b2294159febbe5112",
+  "corrected_sha256": "e74b62705bc28760c68f55e99d6a39c21913ea82391e3703ad9989371ad5c681"
+}
