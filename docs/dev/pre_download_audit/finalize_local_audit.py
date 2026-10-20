@@ -21,6 +21,12 @@ report=f'''# 第一次下載前全面查證：本機範圍完成
 
 已完成本次可在既有環境驗證的全盤掃描、根因修正、回歸、實際介面及證據交接。這次沒有 EXE；本機還原包的精確提交以 `.cache/debug-tooling/audit-delivery-20261020/manifest.json` 為準。該目錄 receipt 或ZIP內RESTORE_RECEIPT標記 LOCAL_SAVED_AND_RESTORE_VERIFIED 才代表還原包已製作並驗證；包的雜湊在提交後產生，收據為準。
 
+## 白話綜述
+
+這一輪已實際修正視窗操作、資料列表混版、舊回呼、文件分析與草稿恢復等10類問題。最後1921項測試、27組原版操作及19項實際桌面操作都通過。您可以用本機還原包接回這個版本，詳細證據留在文件裡。
+
+目前仍需要您日後在Windows與自己的作品上試用，才能確認真實字型、作品還原、學習品質和實機效能。本輪沒有新收費服務，也沒有推送GitHub；請保存還原ZIP。這是開發原碼還原包，EXE屬後續另行工作。
+
 ## 實際驗證結果
 
 - 最後完整回歸：**1921 PASS、0 FAIL、0 ERROR、0 SKIP、{full['healthy_modules']}／{full['modules']} 健康獨立模組、0 執行期錯誤**。原1850項保留，新增71項有意義案例，執行期間來源未改。
@@ -52,7 +58,7 @@ report=f'''# 第一次下載前全面查證：本機範圍完成
 | 重開已派送工作參數錯誤 | 找到精確原工作，正在跑另一工作時不切換、不重啟 |
 | 草稿讀取失敗留下混合狀態 | 完整驗證新來源／作品／框位後才替換目前工作，失敗保留原狀態 |
 
-測試與擷取程式也修正了欄位更名後漏接的尺寸、控制項與fixture。所有重現失敗、中斷與無效測試前置都保留，無效樣本未當成產品故障或驗證成功。讀取快照的包裝以ParamSpec保留公開型別；隔離錯型別樣本仍被Pyright拒絕。
+測試與擷取程式也修正了欄位更名後漏接的尺寸、控制項與fixture。新讀取保護放回既有錯誤處理範圍，並以真正關閉後仍執行的延遲回呼驗證，保留原先的安全拒絕。所有重現失敗、中斷與無效測試前置都保留，無效樣本未當成產品故障或驗證成功。讀取快照的包裝以ParamSpec保留公開型別；隔離錯型別樣本仍被Pyright拒絕。
 
 ## 入口、限制與仍待實機項目
 
@@ -81,7 +87,7 @@ report=f'''# 第一次下載前全面查證：本機範圍完成
 參考現成方法：SQLite WAL讀取快照／savepoint、Python contextmanager與ParamSpec；演算法驗證用小規模窮舉對照最佳指派和手算聯合區間，沒有重造資料庫或連接付費模型。參考 https://sqlite.org/isolation.html 、https://docs.python.org/3/library/contextlib.html 、https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.linear_sum_assignment.html 。
 '''
 (F/'FINAL_REPORT.md').write_text(report)
-progress=load(F/'PROGRESS.json');progress.update(status='LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED',phase='All local execution/triage complete; committed recovery package must still be exported and restored',completed_at=now,original_diagnostics=11798,diagnostic_statuses=counts,unreviewed=0,confirmed_defects=10,fixed_defects=10,open_confirmed_defects=[],final_regression=full,stock_gui_final=stock,native_gui_final=dict(status='PASS',cases=19,images=11,source_unchanged=True),latest_new_review=dict(unique_current_occurrences=union_count,new_or_variant=new_count,unreviewed=0),next='Commit final docs/checkpoint; export_local_delivery.py; verify receipt and clean Git. Do not expand scope or push unknown fee triggers.',final_delivery_status='CHECK_POST_COMMIT_RECEIPT_OR_ZIP_RESTORE_RECEIPT',remote_write='NOT_PERFORMED_COST_UNKNOWN');save(F/'PROGRESS.json',progress)
+historical_progress=load(F/'PROGRESS.json');save(F/'PROGRESS_BEFORE_FINAL.json',historical_progress);progress=dict(historical_progress_snapshot='PROGRESS_BEFORE_FINAL.json',source_base=historical_progress['source_base'],provenance='LOCAL_ONLY',source_fix_commit=full['source_commit'],fixed_defects_pending_full_regression=0,requirements_qualifications_unchanged=True);progress.update(human_summary='本機範圍查證及最終測試完成；10類問題已修，私人作品與Windows等實機資格保持原延後狀態。遠端未推送，請保留還原包與收據。',status='LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED',phase='All local execution/triage complete; committed recovery package must still be exported and restored',completed_at=now,original_diagnostics=11798,diagnostic_statuses=counts,unreviewed=0,confirmed_defects=10,fixed_defects=10,open_confirmed_defects=[],final_regression=full,stock_gui_final=stock,native_gui_final=dict(status='PASS',cases=19,images=11,source_unchanged=True),latest_new_review=dict(unique_current_occurrences=union_count,new_or_variant=new_count,unreviewed=0),next='Commit final docs/checkpoint; export_local_delivery.py; verify receipt and clean Git. Do not expand scope or push unknown fee triggers.',final_delivery_status='CHECK_POST_COMMIT_RECEIPT_OR_ZIP_RESTORE_RECEIPT',remote_write='NOT_PERFORMED_COST_UNKNOWN');save(F/'PROGRESS.json',progress)
 state_path=ROOT/'docs/dev/STATE.json';state=load(state_path);state.update(active_task='PRE_DOWNLOAD_AUDIT_LOCAL_COMPLETE',audit_plan_status='LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED',audit_final_report='docs/dev/pre_download_audit/FINAL_REPORT.md',audit_final_checkpoint='docs/checkpoints/CP-20261020-AUDIT-LOCAL-FINAL.json',audit_source_commit=source,audit_recovery_receipt='.cache/debug-tooling/audit-delivery-20261020/receipt.json',next_tasks=['Preserve/download local audit recovery ZIP; verify manifest base/head and restored receipt.','Resume only the next authorized work or safe offline Windows/user report; do not auto-start EXE/web/mobile/whole-repo type cleanup.','Remote persistence/formal evidence requires verified zero-new-cost trigger information; do not push/PR/CI or claim REMOTE_VERIFIED without it.']);save(state_path,state)
 plan_path=ROOT/'docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.json';plan=load(plan_path);plan.update(status='LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED',scope='PRE_FIRST_DOWNLOAD_AUDIT_EXECUTED_LOCAL_SCOPE',completion_report='docs/dev/pre_download_audit/FINAL_REPORT.md',source_commit=source,completed_at=now,qualification='Local available-condition execution complete; external/native/real-corpus and current formal remote evidence qualifications unchanged')
 for phase in plan['phases']:phase['status']='LOCAL_COMPLETE';phase['external_qualifications_unchanged']=True

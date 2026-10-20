@@ -12,7 +12,7 @@ def location(scope,info):
  return dict(path=p.relative_to(ROOT).as_posix(),start=a,end=b,source_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),snippet='\n'.join(source.splitlines()[a-1:b]),functions=[n.name for n in ast.walk(tree) if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.lineno<=b and n.end_lineno>=a])
 reviews=[]
 for scope in ['application','tools','tests']:
- profile='final-release-'+scope+'-clones-002/report.json';report=json.loads((F/profile).read_text());assert report['source_unchanged']
+ profile='final-release-'+scope+'-clones-003/report.json';report=json.loads((F/profile).read_text());assert report['source_unchanged']
  for i,c in enumerate(report['findings']):
   left,right=[location(scope,c[k]) for k in ['firstFile','secondFile']];key=identity(scope,c['kind'],[left['path'],right['path']],c['fragment']);prior=existing.get(key)
   if prior:decision,reason=prior['decision'],prior['reason']

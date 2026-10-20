@@ -52,7 +52,7 @@
           "snippet": "    case=BatchCandidateGuiTests('runTest');case.setUp();d=case.d;f=case.f;app=QApplication.instance();folder=Path(folder);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n    def shot(widget,name):\n        app.processEvents();path=folder/('batch-correction-'+name+'.png');assert widget.grab().save(str(path));screens.append(path.name)\n    def confirm(name,yes=True):\n        def respond():\n            box=QApplication.activeModalWidget()\n            try:\n                assert isinstance(box,QMessageBox);shot(box,name);box.button(QMessageBox.Yes if yes else QMessageBox.No).click()\n            except BaseException as error:errors.append(str(error))\n            finally:\n                if box and box.isVisible():box.reject()\n        QTimer.singleShot(0,respond)\n    def password(name):"
         }
       ],
-      "profile": "final-release-tools-standard-002/report.json",
+      "profile": "final-release-tools-standard-003/report.json",
       "baseline_refreshed": false
     },
     {
@@ -105,7 +105,7 @@
           "snippet": "\"\"\"Source-bound Qt evidence for the ongoing twenty-parent work, not completion.\"\"\"\nimport argparse\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nsys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[1]/'tests')]\nos.environ.setdefault('QT_QPA_PLATFORM','offscreen')\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.gui import MainWindow\nfrom template_ai.automatic_training_dialog import AutomaticTrainingDialog"
         }
       ],
-      "profile": "final-release-tools-standard-002/report.json",
+      "profile": "final-release-tools-standard-003/report.json",
       "baseline_refreshed": false
     },
     {
@@ -158,7 +158,7 @@
           "snippet": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.gui import MainWindow"
         }
       ],
-      "profile": "final-release-tests-standard-002/report.json",
+      "profile": "final-release-tests-standard-003/report.json",
       "baseline_refreshed": false
     },
     {
@@ -211,7 +211,7 @@
           "snippet": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.gui import MainWindow"
         }
       ],
-      "profile": "final-release-tests-standard-002/report.json",
+      "profile": "final-release-tests-standard-003/report.json",
       "baseline_refreshed": false
     },
     {
@@ -264,7 +264,7 @@
           "snippet": "from template_ai.gui import MainWindow\nfrom template_ai.layout import generate\nfrom template_ai.render import export\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\nFONT = next((p for p in (Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),\n                        Path('/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf'),\n                        Path(r'C:\\Windows\\Fonts\\arial.ttf')) if p.is_file()), None)\nDATA = [{\"name\": \"Alex Example\", \"title\": \"Consultant\", \"phone\": \"0900-123-456\", \"email\": \"hello@example.test\"}]"
         }
       ],
-      "profile": "final-release-tests-standard-002/report.json",
+      "profile": "final-release-tests-standard-003/report.json",
       "baseline_refreshed": false
     },
     {
@@ -317,7 +317,7 @@
           "snippet": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.noise import relative_region"
         }
       ],
-      "profile": "final-release-tests-standard-002/report.json",
+      "profile": "final-release-tests-standard-003/report.json",
       "baseline_refreshed": false
     },
     {
@@ -370,7 +370,7 @@
           "snippet": "from pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog\nfrom training_fixture import source_work,observations\nfrom test_noise_authoring import confirmed"
         }
       ],
-      "profile": "final-release-tests-standard-002/report.json",
+      "profile": "final-release-tests-standard-003/report.json",
       "baseline_refreshed": false
     }
   ]
