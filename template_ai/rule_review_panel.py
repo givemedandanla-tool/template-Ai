@@ -10,6 +10,8 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEd
 from .training_store import TrainingStore
 
 
+from .metadata_snapshot import snapshot_read
+
 class RuleReviewPanel(QWidget):
     def __init__(self, window, parent=None):
         super().__init__(parent); self.host_window: MainWindow=window; self.store=TrainingStore(window.library); self.rows=[]; self.offset=0; self.loading=False
@@ -29,6 +31,7 @@ class RuleReviewPanel(QWidget):
     def search_changed(self,*_):self.offset=0;self.reload()
     def page(self,delta):self.offset=max(0,self.offset+delta);self.reload()
     def selected_ids(self):return [self.rows[r.row()]['id'] for r in self.table.selectionModel().selectedRows() if r.row()<len(self.rows)]
+    @snapshot_read(lambda self,*args,**kwargs:self.store.db)
     def reload(self,*_):
         if self.loading:return
         old=self.selected_ids();self.loading=True

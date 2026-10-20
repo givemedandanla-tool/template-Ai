@@ -6,6 +6,8 @@ MAX_PAYLOAD=1024*1024
 PAGE_SIZE=48
 
 
+from .metadata_snapshot import snapshot_read
+
 def payload(library,table,identity):
     if table not in ('templates','sources'):raise ValueError('未知目錄種類')
     row=library.db.execute('SELECT CASE WHEN length(CAST(payload AS BLOB))<=? THEN payload END FROM '+table+' WHERE id=?',(MAX_PAYLOAD,identity)).fetchone()
@@ -14,6 +16,7 @@ def payload(library,table,identity):
     return json.loads(row[0])
 
 
+@snapshot_read(lambda library,*args,**kwargs:library.db)
 def editor_page(library,table,offset=0,selected=None,limit=48):
     if table not in ('sources','templates') or type(offset) is not int or offset<0 or type(limit) is not int or not 1<=limit<=100:raise ValueError('目錄需有效分頁')
     total=library.db.execute('SELECT count(*) FROM '+table).fetchone()[0]

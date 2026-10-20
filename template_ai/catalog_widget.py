@@ -16,6 +16,8 @@ from . import catalog
 from .catalog_preview import PreviewController
 
 
+from .metadata_snapshot import snapshot_read
+
 class CatalogWidget(QWidget):
     def __init__(self,window,customer=None,on_pick=None,allow_edit=True):
         super().__init__(window);self.host_window: MainWindow=window;self.customer=deepcopy(customer);self.on_pick=on_pick;self.allow_edit=allow_edit
@@ -91,6 +93,7 @@ class CatalogWidget(QWidget):
         current=self.tree.currentItem();key=current.data(0,Qt.UserRole) if current else None
         return catalog.filtered(self.entries,self.query.text(),key.get('size') if key else None,key.get('capacity') if key else None,self.state.currentData(),self.version.currentData())
 
+    @snapshot_read(lambda self,*args,**kwargs:self.host_window.library.db)
     def rebuild(self):
         self.blocked=True;self.items.blockSignals(True)
         try:

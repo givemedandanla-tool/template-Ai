@@ -11,6 +11,8 @@ from .training_store import TrainingStore
 from .training_navigation import locate_work
 
 
+from .metadata_record import training_record
+
 class NoiseHitsPanel(QWidget):
     def __init__(self,window,parent=None):
         super().__init__(parent);self.host_window: MainWindow=window;self.store=TrainingStore(window.library);self.rows=[];self.offset=0;self.loading=False;outer=QVBoxLayout(self);bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('全命中完整文字／work／observation／rule ID搜尋');self.search.textChanged.connect(self.search_changed);bar.addWidget(self.search,1);self.reload_button=QPushButton('重查目前決定');self.reload_button.clicked.connect(self.reload);bar.addWidget(self.reload_button);outer.addLayout(bar)
@@ -31,16 +33,16 @@ class NoiseHitsPanel(QWidget):
         try:
             where=['kind=?'];args=['HIT']
             for token in self.search.text().casefold().split():where.append("training_casefold(payload||id) LIKE ? ESCAPE '\\'");args.append('%'+token.replace('\\','\\\\').replace('%','\\%').replace('_','\\_')+'%')
-            condition=' AND '.join(where);total=self.store.db.execute('SELECT count(*) FROM training_records WHERE '+condition,args).fetchone()[0];ids=[r[0] for r in self.store.db.execute('SELECT id FROM training_records WHERE '+condition+' ORDER BY id LIMIT 200 OFFSET ?',args+[self.offset])];self.rows=[];cache={}
-            for rid in ids:
-                stored=self.store.get('HIT',rid);wid=stored['work_id']
+            condition=' AND '.join(where);total=self.store.db.execute('SELECT count(*) FROM training_records WHERE '+condition,args).fetchone()[0];selected=[training_record(r) for r in self.store.db.execute('SELECT id,revision,payload FROM training_records WHERE '+condition+' ORDER BY id LIMIT 200 OFFSET ?',args+[self.offset])];self.rows=[];cache={}
+            for stored in selected:
+                rid=stored['id'];wid=stored['work_id']
                 if wid not in cache:cache[wid]={r['observation_id']:r for r in self.store.noise_decisions(wid)}
                 current=cache[wid].get(stored['observation_id'],{'state':'OBSERVATION_REMOVED','reason':'只保留舊追溯'});self.rows.append({'id':rid,'stored':stored,'current':current,'trace_current':{k:v for k,v in stored.items() if k not in ('id','revision')}==current})
             self.rows.sort(key=lambda r:(r['current']['state'],r['stored']['work_id'],r['stored']['observation_id']));self.table.setRowCount(len(self.rows))
             for i,row in enumerate(self.rows):
                 stored=row['stored'];current=row['current'];values=(current['state'],stored['state']+' / r'+str(stored['revision']),stored['text'],stored['work_id'],', '.join(r['id']+' / r'+str(r['revision']) for r in current.get('rule_matches',[])),stored['observation_id'])
                 for j,v in enumerate(values):item=QTableWidgetItem(v);item.setToolTip(v);self.table.setItem(i,j,item)
-            counts=Counter(r['current']['state'] for r in self.rows);excluded=sum(v for k,v in counts.items() if k.startswith('EXCLUDED'));kept=sum(v for k,v in counts.items() if k.startswith('KEPT') or k=='INCLUDED');self.count.setText(f'本頁目前排除{excluded}／保留{kept}／疑義或歷史{len(self.rows)-excluded-kept}；本頁{len(self.rows)}／搜尋保存記錄{total}／全保存記錄{self.store.count("HIT")}。未掃其他頁，不冒當全庫目前計數。');self.previous_button.setEnabled(self.offset>0);self.next_button.setEnabled(self.offset+len(ids)<total)
+            counts=Counter(r['current']['state'] for r in self.rows);excluded=sum(v for k,v in counts.items() if k.startswith('EXCLUDED'));kept=sum(v for k,v in counts.items() if k.startswith('KEPT') or k=='INCLUDED');self.count.setText(f'本頁目前排除{excluded}／保留{kept}／疑義或歷史{len(self.rows)-excluded-kept}；本頁{len(self.rows)}／搜尋保存記錄{total}／全保存記錄{self.store.count("HIT")}。未掃其他頁，不冒當全庫目前計數。');self.previous_button.setEnabled(self.offset>0);self.next_button.setEnabled(self.offset+len(selected)<total)
         except Exception as error:self.rows=[];self.table.setRowCount(0);self.status.setText('追溯讀取失敗：'+str(error))
         finally:self.loading=False;self.selected()
     def selected(self):

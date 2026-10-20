@@ -12,17 +12,19 @@ def execute(root,command,payload):
     from .storage import Library
     from .training_store import TrainingStore
     from .coverage_batches import CoverageBatches
+    from .metadata_snapshot import read_snapshot
     library=Library(root)
     try:
         TrainingStore(library);service=CoverageBatches(library)
         if command=='BATCHES':
-            offset=payload.get('offset',0);query=payload.get('query','')
-            if type(offset) is not int or offset<0 or not isinstance(query,str) or len(query)>500:raise ValueError('查詢範圍無效')
-            args=['COVERAGE_BATCH'];where="kind=?"
-            for token in query.casefold().split():where+=" AND instr(training_casefold(id||' '||payload),?)>0";args.append(token)
-            total=library.db.execute('SELECT count(*) FROM training_records WHERE '+where,args).fetchone()[0]
-            rows=[service.batch(row[0]) for row in library.db.execute('SELECT id FROM training_records WHERE '+where+" ORDER BY json_extract(payload,'$.created') DESC,id LIMIT 50 OFFSET ?",(*args,offset))]
-            return dict(rows=[{key:row[key] for key in ('id','revision','state','file_count','source_page_count','created')} for row in rows],total=total,offset=offset)
+            with read_snapshot(library.db):
+                offset=payload.get('offset',0);query=payload.get('query','')
+                if type(offset) is not int or offset<0 or not isinstance(query,str) or len(query)>500:raise ValueError('查詢範圍無效')
+                args=['COVERAGE_BATCH'];where="kind=?"
+                for token in query.casefold().split():where+=" AND instr(training_casefold(id||' '||payload),?)>0";args.append(token)
+                total=library.db.execute('SELECT count(*) FROM training_records WHERE '+where,args).fetchone()[0]
+                rows=[service.batch(row[0]) for row in library.db.execute('SELECT id FROM training_records WHERE '+where+" ORDER BY json_extract(payload,'$.created') DESC,id LIMIT 50 OFFSET ?",(*args,offset))]
+                return dict(rows=[{key:row[key] for key in ('id','revision','state','file_count','source_page_count','created')} for row in rows],total=total,offset=offset)
         if command=='PLAN_FILES':return service.plan_source_files(payload['paths'],payload.get('selected_source_ids'))
         if command=='PLAN_ROOT':return service.plan_directory(payload['root'],payload.get('recursive',True),payload.get('extensions'),payload.get('selected_source_ids'))
         if command=='MEMBERS':return dict(batch=service.batch(payload['batch_id']),page=service.members(payload['batch_id'],payload.get('offset',0),50,payload.get('query',''),payload.get('group_by','file')),summary=service.boundary_summary(payload['batch_id']))
