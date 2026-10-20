@@ -4,24 +4,25 @@
   "working_branch": "dev/v0.1-first-version",
   "pull_request": 2,
   "product_version": "0.1.28",
-  "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "INPUT_INTEGRATION_FULL_REGRESSION",
+  "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
+  "active_task": "INPUT_INTEGRATION_AND_GUI_DESIGN_TOOLING_COMPLETE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-INPUT-CAPTURE-SOURCE.receipt.json",
   "last_confirmed_commit": "75358e0c331fa46c9f4df1d549316145c4452efb",
-  "latest_evidence_run": null,
+  "latest_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
-    "docs/decisions/2026-10-19-CORE-ADAPTATION-SWAPS-AND-DEFAULTS.md",
-    "docs/dev/SWAP_ADAPTATION_AND_DEFAULT_PREFERENCE_TRAINING_PLAN.md",
-    "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
-    "docs/dev/AI_TRAINING_DESIGN_TODOS.md"
+    "docs/dev/INPUT_INTEGRATION_FINAL_REPORT_20261020.md",
+    "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md",
+    "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
+    "docs/dev/GUI_TOOLING_READINESS_20261020.md",
+    "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
   ],
   "next_tasks": [
-    "Freeze corrected candidate-storage source and execute RUN-INPUT-INTEGRATION-ALL-004",
-    "Finish GUI design tooling readiness and source-based panel research",
-    "Adopt only complete verified evidence and publish final checkpoint"
+    "Current integration/tooling scope complete;follow GUI_PANEL_DESIGN_PLAN if subsequent panel implementation is requested",
+    "Use local selftest/diagnostic guide for private Windows artwork;do not require uploads",
+    "Cloud GUI configuration draft saved;publish environment settings only when activating a new snapshot"
   ],
   "blocked": [
     {
@@ -45,17 +46,19 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261020-INPUT-GUI-FINAL"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-BASELINE.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-FINAL.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-INPUT-GUI-FINAL.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
-  "goal_milestone": "Many works -> learned shared families/rules -> synthesized templates and best feasible input-conditioned layouts; new learning0of8 implemented",
+  "goal_milestone": "Existing internal inputs -> current shared learning draft -> relative edit/correction -> exact preview,confirmation and output;GUI design toolchain ready;original8/50real qualification unchanged",
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
-  "next_work_package": "AI-LEARN-01 actual source metrics and lineage/dataset linkage",
+  "next_work_package": "NONE_IN_CURRENT_AUTHORIZED_INTEGRATION_SCOPE;MODERN_PANEL_IMPLEMENTATION_IS_FUTURE_PLAN",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -163,7 +166,7 @@
     "snapshot_commit": "175340ad1cd544f99e3927d7e481015b064b9d42",
     "receipt": "docs/checkpoints/CP-20261014-THREE-SOURCE-VERIFIED.receipt.json"
   },
-  "final_verification": "docs/dev/TEMPLATE_EDITING_PUBLICATION_CHECK_20261019.json",
+  "final_verification": "docs/dev/INPUT_INTEGRATION_CLAUSE_AUDIT_20261020.json",
   "checkpoint_cadence": "每個可恢復工作包及每10分鐘；如受工具等待影響，記錄實際間隔，不虛報達標。",
   "ten_packages": {
     "target": 10,
@@ -413,9 +416,9 @@
   },
   "continuation_policy": "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
   "pending_revalidation_ids": [],
-  "last_formal_validation": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+  "last_formal_validation": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
-  "publication_status": "REMOTE_VERIFIED_CURRENT_FORMAL_EVIDENCE_CHECKPOINT",
+  "publication_status": "FINAL_INPUT_GUI_CHECKPOINT_PENDING_NATIVE_GIT_READBACK",
   "cloud_environment_configuration": {
     "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
     "receipt": "docs/dev/CLOUD_CONFIG_DRAFT_RECEIPT.json",
@@ -524,15 +527,15 @@
     "reason": "GUI/source integration checkpoint exceeded 10 minutes; recorded actual gap, immediate WIP preservation; no claim cadence was met"
   },
   "latest_verification": {
-    "run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
-    "source_commit": "a97819ee66a3e7ef86f212d855932510e99199f8",
+    "run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
+    "source_commit": "bd1e9c5aff9d049d5b5d0bb339bf4bc5d135a2da",
     "software": "PASS",
     "overall": "FAIL",
-    "tests": 1779,
-    "passed": 1779,
-    "modules": 229,
-    "attachments": 378,
-    "scope": "SELF_VERIFIED_SOFTWARE_SYNTHETIC_NOT_REAL_PRODUCTION_QUALIFICATION"
+    "tests": 1798,
+    "passed": 1798,
+    "modules": 230,
+    "attachments": 384,
+    "scope": "LINUX_AUTHORED_SOFTWARE_SELF_VERIFICATION;PRIVATE_WINDOWS_PREPRESS_SEPARATE"
   },
   "failed_evidence_runs": [
     "docs/evidence/runs/RUN-REMAINING28-WATCH-001/run.json",
@@ -666,7 +669,7 @@
       "superseded_by": "CP-20261017-REMAINING28-CURRENT007-CAPTURE-CHAIN-WIP002"
     }
   ],
-  "current_work": "Approved16native family/template editing tools implemented and software self-verified;private corpus/device/prepress qualification separate",
+  "current_work": "Legacy input/preview integration verified;GUI skill/native tools and modern panel research delivered",
   "last_formal_failure": "docs/evidence/runs/RUN-REMAINING28-LAYOUT-002/run.json",
   "interrupted_evidence_runs": [
     {
@@ -794,9 +797,9 @@
       "event": "First code+tests drafted about15minutes after plan checkpoint;WIPnow18unitPASS before broad regression;no package completion claim"
     }
   ],
-  "next_work_package_plan": "docs/dev/AI_DESIGN_OBSERVATION_SCHEMA_V1.md",
-  "next_step": "This local-only recovery/learning software subset is self-verified and remotely persisted. Use guide/local selftest;future diagnostics or core extensions use this checkpoint and current source. Original8/50full real qualification remainsPARTIAL;no private uploads or paid AI API.",
-  "current_work_package": "TEMPLATE_EDITOR_SELFTEST_READY",
+  "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
+  "next_step": "Read current integration report and GUI panel plan;private artwork remains local;future panel refactor must reuse the same production bridge/session rules",
+  "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
   "latest_targeted_verification": "docs/evidence/local-recovery/targeted-008/result.json",
@@ -836,7 +839,7 @@
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261018T173234Z.json",
     "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T034415Z.json"
   ],
-  "current_evidence_validity": "CURRENT_FROZEN_EDITOR_CODE_TEST_FIXTURE_MANIFEST_MATCHES_FULL006",
+  "current_evidence_validity": "CURRENT_CODE_MANIFEST_MATCHES_FULL007",
   "historical_active_contract": "docs/dev/FIXED70_REMAINING28_CONTRACT.json",
   "new_learning_progress": {
     "total_work_packages": 8,
@@ -845,7 +848,7 @@
     "verified": 0,
     "acceptance_count": 50,
     "verified_acceptance": 0,
-    "scope": "Original full acceptance unchanged; current local-only supported software subset being formally reverified; actual corpus not provided by design"
+    "scope": "Original8/50full real qualification unchanged;current supported software subset1798PASS;private Windows/nativeAI/prepress verification remains separate"
   },
   "new_goal_data_dependencies": {
     "real_corpus": "Authorized representative source works/labels/reference needed for actual generalization claim; synthetic mechanics can be implemented now",
@@ -1389,16 +1392,15 @@
   "editor_tools_final_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
   "input_integration_contract": "docs/dev/INPUT_LEARNING_INTEGRATION_CONTRACT.json",
   "input_integration_progress": {
-    "status": "APPLICATION1798PASS_CAPTURE_MEASUREMENT_CORRECTED_AWAITING_FULL007",
+    "status": "SOFTWARE_SELF_VERIFIED",
     "contract": "INPUT-LEARNING-INTEGRATION-20261020",
     "baseline": "docs/dev/progress/PROGRESS-20261020-INPUT-INTEGRATION-BASELINE.json",
     "target": "CORE-089",
-    "tests": 14,
+    "tests": 1798,
     "first_targeted_result": "Existing22PASS;new8run001failed fixture assumptions;real drag/edit/cancel PASS;fixing fixtures before rerun",
     "planned_unique_tests": 1798,
     "interface_map": "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md",
-    "next": "Verify actual nested Logo library/worker,then rerun complete corrected source before GUI design tooling",
-    "interrupted_full_run": "docs/qa/plans/INPUT-FULL-001-INTERRUPTED.json",
+    "next": "Integration complete;GUI tooling/research also ready",
     "new_tests": 19,
     "interrupted_full_runs": [
       "docs/qa/plans/INPUT-FULL-001-INTERRUPTED.json",
@@ -1407,7 +1409,7 @@
       "docs/qa/plans/INPUT-FULL-005-INTERRUPTED.json"
     ],
     "targeted_regression": "docs/qa/plans/INPUT-EXPANDED-91-002.log",
-    "pending_run": "RUN-INPUT-INTEGRATION-ALL-007",
+    "pending_run": null,
     "targeted_storage_tests": 29,
     "local_end_to_end_tests": 2,
     "failed_full_runs": [
@@ -1421,6 +1423,39 @@
     "final_status_targeted_status": "PASS",
     "application_unchanged_since": "73c77229c385c28b6bd568d94149f12f60913cd0",
     "viewport_measurement_targeted_tests": 16,
-    "viewport_measurement_capture": "PASS_ALL12_SCENARIOS_NO_QT_ERRORS"
+    "viewport_measurement_capture": "PASS_ALL12_SCENARIOS_NO_QT_ERRORS",
+    "run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
+    "source_commit": "bd1e9c5aff9d049d5b5d0bb339bf4bc5d135a2da",
+    "passed_clauses": 9,
+    "report": "docs/dev/INPUT_INTEGRATION_FINAL_REPORT_20261020.md"
+  },
+  "native_input_verification": {
+    "status": "PASS",
+    "platform": "Linux xcb/Xvfb;TCP disabled",
+    "existing_scenarios": 5,
+    "screenshots": 6,
+    "new_unique_test_increment": 0,
+    "evidence": "docs/evidence/runs/RUN-INPUT-INTEGRATION-NATIVE-003/native-evidence.json",
+    "source_commit": "73c77229c385c28b6bd568d94149f12f60913cd0",
+    "equivalent_application_source": "bd1e9c5aff9d049d5b5d0bb339bf4bc5d135a2da",
+    "equivalence": "docs/dev/NATIVE_APPLICATION_SOURCE_EQUIVALENCE_20261020.json"
+  },
+  "history_note": "Earlier dated state/contract interview flags are retained as history;current authority is ACTIVE_DEVELOPMENT_HANDOFF,latest_verification,and the current scoped integration audit",
+  "checkpoint_cache_cleanup": "docs/qa/plans/INPUT-FINAL-CACHE-SPACE-RECOVERY-20261020.json",
+  "gui_tooling": {
+    "status": "CONNECTED_AND_NATIVE_SMOKE_PASS",
+    "skill": "docs/dev/gui_tooling/SKILL.md",
+    "upstream": "UI/UX Pro Max MIT pinned56ea9cf",
+    "tools": [
+      "Qt Designer6.8.3",
+      "QUiLoader/QTest",
+      "isolated Xvfb/xdotool"
+    ],
+    "evidence": "docs/evidence/runs/RUN-GUI-TOOLING-001/tooling-evidence.json",
+    "plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
+    "readiness": "docs/dev/GUI_TOOLING_READINESS_20261020.md",
+    "clean_tool_root_rebuild": "PASS",
+    "product_ui_visual_redesign": "PLANNED_NOT_DELIVERED",
+    "configuration_draft": "SAVED_REQUIRES_PUBLISH;CURRENT_INSTANCE_ALREADY_VERIFIED"
   }
 }

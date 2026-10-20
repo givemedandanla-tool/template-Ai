@@ -1,13 +1,15 @@
-# Template AI 當前接續點（完整007待驗）
+# Template AI 目前接續點
 
-CORE089九條，原1779測試保留、新19、總1798／230模組；GUI skill／Qt Designer／QUiLoader／Xvfb／xdotool接入、原生舊UI5情境6截圖、成熟方案研究均完成。私人資料留本地、網頁／手機／EXE延後，原AI8完整真實資格仍8部分／0完整。171登錄原164完成暫待完整重驗。
+先跑 `.venv/bin/python tools/resume_status.py`。本輪使用者要求「舊內部輸入與新學習／家族／規則接線」及「探索接入讓GUI直觀現代的skill／工具，研究成熟方案」已完成軟體範圍；網頁／手機／EXE延後，不合併main、不索取私人作品、不擅自啟用多代理。
 
-最新應用程式來源73c7722已完整006測1798全PASS／230健康模組，NATIVE003同來源5情境全PASS／6截圖；但006capture失敗：舊導覽擷取量到QGraphicsView外框（0可見），實際viewport733×409符合240×180。已用不改行為的診斷重現，僅修正tools/capture_workbench_navigation.py及同名導覽測試，門檻／2秒等待不改；可見寬度也改量真實裁切區。應用程式／輸入測例／其他工具均未再修改。修正後capture全流程PASS、qt_errors=[]；導覽16條全PASS。失敗證據保留INPUT-FULL-006-CAPTURE-FAILED.log與INPUT-CAPTURE-VIEWPORT-DIAGNOSTIC.log，不把006當完整PASS。
+來源 `bd1e9c5aff9d049d5b5d0bb339bf4bc5d135a2da`，`RUN-INPUT-INTEGRATION-ALL-007`：1798／1798PASS、230健康模組、capture0、384附件hash核對、來源未變。原1779ID保留，新19；CORE-089九條PASS。總171登錄／165已完成（原164恢復＋本輪1項），原75主題與AI8包50條完整真實資格不變：8部分、0完整。整體run可能因原5項外部資格FAIL，軟體執行PASS不可混作真實生產資格。
 
-下一步：16已通過→CP-20261020-INPUT-CAPTURE-SOURCE→fresh native Git讀回→RUN-INPUT-INTEGRATION-ALL-007（可4 module-workers；600秒各module；全部1798／230／capture0／附件hash／來源未變才採用）。應用程式凍結不再改；若只是舊擷取量測錯誤，先記錄真實區域再修工具，不能偽造視窗或放寬標準。保存NATIVE_APPLICATION_SOURCE_EQUIVALENCE_20261020.json，證明NATIVE003來源與最終source只差上述2個量測檔；Native003正確保留原SHA，不能改成新工具SHA。
+先讀INPUT_INTEGRATION_FINAL_REPORT_20261020.md、INPUT_LEARNING_INTERFACE_MAP.md及INPUT_INTEGRATION_CLAUSE_AUDIT_20261020.json。資料入口、主預覽、拖動／更正／undo／redo／恢復、候選、條件容量建議、進度取消、確認、PNG/PDF/JPG輸出與安全報告已接同稿版本。固定舊款／已確認稿保留原版；固定模板多尺寸批次維持原模式，學習稿按實際尺寸核對，不混稱新家族批次。
 
-歷史：001／002補查中斷；003metadata實際失敗→不可變候選hash參照；004小視窗1FAIL→外框定位+2及真viewport檢查；005在1403PASS因原生截圖發現舊頁首覆寫而中斷→統一唯讀狀態，基本資料診斷保留、不混固定模板slot-fit，晚到editingFinished避免已刪owner。006應用程式全PASS／capture量測失敗，沒有新app bug。
+完整001在300PASS中斷補Logo host，002在953PASS中斷補身份／畫面接線；003實際出現1ERROR（結果metadata過大），在1082完成／1081PASS時中斷。改成不可變候選內容加hash參照，保留單筆1MiB限制；破壞候選不能被選入且保留原稿。007完整重跑才採用；004原1798條中1條小視窗外框捲動定位未達驗收，已保留並修正顯示邊界，不放寬原測試。失敗／中斷／早期載入指令錯誤保留於docs/qa/plans，不覆寫或混成PASS。
 
-正式成功後：/tmp/adopt_input_evidence.py run007、/tmp/finalize_input_gui_docs.py（兩者已改007，需核對Native003實際SHA與equivalence）、governance render/check --require-evidence、progress snapshot，CP-20261020-INPUT-GUI-FINAL推送／逐檔Git讀回。已準備/tmp/discover_gui_projects.py；最終checkpoint後再次掃描，後端設定草稿可固定到final receipt HEAD（完整檢查1專案template-Ai；UI/UX上游為工具依賴；/workspace/.git為空保護目錄，不是倉庫）。更新雲端草稿只保存配置，不發佈快照；可將新設定回覆／pin以doc-only commit再讀回，不改已驗證程式。
+GUI：AGENTS指向docs/dev/gui_tooling/SKILL.md；本地template-ai-gui適配層＋UI/UX Pro Max MIT固定版已接入。Qt Designer實際開窗、QUiLoader原生輸入／錯誤回復、Xvfb／xdotool及空工具目錄重建PASS，來源hash／LICENSE保留。GUI_PANEL_DESIGN_PLAN_20261020.md含Fluent／Spectrum／Penpot／Excalidraw實讀研究；共用製作工作區、專業工具按需展開、白話摘要＋技術詳情。Concept .ui未接正式排版，工具smoke不是正式新版面板或真人可用性訪測。Designer快捷預覽未證實；QUiLoader預覽已驗證。
 
-面板方案GUI_PANEL_DESIGN_PLAN_20261020.md、工具GUI_TOOLING_READINESS_20261020.md、現有操作INTERNAL_DRAFT_INPUT_QUICK_GUIDE.md均已GitHub保存；概念稿不是正式新面板。實際新語意：輸入→學習稿→相對拖動／資料更正→同版確認／PNG/PDF/JPG；舊款式／已確認稿保留，固定模板多尺寸批次仍原模式。空間只刪有hash／REMOTE_VERIFIED／遠端祖先佐證的舊ZIP快取，最新3source保留，詳INPUT-FINAL-CACHE-SPACE-RECOVERY-20261020.json。
+雲端安裝／start instructions草稿已後端confirmed saved且requires_publish；目前環境可用，設定未因此發布新快照。重建方式與限制見GUI_TOOLING_READINESS_20261020.md，無付費服務／新網域／secret。零對話接續讀這份交接與STATE，不帶完整聊天。
+
+當前正式來源未變，不因文件／工具研究再跑整套測試。最新GitHub checkpoint與native Git逐檔讀回狀態看STATE.last_confirmed_checkpoint；保留開發分支dev/v0.1-first-version／PR2。原Windows／原生AI／真實字型與印前資格分開，來源與私人資料留本地。空間回收僅刪已hash核對且REMOTE_VERIFIED的舊ZIP快取，紀錄INPUT-ENVIRONMENT-SPACE-RECOVERY-20261020.json與INPUT-FINAL-CACHE-SPACE-RECOVERY-20261020.json。

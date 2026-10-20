@@ -1564,7 +1564,7 @@
   "user_corpus_availability": "NOT_PROVIDED_CONFIRMED_BY_USER_2026-10-19",
   "implementation_count_semantics": "implemented_count/verified_count count complete packages,not candidate modules;all8partial is not0engineering work",
   "current_scope_audit": "docs/dev/AI_ALL8_50_CLAUSE_AUDIT_20261019.json",
-  "current_full_software_evidence": "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json",
+  "current_full_software_evidence": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "local_only_synthetic_acceptance": {
     "decision": "docs/decisions/2026-10-19-LOCAL-ONLY-RECOVERY-AND-SYNTHETIC-ACCEPTANCE.md",
     "user_confirmed": true,
@@ -1580,5 +1580,26 @@
     "original_acceptance_count_unchanged": true,
     "real_user_artwork_required_in_cloud": false,
     "production_qualification_not_granted_by_synthetic_tests": true
+  },
+  "previous_full_software_evidence": [
+    "docs/evidence/runs/RUN-AI-SHARED-CORE-ALL8-002/run.json"
+  ],
+  "current_internal_input_integration": {
+    "status": "SOFTWARE_SCOPE_SELF_VERIFIED",
+    "contract": "docs/dev/INPUT_LEARNING_INTEGRATION_CONTRACT.json",
+    "audit": "docs/dev/INPUT_INTEGRATION_CLAUSE_AUDIT_20261020.json",
+    "run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
+    "source_commit": "bd1e9c5aff9d049d5b5d0bb339bf4bc5d135a2da",
+    "software": "PASS",
+    "overall": "FAIL",
+    "tests": 1798,
+    "passed": 1798,
+    "modules": 230,
+    "attachments": 384,
+    "scope": "LINUX_AUTHORED_SOFTWARE_SELF_VERIFICATION;PRIVATE_WINDOWS_PREPRESS_SEPARATE",
+    "original_8_work_packages_50_full_criteria_unchanged": true,
+    "historical_body_interview_flags": "Original interview planning flags retained;current integration scope is this source-bound9-clause audit",
+    "learned_input_advice": "Conditioned observed combinations and reviewed empirical capacity;UNKNOWN retained;not a global hard cap",
+    "gui_design": "Skill/tools/prototype ready;complete panel redesign is a future plan"
   }
 }

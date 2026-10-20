@@ -1,0 +1,74 @@
+{
+  "automatic": {
+    "phase": "COMPLETED_WITH_EXCEPTIONS",
+    "sources": 1,
+    "units": 2,
+    "source_unchanged": true,
+    "facts_still_pending": true,
+    "templates_published": 0
+  },
+  "semantic": {
+    "state": "PENDING",
+    "metrics": {
+      "address": {
+        "correct": 1,
+        "errors": [],
+        "total": 1,
+        "unknown": 0
+      },
+      "title": {
+        "correct": 1,
+        "errors": [],
+        "total": 1,
+        "unknown": 0
+      }
+    },
+    "baseline_metrics": {
+      "address": {
+        "correct": 1,
+        "errors": [],
+        "total": 1,
+        "unknown": 0
+      },
+      "title": {
+        "correct": 0,
+        "errors": [
+          {
+            "predicted": "unknown",
+            "sample_id": "63d145e251aa4021adeb4c6e9b02bcb7-text0"
+          }
+        ],
+        "total": 1,
+        "unknown": 1
+      }
+    },
+    "vocabulary_size": 68,
+    "parameter_count": 70,
+    "weights_digest": "e07381b8e354734f6ec69c604f9f6d37aee421f6346ceb188dfd454cadf074fa",
+    "activated": false,
+    "fixture": "SYNTHETIC_CONFIRMED_TEXT; NOT_REAL_WORLD_ACCURACY"
+  },
+  "versions": {
+    "published_version_unchanged": true,
+    "safety_zone_preview_only": true,
+    "difference_visible": true,
+    "rollback_requires_explicit_confirmation": true
+  },
+  "status": "SELF_CAPTURED_ONGOING_TWENTY; NOT_PARENT_COMPLETION",
+  "screenshots": [
+    "next20-automatic-source-work-stages.png",
+    "next20-source-work-overview.png",
+    "next20-source-marking-and-evidence.png",
+    "next20-source-work-region-candidates.png",
+    "next20-local-semantic-model-heldout.png",
+    "next20-template-version-difference.png",
+    "next20-canvas-safety-preview-unpublished.png"
+  ],
+  "limitations": [
+    "Linux/offscreen Qt",
+    "Synthetic sources only",
+    "No independent review",
+    "No real Illustrator native-layer claim",
+    "No paid LLM/API"
+  ]
+}

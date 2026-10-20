@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "status": "PASS_SCOPED_SELF_VERIFIED",
+  "source_commit": "bd1e9c5aff9d049d5b5d0bb339bf4bc5d135a2da",
+  "run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
+  "total_clauses": 9,
+  "passed_clauses": 9,
+  "clauses": [
+    {
+      "id": "CORE-089-A01",
+      "expected": "舊表格／人物卡片／客戶預填以同一輸入圖接入已啟用學習模型；保留身份、歸屬、共享及尺寸Logo",
+      "status": "PASS",
+      "tests": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context"
+      ]
+    },
+    {
+      "id": "CORE-089-A02",
+      "expected": "真實新建、更正輸入視窗不報錯；超限原文保留並明確提示，不靜默截短",
+      "status": "PASS",
+      "tests": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss"
+      ]
+    },
+    {
+      "id": "CORE-089-A03",
+      "expected": "實際滑鼠拖動產生相對位置意圖、保護未受影響關係；不提供字級字寬控制",
+      "status": "PASS",
+      "tests": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure"
+      ]
+    },
+    {
+      "id": "CORE-089-A04",
+      "expected": "更正資料、返回、版面復原／重做及重新開啟使用最新資料；過期確認不能輸出",
+      "status": "PASS",
+      "tests": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_resume_other_saved_draft_updates_main_input_size_and_export_reference",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_resize_keeps_position_intent_but_new_person_roots_start_independent_draft"
+      ]
+    },
+    {
+      "id": "CORE-089-A05",
+      "expected": "舊排版／預覽／輸出入口接續同一學習稿件；明示固定舊版與新家族路徑，背景求解可取消且晚到不覆寫",
+      "status": "PASS",
+      "tests": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_legacy_edit_progress_and_stale_preview_buttons_use_same_learning_draft",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary"
+      ]
+    },
+    {
+      "id": "CORE-089-A06",
+      "expected": "確切已確認稿自動查找並可開啟；沿用舊版不因新模型重排，未知身份不靠字串猜測",
+      "status": "PASS",
+      "tests": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder"
+      ]
+    },
+    {
+      "id": "CORE-089-A07",
+      "expected": "輸入及結果顯示條件容量建議、候選理由／失敗原因，UNKNOWN不當無解或任意上限",
+      "status": "PASS",
+      "tests": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary"
+      ]
+    },
+    {
+      "id": "CORE-089-A08",
+      "expected": "錯誤與報告附白話摘要、影響與下一步，保留專業詳情；來源／資產／正式驗證不放寬",
+      "status": "PASS",
+      "tests": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary"
+      ]
+    },
+    {
+      "id": "CORE-089-A09",
+      "expected": "既有固定模板、客戶主檔／Logo／多尺寸／輸出等流程回歸；私人Windows與實體印前另列",
+      "status": "PASS",
+      "tests": [
+        "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_font_style_enumeration_order_does_not_invalidate_same_face",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_shared_learning_preview_preserves_original_pdf_png_jpg_formats",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation"
+      ]
+    }
+  ],
+  "original_test_ids_retained": 1779,
+  "new_unique_tests": 19,
+  "total_unique_tests": 1798,
+  "all_modules_healthy": true,
+  "attachments": 384,
+  "limitations": [
+    "Linux/authored source verification only;private Windows/nativeAI/prepress qualification separate",
+    "Existing fixed-template multi-size batch retained;learned drafts verified per physical size",
+    "Public website/mobile/EXE deferred;new simple panel still a design/tooling next step"
+  ]
+}
