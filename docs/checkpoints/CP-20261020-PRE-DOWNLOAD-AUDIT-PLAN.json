@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261020-PRE-DOWNLOAD-AUDIT-PLAN",
+  "kind": "LOCAL_INCREMENTAL_PLAN_NOT_FULL_PRODUCT_SNAPSHOT",
+  "phase": "PREPARED",
+  "base_commit": "127b69fc59112a540f78bb8488e5a024c5eddd38",
+  "prerequisite": "Existing tooling local commit127b69f or original verified0e7b8aee plus tooling delivery bundle; this ZIP restores only plan/metadata changes.",
+  "created_utc": "2026-10-20T14:00:44.663661+00:00",
+  "requirement_ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+  ],
+  "source_files": {
+    "AGENTS.md": {
+      "bytes": 16577,
+      "sha256": "ea543a03e1c7ed5d711bb295e0b2a6e79ecae58e1fd647fb257e71b5bc9f5212",
+      "git_blob_sha1": "466b3c3c31cc1b6b79e86895a8dbf270eddd972f"
+    },
+    "docs/dev/STATE.json": {
+      "bytes": 73237,
+      "sha256": "c1b9846db414f6827761582c010c8ec7006c84af98da6158d10ae5b7d05c6de4",
+      "git_blob_sha1": "6837bb478f24c80d008afa3c7919b32ea53a44f0"
+    },
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 4448,
+      "sha256": "34b47dd2d40c1d9395d539a6358d3ce25a7847267b8ece5b62df668159bec159",
+      "git_blob_sha1": "6bc78e588e13f792118637d1c4dc8362a2412e91"
+    },
+    "docs/dev/WORK_LOG.md": {
+      "bytes": 295832,
+      "sha256": "d4184d9bebdaf605207044191e6a81dc766b79ad03560958cf82a9e0da2ab015",
+      "git_blob_sha1": "8a2cddbaac091ef60ed08c34a3d0a956be5712d1"
+    },
+    "docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.md": {
+      "bytes": 12565,
+      "sha256": "197c0a3e5659d929e43ac87b57d877482973c02d1686292fbfc33cc85311b0eb",
+      "git_blob_sha1": "95411a0c057df00e0d5d41cf13fdc2216f362dc7"
+    },
+    "docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.json": {
+      "bytes": 3132,
+      "sha256": "5e769297fdebce307325e023589236ab11f4f0d3ccdd47f1b7b009d5b6ee2cfc",
+      "git_blob_sha1": "fbfb9450a0d1611980bd497dfc44eafae9ba4ef1"
+    }
+  },
+  "source_manifest_sha256": "24ee891bbadee1ba1a677e59270e1703ba2b2c744ddd71fc5fdfa93ee59d0c3d",
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261020-PRE-DOWNLOAD-AUDIT-PLAN/source.zip",
+    "sha256": "3b32e1dc8e56167b5f2189c0a4466fbc9fb36e88abf9b973759a4fb35eb4dc06"
+  },
+  "remote_confirmation": "NOT_PERFORMED_COST_UNVERIFIED",
+  "next_step": "Plan only; execution begins with phase0 resource/source/coverage preparation."
+}

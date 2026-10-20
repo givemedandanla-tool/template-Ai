@@ -1707,3 +1707,5 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 
 
 2026-10-20 DEV-QUALITY-001：零新增費用的本地開發工具建置／三範圍基準／18項針對性驗證；產品來源與資格未改。費用未核實，不push／PR／CI。完整紀錄與恢復方式見debug_tooling/README.md、FINAL_REPORT.md及STATE.debug_tooling。
+
+2026-10-20 PRE-DOWNLOAD-AUDIT-PLAN：依使用者要求制定全面查證／修正計畫，尚未執行。基底127b69f，逐筆台帳／高風險流程／獨立合成標準答案／實際GUI／故障恢復／完整回歸及交付門檻已定義；費用、資料、設備邊界維持。不修改產品或基準，不重跑測試。

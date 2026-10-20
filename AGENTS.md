@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新任務：第一次下載前全面查證計畫
+
+見[掃描與修正計畫](docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.md)、同名JSON及STATE.active_audit_plan。本輪僅規劃／保存，PLANNED_NOT_EXECUTED；不能把既有11798筆診斷說成已查證。後續執行先處理空間與來源，再逐筆台帳／高風險根因、全部入口及模型／GUI／恢復／離線，最後完整回歸。仍單一Codex、零新增費用、不自動遠端寫入，不變更原產品／AI包計數。
+
 ## 當前補充：零新增費用的開發除錯／查重工具
 
 本輪DEV-QUALITY-001只新增開發工具，見[操作與限制](docs/dev/debug_tooling/README.md)、[交付](docs/dev/debug_tooling/FINAL_REPORT.md)、BACKLOG與STATE.debug_tooling。固定Ruff／Pyright／jscpd及兩個skill；一般quality.py check不下載、不安裝、全程單一Codex。保留初始基準，不把新增問題刷新成歷史；新程式與完整舊程式比較。沒有授權全庫重構或產品功能。

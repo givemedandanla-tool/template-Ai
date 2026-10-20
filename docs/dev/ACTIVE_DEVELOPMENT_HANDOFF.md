@@ -1,3 +1,11 @@
+# 最新接手：第一次下載前全面查證計畫（尚未執行）
+
+使用者本輪要求擬定全盤掃描計畫。讀[計畫](PRE_DOWNLOAD_AUDIT_PLAN_20261020.md)與同名JSON；狀態PLANNED_NOT_EXECUTED。11798筆型別診斷尚未逐筆確認，本輪沒有修產品或重跑全套。規劃順序：資源／來源／完整入口矩陣→逐筆台帳與高風險根因→接線／查重→合成核心及實際GUI／故障恢復→修正與完整回歸。不得將計畫當成已完成掃描。
+
+零新增費用、單一Codex、本機保存原則不變。主工作區僅約50MB，執行前先解決自有快取與暫存，不買新資源、不刪私人或失敗證據。新計畫增量checkpoint及更新後工具／計畫整包的收據見`.cache/debug-tooling/plan-delivery-20261020/receipt.json`；原工具包保留不覆寫。若收據缺少，最終恢復包核對尚未完成。
+
+以下保留已完成工具與產品交接。
+
 # 當前交接：DEV-QUALITY-001本地工具；產品GUI維持已自驗
 
 本輪沒有推送／PR／CI：零新增費用優先，沒有充分帳戶額度與連帶觸發證據。最近遠端確認基底0e7b8aee；本輪精確本機HEAD、patch/bundle封裝hash與隔離還原結果見`.cache/debug-tooling/delivery/receipt.json`及同目錄ZIP。若receipt不存在，最後封裝驗證仍未完成；不將本機checkpoint稱為REMOTE_VERIFIED。

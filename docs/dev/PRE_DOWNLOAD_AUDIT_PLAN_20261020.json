@@ -1,0 +1,91 @@
+{
+  "id": "PRE-DOWNLOAD-AUDIT-PLAN-20261020",
+  "status": "PLANNED_NOT_EXECUTED",
+  "base_commit": "127b69fc59112a540f78bb8488e5a024c5eddd38",
+  "scope": "PRE_FIRST_DOWNLOAD_AUDIT_PLAN_ONLY",
+  "document": "docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.md",
+  "initial_diagnostics": {
+    "pyright_application": 4212,
+    "pyright_tools": 521,
+    "pyright_tests": 7065,
+    "pyright_total": 11798,
+    "ruff_known_parser_limits": 3,
+    "jscpd_exact_groups": 7
+  },
+  "product_parent_count_unchanged": 75,
+  "ai_work_package_count_unchanged": 8,
+  "phases": [
+    {
+      "id": "0",
+      "goal": "Protect source and resources; inventory all entries and requirement/test coverage",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "1",
+      "goal": "Classify every original and new diagnostic with evidence and caller scope",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "2",
+      "goal": "Trace all input/version paths and review exact/renamed/structural clone candidates",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "3",
+      "goal": "Independently authored synthetic data, learning and layout invariants/boundaries",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "4",
+      "goal": "Actual GUI end-to-end workflows, races, correction, confirmation and export",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "5",
+      "goal": "Failure injection, persistence/recovery and offline/privacy boundaries",
+      "status": "NOT_STARTED"
+    },
+    {
+      "id": "6",
+      "goal": "Minimal root-cause fixes, full isolated regression and release-readiness report",
+      "status": "NOT_STARTED"
+    }
+  ],
+  "ledger_required_fields": [
+    "scope",
+    "tool",
+    "rule",
+    "fingerprint",
+    "occurrence",
+    "source_commit",
+    "original_location",
+    "status",
+    "severity",
+    "affected_workflow",
+    "root_cause_or_blocker",
+    "repro_command_and_result",
+    "fix_commit",
+    "regression_and_result"
+  ],
+  "required_outcomes": [
+    "All original/new findings accounted for with evidence, not blanket suppression",
+    "Fix all confirmed defects possible under available conditions",
+    "No unresolved reproducible P0/P1 in supported reachable workflows",
+    "Complete original catalog plus meaningful new tests, preserving failures/skips/external qualifications",
+    "Real GUI input-to-output/version/recovery/offline checks",
+    "No false remote verification or actual Windows/private-corpus claim"
+  ],
+  "budget": {
+    "agents": false,
+    "external_models": false,
+    "new_paid_resources": false,
+    "push_pr_ci": "BLOCKED_WITHOUT_ZERO_ADDITIONAL_COST_EVIDENCE"
+  },
+  "execution_limitations": [
+    "Workspace has about 50MB free; resolve owned caches/temp routing before full runs",
+    "Remote source receipt requirements remain unmet for unpublished local commits; save LOCAL_ONLY execution evidence without weakening gates",
+    "Windows/hardware/private-corpus/print qualification remains deferred"
+  ],
+  "local_checkpoint": "CP-20261020-PRE-DOWNLOAD-AUDIT-PLAN",
+  "local_recovery_receipt": ".cache/debug-tooling/plan-delivery-20261020/receipt.json"
+}
