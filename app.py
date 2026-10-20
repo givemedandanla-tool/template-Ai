@@ -53,9 +53,12 @@ def main():
         if window_ref and hasattr(window_ref[0], 'offline_support'):
             window_ref[0].offline_support.problem.emit()
     restore = install_exception_reporting(journal, notify)
+    restore_qt = None
     try:
         from PySide6.QtWidgets import QApplication
         from template_ai.gui import MainWindow
+        from template_ai.offline_support import install_qt_message_reporting
+        restore_qt = install_qt_message_reporting(journal)
         app = QApplication(sys.argv)
         app.setApplicationName('TemplateAI')
         app.setOrganizationName('TemplateAI')
@@ -79,6 +82,8 @@ def main():
         print('軟體尚未啟動；可用 --support-report 匯出本機安全紀錄。', file=sys.stderr)
         return 1
     finally:
+        if restore_qt:
+            restore_qt()
         restore()
 
 

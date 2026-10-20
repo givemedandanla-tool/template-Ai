@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "GUI_OFFLINE_DELIVERY_IN_PROGRESS",
+  "active_task": "GUI_OFFLINE_SOURCE_READY_FULL_VERIFICATION_PENDING",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-BEGIN.receipt.json",
   "last_confirmed_commit": "bdf1d41e6795967a7f6261008db5fbd0b76e853e",
   "latest_evidence_run": null,
@@ -20,10 +20,10 @@
     "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
   ],
   "next_tasks": [
-    "Complete desktop workspace tests and cross-session preview checks",
-    "Finish local offline launcher and beginner input language",
-    "Freeze code,run native GUI and full original/new regression",
-    "Publish source/evidence and final checkpoint to GitHub"
+    "Finish new source-fenced desktop capture",
+    "Publish valid WIP2 checkpoint using observed Git HEAD",
+    "Run full original1798+new regression and native GUI",
+    "Finalize reports,receipts and local use instructions"
   ],
   "blocked": [
     {
@@ -48,7 +48,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261020-GUI-OFFLINE-WIP1"
+    "CP-20261020-GUI-OFFLINE-WIP2"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
@@ -1474,5 +1474,13 @@
     "Real corpus quality",
     "Windows and specified hardware benchmarking",
     "Previously deferred functions"
+  ],
+  "abandoned_prepared_checkpoints": [
+    {
+      "id": "CP-20261020-GUI-OFFLINE-WIP1",
+      "reason": "Unverified base metadata;original preserved,not acknowledged",
+      "source_saved_commit": "e95eb68340a93b92602fe32cdcda3276e64ded8d",
+      "audit": "docs/qa/plans/GUI-WIP1-PREPARE-BASE-ERROR.json"
+    }
   ]
 }

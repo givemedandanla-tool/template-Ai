@@ -175,6 +175,6 @@
 | CORE-087 | 客戶尺寸版型來源並排與身份確認exact預填 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 多類欄位／格式電話只讀搜尋、同名同電話保持獨立、身份確認只看該客戶確切款式、歷史來源hash裁切／未知／過期檢查、雙尺寸並排、確認前後CAS及來源新鮮度、僅改當次資料並保持原Gate | [run](../../docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json) |
 | CORE-088 | 家族管理與單一模板規則編輯本體工作台 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 16項研究工具B01-B08/S01-S08的本體增量；重用既有工具，私人真實美學/Windows/印前資格分開 | [run](../../docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json) |
 | CORE-089 | 內部既有輸入與學習家族的製作流程整合 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 既有輸入、實際Qt拖動、更正與預覽／確認／輸出接入DesignSessions；Linux自製來源驗證，真實私人Windows／印前另列 | [run](../../docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json) |
-| CORE-090 | 整體桌面GUI、進階操作引導與完全離線回報 | IN_PROGRESS | 否 | 本輪GUI/離線軟體範圍；Windows與私人作品等暫擱，未宣稱真人可用性資格 | 無有效新版證據 |
+| CORE-090 | 整體桌面GUI、進階操作引導與完全離線回報 | IMPLEMENTED_PENDING_VERIFICATION | 否 | 本輪GUI/離線軟體範圍；Windows與私人作品等暫擱，未宣稱真人可用性資格 | 無有效新版證據 |
 
 驗收細節、來源、具名測試、父要求、阻擋與下一步請讀 [REQUIREMENTS.json](REQUIREMENTS.json)。歷史 UI CSV 是來源索引，不再當作即時完成度。

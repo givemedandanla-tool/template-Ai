@@ -1,5 +1,6 @@
 @echo off
 setlocal
+set "PYTHONUTF8=1"
 chcp 65001 >nul
 cd /d "%~dp0"
 if not "%~1"=="" if /I not "%~1"=="--offline" (
@@ -23,6 +24,12 @@ set "PIP_DISABLE_PIP_VERSION_CHECK=1"
 set "PIP_NO_INPUT=1"
 set "PIP_REQUIRE_VIRTUALENV=1"
 if /I "%~1"=="--offline" (
+  .venv\Scripts\python.exe -c "from template_ai.offline_runtime import assert_local_path; import sys; assert_local_path(sys.argv[1])" "%~2"
+  if errorlevel 1 (
+    echo 離線準備只接受本機套件資料夾，請勿使用網路磁碟或網址。
+    pause
+    exit /b 2
+  )
   echo 只使用指定的本機套件資料夾，不連線下載。
   .venv\Scripts\python.exe -m pip install --no-index --find-links "%~2" -r requirements-lock.txt
 ) else (

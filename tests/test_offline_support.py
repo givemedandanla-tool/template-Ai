@@ -162,7 +162,7 @@ class OfflineSupportTests(unittest.TestCase):
             svg.write_bytes(('<svg xmlns="http://www.w3.org/2000/svg">' + body + '</svg>').encode(encoding))
             with self.assertRaises(OfflineAccessError):
                 assert_local_document(svg)
-        svg.write_text('<svg xmlns="http://www.w3.org/2000/svg"><text>https://example.test</text><image href="data:image/png;base64,iVBORw0KGgo="/></svg>')
+        svg.write_text('<svg xmlns="http://www.w3.org/2000/svg"><text>https://example.test @import url(https://literal.test) SYSTEM &quot;https://literal.test&quot;</text><image href="data:image/png;base64,iVBORw0KGgo="/></svg>')
         assert_local_document(svg)
 
     def test_svg_dependencies_cannot_hide_remote_resources_in_nested_or_disguised_svg(self):
@@ -181,6 +181,12 @@ class OfflineSupportTests(unittest.TestCase):
         svg.write_text('<svg xmlns="http://www.w3.org/2000/svg"><image href="data:image/png;base64,PHN2Zy8+"/></svg>')
         with self.assertRaises(OfflineAccessError):
             assert_local_document(svg)
+        for body in ('<g xml:base="https://example.test/"><image href="photo.png"/></g>',
+                     '<style>image {fill:u\\72l(https://example.test/a.png)}</style>',
+                     '<image href="#local" src="//server/photo.png"/>'):
+            svg.write_text('<svg xmlns="http://www.w3.org/2000/svg">' + body + '</svg>')
+            with self.assertRaises(OfflineAccessError):
+                assert_local_document(svg)
 
     def test_local_raster_resource_is_retained_and_error_hint_is_only_a_safe_category(self):
         from PySide6.QtGui import QImage
@@ -243,6 +249,35 @@ print('guard-pass')
         report = read_support_bundle(target.read_bytes())
         self.assertEqual(report['environment']['pyside6'], 'UNAVAILABLE')
         self.assertTrue(report['environment']['python_network_guard'])
+
+    def test_real_qt_warning_and_fatal_are_safe_and_fatal_still_terminates_child(self):
+        for fatal in (False, True):
+            root = self.root / ('fatal' if fatal else 'warning')
+            code = '''
+import os,sys
+if os.name=='posix':
+ import resource
+ resource.setrlimit(resource.RLIMIT_CORE,(0,0))
+elif os.name=='nt':
+ import ctypes
+ ctypes.windll.kernel32.SetErrorMode(0x8003)
+from template_ai.offline_support import OfflineJournal,install_qt_message_reporting
+from PySide6.QtCore import qWarning,qFatal
+journal=OfflineJournal(sys.argv[1])
+restore=install_qt_message_reporting(journal)
+if sys.argv[2]=='fatal': qFatal('PRIVATE_NATIVE_TEXT_customer@example.test')
+else: qWarning('PRIVATE_NATIVE_TEXT_customer@example.test')
+restore()
+'''
+            result = subprocess.run([sys.executable, '-c', code, str(root), 'fatal' if fatal else 'warning'],
+                                    capture_output=True, text=True, timeout=30)
+            if fatal:
+                self.assertNotEqual(result.returncode, 0, 'qFatal must still terminate its own process')
+            else:
+                self.assertEqual(result.returncode, 0, result.stderr)
+            data = json.loads((root / 'local-support' / 'recent-operations.json').read_text())
+            self.assertIn('NATIVE_FATAL' if fatal else 'NATIVE_WARNING', [event['code'] for event in data['events']])
+            self.assertNotIn(b'customer@example.test', build_support_bundle(data))
 
 
 class Window(QMainWindow):

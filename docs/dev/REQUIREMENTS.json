@@ -28397,7 +28397,7 @@
       "id": "CORE-090",
       "kind": "core",
       "title": "整體桌面GUI、進階操作引導與完全離線回報",
-      "status": "IN_PROGRESS",
+      "status": "IMPLEMENTED_PENDING_VERIFICATION",
       "completed": false,
       "review_level": "NOT_REVIEWED",
       "scope": "本輪GUI/離線軟體範圍；Windows與私人作品等暫擱，未宣稱真人可用性資格",
@@ -28419,53 +28419,144 @@
         {
           "id": "CORE-090-A01",
           "expected": "全功能導航與保留",
-          "tests": []
+          "tests": [
+            "test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands"
+          ]
         },
         {
           "id": "CORE-090-A02",
           "expected": "共用正式製作與拖動",
-          "tests": []
+          "tests": [
+            "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+            "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+            "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data"
+          ]
         },
         {
           "id": "CORE-090-A03",
           "expected": "版本與確認保護",
-          "tests": []
+          "tests": [
+            "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+            "test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation"
+          ]
         },
         {
           "id": "CORE-090-A04",
           "expected": "白話狀態與鍵盤小視窗",
-          "tests": []
+          "tests": [
+            "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+            "test_input_plain_language.InputPlainLanguageTests.test_plain_normal_labels_preserve_full_ids_in_expandable_details",
+            "test_input_plain_language.InputPlainLanguageTests.test_plain_problem_list_keeps_exact_field_navigation_and_private_data"
+          ]
         },
         {
           "id": "CORE-090-A05",
           "expected": "進階真實服務引導",
-          "tests": []
+          "tests": [
+            "test_guided_operations.GuidedOperationsTests.test_real_window_empty_guidance_opens_existing_source_and_family_tools",
+            "test_guided_operations.GuidedOperationsTests.test_pending_cases_persist_but_review_approval_does_not",
+            "test_guided_operations.GuidedOperationsTests.test_actual_case_input_dialog_keeps_local_size_and_does_not_change_main_input",
+            "test_guided_operations.GuidedOperationsTests.test_cases_require_real_input_correspondence_and_explicit_review",
+            "test_guided_operations.GuidedOperationsTests.test_validation_and_holdout_cannot_be_mixed_into_one_guided_task",
+            "test_guided_operations.GuidedOperationsTests.test_actual_background_task_pauses_and_resumes_saved_cases",
+            "test_guided_operations.GuidedOperationsTests.test_actual_validation_worker_preview_style_review_and_capacity_api",
+            "test_guided_operations.GuidedOperationsTests.test_synthetic_holdout_cannot_be_promoted_even_with_checked_boxes",
+            "test_guided_operations.GuidedOperationsTests.test_error_is_visible_and_core_state_is_retained",
+            "test_guided_operations.GuidedOperationsTests.test_handled_core_failure_is_in_safe_manual_report_without_raw_message"
+          ]
         },
         {
           "id": "CORE-090-A06",
           "expected": "完全離線與安全本地日誌",
-          "tests": []
+          "tests": [
+            "test_offline_support.OfflineSupportTests.test_report_roundtrip_has_beginner_summary_and_no_private_content",
+            "test_offline_support.OfflineSupportTests.test_journal_survives_relaunch_and_marks_missing_normal_shutdown",
+            "test_offline_support.OfflineSupportTests.test_bounded_events_keep_latest_and_account_for_omitted_history",
+            "test_offline_support.OfflineSupportTests.test_unknown_strings_and_private_fields_cannot_enter_report",
+            "test_offline_support.OfflineSupportTests.test_corrupt_local_journal_is_not_copied_into_shareable_report",
+            "test_offline_support.OfflineSupportTests.test_storage_failure_still_allows_manual_report_export",
+            "test_offline_support.OfflineSupportTests.test_save_is_atomic_exclusive_and_failure_leaves_no_partial_file",
+            "test_offline_support.OfflineSupportTests.test_tampered_html_and_extra_zip_entries_are_rejected",
+            "test_offline_support.OfflineSupportTests.test_exception_hooks_store_type_without_message_or_private_trace_source",
+            "test_offline_support.OfflineSupportTests.test_unc_and_remote_paths_are_rejected_before_file_access",
+            "test_offline_support.OfflineSupportTests.test_remote_svg_references_are_blocked_but_displayed_urls_and_embedded_images_remain",
+            "test_offline_support.OfflineSupportTests.test_svg_dependencies_cannot_hide_remote_resources_in_nested_or_disguised_svg",
+            "test_offline_support.OfflineSupportTests.test_local_raster_resource_is_retained_and_error_hint_is_only_a_safe_category",
+            "test_offline_support.OfflineSupportTests.test_import_remote_svg_does_not_start_converter",
+            "test_offline_support.OfflineSupportTests.test_python_network_guard_blocks_ipv4_ipv6_dns_and_unc_but_allows_unix",
+            "test_offline_support.OfflineSupportTests.test_headless_cli_exports_local_report_without_opening_main_window",
+            "test_offline_support.OfflineSupportTests.test_report_export_still_works_without_site_packages_or_qt",
+            "test_offline_support.OfflineSupportTests.test_real_qt_warning_and_fatal_are_safe_and_fatal_still_terminates_child",
+            "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+            "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+            "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+          ]
         },
         {
           "id": "CORE-090-A07",
           "expected": "手動安全診斷匯出",
-          "tests": []
+          "tests": [
+            "test_desktop_workspace.DesktopNavigationTests.test_real_background_job_records_duration_without_private_message",
+            "test_desktop_workspace.DesktopNavigationTests.test_real_support_navigation_exports_local_safe_report",
+            "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+            "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+            "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+          ]
         },
         {
           "id": "CORE-090-A08",
           "expected": "更多skill與agent接入",
-          "tests": []
+          "tests": [
+            "test_gui_tooling_extensions.GuiToolingIntegrityTests.test_altered_original_screenshot_helper_rejected_before_discovery",
+            "test_gui_tooling_extensions.GuiToolingIntegrityTests.test_project_skill_discovery_is_repeatable_and_does_not_overwrite_user_work",
+            "test_gui_tooling_extensions.GuiToolingIntegrityTests.test_manifest_cannot_read_files_outside_tool_directory"
+          ]
         },
         {
           "id": "CORE-090-A09",
           "expected": "保留原測試並完整回歸",
-          "tests": []
+          "tests": [
+            "test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_font_style_enumeration_order_does_not_invalidate_same_face",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_legacy_edit_progress_and_stale_preview_buttons_use_same_learning_draft",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_resize_keeps_position_intent_but_new_person_roots_start_independent_draft",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_resume_other_saved_draft_updates_main_input_size_and_export_reference",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter",
+            "test_input_learning_integration.InputLearningIntegrationTests.test_shared_learning_preview_preserves_original_pdf_png_jpg_formats",
+            "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+            "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data"
+          ]
         },
         {
           "id": "CORE-090-A10",
           "expected": "本地啟動與GitHub可恢復交付",
-          "tests": []
+          "tests": [
+            "test_local_start.LocalStartTests.test_ready_preflight_does_not_create_working_data",
+            "test_local_start.LocalStartTests.test_missing_dependencies_are_plain_and_never_installed",
+            "test_local_start.LocalStartTests.test_remote_location_is_rejected_before_preflight_or_launch",
+            "test_local_start.LocalStartTests.test_real_application_capture_and_manual_support_export",
+            "test_gui_tooling_extensions.GuiToolingIntegrityTests.test_altered_original_screenshot_helper_rejected_before_discovery",
+            "test_gui_tooling_extensions.GuiToolingIntegrityTests.test_project_skill_discovery_is_repeatable_and_does_not_overwrite_user_work",
+            "test_gui_tooling_extensions.GuiToolingIntegrityTests.test_manifest_cannot_read_files_outside_tool_directory"
+          ]
         }
+      ],
+      "remaining": [
+        "Full immutable regression and native GUI validation pending; private Windows/data/print and human novice qualification remain separate"
       ]
     }
   ]

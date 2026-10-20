@@ -1,6 +1,7 @@
 """繁體中文三模式桌面工作台；所有背景工作都不直接改動目前畫布。"""
 from __future__ import annotations
 import math
+import time
 
 import copy
 import json
@@ -900,6 +901,10 @@ class MainWindow(QMainWindow):
             self.inform("目前仍有背景匯入工作，請等待完成")
             return
         self.busy = True
+        support = getattr(self, 'offline_support', None)
+        support_started = time.monotonic()
+        support_stage = support.stage if support else 'APPLICATION'
+        if support: support.record(support_stage, 'ACTION_STARTED')
         self.import_button.setEnabled(False)
         self.statusBar().showMessage(message + " · 背景執行中，完成前不宣稱成功")
         job = Job(function)
@@ -920,7 +925,9 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage(message+' · 背景步驟已結束；請核對目前工作結果')
             try:
                 callback(value)
+                if support: support.record(support_stage, 'ACTION_CANCELLED' if cancel.is_set() else 'ACTION_COMPLETED', duration_ms=(time.monotonic()-support_started)*1000)
             except Exception as e:
+                if support: support.record(support_stage, 'ACTION_FAILED', error=e, duration_ms=(time.monotonic()-support_started)*1000)
                 self.error(str(e))
             finally:
                 release()
@@ -929,6 +936,9 @@ class MainWindow(QMainWindow):
             self.import_button.setEnabled(True)
             self.statusBar().showMessage(message+' · 工作未完成；尚未宣稱保存成功')
             try:
+                if support:
+                    support.record_problem(text)
+                    support.record(support_stage, 'ACTION_CANCELLED' if cancel.is_set() else 'ACTION_FAILED', duration_ms=(time.monotonic()-support_started)*1000)
                 (on_error or getattr(callback,'error',None) or self.error)(text)
             finally:
                 release()

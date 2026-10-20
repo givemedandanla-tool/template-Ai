@@ -129,9 +129,6 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
     assert_local_path(path)
     assert_local_path(assets)
     assert_local_document(path)
-    if Path(path).suffix.lower() in ('.png', '.jpg', '.jpeg'):
-        from .offline_runtime import assert_local_raster
-        assert_local_raster(path)
     path, assets = Path(path).resolve(), Path(assets).resolve()
     if type(page) is not int or not 1 <= page <= 999:
         raise ValueError("頁碼必須是 1～999 的整數")
@@ -227,9 +224,16 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
         semantic_svg, recovery = recover_semantics(path, folder, page, False, None, run=_run)
     elif suffix in (".png", ".jpg", ".jpeg"):
         reader = QImageReader(str(path))
+        # Fix the decoder before asking for dimensions: a file named .png must
+        # never invoke a native SVG handler through content auto-detection.
+        reader.setAutoDetectImageFormat(False)
+        reader.setDecideFormatFromContent(False)
+        reader.setFormat(b'PNG' if suffix == '.png' else b'JPEG')
         size = reader.size()
         if not size.isValid() or size.width() * size.height() > MAX_PIXELS:
             raise ValueError("圖片無法讀取或超出本版 1200 萬像素預算")
+        from .offline_runtime import assert_local_raster
+        assert_local_raster(path)
         image = reader.read()
         if image.isNull():
             raise ValueError("圖片解碼失敗：" + reader.errorString())

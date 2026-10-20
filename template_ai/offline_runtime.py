@@ -68,22 +68,34 @@ def assert_local_document(path, *, require_svg=False):
         raise ValueError('SVG 超過本版支援預算')
     encoding = 'utf-32' if raw.startswith((b'\xff\xfe\x00\x00', b'\x00\x00\xfe\xff')) else 'utf-16' if raw.startswith((b'\xff\xfe', b'\xfe\xff')) else 'utf-8-sig'
     text = raw.decode(encoding, errors='replace')
-    if re.search(r'<\?xml-stylesheet\b|@import\b', text, re.I):
+    if re.search(r'<\?xml-stylesheet\b', text, re.I):
         raise OfflineAccessError('離線 SVG 不載入外部樣式；請將樣式內嵌後再匯入。')
     try:
         root = ET.fromstring(raw)
     except ET.ParseError as error:
         raise ValueError('SVG 結構無法核對；尚未交給轉換器') from error
-    refs = [v for node in root.iter() for k, v in node.attrib.items() if k.rsplit('}', 1)[-1].lower() in ('href', 'src')]
-    css_refs = re.findall(r'url\(\s*[\"\']?([^\)\"\']+)', text, re.I)
-    css_refs += re.findall(r'@import\s+[\"\']([^\"\']+)', text, re.I)
+    for node in root.iter():
+        base = node.get('{http://www.w3.org/XML/1998/namespace}base')
+        if base is not None and base.strip() not in ('', '.', './'):
+            raise OfflineAccessError('離線 SVG 不套用外部資源基底；請將資源路徑正規化或內嵌。')
+    refs = [v for node in root.iter() for k, v in node.attrib.items() if k.rsplit('}', 1)[-1].lower() in ('href', 'src', 'absref')]
+    css_values = []
+    presentation = {'style', 'fill', 'stroke', 'filter', 'clip-path', 'mask', 'marker-start', 'marker-end', 'marker-mid', 'cursor'}
+    for node in root.iter():
+        if node.tag.rsplit('}', 1)[-1].lower() == 'style':
+            css_values.append(node.text or '')
+        css_values.extend(value for key, value in node.attrib.items() if key.rsplit('}', 1)[-1].lower() in presentation)
+    if any(re.search(r'@import\b', value, re.I) for value in css_values):
+        raise OfflineAccessError('離線 SVG 不載入外部樣式；請將樣式內嵌後再匯入。')
+    if any('\\' in value for value in css_values):
+        raise OfflineAccessError('離線 SVG 的樣式需先展開跳脫字元，才能核對資源範圍。')
+    css_refs = [ref for value in css_values for ref in re.findall(r'url\(\s*[\"\']?([^\)\"\']+)', value, re.I)]
     for ref in css_refs:
         # Ambiguous CSS escapes cannot establish a local resource. They must be
         # expanded/embed locally before entering the offline converter.
         if '\\' in ref:
             _blocked()
     refs += css_refs
-    refs += re.findall(r'\b(?:SYSTEM|PUBLIC)\s+[\"\']([^\"\']+)', text, re.I)
     for declaration in re.findall(r'<!DOCTYPE.*?>|<!ENTITY.*?>', text, re.I | re.S):
         if re.search(r'\b(?:SYSTEM|PUBLIC)\b', declaration, re.I):
             refs += re.findall(r'[\"\']([^\"\']+)[\"\']', declaration)

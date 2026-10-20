@@ -316,6 +316,13 @@ def main():
                 for path in generated.glob('input-integration-*'):
                     if path.is_file():shutil.copyfile(path,folder/path.name)
         if capture_code == 0:
+            extra=subprocess.run([sys.executable,str(ROOT/'tools/capture_desktop_workspace.py'),'--folder',str(generated)],cwd=ROOT,capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=240)
+            with capture_log.open('a') as log:log.write(extra.stdout+extra.stderr)
+            capture_code=extra.returncode
+            if capture_code==0:
+                for path in generated.glob('desktop-*'):
+                    if path.is_file():shutil.copyfile(path,folder/path.name)
+        if capture_code == 0:
             for name in ("output-workspace.png", "training-workspace.png", "template-workspace.png", "decorated-output-workspace.png", "multiple-artworks-workspace.png", "batch-source-preview.png", "font-center-workspace.png", "font-center-diagnostics.png",
                          "font-candidates-ranked.png", "font-candidates-preview.png", "font-candidate-line.png", "font-candidates-report.json",
                          "font-review-differences.png", "font-review-approved.png", "font-review-draft-history.png", "font-review-undone.png", "font-review-audit.json",

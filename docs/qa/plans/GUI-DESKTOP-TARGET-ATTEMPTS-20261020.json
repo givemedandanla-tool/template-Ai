@@ -1,0 +1,31 @@
+{
+  "attempts": [
+    {
+      "id": "001",
+      "tests": 8,
+      "passed": 7,
+      "errors": 1,
+      "cause": "New test queried wrong artifact kind DESIGN_ARTIFACT;actual core uses DESIGN_ACCEPTED_ARTIFACT;corrected test,production export already succeeded",
+      "log": "GUI-DESKTOP-TARGET-001.log"
+    },
+    {
+      "id": "002",
+      "tests": 9,
+      "passed": 9,
+      "seconds": 71.328,
+      "exit_code": 0,
+      "log": "GUI-DESKTOP-TARGET-002.log"
+    },
+    {
+      "id": "NAV003",
+      "tests": 5,
+      "passed": 5,
+      "seconds": 3.757,
+      "exit_code": 0,
+      "log": "GUI-DESKTOP-NAVIGATION-003.log"
+    }
+  ],
+  "current_unique_new_desktop_tests": 11,
+  "formal_regression": "PENDING",
+  "no_assertion_weakening": true
+}

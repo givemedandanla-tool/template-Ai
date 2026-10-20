@@ -601,6 +601,9 @@ class DesktopWorkspace(QObject):
         if not current:
             self.preview_stack.setCurrentWidget(w.output_canvas)
             self.learned_controls.hide()
+            self.preview_hint.setText("檢查完整稿件；更正內容後請重新排版，位置調整請按下方「修改位置」。")
+        if hasattr(self, 'learned_more'):
+            self.learned_more.setVisible(current)
         if editor is not None and editor.solve_worker is not None and editor.solve_worker.isRunning():
             key = ("running", editor.solve_status.text())
             text, action = editor.solve_status.text(), "停止這次排版"

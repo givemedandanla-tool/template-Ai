@@ -44,6 +44,8 @@ CODES = {
     'PREVIOUS_SESSION_FOUND': '已找到上次使用紀錄', 'LOG_READ_FAILED': '上次紀錄無法驗證',
     'PREVIOUS_SESSION_INTERRUPTED': '上次使用未記錄正常結束',
     'USER_REPORTED_PROBLEM': '使用者標記需要協助的問題',
+    'NATIVE_WARNING': '介面執行環境提出提示', 'NATIVE_CRITICAL': '介面執行環境遇到問題',
+    'NATIVE_FATAL': '介面執行環境無法繼續',
 }
 ERRORS = {'NONE', 'VALUE', 'TYPE', 'FILE_MISSING', 'PERMISSION', 'OS', 'RUNTIME', 'MEMORY', 'OTHER'}
 MISSING = {
@@ -222,7 +224,7 @@ def validate_report(data):
 
 
 def report_summary(data):
-    errors = sum(e['code'] in ('ACTION_FAILED', 'UNHANDLED_ERROR', 'REPORT_SAVE_FAILED', 'LOG_READ_FAILED', 'USER_REPORTED_PROBLEM') for e in data['events'])
+    errors = sum(e['code'] in ('ACTION_FAILED', 'UNHANDLED_ERROR', 'REPORT_SAVE_FAILED', 'LOG_READ_FAILED', 'USER_REPORTED_PROBLEM', 'NATIVE_CRITICAL', 'NATIVE_FATAL') for e in data['events'])
     missing = sorted({e['missing'] for e in data['events']} - {'NONE'})
     return {'發生什麼': f'這份本地紀錄包含 {len(data["events"])} 筆操作與 {errors} 筆問題。',
             '影響什麼': '報告只記錄使用情況；不修改原稿，也不代表模型、字型或印刷已驗證。',
@@ -443,4 +445,34 @@ def install_exception_reporting(journal, notify=None):
             threading.excepthook = old_thread
         if sys.unraisablehook is unraisable_hook:
             sys.unraisablehook = old_unraisable
+    return restore
+
+
+def install_qt_message_reporting(journal):
+    """Record only Qt severity. Qt itself still terminates after qFatal.
+
+    Message text, logging context, thread stack and native paths are never
+    serialized. This opt-in hook belongs solely to the launched application.
+    """
+    import sys
+    from PySide6.QtCore import QtMsgType, qInstallMessageHandler
+    codes = {QtMsgType.QtWarningMsg: 'NATIVE_WARNING', QtMsgType.QtCriticalMsg: 'NATIVE_CRITICAL',
+             QtMsgType.QtFatalMsg: 'NATIVE_FATAL'}
+    old = None
+
+    def handler(kind, context, message):
+        code = codes.get(kind)
+        if code is not None:
+            try:
+                journal.record('APPLICATION', code, error=RuntimeError() if kind != QtMsgType.QtWarningMsg else None)
+            except Exception:
+                pass
+        if old is not None:
+            old(kind, context, message)
+        elif code is not None:
+            print('Template AI 介面執行環境：' + code + '；請使用本機問題回報。', file=sys.stderr)
+
+    old = qInstallMessageHandler(handler)
+    def restore():
+        qInstallMessageHandler(old)
     return restore
