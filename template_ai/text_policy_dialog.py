@@ -38,12 +38,20 @@ class TextPolicyDialog(QDialog):
             finally:p.end()
             self.image.setPixmap(QPixmap.fromImage(image));self.status.setText(f'{slot.owner}/{slot.kind}／{slot.id}；固定 {slot.size_pt:g} pt；實測寬{w:.4f}mm／框{slot.rect.w:g}mm，選用字距{tracking:.4f}mm，水平比例{scale:.2%}；{strategy}；'+('示例可排入，非完整印前PASS' if valid else '示例無解：不能正式輸出；可修改草稿政策'))
         except (ValueError,TypeError) as error:self.image.clear();self.status.setText('未通過：'+str(error))
+    def _check_current_draft(self):
+        from .font_review import fingerprint
+        current=self.host_window.template
+        if (self.host_window.tabs.currentIndex()!=1 or current is None
+                or current.id!=self.template_id
+                or fingerprint(current.to_dict())!=fingerprint(self.before)):
+            raise ValueError('目前草稿已變更，請重開規則編輯')
+
     def apply(self):
         try:
-            from .font_review import fingerprint
-            if self.host_window.tabs.currentIndex()!=1 or self.host_window.template.id!=self.template_id or fingerprint(self.host_window.template.to_dict())!=fingerprint(self.before):raise ValueError('目前草稿已變更，請重開規則編輯')
+            self._check_current_draft()
             slot=self.candidate();patch={key:deepcopy(getattr(slot,key)) for key in ('tracking_mm','tracking_min_mm','tracking_max_mm','align','distribution_approval')};plan=propose(self.before,'TEMPLATE',dict(operation='PATCH',ids=[slot.id],patch=patch))
             if QMessageBox.question(self,'只修改目前模板版本草稿',f'{slot.id}／固定{slot.size_pt:g}pt\n{patch}\n不啟用跨模板規則、不發布，保存後仍需完整驗證。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
+            self._check_current_draft()
             if not self.host_window.editable() or self.host_window.checkpoint() is False:return
             self.host_window.template=Template.from_dict(plan['after']);self.host_window.refresh_editor();self.host_window.editor_selection([slot.id]);self.accept()
         except (ValueError,TypeError) as error:self.status.setText('未套用：'+str(error))
