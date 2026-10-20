@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "tools/dev_governance.py",
+    "check",
+    "--require-evidence"
+  ],
+  "exit_code": 0,
+  "result": {
+    "status": "PASS",
+    "requirements": 172,
+    "completed_scoped": 166,
+    "parent_topics": 75,
+    "tests_known": 1850
+  },
+  "stderr": "",
+  "scope": "Existing product governance; new tooling acceptance tracked separately; local prepared checkpoint is not remote verified."
+}
