@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "GUI_OFFLINE_FORMAL_CAPTURES_RUNNING_TESTS1850_PASS",
+  "active_task": "GUI_OFFLINE_DELIVERY_SELF_VERIFIED_COMPLETE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-WIP7.receipt.json",
   "last_confirmed_commit": "a15d765a5096fe0a716b7b36e0f05ded4f8dfd17",
-  "latest_evidence_run": null,
+  "latest_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -20,9 +20,9 @@
     "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
   ],
   "next_tasks": [
-    "Poll existing FULL006 owner session14689;1850/1850 tests and0runtime complete,formal capture/output-readback pipeline still running",
-    "Do not modify source4ebfff6 or duplicate tests;native00512+3/owned3 already passed",
-    "After run.json clean softwarePASS and all attachments use /tmp/template-ai-finalize-gui.py;final checkpoint and cloud config draft"
+    "User local first preparation and offline launch per LOCAL_DESKTOP_QUICK_START.md",
+    "User manually exports safe support ZIP;future Codex uses report and frozen version to reproduce",
+    "Four user-deferred qualification groups remain pending;do not request private corpus or auto-start web/mobile/EXE"
   ],
   "blocked": [
     {
@@ -46,17 +46,19 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261020-GUI-OFFLINE-FINAL"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
-  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-INPUT-GUI-FINAL.json",
+  "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
   "goal_milestone": "Existing internal inputs -> current shared learning draft -> relative edit/correction -> exact preview,confirmation and output;GUI design toolchain ready;original8/50real qualification unchanged",
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
-  "next_work_package": "CORE-090",
+  "next_work_package": null,
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -1131,7 +1133,7 @@
   "ai_execution_plan": "docs/dev/AI_LEARNING_EXECUTION.md",
   "ai_execution_baseline": "docs/dev/progress/PROGRESS-20261019-AI-ALL8-BEGIN.json",
   "latest_targeted_evidence": "docs/evidence/local-recovery/targeted-006/result.json",
-  "latest_evidence_scope": "Source 96b1eb9dc23fe39fd5233d17513cc42f8ed547f8: 1733/1733 PASS, 222 healthy modules, capture0, 369 hash-verified attachments. Original8partial/0full real acceptance; no private user corpus requested.",
+  "latest_evidence_scope": "Source 4ebfff6f676b236519c4a1ba2b0cb192acbffea3:1850/1850 PASS,236 healthy modules,0 runtime errors,capture0,397 hash-verified attachments;CORE090 10/10 SELF_VERIFIED;native12+originalparent3;Windows/private corpus/hardware/print unchanged.",
   "latest_cache_relocation": "docs/dev/history/LOCAL_CHECKPOINT_CACHE_RELOCATION_20261019T061258Z.json",
   "frozen_formal_run": {
     "id": "RUN-LOCAL-RECOVERY-ALL8-005",
@@ -1441,7 +1443,7 @@
   "history_note": "Earlier dated state/contract interview flags are retained as history;current authority is ACTIVE_DEVELOPMENT_HANDOFF,latest_verification,and the current scoped integration audit",
   "checkpoint_cache_cleanup": "docs/qa/plans/INPUT-FINAL-CACHE-SPACE-RECOVERY-20261020.json",
   "gui_tooling": {
-    "status": "CONNECTED_AND_NATIVE_SMOKE_PASS",
+    "status": "CONNECTED_AND_GUI_SELF_VERIFIED",
     "skill": "docs/dev/gui_tooling/SKILL.md",
     "upstream": "UI/UX Pro Max MIT pinned56ea9cf",
     "tools": [
@@ -1453,7 +1455,7 @@
     "plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
     "readiness": "docs/dev/GUI_TOOLING_READINESS_20261020.md",
     "clean_tool_root_rebuild": "PASS",
-    "product_ui_visual_redesign": "IMPLEMENTED_WAITING_FULL_REGRESSION",
+    "product_ui_visual_redesign": "DELIVERED_CORE090_SELF_VERIFIED",
     "configuration_draft": "SAVED_REQUIRES_PUBLISH;CURRENT_INSTANCE_ALREADY_VERIFIED",
     "additional_skills": 3,
     "additional_agent_roles": 5,
@@ -1487,5 +1489,23 @@
   "current_native_gui_run": "docs/evidence/runs/RUN-GUI-OFFLINE-NATIVE-005/desktop-workspace-audit.json",
   "latest_failed_gui_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-002/run.json",
   "latest_gui_launch_rejected": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-003/launch-rejected.json",
-  "latest_gui_interruption": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-005/interrupted.json"
+  "latest_gui_interruption": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-005/interrupted.json",
+  "latest_completed_delivery_contract": "docs/dev/GUI_OFFLINE_DELIVERY_CONTRACT_20261020.md",
+  "gui_offline_delivery": {
+    "status": "SELF_VERIFIED_COMPLETE",
+    "requirement": "CORE-090",
+    "acceptance_passed": 10,
+    "acceptance_total": 10,
+    "full_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
+    "source_commit": "4ebfff6f676b236519c4a1ba2b0cb192acbffea3",
+    "final_report": "docs/dev/GUI_OFFLINE_FINAL_REPORT_20261020.md",
+    "clause_audit": "docs/dev/GUI_OFFLINE_10_CLAUSE_AUDIT_20261020.json",
+    "user_guide": "docs/dev/DESKTOP_WORKSPACE_USER_GUIDE_20261020.md",
+    "local_launch": "docs/dev/LOCAL_DESKTOP_QUICK_START.md",
+    "manual_report": "docs/dev/OFFLINE_SUPPORT_USER_GUIDE_20261020.md",
+    "network_use": "No automatic upload;offline product workflow;explicit initial preparation separate",
+    "private_data": "Remains local;not included in safe report or GitHub",
+    "original_ai_qualification": "8_PARTIAL_0_FULL_UNCHANGED",
+    "proof_scope": "Software self-verification;not human/Windows/private corpus/print qualification"
+  }
 }

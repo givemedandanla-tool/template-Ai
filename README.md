@@ -12,6 +12,8 @@
 
 [70個部分父需求的完整化缺口報告](docs/dev/PARTIAL_70_GAP_REPORT.md)與[AI可讀清單](docs/dev/PARTIAL_70_GAP_ANALYSIS.json)逐條保留現況、缺口及驗收，不把83個子功能當全產品完成。
 
+**桌面工作台已重構**：三個工作區、完整預覽與相對位置微調、按狀態的主要動作及進階工作引導；普通說明白話、技術內容可展開。日常離線，問題報告由使用者手動匯出，私人資料留本機。見[桌面指南](docs/dev/DESKTOP_WORKSPACE_USER_GUIDE_20261020.md)及[本輪交付結果](docs/dev/GUI_OFFLINE_FINAL_REPORT_20261020.md)。
+
 ## 開啟與快速試用
 
 家族／共用規則編輯：模板目錄→「家族與共用規則」，或設計學習視窗第4頁；支援大量工作集、批次與單一家族規則／來源核對／案例試排。見[操作指引](docs/dev/TEMPLATE_EDITING_USER_GUIDE.md)及[本輪驗收](docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.md)。
@@ -22,7 +24,7 @@
 
 原始碼：第一次安裝 64 位元 Python 3.11，明確執行 `PREPARE_WINDOWS.bat` 準備專案依賴；日後雙擊 `START_WINDOWS.bat` 完全離線啟動，不再自動安裝套件。首次離線準備、私人資料備份及手動匯出安全報告見[本機快速開始](docs/dev/LOCAL_DESKTOP_QUICK_START.md)。
 
-最快路徑：「模板與 Logo」加入合成示範 → 驗證並發布 →「排版與輸出」填入匿名示範 → 開始排版 → 輸出 PDF／PNG／JPG。
+最快路徑：「模板與圖片」加入合成示範 → 驗證並發布 →「排版與輸出」填入匿名示範 → 開始排版 → 輸出 PDF／PNG／JPG。
 
 ## 核心功能
 

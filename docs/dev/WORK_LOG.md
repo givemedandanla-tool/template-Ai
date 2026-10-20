@@ -1694,3 +1694,9 @@ FULL005572PASS中斷：1次Qt observer收到QWidgetItem而非QEvent致AttributeE
 ### 最終源4ebfff6f原生驗證與完整回歸進行
 
 native005桌面12/12(231.225s)+原parent3/3(31.512s)，owned3頁Tab PASS5.333s；264.935s owner／600s上限、0runtime，14圖hash核對，11流程圖與native004相同。source30ac2af0前後一致，root實看主預覽及小視窗。FULL006唯一owner14689，1850尚在執行，不採用partial；目標10條及原165明列範圍待全新證據。WIP7僅保存metadata／proofs，不改app/test/tool。
+
+### GUI／離線最終自我驗證
+
+FULL006來源4ebfff6f：1850PASS／236健康模組／0runtime／capture0／397附件，原1798保留新52；native12＋原導航3、owned3頁Tab；CORE090十條逐測映射完成。原有5外部資格仍未滿，整體FAIL與軟體PASS分開。166明列範圍登錄完成，3PARTIAL／3DEFERRED不變；原AI8／50真實資格8partial／0complete。完整失敗與unique-ID拒絕紀錄保留。下一步最終checkpoint及GitHub精確讀回，本地手動安全報告循環。
+
+最終metadata已依1850PASS/0runtime/capture0與397附件逐hash生成；第一次永久保存治理check正確阻擋，因新397證據尚未進REMOTE_VERIFIED checkpoint。這是順序檢查，不是軟體回歸失敗；先FINAL checkpoint/push/readback/ack，再重跑治理，不重跑軟體。只釋放本輪完整synthetic capture cache，source/tests/public397全部保留且已verify_run。

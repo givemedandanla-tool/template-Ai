@@ -1,0 +1,188 @@
+{
+  "cancelled": {
+    "id": "167adf39294d4642920af9ab8fb36830",
+    "revision": 4,
+    "phase": "CANCELLED",
+    "created": 1792492357.92117,
+    "items": [
+      {
+        "id": "4a5a350e24ff46f19a65c00431465d44",
+        "path": "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-GUI-OFFLINE-ALL-006/synthetic-batch-input/duplicate.svg",
+        "page": 1,
+        "expected_hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7",
+        "status": "SUCCESS",
+        "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+        "attempts": 1,
+        "history": [
+          {
+            "action": "CLAIM",
+            "attempt": 1,
+            "hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7"
+          },
+          {
+            "action": "SUCCESS",
+            "attempt": 1,
+            "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+            "source_id": "d0667797cb33439faf1e8fa4b13ed3ab"
+          }
+        ],
+        "source_id": "d0667797cb33439faf1e8fa4b13ed3ab",
+        "reuse_source": null,
+        "bytes": 114
+      },
+      {
+        "id": "4b6c3e84e7ff4de193817c686a32625e",
+        "path": "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-GUI-OFFLINE-ALL-006/synthetic-batch-input/first.svg",
+        "page": 1,
+        "expected_hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7",
+        "status": "SKIPPED",
+        "reason": "同批相同SHA-256／頁次；路徑證據保留，作品／模板相似仍UNKNOWN",
+        "attempts": 0,
+        "history": [],
+        "source_id": null,
+        "reuse_source": null,
+        "bytes": 114,
+        "duplicate_of": "4a5a350e24ff46f19a65c00431465d44"
+      },
+      {
+        "id": "4ff924422c77423c81132ba2dc0ca19b",
+        "path": "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-GUI-OFFLINE-ALL-006/synthetic-batch-input/second.svg",
+        "page": 1,
+        "expected_hash": "6a5b6623511078fce67de16fccec317cf4982556bc40932df7112c9f6eb63c8d",
+        "status": "READY",
+        "reason": "待匯入；視覺／語意尚未核驗",
+        "attempts": 0,
+        "history": [],
+        "source_id": null,
+        "reuse_source": null,
+        "bytes": 115
+      }
+    ],
+    "owner": null,
+    "history": [
+      {
+        "action": "import_item_started",
+        "revision": 2,
+        "created": 1792492357.9237566
+      },
+      {
+        "action": "import_item_result_saved",
+        "revision": 3,
+        "created": 1792492359.5208988
+      },
+      {
+        "action": "import_cancelled",
+        "revision": 4,
+        "created": 1792492359.5427604
+      }
+    ],
+    "scope": "只讀來源匯入；尚非自动語意辨識／學習／發布"
+  },
+  "resumed": {
+    "id": "167adf39294d4642920af9ab8fb36830",
+    "revision": 7,
+    "phase": "DONE",
+    "created": 1792492357.92117,
+    "items": [
+      {
+        "id": "4a5a350e24ff46f19a65c00431465d44",
+        "path": "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-GUI-OFFLINE-ALL-006/synthetic-batch-input/duplicate.svg",
+        "page": 1,
+        "expected_hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7",
+        "status": "SUCCESS",
+        "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+        "attempts": 1,
+        "history": [
+          {
+            "action": "CLAIM",
+            "attempt": 1,
+            "hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7"
+          },
+          {
+            "action": "SUCCESS",
+            "attempt": 1,
+            "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+            "source_id": "d0667797cb33439faf1e8fa4b13ed3ab"
+          }
+        ],
+        "source_id": "d0667797cb33439faf1e8fa4b13ed3ab",
+        "reuse_source": null,
+        "bytes": 114
+      },
+      {
+        "id": "4b6c3e84e7ff4de193817c686a32625e",
+        "path": "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-GUI-OFFLINE-ALL-006/synthetic-batch-input/first.svg",
+        "page": 1,
+        "expected_hash": "0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7",
+        "status": "SKIPPED",
+        "reason": "同批相同SHA-256／頁次；路徑證據保留，作品／模板相似仍UNKNOWN",
+        "attempts": 0,
+        "history": [],
+        "source_id": null,
+        "reuse_source": null,
+        "bytes": 114,
+        "duplicate_of": "4a5a350e24ff46f19a65c00431465d44"
+      },
+      {
+        "id": "4ff924422c77423c81132ba2dc0ca19b",
+        "path": "/workspace/template-Ai/.checkpoints/evidence-workspaces/RUN-GUI-OFFLINE-ALL-006/synthetic-batch-input/second.svg",
+        "page": 1,
+        "expected_hash": "6a5b6623511078fce67de16fccec317cf4982556bc40932df7112c9f6eb63c8d",
+        "status": "SUCCESS",
+        "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+        "attempts": 1,
+        "history": [
+          {
+            "action": "CLAIM",
+            "attempt": 1,
+            "hash": "6a5b6623511078fce67de16fccec317cf4982556bc40932df7112c9f6eb63c8d"
+          },
+          {
+            "action": "SUCCESS",
+            "attempt": 1,
+            "reason": "來源預覽已保存；視覺／作品辨識與訓練待核驗",
+            "source_id": "391c777efef04867a8df5caae83f4dbc"
+          }
+        ],
+        "source_id": "391c777efef04867a8df5caae83f4dbc",
+        "reuse_source": null,
+        "bytes": 115
+      }
+    ],
+    "owner": null,
+    "history": [
+      {
+        "action": "import_item_started",
+        "revision": 2,
+        "created": 1792492357.9237566
+      },
+      {
+        "action": "import_item_result_saved",
+        "revision": 3,
+        "created": 1792492359.5208988
+      },
+      {
+        "action": "import_cancelled",
+        "revision": 4,
+        "created": 1792492359.5427604
+      },
+      {
+        "action": "import_item_started",
+        "revision": 5,
+        "created": 1792492359.6228151
+      },
+      {
+        "action": "import_item_result_saved",
+        "revision": 6,
+        "created": 1792492361.4539135
+      },
+      {
+        "action": "import_run_stopped",
+        "revision": 7,
+        "created": 1792492361.4671876
+      }
+    ],
+    "scope": "只讀來源匯入；尚非自动語意辨識／學習／發布"
+  },
+  "scope": "Actual anonymous GUI; procedure-confirmed source import only, no automatic semantic training/publication or independent review"
+}

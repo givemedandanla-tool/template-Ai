@@ -1,21 +1,15 @@
-# 本輪：桌面 GUI 與離線回報開發中
+# 當前交接：桌面GUI、進階引導與離線回報已自驗
 
-契約：GUI_OFFLINE_DELIVERY_CONTRACT_20261020.md；CORE-090。使用者已明確授權專項agent協作及持續完成。四類外部條件/延後項暫擱；網頁/手機/EXE未加入。
+先跑`.venv/bin/python tools/resume_status.py`；分支`dev/v0.1-first-version`／PR2，不合併main。STATE與最新REMOTE_VERIFIED收據為保存依據。
 
-基底33d24c2，原1798測試ID必須保留；來源變更後原165 scoped完成轉待重驗，不能拿舊PASS驗證新GUI。既有AI8包50條真實資格不變。
+- 本輪CORE-090：10／10 SELF_VERIFIED；[完整報告](GUI_OFFLINE_FINAL_REPORT_20261020.md)、[驗收映射](GUI_OFFLINE_10_CLAUSE_AUDIT_20261020.json)。
+- 程式來源`4ebfff6f676b236519c4a1ba2b0cb192acbffea3`；FULL0061850／1850PASS、236健康模組、0runtime、capture0、397附件；原1798保留、新52。後續commit僅證據／交接／收據，不修改此來源。
+- native005：桌面12＋原導航3 PASS、11PNG；owned3頁Tab PASS。非Windows／真人／實體印刷資格。
+- 三工作區、真核心拖動、更正、確認、版本、固定與學習路徑都接通。普通操作白話，專業細節按需展開；原16家族工具仍可用。
+- 完全本地工作，手動匯出安全ZIP；私人作品／字型／資料庫／原文不外傳。不索取私人作品，不自動上傳，不依賴外部AI。
+- 額外3skill／5agent角色可由gui_tooling bootstrap重建；使用者本輪允許agent，不成為其他任務永久授權。
+- 原AI8／50完整真實資格8部分／0完整。四類使用者暫擱維持；網頁／手機／EXE延後。
+- 172登錄：父題69／75已驗證、3部分3延後；CORE90／90、GOV7／7。整體run FAIL僅原有5資格，software execution PASS。
+- ALL001中斷、ALL002四FAIL／9Qt例外、ALL003啟動拒絕0測試、ALL004781PASS及ALL005572PASS中斷均保留；WIP1錯base metadata棄用。不要把失敗／部分來源當新驗證。
 
-root整合desktop_workspace；offline_diagnostics負責離線診斷與app.py；guided_operations負責引導/家族面板；gui_tooling_research負責更多skills/agent規格與bootstrap。共享檔界線在開發紀錄，統一root commit/push。下一步完成實作、目標測試、原生GUI與完整回歸，逐checkpoint遠端讀回。
-
-WIP1：新desktop_workspace已接正式MainWindow；三工作區導航/固定footer/嵌入真DesignSession畫布與進階選項/白話狀態。學習頁也重組，舊工具仍可由更多入口使用。離線日誌/安全ZIP/guard、進階引導、3新skill與5agent角色已實作；目標測試通過不當完整回歸。後續須新製作路徑具名測試及來源凍結全回歸，舊1798全部保留。
-
-來源準備WIP2：本輪新增51具名測試，原1798保留，合計1849待完整回歸。新桌面11案例來源圍欄擷取中；四類暫擱不影響GUI核心。WIP1的base metadata輸入錯誤已保留並棄用，不ack；實際WIP來源e95eb68逐檔Git讀回。後續checkpoint直接用git rev-parse HEAD取得基底。
-
-WIP3：完整001已保留中斷(241完成239PASS/2FAIL)，定位屬性及收合停用候選均修，原25測試PASS，三頁Tab+兩原失敗7PASS。hidden TabBar焦點陷阱與native工具自有視窗未啟用分開修；原生owned工具3頁嚴格Tab通過。下一新來源完整1849及原生11，勿把001部分當完成。
-
-FULL002已完整收齊1849：1845PASS/4FAIL，另9Qt計時器銷毀例外，source unchanged；不採用。4失敗為預檢回頁、圖片狀態code查詢及parent導航兩條。修正明確property偏好、動態舊toggle、獨立唯讀稿件摘要／新批候選必要時展開、技術圖片狀態tab與timer生命週期。增加1真Qt銷毀測試，1850總數；原1798保留。START/PREPARE納入正式code manifest與checkpoint，不能只靠補充證明。target21PASS；fresh7模組target004進行中；待通過後新FULL003/native003。
-
-FULL004在781PASS/0FAIL主動中斷以完成最後人工發現的help過時宣稱與主預覽縮放入口；source80a native00312+3/owned3及37PNG先保存，非最終新source。新view只動螢幕transform不改稿件，原nav/drag/parent測試增強，仍1850 IDs。target005同程序14/15PASS，parent候選0尚未證實原因；原正式fresh-module target00615/15PASS、0runtime，不改原斷言。最後補首次示範需驗證並發布與私人資料本地試用文案。下一FULL005/native004；不要預建run資料夾。
-
-FULL005在572PASS/0assertion FAIL因1次RuntimeSupervisor eventFilter把QWidgetItem當QEvent而中斷；失敗模組results永久保留。三個Qt eventFilter補QEvent型別／有效性守衛，原runtime測試增非事件與已刪event，不增加IDs；fresh41/41PASS0runtime。WIP6後FULL006/native005。native004舊1d65來源12+3及owned3PASS保存。混合同程序候選失敗已診斷：GUI實際Noto、worker實際OpenAI Sans，dependency stamp不同，Gate正確標UNKNOWN；不改Gate、字型與實機資格暫擱仍有效。
-
-WIP7保存最終源4ebfff6f：native005桌面12＋原導航3、owned005三頁Tab全PASS、0runtime，14PNG永久；來源圍欄30ac2af0前後一致。FULL0061850已啟動，既有owner session14689勿重跑/勿改code，進度見formal-live/test-progress。用/tmp/template-ai-finalize-gui.py在run完整且softwarePASS後更新10條/登錄/進度/交接，最後checkpoint及環境草稿。當前latest_evidence_run仍null、完成登錄仍待新驗；不能提前採用。混合字型公開診斷已存targeted：worker原始字面未直接插樁，fresh-thread stamp吻合stored且不同GUI，Gate正確阻擋。
+下一步由使用者下載到本地，依LOCAL_DESKTOP_QUICK_START／DESKTOP_WORKSPACE_USER_GUIDE操作；有問題從「問題與報告」手動匯出ZIP再交Codex。不得自動新增前端、EXE或要求真實資料來阻擋本輪交付。

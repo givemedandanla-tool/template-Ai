@@ -1,4 +1,4 @@
-# GUI 專項覆核紀錄（開發中）
+# GUI 專項覆核紀錄
 
 本輪實際使用 offline_diagnostics、guided_operations、gui_tooling_research 及 gui_review 專項 agent；角色可由 gui_tooling/agent_task.py 重建。這是同團隊自我覆核，不是外部獨立驗收。
 
@@ -26,3 +26,5 @@ ALL001在241完成(239PASS/2FAIL)中斷：明確定位來源欄位後屬性區�
 ALL002完整1849中1845PASS/4FAIL及9Qt例外保留，非採用證據。修正後直接21PASS、fresh7模組75PASS且0runtime；新增真Qt刪timer訊號測試，總1850。覆核確認唯讀摘要與專業工具分離、原風險詳情完整、每批必要候選展開一次、技術Logo狀態保留、舊toggle指向當前容器。源80a40511：workbench/candidate/preflight三正式擷取入口PASS(11.712/21.594/27.633秒)，37PNG/3metadata/1匿名PDF；source hash起訖一致31cb3f25。小窗預覽圖刻意延續原set_zoom(12)測試的視圖，不當初始fit結果。證據RUN-GUI-COMPAT-CAPTURE-004；完整FULL004與native003仍待採用。
 
 人工末輪另定位help早期宣稱、示範發布缺步及初始匿名限定不符本輪本地試用。均修正文案；主預覽補fit/zoom並用既有nav/drag/parent驗view不改session或候選。fresh15PASS、混合程序1原候選失敗保留且未定因。最後唯讀覆核未見其他必須修入口，待新源FULL005/native004。
+
+最終採用：FULL006完整1850PASS、0runtime，native005桌面12＋原導航3及owned3頁Tab通過；原165明列範圍回復驗證並新增CORE090十條，私人作品／Windows／實體印刷與真人資格未宣稱。先前段落為各輪歷史。
