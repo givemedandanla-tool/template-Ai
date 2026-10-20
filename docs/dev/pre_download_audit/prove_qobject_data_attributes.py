@@ -9,7 +9,7 @@ import sys
 sys.path[:0]=[str(ROOT),str(ROOT/'tests')]
 app=QApplication.instance() or QApplication([])
 rows=[json.loads(x) for x in (F/'diagnostic-ledger.jsonl').read_text().splitlines()];proof=json.loads((F/'qobject-data-attribute-proof.json').read_text()).get('proof',{}) if (F/'qobject-data-attribute-proof.json').exists() else {};dummy=QDialog();marker=object()
-for runname,result_file in [('runtime-ast-observations-001','tests.json'),('capture-type-evidence-001','capture-contexts.json')]:
+for runname,result_file in [('runtime-ast-observations-001','tests.json'),('ast-module-contexts-003','tests.json'),('runtime-ast-observations-004','tests.json'),('capture-type-evidence-001','capture-contexts.json')]:
  o=json.loads((F/runname/'observations.json').read_text());results={r['id']:r['status'] for r in json.loads((F/runname/result_file).read_text())};assert not o['observer_errors'] and o['business_ast_equivalence_verified']
  for row in rows:
   if row['status']!='UNREVIEWED' or row['rule']!='reportAttributeAccessIssue' or not row['original']['message'].startswith('Cannot assign to attribute'):continue

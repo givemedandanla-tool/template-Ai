@@ -1,0 +1,44 @@
+{
+  "source_fix": "281b53af453b2ec104ada436d948da96237b8c24",
+  "after": {
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "source_commit": "281b53af453b2ec104ada436d948da96237b8c24",
+    "software_execution": "PASS",
+    "planned": 23,
+    "completed": 23,
+    "statuses": {
+      "PASS": 23
+    },
+    "modules": 5,
+    "healthy_modules": 5,
+    "runtime_errors": 0,
+    "source_unchanged_during_run": true,
+    "original_test_ids_preserved": null,
+    "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
+    "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
+  },
+  "roots": {
+    "BUG-UNSUPPORTED-PDF-FONT-008": {
+      "original_ids": [
+        "D-APP-02708"
+      ],
+      "before": "type3-before.log: 2 ERROR; unexpected basis keyword on actual authored Type3 PDFs",
+      "fix": "Use unknown(reason=...), preserve UNKNOWN and source evidence; never invent point size",
+      "after": "test_type3_glyph_unknown:2PASS"
+    },
+    "BUG-REOPEN-DISPATCHED-JOB-009": {
+      "original_ids": [
+        "D-APP-03712"
+      ],
+      "before": "dispatched-job-before.log:2ERROR; reload accepts no positional job identity",
+      "fix": "Actual training dialog focus_job reads exact durable job including offpage target; running jobs keep their selection; clear unrelated preflight start state",
+      "after": "test_dispatched_job_reopen:2PASS"
+    }
+  },
+  "capture_helper_regression": {
+    "id": "AUDIT-REGRESSION-TOOL-003",
+    "source_fix": "281b53af453b2ec104ada436d948da96237b8c24",
+    "change": "Two references on plain unittest fixture restored to window; native Qt host_window fixes retained",
+    "after": "Full stock27 capture chain running; prior exact prototype PASS"
+  }
+}

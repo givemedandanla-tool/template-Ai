@@ -1612,6 +1612,150 @@
         "capture:tools/capture_family_workbench.py"
       ],
       "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-01687": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/gui.py",
+        "line": 1070,
+        "message": "Cannot assign to attribute \"_source_relink_preview\" for class \"MainWindow*\"\n  Attribute \"_source_relink_preview\" is unknown",
+        "context": "dialog=SourceRelinkDialog(self);self._source_relink_preview=dialog",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "854356eabeb4ca56b133846bf83154e132c37469c7f9f2b62c87f964f45b2d69"
+      },
+      "member": "_source_relink_preview",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.gui.MainWindow",
+          "mro": [
+            "template_ai.gui.MainWindow",
+            "PySide6.QtWidgets.QMainWindow",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "ast-module-contexts-003",
+      "contexts": [
+        "test_source_relink.SourceRelinkTests.test_gui_background_relink_keeps_selected_work_and_reopens"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-APP-03022": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/quality_panel.py",
+        "line": 77,
+        "message": "Cannot assign to attribute \"major_entrypoint\" for class \"QualityRepairDialog\"\n  Attribute \"major_entrypoint\" is unknown",
+        "context": "dialog.major_entrypoint=bool(entry and entry.get('major_review'))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9173d1c08522cc8de4600cce8e39d68ab926862452aaf283004519f88b6c64ed"
+      },
+      "member": "major_entrypoint",
+      "receiver_contracts": [
+        {
+          "receiver": "template_ai.quality_repair_dialog.QualityRepairDialog",
+          "mro": [
+            "template_ai.quality_repair_dialog.QualityRepairDialog",
+            "PySide6.QtWidgets.QDialog",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "ast-module-contexts-003",
+      "contexts": [
+        "test_major_review_entries.MajorReviewEntryTests.test_overview_opens_actual_major_page_without_creating_any_record"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-08711": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_offline_support.py",
+        "line": 293,
+        "message": "Cannot assign to attribute \"library\" for class \"Window\"\n  Attribute \"library\" is unknown",
+        "context": "self.window.library = types.SimpleNamespace(root=self.root)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d3efb95bdaeb36e87246e4ab9804d3e95dfd435519c4bdb63b7a18556fef3a6c"
+      },
+      "member": "library",
+      "receiver_contracts": [
+        {
+          "receiver": "test_offline_support.Window",
+          "mro": [
+            "test_offline_support.Window",
+            "PySide6.QtWidgets.QMainWindow",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "ast-module-contexts-003",
+      "contexts": [
+        "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+        "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+        "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
+    },
+    "D-TES-08712": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_offline_support.py",
+        "line": 294,
+        "message": "Cannot assign to attribute \"tabs\" for class \"Window\"\n  Attribute \"tabs\" is unknown",
+        "context": "self.window.tabs = QTabWidget()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a454febfe17c2cbc665334bfff1404d355473ac3aa680663a1560eacad3f0052"
+      },
+      "member": "tabs",
+      "receiver_contracts": [
+        {
+          "receiver": "test_offline_support.Window",
+          "mro": [
+            "test_offline_support.Window",
+            "PySide6.QtWidgets.QMainWindow",
+            "PySide6.QtWidgets.QWidget",
+            "PySide6.QtCore.QObject",
+            "PySide6.QtGui.QPaintDevice",
+            "Shiboken.Object",
+            "builtins.object"
+          ],
+          "native_or_property_collision": false,
+          "custom_setattr": false,
+          "qt_python_namespace_roundtrip": true
+        }
+      ],
+      "run": "ast-module-contexts-003",
+      "contexts": [
+        "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+        "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+        "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+      ],
+      "scope": "Only creation of this absent Python data name; native APIs/property setters and arbitrary non-QObject hosts excluded"
     }
   }
 }

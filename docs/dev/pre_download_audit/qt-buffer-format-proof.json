@@ -1,0 +1,357 @@
+{
+  "method": "Precisely bounded PySide6 buffer/format binding compatibility, not image fidelity.",
+  "proof": {
+    "D-APP-00357": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/canvas_compare.py",
+        "line": 40,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"\n  ...",
+        "context": "return bytes(data)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "91a34690fefb91bfccc59347f258835867f9c15a18adc6732a1c19b7c4e37d1e"
+      },
+      "kind": "QBYTEARRAY_BUFFER_PROTOCOL",
+      "source_sha256": "9b35ab18210f7996d3b852064bc84e2c211f130b73cbd7c911f59b32bfae36d8",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-00358": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/canvas_compare.py",
+        "line": 40,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"",
+        "context": "return bytes(data)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "20af513b4facd13b7f530ec8c337222ffd454efb47aff2ca3bc3f73d1f340025"
+      },
+      "kind": "QBYTEARRAY_BUFFER_PROTOCOL",
+      "source_sha256": "9b35ab18210f7996d3b852064bc84e2c211f130b73cbd7c911f59b32bfae36d8",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-00429": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/comparison_view.py",
+        "line": 19,
+        "message": "No overloads for \"loadFromData\" match the provided arguments",
+        "context": "if not pixmap.loadFromData(raw,'PNG'):raise ValueError('對照圖像解碼失敗')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "79dc97b3c5d6fe3a3496ca4b261cc6fde43c657da720a709b8ec8b0a9547aa44"
+      },
+      "kind": "PYSIDE_STRING_PNG_FORMAT",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-00430": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/comparison_view.py",
+        "line": 19,
+        "message": "Argument of type \"Literal['PNG']\" cannot be assigned to parameter \"format\" of type \"bytes | bytearray | memoryview[int] | None\" in function \"loadFromData\"\n  Type \"Literal['PNG']\" is not assignable to type \"bytes | bytearray | memoryview[int] | None\"\n    \"Literal['PNG']\" is not assignable to \"bytes\"\n    \"Literal['PNG']\" is not assignable to \"bytearray\"\n    \"Literal['PNG']\" is not assignable to \"memoryview[int]\"\n    \"Literal['PNG']\" is not assignable to \"None\"",
+        "context": "if not pixmap.loadFromData(raw,'PNG'):raise ValueError('對照圖像解碼失敗')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2478c83d696f232211f33fcf6255d2c159187580e5d1c845149b21fb883e3de7"
+      },
+      "kind": "PYSIDE_STRING_PNG_FORMAT",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-01463": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/font_candidate_dialog.py",
+        "line": 151,
+        "message": "No overloads for \"loadFromData\" match the provided arguments",
+        "context": "if not pixmap.loadFromData(result[\"png\"],\"PNG\"): raise ValueError(\"預覽PNG無法顯示\")",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4068989740c99c18052888677ae9109a92db27a3d27dd66f1fcd47e940abf197"
+      },
+      "kind": "PYSIDE_STRING_PNG_FORMAT",
+      "source_sha256": "ea7bf8e428e073270124c48fe9a575a85ac455e67ee0597cdf4fd525deee576d",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-01464": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/font_candidate_dialog.py",
+        "line": 151,
+        "message": "Argument of type \"Literal['PNG']\" cannot be assigned to parameter \"format\" of type \"bytes | bytearray | memoryview[int] | None\" in function \"loadFromData\"\n  Type \"Literal['PNG']\" is not assignable to type \"bytes | bytearray | memoryview[int] | None\"\n    \"Literal['PNG']\" is not assignable to \"bytes\"\n    \"Literal['PNG']\" is not assignable to \"bytearray\"\n    \"Literal['PNG']\" is not assignable to \"memoryview[int]\"\n    \"Literal['PNG']\" is not assignable to \"None\"",
+        "context": "if not pixmap.loadFromData(result[\"png\"],\"PNG\"): raise ValueError(\"預覽PNG無法顯示\")",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "447d7aecdb1375215eb660231894428cc1a0c19d3fc0fc42b00eee3f4a8ef573"
+      },
+      "kind": "PYSIDE_STRING_PNG_FORMAT",
+      "source_sha256": "ea7bf8e428e073270124c48fe9a575a85ac455e67ee0597cdf4fd525deee576d",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-01471": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/font_candidates.py",
+        "line": 150,
+        "message": "No overloads for \"save\" match the provided arguments",
+        "context": "if not image.save(buffer, \"PNG\"): raise ValueError(\"唯讀預覽PNG建立失敗\")",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "39dadf12526ce280a87164ddaf18a3dd48b29d584004f92da4cf1986972c80b3"
+      },
+      "kind": "PYSIDE_STRING_PNG_SAVE_FORMAT",
+      "source_sha256": "e1a7de869c9e7a37d13ce04bf8404dc1d52e2c1816ef1e0a7df530028e0b446d",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-01472": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/font_candidates.py",
+        "line": 150,
+        "message": "Argument of type \"Literal['PNG']\" cannot be assigned to parameter \"format\" of type \"bytes | bytearray | memoryview[int] | None\" in function \"save\"\n  Type \"Literal['PNG']\" is not assignable to type \"bytes | bytearray | memoryview[int] | None\"\n    \"Literal['PNG']\" is not assignable to \"bytes\"\n    \"Literal['PNG']\" is not assignable to \"bytearray\"\n    \"Literal['PNG']\" is not assignable to \"memoryview[int]\"\n    \"Literal['PNG']\" is not assignable to \"None\"",
+        "context": "if not image.save(buffer, \"PNG\"): raise ValueError(\"唯讀預覽PNG建立失敗\")",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e325b672e068445159995638bcc10d124551a3ea2014885c582556a27380eb46"
+      },
+      "kind": "PYSIDE_STRING_PNG_SAVE_FORMAT",
+      "source_sha256": "e1a7de869c9e7a37d13ce04bf8404dc1d52e2c1816ef1e0a7df530028e0b446d",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-01473": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/font_candidates.py",
+        "line": 154,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"\n  ...",
+        "context": "return {\"png\":bytes(data), \"analysis\":actual, \"pixels_per_mm\":ppm,",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "224f7dc11a3a916b5fe869b7b5c5595d923f581bc9d29040aefad35d0c63ed8d"
+      },
+      "kind": "QBYTEARRAY_BUFFER_PROTOCOL",
+      "source_sha256": "e1a7de869c9e7a37d13ce04bf8404dc1d52e2c1816ef1e0a7df530028e0b446d",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-01474": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/font_candidates.py",
+        "line": 154,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"",
+        "context": "return {\"png\":bytes(data), \"analysis\":actual, \"pixels_per_mm\":ppm,",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a26dcf2494078925e7eea335337bd53be20f709ee4b6ddf4620afedf01dd18a1"
+      },
+      "kind": "QBYTEARRAY_BUFFER_PROTOCOL",
+      "source_sha256": "e1a7de869c9e7a37d13ce04bf8404dc1d52e2c1816ef1e0a7df530028e0b446d",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-01601": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/font_review_dialog.py",
+        "line": 190,
+        "message": "No overloads for \"loadFromData\" match the provided arguments",
+        "context": "pixmap=QPixmap();pixmap.loadFromData(line['png'],'PNG');self.preview.setPixmap(pixmap);self.preview_data=line;self.comparison_data=comparison",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2c02997fcf7453d38ba50f330e4b4b03d8a018d9091edc2c5df01406976e949b"
+      },
+      "kind": "PYSIDE_STRING_PNG_FORMAT",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-01602": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/font_review_dialog.py",
+        "line": 190,
+        "message": "Argument of type \"Literal['PNG']\" cannot be assigned to parameter \"format\" of type \"bytes | bytearray | memoryview[int] | None\" in function \"loadFromData\"\n  Type \"Literal['PNG']\" is not assignable to type \"bytes | bytearray | memoryview[int] | None\"\n    \"Literal['PNG']\" is not assignable to \"bytes\"\n    \"Literal['PNG']\" is not assignable to \"bytearray\"\n    \"Literal['PNG']\" is not assignable to \"memoryview[int]\"\n    \"Literal['PNG']\" is not assignable to \"None\"",
+        "context": "pixmap=QPixmap();pixmap.loadFromData(line['png'],'PNG');self.preview.setPixmap(pixmap);self.preview_data=line;self.comparison_data=comparison",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2f4b86e2cf3c149f308718a4186703e249979095e06e7e752669d0b2ef134129"
+      },
+      "kind": "PYSIDE_STRING_PNG_FORMAT",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-02201": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/logo_compare.py",
+        "line": 37,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"\n  ...",
+        "context": "return bytes(data)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "747fed84782b86e0ef9fa0f269e88c3c8005ce60d0c6525b538cd34cb87dc90c"
+      },
+      "kind": "QBYTEARRAY_BUFFER_PROTOCOL",
+      "source_sha256": "a199c9417a87862e29db5d4477321fc050fab9e06d2afe127157a86f02b7963e",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-02202": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/logo_compare.py",
+        "line": 37,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"",
+        "context": "return bytes(data)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2cb23e9430d813e28292743c1b2a5b708688b897fadd541800132608dd274c01"
+      },
+      "kind": "QBYTEARRAY_BUFFER_PROTOCOL",
+      "source_sha256": "a199c9417a87862e29db5d4477321fc050fab9e06d2afe127157a86f02b7963e",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-APP-02280": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/logo_review_dialog.py",
+        "line": 104,
+        "message": "Argument of type \"Literal['PNG']\" cannot be assigned to parameter \"format\" of type \"bytes | bytearray | memoryview[int] | None\" in function \"loadFromData\"\n  Type \"Literal['PNG']\" is not assignable to type \"bytes | bytearray | memoryview[int] | None\"\n    \"Literal['PNG']\" is not assignable to \"bytes\"\n    \"Literal['PNG']\" is not assignable to \"bytearray\"\n    \"Literal['PNG']\" is not assignable to \"memoryview[int]\"\n    \"Literal['PNG']\" is not assignable to \"None\"",
+        "context": "if not image.loadFromData(preview_png(asset,1,1,True),'PNG'):raise ValueError('完整來源圖不可讀')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "63523731c111995bec2eb81e68f4c3c7e4dbed5da0b63f832ab9ee08206cfb58"
+      },
+      "kind": "PYSIDE_STRING_PNG_FORMAT",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    },
+    "D-TES-11710": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_viewport_workbench.py",
+        "line": 26,
+        "message": "Argument of type \"Literal['PNG']\" cannot be assigned to parameter \"format\" of type \"bytes | bytearray | memoryview[int] | None\" in function \"loadFromData\"\n  Type \"Literal['PNG']\" is not assignable to type \"bytes | bytearray | memoryview[int] | None\"\n    \"Literal['PNG']\" is not assignable to \"bytes\"\n    \"Literal['PNG']\" is not assignable to \"bytearray\"\n    \"Literal['PNG']\" is not assignable to \"memoryview[int]\"\n    \"Literal['PNG']\" is not assignable to \"None\"",
+        "context": "image=QImage();self.assertTrue(image.loadFromData(raw,'PNG'));self.assertLessEqual(image.width()*image.height(),1600*1600)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ed7074abab7622af06efe3b20cf735a1e0ee7b8c10bfecbe625daf707a458f67"
+      },
+      "kind": "PYSIDE_STRING_PNG_FORMAT",
+      "source_sha256": "ea17214373f54a74287b0b29a5f713790fcee0a69b54154cb59b5175b01b1d38",
+      "runtime": {
+        "python": "3.12.14",
+        "pyside": "6.8.3",
+        "qbytearray_buffer_pass": true,
+        "png_string_save_and_load_pass": true,
+        "decoded_size_and_pixel_equal": true
+      },
+      "boundary": "Only these actual buffer/PNG-format bindings on Linux PySide6 6.8.3; no Windows, arbitrary input or source fidelity qualification"
+    }
+  }
+}

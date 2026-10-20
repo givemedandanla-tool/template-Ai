@@ -1,25 +1,26 @@
 {
   "status": "RUNNING",
   "source_base": "83908944a907804a18a1d85feadddbc780644e4a",
-  "phase": "Source-stable bounded type supplementation and final evidence preparation",
+  "phase": "Complete remaining source/type review before final stable-source stock regression",
   "original_diagnostics": 11798,
   "classified_tool_limitations": 1824,
-  "unreviewed": 692,
-  "confirmed_defects": 7,
-  "fixed_defects": 7,
+  "unreviewed": 386,
+  "confirmed_defects": 10,
+  "fixed_defects": 10,
   "new_test_execution": null,
   "original_1850_rerun": "Full005 source92977b77:1886PASS/243healthy/0runtime; root7 final1889 rerun pending",
-  "next": "Finish remaining type/source contracts; apply prepared capture helper fix after observer stops; final stock1889 and all scan profiles; restore-verified local bundle",
+  "next": "Finish original386 and all final/new/runtime-profile dispositions; root10 targeted verification; bind matrices, final1901 stock/captures/native; local restore bundle",
   "provenance": "LOCAL_ONLY",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
   "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
   "diagnostic_statuses": {
-    "TYPE_CONTRACT_GAP": 8555,
-    "TOOL_LIMITATION": 1824,
-    "FIXED_AND_VERIFIED": 727,
-    "UNREVIEWED": 692
+    "TYPE_CONTRACT_GAP": 8834,
+    "TOOL_LIMITATION": 1840,
+    "FIXED_AND_VERIFIED": 729,
+    "UNREVIEWED": 386,
+    "BLOCKED_EXTERNAL": 9
   },
-  "fixed_defects_pending_full_regression": 1,
+  "fixed_defects_pending_full_regression": 3,
   "new_targeted_tests": {
     "PASS": 6
   },
@@ -136,5 +137,32 @@
     "current": "BLOCKED_SOURCE_PROVENANCE",
     "reason": "Historical evidence stale after actual fixes; new formal evidence requires genuine remote-read source JSON; cannot fabricate or trigger unknown-cost workflows"
   },
-  "snapshot_commit": "ac49a1050adc0e0718ea1dbf0e43d62710582dcc"
+  "snapshot_commit": "ac49a1050adc0e0718ea1dbf0e43d62710582dcc",
+  "current_code_commit": "3a2ef14207ca117624738e4d765b78162288a3fd",
+  "gui_stock_final_001": {
+    "planned": 27,
+    "completed": 27,
+    "passed": 27,
+    "failed": [],
+    "source_unchanged": true,
+    "instrumented": false,
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "not_executed": [],
+    "status": "PASS"
+  },
+  "roots8_9": {
+    "PASS": 23,
+    "source": "281b53af",
+    "proof": "roots8-9-proof.json"
+  },
+  "major_snapshot_extension": {
+    "before": "4 cases:2ERROR2FAIL on real SQLite; initial missing-table fixture rejected",
+    "after": "37PASS/5healthy/0runtime; source1cef015a"
+  },
+  "work_load_root10": {
+    "before": "Corrected4 exact tests:4FAIL on isolated1cef015a. Initial third persistence premise corrected and not admitted.",
+    "fix_source": "3a2ef142",
+    "after": "work-load-after-002 running"
+  },
+  "full006": "INTERRUPTED_NOT_FULL_PASS:273 cases completed before additional SQL snapshot fixes; source281b53af. Preserve receipts; final1901 not run yet"
 }

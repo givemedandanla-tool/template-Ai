@@ -54,7 +54,13 @@ def compatible_argument(expected,types):
         parts.append(expected[start:].strip())
         return all(any(compatible_argument(part,{t}) for part in parts) for t in types)
     if expected in ['None','NoneType']:return types=={'builtins.NoneType'}
-    if expected in ['Path','PathLike[str]','PathLike[bytes]','PathLike','PurePath']:
+    if expected in ['StrPath','StrOrBytesPath']:
+        return types<={'builtins.str','pathlib.PosixPath','pathlib.WindowsPath'}|({'builtins.bytes'} if expected=='StrOrBytesPath' else set())
+    if expected in ['dict[Unknown, Unknown]','dict'] and types=={'builtins.dict'}:return True
+    if any(expected.startswith(x) for x in ['SupportsRSub[','SupportsDunderLT[','SupportsDunderLE[','SupportsAbs[','SupportsRound[']):
+        return types<={'builtins.int','builtins.float','numpy.float64','numpy.int64'}
+    if expected=='PathLike[bytes]':return False
+    if expected in ['Path','PathLike[str]','PathLike','PurePath']:
         allowed={'pathlib.PosixPath','pathlib.WindowsPath'}
         if expected!='Path':allowed|={'pathlib.PurePosixPath','pathlib.PureWindowsPath'}
         return types<=allowed
@@ -102,16 +108,18 @@ for row in rows:
             elif same and compatible_argument(match[2],types['argument']):
                 kind='EXACT_COMPATIBLE_ARGUMENT_AND_RETURN';reason=f'Parameter {match[1]} expects {match[2]}; its exact observed argument type is compatible and the actual selected call returned normally. Other union members/preconditions remain guarded; callback/generic-content mismatches are not waived.'
     if kind is None and types.get('call_result'):
-        if rule=='reportCallIssue' and (message.startswith('Arguments missing for parameters') or 'not callable' in message) and exact_call_binding(row,point):
+        if rule=='reportCallIssue' and (message.startswith('Arguments missing for parameters') or 'not callable' in message or re.match(r'Expected [0-9]+ positional argument',message)) and exact_call_binding(row,point):
             kind='EXACT_CALL_ARITY_OR_CALLABILITY';reason='The precisely selected call returned normally, so its actual callable and required argument binding succeeded on these paths. This does not prove all payload contents or callback arities connected for future execution.'
+        elif rule=='reportCallIssue' and message.startswith('No overloads for ') and exact_call_binding(row,point):
+            kind='EXACT_COMPLETED_OVERLOAD_BINDING';reason='The precisely selected original call completed, proving its actual callable accepted this argument binding on the retained authored paths. Static overload resolution over inferred unions/protocols is incomplete. Semantic output, generic contents and unseen arguments are not approved by this binding witness.'
         elif rule=='reportArgumentType' and message.startswith('Argument expression after ** must be a mapping with a "str" key type') and exact_call_binding(row,point,keyword=True):
             kind='EXACT_COMPLETED_KEYWORD_MAPPING';reason='CPython completed the exact **kwargs call, which requires a mapping with string keyword keys. Named-field numeric/ownership/shape validation remains separate; the source DTO is insufficiently described.'
-    if kind is None and row['scope'] in ['tests','tools'] and rule=='reportArgumentType' and types.get('call_result') and re.search(r'in function "(?:setUp|tearDown)"',message):
+    if kind is None and row['scope'] in ['tests','tools'] and rule=='reportArgumentType' and types.get('call_result') and re.search(r'to parameter "self" of type "[A-Za-z_][A-Za-z0-9_]*Tests"',message):
         calls=[t for t in point['targets'] if t['label']=='call_result']
         if len(calls)==1:
             call=ast.parse(calls[0]['expression'],mode='eval').body
-            if isinstance(call.func,ast.Attribute) and call.func.attr in ['setUp','tearDown']:
-                kind='EXACT_SHARED_FIXTURE_HOST_CONTRACT';reason='The authored test/capture deliberately delegates fixture setup/cleanup across TestCase hosts. The real original method returned normally, constructing/disposing its real resources. Its class-specific self annotation is narrower than the reused fixture interface; this does not substitute a product window.'
+            if isinstance(call.func,ast.Attribute) and (call.func.attr in ['setUp','tearDown'] or re.search(r'in function "'+re.escape(call.func.attr)+r'"',message)):
+                kind='EXACT_SHARED_FIXTURE_HOST_CONTRACT';reason='The authored test/capture deliberately delegates fixture setup/cleanup across TestCase hosts. The real original method returned normally, constructing/disposing its real resources. Its class-specific fixture-helper self annotation is narrower than the reused fixture interface; this does not substitute a product window.'
     if not kind:continue
     proof[key]=dict(kind=kind,reason=reason,original=row['original'],original_range=row['original_range'],point=point,observed_types=values,member_checks=actual['member_checks'],passing_contexts=contexts,context_granularity='MODULE_ONLY' if contexts[0].startswith('owned-module:') else 'EXACT_CASE_OR_CAPTURE',execution_kind=args.kind,source=run.relative_to(F).as_posix()+'/source.json',observations=run.relative_to(F).as_posix()+'/observations.json',bounds='Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification',followup='Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline.')
     row.update(status='TYPE_CONTRACT_GAP',severity='P2_EXACT_EXPRESSION_CONTRACT_DEBT',affected_workflow=row['original']['path'],root_cause_or_blocker=reason,evidence=['exact-ast-contract-proof.json#'+key],repro_command_and_result='Original unchanged source/Qt/assertions, transparent instrumented bytecode; business AST is identical after unwrapping; exact scope/test/source hashes in proof',regression_and_result=contexts,remaining_condition='Type descriptions still need improvement; preserve all runtime validation and deferred qualification boundaries.')

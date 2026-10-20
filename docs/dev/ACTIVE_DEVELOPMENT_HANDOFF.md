@@ -1,12 +1,12 @@
 # 最新接手：全面查證仍在執行，不可提前結案
 
-先讀pre_download_audit/PROGRESS.json、README與PRE_DOWNLOAD_AUDIT_PLAN_20261020。原始11798診斷保留，目前2453未審（以PROGRESS即時值優先），38新增已另審。已修7根因：Qt原生API、安全關閉、QObject.event覆蓋、SQLite完整列表快照、舊／逾期回呼、無尺寸線索時不載入分群、確認前後草稿保護。產品最新修正bb7f65a9；正確的3競態測試在afa0e33f（先前設定未到達確認的2失敗已明確拒絕，不當證據）。隔離92977b77舊源對照3FAIL；新版3PASS，相關33PASS／4健康／0runtime。
+先讀 pre_download_audit/PROGRESS.json、README、PRE_DOWNLOAD_AUDIT_PLAN_20261020。原11798筆逐筆台帳不可刷新；目前386未審（即時台帳優先）。最新產品3a2ef142，10類根因已實作修正，root10相鄰驗證進行中；未到最終全通過。root8 Type3字型兩實際PDF原先2ERROR、root9重開工作兩真GUI原先2ERROR，修後相關23PASS。SQL列表root4另補重大重審/工作兩讀者：4實際並行SQLite案例原先2ERROR2FAIL，修後37PASS。root10損壞草稿部分替換目前來源/作品：修正測試第三案例前置active選取後，隔離1cef015a舊源4FAIL，新源相關驗證work-load-after-002。保留先前錯誤fixture與未完成結果，不能當根因證據。
 
-full005：92977b77上1886PASS／243健康／0runtime／來源未變，原1850保留。full0031865PASS／0runtime；full0041877斷言PASS但1runtime，保留FAIL。最新native00319PASS／11PNG，已實際檢視學習預覽與拖動後；7獨立數學＋12SQLite案例保留。原真實模型／Windows／私人AI／實體印刷資格未變。
+full005(92977b77)1886PASS/243健康/0runtime/原1850保留。full006(281b53af)在273案例後因新增SQL實例修正中斷，不算完整PASS。最終catalog預計1901=原1850+本輪51有意義新增案例；尚未跑最終全套。27組原版GUI擷取全部PASS/來源281b53af未變，未包裝程式；最新GUI/root4變更後要按剩餘風險補驗。native00319PASS/11PNG，7獨立數學+原SQL12保留。原真實模型/Windows/私人AI/實體印刷資格不變。
 
-逐筆型別審查還在進行：觀察001有497PASS／1已修預檢逾時，0觀察器錯誤；002為資源排程中斷並精確停止自有程序，局部不算全通過。精確座標校正撤回297筆內層索引證據，不能再引用其安全結論；現有效證據已單獨保存。新AST透明表達式觀察器保留原始檔、真實Qt、斷言及getter求值次數；移除包裝後AST逐模組相同，4項校準PASS／0錯誤。它是受限型別證據，不是stock產品資格。下一步使用runtime-points-006.json（建置中）跑既有選定測試，判讀剩餘診斷；再綁定入口／故障矩陣、最終1889原版完整回歸及本機復原包。
+精確AST型別見證001387PASS、0031502PASS（合計原當時1889，兩份清單不重複），皆0runtime/觀察器錯誤/來源未變，移除包裝後業務AST相同；004針對更精確座標91PASS。它們是受限型別證據，不代替原版產品回歸。被拒絕297筆內層座標舊證據與中途改helper的觀察002不可引用。最新三scope標準/runtime-aware/近似查重已跑，但後續修正後仍需更新及審查新增，不能漏掉runtime profile獨有診斷。
 
-可使用既有Pro能力但禁額外費用；無權益證據仍未用代理。未push／PR／CI／部署，沒有REMOTE_VERIFIED。最新audit復原ZIP尚未產生，舊delivery ZIP不含本輪修正。中斷先做本機checkpoint，勿靠整串聊天。
+零新增費用優先；未用子代理/新API/付費服務，未push/PR/CI。正式治理Gate因歷史證據來源過期而FAIL，且新正式run需要真實遠端來源讀回；不能偽造GitHub JSON或關閉Gate。完成本機查證後可標LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED，不得REMOTE_VERIFIED。最新audit還原ZIP未製作，舊ZIP不含本輪修正。每10分鐘保存本機checkpoint；私人資料/字型/資料庫不入Git。
 
 ## 產品GUI交接（保持原資格與證據）
 
