@@ -218,7 +218,8 @@ class SourceScanDialog(QDialog):
         if existing:
             identity=next(iter(existing))
             if not identity or not self.store.get('AUTO_JOB',identity):dialog.close();self.status.setText('交接憑證找不到實際工作，請重新核對');return
-            dialog.reload(identity);self.status.setText('已開啟確切既有工作，成果與續跑以該介面為準');return
+            if not dialog.focus_job(identity):self.status.setText('已有工作進行中；請先安全暫停，再開啟這筆既有工作。');return
+            self.status.setText('已開啟確切既有工作，成果與續跑以該介面為準');return
         self.dispatch_context=values;dialog.preflight([v['path'] for v in values],expected_hashes={v['path']:v['source_hash'] for v in values});self.status.setText('已交既有預檢，真正開始訓練仍須在該介面明確確認')
 
     def training_view(self):

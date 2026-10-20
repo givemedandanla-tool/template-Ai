@@ -93,6 +93,22 @@ class AutomaticTrainingDialog(QDialog):
         index=self.jobs.findData(identity)
         if index>=0:self.jobs.setCurrentIndex(index)
 
+    def focus_job(self,identity):
+        if self.running:
+            self.status.setText('已有工作進行中；請先安全暫停，再切換其他工作。')
+            return False
+        job=self.service.get(identity)
+        self.reload()
+        index=self.jobs.findData(identity)
+        if index<0:
+            self.jobs.insertItem(0,self.service.phase(job)+'／'+job['id'],job['id'])
+            index=0
+        self.jobs.setCurrentIndex(index)
+        self.report=None;self.start_button.setEnabled(False)
+        self.render(job)
+        self.details.setPlainText('已讀回既有工作 '+job['id']+'。如需接續，請選「繼續選定工作」；這次讀取沒有開始訓練。')
+        return True
+
     def render(self,job):
         items=job['items'];self.table.setRowCount(len(items))
         for row,item in enumerate(items):

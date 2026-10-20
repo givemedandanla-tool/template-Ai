@@ -149,7 +149,7 @@ def extract_pdf_glyphs(source,data,*,include_private_text=False):
         matrix=glyphs[0]['text_matrix'];physical=tuple(v*device.user_unit if i<4 else v for i,v in enumerate(matrix))
         effective=effective_point_size(ObservedScalar(**{**declared,'evidence_refs':tuple(declared['evidence_refs'])}),physical).to_dict()
         if raw['font'].get('subtype') in ('Type3','UNKNOWN'):
-            effective=unknown('pt',basis='UNSUPPORTED_FONT_MATRIX')
+            effective=unknown('pt',reason='UNSUPPORTED_FONT_MATRIX')
         boxes=[g['metric_box_mm'] for g in glyphs]
         x=min(box['x'] for box in boxes);y=min(box['y'] for box in boxes)
         right=max(box['x']+box['w'] for box in boxes);bottom=max(box['y']+box['h'] for box in boxes)

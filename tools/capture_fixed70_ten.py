@@ -47,8 +47,8 @@ def capture(root):
         proposal=logo.proposal();review=LogoReviewDialog(logo.store,proposal)
         assert review.compare.available and not any(c.isChecked() for c in review.flags.values())
         shot(review,'fixed70-logo-source-review.png')
-        library=LogoLibraryDialog(logo.host_window);library.views.setCurrentIndex(2)
-        assert library.focus_proposal(proposal['id']);assert not logo.host_window.library.logos()
+        library=LogoLibraryDialog(logo.window);library.views.setCurrentIndex(2)
+        assert library.focus_proposal(proposal['id']);assert not logo.window.library.logos()
         shot(library,'fixed70-logo-size-library.png')
     finally:logo.tearDown()
     matrix=MultiSizeTests();matrix.setUp();w=None
