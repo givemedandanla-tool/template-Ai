@@ -64,4 +64,7 @@ class ReadViewSnapshotTests(unittest.TestCase):
         self.reader.db.execute("INSERT INTO authored_pending VALUES('authored pending')");self.assertTrue(self.reader.db.in_transaction)
         with read_snapshot(self.reader.db):
             with read_snapshot(self.reader.db):self.assertEqual(self.reader.db.execute('SELECT count(*) FROM authored_pending').fetchone()[0],1)
+        with self.assertRaisesRegex(ValueError,'authored refusal'):
+            with read_snapshot(self.reader.db):raise ValueError('authored refusal')
+        self.assertEqual(self.reader.db.execute('SELECT count(*) FROM authored_pending').fetchone()[0],1)
         self.assertTrue(self.reader.db.in_transaction);self.reader.db.rollback();self.assertEqual(self.reader.db.execute('SELECT count(*) FROM authored_pending').fetchone()[0],0)

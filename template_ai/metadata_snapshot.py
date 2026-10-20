@@ -6,10 +6,16 @@ This is for read views; confirmation must still validate current revisions.
 """
 from contextlib import contextmanager
 from functools import wraps
+from collections.abc import Callable, Iterator
+from sqlite3 import Connection
+from typing import ParamSpec, TypeVar
+
+P = ParamSpec('P')
+R = TypeVar('R')
 
 
 @contextmanager
-def read_snapshot(database):
+def read_snapshot(database: Connection) -> Iterator[None]:
     database.execute('SAVEPOINT template_ai_metadata_read')
     try:
         yield
@@ -20,10 +26,10 @@ def read_snapshot(database):
         database.execute('RELEASE SAVEPOINT template_ai_metadata_read')
 
 
-def snapshot_read(connection):
-    def decorate(function):
+def snapshot_read(connection: Callable[..., Connection]) -> Callable[[Callable[P, R]], Callable[P, R]]:
+    def decorate(function: Callable[P, R]) -> Callable[P, R]:
         @wraps(function)
-        def run(*args, **kwargs):
+        def run(*args: P.args, **kwargs: P.kwargs) -> R:
             with read_snapshot(connection(*args, **kwargs)):
                 return function(*args, **kwargs)
         return run
