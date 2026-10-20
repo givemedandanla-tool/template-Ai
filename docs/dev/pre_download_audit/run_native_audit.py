@@ -1,5 +1,6 @@
 """Audit reuse of the owned native verifier; LOCAL_ONLY, no remote qualification."""
 import ast
+import argparse
 import json
 import os
 from pathlib import Path
@@ -12,7 +13,10 @@ import time
 
 repo = Path(__file__).resolve().parents[3]
 native = repo.parent / 'template-ai-gui-tools/root'
-folder = repo / 'docs/dev/pre_download_audit/native-gui-001'
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--output', type=Path, required=True)
+arguments = parser.parse_args()
+folder = arguments.output.resolve()
 folder.mkdir(exist_ok=False)
 expected = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip()
 head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=repo, text=True).strip()
@@ -88,13 +92,22 @@ try:
     if not display.isdigit():
         raise RuntimeError('Unexpected display number')
     environment['DISPLAY'] = ':' + display
+    report_case = 'test_diagnostic_reports.DiagnosticReportTests.test_real_worker_report_records_completed_and_failed_candidates_without_fake_success'
+    recovery_case = 'test_batch_recovery.BatchRecoveryCandidateTests.test_actual_gui_restore_then_selected_inverse_keeps_same_stable_field_identity'
     jobs = [
         ('desktop', [str(repo / '.venv/bin/python'), 'tools/capture_desktop_workspace.py',
                      '--folder', str(folder)], 'test_desktop_workspace', classes),
         ('parent-navigation', [str(repo / '.venv/bin/python'), '-m', 'unittest',
-                               'test_parent_navigation', '-v'], 'test_parent_navigation', None)]
+                               'test_parent_navigation', '-v'], 'test_parent_navigation', None),
+        ('qt-event', [str(repo / '.venv/bin/python'), '-m', 'unittest',
+                      'test_qt_event_contract', '-v'], 'test_qt_event_contract', None),
+        ('report-regression', [str(repo / '.venv/bin/python'), '-m', 'unittest', report_case, '-v'],
+         'test_diagnostic_reports', None),
+        ('recovery-regression', [str(repo / '.venv/bin/python'), '-m', 'unittest', recovery_case, '-v'],
+         'test_batch_recovery', None)]
     for name, command, module, names in jobs:
-        ids = ids_for(module, names)
+        ids = ([report_case] if name == 'report-regression' else
+               [recovery_case] if name == 'recovery-regression' else ids_for(module, names))
         phase_before = manifest_digest(manifest(repo, code_only=True))
         phase_start = time.monotonic()
         (folder / 'native-runner-progress.json').write_text(json.dumps(dict(
@@ -138,7 +151,7 @@ try:
         source_manifest_before=before, source_manifest_after=final,
         source_unchanged=before == final, qt_platform='xcb', outer_timeout_seconds=600,
         elapsed_seconds=round(time.monotonic() - started, 3), isolated_xvfb_tcp_disabled=True,
-        jobs=results, status='PASS' if len(results) == 2 and all(
+        jobs=results, status='PASS' if len(results) == len(jobs) and all(
             item['status'] == 'PASS' for item in results) and before == final else 'FAIL')
     (folder / 'native-runner-result.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps({key: result[key] for key in [

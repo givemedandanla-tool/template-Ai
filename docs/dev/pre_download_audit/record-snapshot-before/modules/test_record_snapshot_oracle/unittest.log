@@ -1,0 +1,21 @@
+test_selected_record_survives_concurrent_delete_as_a_complete_snapshot (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_selected_record_survives_concurrent_delete_as_a_complete_snapshot) ... FAIL
+
+======================================================================
+FAIL: test_selected_record_survives_concurrent_delete_as_a_complete_snapshot (test_record_snapshot_oracle.RecordSnapshotOracleTests.test_selected_record_survives_concurrent_delete_as_a_complete_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py", line 38, in test_selected_record_survives_concurrent_delete_as_a_complete_snapshot
+    self.assertEqual(selected, [expected])
+AssertionError: Lists differ: [None] != [{'id': 'audit-record-one', 'revision': 1, 'count': 1, 'state': 'AUTHORED'}]
+
+First differing element 0:
+None
+{'id': 'audit-record-one', 'revision': 1, 'count': 1, 'state': 'AUTHORED'}
+
+- [None]
++ [{'count': 1, 'id': 'audit-record-one', 'revision': 1, 'state': 'AUTHORED'}]
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)

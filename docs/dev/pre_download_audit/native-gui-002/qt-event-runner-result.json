@@ -1,0 +1,27 @@
+{
+  "name": "qt-event",
+  "command": [
+    "/workspace/template-Ai/.venv/bin/python",
+    "-m",
+    "unittest",
+    "test_qt_event_contract",
+    "-v"
+  ],
+  "qt_platform": "xcb",
+  "PYTHONPATH": "tests:.",
+  "exit_code": 0,
+  "test_ids": [
+    "test_qt_event_contract.QtEventContractTests.test_actual_qt_event_delivery_has_no_python_callback_error",
+    "test_qt_event_contract.QtEventContractTests.test_real_size_controller_accepts_native_events_and_retains_cancel_guard"
+  ],
+  "expected_test_count": 2,
+  "tests_run": 2,
+  "unittest_seconds": 4.151,
+  "elapsed_seconds": 4.504,
+  "source_manifest_before": "3ea06ccee7ec3da9745d4311be076f2c12a185836859aaf4491de5c924a86347",
+  "source_manifest_after": "3ea06ccee7ec3da9745d4311be076f2c12a185836859aaf4491de5c924a86347",
+  "source_unchanged": true,
+  "runtime_error_lines": [],
+  "log": "qt-event.log",
+  "status": "PASS"
+}
