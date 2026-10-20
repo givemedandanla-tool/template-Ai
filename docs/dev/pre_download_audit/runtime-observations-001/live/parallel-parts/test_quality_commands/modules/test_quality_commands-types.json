@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "mode": "TYPE_NAMES_ONLY_NO_PAYLOADS_NO_PROPERTY_GETTERS",
+  "bounded_visits_per_point": 128,
+  "observer_errors": {},
+  "rows": {
+    "D-APP-03588": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 4,
+          "builtins.NoneType": 4
+        }
+      },
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_quality_commands.QualityCommandTests.test_actual_cancelled_owned_command_does_not_commit_gold_or_leave_busy_connection"
+      ],
+      "member_checks": {}
+    },
+    "D-TOO-04654": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_quality_commands.QualityCommandTests.test_actual_cancelled_owned_command_does_not_commit_gold_or_leave_busy_connection"
+      ],
+      "member_checks": {}
+    },
+    "D-TOO-04656": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "run_evidence.EvidenceResult": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_quality_commands.QualityCommandTests.test_actual_cancelled_owned_command_does_not_commit_gold_or_leave_busy_connection"
+      ],
+      "member_checks": {
+        "run_evidence.EvidenceResult:True": 1
+      }
+    },
+    "D-TES-08608": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 1
+        },
+        "result": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [],
+      "member_checks": {}
+    },
+    "D-TES-09228": {
+      "visits": 1,
+      "values": {
+        "value": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 1,
+          "test_quality_commands.QualityCommandTests": 1
+        }
+      },
+      "returns": {
+        "QualityGoldSetTests.plan:builtins.dict": 1
+      },
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_quality_commands.QualityCommandTests.test_actual_cancelled_owned_command_does_not_commit_gold_or_leave_busy_connection"
+      ],
+      "member_checks": {}
+    }
+  }
+}

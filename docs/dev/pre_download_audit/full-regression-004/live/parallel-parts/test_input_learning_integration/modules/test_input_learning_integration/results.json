@@ -1,0 +1,125 @@
+{
+  "records": [
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure",
+      "status": "PASS",
+      "details": [],
+      "seconds": 4.424918
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation",
+      "status": "PASS",
+      "details": [],
+      "seconds": 3.647724
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation",
+      "status": "PASS",
+      "details": [],
+      "seconds": 4.604638
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+      "status": "PASS",
+      "details": [],
+      "seconds": 11.061876
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_font_style_enumeration_order_does_not_invalidate_same_face",
+      "status": "PASS",
+      "details": [],
+      "seconds": 3.149847
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary",
+      "status": "PASS",
+      "details": [],
+      "seconds": 4.387564
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary",
+      "status": "PASS",
+      "details": [],
+      "seconds": 6.791037
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_legacy_edit_progress_and_stale_preview_buttons_use_same_learning_draft",
+      "status": "PASS",
+      "details": [],
+      "seconds": 6.298761
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data",
+      "status": "PASS",
+      "details": [],
+      "seconds": 9.567868
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder",
+      "status": "PASS",
+      "details": [],
+      "seconds": 8.352704
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context",
+      "status": "PASS",
+      "details": [],
+      "seconds": 4.522142
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.735796
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner",
+      "status": "PASS",
+      "details": [],
+      "seconds": 9.690118
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services",
+      "status": "PASS",
+      "details": [],
+      "seconds": 2.90091
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates",
+      "status": "PASS",
+      "details": [],
+      "seconds": 1.388836
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_resize_keeps_position_intent_but_new_person_roots_start_independent_draft",
+      "status": "PASS",
+      "details": [],
+      "seconds": 7.459305
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_resume_other_saved_draft_updates_main_input_size_and_export_reference",
+      "status": "PASS",
+      "details": [],
+      "seconds": 3.266946
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter",
+      "status": "PASS",
+      "details": [],
+      "seconds": 2.807184
+    },
+    {
+      "id": "test_input_learning_integration.InputLearningIntegrationTests.test_shared_learning_preview_preserves_original_pdf_png_jpg_formats",
+      "status": "PASS",
+      "details": [],
+      "seconds": 5.161678
+    }
+  ],
+  "runtime_errors": [
+    {
+      "type": "ProgrammingError",
+      "message": "Cannot operate on a closed database.",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/template-Ai/template_ai/design_learning_dialog.py\", line 419, in solve_finished\n    self.set_solving(False);self.refresh_draft()\n                            ^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/template-Ai/template_ai/design_learning_dialog.py\", line 446, in refresh_draft\n    current=self.sessions.current(self.session_id)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/template-Ai/template_ai/design_session.py\", line 67, in current\n    row=self.store.get('DESIGN_SESSION',session_id)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/template-Ai/template_ai/training_store.py\", line 61, in get\n    row = self.db.execute('SELECT revision,payload FROM training_records WHERE kind=? AND id=?', (kind, record_id)).fetchone()\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsqlite3.ProgrammingError: Cannot operate on a closed database.\n"
+    }
+  ]
+}

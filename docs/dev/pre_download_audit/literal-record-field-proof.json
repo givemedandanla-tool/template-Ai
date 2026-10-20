@@ -1,0 +1,3077 @@
+{
+  "method": "Conservative original AST literal/named-field and source-factory postcondition inference; exact diagnostic coordinates, concrete field kinds, no Any or product edits",
+  "classified": 98,
+  "proof": {
+    "D-APP-00041": {
+      "path": "template_ai/automatic_training.py",
+      "range": {
+        "start": {
+          "line": 179,
+          "character": 12
+        },
+        "end": {
+          "line": 179,
+          "character": 29
+        }
+      },
+      "field_expression": "payload['stages']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/automatic_training.py",
+          "line": 170,
+          "expression": "dict(work_id=work['id'], source_id=work['source_id'], input_signature=self.work_signature(work), state=state, pins=self.store.pins(work['id']), facts_state=self.store.facts_state(work['id']), issues=issues, confirmed_observations=len((facts.get('confirmation') or {}).get('observation_ids', [])), tot"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/automatic_training.py",
+          "line": 174,
+          "expression": "dict(geometry='CHECKED', facts='CONFIRMED' if self.store.facts_state(work['id']) == 'CONFIRMED' else 'NEEDS_REVIEW', noise='EVALUATED', learning='DRAFT_ONLY' if templates else 'WAITING_SAMPLE_AND_TRAIN_AUTHORIZATION')"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00042": {
+      "path": "template_ai/automatic_training.py",
+      "range": {
+        "start": {
+          "line": 179,
+          "character": 12
+        },
+        "end": {
+          "line": 179,
+          "character": 29
+        }
+      },
+      "field_expression": "payload['stages']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/automatic_training.py",
+          "line": 170,
+          "expression": "dict(work_id=work['id'], source_id=work['source_id'], input_signature=self.work_signature(work), state=state, pins=self.store.pins(work['id']), facts_state=self.store.facts_state(work['id']), issues=issues, confirmed_observations=len((facts.get('confirmation') or {}).get('observation_ids', [])), tot"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/automatic_training.py",
+          "line": 174,
+          "expression": "dict(geometry='CHECKED', facts='CONFIRMED' if self.store.facts_state(work['id']) == 'CONFIRMED' else 'NEEDS_REVIEW', noise='EVALUATED', learning='DRAFT_ONLY' if templates else 'WAITING_SAMPLE_AND_TRAIN_AUTHORIZATION')"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00104": {
+      "path": "template_ai/backup_policy.py",
+      "range": {
+        "start": {
+          "line": 162,
+          "character": 28
+        },
+        "end": {
+          "line": 162,
+          "character": 34
+        }
+      },
+      "field_expression": "report['items']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/backup_policy.py",
+          "line": 124,
+          "expression": "dict(state='NO_DELETION', preserved=[], items=[], space_reclaimed=0, policy='UNION_NEWEST_N_AND_WITHIN_DAYS_PLUS_LAST_VERIFIED_COMPLETE')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/backup_policy.py",
+          "line": 124,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00105": {
+      "path": "template_ai/backup_policy.py",
+      "range": {
+        "start": {
+          "line": 162,
+          "character": 28
+        },
+        "end": {
+          "line": 162,
+          "character": 34
+        }
+      },
+      "field_expression": "report['items']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/backup_policy.py",
+          "line": 124,
+          "expression": "dict(state='NO_DELETION', preserved=[], items=[], space_reclaimed=0, policy='UNION_NEWEST_N_AND_WITHIN_DAYS_PLUS_LAST_VERIFIED_COMPLETE')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/backup_policy.py",
+          "line": 124,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00106": {
+      "path": "template_ai/backup_policy.py",
+      "range": {
+        "start": {
+          "line": 167,
+          "character": 28
+        },
+        "end": {
+          "line": 167,
+          "character": 34
+        }
+      },
+      "field_expression": "report['items']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/backup_policy.py",
+          "line": 124,
+          "expression": "dict(state='NO_DELETION', preserved=[], items=[], space_reclaimed=0, policy='UNION_NEWEST_N_AND_WITHIN_DAYS_PLUS_LAST_VERIFIED_COMPLETE')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/backup_policy.py",
+          "line": 124,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00107": {
+      "path": "template_ai/backup_policy.py",
+      "range": {
+        "start": {
+          "line": 167,
+          "character": 28
+        },
+        "end": {
+          "line": 167,
+          "character": 34
+        }
+      },
+      "field_expression": "report['items']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/backup_policy.py",
+          "line": 124,
+          "expression": "dict(state='NO_DELETION', preserved=[], items=[], space_reclaimed=0, policy='UNION_NEWEST_N_AND_WITHIN_DAYS_PLUS_LAST_VERIFIED_COMPLETE')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/backup_policy.py",
+          "line": 124,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00503": {
+      "path": "template_ai/coverage_review.py",
+      "range": {
+        "start": {
+          "line": 93,
+          "character": 34
+        },
+        "end": {
+          "line": 93,
+          "character": 67
+        }
+      },
+      "field_expression": "context['person_root_candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/coverage_evidence.py",
+          "line": 68,
+          "expression": "dict(work_id=work_id, source_id=work['source_id'], revision=work['revision'], context=context, context_digest=digest(context), facts_state=store.facts_state(work_id), observation_count=len(observations), unconfirmed_observation_ids=missing, unobserved_slot_ids=unobserved_slots, unresolved_observatio"
+        }
+      ],
+      "field_origins": [],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00504": {
+      "path": "template_ai/coverage_review.py",
+      "range": {
+        "start": {
+          "line": 93,
+          "character": 86
+        },
+        "end": {
+          "line": 93,
+          "character": 115
+        }
+      },
+      "field_expression": "context['company_candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/coverage_evidence.py",
+          "line": 68,
+          "expression": "dict(work_id=work_id, source_id=work['source_id'], revision=work['revision'], context=context, context_digest=digest(context), facts_state=store.facts_state(work_id), observation_count=len(observations), unconfirmed_observation_ids=missing, unobserved_slot_ids=unobserved_slots, unresolved_observatio"
+        }
+      ],
+      "field_origins": [],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00678": {
+      "path": "template_ai/customer_entities.py",
+      "range": {
+        "start": {
+          "line": 39,
+          "character": 33
+        },
+        "end": {
+          "line": 39,
+          "character": 39
+        }
+      },
+      "field_expression": "data['fields']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/customer_entities.py",
+          "line": 39,
+          "expression": "dict(schema=1, revision=0, people=[{'id': ids[o]} for o in owners], companies=[], links=[], fields=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/customer_entities.py",
+          "line": 39,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00681": {
+      "path": "template_ai/customer_entities.py",
+      "range": {
+        "start": {
+          "line": 66,
+          "character": 20
+        },
+        "end": {
+          "line": 66,
+          "character": 26
+        }
+      },
+      "field_expression": "d['fields']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/customer_entities.py",
+          "line": 62,
+          "expression": "dict(schema=1, revision=revision, people=[], companies=[], fields=[], links=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/customer_entities.py",
+          "line": 62,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00709": {
+      "path": "template_ai/customer_identity.py",
+      "range": {
+        "start": {
+          "line": 253,
+          "character": 36
+        },
+        "end": {
+          "line": 253,
+          "character": 42
+        }
+      },
+      "field_expression": "graph['fields']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/customer_identity.py",
+          "line": 249,
+          "expression": "dict(schema=1, revision=current['revision'], people=[p for p in current['people'] if p['id'] in allowed], companies=[c for c in current['companies'] if c['id'] in allowed], fields=[], links=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/customer_identity.py",
+          "line": 250,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-00710": {
+      "path": "template_ai/customer_identity.py",
+      "range": {
+        "start": {
+          "line": 257,
+          "character": 35
+        },
+        "end": {
+          "line": 257,
+          "character": 41
+        }
+      },
+      "field_expression": "graph['links']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/customer_identity.py",
+          "line": 249,
+          "expression": "dict(schema=1, revision=current['revision'], people=[p for p in current['people'] if p['id'] in allowed], companies=[c for c in current['companies'] if c['id'] in allowed], fields=[], links=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/customer_identity.py",
+          "line": 250,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01253": {
+      "path": "template_ai/family_source_dialog.py",
+      "range": {
+        "start": {
+          "line": 254,
+          "character": 63
+        },
+        "end": {
+          "line": 254,
+          "character": 69
+        }
+      },
+      "field_expression": "presentation['evidence_refs']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/family_source_dialog.py",
+          "line": 253,
+          "expression": "dict(status='HUMAN_CONFIRMED_SOURCE_RULE', evidence_refs=[self.basis.text()], value_frame=[w.value() for w in self.frames['value']], components=parts)"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/family_source_dialog.py",
+          "line": 253,
+          "expression": "[self.basis.text()]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01563": {
+      "path": "template_ai/font_evidence.py",
+      "range": {
+        "start": {
+          "line": 94,
+          "character": 52
+        },
+        "end": {
+          "line": 94,
+          "character": 67
+        }
+      },
+      "field_expression": "actual['faces']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 61,
+          "expression": "dict(hash=hashlib.sha256(data).hexdigest(), bytes=len(data), faces=result, collection=data[:4] == b'ttcf', licence='NOT_INFERRED_FROM_FSTYPE')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 43,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01564": {
+      "path": "template_ai/font_evidence.py",
+      "range": {
+        "start": {
+          "line": 96,
+          "character": 21
+        },
+        "end": {
+          "line": 96,
+          "character": 36
+        }
+      },
+      "field_expression": "actual['faces']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 61,
+          "expression": "dict(hash=hashlib.sha256(data).hexdigest(), bytes=len(data), faces=result, collection=data[:4] == b'ttcf', licence='NOT_INFERRED_FROM_FSTYPE')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 43,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01893": {
+      "path": "template_ai/importer.py",
+      "range": {
+        "start": {
+          "line": 248,
+          "character": 27
+        },
+        "end": {
+          "line": 248,
+          "character": 33
+        }
+      },
+      "field_expression": "recovery['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 177,
+          "expression": "dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN', counts={}, issues=[issue('NO_EDITABLE_TEXT')])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 178,
+          "expression": "[issue('NO_EDITABLE_TEXT')]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01894": {
+      "path": "template_ai/importer.py",
+      "range": {
+        "start": {
+          "line": 248,
+          "character": 27
+        },
+        "end": {
+          "line": 248,
+          "character": 33
+        }
+      },
+      "field_expression": "recovery['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 177,
+          "expression": "dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN', counts={}, issues=[issue('NO_EDITABLE_TEXT')])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 178,
+          "expression": "[issue('NO_EDITABLE_TEXT')]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01896": {
+      "path": "template_ai/importer.py",
+      "range": {
+        "start": {
+          "line": 259,
+          "character": 35
+        },
+        "end": {
+          "line": 259,
+          "character": 41
+        }
+      },
+      "field_expression": "recovery['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 177,
+          "expression": "dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN', counts={}, issues=[issue('NO_EDITABLE_TEXT')])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 178,
+          "expression": "[issue('NO_EDITABLE_TEXT')]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01897": {
+      "path": "template_ai/importer.py",
+      "range": {
+        "start": {
+          "line": 259,
+          "character": 35
+        },
+        "end": {
+          "line": 259,
+          "character": 41
+        }
+      },
+      "field_expression": "recovery['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 177,
+          "expression": "dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN', counts={}, issues=[issue('NO_EDITABLE_TEXT')])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 178,
+          "expression": "[issue('NO_EDITABLE_TEXT')]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01898": {
+      "path": "template_ai/importer.py",
+      "range": {
+        "start": {
+          "line": 261,
+          "character": 31
+        },
+        "end": {
+          "line": 261,
+          "character": 37
+        }
+      },
+      "field_expression": "recovery['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 177,
+          "expression": "dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN', counts={}, issues=[issue('NO_EDITABLE_TEXT')])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 178,
+          "expression": "[issue('NO_EDITABLE_TEXT')]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01899": {
+      "path": "template_ai/importer.py",
+      "range": {
+        "start": {
+          "line": 261,
+          "character": 31
+        },
+        "end": {
+          "line": 261,
+          "character": 37
+        }
+      },
+      "field_expression": "recovery['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 177,
+          "expression": "dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN', counts={}, issues=[issue('NO_EDITABLE_TEXT')])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 178,
+          "expression": "[issue('NO_EDITABLE_TEXT')]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01900": {
+      "path": "template_ai/importer.py",
+      "range": {
+        "start": {
+          "line": 263,
+          "character": 27
+        },
+        "end": {
+          "line": 263,
+          "character": 33
+        }
+      },
+      "field_expression": "recovery['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 177,
+          "expression": "dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN', counts={}, issues=[issue('NO_EDITABLE_TEXT')])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 178,
+          "expression": "[issue('NO_EDITABLE_TEXT')]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-01901": {
+      "path": "template_ai/importer.py",
+      "range": {
+        "start": {
+          "line": 263,
+          "character": 27
+        },
+        "end": {
+          "line": 263,
+          "character": 33
+        }
+      },
+      "field_expression": "recovery['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 177,
+          "expression": "dict(source_kind='RASTER', semantic_status='NO_TEXT', fidelity_status='UNKNOWN', counts={}, issues=[issue('NO_EDITABLE_TEXT')])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/importer.py",
+          "line": 178,
+          "expression": "[issue('NO_EDITABLE_TEXT')]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02864": {
+      "path": "template_ai/quality_domains.py",
+      "range": {
+        "start": {
+          "line": 87,
+          "character": 21
+        },
+        "end": {
+          "line": 87,
+          "character": 39
+        }
+      },
+      "field_expression": "result['matching']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 83,
+          "expression": "dict(matching=matching, per_class={kind: counts(*values) for kind, values in classes.items()}, detection=counts(len(matching['matches']), len(matching['false_positive_ids']), len(matching['false_negative_ids'])), critical_owner_errors=critical, unknown_owner_mappings=unknown_owners, known_owner_pair"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02865": {
+      "path": "template_ai/quality_domains.py",
+      "range": {
+        "start": {
+          "line": 87,
+          "character": 21
+        },
+        "end": {
+          "line": 87,
+          "character": 39
+        }
+      },
+      "field_expression": "result['matching']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 83,
+          "expression": "dict(matching=matching, per_class={kind: counts(*values) for kind, values in classes.items()}, detection=counts(len(matching['matches']), len(matching['false_positive_ids']), len(matching['false_negative_ids'])), critical_owner_errors=critical, unknown_owner_mappings=unknown_owners, known_owner_pair"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02866": {
+      "path": "template_ai/quality_domains.py",
+      "range": {
+        "start": {
+          "line": 87,
+          "character": 21
+        },
+        "end": {
+          "line": 87,
+          "character": 50
+        }
+      },
+      "field_expression": "result['matching']['matches']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 47,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02867": {
+      "path": "template_ai/quality_domains.py",
+      "range": {
+        "start": {
+          "line": 87,
+          "character": 21
+        },
+        "end": {
+          "line": 87,
+          "character": 50
+        }
+      },
+      "field_expression": "result['matching']['matches']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 47,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02868": {
+      "path": "template_ai/quality_domains.py",
+      "range": {
+        "start": {
+          "line": 87,
+          "character": 21
+        },
+        "end": {
+          "line": 87,
+          "character": 50
+        }
+      },
+      "field_expression": "result['matching']['matches']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 47,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02884": {
+      "path": "template_ai/quality_domains.py",
+      "range": {
+        "start": {
+          "line": 161,
+          "character": 83
+        },
+        "end": {
+          "line": 161,
+          "character": 100
+        }
+      },
+      "field_expression": "paired['matches']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 47,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02885": {
+      "path": "template_ai/quality_domains.py",
+      "range": {
+        "start": {
+          "line": 161,
+          "character": 106
+        },
+        "end": {
+          "line": 161,
+          "character": 134
+        }
+      },
+      "field_expression": "paired['false_positive_ids']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "[r['id'] for r in predicted if r['id'] not in ps]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02886": {
+      "path": "template_ai/quality_domains.py",
+      "range": {
+        "start": {
+          "line": 161,
+          "character": 140
+        },
+        "end": {
+          "line": 161,
+          "character": 168
+        }
+      },
+      "field_expression": "paired['false_negative_ids']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "[r['id'] for r in actual if r['id'] not in gs]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02931": {
+      "path": "template_ai/quality_gold.py",
+      "range": {
+        "start": {
+          "line": 26,
+          "character": 49
+        },
+        "end": {
+          "line": 26,
+          "character": 54
+        }
+      },
+      "field_expression": "context['context']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/coverage_evidence.py",
+          "line": 68,
+          "expression": "dict(work_id=work_id, source_id=work['source_id'], revision=work['revision'], context=context, context_digest=digest(context), facts_state=store.facts_state(work_id), observation_count=len(observations), unconfirmed_observation_ids=missing, unobserved_slot_ids=unobserved_slots, unresolved_observatio"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/coverage_evidence.py",
+          "line": 51,
+          "expression": "dict(pins=store.pins(work_id), analyser_version=work['payload'].get('analysis_version', ANALYSER_VERSION), source_parser_provenance_unknown=bool(work['payload'].get('analysis_key') and (not work['payload'].get('analysis_version'))), source_semantic_model_id=source_model_id, source_semantic_model_dig"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02932": {
+      "path": "template_ai/quality_gold.py",
+      "range": {
+        "start": {
+          "line": 26,
+          "character": 49
+        },
+        "end": {
+          "line": 26,
+          "character": 54
+        }
+      },
+      "field_expression": "context['context']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/coverage_evidence.py",
+          "line": 68,
+          "expression": "dict(work_id=work_id, source_id=work['source_id'], revision=work['revision'], context=context, context_digest=digest(context), facts_state=store.facts_state(work_id), observation_count=len(observations), unconfirmed_observation_ids=missing, unobserved_slot_ids=unobserved_slots, unresolved_observatio"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/coverage_evidence.py",
+          "line": 51,
+          "expression": "dict(pins=store.pins(work_id), analyser_version=work['payload'].get('analysis_version', ANALYSER_VERSION), source_parser_provenance_unknown=bool(work['payload'].get('analysis_key') and (not work['payload'].get('analysis_version'))), source_semantic_model_id=source_model_id, source_semantic_model_dig"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02933": {
+      "path": "template_ai/quality_gold.py",
+      "range": {
+        "start": {
+          "line": 26,
+          "character": 49
+        },
+        "end": {
+          "line": 26,
+          "character": 54
+        }
+      },
+      "field_expression": "context['context']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/coverage_evidence.py",
+          "line": 68,
+          "expression": "dict(work_id=work_id, source_id=work['source_id'], revision=work['revision'], context=context, context_digest=digest(context), facts_state=store.facts_state(work_id), observation_count=len(observations), unconfirmed_observation_ids=missing, unobserved_slot_ids=unobserved_slots, unresolved_observatio"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/coverage_evidence.py",
+          "line": 51,
+          "expression": "dict(pins=store.pins(work_id), analyser_version=work['payload'].get('analysis_version', ANALYSER_VERSION), source_parser_provenance_unknown=bool(work['payload'].get('analysis_key') and (not work['payload'].get('analysis_version'))), source_semantic_model_id=source_model_id, source_semantic_model_dig"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02979": {
+      "path": "template_ai/quality_metrics.py",
+      "range": {
+        "start": {
+          "line": 82,
+          "character": 123
+        },
+        "end": {
+          "line": 82,
+          "character": 142
+        }
+      },
+      "field_expression": "matching['matches']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 47,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02980": {
+      "path": "template_ai/quality_metrics.py",
+      "range": {
+        "start": {
+          "line": 82,
+          "character": 148
+        },
+        "end": {
+          "line": 82,
+          "character": 178
+        }
+      },
+      "field_expression": "matching['false_positive_ids']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "[r['id'] for r in predicted if r['id'] not in ps]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-02981": {
+      "path": "template_ai/quality_metrics.py",
+      "range": {
+        "start": {
+          "line": 82,
+          "character": 184
+        },
+        "end": {
+          "line": 82,
+          "character": 214
+        }
+      },
+      "field_expression": "matching['false_negative_ids']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "[r['id'] for r in actual if r['id'] not in gs]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03325": {
+      "path": "template_ai/quality_source_rechecks.py",
+      "range": {
+        "start": {
+          "line": 47,
+          "character": 23
+        },
+        "end": {
+          "line": 47,
+          "character": 29
+        }
+      },
+      "field_expression": "result['coverage']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_source_rechecks.py",
+          "line": 43,
+          "expression": "dict(mode='SOURCE_EVIDENCE', case_id=case_id or new_id(), issue_id=issue_id, issue_digest=digest(issue), work_id=wid, category=category, correct_example=correct_example, wrong_example=wrong_example, severity=severity, rows=rows, templates=templates, dependency_digest=dependencies['digest'], dependen"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_source_rechecks.py",
+          "line": 43,
+          "expression": "dict(registered_sources=service.db.execute('SELECT count(*) FROM sources').fetchone()[0], registered_works=service.db.execute('SELECT count(*) FROM artworks').fetchone()[0], affected_sources=len({r['source_id'] for r in rows}), affected_works=len(rows), affected_templates=len(templates), known_nodes"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03326": {
+      "path": "template_ai/quality_source_rechecks.py",
+      "range": {
+        "start": {
+          "line": 47,
+          "character": 23
+        },
+        "end": {
+          "line": 47,
+          "character": 29
+        }
+      },
+      "field_expression": "result['coverage']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_source_rechecks.py",
+          "line": 43,
+          "expression": "dict(mode='SOURCE_EVIDENCE', case_id=case_id or new_id(), issue_id=issue_id, issue_digest=digest(issue), work_id=wid, category=category, correct_example=correct_example, wrong_example=wrong_example, severity=severity, rows=rows, templates=templates, dependency_digest=dependencies['digest'], dependen"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_source_rechecks.py",
+          "line": 43,
+          "expression": "dict(registered_sources=service.db.execute('SELECT count(*) FROM sources').fetchone()[0], registered_works=service.db.execute('SELECT count(*) FROM artworks').fetchone()[0], affected_sources=len({r['source_id'] for r in rows}), affected_works=len(rows), affected_templates=len(templates), known_nodes"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03327": {
+      "path": "template_ai/quality_source_rechecks.py",
+      "range": {
+        "start": {
+          "line": 47,
+          "character": 23
+        },
+        "end": {
+          "line": 47,
+          "character": 29
+        }
+      },
+      "field_expression": "result['coverage']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_source_rechecks.py",
+          "line": 43,
+          "expression": "dict(mode='SOURCE_EVIDENCE', case_id=case_id or new_id(), issue_id=issue_id, issue_digest=digest(issue), work_id=wid, category=category, correct_example=correct_example, wrong_example=wrong_example, severity=severity, rows=rows, templates=templates, dependency_digest=dependencies['digest'], dependen"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_source_rechecks.py",
+          "line": 43,
+          "expression": "dict(registered_sources=service.db.execute('SELECT count(*) FROM sources').fetchone()[0], registered_works=service.db.execute('SELECT count(*) FROM artworks').fetchone()[0], affected_sources=len({r['source_id'] for r in rows}), affected_works=len(rows), affected_templates=len(templates), known_nodes"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03558": {
+      "path": "template_ai/runtime_resources.py",
+      "range": {
+        "start": {
+          "line": 24,
+          "character": 45
+        },
+        "end": {
+          "line": 24,
+          "character": 51
+        }
+      },
+      "field_expression": "result['errors']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/runtime_resources.py",
+          "line": 18,
+          "expression": "dict(applicable=True, errors=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/runtime_resources.py",
+          "line": 18,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03647": {
+      "path": "template_ai/source_discovery.py",
+      "range": {
+        "start": {
+          "line": 149,
+          "character": 25
+        },
+        "end": {
+          "line": 149,
+          "character": 31
+        }
+      },
+      "field_expression": "result['errors']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_discovery.py",
+          "line": 141,
+          "expression": "dict(root='；'.join((str(x) for x in selected)), roots=[str(x) for x in selected], overlapping_roots=overlaps, status='PARTIAL' if errors else 'COMPLETE', entries=0, bytes_budgeted=0, hashed_files=0, errors=errors, rows=[dict(source=s, availability=availability(s), candidates=[], same_name_different="
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_discovery.py",
+          "line": 129,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03648": {
+      "path": "template_ai/source_discovery.py",
+      "range": {
+        "start": {
+          "line": 149,
+          "character": 25
+        },
+        "end": {
+          "line": 149,
+          "character": 31
+        }
+      },
+      "field_expression": "result['errors']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_discovery.py",
+          "line": 141,
+          "expression": "dict(root='；'.join((str(x) for x in selected)), roots=[str(x) for x in selected], overlapping_roots=overlaps, status='PARTIAL' if errors else 'COMPLETE', entries=0, bytes_budgeted=0, hashed_files=0, errors=errors, rows=[dict(source=s, availability=availability(s), candidates=[], same_name_different="
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_discovery.py",
+          "line": 129,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03652": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 84,
+          "character": 33
+        },
+        "end": {
+          "line": 84,
+          "character": 39
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03653": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 84,
+          "character": 33
+        },
+        "end": {
+          "line": 84,
+          "character": 39
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03654": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 86,
+          "character": 29
+        },
+        "end": {
+          "line": 86,
+          "character": 35
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03655": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 86,
+          "character": 29
+        },
+        "end": {
+          "line": 86,
+          "character": 35
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03656": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 88,
+          "character": 29
+        },
+        "end": {
+          "line": 88,
+          "character": 35
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03657": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 88,
+          "character": 29
+        },
+        "end": {
+          "line": 88,
+          "character": 35
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03658": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 103,
+          "character": 29
+        },
+        "end": {
+          "line": 103,
+          "character": 35
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03659": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 103,
+          "character": 29
+        },
+        "end": {
+          "line": 103,
+          "character": 35
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03660": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 109,
+          "character": 25
+        },
+        "end": {
+          "line": 109,
+          "character": 31
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03661": {
+      "path": "template_ai/source_recovery.py",
+      "range": {
+        "start": {
+          "line": 109,
+          "character": 25
+        },
+        "end": {
+          "line": 109,
+          "character": 31
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 68,
+          "expression": "dict(schema=VERSION, source_kind='PDF' if is_pdf else 'SVG' if path.suffix.lower() == '.svg' else 'OTHER', semantic_status='UNKNOWN', fidelity_status='UNKNOWN', issues=[], counts={})"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_recovery.py",
+          "line": 69,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03665": {
+      "path": "template_ai/source_region_hypotheses.py",
+      "range": {
+        "start": {
+          "line": 93,
+          "character": 29
+        },
+        "end": {
+          "line": 93,
+          "character": 35
+        }
+      },
+      "field_expression": "result['candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_region_hypotheses.py",
+          "line": 63,
+          "expression": "dict(version='unframed-size-clues-1', notes=notes, candidates=[], state='NO_UNAMBIGUOUS_SIZE_REGION', identity='UNKNOWN', review_required=True)"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_region_hypotheses.py",
+          "line": 63,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03666": {
+      "path": "template_ai/source_region_hypotheses.py",
+      "range": {
+        "start": {
+          "line": 93,
+          "character": 29
+        },
+        "end": {
+          "line": 93,
+          "character": 35
+        }
+      },
+      "field_expression": "result['candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/source_region_hypotheses.py",
+          "line": 63,
+          "expression": "dict(version='unframed-size-clues-1', notes=notes, candidates=[], state='NO_UNAMBIGUOUS_SIZE_REGION', identity='UNKNOWN', review_required=True)"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/source_region_hypotheses.py",
+          "line": 63,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03995": {
+      "path": "template_ai/trusted_sample_pool.py",
+      "range": {
+        "start": {
+          "line": 216,
+          "character": 107
+        },
+        "end": {
+          "line": 216,
+          "character": 125
+        }
+      },
+      "field_expression": "detail['conflict']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/trusted_sample_pool.py",
+          "line": 90,
+          "expression": "dict(confirmed_customer_ids=customer_ids[:200], customer_link_scope='EXISTING_CONFIRMED_ASSOCIATIONS_ONLY' if len(customer_ids) <= 200 else 'INCOMPLETE_MAX200', dimensions=dict(width=work['payload']['work_width'], height=work['payload']['work_height']), current_slots=work['payload']['slots'], source"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/trusted_sample_pool.py",
+          "line": 71,
+          "expression": "dict(conflicting_work_ids=conflicts, complete=True, reason='同位元及尺寸／區域的現行人工真值互相矛盾；不採最新者勝出' if conflicts else None)"
+        },
+        {
+          "path": "template_ai/trusted_sample_pool.py",
+          "line": 66,
+          "expression": "dict(conflicting_work_ids=[], complete=False, reason='超過200同內容作品，縮小範圍或明確逐批核實')"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-03996": {
+      "path": "template_ai/trusted_sample_pool.py",
+      "range": {
+        "start": {
+          "line": 216,
+          "character": 107
+        },
+        "end": {
+          "line": 216,
+          "character": 149
+        }
+      },
+      "field_expression": "detail['conflict']['conflicting_work_ids']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/trusted_sample_pool.py",
+          "line": 71,
+          "expression": "dict(conflicting_work_ids=conflicts, complete=True, reason='同位元及尺寸／區域的現行人工真值互相矛盾；不採最新者勝出' if conflicts else None)"
+        },
+        {
+          "path": "template_ai/trusted_sample_pool.py",
+          "line": 66,
+          "expression": "dict(conflicting_work_ids=[], complete=False, reason='超過200同內容作品，縮小範圍或明確逐批核實')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/trusted_sample_pool.py",
+          "line": 64,
+          "expression": "[]"
+        },
+        {
+          "path": "template_ai/trusted_sample_pool.py",
+          "line": 66,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04110": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 202,
+          "character": 37
+        },
+        "end": {
+          "line": 202,
+          "character": 43
+        }
+      },
+      "field_expression": "report['candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04111": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 202,
+          "character": 37
+        },
+        "end": {
+          "line": 202,
+          "character": 43
+        }
+      },
+      "field_expression": "report['candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04112": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 202,
+          "character": 37
+        },
+        "end": {
+          "line": 202,
+          "character": 43
+        }
+      },
+      "field_expression": "report['candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04113": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 204,
+          "character": 33
+        },
+        "end": {
+          "line": 204,
+          "character": 39
+        }
+      },
+      "field_expression": "report['exclusions']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04114": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 204,
+          "character": 33
+        },
+        "end": {
+          "line": 204,
+          "character": 39
+        }
+      },
+      "field_expression": "report['exclusions']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04115": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 204,
+          "character": 33
+        },
+        "end": {
+          "line": 204,
+          "character": 39
+        }
+      },
+      "field_expression": "report['exclusions']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04116": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 205,
+          "character": 25
+        },
+        "end": {
+          "line": 205,
+          "character": 29
+        }
+      },
+      "field_expression": "report['candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04117": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 205,
+          "character": 25
+        },
+        "end": {
+          "line": 205,
+          "character": 29
+        }
+      },
+      "field_expression": "report['candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04118": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 205,
+          "character": 25
+        },
+        "end": {
+          "line": 205,
+          "character": 29
+        }
+      },
+      "field_expression": "report['candidates']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04140": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 210,
+          "character": 38
+        },
+        "end": {
+          "line": 210,
+          "character": 44
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04141": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 210,
+          "character": 38
+        },
+        "end": {
+          "line": 210,
+          "character": 44
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04142": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 210,
+          "character": 38
+        },
+        "end": {
+          "line": 210,
+          "character": 44
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04149": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 211,
+          "character": 60
+        },
+        "end": {
+          "line": 211,
+          "character": 66
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04150": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 211,
+          "character": 60
+        },
+        "end": {
+          "line": 211,
+          "character": 66
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04151": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 211,
+          "character": 60
+        },
+        "end": {
+          "line": 211,
+          "character": 66
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04152": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 213,
+          "character": 25
+        },
+        "end": {
+          "line": 213,
+          "character": 31
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04153": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 213,
+          "character": 25
+        },
+        "end": {
+          "line": 213,
+          "character": 31
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04154": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 213,
+          "character": 25
+        },
+        "end": {
+          "line": 213,
+          "character": 31
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04155": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 215,
+          "character": 25
+        },
+        "end": {
+          "line": 215,
+          "character": 31
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04156": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 215,
+          "character": 25
+        },
+        "end": {
+          "line": 215,
+          "character": 31
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04157": {
+      "path": "template_ai/visual_font_match.py",
+      "range": {
+        "start": {
+          "line": 215,
+          "character": 25
+        },
+        "end": {
+          "line": 215,
+          "character": 31
+        }
+      },
+      "field_expression": "report['issues']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 164,
+          "expression": "dict(schema=VERSION, status='NO_MATCH', font_match_status='NO_MATCH', candidates=[], exclusions=[], checked_faces=0, omitted_faces=max(0, len(faces) - offset - max_faces), next_offset=offset, issues=[], physical_calibration='KNOWN' if pixels_per_mm else 'UNKNOWN', policy=dict(maximum_error=maximum_e"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/visual_font_match.py",
+          "line": 166,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04172": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 36,
+          "character": 24
+        },
+        "end": {
+          "line": 36,
+          "character": 38
+        }
+      },
+      "field_expression": "proof['faces']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 61,
+          "expression": "dict(hash=hashlib.sha256(data).hexdigest(), bytes=len(data), faces=result, collection=data[:4] == b'ttcf', licence='NOT_INFERRED_FROM_FSTYPE')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 43,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04176": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 38,
+          "character": 30
+        },
+        "end": {
+          "line": 38,
+          "character": 44
+        }
+      },
+      "field_expression": "proof['faces']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 61,
+          "expression": "dict(hash=hashlib.sha256(data).hexdigest(), bytes=len(data), faces=result, collection=data[:4] == b'ttcf', licence='NOT_INFERRED_FROM_FSTYPE')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 43,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04177": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 39,
+          "character": 213
+        },
+        "end": {
+          "line": 39,
+          "character": 219
+        }
+      },
+      "field_expression": "report['files']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 11,
+          "expression": "dict(status='COMPLETE', scope=SCOPE, files=[], rejected=[], source_bytes_budgeted=0, notes=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 11,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04178": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 39,
+          "character": 213
+        },
+        "end": {
+          "line": 39,
+          "character": 219
+        }
+      },
+      "field_expression": "report['files']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 11,
+          "expression": "dict(status='COMPLETE', scope=SCOPE, files=[], rejected=[], source_bytes_budgeted=0, notes=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 11,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04180": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 45,
+          "character": 41
+        },
+        "end": {
+          "line": 45,
+          "character": 47
+        }
+      },
+      "field_expression": "report['files']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 11,
+          "expression": "dict(status='COMPLETE', scope=SCOPE, files=[], rejected=[], source_bytes_budgeted=0, notes=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 11,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04181": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 45,
+          "character": 41
+        },
+        "end": {
+          "line": 45,
+          "character": 47
+        }
+      },
+      "field_expression": "report['files']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 11,
+          "expression": "dict(status='COMPLETE', scope=SCOPE, files=[], rejected=[], source_bytes_budgeted=0, notes=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 11,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04191": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 91,
+          "character": 94
+        },
+        "end": {
+          "line": 91,
+          "character": 100
+        }
+      },
+      "field_expression": "combined['rejected']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 86,
+          "expression": "dict(status='COMPLETE', scope=SCOPE, files=[], rejected=[], notes=[], source_bytes_budgeted=0, next_offset=0, total_records=len(records))"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 86,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04192": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 91,
+          "character": 94
+        },
+        "end": {
+          "line": 91,
+          "character": 100
+        }
+      },
+      "field_expression": "combined['rejected']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 86,
+          "expression": "dict(status='COMPLETE', scope=SCOPE, files=[], rejected=[], notes=[], source_bytes_budgeted=0, next_offset=0, total_records=len(records))"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 86,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04193": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 96,
+          "character": 49
+        },
+        "end": {
+          "line": 96,
+          "character": 55
+        }
+      },
+      "field_expression": "combined['files']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 86,
+          "expression": "dict(status='COMPLETE', scope=SCOPE, files=[], rejected=[], notes=[], source_bytes_budgeted=0, next_offset=0, total_records=len(records))"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 86,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-APP-04194": {
+      "path": "template_ai/windows_font_sources.py",
+      "range": {
+        "start": {
+          "line": 96,
+          "character": 49
+        },
+        "end": {
+          "line": 96,
+          "character": 55
+        }
+      },
+      "field_expression": "combined['files']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 86,
+          "expression": "dict(status='COMPLETE', scope=SCOPE, files=[], rejected=[], notes=[], source_bytes_budgeted=0, next_offset=0, total_records=len(records))"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/windows_font_sources.py",
+          "line": 86,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-05214": {
+      "path": "tests/test_candidate_changes.py",
+      "range": {
+        "start": {
+          "line": 42,
+          "character": 139
+        },
+        "end": {
+          "line": 42,
+          "character": 150
+        }
+      },
+      "field_expression": "r['merged']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/candidate_changes.py",
+          "line": 86,
+          "expression": "dict(merged=merged, conflicts=conflicts, decisions=decisions, applied=False, whole_card_recheck_required=True, formal_allowed=False)"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "tests/test_candidate_changes.py",
+          "line": 42,
+          "expression": "dict(size_pt=current)"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-06203": {
+      "path": "tests/test_design_assignment.py",
+      "range": {
+        "start": {
+          "line": 18,
+          "character": 25
+        },
+        "end": {
+          "line": 18,
+          "character": 47
+        }
+      },
+      "field_expression": "allowed['assignments']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/design_assignment.py",
+          "line": 64,
+          "expression": "dict(status='ASSIGNED', assignments=result, basis='SCIPY_MIN_COST_ASSIGNMENT_SAME_OWNER_SUPPORTED_SEMANTICS_STABLE_PORT_DEFAULT', global_optimal_layout_claim=False)"
+        },
+        {
+          "path": "template_ai/design_assignment.py",
+          "line": 33,
+          "expression": "dict(status='ASSIGNED', assignments=[], basis='NO_TEXT_FIELDS')"
+        },
+        {
+          "path": "template_ai/design_assignment.py",
+          "line": 34,
+          "expression": "dict(status='UNSUPPORTED_FIELD_CAPACITY', assignments=[])"
+        },
+        {
+          "path": "template_ai/design_assignment.py",
+          "line": 59,
+          "expression": "dict(status='NO_SOURCE_SUPPORTED_CONDITIONAL_ASSIGNMENT', assignments=[])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/design_assignment.py",
+          "line": 60,
+          "expression": "[]"
+        },
+        {
+          "path": "template_ai/design_assignment.py",
+          "line": 33,
+          "expression": "[]"
+        },
+        {
+          "path": "template_ai/design_assignment.py",
+          "line": 34,
+          "expression": "[]"
+        },
+        {
+          "path": "template_ai/design_assignment.py",
+          "line": 59,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-06334": {
+      "path": "tests/test_design_family.py",
+      "range": {
+        "start": {
+          "line": 82,
+          "character": 8
+        },
+        "end": {
+          "line": 82,
+          "character": 25
+        }
+      },
+      "field_expression": "rows[0]['fields']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "tests/test_design_family.py",
+          "line": 17,
+          "expression": "dict(id='example-' + str(index), lineage_group=group or 'lineage-' + str(index), role=role, width_mm=90, height_mm=54, fields=fields)"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "tests/test_design_family.py",
+          "line": 10,
+          "expression": "[dict(id='name-' + str(index), owner='p1', kind='name', index=0, rect=dict(x=8 + shift, y=5, w=40, h=8), private_text='Person ' + str(index)), dict(id='phone-' + str(index), owner='p1', kind='phone', index=0, rect=dict(x=8 + shift, y=22, w=38, h=6), private_text='Number ' + str(index))]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-06338": {
+      "path": "tests/test_design_family.py",
+      "range": {
+        "start": {
+          "line": 83,
+          "character": 8
+        },
+        "end": {
+          "line": 83,
+          "character": 25
+        }
+      },
+      "field_expression": "rows[0]['fields']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "tests/test_design_family.py",
+          "line": 17,
+          "expression": "dict(id='example-' + str(index), lineage_group=group or 'lineage-' + str(index), role=role, width_mm=90, height_mm=54, fields=fields)"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "tests/test_design_family.py",
+          "line": 10,
+          "expression": "[dict(id='name-' + str(index), owner='p1', kind='name', index=0, rect=dict(x=8 + shift, y=5, w=40, h=8), private_text='Person ' + str(index)), dict(id='phone-' + str(index), owner='p1', kind='phone', index=0, rect=dict(x=8 + shift, y=22, w=38, h=6), private_text='Number ' + str(index))]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-07530": {
+      "path": "tests/test_font_evidence.py",
+      "range": {
+        "start": {
+          "line": 36,
+          "character": 25
+        },
+        "end": {
+          "line": 36,
+          "character": 61
+        }
+      },
+      "field_expression": "inspect_font(asset['path'])['faces']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 61,
+          "expression": "dict(hash=hashlib.sha256(data).hexdigest(), bytes=len(data), faces=result, collection=data[:4] == b'ttcf', licence='NOT_INFERRED_FROM_FSTYPE')"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/font_evidence.py",
+          "line": 43,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-07887": {
+      "path": "tests/test_logo_lifecycle.py",
+      "range": {
+        "start": {
+          "line": 85,
+          "character": 25
+        },
+        "end": {
+          "line": 85,
+          "character": 42
+        }
+      },
+      "field_expression": "fit['padding_mm']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/logo_assets.py",
+          "line": 28,
+          "expression": "dict(frame=asdict(frame), actual=asdict(actual), scale=scale, occupied_fraction=actual.w * actual.h / (frame.w * frame.h), padding_mm=dict(left=actual.x - frame.x, top=actual.y - frame.y, right=frame.x + frame.w - actual.x - actual.w, bottom=frame.y + frame.h - actual.y - actual.h), operation='CONTA"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/logo_assets.py",
+          "line": 30,
+          "expression": "dict(left=actual.x - frame.x, top=actual.y - frame.y, right=frame.x + frame.w - actual.x - actual.w, bottom=frame.y + frame.h - actual.y - actual.h)"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-09627": {
+      "path": "tests/test_quality_metrics.py",
+      "range": {
+        "start": {
+          "line": 15,
+          "character": 25
+        },
+        "end": {
+          "line": 15,
+          "character": 43
+        }
+      },
+      "field_expression": "result['matching']",
+      "field_kind": "dict",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 83,
+          "expression": "dict(matching=matching, per_class={kind: counts(*values) for kind, values in classes.items()}, detection=counts(len(matching['matches']), len(matching['false_positive_ids']), len(matching['false_negative_ids'])), critical_owner_errors=critical, unknown_owner_mappings=unknown_owners, known_owner_pair"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-09630": {
+      "path": "tests/test_quality_metrics.py",
+      "range": {
+        "start": {
+          "line": 15,
+          "character": 25
+        },
+        "end": {
+          "line": 15,
+          "character": 54
+        }
+      },
+      "field_expression": "result['matching']['matches']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 47,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-09632": {
+      "path": "tests/test_quality_metrics.py",
+      "range": {
+        "start": {
+          "line": 15,
+          "character": 25
+        },
+        "end": {
+          "line": 15,
+          "character": 54
+        }
+      },
+      "field_expression": "result['matching']['matches']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 47,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    },
+    "D-TES-09634": {
+      "path": "tests/test_quality_metrics.py",
+      "range": {
+        "start": {
+          "line": 15,
+          "character": 25
+        },
+        "end": {
+          "line": 15,
+          "character": 54
+        }
+      },
+      "field_expression": "result['matching']['matches']",
+      "field_kind": "list",
+      "record_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 52,
+          "expression": "dict(version=VERSION, minimum_iou=minimum_iou, matching_uses_semantic_labels=False, matches=paired, false_negative_ids=[r['id'] for r in actual if r['id'] not in gs], false_positive_ids=[r['id'] for r in predicted if r['id'] not in ps])"
+        }
+      ],
+      "field_origins": [
+        {
+          "path": "template_ai/quality_metrics.py",
+          "line": 47,
+          "expression": "[]"
+        }
+      ],
+      "source": "Isolated original Git373b6ee AST; no user data or checker suppression",
+      "limits": "Only explicit literal/consistent source factory fields; nullable/unknown values left unresolved"
+    }
+  }
+}

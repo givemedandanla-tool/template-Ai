@@ -1,0 +1,23 @@
+test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts (test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts) ... This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+AUDIT_STATE {"main_busy": true, "child_running": true, "child_status": "\u4f5c\u54c1\uff0f\u7d50\u69cb\u6bd4\u5c0d\uff1a\u5df2\u5b8c\u62102\uff0f2\u6a94\uff1bB002.svg\uff1b\u5c1a\u672a\u958b\u59cb\u5b78\u7fd2\u6216\u767c\u5e03", "main_status": "\u6383\u63cf\u53ca\u4f86\u6e90\u9810\u6aa2 \u00b7 \u80cc\u666f\u57f7\u884c\u4e2d\uff0c\u5b8c\u6210\u524d\u4e0d\u5ba3\u7a31\u6210\u529f", "waiting": 0, "background": 1, "active": 1, "admission": "ResourceDecision(allowed=True, state='ALLOW_SINGLE_WORKER', reasons=(), reserve_memory_bytes=536870912, estimated_peak_bytes=268435456, measured={'sampled_at': 215895.15208442, 'sequence': 4, 'memory_total': 8589934592, 'memory_available': 6442450944, 'cpu_percent': 5, 'effective_cpus': 4, 'disk_free': 4294967296, 'process_rss': 67108864, 'unknown': (), 'basis': 'SYNTHETIC_TEST_FIXTURE_NOT_MEASUREMENT', 'io_wait_percent': None, 'io_read_bytes_per_second': None, 'io_write_bytes_per_second': None})", "report": false}
+FAIL
+This plugin does not support propagateSizeHints()
+
+======================================================================
+FAIL: test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts (test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_source_watch_center.py", line 57, in test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts
+    self.scan();self.select(lambda c:True);self.dialog.launch();child=self.dialog.training_dialog;self.wait(lambda:not child.running and not self.window.busy)
+                                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tests/test_source_watch_center.py", line 29, in wait
+    if time.monotonic()>end:self.fail('actual watch/GUI pipeline timed out: '+self.dialog.status.text())
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: actual watch/GUI pipeline timed out: 已交既有預檢，真正開始訓練仍須在該介面明確確認
+
+----------------------------------------------------------------------
+Ran 1 test in 40.070s
+
+FAILED (failures=1)

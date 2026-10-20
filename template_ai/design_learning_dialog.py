@@ -10,6 +10,7 @@ import threading
 
 from PySide6.QtCore import Qt,QThread,Signal,QTimer
 from PySide6.QtGui import QPixmap,QPen,QColor,QBrush
+from shiboken6 import isValid
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTabWidget,QWidget,
     QComboBox,QTableWidget,QTableWidgetItem,QLineEdit,QCheckBox,QDoubleSpinBox,QGraphicsView,
     QGraphicsScene,QGraphicsRectItem,QFileDialog,QMessageBox,QSplitter,QPlainTextEdit,QGroupBox)
@@ -96,6 +97,7 @@ class DesignLearningDialog(QDialog):
         self.service_window=window if hasattr(window,'run_job') else getattr(window,'service_window',None)
         self.learning=CrossWorkLearning(self.library);self.sessions=DesignSessions(self.library);self.jobs=DesignJobs(self.library)
         self.font_manager=FontManager(self.library);self.worker=None;self.solve_worker=None;self.session_id=None;self.close_after_worker=False;self.bound_to_main=False
+        self._accept_solve_callbacks=True;self._accept_training_callbacks=True
         workspace=self.jobs.store.get('DESIGN_WORKSPACE','desktop')
         if workspace and self.jobs.store.get('DESIGN_SESSION',workspace.get('session_id','')):self.session_id=workspace['session_id']
         self.setWindowTitle('共用設計規則與當次稿件');self.resize(1180,800)
@@ -295,11 +297,25 @@ class DesignLearningDialog(QDialog):
         self.start_job(job)
     def start_job(self,job):
         if self.worker and self.worker.isRunning():raise ValueError('目前已有學習工作')
+        self._accept_training_callbacks=True
         claimed=self.jobs.claim(job['id'],job['revision']);self.worker=DesignWorker(self.library.root,job['id'],claimed['owner']['token'],self)
-        self.worker.progress.connect(lambda row:self.say(f"已保存 {row['done']} / {row['total']} 個工作項目"))
-        self.worker.completed.connect(lambda row:self.say('已完成候選學習；請檢視後採用預覽規則。' if row['phase']=='COMPLETE' else '已暫停；可從保存位置接續。'))
-        self.worker.failed.connect(self.say);self.worker.finished.connect(self.worker_finished);self.train_button.setEnabled(False);self.worker.start()
+        self.worker.progress.connect(self.training_progress)
+        self.worker.completed.connect(self.training_completed)
+        self.worker.failed.connect(self.training_failed);self.worker.finished.connect(self.worker_finished);self.train_button.setEnabled(False);self.worker.start()
+    def _current_callback(self, worker, accepting):
+        # Queued signals can outlive a closed dialog or an earlier request.
+        return (isValid(self) and accepting and not self.library.closed
+                and (self.sender() is None or self.sender() is worker))
+    def training_progress(self,row):
+        if self._current_callback(self.worker,self._accept_training_callbacks):
+            self.say(f"已保存 {row['done']} / {row['total']} 個工作項目")
+    def training_completed(self,row):
+        if self._current_callback(self.worker,self._accept_training_callbacks):
+            self.say('已完成候選學習；請檢視後採用預覽規則。' if row['phase']=='COMPLETE' else '已暫停；可從保存位置接續。')
+    def training_failed(self,error):
+        if self._current_callback(self.worker,self._accept_training_callbacks):self.say(error)
     def worker_finished(self):
+        if not self._current_callback(self.worker,self._accept_training_callbacks):return
         self.train_button.setEnabled(True);self.refresh()
         if self.close_after_worker:self.close()
     def pause(self):
@@ -382,10 +398,10 @@ class DesignLearningDialog(QDialog):
             if not decision.allowed:
                 self.solve_status.setText('電腦目前較忙，這次尚未開始排版；資料已保留，稍後可重試。');return
         row=self.sessions.current(self.session_id)
-        self.last_solve_error=None
+        self.last_solve_error=None;self._accept_solve_callbacks=True
         self.solve_worker=DraftSolveWorker(self.library.root,row['id'],row['revision'],self)
         self.solve_worker.completed.connect(self.solve_completed);self.solve_worker.failed.connect(self.solve_failed)
-        self.solve_worker.progress.connect(lambda value:self.solve_status.setText(f"正在比較可用版面：{value['done']+1}／{value['total']}。資料仍保留，可停止。"))
+        self.solve_worker.progress.connect(self.solve_progress)
         self.solve_worker.finished.connect(self.solve_finished)
         self.set_solving(True);self.solve_status.setText('正在依文字、尺寸與圖片產生稿件…')
         try:self.solve_worker.start()
@@ -402,12 +418,18 @@ class DesignLearningDialog(QDialog):
         if self.solve_worker and self.solve_worker.isRunning():
             self.solve_worker.cancel.set();self.solve_status.setText('正在停止；處理完目前項目後返回，資料不會遺失。')
 
+    def solve_progress(self,value):
+        if self._current_callback(self.solve_worker,self._accept_solve_callbacks):
+            self.solve_status.setText(f"正在比較可用版面：{value['done']+1}／{value['total']}。資料仍保留，可停止。")
+
     def solve_completed(self,result):
+        if not self._current_callback(self.solve_worker,self._accept_solve_callbacks):return
         if not self.session_id or result['session_id']!=self.session_id:return
         self.refresh_draft()
         self.say('稿件已更新，請檢視後確認。' if result['selected'] else '尚未找到合適稿件；請展開詳細原因。')
 
     def solve_failed(self,error):
+        if not self._current_callback(self.solve_worker,self._accept_solve_callbacks):return
         support = getattr(self.service_window, 'offline_support', None)
         if support: support.record_problem(str(error), error=error)
         self.last_solve_error=error
@@ -416,6 +438,7 @@ class DesignLearningDialog(QDialog):
         report=explain_error(error);self.solve_status.setText(report['summary']+' '+report['next_step']);self.result_details.setPlainText(report['details'])
 
     def solve_finished(self):
+        if not self._current_callback(self.solve_worker,self._accept_solve_callbacks):return
         self.set_solving(False);self.refresh_draft()
         if getattr(self,'last_solve_error',None):
             from .production_report import explain_error
@@ -537,4 +560,6 @@ class DesignLearningDialog(QDialog):
             self.close_after_worker=True;self.pause();event.ignore();return
         if self.solve_worker and self.solve_worker.isRunning():
             self.close_after_worker=True;self.cancel_solve();event.ignore();return
+        self._accept_solve_callbacks=False;self._accept_training_callbacks=False
+        if not self.library.closed:self.set_solving(False)
         self.font_manager.close();event.accept()

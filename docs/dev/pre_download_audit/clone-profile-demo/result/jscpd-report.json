@@ -1,0 +1,113 @@
+{
+  "duplicates": [
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 17,
+          "line": 14,
+          "position": 495
+        },
+        "name": "existing.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "def summarize_entries(entries, rates, discount):\n    results = []\n    total = 0.0\n    for position, quantity in enumerate(entries):\n        price = rates[position]\n        gross = quantity * price\n        reduction = gross * discount\n        charged = gross - reduction\n        results.append((position, quantity, charged))\n        total += charged\n    count = len(results)\n    average = total / max(1, count)\n    report = {'items': results, 'total': total, 'average': average}\n    return report",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 18,
+          "line": 14,
+          "position": 494
+        },
+        "name": "renamed.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 154
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 17,
+          "line": 14,
+          "position": 495
+        },
+        "name": "existing.py",
+        "nodes": 170,
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "def summarize_entries(entries, rates, discount):\n    results = []\n    total = 0.0\n    for position, quantity in enumerate(entries):\n        price = rates[position]\n        gross = quantity * price\n        reduction = gross * discount\n        charged = gross - reduction\n        results.append((position, quantity, charged))\n        total += charged\n    count = len(results)\n    average = total / max(1, count)\n    report = {'items': results, 'total': total, 'average': average}\n    return report",
+      "isNew": false,
+      "kind": "similar",
+      "lines": 14,
+      "method": "ast",
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 18,
+          "line": 15,
+          "position": 522
+        },
+        "name": "near.py",
+        "nodes": 185,
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "similarity": 0.833,
+      "tokens": 154
+    }
+  ],
+  "statistics": {
+    "detectionDate": "2026-10-20T18:07:55.086Z",
+    "formats": {
+      "python": {
+        "clones": 2,
+        "duplicatedLines": 14,
+        "duplicatedTokens": 308,
+        "lines": 43,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 32.55813953488372,
+        "percentageTokens": 64.9789029535865,
+        "sources": 3,
+        "tokens": 474
+      }
+    },
+    "total": {
+      "clones": 2,
+      "duplicatedLines": 14,
+      "duplicatedTokens": 308,
+      "lines": 43,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 32.55813953488372,
+      "percentageTokens": 64.9789029535865,
+      "sources": 3,
+      "tokens": 474
+    }
+  }
+}

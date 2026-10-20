@@ -1,0 +1,21 @@
+{
+  "id": "CP-20261020-AUDIT-CALLBACK-LIFETIME",
+  "kind": "LOCAL_INCREMENTAL_AUDIT",
+  "phase": "PREPARED",
+  "base_commit": "6258f781f2b59b2db31ec7a93a241cd4164a161c",
+  "summary": "Full004 asserts1877PASS but runtime failure retained. RealQt fail-first queued close/stale worker reproduced2 failures. Bound signal slots now validate dialog/DB lifetime and exact worker ownership. Six targeted tests PASS. Independent source-watch timeout under investigation; audit NOT COMPLETE.",
+  "files": [
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "tests/test_solve_callback_lifetime.py",
+      "sha256": "303faf619d4822a9180faaf371fc7af14eff1fc6071d7e92ba37e1c3f913c4c9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/PROGRESS.json",
+      "sha256": "108d4c0d07551c6151ee4b3de0c172121a276f5980fcfba1720724e324f82ad9"
+    }
+  ]
+}
