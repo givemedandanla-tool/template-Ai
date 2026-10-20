@@ -174,10 +174,11 @@ class DiagnosticReportTests(unittest.TestCase):
         with self.assertRaises(ValueError):s.check(self.w)
         self.assertEqual(read_bundle(build_bundle(s.data))['scope']['width_mm'],90)
     def test_session_partial_cancel_failed_and_unstarted_counts_are_real(self):
-        d=LayoutSessionDialog(self.w);self.addCleanup(d.deleteLater);d.worker=type('W',(),{'templates':[self.t,self.t,self.t]})();d.size=(90,54);d.report_state='CANCELLED';d.generation=self.w.generation
+        d=LayoutSessionDialog(self.w);self.addCleanup(d.deleteLater);d.worker=type('W',(),{'templates':[self.t,self.t,self.t]})();d.output_size_mm=(90,54);d.report_state='CANCELLED';d.generation=self.w.generation
         p,c,l=self.w.input_data();candidate=generate(self.t,p,c,l,self.w.generation)
         d.rows=[{'template_id':self.t.id,'candidate':candidate,'state':'CALCULATED_PENDING_ADOPTION'},{'template_id':self.t.id,'candidate':None,'state':'FAILED','error':'FORBIDDEN_SYNTHETIC_EXCEPTION'}]
-        s=make_snapshot(self.w,'session',session=d);p=s.data['progress'];self.assertEqual((p['total'],p['checked'],p['calculated'],p['failed'],p['unstarted']),(3,2,1,1,1));self.assertEqual(p['state'],'CANCELLED');self.assertNotIn(b'FORBIDDEN_SYNTHETIC_EXCEPTION',build_bundle(s.data))
+        self.w.out_w.setValue(100)
+        s=make_snapshot(self.w,'session',session=d);self.assertEqual((s.data['scope']['width_mm'],s.data['scope']['height_mm']),(90,54));self.assertTrue(callable(d.size));p=s.data['progress'];self.assertEqual((p['total'],p['checked'],p['calculated'],p['failed'],p['unstarted']),(3,2,1,1,1));self.assertEqual(p['state'],'CANCELLED');self.assertNotIn(b'FORBIDDEN_SYNTHETIC_EXCEPTION',build_bundle(s.data))
         d.rows=[];d.report_state='FAILED_SYSTEM';s=make_snapshot(self.w,'session',session=d);self.assertEqual(s.data['progress']['unstarted'],3);self.assertEqual(s.data['status'],'FAILED_SYSTEM')
     def test_oversized_problem_set_is_explicit_partial_not_silent_success(self):
         c=self.candidate();c.issues=['synthetic']*2002;c.diagnostics=[{'code':'UNCLASSIFIED','severity':'REVIEW'} for _ in range(2002)]
