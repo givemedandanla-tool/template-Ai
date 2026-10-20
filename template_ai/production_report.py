@@ -1,5 +1,9 @@
 """Plain explanations with retained expert evidence; never an approval gate."""
 import json
+import math
+from pathlib import Path
+import tempfile
+from datetime import datetime,timezone
 
 
 def explain_error(error):
@@ -59,3 +63,38 @@ def result_report(library,session,result,candidate):
         capacity_summary=capacity_text,input_advice=advice,capacity=capacity,
         details=json.dumps(dict(attempts=result.get('attempts',[]) if result else [],selected=result.get('selected',{}).get('family_id') if result and result.get('selected') else None,
                                ranking_scope=result.get('ranking_scope') if result else None,capacity=capacity,input_advice=advice),ensure_ascii=False,indent=2))
+
+
+def save_report(sessions,identity,revision,target):
+    """Local JSON handoff without input text, source paths or font bytes."""
+    from .training_store import digest
+    from .safe_publish import publish_complete
+    row=sessions.current(identity,revision);candidate=None;validation_summary='這份結果對應目前資料。'
+    try:_,_,candidate=sessions.checked_result(identity)
+    except ValueError as error:validation_summary=explain_error(error)['summary']
+    plain=dict(summary='已產生稿件，請檢視內容及目前驗證狀態。' if candidate else '這份資料仍需重新排版或核對，現在不能作為完成稿。',
+               impact='資料仍保留；本報告不會修改稿件，也不能代替正式輸出驗證。',next_step='先在軟體檢視稿件及問題；需要協助時，把這份報告交給維護人員。')
+    fields=[]
+    if candidate:
+        for index,item in enumerate(candidate.items):
+            slot=item.slot
+            numbers=dict(x_mm=slot.rect.x,y_mm=slot.rect.y,width_mm=slot.rect.w,height_mm=slot.rect.h,size_pt=slot.size_pt,horizontal_scale=item.scale,tracking_mm=item.tracking_mm)
+            fields.append(dict(field='欄位'+str(index+1),kind=slot.kind,owner_port=slot.owner,
+                measurements={k:v for k,v in numbers.items() if type(v) in (int,float) and math.isfinite(v)}))
+    data=dict(schema=1,kind='TEMPLATE_AI_PRODUCTION_DIAGNOSTIC',created_utc=datetime.now(timezone.utc).isoformat(),plain_summary=plain,
+        privacy='NO_INPUT_TEXT_SOURCE_PATHS_OR_FONT_BYTES',historical=True,
+        technical=dict(session_id=row['id'],revision=row['revision'],data_revision=row['data_revision'],layout_revision=row['layout_revision'],
+            physical_size_mm=[row['width_mm'],row['height_mm']],model_id=row['model_id'],model_revision=row['model_revision'],weights_digest=row['weights_digest'],validation_summary=validation_summary,
+            policy_version_digest=digest(row['policy']['version']),result_state=row['result_state'],
+            result_valid_for_current_input=candidate is not None,formal_output_allowed=bool(candidate and candidate.formal_eligible and (row.get('confirmation') or {}).get('for_production')),
+            fields=fields,actual_field_count=len(row['input_graph']['fields']),hard_global_capacity=None))
+    body=json.dumps(data,ensure_ascii=False,indent=2).encode()
+    if len(body)>1024*1024:raise ValueError('報告超過可保存預算；尚未保存，請縮小本次檢查範圍。')
+    target=Path(target);temporary=None
+    try:
+        with tempfile.NamedTemporaryFile(dir=target.parent,prefix='.layout-report-',delete=False) as output:
+            temporary=Path(output.name);output.write(body)
+        publish_complete(temporary,target,lambda:sessions.current(identity,revision))
+    finally:
+        if temporary is not None:temporary.unlink(missing_ok=True)
+    return data

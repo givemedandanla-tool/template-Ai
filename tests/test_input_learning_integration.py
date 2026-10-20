@@ -8,7 +8,7 @@ from PySide6.QtCore import Qt,QTimer,QPointF
 from PySide6.QtGui import QMouseEvent
 from PySide6.QtCore import QEvent
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication,QWidget,QDialog,QDialogButtonBox,QTableWidgetItem
+from PySide6.QtWidgets import QApplication,QWidget,QDialog,QDialogButtonBox,QTableWidgetItem,QMessageBox
 
 from template_ai.storage import Library
 from template_ai.input_graph import InputGraph
@@ -209,9 +209,68 @@ class InputLearningIntegrationTests(unittest.TestCase):
         if errors:raise errors[0]
         self.assertEqual(len(seen),2);self.assertEqual(entry.graph.data,graph.data)
 
+    def test_resize_keeps_position_intent_but_new_person_roots_start_independent_draft(self):
+        from template_ai.gui import MainWindow
+        w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w));w.adopt_input_graph(self.graph.data)
+        d=DesignLearningDialog(w);self.addCleanup(d.close);row=attach(d);d.solve()
+        facts={f['kind']:f for f in input_facts(self.graph)};d.set_relation(facts['phone']['render_id'],'BELOW',facts['email']['render_id'])
+        before=d.sessions.current(d.session_id);w.out_w.setValue(95);resized=attach(d)
+        self.assertEqual(resized['id'],before['id']);self.assertEqual(resized['width_mm'],95)
+        self.assertEqual(resized['intents'],before['intents']);self.assertIsNone(resized['confirmation']);self.assertEqual(resized['result_state'],'STALE')
+        new_graph=InputGraph.from_legacy([dict(name='Alex Example',title='Designer',phone='+1 202 555 0100',email='alex@example.test')],[])
+        w.adopt_input_graph(new_graph.data);new=attach(d)
+        self.assertNotEqual(new['id'],before['id']);self.assertEqual(new['intents'],[]);self.assertEqual(new['input_graph'],new_graph.data)
+        self.assertEqual(d.sessions.current(before['id'])['intents'],before['intents'])
+
+    def test_real_clear_and_demo_actions_remove_previous_production_and_customer_context(self):
+        from template_ai.gui import MainWindow
+        w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w));w.adopt_input_graph(self.graph.data)
+        d=DesignLearningDialog(w);self.addCleanup(d.close);row=attach(d)
+        def confirm(action):
+            seen=[]
+            def click_yes():
+                box=APP.activeModalWidget()
+                if isinstance(box,QMessageBox):seen.append(True);QTest.mouseClick(box.button(QMessageBox.Yes),Qt.LeftButton)
+            guard=QTimer();guard.setSingleShot(True);guard.timeout.connect(lambda:APP.activeModalWidget().reject() if APP.activeModalWidget() else None);guard.start(3000)
+            QTimer.singleShot(0,w,click_yes)
+            try:action()
+            finally:guard.stop()
+            self.assertTrue(seen)
+        confirm(w.clear_input_graph)
+        self.assertIsNone(w.production_session_id);self.assertIsNone(w.active_input_graph);self.assertIsNone(w.reorder_customer_snapshot)
+        self.assertEqual(self.sessions.current(row['id'])['input_graph'],self.graph.data)
+        w.adopt_input_graph(self.graph.data);attach(d);w.reorder_customer_snapshot=dict(id='authored-demo-context',code='0001',revision=1)
+        confirm(w.demo_input)
+        self.assertIsNone(w.production_session_id);self.assertIsNone(w.reorder_customer_snapshot);self.assertIsNone(w.reorder_template_id)
+        self.assertNotEqual(w.active_input_graph.data['people'],self.graph.data['people'])
+
+    def test_explicit_fixed_preview_remains_edit_export_target_after_model_activation(self):
+        from template_ai.gui import MainWindow
+        from template_ai.demo import demo_template
+        from template_ai.layout import generate
+        from authored_font_fixture import bind_authored_fonts
+        from template_ai.production_bridge import routes_to_learning
+        w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w));w.adopt_input_graph(self.graph.data)
+        w.tabs.setCurrentIndex(2)
+        d=DesignLearningDialog(w);self.addCleanup(d.close);attach(d);d.solve()
+        facts={f['kind']:f for f in input_facts(self.graph)};d.set_relation(facts['phone']['render_id'],'BELOW',facts['email']['render_id'])
+        saved_intents=d.sessions.current(d.session_id)['intents'];self.assertFalse(w.property_panel.isEnabled())
+        template=bind_authored_fonts(demo_template(),w.font_manager);w.library.publish(template)
+        candidate=generate(template,*w.input_data(),w.generation);w.candidates=[candidate]
+        w.candidate_list.addItem('已保存的原款式');w.candidate_list.setCurrentRow(0);w.choose_candidate(0)
+        saved_session=w.production_session_id;self.assertEqual(w.production_view,'FIXED');self.assertFalse(routes_to_learning(w))
+        self.assertTrue(w.property_panel.isEnabled())
+        target=self.root/('PREVIEW-explicit-fixed-'+self.row['id']+'.png')
+        with patch.object(w,'shared_design_learning') as learning,patch('template_ai.gui.QFileDialog.getSaveFileName',return_value=(str(target),'PNG')):
+            w.export_current(True)
+        learning.assert_not_called();self.assertTrue(target.is_file())
+        restored=attach(d);self.assertEqual(restored['id'],saved_session);self.assertEqual(w.production_view,'LEARNED')
+        self.assertEqual(restored['intents'],saved_intents)
+
     def test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data(self):
         from template_ai.gui import MainWindow
         w=MainWindow(self.library.root);self.addCleanup(lambda:dispose_main_window(w));controlled_resources(w)
+        w.tabs.setCurrentIndex(2);w.show();APP.processEvents()
         for col,value in enumerate(['Alex Example','Designer','+1 202 555 0100','alex@example.test']):w.people.setItem(0,col,QTableWidgetItem(value))
         w.companies.setRowCount(0)
         learning=self.dialog.learning;active=learning.store.get('DESIGN_ACTIVE','local-layout')
@@ -274,6 +333,25 @@ class InputLearningIntegrationTests(unittest.TestCase):
         from template_ai.gui import MainWindow
         w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w))
         data=make_snapshot(w,'input').data;self.assertIn('接下來怎麼做',plain_overview(data));self.assertIn('白話摘要',report_html(data).decode())
+
+
+    def test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary(self):
+        from template_ai.gui import MainWindow
+        from template_ai.production_report import save_report
+        import json
+        w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w));w.adopt_input_graph(self.graph.data);w.tabs.setCurrentIndex(2)
+        d=DesignLearningDialog(w);self.addCleanup(d.close);attach(d);d.solve()
+        with patch.object(w,'shared_design_learning') as route:
+            w.diagnostic_report('input');w.diagnostic_report('candidate');w.digital_preflight();w.compare_candidate_results();w.recheck_candidate();w.open_diagnostic('candidate');w.custom_layout()
+        self.assertEqual(route.call_count,7);self.assertTrue(all(c.kwargs['use_current_input'] for c in route.call_args_list))
+        row=d.sessions.current(d.session_id);target=self.root/('safe-layout-report-'+row['id']+'.json')
+        report=save_report(d.sessions,row['id'],row['revision'],target);self.assertEqual(json.loads(target.read_text()),report)
+        self.assertEqual(set(report['plain_summary']),{'summary','impact','next_step'});self.assertTrue(report['technical']['result_valid_for_current_input'])
+        self.assertFalse(report['technical']['formal_output_allowed']);self.assertEqual(report['technical']['physical_size_mm'],[90.,54.])
+        raw=target.read_text();self.assertNotIn('Alex Example',raw);self.assertNotIn('+1 202 555',raw);self.assertNotIn(str(self.root),raw)
+        prior=target.read_bytes()
+        with self.assertRaises(FileExistsError):save_report(d.sessions,row['id'],row['revision'],target)
+        self.assertEqual(target.read_bytes(),prior)
 
 
 if __name__=='__main__':unittest.main()

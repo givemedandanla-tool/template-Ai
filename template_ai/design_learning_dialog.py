@@ -168,8 +168,9 @@ class DesignLearningDialog(QDialog):
         for widget in (self.subject,self.relation,self.reference):row.addWidget(widget)
         self.button(row,'調整兩欄相對位置',lambda:self.set_relation(self.subject.currentData(),self.relation.currentData(),self.reference.currentData(),background=True));layout.addLayout(row)
         row=QHBoxLayout();self.candidate_choices=QComboBox();row.addWidget(self.candidate_choices,1);self.button(row,'查看這個方案',self.choose_candidate);layout.addLayout(row)
-        box=QGroupBox('查看詳細原因（進階）');box.setCheckable(True);box.setChecked(False);box_layout=QVBoxLayout(box)
+        box=QGroupBox('查看詳細原因（進階）');self.details_group=box;box.setCheckable(True);box.setChecked(False);box_layout=QVBoxLayout(box)
         self.result_details=QPlainTextEdit();self.result_details.setReadOnly(True);self.result_details.setMaximumHeight(110);self.result_details.hide();box_layout.addWidget(self.result_details);box.toggled.connect(self.result_details.setVisible);layout.addWidget(box)
+        self.button(layout,'儲存本次檢查報告',self.export_report)
         row=QHBoxLayout();self.switch_button=self.button(row,'已檢視並採用變更版面',self.review_switch)
         self.confirm_button=self.button(row,'確認目前完整預覽稿',self.confirm_preview)
         self.export_button=self.button(row,'輸出已確認預覽稿',self.export_preview);layout.addLayout(row)
@@ -497,6 +498,13 @@ class DesignLearningDialog(QDialog):
         path,_=QFileDialog.getSaveFileName(self,'保存已確認正式數位稿','design.png','PNG (*.png);;PDF (*.pdf);;JPG (*.jpg)')
         if not path:return
         artifact=self.sessions.export(self.session_id,path,preview=False);self.refresh_draft();self.say('已保存正式數位檔與原版本憑證：'+artifact['path'])
+    def export_report(self):
+        if not self.session_id:raise ValueError('請先填資料或接續稿件。')
+        from .production_report import save_report
+        row=self.sessions.current(self.session_id)
+        path,_=QFileDialog.getSaveFileName(self,'儲存這份稿件的檢查報告','layout-report.json','JSON (*.json)')
+        if not path:return
+        save_report(self.sessions,row['id'],row['revision'],path);self.say('已儲存檢查報告：包含白話摘要與專業數值，未附上輸入原文。')
     def confirm_preview(self):
         row=self.sessions.current(self.session_id);self.sessions.confirm(row['id'],row['revision'],self.actor.text());self.refresh_draft();self.say('已確認目前顯示的完整預覽稿。')
     def export_preview(self):

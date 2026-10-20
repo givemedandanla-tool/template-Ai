@@ -1,0 +1,65 @@
+test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure (test_input_learning_integration.InputLearningIntegrationTests.test_actual_pointer_drag_creates_relation_and_preserves_unaffected_structure) ... This plugin does not support propagateSizeHints()
+ok
+test_background_cancel_retains_new_data_and_cannot_install_old_confirmation (test_input_learning_integration.InputLearningIntegrationTests.test_background_cancel_retains_new_data_and_cannot_install_old_confirmation) ... This plugin does not support propagateSizeHints()
+Traceback (most recent call last):
+  File "/workspace/template-Ai/template_ai/design_learning_dialog.py", line 410, in solve_finished
+    self.set_solving(False);self.refresh_draft()
+                            ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_learning_dialog.py", line 437, in refresh_draft
+    current=self.sessions.current(self.session_id)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_session.py", line 45, in current
+    row=self.store.get('DESIGN_SESSION',session_id)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/training_store.py", line 60, in get
+    row = self.db.execute('SELECT revision,payload FROM training_records WHERE kind=? AND id=?', (kind, record_id)).fetchone()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.ProgrammingError: Cannot operate on a closed database.
+ok
+test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation (test_input_learning_integration.InputLearningIntegrationTests.test_existing_confirmed_artifact_auto_discovered_and_choice_invalidates_confirmation) ... This plugin does not support propagateSizeHints()
+ok
+test_explicit_fixed_preview_remains_edit_export_target_after_model_activation (test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation) ... This plugin does not support propagateSizeHints()
+ok
+test_font_style_enumeration_order_does_not_invalidate_same_face (test_input_learning_integration.InputLearningIntegrationTests.test_font_style_enumeration_order_does_not_invalidate_same_face) ... This plugin does not support propagateSizeHints()
+ok
+test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary (test_input_learning_integration.InputLearningIntegrationTests.test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary) ... This plugin does not support propagateSizeHints()
+ok
+test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary (test_input_learning_integration.InputLearningIntegrationTests.test_learned_reports_preflight_and_comparison_use_current_session_and_safe_summary) ... This plugin does not support propagateSizeHints()
+ok
+test_legacy_edit_progress_and_stale_preview_buttons_use_same_learning_draft (test_input_learning_integration.InputLearningIntegrationTests.test_legacy_edit_progress_and_stale_preview_buttons_use_same_learning_draft) ... This plugin does not support propagateSizeHints()
+ok
+test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data (test_input_learning_integration.InputLearningIntegrationTests.test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_new_model_activation_keeps_exact_accepted_session_for_reorder (test_input_learning_integration.InputLearningIntegrationTests.test_new_model_activation_keeps_exact_accepted_session_for_reorder) ... This plugin does not support propagateSizeHints()
+ok
+test_real_clear_and_demo_actions_remove_previous_production_and_customer_context (test_input_learning_integration.InputLearningIntegrationTests.test_real_clear_and_demo_actions_remove_previous_production_and_customer_context) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss (test_input_learning_integration.InputLearningIntegrationTests.test_real_clipboard_over_limit_keeps_all_text_and_blocks_adoption_without_loss) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner (test_input_learning_integration.InputLearningIntegrationTests.test_real_edit_modal_return_undo_redo_preserve_new_phone_and_exact_owner) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services (test_input_learning_integration.InputLearningIntegrationTests.test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates (test_input_learning_integration.InputLearningIntegrationTests.test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates) ... This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+ok
+test_resize_keeps_position_intent_but_new_person_roots_start_independent_draft (test_input_learning_integration.InputLearningIntegrationTests.test_resize_keeps_position_intent_but_new_person_roots_start_independent_draft) ... This plugin does not support propagateSizeHints()
+ok
+test_resume_other_saved_draft_updates_main_input_size_and_export_reference (test_input_learning_integration.InputLearningIntegrationTests.test_resume_other_saved_draft_updates_main_input_size_and_export_reference) ... This plugin does not support propagateSizeHints()
+ok
+test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter (test_input_learning_integration.InputLearningIntegrationTests.test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter) ... This plugin does not support propagateSizeHints()
+ok
+test_shared_learning_preview_preserves_original_pdf_png_jpg_formats (test_input_learning_integration.InputLearningIntegrationTests.test_shared_learning_preview_preserves_original_pdf_png_jpg_formats) ... This plugin does not support propagateSizeHints()
+ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 106.817s
+
+OK

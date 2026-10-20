@@ -12,7 +12,7 @@
 | 客戶搜尋／預填 | CustomerStore的exact snapshot／style | customer_catalog.apply_reorder或CustomerDialog.prefill → adopt_input_graph | 主檔版本、前導零、人物欄位ID不重編；當次更正不自動回寫主檔 |
 | 舊客戶確切款式 | reorder_template_id、已發布固定模板 | 原LayoutSession／原固定版型規則 | 明確沿用原款式版本；解除限定後才使用學習路徑，不能默默換版 |
 | 圖片／Logo選擇 | LogoStore公司實體、尺寸及資產引用 | graph.companies.logo_id → resolve_logos → synthesize／原generate | 公司名稱不是身分證明；不同公司／尺寸不可互借；核准與權利檢查保留 |
-| 尺寸設定 | MainWindow.out_w／out_h | attach固定成稿件width_mm／height_mm | 同尺寸續接，改尺寸建立另份稿件；稿件頁顯示固定尺寸，避免改顯示值卻仍輸出舊尺寸 |
+| 尺寸設定 | MainWindow.out_w／out_h | attach固定成稿件width_mm／height_mm | 同尺寸續接，改尺寸建立同稿件的新revision並保留位置要求；稿件頁顯示固定尺寸，避免改顯示值卻仍輸出舊尺寸 |
 | 自動排版 | active模型或固定舊款式、版本化policy | MainWindow.generate → 已啟用學習則同一DesignSessions；無模型保留原固定模板路徑 | 啟用記錄損壞／撤回時報原因，不偷偷降級；未知容量不當確定無解 |
 | 預覽／拖動調整 | DESIGN_SESSION／DESIGN_RESULT | 共用稿件頁RelativeCanvas；publish_preview回主視窗 | 真實拖動形成左右上下意圖；保護owner與未受影響拓撲；字級字寬由核心規則控制 |
 | 局部更正與返回 | replace_input僅更新data_revision | 真實InputGraphDialog → 保留位置意圖 → 結果stale → 重算 | 不能拿舊確認輸出新資料；超過2048保存預算時保留輸入框原文、阻止採用並說明 |
@@ -31,3 +31,5 @@
 補充：當次候選局部修改、排版進度／恢復、過期預覽入口也回到同一學習稿件；來源影響清單同時含固定候選與目前學習稿件。既有多尺寸批次是固定模板工作區，保留其原先版本及正式驗證；學習稿的各尺寸由主視窗尺寸→同一稿件流程獨立建立／核對，不把固定模板批次稱為家族批次生成。
 
 圖片庫子視窗補查：LogoLibraryDialog保留稿件作尺寸擁有者，另以明確service_window使用原MainWindow的工作派送／來源／圖片刷新服務。公司卡片與選圖對話框兩條真實開啟路徑均已執行背景工作驗證；不讓120×80稿件誤用主視窗90×54尺寸。
+
+最終身分／畫面盤點：清除與示範會解除前一單的製作／主檔脈絡；全新人員ID開獨立稿件，不按相同字串合併；同一單尺寸變更保留位置意圖並撤銷舊確認。畫面模式與持久稿件cursor分開：明確查看固定候選會使用固定候選輸出，回學習稿仍保留先前意圖。學習畫面的舊候選側欄／物件工具停用，檢查／比較／報告／重驗都接當前稿件。新本次檢查JSON含白話摘要及匿名欄位數值／版次，不含輸入原文、路徑或字型檔案。

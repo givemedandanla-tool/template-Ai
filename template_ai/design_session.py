@@ -101,6 +101,12 @@ class DesignSessions:
             value['input_graph']=deepcopy(graph.data);value['data_revision']+=1
         return self._edit(session_id,expected_revision,request_id,dict(action='REPLACE_INPUT',graph=graph.data),change)
 
+    def resize(self,session_id,expected_revision,request_id,width,height):
+        if any(type(v) not in (int,float) or not 0<v<=2000 for v in (width,height)):raise ValueError('Invalid physical dimensions')
+        def change(value):
+            value.update(width_mm=width,height_mm=height,data_revision=value['data_revision']+1)
+        return self._edit(session_id,expected_revision,request_id,dict(action='RESIZE',width=width,height=height),change)
+
     def set_relation(self,session_id,expected_revision,request_id,subject,relation,object_id):
         intent=dict(subject=subject,relation=relation,object=object_id)
         def change(value):

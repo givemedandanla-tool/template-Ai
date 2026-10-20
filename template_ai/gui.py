@@ -315,10 +315,15 @@ class MainWindow(QMainWindow):
         except Exception as error:self.statusBar().showMessage('匯入斷點尚未核實；已停止恢復，請從診斷處理：'+str(error))
 
     def sync_property_mode(self,*args):
+        from .production_bridge import is_learning_view
+        learning_output=self.tabs.currentIndex()==2 and is_learning_view(self)
         browsing=self.tabs.currentIndex()==1 and self.template_stack.currentIndex()==0
         self.property_fields.setVisible(self.tabs.currentIndex()!=2);self.selected_info.setVisible(self.tabs.currentIndex()!=2);self.output_properties.setVisible(self.tabs.currentIndex()==2)
-        self.property_panel.setEnabled(True)
-        if hasattr(self,'right_context'):self.right_context.schedule()
+        self.property_panel.setEnabled(not learning_output)
+        if hasattr(self,'candidate_scroll'):self.candidate_scroll.setVisible(not learning_output)
+        if hasattr(self,'fixed_custom_button'):self.fixed_custom_button.setVisible(not learning_output)
+        if learning_output:self.property_context_label.setText('目前是學習稿件；請使用「預覽／拖動調整」及本次檢查報告。')
+        elif hasattr(self,'right_context'):self.right_context.schedule()
         self.property_panel.setToolTip("模板瀏覽為唯讀；先明確開啟模板編輯區" if browsing else "")
 
     def closeEvent(self,event):
@@ -404,6 +409,8 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("操作說明", self.help)
 
     def diagnostic_report(self, kind, work_id=None):
+        from .production_bridge import is_learning_view
+        if kind in ('input','candidate') and is_learning_view(self):return self.shared_design_learning(use_current_input=True,show_report=True)
         from .diagnostic_dialog import DiagnosticReportDialog
         dialog=DiagnosticReportDialog(self,kind,work_id)
         try:dialog.exec()
@@ -438,6 +445,8 @@ class MainWindow(QMainWindow):
         finally:dialog.deleteLater();self.navigation.finish()
 
     def open_diagnostic(self, kind):
+        from .production_bridge import is_learning_view
+        if kind in ('input','candidate') and is_learning_view(self):return self.shared_design_learning(use_current_input=True,show_report=True)
         from .diagnostic_routes import open_diagnostic
         try:return open_diagnostic(self,kind)
         except Exception as error:self.error(str(error))
@@ -697,7 +706,7 @@ class MainWindow(QMainWindow):
         self.button("更新同尺寸 Logo 選項", self.refresh_logos, row)
         table_layout.addLayout(row)
         split = QSplitter()
-        self.button('無合格現成模板：授權特製草稿',self.custom_layout,layout)
+        self.fixed_custom_button=self.button('無合格現成模板：授權特製草稿',self.custom_layout,layout)
         self.candidate_list = QListWidget()
         self.candidate_list.currentRowChanged.connect(self.choose_candidate)
         self.candidate_list.hide()
@@ -747,9 +756,9 @@ class MainWindow(QMainWindow):
         return self.output_page_scroll
 
     def candidate_editor(self):
-        from .production_bridge import has_current,uses_learning
+        from .production_bridge import routes_to_learning
         try:
-            if not getattr(self,'reorder_template_id',None) and (has_current(self) or uses_learning(self)):
+            if routes_to_learning(self):
                 return self.shared_design_learning(use_current_input=True)
         except (ValueError,OSError) as error:self.error(str(error));return
         from .candidate_edit import CandidateEditDialog
@@ -768,9 +777,9 @@ class MainWindow(QMainWindow):
         self.invalidate()
 
     def layout_session(self):
-        from .production_bridge import has_current,uses_learning
+        from .production_bridge import routes_to_learning
         try:
-            if not getattr(self,'reorder_template_id',None) and (has_current(self) or uses_learning(self)):
+            if routes_to_learning(self):
                 return self.shared_design_learning(use_current_input=True)
         except (ValueError,OSError) as error:self.error(str(error));return
         from .layout_session import LayoutSessionDialog
@@ -1425,7 +1434,7 @@ class MainWindow(QMainWindow):
             open_repair_center(self,dict(origin='SOURCE_FACTS',origin_id=self.work['id'],work_id=self.work['id'],description='從原畫布核對此作品的來源、人工真值與局部問題'))
         except (ValueError,KeyError) as error:self.statusBar().showMessage(str(error))
 
-    def shared_design_learning(self,*,family_tools=False,use_current_input=False,solve_current=False):
+    def shared_design_learning(self,*,family_tools=False,use_current_input=False,solve_current=False,show_report=False):
         if self.busy:
             self.error('請待目前背景工作完成後開啟共用設計工作');return
         from .design_learning_dialog import DesignLearningDialog
@@ -1435,6 +1444,7 @@ class MainWindow(QMainWindow):
                 from .production_bridge import attach
                 attach(dialog)
                 if solve_current and not dialog.matching_accepted_id:QTimer.singleShot(0,dialog,lambda:dialog.attempt(dialog.solve_async))
+                if show_report:dialog.details_group.setChecked(True)
             except (ValueError,TypeError,OSError) as error:
                 dialog.close();dialog.deleteLater();self.error(str(error));return
         if family_tools:dialog.tabs.setCurrentWidget(dialog.family_workbench)
@@ -1443,8 +1453,8 @@ class MainWindow(QMainWindow):
 
     def open_production(self):
         try:
-            from .production_bridge import uses_learning,has_current
-            if has_current(self) or uses_learning(self):return self.shared_design_learning(use_current_input=True)
+            from .production_bridge import routes_to_learning
+            if routes_to_learning(self):return self.shared_design_learning(use_current_input=True)
             self.statusBar().showMessage('目前使用已保存的固定版型；可在候選局部修改調整位置。啟用學習規則後，此入口可拖動調整學習稿。')
             return self.candidate_editor()
         except (ValueError,TypeError,OSError) as error:self.error(str(error))
@@ -1986,6 +1996,7 @@ class MainWindow(QMainWindow):
     def clear_input_graph(self):
         if QMessageBox.question(self,"清除當次輸入","清除目前人物／公司／聯絡資料與重訂來源，保留客戶主檔及模板。確認？")!=QMessageBox.Yes:return
         self.active_input_graph=None;self.reorder_customer_snapshot=None
+        self.production_session_id=None;self.production_generation=None;self.production_view=None
         self.reorder_template_id=None
         self.people.clearContents();self.people.setRowCount(1);self.companies.clearContents();self.companies.setRowCount(1)
         for table in (self.people,self.companies):table.setEditTriggers(QTableWidget.DoubleClicked|QTableWidget.EditKeyPressed|QTableWidget.AnyKeyPressed)
@@ -2027,6 +2038,9 @@ class MainWindow(QMainWindow):
             self.qualified_candidates.setEnabled(False);self.review_candidates.setEnabled(False);self.blocked_candidates.setEnabled(False)
         if hasattr(self,'dependency_notice'):self.dependency_notice.setText('資料已變更；人工框位保留，停止連續輸入後顯示受影響原因。尚未重驗，不得正式輸出。')
         self.inputs_invalidated.emit(self.generation)
+        from .production_bridge import is_learning_view
+        if is_learning_view(self):self.issues.setText('資料或尺寸已修改，請更新這份稿件。先前畫面不能作為新資料的確認結果。')
+        if hasattr(self,'property_panel'):self.sync_property_mode()
 
     def refresh_input_problems(self):
         try:self.library.db.execute("SELECT 1")
@@ -2063,6 +2077,8 @@ class MainWindow(QMainWindow):
         issue=item.data(Qt.UserRole);table=getattr(self,issue['table']);table.setCurrentCell(issue['row'],issue['col']);table.setFocus()
 
     def custom_layout(self):
+        from .production_bridge import is_learning_view
+        if is_learning_view(self):return self.shared_design_learning(use_current_input=True,show_report=True)
         if self.busy:return
         from .custom_layout_dialog import CustomLayoutDialog
         dialog=CustomLayoutDialog(self);dialog.exec();dialog.deleteLater()
@@ -2108,6 +2124,8 @@ class MainWindow(QMainWindow):
         self.refresh_candidate_views(row)
         if not 0 <= row < len(self.candidates):
             return
+        self.production_view='FIXED'
+        self.sync_property_mode()
         c = self.candidates[row]
         if hasattr(self,'navigation'):self.navigation.update()
         try:
@@ -2146,6 +2164,8 @@ class MainWindow(QMainWindow):
         except ValueError as error:self.error(str(error))
 
     def compare_candidate_results(self):
+        from .production_bridge import is_learning_view
+        if is_learning_view(self):return self.shared_design_learning(use_current_input=True,show_report=True)
         from .candidate_results import ResultComparisonDialog
         dialog=ResultComparisonDialog(self)
         try:dialog.exec()
@@ -2173,6 +2193,8 @@ class MainWindow(QMainWindow):
         except (ValueError,OSError,TypeError,KeyError,IndexError) as error:self.statusBar().showMessage('未開啟修正：'+str(error))
 
     def select_recommended_candidate(self):
+        from .production_bridge import is_learning_view
+        if is_learning_view(self):return self.shared_design_learning(use_current_input=True)
         from .candidate_results import recommendation
         result=recommendation(self)
         if result['index'] is not None:self.candidate_list.setCurrentRow(result['index'])
@@ -2188,6 +2210,8 @@ class MainWindow(QMainWindow):
         except (ValueError,OSError,TypeError,KeyError) as error:self.dependency_notice.setText('依賴待核對；保守重驗整張作品：'+str(error))
 
     def recheck_affected_candidates(self):
+        from .production_bridge import is_learning_view
+        if is_learning_view(self):return self.shared_design_learning(use_current_input=True,solve_current=True)
         from .candidate_edit import plan_recheck
         from .candidate_edit_dispatch import dispatcher
         from .candidate_changes import candidate_impact
@@ -2201,6 +2225,8 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage('已排程'+str(count)+'個候選完整重驗；共用單worker，人工框位保留')
 
     def recheck_candidate(self):
+        from .production_bridge import is_learning_view
+        if is_learning_view(self):return self.shared_design_learning(use_current_input=True,solve_current=True)
         row=self.candidate_list.currentRow()
         if not 0<=row<len(self.candidates):return
         try:
@@ -2210,18 +2236,18 @@ class MainWindow(QMainWindow):
         except (ValueError,OSError) as error:self.error(str(error))
 
     def digital_preflight(self):
+        from .production_bridge import is_learning_view
+        if is_learning_view(self):return self.shared_design_learning(use_current_input=True,show_report=True)
         from .digital_preflight_panel import open_preflight
         return open_preflight(self)
 
     def export_current(self, preview):
         from .production_bridge import has_current,export_current
-        if has_current(self):
+        if not getattr(self,'reorder_template_id',None) and has_current(self):
             try:return export_current(self,preview)
             except (ValueError,OSError) as error:self.error(str(error));return
-        from .production_bridge import uses_learning
-        try:
-            if uses_learning(self):return self.shared_design_learning(use_current_input=True)
-        except (ValueError,OSError) as error:self.error(str(error));return
+        if not getattr(self,'reorder_template_id',None) and getattr(self,'production_view',None)=='LEARNED' and getattr(self,'production_session_id',None):
+            return self.shared_design_learning(use_current_input=True)
         row = self.candidate_list.currentRow()
         if not 0 <= row < len(self.candidates):
             return
@@ -2250,8 +2276,10 @@ class MainWindow(QMainWindow):
     def demo_input(self):
         if self.active_input_graph is not None:
             if QMessageBox.question(self,"替換當次輸入","示範資料將替換目前卡片，客戶主檔保留。繼續？")!=QMessageBox.Yes:return
+            self.production_session_id=None;self.production_generation=None;self.production_view=None;self.reorder_customer_snapshot=None;self.reorder_template_id=None
             from .input_graph import InputGraph
             self.adopt_input_graph(InputGraph.from_legacy([{"name":["林小明"],"title":["設計顧問"],"phone":["0900-123-456"],"email":["hello@example.test"]}],[]).data);return
+        self.production_session_id=None;self.production_generation=None;self.production_view=None;self.reorder_customer_snapshot=None;self.reorder_template_id=None
         self.people.setRowCount(1)
         for i, value in enumerate(["林小明", "設計顧問", "0900-123-456", "hello@example.test", "", "", "", ""]):
             self.people.setItem(0, i, QTableWidgetItem(value))

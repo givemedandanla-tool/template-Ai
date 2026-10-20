@@ -43,7 +43,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261020-INPUT-FINAL-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-BASELINE.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-FINAL.json",
@@ -1387,15 +1389,21 @@
   "editor_tools_final_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
   "input_integration_contract": "docs/dev/INPUT_LEARNING_INTEGRATION_CONTRACT.json",
   "input_integration_progress": {
-    "status": "LOGO_HOST_FIX_PENDING_FULL_RERUN",
+    "status": "FINAL_SOURCE_FROZEN_PENDING_FULL",
     "contract": "INPUT-LEARNING-INTEGRATION-20261020",
     "baseline": "docs/dev/progress/PROGRESS-20261020-INPUT-INTEGRATION-BASELINE.json",
     "target": "CORE-089",
     "tests": 14,
     "first_targeted_result": "Existing22PASS;new8run001failed fixture assumptions;real drag/edit/cancel PASS;fixing fixtures before rerun",
-    "planned_unique_tests": 1794,
+    "planned_unique_tests": 1798,
     "interface_map": "docs/dev/INPUT_LEARNING_INTERFACE_MAP.md",
     "next": "Verify actual nested Logo library/worker,then rerun complete corrected source before GUI design tooling",
-    "interrupted_full_run": "docs/qa/plans/INPUT-FULL-001-INTERRUPTED.json"
+    "interrupted_full_run": "docs/qa/plans/INPUT-FULL-001-INTERRUPTED.json",
+    "new_tests": 19,
+    "interrupted_full_runs": [
+      "docs/qa/plans/INPUT-FULL-001-INTERRUPTED.json",
+      "docs/qa/plans/INPUT-FULL-002-INTERRUPTED.json"
+    ],
+    "targeted_regression": "docs/qa/plans/INPUT-EXPANDED-91-002.log"
   }
 }

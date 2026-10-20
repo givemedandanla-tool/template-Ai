@@ -24,6 +24,14 @@ def uses_learning(window):
     return True
 
 
+def routes_to_learning(window):
+    if getattr(window,'reorder_template_id',None):return False
+    if getattr(window,'production_view',None)=='FIXED':return False
+    if getattr(window,'production_session_id',None):return True
+    if any(c.generation==window.generation for c in window.candidates):return False
+    return uses_learning(window)
+
+
 def attach(dialog):
     window=dialog.window
     graph=current_graph(window)
@@ -32,10 +40,14 @@ def attach(dialog):
     size=(window.out_w.value(),window.out_h.value())
     identity=getattr(window,'production_session_id',None)
     row=dialog.sessions.current(identity) if identity else None
-    if row and (row['width_mm'],row['height_mm'])!=size:row=None
     origin=deepcopy(getattr(window,'reorder_customer_snapshot',None))
     origin_ref=dict(id=origin['id'],revision=origin['revision'],code=origin['code']) if origin else None
     if row and row.get('customer_reference')!=origin_ref:row=None
+    if row and not ({p['id'] for p in row['input_graph']['people']} & {p['id'] for p in graph.data['people']}):row=None
+    if row and (row['width_mm'],row['height_mm'])!=size:
+        from .model import new_id
+        dialog.sessions.resize(row['id'],row['revision'],new_id(),*size)
+        row=dialog.sessions.current(row['id'])
     if row is None:
         # The exact accepted artifact takes precedence over a newer active
         # model. Reuse its session only while it still describes that artifact.
@@ -60,6 +72,7 @@ def attach(dialog):
                 row=dialog.sessions.store._write('DESIGN_SESSION',row['id'],value,row['revision'],'production_customer_reference_pinned')
     dialog.session_id=row['id'];dialog.bound_to_main=True
     window.production_session_id=row['id'];window.production_generation=window.generation
+    window.production_view='LEARNED'
     dialog.out_w.setValue(size[0]);dialog.out_h.setValue(size[1]);dialog.save_workspace()
     dialog.tabs.setCurrentIndex(2);dialog.refresh_draft()
     return row
@@ -70,11 +83,13 @@ def sync_input(dialog,graph):
     window=dialog.window
     window.adopt_input_graph(graph.data,history=graph)
     window.production_generation=window.generation
+    window.production_view='LEARNED'
 
 
 def publish_preview(dialog):
     if not getattr(dialog,'bound_to_main',False) or not dialog.session_id:return
     window=dialog.window;row=dialog.sessions.current(dialog.session_id)
+    if getattr(window,'production_view',None)!='LEARNED' or getattr(window,'production_session_id',None)!=dialog.session_id:return
     if window.generation!=getattr(window,'production_generation',None):return
     if digest(current_graph(window).data)!=digest(row['input_graph']):return
     if (window.out_w.value(),window.out_h.value())!=(row['width_mm'],row['height_mm']):return
@@ -85,18 +100,26 @@ def publish_preview(dialog):
     from .render import card_view_image
     window.output_canvas.set_content(row['width_mm'],row['height_mm'],card_view_image(candidate,150))
     window.output_canvas.set_mode('pan');window.output_canvas.fit()
+    window.sync_property_mode()
+    window.work_context.setText(f"本次稿件已儲存 · {row['width_mm']:g}×{row['height_mm']:g} mm · "+('已確認' if row.get('confirmation') else '待確認'))
+    window.output_properties.setPlainText('目前顯示學習稿件；填資料、位置調整、確認及檢查報告皆由同一份稿件接續。')
     window.preview_button.setEnabled(True)
     window.export_button.setEnabled(bool(row.get('confirmation',{} ) and row['confirmation'].get('for_production') and candidate.formal_eligible))
     window.issues.setText('已使用學到的版面規則產生稿件。按「預覽／拖動調整」可移動聯絡資料、改內容及確認。\n'+dialog.status.text())
 
 
+def is_learning_view(window):
+    return bool(not getattr(window,'reorder_template_id',None) and getattr(window,'production_view',None)=='LEARNED' and getattr(window,'production_session_id',None))
+
+
 def has_current(window):
-    return bool(getattr(window,'production_session_id',None) and getattr(window,'production_generation',None)==window.generation)
+    return bool(is_learning_view(window) and getattr(window,'production_generation',None)==window.generation)
 
 
 def export_current(window,preview):
     from .design_session import DesignSessions
     from PySide6.QtWidgets import QFileDialog
+    if not has_current(window):raise ValueError('目前畫面不是這份有效學習稿，請先開啟並核對。')
     sessions=DesignSessions(window.library);row,_,candidate=sessions.checked_result(window.production_session_id)
     if current_graph(window).data!=row['input_graph'] or (window.out_w.value(),window.out_h.value())!=(row['width_mm'],row['height_mm']):
         raise ValueError('資料或尺寸已改變，請重新排版再確認。')
