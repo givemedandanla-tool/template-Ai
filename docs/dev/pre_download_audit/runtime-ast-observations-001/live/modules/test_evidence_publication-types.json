@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_evidence_publication.py": {
+      "source_sha256": "c28c74c723b17c618e292ddeed07a759da3a44e826390c5b0d57bc803b9ecb89",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-TES-07273": {
+      "visits": 5,
+      "values": {
+        "value": {
+          "test_evidence_publication.PublicationTests": 1,
+          "builtins.dict": 1
+        },
+        "operator_left": {
+          "builtins.dict": 1
+        },
+        "operator_right": {
+          "builtins.dict": 1
+        },
+        "operation": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_evidence_publication.PublicationTests.test_unlisted_run_no_blanket_waiver_and_untrusted_policy_refused"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07274": {
+      "visits": 5,
+      "values": {
+        "value": {
+          "test_evidence_publication.PublicationTests": 1,
+          "builtins.dict": 1
+        },
+        "operator_left": {
+          "builtins.dict": 1
+        },
+        "operator_right": {
+          "builtins.dict": 1
+        },
+        "operation": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_evidence_publication.PublicationTests.test_diagnostic_policy_does_not_waive_json_or_unlisted_run"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

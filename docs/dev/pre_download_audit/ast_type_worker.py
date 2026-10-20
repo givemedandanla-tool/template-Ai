@@ -4,9 +4,9 @@ Original source, assertions, Qt objects and getter evaluation counts are preserv
 Runtime bytecode is instrumented; this is bounded type evidence, NOT stock product
 qualification. Each transformed module must unwrap to the identical business AST.
 """
-import argparse,ast,collections,hashlib,importlib.abc,importlib.machinery,inspect,json,runpy,sys
+import argparse,ast,collections,hashlib,importlib.abc,importlib.machinery,inspect,json,runpy,sys,types,os
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[3]
+ROOT=Path(os.environ.get('TEMPLATE_AI_AUDIT_ROOT',str(Path(__file__).resolve().parents[3]))).resolve()
 sys.path[:0]=[str(ROOT),str(ROOT/'tools'),str(ROOT/'tests')]
 ALIAS='__template_ai_observe_expression_type_20261020__'
 
@@ -14,7 +14,7 @@ def typename(value):return type(value).__module__+'.'+type(value).__qualname__
 
 class Observation:
  def __init__(self,points):
-  self.by_file=collections.defaultdict(list);self.rows={};self.errors=collections.Counter();self.modules={}
+  self.by_file=collections.defaultdict(list);self.rows={};self.errors=collections.Counter();self.modules={};self.execution_context=None
   for p in points['points']:
    self.by_file[str((ROOT/p['path']).resolve())].append(p)
    self.rows[p['id']]={'visits':0,'values':{},'member_checks':{},'test_contexts':[],'returns':{},'normal_calls':{},'raised_calls':{}}
@@ -25,9 +25,10 @@ class Observation:
     obj=f.f_locals.get('self')
     if obj is not None:return type(obj).__module__+'.'+type(obj).__qualname__+'.'+object.__getattribute__(obj,'_testMethodName')
    f=f.f_back
-  return None
+  return self.execution_context
  def capture(self,keys,value):
   try:
+   if all(self.rows[ident]['visits']>=128 for ident,_,_ in keys):return value
    context=self.context();kind=typename(value)
    for ident,label,member in keys:
     row=self.rows[ident]
@@ -101,16 +102,29 @@ class Finder(importlib.abc.MetaPathFinder):
   return None
 
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--points',type=Path,required=True);parser.add_argument('--type-output',type=Path,required=True);args,rest=parser.parse_known_args()
+ parser=argparse.ArgumentParser();parser.add_argument('--points',type=Path,required=True);parser.add_argument('--type-output',type=Path,required=True);parser.add_argument('--script',type=Path);args,rest=parser.parse_known_args()
  if rest and rest[0]=='--':rest=rest[1:]
+ worker_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
  points=json.loads(args.points.read_text())
  for path,digest in points['source_files'].items():
   if hashlib.sha256((ROOT/path).read_bytes()).hexdigest()!=digest:raise RuntimeError('Source hash changed '+path)
  observation=Observation(points);finder=Finder(observation);sys.meta_path.insert(0,finder)
- sys.argv=[str(ROOT/'tools/evidence_test_worker.py'),*rest]
- try:runpy.run_path(str(ROOT/'tools/evidence_test_worker.py'),run_name='__main__')
+ previous_main=sys.modules['__main__']
+ try:
+  if args.script:
+   script=args.script.resolve();script.relative_to(ROOT)
+   if script.suffix!='.py':raise ValueError('Only a local authored Python script is supported')
+   observation.execution_context='capture:'+script.relative_to(ROOT).as_posix()
+   sys.path.insert(0,str(script.parent))
+   module=types.ModuleType('__main__');module.__dict__.update(__file__=str(script),__package__=None,__spec__=None,__cached__=None,__loader__=importlib.machinery.SourceFileLoader('__main__',str(script)))
+   module.__dict__[ALIAS]=observation.capture;sys.modules['__main__']=module;sys.argv=[str(script),*rest]
+   exec(observation.instrument(script.read_text(),str(script)),module.__dict__)
+  else:
+   sys.argv=[str(ROOT/'tools/evidence_test_worker.py'),*rest]
+   runpy.run_path(str(ROOT/'tools/evidence_test_worker.py'),run_name='__main__')
  finally:
+  sys.modules['__main__']=previous_main
   sys.meta_path.remove(finder)
-  args.type_output.write_text(json.dumps(dict(schema=1,mode='AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS',runtime_instrumented=True,source_files_changed=False,assertions_or_window_replaced=False,observer_errors=dict(observation.errors),modules=observation.modules,rows={k:v for k,v in observation.rows.items() if v['visits']}),indent=2)+'\n')
+  args.type_output.write_text(json.dumps(dict(schema=1,worker_sha256=worker_sha256,worker_source_unchanged=worker_sha256==hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),mode='AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS',runtime_instrumented=True,source_files_changed=False,assertions_or_window_replaced=False,observer_errors=dict(observation.errors),modules=observation.modules,rows={k:v for k,v in observation.rows.items() if v['visits']}),indent=2)+'\n')
 
 if __name__=='__main__':main()

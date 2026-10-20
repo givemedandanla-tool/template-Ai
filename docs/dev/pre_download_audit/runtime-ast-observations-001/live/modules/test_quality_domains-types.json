@@ -1,0 +1,1037 @@
+{
+  "schema": 1,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_quality_domains.py": {
+      "source_sha256": "9eada42629c0fa1ad61e1dc57948a5544a45c009e85cab8b48f51ed1fb39ff98",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 15,
+      "skipped_target_keys": [
+        [
+          "D-TES-09348",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09349",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09352",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09353",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09354",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09357",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09358",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09359",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09360",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09367",
+          "result",
+          null
+        ],
+        [
+          "D-TES-09368",
+          "result",
+          null
+        ]
+      ],
+      "unmatched_ranges": [
+        [
+          23,
+          46,
+          23,
+          95
+        ],
+        [
+          35,
+          46,
+          35,
+          88
+        ],
+        [
+          50,
+          46,
+          50,
+          88
+        ],
+        [
+          54,
+          46,
+          54,
+          95
+        ]
+      ]
+    },
+    "/workspace/template-Ai/template_ai/quality_domains.py": {
+      "source_sha256": "f27f81222dfb4a74436d7a910239a58b9da71c6d3471b4cb980d2a646074374d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 35,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 0,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation_store.py": {
+      "source_sha256": "884945432fa826422293d05131c1bfa2caf8b7229ac6c424facf08e27dd8bc2d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation.py": {
+      "source_sha256": "255e58b284a97d510f3aba40932fa61451eee8d8a12371e8743f1b64f93fa603",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 13,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/quality_metrics.py": {
+      "source_sha256": "713158c026df61ca3a5939ceb2934ddedfd499cc8664b2716e3d7d2824496198",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 4,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-02835": {
+      "visits": 9,
+      "values": {
+        "value": {
+          "builtins.dict": 3,
+          "builtins.list": 3
+        },
+        "iterable": {
+          "builtins.list": 3
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02836": {
+      "visits": 24,
+      "values": {
+        "value": {
+          "builtins.dict": 6,
+          "builtins.list": 6
+        },
+        "argument": {
+          "builtins.list": 6
+        },
+        "call_result": {
+          "builtins.int": 6
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02847": {
+      "visits": 24,
+      "values": {
+        "value": {
+          "builtins.dict": 6,
+          "builtins.int": 6
+        },
+        "argument": {
+          "builtins.int": 6
+        },
+        "call_result": {
+          "builtins.NoneType": 6
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02854": {
+      "visits": 24,
+      "values": {
+        "value": {
+          "builtins.dict": 6,
+          "builtins.int": 6
+        },
+        "argument": {
+          "builtins.int": 6
+        },
+        "call_result": {
+          "builtins.NoneType": 6
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02861": {
+      "visits": 24,
+      "values": {
+        "value": {
+          "builtins.dict": 6,
+          "builtins.int": 6
+        },
+        "argument": {
+          "builtins.int": 6
+        },
+        "call_result": {
+          "builtins.NoneType": 6
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02862": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        },
+        "iterable": {
+          "builtins.list": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02863": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        },
+        "iterable": {
+          "builtins.list": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02869": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "builtins.dict": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02870": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "builtins.dict": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02871": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "builtins.dict": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02880": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        },
+        "iterable": {
+          "builtins.list": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02881": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        },
+        "iterable": {
+          "builtins.list": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02888": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.builtin_function_or_method": 2,
+          "builtins.int": 2
+        },
+        "call_result": {
+          "builtins.int": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02889": {
+      "visits": 16,
+      "values": {
+        "argument": {
+          "builtins.generator": 2
+        },
+        "value": {
+          "builtins.dict": 6,
+          "builtins.int": 6
+        },
+        "call_result": {
+          "builtins.int": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02890": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.builtin_function_or_method": 2,
+          "builtins.int": 2
+        },
+        "call_result": {
+          "builtins.int": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02891": {
+      "visits": 16,
+      "values": {
+        "argument": {
+          "builtins.generator": 2
+        },
+        "value": {
+          "builtins.dict": 6,
+          "builtins.int": 6
+        },
+        "call_result": {
+          "builtins.int": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02892": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.builtin_function_or_method": 2,
+          "builtins.int": 2
+        },
+        "call_result": {
+          "builtins.int": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02893": {
+      "visits": 16,
+      "values": {
+        "argument": {
+          "builtins.generator": 2
+        },
+        "value": {
+          "builtins.dict": 6,
+          "builtins.int": 6
+        },
+        "call_result": {
+          "builtins.int": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02977": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        },
+        "iterable": {
+          "builtins.list": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02978": {
+      "visits": 6,
+      "values": {
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        },
+        "iterable": {
+          "builtins.list": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09341": {
+      "visits": 128,
+      "values": {
+        "operator_left": {
+          "builtins.str": 32
+        },
+        "operator_right": {
+          "builtins.str": 32
+        },
+        "value": {
+          "builtins.str": 32
+        },
+        "operation": {
+          "builtins.str": 32
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09342": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09343": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09344": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09345": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09346": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09347": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09348": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09349": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09350": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09351": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09352": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09353": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09354": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09355": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09356": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09357": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09358": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09359": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09360": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09361": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09362": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09363": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09364": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        },
+        "result": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09365": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09366": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09367": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09368": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

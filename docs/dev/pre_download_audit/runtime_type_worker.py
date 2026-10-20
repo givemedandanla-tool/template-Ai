@@ -4,7 +4,7 @@ No payload values, property getters, extra model/API calls or product edits.
 """
 import argparse,ast,collections,inspect,json,os,runpy,sys,types
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[3]
+ROOT=Path(os.environ.get('TEMPLATE_AI_AUDIT_ROOT',str(Path(__file__).resolve().parents[3]))).resolve()
 sys.path[:0]=[str(ROOT),str(ROOT/'tools'),str(ROOT/'tests')]
 MISSING=object()
 

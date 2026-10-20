@@ -1,0 +1,363 @@
+{
+  "schema": 1,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_logo_ocr.py": {
+      "source_sha256": "055bc2fbf638d3423ac53ce851e1669dc1a34e01fcd324387f0af5474fefeaa6",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 16,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/logo_ocr.py": {
+      "source_sha256": "75cd0127a3c0d714d9add9cb5ad4ad8d14053e49d9afbe6dba039d1130b39f53",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 12,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/logo_store.py": {
+      "source_sha256": "fe64d2a1032d86f6ca96f6852a4a648e8b8882796a7a7f2de4a32883644e3404",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 5,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/customers.py": {
+      "source_sha256": "3a7948459cd959e628a2c255863ea43b93ee6ba0ea35ca2f77def54597be23c6",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 11,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 0,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-02266": {
+      "visits": 8,
+      "values": {
+        "value": {
+          "PySide6.QtGui.QImage": 2,
+          "builtins.builtin_function_or_method": 2
+        },
+        "call_receiver": {
+          "PySide6.QtGui.QImage": 2
+        },
+        "call_result": {
+          "builtins.bool": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
+        "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02267": {
+      "visits": 8,
+      "values": {
+        "call_receiver": {
+          "PySide6.QtGui.QImage": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "value": {
+          "builtins.bool": 2
+        },
+        "call_result": {
+          "builtins.bool": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
+        "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02268": {
+      "visits": 6,
+      "values": {
+        "call_receiver": {
+          "builtins.str": 2
+        },
+        "value": {
+          "builtins.builtin_function_or_method": 2
+        },
+        "call_result": {
+          "builtins.str": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
+        "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02269": {
+      "visits": 10,
+      "values": {
+        "call_receiver": {
+          "builtins.str": 2
+        },
+        "value": {
+          "builtins.dict": 2,
+          "builtins.list": 2
+        },
+        "argument": {
+          "builtins.list": 2
+        },
+        "call_result": {
+          "builtins.str": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
+        "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02270": {
+      "visits": 8,
+      "values": {
+        "value": {
+          "builtins.str": 4,
+          "builtins.bool": 4
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image",
+        "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07916": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.list": 1
+        },
+        "iterable": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07917": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.list": 1
+        },
+        "iterable": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07918": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.list": 1
+        },
+        "iterable": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07919": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.list": 1
+        },
+        "iterable": {
+          "builtins.list": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_real_local_inference_reports_words_geometry_and_only_unconfirmed_hints"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07920": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "test_logo_ocr.LogoOcrTests": 1,
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "pathlib.PosixPath": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07921": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "test_logo_ocr.LogoOcrTests": 1,
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "pathlib.PosixPath": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07922": {
+      "visits": 5,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "builtins.int": 1
+        },
+        "operator_left": {
+          "builtins.int": 1
+        },
+        "operator_right": {
+          "builtins.int": 1
+        },
+        "operation": {
+          "builtins.int": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_actual_ocr_attaches_to_candidate_with_cas_and_never_approves_or_rewrites_image"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07925": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "test_logo_ocr.LogoOcrTests": 1,
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "pathlib.PosixPath": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_missing_engine_and_changed_source_never_fabricate_ocr"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07926": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "test_logo_ocr.LogoOcrTests": 1,
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.str": 1
+        },
+        "call_result": {
+          "pathlib.PosixPath": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_ocr.LogoOcrTests.test_missing_engine_and_changed_source_never_fabricate_ocr"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

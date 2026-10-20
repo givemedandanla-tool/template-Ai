@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py": {
+      "source_sha256": "0b3fabf8664945885a3f0309595775cc9e99f3ce8ec03acf57430966edbfe943",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 3,
+      "skipped_target_keys": [
+        [
+          "AST-POST",
+          "receiver",
+          "setObjectName"
+        ]
+      ],
+      "unmatched_ranges": [
+        [
+          27,
+          8,
+          27,
+          14
+        ]
+      ]
+    }
+  },
+  "rows": {
+    "AST-NATIVE": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QLineEdit": 1
+        }
+      },
+      "member_checks": {
+        "PySide6.QtWidgets.QLineEdit:True": 1
+      },
+      "test_contexts": [
+        "test_observer_contract.ObserverCalibrationTests.test_computed_widget_receiver"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "AST-RETURN": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_observer_contract.ObserverCalibrationTests.test_exact_python_container_return"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "AST-ONCE": {
+      "visits": 1,
+      "values": {
+        "container": {
+          "builtins.object": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_observer_contract.ObserverCalibrationTests.test_property_evaluated_once_and_identity_preserved"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}
