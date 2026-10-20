@@ -1764,18 +1764,31 @@ class MainWindow(QMainWindow):
         canvas.command_status.emit('已處理目前標記／草稿 '+command+'；影響 '+str(len(ids))+' 件，正式保存與輸出另行核對。')
 
     def import_background(self):
-        if not self.template or not self.editable() or self.busy:
+        if self.tabs.currentIndex()!=1 or not self.template or not self.editable() or self.busy:
             return
+        from .property_context import source_pin
+        from .font_review import fingerprint
+        pin=source_pin(self,1);draft_digest=fingerprint(self.template.to_dict());assets_dir=self.library.assets
+        def context_current():
+            if (self.library.closed or self.tabs.currentIndex()!=1 or self.template is None
+                    or self.template.state!='draft' or source_pin(self,1)!=pin):return False
+            try:
+                current=self.library.object_snapshot('TEMPLATE',self.template.id)
+                return (fingerprint(self.template.to_dict())==draft_digest
+                        and current['revision']==pin[3] and fingerprint(current['payload'])==pin[4])
+            except (ValueError,TypeError,OSError,sqlite3.Error):return False
+        def changed_context():
+            if context_current():return False
+            self.inform('目前草稿或使用的來源已變更，本次背景尚未套用；請回到原草稿重新匯入。')
+            return True
         path, _ = QFileDialog.getOpenFileName(self, "選擇已清除可變資料的同尺寸背景", "", "背景 (*.svg *.pdf *.ai *.png *.jpg *.jpeg)")
         if not path:
             return
-        template_id, version = self.template.id, self.template.version
+        if changed_context():return
         width, height = self.template.width_mm, self.template.height_mm
         def finished(result):
             # 背景轉換期間仍可切換模式；完成時不把資產套進別的模板。
-            if not self.template or self.template.id != template_id or self.template.version != version or self.template.state != "draft":
-                self.inform("模板上下文已切換，本次背景尚未套用；請回到原草稿重新匯入")
-                return
+            if changed_context():return
             asset = make_background(result, width, height)
             dialog = QDialog(self)
             dialog.setWindowTitle("核對固定背景")
@@ -1807,6 +1820,10 @@ class MainWindow(QMainWindow):
             buttons.rejected.connect(dialog.reject)
             layout.addWidget(buttons)
             def refresh_actual():
+                if not context_current():
+                    actual_image.clear();actual_image.setText('目前草稿已變更；請返回原草稿重新匯入。')
+                    buttons.button(QDialogButtonBox.Ok).setEnabled(False)
+                    return
                 asset["render_mode"] = mode.currentData()
                 review = copy.deepcopy(self.template)
                 review.background = {**asset, "approved": True}
@@ -1822,13 +1839,14 @@ class MainWindow(QMainWindow):
             refresh_actual()
             if dialog.exec() != QDialog.Accepted:
                 return
+            if changed_context():return
             asset["approved"] = True
             self.template.background = asset
             self.save_current_template()
             self.refresh_templates(self.template.id)
             self.invalidate()
             self.statusBar().showMessage("已保存核准固定背景；預覽與數位輸出使用同一背景")
-        self.run_job("轉換固定背景", lambda: import_file(path, self.library.assets), finished)
+        self.run_job("轉換固定背景", lambda: import_file(path, assets_dir), finished)
 
     def clear_background(self):
         if not self.template or not self.editable() or self.busy:
