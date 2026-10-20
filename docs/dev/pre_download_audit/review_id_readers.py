@@ -1,0 +1,22 @@
+"""Review ID-only SQLite queries by purpose; freezing live consent would be unsafe."""
+import ast,hashlib,json
+from pathlib import Path
+F=Path(__file__).resolve().parent;ROOT=F.parents[2];rows=[]
+mutation={'runtime_queue.py','storage.py','source_scan.py','batch_import.py','trusted_samples.py','customer_entities.py','customer_candidates.py','customer_identity.py','coverage_closure.py','automatic_training.py'}
+reference={'qualified_coverage.py','quality_gold.py','quality_repair_gates.py','quality_repair_releases.py','quality_coverage.py','quality_rechecks.py','design_learning.py','similarity_preflight.py','noise_hits.py','training_exceptions.py','semantic_learning_dialog.py'}
+for p in (ROOT/'template_ai').glob('*.py'):
+ tree=ast.parse(p.read_text());queries=[n for n in ast.walk(tree) if isinstance(n,ast.Constant) and isinstance(n.value,str) and 'SELECT id FROM' in n.value]
+ for n in queries:
+  fn=min((x for x in ast.walk(tree) if isinstance(x,(ast.FunctionDef,ast.AsyncFunctionDef)) and x.lineno<=n.lineno<=x.end_lineno),key=lambda x:x.end_lineno-x.lineno,default=None)
+  if p.name in ('startup_catalog.py','rule_review_panel.py','noise_hits_panel.py','coverage_command.py'):
+   decision='READ_VIEW_SNAPSHOT_OR_ID_SEARCH_REFERENCE';reason='Filtered payload read views now use bounded SQLite read savepoints (editor/catalog/rules/coverage) or full selected row decode (stored noise hits). Search returns explicit IDs and its catalog consumer holds the read snapshot through payload loading. Current decisions/confirmation still revalidate. Five corrected actual Qt/two-connection fail-first cases verify the selected content; nested savepoint test preserves caller pending writes.'
+  elif p.name=='source_context.py':
+   decision='SINGLE_SQL_NESTED_ID_SUBQUERY';reason='The ID-only phrase is a nested artworks subquery inside a single SELECT id,payload statement, so SQLite already supplies a coherent statement snapshot; no subsequent get loop exists here.'
+  elif p.name in mutation:decision='LIVE_ID_REFERENCE_OR_MUTATION_CHECK';reason='IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving.'
+  elif p.name in reference:decision='REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ';reason='IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety.'
+  elif p.name=='design_qualification.py':decision='EXTERNAL_REAL_CORPUS_QUALIFICATION_DEFERRED';reason='Post-gate genuine corpus/lineage/qualification references; synthetic data cannot certify production qualification. Existing rejection boundary retained.'
+  elif p.name in ('major_review_job_ui.py','quality_panel.py'):decision='TARGETED_CANCEL_REFERENCE';reason='Selects current job IDs for cancellation; intended current-state command, with owned job/context checks. Not a filtered read-only metadata list contract.'
+  elif p.name=='logo_store.py':decision='WRITE_DEDUP_REFERENCE';reason='This remaining ID query is propose deduplication lookup, not proposals(width,height). Filtered proposal list was changed to full-row decode and independently verified against concurrent update/delete.'
+  else:raise RuntimeError('Unreviewed ID query '+p.name)
+  rows.append(dict(path=p.relative_to(ROOT).as_posix(),line=n.lineno,function=fn.name if fn else None,query=n.value,source_sha256=hashlib.sha256(p.read_bytes()).hexdigest(),decision=decision,reason=reason))
+(F/'id-reader-purpose-review.json').write_text(json.dumps(dict(method=__doc__,reviewed_queries=len(rows),read_snapshot_fixes=['TrainingStore metadata collections','major review cases/jobs','Logo size-filtered proposals'],independent_two_connection_cases=18,remaining=rows,limitation='Source-purpose inventory plus existing related tests; no exhaustive concurrency proof or release qualification. Read-only dependency hardening remains P2.'),ensure_ascii=False,indent=2)+'\n');print('reviewed ID queries',len(rows))

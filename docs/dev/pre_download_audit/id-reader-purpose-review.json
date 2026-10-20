@@ -1,0 +1,400 @@
+{
+  "method": "Review ID-only SQLite queries by purpose; freezing live consent would be unsafe.",
+  "reviewed_queries": 43,
+  "read_snapshot_fixes": [
+    "TrainingStore metadata collections",
+    "major review cases/jobs",
+    "Logo size-filtered proposals"
+  ],
+  "independent_two_connection_cases": 18,
+  "remaining": [
+    {
+      "path": "template_ai/qualified_coverage.py",
+      "line": 34,
+      "function": "roster",
+      "query": "SELECT id FROM training_records WHERE ",
+      "source_sha256": "f6a23046181c897bd5676f99b4efc77ba2b87d90abc01f7575aef1a75cdc6d0c",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/automatic_training.py",
+      "line": 142,
+      "function": "work_unit",
+      "query": "SELECT id FROM training_records WHERE kind='AUTO_UNIT' AND json_extract(payload,'$.work_id')=? ORDER BY (json_extract(payload,'$.state')='EXCLUDED') DESC,json_extract(payload,'$.created') DESC,id LIMIT 1",
+      "source_sha256": "47ea8b5ecf1a3c23af00e9889a0291f200a668f714b31c20655f9b0853ca44ba",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/training_exceptions.py",
+      "line": 30,
+      "function": "exception_rows",
+      "query": "SELECT id FROM templates WHERE json_extract(payload,'$.source_work_id')=? ORDER BY id LIMIT 200",
+      "source_sha256": "94dc9472884666bbc9313c3315ad88a9123da82b59caa75b226dce224115a079",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/logo_store.py",
+      "line": 114,
+      "function": "propose",
+      "query": "SELECT id FROM logo_proposals WHERE json_extract(payload,'$.candidate_key')=?",
+      "source_sha256": "e99c929232e5cfb3371c0dc91c69f23dc4aab1f16066976aac97bb80f0222945",
+      "decision": "WRITE_DEDUP_REFERENCE",
+      "reason": "This remaining ID query is propose deduplication lookup, not proposals(width,height). Filtered proposal list was changed to full-row decode and independently verified against concurrent update/delete."
+    },
+    {
+      "path": "template_ai/semantic_learning_dialog.py",
+      "line": 33,
+      "function": "reload",
+      "query": "SELECT id FROM artworks ORDER BY id LIMIT 100 OFFSET ?",
+      "source_sha256": "eee681df712f40deac560c60baacd41dc3e42407120c6ba3b7859a229cb97562",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/runtime_queue.py",
+      "line": 69,
+      "function": "enqueue",
+      "query": "SELECT id FROM runtime_requests WHERE json_extract(payload,'$.kind')=? AND json_extract(payload,'$.job_id')=? AND json_extract(payload,'$.state') IN ('WAITING','PAUSED_RESOURCES','RUNNING','INTERRUPTED') ORDER BY seq LIMIT 1",
+      "source_sha256": "5098d88ba4f8b781c1677df75c81339448965986b2f3df0fdcffe803ab833e4e",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/runtime_queue.py",
+      "line": 87,
+      "function": "recover_dead",
+      "query": "SELECT id FROM runtime_requests WHERE json_extract(payload,'$.state')='RUNNING' ORDER BY seq LIMIT 200",
+      "source_sha256": "5098d88ba4f8b781c1677df75c81339448965986b2f3df0fdcffe803ab833e4e",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/quality_repair_gates.py",
+      "line": 25,
+      "function": "candidate_plan",
+      "query": "SELECT id FROM training_records WHERE kind='QUALITY_REPAIR_CANDIDATE' AND json_extract(payload,'$.root_review_id')=? AND json_extract(payload,'$.model_id')=? ORDER BY id LIMIT 2",
+      "source_sha256": "de090d8e52413a734910deff61be89bd1912dd024260428ad57659cf75652524",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/quality_gold.py",
+      "line": 56,
+      "function": "plan",
+      "query": "SELECT id FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED' ORDER BY id LIMIT 2001",
+      "source_sha256": "034c3c94cf035cdbd81ed4ffa62aac31a87acaa56ec2e6c779bc4838ae87dfec",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/quality_gold.py",
+      "line": 74,
+      "function": "confirm",
+      "query": "SELECT id FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED' ORDER BY id LIMIT 2001",
+      "source_sha256": "034c3c94cf035cdbd81ed4ffa62aac31a87acaa56ec2e6c779bc4838ae87dfec",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/quality_gold.py",
+      "line": 96,
+      "function": "validity",
+      "query": "SELECT id FROM artworks WHERE source_id=? AND COALESCE(json_extract(payload,'$.segmentation_state'),'')!='SUPERSEDED' ORDER BY id LIMIT 2001",
+      "source_sha256": "034c3c94cf035cdbd81ed4ffa62aac31a87acaa56ec2e6c779bc4838ae87dfec",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/customer_candidates.py",
+      "line": 127,
+      "function": "conflicts",
+      "query": "SELECT id FROM customers WHERE code=?",
+      "source_sha256": "e2bfd45d6b9fdbeae240f43ea8ed56ff5f356c638edc73224e5a933253e31818",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/customer_candidates.py",
+      "line": 155,
+      "function": "propose",
+      "query": "SELECT id FROM customers WHERE code=?",
+      "source_sha256": "e2bfd45d6b9fdbeae240f43ea8ed56ff5f356c638edc73224e5a933253e31818",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/customer_candidates.py",
+      "line": 159,
+      "function": "propose",
+      "query": "SELECT id FROM sources WHERE hash=? AND id<>? ORDER BY id LIMIT 101",
+      "source_sha256": "e2bfd45d6b9fdbeae240f43ea8ed56ff5f356c638edc73224e5a933253e31818",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/source_context.py",
+      "line": 27,
+      "function": "source_context",
+      "query": "SELECT id,payload FROM templates WHERE json_extract(payload,'$.source_id')=? OR json_extract(payload,'$.source_work_id') IN (SELECT id FROM artworks WHERE source_id=?) OR id IN (SELECT value FROM json_each(?)) ORDER BY id",
+      "source_sha256": "7cee52a9186517116a8a612e94e73f1db2129a34f20f72621718633341253f6a",
+      "decision": "SINGLE_SQL_NESTED_ID_SUBQUERY",
+      "reason": "The ID-only phrase is a nested artworks subquery inside a single SELECT id,payload statement, so SQLite already supplies a coherent statement snapshot; no subsequent get loop exists here."
+    },
+    {
+      "path": "template_ai/source_scan.py",
+      "line": 13,
+      "function": "active_roots",
+      "query": "SELECT id FROM training_records WHERE kind='SCAN_ROOT' AND COALESCE(json_extract(payload,'$.archived'),0)=0 ORDER BY rowid LIMIT 21",
+      "source_sha256": "c7520635bf78d56f2f979f8dc19351e666769a55ae6bb6b92a846b82f7c7b61c",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/source_scan.py",
+      "line": 172,
+      "function": "candidate_page",
+      "query": "SELECT id FROM training_records WHERE ",
+      "source_sha256": "c7520635bf78d56f2f979f8dc19351e666769a55ae6bb6b92a846b82f7c7b61c",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/source_scan.py",
+      "line": 152,
+      "function": "save_scan",
+      "query": "SELECT id FROM training_records WHERE kind='SCAN_CANDIDATE' AND json_extract(payload,'$.root_id')=? AND json_extract(payload,'$.path')=? AND json_extract(payload,'$.source_hash')!=? AND json_extract(payload,'$.state') IN ('FOUND_NOT_QUEUED','QUEUED_FOR_UI003_PREFLIGHT','REVIEW_REQUIRED')",
+      "source_sha256": "c7520635bf78d56f2f979f8dc19351e666769a55ae6bb6b92a846b82f7c7b61c",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 43,
+      "function": "reload",
+      "query": "SELECT id FROM training_records WHERE ",
+      "source_sha256": "65217b441a96ebcd705b80b89eb057099e6669eca7a4cadc27de4733896f0918",
+      "decision": "READ_VIEW_SNAPSHOT_OR_ID_SEARCH_REFERENCE",
+      "reason": "Filtered payload read views now use bounded SQLite read savepoints (editor/catalog/rules/coverage) or full selected row decode (stored noise hits). Search returns explicit IDs and its catalog consumer holds the read snapshot through payload loading. Current decisions/confirmation still revalidate. Five corrected actual Qt/two-connection fail-first cases verify the selected content; nested savepoint test preserves caller pending writes."
+    },
+    {
+      "path": "template_ai/quality_coverage.py",
+      "line": 13,
+      "function": "coverage_report",
+      "query": "SELECT id FROM sources ORDER BY id LIMIT ? OFFSET ?",
+      "source_sha256": "5fd59d84bcaf1f686a29882fedfca7be5d367a3038e4722f683046193ef630f6",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/quality_coverage.py",
+      "line": 13,
+      "function": "coverage_report",
+      "query": "SELECT id FROM artworks ORDER BY id LIMIT ? OFFSET ?",
+      "source_sha256": "5fd59d84bcaf1f686a29882fedfca7be5d367a3038e4722f683046193ef630f6",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/quality_coverage.py",
+      "line": 15,
+      "function": "coverage_report",
+      "query": "SELECT id FROM training_records WHERE kind='FACTS' AND json_extract(payload,'$.pins.source_id')=? ORDER BY id LIMIT 1",
+      "source_sha256": "5fd59d84bcaf1f686a29882fedfca7be5d367a3038e4722f683046193ef630f6",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/major_review_job_ui.py",
+      "line": 86,
+      "function": "cancel_job",
+      "query": "SELECT id FROM runtime_requests WHERE json_extract(payload,'$.job_id')=? AND json_extract(payload,'$.state') IN ('WAITING','PAUSED_RESOURCES','RUNNING','INTERRUPTED') ORDER BY seq LIMIT 1",
+      "source_sha256": "dd4865437832865eef39975fbe20c72f4ef8766e73339d3b84d8a38a97f67d58",
+      "decision": "TARGETED_CANCEL_REFERENCE",
+      "reason": "Selects current job IDs for cancellation; intended current-state command, with owned job/context checks. Not a filtered read-only metadata list contract."
+    },
+    {
+      "path": "template_ai/coverage_command.py",
+      "line": 26,
+      "function": "execute",
+      "query": "SELECT id FROM training_records WHERE ",
+      "source_sha256": "86c080c296123105f1f8011946bcc3d7d9bd63df407ced40a0595f9aff8d442c",
+      "decision": "READ_VIEW_SNAPSHOT_OR_ID_SEARCH_REFERENCE",
+      "reason": "Filtered payload read views now use bounded SQLite read savepoints (editor/catalog/rules/coverage) or full selected row decode (stored noise hits). Search returns explicit IDs and its catalog consumer holds the read snapshot through payload loading. Current decisions/confirmation still revalidate. Five corrected actual Qt/two-connection fail-first cases verify the selected content; nested savepoint test preserves caller pending writes."
+    },
+    {
+      "path": "template_ai/quality_panel.py",
+      "line": 194,
+      "function": "cancel_side",
+      "query": "SELECT id FROM runtime_requests WHERE json_extract(payload,'$.job_id')=? AND json_extract(payload,'$.state') IN ('WAITING','RUNNING','PAUSED_RESOURCES') ORDER BY seq DESC LIMIT 1",
+      "source_sha256": "867addaa158dd5ab371e52327dd2384d79c492130fcb151e56287648d194114a",
+      "decision": "TARGETED_CANCEL_REFERENCE",
+      "reason": "Selects current job IDs for cancellation; intended current-state command, with owned job/context checks. Not a filtered read-only metadata list contract."
+    },
+    {
+      "path": "template_ai/storage.py",
+      "line": 328,
+      "function": "_save_template_data",
+      "query": "SELECT id FROM templates WHERE family_id=? AND version=?",
+      "source_sha256": "586c96d6e63e0214735331e0cbae8b8c1c3bcc999da4e5a0156fb0fb8d8c7d96",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/storage.py",
+      "line": 369,
+      "function": "publish",
+      "query": "SELECT id FROM templates WHERE family_id=? AND version=?",
+      "source_sha256": "586c96d6e63e0214735331e0cbae8b8c1c3bcc999da4e5a0156fb0fb8d8c7d96",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/quality_repair_releases.py",
+      "line": 38,
+      "function": "impact_plan",
+      "query": "SELECT id FROM training_records WHERE kind='QUALITY_WORK_QUARANTINE' AND json_extract(payload,'$.work_id')=? AND json_extract(payload,'$.state')='REVIEW_REQUIRED' ORDER BY id",
+      "source_sha256": "9db92895e88bbf166da81baef4edbe124b928759a5f5afa04adf68dbf553dd51",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/coverage_closure.py",
+      "line": 52,
+      "function": "close",
+      "query": "SELECT id FROM training_records WHERE kind='COVERAGE_MEMBER' AND json_extract(payload,'$.batch_id')=? ORDER BY json_extract(payload,'$.ordinal')",
+      "source_sha256": "88a23cc1ea9fa4d6b2c14047f7e1c21afa22a251f6f1849c3ba3366086e17fd8",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/design_learning.py",
+      "line": 171,
+      "function": "train",
+      "query": "SELECT id FROM training_records WHERE kind='DESIGN_MODEL' AND json_extract(payload,'$.origin_job')=?",
+      "source_sha256": "05e8895990a4ed675a0fc78f9f7831a868f709d8fb15fa45f0b2231eddd41fb1",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/noise_hits.py",
+      "line": 52,
+      "function": "_refresh_noise",
+      "query": "SELECT id FROM training_records WHERE kind='HIT' AND json_extract(payload,'$.work_id')=?",
+      "source_sha256": "4a9d5c67c67ac3776a72620baba5449e5c8d22b9b5c34b8aeae57d99d891edb7",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/noise_hits.py",
+      "line": 8,
+      "function": "active_noise_rules",
+      "query": "SELECT id FROM training_records WHERE kind='RULE' AND json_extract(payload,'$.state')='ACTIVE' ORDER BY id LIMIT 201",
+      "source_sha256": "4a9d5c67c67ac3776a72620baba5449e5c8d22b9b5c34b8aeae57d99d891edb7",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/quality_rechecks.py",
+      "line": 137,
+      "function": "dependencies",
+      "query": "SELECT id FROM artworks WHERE json_extract(payload,'$.analysis_version')=? OR (json_type(payload,'$.analysis_key') IS NOT NULL AND json_type(payload,'$.analysis_version') IS NULL)",
+      "source_sha256": "8e52388db529c672048f12eefbe2790f3648fc68f6ccb2209dd859e867ca55d9",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/quality_rechecks.py",
+      "line": 144,
+      "function": "dependencies",
+      "query": "SELECT id FROM artworks WHERE COALESCE(json_extract(payload,'$.analysis_evidence.semantic_model.model_id'),json_extract(payload,'$.evidence.semantic_model.model_id')) IN (",
+      "source_sha256": "8e52388db529c672048f12eefbe2790f3648fc68f6ccb2209dd859e867ca55d9",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/quality_rechecks.py",
+      "line": 140,
+      "function": "dependencies",
+      "query": "SELECT id FROM training_records WHERE kind='SEMANTIC_MODEL' AND json_extract(payload,'$.weights_digest')=? ORDER BY id LIMIT 2001",
+      "source_sha256": "8e52388db529c672048f12eefbe2790f3648fc68f6ccb2209dd859e867ca55d9",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    },
+    {
+      "path": "template_ai/customer_entities.py",
+      "line": 88,
+      "function": "migrate",
+      "query": "SELECT id FROM customers WHERE id NOT IN (SELECT customer_id FROM customer_graph_states)",
+      "source_sha256": "7efb7fd4c499e612ab49e2eacf2c1b03cdf7ec93b419c4b7889f05796691388a",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/batch_import.py",
+      "line": 183,
+      "function": "recover",
+      "query": "SELECT id FROM import_batches WHERE json_extract(payload,'$.phase')='RUNNING' ORDER BY rowid LIMIT ?",
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/trusted_samples.py",
+      "line": 73,
+      "function": "approve_sample_in_transaction",
+      "query": "SELECT id FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.admission_digest')=? AND json_extract(payload,'$.state')='APPROVED'",
+      "source_sha256": "8fbfda87664f066ba658043e1cb6cb334e44f66fea76ef0e4062ba370cde5f15",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/customer_identity.py",
+      "line": 117,
+      "function": "plan_merge",
+      "query": "SELECT id FROM customers WHERE ta_fold(code) IN (?,?)",
+      "source_sha256": "229e730bd9f973496f71b557e98f5b8f303efc832934609758e3936c985d304b",
+      "decision": "LIVE_ID_REFERENCE_OR_MUTATION_CHECK",
+      "reason": "IDs identify current durable resources for deduplication, dispatch, recovery, transactional validation or explicit mutation; the subsequent operation must revalidate current revision/state/consent. A frozen old approval/rights payload must not grant a new write. Existing CAS/transaction/privacy tests remain the behavioral evidence; this inventory alone does not prove every concurrent interleaving."
+    },
+    {
+      "path": "template_ai/startup_catalog.py",
+      "line": 26,
+      "function": "editor_page",
+      "query": "SELECT id FROM ",
+      "source_sha256": "a2dbc775e3be105df3dc344c28024922bcba60e3a3e686b1fe4392087a9dde3c",
+      "decision": "READ_VIEW_SNAPSHOT_OR_ID_SEARCH_REFERENCE",
+      "reason": "Filtered payload read views now use bounded SQLite read savepoints (editor/catalog/rules/coverage) or full selected row decode (stored noise hits). Search returns explicit IDs and its catalog consumer holds the read snapshot through payload loading. Current decisions/confirmation still revalidate. Five corrected actual Qt/two-connection fail-first cases verify the selected content; nested savepoint test preserves caller pending writes."
+    },
+    {
+      "path": "template_ai/startup_catalog.py",
+      "line": 57,
+      "function": "search",
+      "query": "SELECT id FROM templates WHERE ",
+      "source_sha256": "a2dbc775e3be105df3dc344c28024922bcba60e3a3e686b1fe4392087a9dde3c",
+      "decision": "READ_VIEW_SNAPSHOT_OR_ID_SEARCH_REFERENCE",
+      "reason": "Filtered payload read views now use bounded SQLite read savepoints (editor/catalog/rules/coverage) or full selected row decode (stored noise hits). Search returns explicit IDs and its catalog consumer holds the read snapshot through payload loading. Current decisions/confirmation still revalidate. Five corrected actual Qt/two-connection fail-first cases verify the selected content; nested savepoint test preserves caller pending writes."
+    },
+    {
+      "path": "template_ai/design_qualification.py",
+      "line": 65,
+      "function": "plan",
+      "query": "SELECT id FROM training_records WHERE kind='DESIGN_PREFERENCE_REVIEW' AND json_extract(payload,'$.job_id')=? ORDER BY id LIMIT 10001",
+      "source_sha256": "98b93e4bf12edab16809d496e8280c75adf0fda2b3299dcb4467bc3f8f52cb35",
+      "decision": "EXTERNAL_REAL_CORPUS_QUALIFICATION_DEFERRED",
+      "reason": "Post-gate genuine corpus/lineage/qualification references; synthetic data cannot certify production qualification. Existing rejection boundary retained."
+    },
+    {
+      "path": "template_ai/similarity_preflight.py",
+      "line": 85,
+      "function": "inspect_report",
+      "query": "SELECT id FROM sources ORDER BY id LIMIT 201",
+      "source_sha256": "0d933bcb1cce460ba64c173e1e0f7c593850f27e54f6c414ac1ea8eb6117a4f1",
+      "decision": "REFERENCE_GRAPH_OR_CURRENT_VALIDITY_READ",
+      "reason": "IDs are references for dependency/validity/admission review, not a promise that an earlier filter snapshot payload will be returned. Current validity/digests/rights are rechecked at confirmation. Explicit nullable dependency refusal and read-only preview consistency remain P2 hardening candidates; no claim of arbitrary deleted-metadata safety."
+    }
+  ],
+  "limitation": "Source-purpose inventory plus existing related tests; no exhaustive concurrency proof or release qualification. Read-only dependency hardening remains P2."
+}

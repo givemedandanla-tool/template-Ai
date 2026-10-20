@@ -1,23 +1,22 @@
 {
   "status": "RUNNING",
   "source_base": "83908944a907804a18a1d85feadddbc780644e4a",
-  "phase": "Last 110 original occurrences plus refreshed/new/profile-only disposition; final regression pending",
+  "phase": "Last source frozen: final1920 regression + refreshed profiles; root4 read-view extension93PASS",
   "original_diagnostics": 11798,
   "classified_tool_limitations": 1824,
-  "unreviewed": 110,
+  "unreviewed": 0,
   "confirmed_defects": 10,
   "fixed_defects": 10,
   "new_test_execution": null,
-  "original_1850_rerun": "Full005 source92977b77:1886PASS/243healthy/0runtime; root7 final1889 rerun pending",
-  "next": "Finish remaining original/new/runtime-only review; final1914 stock +27captures +19native, matrices, local restore package",
+  "original_1850_rerun": "Last complete1886PASS; full008 interrupted115 due additional read-view SQL roots, never full PASS",
+  "next": "Finish full0091920, final-release002 profiles and all new review; 27stock captures+19native; matrices, governance and restored local bundle",
   "provenance": "LOCAL_ONLY",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
   "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
   "diagnostic_statuses": {
-    "TYPE_CONTRACT_GAP": 9081,
-    "TOOL_LIMITATION": 1854,
-    "FIXED_AND_VERIFIED": 738,
-    "UNREVIEWED": 110,
+    "TYPE_CONTRACT_GAP": 9187,
+    "TOOL_LIMITATION": 1856,
+    "FIXED_AND_VERIFIED": 740,
     "BLOCKED_EXTERNAL": 15
   },
   "fixed_defects_pending_full_regression": 3,
@@ -170,6 +169,9 @@
     "before": "7FAIL/1PASS; eighth learn path already refused in old core",
     "after": "100PASS/7healthy/0runtime/source unchanged"
   },
-  "expected_final_catalog": 1914,
-  "final_regression_status": "NOT_YET_RUN_CURRENT_SOURCE"
+  "expected_final_catalog": 1920,
+  "final_regression_status": "RUNNING_FULL009",
+  "source_read_view_fix": "20e347c401584286c58b6909e039713cae510e35",
+  "read_view_related": "93PASS/7healthy/0runtime",
+  "native_gui_final004": "19PASS/source unchanged on62b2 before read-view fix; current final repeat pending"
 }

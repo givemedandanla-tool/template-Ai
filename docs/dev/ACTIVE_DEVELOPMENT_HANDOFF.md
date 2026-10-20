@@ -1,12 +1,12 @@
-# 最新接手：全面查證仍在執行，不可提前結案
+# 最新接手：最後全套與交付仍在執行
 
-即時狀態見pre_download_audit/PROGRESS.json與11798筆不可刷新台帳。產品HEAD3bf8e460，原110未審；10類根因已修，最後全套仍待跑。Root7擴充背景/其他可變對象確認視窗：更正版背景舊源2FAIL1ERROR，修後29PASS；其他操作8案例舊源7FAIL1PASS（學習原已拒絕，不能宣稱8缺陷），修後相關100PASS/7健康/0runtime。發布附加revision CAS；不得改寫已確認稿。Logo SQL快照2例舊源1ERROR1FAIL、修後34PASS。原報告測試仍寫舊size欄位已修671f8，強化尺寸斷言前1FAIL、修後31PASS；不漏報此次測試整合錯誤。
+原11798診斷全部逐筆判讀：9187型別契約待改善、1856工具/原生宣告限制、740根因相關修正已驗、15外部資格阻擋；0未審。10類根因與原父題/AI工作包計數不增加。最新產品c3885382，讀取快照修正20e347c4的相關93PASS/7健康/0runtime；c388只補精確ParamSpec保留公開型別及回滾測試，避免無型別裝飾器遮蔽檢查。
 
-最後完整乾淨stock full005 source92977b77：1886PASS/243健康/0runtime/原1850保留；006在273、007在637中斷，不算完整PASS。最終預計1914案例（原1850+64），250模組以新發現為準。27原版擷取在281b53af全PASS、native003在92977b77為19PASS；最新修改後還須最終重跑。7獨立數學與18雙連線SQL案例保留，外部真實作品/Windows/印刷資格不變。
+Root4新增5實際Qt/雙SQLite連線路徑：editor、catalog篩選、rule、noise hit、coverage摘要。更正fixture缺text後隔離62b2舊版5FAIL0ERROR，新6PASS；第6項驗證巢狀savepoint不提交呼叫者pending write。初稿4真正FAIL+1fixture錯與錯cwd舊測試/新產品混用結果均保留拒絕。5條路徑屬既有root4擴充，不是新工作包。
 
-精確AST型別見證001387PASS+0031502PASS為受限型別證據，不能取代原版回歸。297內外座標錯誤見證、版本未凍結及錯誤fixture均保留拒絕原因。餘下原始/新增/runtime-profile獨有診斷與最新查重均須判讀，不刷新基準。
+full009在c3885382執行1920（原1850+70）案例，來源凍結；原版27capture及native19最終重跑待排。最後完整乾淨full0051886PASS/0runtime仍是歷史版本，full006273/full007637/full008115中斷，不可算完整PASS。native004在62b2為19PASS/來源未變；目前新讀取修正後須補驗。final-delivery0016profiles union11329，新增/變體386全判讀；final-release001為中斷歷史，最終0029profiles進行中，完成後重新比較，不刷新基準。近似82候選全判讀；4低優先共用候選保留待辦。
 
-零新增費用優先；未用子代理/API/付費資源，未push/PR/CI。正式治理Gate因舊來源證據不匹配FAIL；新正式證據缺真實GitHub讀回，不能偽造或關Gate。本機查證完成後最多LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED，不得REMOTE_VERIFIED。最新audit還原ZIP尚未製作；舊ZIP不含此次修正，需打包並隔離還原核對。私人作品/字型/資料庫不入Git。
+下一步先查pre_download_audit/PROGRESS.json與本輪run進度；完成新診斷/查重、全套、GUI、矩陣與正式治理限制說明，最後本機提交/可還原包。治理舊來源證據不匹配仍FAIL，新來源缺真實GitHub讀回，不偽造、不關Gate。零新增費用優先，無子代理/API/付費資源、push/PR/CI；最多LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED，不得REMOTE_VERIFIED。最新還原ZIP尚未製作，舊ZIP不含此次修正。私人資料/作品/字型/DB不入Git；真實學習/Windows/印刷資格不變。
 
 ## 產品GUI交接（保持原資格與證據）
 

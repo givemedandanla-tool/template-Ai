@@ -231,6 +231,48 @@
       "source_sha256": "4b377a879aa4db760310ffd6916b0a16b323df823b9a012c60284e7d1143fc85",
       "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
       "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-03446": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/review_ledger_dialog.py",
+        "line": 36,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"\n  ...",
+        "context": "output.extend(bytes(process.readAllStandardOutput()))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e397dc6825ab122b51929389612325e5c7beb143ab32f0cb5934978ce4200dab"
+      },
+      "reason": "QProcess.readAllStandardOutput returns the native QByteArray buffer accepted by bytes; independent authored stdout byte roundtrip verified. Standard-output and standard-error use the same native conversion, not a string coercion.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-03447": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/review_ledger_dialog.py",
+        "line": 36,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"",
+        "context": "output.extend(bytes(process.readAllStandardOutput()))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d48ea5fc322064b1d7f272bbb8a0d287b118c4c7cc2599b9da5e85b560b07b86"
+      },
+      "reason": "QProcess.readAllStandardOutput returns the native QByteArray buffer accepted by bytes; independent authored stdout byte roundtrip verified. Standard-output and standard-error use the same native conversion, not a string coercion.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
     }
   }
 }

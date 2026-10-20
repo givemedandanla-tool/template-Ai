@@ -9,6 +9,7 @@ from PySide6.QtCore import QByteArray,QRect,qInstallMessageHandler,qWarning
 from PySide6.QtWidgets import QApplication,QStyleOptionViewItem,QDialog
 app=QApplication.instance() or QApplication([])
 assert bytes(QByteArray(b'authored stderr'))==b'authored stderr'
+assert bytes(QByteArray(b'authored stdout'))==b'authored stdout'
 option=QStyleOptionViewItem();option.rect=QRect(1,2,30,40);copy=QStyleOptionViewItem(option);copy.rect=option.rect.adjusted(0,0,0,-18);assert copy.rect==QRect(1,2,30,22) and option.rect.height()==40
 a=np.array([[True,False],[False,False]]);b=np.array([[False,True],[False,False]]);left=distance_transform_edt(~a);right=distance_transform_edt(~b);assert isinstance(left,np.ndarray) and isinstance(right,np.ndarray);assert (left[b].mean()+right[a].mean())/(2*a.shape[0])==.5
 F=Path(__file__).resolve().parent;ROOT=F.parents[2];rows=[json.loads(x) for x in (F/'diagnostic-ledger.jsonl').read_text().splitlines()];dest=F/'native-value-contract-proof.json';proof=json.loads(dest.read_text()).get('proof',{}) if dest.exists() else {};count=0
@@ -23,6 +24,8 @@ for member in ['catalog_complete']:
 for kind in [ValueError,Exception]:
  error=kind('Authored calibration');error.recovery_report={'status':'UNKNOWN'};assert error.recovery_report=={'status':'UNKNOWN'}
 notes={'D-APP-02058':'Pinned native QStyleOptionViewItem copy has a writable QRect rect; adjusting the copy changes its native rectangle and preserves the original. The static descriptor declaration omits this inherited value field.', 'D-APP-03448':'QProcess.readAllStandardError returns QByteArray. Native QByteArray implements the buffer protocol accepted by bytes, as the independent authored-byte roundtrip proves. Only bounded owned-process stderr is retained by the original code.', 'D-APP-03449':'QProcess.readAllStandardError returns QByteArray. Native QByteArray implements the buffer protocol accepted by bytes, as the independent authored-byte roundtrip proves. Only bounded owned-process stderr is retained by the original code.', 'D-APP-04105':'SciPy distance_transform_edt with omitted output arrays and default return_distances=True/return_indices=False returns ndarray. Its multi-return annotation includes None for the separate caller-supplied-output mode. The exact defaults used by shape_error are checked with a hand-calculated 2x2 distance case.', 'D-APP-04106':'SciPy distance_transform_edt with omitted output arrays and default return_distances=True/return_indices=False returns ndarray. Its multi-return annotation includes None for the separate caller-supplied-output mode. The exact defaults used by shape_error are checked with a hand-calculated 2x2 distance case.'}
+for key in ['D-APP-03446','D-APP-03447']:
+ notes[key]='QProcess.readAllStandardOutput returns the native QByteArray buffer accepted by bytes; independent authored stdout byte roundtrip verified. Standard-output and standard-error use the same native conversion, not a string coercion.'
 from pypdf.generic import RectangleObject
 box=RectangleObject([0,0,90*72/25.4,54*72/25.4]);assert abs(float(box.width)*25.4/72-90)<1e-9
 received=[]

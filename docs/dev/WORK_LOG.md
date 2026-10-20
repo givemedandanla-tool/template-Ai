@@ -1711,3 +1711,5 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 2026-10-20 PRE-DOWNLOAD-AUDIT-PLAN：依使用者要求制定全面查證／修正計畫，尚未執行。基底127b69f，逐筆台帳／高風險流程／獨立合成標準答案／實際GUI／故障恢復／完整回歸及交付門檻已定義；費用、資料、設備邊界維持。不修改產品或基準，不重跑測試。
 
 2026-10-20 PRE-DOWNLOAD-AUDIT 執行中：本機92977b77已修6類根因，新增37項測試；full003 1865PASS／0runtime，full004 1877斷言PASS但1runtime保留FAIL，full0051886項尚在執行。最新實際X11 GUI19PASS／11PNG；全部81查重候選判讀，未自動全庫重構。原始11798診斷保留，精確範圍校正撤回297筆證據，剩餘未審與新38筆另列。文字規則確認期間草稿切換root7已實際重現2FAIL／1ERROR，修正待full005保持來源不變後執行。全部僅本機checkpoint，沒有遠端驗證或新收費服務。
+
+2026-10-20 PRE-DOWNLOAD-AUDIT checkpoint：10類根因修正；11798原始診斷0未審，所有原始指紋/出現次數不變。Root7 modal100PASS、Root4 read-view93PASS；有效雙SQLite舊版5FAIL、修後6PASS，錯fixture/錯cwd結果明確拒絕。最後1920全套與最終9profiles/27capture/19native尚未完成，不能提前結案。來源c3885382；本機保存，無遠端寫入/新付費服務。
