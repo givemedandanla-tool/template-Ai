@@ -1,0 +1,89 @@
+{
+  "checkouts": [
+    {
+      "name": "givemedandanla-tool/template-Ai",
+      "host": "github.com",
+      "commit": "6ce180c53e2f36f87f8ae185c43993c5f54fea29",
+      "mount_path": "template-Ai",
+      "classification": "PROJECT",
+      "git_metadata": "template-Ai/.git"
+    },
+    {
+      "name": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "host": "github.com",
+      "commit": "56ea9cf174ed86786187daa9de0e6247cb0747e4",
+      "mount_path": "template-ai-gui-tools/upstream/ui-ux-pro-max",
+      "classification": "GUI_TOOL_DEPENDENCY",
+      "git_metadata": "template-ai-gui-tools/upstream/ui-ux-pro-max/.git"
+    }
+  ],
+  "errors": [],
+  "known_dependency_build_cache_pruning": [
+    {
+      "path": ".cache",
+      "reason": "Known environment dependency/download cache"
+    },
+    {
+      "path": "template-Ai/.checkpoints",
+      "reason": "Known checkpoint and synthetic verification cache"
+    },
+    {
+      "path": "template-Ai/.venv",
+      "reason": "Known project Python dependency environment"
+    },
+    {
+      "path": "template-Ai/__pycache__",
+      "reason": "Known Python bytecode cache"
+    },
+    {
+      "path": "template-Ai/docs/dev/gui_tooling/__pycache__",
+      "reason": "Known Python bytecode cache"
+    },
+    {
+      "path": "template-Ai/docs/dev/gui_tooling/vendor/ui-ux-pro-max/scripts/__pycache__",
+      "reason": "Known Python bytecode cache"
+    },
+    {
+      "path": "template-Ai/template_ai/__pycache__",
+      "reason": "Known Python bytecode cache"
+    },
+    {
+      "path": "template-Ai/tests/__pycache__",
+      "reason": "Known Python bytecode cache"
+    },
+    {
+      "path": "template-Ai/tools/__pycache__",
+      "reason": "Known Python bytecode cache"
+    }
+  ],
+  "symlink_directories": [
+    {
+      "path": "template-Ai/.agents/skills/template-ai-gui",
+      "target": "/workspace/template-Ai/docs/dev/gui_tooling",
+      "direct_git_metadata": false
+    },
+    {
+      "path": "template-Ai/.agents/skills/template-ai-gui-code-review",
+      "target": "/workspace/template-Ai/docs/dev/gui_tooling/skills/gui-code-review",
+      "direct_git_metadata": false
+    },
+    {
+      "path": "template-Ai/.agents/skills/template-ai-qt-interaction-review",
+      "target": "/workspace/template-Ai/docs/dev/gui_tooling/skills/qt-interaction-review",
+      "direct_git_metadata": false
+    },
+    {
+      "path": "template-Ai/.agents/skills/template-ai-desktop-visual-review",
+      "target": "/workspace/template-Ai/docs/dev/gui_tooling/skills/desktop-visual-review",
+      "direct_git_metadata": false
+    }
+  ],
+  "excluded_nonrepositories": [
+    {
+      "path": ".git",
+      "reason": "Empty directory without Git HEAD/config/objects;not a repository"
+    }
+  ],
+  "discovery_complete": true,
+  "scope": "Complete selected workspace walk including hidden directories and linked Git markers;only explicit dependency/bytecode caches pruned;no secret values read"
+}
