@@ -1,16 +1,26 @@
 {
   "status": "RUNNING",
   "source_base": "83908944a907804a18a1d85feadddbc780644e4a",
-  "phase": "0/1",
+  "phase": "1/2; full regression concurrently running",
   "original_diagnostics": 11798,
   "classified_tool_limitations": 888,
   "unreviewed": 10910,
-  "confirmed_defects": 1,
+  "confirmed_defects": 2,
   "fixed_defects": 0,
   "new_test_execution": null,
-  "original_1850_rerun": false,
-  "next": "Run complete isolated regression for namespace root fix; continue diagnostic root triage and all plan phases",
+  "original_1850_rerun": "RUNNING (1856 planned including 6 new)",
+  "next": "Continue per-root diagnostics and clone review; inspect actual full-regression failures before final verification",
   "provenance": "LOCAL_ONLY",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
-  "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending"
+  "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
+  "diagnostic_statuses": {
+    "UNREVIEWED": 6889,
+    "TOOL_LIMITATION": 1728,
+    "TYPE_CONTRACT_GAP": 3181
+  },
+  "fixed_defects_pending_full_regression": 2,
+  "new_targeted_tests": {
+    "PASS": 6
+  },
+  "source_fix_commit": "045517e"
 }
