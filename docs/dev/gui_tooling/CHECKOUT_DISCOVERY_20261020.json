@@ -1,0 +1,41 @@
+{
+  "checkouts": [
+    {
+      "name": "givemedandanla-tool/template-Ai",
+      "host": "github.com",
+      "commit": "648ad72d43f06b9df106abaf699948f94c120869",
+      "mount_path": "template-Ai",
+      "classification": "PROJECT"
+    },
+    {
+      "name": "nextlevelbuilder/ui-ux-pro-max-skill",
+      "host": "github.com",
+      "commit": "56ea9cf174ed86786187daa9de0e6247cb0747e4",
+      "mount_path": "template-ai-gui-tools/upstream/ui-ux-pro-max",
+      "classification": "GUI_TOOL_DEPENDENCY"
+    }
+  ],
+  "errors": [],
+  "known_dependency_build_cache_pruning": [
+    ".cache",
+    "template-Ai/.venv",
+    "template-Ai/.checkpoints",
+    "template-Ai/docs/dev/gui_tooling/vendor/ui-ux-pro-max/scripts/__pycache__",
+    "template-Ai/template_ai/__pycache__",
+    "template-Ai/tests/__pycache__",
+    "template-Ai/tools/__pycache__"
+  ],
+  "symlink_directories": [
+    {
+      "path": "template-Ai/.agents/skills/template-ai-gui",
+      "target": "/workspace/template-Ai/docs/dev/gui_tooling",
+      "direct_git_metadata": false
+    }
+  ],
+  "excluded_nonrepositories": [
+    {
+      "path": "/workspace/.git",
+      "reason": "Empty protected directory;no HEAD/config/objects;not a Git or unborn repository"
+    }
+  ]
+}
