@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
   "active_task": "INPUT_INTEGRATION_AND_GUI_DESIGN_TOOLING_COMPLETE",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-INPUT-CAPTURE-SOURCE.receipt.json",
-  "last_confirmed_commit": "75358e0c331fa46c9f4df1d549316145c4452efb",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-INPUT-GUI-FINAL.receipt.json",
+  "last_confirmed_commit": "f033ecb17b5b2a92db4b6ca3fa54ea1ab1e8b93a",
   "latest_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -46,9 +46,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261020-INPUT-GUI-FINAL"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-BASELINE.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-INPUT-GUI-FINAL.json",
@@ -418,7 +416,7 @@
   "pending_revalidation_ids": [],
   "last_formal_validation": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "historical_catalog_receipt": "docs/checkpoints/CP-20261015-CATALOG-VERIFIED.receipt.json",
-  "publication_status": "FINAL_INPUT_GUI_CHECKPOINT_PENDING_NATIVE_GIT_READBACK",
+  "publication_status": "REMOTE_VERIFIED_INPUT_INTEGRATION_AND_GUI_TOOLING_CHECKPOINT",
   "cloud_environment_configuration": {
     "status": "DRAFT_SAVED_AND_READ_BACK_REQUIRES_PUBLISH",
     "receipt": "docs/dev/CLOUD_CONFIG_DRAFT_RECEIPT.json",
@@ -1457,5 +1455,6 @@
     "clean_tool_root_rebuild": "PASS",
     "product_ui_visual_redesign": "PLANNED_NOT_DELIVERED",
     "configuration_draft": "SAVED_REQUIRES_PUBLISH;CURRENT_INSTANCE_ALREADY_VERIFIED"
-  }
+  },
+  "final_publication_scope": "Native Git fresh fetch and every checkpoint blob verified;receipt and updated STATE independently read back after publishing"
 }
