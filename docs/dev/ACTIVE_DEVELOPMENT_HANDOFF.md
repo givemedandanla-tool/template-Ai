@@ -1,6 +1,6 @@
 # 最新接手：最後1921全套與交付仍在執行
 
-目前程式修正392fd99e5217af41fa71e5f12d0228fa4b963615，最後full010規劃1921（原1850+71），兩個獨立Qt模組程序並行，全球最多2重型worker。full009在848案例後因新增讀取保護的實際關閉後回呼問題中斷，不算完整PASS。RuleReviewPanel savepoint原在try外會ProgrammingError，現移入既有try/except/finally；有效實際ownedMainWindow.close+localQEventLoop回呼先1FAIL，修後7PASS及相關94PASS/7健康/0runtime。初次processEvents-only probe沒執行回呼，標無效，不能引用。root分類仍10，不是新增父題。最後完整歷史full0051886PASS；006273/007637/008115/009848均中斷。
+目前程式修正392fd99e5217af41fa71e5f12d0228fa4b963615，最後full010已1921PASS（原1850+71）/252健康/0runtime/來源未變，來源65f75f37；兩個獨立Qt模組程序、沒有合併Qt。現在stock003/native006正執行，全球最多2重型worker。full009在848案例後因新增讀取保護的實際關閉後回呼問題中斷，不算完整PASS。RuleReviewPanel savepoint原在try外會ProgrammingError，現移入既有try/except/finally；有效實際ownedMainWindow.close+localQEventLoop回呼先1FAIL，修後7PASS及相關94PASS/7健康/0runtime。初次processEvents-only probe沒執行回呼，標無效，不能引用。root分類仍10，不是新增父題。最後current完整只有full010；歷史full0051886PASS；006273/007637/008115/009848均中斷。
 
 原11798逐筆判讀/指紋次數/證據引用完整：9187契約、1856工具、740修正連動、15外部；0未審。fresh002 union11332/394新變體0未審是前版；fresh0039profiles已完成，union11335/397新增變體全審，0未審，含runtime-only；原基準不變。完全7未增加、近似83全審。825條款817有案例連結，8全屬原PARTIAL/DEFERRED外部，有逐條原因。正式Gate仍因歷史來源過期FAIL，新來源缺真實GitHub讀回；不得偽造或關Gate。
 

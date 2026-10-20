@@ -1,15 +1,15 @@
 {
   "status": "RUNNING",
   "source_base": "83908944a907804a18a1d85feadddbc780644e4a",
-  "phase": "Final0101921 in progress; all397 fresh003new/variant reviewed;83near+7exact decisions complete",
+  "phase": "Full0101921PASS/252healthy/0runtime; same-code stock003/native006 running; package pending",
   "original_diagnostics": 11798,
   "classified_tool_limitations": 1824,
   "unreviewed": 0,
   "confirmed_defects": 10,
   "fixed_defects": 10,
   "new_test_execution": null,
-  "original_1850_rerun": "Last complete1886PASS; full008 interrupted115 due additional read-view SQL roots, never full PASS",
-  "next": "Finish full010; same-source stock003/native006; bind matrices and final/report/governance; commit and actual isolated restore ZIP",
+  "original_1850_rerun": "Preserved and all PASS in source65f75f37",
+  "next": "Finish stock003/native006; refresh current screenshots; final governance/report/checkpoint; commit+actual isolated restore ZIP",
   "provenance": "LOCAL_ONLY",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
   "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
@@ -170,14 +170,7 @@
     "after": "100PASS/7healthy/0runtime/source unchanged"
   },
   "expected_final_catalog": 1921,
-  "final_regression_status": {
-    "run": "full-regression-final-010",
-    "workers": 2,
-    "completed": 644,
-    "passed": 644,
-    "failed_ids": [],
-    "planned": 1921
-  },
+  "final_regression_status": "PASS_FULL010_CURRENT_CODE",
   "source_read_view_fix": "20e347c401584286c58b6909e039713cae510e35",
   "read_view_related": "93PASS/7healthy/0runtime",
   "native_gui_final004": "19PASS/source unchanged on62b2 before read-view fix; current final repeat pending",
@@ -198,5 +191,22 @@
   "decorator_type_check": "snapshot-signature-proof.json: isolated wrong-type call rejected; ParamSpec preserves public signature",
   "requirements_gap_disposition": "825 clauses:817 case-linked,8 prior partial/deferred external clauses separately justified;0unreviewed gaps",
   "last_full009": "INTERRUPTED_NOT_FULL_PASS848 completed; introduced rule savepoint error transport fixed before final qualification",
-  "root4_last_integration": "read-view-close-callback-proof.json: actual after-close queued callback1FAIL before,7PASS after;94relatedPASS"
+  "root4_last_integration": "read-view-close-callback-proof.json: actual after-close queued callback1FAIL before,7PASS after;94relatedPASS",
+  "final_regression": {
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "source_commit": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
+    "software_execution": "PASS",
+    "planned": 1921,
+    "completed": 1921,
+    "statuses": {
+      "PASS": 1921
+    },
+    "modules": 252,
+    "healthy_modules": 252,
+    "runtime_errors": 0,
+    "source_unchanged_during_run": true,
+    "original_test_ids_preserved": true,
+    "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
+    "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
+  }
 }

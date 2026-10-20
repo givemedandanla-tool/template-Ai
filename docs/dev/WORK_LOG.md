@@ -1715,3 +1715,5 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 2026-10-20 PRE-DOWNLOAD-AUDIT checkpoint：10類根因修正；11798原始診斷0未審，所有原始指紋/出現次數不變。Root7 modal100PASS、Root4 read-view93PASS；有效雙SQLite舊版5FAIL、修後6PASS，錯fixture/錯cwd結果明確拒絕。最後1920全套與最終9profiles/27capture/19native尚未完成，不能提前結案。來源c3885382；本機保存，無遠端寫入/新付費服務。
 
 2026-10-20T23:19:57.047390+00:00 查證仍執行：full009848中斷以修正新讀取savepoint外層錯誤處理遺漏；真實關閉後回呼1FAIL→7PASS、相關94PASS。來源392fd99e5217af41fa71e5f12d0228fa4b963615，最後full0101921改用既有雙owned程序隔離驗證；不合併Qt程序、不新增付費計算。最後current GUI/報告/恢復包尚待完成。
+
+2026-10-20T23:54:33.574737+00:00 最後完整回歸FULL010：來源65f75f37，1921PASS/252健康/0runtime/原1850全保留/程式未變。Full009848是中斷，未混充。最後stock003/native006正在執行，接續同源報告與實際ZIP還原。未推送或啟用新收費能力。

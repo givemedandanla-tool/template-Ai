@@ -62,6 +62,13 @@ def main():
   for name,info in records.items():
    if info['state']=='PRESENT':
     path=ROOT/name;data=os.readlink(path).encode() if info['mode']=='120000' else path.read_bytes();archive.writestr('overlay/'+name,data)
+ with zipfile.ZipFile(target) as checked:assert checked.testzip() is None,'ZIP CRC verification failed'
  receipt=dict(status='LOCAL_SAVED_AND_RESTORE_VERIFIED',head=head,base=BASE,zip=target.name,bytes=target.stat().st_size,sha256=sha(target.read_bytes()),manifest_sha256=sha((out/'manifest.json').read_bytes()),restore=restore,remote='NOT_PUSHED_COST_UNKNOWN',budget='No new paid feature/trial/agent/API/runner; account bill not inspected')
+ if target.stat().st_size>30*1024*1024:
+  lean=out/'template-Ai-audit-resume.zip'
+  with zipfile.ZipFile(lean,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as archive:
+   archive.write(bundle,bundle.name);archive.write(out/'manifest.json','manifest.json');archive.writestr('RESTORE_RECEIPT.json',json.dumps(proof_receipt,ensure_ascii=False,indent=2)+'\n');archive.writestr('READ_ME_繁體中文.txt','較小的Git歷史接手包；不是EXE。需要已持有manifest的base提交，請讓Codex讀取manifest後將history.bundle讀入隔離分支並核對精確head。此小包不含changes.patch或overlay；完整還原包另有提供。來源檔已用同head binary patch在隔離資料夾還原並逐hash核對，Git bundle前置與heads亦已驗證。不要直接覆蓋未保存工作。\n')
+  with zipfile.ZipFile(lean) as checked:assert checked.testzip() is None
+  receipt['smaller_resume_package']=dict(file=lean.name,bytes=lean.stat().st_size,sha256=sha(lean.read_bytes()),kind='BASE_RELATIVE_GIT_HISTORY_AND_MANIFEST_NO_OVERLAY',requires_base=BASE)
  (out/'receipt.json').write_text(json.dumps(receipt,ensure_ascii=False,indent=2)+'\n');print(json.dumps(receipt))
 if __name__=='__main__':main()

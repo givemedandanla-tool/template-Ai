@@ -1,0 +1,73 @@
+[
+  {
+    "id": "STOCK-CAPTURE-01",
+    "script": "tools/validate_first_version.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/validate_first_version.py",
+      "--skip-tests",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/audit-stock-final-003",
+      "--dpi",
+      "96"
+    ],
+    "deadline_seconds": 180,
+    "seconds": 47.88144083300722,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "01-validate_first_version.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-02",
+    "script": "tools/capture_next_twenty.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_next_twenty.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/audit-stock-final-003"
+    ],
+    "deadline_seconds": 90,
+    "seconds": 4.539600741001777,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "02-capture_next_twenty.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-03",
+    "script": "tools/capture_next_twentyeight.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_next_twentyeight.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/audit-stock-final-003"
+    ],
+    "deadline_seconds": 90,
+    "seconds": 15.026473981008166,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "03-capture_next_twentyeight.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-04",
+    "script": "tools/capture_remaining28.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_remaining28.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/audit-stock-final-003"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 43.1582433799922,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "04-capture_remaining28.log",
+    "status": "PASS"
+  }
+]

@@ -1,0 +1,4760 @@
+{
+  "source": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
+  "count": 679,
+  "qualification": "Static signal/callback inventory, not proof every signal was separately triggered; actual native/stock captures recorded separately",
+  "connections": [
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 28,
+      "signal": "self.index_mode.currentIndexChanged",
+      "target": "self.rebuild_index",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 28,
+      "signal": "self.index_tree.itemSelectionChanged",
+      "target": "self.from_tree",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 29,
+      "signal": "self.objects.itemSelectionChanged",
+      "target": "self.from_list",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 30,
+      "signal": "self.canvas.selection_ids",
+      "target": "self.select",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 30,
+      "signal": "self.canvas.drag_proposal",
+      "target": "self.move",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 30,
+      "signal": "self.canvas.rectangle",
+      "target": "self.add",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 31,
+      "signal": "self.canvas.preview_proposal",
+      "target": "self.preview_move",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 46,
+      "signal": "button.clicked",
+      "target": "fn",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 41,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "line": 242,
+      "signal": "self.comparison.selection_changed",
+      "target": "lambda identity: self.select([identity])",
+      "source_sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/automatic_training_dialog.py",
+      "line": 26,
+      "signal": "self.progress_signal.updated",
+      "target": "self.render",
+      "source_sha256": "58396edad07826184c3f23c1405116af64a811246721bbc2951b4cd095981e11"
+    },
+    {
+      "path": "template_ai/automatic_training_dialog.py",
+      "line": 27,
+      "signal": "self.progress_signal.scanned",
+      "target": "self.scan_progress",
+      "source_sha256": "58396edad07826184c3f23c1405116af64a811246721bbc2951b4cd095981e11"
+    },
+    {
+      "path": "template_ai/automatic_training_dialog.py",
+      "line": 44,
+      "signal": "button.clicked",
+      "target": "fn",
+      "source_sha256": "58396edad07826184c3f23c1405116af64a811246721bbc2951b4cd095981e11"
+    },
+    {
+      "path": "template_ai/automatic_training_dialog.py",
+      "line": 41,
+      "signal": "dispatcher.progress",
+      "target": "self.queued_progress",
+      "source_sha256": "58396edad07826184c3f23c1405116af64a811246721bbc2951b4cd095981e11"
+    },
+    {
+      "path": "template_ai/automatic_training_dialog.py",
+      "line": 41,
+      "signal": "dispatcher.finished",
+      "target": "self.queued_finished",
+      "source_sha256": "58396edad07826184c3f23c1405116af64a811246721bbc2951b4cd095981e11"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 42,
+      "signal": "self.timer.timeout",
+      "target": "self.tick",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 123,
+      "signal": "self.password.textChanged",
+      "target": "self.invalidate_restore",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 124,
+      "signal": "self.remember.toggled",
+      "target": "self.remember_changed",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 129,
+      "signal": "cancel.clicked",
+      "target": "self.cancel_work",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 130,
+      "signal": "close.clicked",
+      "target": "self.reject",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 131,
+      "signal": "self.phase",
+      "target": "self.show_phase",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 131,
+      "signal": "self.scheduler.phase",
+      "target": "self.show_phase",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 132,
+      "signal": "self.scheduler.changed",
+      "target": "self.show_schedule_status",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 135,
+      "signal": "button.clicked",
+      "target": "action",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 141,
+      "signal": "self.sources.toggled",
+      "target": "self.invalidate_backup",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 142,
+      "signal": "self.fonts.toggled",
+      "target": "self.invalidate_backup",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 146,
+      "signal": "self.limit.currentIndexChanged",
+      "target": "self.invalidate_backup",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 155,
+      "signal": "self.archive.textChanged",
+      "target": "self.archive_changed",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 156,
+      "signal": "self.trusted.toggled",
+      "target": "self.invalidate_restore",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 157,
+      "signal": "self.mode.currentIndexChanged",
+      "target": "self.invalidate_restore",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "line": 140,
+      "signal": "check.toggled",
+      "target": "self.invalidate_backup",
+      "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/backup_policy.py",
+      "line": 110,
+      "signal": "sqlite3",
+      "target": "probe",
+      "source_sha256": "6f6b11a32907e26b0745c50999cb751c6c2829b90c3cba8b0faa0839055b9392"
+    },
+    {
+      "path": "template_ai/backup_service.py",
+      "line": 33,
+      "signal": "sqlite3",
+      "target": "(root / 'library.sqlite3').resolve().as_uri() + '?mode=ro'",
+      "source_sha256": "835d277cae0b405303ecff9abc1021b015d1bd402d7bfc61ec54d2ff9541e674"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 23,
+      "signal": "self.choose_files.clicked",
+      "target": "self.select_files",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 24,
+      "signal": "self.choose_folder.clicked",
+      "target": "self.select_folder",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 26,
+      "signal": "self.scan_button.clicked",
+      "target": "self.scan",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 30,
+      "signal": "self.start_button.clicked",
+      "target": "self.start_confirmed",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 31,
+      "signal": "self.cancel_button.clicked",
+      "target": "self.cancel",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 32,
+      "signal": "self.history.currentIndexChanged",
+      "target": "self.load_history",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 32,
+      "signal": "self.resume_button.clicked",
+      "target": "self.resume",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 33,
+      "signal": "self.locate_button.clicked",
+      "target": "self.locate",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 34,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "line": 34,
+      "signal": "self.page.valueChanged",
+      "target": "self.reset_input",
+      "source_sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_format_review_dialog.py",
+      "line": 21,
+      "signal": "self.inspect_button.clicked",
+      "target": "self.inspect",
+      "source_sha256": "b4395b804f45bd4621e9590a2dfb32ae2e29ef53def20f9bbcdd756675a6b865"
+    },
+    {
+      "path": "template_ai/batch_format_review_dialog.py",
+      "line": 21,
+      "signal": "self.detail_button.clicked",
+      "target": "self.open_detail",
+      "source_sha256": "b4395b804f45bd4621e9590a2dfb32ae2e29ef53def20f9bbcdd756675a6b865"
+    },
+    {
+      "path": "template_ai/batch_format_review_dialog.py",
+      "line": 23,
+      "signal": "self.confirm_button.clicked",
+      "target": "self.confirm",
+      "source_sha256": "b4395b804f45bd4621e9590a2dfb32ae2e29ef53def20f9bbcdd756675a6b865"
+    },
+    {
+      "path": "template_ai/batch_format_review_dialog.py",
+      "line": 23,
+      "signal": "cancel.clicked",
+      "target": "self.reject",
+      "source_sha256": "b4395b804f45bd4621e9590a2dfb32ae2e29ef53def20f9bbcdd756675a6b865"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 252,
+      "signal": "self.batch_progress",
+      "target": "self.progress",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 252,
+      "signal": "self.scope.currentIndexChanged",
+      "target": "self.reload",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 252,
+      "signal": "self.search.textChanged",
+      "target": "self.filter_rows",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 252,
+      "signal": "self.state_filter.currentIndexChanged",
+      "target": "self.filter_rows",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 252,
+      "signal": "self.table.itemChanged",
+      "target": "self.filter_rows",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 260,
+      "signal": "self.ratio.valueChanged",
+      "target": "self.update_counts",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 266,
+      "signal": "self.graphic_button.clicked",
+      "target": "self.graphic_preview",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 267,
+      "signal": "self.table.cellDoubleClicked",
+      "target": "lambda *_: self.locate()",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 251,
+      "signal": "button.clicked",
+      "target": "slot",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 253,
+      "signal": "control.valueChanged if isinstance(control, QDoubleSpinBox) else control.currentIndexChanged",
+      "target": "self.update_counts",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 255,
+      "signal": "button.clicked",
+      "target": "slot",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "line": 264,
+      "signal": "button.clicked",
+      "target": "slot",
+      "source_sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/candidate_edit.py",
+      "line": 168,
+      "signal": "self.current_canvas.selected",
+      "target": "self.canvas_selected",
+      "source_sha256": "5f013def57dd9d46b427ad0c81e9b4a0e7101105f02d35cda589e157daa74fd0"
+    },
+    {
+      "path": "template_ai/candidate_edit.py",
+      "line": 174,
+      "signal": "self.objects.itemSelectionChanged",
+      "target": "self.object_selected",
+      "source_sha256": "5f013def57dd9d46b427ad0c81e9b4a0e7101105f02d35cda589e157daa74fd0"
+    },
+    {
+      "path": "template_ai/candidate_edit.py",
+      "line": 189,
+      "signal": "manager.completed",
+      "target": "self.edit_completed",
+      "source_sha256": "5f013def57dd9d46b427ad0c81e9b4a0e7101105f02d35cda589e157daa74fd0"
+    },
+    {
+      "path": "template_ai/candidate_edit.py",
+      "line": 189,
+      "signal": "manager.failed",
+      "target": "self.edit_failed",
+      "source_sha256": "5f013def57dd9d46b427ad0c81e9b4a0e7101105f02d35cda589e157daa74fd0"
+    },
+    {
+      "path": "template_ai/candidate_edit.py",
+      "line": 189,
+      "signal": "manager.preview_ready",
+      "target": "self.comparison_ready",
+      "source_sha256": "5f013def57dd9d46b427ad0c81e9b4a0e7101105f02d35cda589e157daa74fd0"
+    },
+    {
+      "path": "template_ai/candidate_edit.py",
+      "line": 182,
+      "signal": "button.clicked",
+      "target": "callback",
+      "source_sha256": "5f013def57dd9d46b427ad0c81e9b4a0e7101105f02d35cda589e157daa74fd0"
+    },
+    {
+      "path": "template_ai/candidate_edit.py",
+      "line": 186,
+      "signal": "button.clicked",
+      "target": "callback",
+      "source_sha256": "5f013def57dd9d46b427ad0c81e9b4a0e7101105f02d35cda589e157daa74fd0"
+    },
+    {
+      "path": "template_ai/candidate_edit_dispatch.py",
+      "line": 41,
+      "signal": "self.timer.timeout",
+      "target": "self.tick",
+      "source_sha256": "9ab13e1b0e2793b7cb358cb8ac2e73bd64c689cbe34e4d6611791345a650ce06"
+    },
+    {
+      "path": "template_ai/candidate_results.py",
+      "line": 140,
+      "signal": "self.refresh_button.clicked",
+      "target": "self.refresh",
+      "source_sha256": "39e9e27b4c0a6f94ad64b7e0bef0e6391d49217e7e26dd7d42e3ae2fc7538a3c"
+    },
+    {
+      "path": "template_ai/candidate_results.py",
+      "line": 144,
+      "signal": "self.watch.timeout",
+      "target": "self.check_current",
+      "source_sha256": "39e9e27b4c0a6f94ad64b7e0bef0e6391d49217e7e26dd7d42e3ae2fc7538a3c"
+    },
+    {
+      "path": "template_ai/candidate_results.py",
+      "line": 139,
+      "signal": "button.clicked",
+      "target": "lambda checked=False, s=side: self.select_side(s)",
+      "source_sha256": "39e9e27b4c0a6f94ad64b7e0bef0e6391d49217e7e26dd7d42e3ae2fc7538a3c"
+    },
+    {
+      "path": "template_ai/candidate_results.py",
+      "line": 143,
+      "signal": "combo.currentIndexChanged",
+      "target": "self.refresh",
+      "source_sha256": "39e9e27b4c0a6f94ad64b7e0bef0e6391d49217e7e26dd7d42e3ae2fc7538a3c"
+    },
+    {
+      "path": "template_ai/candidate_sync_dialog.py",
+      "line": 27,
+      "signal": "self.preview_button.clicked",
+      "target": "self.preview",
+      "source_sha256": "3d6775b388c3b0025a0092972aeabbb4f1856301218b88cc3b79cb0d0d04053b"
+    },
+    {
+      "path": "template_ai/candidate_sync_dialog.py",
+      "line": 27,
+      "signal": "self.apply_button.clicked",
+      "target": "self.apply",
+      "source_sha256": "3d6775b388c3b0025a0092972aeabbb4f1856301218b88cc3b79cb0d0d04053b"
+    },
+    {
+      "path": "template_ai/candidate_sync_dialog.py",
+      "line": 27,
+      "signal": "self.cancel_button.clicked",
+      "target": "self.cancel",
+      "source_sha256": "3d6775b388c3b0025a0092972aeabbb4f1856301218b88cc3b79cb0d0d04053b"
+    },
+    {
+      "path": "template_ai/catalog_preview.py",
+      "line": 44,
+      "signal": "job.signals.done",
+      "target": "self.completed",
+      "source_sha256": "00e56f82ae18ee6e26c4a86638443c557313b672befc6df55f15e2c61245ce4e"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 25,
+      "signal": "self.controller.result",
+      "target": "self.preview_done",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 48,
+      "signal": "self.query.textChanged",
+      "target": "self.filter_changed",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 48,
+      "signal": "self.state.currentIndexChanged",
+      "target": "self.filter_changed",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 48,
+      "signal": "self.version.currentIndexChanged",
+      "target": "self.filter_changed",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 48,
+      "signal": "self.mode.currentIndexChanged",
+      "target": "self.change_view",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 48,
+      "signal": "self.tree.currentItemChanged",
+      "target": "self.filter_changed",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 49,
+      "signal": "self.items.itemSelectionChanged",
+      "target": "self.selection_changed",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 49,
+      "signal": "self.items.currentItemChanged",
+      "target": "self.current_changed",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 53,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "line": 245,
+      "signal": "buttons.rejected",
+      "target": "dialog.reject",
+      "source_sha256": "b39b3bbdc4057b157be345a4a24a9a3fe87423672a5121bb50f1930ef2398512"
+    },
+    {
+      "path": "template_ai/comparison_view.py",
+      "line": 86,
+      "signal": "self.sync_enabled.toggled",
+      "target": "lambda enabled: self.synchronize(self.views[0].shared_center, self.views[0].shared_zoom) if enabled and self.views else None",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb"
+    },
+    {
+      "path": "template_ai/comparison_view.py",
+      "line": 87,
+      "signal": "self.zoom_input.valueChanged",
+      "target": "lambda value: self.synchronize(self.center, value)",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb"
+    },
+    {
+      "path": "template_ai/comparison_view.py",
+      "line": 88,
+      "signal": "self.zoom_slider.valueChanged",
+      "target": "lambda value: self.synchronize(self.center, 0.02 * 25000 ** (value / 1000))",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb"
+    },
+    {
+      "path": "template_ai/comparison_view.py",
+      "line": 97,
+      "signal": "self.objects.currentItemChanged",
+      "target": "lambda item, old: self.select_slot(item.data(Qt.UserRole)) if item else None",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb"
+    },
+    {
+      "path": "template_ai/comparison_view.py",
+      "line": 101,
+      "signal": "self.buttons.accepted",
+      "target": "self.accept",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb"
+    },
+    {
+      "path": "template_ai/comparison_view.py",
+      "line": 101,
+      "signal": "self.buttons.rejected",
+      "target": "self.reject",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb"
+    },
+    {
+      "path": "template_ai/comparison_view.py",
+      "line": 83,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb"
+    },
+    {
+      "path": "template_ai/comparison_view.py",
+      "line": 92,
+      "signal": "view.navigated",
+      "target": "lambda center, zoom, v=view: self.navigate(v, center, zoom)",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb"
+    },
+    {
+      "path": "template_ai/comparison_view.py",
+      "line": 92,
+      "signal": "view.picked",
+      "target": "self.select_slot",
+      "source_sha256": "12401885d0733d4cd3faddba6a43fcb0df2b4abe4724ef90f16da8cb3d9aebcb"
+    },
+    {
+      "path": "template_ai/coverage_closure_panel.py",
+      "line": 31,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "736154dee864ac5ec8d1327b6baacc624bf7b58afa87512461f9461e9210bf42"
+    },
+    {
+      "path": "template_ai/coverage_closure_panel.py",
+      "line": 47,
+      "signal": "button.clicked",
+      "target": "callback",
+      "source_sha256": "736154dee864ac5ec8d1327b6baacc624bf7b58afa87512461f9461e9210bf42"
+    },
+    {
+      "path": "template_ai/coverage_panel.py",
+      "line": 15,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "4ab9b3fdea5ce5e62f4570bac5b8986d2181c32b3e9a0fe3f0783c4ae597864f"
+    },
+    {
+      "path": "template_ai/coverage_panel.py",
+      "line": 15,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "4ab9b3fdea5ce5e62f4570bac5b8986d2181c32b3e9a0fe3f0783c4ae597864f"
+    },
+    {
+      "path": "template_ai/coverage_panel.py",
+      "line": 15,
+      "signal": "self.reload_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "4ab9b3fdea5ce5e62f4570bac5b8986d2181c32b3e9a0fe3f0783c4ae597864f"
+    },
+    {
+      "path": "template_ai/coverage_panel.py",
+      "line": 17,
+      "signal": "self.tree.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "4ab9b3fdea5ce5e62f4570bac5b8986d2181c32b3e9a0fe3f0783c4ae597864f"
+    },
+    {
+      "path": "template_ai/coverage_panel.py",
+      "line": 17,
+      "signal": "self.locate_button.clicked",
+      "target": "self.locate",
+      "source_sha256": "4ab9b3fdea5ce5e62f4570bac5b8986d2181c32b3e9a0fe3f0783c4ae597864f"
+    },
+    {
+      "path": "template_ai/custom_layout_dialog.py",
+      "line": 28,
+      "signal": "button.clicked",
+      "target": "fn",
+      "source_sha256": "5b0e256f8317e64e6010b740bb3a21f3d2ae32bddb278b38a5780adabd0f5173"
+    },
+    {
+      "path": "template_ai/customer_candidates_dialog.py",
+      "line": 52,
+      "signal": "self.table.currentCellChanged",
+      "target": "self.details_changed",
+      "source_sha256": "9e33e650aa072fb1652712ea1646a2ab99bab5aac3ab1fd15e042cdbacce8f0d"
+    },
+    {
+      "path": "template_ai/customer_candidates_dialog.py",
+      "line": 70,
+      "signal": "button.clicked",
+      "target": "action",
+      "source_sha256": "9e33e650aa072fb1652712ea1646a2ab99bab5aac3ab1fd15e042cdbacce8f0d"
+    },
+    {
+      "path": "template_ai/customer_candidates_dialog.py",
+      "line": 198,
+      "signal": "buttons.accepted",
+      "target": "dialog.accept",
+      "source_sha256": "9e33e650aa072fb1652712ea1646a2ab99bab5aac3ab1fd15e042cdbacce8f0d"
+    },
+    {
+      "path": "template_ai/customer_candidates_dialog.py",
+      "line": 199,
+      "signal": "buttons.rejected",
+      "target": "dialog.reject",
+      "source_sha256": "9e33e650aa072fb1652712ea1646a2ab99bab5aac3ab1fd15e042cdbacce8f0d"
+    },
+    {
+      "path": "template_ai/customer_catalog.py",
+      "line": 28,
+      "signal": "buttons.rejected",
+      "target": "self.reject",
+      "source_sha256": "84ff6b44ecd31a6e08e9dbf04ce5b36586ea93ed8096fa0f3c7b0fa7069279c9"
+    },
+    {
+      "path": "template_ai/customer_catalog.py",
+      "line": 29,
+      "signal": "self.finished",
+      "target": "lambda: self.catalog.close_previews()",
+      "source_sha256": "84ff6b44ecd31a6e08e9dbf04ce5b36586ea93ed8096fa0f3c7b0fa7069279c9"
+    },
+    {
+      "path": "template_ai/customer_dialog.py",
+      "line": 20,
+      "signal": "self.customers.itemSelectionChanged",
+      "target": "self.select",
+      "source_sha256": "13af3f1d180b24478c59bc27ef4e2d88432ff5a2683d995a7cdbcda43ec3050e"
+    },
+    {
+      "path": "template_ai/customer_dialog.py",
+      "line": 30,
+      "signal": "toggle.toggled",
+      "target": "self.identity_tools.setVisible",
+      "source_sha256": "13af3f1d180b24478c59bc27ef4e2d88432ff5a2683d995a7cdbcda43ec3050e"
+    },
+    {
+      "path": "template_ai/customer_dialog.py",
+      "line": 82,
+      "signal": "self.identity_preview.reviewed",
+      "target": "lambda pin: setattr(self, 'identity_viewed_pin', pin)",
+      "source_sha256": "13af3f1d180b24478c59bc27ef4e2d88432ff5a2683d995a7cdbcda43ec3050e"
+    },
+    {
+      "path": "template_ai/customer_dialog.py",
+      "line": 150,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "13af3f1d180b24478c59bc27ef4e2d88432ff5a2683d995a7cdbcda43ec3050e"
+    },
+    {
+      "path": "template_ai/customer_identity_dialog.py",
+      "line": 74,
+      "signal": "self.ack.toggled",
+      "target": "self.confirm.setEnabled",
+      "source_sha256": "ab9769417ee0cb95b9c12d88532639d2033a4d4332f65109fc705dc8af804a54"
+    },
+    {
+      "path": "template_ai/customer_identity_dialog.py",
+      "line": 74,
+      "signal": "self.confirm.clicked",
+      "target": "self.acknowledge",
+      "source_sha256": "ab9769417ee0cb95b9c12d88532639d2033a4d4332f65109fc705dc8af804a54"
+    },
+    {
+      "path": "template_ai/customer_identity_dialog.py",
+      "line": 75,
+      "signal": "close.clicked",
+      "target": "self.reject",
+      "source_sha256": "ab9769417ee0cb95b9c12d88532639d2033a4d4332f65109fc705dc8af804a54"
+    },
+    {
+      "path": "template_ai/customer_identity_dialog.py",
+      "line": 71,
+      "signal": "button.clicked",
+      "target": "fn",
+      "source_sha256": "ab9769417ee0cb95b9c12d88532639d2033a4d4332f65109fc705dc8af804a54"
+    },
+    {
+      "path": "template_ai/customer_sync_dialog.py",
+      "line": 36,
+      "signal": "button.clicked",
+      "target": "action",
+      "source_sha256": "e0df1214d6d9a835e9471bcc94b37d8774bdae9fd6067ae68d08d2f7824d092d"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 19,
+      "signal": "self.reload_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 20,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 20,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 20,
+      "signal": "self.preview_button.clicked",
+      "target": "self.preview",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 20,
+      "signal": "self.create_button.clicked",
+      "target": "self.create",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 22,
+      "signal": "self.dataset_combo.currentIndexChanged",
+      "target": "self.load_dataset",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 22,
+      "signal": "self.dataset_previous.clicked",
+      "target": "lambda: self.dataset_page(-200)",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 22,
+      "signal": "self.dataset_next.clicked",
+      "target": "lambda: self.dataset_page(200)",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 22,
+      "signal": "self.learn_button.clicked",
+      "target": "self.learn",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 80,
+      "signal": "job.signals.done",
+      "target": "done",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "line": 80,
+      "signal": "job.signals.error",
+      "target": "failed",
+      "source_sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/design_instances.py",
+      "line": 16,
+      "signal": "sqlite3",
+      "target": "(library.root / 'library.sqlite3').as_uri() + '?mode=ro'",
+      "source_sha256": "d3b7c8601c1cce003813992a5d74ba80a9fd2d2e42145b0c53fc13cd4a27ad6b"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 123,
+      "signal": "button.clicked",
+      "target": "lambda: self.attempt(action)",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 130,
+      "signal": "self.source_fields.currentIndexChanged",
+      "target": "lambda: self.load_source_runs()",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 174,
+      "signal": "self.canvas.requested",
+      "target": "lambda a, r, b: self.attempt(lambda: self.set_relation(a, r, b, background=True))",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 181,
+      "signal": "box.toggled",
+      "target": "self.result_details.setVisible",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 302,
+      "signal": "self.worker.progress",
+      "target": "self.training_progress",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 303,
+      "signal": "self.worker.completed",
+      "target": "self.training_completed",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 304,
+      "signal": "self.worker.failed",
+      "target": "self.training_failed",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 304,
+      "signal": "self.worker.finished",
+      "target": "self.worker_finished",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 403,
+      "signal": "self.solve_worker.completed",
+      "target": "self.solve_completed",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 403,
+      "signal": "self.solve_worker.failed",
+      "target": "self.solve_failed",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 404,
+      "signal": "self.solve_worker.progress",
+      "target": "self.solve_progress",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "line": 405,
+      "signal": "self.solve_worker.finished",
+      "target": "self.solve_finished",
+      "source_sha256": "89396b168a7f11f9386d95f0e5cdfb5df9fa58e189cd9d6ee1a0f5819483f72d"
+    },
+    {
+      "path": "template_ai/desktop_workspace.py",
+      "line": 54,
+      "signal": "result.clicked",
+      "target": "action",
+      "source_sha256": "2a803ee704b491d321e1ce6e2ce84939bcbd3d4b06b69c8b923abbdafb5c6fe5"
+    },
+    {
+      "path": "template_ai/desktop_workspace.py",
+      "line": 72,
+      "signal": "self.header.toggled",
+      "target": "self._apply",
+      "source_sha256": "2a803ee704b491d321e1ce6e2ce84939bcbd3d4b06b69c8b923abbdafb5c6fe5"
+    },
+    {
+      "path": "template_ai/desktop_workspace.py",
+      "line": 120,
+      "signal": "window.tabs.currentChanged",
+      "target": "self.mode_changed",
+      "source_sha256": "2a803ee704b491d321e1ce6e2ce84939bcbd3d4b06b69c8b923abbdafb5c6fe5"
+    },
+    {
+      "path": "template_ai/desktop_workspace.py",
+      "line": 121,
+      "signal": "window.inputs_invalidated",
+      "target": "self.invalidate_view",
+      "source_sha256": "2a803ee704b491d321e1ce6e2ce84939bcbd3d4b06b69c8b923abbdafb5c6fe5"
+    },
+    {
+      "path": "template_ai/desktop_workspace.py",
+      "line": 124,
+      "signal": "self.timer.timeout",
+      "target": "self.refresh",
+      "source_sha256": "2a803ee704b491d321e1ce6e2ce84939bcbd3d4b06b69c8b923abbdafb5c6fe5"
+    },
+    {
+      "path": "template_ai/diagnostic_dialog.py",
+      "line": 39,
+      "signal": "self.refresh_button.clicked",
+      "target": "self.refresh",
+      "source_sha256": "4f1fd83d3d0e0ed6bfa05f649da5da2bbca8bcfaa4a889a3e696e92eca039a1c"
+    },
+    {
+      "path": "template_ai/diagnostic_dialog.py",
+      "line": 40,
+      "signal": "self.save_button.clicked",
+      "target": "self.save",
+      "source_sha256": "4f1fd83d3d0e0ed6bfa05f649da5da2bbca8bcfaa4a889a3e696e92eca039a1c"
+    },
+    {
+      "path": "template_ai/diagnostic_dialog.py",
+      "line": 41,
+      "signal": "self.locate_button.clicked",
+      "target": "self.locate_selected",
+      "source_sha256": "4f1fd83d3d0e0ed6bfa05f649da5da2bbca8bcfaa4a889a3e696e92eca039a1c"
+    },
+    {
+      "path": "template_ai/diagnostic_dialog.py",
+      "line": 42,
+      "signal": "close.clicked",
+      "target": "self.reject",
+      "source_sha256": "4f1fd83d3d0e0ed6bfa05f649da5da2bbca8bcfaa4a889a3e696e92eca039a1c"
+    },
+    {
+      "path": "template_ai/diagnostic_dialog.py",
+      "line": 57,
+      "signal": "self.worker.signals.finished",
+      "target": "self.on_finished",
+      "source_sha256": "4f1fd83d3d0e0ed6bfa05f649da5da2bbca8bcfaa4a889a3e696e92eca039a1c"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 33,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 34,
+      "signal": "self.inspect_button.clicked",
+      "target": "self.inspect",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 34,
+      "signal": "self.cancel_button.clicked",
+      "target": "self.cancel",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 35,
+      "signal": "self.detail_button.clicked",
+      "target": "self.open_detail",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 35,
+      "signal": "self.locate_button.clicked",
+      "target": "self.locate",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 36,
+      "signal": "self.review_button.clicked",
+      "target": "self.confirm_review",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 38,
+      "signal": "self.review_actor.textChanged",
+      "target": "self.reviewer_changed",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 38,
+      "signal": "self.review_evidence.textChanged",
+      "target": "self.reviewer_changed",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 38,
+      "signal": "self.review_consent.toggled",
+      "target": "self.clear_review",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 40,
+      "signal": "window.inputs_invalidated",
+      "target": "self.invalidate",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 40,
+      "signal": "window.candidate_list.currentRowChanged",
+      "target": "self.invalidate",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 40,
+      "signal": "window.dpi.valueChanged",
+      "target": "self.invalidate",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 40,
+      "signal": "self.format.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 40,
+      "signal": "window.tabs.currentChanged",
+      "target": "self.mode_changed",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "line": 32,
+      "signal": "check.toggled",
+      "target": "self.draw_guides",
+      "source_sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/editor_settings.py",
+      "line": 53,
+      "signal": "buttons.accepted",
+      "target": "self.save",
+      "source_sha256": "1bfdbe5d972a502f01de01f7fe7f13247f3d4c731c93997648fd574033a91b51"
+    },
+    {
+      "path": "template_ai/editor_settings.py",
+      "line": 53,
+      "signal": "buttons.rejected",
+      "target": "self.reject",
+      "source_sha256": "1bfdbe5d972a502f01de01f7fe7f13247f3d4c731c93997648fd574033a91b51"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 23,
+      "signal": "self.search.textChanged",
+      "target": "self.reload",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 26,
+      "signal": "self.order.currentIndexChanged",
+      "target": "self.reload",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 29,
+      "signal": "self.filter.currentIndexChanged",
+      "target": "self.reload",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 30,
+      "signal": "self.reload_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 32,
+      "signal": "self.repair_button.clicked",
+      "target": "self.open_repair",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 33,
+      "signal": "self.logo_exceptions.clicked",
+      "target": "self.open_logo_exceptions",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 34,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 36,
+      "signal": "self.preview_button.clicked",
+      "target": "self.preview_retry",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 37,
+      "signal": "self.apply_button.clicked",
+      "target": "self.apply_retry",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 38,
+      "signal": "self.exclude_button.clicked",
+      "target": "lambda: self.change_status('EXCLUDE')",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 39,
+      "signal": "self.restore_button.clicked",
+      "target": "lambda: self.change_status('RESTORE')",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 40,
+      "signal": "self.locate_button.clicked",
+      "target": "self.locate",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 41,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "line": 120,
+      "signal": "self.runner.finished",
+      "target": "self.runner_closed",
+      "source_sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/family_compare.py",
+      "line": 37,
+      "signal": "self.overlay.toggled",
+      "target": "lambda checked: [self.load(pane) for pane in self.panes]",
+      "source_sha256": "216816e0fcaa9d6b346e933b98668eff58d65dc80f6a33ff352f0e2afdced587"
+    },
+    {
+      "path": "template_ai/family_compare.py",
+      "line": 38,
+      "signal": "buttons.rejected",
+      "target": "self.reject",
+      "source_sha256": "216816e0fcaa9d6b346e933b98668eff58d65dc80f6a33ff352f0e2afdced587"
+    },
+    {
+      "path": "template_ai/family_compare.py",
+      "line": 36,
+      "signal": "choices.currentIndexChanged",
+      "target": "lambda index, pane=pane: self.load(pane)",
+      "source_sha256": "216816e0fcaa9d6b346e933b98668eff58d65dc80f6a33ff352f0e2afdced587"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "line": 50,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "line": 60,
+      "signal": "self.run_choice.currentIndexChanged",
+      "target": "self.suggest_range",
+      "source_sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "line": 64,
+      "signal": "self.slots.currentIndexChanged",
+      "target": "self.load_slot",
+      "source_sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "line": 67,
+      "signal": "button.clicked",
+      "target": "lambda checked=False: self.attempt(action)",
+      "source_sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "line": 88,
+      "signal": "self.metrics.toggled",
+      "target": "self.scale.setEnabled",
+      "source_sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "line": 88,
+      "signal": "self.metrics.toggled",
+      "target": "self.tracking.setEnabled",
+      "source_sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "line": 92,
+      "signal": "self.word_review.toggled",
+      "target": "self.word.setEnabled",
+      "source_sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "line": 95,
+      "signal": "self.work_pt_review.toggled",
+      "target": "self.work_pt.setEnabled",
+      "source_sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "line": 134,
+      "signal": "self.label_measured.toggled",
+      "target": "self.label_pt.setEnabled",
+      "source_sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 82,
+      "signal": "button.clicked",
+      "target": "lambda checked=False: self.attempt(action)",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 116,
+      "signal": "self.families.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 134,
+      "signal": "self.draft_choice.currentIndexChanged",
+      "target": "lambda: self.attempt(self.load_draft)",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 141,
+      "signal": "self.roles.currentItemChanged",
+      "target": "self.role_selected",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 143,
+      "signal": "self.canvas.selection_ids",
+      "target": "self.canvas_selected",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 150,
+      "signal": "self.containers.currentCellChanged",
+      "target": "lambda *args: self.load_container()",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 155,
+      "signal": "self.semantic_role.currentIndexChanged",
+      "target": "self.load_semantic",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 181,
+      "signal": "self.patterns.currentItemChanged",
+      "target": "lambda item, old: self.attempt(lambda: self.show_pattern(item))",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 187,
+      "signal": "self.style_role.currentIndexChanged",
+      "target": "self.load_styles",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 210,
+      "signal": "self.case_choice.currentIndexChanged",
+      "target": "self.load_case",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 220,
+      "signal": "self.run_choice.currentIndexChanged",
+      "target": "self.show_run",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 764,
+      "signal": "self.worker.progress",
+      "target": "self.job_progress",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 765,
+      "signal": "self.worker.failed",
+      "target": "self.say",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "line": 766,
+      "signal": "self.worker.finished",
+      "target": "self.worker_finished",
+      "source_sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/font_candidate_dialog.py",
+      "line": 36,
+      "signal": "self.search_button.clicked",
+      "target": "self.search",
+      "source_sha256": "ea7bf8e428e073270124c48fe9a575a85ac455e67ee0597cdf4fd525deee576d"
+    },
+    {
+      "path": "template_ai/font_candidate_dialog.py",
+      "line": 49,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selection_changed",
+      "source_sha256": "ea7bf8e428e073270124c48fe9a575a85ac455e67ee0597cdf4fd525deee576d"
+    },
+    {
+      "path": "template_ai/font_candidate_dialog.py",
+      "line": 54,
+      "signal": "self.preview_button.clicked",
+      "target": "self.preview",
+      "source_sha256": "ea7bf8e428e073270124c48fe9a575a85ac455e67ee0597cdf4fd525deee576d"
+    },
+    {
+      "path": "template_ai/font_candidate_dialog.py",
+      "line": 56,
+      "signal": "self.review_button.clicked",
+      "target": "self.open_review",
+      "source_sha256": "ea7bf8e428e073270124c48fe9a575a85ac455e67ee0597cdf4fd525deee576d"
+    },
+    {
+      "path": "template_ai/font_candidate_dialog.py",
+      "line": 61,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "ea7bf8e428e073270124c48fe9a575a85ac455e67ee0597cdf4fd525deee576d"
+    },
+    {
+      "path": "template_ai/font_candidate_dialog.py",
+      "line": 64,
+      "signal": "signal",
+      "target": "self.invalidate",
+      "source_sha256": "ea7bf8e428e073270124c48fe9a575a85ac455e67ee0597cdf4fd525deee576d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 32,
+      "signal": "self.query.textChanged",
+      "target": "self.filter_rows",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 36,
+      "signal": "self.kind.currentIndexChanged",
+      "target": "self.filter_rows",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 39,
+      "signal": "self.health.currentIndexChanged",
+      "target": "self.filter_rows",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 40,
+      "signal": "self.refresh_button.clicked",
+      "target": "self.refresh",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 47,
+      "signal": "self.source_button.clicked",
+      "target": "self.choose_source_font",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 47,
+      "signal": "self.identity_button.clicked",
+      "target": "self.verify_source_identity",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 55,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selection_changed",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 66,
+      "signal": "self.analyze_button.clicked",
+      "target": "self.analyze",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 72,
+      "signal": "self.style_input.currentIndexChanged",
+      "target": "self.diagnostic_style_changed",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 74,
+      "signal": "self.candidates_button.clicked",
+      "target": "self.open_candidates",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 75,
+      "signal": "self.import_button.clicked",
+      "target": "self.import_font",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 76,
+      "signal": "self.rights_button.clicked",
+      "target": "self.attest_rights",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 77,
+      "signal": "self.repair_button.clicked",
+      "target": "self.repair_font",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 78,
+      "signal": "self.windows_button.clicked",
+      "target": "self.open_windows_workflow",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 79,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 45,
+      "signal": "control.currentIndexChanged",
+      "target": "self.filter_rows",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "line": 71,
+      "signal": "widget.textChanged if widget is self.text else widget.valueChanged",
+      "target": "self.diagnostic_inputs_changed",
+      "source_sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 37,
+      "signal": "self.fill_button.clicked",
+      "target": "self.fill_selected",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 38,
+      "signal": "self.check_button.clicked",
+      "target": "self.validate",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 39,
+      "signal": "self.refresh_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 47,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selection_changed",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 49,
+      "signal": "self.review_button.clicked",
+      "target": "self.review_selected",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 50,
+      "signal": "self.apply_button.clicked",
+      "target": "self.apply_selected",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 57,
+      "signal": "self.history.itemSelectionChanged",
+      "target": "self.history_selection",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 59,
+      "signal": "self.undo_button.clicked",
+      "target": "lambda: self.history_action('UNDO')",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 60,
+      "signal": "self.redo_button.clicked",
+      "target": "lambda: self.history_action('REDO')",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 61,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "line": 98,
+      "signal": "edit.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 116,
+      "signal": "self.scene().selectionChanged",
+      "target": "self.selection_changed",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 342,
+      "signal": "button.clicked",
+      "target": "action",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 375,
+      "signal": "self.tabs.currentChanged",
+      "target": "self.mode_changed",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 379,
+      "signal": "self.tabs.currentChanged",
+      "target": "self.sync_property_mode",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 380,
+      "signal": "self.template_stack.currentChanged",
+      "target": "self.sync_property_mode",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 501,
+      "signal": "self.source_combo.currentIndexChanged",
+      "target": "self.choose_source",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 520,
+      "signal": "self.work_combo.currentIndexChanged",
+      "target": "self.choose_work",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 534,
+      "signal": "self.train_canvas.command_requested",
+      "target": "lambda command: self.canvas_command(self.train_canvas, command)",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 535,
+      "signal": "self.train_canvas.command_status",
+      "target": "self.statusBar().showMessage",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 536,
+      "signal": "self.train_canvas.rectangle",
+      "target": "self.add_rectangle",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 537,
+      "signal": "self.train_canvas.selected",
+      "target": "self.select_slot",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 538,
+      "signal": "self.train_canvas.moved",
+      "target": "self.box_moved",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 543,
+      "signal": "self.slot_list.currentRowChanged",
+      "target": "self.list_selection",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 549,
+      "signal": "self.visual.toggled",
+      "target": "self.labels_changed",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 603,
+      "signal": "self.template_list.currentRowChanged",
+      "target": "self.choose_template",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 606,
+      "signal": "self.editor_tree.itemSelectionChanged",
+      "target": "self.editor_tree_selection",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 611,
+      "signal": "self.edit_canvas.command_requested",
+      "target": "lambda command: self.canvas_command(self.edit_canvas, command)",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 612,
+      "signal": "self.edit_canvas.command_status",
+      "target": "self.statusBar().showMessage",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 613,
+      "signal": "self.edit_canvas.selection_ids",
+      "target": "self.editor_selection",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 614,
+      "signal": "self.edit_canvas.drag_proposal",
+      "target": "self.editor_canvas_apply",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 615,
+      "signal": "self.edit_canvas.preview_proposal",
+      "target": "self.editor_canvas_preview",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 616,
+      "signal": "self.edit_canvas.rectangle",
+      "target": "self.add_rectangle",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 679,
+      "signal": "self.legacy_input_panel.toggled",
+      "target": "table_scroll.setVisible",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 684,
+      "signal": "self.people.itemChanged",
+      "target": "self.invalidate",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 697,
+      "signal": "self.companies.itemChanged",
+      "target": "self.invalidate",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 705,
+      "signal": "self.input_problems.itemClicked",
+      "target": "self.locate_input_problem",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 709,
+      "signal": "self.input_timer.timeout",
+      "target": "self.refresh_input_problems",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 718,
+      "signal": "self.candidate_list.currentRowChanged",
+      "target": "self.choose_candidate",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 730,
+      "signal": "self.recommended_button.clicked",
+      "target": "self.select_recommended_candidate",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 732,
+      "signal": "self.result_problem_items.itemClicked",
+      "target": "self.locate_result_problem",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 863,
+      "signal": "policy_button.clicked",
+      "target": "self.text_policy_editor",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 866,
+      "signal": "self.property_button.clicked",
+      "target": "self.apply_properties",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 869,
+      "signal": "self.property_object_tools.clicked",
+      "target": "self.object_tools",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 870,
+      "signal": "self.property_candidate_edit.clicked",
+      "target": "self.candidate_editor",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 871,
+      "signal": "self.property_problem.clicked",
+      "target": "lambda: self.fix_result_problem()",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 947,
+      "signal": "job.signals.done",
+      "target": "finished",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 948,
+      "signal": "job.signals.error",
+      "target": "failed",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 359,
+      "signal": "button.clicked",
+      "target": "lambda _, i=index: self.navigate_mode(i)",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 383,
+      "signal": "action.clicked",
+      "target": "lambda _, n=name: self.toggle_workspace_panel(n)",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 654,
+      "signal": "spin.valueChanged",
+      "target": "self.invalidate",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 723,
+      "signal": "view.currentItemChanged",
+      "target": "lambda item, previous: self.candidate_list.setCurrentRow(item.data(Qt.UserRole)) if item else None",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 815,
+      "signal": "section.toggled",
+      "target": "body.setVisible",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 1836,
+      "signal": "buttons.accepted",
+      "target": "dialog.accept",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 1837,
+      "signal": "buttons.rejected",
+      "target": "dialog.reject",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 1855,
+      "signal": "mode.currentIndexChanged",
+      "target": "refresh_actual",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "line": 2005,
+      "signal": "combo.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "d423f80e14b9a18ab4faf4d1dd4beb4d8314f79cfa3302284ca851f319f1bec4"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 66,
+      "signal": "self.detail_toggle.toggled",
+      "target": "self.details.setVisible",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 80,
+      "signal": "button.clicked",
+      "target": "lambda: self.attempt(action)",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 144,
+      "signal": "dialog.finished",
+      "target": "lambda _=0, item=dialog: self._child_finished(item)",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 176,
+      "signal": "self.models.currentIndexChanged",
+      "target": "self.model_changed",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 176,
+      "signal": "self.split.currentIndexChanged",
+      "target": "self.load_samples",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 261,
+      "signal": "self.worker.progress",
+      "target": "lambda row: self.say('已保存 ' + str(row['done']) + '／' + str(row['total']) + ' 個驗證案例。')",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 262,
+      "signal": "self.worker.completed",
+      "target": "lambda row: self.say('驗證結果已保存，可接著核對適合範圍或正式資格。' if row['phase'] == 'COMPLETE' else '已暫停，已完成的案例仍在本機。')",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 263,
+      "signal": "self.worker.failed",
+      "target": "self.worker_failed",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 264,
+      "signal": "self.worker.finished",
+      "target": "self.worker_finished",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 298,
+      "signal": "self.capacity_jobs.currentIndexChanged",
+      "target": "self.load_capacity_cases",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 298,
+      "signal": "self.capacity_cases.currentIndexChanged",
+      "target": "self.show_capacity_case",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 381,
+      "signal": "self.qualification_jobs.currentIndexChanged",
+      "target": "self.load_qualification_cases",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "line": 381,
+      "signal": "self.qualification_cases.currentIndexChanged",
+      "target": "self.show_qualification_case",
+      "source_sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 36,
+      "signal": "self.tree.currentItemChanged",
+      "target": "self.navigate",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 39,
+      "signal": "self.problems.itemClicked",
+      "target": "self.locate_warning",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 40,
+      "signal": "self.warning_timer.timeout",
+      "target": "self.refresh_warnings",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 41,
+      "signal": "buttons.accepted",
+      "target": "self.accept",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 41,
+      "signal": "buttons.rejected",
+      "target": "self.reject",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 50,
+      "signal": "self.technical_group.toggled",
+      "target": "self.technical_body.setVisible",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 54,
+      "signal": "b.clicked",
+      "target": "action",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 101,
+      "signal": "buttons.accepted",
+      "target": "dialog.accept",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 101,
+      "signal": "buttons.rejected",
+      "target": "dialog.reject",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 150,
+      "signal": "editor.editingFinished",
+      "target": "commit",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 151,
+      "signal": "editor.textEdited",
+      "target": "lambda value, fid=f['id']: (self.pending_input.__setitem__(fid, value), self.warning_timer.start(180))",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 184,
+      "signal": "combo.currentIndexChanged",
+      "target": "lambda: self.execute('edit_logo', company_id=cid, logo_id=combo.currentData())",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "line": 276,
+      "signal": "box.toggled",
+      "target": "collapse",
+      "source_sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 75,
+      "signal": "self.start_button.clicked",
+      "target": "self.start",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 76,
+      "signal": "self.pause_button.clicked",
+      "target": "self.pause",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 76,
+      "signal": "self.resume_button.clicked",
+      "target": "self.resume",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 76,
+      "signal": "self.cancel_button.clicked",
+      "target": "self.cancel",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 76,
+      "signal": "self.adopt_button.clicked",
+      "target": "self.adopt",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 76,
+      "signal": "self.preview_button.clicked",
+      "target": "self.preview_selected",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 76,
+      "signal": "self.report_button.clicked",
+      "target": "self.report",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 77,
+      "signal": "self.save_recovery_button.clicked",
+      "target": "self.save_recovery",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 77,
+      "signal": "self.restore_button.clicked",
+      "target": "self.restore_recovery",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 77,
+      "signal": "self.clear_recovery_button.clicked",
+      "target": "self.clear_recovery",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 101,
+      "signal": "self.worker.signals.progress",
+      "target": "self.progress",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 101,
+      "signal": "self.worker.signals.finished",
+      "target": "self.on_finished",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 141,
+      "signal": "self.worker.signals.progress",
+      "target": "self.progress",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "line": 141,
+      "signal": "self.worker.signals.finished",
+      "target": "self.on_finished",
+      "source_sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/logo_choice_dialog.py",
+      "line": 34,
+      "signal": "button.clicked",
+      "target": "self.bind",
+      "source_sha256": "4b03fcedd6aca5299e73dc38ecf741d97f5c12cc26c365e1ebf255421224b226"
+    },
+    {
+      "path": "template_ai/logo_choice_dialog.py",
+      "line": 35,
+      "signal": "button.clicked",
+      "target": "self.library",
+      "source_sha256": "4b03fcedd6aca5299e73dc38ecf741d97f5c12cc26c365e1ebf255421224b226"
+    },
+    {
+      "path": "template_ai/logo_choice_dialog.py",
+      "line": 36,
+      "signal": "self.table.currentCellChanged",
+      "target": "self.preview",
+      "source_sha256": "4b03fcedd6aca5299e73dc38ecf741d97f5c12cc26c365e1ebf255421224b226"
+    },
+    {
+      "path": "template_ai/logo_choice_dialog.py",
+      "line": 38,
+      "signal": "self.choose_button.clicked",
+      "target": "self.choose",
+      "source_sha256": "4b03fcedd6aca5299e73dc38ecf741d97f5c12cc26c365e1ebf255421224b226"
+    },
+    {
+      "path": "template_ai/logo_choice_dialog.py",
+      "line": 38,
+      "signal": "cancel.clicked",
+      "target": "self.reject",
+      "source_sha256": "4b03fcedd6aca5299e73dc38ecf741d97f5c12cc26c365e1ebf255421224b226"
+    },
+    {
+      "path": "template_ai/logo_compare.py",
+      "line": 52,
+      "signal": "button.clicked",
+      "target": "action",
+      "source_sha256": "a199c9417a87862e29db5d4477321fc050fab9e06d2afe127157a86f02b7963e"
+    },
+    {
+      "path": "template_ai/logo_compare.py",
+      "line": 86,
+      "signal": "view.navigated",
+      "target": "self.synchronize",
+      "source_sha256": "a199c9417a87862e29db5d4477321fc050fab9e06d2afe127157a86f02b7963e"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "line": 34,
+      "signal": "self.reference.toggled",
+      "target": "self.reload",
+      "source_sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "line": 41,
+      "signal": "self.query.textChanged",
+      "target": "self.selected",
+      "source_sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "line": 44,
+      "signal": "self.views.currentChanged",
+      "target": "self.selected",
+      "source_sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "line": 45,
+      "signal": "self.tree.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "line": 48,
+      "signal": "self.table.currentCellChanged",
+      "target": "self.show_details",
+      "source_sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "line": 61,
+      "signal": "button.clicked",
+      "target": "action",
+      "source_sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "line": 266,
+      "signal": "buttons.rejected",
+      "target": "dialog.reject",
+      "source_sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "line": 297,
+      "signal": "buttons.accepted",
+      "target": "dialog.accept",
+      "source_sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "line": 297,
+      "signal": "buttons.rejected",
+      "target": "dialog.reject",
+      "source_sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/logo_review_dialog.py",
+      "line": 47,
+      "signal": "self.save_crop.clicked",
+      "target": "self.correct",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781"
+    },
+    {
+      "path": "template_ai/logo_review_dialog.py",
+      "line": 50,
+      "signal": "drag.clicked",
+      "target": "self.drag_crop",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781"
+    },
+    {
+      "path": "template_ai/logo_review_dialog.py",
+      "line": 60,
+      "signal": "button.clicked",
+      "target": "self.preview",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781"
+    },
+    {
+      "path": "template_ai/logo_review_dialog.py",
+      "line": 63,
+      "signal": "button.clicked",
+      "target": "self.proof",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781"
+    },
+    {
+      "path": "template_ai/logo_review_dialog.py",
+      "line": 84,
+      "signal": "self.approve_button.clicked",
+      "target": "self.approve",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781"
+    },
+    {
+      "path": "template_ai/logo_review_dialog.py",
+      "line": 87,
+      "signal": "cancel.clicked",
+      "target": "self.reject",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781"
+    },
+    {
+      "path": "template_ai/logo_review_dialog.py",
+      "line": 92,
+      "signal": "self.company.currentIndexChanged",
+      "target": "self.invalidate_review",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781"
+    },
+    {
+      "path": "template_ai/logo_review_dialog.py",
+      "line": 91,
+      "signal": "spin.valueChanged",
+      "target": "self.invalidate_review",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781"
+    },
+    {
+      "path": "template_ai/logo_review_dialog.py",
+      "line": 122,
+      "signal": "canvas.rectangle",
+      "target": "chosen",
+      "source_sha256": "d517448bd46570d10635f6e6591d4a7d77dd49bdae1e5136d322e362302db781"
+    },
+    {
+      "path": "template_ai/major_review_finding_ui.py",
+      "line": 13,
+      "signal": "self.finding.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "814c7a4c89f07fa192bd0ff1d9009e0654fdd12ed1e21ad4a0cfd8de8ab87493"
+    },
+    {
+      "path": "template_ai/major_review_finding_ui.py",
+      "line": 13,
+      "signal": "self.finding_evidence.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "814c7a4c89f07fa192bd0ff1d9009e0654fdd12ed1e21ad4a0cfd8de8ab87493"
+    },
+    {
+      "path": "template_ai/major_review_job_ui.py",
+      "line": 11,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.invalidate",
+      "source_sha256": "dd4865437832865eef39975fbe20c72f4ef8766e73339d3b84d8a38a97f67d58"
+    },
+    {
+      "path": "template_ai/major_review_job_ui.py",
+      "line": 15,
+      "signal": "self.cases.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "dd4865437832865eef39975fbe20c72f4ef8766e73339d3b84d8a38a97f67d58"
+    },
+    {
+      "path": "template_ai/major_review_job_ui.py",
+      "line": 15,
+      "signal": "self.analysis_jobs.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "dd4865437832865eef39975fbe20c72f4ef8766e73339d3b84d8a38a97f67d58"
+    },
+    {
+      "path": "template_ai/major_review_job_ui.py",
+      "line": 16,
+      "signal": "self.cases.currentIndexChanged",
+      "target": "self.job_case_changed",
+      "source_sha256": "dd4865437832865eef39975fbe20c72f4ef8766e73339d3b84d8a38a97f67d58"
+    },
+    {
+      "path": "template_ai/major_review_job_ui.py",
+      "line": 17,
+      "signal": "self.dialog.host_window.execution_queue.progress",
+      "target": "self.job_progress",
+      "source_sha256": "dd4865437832865eef39975fbe20c72f4ef8766e73339d3b84d8a38a97f67d58"
+    },
+    {
+      "path": "template_ai/major_review_job_ui.py",
+      "line": 18,
+      "signal": "self.dialog.host_window.execution_queue.changed",
+      "target": "self.job_queue_changed",
+      "source_sha256": "dd4865437832865eef39975fbe20c72f4ef8766e73339d3b84d8a38a97f67d58"
+    },
+    {
+      "path": "template_ai/major_review_page.py",
+      "line": 26,
+      "signal": "dialog.actor.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "5f4e3108fc2bd3cacda3e98bc0cb0fc3aac3db192700c57ee3e850bb7a2855ef"
+    },
+    {
+      "path": "template_ai/major_review_page.py",
+      "line": 26,
+      "signal": "dialog.reason.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "5f4e3108fc2bd3cacda3e98bc0cb0fc3aac3db192700c57ee3e850bb7a2855ef"
+    },
+    {
+      "path": "template_ai/major_review_page.py",
+      "line": 27,
+      "signal": "self.cases.currentIndexChanged",
+      "target": "lambda *_: setattr(self, 'offset', 0)",
+      "source_sha256": "5f4e3108fc2bd3cacda3e98bc0cb0fc3aac3db192700c57ee3e850bb7a2855ef"
+    },
+    {
+      "path": "template_ai/major_review_page.py",
+      "line": 32,
+      "signal": "button.clicked",
+      "target": "lambda: self.dialog.guard(action)",
+      "source_sha256": "5f4e3108fc2bd3cacda3e98bc0cb0fc3aac3db192700c57ee3e850bb7a2855ef"
+    },
+    {
+      "path": "template_ai/major_review_page.py",
+      "line": 18,
+      "signal": "field.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "5f4e3108fc2bd3cacda3e98bc0cb0fc3aac3db192700c57ee3e850bb7a2855ef"
+    },
+    {
+      "path": "template_ai/major_review_page.py",
+      "line": 25,
+      "signal": "field.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "5f4e3108fc2bd3cacda3e98bc0cb0fc3aac3db192700c57ee3e850bb7a2855ef"
+    },
+    {
+      "path": "template_ai/major_review_template_ui.py",
+      "line": 13,
+      "signal": "box.toggled",
+      "target": "self.invalidate",
+      "source_sha256": "c1ddde1370af08d786c6633d5aeb2d9b5b0b5a1a8d8129bb75d09cb269694eef"
+    },
+    {
+      "path": "template_ai/major_review_template_ui.py",
+      "line": 19,
+      "signal": "field.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "c1ddde1370af08d786c6633d5aeb2d9b5b0b5a1a8d8129bb75d09cb269694eef"
+    },
+    {
+      "path": "template_ai/multi_size_dialog.py",
+      "line": 49,
+      "signal": "window.inputs_invalidated",
+      "target": "self.changed",
+      "source_sha256": "ad7e095cb5bb4ecac9befa949001e3c6b1c75ae0bd44ebc3e1fc05716440c459"
+    },
+    {
+      "path": "template_ai/multi_size_dialog.py",
+      "line": 52,
+      "signal": "button.clicked",
+      "target": "action",
+      "source_sha256": "ad7e095cb5bb4ecac9befa949001e3c6b1c75ae0bd44ebc3e1fc05716440c459"
+    },
+    {
+      "path": "template_ai/multi_size_dialog.py",
+      "line": 168,
+      "signal": "dialog.finished",
+      "target": "closed",
+      "source_sha256": "ad7e095cb5bb4ecac9befa949001e3c6b1c75ae0bd44ebc3e1fc05716440c459"
+    },
+    {
+      "path": "template_ai/multi_size_dialog.py",
+      "line": 180,
+      "signal": "combo.activated",
+      "target": "lambda _, key=entry['key'], control=combo: self.select_candidate(key, control.currentData())",
+      "source_sha256": "ad7e095cb5bb4ecac9befa949001e3c6b1c75ae0bd44ebc3e1fc05716440c459"
+    },
+    {
+      "path": "template_ai/noise_authoring_dialog.py",
+      "line": 19,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.preview",
+      "source_sha256": "ee449dc53439d21f4d1468e423c7f58387051b9889e29147904c5a9d37724448"
+    },
+    {
+      "path": "template_ai/noise_authoring_dialog.py",
+      "line": 20,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "ee449dc53439d21f4d1468e423c7f58387051b9889e29147904c5a9d37724448"
+    },
+    {
+      "path": "template_ai/noise_authoring_dialog.py",
+      "line": 20,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "ee449dc53439d21f4d1468e423c7f58387051b9889e29147904c5a9d37724448"
+    },
+    {
+      "path": "template_ai/noise_authoring_dialog.py",
+      "line": 21,
+      "signal": "self.save_button.clicked",
+      "target": "self.save",
+      "source_sha256": "ee449dc53439d21f4d1468e423c7f58387051b9889e29147904c5a9d37724448"
+    },
+    {
+      "path": "template_ai/noise_authoring_dialog.py",
+      "line": 21,
+      "signal": "cancel.clicked",
+      "target": "self.reject",
+      "source_sha256": "ee449dc53439d21f4d1468e423c7f58387051b9889e29147904c5a9d37724448"
+    },
+    {
+      "path": "template_ai/noise_authoring_dialog.py",
+      "line": 22,
+      "signal": "self.mode.currentIndexChanged",
+      "target": "self.preview",
+      "source_sha256": "ee449dc53439d21f4d1468e423c7f58387051b9889e29147904c5a9d37724448"
+    },
+    {
+      "path": "template_ai/noise_authoring_dialog.py",
+      "line": 22,
+      "signal": "self.nfc.toggled",
+      "target": "self.preview",
+      "source_sha256": "ee449dc53439d21f4d1468e423c7f58387051b9889e29147904c5a9d37724448"
+    },
+    {
+      "path": "template_ai/noise_authoring_dialog.py",
+      "line": 17,
+      "signal": "spin.valueChanged",
+      "target": "self.preview",
+      "source_sha256": "ee449dc53439d21f4d1468e423c7f58387051b9889e29147904c5a9d37724448"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 18,
+      "signal": "self.search.textChanged",
+      "target": "self.search_changed",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 18,
+      "signal": "self.reload_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 20,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 21,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 21,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 21,
+      "signal": "self.locate_button.clicked",
+      "target": "self.locate",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 21,
+      "signal": "self.refresh_button.clicked",
+      "target": "self.refresh",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 23,
+      "signal": "self.major_button.clicked",
+      "target": "self.major_recheck",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 25,
+      "signal": "self.keep_button.clicked",
+      "target": "self.keep",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "line": 25,
+      "signal": "self.whitelist_button.clicked",
+      "target": "self.whitelist",
+      "source_sha256": "b989fa6a2f6150dd26700d3943bbd09bf4b2d4f765b631f040c1d06333836b01"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 206,
+      "signal": "step.valueChanged",
+      "target": "lambda value: setattr(canvas, 'nudge_mm', value)",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 205,
+      "signal": "checkbox.toggled",
+      "target": "lambda value, key=attribute: (setattr(canvas, key, value), canvas.viewport().update())",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 216,
+      "signal": "self.margin.valueChanged",
+      "target": "self.invalidate",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 216,
+      "signal": "self.margin_button.clicked",
+      "target": "self.preview_margin",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 222,
+      "signal": "self.index_mode.currentIndexChanged",
+      "target": "self.rebuild_index",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 223,
+      "signal": "self.search.textChanged",
+      "target": "self.filter_index",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 226,
+      "signal": "self.index_filter.currentIndexChanged",
+      "target": "self.filter_index",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 228,
+      "signal": "self.index_tree.itemSelectionChanged",
+      "target": "self.tree_changed",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 229,
+      "signal": "self.objects.itemSelectionChanged",
+      "target": "self.list_changed",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 233,
+      "signal": "self.canvas.selection_ids",
+      "target": "self.select_ids",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 233,
+      "signal": "self.canvas.drag_proposal",
+      "target": "self.preview_request",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 233,
+      "signal": "self.canvas.preview_proposal",
+      "target": "self.preview_request",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 234,
+      "signal": "self.canvas.command_status",
+      "target": "self.status.setText",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 236,
+      "signal": "self.canvas.command_requested",
+      "target": "self.canvas_command",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 241,
+      "signal": "self.pin_text.toggled",
+      "target": "self.pin_changed",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 242,
+      "signal": "self.retained_button.clicked",
+      "target": "self.inspect_pending",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 243,
+      "signal": "self.all_properties.toggled",
+      "target": "self.update_context",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 251,
+      "signal": "self.index.valueChanged",
+      "target": "lambda _: self.changed('index')",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 252,
+      "signal": "self.index.lineEdit().textEdited",
+      "target": "lambda text: self.numeric_edited('index')",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 253,
+      "signal": "color.textChanged",
+      "target": "lambda _: self.changed('color')",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 254,
+      "signal": "self.required.stateChanged",
+      "target": "lambda _: self.changed('required')",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 261,
+      "signal": "self.font_choice.currentIndexChanged",
+      "target": "lambda _: self.changed('font_asset')",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 265,
+      "signal": "patch.clicked",
+      "target": "self.preview_patch",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 266,
+      "signal": "self.cross.toggled",
+      "target": "self.invalidate",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 267,
+      "signal": "self.reference.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 270,
+      "signal": "self.direction.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 271,
+      "signal": "align.clicked",
+      "target": "self.preview_geometry",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 274,
+      "signal": "move.clicked",
+      "target": "lambda: self.preview_request({'operation': 'MOVE', 'ids': self.ids, 'dx': self.dx.value(), 'dy': self.dy.value()})",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 278,
+      "signal": "cancel.clicked",
+      "target": "self.invalidate",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 279,
+      "signal": "self.apply_button.clicked",
+      "target": "self.apply",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 284,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 219,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 231,
+      "signal": "b.clicked",
+      "target": "lambda _, a=action: self.viewport_action(a)",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 245,
+      "signal": "spin.valueChanged",
+      "target": "lambda value, k=key: self.changed(k)",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 246,
+      "signal": "spin.lineEdit().textEdited",
+      "target": "lambda text, k=key: self.numeric_edited(k)",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 250,
+      "signal": "combo.currentIndexChanged",
+      "target": "lambda value, k=key: self.changed(k)",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 273,
+      "signal": "spin.valueChanged",
+      "target": "self.invalidate",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "line": 283,
+      "signal": "b.clicked",
+      "target": "lambda _, a=action: self.history_action(a)",
+      "source_sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 52,
+      "signal": "self.mark_button.clicked",
+      "target": "self.mark_problem",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 62,
+      "signal": "self.details_button.toggled",
+      "target": "self.show_details",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 77,
+      "signal": "self.refresh_button.clicked",
+      "target": "self.refresh",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 80,
+      "signal": "self.open_button.clicked",
+      "target": "self.open_saved",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 85,
+      "signal": "self.export_button.clicked",
+      "target": "self.export",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 164,
+      "signal": "self.timer.timeout",
+      "target": "self.flush",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 166,
+      "signal": "self.problem",
+      "target": "self.show_problem",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 171,
+      "signal": "window.statusBar().messageChanged",
+      "target": "lambda *_: self.schedule(self.stage, 'GUI_STATUS_CHANGED')",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 210,
+      "signal": "close.clicked",
+      "target": "dialog.accept",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 168,
+      "signal": "window.tabs.currentChanged",
+      "target": "self.on_stage_changed",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 170,
+      "signal": "window.inputs_invalidated",
+      "target": "lambda *_: self.schedule('INPUT', 'INPUT_CHANGED')",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/offline_support_dialog.py",
+      "line": 174,
+      "signal": "app.aboutToQuit",
+      "target": "self.close",
+      "source_sha256": "2d19ce4c75677336e18f35c43ef82175c703e3907a161301ec8b516d51855fa9"
+    },
+    {
+      "path": "template_ai/output_batch_dialog.py",
+      "line": 21,
+      "signal": "self.progress.updated",
+      "target": "self.update_row",
+      "source_sha256": "25a82ffe6199d0df1b0adebca9e8a669bf1d0ce48d0ac3dd1be541ad0308d297"
+    },
+    {
+      "path": "template_ai/output_batch_dialog.py",
+      "line": 23,
+      "signal": "self.dpi.valueChanged",
+      "target": "lambda *_: self.cancel.set() if self.running else None",
+      "source_sha256": "25a82ffe6199d0df1b0adebca9e8a669bf1d0ce48d0ac3dd1be541ad0308d297"
+    },
+    {
+      "path": "template_ai/output_batch_dialog.py",
+      "line": 42,
+      "signal": "button.clicked",
+      "target": "fn",
+      "source_sha256": "25a82ffe6199d0df1b0adebca9e8a669bf1d0ce48d0ac3dd1be541ad0308d297"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 94,
+      "signal": "self.timer.timeout",
+      "target": "self.sync",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 97,
+      "signal": "window.all_property_tools.toggled",
+      "target": "self.expand_all",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 108,
+      "signal": "window.property_conflict.clicked",
+      "target": "self.inspect_conflict",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 108,
+      "signal": "window.property_problem.clicked",
+      "target": "self.fix_local_problem",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 109,
+      "signal": "window.tabs.currentChanged",
+      "target": "self.schedule",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 109,
+      "signal": "window.inputs_invalidated",
+      "target": "self.schedule",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 110,
+      "signal": "window.candidate_list.currentRowChanged",
+      "target": "self.schedule",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 110,
+      "signal": "window.output_canvas.scene().selectionChanged",
+      "target": "self.schedule",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 111,
+      "signal": "window.result_problem_items.currentRowChanged",
+      "target": "self.schedule",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 96,
+      "signal": "check.toggled",
+      "target": "lambda checked, k=key: self.pin(k, checked)",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 107,
+      "signal": "control.lineEdit().textEdited",
+      "target": "lambda text, k=key: self.numeric_edited(k)",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "line": 105,
+      "signal": "signal",
+      "target": "self.schedule",
+      "source_sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/qualified_coverage_panel.py",
+      "line": 28,
+      "signal": "self.collection.currentIndexChanged",
+      "target": "lambda: self.guard(self.changed)",
+      "source_sha256": "018d8d620b5def2c6c3278f1da15848b71f6aa7c56f98df9511783ec5171241e"
+    },
+    {
+      "path": "template_ai/qualified_coverage_panel.py",
+      "line": 28,
+      "signal": "self.dataset.currentIndexChanged",
+      "target": "lambda: self.guard(lambda: self.reload(0))",
+      "source_sha256": "018d8d620b5def2c6c3278f1da15848b71f6aa7c56f98df9511783ec5171241e"
+    },
+    {
+      "path": "template_ai/qualified_coverage_panel.py",
+      "line": 28,
+      "signal": "self.tree.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "018d8d620b5def2c6c3278f1da15848b71f6aa7c56f98df9511783ec5171241e"
+    },
+    {
+      "path": "template_ai/qualified_coverage_panel.py",
+      "line": 31,
+      "signal": "button.clicked",
+      "target": "lambda: self.guard(action)",
+      "source_sha256": "018d8d620b5def2c6c3278f1da15848b71f6aa7c56f98df9511783ec5171241e"
+    },
+    {
+      "path": "template_ai/quality_evaluation_panel.py",
+      "line": 18,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "440e68d2b7055062134be8d4a6e205e599442e858126c2c1b3a7c08bf9377a23"
+    },
+    {
+      "path": "template_ai/quality_evaluation_panel.py",
+      "line": 20,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "440e68d2b7055062134be8d4a6e205e599442e858126c2c1b3a7c08bf9377a23"
+    },
+    {
+      "path": "template_ai/quality_evaluation_panel.py",
+      "line": 66,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "440e68d2b7055062134be8d4a6e205e599442e858126c2c1b3a7c08bf9377a23"
+    },
+    {
+      "path": "template_ai/quality_panel.py",
+      "line": 40,
+      "signal": "self.table.cellDoubleClicked",
+      "target": "lambda *_: self.guarded(self.detail)",
+      "source_sha256": "867addaa158dd5ab371e52327dd2384d79c492130fcb151e56287648d194114a"
+    },
+    {
+      "path": "template_ai/quality_panel.py",
+      "line": 48,
+      "signal": "button.clicked",
+      "target": "lambda: self.guarded(fn)",
+      "source_sha256": "867addaa158dd5ab371e52327dd2384d79c492130fcb151e56287648d194114a"
+    },
+    {
+      "path": "template_ai/quality_panel.py",
+      "line": 319,
+      "signal": "self.work.currentIndexChanged",
+      "target": "self.load_work",
+      "source_sha256": "867addaa158dd5ab371e52327dd2384d79c492130fcb151e56287648d194114a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 24,
+      "signal": "self.actor.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 24,
+      "signal": "self.reason.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 32,
+      "signal": "self.confirm_button.clicked",
+      "target": "lambda: self.guard(self.confirm)",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 33,
+      "signal": "close.clicked",
+      "target": "self.reject",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 63,
+      "signal": "button.clicked",
+      "target": "lambda: self.guard(action)",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 66,
+      "signal": "field.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 82,
+      "signal": "combo.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 166,
+      "signal": "self.source_work.textChanged",
+      "target": "self.source_identity_changed",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 190,
+      "signal": "self.original_reviewed.toggled",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 190,
+      "signal": "self.truth_reviewed.toggled",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 190,
+      "signal": "self.layer.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 221,
+      "signal": "self.detail_rule.toggled",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 295,
+      "signal": "self.stage.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 30,
+      "signal": "combo.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 81,
+      "signal": "button.clicked",
+      "target": "lambda checked=False, d=delta: self.guard(lambda: load(d))",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "line": 251,
+      "signal": "combo.currentIndexChanged",
+      "target": "lambda _, c=combo, wid=row['id']: self.set_role(wid, c.currentData())",
+      "source_sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/quality_rule_selector.py",
+      "line": 15,
+      "signal": "button.clicked",
+      "target": "lambda checked=False, d=delta: self.guarded_refresh(d)",
+      "source_sha256": "f3593bc14b24df7832867ff323c9e5a9a0f76e4b522d71de3661705cd4a5f43b"
+    },
+    {
+      "path": "template_ai/quality_rule_selector.py",
+      "line": 33,
+      "signal": "box.toggled",
+      "target": "lambda selected, r=row: self.choose(r, selected)",
+      "source_sha256": "f3593bc14b24df7832867ff323c9e5a9a0f76e4b522d71de3661705cd4a5f43b"
+    },
+    {
+      "path": "template_ai/quality_setup.py",
+      "line": 33,
+      "signal": "query.textChanged",
+      "target": "refresh",
+      "source_sha256": "7a9ed3097585ea0484762e07ab52481ab2ef5c1991898422816c6c3175d77b23"
+    },
+    {
+      "path": "template_ai/quality_setup.py",
+      "line": 36,
+      "signal": "button.clicked",
+      "target": "lambda: self.guarded(callback)",
+      "source_sha256": "7a9ed3097585ea0484762e07ab52481ab2ef5c1991898422816c6c3175d77b23"
+    },
+    {
+      "path": "template_ai/quality_setup.py",
+      "line": 52,
+      "signal": "query.textChanged",
+      "target": "works",
+      "source_sha256": "7a9ed3097585ea0484762e07ab52481ab2ef5c1991898422816c6c3175d77b23"
+    },
+    {
+      "path": "template_ai/quality_setup.py",
+      "line": 69,
+      "signal": "self.work.currentIndexChanged",
+      "target": "logos",
+      "source_sha256": "7a9ed3097585ea0484762e07ab52481ab2ef5c1991898422816c6c3175d77b23"
+    },
+    {
+      "path": "template_ai/quality_setup.py",
+      "line": 121,
+      "signal": "self.rules_mode.currentIndexChanged",
+      "target": "self.rules_selection_changed",
+      "source_sha256": "7a9ed3097585ea0484762e07ab52481ab2ef5c1991898422816c6c3175d77b23"
+    },
+    {
+      "path": "template_ai/quality_source_rechecks.py",
+      "line": 107,
+      "signal": "sqlite3",
+      "target": "(Path(root) / 'library.sqlite3').resolve().as_uri() + '?mode=ro'",
+      "source_sha256": "8c34396efbd8a8ece049dd59f1cda57e4bcd647e1cbb8b3596c9e88f72cfb8df"
+    },
+    {
+      "path": "template_ai/recovery_dialog.py",
+      "line": 65,
+      "signal": "button.clicked",
+      "target": "lambda: self.attempt(operation)",
+      "source_sha256": "0d6e648caba6020334c20cd02242e96739ba25627a9350a9b64091dd0c726d59"
+    },
+    {
+      "path": "template_ai/recovery_dialog.py",
+      "line": 80,
+      "signal": "worker.result",
+      "target": "receive",
+      "source_sha256": "0d6e648caba6020334c20cd02242e96739ba25627a9350a9b64091dd0c726d59"
+    },
+    {
+      "path": "template_ai/recovery_dialog.py",
+      "line": 81,
+      "signal": "worker.finished",
+      "target": "worker.deleteLater",
+      "source_sha256": "0d6e648caba6020334c20cd02242e96739ba25627a9350a9b64091dd0c726d59"
+    },
+    {
+      "path": "template_ai/recovery_dialog.py",
+      "line": 82,
+      "signal": "worker.finished",
+      "target": "lambda: setattr(self, 'worker', None)",
+      "source_sha256": "0d6e648caba6020334c20cd02242e96739ba25627a9350a9b64091dd0c726d59"
+    },
+    {
+      "path": "template_ai/relational_backup.py",
+      "line": 102,
+      "signal": "sqlite3",
+      "target": "path",
+      "source_sha256": "cdf234fe66b1d8ef1a79964401fa221d7dae69145e68a456bdbe7a8024afefd0"
+    },
+    {
+      "path": "template_ai/relational_backup.py",
+      "line": 312,
+      "signal": "sqlite3",
+      "target": "probe.resolve().as_uri() + '?mode=ro'",
+      "source_sha256": "cdf234fe66b1d8ef1a79964401fa221d7dae69145e68a456bdbe7a8024afefd0"
+    },
+    {
+      "path": "template_ai/relational_backup.py",
+      "line": 195,
+      "signal": "sqlite3",
+      "target": "probe.resolve().as_uri() + '?mode=ro'",
+      "source_sha256": "cdf234fe66b1d8ef1a79964401fa221d7dae69145e68a456bdbe7a8024afefd0"
+    },
+    {
+      "path": "template_ai/relational_backup.py",
+      "line": 395,
+      "signal": "sqlite3",
+      "target": "stage / 'library.sqlite3'",
+      "source_sha256": "cdf234fe66b1d8ef1a79964401fa221d7dae69145e68a456bdbe7a8024afefd0"
+    },
+    {
+      "path": "template_ai/review_ledger.py",
+      "line": 18,
+      "signal": "sqlite3",
+      "target": "(root / 'library.sqlite3').resolve().as_uri() + '?mode=ro'",
+      "source_sha256": "97b7d0578f0d191f0afeb7c3fd1caaacde626d05c308e74a91110e73484fc84d"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 22,
+      "signal": "self.refresh_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 24,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.show_detail",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 24,
+      "signal": "self.table.cellDoubleClicked",
+      "target": "lambda *_: self.open_works()",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 28,
+      "signal": "self.previous.clicked",
+      "target": "lambda: self.page(-50)",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 28,
+      "signal": "self.next.clicked",
+      "target": "lambda: self.page(50)",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 28,
+      "signal": "self.works.clicked",
+      "target": "self.open_works",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 28,
+      "signal": "self.locate.clicked",
+      "target": "self.locate_work",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 29,
+      "signal": "self.debounce.timeout",
+      "target": "self.reset_search",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 30,
+      "signal": "self.query.textChanged",
+      "target": "lambda: self.debounce.start()",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 30,
+      "signal": "self.source_filter.textChanged",
+      "target": "lambda: self.debounce.start()",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 30,
+      "signal": "self.mode.currentIndexChanged",
+      "target": "self.reset_search",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 68,
+      "signal": "process.readyReadStandardOutput",
+      "target": "stdout",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 68,
+      "signal": "process.readyReadStandardError",
+      "target": "stderr",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 68,
+      "signal": "process.finished",
+      "target": "done",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "line": 68,
+      "signal": "process.errorOccurred",
+      "target": "failed",
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/rule_change_selector.py",
+      "line": 7,
+      "signal": "self.work_combo.currentIndexChanged",
+      "target": "self.load_observations",
+      "source_sha256": "c18b00acef08224cb9e32c1f9da147e75bff5b4627a28095d173df1c2a3abb1a"
+    },
+    {
+      "path": "template_ai/rule_change_selector.py",
+      "line": 7,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "c18b00acef08224cb9e32c1f9da147e75bff5b4627a28095d173df1c2a3abb1a"
+    },
+    {
+      "path": "template_ai/rule_change_selector.py",
+      "line": 7,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "c18b00acef08224cb9e32c1f9da147e75bff5b4627a28095d173df1c2a3abb1a"
+    },
+    {
+      "path": "template_ai/rule_change_selector.py",
+      "line": 7,
+      "signal": "self.open_button.clicked",
+      "target": "self.open",
+      "source_sha256": "c18b00acef08224cb9e32c1f9da147e75bff5b4627a28095d173df1c2a3abb1a"
+    },
+    {
+      "path": "template_ai/rule_hints_panel.py",
+      "line": 16,
+      "signal": "self.query.textChanged",
+      "target": "self.reload",
+      "source_sha256": "a1af226e21d84378b2c016ed348634b60992dad2152481136e45bc35e15776a8"
+    },
+    {
+      "path": "template_ai/rule_hints_panel.py",
+      "line": 16,
+      "signal": "self.order.currentIndexChanged",
+      "target": "self.reload",
+      "source_sha256": "a1af226e21d84378b2c016ed348634b60992dad2152481136e45bc35e15776a8"
+    },
+    {
+      "path": "template_ai/rule_hints_panel.py",
+      "line": 18,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "a1af226e21d84378b2c016ed348634b60992dad2152481136e45bc35e15776a8"
+    },
+    {
+      "path": "template_ai/rule_hints_panel.py",
+      "line": 20,
+      "signal": "button.clicked",
+      "target": "fn",
+      "source_sha256": "a1af226e21d84378b2c016ed348634b60992dad2152481136e45bc35e15776a8"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 18,
+      "signal": "self.search.textChanged",
+      "target": "self.search_changed",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 18,
+      "signal": "self.state.currentIndexChanged",
+      "target": "self.search_changed",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 18,
+      "signal": "self.reload_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 20,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 22,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 22,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 27,
+      "signal": "self.disable_button.clicked",
+      "target": "lambda: self.version('DISABLE')",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 27,
+      "signal": "self.rollback_button.clicked",
+      "target": "lambda: self.version('ROLLBACK')",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 27,
+      "signal": "self.change_button.clicked",
+      "target": "self.change",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "line": 25,
+      "signal": "button.clicked",
+      "target": "lambda _, a=action: self.decide(a)",
+      "source_sha256": "fabbab98bdabdf7869e6a4287b201c7ef4643cfc3aa63c2b361d4f7ffc9cc5dd"
+    },
+    {
+      "path": "template_ai/runtime_dispatch.py",
+      "line": 19,
+      "signal": "self.timer.timeout",
+      "target": "self.dispatch",
+      "source_sha256": "7d350e85ab5a50dc33165a7c1286d86dcbbe7f9186f0036939073c3d202878d0"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 15,
+      "signal": "self.pause.clicked",
+      "target": "lambda: self.change(True)",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 15,
+      "signal": "self.resume.clicked",
+      "target": "lambda: self.change(False)",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 16,
+      "signal": "self.cancel_foreground.clicked",
+      "target": "window.cancel_waiting_jobs",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 17,
+      "signal": "self.ledger.clicked",
+      "target": "self.open_ledger",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 18,
+      "signal": "self.recover.clicked",
+      "target": "self.recover_scheduler",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 19,
+      "signal": "toggle.clicked",
+      "target": "lambda: self.details.setVisible(not self.details.isVisible())",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 24,
+      "signal": "self.previous.clicked",
+      "target": "lambda: self.page(-50)",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 24,
+      "signal": "self.next.clicked",
+      "target": "lambda: self.page(50)",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 24,
+      "signal": "self.restore.clicked",
+      "target": "self.resume_selected",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 24,
+      "signal": "self.cancel.clicked",
+      "target": "self.cancel_selected",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_panel.py",
+      "line": 26,
+      "signal": "self.timer.timeout",
+      "target": "self.refresh",
+      "source_sha256": "67d38299c2ad7ddce480d813b1e9bdde763b036316a2a23450fb1f03abf53a81"
+    },
+    {
+      "path": "template_ai/runtime_supervisor.py",
+      "line": 17,
+      "signal": "self.timer.timeout",
+      "target": "self.pulse",
+      "source_sha256": "854e96ca5f724fbe544cfb2f50f8a6f5e8ab18ec0bb226259593945fde153694"
+    },
+    {
+      "path": "template_ai/runtime_supervisor.py",
+      "line": 19,
+      "signal": "self.destroyed",
+      "target": "lambda *_: (stopped.set(), probe.close())",
+      "source_sha256": "854e96ca5f724fbe544cfb2f50f8a6f5e8ab18ec0bb226259593945fde153694"
+    },
+    {
+      "path": "template_ai/runtime_worker.py",
+      "line": 22,
+      "signal": "sqlite3",
+      "target": "(Path(root) / 'library.sqlite3').resolve().as_uri() + '?mode=ro'",
+      "source_sha256": "7b8a78343247c153445dd914a35bfb11436ddf1a8ce605772c8e469f9480a8a5"
+    },
+    {
+      "path": "template_ai/secure_backup.py",
+      "line": 27,
+      "signal": "sqlite3",
+      "target": "path",
+      "source_sha256": "980ed7eca9dfae218f094bf73b8f3f8a7ca9c5bffe153652ad724dd48bf0ee93"
+    },
+    {
+      "path": "template_ai/secure_backup.py",
+      "line": 58,
+      "signal": "sqlite3",
+      "target": "'file:' + str(probe) + '?mode=ro'",
+      "source_sha256": "980ed7eca9dfae218f094bf73b8f3f8a7ca9c5bffe153652ad724dd48bf0ee93"
+    },
+    {
+      "path": "template_ai/semantic_learning_dialog.py",
+      "line": 21,
+      "signal": "self.models.currentIndexChanged",
+      "target": "self.model_selected",
+      "source_sha256": "eee681df712f40deac560c60baacd41dc3e42407120c6ba3b7859a229cb97562"
+    },
+    {
+      "path": "template_ai/semantic_learning_dialog.py",
+      "line": 20,
+      "signal": "button.clicked",
+      "target": "fn",
+      "source_sha256": "eee681df712f40deac560c60baacd41dc3e42407120c6ba3b7859a229cb97562"
+    },
+    {
+      "path": "template_ai/semantic_learning_dialog.py",
+      "line": 42,
+      "signal": "role.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "eee681df712f40deac560c60baacd41dc3e42407120c6ba3b7859a229cb97562"
+    },
+    {
+      "path": "template_ai/source_context.py",
+      "line": 85,
+      "signal": "sqlite3",
+      "target": "(Path(root) / 'library.sqlite3').resolve().as_uri() + '?mode=ro'",
+      "source_sha256": "7cee52a9186517116a8a612e94e73f1db2129a34f20f72621718633341253f6a"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "line": 36,
+      "signal": "self.choose_button.clicked",
+      "target": "self.choose_root",
+      "source_sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "line": 38,
+      "signal": "self.clear_button.clicked",
+      "target": "self.clear_roots",
+      "source_sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "line": 40,
+      "signal": "self.search_button.clicked",
+      "target": "self.search",
+      "source_sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "line": 43,
+      "signal": "self.cancel_button.clicked",
+      "target": "self.cancel_event.set",
+      "source_sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "line": 55,
+      "signal": "self.detail_button.clicked",
+      "target": "self.show_details",
+      "source_sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "line": 57,
+      "signal": "self.apply_button.clicked",
+      "target": "self.apply_selection",
+      "source_sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "line": 64,
+      "signal": "self.undo_button.clicked",
+      "target": "self.undo_batch",
+      "source_sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "line": 69,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "line": 213,
+      "signal": "close.rejected",
+      "target": "dialog.reject",
+      "source_sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_scan_dialog.py",
+      "line": 27,
+      "signal": "self.roots.currentIndexChanged",
+      "target": "self.load_root",
+      "source_sha256": "e7076ab3cae1423ab1d9f05324472e855cd604ecc8e2197e1041b9895aa88904"
+    },
+    {
+      "path": "template_ai/source_scan_dialog.py",
+      "line": 30,
+      "signal": "self.only_changed.toggled",
+      "target": "self.reset_scan_page",
+      "source_sha256": "e7076ab3cae1423ab1d9f05324472e855cd604ecc8e2197e1041b9895aa88904"
+    },
+    {
+      "path": "template_ai/source_scan_dialog.py",
+      "line": 45,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "e7076ab3cae1423ab1d9f05324472e855cd604ecc8e2197e1041b9895aa88904"
+    },
+    {
+      "path": "template_ai/source_scan_dialog.py",
+      "line": 47,
+      "signal": "self.service.updated",
+      "target": "self.service_updated",
+      "source_sha256": "e7076ab3cae1423ab1d9f05324472e855cd604ecc8e2197e1041b9895aa88904"
+    },
+    {
+      "path": "template_ai/source_scan_dialog.py",
+      "line": 50,
+      "signal": "button.clicked",
+      "target": "callback",
+      "source_sha256": "e7076ab3cae1423ab1d9f05324472e855cd604ecc8e2197e1041b9895aa88904"
+    },
+    {
+      "path": "template_ai/source_scan_dialog.py",
+      "line": 46,
+      "signal": "signal",
+      "target": "self.changed",
+      "source_sha256": "e7076ab3cae1423ab1d9f05324472e855cd604ecc8e2197e1041b9895aa88904"
+    },
+    {
+      "path": "template_ai/source_scan_dialog.py",
+      "line": 228,
+      "signal": "self.training_dialog.job_created",
+      "target": "self.training_created",
+      "source_sha256": "e7076ab3cae1423ab1d9f05324472e855cd604ecc8e2197e1041b9895aa88904"
+    },
+    {
+      "path": "template_ai/source_watch.py",
+      "line": 20,
+      "signal": "self.watcher.directoryChanged",
+      "target": "self.hint",
+      "source_sha256": "bb533d41b759f3059a806dd6b79a67594e9cfc5ad02108b6ff325e1577b65f58"
+    },
+    {
+      "path": "template_ai/source_watch.py",
+      "line": 20,
+      "signal": "self.watcher.fileChanged",
+      "target": "self.hint",
+      "source_sha256": "bb533d41b759f3059a806dd6b79a67594e9cfc5ad02108b6ff325e1577b65f58"
+    },
+    {
+      "path": "template_ai/source_watch.py",
+      "line": 21,
+      "signal": "self.debounce.timeout",
+      "target": "self.dispatch",
+      "source_sha256": "bb533d41b759f3059a806dd6b79a67594e9cfc5ad02108b6ff325e1577b65f58"
+    },
+    {
+      "path": "template_ai/source_watch.py",
+      "line": 22,
+      "signal": "self.timer.timeout",
+      "target": "self.tick",
+      "source_sha256": "bb533d41b759f3059a806dd6b79a67594e9cfc5ad02108b6ff325e1577b65f58"
+    },
+    {
+      "path": "template_ai/storage.py",
+      "line": 24,
+      "signal": "sqlite3",
+      "target": "self.root / 'library.sqlite3'",
+      "source_sha256": "586c96d6e63e0214735331e0cbae8b8c1c3bcc999da4e5a0156fb0fb8d8c7d96"
+    },
+    {
+      "path": "template_ai/storage.py",
+      "line": 633,
+      "signal": "sqlite3",
+      "target": "target",
+      "source_sha256": "586c96d6e63e0214735331e0cbae8b8c1c3bcc999da4e5a0156fb0fb8d8c7d96"
+    },
+    {
+      "path": "template_ai/template_versions_dialog.py",
+      "line": 15,
+      "signal": "button.clicked",
+      "target": "self.restore",
+      "source_sha256": "106abb0d3b30225b2b77fdb0909cde66d044d71bb837c2253243ebfdb299a0b6"
+    },
+    {
+      "path": "template_ai/template_versions_dialog.py",
+      "line": 21,
+      "signal": "self.left.currentIndexChanged",
+      "target": "self.compare",
+      "source_sha256": "106abb0d3b30225b2b77fdb0909cde66d044d71bb837c2253243ebfdb299a0b6"
+    },
+    {
+      "path": "template_ai/template_versions_dialog.py",
+      "line": 21,
+      "signal": "self.right.currentIndexChanged",
+      "target": "self.compare",
+      "source_sha256": "106abb0d3b30225b2b77fdb0909cde66d044d71bb837c2253243ebfdb299a0b6"
+    },
+    {
+      "path": "template_ai/text_policy_dialog.py",
+      "line": 24,
+      "signal": "bar.clicked",
+      "target": "self.preview",
+      "source_sha256": "927ce7cd7beb9d79c0d059333f8d10b53a2372a6371daf0343afccefc4af466b"
+    },
+    {
+      "path": "template_ai/text_policy_dialog.py",
+      "line": 24,
+      "signal": "self.apply_button.clicked",
+      "target": "self.apply",
+      "source_sha256": "927ce7cd7beb9d79c0d059333f8d10b53a2372a6371daf0343afccefc4af466b"
+    },
+    {
+      "path": "template_ai/training_exceptions_panel.py",
+      "line": 20,
+      "signal": "button.clicked",
+      "target": "self.reload",
+      "source_sha256": "b11db0155c7b265bed496e98ab132ae6a591b397b190a6f655f9f11ea0f0cf3e"
+    },
+    {
+      "path": "template_ai/training_exceptions_panel.py",
+      "line": 26,
+      "signal": "self.query.textChanged",
+      "target": "self.filter_changed",
+      "source_sha256": "b11db0155c7b265bed496e98ab132ae6a591b397b190a6f655f9f11ea0f0cf3e"
+    },
+    {
+      "path": "template_ai/training_exceptions_panel.py",
+      "line": 26,
+      "signal": "self.order.currentIndexChanged",
+      "target": "self.filter_changed",
+      "source_sha256": "b11db0155c7b265bed496e98ab132ae6a591b397b190a6f655f9f11ea0f0cf3e"
+    },
+    {
+      "path": "template_ai/training_exceptions_panel.py",
+      "line": 26,
+      "signal": "self.severity.currentIndexChanged",
+      "target": "self.filter_changed",
+      "source_sha256": "b11db0155c7b265bed496e98ab132ae6a591b397b190a6f655f9f11ea0f0cf3e"
+    },
+    {
+      "path": "template_ai/training_exceptions_panel.py",
+      "line": 26,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "b11db0155c7b265bed496e98ab132ae6a591b397b190a6f655f9f11ea0f0cf3e"
+    },
+    {
+      "path": "template_ai/training_exceptions_panel.py",
+      "line": 25,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "b11db0155c7b265bed496e98ab132ae6a591b397b190a6f655f9f11ea0f0cf3e"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 19,
+      "signal": "self.work_combo.currentIndexChanged",
+      "target": "self.load",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 20,
+      "signal": "self.reload_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 21,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 21,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 23,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 36,
+      "signal": "self.exclude_button.clicked",
+      "target": "self.exclude",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 36,
+      "signal": "self.remember_button.clicked",
+      "target": "self.remember",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 36,
+      "signal": "self.undo_noise_button.clicked",
+      "target": "self.undo_noise",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 37,
+      "signal": "self.repair_button.clicked",
+      "target": "self.open_repair",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 38,
+      "signal": "self.major_button.clicked",
+      "target": "lambda: self.open_repair(True)",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 162,
+      "signal": "job.signals.done",
+      "target": "finished",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 162,
+      "signal": "job.signals.error",
+      "target": "failed",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "line": 34,
+      "signal": "button.clicked",
+      "target": "handler",
+      "source_sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 19,
+      "signal": "self.search.textChanged",
+      "target": "self.reload",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 22,
+      "signal": "self.filter.currentIndexChanged",
+      "target": "self.reload",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 23,
+      "signal": "self.reload_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 26,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 28,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 28,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 29,
+      "signal": "self.locate_button.clicked",
+      "target": "self.locate",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 30,
+      "signal": "self.edit_button.clicked",
+      "target": "self.edit",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 31,
+      "signal": "close.rejected",
+      "target": "self.reject",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 32,
+      "signal": "self.report_button.clicked",
+      "target": "self.report",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 50,
+      "signal": "self.tabs.currentChanged",
+      "target": "lambda index: self.closure_panel.activate() if self.tabs.widget(index) is self.closure_panel else None",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "line": 56,
+      "signal": "self.tabs.currentChanged",
+      "target": "lambda index: self.quality_panel.activate() if self.tabs.widget(index) is self.quality_scroll else None",
+      "source_sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 29,
+      "signal": "self.dataset_combo.currentIndexChanged",
+      "target": "self.load_dataset",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 29,
+      "signal": "self.reload_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 29,
+      "signal": "self.dataset_previous.clicked",
+      "target": "lambda: self.dataset_page(-200)",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 29,
+      "signal": "self.dataset_next.clicked",
+      "target": "lambda: self.dataset_page(200)",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 30,
+      "signal": "self.preview_button.clicked",
+      "target": "self.preview",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 30,
+      "signal": "self.create_button.clicked",
+      "target": "self.create_start",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 31,
+      "signal": "self.jobs_table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 31,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 31,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 31,
+      "signal": "self.resume_button.clicked",
+      "target": "self.start_selected",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 31,
+      "signal": "self.cancel_button.clicked",
+      "target": "self.cancel",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 35,
+      "signal": "dispatcher.progress",
+      "target": "self.queued_progress",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 35,
+      "signal": "dispatcher.finished",
+      "target": "self.queued_finished",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 92,
+      "signal": "self.task.signals.progress",
+      "target": "self.progress",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 92,
+      "signal": "self.task.signals.done",
+      "target": "self.done",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "line": 92,
+      "signal": "self.task.signals.error",
+      "target": "self.failed",
+      "source_sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selection_changed",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.table.itemChanged",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.collection.currentIndexChanged",
+      "target": "lambda: self.reload(0)",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.query.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.actor.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.basis.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.reference.textChanged",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.privacy_action.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.retention.valueChanged",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 38,
+      "signal": "self.privacy_records.itemChanged",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 45,
+      "signal": "button.clicked",
+      "target": "lambda: self.guard(action)",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 35,
+      "signal": "check.toggled",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 86,
+      "signal": "combo.currentIndexChanged",
+      "target": "lambda _, identity=row['id'], owner=person, widget=combo: self.bind(identity, owner, widget)",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "line": 74,
+      "signal": "action.currentIndexChanged",
+      "target": "self.invalidate",
+      "source_sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 19,
+      "signal": "self.work_combo.currentIndexChanged",
+      "target": "self.load_work",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 19,
+      "signal": "self.pool_button.clicked",
+      "target": "self.open_pool",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 19,
+      "signal": "self.reload_button.clicked",
+      "target": "self.reload",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 19,
+      "signal": "self.work_previous.clicked",
+      "target": "lambda: self.work_page(-200)",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 19,
+      "signal": "self.work_next.clicked",
+      "target": "lambda: self.work_page(200)",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 21,
+      "signal": "self.preview_button.clicked",
+      "target": "self.preview",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 21,
+      "signal": "self.admit_button.clicked",
+      "target": "self.admit",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 22,
+      "signal": "self.table.itemSelectionChanged",
+      "target": "self.selected",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 23,
+      "signal": "self.previous_button.clicked",
+      "target": "lambda: self.page(-200)",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 23,
+      "signal": "self.next_button.clicked",
+      "target": "lambda: self.page(200)",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 23,
+      "signal": "self.quarantine_button.clicked",
+      "target": "lambda: self.transition('QUARANTINE')",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 23,
+      "signal": "self.revoke_button.clicked",
+      "target": "lambda: self.transition('REVOKE')",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 95,
+      "signal": "job.signals.done",
+      "target": "done",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "line": 95,
+      "signal": "job.signals.error",
+      "target": "failed",
+      "source_sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/viewport_controls.py",
+      "line": 71,
+      "signal": "buttons.rejected",
+      "target": "dialog.reject",
+      "source_sha256": "ada02de2e05208950465afe0561c103b3da0a6156a8fe6a5d713ac6f7a61d840"
+    },
+    {
+      "path": "template_ai/viewport_controls.py",
+      "line": 103,
+      "signal": "spin.valueChanged",
+      "target": "lambda value: canvas.set_zoom(value / 100 * nominal)",
+      "source_sha256": "ada02de2e05208950465afe0561c103b3da0a6156a8fe6a5d713ac6f7a61d840"
+    },
+    {
+      "path": "template_ai/viewport_controls.py",
+      "line": 104,
+      "signal": "slider.valueChanged",
+      "target": "lambda value: canvas.set_zoom(0.2 * math.exp(value / 1000 * math.log(2500)))",
+      "source_sha256": "ada02de2e05208950465afe0561c103b3da0a6156a8fe6a5d713ac6f7a61d840"
+    },
+    {
+      "path": "template_ai/viewport_controls.py",
+      "line": 105,
+      "signal": "canvas.view_changed",
+      "target": "refresh",
+      "source_sha256": "ada02de2e05208950465afe0561c103b3da0a6156a8fe6a5d713ac6f7a61d840"
+    },
+    {
+      "path": "template_ai/viewport_controls.py",
+      "line": 106,
+      "signal": "canvas.command_status",
+      "target": "hint.setText",
+      "source_sha256": "ada02de2e05208950465afe0561c103b3da0a6156a8fe6a5d713ac6f7a61d840"
+    },
+    {
+      "path": "template_ai/viewport_controls.py",
+      "line": 66,
+      "signal": "receipt.clicked",
+      "target": "lambda: show_canvas_receipt(canvas)",
+      "source_sha256": "ada02de2e05208950465afe0561c103b3da0a6156a8fe6a5d713ac6f7a61d840"
+    },
+    {
+      "path": "template_ai/viewport_controls.py",
+      "line": 84,
+      "signal": "b.clicked",
+      "target": "fn",
+      "source_sha256": "ada02de2e05208950465afe0561c103b3da0a6156a8fe6a5d713ac6f7a61d840"
+    },
+    {
+      "path": "template_ai/viewport_controls.py",
+      "line": 62,
+      "signal": "button.clicked",
+      "target": "lambda checked=False, x=dx, y=dy: (dialog.accept(), canvas.request_nudge(x, y))",
+      "source_sha256": "ada02de2e05208950465afe0561c103b3da0a6156a8fe6a5d713ac6f7a61d840"
+    },
+    {
+      "path": "template_ai/viewport_controls.py",
+      "line": 70,
+      "signal": "button.clicked",
+      "target": "lambda checked=False, name=command: (dialog.accept(), dispatch_canvas_command(canvas, name))",
+      "source_sha256": "ada02de2e05208950465afe0561c103b3da0a6156a8fe6a5d713ac6f7a61d840"
+    },
+    {
+      "path": "template_ai/windows_font_dialog.py",
+      "line": 15,
+      "signal": "self.open_button.clicked",
+      "target": "self.begin",
+      "source_sha256": "5ba1f02b29eca9de951caa89bda5ea81fa6f3f8ccbc0bd7d8851faba6df00c39"
+    },
+    {
+      "path": "template_ai/windows_font_dialog.py",
+      "line": 15,
+      "signal": "buttons.rejected",
+      "target": "self.reject",
+      "source_sha256": "5ba1f02b29eca9de951caa89bda5ea81fa6f3f8ccbc0bd7d8851faba6df00c39"
+    },
+    {
+      "path": "template_ai/work_overview_dialog.py",
+      "line": 20,
+      "signal": "self.query.textChanged",
+      "target": "self.search",
+      "source_sha256": "a484165e7e47c1e457a680a270f6c07987fbc9b1b452b058eb461c95ec465e1f"
+    },
+    {
+      "path": "template_ai/work_overview_dialog.py",
+      "line": 21,
+      "signal": "self.state.currentIndexChanged",
+      "target": "self.search",
+      "source_sha256": "a484165e7e47c1e457a680a270f6c07987fbc9b1b452b058eb461c95ec465e1f"
+    },
+    {
+      "path": "template_ai/work_overview_dialog.py",
+      "line": 24,
+      "signal": "self.sort.currentIndexChanged",
+      "target": "self.search",
+      "source_sha256": "a484165e7e47c1e457a680a270f6c07987fbc9b1b452b058eb461c95ec465e1f"
+    },
+    {
+      "path": "template_ai/work_overview_dialog.py",
+      "line": 25,
+      "signal": "self.table.cellDoubleClicked",
+      "target": "lambda *_: self.edit()",
+      "source_sha256": "a484165e7e47c1e457a680a270f6c07987fbc9b1b452b058eb461c95ec465e1f"
+    },
+    {
+      "path": "template_ai/work_overview_dialog.py",
+      "line": 92,
+      "signal": "self.canvas.rectangle",
+      "target": "self.add",
+      "source_sha256": "a484165e7e47c1e457a680a270f6c07987fbc9b1b452b058eb461c95ec465e1f"
+    },
+    {
+      "path": "template_ai/work_overview_dialog.py",
+      "line": 23,
+      "signal": "field.textChanged",
+      "target": "self.search",
+      "source_sha256": "a484165e7e47c1e457a680a270f6c07987fbc9b1b452b058eb461c95ec465e1f"
+    },
+    {
+      "path": "template_ai/work_overview_dialog.py",
+      "line": 27,
+      "signal": "button.clicked",
+      "target": "fn",
+      "source_sha256": "a484165e7e47c1e457a680a270f6c07987fbc9b1b452b058eb461c95ec465e1f"
+    },
+    {
+      "path": "template_ai/work_overview_dialog.py",
+      "line": 94,
+      "signal": "button.clicked",
+      "target": "fn",
+      "source_sha256": "a484165e7e47c1e457a680a270f6c07987fbc9b1b452b058eb461c95ec465e1f"
+    },
+    {
+      "path": "template_ai/workbench_navigation.py",
+      "line": 27,
+      "signal": "self.back.clicked",
+      "target": "self.return_to_work",
+      "source_sha256": "db0bad42d38a7d132fa59586779ba53155d1e0b254687348e3c74e0637932267"
+    },
+    {
+      "path": "template_ai/workbench_navigation.py",
+      "line": 28,
+      "signal": "window.tabs.currentChanged",
+      "target": "self.update",
+      "source_sha256": "db0bad42d38a7d132fa59586779ba53155d1e0b254687348e3c74e0637932267"
+    },
+    {
+      "path": "template_ai/workbench_navigation.py",
+      "line": 29,
+      "signal": "window.inputs_invalidated",
+      "target": "self.update",
+      "source_sha256": "db0bad42d38a7d132fa59586779ba53155d1e0b254687348e3c74e0637932267"
+    },
+    {
+      "path": "template_ai/workbench_navigation.py",
+      "line": 30,
+      "signal": "window.statusBar().messageChanged",
+      "target": "self.update",
+      "source_sha256": "db0bad42d38a7d132fa59586779ba53155d1e0b254687348e3c74e0637932267"
+    },
+    {
+      "path": "template_ai/workbench_navigation.py",
+      "line": 31,
+      "signal": "window.candidate_list.currentRowChanged",
+      "target": "self.update",
+      "source_sha256": "db0bad42d38a7d132fa59586779ba53155d1e0b254687348e3c74e0637932267"
+    }
+  ]
+}

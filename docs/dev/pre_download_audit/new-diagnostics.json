@@ -316,11 +316,10 @@
       "profile": "final-scan-application-003",
       "status": "FIXED_AND_VERIFIED",
       "severity": "P0_CONFIRMED_STALE_DRAFT_OVERWRITE",
-      "review": "Corrected oracle reaches confirmation exactly once: source92977b77 fails3; fixed policy passes3. Both removed-draft and after-confirmation exact draft id/content checks now protect the active draft. Related suite rerun pending; first invalid fixture does not count as proof.",
+      "review": "Corrected exact confirmation fixtures on isolated old92977b77:2FAIL1ERROR; fixed source3PASS and current full1921PASS. Earlier max_tracking=0 fixture never reached confirmation and is rejected as evidence.",
       "evidence": [
         "text-policy-context-before-corrected.log",
-        "text-policy-context-after-corrected.log",
-        "root7-isolated-before-source.json"
+        "full-regression-final-010/summary.json"
       ],
       "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source.",
       "fix_commit": "bb7f65a9"
@@ -341,11 +340,10 @@
       "profile": "final-scan-application-003",
       "status": "FIXED_AND_VERIFIED",
       "severity": "P0_CONFIRMED_STALE_DRAFT_OVERWRITE",
-      "review": "Corrected oracle reaches confirmation exactly once: source92977b77 fails3; fixed policy passes3. Both removed-draft and after-confirmation exact draft id/content checks now protect the active draft. Related suite rerun pending; first invalid fixture does not count as proof.",
+      "review": "Corrected exact confirmation fixtures on isolated old92977b77:2FAIL1ERROR; fixed source3PASS and current full1921PASS. Earlier max_tracking=0 fixture never reached confirmation and is rejected as evidence.",
       "evidence": [
         "text-policy-context-before-corrected.log",
-        "text-policy-context-after-corrected.log",
-        "root7-isolated-before-source.json"
+        "full-regression-final-010/summary.json"
       ],
       "followup": "Preserve diagnostics and precise schemas; no baseline refresh, blanket ignore or Any. Runtime qualification remains bound to exact tests and source.",
       "fix_commit": "bb7f65a9"
@@ -883,5 +881,7 @@
   "all_new_occurrences_reviewed": true,
   "unreviewed": 0,
   "confirmed_defect_root": "BUG-DRAFT-CONTEXT-007",
-  "qualification": "Does not close remaining original diagnostics or deferred external qualifications"
+  "qualification": "Does not close remaining original diagnostics or deferred external qualifications",
+  "superseded_current_review": "release-diagnostic-comparison.json",
+  "historical_profile_only": true
 }

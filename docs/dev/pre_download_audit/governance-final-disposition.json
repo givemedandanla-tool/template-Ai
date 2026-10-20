@@ -1,0 +1,36 @@
+{
+  "status": "CURRENT_FORMAL_GATE_BLOCKED_NOT_PASSED",
+  "human_summary": "程式本機測試已通過；正式發行與遠端保存查核仍被擋住，原因是現有證據來源過期，以及缺少新來源的真實GitHub讀回。沒有關閉或繞過檢查。",
+  "checks": [
+    {
+      "command": [
+        ".venv/bin/python",
+        "tools/dev_governance.py",
+        "check"
+      ],
+      "exit_code": 1,
+      "status": "FAIL_NOT_BYPASSED",
+      "reason": "Historical formal evidence source no longer equals current code. New formal source readback is unavailable under remote fee boundary.",
+      "log": "governance-final-basic.log",
+      "log_sha256": "7834c61bbb69dad03a1868f4fe9ee0e686d0e740492577b261314ea4cf37e7e4"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "tools/dev_governance.py",
+        "check",
+        "--require-evidence",
+        "--publication-scope"
+      ],
+      "exit_code": 1,
+      "status": "FAIL_NOT_BYPASSED",
+      "reason": "Historical formal evidence source no longer equals current code. New formal source readback is unavailable under remote fee boundary.",
+      "log": "governance-final-publication.log",
+      "log_sha256": "7834c61bbb69dad03a1868f4fe9ee0e686d0e740492577b261314ea4cf37e7e4"
+    }
+  ],
+  "cost_boundary": "remote-cost-evidence-boundary.json",
+  "not_software_execution_failure": true,
+  "no_remote_receipt_fabricated": true,
+  "requirements_statuses_unchanged": true
+}
