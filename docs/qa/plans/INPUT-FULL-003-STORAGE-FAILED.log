@@ -1,0 +1,25 @@
+test_actual_pdf_compatible_ai_pipeline_pauses_reopens_and_fits_shared_rules (test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_pdf_compatible_ai_pipeline_pauses_reopens_and_fits_shared_rules) ... ok
+test_actual_source_learning_capacity_novel_input_preview_and_stable_output (test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_source_learning_capacity_novel_input_preview_and_stable_output) ... ERROR
+
+======================================================================
+ERROR: test_actual_source_learning_capacity_novel_input_preview_and_stable_output (test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_source_learning_capacity_novel_input_preview_and_stable_output)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_local_acceptance.py", line 12, in test_actual_source_learning_capacity_novel_input_preview_and_stable_output
+    result=learning_selftest(Path(directory)/'isolated-test')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/tools/local_learning_selftest.py", line 125, in run
+    first=sessions.solve(session['id'],session['revision'])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/design_session.py", line 213, in solve
+    saved=self.store._write('DESIGN_RESULT',new_id(),body,0,'shared_model_layout_result_saved')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/training_store.py", line 90, in _write
+    if len(raw.encode()) > 1_048_576: raise ValueError('單筆metadata超過1MiB')
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: 單筆metadata超過1MiB
+
+----------------------------------------------------------------------
+Ran 2 tests in 61.986s
+
+FAILED (errors=1)

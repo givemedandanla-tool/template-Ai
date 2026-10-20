@@ -135,6 +135,18 @@ class InputLearningIntegrationTests(unittest.TestCase):
         row=self.sessions.current(d.session_id);d.sessions.select_candidate(row['id'],row['revision'],0)
         self.assertIsNone(self.sessions.current(d.session_id)['confirmation'])
         self.assertEqual(self.sessions.find_accepted(self.graph,90,54,production=False)['sha256'],artifact['sha256'])
+        _,result,_=self.sessions.checked_result(d.session_id)
+        self.assertNotIn('serialized',result['choices'][0])
+        reference=result['choices'][0]['serialized_ref']
+        stored=self.sessions.store.get('DESIGN_CHOICE',reference)
+        self.assertEqual(stored['serialized']['items'],result['selected']['serialized']['items'])
+        with self.sessions.store.transaction():
+            payload=dict(stored);payload['serialized']=dict(stored['serialized'],items=[])
+            self.sessions.store._write('DESIGN_CHOICE',reference,payload,stored['revision'],'test_candidate_corruption')
+        before=self.sessions.current(d.session_id)
+        with self.assertRaisesRegex(ValueError,'missing or changed'):
+            self.sessions.select_candidate(d.session_id,before['revision'],0)
+        self.assertEqual(self.sessions.current(d.session_id),before)
 
     def test_new_model_activation_keeps_exact_accepted_session_for_reorder(self):
         d=self.dialog;d.solve();d.confirm_preview()

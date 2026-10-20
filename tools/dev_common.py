@@ -52,7 +52,7 @@ def source_files(root=ROOT, code_only=False):
     root = Path(root)
     directories = ("template_ai", "tests", "examples", "tools") if code_only else ("template_ai", "tests", "examples", "tools", "docs", ".github")
     root_names = ("app.py", "requirements.txt", "requirements-lock.txt") if code_only else ("app.py", "requirements.txt", "requirements-lock.txt", "requirements-build.txt", "README.md", "AGENTS.md", "START_WINDOWS.bat", ".gitignore")
-    allowed = {".py", ".md", ".json", ".jsonl", ".csv", ".txt", ".log", ".svg", ".xml", ".yml", ".yaml", ".ps1", ".bat"}
+    allowed = {".py", ".md", ".json", ".jsonl", ".csv", ".txt", ".log", ".svg", ".xml", ".ui", ".yml", ".yaml", ".ps1", ".bat"}
     files = [root / name for name in root_names if (root / name).is_file()]
     for directory in directories:
         for path in (root / directory).rglob("*"):
@@ -60,7 +60,8 @@ def source_files(root=ROOT, code_only=False):
             if any(part in ("__pycache__", "assets", ".venv", ".private", "ten-package-data") or part.startswith("anonymous-smoke-data") for part in relative.parts):
                 continue
             evidence_binary = relative.parts[:3] == ("docs", "evidence", "runs") and path.suffix in (".png", ".jpg", ".pdf")
-            if path.is_file() and not path.is_symlink() and (path.suffix in allowed or evidence_binary):
+            gui_license = relative.parts[:3] == ("docs", "dev", "gui_tooling") and path.name == "LICENSE"
+            if path.is_file() and not path.is_symlink() and (path.suffix in allowed or evidence_binary or gui_license):
                 files.append(path)
     return sorted(set(files))
 

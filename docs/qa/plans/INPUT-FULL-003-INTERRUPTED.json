@@ -1,0 +1,24 @@
+{
+  "status": "INTERRUPTED_NOT_ADOPTED",
+  "reason": "Actual regression: learned-session result metadata exceeds existing 1MiB store limit when all candidate payloads are persisted. Preserve failure; fix representation without weakening limit, then rerun complete source.",
+  "source_commit": "7597c16ea435db3baa9909063bc983d42b54e6ae",
+  "owned_parent": 704551,
+  "owned_children": [
+    718640,
+    718760,
+    719026
+  ],
+  "progress": {
+    "phase": "RUNNING_OWNED_TEST_MODULES",
+    "current_test": "test_multi_size.MultiSizeTests.test_input_change_before_and_between_files_never_produces_unconfirmed_new_output, test_multi_size_edit_gui.MultiSizeEditGuiTests.test_cancel_resource_wait_starts_no_calculation_and_keeps_manual_unknown, test_multi_size_manual_sync.MultiSizeManualSyncTests.test_candidate_budget_rejects_before_mutating_previous_collection",
+    "started": 1085,
+    "completed": 1082,
+    "passed": 1081,
+    "failed_ids": [
+      "test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_source_learning_capacity_novel_input_preview_and_stable_output"
+    ],
+    "planned_tests": 1798,
+    "formal_complete": false,
+    "updated_at": "2026-10-20T03:40:31.924381+00:00"
+  }
+}

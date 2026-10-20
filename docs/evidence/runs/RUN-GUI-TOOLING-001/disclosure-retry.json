@@ -1,0 +1,41 @@
+{
+  "domain": "ux",
+  "query": "form labels helper",
+  "file": "ux-guidelines.csv",
+  "count": 3,
+  "results": [
+    {
+      "Category": "Accessibility",
+      "Issue": "Form Labels",
+      "Platform": "All",
+      "Description": "Inputs must have associated labels",
+      "Do": "Use label with for attribute or wrap input",
+      "Don't": "Placeholder-only inputs",
+      "Code Example Good": "<label for='email'>",
+      "Code Example Bad": "placeholder='Email' only",
+      "Severity": "High"
+    },
+    {
+      "Category": "Forms",
+      "Issue": "Submit Feedback",
+      "Platform": "All",
+      "Description": "Confirm form submission status",
+      "Do": "Show loading then success/error state",
+      "Don't": "No feedback after submit",
+      "Code Example Good": "Loading -> Success message",
+      "Code Example Bad": "Button click with no response",
+      "Severity": "High"
+    },
+    {
+      "Category": "Accessibility",
+      "Issue": "ARIA Labels",
+      "Platform": "All",
+      "Description": "Interactive elements need accessible names",
+      "Do": "Add aria-label for icon-only buttons",
+      "Don't": "Icon buttons without labels",
+      "Code Example Good": "aria-label='Close menu'",
+      "Code Example Bad": "<button><Icon/></button>",
+      "Severity": "High"
+    }
+  ]
+}

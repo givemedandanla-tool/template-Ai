@@ -1,0 +1,699 @@
+<ui version="4.0">
+ <class>ProductionWorkspaceConcept</class>
+ <widget class="QMainWindow" name="ProductionWorkspaceConcept">
+  <property name="windowTitle">
+   <string>Template AI — 面板概念稿（工具驗證用）</string>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1360</width>
+    <height>860</height>
+   </rect>
+  </property>
+  <property name="styleSheet">
+   <string>QWidget {font-family: "Noto Sans CJK TC", "Noto Sans", sans-serif; font-size: 14px; color:#172033; background:#f4f6fa;}
+QLabel {background:transparent;} QFrame#header, QFrame#inputPanel, QFrame#helpPanel {background:white; border:1px solid #dce2eb; border-radius:12px;}
+QFrame#canvas {background:#e9edf4; border:1px solid #d7dfeb; border-radius:12px;} QFrame#exampleCard {background:white; border:1px solid #c9d2df; border-radius:2px;}
+QLineEdit {background:white; border:1px solid #b3bfd0; border-radius:6px; padding:9px; min-height:22px; selection-background-color:#2459c4;}
+QLineEdit:focus {border:2px solid #2459c4; padding:8px;}
+QPushButton {background:white; border:1px solid #b9c5d5; border-radius:7px; padding:10px 14px; min-height:20px; font-weight:500;}
+QPushButton:hover {background:#edf3ff; border-color:#2459c4;} QPushButton:focus {border:2px solid #2459c4; padding:9px 13px;}
+QPushButton#primaryAction {background:#2459c4; border-color:#2459c4; color:white; font-weight:600; min-width:130px;}
+QPushButton#primaryAction:hover {background:#17459f;} QPushButton:disabled {color:#68758a; background:#edf0f5; border-color:#dce2eb;}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="rootLayout">
+    <property name="spacing">
+     <number>18</number>
+    </property>
+    <property name="leftMargin">
+     <number>24</number>
+    </property>
+    <property name="rightMargin">
+     <number>24</number>
+    </property>
+    <property name="topMargin">
+     <number>24</number>
+    </property>
+    <property name="bottomMargin">
+     <number>24</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="header">
+      <layout class="QHBoxLayout" name="headerLayout">
+       <item>
+        <widget class="QLabel" name="brand">
+         <property name="text">
+          <string>Template AI</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string>font-size:22px;font-weight:700;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="headSpace">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>1</width>
+           <height>12</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="currentNav">
+         <property name="text">
+          <string>製作稿件</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string>font-weight:700;color:#2459c4;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="otherNav">
+         <property name="text">
+          <string>歷史稿件     模板與學習</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string>color:#516076;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="conceptNotice">
+      <property name="text">
+       <string>面板概念稿 · 範例資料 · 僅驗證設計工具，尚未連接正式排版</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="styleSheet">
+       <string>font-size:12px;color:#526076;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="workspace">
+      <property name="spacing">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QFrame" name="inputPanel">
+        <property name="minimumSize">
+         <size>
+          <width>270</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>300</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="inputLayout">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="dataTitle">
+           <property name="text">
+            <string>1  填寫資料</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-size:19px;font-weight:700;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="dataHint">
+           <property name="text">
+            <string>資料會保留；修改後再更新稿件。</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>color:#516076;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="personNameLabel">
+           <property name="text">
+            <string>姓名</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-weight:600;</string>
+           </property>
+           <property name="buddy">
+            <cstring>personName</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="personName">
+           <property name="text">
+            <string>王小明</string>
+           </property>
+           <property name="accessibleName">
+            <string>姓名</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="jobTitleLabel">
+           <property name="text">
+            <string>職稱</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-weight:600;</string>
+           </property>
+           <property name="buddy">
+            <cstring>jobTitle</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="jobTitle">
+           <property name="text">
+            <string>設計顧問</string>
+           </property>
+           <property name="accessibleName">
+            <string>職稱</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="phoneLabel">
+           <property name="text">
+            <string>手機</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-weight:600;</string>
+           </property>
+           <property name="buddy">
+            <cstring>phone</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="phone">
+           <property name="text">
+            <string>0912 345 678</string>
+           </property>
+           <property name="accessibleName">
+            <string>手機</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="emailLabel">
+           <property name="text">
+            <string>電子郵件</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-weight:600;</string>
+           </property>
+           <property name="buddy">
+            <cstring>email</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="email">
+           <property name="text">
+            <string>hello@example.com</string>
+           </property>
+           <property name="accessibleName">
+            <string>電子郵件</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="addField">
+           <property name="text">
+            <string>＋ 新增資料</string>
+           </property>
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="companyTitle">
+           <property name="text">
+            <string>公司與共用資料</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-weight:700;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="companyValue">
+           <property name="text">
+            <string>範例設計工作室
+共用聯絡資料可在這裡集中維護。</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>color:#516076;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="leftGrow">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>1</width>
+             <height>12</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="sizeLabel">
+           <property name="text">
+            <string>成品尺寸</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-weight:600;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="sizeExample">
+           <property name="text">
+            <string>90 × 54 mm · 範例尺寸</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>color:#516076;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="previewPanel">
+        <layout class="QVBoxLayout" name="previewLayout">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="previewTitle">
+           <property name="text">
+            <string>2  檢查與調整</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-size:19px;font-weight:700;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="previewHint">
+           <property name="text">
+            <string>正式面板可拖動欄位調整相對位置；文字樣式由規則處理。</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>color:#516076;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="canvas">
+           <layout class="QVBoxLayout" name="canvasLayout">
+            <property name="leftMargin">
+             <number>28</number>
+            </property>
+            <property name="rightMargin">
+             <number>28</number>
+            </property>
+            <item>
+             <spacer name="canvasTop">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>1</width>
+                <height>12</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QFrame" name="exampleCard">
+              <property name="minimumSize">
+               <size>
+                <width>500</width>
+                <height>300</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>340</height>
+               </size>
+              </property>
+              <layout class="QVBoxLayout" name="cardLayout">
+               <property name="leftMargin">
+                <number>30</number>
+               </property>
+               <property name="rightMargin">
+                <number>30</number>
+               </property>
+               <property name="topMargin">
+                <number>24</number>
+               </property>
+               <property name="bottomMargin">
+                <number>24</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="previewCompany">
+                 <property name="text">
+                  <string>STUDIO  /  範例設計工作室</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size:14px;color:#2459c4;font-weight:600;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="cardGap">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>1</width>
+                   <height>12</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="previewName">
+                 <property name="text">
+                  <string>王小明</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size:30px;font-weight:700;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="previewJob">
+                 <property name="text">
+                  <string>設計顧問</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size:15px;color:#516076;</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="cardContactGap">
+                 <property name="orientation">
+                  <enum>Qt::Vertical</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>1</width>
+                   <height>12</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QLabel" name="previewContact">
+                 <property name="text">
+                  <string>0912 345 678
+hello@example.com</string>
+                 </property>
+                 <property name="wordWrap">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string>font-size:14px;color:#36445a;</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="canvasBottom">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>1</width>
+                <height>12</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="previewFoot">
+           <property name="text">
+            <string>畫面上的卡片是設計示例，不代表正式輸出或印刷檢查已通過。</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-size:12px;color:#516076;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="helpPanel">
+        <property name="minimumSize">
+         <size>
+          <width>220</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>250</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="helpLayout">
+         <property name="spacing">
+          <number>14</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="helpTitle">
+           <property name="text">
+            <string>目前狀況</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-size:18px;font-weight:700;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="summary">
+           <property name="text">
+            <string>這是可操作的面板概念稿。先填姓名，按下方按鈕更新範例。</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>color:#36445a;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="nextTitle">
+           <property name="text">
+            <string>接下來怎麼做</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-weight:700;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="nextText">
+           <property name="text">
+            <string>正式流程：
+填寫資料 → 產生稿件 → 微調位置 → 確認 → 儲存輸出</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>color:#516076;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="rightGrow">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>1</width>
+             <height>12</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="detailsAction">
+           <property name="text">
+            <string>查看技術詳情</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="technical">
+           <property name="text">
+            <string>工具模式：Qt QUiLoader
+資料：人工範例
+正式排版核心：未連接
+本概念稿不支援正式輸出。</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="styleSheet">
+            <string>font-size:12px;color:#516076;</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="footerLayout">
+      <item>
+       <widget class="QLabel" name="footerHelp">
+        <property name="text">
+         <string>先看完整稿件，再按需要修改資料與位置。</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="styleSheet">
+         <string>color:#516076;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="footerGrow">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>1</width>
+          <height>12</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="primaryAction">
+        <property name="text">
+         <string>更新範例畫面</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources />
+ <connections />
+</ui>

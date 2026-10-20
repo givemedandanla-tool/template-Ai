@@ -449,7 +449,8 @@ class DesignLearningDialog(QDialog):
             try:_,result,candidate=self.sessions.checked_result(self.session_id)
             except ValueError:pass
             for index,choice in enumerate(result.get('choices',[]) if result else []):
-                self.candidate_choices.addItem(('建議方案' if index==0 else '其他方案 '+str(index+1))+' · '+str(len(choice['serialized']['items']))+'項資料',index)
+                count=choice.get('item_count',len(choice.get('serialized',{}).get('items',[])))
+                self.candidate_choices.addItem(('建議方案' if index==0 else '其他方案 '+str(index+1))+' · '+str(count)+'項資料',index)
                 if result['selected']['id']==choice['id']:self.candidate_choices.setCurrentIndex(index)
             for artifact in self.jobs.store.records('DESIGN_ACCEPTED_ARTIFACT',limit=200):
                 if artifact['session_id']==self.session_id:self.artifacts.addItem(artifact['path'],artifact['id'])

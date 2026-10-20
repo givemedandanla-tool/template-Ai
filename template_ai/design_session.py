@@ -41,6 +41,28 @@ class DesignSessions:
         self.store=TrainingStore.bind(library) if library.db.in_transaction else TrainingStore(library)
         self.learning=CrossWorkLearning(library)
 
+    def _choice_summaries(self,choices):
+        """Keep bounded result metadata; immutable candidate payloads live separately."""
+        summaries=[]
+        for choice in choices:
+            value=deepcopy(choice);serialized=value.pop('serialized')
+            key=digest(serialized);record=self.store.get('DESIGN_CHOICE',key)
+            if record:
+                if digest(record['serialized'])!=key:raise ValueError('Saved candidate content differs')
+            else:
+                self.store._write('DESIGN_CHOICE',key,dict(serialized=serialized),0,'exact_candidate_payload_saved')
+            value.update(serialized_ref=key,item_count=len(serialized['items']))
+            summaries.append(value)
+        return summaries
+
+    def _expand_choice(self,choice):
+        value=deepcopy(choice)
+        if 'serialized' not in value:
+            key=value.get('serialized_ref');record=self.store.get('DESIGN_CHOICE',key or 'missing')
+            if not record or digest(record['serialized'])!=key:raise ValueError('Saved candidate is missing or changed;regenerate before selection')
+            value['serialized']=deepcopy(record['serialized'])
+        return value
+
     def current(self,session_id,expected_revision=None):
         row=self.store.get('DESIGN_SESSION',session_id)
         if not row or expected_revision is not None and row['revision']!=expected_revision:
@@ -210,6 +232,8 @@ class DesignSessions:
         with self.store.transaction():
             current=self.current(session_id,snapshot['revision'])
             if self.learning.checked_model(model['id'])[0]!=model:raise ValueError('Model/source changed while solving')
+            body['choices']=self._choice_summaries(body['choices'])
+            body.pop('content_digest',None);body['content_digest']=digest(body)
             saved=self.store._write('DESIGN_RESULT',new_id(),body,0,'shared_model_layout_result_saved')
             value=deepcopy(_body(current));value.update(result_id=saved['id'],result_state='CURRENT',confirmation=None)
             self.store._write('DESIGN_SESSION',session_id,value,current['revision'],'exact_layout_result_installed')
@@ -222,7 +246,7 @@ class DesignSessions:
             choices=result.get('choices',[])
             if type(index) is not int or not 0<=index<len(choices):raise ValueError('Candidate choice is unavailable')
             body=deepcopy(_body(result));body.pop('content_digest',None)
-            body['selected']=deepcopy(choices[index])
+            body['selected']=self._expand_choice(choices[index])
             body['family_switch_requires_review']=bool(result.get('previous_family') and body['selected']['family_id']!=result['previous_family'])
             body['production_qualification']='NOT_EVALUATED';body['content_digest']=digest(body)
             saved=self.store._write('DESIGN_RESULT',new_id(),body,0,'explicit_candidate_selection')
