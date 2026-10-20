@@ -56,6 +56,11 @@ class WorkLoadAtomicityTests(unittest.TestCase):
         self.assertEqual(self.state(),self.before);self.assertEqual(self.w.library.artwork(bad['id']),bad)
 
     def test_work_navigation_failure_does_not_persist_failed_selection(self):
-        good=self.works[0];bad=self.w.library.create_artwork(good['source_id'],'Unreadable second work',good['payload']);bad=self.unreadable(bad);self.w.refresh_works();index=next(i for i,w in enumerate(self.w.works) if w['id']==bad['id'])
+        good=self.works[0];bad=self.w.library.create_artwork(good['source_id'],'Unreadable second work',good['payload']);bad=self.unreadable(bad);self.w.library.select_artwork(good['source_id'],good['id']);self.assertEqual(self.w.library.active_artwork(good['source_id'])['id'],good['id']);self.w.refresh_works();index=next(i for i,w in enumerate(self.w.works) if w['id']==bad['id'])
         self.dismiss_error(lambda:self.w.choose_work(index))
         self.assertEqual(self.state(),self.before);self.assertEqual(self.w.library.active_artwork(good['source_id'])['id'],good['id']);self.assertEqual(self.w.library.artwork(bad['id']),bad)
+
+    def test_direct_foreign_work_cannot_be_mixed_with_current_source(self):
+        with self.assertRaisesRegex(ValueError,'不屬於'):
+            self.w.load_work(self.works[1])
+        self.assertEqual(self.state(),self.before)

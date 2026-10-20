@@ -1132,7 +1132,8 @@ class MainWindow(QMainWindow):
         crop = Rect(**saved["crop"])
         slots = [Slot(**{**s, "rect": Rect(**s["rect"])}) for s in saved["slots"]]
         self.font_manager.ensure_slots(slots)
-        if source is not None and source['id']!=work['source_id']:
+        target_source=source if source is not None else self.source
+        if target_source is None or target_source['id']!=work['source_id']:
             raise ValueError('作品不屬於目前來源，不能跨來源混配')
         self.work = work
         self.crop = crop
