@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-20T10:47:57.692974+00:00",
+  "code_source_commit": "4ebfff6f676b236519c4a1ba2b0cb192acbffea3",
+  "checkpoint_id": "CP-20261020-GUI-OFFLINE-FINAL",
+  "receipt": "docs/checkpoints/CP-20261020-GUI-OFFLINE-FINAL.receipt.json",
+  "checks": [
+    {
+      "command": "dev_governance.py check --require-evidence --publication-scope",
+      "exit_code": 0,
+      "result": {
+        "status": "PASS",
+        "requirements": 172,
+        "completed_scoped": 166,
+        "parent_topics": 75,
+        "tests_known": 1850
+      }
+    },
+    {
+      "command": "dev_governance.py check --require-evidence",
+      "exit_code": 0,
+      "result": {
+        "status": "PASS",
+        "requirements": 172,
+        "completed_scoped": 166,
+        "parent_topics": 75,
+        "tests_known": 1850
+      }
+    }
+  ],
+  "scope": "Current complete397 attachments;no new publication waiver;not a claim of original external qualification"
+}

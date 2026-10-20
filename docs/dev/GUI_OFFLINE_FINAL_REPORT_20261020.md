@@ -52,3 +52,5 @@
 本地操作：[快速開始](LOCAL_DESKTOP_QUICK_START.md) → [桌面指南](DESKTOP_WORKSPACE_USER_GUIDE_20261020.md) → [離線報告](OFFLINE_SUPPORT_USER_GUIDE_20261020.md)。首次明確執行PREPARE_WINDOWS.bat，之後START_WINDOWS.bat離線啟動。私人資料先另行備份；報告由使用者手動提供Codex，沒有自動傳送。
 
 GitHub保存使用既有`dev/v0.1-first-version`／PR2，不合併main。最終checkpoint收據以STATE為準；新對話讀AGENTS→STATE→ACTIVE_DEVELOPMENT_HANDOFF，執行resume_status即可接續。
+
+最終保存：`CP-20261020-GUI-OFFLINE-FINAL` 已REMOTE_VERIFIED，來源、測試、397件公開附件及全部本輪報告已精確Git讀回。嚴格`--require-evidence`與核准範圍檢查皆PASS（172登錄、166明列範圍完成）；不新增證據豁免。見[治理結果](../qa/targeted/GUI-FINAL-GOVERNANCE.json)及STATE最新收據。後續收據／環境草稿metadata commit不修改已驗證程式。

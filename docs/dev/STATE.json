@@ -6,8 +6,8 @@
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
   "active_task": "GUI_OFFLINE_DELIVERY_SELF_VERIFIED_COMPLETE",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-WIP7.receipt.json",
-  "last_confirmed_commit": "a15d765a5096fe0a716b7b36e0f05ded4f8dfd17",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-FINAL.receipt.json",
+  "last_confirmed_commit": "5cfa9dac1d0ccb1eaedfd2cb9fbdb3847fd54e92",
   "latest_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -46,9 +46,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261020-GUI-OFFLINE-FINAL"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1506,6 +1504,10 @@
     "network_use": "No automatic upload;offline product workflow;explicit initial preparation separate",
     "private_data": "Remains local;not included in safe report or GitHub",
     "original_ai_qualification": "8_PARTIAL_0_FULL_UNCHANGED",
-    "proof_scope": "Software self-verification;not human/Windows/private corpus/print qualification"
+    "proof_scope": "Software self-verification;not human/Windows/private corpus/print qualification",
+    "final_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-FINAL.receipt.json",
+    "persistence": "REMOTE_VERIFIED",
+    "governance": "STRICT_AND_PUBLICATION_SCOPE_PASS_172_REGISTERED_166_SCOPED",
+    "governance_evidence": "docs/qa/targeted/GUI-FINAL-GOVERNANCE.json"
   }
 }

@@ -1700,3 +1700,5 @@ native005桌面12/12(231.225s)+原parent3/3(31.512s)，owned3頁Tab PASS5.333s�
 FULL006來源4ebfff6f：1850PASS／236健康模組／0runtime／capture0／397附件，原1798保留新52；native12＋原導航3、owned3頁Tab；CORE090十條逐測映射完成。原有5外部資格仍未滿，整體FAIL與軟體PASS分開。166明列範圍登錄完成，3PARTIAL／3DEFERRED不變；原AI8／50真實資格8partial／0complete。完整失敗與unique-ID拒絕紀錄保留。下一步最終checkpoint及GitHub精確讀回，本地手動安全報告循環。
 
 最終metadata已依1850PASS/0runtime/capture0與397附件逐hash生成；第一次永久保存治理check正確阻擋，因新397證據尚未進REMOTE_VERIFIED checkpoint。這是順序檢查，不是軟體回歸失敗；先FINAL checkpoint/push/readback/ack，再重跑治理，不重跑軟體。只釋放本輪完整synthetic capture cache，source/tests/public397全部保留且已verify_run。
+
+FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE_VERIFIED；397附件永久保存。嚴格require-evidence及publication-scope治理皆PASS172／166，原外部5資格及3PARTIAL/3DEFERRED不改。只釋放已驗ZIP cache；保存收據、治理結果及STATE，下一步雲端設定草稿（不等於發布）。
