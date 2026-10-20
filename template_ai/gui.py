@@ -747,6 +747,11 @@ class MainWindow(QMainWindow):
         return self.output_page_scroll
 
     def candidate_editor(self):
+        from .production_bridge import has_current,uses_learning
+        try:
+            if not getattr(self,'reorder_template_id',None) and (has_current(self) or uses_learning(self)):
+                return self.shared_design_learning(use_current_input=True)
+        except (ValueError,OSError) as error:self.error(str(error));return
         from .candidate_edit import CandidateEditDialog
         dialog=CandidateEditDialog(self)
         try:dialog.exec()
@@ -763,6 +768,11 @@ class MainWindow(QMainWindow):
         self.invalidate()
 
     def layout_session(self):
+        from .production_bridge import has_current,uses_learning
+        try:
+            if not getattr(self,'reorder_template_id',None) and (has_current(self) or uses_learning(self)):
+                return self.shared_design_learning(use_current_input=True)
+        except (ValueError,OSError) as error:self.error(str(error));return
         from .layout_session import LayoutSessionDialog
         dialog=getattr(self,'foreground_layout_session',None)
         if dialog is None:dialog=LayoutSessionDialog(self);self.foreground_layout_session=dialog
@@ -1438,6 +1448,16 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage('目前使用已保存的固定版型；可在候選局部修改調整位置。啟用學習規則後，此入口可拖動調整學習稿。')
             return self.candidate_editor()
         except (ValueError,TypeError,OSError) as error:self.error(str(error))
+
+    def source_candidates(self):
+        rows=[('目前固定版型候選',candidate) for candidate in self.candidates]
+        identity=getattr(self,'production_session_id',None)
+        if identity:
+            from .design_session import DesignSessions
+            try:_,_,candidate=DesignSessions(self.library).checked_result(identity)
+            except (ValueError,OSError):pass
+            else:rows.append(('目前學習稿件',candidate))
+        return rows
 
     def training_center(self):
         from .training_quality_dialog import TrainingQualityDialog
@@ -2198,6 +2218,10 @@ class MainWindow(QMainWindow):
         if has_current(self):
             try:return export_current(self,preview)
             except (ValueError,OSError) as error:self.error(str(error));return
+        from .production_bridge import uses_learning
+        try:
+            if uses_learning(self):return self.shared_design_learning(use_current_input=True)
+        except (ValueError,OSError) as error:self.error(str(error));return
         row = self.candidate_list.currentRow()
         if not 0 <= row < len(self.candidates):
             return

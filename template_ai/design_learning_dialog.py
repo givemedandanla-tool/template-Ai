@@ -176,6 +176,7 @@ class DesignLearningDialog(QDialog):
         row=QHBoxLayout();self.artifacts=QComboBox();row.addWidget(self.artifacts,1);self.button(row,'開啟已保存的相同檔案',self.replay);layout.addLayout(row)
 
     def source_candidates(self):
+        if self.bound_to_main:return self.window.source_candidates()
         if not self.session_id:return []
         try:_,_,candidate=self.sessions.checked_result(self.session_id)
         except ValueError:return []

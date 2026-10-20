@@ -167,6 +167,18 @@ class InputLearningIntegrationTests(unittest.TestCase):
             artifact=self.sessions.export(self.row['id'],target,preview=True)
             self.assertGreater(target.stat().st_size,100);self.assertEqual(self.sessions.replay_artifact(artifact['id'])['sha256'],artifact['sha256'])
 
+    def test_legacy_edit_progress_and_stale_preview_buttons_use_same_learning_draft(self):
+        from template_ai.gui import MainWindow
+        w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w));w.adopt_input_graph(self.graph.data)
+        d=DesignLearningDialog(w);self.addCleanup(d.close);row=attach(d);d.solve()
+        from template_ai.source_change_impact import consumers
+        self.assertTrue(any(scope=='目前學習稿件' for scope,_ in consumers(w)))
+        with patch.object(w,'shared_design_learning') as open_draft:
+            w.candidate_editor();w.layout_session();w.invalidate();w.export_current(True)
+        self.assertEqual(open_draft.call_count,3)
+        self.assertTrue(all(call.kwargs.get('use_current_input') is True for call in open_draft.call_args_list))
+        self.assertEqual(w.production_session_id,row['id']);self.assertEqual(w.active_input_graph.data,self.graph.data)
+
     def test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data(self):
         from template_ai.gui import MainWindow
         w=MainWindow(self.library.root);self.addCleanup(lambda:dispose_main_window(w));controlled_resources(w)
