@@ -409,8 +409,8 @@ class MainWindow(QMainWindow):
         self.menuBar().addAction("操作說明", self.help)
 
     def diagnostic_report(self, kind, work_id=None):
-        from .production_bridge import is_learning_view
-        if kind in ('input','candidate') and is_learning_view(self):return self.shared_design_learning(use_current_input=True,show_report=True)
+        from .production_bridge import routes_to_learning
+        if kind in ('input','candidate') and routes_to_learning(self):return self.shared_design_learning(use_current_input=True,show_report=True)
         from .diagnostic_dialog import DiagnosticReportDialog
         dialog=DiagnosticReportDialog(self,kind,work_id)
         try:dialog.exec()
@@ -445,8 +445,8 @@ class MainWindow(QMainWindow):
         finally:dialog.deleteLater();self.navigation.finish()
 
     def open_diagnostic(self, kind):
-        from .production_bridge import is_learning_view
-        if kind in ('input','candidate') and is_learning_view(self):return self.shared_design_learning(use_current_input=True,show_report=True)
+        from .production_bridge import routes_to_learning
+        if kind in ('input','candidate') and routes_to_learning(self):return self.shared_design_learning(use_current_input=True,show_report=True)
         from .diagnostic_routes import open_diagnostic
         try:return open_diagnostic(self,kind)
         except Exception as error:self.error(str(error))
@@ -2045,10 +2045,14 @@ class MainWindow(QMainWindow):
     def refresh_input_problems(self):
         try:self.library.db.execute("SELECT 1")
         except sqlite3.ProgrammingError:self.input_timer.stop();return
+        from .production_bridge import learning_input_status
+        learning_status=learning_input_status(self)
         from .input_diagnostics import diagnose
         try:
             people, companies, _ = self.input_data()
-            report = diagnose(people, companies, self.library.templates(True), self.out_w.value(), self.out_h.value())
+            # Keep structural input warnings while excluding fixed-template
+            # slot/fit rules from the learned-family path.
+            report = diagnose(people, companies, [] if learning_status else self.library.templates(True), self.out_w.value(), self.out_h.value())
         except (ValueError, TypeError) as error:
             report = {'issues': [{'table':'people','row':i,'col':7,'owner':f'p{i+1}','reason':'公司序號需為有效整數：'+str(error)} for i in range(self.people.rowCount()) if self.people.item(i,7) and not self.people.item(i,7).text().strip().isdigit() and self.people.item(i,7).text().strip()]}
         self.input_problems.clear()
@@ -2066,7 +2070,7 @@ class MainWindow(QMainWindow):
                         item.setToolTip(warning);item.setData(WARNING_ROLE,warning)
                 table.setRowHeight(row,48 if any(i['row']==row and i['table']==('people' if table is self.people else 'companies') for i in report['issues']) else 28)
             del blocker
-        self.input_state.setText(f"{len(report['issues'])}項輸入提示／待版面驗證；非全域無解，正式輸出依當前候選Gate")
+        self.input_state.setText((('請先處理'+str(len(report['issues']))+'項資料提示。' if report['issues'] else '')+learning_status) if learning_status else f"{len(report['issues'])}項輸入提示／待版面驗證；非全域無解，正式輸出依當前候選Gate")
         self.refresh_dependency_notice()
         self.refresh_candidate_views(self.candidate_list.currentRow())
 

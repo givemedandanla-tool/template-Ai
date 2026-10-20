@@ -45,7 +45,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261020-INPUT-STATUS-SOURCE"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-BASELINE.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-FINAL.json",
@@ -423,7 +425,7 @@
   },
   "core_rules": "docs/dev/CONTEXT_AND_PERSISTENCE_RULES.md",
   "resume_command": ".venv/bin/python tools/resume_status.py",
-  "planned_evidence_run": "RUN-INPUT-INTEGRATION-ALL-005",
+  "planned_evidence_run": "RUN-INPUT-INTEGRATION-ALL-006",
   "previous_formal_validations": [
     {
       "run": "docs/evidence/runs/RUN-FIXED70-TEN-PARENTS-001/run.json",
@@ -1389,7 +1391,7 @@
   "editor_tools_final_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
   "input_integration_contract": "docs/dev/INPUT_LEARNING_INTEGRATION_CONTRACT.json",
   "input_integration_progress": {
-    "status": "VIEWPORT_FRAME_SCROLL_FIXED_AWAITING_COMPLETE_RUN",
+    "status": "LEARNING_STATUS_AND_BASIC_DIAGNOSTICS_FIXED_AWAITING_COMPLETE_RUN",
     "contract": "INPUT-LEARNING-INTEGRATION-20261020",
     "baseline": "docs/dev/progress/PROGRESS-20261020-INPUT-INTEGRATION-BASELINE.json",
     "target": "CORE-089",
@@ -1402,16 +1404,21 @@
     "new_tests": 19,
     "interrupted_full_runs": [
       "docs/qa/plans/INPUT-FULL-001-INTERRUPTED.json",
-      "docs/qa/plans/INPUT-FULL-002-INTERRUPTED.json"
+      "docs/qa/plans/INPUT-FULL-002-INTERRUPTED.json",
+      "docs/qa/plans/INPUT-FULL-003-INTERRUPTED.json",
+      "docs/qa/plans/INPUT-FULL-005-INTERRUPTED.json"
     ],
     "targeted_regression": "docs/qa/plans/INPUT-EXPANDED-91-002.log",
-    "pending_run": "RUN-INPUT-INTEGRATION-ALL-005",
+    "pending_run": "RUN-INPUT-INTEGRATION-ALL-006",
     "targeted_storage_tests": 29,
     "local_end_to_end_tests": 2,
     "failed_full_runs": [
       "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-004/run.json"
     ],
     "viewport_targeted_tests": 38,
-    "viewport_targeted_status": "PASS"
+    "viewport_targeted_status": "PASS",
+    "status_targeted_tests": 38,
+    "final_status_targeted_tests": 6,
+    "final_status_targeted_status": "PASS"
   }
 }

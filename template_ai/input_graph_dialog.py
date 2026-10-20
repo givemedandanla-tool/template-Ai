@@ -5,6 +5,7 @@ from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButto
     QInputDialog,QMessageBox,QDialogButtonBox,QListWidget,QListWidgetItem,QPlainTextEdit)
 from .input_graph import InputGraph, CONTACT_KINDS
 from .model import KINDS
+from shiboken6 import isValid
 
 
 class InputGraphDialog(QDialog):
@@ -40,6 +41,9 @@ class InputGraphDialog(QDialog):
         b=QPushButton(text);b.clicked.connect(action);bar.addWidget(b);return b
 
     def execute(self,action,**params):
+        # Qt can emit editingFinished while destroying the owner window.
+        # Do not rebuild a draft or inspect consumers after that lifetime.
+        if not isValid(self) or not isValid(self.window):return False
         if self.rebuilding:return False
         if any(len(value)>2048 for value in self.pending_input.values()):
             self.status.setText('有一欄資料過長，原文仍保留在輸入框。請先縮短或另存原文，再使用這些資料。');self.refresh_warnings();return False

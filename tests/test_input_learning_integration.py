@@ -287,6 +287,9 @@ class InputLearningIntegrationTests(unittest.TestCase):
         w.companies.setRowCount(0)
         learning=self.dialog.learning;active=learning.store.get('DESIGN_ACTIVE','local-layout')
         learning.activate(self.model['id'],active['revision'] if active else 0,'Author',dict(version='legacy-main-learning-1',basis='Authored legacy GUI integration policy',approved=True,production=False),True)
+        name=w.people.item(0,0);saved_name=name.text();name.setText('');w.refresh_input_problems()
+        self.assertGreater(w.input_problems.count(),0);self.assertIn('請先處理',w.input_state.text())
+        name.setText(saved_name);w.refresh_input_problems()
         observations=[];errors=[];timer=QTimer();timer.setInterval(20)
         def inspect():
             try:
@@ -310,6 +313,10 @@ class InputLearningIntegrationTests(unittest.TestCase):
         target=self.root/('PREVIEW-main-input-'+current['id']+'.png')
         with patch('PySide6.QtWidgets.QFileDialog.getSaveFileName',return_value=(str(target),'PNG')):artifact=export_current(w,True)
         self.assertTrue(target.is_file());self.assertEqual(artifact['session_id'],current['id'])
+        w.statusBar().showMessage('Status refresh must preserve the displayed learned case')
+        w.refresh_input_problems();w.navigation.update();APP.processEvents()
+        self.assertIn('學習稿已保存',w.work_context.text());self.assertNotIn('尚未產生候選',w.work_context.text())
+        self.assertIn('學習稿已保存',w.input_state.text());self.assertEqual(w.input_problems.count(),0)
         self.capture(w,'input-integration-main-preview.png')
         w.reorder_template_id='explicit-historical-style';self.assertFalse(uses_learning(w))
 

@@ -289,7 +289,10 @@ class WorkbenchNavigation:
     def update(self,*args):
         w=self.window;mode=w.tabs.currentIndex();parts=[self.route or MODE_LABELS[mode]]
         index=w.candidate_list.currentRow()
-        if mode==2 and 0<=index<len(w.candidates):
+        from .production_bridge import learning_input_status
+        learning_status=learning_input_status(w) if mode==2 else None
+        if learning_status:parts.append(learning_status)
+        elif mode==2 and 0<=index<len(w.candidates):
             c=w.candidates[index];parts+=[f'候選 {index+1}',f'{c.template.width_mm:g}×{c.template.height_mm:g} mm']
             parts.append('需重新驗證' if c.generation!=w.generation else '正式輸出仍需當前檢查')
             parts.append('短期恢復已加密落盤；目前進度另需核對' if self.recovery and self.recovery['expires']>time.time() else '尚未保存的當次排版')

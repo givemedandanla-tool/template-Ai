@@ -1,11 +1,13 @@
-# Template AI 當前接續點（完整005待驗）
+# Template AI 目前接續點（完整006待驗）
 
-本輪內部輸入整合CORE-089九條，1779原測試保留、新19、總1798／230模組。最新STATE與接口表為準。
+本輪CORE089九條／原1779測試保留、新19、總1798／230模組。先完成舊輸入接新家族／規則、再接GUI設計工具；GUI skill／Qt Designer／QUiLoader／Xvfb／xdotool與商用開源研究已完成並GitHub持久化。網頁／手機／EXE延後、私人資料留本地、原AI8完整真實資格仍8部分／0完整。
 
-完整004來源3634393已完成1798條：1797PASS／1FAIL，小視窗預覽外框可見高度未達原驗收；capture因測試未全過停止，不採用。詳細INPUT-FULL-004-SMALL-WINDOW-FAILED.log。實際重現：canvas兩側因內容寬而被裁，捲動定位把下框剛好放在viewport exclusive邊界，visibleRegion僅剩上框1px。改navigate_mode的外框定位邊距加2px，保留原尺寸標準，再加真正canvas viewport可見高度檢查。不是提高等待時間或移除舊驗收。
+完整001／002為補查中斷；003實際metadata超過1MiB，改不可變候選hash參照；004完成1798：1797PASS／小視窗1FAIL，改外框捲動inclusive/exclusive邊界並保留原驗收、補實際viewport高度。005在1403PASS／0FAIL主動中斷：原生截圖發現舊navigation頁首與輸入提示覆寫學習稿狀態。所有失敗／中斷保留，不採作完整PASS。
 
-最新viewport／input／navigation局部38條PASS（INPUT-VIEWPORT-38-001.log）；現在建立CP-20261020-INPUT-VIEWPORT-SOURCE、原生Git讀回，啟動完整RUN-INPUT-INTEGRATION-ALL-005。原始001／002主動中斷、003metadata過大失敗保留，003不可變候選hash參照已在004本地端到端PASS。
+最新修正：read-only learning_input_status統一頁首／輸入狀態；排除固定模板slot-fit警告，但保留基本姓名／公司引用診斷。已啟用規則、未產稿時也正確引導；固定舊版／明確固定候選維持原路徑。報告在選用學習規則時接新稿件。新增同ID回歸斷言核對statusBar／timer之後仍為當前學習稿。相關38條PASS；最後基本診斷／主流程／固定舊版／小視窗6條PASS，且沒有關閉時的Qt回呼錯誤。
 
-GUI skill／Qt Designer／QUiLoader／Xvfb／xdotool接入及乾淨工具重建已PASS；GUI_PANEL_DESIGN_PLAN_20261020.md、GUI_TOOLING_READINESS_20261020.md與INTERNAL_DRAFT_INPUT_QUICK_GUIDE.md已整理。Concept不是正式新面板；原生QUiLoader可預覽、Designer快捷預覽未證實。既有相對位置選單保留，避免重複開發。
+下一步：6條已通過→CP-20261020-INPUT-STATUS-SOURCE→原生Git讀回→完整RUN-INPUT-INTEGRATION-ALL-006。來源凍結後不要再改程式。1798全PASS、230健康模組、capture0、來源未變、附件hash正確才採用；整體仍可能因原5外部資格FAIL，但軟體PASS不可混真實印前資格。
 
-私人資料留本地；網頁／手機／EXE延後，不合併main。原AI8包50完整真實資格仍8部分／0完整。171登錄原164完成暫待完整重驗，未把局部當完整PASS。完成005後才執行/tmp/adopt_input_evidence.py、/tmp/finalize_input_gui_docs.py，驗證當前來源／完整附件，再保存最終GitHub checkpoint。
+原生Linux xcb舊UI補驗：前來源e4f44f8的5既有情境全PASS／6截圖，RUN-INPUT-INTEGRATION-NATIVE-002；001外層180秒不足保留，002在184.219秒成功。不增加測試數。原生截圖人工覆核才抓到本次頁首問題；最終來源凍結後再跑同5情境NATIVE-003，確保修正可見。操作指南INTERNAL_DRAFT_INPUT_QUICK_GUIDE.md；現代面板仍概念稿與未來重整方案，非正式新介面。
+
+正式完成後使用/tmp/adopt_input_evidence.py與/tmp/finalize_input_gui_docs.py（需更新至006及最新NATIVE003），再跑governance render/check與progress snapshot，保存最終checkpoint。核心官方工具與契約／baseline均在GitHub，臨時helper僅目前環境便利工具。

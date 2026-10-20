@@ -101,7 +101,8 @@ def publish_preview(dialog):
     window.output_canvas.set_content(row['width_mm'],row['height_mm'],card_view_image(candidate,150))
     window.output_canvas.set_mode('pan');window.output_canvas.fit()
     window.sync_property_mode()
-    window.work_context.setText(f"本次稿件已儲存 · {row['width_mm']:g}×{row['height_mm']:g} mm · "+('已確認' if row.get('confirmation') else '待確認'))
+    window.navigation.update()
+    window.refresh_input_problems()
     window.output_properties.setPlainText('目前顯示學習稿件；填資料、位置調整、確認及檢查報告皆由同一份稿件接續。')
     window.preview_button.setEnabled(True)
     window.export_button.setEnabled(bool(row.get('confirmation',{} ) and row['confirmation'].get('for_production') and candidate.formal_eligible))
@@ -110,6 +111,31 @@ def publish_preview(dialog):
 
 def is_learning_view(window):
     return bool(not getattr(window,'reorder_template_id',None) and getattr(window,'production_view',None)=='LEARNED' and getattr(window,'production_session_id',None))
+
+
+def learning_input_status(window):
+    """Read-only presentation status; never solve, activate or rewrite master data."""
+    if getattr(window,'reorder_template_id',None) or getattr(window,'production_view',None)=='FIXED':return None
+    # Navigation also runs before learning storage exists and during shutdown.
+    import sqlite3
+    from .training_store import TrainingStore
+    try:
+        if not window.library.db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='training_records'").fetchone():return None
+        store=TrainingStore.bind(window.library)
+        if is_learning_view(window):
+            row=store.get('DESIGN_SESSION',window.production_session_id)
+            if not row:return '學習稿狀態需要重新核對；請開啟目前稿件。'
+            same=(getattr(window,'production_generation',None)==window.generation
+                  and current_graph(window).data==row['input_graph']
+                  and (window.out_w.value(),window.out_h.value())==(row['width_mm'],row['height_mm']))
+            if not same or row['result_state']!='CURRENT':return '學習稿已保存；資料或尺寸已修改，請更新稿件。'
+            state='已確認；輸出前仍會核對目前版本' if row.get('confirmation') else '待檢查與確認'
+            return f"學習稿已保存 · {row['width_mm']:g}×{row['height_mm']:g} mm · "+state
+        if not any(c.generation==window.generation for c in window.candidates) and store.get('DESIGN_ACTIVE','local-layout'):
+            return '已選用學習規則；請產生稿件，核對資料、容量與可用版面。'
+    except (sqlite3.Error,ValueError,TypeError,KeyError):
+        if is_learning_view(window):return '學習稿狀態需要重新核對；請開啟目前稿件。'
+    return None
 
 
 def has_current(window):
