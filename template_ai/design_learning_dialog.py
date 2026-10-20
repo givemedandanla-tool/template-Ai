@@ -3,11 +3,11 @@ from copy import deepcopy
 import hashlib
 import threading
 
-from PySide6.QtCore import Qt,QThread,Signal
+from PySide6.QtCore import Qt,QThread,Signal,QTimer
 from PySide6.QtGui import QPixmap,QPen,QColor,QBrush
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTabWidget,QWidget,
     QComboBox,QTableWidget,QTableWidgetItem,QLineEdit,QCheckBox,QDoubleSpinBox,QGraphicsView,
-    QGraphicsScene,QGraphicsRectItem,QFileDialog,QMessageBox,QSplitter)
+    QGraphicsScene,QGraphicsRectItem,QFileDialog,QMessageBox,QSplitter,QPlainTextEdit,QGroupBox)
 
 from .design_learning import CrossWorkLearning,USE
 from .design_source_binding import SourceTypographyReview
@@ -28,6 +28,18 @@ class DesignWorker(QThread):
         except Exception as error:self.failed.emit(str(error)[:1000])
 
 
+class DraftSolveWorker(QThread):
+    progress=Signal(object);completed=Signal(object);failed=Signal(str)
+    def __init__(self,root,identity,revision,parent=None):
+        super().__init__(parent);self.root=root;self.identity=identity;self.revision=revision;self.cancel=threading.Event()
+    def run(self):
+        from .storage import Library
+        library=Library(self.root)
+        try:self.completed.emit(DesignSessions(library).solve(self.identity,self.revision,cancel=self.cancel.is_set,progress=self.progress.emit))
+        except Exception as error:self.failed.emit(type(error).__name__+': '+str(error))
+        finally:library.close()
+
+
 class RelativeBox(QGraphicsRectItem):
     def __init__(self,identity,rect,canvas):
         super().__init__(0,0,rect.w,rect.h);self.identity=identity;self.canvas=canvas
@@ -46,7 +58,8 @@ class RelativeBox(QGraphicsRectItem):
         delta=centre-target.sceneBoundingRect().center()
         relation=('LEFT_OF' if delta.x()<0 else 'RIGHT_OF') if abs(delta.x())>abs(delta.y()) else ('ABOVE' if delta.y()<0 else 'BELOW')
         self.setPos(self.start_position)
-        self.canvas.requested.emit(self.identity,relation,target.identity)
+        canvas=self.canvas;identity=self.identity;other=target.identity
+        QTimer.singleShot(0,canvas,lambda:canvas.requested.emit(identity,relation,other))
 
 
 class RelativeCanvas(QGraphicsView):
@@ -75,7 +88,7 @@ class DesignLearningDialog(QDialog):
     def __init__(self,window):
         super().__init__(window);self.window=window;self.library=window.library
         self.learning=CrossWorkLearning(self.library);self.sessions=DesignSessions(self.library);self.jobs=DesignJobs(self.library)
-        self.font_manager=FontManager(self.library);self.worker=None;self.session_id=None;self.close_after_worker=False
+        self.font_manager=FontManager(self.library);self.worker=None;self.solve_worker=None;self.session_id=None;self.close_after_worker=False;self.bound_to_main=False
         workspace=self.jobs.store.get('DESIGN_WORKSPACE','desktop')
         if workspace and self.jobs.store.get('DESIGN_SESSION',workspace.get('session_id','')):self.session_id=workspace['session_id']
         self.setWindowTitle('共用設計規則與當次稿件');self.resize(1180,800)
@@ -90,7 +103,11 @@ class DesignLearningDialog(QDialog):
     def say(self,value):self.status.setText(value)
     def attempt(self,action):
         try:return action()
-        except (ValueError,OSError,KeyError,TypeError) as error:self.say(str(error));return None
+        except (ValueError,OSError,KeyError,TypeError) as error:
+            from .production_report import explain_error
+            report=explain_error(error);self.say(report['summary']+' '+report['next_step'])
+            if hasattr(self,'result_details'):self.result_details.setPlainText(report['details'])
+            return None
     def button(self,layout,text,action):
         button=QPushButton(text);button.clicked.connect(lambda:self.attempt(action));layout.addWidget(button);return button
     def page(self,label):
@@ -134,20 +151,39 @@ class DesignLearningDialog(QDialog):
         self.button(layout,'重新讀取已保存狀態',self.refresh)
     def _draft_tab(self):
         layout=self.page('當次稿件');row=QHBoxLayout();self.session_choices=QComboBox();row.addWidget(self.session_choices,1)
-        self.button(row,'接續稿件',self.resume_session);self.button(row,'建立新稿件',self.new_session);layout.addLayout(row)
+        self.button(row,'接續稿件',self.resume_session);self.new_button=self.button(row,'建立新稿件',self.new_session)
+        self.button(row,'使用主視窗已填資料',self.use_main_input);layout.addLayout(row)
         row=QHBoxLayout();self.out_w=QDoubleSpinBox();self.out_h=QDoubleSpinBox()
         for spin,value in ((self.out_w,90),(self.out_h,54)):spin.setRange(1,2000);spin.setValue(value);spin.setSuffix(' mm');row.addWidget(spin)
-        self.button(row,'輸入／局部更正資料',self.edit_data);self.button(row,'產生完整稿件',self.solve);self.button(row,'復原相對位置',self.undo_layout);layout.addLayout(row)
-        self.canvas=RelativeCanvas(self);self.canvas.requested.connect(lambda a,r,b:self.attempt(lambda:self.set_relation(a,r,b)))
+        self.edit_button=self.button(row,'填資料／改內容',self.edit_data);self.solve_button=self.button(row,'產生完整稿件',self.solve_async)
+        self.undo_button=self.button(row,'復原位置調整',lambda:self.undo_layout(background=True));self.redo_button=self.button(row,'重做位置調整',lambda:self.redo_layout(background=True));layout.addLayout(row)
+        self.solve_status=QLabel('填好資料後產生稿件；可直接拖動藍框內的聯絡資料調整位置。');self.solve_status.setWordWrap(True);layout.addWidget(self.solve_status)
+        self.cancel_solve_button=self.button(layout,'停止這次排版',self.cancel_solve);self.cancel_solve_button.setEnabled(False)
+        self.capacity_summary=QLabel();self.capacity_summary.setWordWrap(True);layout.addWidget(self.capacity_summary)
+        self.canvas=RelativeCanvas(self);self.canvas.requested.connect(lambda a,r,b:self.attempt(lambda:self.set_relation(a,r,b,background=True)))
         layout.addWidget(self.canvas,1);row=QHBoxLayout();self.subject=QComboBox();self.reference=QComboBox();self.relation=QComboBox()
         for text,code in [('在左側','LEFT_OF'),('在右側','RIGHT_OF'),('在上方','ABOVE'),('在下方','BELOW')]:self.relation.addItem(text,code)
         for widget in (self.subject,self.relation,self.reference):row.addWidget(widget)
-        self.button(row,'調整兩欄相對位置',lambda:self.set_relation(self.subject.currentData(),self.relation.currentData(),self.reference.currentData()));layout.addLayout(row)
+        self.button(row,'調整兩欄相對位置',lambda:self.set_relation(self.subject.currentData(),self.relation.currentData(),self.reference.currentData(),background=True));layout.addLayout(row)
+        row=QHBoxLayout();self.candidate_choices=QComboBox();row.addWidget(self.candidate_choices,1);self.button(row,'查看這個方案',self.choose_candidate);layout.addLayout(row)
+        box=QGroupBox('查看詳細原因（進階）');box.setCheckable(True);box.setChecked(False);box_layout=QVBoxLayout(box)
+        self.result_details=QPlainTextEdit();self.result_details.setReadOnly(True);self.result_details.setMaximumHeight(110);self.result_details.hide();box_layout.addWidget(self.result_details);box.toggled.connect(self.result_details.setVisible);layout.addWidget(box)
         row=QHBoxLayout();self.switch_button=self.button(row,'已檢視並採用變更版面',self.review_switch)
         self.confirm_button=self.button(row,'確認目前完整預覽稿',self.confirm_preview)
         self.export_button=self.button(row,'輸出已確認預覽稿',self.export_preview);layout.addLayout(row)
         row=QHBoxLayout();self.formal_button=self.button(row,'核對當次實例並確認正式稿',self.confirm_formal);self.formal_export_button=self.button(row,'正式數位輸出',self.export_formal);layout.addLayout(row)
         row=QHBoxLayout();self.artifacts=QComboBox();row.addWidget(self.artifacts,1);self.button(row,'開啟已保存的相同檔案',self.replay);layout.addLayout(row)
+
+    def source_candidates(self):
+        if not self.session_id:return []
+        try:_,_,candidate=self.sessions.checked_result(self.session_id)
+        except ValueError:return []
+        return [('這份稿件',candidate)]
+
+    def use_main_input(self):
+        from .production_bridge import attach
+        if not hasattr(self.window,'input_data'):raise ValueError('請從主視窗的資料輸入入口開啟。')
+        attach(self);self.say('已接上主視窗的資料、公司與圖片；請產生稿件。')
     def refresh(self):
         current_model=self.models.currentData();self.models.clear();self.job_choices.clear();self.session_choices.clear();self.source_work.clear()
         samples=[row for row in self.jobs.store.records('SAMPLE',limit=200) if self.jobs.store.sample_state(row['id'])=='APPROVED']
@@ -289,48 +325,121 @@ class DesignLearningDialog(QDialog):
         if self.session_id:return InputGraph(self.sessions.current(self.session_id)['input_graph']).compile(self.library.logos())
         return [dict(name='')],[],{}
     def new_session(self):
+        if self.solve_worker and self.solve_worker.isRunning():raise ValueError('請先停止目前排版，再建立新稿件。')
         from .input_graph_dialog import InputGraphDialog
         dialog=InputGraphDialog(self,InputGraph.from_legacy([dict(name='')],[]).data)
         if dialog.exec()!=QDialog.Accepted:return
         saved=self.sessions.create(dialog.graph,self.out_w.value(),self.out_h.value(),self.actor.text())
-        self.session_id=saved['id'];self.save_workspace();self.refresh();self.say('資料已保存；可以產生完整稿件。')
+        self.session_id=saved['id'];self.save_workspace()
+        from .production_bridge import sync_input
+        sync_input(self,dialog.graph)
+        if self.bound_to_main:self.window.production_session_id=saved['id']
+        self.refresh();self.say('資料已保存；可以產生完整稿件。')
     def resume_session(self):
         identity=self.session_choices.currentData()
         if not identity:raise ValueError('沒有已保存稿件')
         self.session_id=identity;self.save_workspace();row=self.sessions.current(identity)
         self.out_w.setValue(row['width_mm']);self.out_h.setValue(row['height_mm']);self.refresh_draft()
     def edit_data(self):
+        if self.solve_worker and self.solve_worker.isRunning():raise ValueError('請先停止目前排版，再改資料。')
         if not self.session_id:return self.new_session()
         from .input_graph_dialog import InputGraphDialog
         current=self.sessions.current(self.session_id);self.out_w.setValue(current['width_mm']);self.out_h.setValue(current['height_mm']);dialog=InputGraphDialog(self,current['input_graph'])
         if dialog.exec()!=QDialog.Accepted:return
         self.sessions.replace_input(current['id'],current['revision'],new_id(),dialog.graph);self.refresh_draft()
+        from .production_bridge import sync_input
+        sync_input(self,dialog.graph)
         self.say('更正資料已保存；原相對位置意圖保留，請重新產生稿件。')
     def solve(self):
         if not self.session_id:raise ValueError('請先建立或接續稿件')
         row=self.sessions.current(self.session_id);result=self.sessions.solve(row['id'],row['revision']);self.refresh_draft()
         self.say('已產生完整預覽稿；請檢視後確認。' if result['selected'] else '目前規則或來源資料不足，尚無可完整承接這筆資料的稿件。')
-    def set_relation(self,subject,relation,reference):
+
+    def solve_async(self):
+        if not self.session_id:raise ValueError('請先填資料，再產生稿件。')
+        if self.solve_worker and self.solve_worker.isRunning():return
+        row=self.sessions.current(self.session_id)
+        self.solve_worker=DraftSolveWorker(self.library.root,row['id'],row['revision'],self)
+        self.solve_worker.completed.connect(self.solve_completed);self.solve_worker.failed.connect(self.solve_failed)
+        self.solve_worker.progress.connect(lambda value:self.solve_status.setText(f"正在比較可用版面：{value['done']+1}／{value['total']}。資料仍保留，可停止。"))
+        self.solve_worker.finished.connect(self.solve_finished)
+        self.set_solving(True);self.solve_status.setText('正在依文字、尺寸與圖片產生稿件…')
+        try:self.solve_worker.start()
+        except BaseException:self.set_solving(False);raise
+
+    def set_solving(self,running):
+        for button in (self.new_button,self.edit_button,self.solve_button,self.undo_button,self.redo_button):button.setEnabled(not running)
+        self.canvas.setEnabled(not running);self.cancel_solve_button.setEnabled(running)
+        if self.bound_to_main:self.window.busy=running
+        if running:
+            for button in (self.confirm_button,self.export_button,self.formal_button,self.formal_export_button):button.setEnabled(False)
+
+    def cancel_solve(self):
+        if self.solve_worker and self.solve_worker.isRunning():
+            self.solve_worker.cancel.set();self.solve_status.setText('正在停止；處理完目前項目後返回，資料不會遺失。')
+
+    def solve_completed(self,result):
+        if not self.session_id or result['session_id']!=self.session_id:return
+        self.refresh_draft()
+        self.say('稿件已更新，請檢視後確認。' if result['selected'] else '尚未找到合適稿件；請展開詳細原因。')
+
+    def solve_failed(self,error):
+        self.refresh_draft()
+        from .production_report import explain_error
+        report=explain_error(error);self.solve_status.setText(report['summary']+' '+report['next_step']);self.result_details.setPlainText(report['details'])
+
+    def solve_finished(self):
+        self.set_solving(False);self.refresh_draft()
+        if self.close_after_worker:self.close()
+
+    def set_relation(self,subject,relation,reference,*,background=False):
+        if self.solve_worker and self.solve_worker.isRunning():raise ValueError('目前正在排版，請稍候或先停止。')
         if not self.session_id or not subject or not reference or subject==reference:raise ValueError('請選擇兩個不同欄位')
-        row=self.sessions.current(self.session_id);self.sessions.set_relation(row['id'],row['revision'],new_id(),subject,relation,reference);self.solve()
-    def undo_layout(self):
+        row=self.sessions.current(self.session_id);self.sessions.set_relation(row['id'],row['revision'],new_id(),subject,relation,reference)
+        self.refresh_draft();self.solve_async() if background else self.solve()
+    def undo_layout(self,*,background=False):
         if not self.session_id:return
-        row=self.sessions.current(self.session_id);self.sessions.undo_layout(row['id'],row['revision'],new_id());self.solve()
+        row=self.sessions.current(self.session_id);self.sessions.undo_layout(row['id'],row['revision'],new_id())
+        self.refresh_draft();self.solve_async() if background else self.solve()
+    def redo_layout(self,*,background=False):
+        if not self.session_id:return
+        row=self.sessions.current(self.session_id);self.sessions.redo_layout(row['id'],row['revision'],new_id())
+        self.refresh_draft();self.solve_async() if background else self.solve()
+
+    def choose_candidate(self):
+        if self.solve_worker and self.solve_worker.isRunning():raise ValueError('請等待目前排版完成。')
+        if not self.session_id:return
+        row=self.sessions.current(self.session_id);self.sessions.select_candidate(row['id'],row['revision'],self.candidate_choices.currentIndex());self.refresh_draft()
     def refresh_draft(self):
-        self.subject.clear();self.reference.clear();self.artifacts.clear();candidate=None;current=None
+        self.subject.clear();self.reference.clear();self.artifacts.clear();self.candidate_choices.clear();candidate=None;current=None;result=None
         if self.session_id:
             current=self.sessions.current(self.session_id)
             index=self.session_choices.findData(self.session_id)
             if index>=0:self.session_choices.setItemText(index,self.session_id+' · '+current['result_state'])
             graph=InputGraph(current['input_graph']);movable=set(current['policy'].get('movable_kinds',('phone','email','line','ig','address')))
             for field in input_facts(graph):
-                label=field['owner_port']+' / '+field['kind']+' / '+field['value'][:35]
+                from .model import KINDS
+                label=graph.label(field['entity_id'])+'／'+KINDS.get(field['kind'],field['kind'])+'／'+field['value'][:35]
                 self.reference.addItem(label,field['render_id'])
                 if field['kind'] in movable:self.subject.addItem(label,field['render_id'])
-            try:_,_,candidate=self.sessions.checked_result(self.session_id)
+            try:_,result,candidate=self.sessions.checked_result(self.session_id)
             except ValueError:pass
+            for index,choice in enumerate(result.get('choices',[]) if result else []):
+                self.candidate_choices.addItem(('建議方案' if index==0 else '其他方案 '+str(index+1))+' · '+str(len(choice['serialized']['items']))+'項資料',index)
+                if result['selected']['id']==choice['id']:self.candidate_choices.setCurrentIndex(index)
             for artifact in self.jobs.store.records('DESIGN_ACCEPTED_ARTIFACT',limit=200):
                 if artifact['session_id']==self.session_id:self.artifacts.addItem(artifact['path'],artifact['id'])
+            try:
+                accepted=self.sessions.find_accepted(graph,current['width_mm'],current['height_mm'],current['intents'],production=current['policy'].get('production') is True)
+                if accepted and self.artifacts.findData(accepted['id'])<0:self.artifacts.insertItem(0,'可沿用的已確認稿：'+accepted['path'],accepted['id'])
+                if accepted:self.artifacts.setCurrentIndex(self.artifacts.findData(accepted['id']))
+            except ValueError as error:self.solve_status.setText('先前確認稿目前不能沿用；請查看原因。'+str(error))
+            from .production_report import result_report,explain_error
+            try:
+                report=result_report(self.library,current,result,candidate)
+                self.solve_status.setText(report['summary']+' '+report['next_step']);self.capacity_summary.setText(report['capacity_summary']);self.result_details.setPlainText(report['details'])
+            except (ValueError,KeyError) as error:
+                self.capacity_summary.setText('目前無法核對學習建議；正式輸出不因此放寬。');self.result_details.setPlainText(explain_error(error)['details'])
         self.switch_button.setVisible(bool(current and current.get('result_id') and self.jobs.store.get('DESIGN_RESULT',current['result_id']).get('family_switch_requires_review')))
         qualified_model=self.jobs.store.get('DESIGN_MODEL',current['model_id']) if current else None
         self.formal_button.setEnabled(bool(candidate and qualified_model and qualified_model.get('formal_qualification')=='PASS'
@@ -340,6 +449,13 @@ class DesignLearningDialog(QDialog):
         self.canvas.show_candidate(candidate);self.confirm_button.setEnabled(candidate is not None)
         self.export_button.setEnabled(candidate is not None and bool(current and current.get('confirmation')))
         self.out_w.setEnabled(True);self.out_h.setEnabled(True)
+        if current:
+            # A saved draft has pinned dimensions. Change size in the main
+            # production entry, or before creating a new standalone draft.
+            self.out_w.setValue(current['width_mm']);self.out_h.setValue(current['height_mm'])
+            self.out_w.setEnabled(False);self.out_h.setEnabled(False)
+        from .production_bridge import publish_preview
+        publish_preview(self)
     def review_switch(self):
         row=self.sessions.current(self.session_id);self.sessions.review_family_switch(row['id'],row['revision'],self.actor.text())
         self.say('已保存對目前變更版面的明確採用。')
@@ -370,4 +486,6 @@ class DesignLearningDialog(QDialog):
             event.ignore();return
         if self.worker and self.worker.isRunning():
             self.close_after_worker=True;self.pause();event.ignore();return
+        if self.solve_worker and self.solve_worker.isRunning():
+            self.close_after_worker=True;self.cancel_solve();event.ignore();return
         self.font_manager.close();event.accept()

@@ -640,6 +640,7 @@ class MainWindow(QMainWindow):
         size_row.addWidget(self.out_w)
         size_row.addWidget(self.out_h)
         self.button("開始自動排版", self.generate, size_row)
+        self.button('預覽／拖動調整',self.open_production,size_row)
         self.layout_session_button=self.button("排版進度／恢復", self.layout_session, size_row)
         self.layout_session_button.setToolTip("當次真實進度、暫停／取消及恢復上一次未完成的排版")
         from .layout_recovery import LayoutRecovery
@@ -1413,13 +1414,29 @@ class MainWindow(QMainWindow):
             open_repair_center(self,dict(origin='SOURCE_FACTS',origin_id=self.work['id'],work_id=self.work['id'],description='從原畫布核對此作品的來源、人工真值與局部問題'))
         except (ValueError,KeyError) as error:self.statusBar().showMessage(str(error))
 
-    def shared_design_learning(self,*,family_tools=False):
+    def shared_design_learning(self,*,family_tools=False,use_current_input=False,solve_current=False):
         if self.busy:
             self.error('請待目前背景工作完成後開啟共用設計工作');return
         from .design_learning_dialog import DesignLearningDialog
         dialog=DesignLearningDialog(self)
+        if use_current_input:
+            try:
+                from .production_bridge import attach
+                attach(dialog)
+                if solve_current:QTimer.singleShot(0,dialog,lambda:dialog.attempt(dialog.solve_async))
+            except (ValueError,TypeError,OSError) as error:
+                dialog.close();dialog.deleteLater();self.error(str(error));return
         if family_tools:dialog.tabs.setCurrentWidget(dialog.family_workbench)
-        dialog.exec()
+        try:dialog.exec()
+        finally:dialog.deleteLater()
+
+    def open_production(self):
+        try:
+            from .production_bridge import uses_learning,has_current
+            if has_current(self) or uses_learning(self):return self.shared_design_learning(use_current_input=True)
+            self.statusBar().showMessage('目前使用已保存的固定版型；可在候選局部修改調整位置。啟用學習規則後，此入口可拖動調整學習稿。')
+            return self.candidate_editor()
+        except (ValueError,TypeError,OSError) as error:self.error(str(error))
 
     def training_center(self):
         from .training_quality_dialog import TrainingQualityDialog
@@ -2031,6 +2048,11 @@ class MainWindow(QMainWindow):
 
     def generate(self):
         if self.busy:self.statusBar().showMessage('已有背景工作；此次排版未開始');return
+        from .production_bridge import uses_learning,has_current
+        try:
+            if not getattr(self,'reorder_template_id',None) and (has_current(self) or uses_learning(self)):
+                return self.shared_design_learning(use_current_input=True,solve_current=True)
+        except (ValueError,TypeError,OSError) as error:self.error(str(error));return
         from .layout_session import LayoutSessionDialog
         dialog=getattr(self,'foreground_layout_session',None)
         if dialog is None:
@@ -2171,6 +2193,10 @@ class MainWindow(QMainWindow):
         return open_preflight(self)
 
     def export_current(self, preview):
+        from .production_bridge import has_current,export_current
+        if has_current(self):
+            try:return export_current(self,preview)
+            except (ValueError,OSError) as error:self.error(str(error));return
         row = self.candidate_list.currentRow()
         if not 0 <= row < len(self.candidates):
             return

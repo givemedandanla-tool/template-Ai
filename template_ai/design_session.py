@@ -77,7 +77,7 @@ class DesignSessions:
             return self.store._write('DESIGN_SESSION',new_id(),dict(schema=1,input_graph=deepcopy(graph.data),
                 width_mm=width,height_mm=height,actor=actor,model_id=model_id,model_revision=model['revision'],
                 weights_digest=model['weights_digest'],policy=policy,data_revision=1,layout_revision=0,
-                ranker_ref=ranker_ref,intents=[],layout_undo=[],result_id=None,result_state='NEEDS_SOLVE',confirmation=None),
+                ranker_ref=ranker_ref,intents=[],layout_undo=[],layout_redo=[],result_id=None,result_state='NEEDS_SOLVE',confirmation=None),
                 0,'design_session_created')
 
     def _edit(self,session_id,expected_revision,request_id,command,change):
@@ -117,14 +117,22 @@ class DesignSessions:
             kept=[row for row in old if not ({row['subject'],row['object']}=={subject,object_id}
                 and ('V' if row['relation'] in ('ABOVE','BELOW') else 'H')==axis)]
             updated=kept+[intent];_relation_graph(updated,ids)
-            value['layout_undo'].append(old);value['intents']=updated;value['layout_revision']+=1
+            value['layout_undo'].append(old);value['layout_redo']=[];value['intents']=updated;value['layout_revision']+=1
         return self._edit(session_id,expected_revision,request_id,dict(action='SET_RELATION',intent=intent),change)
 
     def undo_layout(self,session_id,expected_revision,request_id):
         def change(value):
             if not value['layout_undo']:raise ValueError('No layout intention to undo')
+            value.setdefault('layout_redo',[]).append(deepcopy(value['intents']))
             value['intents']=value['layout_undo'].pop();value['layout_revision']+=1
         return self._edit(session_id,expected_revision,request_id,dict(action='UNDO_LAYOUT'),change)
+
+    def redo_layout(self,session_id,expected_revision,request_id):
+        def change(value):
+            if not value.get('layout_redo'):raise ValueError('No layout intention to redo')
+            value['layout_undo'].append(deepcopy(value['intents']))
+            value['intents']=value['layout_redo'].pop();value['layout_revision']+=1
+        return self._edit(session_id,expected_revision,request_id,dict(action='REDO_LAYOUT'),change)
 
     def resolve_logos(self,graph,width,height):
         from .logo_store import LogoStore
@@ -137,7 +145,7 @@ class DesignSessions:
             if match['selected']:resolved_logos['c'+str(i+1)]=dict(match['selected'],design_entity_ref=entity['id'])
         return resolved_logos
 
-    def solve(self,session_id,expected_revision):
+    def solve(self,session_id,expected_revision,*,cancel=None,progress=None):
         snapshot=self.current(session_id,expected_revision)
         model,_=self.learning.checked_model(snapshot['model_id'])
         if model['revision']!=snapshot['model_revision'] or model['weights_digest']!=snapshot['weights_digest']:
@@ -153,8 +161,11 @@ class DesignSessions:
         previous_family=cache['selected']['family_id'] if cache and cache.get('selected') else None
         families=sorted(model['artifact']['profile_model']['families'],
                         key=lambda row:(row['family_id']!=previous_family,row['family_id']))
-        for family in families:
-            result=synthesize(family,graph,snapshot['width_mm'],snapshot['height_mm'],snapshot['policy'],snapshot['intents'],resolved_logos)
+        for family_index,family in enumerate(families):
+            if cancel and cancel():raise ValueError('LAYOUT_CANCELLED: 已停止排版；輸入資料與先前稿件仍保留。')
+            if progress:progress(dict(done=family_index,total=len(families),phase='FAMILY'))
+            kwargs=dict(cancel=cancel) if cancel else {}
+            result=synthesize(family,graph,snapshot['width_mm'],snapshot['height_mm'],snapshot['policy'],snapshot['intents'],resolved_logos,**kwargs)
             attempts.append(dict(family_id=family['family_id'],status=result['status'],issues=result['issues'],
                                  searched=result['searched'],complete_search=result['complete_search']))
             for index,row in enumerate(result['candidates']):
@@ -184,17 +195,33 @@ class DesignSessions:
         body=dict(session_id=session_id,data_revision=snapshot['data_revision'],layout_revision=snapshot['layout_revision'],
             input_digest=digest(graph.data),input_graph=deepcopy(graph.data),ranker_ref=deepcopy(snapshot.get('ranker_ref')),model_id=model['id'],model_revision=model['revision'],weights_digest=model['weights_digest'],
             policy_version=snapshot['policy']['version'],status='FEASIBLE_PREVIEW' if selected else 'NO_SUPPORTED_CANDIDATE',
-            selected=deepcopy(selected),attempts=attempts,ranking_scope=ranking['scope'],
+            selected=deepcopy(selected),choices=deepcopy([row['candidate'] for row in ranking['ranked']]),attempts=attempts,ranking_scope=ranking['scope'],
             previous_family=previous_family,
             family_switch_requires_review=bool(selected and previous_family and selected['family_id']!=previous_family),
             production_qualification='NOT_EVALUATED',customer_confirmation_is_not_publication=True)
         body['content_digest']=digest(body)
+        if cancel and cancel():raise ValueError('LAYOUT_CANCELLED: 已停止排版；未採用這次結果。')
         with self.store.transaction():
             current=self.current(session_id,snapshot['revision'])
             if self.learning.checked_model(model['id'])[0]!=model:raise ValueError('Model/source changed while solving')
             saved=self.store._write('DESIGN_RESULT',new_id(),body,0,'shared_model_layout_result_saved')
             value=deepcopy(_body(current));value.update(result_id=saved['id'],result_state='CURRENT',confirmation=None)
             self.store._write('DESIGN_SESSION',session_id,value,current['revision'],'exact_layout_result_installed')
+            return saved
+
+    def select_candidate(self,session_id,expected_revision,index):
+        with self.store.transaction():
+            session,result,_=self.checked_result(session_id)
+            if session['revision']!=expected_revision:raise ValueError('Candidate selection is stale')
+            choices=result.get('choices',[])
+            if type(index) is not int or not 0<=index<len(choices):raise ValueError('Candidate choice is unavailable')
+            body=deepcopy(_body(result));body.pop('content_digest',None)
+            body['selected']=deepcopy(choices[index])
+            body['family_switch_requires_review']=bool(result.get('previous_family') and body['selected']['family_id']!=result['previous_family'])
+            body['production_qualification']='NOT_EVALUATED';body['content_digest']=digest(body)
+            saved=self.store._write('DESIGN_RESULT',new_id(),body,0,'explicit_candidate_selection')
+            value=deepcopy(_body(session));value.update(result_id=saved['id'],confirmation=None)
+            self.store._write('DESIGN_SESSION',session_id,value,session['revision'],'selected_exact_layout_candidate')
             return saved
 
     def checked_result(self,session_id):

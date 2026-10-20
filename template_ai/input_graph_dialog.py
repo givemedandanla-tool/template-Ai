@@ -32,7 +32,7 @@ class InputGraphDialog(QDialog):
         self.summary=QLabel();self.summary.setWordWrap(True);layout.insertWidget(1,self.summary)
         self.problems=QListWidget();self.problems.setMaximumWidth(330);self.problems.itemClicked.connect(self.locate_warning);split.addWidget(self.problems)
         self.pending_input={};self.field_warnings={};self.field_locations={};self.warning_timer=QTimer(self);self.warning_timer.setSingleShot(True);self.warning_timer.timeout.connect(self.refresh_warnings)
-        buttons=QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel);buttons.button(QDialogButtonBox.Ok).setText('採用到當次輸入（須重新排版）');buttons.button(QDialogButtonBox.Cancel).setText('取消全部未採用修改');buttons.accepted.connect(self.accept);buttons.rejected.connect(self.reject);layout.addWidget(buttons)
+        buttons=QDialogButtonBox(QDialogButtonBox.Ok|QDialogButtonBox.Cancel);self.adopt_button=buttons.button(QDialogButtonBox.Ok);self.adopt_button.setText('使用這些資料');buttons.button(QDialogButtonBox.Cancel).setText('取消這次修改');buttons.accepted.connect(self.accept);buttons.rejected.connect(self.reject);layout.addWidget(buttons)
         self.source_impacts=QPlainTextEdit();self.source_impacts.setReadOnly(True);self.source_impacts.setMaximumHeight(105);self.source_impacts.setPlaceholderText('目前沒有來源差異；採用任何來源操作版本後，舊候選仍須重新核對。');layout.insertWidget(2,self.source_impacts)
         self.field_editors={};self.cards={};self.rebuild()
 
@@ -41,6 +41,8 @@ class InputGraphDialog(QDialog):
 
     def execute(self,action,**params):
         if self.rebuilding:return False
+        if any(len(value)>2048 for value in self.pending_input.values()):
+            self.status.setText('有一欄資料過長，原文仍保留在輸入框。請先縮短或另存原文，再使用這些資料。');self.refresh_warnings();return False
         try:
             plan=self.graph.make_plan(action,**params)
             if plan['requires_confirmation']:
@@ -117,10 +119,12 @@ class InputGraphDialog(QDialog):
 
     def field_row(self,layout,f,eid):
         row=QHBoxLayout();label=QLabel('公司名稱' if f['kind']=='name' and eid in {c['id'] for c in self.graph.data['companies']} else KINDS[f['kind']]);label.setMinimumWidth(50);row.addWidget(label)
-        editor=QLineEdit(f['value']);editor.setMaxLength(2048);editor.setObjectName('input-field-'+f['id']);row.addWidget(editor,1)
+        editor=QLineEdit(f['value']);editor.setMaxLength(2147483647);editor.setObjectName('input-field-'+f['id']);row.addWidget(editor,1)
         editor.setToolTip('欄位ID：'+f['id']+'\n所有者：'+self.graph.label(f['owner_id'])+'／'+f['owner_id']+'\n資料來源：當次輸入')
         def commit():
             if not self.rebuilding and editor.text()!=self.graph.field(f['id'])['value']:
+                if len(editor.text())>2048:
+                    self.pending_input[f['id']]=editor.text();self.refresh_warnings();return
                 self.execute('edit_field',field_id=f['id'],value=editor.text())
         editor.editingFinished.connect(commit);self.field_editors.setdefault(f['id'],editor);self.field_locations[(f['id'],eid)]=editor
         editor.textEdited.connect(lambda value,fid=f['id']:(self.pending_input.__setitem__(fid,value),self.warning_timer.start(180)))
@@ -189,10 +193,25 @@ class InputGraphDialog(QDialog):
         try:
             from .input_diagnostics import diagnose
             preview=InputGraph(self.graph.data)
+            overlong=[]
             for field in preview.data['fields']:
-                if field['id'] in self.pending_input:field['value']=self.pending_input[field['id']]
-            people,companies,_=preview.compile(self.window.library.logos());report=diagnose(people,companies,self.window.library.templates(True),self.window.out_w.value(),self.window.out_h.value());self.warning_report=report
+                if field['id'] in self.pending_input:
+                    value=self.pending_input[field['id']]
+                    if len(value)>2048:overlong.append(field)
+                    else:field['value']=value
+            model_id=None;learning_summary=None
+            if getattr(self.window,'session_id',None) and hasattr(self.window,'sessions'):
+                model_id=self.window.sessions.current(self.window.session_id)['model_id']
+            from .production_report import input_advice
+            advice=input_advice(self.window.library,preview,self.window.out_w.value(),self.window.out_h.value(),model_id)
+            learning_summary=advice['summary'] if advice['status']!='NO_ACTIVE_MODEL' else None
+            people,companies,_=preview.compile(self.window.library.logos());report=diagnose(people,companies,[] if learning_summary else self.window.library.templates(True),self.window.out_w.value(),self.window.out_h.value());self.warning_report=report
+            if learning_summary:report['learning_advice']=advice
+            for field in overlong:
+                report['issues'].append(dict(owner=self.graph.label(field['owner_id']),entity_id=field['owner_id'],field_id=field['id'],code='INPUT_STORAGE_LIMIT',severity='WARNING',reason='這欄超過目前可保存的2048字元；原文完整保留，尚未採用。請縮短或另存原文。這不是版面學習所得的字數上限。'))
+            self.adopt_button.setEnabled(not overlong)
             self.summary.setText(('警告：印刷效果可能不佳；預估風險／待驗證' if report['issues'] else '目前未發現輸入風險；尚待版面驗證')+f"；{len(people)}人物／{len(companies)}公司／{len(report['issues'])}問題。固定字級，未試排不宣稱無解或印前PASS。")
+            if learning_summary:self.summary.setText(('有資料需要查看；' if report['issues'] else '')+learning_summary)
             self.problems.clear()
             for issue in report['issues']:
                 item=QListWidgetItem(issue['owner']+'／'+str(issue.get('field_id') or '關聯')+'：'+issue['reason']);item.setData(Qt.UserRole,issue);self.problems.addItem(item)
@@ -200,6 +219,15 @@ class InputGraphDialog(QDialog):
                 text='\n'.join(issue['reason'] for issue in report['issues'] if issue.get('field_id')==fid)
                 for label in labels:label.setText(text);label.setVisible(bool(text))
         except (ValueError,TypeError) as error:self.summary.setText('尚未完成輸入檢查：'+str(error))
+
+    def accept(self):
+        for field_id,editor in list(self.field_editors.items()):
+            if len(editor.text())>2048:
+                self.pending_input[field_id]=editor.text();self.refresh_warnings();return
+        changes=[(fid,editor.text()) for fid,editor in self.field_editors.items() if editor.text()!=self.graph.field(fid)['value']]
+        for fid,value in changes:
+            if not self.execute('edit_field',field_id=fid,value=value):return
+        super().accept()
 
     def locate_warning(self,item):
         issue=item.data(Qt.UserRole);editor=self.field_locations.get((issue.get('field_id'),issue.get('entity_id'))) or self.field_editors.get(issue.get('field_id'))

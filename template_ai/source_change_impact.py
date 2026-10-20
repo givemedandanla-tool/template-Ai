@@ -4,7 +4,8 @@ from .candidate_sync import field_reference
 
 def consumers(window):
     from .multi_size_dialog import MultiSizeDialog
-    result=[('目前輸出',candidate) for candidate in window.candidates]
+    provider=getattr(window,'source_candidates',None)
+    result=list(provider()) if callable(provider) else [('目前輸出',candidate) for candidate in window.candidates]
     for dialog in window.findChildren(MultiSizeDialog):
         if dialog.service is not None and (dialog.isVisible() or dialog.running):
             for entry in dialog.service.entries:

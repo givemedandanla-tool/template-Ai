@@ -178,7 +178,7 @@ def _relation_graph(relations, ids):
     return horizontal,vertical
 
 
-def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=None):
+def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=None, *, cancel=None):
     width,height=width_mm,height_mm
     if any(type(value) not in (int,float) or not math.isfinite(value) or not 0<value<=2000 for value in (width,height)):
         raise ValueError('Physical output size is invalid')
@@ -267,6 +267,7 @@ def synthesize(profile, graph, width_mm, height_mm, policy, intents=None, logos=
     style_admission='OBSERVED_JOINT_ROLE_COUNTS' if not observed_patterns or joint_counts in observed_patterns else 'UNVERIFIED_JOINT_ROLE_COMBINATION_PREVIEW_ONLY'
     combinations=math.prod(len(row) for row in options);candidates=[];attempts=[]
     for selected in islice(product(*options),budget):
+        if cancel and cancel():raise ValueError('LAYOUT_CANCELLED: 已停止排版；資料保留。')
         solver=kiwi.Solver();variables={};slots=[];measurements=[];failure=None
         try:
             for fact,configuration in zip(facts,selected):

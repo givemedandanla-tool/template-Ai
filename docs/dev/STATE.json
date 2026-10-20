@@ -8,7 +8,7 @@
   "active_task": "INPUT_LEARNING_INTEGRATION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-INPUT-BEGIN.receipt.json",
   "last_confirmed_commit": "bb471f3ccb48dbf82ba7512602f9da22c2cab2b2",
-  "latest_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
+  "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -43,8 +43,10 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
+  "pending_remote": [
+    "CP-20261020-INPUT-WIP1"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-BASELINE.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-FINAL.json",
   "progress_report": "docs/dev/PROGRESS.md",
@@ -1387,8 +1389,11 @@
   "editor_tools_final_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
   "input_integration_contract": "docs/dev/INPUT_LEARNING_INTEGRATION_CONTRACT.json",
   "input_integration_progress": {
-    "status": "IN_PROGRESS",
+    "status": "IMPLEMENTED_PENDING_VERIFICATION",
     "contract": "INPUT-LEARNING-INTEGRATION-20261020",
-    "baseline": "docs/dev/progress/PROGRESS-20261020-INPUT-INTEGRATION-BASELINE.json"
+    "baseline": "docs/dev/progress/PROGRESS-20261020-INPUT-INTEGRATION-BASELINE.json",
+    "target": "CORE-089",
+    "tests": "tests/test_input_learning_integration.py",
+    "first_targeted_result": "Existing22PASS;new8run001failed fixture assumptions;real drag/edit/cancel PASS;fixing fixtures before rerun"
   }
 }

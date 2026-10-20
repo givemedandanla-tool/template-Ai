@@ -84,6 +84,28 @@ def capacity_advice(artifact,context,demand):
     return dict(status='UNKNOWN_OR_OUTSIDE_VALIDATED_REGION',actual_layout_required=True,hard_global_capacity=None)
 
 
+def joint_demand(candidate,graph,width,height):
+    from .design_synthesis import input_facts
+    from .design_learning import grapheme_count
+    from .design_style import font_identity,functional
+    from .layout import text_geometry
+    facts=sorted(input_facts(graph),key=lambda value:value['role_key'])
+    items={item.slot.id:item for item in candidate.items};demand=[];fonts=[]
+    for fact in facts:
+        item=items[fact['render_id']];slot=item.slot
+        if slot.kind=='logo':continue
+        if slot.text_flow:
+            from .design_text_flow import shape_flow
+            measured=shape_flow(item.text,slot.font,slot.size_pt,item.scale,slot.rect.w,slot.font_asset,slot.font_style,item.tracking_mm,slot.text_flow,slot.kind)
+            advance=measured['natural_advance_mm']
+        else:
+            advance,_,errors=text_geometry(slot.font,slot.size_pt,item.text,slot.font_style,slot.font_asset,item.tracking_mm)
+            if errors:raise ValueError('Calibration font measurement is unknown')
+        demand.extend([grapheme_count(fact['value']),advance/slot.size_pt])
+        fonts.append(dict(role=fact['role_key'],font=font_identity(slot.font_asset),flow=functional(slot.text_flow)))
+    return dict(family_id=candidate.template.family_id,font_signature=digest(fonts),field_count=len(facts),width_mm=width,height_mm=height,roles=[fact['role_key'] for fact in facts]),demand
+
+
 class LocalCapacityCalibration:
     def __init__(self,library):
         from .design_learning import CrossWorkLearning
@@ -152,23 +174,8 @@ class LocalCapacityCalibration:
             if row['learned']['status']!='FEASIBLE':
                 raise ValueError('Unshaped validation case has unknown joint demand;cannot calibrate this cohort')
             candidate=_candidate(row['learned']['serialized']);case=job['plan']['items'][index]
-            graph=InputGraph(case['input_graph']);facts=sorted(input_facts(graph),key=lambda value:value['role_key'])
-            items={item.slot.id:item for item in candidate.items};demand=[];fonts=[]
-            for fact in facts:
-                item=items[fact['render_id']];slot=item.slot
-                if slot.kind=='logo':continue
-                if slot.text_flow:
-                    from .design_text_flow import shape_flow
-                    measured=shape_flow(item.text,slot.font,slot.size_pt,item.scale,slot.rect.w,slot.font_asset,
-                        slot.font_style,item.tracking_mm,slot.text_flow,slot.kind)
-                    advance=measured['natural_advance_mm']
-                else:
-                    advance,_,errors=text_geometry(slot.font,slot.size_pt,item.text,slot.font_style,slot.font_asset,item.tracking_mm)
-                    if errors:raise ValueError('Calibration font measurement is unknown')
-                demand.extend([grapheme_count(fact['value']),advance/slot.size_pt])
-                fonts.append(dict(role=fact['role_key'],font=font_identity(slot.font_asset),flow=functional(slot.text_flow)))
-            context=dict(family_id=candidate.template.family_id,font_signature=digest(fonts),field_count=len(facts),
-                width_mm=case['width_mm'],height_mm=case['height_mm'],roles=[fact['role_key'] for fact in facts])
+            graph=InputGraph(case['input_graph'])
+            context,demand=joint_demand(candidate,graph,case['width_mm'],case['height_mm'])
             records.append(dict(id=row['case_id'],sample_id=row['sample_id'],role='VALIDATION',lineage_group=row['lineage_group'],
                 context=context,demand=demand,layout_pass=row['learned']['integrity']['status']=='PASS',
                 qualified_style=review['qualified_style'],evidence_refs=[job_id,saved['result_digest'],review['id']]))
