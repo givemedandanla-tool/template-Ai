@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "AI01_PARTIAL_OBSERVATION_FOUNDATION_SELF_VERIFIED",
-  "active_task": "TEMPLATE_EDITOR_SOFTWARE_COMPLETE",
+  "active_task": "INPUT_LEARNING_INTEGRATION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261019-TEMPLATE-EDITOR-FINAL.receipt.json",
   "last_confirmed_commit": "05ec4c4cd098d19f74ae1879ea1b801445b2d88a",
   "latest_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
@@ -19,8 +19,7 @@
     "docs/dev/AI_TRAINING_DESIGN_TODOS.md"
   ],
   "next_tasks": [
-    "Use native family/template tools;see TEMPLATE_EDITING_USER_GUIDE.md",
-    "Local private-corpus/Windows/prepress qualification stays separate;safe diagnostic guide available"
+    "Complete CORE-089 integration and actual GUI regressions before GUI tool onboarding and research"
   ],
   "blocked": [
     {
@@ -44,7 +43,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261020-INPUT-BEGIN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-LOCAL-RECOVERY-ALL8-005/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-BASELINE.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-FINAL.json",
@@ -1385,5 +1386,11 @@
   "original_ai_scope_audit": "docs/dev/AI_LOCAL_RECOVERY_50_CLAUSE_AUDIT_20261019.json",
   "editor_tools_acceptance_audit": "docs/dev/TEMPLATE_EDITING_16_CLAUSE_AUDIT_20261019.json",
   "editor_tools_user_guide": "docs/dev/TEMPLATE_EDITING_USER_GUIDE.md",
-  "editor_tools_final_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json"
+  "editor_tools_final_report": "docs/dev/TEMPLATE_EDITING_FINAL_REPORT_20261019.json",
+  "input_integration_contract": "docs/dev/INPUT_LEARNING_INTEGRATION_CONTRACT.json",
+  "input_integration_progress": {
+    "status": "IN_PROGRESS",
+    "contract": "INPUT-LEARNING-INTEGRATION-20261020",
+    "baseline": "docs/dev/progress/PROGRESS-20261020-INPUT-INTEGRATION-BASELINE.json"
+  }
 }

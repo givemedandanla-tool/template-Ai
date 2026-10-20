@@ -1,0 +1,78 @@
+{
+  "id": "INPUT-LEARNING-INTEGRATION-20261020",
+  "status": "IN_PROGRESS",
+  "base_commit": "1ec238c328e837208f89d2540d7f59b61d39515d",
+  "operator": "INTERNAL_STAFF_FIRST",
+  "common_panel_goal": "One simple production workflow;internal advanced tools separate;web/mobile later",
+  "sequence": [
+    "INTEGRATE_AND_REGRESS_EXISTING_INPUT_PREVIEW",
+    "VERIFY_AND_PERSIST",
+    "CONNECT_GUI_DEVELOPMENT_TOOLS",
+    "RESEARCH_AND_PERSIST_SIMPLE_PANEL_PLAN"
+  ],
+  "acceptance": [
+    {
+      "id": "CORE-089-A01",
+      "expected": "舊表格／人物卡片／客戶預填以同一輸入圖接入已啟用學習模型；保留身份、歸屬、共享及尺寸Logo",
+      "tests": []
+    },
+    {
+      "id": "CORE-089-A02",
+      "expected": "真實新建、更正輸入視窗不報錯；超限原文保留並明確提示，不靜默截短",
+      "tests": []
+    },
+    {
+      "id": "CORE-089-A03",
+      "expected": "實際滑鼠拖動產生相對位置意圖、保護未受影響關係；不提供字級字寬控制",
+      "tests": []
+    },
+    {
+      "id": "CORE-089-A04",
+      "expected": "更正資料、返回、版面復原／重做及重新開啟使用最新資料；過期確認不能輸出",
+      "tests": []
+    },
+    {
+      "id": "CORE-089-A05",
+      "expected": "舊排版／預覽／輸出入口接續同一學習稿件；明示固定舊版與新家族路徑，背景求解可取消且晚到不覆寫",
+      "tests": []
+    },
+    {
+      "id": "CORE-089-A06",
+      "expected": "確切已確認稿自動查找並可開啟；沿用舊版不因新模型重排，未知身份不靠字串猜測",
+      "tests": []
+    },
+    {
+      "id": "CORE-089-A07",
+      "expected": "輸入及結果顯示條件容量建議、候選理由／失敗原因，UNKNOWN不當無解或任意上限",
+      "tests": []
+    },
+    {
+      "id": "CORE-089-A08",
+      "expected": "錯誤與報告附白話摘要、影響與下一步，保留專業詳情；來源／資產／正式驗證不放寬",
+      "tests": []
+    },
+    {
+      "id": "CORE-089-A09",
+      "expected": "既有固定模板、客戶主檔／Logo／多尺寸／輸出等流程回歸；私人Windows與實體印前另列",
+      "tests": []
+    }
+  ],
+  "known_reproductions": [
+    "DesignLearningDialog new_session/edit_data -> source_change_impact.consumers missing candidates",
+    "InputGraphDialog 2050-character paste retains2048 without explanation",
+    "new learned session ignores main/customer input;capacity advice and accepted default not wired"
+  ],
+  "boundaries": [
+    "No new web/mobile/EXE",
+    "No customer font size/width/line controls",
+    "No private artwork/fonts/database upload",
+    "Existing published/accepted versions retained",
+    "No model qualification granted by synthetic tests"
+  ],
+  "gui_research_requirements": [
+    "Actual Qt pointer drag,clipboard,modal input,preview,reopen tests",
+    "Find reusable GUI skills/tooling after integration",
+    "Study mature commercial/open-source UX with source URLs/versions",
+    "Plain-language beginner summary plus expert details on failures/reports"
+  ]
+}
