@@ -52,9 +52,10 @@
       "license": "MIT"
     }
   },
-  "python": "3.11",
   "node_minimum_major": 18,
   "normal_check_network": "NONE",
   "agents": "DISABLED",
-  "remote_write": "COST_UNVERIFIED_DO_NOT_PUSH"
+  "remote_write": "COST_UNVERIFIED_DO_NOT_PUSH",
+  "python_minimum_target": "3.11",
+  "runtime_policy": "Discover actual application Python/PySide6 and bind baseline environment; Windows 3.11 native execution remains unverified"
 }

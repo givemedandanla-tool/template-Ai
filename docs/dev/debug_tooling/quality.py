@@ -84,11 +84,14 @@ def locate(name: str, files: list[Path], root: Path) -> str:
     return candidates[0]
 
 
-def diagnostic(tool: str, rule: str, path: str, line: int, message: str, root: Path) -> dict:
+def diagnostic(tool: str, rule: str, path: str, line: int, message: str, root: Path, syntax_validated: bool = False) -> dict:
     lines = (root / path).read_text(encoding="utf-8-sig").splitlines()
     context = lines[line - 1].strip() if 0 < line <= len(lines) else ""
     key = [tool, rule, path, message, context]
-    return {"tool": tool, "rule": rule, "path": path, "line": line, "message": message, "context": context, "fingerprint": sha(json.dumps(key, ensure_ascii=False).encode())}
+    category = "UNREVIEWED_STATIC_DIAGNOSTIC"
+    if tool == "ruff" and rule == "invalid-syntax" and syntax_validated:
+        category = "TOOL_PARSER_LIMITATION_CPYTHON_ACCEPTS"
+    return {"tool": tool, "rule": rule, "path": path, "line": line, "message": message, "context": context, "category": category, "fingerprint": sha(json.dumps(key, ensure_ascii=False).encode())}
 
 
 def compare(report: dict, baseline: dict) -> dict:
@@ -144,16 +147,28 @@ def scan(root: Path, scope: str, output: Path, application_python: Path | None =
     ruff_config.write_bytes((HERE / "ruff.toml.txt").read_bytes())
     ruff = str(executable(home() / "python", "ruff"))
     arguments = [str(p) for p in files]
+    runtime = json.loads(run("application-runtime", [str(interpreter), "-c", "import json,sys,platform,importlib.metadata;print(json.dumps({'python':platform.python_version(),'python_minor':f'{sys.version_info.major}.{sys.version_info.minor}','platform':sys.platform,'PySide6':importlib.metadata.version('PySide6')}))"]))
+    if tuple(map(int, runtime["python_minor"].split("."))) < (3, 11):
+        raise ValueError("Project requires Python >=3.11; use its actual application interpreter")
+    effective_profile["environment"] = runtime
+    compile_script = "import ast,json,pathlib,sys\nerrors=[]\nfor name in sys.argv[1:]:\n try:\n  source=pathlib.Path(name).read_bytes();compile(source,name,'exec');ast.parse(source,filename=name,feature_version=(3,11))\n except SyntaxError as error: errors.append({'file':name,'line':error.lineno,'message':error.msg})\nprint(json.dumps({'checked':len(sys.argv)-1,'errors':errors,'minimum_grammar':'3.11','runtime':sys.version.split()[0]}))\nsys.exit(bool(errors))"
+    syntax = json.loads(run("cpython-syntax", [str(interpreter), "-c", compile_script, *arguments]))
+    if syntax["checked"] != len(files):
+        raise ValueError("CPython syntax coverage differs from inventory")
+    syntax_failed = {x["file"] for x in syntax["errors"]}
     listed = run("ruff-files", [ruff, "check", "--config", str(ruff_config), "--show-files", *arguments], (0,))
     if {Path(x.strip()).resolve() for x in listed.splitlines() if x.strip()} != set(files):
         raise ValueError("Ruff did not cover the exact inventory")
     ruff_items = json.loads(run("ruff", [ruff, "check", "--config", str(ruff_config), "--output-format", "json", *arguments]))
-    findings = [diagnostic("ruff", x["code"], locate(x["filename"], files, root), x["location"]["row"], x["message"], root) for x in ruff_items]
+    findings = [diagnostic("ruff", x["code"], locate(x["filename"], files, root), x["location"]["row"], x["message"], root, syntax_validated=x["filename"] not in syntax_failed) for x in ruff_items]
+    findings += [diagnostic("cpython", "syntax-error", locate(x["file"], files, root), x["line"], x["message"], root) for x in syntax["errors"]]
 
     config = json.loads((HERE / "pyrightconfig.json").read_text())
-    config.update(include=[os.path.relpath(p, output) for p in files], executionEnvironments=[{"root": str(root), "extraPaths": [str(root)]}])
+    config.update(pythonVersion=runtime["python_minor"], include=[os.path.relpath(p, output) for p in files], executionEnvironments=[{"root": str(root), "extraPaths": [str(root)]}])
     dump(output / "pyrightconfig.json", config)
     node = shutil.which("node")
+    if not node:
+        raise RuntimeError("Installed Node runtime is required; no automatic download")
     pyright = json.loads(run("pyright", [node, str(home() / "node/node_modules/pyright/index.js"), "--project", str(output / "pyrightconfig.json"), "--pythonpath", str(interpreter), "--outputjson"]))
     pyright_count = pyright["summary"]["filesAnalyzed"]
     if pyright_count < len(files):
@@ -180,13 +195,13 @@ def scan(root: Path, scope: str, output: Path, application_python: Path | None =
         key = ["jscpd", kind, sorted(paths), fragment_hash]
         findings.append({"tool": "jscpd", "rule": kind, "paths": paths, "ranges": [[x["start"], x["end"]] for x in (first, second)], "lines": item["lines"], "fragment_sha256": fragment_hash, "fingerprint": sha(json.dumps(key).encode()), "review": "UNREVIEWED_CANDIDATE_NOT_CONFIRMED_DEFECT"})
 
-    if manifest(inventory(root, scope), root) != before or profile(scope) != effective_profile:
+    if manifest(inventory(root, scope), root) != before or profile(scope) != {k: v for k, v in effective_profile.items() if k != "environment"}:
         raise ValueError("Source/configuration changed while scanning; result not accepted")
     git = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True)
     report = {"schema": SCHEMA, "status": "SCAN_COMPLETE_WITH_FINDINGS" if findings else "SCAN_COMPLETE_CLEAN", "scope": scope, "profile": effective_profile, "versions": installed,
               "source": {"head": git.stdout.strip() if git.returncode == 0 else "ISOLATED_DEMONSTRATION", "manifest_sha256": sha(json.dumps(before, sort_keys=True).encode()), "files": before},
-              "coverage": {"expected": len(files), "ruff": len(files), "pyright_files_analyzed": pyright_count, "pyright_include": len(arguments), "jscpd_explicit_inputs": len(files), "jscpd_eligible_sources": clone_count, "jscpd_below_min_lines": short_sources, "jscpd_additional_below_min_tokens": len(files) - len(short_sources) - clone_count},
-              "effective_configuration": {"ruff_sha256": sha(ruff_config.read_bytes()), "pyright_sha256": sha((output / "pyrightconfig.json").read_bytes()), "jscpd_sha256": sha((HERE / "jscpd.json").read_bytes()), "application_python_version": subprocess.run([str(interpreter), "--version"], capture_output=True, text=True, check=True).stdout.strip()},
+              "coverage": {"expected": len(files), "cpython_compile": syntax["checked"], "ruff": len(files), "ruff_parser_limitations": sum(x.get("category") == "TOOL_PARSER_LIMITATION_CPYTHON_ACCEPTS" for x in findings), "pyright_files_analyzed": pyright_count, "pyright_include": len(arguments), "jscpd_explicit_inputs": len(files), "jscpd_eligible_sources": clone_count, "jscpd_below_min_lines": short_sources, "jscpd_additional_below_min_tokens": len(files) - len(short_sources) - clone_count},
+              "effective_configuration": {"ruff_sha256": sha(ruff_config.read_bytes()), "pyright_sha256": sha((output / "pyrightconfig.json").read_bytes()), "jscpd_sha256": sha((HERE / "jscpd.json").read_bytes()), "application_runtime": runtime, "minimum_syntax_target": "3.11_GRAMMAR_NOT_A_NATIVE_3_11_RUNTIME_TEST"},
               "commands": commands, "seconds": round(time.monotonic() - started, 3), "findings": findings, "counts": dict(Counter(x["tool"] for x in findings)),
               "exclusion_policy": {"directory_names": sorted(EXCLUDED), "reason": "Third-party/generated/build/private/cache data are not product source; tools and tests are separate scopes."},
               "qualification": "LOCAL_STATIC_ANALYSIS_ONLY_NOT_PRODUCT_OR_WINDOWS_ACCEPTANCE"}
@@ -223,6 +238,7 @@ def selftest(output: Path) -> dict:
         unchanged = directory / "existing.py"
         unchanged.write_text(DEMO_CODE)
         (directory / "known_problem.py").write_text("def known() -> float:\n    return missing_old_rate\n")
+        (directory / "valid_soft_keyword.py").write_text("value = 1;match = 2\n")
         old_hash = sha(unchanged.read_bytes())
         baseline = scan(root, "application", output / "before")
         copied = directory / "new_copy.py"
@@ -233,13 +249,14 @@ def selftest(output: Path) -> dict:
         assert any(x["rule"] == "reportReturnType" for x in broken["findings"] if x["tool"] == "pyright")
         assert any(x["tool"] == "jscpd" and set(x["paths"]) == {"template_ai/existing.py", "template_ai/new_copy.py"} for x in comparison["new"])
         assert comparison["existing_count"] > 0 and comparison["new_count"] > 0
+        assert any(x.get("category") == "TOOL_PARSER_LIMITATION_CPYTHON_ACCEPTS" for x in baseline["findings"])
         assert sha(unchanged.read_bytes()) == old_hash
         copied.write_text("def wrong() -> int:\n    return 1\n\ndef missing() -> float:\n    return 1.0\n")
         repaired = scan(root, "application", output / "repaired")
         clean_comparison = compare(repaired, baseline)
         assert clean_comparison["new_count"] == 0
         assert repaired["counts"].get("ruff") == baseline["counts"].get("ruff")
-        result = {"status": "PASS", "label": "ISOLATED_DEMONSTRATION_NOT_REAL_PRODUCT_FIX", "checks": {"ruff_undefined_name": True, "pyright_incompatible_return": True, "exact_clone_detected": True, "new_to_unchanged_comparison": True, "existing_source_unchanged": True, "baseline_keeps_existing_problem": True, "new_findings_not_swallowed": True, "repair_removes_only_demo_new_findings": True}, "before": baseline["counts"], "broken": broken["counts"], "repaired": repaired["counts"], "versions": repaired["versions"], "profile": repaired["profile"]}
+        result = {"status": "PASS", "label": "ISOLATED_DEMONSTRATION_NOT_REAL_PRODUCT_FIX", "checks": {"ruff_undefined_name": True, "pyright_incompatible_return": True, "exact_clone_detected": True, "new_to_unchanged_comparison": True, "existing_source_unchanged": True, "baseline_keeps_existing_problem": True, "new_findings_not_swallowed": True, "repair_removes_only_demo_new_findings": True, "parser_limit_retained_and_classified": True}, "before": baseline["counts"], "broken": broken["counts"], "repaired": repaired["counts"], "versions": repaired["versions"], "profile": repaired["profile"]}
     dump(output / "selftest.json", result)
     return result
 

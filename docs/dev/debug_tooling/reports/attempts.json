@@ -22,6 +22,12 @@
       "cause": "jscpd sources statistic counts only line/token-eligible sources (1 of 3 explicit inputs), unlike Ruff/Pyright.",
       "upstream_proof": "kucherenko/jscpd@854df3d40a4317e71ffd4e03474b4f812e533184 rust/crates/cpd-finder/src/orchestrate.rs fits_lines and prepare; lines 525-536, 692-695.",
       "resolution": "Keep exact explicit input manifest; separately report fixed-threshold eligible sources, short files and token-ineligible count. Reject zero eligible source statistics. Thresholds remain 10 lines/70 tokens."
+    },
+    {
+      "stage": "tool-tests-001",
+      "status": "10_PASS_1_ERROR",
+      "cause": "New guard assumed documentation target Python 3.11; actual existing application interpreter is 3.12.14. Guard correctly stopped before scan.",
+      "resolution": "Discover actual interpreter and PySide6; configure Pyright to that version and bind baseline environment. Separately verify minimum 3.11 grammar; do not claim a native 3.11 or Windows run."
     }
   ]
 }
