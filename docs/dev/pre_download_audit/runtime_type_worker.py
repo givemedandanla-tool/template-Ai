@@ -51,6 +51,7 @@ class Observer:
             path=str((ROOT/p['path']).resolve());self.by_file.setdefault(path,{}).setdefault(p['line'],[]).append(p)
             p['_targets']=[(t['label'],ast.parse(t['expression'],mode='eval').body) for t in p['targets']]
             self.rows[p['id']]={'visits':0,'values':{},'returns':{},'normal_calls':{},'raised_calls':{},'test_contexts':[],'member_checks':{}}
+        self.pending={}
         self.monitor=sys.monitoring;self.tool=None
         for candidate in (5,4,3):
             try:self.monitor.use_tool_id(candidate,'template-ai-type-audit');self.tool=candidate;break
@@ -70,7 +71,7 @@ class Observer:
             path=code.co_filename
             if path in self.by_file:
                 self.by_code[code]=self.by_file[path]
-                self.monitor.set_local_events(self.tool,code,self.monitor.events.LINE|self.monitor.events.PY_RETURN|self.monitor.events.CALL)
+                self.monitor.set_local_events(self.tool,code,self.monitor.events.LINE|self.monitor.events.PY_RETURN|self.monitor.events.PY_UNWIND|self.monitor.events.CALL)
                 self.local_codes.add(code)
             elif path.startswith(str(ROOT/'template_ai')+os.sep):
                 self.monitor.set_local_events(self.tool,code,self.monitor.events.PY_RETURN)
@@ -83,26 +84,36 @@ class Observer:
         except BaseException as error:self.errors['START_'+type(error).__name__]+=1
         return self.monitor.DISABLE
 
+    def sample(self,f,points,phase):
+        for p in points:
+            row=self.rows[p['id']]
+            if row['visits']>=128:continue
+            row['visits']+=1;self.context(row)
+            phases=row.setdefault('sample_phases',{});phases[phase]=phases.get(phase,0)+1
+            for label,node in p['_targets']:
+                obj=resolve(node,f)
+                key='UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE' if obj is MISSING else typename(obj)
+                values=row['values'].setdefault(label,{})
+                values[key]=values.get(key,0)+1
+                if obj is not MISSING and p.get('member') and label=='receiver':
+                    try:inspect.getattr_static(obj,p['member']);exists=True
+                    except AttributeError:exists=False
+                    state=typename(obj)+':'+str(exists);row['member_checks'][state]=row['member_checks'].get(state,0)+1
+
     def line(self,code,line):
         try:
-            points=self.by_code.get(code,{}).get(line)
-            if not points:return
             f=self.frame(code)
             if f is None:self.errors['FRAME_MISSING']+=1;return
-            for p in points:
-                row=self.rows[p['id']]
-                if row['visits']>=128:continue
-                row['visits']+=1;self.context(row)
-                for label,node in p['_targets']:
-                    obj=resolve(node,f)
-                    key='UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE' if obj is MISSING else typename(obj)
-                    values=row['values'].setdefault(label,{})
-                    values[key]=values.get(key,0)+1
-                    if obj is not MISSING and p.get('member') and label=='receiver':
-                        try:inspect.getattr_static(obj,p['member']);exists=True
-                        except AttributeError:exists=False
-                        state=typename(obj)+':'+str(exists);row['member_checks'][state]=row['member_checks'].get(state,0)+1
+            previous=self.pending.pop(id(f),None)
+            if previous is not None:self.sample(f,previous,'AFTER_PREVIOUS_LINE')
+            points=self.by_code.get(code,{}).get(line)
+            if not points:return
+            self.sample(f,points,'BEFORE_LINE');self.pending[id(f)]=points
         except BaseException as error:self.errors['LINE_'+type(error).__name__]+=1
+
+    def unwind(self,code,offset,error):
+        f=self.frame(code)
+        if f is not None:self.pending.pop(id(f),None)
 
     def call(self,code,offset,func,arg):
         points=self.by_code.get(code)
@@ -131,6 +142,9 @@ class Observer:
 
     def returned(self,code,offset,value):
         try:
+            f=self.frame(code)
+            previous=self.pending.pop(id(f),None) if f is not None else None
+            if previous is not None:self.sample(f,previous,'NORMAL_RETURN_AFTER_LINE')
             # Exceptional unwinds are not normal None returns.
             import dis
             if dis.opname[code.co_code[offset]] not in ('RETURN_VALUE','RETURN_CONST'):return
@@ -145,14 +159,14 @@ class Observer:
 
     def install(self):
         m=self.monitor;t=self.tool
-        for e,fn in [(m.events.PY_START,self.start),(m.events.LINE,self.line),(m.events.CALL,self.call),(m.events.C_RETURN,self.c_result),(m.events.C_RAISE,lambda *a:self.c_result(*a,raised=True)),(m.events.PY_RETURN,self.returned)]:m.register_callback(t,e,fn)
+        for e,fn in [(m.events.PY_START,self.start),(m.events.LINE,self.line),(m.events.CALL,self.call),(m.events.C_RETURN,self.c_result),(m.events.C_RAISE,lambda *a:self.c_result(*a,raised=True)),(m.events.PY_RETURN,self.returned),(m.events.PY_UNWIND,self.unwind)]:m.register_callback(t,e,fn)
         m.set_events(t,m.events.PY_START|m.events.CALL|m.events.C_RETURN|m.events.C_RAISE)
 
     def finish(self):
         m=self.monitor;m.set_events(self.tool,0)
         for code in self.local_codes:
             m.set_local_events(self.tool,code,0)
-        for event in (m.events.PY_START,m.events.LINE,m.events.CALL,m.events.C_RETURN,m.events.C_RAISE,m.events.PY_RETURN):
+        for event in (m.events.PY_START,m.events.LINE,m.events.CALL,m.events.C_RETURN,m.events.C_RAISE,m.events.PY_RETURN,m.events.PY_UNWIND):
             m.register_callback(self.tool,event,None)
         m.free_tool_id(self.tool)
         return {'schema':1,'mode':'TYPE_NAMES_ONLY_NO_PAYLOADS_NO_PROPERTY_GETTERS','bounded_visits_per_point':128,'observer_errors':dict(self.errors),'rows':{k:v for k,v in self.rows.items() if v['visits'] or v['returns'] or v['normal_calls'] or v['raised_calls']}}

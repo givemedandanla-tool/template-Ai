@@ -1,23 +1,23 @@
 {
   "status": "RUNNING",
   "source_base": "83908944a907804a18a1d85feadddbc780644e4a",
-  "phase": "1/2: root5 callback repair; preflight timeout investigation",
+  "phase": "Full005 on92977b77 running; final native19PASS; remaining static contracts under review",
   "original_diagnostics": 11798,
   "classified_tool_limitations": 888,
-  "unreviewed": 4016,
-  "confirmed_defects": 5,
-  "fixed_defects": 5,
+  "unreviewed": 2481,
+  "confirmed_defects": 7,
+  "fixed_defects": 6,
   "new_test_execution": null,
   "original_1850_rerun": "Full004 all1877 assertions PASS but one runtime error, explicitly FAIL; root5 now repaired with6 targeted PASS; final complete rerun pending",
-  "next": "Resolve preflight timeout, complete remaining diagnostic proof, faults/matrices, full regression and restorable delivery",
+  "next": "Complete full005 then apply queued root7 guard/fail-first3; exact remaining contracts/type observer3, matrices and delivery remain pending",
   "provenance": "LOCAL_ONLY",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
   "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
   "diagnostic_statuses": {
-    "UNREVIEWED": 4016,
+    "TYPE_CONTRACT_GAP": 6769,
     "TOOL_LIMITATION": 1821,
-    "FIXED_AND_VERIFIED": 614,
-    "TYPE_CONTRACT_GAP": 5347
+    "FIXED_AND_VERIFIED": 727,
+    "UNREVIEWED": 2481
   },
   "fixed_defects_pending_full_regression": 2,
   "new_targeted_tests": {
@@ -39,13 +39,28 @@
     "owned_workspace_pages": 3,
     "status": "PASS"
   },
-  "open_confirmed_defects": [],
+  "open_confirmed_defects": [
+    {
+      "id": "BUG-DRAFT-CONTEXT-007",
+      "status": "CONFIRMED_FIX_PREPARED_NOT_APPLIED_DURING_FULL005",
+      "before": {
+        "FAIL": 2,
+        "ERROR": 1,
+        "PASS": 0
+      },
+      "evidence": "text-policy-context-before.log",
+      "severity": "P0_STALE_DRAFT_OVERWRITE",
+      "fix": "Check exact draft id/content/tab both before and after confirmation; missing draft gives existing plain rejection; no broad exception swallowing",
+      "next": "Apply prepared patch after unchanged-source full005 completes, run real-dialog3 and existing text policy/related UI tests. Final overall audit remains OPEN."
+    }
+  ],
   "final_regression_003": "RUNNING_ON_EFA1E958_NO_PRODUCT_CHANGES_DURING_RUN",
   "native_gui_latest": {
-    "source": "efa1e958",
+    "source": "92977b77",
     "status": "PASS",
     "tests": 19,
-    "full_real_windows": true
+    "images": 11,
+    "source_unchanged": true
   },
   "full_regression_003": {
     "source": "efa1e958",
@@ -65,5 +80,20 @@
   "callback_root": {
     "status": "FIX_IMPLEMENTED_TARGETED6PASS_FULL_PENDING",
     "proof": "solve-callback-before-summary.json"
-  }
+  },
+  "new_static_findings": {
+    "total": 38,
+    "reviewed": 38,
+    "confirmed_pending_root7": 2
+  },
+  "clones": {
+    "status": "REVIEWED_ALL81",
+    "counts": {
+      "application": 9,
+      "tools": 7,
+      "tests": 65
+    },
+    "new_candidates_reviewed": 5
+  },
+  "coordinate_evidence_correction": "297 draft inner-container proofs rejected; 1189 retained with exact ranges; additional99 valid dict overload occurrences linked"
 }

@@ -1,0 +1,13 @@
+{
+  "id": "BUG-DRAFT-CONTEXT-007",
+  "status": "CONFIRMED_FIX_PREPARED_NOT_APPLIED_DURING_FULL005",
+  "before": {
+    "FAIL": 2,
+    "ERROR": 1,
+    "PASS": 0
+  },
+  "evidence": "text-policy-context-before.log",
+  "severity": "P0_STALE_DRAFT_OVERWRITE",
+  "fix": "Check exact draft id/content/tab both before and after confirmation; missing draft gives existing plain rejection; no broad exception swallowing",
+  "next": "Apply prepared patch after unchanged-source full005 completes, run real-dialog3 and existing text policy/related UI tests. Final overall audit remains OPEN."
+}

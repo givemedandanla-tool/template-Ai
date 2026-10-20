@@ -1,0 +1,2039 @@
+{
+  "proof": {
+    "D-APP-00036": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/automatic_training.py",
+        "line": 159,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if self.store.sample_state(sample['id'])!='APPROVED':continue",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f13a708edd3c3b1b2fd8fd170018b82d91740e68fd39fdbb53adcefd22711c79"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00037": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/automatic_training.py",
+        "line": 160,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "entries=list(self.db.execute(\"SELECT DISTINCT d.id FROM training_records d,json_each(d.payload,'$.entries') e WHERE d.kind='DATASET' AND json_extract(e.value,'$.sample_id')=? AND json_extract(e.value,'$.role')='TRAIN' ORDER BY d.id LIMIT 201\",(sample['id'],)))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ed2a371f79021f80543748504f4605e734ac51c289c5482f8680a0faff76231a"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00038": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/automatic_training.py",
+        "line": 163,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if not self.store.dataset_validity(dataset_id,[sample['id']])['valid']:continue",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b26e4f910a8d3f7368ecedfd6aa8a9a4770e5a7aba49b7866078da614389a062"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00039": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/automatic_training.py",
+        "line": 164,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "existing=self.store.existing_geometry_result(dataset_id,sample['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "513981276440ad3af6ab43048312c3074474062a5d9f4f4fd0d05a753bc78b8b"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00040": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/automatic_training.py",
+        "line": 167,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "plan=self.store.geometry_learning_plan(dataset_id,sample['id'],'自動分析幾何候選')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "de65a88e830a1f51f722d45ddefdf344db9a2b70eb3e9c912fde9640e171ca10"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00053": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/automatic_training_dialog.py",
+        "line": 87,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for job in self.service.store.records('AUTO_JOB',offset=self.job_offset):self.jobs.addItem(self.service.phase(job)+'／'+job['id'],job['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "dfb27c37ab2b376e6be0e459f2ac8b133d7ecbbe795fb90ceed8962b130b4622"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00054": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/automatic_training_dialog.py",
+        "line": 87,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for job in self.service.store.records('AUTO_JOB',offset=self.job_offset):self.jobs.addItem(self.service.phase(job)+'／'+job['id'],job['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "dfb27c37ab2b376e6be0e459f2ac8b133d7ecbbe795fb90ceed8962b130b4622"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00189": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/batch_objects.py",
+        "line": 243,
+        "message": "Cannot assign to attribute \"width\" for class \"BatchObjectDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "self.dx=QDoubleSpinBox();self.dy=QDoubleSpinBox();self.width=QDoubleSpinBox();self.height=QDoubleSpinBox()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5b58578cced5e0d5cd5490ddc29bd8114dcc85feee1cfedef0f81eb5a4afa4e0"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00190": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/batch_objects.py",
+        "line": 243,
+        "message": "Cannot assign to attribute \"height\" for class \"BatchObjectDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "self.dx=QDoubleSpinBox();self.dy=QDoubleSpinBox();self.width=QDoubleSpinBox();self.height=QDoubleSpinBox()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "71dca7b793d27e333bf23bba1db5b7f047179799b1a2da692b2bf06e7afe670b"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00279": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/candidate_edit.py",
+        "line": 171,
+        "message": "Cannot assign to attribute \"width\" for class \"CandidateEditDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "self.dx=QDoubleSpinBox();self.dy=QDoubleSpinBox();self.width=QDoubleSpinBox();self.height=QDoubleSpinBox()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5d221036408f62f80b324b29856f95bba39ec27401a4e2062fc74c4e5f7254f1"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00280": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/candidate_edit.py",
+        "line": 171,
+        "message": "Cannot assign to attribute \"height\" for class \"CandidateEditDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "self.dx=QDoubleSpinBox();self.dy=QDoubleSpinBox();self.width=QDoubleSpinBox();self.height=QDoubleSpinBox()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f87889baec8cd687495230926bca11c58788e2e6b19a9487af3caeed827f7f92"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00297": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/candidate_edit.py",
+        "line": 223,
+        "message": "Argument of type \"dict[str, Unknown]\" cannot be assigned to parameter \"patch\" of type \"list[Any] | bool\" in function \"update\"\n  Type \"dict[str, Unknown]\" is not assignable to type \"list[Any] | bool\"\n    \"dict[str, Unknown]\" is not assignable to \"list[Any]\"\n    \"dict[str, Unknown]\" is not assignable to \"bool\"",
+        "context": "if operation==1:request.update(operation='PATCH',patch=dict(w=self.width.value(),h=self.height.value()))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "002e02c39b49bad55e9412354921a891b04ad8e4b4d35ea1d5ff0f10ceec517b"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00761": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "template_ai/dataset_panel.py",
+        "line": 32,
+        "message": "\"get\" is not a known attribute of \"None\"",
+        "context": "for ds in datasets:self.dataset_combo.addItem(ds.get('manifest',{}).get('name',ds['id'])+' / '+ds['id'],ds['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6d5b5f7799c1fcaf54a125aa144cb67ed0ce95683b5368b3e29e83086d39a1d8"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00762": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/dataset_panel.py",
+        "line": 32,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for ds in datasets:self.dataset_combo.addItem(ds.get('manifest',{}).get('name',ds['id'])+' / '+ds['id'],ds['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d590855a8f5a144c427adca5dd56ef2010017f2f275ec0583037f12781078f2a"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00763": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/dataset_panel.py",
+        "line": 32,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for ds in datasets:self.dataset_combo.addItem(ds.get('manifest',{}).get('name',ds['id'])+' / '+ds['id'],ds['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d590855a8f5a144c427adca5dd56ef2010017f2f275ec0583037f12781078f2a"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00764": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/dataset_panel.py",
+        "line": 32,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for ds in datasets:self.dataset_combo.addItem(ds.get('manifest',{}).get('name',ds['id'])+' / '+ds['id'],ds['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d590855a8f5a144c427adca5dd56ef2010017f2f275ec0583037f12781078f2a"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00765": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/dataset_panel.py",
+        "line": 38,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "def assignments(self):return [{'sample_id':row['id'],'role':self.table.cellWidget(i,1).currentText()} for i,row in enumerate(self.rows) if self.table.item(i,0).checkState()==Qt.Checked]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8d40c1d8ea48a61dab40cbdb429f19c1d690034cd670fce4e8b85d8d163d9432"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00872": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 195,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "samples=[row for row in self.jobs.store.records('SAMPLE',limit=200) if self.jobs.store.sample_state(row['id'])=='APPROVED']",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "48ebc0034d9bf1f231095b67f9b26fd4fd10a57d9b4bdb78ca3d285e4ea67090"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00880": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 208,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if job['kind']=='TRAIN_SHARED_MODEL' and job['phase']!='COMPLETE':self.job_choices.addItem(job['id']+' · '+self.jobs.state(job['id']),job['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "eb0c945cc50e935e8f273588297990c11c6557cbf47164ec68c4ddb49494bf7d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00881": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 208,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if job['kind']=='TRAIN_SHARED_MODEL' and job['phase']!='COMPLETE':self.job_choices.addItem(job['id']+' · '+self.jobs.state(job['id']),job['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "eb0c945cc50e935e8f273588297990c11c6557cbf47164ec68c4ddb49494bf7d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00882": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 208,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if job['kind']=='TRAIN_SHARED_MODEL' and job['phase']!='COMPLETE':self.job_choices.addItem(job['id']+' · '+self.jobs.state(job['id']),job['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "eb0c945cc50e935e8f273588297990c11c6557cbf47164ec68c4ddb49494bf7d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00883": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 208,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if job['kind']=='TRAIN_SHARED_MODEL' and job['phase']!='COMPLETE':self.job_choices.addItem(job['id']+' · '+self.jobs.state(job['id']),job['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "eb0c945cc50e935e8f273588297990c11c6557cbf47164ec68c4ddb49494bf7d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00884": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 208,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if job['kind']=='TRAIN_SHARED_MODEL' and job['phase']!='COMPLETE':self.job_choices.addItem(job['id']+' · '+self.jobs.state(job['id']),job['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "eb0c945cc50e935e8f273588297990c11c6557cbf47164ec68c4ddb49494bf7d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00885": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 209,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for session in self.jobs.store.records('DESIGN_SESSION',limit=200):self.session_choices.addItem(session['id']+' · '+session['result_state'],session['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6aa728b27e41349474b40ebfda94f6d6044e73270781ec1817a806a22f1e7f1d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00886": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 209,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for session in self.jobs.store.records('DESIGN_SESSION',limit=200):self.session_choices.addItem(session['id']+' · '+session['result_state'],session['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6aa728b27e41349474b40ebfda94f6d6044e73270781ec1817a806a22f1e7f1d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-00887": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 209,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for session in self.jobs.store.records('DESIGN_SESSION',limit=200):self.session_choices.addItem(session['id']+' · '+session['result_state'],session['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6aa728b27e41349474b40ebfda94f6d6044e73270781ec1817a806a22f1e7f1d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01204": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_batch.py",
+        "line": 80,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if case['ref']==ref:items.append(dict(ref_index=i,case_id=case['id'],case_revision=case['revision']))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b2f7d87ea1ce5a4331b6f40ff2b376ee5ef82d330f33d7aa162033defd28d5c8"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01205": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_batch.py",
+        "line": 80,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if case['ref']==ref:items.append(dict(ref_index=i,case_id=case['id'],case_revision=case['revision']))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b2f7d87ea1ce5a4331b6f40ff2b376ee5ef82d330f33d7aa162033defd28d5c8"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01206": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_batch.py",
+        "line": 80,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if case['ref']==ref:items.append(dict(ref_index=i,case_id=case['id'],case_revision=case['revision']))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b2f7d87ea1ce5a4331b6f40ff2b376ee5ef82d330f33d7aa162033defd28d5c8"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01241": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/family_source_dialog.py",
+        "line": 75,
+        "message": "Cannot assign to attribute \"font\" for class \"FamilySourceDialog*\"\n  Type \"QComboBox\" is not assignable to type \"() -> QFont\"",
+        "context": "form=QFormLayout();self.run_choice=QComboBox();self.font=QComboBox();self.font.addItem('請選擇實際本地字型',None)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b9e43c715b9a9070373dd4332364b96e1f8bd369d7c9b3d41ef3812e5c19bb1c"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01243": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/family_source_dialog.py",
+        "line": 78,
+        "message": "No overloads for \"addRow\" match the provided arguments",
+        "context": "form.addRow('來源文字 run',self.run_choice);form.addRow('字型檔與字面',self.font)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9ebaf6d973e712640b4c59b0f9f82b64dbc3636d9fa064d03bfb701ca11615b9"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01264": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/family_workbench.py",
+        "line": 210,
+        "message": "Cannot assign to attribute \"width\" for class \"FamilyWorkbench*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "self.width = QDoubleSpinBox(); self.height = QDoubleSpinBox()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c5fa87275dedc312aae832860b0789b31bda9d23c23a00a4d7f81d2e7630ec05"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01265": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/family_workbench.py",
+        "line": 210,
+        "message": "Cannot assign to attribute \"height\" for class \"FamilyWorkbench*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "self.width = QDoubleSpinBox(); self.height = QDoubleSpinBox()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8df2f62a5ae075fbcc8f341a5502bf027e77ceea52a1609046637fa62fa95f1a"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01279": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_workbench.py",
+        "line": 293,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for view in records(self.store,'FAMILY_VIEW'):self.views.addItem(view['name'],view['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4057a3d37280bade20e090d002e82349a1cc5a074e690c898571689a8a88409f"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01280": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_workbench.py",
+        "line": 293,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for view in records(self.store,'FAMILY_VIEW'):self.views.addItem(view['name'],view['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4057a3d37280bade20e090d002e82349a1cc5a074e690c898571689a8a88409f"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01404": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_workspace.py",
+        "line": 239,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if row['model_id']!=ref['model_id']:continue",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "03ff3753863baa41b41902b6936919eaca5eef4a5de3917e472441f1f5f7c40b"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01405": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_workspace.py",
+        "line": 241,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "LocalCapacityCalibration(self.library).checked(row['id']);current=True",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "046c202c84474909062de884bb1d325855d7133e2ecd92bce5f2dc7a63873f9e"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01406": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_workspace.py",
+        "line": 243,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "cells=[deepcopy(c) for c in row['artifact']['cells'] if c['context'].get('family_id')==ref['family_id']]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2d36f341f063d5e613b8ce13a585f8700e37ff2fb7cd06e81d6f85631de714f0"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01407": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_workspace.py",
+        "line": 244,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if cells:result.append(dict(id=row['id'],revision=row['revision'],current=current,cells=cells,",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "88d4fa48fdc3b468a5bd5ee61c83dcf06b51a07065a507baeed88c18e8a015af"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01408": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/family_workspace.py",
+        "line": 244,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if cells:result.append(dict(id=row['id'],revision=row['revision'],current=current,cells=cells,",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "88d4fa48fdc3b468a5bd5ee61c83dcf06b51a07065a507baeed88c18e8a015af"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01422": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/font_candidate_dialog.py",
+        "line": 28,
+        "message": "Cannot assign to attribute \"size\" for class \"FontCandidateDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> QSize\"",
+        "context": "self.size = QDoubleSpinBox(); self.size.setRange(1,200); self.size.setValue(center.size.value()); self.size.setSuffix(\" pt\"); inputs.addWidget(self.size)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d9d843a7ad3d47ddc52aca6aa2a6cc6cb74a78a35c71baec5faf386d19cb3186"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01427": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/font_candidate_dialog.py",
+        "line": 29,
+        "message": "Cannot assign to attribute \"width\" for class \"FontCandidateDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "self.width = QDoubleSpinBox(); self.width.setRange(.001,2000); self.width.setDecimals(3); self.width.setValue(center.width.value()); self.width.setSuffix(\" mm\"); inputs.addWidget(self.width)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3e5ae2b28fa8e624775681601a490e95bd6ee0126dde930c4755ca56b6264cc5"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01493": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/font_dialog.py",
+        "line": 57,
+        "message": "Cannot assign to attribute \"size\" for class \"FontCenterDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> QSize\"",
+        "context": "self.size=QDoubleSpinBox(); self.size.setRange(1,200); self.size.setValue(10); self.size.setSuffix(\" pt\"); inputs.addWidget(self.size)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "16161d9e371f8182cae14e000326717bd7b8b240427e154e451c4254e19f5497"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01498": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/font_dialog.py",
+        "line": 58,
+        "message": "Cannot assign to attribute \"width\" for class \"FontCenterDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "self.width=QDoubleSpinBox(); self.width.setRange(.001,2000); self.width.setDecimals(3); self.width.setValue(80); self.width.setSuffix(\" mm\"); inputs.addWidget(self.width)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "76ed752a942d0c2bdf36680c0c7f0dad5b58f6c5b05c0d20eadd504bed658905"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01504": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/font_dialog.py",
+        "line": 60,
+        "message": "Cannot assign to attribute \"style\" for class \"FontCenterDialog*\"\n  Type \"QComboBox\" is not assignable to type \"() -> QStyle\"",
+        "context": "self.style=QComboBox(); inputs.addWidget(self.style)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2fcc58f2bc91a013514056202f8732780bf91416ce8ea1a3282c04ee52ba0ca9"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01506": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/font_dialog.py",
+        "line": 63,
+        "message": "Cannot assign to attribute \"result\" for class \"FontCenterDialog*\"\n  Type \"QLabel\" is not assignable to type \"() -> int\"",
+        "context": "self.result=QLabel(\"診斷僅判斷所選單行字形／字寬；不改字級、不截字、不核准完整輸出或授權。\")",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f35153f961ac9f7456476fbdfa41bb94495eba60fd14d4fc062bfda1d4982b9b"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01675": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/gui.py",
+        "line": 839,
+        "message": "Cannot assign to attribute \"font\" for class \"MainWindow*\"\n  Type \"QFontComboBox\" is not assignable to type \"() -> QFont\"",
+        "context": "self.font = QFontComboBox()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "dabec5463b9ac7493ceb529dfbf9057f6a9f80fc6a64b3b7965b8047ce9c8862"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01847": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/guided_operations.py",
+        "line": 153,
+        "message": "Cannot assign to attribute \"width\" for class \"GuidedOperationsDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "sizes = QHBoxLayout(); self.width = QDoubleSpinBox(); self.height = QDoubleSpinBox()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "277518e6bc5adb458705578e92b04cab91bca40dbb96039b18dbbb6b957d5112"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01848": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/guided_operations.py",
+        "line": 153,
+        "message": "Cannot assign to attribute \"height\" for class \"GuidedOperationsDialog*\"\n  Type \"QDoubleSpinBox\" is not assignable to type \"() -> int\"",
+        "context": "sizes = QHBoxLayout(); self.width = QDoubleSpinBox(); self.height = QDoubleSpinBox()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "af5bc9e2672bc494e9099be3a3946ebbd84cc11501c09ca5da83a562cf95042d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01859": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/guided_operations.py",
+        "line": 282,
+        "message": "Cannot assign to attribute \"style\" for class \"GuidedOperationsDialog*\"\n  Type \"QComboBox\" is not assignable to type \"() -> QStyle\"",
+        "context": "form = QFormLayout(); self.style = QComboBox(); self.style.addItem('尚未決定', None); self.style.addItem('符合合格作品風格', True); self.style.addItem('不符合', False)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "36eb98c581fae0a9f37c9d090adc8d31048d12482fe7509afdc8f42b66c89d94"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01863": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/guided_operations.py",
+        "line": 283,
+        "message": "No overloads for \"addRow\" match the provided arguments",
+        "context": "self.style_basis = QLineEdit(); form.addRow('這份稿件', self.style); form.addRow('實際核對依據', self.style_basis); layout.addLayout(form)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "cb4b67ae802157d0151b42dba742e1e875b0f8716cb363de056905f466c7e25c"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01865": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/guided_operations.py",
+        "line": 297,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "return [self.jobs.current(row['id']) for row in rows if row.get('kind') == 'EVALUATE_LAYOUTS']",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e639d11813a99d398f5f4a78bd9964823d2345491f053335078e11bbacd3375e"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01866": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "template_ai/guided_operations.py",
+        "line": 297,
+        "message": "\"get\" is not a known attribute of \"None\"",
+        "context": "return [self.jobs.current(row['id']) for row in rows if row.get('kind') == 'EVALUATE_LAYOUTS']",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "efcee2b5452bf247f993dfe80c28346083b9c20f0a3ee2f05c678a388f7c925d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01873": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/guided_operations.py",
+        "line": 389,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if row['job_id'] == identity: self.corpus_reviews.addItem('已保存的來源審查 · ' + row['id'][:8], row['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c861f5c8639ae18a35b0575dcddcb7e0c26edfedf1751d1c5b8dc98e22bb87d2"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01874": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/guided_operations.py",
+        "line": 389,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if row['job_id'] == identity: self.corpus_reviews.addItem('已保存的來源審查 · ' + row['id'][:8], row['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c861f5c8639ae18a35b0575dcddcb7e0c26edfedf1751d1c5b8dc98e22bb87d2"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01875": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/guided_operations.py",
+        "line": 389,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if row['job_id'] == identity: self.corpus_reviews.addItem('已保存的來源審查 · ' + row['id'][:8], row['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c861f5c8639ae18a35b0575dcddcb7e0c26edfedf1751d1c5b8dc98e22bb87d2"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01876": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/guided_operations.py",
+        "line": 404,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if any(row['job_id'] == job['id'] and row['index'] == index for row in records(self.store, 'DESIGN_PREFERENCE_REVIEW')):",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6af2980f910f20cc8f5d05b8db64ca98a4222e6cafa9c934c4e50de95ffd896e"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01877": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/guided_operations.py",
+        "line": 404,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if any(row['job_id'] == job['id'] and row['index'] == index for row in records(self.store, 'DESIGN_PREFERENCE_REVIEW')):",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6af2980f910f20cc8f5d05b8db64ca98a4222e6cafa9c934c4e50de95ffd896e"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-01977": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/input_graph_dialog.py",
+        "line": 32,
+        "message": "Cannot assign to attribute \"scroll\" for class \"InputGraphDialog*\"\n  One or more overloads of \"scroll\" is not assignable\n    Type \"QScrollArea\" is not assignable to type \"(dx: int, dy: int, /) -> None\"",
+        "context": "self.scroll=QScrollArea();self.scroll.setWidgetResizable(True);split.addWidget(self.scroll);split.setStretchFactor(1,3);layout.addWidget(split,1)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b88d6af18590b91d8c79ed60fbc7c67b4a32d0633cbcc0f8cf341fd90c91d94f"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02033": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/input_graph_dialog.py",
+        "line": 227,
+        "message": "Argument of type \"dict[str, str | None] | dict[str, str | dict[Unknown, int] | list[Unknown] | bool | None]\" cannot be assigned to parameter \"value\" of type \"str | int | list[Unknown]\" in function \"__setitem__\"\n  Type \"dict[str, str | None] | dict[str, str | dict[Unknown, int] | list[Unknown] | bool | None]\" is not assignable to type \"str | int | list[Unknown]\"\n    Type \"dict[str, str | None]\" is not assignable to type \"str | int | list[Unknown]\"\n      \"dict[str, str | None]\" is not assignable to \"str\"\n      \"dict[str, str | None]\" is not assignable to \"int\"\n      \"dict[str, str | None]\" is not assignable to \"list[Unknown]\"",
+        "context": "if learning_summary:report['learning_advice']=advice",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e7da6fb3ada6a099e633403856389092f3c86b9eb1a0fe39df0a02a4106b61a4"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02037": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOperatorIssue",
+        "path": "template_ai/input_graph_dialog.py",
+        "line": 232,
+        "message": "Operator \"+\" not supported for types \"Literal['有資料需要查看；', '']\" and \"str | dict[Unknown, int] | list[Unknown] | Literal[True]\"\n  Operator \"+\" not supported for types \"Literal['有資料需要查看；']\" and \"dict[Unknown, int]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['有資料需要查看；']\" and \"list[Unknown]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['有資料需要查看；']\" and \"Literal[True]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['']\" and \"dict[Unknown, int]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['']\" and \"list[Unknown]\" when expected type is \"str\"\n  Operator \"+\" not supported for types \"Literal['']\" and \"Literal[True]\" when expected type is \"str\"",
+        "context": "if learning_summary:self.summary.setText(('有資料需要查看；' if report['issues'] else '')+learning_summary)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "03aeacc6fc54a0b96ab9ec4c55870b3d40b176b86f15e3ce825b7f2ad60adc61"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02071": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/layout_session.py",
+        "line": 90,
+        "message": "Cannot assign to attribute \"size\" for class \"LayoutSessionDialog*\"\n  Type \"tuple[Unknown, Unknown]\" is not assignable to type \"() -> QSize\"",
+        "context": "w=self.window;self.generation=w.generation;self.people,self.companies,self.logos=copy.deepcopy(w.input_data());self.size=(w.out_w.value(),w.out_h.value());self.input_digest=digest((self.people,self.companies,self.logos,self.size));self.canvas_stamp=canvas_stamp(w);self.graph_snapshot=copy.deepcopy(w.active_input_graph.data if w.active_input_graph else None);templates=[]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0a0b5f5cff0bd8d6594f69f2091049e382816e684196b29569761ad609e3a001"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02155": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/layout_session.py",
+        "line": 263,
+        "message": "Cannot assign to attribute \"size\" for class \"LayoutSessionDialog*\"\n  Type \"tuple[Unknown, ...]\" is not assignable to type \"() -> QSize\"",
+        "context": "w.adopt_input_graph(graph);self.graph_snapshot=copy.deepcopy(graph);w.out_w.setValue(payload['size'][0]);w.out_h.setValue(payload['size'][1]);self.generation=w.generation;self.people,self.companies,self.logos=copy.deepcopy(w.input_data());self.size=tuple(payload['size']);self.input_digest=digest((self.people,self.companies,self.logos,self.size));self.canvas_stamp=canvas_stamp(w);self.template_digests=payload['template_digests'];templates=[Template.from_dict(t) for t in payload['templates']]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "788110b87350434524e3189aa8015dcaeee9e47846d47431461d3e1efbf07386"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02203": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/logo_compare.py",
+        "line": 43,
+        "message": "Cannot assign to attribute \"layout\" for class \"LogoCompareWidget*\"\n  Type \"QVBoxLayout\" is not assignable to type \"() -> (QLayout | None)\"",
+        "context": "self.layout = QVBoxLayout(self)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "111839004d4133e75a846e2ea7cf2f2f22ce95d83411983a54309a813d0131af"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02223": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/logo_library_dialog.py",
+        "line": 21,
+        "message": "Cannot assign to attribute \"window\" for class \"LogoLibraryDialog*\"\n  Type \"Any | None\" is not assignable to type \"() -> QWidget\"\n    Type \"None\" is not assignable to type \"() -> QWidget\"",
+        "context": "self.size_owner=window;self.window=getattr(window,'service_window',window)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "46d0f1d10a82562a7c4bc3802b13e819a42e3c5d7dbbc49f17c92c2dd4fc38a1"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02489": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/multi_size_edit.py",
+        "line": 32,
+        "message": "Cannot assign to attribute \"event\" for class \"SizeEditController*\"\n  Type \"Event\" is not assignable to type \"(event: QEvent, /) -> bool\"",
+        "context": "super().__init__(adapter);self.adapter=adapter;self.owner=adapter.owner;self.active=False;self.event=threading.Event()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f11619736b0a94c06b90cb3ccf6dfa719ea140ee64964cb404c102c51babcd07"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02490": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/multi_size_edit.py",
+        "line": 40,
+        "message": "Cannot assign to attribute \"event\" for class \"SizeEditController*\"\n  Type \"Event\" is not assignable to type \"(event: QEvent, /) -> bool\"",
+        "context": "envelope=prepare_edit(self.adapter,plan);self.event=threading.Event();index=plan['index'];self.active=True",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d75542a3a9fe7b7ee47801a65a445b4036106de9b64a57d8d05f55ec40379445"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02746": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/production_report.py",
+        "line": 54,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if row['model_id']!=session['model_id']:continue",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "48abfbb544d7478d9b660e1a03b12c6741419ac89288141449a0267c10c28531"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02747": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/production_report.py",
+        "line": 55,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "try:checked=service.checked(row['id']);value=capacity_advice(checked['artifact'],context,demand)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d20df97bb6b4a37b708cac3bccd0889f1b577211989f9d43e4621e1760c5da56"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02748": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/production_report.py",
+        "line": 57,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "capacity.append(dict(calibration_id=row['id'],**value))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f0799be89443a40111d9784a1e397a63257d76d47a806557a7726cabe7540b16"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02920": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/quality_evaluation_panel.py",
+        "line": 65,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for r in self.store.records('RULE'):self.rules.addItem(r['id']+'／r'+str(r['revision']),r['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a673de25283dc16aefc95e795918232db72c5f2f68665534970a7ead5db74c63"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02921": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/quality_evaluation_panel.py",
+        "line": 65,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for r in self.store.records('RULE'):self.rules.addItem(r['id']+'／r'+str(r['revision']),r['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a673de25283dc16aefc95e795918232db72c5f2f68665534970a7ead5db74c63"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-02922": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/quality_evaluation_panel.py",
+        "line": 65,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for r in self.store.records('RULE'):self.rules.addItem(r['id']+'／r'+str(r['revision']),r['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a673de25283dc16aefc95e795918232db72c5f2f68665534970a7ead5db74c63"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03459": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 21,
+        "message": "\"get\" is not a known attribute of \"None\"",
+        "context": "self.rows.sort(key=lambda r:(r.get({'SOURCE':'work_id','STATE':'state'}.get(self.order.currentText(),'risk'),''),r['id']));self.table.setRowCount(len(self.rows))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8e601b75d535e860b1fa902715354b34f0acf52744f364aaf3f4b0b8d4077600"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03460": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 21,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "self.rows.sort(key=lambda r:(r.get({'SOURCE':'work_id','STATE':'state'}.get(self.order.currentText(),'risk'),''),r['id']));self.table.setRowCount(len(self.rows))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "185443c1474f57138bc4d5fe522183680e0e702c628b1d0ca08029b1c9db864a"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03462": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 23,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "count=self.window.library.db.execute(\"SELECT count(*) FROM templates WHERE json_extract(payload,'$.source_work_id')=?\",(row['work_id'],)).fetchone()[0]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6136e37a05fb23fa1a8c02ca2a9228300ffa269678e7f6c9cdc7a99888bc3f0e"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03463": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 24,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for j,value in enumerate((row['risk']+'／'+row['state'],row['work_id'],f'實際1作品＋{count}引用模板；跨作品適用未知',row['id'])):self.table.setItem(i,j,QTableWidgetItem(value))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "94e83c206c84de4b45d17dd0c7b6e2263199d36e3031f3b2eb112c898e19c03f"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03464": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 24,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for j,value in enumerate((row['risk']+'／'+row['state'],row['work_id'],f'實際1作品＋{count}引用模板；跨作品適用未知',row['id'])):self.table.setItem(i,j,QTableWidgetItem(value))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "94e83c206c84de4b45d17dd0c7b6e2263199d36e3031f3b2eb112c898e19c03f"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03465": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 24,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for j,value in enumerate((row['risk']+'／'+row['state'],row['work_id'],f'實際1作品＋{count}引用模板；跨作品適用未知',row['id'])):self.table.setItem(i,j,QTableWidgetItem(value))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "94e83c206c84de4b45d17dd0c7b6e2263199d36e3031f3b2eb112c898e19c03f"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03466": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 24,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for j,value in enumerate((row['risk']+'／'+row['state'],row['work_id'],f'實際1作品＋{count}引用模板；跨作品適用未知',row['id'])):self.table.setItem(i,j,QTableWidgetItem(value))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "94e83c206c84de4b45d17dd0c7b6e2263199d36e3031f3b2eb112c898e19c03f"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03467": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 40,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "row=self.current();after=row['after'];locate_work(self.window,row['work_id'],[after['slot_id']] if after.get('slot_id') else [])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7ddeff450a2c779aa4c6819a29f02c3f733e5ff7aa631427d30b41f052d2bdad"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03468": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 40,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "row=self.current();after=row['after'];locate_work(self.window,row['work_id'],[after['slot_id']] if after.get('slot_id') else [])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7ddeff450a2c779aa4c6819a29f02c3f733e5ff7aa631427d30b41f052d2bdad"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03469": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 48,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if QMessageBox.question(self,'確認'+state,row['id']+'\\n'+reason)!=QMessageBox.Yes:return",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4c78cc9183eaa19465ab7b68f8082bc4722c99445d3f407a5baee4152b3f18a5"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03471": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 50,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "current=self.store.get('RULE_HINT',row['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "bce77adf3d856b59931e5d8fdb34aa87c46e1ae690aa197b107fc8c528704c8a"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03473": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 51,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "if current['revision']!=row['revision']:raise ValueError('線索已更新，重新核對')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5b8090f808de7666195d4d1b6e3e8d6ff07bb6addae79e149beb4df3bf2a459a"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03475": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 52,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "current.update(state=state,review_actor='LOCAL_OPERATOR',review_reason=reason);self.store._write('RULE_HINT',row['id'],current,row['revision'],'correction_hint_'+state.lower())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3a9f082ba5b7768be7a79f56d5ea2daac9b01b860bcf8a8be19030da99a152c5"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03476": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/rule_hints_panel.py",
+        "line": 52,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "current.update(state=state,review_actor='LOCAL_OPERATOR',review_reason=reason);self.store._write('RULE_HINT',row['id'],current,row['revision'],'correction_hint_'+state.lower())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3a9f082ba5b7768be7a79f56d5ea2daac9b01b860bcf8a8be19030da99a152c5"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03506": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/runtime_queue.py",
+        "line": 48,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "return [row for row in rows if (session is None or row['consent_session']==session) and owner_alive(row.get('consent_owner'))]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7a9ad6c780f538a6a84600aa84f5b7b8fdaf90dcf9d6c5ad0fee7c1cb49f8558"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03507": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "template_ai/runtime_queue.py",
+        "line": 48,
+        "message": "\"get\" is not a known attribute of \"None\"",
+        "context": "return [row for row in rows if (session is None or row['consent_session']==session) and owner_alive(row.get('consent_owner'))]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f626ef1d886965bbc7ae307d12a0fc9fc19782c0f118d5cd5d79a27aed7b88db"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03524": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/runtime_queue.py",
+        "line": 98,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "chosen={r['id'] for r in self.eligible()} if admissible_ids is None else set(admissible_ids)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3cd8fb38c1ef9db31bf72338bd3dfa268b4f2cbfa28e4052619835ec04859b9d"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03525": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/runtime_queue.py",
+        "line": 100,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "current=self.get(request['id']);ordered=[r for r in self.eligible() if r['id'] in chosen]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "34db1c3901f0d2b099543bbd171d45c4a50fc9a52ec1a9f74e95a56ef0a04353"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03603": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/semantic_learning_dialog.py",
+        "line": 39,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for row in self.service.store.records('SEMANTIC_MODEL',0,200):self.models.addItem(row['id']+'／'+row['state']+'／參數'+str(row['parameter_count']),row['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c9a0c9ee95f5cd5813b326928e9f832400bff844140de7b58f3d1499b5255aa7"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03604": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/semantic_learning_dialog.py",
+        "line": 39,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for row in self.service.store.records('SEMANTIC_MODEL',0,200):self.models.addItem(row['id']+'／'+row['state']+'／參數'+str(row['parameter_count']),row['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c9a0c9ee95f5cd5813b326928e9f832400bff844140de7b58f3d1499b5255aa7"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03605": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/semantic_learning_dialog.py",
+        "line": 39,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for row in self.service.store.records('SEMANTIC_MODEL',0,200):self.models.addItem(row['id']+'／'+row['state']+'／參數'+str(row['parameter_count']),row['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c9a0c9ee95f5cd5813b326928e9f832400bff844140de7b58f3d1499b5255aa7"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03606": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/semantic_learning_dialog.py",
+        "line": 39,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for row in self.service.store.records('SEMANTIC_MODEL',0,200):self.models.addItem(row['id']+'／'+row['state']+'／參數'+str(row['parameter_count']),row['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c9a0c9ee95f5cd5813b326928e9f832400bff844140de7b58f3d1499b5255aa7"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03765": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/training_exceptions.py",
+        "line": 26,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "issues=[dict(code='WORK_EXCLUDED',severity='REVIEW',reason=unit['exclusion_reason'],slot_ids=[])]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "fa7244d0c44ab082e125a5b492e4b7ba400e0261bb5a94235a92e08ca540c40f"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03889": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalMemberAccess",
+        "path": "template_ai/training_queue_panel.py",
+        "line": 40,
+        "message": "\"get\" is not a known attribute of \"None\"",
+        "context": "for ds in datasets:self.dataset_combo.addItem(ds.get('manifest',{}).get('name',ds['id'])+' / '+ds['id'],ds['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e1403b996ddef1f0e9cf63da538a3ebd73c158e5e931d57201a08ebac1a680e4"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03890": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/training_queue_panel.py",
+        "line": 40,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for ds in datasets:self.dataset_combo.addItem(ds.get('manifest',{}).get('name',ds['id'])+' / '+ds['id'],ds['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0814b29d0ed5e2cc9437b706fb90f6b0a032e4ce2ece5fc0908b91f9427cc3d5"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03891": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/training_queue_panel.py",
+        "line": 40,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for ds in datasets:self.dataset_combo.addItem(ds.get('manifest',{}).get('name',ds['id'])+' / '+ds['id'],ds['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0814b29d0ed5e2cc9437b706fb90f6b0a032e4ce2ece5fc0908b91f9427cc3d5"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-APP-03892": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/training_queue_panel.py",
+        "line": 40,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "for ds in datasets:self.dataset_combo.addItem(ds.get('manifest',{}).get('name',ds['id'])+' / '+ds['id'],ds['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0814b29d0ed5e2cc9437b706fb90f6b0a032e4ce2ece5fc0908b91f9427cc3d5"
+      },
+      "after_profile": "final-scan-application-003/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TOO-04589": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tools/capture_ten_packages.py",
+        "line": 92,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "assert not samples.running and samples.store.count('SAMPLE')==1;sample=samples.rows[0];samples.table.selectRow(0);QApplication.processEvents();assert samples.store.sample_state(sample['id'])=='APPROVED';assert not sample['used_for_training'] and window.library.templates()==[]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0efd751d82f2b34403a99c83b38c20d21051fe890188a8e24e5d639be11ff7e1"
+      },
+      "after_profile": "final-scan-tools-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TOO-04590": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tools/capture_ten_packages.py",
+        "line": 92,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "assert not samples.running and samples.store.count('SAMPLE')==1;sample=samples.rows[0];samples.table.selectRow(0);QApplication.processEvents();assert samples.store.sample_state(sample['id'])=='APPROVED';assert not sample['used_for_training'] and window.library.templates()==[]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0efd751d82f2b34403a99c83b38c20d21051fe890188a8e24e5d639be11ff7e1"
+      },
+      "after_profile": "final-scan-tools-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TOO-04591": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tools/capture_ten_packages.py",
+        "line": 95,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "datasets=dialog.dataset_panel;dialog.tabs.setCurrentWidget(datasets);datasets.reload();datasets.actor.setText('Synthetic Reviewer');datasets.name.setText('Synthetic TRAIN geometry dataset');idx=next(i for i,r in enumerate(datasets.rows) if r['id']==sample['id']);datasets.table.item(idx,0).setCheckState(Qt.Checked);datasets.table.cellWidget(idx,1).setCurrentText('TRAIN')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ccabb9580c05959ae797b89acdb7bc33313e80f709b222803568f48cf01a34fa"
+      },
+      "after_profile": "final-scan-tools-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TOO-04592": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tools/capture_ten_packages.py",
+        "line": 95,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "datasets=dialog.dataset_panel;dialog.tabs.setCurrentWidget(datasets);datasets.reload();datasets.actor.setText('Synthetic Reviewer');datasets.name.setText('Synthetic TRAIN geometry dataset');idx=next(i for i,r in enumerate(datasets.rows) if r['id']==sample['id']);datasets.table.item(idx,0).setCheckState(Qt.Checked);datasets.table.cellWidget(idx,1).setCurrentText('TRAIN')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ccabb9580c05959ae797b89acdb7bc33313e80f709b222803568f48cf01a34fa"
+      },
+      "after_profile": "final-scan-tools-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TOO-04602": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tools/capture_ten_packages.py",
+        "line": 104,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "assert not datasets.running and len(window.library.templates())==1;draft=window.library.templates()[0];assert draft.state=='draft' and draft.training_reference['sample_id']==sample['id'];assert window.library.artwork(future_work['id'])==future_work;datasets.load_dataset();QApplication.processEvents()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "359208855d8c89261c45055807db973835d039f176745a881c73a0c6479e47d3"
+      },
+      "after_profile": "final-scan-tools-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TES-04877": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_automatic_training.py",
+        "line": 84,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "units=self.service.store.records('AUTO_UNIT');self.assertEqual({u['state'] for u in units},{'FAILED','WAITING_REVIEW'})",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b93a4d1c1299f8fd7a6a465ea35870503db0eb8fdf9f8a613e6682162be03cb3"
+      },
+      "after_profile": "final-scan-tests-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TES-04878": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_automatic_training.py",
+        "line": 85,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "self.assertEqual({u['work_id'] for u in units},{work['id'],other['id']})",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "deca4b080b4fbc3ba0b839fc11fa6bedb86704b68900d953149ae56c2bccb7dc"
+      },
+      "after_profile": "final-scan-tests-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TES-04940": {
+      "root": "BUG-QT-001",
+      "fix_commit": "045517e",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_batch_candidate_adapter.py",
+        "line": 50,
+        "message": "Cannot assign to attribute \"window\" for class \"QDialog\"\n  Type \"MainWindow\" is not assignable to type \"() -> QWidget\"",
+        "context": "checked=self.checked();other=QDialog(self.f.w);self.addCleanup(other.deleteLater);other.window=self.f.w;other.service=self.f.d.service;other.is_current=self.f.d.is_current;adapter=SizeEditAdapter(other,self.a.entry,self.i);before=self.a.candidates[self.i].template.to_dict()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "89f05c4cf0ac9fa6b2685d7af663fb638ca4506d404f3c26e61ed597e3cb1f1d"
+      },
+      "after_profile": "final-scan-tests-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "qt-contract-final-summary.json and native-gui-002",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TES-09508": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_quality_jobs.py",
+        "line": 44,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "self.assertEqual([r['state'] for r in queue.page()],['DONE','DONE']);self.assertEqual(self.store.count('SAMPLE'),0);self.assertEqual(self.library.templates(),[])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d62e0d41aaf3a02345140cb7a72210dcc31c885875709abd71459361b79ce1cb"
+      },
+      "after_profile": "final-scan-tests-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TES-11309": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_template_versions.py",
+        "line": 21,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "records=self.service.store.records('TEMPLATE_VERSION');self.assertEqual(len(records),2);self.assertTrue(any(r['action']=='ROLLBACK_AS_NEW_DRAFT' and r['source_template_id']==self.t.id for r in records))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e2d02a21a5476398300ca45d2c57411f9abdb89f62676251a6647100758971a5"
+      },
+      "after_profile": "final-scan-tests-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TES-11310": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_template_versions.py",
+        "line": 21,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "records=self.service.store.records('TEMPLATE_VERSION');self.assertEqual(len(records),2);self.assertTrue(any(r['action']=='ROLLBACK_AS_NEW_DRAFT' and r['source_template_id']==self.t.id for r in records))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "e2d02a21a5476398300ca45d2c57411f9abdb89f62676251a6647100758971a5"
+      },
+      "after_profile": "final-scan-tests-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TES-11398": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_training_pipeline.py",
+        "line": 120,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "cancelled=self.store.records('JOB')[0];self.assertEqual(cancelled['phase'],'CANCELLED');self.assertEqual(sum(i['state']=='SUCCESS' for i in cancelled['items']),1);self.p.reload();self.p.jobs_table.selectRow(0)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0c73907189557a9fba2153bd475b8f92ab2913d21cf4b86d7b228ad22510e1e1"
+      },
+      "after_profile": "final-scan-tests-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    },
+    "D-TES-11403": {
+      "root": "BUG-METADATA-SNAPSHOT-004",
+      "fix_commit": "6258f781",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "tests/test_training_pipeline.py",
+        "line": 122,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "completed=self.store.get('JOB',cancelled['id']);self.assertEqual(completed['phase'],'COMPLETED');self.assertEqual(len(self.window.library.templates()),2);self.assertTrue(all(i['attempts']==1 for i in completed['items']))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8d28a13b533efb41e76e4fa2aaf245b747fa94f9df9bceca4040435a1258d020"
+      },
+      "after_profile": "final-scan-tests-001/report.json",
+      "comparison": "Full current scope; multiset matching of original rule/path/message/context, canonicalizing only documented Qt renames. Exact original occurrence no longer emitted.",
+      "runtime_proof": "record-collections-after-summary.json:12PASS, preserving nullable arbitrary get and revision gates",
+      "residual": "Final current-source full regression outcome is recorded separately; no baseline refreshed."
+    }
+  },
+  "count": 113
+}

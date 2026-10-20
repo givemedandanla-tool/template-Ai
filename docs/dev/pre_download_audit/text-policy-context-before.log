@@ -1,0 +1,38 @@
+EFF
+======================================================================
+ERROR: test_missing_draft_is_plain_rejection (test_text_policy_context.TextPolicyContextTests.test_missing_draft_is_plain_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_text_policy_context.py", line 19, in test_missing_draft_is_plain_rejection
+    d.apply()
+  File "/workspace/template-Ai/template_ai/text_policy_dialog.py", line 44, in apply
+    if self.host_window.tabs.currentIndex()!=1 or self.host_window.template.id!=self.template_id or fingerprint(self.host_window.template.to_dict())!=fingerprint(self.before):raise ValueError('目前草稿已變更，請重開規則編輯')
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'id'
+
+======================================================================
+FAIL: test_replacement_draft_during_confirmation_is_not_overwritten (test_text_policy_context.TextPolicyContextTests.test_replacement_draft_during_confirmation_is_not_overwritten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_text_policy_context.py", line 25, in test_replacement_draft_during_confirmation_is_not_overwritten
+    self.confirmation_race(replace=True)
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_text_policy_context.py", line 38, in confirmation_race
+    self.assertEqual(self.w.template.to_dict(),before)
+AssertionError: {'name': '匿名示範 · 單人矩形', 'width_mm': 90, 'height_mm'[2006 chars] 0.0} != {'name': 'Authored changed draft', 'width_mm': 90, [2011 chars] 0.0}
+Diff is 3183 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_changed_same_draft_during_confirmation_is_not_overwritten (test_text_policy_context.TextPolicyContextTests.test_changed_same_draft_during_confirmation_is_not_overwritten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_text_policy_context.py", line 28, in test_changed_same_draft_during_confirmation_is_not_overwritten
+    self.confirmation_race(replace=False)
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_text_policy_context.py", line 38, in confirmation_race
+    self.assertEqual(self.w.template.to_dict(),before)
+AssertionError: {'name': '匿名示範 · 單人矩形', 'width_mm': 90, 'height_mm'[2006 chars] 0.0} != {'name': 'Authored changed draft', 'width_mm': 90, [2017 chars] 0.0}
+Diff is 3144 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.918s
+
+FAILED (failures=2, errors=1)

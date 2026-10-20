@@ -1,28 +1,12 @@
-# 最新接手：全面查證執行中，尚未結案
+# 最新接手：全面查證仍在執行，不可宣稱結案
 
-先讀pre_download_audit/PROGRESS.json與README。已有11798筆原始診斷台帳及逐根因證據，尚有未審項目；不可宣稱全數無錯誤。Qt原生API與安全關閉已修；後續發現QObject.event覆蓋及本輪更名漏接的報告／恢復讀取點，已補修。47項針對性PASS，恢復16項重跑中；7項獨立分配／共同模型數學案例PASS。Linux原生桌面12＋導航3、owned3頁PASS。
+先讀pre_download_audit/PROGRESS.json、README與PRE_DOWNLOAD_AUDIT_PLAN_20261020。原始11798筆診斷已逐筆保留；目前2417未審，38筆新增待對照，不能當全部誤判。已修6類根因：Qt原生API、預覽安全關閉、QObject.event覆蓋、SQLite列表快照、逾期／舊工作回呼、無尺寸線索時不必要的分群套件載入。來源92977b77；新增37測試，完整1886項full-regression-005執行中，不能提前填PASS。
 
-中間完整回歸002保留706筆完成紀錄、報告入口1ERROR與恢復模組逾時，不冒稱全套完成；檔案及interrupted-summary記錄中斷原因與精確剩餘數。下一步從新提交跑原1850＋15新增＝1865項，最多2個獨立程序，Qt模組仍隔離；再完成剩餘診斷／故障查證與交付。模型真實品質、Windows、私人原稿及印前資格不以本輪合成／Linux自驗取代。
+full003保留1865PASS／240健康／0runtime；full004保留1877斷言PASS但1runtime，整輪FAIL。回呼修正6項PASS；分群載入3項由FAIL轉PASS，原預檢GUI逾時案例原時限內通過。最新native-gui-003：桌面12＋導航3＋event2＋報告1＋恢復1，共19PASS、11PNG，實際X11、來源未變；已檢視學習預覽與拖動後圖片。7項獨立數學案例PASS及12項SQLite快照／版次案例保留。外部Windows／私人作品／實體印刷資格仍未通過，沒有改寫舊資格。
 
-可以使用既有Pro權益及合理額度，訂閱外費用禁止；無法核對額外代理／遠端觸發費用時不用。至今只有本機提交，沒有REMOTE_VERIFIED。本輪最終可恢復ZIP尚待建立。以下為歷史交付，不作當前完成聲明。
+型別觀察001：498選定測試497PASS／1預檢逾時，0runtime／0觀察器錯誤；逾時根因已修。002為避免完整套件加觀察套件超出整體2-worker配置而中斷，保留局部檔案，不算全輪PASS。下一步逐筆審查剩餘契約、故障與入口矩陣，完成full005與可恢復交付。不可因通過案例而全面豁免其他輸入。
 
-# 最新接手：第一次下載前全面查證計畫（尚未執行）
-
-使用者本輪要求擬定全盤掃描計畫。讀[計畫](PRE_DOWNLOAD_AUDIT_PLAN_20261020.md)與同名JSON；狀態PLANNED_NOT_EXECUTED。11798筆型別診斷尚未逐筆確認，本輪沒有修產品或重跑全套。規劃順序：資源／來源／完整入口矩陣→逐筆台帳與高風險根因→接線／查重→合成核心及實際GUI／故障恢復→修正與完整回歸。不得將計畫當成已完成掃描。
-
-零新增費用、單一Codex、本機保存原則不變。主工作區僅約50MB，執行前先解決自有快取與暫存，不買新資源、不刪私人或失敗證據。新計畫增量checkpoint及更新後工具／計畫整包的收據見`.cache/debug-tooling/plan-delivery-20261020/receipt.json`；原工具包保留不覆寫。若收據缺少，最終恢復包核對尚未完成。
-
-以下保留已完成工具與產品交接。
-
-# 當前交接：DEV-QUALITY-001本地工具；產品GUI維持已自驗
-
-本輪沒有推送／PR／CI：零新增費用優先，沒有充分帳戶額度與連帶觸發證據。最近遠端確認基底0e7b8aee；本輪精確本機HEAD、patch/bundle封裝hash與隔離還原結果見`.cache/debug-tooling/delivery/receipt.json`及同目錄ZIP。若receipt不存在，最後封裝驗證仍未完成；不將本機checkpoint稱為REMOTE_VERIFIED。
-
-- 讀[工具說明](debug_tooling/README.md)、[結果](debug_tooling/FINAL_REPORT.md)、[待辦](debug_tooling/BACKLOG.json)。固定Ruff0.17.1／Pyright1.1.414／jscpd5.4.1及兩個MIT skill；一般檢查不下載或安裝，單一Codex、不全庫整改。skill可顯式讀取，平台自動辨識未驗證。
-- 576個Python輸入按應用270／工具60／測試246分開掃描。新工具／測試0診斷；舊Pyright11798筆待判讀、Ruff3個工具解析限制保留。7組exact重複6保留、1低優先候選。沒有改產品。
-- 新工具11＋既有相關7＝18針對性PASS／0runtime；9項隔離示範及全新目錄離線重建PASS。application正式check新增0，其餘對精確完整掃描結果分類。實際Linux／Python3.12.14／PySide6 6.8.3，3.11僅最低語法模式核對。
-- 雲端草稿rev7保存未發布，沒有改repository ref／network／secret需求；遠端沒有本輪工具原碼，缺檔時明示LOCAL_ONLY。必須保存交付ZIP，新對話先核對其base/head再還原，不能依賴本機工作區永久存在。
-- 本輪工具交付後停止；沒有新任務不繼續重構。EXE／網頁／手機及已延後資格維持原範圍。
+既有Pro可用能力仍禁止額外收費；無權益證據暫不啟用代理。GitHub連帶費用不能核實，未push／開PR／跑CI；本輪只是本機提交與PREPARED checkpoint，尚無最新復原交付ZIP、沒有REMOTE_VERIFIED。先保留現有原始碼／證據與舊交付ZIP，再完成新差異包。
 
 ## 產品GUI交接（保持原資格與證據）
 

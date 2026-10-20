@@ -4,8 +4,8 @@
 
 - `PROGRESS.json`：當前階段及下一步，並非完成宣告。
 - `diagnostic-ledger.jsonl`：11798筆原始Pyright診斷，以原始指紋加出現次數保留每筆；未審項目明列UNREVIEWED。完整欄位保留未取得的證據為null，不能推測填入。
-- `qt-enum-members.json`：實際PySide6 6.8.3中87組Qt enum舊別名存在性證明，只對精確匹配的888筆工具限制適用。
-- `qt-shadow-before.json`：真實MainWindow及InputGraphDialog的QWidget.window()被同名資料覆蓋，呼叫可重現TypeError；尚未修正。
+- `qt-enum-members.json`：實際PySide6 6.8.3中首批87組Qt enum舊別名；complete-002另補完整名字空間，精確1728筆Qt別名診斷有對照。
+- `qt-shadow-before.json`：真實MainWindow及InputGraphDialog的QWidget.window()被同名資料覆蓋，呼叫可重現TypeError；已在045517e修正；後續QObject.event及收尾回呼見PROGRESS。
 - `requirements-test-matrix.json`：172需求／條款與原1850測試目錄的對照，缺失ID為0；這是盤點，並非本輪已執行結果。
 - `resource-cache-release.json`：8份既有REMOTE_VERIFIED快取經來源／manifest／Git blob／收據／ZIP hash核對後釋放的證明；私人資料、本機未遠端保存快照及失敗證據保留。
 

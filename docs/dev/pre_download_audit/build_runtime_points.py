@@ -1,5 +1,6 @@
 """Map original diagnostics to unchanged current expressions for type-only probes."""
 import ast,json,re,hashlib
+from coordinate_contract import index_for_diagnostic
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[3];FOLDER=Path(__file__).resolve().parent
 ORIGINAL=Path('/tmp/template-ai-audit-original-373b6ee')
@@ -39,8 +40,8 @@ for row in rows:
  subnodes=[n for n in nodes if isinstance(n,ast.Subscript)]
  attrs=[n for n in nodes if isinstance(n,ast.Attribute)]
  if rule in ['reportOptionalSubscript','reportIndexIssue'] or '__getitem__' in message or '__setitem__' in message:
-  if subnodes:
-   chosen=min(subnodes,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset));wanted+=[('container',chosen.value),('result',chosen)]
+  chosen=index_for_diagnostic(old['tree'],old['lines'],row['original_range'],rule)
+  if chosen is not None:wanted+=[('container',chosen.value),('result',chosen)]
  elif rule in ['reportOptionalMemberAccess','reportAttributeAccessIssue']:
   match=re.search(r'(?:attribute "([^"]+)"|"([^"]+)" is not a known attribute)',message)
   member=(match[1] or match[2]) if match else None
@@ -51,7 +52,24 @@ for row in rows:
   options=[n for n in nodes if isinstance(n,ast.expr) and not isinstance(n,(ast.Constant,ast.Name))]
   if options:wanted.append(('value',min(options,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset))))
   if isinstance(inner,ast.Name):wanted.append(('value',inner))
+ # Capture exact operator operands and iterable sources without evaluating them.
+ if rule in ['reportOperatorIssue','reportOptionalOperand']:
+  operations=[n for n in nodes if isinstance(n,ast.BinOp)]
+  if operations:
+   op=min(operations,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset))
+   wanted += [('operator_left',op.left),('operator_right',op.right)]
+ if rule in ['reportGeneralTypeIssues','reportOptionalIterable'] and 'iterable' in message:
+  sources=[n.iter for n in nodes if isinstance(n,(ast.For,ast.AsyncFor))]
+  for n in nodes:
+   if isinstance(n,(ast.ListComp,ast.SetComp,ast.DictComp,ast.GeneratorExp)):sources += [g.iter for g in n.generators]
+  if sources:
+   source=min(sources,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset))
+   wanted.append(('iterable',source))
  parent_calls=[n for n in nodes if isinstance(n,ast.Call)]
+ if rule=='reportArgumentType' and parent_calls:
+  call=min(parent_calls,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset))
+  args=[arg for arg in [*call.args,*[k.value for k in call.keywords]] if coord(arg.lineno,arg.col_offset)<=p<coord(arg.end_lineno,arg.end_col_offset)]
+  if len(args)==1:wanted.append(('argument',args[0]))
  if parent_calls:
   chosen=min(parent_calls,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset));calls.append(chosen)
   if isinstance(chosen.func,ast.Attribute) and chosen.func.attr in ['len','get']:pass
@@ -72,5 +90,7 @@ for row in rows:
  test_id='.'.join([Path(path).stem,*old_scope[:old_scope.index(method)+1]]) if path.startswith('tests/') and method else None
  points.append({'id':row['id'],'scope':row['scope'],'path':path,'line':line,'rule':rule,'targets':targets,'member':member,'call_ranges':call_ranges,'producer_names':sorted(set(producer_names)),'test_id':test_id,'source_sha256':hashlib.sha256((ROOT/path).read_bytes()).hexdigest()})
 result={'scope':'TYPE_ONLY_NO_PAYLOADS_NO_PROPERTY_GETTERS','source_files':{path:hashlib.sha256((ROOT/path).read_bytes()).hexdigest() for path in cache},'points':points,'unmapped':unmapped}
-(FOLDER/'runtime-points.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+import argparse
+parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,default=FOLDER/'runtime-points.json');args=parser.parse_args()
+args.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
 print('mapped runtime points',len(points),'unmapped',len(unmapped),'direct test IDs',len({p['test_id'] for p in points if p['test_id']}))
