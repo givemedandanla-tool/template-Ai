@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "PRE_DOWNLOAD_AUDIT_PLANNED_NOT_STARTED",
+  "active_task": "PRE_DOWNLOAD_AUDIT_RUNNING",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-FINAL.receipt.json",
   "last_confirmed_commit": "5cfa9dac1d0ccb1eaedfd2cb9fbdb3847fd54e92",
   "latest_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
@@ -20,9 +20,9 @@
     "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
   ],
   "next_tasks": [
-    "Plan delivered only; no full diagnostic triage or product fixes have started.",
-    "Audit execution order: phase0 resource/source/coverage preparation, then high-risk diagnostic triage and real call paths, synthetic/core/GUI/failure tests, final full regression.",
-    "Preserve updated local plan/tooling recovery ZIP; remote push/PR/CI remains blocked by unverified cost."
+    "Continue root-cause triage: restore QWidget native APIs shadowed by owner/control attributes, with real failing repro and regression.",
+    "Complete every diagnostic disposition, input/version/clone review and synthetic/GUI/failure checks, then full isolated regression.",
+    "Save local milestones and verified recovery artifacts; do not push or use unknown paid capabilities."
   ],
   "blocked": [
     {
@@ -1556,5 +1556,7 @@
     "billing_evidence": "NOT_AVAILABLE_NO_AMOUNT_CLAIM"
   },
   "active_audit_plan": "docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.json",
-  "audit_plan_status": "PLANNED_NOT_EXECUTED"
+  "audit_plan_status": "RUNNING",
+  "audit_execution_progress": "docs/dev/pre_download_audit/PROGRESS.json",
+  "agent_policy_current": "Existing Pro entitlements and reasonable-use quota only; subagents permitted if inclusion is verifiable. Currently no billing/entitlement proof, so no new agents."
 }

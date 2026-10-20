@@ -1,6 +1,6 @@
 {
   "id": "PRE-DOWNLOAD-AUDIT-PLAN-20261020",
-  "status": "PLANNED_NOT_EXECUTED",
+  "status": "RUNNING",
   "base_commit": "127b69fc59112a540f78bb8488e5a024c5eddd38",
   "scope": "PRE_FIRST_DOWNLOAD_AUDIT_PLAN_ONLY",
   "document": "docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.md",
@@ -18,7 +18,7 @@
     {
       "id": "0",
       "goal": "Protect source and resources; inventory all entries and requirement/test coverage",
-      "status": "NOT_STARTED"
+      "status": "IN_PROGRESS"
     },
     {
       "id": "1",
@@ -87,5 +87,7 @@
     "Windows/hardware/private-corpus/print qualification remains deferred"
   ],
   "local_checkpoint": "CP-20261020-PRE-DOWNLOAD-AUDIT-PLAN",
-  "local_recovery_receipt": ".cache/debug-tooling/plan-delivery-20261020/receipt.json"
+  "local_recovery_receipt": ".cache/debug-tooling/plan-delivery-20261020/receipt.json",
+  "execution_progress": "docs/dev/pre_download_audit/PROGRESS.json",
+  "agent_policy_current": "Existing Pro entitlements and reasonable-use quota only; subagents permitted if inclusion is verifiable. Currently no billing/entitlement proof, so no new agents."
 }
