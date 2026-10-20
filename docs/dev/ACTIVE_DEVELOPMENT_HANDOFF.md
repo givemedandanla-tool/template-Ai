@@ -1,12 +1,12 @@
-# 最新接手：最後全套與交付仍在執行
+# 最新接手：最後1921全套與交付仍在執行
 
-原11798診斷全部逐筆判讀：9187型別契約待改善、1856工具/原生宣告限制、740根因相關修正已驗、15外部資格阻擋；0未審。10類根因與原父題/AI工作包計數不增加。最新產品c3885382，讀取快照修正20e347c4的相關93PASS/7健康/0runtime；c388只補精確ParamSpec保留公開型別及回滾測試，避免無型別裝飾器遮蔽檢查。
+目前程式修正392fd99e5217af41fa71e5f12d0228fa4b963615，最後full010規劃1921（原1850+71），兩個獨立Qt模組程序並行，全球最多2重型worker。full009在848案例後因新增讀取保護的實際關閉後回呼問題中斷，不算完整PASS。RuleReviewPanel savepoint原在try外會ProgrammingError，現移入既有try/except/finally；有效實際ownedMainWindow.close+localQEventLoop回呼先1FAIL，修後7PASS及相關94PASS/7健康/0runtime。初次processEvents-only probe沒執行回呼，標無效，不能引用。root分類仍10，不是新增父題。最後完整歷史full0051886PASS；006273/007637/008115/009848均中斷。
 
-Root4新增5實際Qt/雙SQLite連線路徑：editor、catalog篩選、rule、noise hit、coverage摘要。更正fixture缺text後隔離62b2舊版5FAIL0ERROR，新6PASS；第6項驗證巢狀savepoint不提交呼叫者pending write。初稿4真正FAIL+1fixture錯與錯cwd舊測試/新產品混用結果均保留拒絕。5條路徑屬既有root4擴充，不是新工作包。
+原11798逐筆判讀/指紋次數/證據引用完整：9187契約、1856工具、740修正連動、15外部；0未審。fresh002 union11332/394新變體0未審是前版；fresh0039profiles已完成，現在須重新比較/判讀，不能漏runtime-only。完全7未增加、近似前版83；新003須更新。825條款817有案例連結，8全屬原PARTIAL/DEFERRED外部，有逐條原因。正式Gate仍因歷史來源過期FAIL，新來源缺真實GitHub讀回；不得偽造或關Gate。
 
-full009在c3885382執行1920（原1850+70）案例，來源凍結；原版27capture及native19最終重跑待排。最後完整乾淨full0051886PASS/0runtime仍是歷史版本，full006273/full007637/full008115中斷，不可算完整PASS。native004在62b2為19PASS/來源未變；目前新讀取修正後須補驗。final-delivery0016profiles union11329，新增/變體386全判讀；final-release001為中斷歷史，最終0029profiles進行中，完成後重新比較，不刷新基準。近似82候選全判讀；4低優先共用候選保留待辦。
+stock00227PASS、native00519PASS/11PNG在前版c388程式，selected-stock-gui保留8圖。讀取修正後最後stock003/native006排在full010後並行，維持2worker上限。source frozen run活著時不要改product/tools/tests；docs helper可寫。final-release003profiles在392fd來源；compare_delivery_diagnostics.py --prefix final-release --iteration003要另產final ledger，保留original baseline；再review。
 
-下一步先查pre_download_audit/PROGRESS.json與本輪run進度；完成新診斷/查重、全套、GUI、矩陣與正式治理限制說明，最後本機提交/可還原包。治理舊來源證據不匹配仍FAIL，新來源缺真實GitHub讀回，不偽造、不關Gate。零新增費用優先，無子代理/API/付費資源、push/PR/CI；最多LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED，不得REMOTE_VERIFIED。最新還原ZIP尚未製作，舊ZIP不含此次修正。私人資料/作品/字型/DB不入Git；真實學習/Windows/印刷資格不變。
+收尾腳本已準備但不可提前執行完成宣告：bind_final_results.py、validate_audit_integrity.py（profile003）、finalize_local_audit.py、export_local_delivery.py。它們讀full0101921/stock003/native006。部分動態數量或歷史字串需最後核對；source/requirement資格不可提高。最終報告/還原ZIP尚未製作；舊ZIP不含本輪。提交後export到.cache/debug-tooling/audit-delivery-20261020，實際隔離套binary patch比對所有變更，再依receipt/ZIP內manifest確認完成。不得REMOTE_VERIFIED；無新付費服務/API/試用/runner/子代理、無push/PR/CI。使用者需保存本機ZIP。私人作品/字型/DB/模型留本地；原AI8/50真實資格8部分/0完整不變。
 
 ## 產品GUI交接（保持原資格與證據）
 

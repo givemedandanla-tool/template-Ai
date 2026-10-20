@@ -1,0 +1,282 @@
+{
+  "scope": "P2 follow-ups only; confirmed reachable reproduced roots fixed; no automatic refactor/type overhaul",
+  "diagnostic_groups": [
+    {
+      "status": "TYPE_CONTRACT_GAP",
+      "occurrences": 9187,
+      "by_scope": {
+        "application": 2479,
+        "tools": 298,
+        "tests": 6410
+      },
+      "by_rule": {
+        "reportAttributeAccessIssue": 4092,
+        "reportOperatorIssue": 115,
+        "reportOptionalMemberAccess": 648,
+        "reportCallIssue": 291,
+        "reportOptionalSubscript": 1993,
+        "reportIndexIssue": 459,
+        "reportArgumentType": 1303,
+        "reportGeneralTypeIssues": 246,
+        "reportOptionalOperand": 16,
+        "reportOptionalIterable": 20,
+        "reportOptionalCall": 1,
+        "reportReturnType": 2,
+        "reportUnhashable": 1
+      },
+      "meaning": "Review disposition is not zero warnings, a type cleanup, or proof for arbitrary data. Per-occurrence proof/limits remain in diagnostic-ledger.jsonl."
+    },
+    {
+      "status": "TOOL_LIMITATION",
+      "occurrences": 1856,
+      "by_scope": {
+        "application": 1016,
+        "tools": 216,
+        "tests": 624
+      },
+      "by_rule": {
+        "reportAttributeAccessIssue": 1732,
+        "reportArgumentType": 20,
+        "reportCallIssue": 7,
+        "reportIndexIssue": 2,
+        "reportOptionalSubscript": 2,
+        "reportMissingImports": 93
+      },
+      "meaning": "Review disposition is not zero warnings, a type cleanup, or proof for arbitrary data. Per-occurrence proof/limits remain in diagnostic-ledger.jsonl."
+    },
+    {
+      "status": "BLOCKED_EXTERNAL",
+      "occurrences": 15,
+      "by_scope": {
+        "application": 15
+      },
+      "by_rule": {
+        "reportOptionalSubscript": 4,
+        "reportOptionalMemberAccess": 1,
+        "reportAttributeAccessIssue": 10
+      },
+      "meaning": "Review disposition is not zero warnings, a type cleanup, or proof for arbitrary data. Per-occurrence proof/limits remain in diagnostic-ledger.jsonl."
+    }
+  ],
+  "typing_tasks": [
+    "Named DTOs for page, risk, plan, report, graph and observed-scalar records",
+    "Explicit host/provider Protocols for composed stores, Qt panels and adapters",
+    "Fixture setup declarations and supported-state narrowing without replacing real windows",
+    "Precise native binding/version annotations; keep actual roundtrip/event tests",
+    "Explicit missing-reference domain errors and read-only preview consistency where proof notes say bounded valid artifacts; retain fresh transactional confirmation"
+  ],
+  "refactor_candidates": [
+    {
+      "id": "FINAL-CLONE-APPLICATION-001",
+      "scope": "application",
+      "kind": "renamed",
+      "locations": [
+        {
+          "path": "template_ai/backup_center.py",
+          "start": 371,
+          "end": 381,
+          "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4",
+          "snippet": "            self.load_schedule();self.status.setText('排程／保留已保存；密碼未持久化，不代表關閉程式也會執行。')\n        self.guarded(action)\n\n    def arm(self):\n        def action():\n            password=self.secret();self.remember.setChecked(True);self.scheduler.set_session_password(password);self.scheduler.tick();self.load_schedule()\n        self.guarded(action)\n\n    def run_due(self):\n        def action():\n            password=self.secret();self.remember.setChecked(True);self.scheduler.set_session_password(password);self.scheduler.tick();self.load_schedule()",
+          "functions": [
+            "save_schedule",
+            "arm",
+            "run_due",
+            "action",
+            "action",
+            "action"
+          ]
+        },
+        {
+          "path": "template_ai/backup_center.py",
+          "start": 376,
+          "end": 386,
+          "source_sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4",
+          "snippet": "            password=self.secret();self.remember.setChecked(True);self.scheduler.set_session_password(password);self.scheduler.tick();self.load_schedule()\n        self.guarded(action)\n\n    def run_due(self):\n        def action():\n            password=self.secret();self.remember.setChecked(True);self.scheduler.set_session_password(password);self.scheduler.tick();self.load_schedule()\n        self.guarded(action)\n\n    def prune(self):\n        def action():\n            record=policy.schedule(self.host_window.library)",
+          "functions": [
+            "arm",
+            "run_due",
+            "prune",
+            "action",
+            "action",
+            "action"
+          ]
+        }
+      ],
+      "profile": "final-release-application-clones-002/report.json",
+      "decision": "REFACTOR_CANDIDATE_LOW_PRIORITY",
+      "reason": "BackupManagerDialog.arm/run_due currently perform the same bounded session-password plus scheduler tick. A private helper could serve both button callbacks; do not alter persisted scheduling, due-state, consent or password lifetime in this audit.",
+      "differences": "--- \n\n+++ \n\n@@ -1,6 +1 @@\n\n-            self.load_schedule();self.status.setText('排程／保留已保存；密碼未持久化，不代表關閉程式也會執行。')\n-        self.guarded(action)\n-\n-    def arm(self):\n-        def action():\n             password=self.secret();self.remember.setChecked(True);self.scheduler.set_session_password(password);self.scheduler.tick();self.load_schedule()\n@@ -11 +6,6 @@\n\n             password=self.secret();self.remember.setChecked(True);self.scheduler.set_session_password(password);self.scheduler.tick();self.load_schedule()\n+        self.guarded(action)\n+\n+    def prune(self):\n+        def action():\n+            record=policy.schedule(self.host_window.library)",
+      "callers": {
+        "entry": "application import/Qt callback",
+        "functions": [
+          "save_schedule",
+          "arm",
+          "run_due",
+          "action",
+          "action",
+          "action",
+          "arm",
+          "run_due",
+          "prune",
+          "action",
+          "action",
+          "action"
+        ],
+        "dynamic_call_graph_complete": false
+      },
+      "refactored": false,
+      "baseline_refreshed": false
+    },
+    {
+      "id": "FINAL-CLONE-APPLICATION-008",
+      "scope": "application",
+      "kind": "similar",
+      "locations": [
+        {
+          "path": "template_ai/diagnostic_bundle.py",
+          "start": 180,
+          "end": 190,
+          "source_sha256": "73f26c27d41879e88b6d72a06841a30a1e1746ae27c23a0175ba29763fd87909",
+          "snippet": "def build_bundle(data):\n    public=encoded(validate(data)); page=report_html(data)\n    manifest=encoded({'schema_version':1,'integrity':'SHA256_NOT_SIGNATURE',\n                      'files':{n:{'bytes':len(b),'sha256':sha(b)} for n,b in [('report.json',public),('report.html',page)]}})\n    if sum(map(len,(public,page,manifest)))>MAX_BYTES:raise ValueError('報告超過2MiB，請縮小範圍')\n    out=io.BytesIO()\n    with zipfile.ZipFile(out,'w',compression=zipfile.ZIP_STORED) as z:\n        for name,body in [('report.json',public),('report.html',page),('manifest.json',manifest)]:\n            info=zipfile.ZipInfo(name,date_time=(1980,1,1,0,0,0));info.compress_type=zipfile.ZIP_STORED;info.create_system=3;info.external_attr=0o600<<16\n            z.writestr(info,body)\n    return out.getvalue()",
+          "functions": [
+            "build_bundle"
+          ]
+        },
+        {
+          "path": "template_ai/offline_support.py",
+          "start": 254,
+          "end": 270,
+          "source_sha256": "53f91bba4d4e5eed3ede96f6685476fb616ba8c5d48ad22bc43f080361c64baf",
+          "snippet": "def build_support_bundle(data):\n    public = encoded(validate_report(data))\n    page = report_html(data)\n    manifest = encoded({'schema_version': 1, 'integrity': 'SHA256_NOT_SIGNATURE',\n                        'files': {name: {'bytes': len(body), 'sha256': sha(body)}\n                                  for name, body in [('support.json', public), ('support.html', page)]}})\n    if sum(map(len, (public, page, manifest))) > MAX_BYTES:\n        raise ValueError('問題報告超過 1 MiB，請減少紀錄範圍')\n    out = io.BytesIO()\n    with zipfile.ZipFile(out, 'w', compression=zipfile.ZIP_STORED) as archive:\n        for name, body in [('support.json', public), ('support.html', page), ('manifest.json', manifest)]:\n            info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))\n            info.compress_type = zipfile.ZIP_STORED\n            info.create_system = 3\n            info.external_attr = 0o600 << 16\n            archive.writestr(info, body)\n    return out.getvalue()",
+          "functions": [
+            "build_support_bundle"
+          ]
+        }
+      ],
+      "profile": "final-release-application-clones-002/report.json",
+      "decision": "REFACTOR_CANDIDATE_LOW_PRIORITY",
+      "reason": "Diagnostic and offline-support ZIP builders have similar deterministic ZIP/manifest mechanics but different schemas, payload/size policies and validation. Possible future shared low-level archive utility only after preserving both validators and file-name allowlists.",
+      "differences": "--- \n\n+++ \n\n@@ -1,11 +1,17 @@\n\n-def build_bundle(data):\n-    public=encoded(validate(data)); page=report_html(data)\n-    manifest=encoded({'schema_version':1,'integrity':'SHA256_NOT_SIGNATURE',\n-                      'files':{n:{'bytes':len(b),'sha256':sha(b)} for n,b in [('report.json',public),('report.html',page)]}})\n-    if sum(map(len,(public,page,manifest)))>MAX_BYTES:raise ValueError('報告超過2MiB，請縮小範圍')\n-    out=io.BytesIO()\n-    with zipfile.ZipFile(out,'w',compression=zipfile.ZIP_STORED) as z:\n-        for name,body in [('report.json',public),('report.html',page),('manifest.json',manifest)]:\n-            info=zipfile.ZipInfo(name,date_time=(1980,1,1,0,0,0));info.compress_type=zipfile.ZIP_STORED;info.create_system=3;info.external_attr=0o600<<16\n-            z.writestr(info,body)\n+def build_support_bundle(data):\n+    public = encoded(validate_report(data))\n+    page = report_html(data)\n+    manifest = encoded({'schema_version': 1, 'integrity': 'SHA256_NOT_SIGNATURE',\n+                        'files': {name: {'bytes': len(body), 'sha256': sha(body)}\n+                                  for name, body in [('support.json', public), ('support.html', page)]}})\n+    if sum(map(len, (public, page, manifest))) > MAX_BYTES:\n+        raise ValueError('問題報告超過 1 MiB，請減少紀錄範圍')\n+    out = io.BytesIO()\n+    with zipfile.ZipFile(out, 'w', compression=zipfile.ZIP_STORED) as archive:\n+        for name, body in [('support.json', public), ('support.html', page), ('manifest.json', manifest)]:\n+            info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))\n+            info.compress_type = zipfile.ZIP_STORED\n+            info.create_system = 3\n+            info.external_attr = 0o600 << 16\n+            archive.writestr(info, body)\n     return out.getvalue()",
+      "callers": {
+        "entry": "application import/Qt callback",
+        "functions": [
+          "build_bundle",
+          "build_support_bundle"
+        ],
+        "dynamic_call_graph_complete": false
+      },
+      "refactored": false,
+      "baseline_refreshed": false
+    },
+    {
+      "id": "FINAL-CLONE-TOOLS-001",
+      "scope": "tools",
+      "kind": "renamed",
+      "locations": [
+        {
+          "path": "tools/capture_batch_correction.py",
+          "start": 14,
+          "end": 26,
+          "source_sha256": "b22ac1bfb2668d20a561bb69d839ae3bfde0ffd1b6437b521465b2f83bcef473",
+          "snippet": "    case=BatchCorrectionGuiTests('runTest');case.setUp();d=case.make(3);w=case.w;app=QApplication.instance();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n    def shot(widget,name):\n        app.processEvents();path=folder/('batch-correction-'+name+'.png');assert widget.grab().save(str(path));screens.append(path.name)\n    def confirm(name,yes=True):\n        def respond():\n            box=QApplication.activeModalWidget()\n            try:\n                assert isinstance(box,QMessageBox);shot(box,name);box.button(QMessageBox.Yes if yes else QMessageBox.No).click()\n            except BaseException as error:errors.append(str(error))\n            finally:\n                if box and box.isVisible():box.reject()\n        QTimer.singleShot(0,respond)\n    release=threading.Event()",
+          "functions": [
+            "capture_source",
+            "shot",
+            "confirm",
+            "respond"
+          ]
+        },
+        {
+          "path": "tools/capture_batch_correction.py",
+          "start": 59,
+          "end": 71,
+          "source_sha256": "b22ac1bfb2668d20a561bb69d839ae3bfde0ffd1b6437b521465b2f83bcef473",
+          "snippet": "    case=BatchCandidateGuiTests('runTest');case.setUp();d=case.d;f=case.f;app=QApplication.instance();folder=Path(folder);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n    def shot(widget,name):\n        app.processEvents();path=folder/('batch-correction-'+name+'.png');assert widget.grab().save(str(path));screens.append(path.name)\n    def confirm(name,yes=True):\n        def respond():\n            box=QApplication.activeModalWidget()\n            try:\n                assert isinstance(box,QMessageBox);shot(box,name);box.button(QMessageBox.Yes if yes else QMessageBox.No).click()\n            except BaseException as error:errors.append(str(error))\n            finally:\n                if box and box.isVisible():box.reject()\n        QTimer.singleShot(0,respond)\n    def password(name):",
+          "functions": [
+            "capture_candidate",
+            "shot",
+            "confirm",
+            "password",
+            "respond"
+          ]
+        }
+      ],
+      "profile": "final-release-tools-clones-002/report.json",
+      "decision": "REFACTOR_CANDIDATE_LOW_PRIORITY",
+      "reason": "Standalone tools/capture_batch_correction.py / tools/capture_batch_correction.py capture setup or timer/confirmation closures use different fixture owners and workflow states. Any helper must retain per-scenario waits, exact screenshots, cleanup and ownership; no runtime defect follows from duplication.",
+      "differences": "--- \n\n+++ \n\n@@ -1,2 +1,2 @@\n\n-    case=BatchCorrectionGuiTests('runTest');case.setUp();d=case.make(3);w=case.w;app=QApplication.instance();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n+    case=BatchCandidateGuiTests('runTest');case.setUp();d=case.d;f=case.f;app=QApplication.instance();folder=Path(folder);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n     def shot(widget,name):\n@@ -12,2 +12,2 @@\n\n         QTimer.singleShot(0,respond)\n-    release=threading.Event()\n+    def password(name):",
+      "callers": {
+        "entry": "standalone authored capture",
+        "functions": [
+          "capture_source",
+          "shot",
+          "confirm",
+          "respond",
+          "capture_candidate",
+          "shot",
+          "confirm",
+          "password",
+          "respond"
+        ],
+        "dynamic_call_graph_complete": false
+      },
+      "refactored": false,
+      "baseline_refreshed": false
+    },
+    {
+      "id": "FINAL-CLONE-TOOLS-007",
+      "scope": "tools",
+      "kind": "renamed",
+      "locations": [
+        {
+          "path": "tools/capture_quality.py",
+          "start": 14,
+          "end": 27,
+          "source_sha256": "f61a0c07736a393ca00bdc2589c4ec25b1d3de710a0e72b3989437bbecb50d1a",
+          "snippet": "    import test_quality_gold_sets as fixtures\n    from quality_acceptance_fixture import actual_positive_pair\n    from test_quality_ocr import QualityOcrTests\n    from template_ai.gui import MainWindow\n    from template_ai.training_quality_dialog import TrainingQualityDialog\n    from template_ai.quality_panel import QualityCaseDialog\n    from template_ai.quality_setup import QualitySetupDialog\n    from template_ai.quality_reports import QualityReports\n    from template_ai.quality_diagnostics import QualityDiagnostics\n    from template_ai.quality_pipeline import QualityPipelines\n    from template_ai.quality_jobs import EvaluationJobs\n    from template_ai.quality_protocol import QualityProtocols\n    from template_ai.runtime_panel import RuntimePanel\n    app=QApplication.instance() or QApplication([]);case=fixtures.QualityGoldSetTests('runTest');case.setUp();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)",
+          "functions": [
+            "capture_quality"
+          ]
+        },
+        {
+          "path": "tools/capture_quality_repair.py",
+          "start": 15,
+          "end": 28,
+          "source_sha256": "4b2aae86add878460acfed4d603d9547482b206c52c0fd74e1efbd3770323124",
+          "snippet": "    from quality_repair_acceptance_fixture import actual_chain\n    from test_semantic_learning import SemanticLearningTests\n    from runtime_fixture import controlled_resources\n    from template_ai.gui import MainWindow\n    from template_ai.training_quality_dialog import TrainingQualityDialog\n    from template_ai.quality_repair_dialog import QualityRepairDialog\n    from template_ai.quality_repairs import QualityRepairs\n    from template_ai.semantic_learning import SemanticLearning\n    from template_ai.automatic_training import AutomaticTraining\n    from template_ai.quality_repair_training import create\n    from template_ai.quality_pipeline import QualityPipelines\n    from template_ai.quality_repair_gates import QualityRepairGates\n    from template_ai.quality_reports import QualityReports\n    app=QApplication.instance() or QApplication([]);case=QualityRepairFullChainTests('runTest');case.setUp();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)",
+          "functions": [
+            "capture_repair"
+          ]
+        }
+      ],
+      "profile": "final-release-tools-clones-002/report.json",
+      "decision": "REFACTOR_CANDIDATE_LOW_PRIORITY",
+      "reason": "Standalone tools/capture_quality.py / tools/capture_quality_repair.py capture setup or timer/confirmation closures use different fixture owners and workflow states. Any helper must retain per-scenario waits, exact screenshots, cleanup and ownership; no runtime defect follows from duplication.",
+      "differences": "--- \n\n+++ \n\n@@ -1,14 +1,14 @@\n\n-    import test_quality_gold_sets as fixtures\n-    from quality_acceptance_fixture import actual_positive_pair\n-    from test_quality_ocr import QualityOcrTests\n+    from quality_repair_acceptance_fixture import actual_chain\n+    from test_semantic_learning import SemanticLearningTests\n+    from runtime_fixture import controlled_resources\n     from template_ai.gui import MainWindow\n     from template_ai.training_quality_dialog import TrainingQualityDialog\n-    from template_ai.quality_panel import QualityCaseDialog\n-    from template_ai.quality_setup import QualitySetupDialog\n+    from template_ai.quality_repair_dialog import QualityRepairDialog\n+    from template_ai.quality_repairs import QualityRepairs\n+    from template_ai.semantic_learning import SemanticLearning\n+    from template_ai.automatic_training import AutomaticTraining\n+    from template_ai.quality_repair_training import create\n+    from template_ai.quality_pipeline import QualityPipelines\n+    from template_ai.quality_repair_gates import QualityRepairGates\n     from template_ai.quality_reports import QualityReports\n-    from template_ai.quality_diagnostics import QualityDiagnostics\n-    from template_ai.quality_pipeline import QualityPipelines\n-    from template_ai.quality_jobs import EvaluationJobs\n-    from template_ai.quality_protocol import QualityProtocols\n-    from template_ai.runtime_panel import RuntimePanel\n-    app=QApplication.instance() or QApplication([]);case=fixtures.QualityGoldSetTests('runTest');case.setUp();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)\n+    app=QApplication.instance() or QApplication([]);case=QualityRepairFullChainTests('runTest');case.setUp();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)",
+      "callers": {
+        "entry": "standalone authored capture",
+        "functions": [
+          "capture_quality",
+          "capture_repair"
+        ],
+        "dynamic_call_graph_complete": false
+      },
+      "refactored": false,
+      "baseline_refreshed": false
+    }
+  ],
+  "deferred": [
+    "Native Windows/font registry and actual installed/private fonts",
+    "Real private Illustrator fidelity and true-corpus learning quality",
+    "Native device/hardware performance",
+    "Physical print and production qualification",
+    "Remote publication/current formal evidence provenance; fee triggers not confirmed"
+  ],
+  "qualifications_unchanged": {
+    "original_requirements": 172,
+    "ai_packages": 8,
+    "real_ai_packages_partial": 8,
+    "real_ai_packages_complete": 0
+  },
+  "no_budget_increase": true
+}

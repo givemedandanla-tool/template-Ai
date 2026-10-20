@@ -1,0 +1,75 @@
+{
+  "requirements": 172,
+  "clauses": 825,
+  "case_linked_clauses": 817,
+  "unlinked_clauses": 8,
+  "unreviewed_gaps": 0,
+  "prior_requirement_statuses_unchanged": true,
+  "gaps": [
+    {
+      "requirement": "UI-032",
+      "clause": "UI-032-CLAUSE-5",
+      "prior_status": "PARTIAL",
+      "expected": "**Windows 系統安裝需要獨立明確授權**：只有使用者主動選擇「安裝至 Windows」並確認字型來源、授權、影響範圍（例如目前使用者／全系統）、可能管理員權限及可回復方法，才可嘗試操作；禁止匯入時自動安裝、因修復而靜默變更 Windows 字型、擅自搜尋下載未授權字型或替使用者接受使用條款。程式內使用與系統安裝在畫面上必須是**不同動作和狀態**。",
+      "disposition": "EXTERNAL_NATIVE_OR_REAL_SOURCE_QUALIFICATION",
+      "reason": "Native Windows installation/permissions/rollback require explicit authorized actual machine; portable/mocked safety tests do not certify native installation."
+    },
+    {
+      "requirement": "UI-048",
+      "clause": "UI-048-FULL",
+      "prior_status": "DEFERRED",
+      "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：最後功能完成但正式真資料前必過資料層權限驗證",
+      "disposition": "USER_EXPLICITLY_DEFERRED",
+      "reason": "External/customer true-data access-control release explicitly deferred; current local report/privacy safeguards still tested."
+    },
+    {
+      "requirement": "UI-056-D",
+      "clause": "UI-056-D-FULL",
+      "prior_status": "DEFERRED",
+      "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：正式版本完善後另行評估，不加入本期交付",
+      "disposition": "USER_EXPLICITLY_DEFERRED",
+      "reason": "Advanced imbalance/supplementation explicitly deferred after formal version."
+    },
+    {
+      "requirement": "REV-02",
+      "clause": "REV-02-CLAUSE-1",
+      "prior_status": "PARTIAL",
+      "expected": "有可信原稿參考，例如獲授權的原稿渲染／既有可信 PDF 或圖片；參考版本、範圍、尺寸和來源可追溯。",
+      "disposition": "EXTERNAL_NATIVE_OR_REAL_SOURCE_QUALIFICATION",
+      "reason": "Trusted private Illustrator reference and real authorized corpus not supplied; user explicitly postponed true visual/learning qualification."
+    },
+    {
+      "requirement": "REV-02",
+      "clause": "REV-02-CLAUSE-2",
+      "prior_status": "PARTIAL",
+      "expected": "轉換結果在相同範圍、比例與渲染條件下，內容、字形、Logo、線條、遮罩、透明度、相對位置與細節視覺無可辨識差異。",
+      "disposition": "EXTERNAL_NATIVE_OR_REAL_SOURCE_QUALIFICATION",
+      "reason": "Trusted private Illustrator reference and real authorized corpus not supplied; user explicitly postponed true visual/learning qualification."
+    },
+    {
+      "requirement": "REV-02",
+      "clause": "REV-02-CLAUSE-4",
+      "prior_status": "PARTIAL",
+      "expected": "必須以真實樣本及實際訓練資料管線證明可用；只有轉換檔存在或能顯示縮圖不能宣稱任務完成。",
+      "disposition": "EXTERNAL_NATIVE_OR_REAL_SOURCE_QUALIFICATION",
+      "reason": "Trusted private Illustrator reference and real authorized corpus not supplied; user explicitly postponed true visual/learning qualification."
+    },
+    {
+      "requirement": "REV-03",
+      "clause": "REV-03-FULL",
+      "prior_status": "DEFERRED",
+      "expected": "完成來源文件中的全部已核准要求；以下為索引摘要：前期數位輸出與幾何仍驗證，實體樣張／設備／材料條件後移",
+      "disposition": "USER_EXPLICITLY_DEFERRED",
+      "reason": "Physical print/device/material study explicitly deferred."
+    },
+    {
+      "requirement": "REV-04",
+      "clause": "REV-04-CLAUSE-1",
+      "prior_status": "PARTIAL",
+      "expected": "## 4. 效能參考機與研究計畫\n\n使用者原文：「低配效能可以參考上限記憶體個人電腦16gb記憶體+nvdia rtx 5050,下限則是asus vivobook。」\n\n| 層級 | 已指定參考 | 尚待補齊 |\n| --- | --- | --- |\n| 上限參考機 | 16 GB 系統 RAM＋NVIDIA RTX 5050 | CPU、桌機／筆電形式、GPU VRAM、驅動與實際可用 RAM |\n| 下限參考機 | ASUS VivoBook | 完整型號、CPU、RAM、GPU、系統版本 |\n\nVivoBook 是系列，不推定其一定具備特定 RAM／GPU。這是參考測試範圍，尚不是已實測最低配置或所有該系列電腦的相容保證。16 GB 是整機記憶體參考上限，不代表程式可占用全數；程序預算需扣除作業系統和其他程序餘量。未指定整機 VRAM 上限，不把系統 RAM 當 GPU 記憶體。\n\n建議工程方向：\n\n- 核心功能可走 CPU；RTX 5050 為可選加速，模型／框架相容和加速效果需實測。\n- GUI 優先啟動，模型按需載入；分批、索引分頁、有界佇列和並行，資源緊張時降低負載。\n- 同一固定匿名樣本集與軟體版本，在兩類機器測量冷啟動、匯入／學習／排版耗時、GUI 回應、程序／整機峰值 RAM、VRAM、磁碟、取消續跑與崩潰恢復。\n- 比較不同資料量及 CPU／GPU 路徑，依真正數據決定模型大小、批次數、並行數與可用設定，不先承諾秒數或記憶體門檻。\n\n",
+      "disposition": "EXTERNAL_NATIVE_OR_REAL_SOURCE_QUALIFICATION",
+      "reason": "Specified actual Windows hardware unavailable; do not infer physical timing/RAM/VRAM from Linux32GB container."
+    }
+  ],
+  "qualification": "Links are an evidence index, not a claim that every assertion fully certifies a whole requirement."
+}

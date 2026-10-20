@@ -1,0 +1,630 @@
+{
+  "profile": "AUDIT_CLONES_V1",
+  "scope": "tools",
+  "purpose": "Supplemental evidence; not comparable with or a replacement for immutable original baseline",
+  "source": {
+    "docs/dev/debug_tooling/bootstrap.py": {
+      "sha256": "74b5e376e8b066979734c2f0d64b21d5bf988b9184d25fc1a7db3a64ae68690f",
+      "bytes": 6256
+    },
+    "docs/dev/debug_tooling/quality.py": {
+      "sha256": "4ef1d89bae0c6c448efe84867741132968b7b317c07ff94238c5bd7aa6b46307",
+      "bytes": 19619
+    },
+    "tools/benchmark_family_index.py": {
+      "sha256": "a48eda93ff5a1cf40e7d43e08405b0b8955262a26f99613c17ba87269b4748b6",
+      "bytes": 4015
+    },
+    "tools/bootstrap_registry.py": {
+      "sha256": "4de4d8b0641ac306bce284cb267f142fd4bed2e1ba6df37ecc3714d4ee794345",
+      "bytes": 11916
+    },
+    "tools/capture_batch_correction.py": {
+      "sha256": "b22ac1bfb2668d20a561bb69d839ae3bfde0ffd1b6437b521465b2f83bcef473",
+      "bytes": 12064
+    },
+    "tools/capture_candidate_changes.py": {
+      "sha256": "e0d61792dd69eb37b6420942bbdec425b1d8d9af1e53d3c4642ba098dc666163",
+      "bytes": 6120
+    },
+    "tools/capture_candidate_results.py": {
+      "sha256": "1e00f13da4623d0663551518128bebb8e4e0831132b852e3a3cd7f23377f3989",
+      "bytes": 5524
+    },
+    "tools/capture_canvas_commands.py": {
+      "sha256": "32f66862f480fdbeaa3c77360908c755d035cbbd8bfcae92576921f569e0a3ee",
+      "bytes": 7769
+    },
+    "tools/capture_catalog.py": {
+      "sha256": "f2b0326836c2804d0adb622b9aa8680f91ddadc2c262403f32be2152862ec57c",
+      "bytes": 5876
+    },
+    "tools/capture_coverage.py": {
+      "sha256": "b568e845066c9f94f8485f93e806612b4361188b99a52249d4a274e5aaa87e9f",
+      "bytes": 7349
+    },
+    "tools/capture_desktop_workspace.py": {
+      "sha256": "cac572b6768994b61df28bc8c50373701af9dda64262622db90e398cb200ab89",
+      "bytes": 2547
+    },
+    "tools/capture_diagnostics.py": {
+      "sha256": "84db1d070e59f4d3382143fbb6f791762c0887d73db7573b4b416c5cca588ff4",
+      "bytes": 4751
+    },
+    "tools/capture_digital_preflight.py": {
+      "sha256": "aa2cfcc4c7679b29c5c6b01362e9c19cce36cdf5452a616898f9e8e73596dbe6",
+      "bytes": 5983
+    },
+    "tools/capture_entities.py": {
+      "sha256": "f9efa75e0ced557b33c6238c75e1bf781c0b26b424d7a7e8134c00d8c6a5b167",
+      "bytes": 3453
+    },
+    "tools/capture_family_workbench.py": {
+      "sha256": "0976b4dc876c69e09b1dbbe2fa4188916641a4802a66d6a212687aa221fcc881",
+      "bytes": 2803
+    },
+    "tools/capture_fixed70_ten.py": {
+      "sha256": "e74b62705bc28760c68f55e99d6a39c21913ea82391e3703ad9989371ad5c681",
+      "bytes": 4536
+    },
+    "tools/capture_font_source_workflow.py": {
+      "sha256": "d77c2e7908b85d290883c59b9dcf2b1a159f1e146abf4d09296cfe2df802b90a",
+      "bytes": 4704
+    },
+    "tools/capture_input_integration.py": {
+      "sha256": "360d9d58ff1774ac8da28ad3aa7ef36db37f9979f0372b51eb1b9006bef34770",
+      "bytes": 1572
+    },
+    "tools/capture_layout_risk_session.py": {
+      "sha256": "b91cd47c0cae65672cf21db939701ff822d01a0bd54a07b5cd0ef33a6c2857d7",
+      "bytes": 7696
+    },
+    "tools/capture_local_recovery.py": {
+      "sha256": "c5a6d16746127d2ee9513a2f02a8c01ac871e7780d3120591641c211185c5c75",
+      "bytes": 3124
+    },
+    "tools/capture_major_review.py": {
+      "sha256": "713f5ad7eb0dc67aa9f42d1b88729e12d3a3a1b39fd43815fcd6badfe1a8715e",
+      "bytes": 7564
+    },
+    "tools/capture_next_twenty.py": {
+      "sha256": "8667bede8566735314250d20abd16dc63e39d0eef4d449e9812c1a59d79fda47",
+      "bytes": 5506
+    },
+    "tools/capture_next_twentyeight.py": {
+      "sha256": "539b7c21b3bf061ca6be2ef54c719eb7dd0157de09ba20f8a3de168d7f658384",
+      "bytes": 8654
+    },
+    "tools/capture_property_context.py": {
+      "sha256": "5693d21b62df50cf5c5060290d5544fd82c5fc3e4a062babb0b86c0bb4e69857",
+      "bytes": 6579
+    },
+    "tools/capture_qualified_coverage.py": {
+      "sha256": "e76096d359240f44cf8fb756afad479d807a24cfa2698e2eb7a8163fcfef1d66",
+      "bytes": 5859
+    },
+    "tools/capture_quality.py": {
+      "sha256": "f61a0c07736a393ca00bdc2589c4ec25b1d3de710a0e72b3989437bbecb50d1a",
+      "bytes": 8129
+    },
+    "tools/capture_quality_repair.py": {
+      "sha256": "4b2aae86add878460acfed4d603d9547482b206c52c0fd74e1efbd3770323124",
+      "bytes": 10649
+    },
+    "tools/capture_remaining28.py": {
+      "sha256": "0a4a563aab524164d9bbcd47a5ce042ec8e541abcef92e9b995ddba26c323cbd",
+      "bytes": 14856
+    },
+    "tools/capture_runtime.py": {
+      "sha256": "3e14064f7f3a765d40c75bf3a15f06d354fc20d1efd4f622cadfdcdef21622a7",
+      "bytes": 4203
+    },
+    "tools/capture_source_text_diagnostics.py": {
+      "sha256": "ebb4a07a1fc8c5355a720fa0eb0f7626e2ea91bd99dd05fb117a783811837da3",
+      "bytes": 3365
+    },
+    "tools/capture_sync_workflow.py": {
+      "sha256": "7191b73a7b10041eab5b6a5676ae4346159d216cac2212a8382bf16ee2313477",
+      "bytes": 9159
+    },
+    "tools/capture_ten_packages.py": {
+      "sha256": "ef9a7bca218438496d3e31a032645881ef71a7bdafac680b895f69ffed01a16c",
+      "bytes": 14645
+    },
+    "tools/capture_trusted_samples.py": {
+      "sha256": "5fa927dee4fa5a881566ff41aea4123a902b29618d38e99e7ce3cae57b768325",
+      "bytes": 5050
+    },
+    "tools/capture_work_packages.py": {
+      "sha256": "7accc2700786f71b83285d062550c654c3014fabe9433d575a3883a3ffb965d9",
+      "bytes": 8112
+    },
+    "tools/capture_workbench_navigation.py": {
+      "sha256": "184225f85fda882a429f3094846c64a7089f255283386ea898b1b677cc575a5a",
+      "bytes": 8193
+    },
+    "tools/dev_checkpoint.py": {
+      "sha256": "e01505fbd6ecdeadae586758801237223cc8023db1c835294d7d0127fe6f809d",
+      "bytes": 6861
+    },
+    "tools/dev_common.py": {
+      "sha256": "860f52c430211190519e76a04126e8198cc9f3009e94d02e5e79b17937e2aea3",
+      "bytes": 3622
+    },
+    "tools/dev_governance.py": {
+      "sha256": "ca1d0b7824aefb745b091af9345ac53b6786b1234460c938279bf34230aee40a",
+      "bytes": 11404
+    },
+    "tools/dev_progress.py": {
+      "sha256": "644e27fc9cf88a627ad9bab1d015f4af30480262c479c2ccc2be44519e4b92db",
+      "bytes": 5406
+    },
+    "tools/evidence_modules.py": {
+      "sha256": "807072741ea035e2654f87bca1ccac2893c76b6aaf8df825fb9e4d204804df61",
+      "bytes": 9007
+    },
+    "tools/evidence_parallel.py": {
+      "sha256": "a083f67e7007ddb2b9385759aa7cdeede09ede6dc45f64814e05ea76c8593345",
+      "bytes": 3985
+    },
+    "tools/evidence_publication.py": {
+      "sha256": "d7a5ba5d37e56cdbc55d006c94c71d267c04c72bfc17ad28972fe0ec31579527",
+      "bytes": 2623
+    },
+    "tools/evidence_test_worker.py": {
+      "sha256": "fcd0fe750e5825d531a65651658c1f134bb95e8984ba911b1d464f6c1b0d62cb",
+      "bytes": 3482
+    },
+    "tools/git_readback.py": {
+      "sha256": "d136e040b5922f562c7f0eeafb37ec1819f6999e054f4ed1955047652eae76b9",
+      "bytes": 2880
+    },
+    "tools/gui_convergence.py": {
+      "sha256": "13465cf452dbbf84b91ed6b930911e76055797058c859bbe7b3937d41bb6bd49",
+      "bytes": 8153
+    },
+    "tools/install_ocr_models.py": {
+      "sha256": "95c75a0b253519a4ea84012f76cd6f67285211d9bdb5a24aea0b2cdf143981f4",
+      "bytes": 2135
+    },
+    "tools/local_learning_selftest.py": {
+      "sha256": "fc43b39231925c2442983861978ea55a85ceff813a60a1bdbba307a60e6f0448",
+      "bytes": 12519
+    },
+    "tools/local_start.py": {
+      "sha256": "754269ec203a99dcf1d4e1b05207a12d11df31c17063673e43d01ee9f2a6692a",
+      "bytes": 5490
+    },
+    "tools/package_source.py": {
+      "sha256": "b00c4138ea9167aefd0edbbe819a352a25a7d85bb92b3e0607301255a83c696a",
+      "bytes": 3005
+    },
+    "tools/public_evidence.py": {
+      "sha256": "9216bea4fdf4281aaa90598140aef6f0e4a53c23a89992d48d8abfe90af6b3b8",
+      "bytes": 406
+    },
+    "tools/resume_status.py": {
+      "sha256": "a3fab7e3532b1c8e9ed344dc39e653a5ce787b2698c2e4b275374cbac2ccb175",
+      "bytes": 2015
+    },
+    "tools/run_design_scale.py": {
+      "sha256": "adc2e8b527b0d919857f7c6737ba4bb55d4c0b4bc1830a297eb22897ddbc0461",
+      "bytes": 4341
+    },
+    "tools/run_evidence.py": {
+      "sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "bytes": 32104
+    },
+    "tools/run_source_file_scale.py": {
+      "sha256": "a843bb291cbcd0514888d4f531b9ed4b9efdcbc68947244f43c592ee2443b0c3",
+      "bytes": 3443
+    },
+    "tools/seventy_finish.py": {
+      "sha256": "b81885778a663361c872d97b79668e772075d380a3c738e03fa061dee20ac9e1",
+      "bytes": 4310
+    },
+    "tools/seventy_stage.py": {
+      "sha256": "97867604d455a0afa4f7fd4fc5e5cd43d09f18637f9a40c2fb753bde361802ad",
+      "bytes": 1571
+    },
+    "tools/ten_package_finish.py": {
+      "sha256": "935ed7d77b624d74c764c58cecdc9ec73e54c8b83f1e0ab01d1127c5ecd330c9",
+      "bytes": 4575
+    },
+    "tools/ten_package_stage.py": {
+      "sha256": "f6a6ca67f6924440ded9afc9ef8edaa3e717b62faadae8f5e33f190cc7feb646",
+      "bytes": 2619
+    },
+    "tools/ui019_source_poc.py": {
+      "sha256": "3e329734711328b1e3609842ef43a4e75f01a05f42c7d2d3b30477db4eadbdb1",
+      "bytes": 3048
+    },
+    "tools/validate_first_version.py": {
+      "sha256": "5f6278713f44b6dcd0b9be1ccd9d01afc0a39e258cf0c8e82ac5f07c2c83fdd8",
+      "bytes": 19957
+    }
+  },
+  "input_files": 60,
+  "coverage": {
+    "detectionDate": "2026-10-20T23:18:06.265Z",
+    "formats": {
+      "python": {
+        "clones": 7,
+        "duplicatedLines": 84,
+        "duplicatedTokens": 826,
+        "lines": 4996,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 1.6813450760608486,
+        "percentageTokens": 0.8395162109970525,
+        "sources": 59,
+        "tokens": 98390
+      }
+    },
+    "total": {
+      "clones": 7,
+      "duplicatedLines": 84,
+      "duplicatedTokens": 826,
+      "lines": 4996,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 1.6813450760608486,
+      "percentageTokens": 0.8395162109970525,
+      "sources": 59,
+      "tokens": 98390
+    }
+  },
+  "versions": {
+    "ruff": "0.17.1",
+    "pyright": "1.1.414",
+    "jscpd": "5.4.1"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/workspace/template-Ai/.cache/debug-tooling/node/node_modules/jscpd/run-jscpd.js",
+    "--config",
+    "/workspace/template-Ai/docs/dev/pre_download_audit/final-release-tools-clones-003/jscpd-config.json",
+    "--no-gitignore",
+    "--output",
+    "/workspace/template-Ai/docs/dev/pre_download_audit/final-release-tools-clones-003/clones",
+    "--silent",
+    "--ignore-identifiers",
+    "--max-gap-lines",
+    "1",
+    "--similarity=0.8",
+    "/workspace/template-Ai/docs/dev/debug_tooling/bootstrap.py",
+    "/workspace/template-Ai/docs/dev/debug_tooling/quality.py",
+    "/workspace/template-Ai/tools/benchmark_family_index.py",
+    "/workspace/template-Ai/tools/bootstrap_registry.py",
+    "/workspace/template-Ai/tools/capture_batch_correction.py",
+    "/workspace/template-Ai/tools/capture_candidate_changes.py",
+    "/workspace/template-Ai/tools/capture_candidate_results.py",
+    "/workspace/template-Ai/tools/capture_canvas_commands.py",
+    "/workspace/template-Ai/tools/capture_catalog.py",
+    "/workspace/template-Ai/tools/capture_coverage.py",
+    "/workspace/template-Ai/tools/capture_desktop_workspace.py",
+    "/workspace/template-Ai/tools/capture_diagnostics.py",
+    "/workspace/template-Ai/tools/capture_digital_preflight.py",
+    "/workspace/template-Ai/tools/capture_entities.py",
+    "/workspace/template-Ai/tools/capture_family_workbench.py",
+    "/workspace/template-Ai/tools/capture_fixed70_ten.py",
+    "/workspace/template-Ai/tools/capture_font_source_workflow.py",
+    "/workspace/template-Ai/tools/capture_input_integration.py",
+    "/workspace/template-Ai/tools/capture_layout_risk_session.py",
+    "/workspace/template-Ai/tools/capture_local_recovery.py",
+    "/workspace/template-Ai/tools/capture_major_review.py",
+    "/workspace/template-Ai/tools/capture_next_twenty.py",
+    "/workspace/template-Ai/tools/capture_next_twentyeight.py",
+    "/workspace/template-Ai/tools/capture_property_context.py",
+    "/workspace/template-Ai/tools/capture_qualified_coverage.py",
+    "/workspace/template-Ai/tools/capture_quality.py",
+    "/workspace/template-Ai/tools/capture_quality_repair.py",
+    "/workspace/template-Ai/tools/capture_remaining28.py",
+    "/workspace/template-Ai/tools/capture_runtime.py",
+    "/workspace/template-Ai/tools/capture_source_text_diagnostics.py",
+    "/workspace/template-Ai/tools/capture_sync_workflow.py",
+    "/workspace/template-Ai/tools/capture_ten_packages.py",
+    "/workspace/template-Ai/tools/capture_trusted_samples.py",
+    "/workspace/template-Ai/tools/capture_work_packages.py",
+    "/workspace/template-Ai/tools/capture_workbench_navigation.py",
+    "/workspace/template-Ai/tools/dev_checkpoint.py",
+    "/workspace/template-Ai/tools/dev_common.py",
+    "/workspace/template-Ai/tools/dev_governance.py",
+    "/workspace/template-Ai/tools/dev_progress.py",
+    "/workspace/template-Ai/tools/evidence_modules.py",
+    "/workspace/template-Ai/tools/evidence_parallel.py",
+    "/workspace/template-Ai/tools/evidence_publication.py",
+    "/workspace/template-Ai/tools/evidence_test_worker.py",
+    "/workspace/template-Ai/tools/git_readback.py",
+    "/workspace/template-Ai/tools/gui_convergence.py",
+    "/workspace/template-Ai/tools/install_ocr_models.py",
+    "/workspace/template-Ai/tools/local_learning_selftest.py",
+    "/workspace/template-Ai/tools/local_start.py",
+    "/workspace/template-Ai/tools/package_source.py",
+    "/workspace/template-Ai/tools/public_evidence.py",
+    "/workspace/template-Ai/tools/resume_status.py",
+    "/workspace/template-Ai/tools/run_design_scale.py",
+    "/workspace/template-Ai/tools/run_evidence.py",
+    "/workspace/template-Ai/tools/run_source_file_scale.py",
+    "/workspace/template-Ai/tools/seventy_finish.py",
+    "/workspace/template-Ai/tools/seventy_stage.py",
+    "/workspace/template-Ai/tools/ten_package_finish.py",
+    "/workspace/template-Ai/tools/ten_package_stage.py",
+    "/workspace/template-Ai/tools/ui019_source_poc.py",
+    "/workspace/template-Ai/tools/validate_first_version.py"
+  ],
+  "exit_code": 0,
+  "seconds": 0.3700995950202923,
+  "configuration_sha256": "9b1c20d6ef6319b4795168ad75b8a03d1ae8ce36a2ccb2a10d8d43df1e23189a",
+  "source_unchanged": true,
+  "findings": [
+    {
+      "firstFile": {
+        "end": 26,
+        "endLoc": {
+          "column": 4,
+          "line": 26,
+          "position": 1455
+        },
+        "name": "capture_batch_correction.py",
+        "start": 14,
+        "startLoc": {
+          "column": 164,
+          "line": 14,
+          "position": 743
+        }
+      },
+      "format": "python",
+      "fragment": "    case=BatchCorrectionGuiTests('runTest');case.setUp();d=case.make(3);w=case.w;app=QApplication.instance();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n    def shot(widget,name):\n        app.processEvents();path=folder/('batch-correction-'+name+'.png');assert widget.grab().save(str(path));screens.append(path.name)\n    def confirm(name,yes=True):\n        def respond():\n            box=QApplication.activeModalWidget()\n            try:\n                assert isinstance(box,QMessageBox);shot(box,name);box.button(QMessageBox.Yes if yes else QMessageBox.No).click()\n            except BaseException as error:errors.append(str(error))\n            finally:\n                if box and box.isVisible():box.reject()\n        QTimer.singleShot(0,respond)\n    release=threading.Event()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 71,
+        "endLoc": {
+          "column": 4,
+          "line": 71,
+          "position": 7005
+        },
+        "name": "capture_batch_correction.py",
+        "start": 59,
+        "startLoc": {
+          "column": 114,
+          "line": 59,
+          "position": 6291
+        }
+      },
+      "tokens": 211
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 4,
+          "line": 14,
+          "position": 348
+        },
+        "name": "capture_coverage.py",
+        "start": 4,
+        "startLoc": {
+          "column": 7,
+          "line": 4,
+          "position": 122
+        }
+      },
+      "format": "python",
+      "fragment": "import time\nfrom pathlib import Path\n\nROOT=Path(__file__).resolve().parents[1]\nsys.path[:0]=[str(ROOT),str(ROOT/'tests')]\n\n\ndef capture_coverage(folder):\n    from PySide6.QtCore import QTimer\n    from PySide6.QtTest import QTest\n    from PySide6.QtWidgets import QApplication",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 4,
+          "line": 12,
+          "position": 341
+        },
+        "name": "capture_runtime.py",
+        "start": 2,
+        "startLoc": {
+          "column": 16,
+          "line": 2,
+          "position": 107
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 37,
+          "line": 11,
+          "position": 496
+        },
+        "name": "capture_digital_preflight.py",
+        "start": 1,
+        "startLoc": {
+          "column": 79,
+          "line": 1,
+          "position": 79
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"Actual original canvas/property panel and per-row format QA; authored data.\"\"\"\nimport argparse,json,sys\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1];sys.path[:0]=[str(ROOT),str(ROOT/'tests')]\n\ndef capture(folder):\n    from unittest.mock import patch\n    from PySide6.QtCore import Qt,QCoreApplication,QEvent\n    from PySide6.QtWidgets import QApplication,QMessageBox\n    from test_digital_preflight_gui import DigitalPreflightGuiTests\n    from test_batch_format_review_gui import BatchFormatReviewGuiTests",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 20,
+          "line": 12,
+          "position": 490
+        },
+        "name": "capture_source_text_diagnostics.py",
+        "start": 1,
+        "startLoc": {
+          "column": 82,
+          "line": 1,
+          "position": 82
+        }
+      },
+      "tokens": 107
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 61,
+          "line": 13,
+          "position": 615
+        },
+        "name": "capture_fixed70_ten.py",
+        "start": 1,
+        "startLoc": {
+          "column": 97,
+          "line": 1,
+          "position": 97
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"十父題新增流程的真實 Qt 擷取；只使用本機合成 fixture，不代替測試。\"\"\"\nimport argparse\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nsys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[1]/'tests')]\nos.environ.setdefault('QT_QPA_PLATFORM','offscreen')\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.gui import MainWindow\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog\nfrom template_ai.customer_sync_dialog import CustomerSyncDialog\nfrom template_ai.logo_library_dialog import LogoLibraryDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 63,
+          "line": 13,
+          "position": 593
+        },
+        "name": "capture_next_twenty.py",
+        "start": 1,
+        "startLoc": {
+          "column": 80,
+          "line": 1,
+          "position": 80
+        }
+      },
+      "tokens": 120
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 59,
+          "line": 22,
+          "position": 1178
+        },
+        "name": "capture_next_twentyeight.py",
+        "start": 12,
+        "startLoc": {
+          "column": 5,
+          "line": 12,
+          "position": 611
+        }
+      },
+      "format": "python",
+      "fragment": "from runtime_fixture import controlled_resources\n\nfrom template_ai.gui import MainWindow\nfrom template_ai.automatic_training_dialog import AutomaticTrainingDialog\nfrom template_ai.annotation_dialog import AnnotationDialog\nfrom template_ai.text_policy_dialog import TextPolicyDialog\nfrom template_ai.custom_layout_dialog import CustomLayoutDialog\nfrom template_ai.output_batch_dialog import OutputBatchDialog\nfrom template_ai.multi_size_dialog import MultiSizeDialog\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.input_graph_dialog import InputGraphDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 42,
+          "line": 23,
+          "position": 1221
+        },
+        "name": "capture_next_twentyeight.py",
+        "start": 14,
+        "startLoc": {
+          "column": 17,
+          "line": 14,
+          "position": 673
+        }
+      },
+      "tokens": 86
+    },
+    {
+      "firstFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 46,
+          "line": 11,
+          "position": 388
+        },
+        "name": "capture_quality.py",
+        "start": 1,
+        "startLoc": {
+          "column": 79,
+          "line": 1,
+          "position": 79
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"Actual quality Qt/FIFO/SQLite source evidence; synthetic safety scope only.\"\"\"\nimport json,sys,time\nfrom pathlib import Path\nROOT=Path(__file__).resolve().parents[1]\nsys.path[:0]=[str(ROOT),str(ROOT/'tests')]\n\n\ndef capture_quality(folder):\n    from PySide6.QtCore import QTimer,QCoreApplication,QEvent\n    from PySide6.QtTest import QTest\n    from PySide6.QtWidgets import QApplication,QMessageBox",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 36,
+          "line": 11,
+          "position": 391
+        },
+        "name": "capture_quality_repair.py",
+        "start": 1,
+        "startLoc": {
+          "column": 83,
+          "line": 1,
+          "position": 83
+        }
+      },
+      "tokens": 92
+    },
+    {
+      "firstFile": {
+        "end": 27,
+        "endLoc": {
+          "column": 65,
+          "line": 27,
+          "position": 1278
+        },
+        "name": "capture_quality.py",
+        "start": 14,
+        "startLoc": {
+          "column": 36,
+          "line": 14,
+          "position": 491
+        }
+      },
+      "format": "python",
+      "fragment": "    import test_quality_gold_sets as fixtures\n    from quality_acceptance_fixture import actual_positive_pair\n    from test_quality_ocr import QualityOcrTests\n    from template_ai.gui import MainWindow\n    from template_ai.training_quality_dialog import TrainingQualityDialog\n    from template_ai.quality_panel import QualityCaseDialog\n    from template_ai.quality_setup import QualitySetupDialog\n    from template_ai.quality_reports import QualityReports\n    from template_ai.quality_diagnostics import QualityDiagnostics\n    from template_ai.quality_pipeline import QualityPipelines\n    from template_ai.quality_jobs import EvaluationJobs\n    from template_ai.quality_protocol import QualityProtocols\n    from template_ai.runtime_panel import RuntimePanel\n    app=QApplication.instance() or QApplication([]);case=fixtures.QualityGoldSetTests('runTest');case.setUp();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 28,
+        "endLoc": {
+          "column": 84,
+          "line": 28,
+          "position": 1406
+        },
+        "name": "capture_quality_repair.py",
+        "start": 15,
+        "startLoc": {
+          "column": 49,
+          "line": 15,
+          "position": 572
+        }
+      },
+      "tokens": 138
+    }
+  ],
+  "structural_test_file_exclusion": "jscpd similarity excludes test files by design; token-based renamed comparison still covers explicit inputs",
+  "paid_or_remote_model": false
+}

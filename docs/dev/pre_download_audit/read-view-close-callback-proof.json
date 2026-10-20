@@ -1,0 +1,10 @@
+{
+  "fix_commit": "392fd99e5217af41fa71e5f12d0228fa4b963615",
+  "root": "introduced_root4_read_view_lifetime_integration",
+  "before_source": "c388538252d963c0695d49035cd79df09ce5c5db",
+  "before": "Real owned RuleReviewPanel callback actually ran after real MainWindow close; ProgrammingError captured; exact new case1FAIL",
+  "after": "7 read-view cases PASS, including actual close/deferred callback and nested/exception pending writes",
+  "invalid_probe": "Initial processEvents-only probe never delivered callback; not evidence. Qualified local QEventLoop probe and official test assert callback actually ran.",
+  "change": "Move read snapshot into existing try/except/finally; preserve old loading/error/message contract",
+  "scope": "Same10 root categories, no new parent/work package"
+}

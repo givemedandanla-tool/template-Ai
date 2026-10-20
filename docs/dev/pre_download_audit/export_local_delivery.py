@@ -14,12 +14,12 @@ def tree(rev):
 
 def main():
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();out.relative_to(ROOT/'.cache');assert not git('status','--porcelain').stdout,'Commit tracked delivery first'
- audit=ROOT/'docs/dev/pre_download_audit';full=json.loads((audit/'full-regression-final-009/summary.json').read_text());assert full['software_execution']=='PASS' and full['planned']==1920 and full['original_test_ids_preserved'] and full['source_unchanged_during_run']
- stock=json.loads((audit/'gui-stock-captures-final-002/summary.json').read_text());assert stock['status']=='PASS' and stock['passed']==27 and stock['source_unchanged']
- native=json.loads((audit/'native-gui-final-005/native-runner-result.json').read_text());assert native['status']=='PASS' and native['source_unchanged']
+ audit=ROOT/'docs/dev/pre_download_audit';full=json.loads((audit/'full-regression-final-010/summary.json').read_text());assert full['software_execution']=='PASS' and full['planned']==1921 and full['original_test_ids_preserved'] and full['source_unchanged_during_run']
+ stock=json.loads((audit/'gui-stock-captures-final-003/summary.json').read_text());assert stock['status']=='PASS' and stock['passed']==27 and stock['source_unchanged']
+ native=json.loads((audit/'native-gui-final-006/native-runner-result.json').read_text());assert native['status']=='PASS' and native['source_unchanged']
  sys.path.insert(0,str(ROOT/'tools'))
  from dev_common import manifest as source_manifest
- qualified=json.loads((audit/'full-regression-final-009/source.json').read_text());assert source_manifest(code_only=True)==qualified['source_manifest'],'Source no longer equals final tested code'
+ qualified=json.loads((audit/'full-regression-final-010/source.json').read_text());assert source_manifest(code_only=True)==qualified['source_manifest'],'Source no longer equals final tested code'
  head=git('rev-parse','HEAD').stdout.decode().strip();branch=git('branch','--show-current').stdout.decode().strip();out.mkdir(parents=True,exist_ok=False)
  before=tree(BASE);after=tree(head);names=[x.decode() for x in git('diff','--no-renames','--name-only','-z',BASE,head).stdout.split(b'\0') if x];assert names
  for name in names:
@@ -54,9 +54,11 @@ def main():
  (out/'manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n')
  guide='''這是本機開發還原包，不是 EXE。沒有推送 GitHub，不是 REMOTE_VERIFIED。\n\n先保留原本未提交工作。需要既有 template-Ai 倉庫及 manifest.json 的 base 提交。\n在乾淨、隔離的 checkout 可用 changes.patch 還原全部差異；或在含 base 的 Git 倉庫讀入 history.bundle 並 checkout manifest 的精確 head。overlay/ 是相同提交的變更檔案備份，不含未變更的原有檔案。不要直接覆蓋仍有未保存工作的資料夾。\n\n重新接手：核對 manifest 的 base/head；閱讀 AGENTS.md、STATE 與 ACTIVE_DEVELOPMENT_HANDOFF；執行 python tools/resume_status.py。工具依 debug_tooling/README.md 固定版本重建；私人作品、字型、資料庫及模型自行保存在本機。\n\n本包已在獨立暫存資料夾實際套用 binary patch，逐一核對全部變更檔案 hash。原172需求、AI8包真實資格及 Windows/印刷限制保持不變。完整報告在 docs/dev/pre_download_audit/FINAL_REPORT.md。\n'''
  (out/'READ_ME_繁體中文.txt').write_text(guide)
+ proof_receipt=dict(status='LOCAL_SAVED_AND_RESTORE_VERIFIED',head=head,base=BASE,restore=restore,remote='NOT_PUSHED_COST_UNKNOWN',note='ZIP SHA256 is in the separately produced external receipt to avoid self-hash recursion')
  target=out/'template-Ai-audit-local-recovery.zip'
  with zipfile.ZipFile(target,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as archive:
   for path in [patch,bundle,out/'manifest.json',out/'READ_ME_繁體中文.txt']:archive.write(path,path.name)
+  archive.writestr('RESTORE_RECEIPT.json',json.dumps(proof_receipt,ensure_ascii=False,indent=2)+'\n')
   for name,info in records.items():
    if info['state']=='PRESENT':
     path=ROOT/name;data=os.readlink(path).encode() if info['mode']=='120000' else path.read_bytes();archive.writestr('overlay/'+name,data)

@@ -22,7 +22,7 @@ result=dict(status='PASS',original_occurrences=len(rows),original_multiset=compa
 # All exact clones remain the original seven; carry source-bounded reviewed decisions.
 backlog=json.loads((ROOT/'docs/dev/debug_tooling/BACKLOG.json').read_text());prior={r['fingerprint']:r for r in backlog['clone_reviews']};reviews=[]
 for scope in ('application','tools','tests'):
- profile=F/f'final-release-{scope}-standard-002/report.json';report=json.loads(profile.read_text())
+ profile=F/f'final-release-{scope}-standard-003/report.json';report=json.loads(profile.read_text())
  for r in report['findings']:
   if r['tool']!='jscpd':continue
   old=prior[r['fingerprint']];locations=[]
