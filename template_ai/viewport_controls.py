@@ -2,10 +2,12 @@
 import math,json
 from PySide6.QtCore import Qt,QRectF,QObject,QEvent
 from PySide6.QtWidgets import QWidget,QHBoxLayout,QPushButton,QLabel,QDoubleSpinBox,QSlider,QApplication,QGraphicsItem,QDialog,QVBoxLayout,QDialogButtonBox,QAbstractSpinBox,QComboBox,QMessageBox
+from shiboken6 import isValid
 
 
 class FocusWheelGuard(QObject):
     def eventFilter(self,widget,event):
+        if not isinstance(event,QEvent) or not isValid(event) or not isValid(widget):return False
         if event.type()==QEvent.Wheel:
             focus=QApplication.focusWidget()
             if not widget.hasFocus() and (focus is None or not widget.isAncestorOf(focus)):

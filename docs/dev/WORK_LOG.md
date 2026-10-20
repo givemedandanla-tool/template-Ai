@@ -1686,3 +1686,7 @@ CORE-089九條Linux／合成軟體自我驗證PASS，完整007／來源bd1e9c5�
 FULL004在781／781PASS、無assertion失敗時主動中斷；不是採用證據。人工檢查發現help仍誤稱早期幾何限定及重訂未完成、製作預覽縮放藏更多工具。修白話現行help及主預覽完整顯示／放大／縮小，只改QGraphicsView transform。原nav/drag/parent測試增強，不刪原斷言，IDs仍1850；target15在跑。native003舊80a源12＋3及owned3頁PASS永久保留，但最終新源另跑native004。
 
 GUI末輪收斂：fresh target00615／15PASS、0runtime，混合同程序00514／15的原候選失敗保留且原因未證實，未改原斷言。help首試補明確編輯及驗證發布，初始文案允許私人作品留本地試用；主預覽fit/zoom只改view，舊固定／學習資料與版本不變。仍1850 IDs。WIP5保存後Full005/native004，不再新增可選介面範圍。
+
+### GUI Qt事件邊界完整防護
+
+FULL005572PASS中斷：1次Qt observer收到QWidgetItem而非QEvent致AttributeError；非assertion失敗。runtime/viewport/catalog三個eventFilter驗型別／C++有效性，合法事件仍原派送、無效observer返回False；原延遲事件測試增強。fresh41/41PASS0runtime；008工具猜錯模組ID拒執行log也保留。native0041d65來源12+3及owned3PASS保存，新源另native005/FULL006。混合同程序15之候選失敗已確定GUI/worker實際字面不同導致snapshot Gate正確阻擋；不將字型環境資格冒充GUI通過。

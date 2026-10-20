@@ -2,8 +2,8 @@ import tempfile,unittest
 from pathlib import Path
 from unittest.mock import patch
 from PySide6.QtCore import QEvent,QCoreApplication
-from shiboken6 import isValid
-from PySide6.QtWidgets import QApplication,QWidget
+from shiboken6 import isValid,delete
+from PySide6.QtWidgets import QApplication,QWidget,QWidgetItem
 from template_ai.storage import Library
 from template_ai.runtime_supervisor import RuntimeSupervisor,KEY
 from template_ai.runtime_resources import ResourceSnapshot,MiB
@@ -29,6 +29,11 @@ class RuntimeSupervisorTests(unittest.TestCase):
         child=QWidget(self.window);child.deleteLater();QCoreApplication.sendPostedEvents(None,QEvent.DeferredDelete)
         self.assertFalse(isValid(child));before=self.service.last_interaction
         self.assertFalse(self.service.eventFilter(child,QEvent(QEvent.MouseButtonPress)))
+        self.assertEqual(self.service.last_interaction,before)
+        unrelated=QWidgetItem(self.window)
+        self.assertFalse(self.service.eventFilter(self.window,unrelated))
+        stale_event=QEvent(QEvent.KeyPress);delete(stale_event)
+        self.assertFalse(self.service.eventFilter(self.window,stale_event))
         self.assertEqual(self.service.last_interaction,before)
         self.service.shutdown();self.clock[0]+=1
         self.assertFalse(self.service.eventFilter(self.window,QEvent(QEvent.KeyPress)))

@@ -15,3 +15,5 @@ WIP3：完整001已保留中斷(241完成239PASS/2FAIL)，定位屬性及收合�
 FULL002已完整收齊1849：1845PASS/4FAIL，另9Qt計時器銷毀例外，source unchanged；不採用。4失敗為預檢回頁、圖片狀態code查詢及parent導航兩條。修正明確property偏好、動態舊toggle、獨立唯讀稿件摘要／新批候選必要時展開、技術圖片狀態tab與timer生命週期。增加1真Qt銷毀測試，1850總數；原1798保留。START/PREPARE納入正式code manifest與checkpoint，不能只靠補充證明。target21PASS；fresh7模組target004進行中；待通過後新FULL003/native003。
 
 FULL004在781PASS/0FAIL主動中斷以完成最後人工發現的help過時宣稱與主預覽縮放入口；source80a native00312+3/owned3及37PNG先保存，非最終新source。新view只動螢幕transform不改稿件，原nav/drag/parent測試增強，仍1850 IDs。target005同程序14/15PASS，parent候選0尚未證實原因；原正式fresh-module target00615/15PASS、0runtime，不改原斷言。最後補首次示範需驗證並發布與私人資料本地試用文案。下一FULL005/native004；不要預建run資料夾。
+
+FULL005在572PASS/0assertion FAIL因1次RuntimeSupervisor eventFilter把QWidgetItem當QEvent而中斷；失敗模組results永久保留。三個Qt eventFilter補QEvent型別／有效性守衛，原runtime測試增非事件與已刪event，不增加IDs；fresh41/41PASS0runtime。WIP6後FULL006/native005。native004舊1d65來源12+3及owned3PASS保存。混合同程序候選失敗已診斷：GUI實際Noto、worker實際OpenAI Sans，dependency stamp不同，Gate正確標UNKNOWN；不改Gate、字型與實機資格暫擱仍有效。

@@ -1,6 +1,7 @@
 """One read-only index, two views, and explicit edit/reorder actions."""
 from copy import deepcopy
 import sqlite3
+from shiboken6 import isValid
 from PySide6.QtCore import Qt,QSize,QItemSelectionModel,QEvent
 from PySide6.QtGui import QIcon,QPixmap
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QSplitter,QLineEdit,QComboBox,QLabel,
@@ -188,6 +189,7 @@ class CatalogWidget(QWidget):
         if force or current.isNull() or current.size()!=fitted.size():self.picture.setPixmap(fitted)
 
     def eventFilter(self,watched,event):
+        if not isinstance(event,QEvent) or not isValid(event) or not isValid(watched):return False
         if watched is self.picture and event.type()==QEvent.Resize:self.fit_preview()
         return super().eventFilter(watched,event)
 

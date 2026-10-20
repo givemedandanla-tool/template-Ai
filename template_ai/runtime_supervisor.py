@@ -25,6 +25,7 @@ class RuntimeSupervisor(QObject):
 
     def eventFilter(self,watched,event):
         if self.closed_event.is_set() or not isValid(self.window):return False
+        if not isinstance(event,QEvent) or not isValid(event):return False
         if event.type() in (QEvent.KeyPress,QEvent.MouseButtonPress,QEvent.Wheel) and isinstance(watched,QWidget) and isValid(watched) and (watched is self.window or self.window.isAncestorOf(watched)):self.last_interaction=self.clock()
         return False
 
