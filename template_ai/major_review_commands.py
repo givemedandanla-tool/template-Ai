@@ -2,6 +2,7 @@
 import json
 from collections import Counter
 from .quality_rechecks import QualityRechecks
+from .metadata_record import training_record
 
 
 def execute(library,command,payload):
@@ -68,15 +69,15 @@ def execute(library,command,payload):
         for term in query.casefold().split():where+=' AND instr(training_casefold(id||payload),?)>0';args.append(term)
         total=library.db.execute('SELECT count(*) FROM training_records WHERE '+where,args).fetchone()[0]
         rows=[]
-        for identity in library.db.execute('SELECT id FROM training_records WHERE '+where+' ORDER BY rowid DESC LIMIT 50 OFFSET ?',(*args,offset)):
-            case=store.get('QUALITY_MAJOR_RECHECK',identity[0]);rows.append(dict(id=case['id'],revision=case['revision'],state=case['state'],category=case['plan']['category'],affected_works=case['affected_works'],affected_templates=case['affected_templates']))
+        for raw in library.db.execute('SELECT id,revision,payload FROM training_records WHERE '+where+' ORDER BY rowid DESC LIMIT 50 OFFSET ?',(*args,offset)):
+            case=training_record(raw);rows.append(dict(id=case['id'],revision=case['revision'],state=case['state'],category=case['plan']['category'],affected_works=case['affected_works'],affected_templates=case['affected_templates']))
         return dict(rows=rows,total=total,offset=offset)
     if command=='JOBS':
         from .automatic_training import AutomaticTraining
         where="kind='AUTO_JOB' AND json_extract(payload,'$.operation')='MAJOR_SOURCE_RECHECK' AND json_extract(payload,'$.scope.case_id')=?";args=[payload['case_id']]
         total=library.db.execute('SELECT count(*) FROM training_records WHERE '+where,args).fetchone()[0];rows=[]
-        for row in library.db.execute('SELECT id FROM training_records WHERE '+where+' ORDER BY rowid DESC LIMIT 50 OFFSET ?',(*args,offset)):
-            job=store.get('AUTO_JOB',row[0]);rows.append(dict(id=job['id'],phase=AutomaticTraining(library).phase(job),source_count=len(job['items']),work_count=len(job['scope']['work_ids'])))
+        for raw in library.db.execute('SELECT id,revision,payload FROM training_records WHERE '+where+' ORDER BY rowid DESC LIMIT 50 OFFSET ?',(*args,offset)):
+            job=training_record(raw);rows.append(dict(id=job['id'],phase=AutomaticTraining(library).phase(job),source_count=len(job['items']),work_count=len(job['scope']['work_ids'])))
         return dict(rows=rows,total=total,offset=offset)
     if command=='STATUS':
         case=store.get('QUALITY_MAJOR_RECHECK',payload['case_id'])
