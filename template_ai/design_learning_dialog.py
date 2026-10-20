@@ -88,6 +88,7 @@ class RelativeCanvas(QGraphicsView):
 class DesignLearningDialog(QDialog):
     def __init__(self,window):
         super().__init__(window);self.window=window;self.library=window.library
+        self.service_window=window if hasattr(window,'run_job') else getattr(window,'service_window',None)
         self.learning=CrossWorkLearning(self.library);self.sessions=DesignSessions(self.library);self.jobs=DesignJobs(self.library)
         self.font_manager=FontManager(self.library);self.worker=None;self.solve_worker=None;self.session_id=None;self.close_after_worker=False;self.bound_to_main=False
         workspace=self.jobs.store.get('DESIGN_WORKSPACE','desktop')

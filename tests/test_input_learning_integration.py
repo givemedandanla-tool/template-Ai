@@ -179,6 +179,36 @@ class InputLearningIntegrationTests(unittest.TestCase):
         self.assertTrue(all(call.kwargs.get('use_current_input') is True for call in open_draft.call_args_list))
         self.assertEqual(w.production_session_id,row['id']);self.assertEqual(w.active_input_graph.data,self.graph.data)
 
+    def test_real_learned_input_logo_library_keeps_size_and_uses_main_background_services(self):
+        from template_ai.gui import MainWindow
+        from template_ai.logo_library_dialog import LogoLibraryDialog
+        from template_ai.logo_choice_dialog import LogoChoiceDialog
+        w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w))
+        d=DesignLearningDialog(w);self.addCleanup(d.close);d.session_id=None;d.out_w.setValue(120);d.out_h.setValue(80)
+        graph=InputGraph(self.graph.data);pid=graph.data['people'][0]['id']
+        graph.apply(graph.make_plan('add_company',person_id=pid,name='Authored Company'),approved=True)
+        cid=graph.data['companies'][0]['id'];entry=InputGraphDialog(d,graph.data);self.addCleanup(entry.close);self.addCleanup(entry.warning_timer.stop)
+        seen=[];errors=[]
+        def inspect_library():
+            modal=APP.activeModalWidget()
+            try:
+                self.assertIsInstance(modal,LogoLibraryDialog);self.assertIs(modal.window,w);self.assertIs(modal.size_owner,d)
+                self.assertEqual(modal.selected_size(),[120.,80.]);self.assertEqual((modal.target_w.value(),modal.target_h.value()),(120,80))
+                modal.background('核對自製測試圖片庫',lambda store:dict(companies=len(store.companies())))
+                self.assertTrue(wait_for_gui(lambda:not modal.running and not w.busy,10))
+                self.assertNotIn('未完成',modal.status.text());seen.append(True)
+                self.capture(modal,'input-integration-logo-library.png')
+            except BaseException as error:errors.append(error)
+            finally:
+                if modal:modal.reject()
+        for action in (lambda:entry.open_logo_library(cid,False),lambda:LogoChoiceDialog(d,graph,cid,entry).library()):
+            guard=QTimer();guard.setSingleShot(True);guard.timeout.connect(lambda:APP.activeModalWidget().reject() if APP.activeModalWidget() else None);guard.start(15000)
+            QTimer.singleShot(0,d,inspect_library)
+            try:action()
+            finally:guard.stop()
+        if errors:raise errors[0]
+        self.assertEqual(len(seen),2);self.assertEqual(entry.graph.data,graph.data)
+
     def test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data(self):
         from template_ai.gui import MainWindow
         w=MainWindow(self.library.root);self.addCleanup(lambda:dispose_main_window(w));controlled_resources(w)

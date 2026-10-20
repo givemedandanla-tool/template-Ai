@@ -18,7 +18,9 @@ from .logo_assets import errors
 class LogoLibraryDialog(QDialog):
     def __init__(self,window,exceptions_only=False):
         super().__init__(window)
-        self.window=window;self.store=LogoStore(window.library);self.running=False;self.changed=False
+        self.size_owner=window;self.window=getattr(window,'service_window',window)
+        if self.window is None:raise ValueError('請從主視窗開啟圖片庫，才能使用匯入與背景處理。')
+        self.store=LogoStore(window.library);self.running=False;self.changed=False
         self.offset=0;self._reloading=False
         self.exceptions_only=exceptions_only
         self.setWindowTitle('尺寸獨立 Logo 庫／候選審核／新尺寸預測');self.resize(1220,850)
@@ -60,11 +62,11 @@ class LogoLibraryDialog(QDialog):
         except (ValueError,KeyError,OSError,sqlite3.DatabaseError) as error:self.status.setText('未完成：'+str(error))
 
     def selected_size(self):
-        node=self.tree.currentItem();return node.data(0,Qt.UserRole) if node else [self.window.out_w.value(),self.window.out_h.value()]
+        node=self.tree.currentItem();return node.data(0,Qt.UserRole) if node else [self.size_owner.out_w.value(),self.size_owner.out_h.value()]
 
     def reload(self,*_):
         if self.running:return
-        old_size=self.selected_size() if hasattr(self,'tree') and self.tree.currentItem() else [self.window.out_w.value(),self.window.out_h.value()]
+        old_size=self.selected_size() if hasattr(self,'tree') and self.tree.currentItem() else [self.size_owner.out_w.value(),self.size_owner.out_h.value()]
         company=self.company.currentData();self.company.blockSignals(True);self.company.clear();self.company.addItem('尚未指定公司身分',None)
         for item in self.store.companies():self.company.addItem(item['name']+'／'+item['id'],item['id'])
         self.company.setCurrentIndex(max(0,self.company.findData(company)));self.company.blockSignals(False)
