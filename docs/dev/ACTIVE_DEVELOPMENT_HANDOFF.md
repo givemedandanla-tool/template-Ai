@@ -11,3 +11,5 @@ WIP1：新desktop_workspace已接正式MainWindow；三工作區導航/固定foo
 來源準備WIP2：本輪新增51具名測試，原1798保留，合計1849待完整回歸。新桌面11案例來源圍欄擷取中；四類暫擱不影響GUI核心。WIP1的base metadata輸入錯誤已保留並棄用，不ack；實際WIP來源e95eb68逐檔Git讀回。後續checkpoint直接用git rev-parse HEAD取得基底。
 
 WIP3：完整001已保留中斷(241完成239PASS/2FAIL)，定位屬性及收合停用候選均修，原25測試PASS，三頁Tab+兩原失敗7PASS。hidden TabBar焦點陷阱與native工具自有視窗未啟用分開修；原生owned工具3頁嚴格Tab通過。下一新來源完整1849及原生11，勿把001部分當完成。
+
+FULL002已完整收齊1849：1845PASS/4FAIL，另9Qt計時器銷毀例外，source unchanged；不採用。4失敗為預檢回頁、圖片狀態code查詢及parent導航兩條。修正明確property偏好、動態舊toggle、獨立唯讀稿件摘要／新批候選必要時展開、技術圖片狀態tab與timer生命週期。增加1真Qt銷毀測試，1850總數；原1798保留。START/PREPARE納入正式code manifest與checkpoint，不能只靠補充證明。target21PASS；fresh7模組target004進行中；待通過後新FULL003/native003。

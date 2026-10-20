@@ -319,6 +319,12 @@ class MainWindow(QMainWindow):
         try:self.import_store.recover(limit=20)
         except Exception as error:self.statusBar().showMessage('匯入斷點尚未核實；已停止恢復，請從診斷處理：'+str(error))
 
+    def toggle_workspace_panel(self,name):
+        if name=='property_panel' and hasattr(self,'desktop_workspace'):
+            self.desktop_workspace.toggle_properties()
+        else:
+            panel=getattr(self,name);panel.setVisible(not panel.isVisible())
+
     def sync_property_mode(self,*args):
         from .production_bridge import is_learning_view
         learning_output=self.tabs.currentIndex()==2 and is_learning_view(self)
@@ -377,8 +383,8 @@ class MainWindow(QMainWindow):
         self.tabs.currentChanged.connect(self.sync_property_mode)
         self.template_stack.currentChanged.connect(self.sync_property_mode)
         self.sync_property_mode()
-        for label,panel in [('功能導覽',rail),('屬性面板',self.property_panel)]:
-            action=QPushButton(label+' 顯示／收合');action.clicked.connect(lambda _,p=panel:p.setVisible(not p.isVisible()));header.addWidget(action)
+        for label,name in [('功能導覽','function_rail'),('屬性面板','property_panel')]:
+            action=QPushButton(label+' 顯示／收合');action.clicked.connect(lambda _,n=name:self.toggle_workspace_panel(n));header.addWidget(action)
         splitter.setSizes([160,1000,300])
         outer.addWidget(splitter, 1)
         self.setCentralWidget(root)
@@ -1288,8 +1294,7 @@ class MainWindow(QMainWindow):
             else:retain_pending_main(self)
         self.current_slot=selected;self._property_mode=self.tabs.currentIndex()
         if selected is not None and self.tabs.currentIndex() != 2 and hasattr(self, 'desktop_workspace'):
-            self.property_panel.show()
-            self.desktop_workspace.professional.setText('收合編輯工具')
+            self.desktop_workspace.set_properties_visible(True, remember=False)
         self._property_raw_inputs={}
         s = self.current_slot
         self.property_button.setEnabled(s is not None and not s.locked and self.tabs.currentIndex() != 2 and (self.tabs.currentIndex()==0 or (self.template and self.template.state=='draft')))
@@ -2142,6 +2147,7 @@ class MainWindow(QMainWindow):
             for index in range(view.count()):
                 if view.item(index).data(Qt.UserRole)==row:view.setCurrentRow(index)
             view.setEnabled(bool(self.candidates));view.blockSignals(False)
+        if hasattr(self,'desktop_workspace'):self.desktop_workspace.fixed_candidates_updated()
 
     def choose_candidate(self, row):
         self.refresh_candidate_views(row)
@@ -2166,7 +2172,7 @@ class MainWindow(QMainWindow):
             self.refresh_result_problems(row)
             self.export_button.setEnabled(eligible and current)
             self.preview_button.setEnabled(current)
-            self.output_properties.setPlainText(f"目前候選：{c.template.name} v{c.template.version}\nID {c.template.id}\n尺寸 {c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n"+('已驗證合格（有效版本）' if eligible and current else risk['label'] if current else '候選過期：禁止正式輸出')+'\n排序為規則適配，非審美保證\n'+'；'.join(c.reasons)+'\n問題：\n'+'\n'.join(c.issues[:20]))
+            self.output_properties.setPlainText(f"目前候選：{c.template.name} v{c.template.version}\n尺寸 {c.template.width_mm:g}×{c.template.height_mm:g}mm／{c.template.capacity}人\n"+('已驗證合格（有效版本）' if eligible and current else '仍有項目需要核對，請查看稿件問題' if current else '候選過期：禁止正式輸出')+f'\n\n詳細核對\nID {c.template.id}\n'+risk['label']+'\n排序為規則適配，非審美保證\n'+'；'.join(c.reasons)+'\n問題：\n'+'\n'.join(c.issues[:20]))
             self.output_properties.appendPlainText('\n逐項Gate：\n'+'\n'.join(x['status']+' · '+x['reason'] for x in risk['conditions'])+'\n輸入快照 '+str(risk['input_digest'])[:16]+'\n引擎／規則 '+str(risk['engine_digest'])[:16]+'\n資產依賴 '+str(risk['dependency_stamp'])[:16]+'\n使用依據：已核准模板與明確規則；未將排序分數當模型信心')
             self.input_state.setText(('目前所選候選已驗證合格；輸出前仍需重核有效版本。' if eligible else risk['label']+'。可修正輸入、公司與Logo配對、字型／來源或另選模板，再重新檢查；不推論所有設計都無解。') if current else '輸入／候選已變更，待重新驗證。')
             self.issues.setText(risk['label']+'\n'+'；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS')+'\n'+("數位排版檢查通過；尚未做實體印刷分析。" if eligible else "正式輸出阻擋：\n" + "\n".join(c.issues[:8])) + "\n" + "；".join(c.reasons))

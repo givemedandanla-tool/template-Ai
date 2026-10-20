@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "GUI_OFFLINE_FULL_REGRESSION_ALL002_RUNNING",
+  "active_task": "GUI_COMPATIBILITY_FIXES_TARGET004_RUNNING",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-WIP3.receipt.json",
   "last_confirmed_commit": "9f6e7f66cdc558475fe3dd65a0e8dc114bb8ac95",
   "latest_evidence_run": null,
@@ -20,9 +20,9 @@
     "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
   ],
   "next_tasks": [
-    "Poll existing RUN-GUI-OFFLINE-ALL-002 owner before starting any duplicate suite",
-    "Source9f6 immutable;native11/owned3 passed;wait1849 regression and captures",
-    "Adopt only full clean software execution;finish registry/reports/checkpoint"
+    "Poll existing /tmp/gui-compat-target-004 owned target;source currently modified after complete failed FULL002",
+    "If clean freeze/persist source for FULL003:1850 tests,original1798 retained,new52",
+    "Run native003 against exact new source;only full clean execution qualifies"
   ],
   "blocked": [
     {
@@ -46,7 +46,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261020-GUI-OFFLINE-WIP4"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-INPUT-GUI-FINAL.json",
@@ -1481,5 +1483,6 @@
     }
   ],
   "latest_incomplete_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-001/interrupted.json",
-  "current_native_gui_run": "docs/evidence/runs/RUN-GUI-OFFLINE-NATIVE-002/desktop-workspace-audit.json"
+  "current_native_gui_run": "docs/evidence/runs/RUN-GUI-OFFLINE-NATIVE-002/desktop-workspace-audit.json",
+  "latest_failed_gui_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-002/run.json"
 }

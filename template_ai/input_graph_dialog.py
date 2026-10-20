@@ -38,6 +38,9 @@ class InputGraphDialog(QDialog):
         group_layout=QVBoxLayout(self.technical_group);self.technical_body=QWidget();technical_layout=QVBoxLayout(self.technical_body);technical_layout.setContentsMargins(0,0,0,0)
         self.technical_tabs=QTabWidget();self.technical_tabs.setMaximumHeight(155);technical_layout.addWidget(self.technical_tabs)
         self.identity_details=QPlainTextEdit();self.identity_details.setReadOnly(True);self.identity_details.setAccessibleName('穩定身分、模板位置與欄位歸屬的技術詳情');self.technical_tabs.addTab(self.identity_details,'資料對應')
+        logo_details_scroll=QScrollArea();logo_details_scroll.setWidgetResizable(True)
+        self.logo_state_details=QLabel();self.logo_state_details.setWordWrap(True);self.logo_state_details.setTextFormat(Qt.PlainText);self.logo_state_details.setTextInteractionFlags(Qt.TextSelectableByMouse|Qt.TextSelectableByKeyboard);self.logo_state_details.setAccessibleName('各公司圖片的完整狀態代碼')
+        logo_details_scroll.setWidget(self.logo_state_details);self.technical_tabs.addTab(logo_details_scroll,'圖片狀態')
         self.source_impacts=QPlainTextEdit();self.source_impacts.setReadOnly(True);self.source_impacts.setMaximumHeight(130);self.source_impacts.setPlaceholderText('目前沒有來源差異；採用任何來源操作版本後，舊候選仍須重新核對。');self.technical_tabs.addTab(self.source_impacts,'共用資料變更影響')
         group_layout.addWidget(self.technical_body);self.technical_body.setVisible(False);self.technical_group.toggled.connect(self.technical_body.setVisible);layout.insertWidget(2,self.technical_group)
         self.field_editors={};self.cards={};self.rebuild()
@@ -286,6 +289,7 @@ class InputGraphDialog(QDialog):
                 state=self.logo_states.get(company['id'],{});details.append('Logo 狀態 '+state.get('state','UNKNOWN')+'；'+state.get('reason','尚未核對'))
             for field in self.graph.data['fields']:details.append('欄位 ID '+field['id']+'；種類 '+field['kind']+'；所有者 '+field['owner_id']+'；使用者 '+', '.join(field['users']))
             self.identity_details.setPlainText('\n'.join(details))
+            self.logo_state_details.setText('\n\n'.join(self.graph.label(company['id'])+'\n'+str(self.logo_states.get(company['id'],{}).get('state','UNKNOWN'))+'\n'+str(self.logo_states.get(company['id'],{}).get('reason','尚未核對')) for company in self.graph.data['companies']))
             from .source_change_impact import consumers,source_change_impact,describe
             try:self.source_impacts.setPlainText(describe(source_change_impact(consumers(self.window),self.initial_graph,self.graph.data)))
             except ValueError as error:self.source_impacts.setPlainText('來源影響待核對：'+str(error))

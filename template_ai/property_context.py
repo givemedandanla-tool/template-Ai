@@ -4,6 +4,7 @@ from dataclasses import asdict
 from PySide6.QtCore import QSignalBlocker,Qt,QTimer
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QMessageBox,QDoubleSpinBox,QComboBox,QLineEdit
+from shiboken6 import isValid
 from .customers import digest
 
 
@@ -111,7 +112,7 @@ class RightPropertyContext:
         self.loading=False;self.sync()
 
     def schedule(self,*args):
-        if not self.loading:self.timer.start(0)
+        if not self.loading and isValid(self.w) and isValid(self.timer) and not self.w.library.closed:self.timer.start(0)
 
     def numeric_edited(self,key):
         if not self.loading:capture_incomplete(self.w,key);self.schedule()
@@ -170,6 +171,7 @@ class RightPropertyContext:
         else:w.font.setCurrentIndex(-1)
 
     def sync(self,*args):
+        if not isValid(self.w):return
         if self.loading:return
         w=self.w
         if w.library.closed:return

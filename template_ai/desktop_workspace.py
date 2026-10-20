@@ -106,6 +106,8 @@ class DesktopWorkspace(QObject):
         self._last_state = None
         self._editor_pin = None
         self._tools_dialog = None
+        self._property_preferences = {}
+        self._fixed_candidate_pin = None
         self.legacy_root = window.takeCentralWidget()
         self.legacy_root.setParent(window)
         self.legacy_root.hide()
@@ -233,6 +235,16 @@ class DesktopWorkspace(QObject):
         self.other_fixed.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
         w.legacy_input_panel.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
         data_layout.addWidget(self.other_fixed)
+        self.fixed_summary = QWidget()
+        summary_layout = QVBoxLayout(self.fixed_summary)
+        summary_layout.setContentsMargins(0, 0, 0, 0)
+        summary_layout.addWidget(label("目前版面（唯讀）"))
+        w.output_properties.setMinimumHeight(90)
+        w.output_properties.setMaximumHeight(110)
+        w.output_properties.setAccessibleName("目前版面摘要與詳細核對")
+        summary_layout.addWidget(w.output_properties)
+        self.fixed_summary.hide()
+        data_layout.addWidget(self.fixed_summary)
         data_layout.addWidget(button("查看這份稿件的問題", self.open_current_report))
         data_layout.addStretch()
         self.data_layout = data_layout
@@ -258,7 +270,9 @@ class DesktopWorkspace(QObject):
         self.learned_controls_layout.setContentsMargins(0, 0, 0, 0)
         self.learned_controls.hide()
         preview_layout.addWidget(self.learned_controls)
-        self.issue_summary = w.issues
+        # Keep the original detailed issues in More production tools. The main
+        # preview presents a beginner summary without discarding those details.
+        self.issue_summary = label("填好資料後產生稿件；檢查結果會顯示在這裡。")
         preview_layout.addWidget(self.issue_summary)
         split.addWidget(preview)
         split.setStretchFactor(0, 0)
@@ -374,16 +388,36 @@ class DesktopWorkspace(QObject):
         self.hint.setText(self.HINTS[index])
         for current, control in self.nav_buttons.items():
             control.setChecked(current == index)
-        show_properties = index != 2 and self.window.current_slot is not None
-        self.window.property_panel.setVisible(show_properties)
+        show_properties = self._property_preferences.get(
+            index, index != 2 and self.window.current_slot is not None)
+        self.set_properties_visible(show_properties, remember=False)
         self.production_footer.setVisible(index == 2)
-        self.professional.setText("收合編輯工具" if show_properties else "顯示編輯工具")
         self.refresh()
+
+    def set_properties_visible(self, visible, *, remember=True):
+        if remember:
+            self._property_preferences[self.window.tabs.currentIndex()] = visible
+        self.window.property_panel.setVisible(visible)
+        self.professional.setText("收合編輯工具" if visible else "顯示編輯工具")
 
     def toggle_properties(self):
         panel = self.window.property_panel
-        panel.setVisible(not panel.isVisible())
-        self.professional.setText("收合編輯工具" if panel.isVisible() else "顯示編輯工具")
+        self.set_properties_visible(not panel.isVisible())
+
+    def fixed_candidates_updated(self):
+        from .production_bridge import is_learning_view
+        w = self.window
+        active = w.tabs.currentIndex() == 2 and not is_learning_view(w)
+        self.fixed_summary.setVisible(active and bool(w.candidates))
+        if not active or not w.candidates:
+            return
+        pin = (w.generation, getattr(w, '_candidate_view_signature', None))
+        if pin != self._fixed_candidate_pin:
+            self._fixed_candidate_pin = pin
+            needs_choice = (len(w.candidates) > 1 or w.review_candidates.count()
+                            or w.blocked_candidates.count())
+            if needs_choice:
+                self.other_fixed.setChecked(True)
 
     def open_tools(self):
         self._open_widget(self.legacy_rail, "更多工作工具")
@@ -640,6 +674,7 @@ class DesktopWorkspace(QObject):
                     else "填好資料後再產生稿件；輸出前會再次檢查。")
         if self.input_guidance.text() != guidance:
             self.input_guidance.setText(guidance)
+        self.fixed_candidates_updated()
         w.candidate_scroll.setVisible(self.other_fixed.isChecked() and not self._editor_is_current())
         editor = self.editor
         current = self._editor_is_current()
@@ -654,6 +689,16 @@ class DesktopWorkspace(QObject):
             self.preview_hint.setText("檢查完整稿件；更正內容後請重新排版，位置調整請按下方「修改位置」。")
         if hasattr(self, 'learned_more'):
             self.learned_more.setVisible(current)
+        if current:
+            self.issue_summary.setText("位置與文字由同一份稿件核對。修改後需要重新確認；正式輸出仍須通過檢查。")
+        elif w.busy:
+            self.issue_summary.setText("正在比較可用版面。資料已保留，可從處理進度停止。")
+        elif w.preview_button.isEnabled():
+            self.issue_summary.setText(
+                "目前稿件已通過數位檢查；實體印刷尚未驗證。" if w.export_button.isEnabled()
+                else "這份稿件可以預覽，還不能正式輸出。請按「查看這份稿件的問題」了解需要補齊的資訊。")
+        else:
+            self.issue_summary.setText("請產生或更新稿件，再檢查完整預覽。舊確認不會套用到更正後的資料。")
         if editor is not None and editor.solve_worker is not None and editor.solve_worker.isRunning():
             key = ("running", editor.solve_status.text())
             text, action = editor.solve_status.text(), "停止這次排版"

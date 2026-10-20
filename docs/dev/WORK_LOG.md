@@ -1676,3 +1676,7 @@ INPUT final mode/report source:91/91 expanded current-source regressionPASS139.6
 CORE-089九條Linux／合成軟體自我驗證PASS，完整007／來源bd1e9c5：1798PASS、230健康模組、384附件hash，原1779ID保留／新19。001／002補查中斷，003實際metadata過大失敗已保留並以不可變候選內容／hash參照修正，004小視窗失敗保留並修正，005在1403PASS因原生截圖發現頁首覆寫而中斷，修正唯讀狀態與基本診斷後007完整重跑採用。輸入→學習稿→拖動／更正→同版預覽／確認／輸出；固定舊版與已確認稿保留。171登錄／165完成，原AI8完整真實資格不變。
 
 專案GUI skill＋UI/UX Pro Max MIT、Qt Designer、QUiLoader／QTest及隔離Xvfb／xdotool接入；原生smoke及乾淨工具重建PASS。Fluent／Spectrum／Penpot／Excalidraw固定版公開來源實讀，現代簡潔面板與白話／技術雙層報告方案持久化；概念稿不當正式面板，無真人新手訪測。雲端草稿saved／待發布，當前實例已可用。詳見本輪final report／GUI plan／readiness。私人資料留本地，網頁／手機／EXE延後。
+
+### GUI FULL002完整失敗及相容修正
+
+1849完成1845PASS/4FAIL，9次RightPropertyContext已刪timer例外，來源9f6前後一致；保留正式失敗run，不採用。專項審查定位舊header捕獲舊rail、製作摘要與候選被過度收合；原狀態碼雖有QPlainTextEdit但失去QLabel查詢。統一顯示偏好、唯讀摘要獨立、候選依新批次處理、展開技術圖示狀態及Qt生命週期guard；原斷言不變。新1測試及Windows兩launcher加入manifest，總1850。target21/21PASS；fresh7模組target004仍驗。

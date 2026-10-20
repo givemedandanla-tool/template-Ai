@@ -18,6 +18,10 @@ class DevFrameworkTests(unittest.TestCase):
             path=self.root/relative;path.parent.mkdir(parents=True,exist_ok=True);path.write_text('{"private":true}')
         paths=manifest(self.root)
         self.assertIn('docs/qa/capture/public-report.json',paths)
+        for name in ('START_WINDOWS.bat','PREPARE_WINDOWS.bat'):
+            (self.root/name).write_text('@echo off\n',encoding='utf-8')
+            self.assertIn(name,manifest(self.root))
+            self.assertIn(name,manifest(self.root,code_only=True))
         self.assertFalse(any(any(part in ('.private','ten-package-data','assets') or part.startswith('anonymous-smoke-data') for part in Path(name).parts) for name in paths))
 
     def setUp(self):

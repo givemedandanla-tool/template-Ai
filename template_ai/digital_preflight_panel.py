@@ -171,6 +171,8 @@ def open_preflight(window):
     window.tabs.setCurrentIndex(2)
     panel=getattr(window,'digital_preflight_panel',None)
     if panel is None:panel=DigitalPreflightPanel(window);window.digital_preflight_panel=panel
-    window.property_panel.setVisible(True);panel.show();panel.draw_guides()
+    if hasattr(window,'desktop_workspace'):window.desktop_workspace.set_properties_visible(True)
+    else:window.property_panel.setVisible(True)
+    panel.show();panel.draw_guides()
     QTimer.singleShot(0,panel,lambda:window.property_panel.verticalScrollBar().setValue(0))
     return panel

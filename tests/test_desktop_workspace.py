@@ -87,6 +87,27 @@ class DesktopNavigationTests(unittest.TestCase):
         self.assertTrue(w.preview_button.isVisible())
         capture(w, "desktop-small-window.png")
 
+    def test_deleted_property_timer_ignores_real_pending_shutdown_signal(self):
+        from shiboken6 import isValid
+        context = self.w.right_context
+        context.timer.deleteLater()
+        APP.sendPostedEvents(context.timer, QEvent.DeferredDelete)
+        self.assertFalse(isValid(context.timer))
+        errors = []
+        import sys
+        original_hook = sys.excepthook
+        try:
+            sys.excepthook = lambda *error: errors.append(error)
+            self.w.inputs_invalidated.emit(self.w.generation)
+            APP.processEvents()
+            self.w.library.close()
+            context.schedule()
+            context.sync()
+            APP.processEvents()
+        finally:
+            sys.excepthook = original_hook
+        self.assertEqual(errors, [])
+
     def test_real_background_job_records_duration_without_private_message(self):
         received = []
         self.w.run_job("PRIVATE-LOCAL-JOB-TEXT", lambda: 42, received.append)
