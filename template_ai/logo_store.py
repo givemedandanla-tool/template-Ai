@@ -6,6 +6,7 @@
 from copy import deepcopy
 from datetime import datetime, timezone
 import json
+from .metadata_record import logo_proposal_record
 import math
 import os
 from pathlib import Path
@@ -73,21 +74,21 @@ class LogoStore:
             self.library.event(entity_id, 'logo_company_binding_confirmed')
 
     def proposal(self, identity):
-        row = self.db.execute('SELECT revision,state,payload FROM logo_proposals WHERE id=?', (identity,)).fetchone()
+        row = self.db.execute('SELECT id,revision,state,payload FROM logo_proposals WHERE id=?', (identity,)).fetchone()
         if not row:
             raise ValueError('Logo 候選不存在')
-        return dict(id=identity, revision=row[0], state=row[1], **json.loads(row[2]))
+        return logo_proposal_record(row)
 
     def proposals(self, width, height, offset=0):
         self._size(width, height)
         if type(offset) is not int or offset < 0:
             raise ValueError('候選分頁不合法')
         # 尺寸存在 payload 但查詢不靠浮點字串；最多一頁100筆，索引保存精確尺寸。
-        rows = self.db.execute("SELECT id FROM logo_proposals WHERE "
+        rows = self.db.execute("SELECT id,revision,state,payload FROM logo_proposals WHERE "
             "abs(json_extract(payload,'$.width_mm')-?)<0.00001 AND "
             "abs(json_extract(payload,'$.height_mm')-?)<0.00001 ORDER BY rowid LIMIT 100 OFFSET ?",
             (width, height, offset))
-        return [self.proposal(r[0]) for r in rows]
+        return [logo_proposal_record(r) for r in rows]
 
     @staticmethod
     def _size(width, height):
