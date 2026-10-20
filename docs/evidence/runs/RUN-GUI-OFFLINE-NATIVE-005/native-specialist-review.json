@@ -1,0 +1,211 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "source_commit": "4ebfff6f676b236519c4a1ba2b0cb192acbffea3",
+  "qt_platform": "xcb",
+  "actual_gui": true,
+  "owned_window_capture": {
+    "command": ".venv/bin/python docs/dev/gui_tooling/capture_owned_workspace.py --native --output /tmp/template-ai-owned-gui-final-005",
+    "exit_code": 0,
+    "elapsed_seconds": 5.333,
+    "source_unchanged": true,
+    "captures": [
+      {
+        "page_index": 0,
+        "width": 1280,
+        "height": 860,
+        "screenshot": "owned-workspace-0.png",
+        "sha256": "caab3154f7549c7389351adf7cbeb5b2dc348135ccb53f55f098988172b2e525",
+        "visible_enabled_buttons": 19,
+        "focusable_controls": 26,
+        "unnamed_button_warnings": [],
+        "tab_focus_moved": true
+      },
+      {
+        "page_index": 1,
+        "width": 1280,
+        "height": 860,
+        "screenshot": "owned-workspace-1.png",
+        "sha256": "28038da723b6836daa0cad9b2aee2e1571107dec152ecb4af721cfb86951705a",
+        "visible_enabled_buttons": 16,
+        "focusable_controls": 23,
+        "unnamed_button_warnings": [],
+        "tab_focus_moved": true
+      },
+      {
+        "page_index": 2,
+        "width": 1280,
+        "height": 860,
+        "screenshot": "owned-workspace-2.png",
+        "sha256": "bde9efa3b34be193312e181ef644f313745f24a883f6bc9a8d35f042af47f162",
+        "visible_enabled_buttons": 21,
+        "focusable_controls": 31,
+        "unnamed_button_warnings": [],
+        "tab_focus_moved": true
+      }
+    ]
+  },
+  "desktop_and_parent_navigation": {
+    "source_commit": "4ebfff6f676b236519c4a1ba2b0cb192acbffea3",
+    "source_head_at_finish": "4ebfff6f676b236519c4a1ba2b0cb192acbffea3",
+    "source_manifest_before": "30ac2af0c791906198687628b70df2e6ed0ebed459ffdbb1409820dc94eb1f35",
+    "source_manifest_after": "30ac2af0c791906198687628b70df2e6ed0ebed459ffdbb1409820dc94eb1f35",
+    "source_unchanged": true,
+    "qt_platform": "xcb",
+    "outer_timeout_seconds": 600,
+    "elapsed_seconds": 264.935,
+    "isolated_xvfb_tcp_disabled": true,
+    "jobs": [
+      {
+        "name": "desktop",
+        "command": [
+          "/workspace/template-Ai/.venv/bin/python",
+          "tools/capture_desktop_workspace.py",
+          "--folder",
+          "/tmp/template-ai-desktop-native-005"
+        ],
+        "qt_platform": "xcb",
+        "PYTHONPATH": "tests:.",
+        "exit_code": 0,
+        "test_ids": [
+          "test_desktop_workspace.DesktopNavigationTests.test_deleted_property_timer_ignores_real_pending_shutdown_signal",
+          "test_desktop_workspace.DesktopNavigationTests.test_real_background_job_records_duration_without_private_message",
+          "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages",
+          "test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands",
+          "test_desktop_workspace.DesktopNavigationTests.test_real_support_navigation_exports_local_safe_report",
+          "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+          "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+          "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+          "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+          "test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker",
+          "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+          "test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session"
+        ],
+        "expected_test_count": 12,
+        "tests_run": 12,
+        "unittest_seconds": 231.225,
+        "elapsed_seconds": 232.065,
+        "source_manifest_before": "30ac2af0c791906198687628b70df2e6ed0ebed459ffdbb1409820dc94eb1f35",
+        "source_manifest_after": "30ac2af0c791906198687628b70df2e6ed0ebed459ffdbb1409820dc94eb1f35",
+        "source_unchanged": true,
+        "runtime_error_lines": [],
+        "log": "desktop.log",
+        "status": "PASS"
+      },
+      {
+        "name": "parent-navigation",
+        "command": [
+          "/workspace/template-Ai/.venv/bin/python",
+          "-m",
+          "unittest",
+          "test_parent_navigation",
+          "-v"
+        ],
+        "qt_platform": "xcb",
+        "PYTHONPATH": "tests:.",
+        "exit_code": 0,
+        "test_ids": [
+          "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
+          "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+          "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once"
+        ],
+        "expected_test_count": 3,
+        "tests_run": 3,
+        "unittest_seconds": 31.512,
+        "elapsed_seconds": 31.912,
+        "source_manifest_before": "30ac2af0c791906198687628b70df2e6ed0ebed459ffdbb1409820dc94eb1f35",
+        "source_manifest_after": "30ac2af0c791906198687628b70df2e6ed0ebed459ffdbb1409820dc94eb1f35",
+        "source_unchanged": true,
+        "runtime_error_lines": [],
+        "log": "parent-navigation.log",
+        "status": "PASS"
+      }
+    ],
+    "status": "PASS"
+  },
+  "desktop_screenshots": {
+    "desktop-mode-0.png": {
+      "sha256": "db3f5ec52e547f02af5d7fac2a49d6171fe9e84d672be0a3e5e42b3e47128bee",
+      "bytes": 120277
+    },
+    "desktop-mode-1.png": {
+      "sha256": "861ee900af69ba4caacbaadeb8ea0331d38dfc050ed4e131e7d3f4a60d73effe",
+      "bytes": 120303
+    },
+    "desktop-mode-2.png": {
+      "sha256": "0d7d574fd667f6dac4431d9dd3a0a6882cfb6692dbf1f6887c3b9b1e3801e73c",
+      "bytes": 153223
+    },
+    "desktop-small-window.png": {
+      "sha256": "21359243226eedb2ad0c427b23c41255cdb0b2d3cb3aa489c333d166ae531752",
+      "bytes": 126254
+    },
+    "desktop-guidance.png": {
+      "sha256": "ca7ed9d047a6bdf949f1b17dd8c243fbb15bec8a61b2711bd29c700942446e05",
+      "bytes": 82150
+    },
+    "desktop-offline-support.png": {
+      "sha256": "98f548e48d6aaf8fcb91d4ceb5e5893bb9e9296c8ad639c6f72396888176ad74",
+      "bytes": 126170
+    },
+    "desktop-learned-preview.png": {
+      "sha256": "9d4e1bebb86a9f49f9df9fcf75826e61cc262ae799c1058a9c6d1fb4e8311dca",
+      "bytes": 203482
+    },
+    "desktop-confirmed.png": {
+      "sha256": "aa390d8009a72cf8e57f97d863661c9a2729734819362f03d3b7d5ef947f42ea",
+      "bytes": 204389
+    },
+    "desktop-stale-after-correction.png": {
+      "sha256": "c78b0b44f5c168081cb79d16b56baafd6858dd2592f095dfcd5ab4bccad23e13",
+      "bytes": 175873
+    },
+    "desktop-corrected-preview.png": {
+      "sha256": "db511b7c78d4da2675c044669d6317485fec3d1f73b7412c31dea8120f9e0529",
+      "bytes": 180066
+    },
+    "desktop-after-drag.png": {
+      "sha256": "76986932a8a4c5312f7a45a7689282143c927ab1fe7e9fb1a1ad2f0722735a5a",
+      "bytes": 203449
+    }
+  },
+  "all_14_image_hashes_rechecked": true,
+  "owner_script_sha256": "c1870cf1763a146af59459b43774a2a4d763ba9bd7c0e242fd9f1da8ccc7c503",
+  "visual_review": {
+    "reviewer": "/root/gui_tooling_research, same-team specialist",
+    "viewed_current_source": [
+      "desktop-learned-preview.png"
+    ],
+    "byte_identity_to_previously_viewed_native004": {
+      "count": 11,
+      "images": [
+        "desktop-mode-0.png",
+        "desktop-mode-1.png",
+        "desktop-mode-2.png",
+        "desktop-small-window.png",
+        "desktop-guidance.png",
+        "desktop-offline-support.png",
+        "desktop-learned-preview.png",
+        "desktop-confirmed.png",
+        "desktop-stale-after-correction.png",
+        "desktop-corrected-preview.png",
+        "desktop-after-drag.png"
+      ]
+    },
+    "findings": [
+      "All 11 native desktop images are byte-identical to the corresponding native004 images, supporting the stated no-UI-change scope of the event-boundary fix.",
+      "The current-source learned preview was explicitly viewed again; complete draft, view-only fit/zoom controls and plain input/confirmation guidance remain visible.",
+      "The same strengthened 12 desktop and 3 original parent-navigation cases pass using the real native GUI, with no recorded runtime error lines."
+    ],
+    "limitations": [
+      "This is same-team synthetic/Linux native verification, not Windows/IME, human usability, real model quality or print qualification."
+    ]
+  },
+  "font_context_reference": {
+    "path": "docs/qa/targeted/GUI-FONT-CONTEXT-DIAGNOSTIC/diagnostic.json",
+    "status": "Read existing public summary; no additional rerun or Gate relaxation",
+    "conclusion": "After a multi-Library fixture lifecycle, unbound requested families can resolve different actual faces in GUI and worker-equivalent contexts; the formal freshness gate correctly rejects that mismatch. This native evidence does not replace the retained diagnostic."
+  },
+  "not_counted_as_new_unique_tests": "These same 12 desktop and 3 parent-navigation IDs are native platform repeats, not additional full-regression test IDs.",
+  "source_head_at_finish": "4ebfff6f676b236519c4a1ba2b0cb192acbffea3"
+}

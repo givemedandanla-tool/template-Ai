@@ -17,3 +17,5 @@ FULL002已完整收齊1849：1845PASS/4FAIL，另9Qt計時器銷毀例外，sour
 FULL004在781PASS/0FAIL主動中斷以完成最後人工發現的help過時宣稱與主預覽縮放入口；source80a native00312+3/owned3及37PNG先保存，非最終新source。新view只動螢幕transform不改稿件，原nav/drag/parent測試增強，仍1850 IDs。target005同程序14/15PASS，parent候選0尚未證實原因；原正式fresh-module target00615/15PASS、0runtime，不改原斷言。最後補首次示範需驗證並發布與私人資料本地試用文案。下一FULL005/native004；不要預建run資料夾。
 
 FULL005在572PASS/0assertion FAIL因1次RuntimeSupervisor eventFilter把QWidgetItem當QEvent而中斷；失敗模組results永久保留。三個Qt eventFilter補QEvent型別／有效性守衛，原runtime測試增非事件與已刪event，不增加IDs；fresh41/41PASS0runtime。WIP6後FULL006/native005。native004舊1d65來源12+3及owned3PASS保存。混合同程序候選失敗已診斷：GUI實際Noto、worker實際OpenAI Sans，dependency stamp不同，Gate正確標UNKNOWN；不改Gate、字型與實機資格暫擱仍有效。
+
+WIP7保存最終源4ebfff6f：native005桌面12＋原導航3、owned005三頁Tab全PASS、0runtime，14PNG永久；來源圍欄30ac2af0前後一致。FULL0061850已啟動，既有owner session14689勿重跑/勿改code，進度見formal-live/test-progress。用/tmp/template-ai-finalize-gui.py在run完整且softwarePASS後更新10條/登錄/進度/交接，最後checkpoint及環境草稿。當前latest_evidence_run仍null、完成登錄仍待新驗；不能提前採用。混合字型公開診斷已存targeted：worker原始字面未直接插樁，fresh-thread stamp吻合stored且不同GUI，Gate正確阻擋。

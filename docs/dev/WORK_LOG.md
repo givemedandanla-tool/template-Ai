@@ -1690,3 +1690,7 @@ GUI末輪收斂：fresh target00615／15PASS、0runtime，混合同程序00514�
 ### GUI Qt事件邊界完整防護
 
 FULL005572PASS中斷：1次Qt observer收到QWidgetItem而非QEvent致AttributeError；非assertion失敗。runtime/viewport/catalog三個eventFilter驗型別／C++有效性，合法事件仍原派送、無效observer返回False；原延遲事件測試增強。fresh41/41PASS0runtime；008工具猜錯模組ID拒執行log也保留。native0041d65來源12+3及owned3PASS保存，新源另native005/FULL006。混合同程序15之候選失敗已確定GUI/worker實際字面不同導致snapshot Gate正確阻擋；不將字型環境資格冒充GUI通過。
+
+### 最終源4ebfff6f原生驗證與完整回歸進行
+
+native005桌面12/12(231.225s)+原parent3/3(31.512s)，owned3頁Tab PASS5.333s；264.935s owner／600s上限、0runtime，14圖hash核對，11流程圖與native004相同。source30ac2af0前後一致，root實看主預覽及小視窗。FULL006唯一owner14689，1850尚在執行，不採用partial；目標10條及原165明列範圍待全新證據。WIP7僅保存metadata／proofs，不改app/test/tool。
