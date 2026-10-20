@@ -22,3 +22,7 @@ review agent 已用真實合成模型完成輸入圖→求解→可拖框→主�
 ## 全回歸後補修
 
 ALL001在241完成(239PASS/2FAIL)中斷：明確定位來源欄位後屬性區未顯示，及checkable QGroupBox收合時連帶停用候選檢查。保留原測試，改選取時展開屬性、收合僅控制可見性。原兩模組25/25 PASS；加真三頁Tab與兩個原失敗共7/7 PASS。原生專項審查另確認hidden QTabBar的focusProxy造成Tab陷阱，tabs/tabBar皆NoFocus修復；工具自身無window manager時需啟用自有視窗，Tab斷言不放寬。
+
+ALL002完整1849中1845PASS/4FAIL及9Qt例外保留，非採用證據。修正後直接21PASS、fresh7模組75PASS且0runtime；新增真Qt刪timer訊號測試，總1850。覆核確認唯讀摘要與專業工具分離、原風險詳情完整、每批必要候選展開一次、技術Logo狀態保留、舊toggle指向當前容器。源80a40511：workbench/candidate/preflight三正式擷取入口PASS(11.712/21.594/27.633秒)，37PNG/3metadata/1匿名PDF；source hash起訖一致31cb3f25。小窗預覽圖刻意延續原set_zoom(12)測試的視圖，不當初始fit結果。證據RUN-GUI-COMPAT-CAPTURE-004；完整FULL004與native003仍待採用。
+
+人工末輪另定位help早期宣稱、示範發布缺步及初始匿名限定不符本輪本地試用。均修正文案；主預覽補fit/zoom並用既有nav/drag/parent驗view不改session或候選。fresh15PASS、混合程序1原候選失敗保留且未定因。最後唯讀覆核未見其他必須修入口，待新源FULL005/native004。

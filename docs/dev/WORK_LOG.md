@@ -1680,3 +1680,9 @@ CORE-089九條Linux／合成軟體自我驗證PASS，完整007／來源bd1e9c5�
 ### GUI FULL002完整失敗及相容修正
 
 1849完成1845PASS/4FAIL，9次RightPropertyContext已刪timer例外，來源9f6前後一致；保留正式失敗run，不採用。專項審查定位舊header捕獲舊rail、製作摘要與候選被過度收合；原狀態碼雖有QPlainTextEdit但失去QLabel查詢。統一顯示偏好、唯讀摘要獨立、候選依新批次處理、展開技術圖示狀態及Qt生命週期guard；原斷言不變。新1測試及Windows兩launcher加入manifest，總1850。target21/21PASS；fresh7模組target004仍驗。
+
+### GUI人工最後覆核與FULL004中斷
+
+FULL004在781／781PASS、無assertion失敗時主動中斷；不是採用證據。人工檢查發現help仍誤稱早期幾何限定及重訂未完成、製作預覽縮放藏更多工具。修白話現行help及主預覽完整顯示／放大／縮小，只改QGraphicsView transform。原nav/drag/parent測試增強，不刪原斷言，IDs仍1850；target15在跑。native003舊80a源12＋3及owned3頁PASS永久保留，但最終新源另跑native004。
+
+GUI末輪收斂：fresh target00615／15PASS、0runtime，混合同程序00514／15的原候選失敗保留且原因未證實，未改原斷言。help首試補明確編輯及驗證發布，初始文案允許私人作品留本地試用；主預覽fit/zoom只改view，舊固定／學習資料與版本不變。仍1850 IDs。WIP5保存後Full005/native004，不再新增可選介面範圍。

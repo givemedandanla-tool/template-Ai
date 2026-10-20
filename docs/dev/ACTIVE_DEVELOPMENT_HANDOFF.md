@@ -13,3 +13,5 @@ WIP1：新desktop_workspace已接正式MainWindow；三工作區導航/固定foo
 WIP3：完整001已保留中斷(241完成239PASS/2FAIL)，定位屬性及收合停用候選均修，原25測試PASS，三頁Tab+兩原失敗7PASS。hidden TabBar焦點陷阱與native工具自有視窗未啟用分開修；原生owned工具3頁嚴格Tab通過。下一新來源完整1849及原生11，勿把001部分當完成。
 
 FULL002已完整收齊1849：1845PASS/4FAIL，另9Qt計時器銷毀例外，source unchanged；不採用。4失敗為預檢回頁、圖片狀態code查詢及parent導航兩條。修正明確property偏好、動態舊toggle、獨立唯讀稿件摘要／新批候選必要時展開、技術圖片狀態tab與timer生命週期。增加1真Qt銷毀測試，1850總數；原1798保留。START/PREPARE納入正式code manifest與checkpoint，不能只靠補充證明。target21PASS；fresh7模組target004進行中；待通過後新FULL003/native003。
+
+FULL004在781PASS/0FAIL主動中斷以完成最後人工發現的help過時宣稱與主預覽縮放入口；source80a native00312+3/owned3及37PNG先保存，非最終新source。新view只動螢幕transform不改稿件，原nav/drag/parent測試增強，仍1850 IDs。target005同程序14/15PASS，parent候選0尚未證實原因；原正式fresh-module target00615/15PASS、0runtime，不改原斷言。最後補首次示範需驗證並發布與私人資料本地試用文案。下一FULL005/native004；不要預建run資料夾。

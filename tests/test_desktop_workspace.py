@@ -10,7 +10,7 @@ from unittest.mock import patch
 from PySide6.QtCore import Qt, QTimer, QEvent, QPointF
 from PySide6.QtGui import QMouseEvent
 from PySide6.QtTest import QTest
-from PySide6.QtWidgets import QApplication, QComboBox, QDialog, QPushButton, QFileDialog
+from PySide6.QtWidgets import QApplication, QComboBox, QDialog, QPushButton, QFileDialog, QMessageBox
 
 from template_ai.gui import MainWindow
 from template_ai.input_graph import InputGraph
@@ -68,6 +68,17 @@ class DesktopNavigationTests(unittest.TestCase):
         self.assertIn("匯入合法本機字型", actions)
         self.assertIs(w.train_canvas.parentWidget().parentWidget(), desk.learning_page)
         self.assertFalse(w.property_panel.isVisible())
+        messages = []
+        def close_help():
+            dialog = APP.activeModalWidget()
+            self.assertIsInstance(dialog, QMessageBox)
+            messages.append(dialog.text())
+            dialog.accept()
+        QTimer.singleShot(0, close_help)
+        w.help()
+        self.assertIn('問題與報告', messages[0])
+        self.assertIn('拖動', messages[0])
+        self.assertNotIn('本版只提供標記幾何規則學習', messages[0])
 
     def test_small_window_keeps_primary_and_canvas_visible_without_scrolling(self):
         w = self.w
@@ -343,6 +354,13 @@ class DesktopProductionTests(unittest.TestCase):
 
     def test_embedded_pointer_drag_keeps_same_core_intent_and_data(self):
         editor = self.solved()
+        pinned = editor.sessions.current(editor.session_id)
+        zoom = editor.canvas.transform().m11()
+        QTest.mouseClick(self.desk.zoom_out_button, Qt.LeftButton)
+        self.assertLess(editor.canvas.transform().m11(), zoom)
+        QTest.mouseClick(self.desk.zoom_in_button, Qt.LeftButton)
+        QTest.mouseClick(self.desk.fit_preview_button, Qt.LeftButton)
+        self.assertEqual(editor.sessions.current(editor.session_id), pinned)
         before = editor.sessions.current(editor.session_id)["input_graph"]
         box, target = editor.canvas.boxes[:2]
         start = editor.canvas.mapFromScene(box.sceneBoundingRect().center())

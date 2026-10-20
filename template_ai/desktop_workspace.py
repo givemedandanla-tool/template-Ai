@@ -259,7 +259,16 @@ class DesktopWorkspace(QObject):
         preview = QWidget()
         preview_layout = QVBoxLayout(preview)
         preview_layout.setContentsMargins(4, 4, 4, 4)
-        preview_layout.addWidget(label("2  檢查與調整"))
+        preview_bar = QHBoxLayout()
+        preview_bar.addWidget(label("2  檢查與調整"))
+        preview_bar.addStretch()
+        self.fit_preview_button = button("完整顯示", self.fit_preview)
+        self.zoom_in_button = button("放大", lambda: self.zoom_preview(1.25))
+        self.zoom_out_button = button("縮小", lambda: self.zoom_preview(0.8))
+        for control in (self.fit_preview_button, self.zoom_in_button, self.zoom_out_button):
+            control.setToolTip("只調整螢幕上的預覽，不改動稿件或印刷尺寸。")
+            preview_bar.addWidget(control)
+        preview_layout.addLayout(preview_bar)
         self.preview_stack = QStackedWidget()
         self.preview_stack.addWidget(w.output_canvas)
         preview_layout.addWidget(self.preview_stack, 1)
@@ -403,6 +412,21 @@ class DesktopWorkspace(QObject):
     def toggle_properties(self):
         panel = self.window.property_panel
         self.set_properties_visible(not panel.isVisible())
+
+    def fit_preview(self):
+        canvas = self.preview_stack.currentWidget()
+        if canvas is self.window.output_canvas:
+            canvas.fit()
+        elif not canvas.sceneRect().isEmpty():
+            canvas.fitInView(canvas.sceneRect(), Qt.KeepAspectRatio)
+
+    def zoom_preview(self, factor):
+        canvas = self.preview_stack.currentWidget()
+        zoom = max(0.2, min(500, canvas.transform().m11() * factor))
+        if canvas is self.window.output_canvas:
+            canvas.set_zoom(zoom)
+        elif canvas.transform().m11() > 0:
+            canvas.scale(zoom / canvas.transform().m11(), zoom / canvas.transform().m11())
 
     def fixed_candidates_updated(self):
         from .production_bridge import is_learning_view

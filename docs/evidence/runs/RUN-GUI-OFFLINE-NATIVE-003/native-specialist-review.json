@@ -1,0 +1,196 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "source_commit": "80a40511d04757750746c534c9257e2d9b611c3a",
+  "qt_platform": "xcb",
+  "actual_gui": true,
+  "owned_window_capture": {
+    "command": ".venv/bin/python docs/dev/gui_tooling/capture_owned_workspace.py --native --output /tmp/template-ai-owned-gui-final-003",
+    "exit_code": 0,
+    "elapsed_seconds": 5.097,
+    "source_unchanged": true,
+    "captures": [
+      {
+        "page_index": 0,
+        "width": 1280,
+        "height": 860,
+        "screenshot": "owned-workspace-0.png",
+        "sha256": "7b8319a267df915e3c64e4b2b8bcfc2464d3bd62c771efa7a786b07e9e79423a",
+        "visible_enabled_buttons": 19,
+        "focusable_controls": 26,
+        "unnamed_button_warnings": [],
+        "tab_focus_moved": true
+      },
+      {
+        "page_index": 1,
+        "width": 1280,
+        "height": 860,
+        "screenshot": "owned-workspace-1.png",
+        "sha256": "7839de0f4edb27aa7330d2595669321b47cb4bbd2f6486074f05ab6f8822a930",
+        "visible_enabled_buttons": 16,
+        "focusable_controls": 23,
+        "unnamed_button_warnings": [],
+        "tab_focus_moved": true
+      },
+      {
+        "page_index": 2,
+        "width": 1280,
+        "height": 860,
+        "screenshot": "owned-workspace-2.png",
+        "sha256": "8608573167850b01c99e8256e5f64229d4608bb193f91b37ec844169db75b1d4",
+        "visible_enabled_buttons": 18,
+        "focusable_controls": 28,
+        "unnamed_button_warnings": [],
+        "tab_focus_moved": true
+      }
+    ]
+  },
+  "desktop_and_parent_navigation": {
+    "source_commit": "80a40511d04757750746c534c9257e2d9b611c3a",
+    "source_head_at_finish": "80a40511d04757750746c534c9257e2d9b611c3a",
+    "source_manifest_before": "31cb3f2505d6cdaaeea453a6d45ceed655268b05ea5b8d2e0cddac56069aade4",
+    "source_manifest_after": "31cb3f2505d6cdaaeea453a6d45ceed655268b05ea5b8d2e0cddac56069aade4",
+    "source_unchanged": true,
+    "qt_platform": "xcb",
+    "outer_timeout_seconds": 600,
+    "elapsed_seconds": 268.602,
+    "isolated_xvfb_tcp_disabled": true,
+    "jobs": [
+      {
+        "name": "desktop",
+        "command": [
+          "/workspace/template-Ai/.venv/bin/python",
+          "tools/capture_desktop_workspace.py",
+          "--folder",
+          "/tmp/template-ai-desktop-native-003"
+        ],
+        "qt_platform": "xcb",
+        "PYTHONPATH": "tests:.",
+        "exit_code": 0,
+        "test_ids": [
+          "test_desktop_workspace.DesktopNavigationTests.test_deleted_property_timer_ignores_real_pending_shutdown_signal",
+          "test_desktop_workspace.DesktopNavigationTests.test_real_background_job_records_duration_without_private_message",
+          "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages",
+          "test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands",
+          "test_desktop_workspace.DesktopNavigationTests.test_real_support_navigation_exports_local_safe_report",
+          "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+          "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+          "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+          "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+          "test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker",
+          "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+          "test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session"
+        ],
+        "expected_test_count": 12,
+        "tests_run": 12,
+        "unittest_seconds": 234.735,
+        "elapsed_seconds": 235.542,
+        "source_manifest_before": "31cb3f2505d6cdaaeea453a6d45ceed655268b05ea5b8d2e0cddac56069aade4",
+        "source_manifest_after": "31cb3f2505d6cdaaeea453a6d45ceed655268b05ea5b8d2e0cddac56069aade4",
+        "source_unchanged": true,
+        "runtime_error_lines": [],
+        "log": "desktop.log",
+        "status": "PASS"
+      },
+      {
+        "name": "parent-navigation",
+        "command": [
+          "/workspace/template-Ai/.venv/bin/python",
+          "-m",
+          "unittest",
+          "test_parent_navigation",
+          "-v"
+        ],
+        "qt_platform": "xcb",
+        "PYTHONPATH": "tests:.",
+        "exit_code": 0,
+        "test_ids": [
+          "test_parent_navigation.ParentNavigationTests.test_manual_source_selection_has_schema_before_readonly_fact_properties",
+          "test_parent_navigation.ParentNavigationTests.test_real_qualified_and_blocked_candidate_sections_auto_choose_and_revalidate_current_input",
+          "test_parent_navigation.ParentNavigationTests.test_three_mode_function_rail_and_collapsible_panels_keep_background_job_once"
+        ],
+        "expected_test_count": 3,
+        "tests_run": 3,
+        "unittest_seconds": 31.816,
+        "elapsed_seconds": 32.226,
+        "source_manifest_before": "31cb3f2505d6cdaaeea453a6d45ceed655268b05ea5b8d2e0cddac56069aade4",
+        "source_manifest_after": "31cb3f2505d6cdaaeea453a6d45ceed655268b05ea5b8d2e0cddac56069aade4",
+        "source_unchanged": true,
+        "runtime_error_lines": [],
+        "log": "parent-navigation.log",
+        "status": "PASS"
+      }
+    ],
+    "status": "PASS"
+  },
+  "desktop_screenshots": {
+    "desktop-mode-0.png": {
+      "sha256": "9ecf7fa3a4fcf4f0ba6c4e480fedd36dac8ea14da842d659fd91ccd02be31007",
+      "bytes": 119412
+    },
+    "desktop-mode-1.png": {
+      "sha256": "ae622d4d61823834d77b1665a077ea776fff058d71cf9ae9bc122864d8084e52",
+      "bytes": 119442
+    },
+    "desktop-mode-2.png": {
+      "sha256": "2730584d4de9a8e337be62471b8171c6ed93e80a766b9fd0cf2ac72bd4135d5f",
+      "bytes": 148869
+    },
+    "desktop-small-window.png": {
+      "sha256": "2636f7fda8863297f94380d6f830ef51cbe8eb5bee194fd25a0fd6771d997f63",
+      "bytes": 129578
+    },
+    "desktop-guidance.png": {
+      "sha256": "ca7ed9d047a6bdf949f1b17dd8c243fbb15bec8a61b2711bd29c700942446e05",
+      "bytes": 82150
+    },
+    "desktop-offline-support.png": {
+      "sha256": "98f548e48d6aaf8fcb91d4ceb5e5893bb9e9296c8ad639c6f72396888176ad74",
+      "bytes": 126170
+    },
+    "desktop-learned-preview.png": {
+      "sha256": "cd5a239bfaf5c8ce35beb9b61aabd64db81d0c473d7f7fa089ed8097786b166a",
+      "bytes": 199754
+    },
+    "desktop-confirmed.png": {
+      "sha256": "44ad6407f8c6e65a86638b90fe0f03c667bebf52d6e705824f7a04dca3aaad10",
+      "bytes": 200769
+    },
+    "desktop-stale-after-correction.png": {
+      "sha256": "cdf8eb786bb50fb8577abb0e6a80e21ed7ef5be40dedef976b17d60f721e3ead",
+      "bytes": 171766
+    },
+    "desktop-corrected-preview.png": {
+      "sha256": "3f922bfbd7e554ac72d581577d9f2613e4a45f030caae9b99445e489decb3883",
+      "bytes": 176089
+    },
+    "desktop-after-drag.png": {
+      "sha256": "048d63b1ed1d10a06b98716f2055a404b4aeff07ebfb052dd816221734c4cde9",
+      "bytes": 199802
+    }
+  },
+  "all_14_image_hashes_rechecked": true,
+  "visual_review": {
+    "reviewer": "/root/gui_tooling_research, same-team specialist",
+    "viewed": [
+      "desktop-after-drag.png",
+      "desktop-corrected-preview.png",
+      "desktop-stale-after-correction.png",
+      "desktop-small-window.png",
+      "desktop-offline-support.png"
+    ],
+    "findings": [
+      "After dragging, email and phone order visibly changes while name/title remain fixed; real tests verify same-core relative intent and retained data.",
+      "After correcting phone to 0199 the regenerated draft shows 0199; old confirmation/export is invalidated with explicit update guidance.",
+      "At 960x640 the primary action remains visible and data scrolls separately from the preview.",
+      "The offline support dialog explains manual ZIP extraction and sharing; it does not claim automatic upload or include private artwork/font/database contents.",
+      "Three original parent-navigation cases validate real fixed candidate selection/revalidation, schema availability for source properties, and legacy panel toggles/background job uniqueness."
+    ],
+    "limitations": [
+      "Same-team screenshot and synthetic native tests are not human beginner usability qualification.",
+      "No Windows/IME, real artwork/generalization, hardware, or physical print qualification."
+    ]
+  },
+  "not_counted_as_new_unique_tests": "12 desktop and 3 parent-navigation IDs already belong to software suite; native repeats add platform evidence only.",
+  "source_head_at_finish": "80a40511d04757750746c534c9257e2d9b611c3a"
+}

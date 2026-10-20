@@ -298,7 +298,7 @@ class MainWindow(QMainWindow):
         self.navigation=WorkbenchNavigation(self,self.work_context,self.return_work_button)
         from .property_context import RightPropertyContext
         self.right_context=RightPropertyContext(self)
-        self.statusBar().showMessage("本機研究版 · 請使用匿名／合成資料 · 實體印刷分析尚未執行")
+        self.statusBar().showMessage("本機作業 · 私人資料留在本機 · 真實作品與印刷品質仍待本地核對")
         if self.font_manager.issues:
             self.statusBar().showMessage("字型資產需處理：" + "；".join(self.font_manager.issues))
         from .backup_center import BackupScheduler
@@ -2404,7 +2404,7 @@ class MainWindow(QMainWindow):
             self.error(str(error))
 
     def help(self):
-        self.inform("第一版快速操作：\n1. 模板區加入示範模板，驗證並發布。\n2. 輸出區填入匿名示範，開始排版並輸出。\n3. 訓練區匯入來源，框選作品、標定毫米，新增欄位並設定歸屬。\n4. 核對原稿後確認視覺一致，保存標記、學習模板。\n5. 缺少 Logo 或內容排不下只可 PREVIEW，不會暗縮字級。\n\n本版只提供標記幾何規則學習；完整自動辨識、客戶重訂、深度模型、完整權限與印刷分析尚未完成。")
+        self.inform("桌面工作台快速操作：\n1.「排版與輸出」填寫人物與公司資料，設定成品尺寸，再按「產生稿件」。空資料庫先到「模板與圖片」按「加入合成示範模板」，選取草稿、按「明確開啟模板編輯區」再「驗證並發布」，才能回來排版。\n2. 檢查完整預覽；可按「完整顯示／放大／縮小」調整螢幕檢視，不改印刷尺寸。學習稿可拖動或用位置選單微調；更正資料後須更新並重新確認。\n3. 確認預覽後儲存；正式輸出仍需通過目前稿件、來源、字型與圖片檢查。固定模板、學習稿與已確認稿保留各自版本。\n4.「匯入與學習」核對作品及來源；「工作引導」協助準備驗證案例、檢查適合範圍及審查啟用。「模板與圖片」整理模板與家族；專業功能從「更多工具」開啟。\n5.「問題與報告」手動匯出白話與技術雙層安全報告，提供維護人員分析；不自動傳送，私人作品、字型與客戶資料留在本機。\n\n程式可依既有規則與本地學習結果產稿；合成自驗不是你的真實作品品質或印刷資格。Windows實機、私人作品、指定設備與實體印刷仍待本地回饋；網頁／手機／EXE延後。詳見docs/dev/DESKTOP_WORKSPACE_USER_GUIDE_20261020.md與LOCAL_DESKTOP_QUICK_START.md。")
 
     def closeEvent(self, event):
         if self.library.closed:
