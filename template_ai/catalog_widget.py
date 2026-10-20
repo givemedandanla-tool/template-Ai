@@ -1,4 +1,9 @@
 """One read-only index, two views, and explicit edit/reorder actions."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 import sqlite3
 from shiboken6 import isValid
@@ -13,7 +18,7 @@ from .catalog_preview import PreviewController
 
 class CatalogWidget(QWidget):
     def __init__(self,window,customer=None,on_pick=None,allow_edit=True):
-        super().__init__(window);self.window=window;self.customer=deepcopy(customer);self.on_pick=on_pick;self.allow_edit=allow_edit
+        super().__init__(window);self.host_window: MainWindow=window;self.customer=deepcopy(customer);self.on_pick=on_pick;self.allow_edit=allow_edit
         self.entries=[];self.visible=[];self.byid={};self.selected_ids=set();self.primary_id=None;self.page=0;self.blocked=False;self.closed=False;self.source_results={};self.compare_dialogs=[];self.preview_pixmap=None
         self.controller=PreviewController(window,self);self.controller.result.connect(self.preview_done)
         layout=QVBoxLayout(self)
@@ -50,12 +55,12 @@ class CatalogWidget(QWidget):
         try:
             if self.customer is None:
                 from .startup_catalog import facets
-                index=facets(self.window.library);self.partial_facets=index['partial_facets'];tree=index['tree'];versions=index['versions']
+                index=facets(self.host_window.library);self.partial_facets=index['partial_facets'];tree=index['tree'];versions=index['versions']
                 keep=self.selected_ids|({self.primary_id} if self.primary_id else set())
-                ids=[identity for identity in keep if self.window.library.db.execute('SELECT 1 FROM templates WHERE id=?',(identity,)).fetchone()]
-                self.entries=catalog.rows(self.window.library,template_ids=ids);self.byid={r['id']:r for r in self.entries}
+                ids=[identity for identity in keep if self.host_window.library.db.execute('SELECT 1 FROM templates WHERE id=?',(identity,)).fetchone()]
+                self.entries=catalog.rows(self.host_window.library,template_ids=ids);self.byid={r['id']:r for r in self.entries}
             else:
-                self.entries=catalog.rows(self.window.library,self.customer);self.byid={r['id']:r for r in self.entries};tree=catalog.hierarchy(self.entries);versions=sorted({r['version'] for r in self.entries if r['version'] is not None})
+                self.entries=catalog.rows(self.host_window.library,self.customer);self.byid={r['id']:r for r in self.entries};tree=catalog.hierarchy(self.entries);versions=sorted({r['version'] for r in self.entries if r['version'] is not None})
             self.source_results={k:v for k,v in self.source_results.items() if k in self.byid and v['signature']==self.byid[k]['signature'] and self.cache_current(v)}
             gone=self.selected_ids-self.byid.keys();self.selected_ids.intersection_update(self.byid)
             if self.primary_id not in self.byid:self.primary_id=None
@@ -92,8 +97,8 @@ class CatalogWidget(QWidget):
             if self.customer is None:
                 from .startup_catalog import search
                 current=self.tree.currentItem();key=current.data(0,Qt.UserRole) if current else None
-                result=search(self.window.library,self.query.text(),key.get('size') if key else None,key.get('capacity') if key else None,self.state.currentData(),self.version.currentData(),self.page)
-                self.page=result['page'];self.matching_count=result['total'];self.visible=catalog.rows(self.window.library,template_ids=result['ids']);self.entries=self.visible
+                result=search(self.host_window.library,self.query.text(),key.get('size') if key else None,key.get('capacity') if key else None,self.state.currentData(),self.version.currentData(),self.page)
+                self.page=result['page'];self.matching_count=result['total'];self.visible=catalog.rows(self.host_window.library,template_ids=result['ids']);self.entries=self.visible
                 keep=self.selected_ids|({self.primary_id} if self.primary_id else set());self.byid={identity:row for identity,row in self.byid.items() if identity in keep};self.byid.update({row['id']:row for row in self.visible});count=self.matching_count
             else:
                 matching=self.matching();count=len(matching);self.page=min(self.page,max(0,(count-1)//catalog.PAGE_SIZE));self.visible=matching[self.page*catalog.PAGE_SIZE:(self.page+1)*catalog.PAGE_SIZE]
@@ -125,7 +130,7 @@ class CatalogWidget(QWidget):
 
     def show_primary(self):
         if self.primary_id not in self.byid:return
-        entry=self.byid[self.primary_id];self.details.setPlainText(catalog.metadata(self.window.library,entry))
+        entry=self.byid[self.primary_id];self.details.setPlainText(catalog.metadata(self.host_window.library,entry))
         if not self.customer:
             self.set_preview_image(catalog.frame_diagram(entry));self.preview_state.setText('實際模板框位示意；不是原稿／新排版／品質證明')
         else:self.set_preview_image(None);self.picture.setText('來源縮圖讀取中／UNKNOWN')
@@ -145,13 +150,13 @@ class CatalogWidget(QWidget):
         result=message['result']
         try:
             if row['template']:
-                current=self.window.library.object_snapshot('TEMPLATE',row['template_id'])['payload']
+                current=self.host_window.library.object_snapshot('TEMPLATE',row['template_id'])['payload']
                 if catalog.digest(current)!=catalog.digest(row['template']):raise ValueError('版型已變')
             from .source_links import check_verified
             for proof in result.get('proofs',[]):check_verified(proof,proof.hash)
             if row['template']:
                 from .model import Template
-                self.window.library._template_provenance(Template.from_dict(row['template']))
+                self.host_window.library._template_provenance(Template.from_dict(row['template']))
         except (ValueError,OSError,sqlite3.DatabaseError):message={**message,'result':dict(status='STALE',reason='預覽期間依賴已變，重新整理後再核對',image=None,proofs=[])}
         self.source_results[message['id']]=message
         if len(self.source_results)>96:
@@ -204,8 +209,8 @@ class CatalogWidget(QWidget):
         hidden=len(self.selected_ids-{r['id'] for r in getattr(self,'visible',[])})
         self.status.setText(f'符合{count}版本／第{self.page+1}頁；已選{len(self.selected_ids)}（其中{hidden}不在本頁，仍保留）；瀏覽／切換不保存、不發布、不採用。')
         if getattr(self,'partial_facets',False):self.status.setText(self.status.text()+' 尺寸／版次樹顯示前200組；搜尋及分頁涵蓋全部。')
-        if self.edit_button:self.edit_button.setEnabled(len(self.selected_ids)==1 and not self.window.busy)
-        if self.pick_button:self.pick_button.setEnabled(len(self.selected_ids)==1 and not self.window.busy)
+        if self.edit_button:self.edit_button.setEnabled(len(self.selected_ids)==1 and not self.host_window.busy)
+        if self.pick_button:self.pick_button.setEnabled(len(self.selected_ids)==1 and not self.host_window.busy)
 
     def clear_selection(self):
         self.selected_ids.clear();self.primary_id=None;self.picture.clear();self.details.clear();self.preview_state.setText('未選取模板／來源縮圖 UNKNOWN');self.rebuild()
@@ -214,14 +219,14 @@ class CatalogWidget(QWidget):
         if len(self.selected_ids)!=1:raise ValueError('請明確選一個版本；未自動取最新或排除隱藏選取')
         row=self.byid[next(iter(self.selected_ids))]
         if not row['template'] or row['reference_state']!='CURRENT':raise ValueError('版型失聯／引用已變，不能替換為其他版本')
-        current=self.window.library.object_snapshot('TEMPLATE',row['template_id'])['payload']
+        current=self.host_window.library.object_snapshot('TEMPLATE',row['template_id'])['payload']
         if catalog.digest(current)!=catalog.digest(row['template']):raise ValueError('版型已更新；請重新整理與確認')
         return row
 
     def open_editor(self):
         try:
             from .training_navigation import require_clean_navigation
-            require_clean_navigation(self.window);row=self.choose_exact();self.window.open_catalog_editor(row['template_id'])
+            require_clean_navigation(self.host_window);row=self.choose_exact();self.host_window.open_catalog_editor(row['template_id'])
         except (ValueError,KeyError,sqlite3.DatabaseError) as error:self.status.setText('未進入編輯：'+str(error))
 
     def pick(self):
@@ -246,7 +251,7 @@ class CatalogWidget(QWidget):
             if image is not None:picture.setPixmap(QPixmap.fromImage(image))
             elif self.customer:picture.clear();picture.setText('原稿預覽 '+result.get('status','UNKNOWN'))
             else:picture.setPixmap(QPixmap.fromImage(catalog.frame_diagram(row)))
-            text.setPlainText(catalog.metadata(self.window.library,row)+'\n\n來源圖：'+result.get('status','UNKNOWN')+'\n'+result.get('reason','沒有來源證據時不編造縮圖')+'\n\n'+catalog.geometry_description(row))
+            text.setPlainText(catalog.metadata(self.host_window.library,row)+'\n\n來源圖：'+result.get('status','UNKNOWN')+'\n'+result.get('reason','沒有來源證據時不編造縮圖')+'\n\n'+catalog.geometry_description(row))
 
     def close_previews(self):
         self.closed=True;self.controller.close()

@@ -1,4 +1,9 @@
 """結果輸出區的多尺寸矩陣：各尺寸、確切候選與正式／預覽分開。"""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 import json
 import threading
@@ -17,12 +22,12 @@ SIZE_LABELS=dict(VALID='數位檢查通過',BLOCKED='有問題／禁止正式輸
 
 class MultiSizeDialog(QDialog):
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.running=False;self.service=None
+        super().__init__(window);self.host_window: MainWindow=window;self.running=False;self.service=None
         self.selections={};self.stop=threading.Event();self.stale=threading.Event()
         self.setWindowTitle('多尺寸驗證總覽／部分正式輸出與獨立占位預覽');self.resize(1180,780)
         layout=QVBoxLayout(self);self.status=QLabel('勾選要計算的實體尺寸；每尺寸獨立驗證。輸出模式預設不選。');self.status.setWordWrap(True);layout.addWidget(self.status)
-        bar=QHBoxLayout();self.width,self.height=QDoubleSpinBox(),QDoubleSpinBox()
-        for spin,value in ((self.width,window.out_w.value()),(self.height,window.out_h.value())):
+        bar=QHBoxLayout();self.width_input,self.height_input=QDoubleSpinBox(),QDoubleSpinBox()
+        for spin,value in ((self.width_input,window.out_w.value()),(self.height_input,window.out_h.value())):
             spin.setRange(1,2000);spin.setDecimals(4);spin.setValue(value);spin.setSuffix(' mm');bar.addWidget(spin)
         self.button(bar,'加入尺寸',self.add_size);self.button(bar,'計算所選尺寸',self.start);self.button(bar,'安全取消計算',self.stop.set);layout.addLayout(bar)
         self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['計算尺寸','實體尺寸 mm','確切模板／版本','最後驗證狀態','Logo狀態','輸出類別（預設不選）']);layout.addWidget(self.table,2)
@@ -35,8 +40,8 @@ class MultiSizeDialog(QDialog):
         for name in ('png','jpg','pdf'):
             box=QCheckBox(name.upper());box.setChecked(name=='png');self.preview_formats[name]=box;bar.addWidget(box)
         self.export_button=self.button(bar,'確認清單後輸出',self.export);self.export_button.setEnabled(False);layout.addLayout(bar)
-        bar=QHBoxLayout();self.button(bar,'編輯此尺寸當次人工版面',self.edit_local_candidate);self.button(bar,'修改共用來源人物資料',lambda:self.window.edit_input_graph(return_origin=self));self.button(bar,'保留人工版面同步共用資料',self.sync_source);self.button(bar,'跨候選／尺寸屬性差異',self.cross_properties);self.button(bar,'批次候選修正',lambda:self.window.batch_object_center(origin=self));layout.addLayout(bar)
-        bar=QHBoxLayout();self.button(bar,'開啟尺寸 Logo 管理',lambda:self.window.logo_center(return_origin=self));self.button(bar,'返回原候選／尺寸',self.window.navigation.return_to_work);layout.addLayout(bar)
+        bar=QHBoxLayout();self.button(bar,'編輯此尺寸當次人工版面',self.edit_local_candidate);self.button(bar,'修改共用來源人物資料',lambda:self.host_window.edit_input_graph(return_origin=self));self.button(bar,'保留人工版面同步共用資料',self.sync_source);self.button(bar,'跨候選／尺寸屬性差異',self.cross_properties);self.button(bar,'批次候選修正',lambda:self.host_window.batch_object_center(origin=self));layout.addLayout(bar)
+        bar=QHBoxLayout();self.button(bar,'開啟尺寸 Logo 管理',lambda:self.host_window.logo_center(return_origin=self));self.button(bar,'返回原候選／尺寸',self.host_window.navigation.return_to_work);layout.addLayout(bar)
         self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,1)
         sizes={(t.width_mm,t.height_mm) for t in window.library.templates(True)}|{(window.out_w.value(),window.out_h.value())}
         self.sizes=[]
@@ -65,17 +70,17 @@ class MultiSizeDialog(QDialog):
         mode=QComboBox();mode.addItems(['不輸出','FINAL','PREVIEW']);self.table.setCellWidget(row,5,mode)
 
     def add_size(self):
-        if not self.running:self.insert_size([self.width.value(),self.height.value()]);self.changed()
+        if not self.running:self.insert_size([self.width_input.value(),self.height_input.value()]);self.changed()
 
     def context_current(self):
-        try:return not self.window.library.closed and self.window.library.root==self.context_root and not self.stale.is_set() and self.window.generation==self.generation and digest(self.window.input_data())==self.input_signature
+        try:return not self.host_window.library.closed and self.host_window.library.root==self.context_root and not self.stale.is_set() and self.host_window.generation==self.generation and digest(self.host_window.input_data())==self.input_signature
         except (ValueError,TypeError,AttributeError):return False
 
     def is_current(self):
-        return self.context_current() and self.service is not None and self.service.generation==self.generation and self.service.library is self.window.library
+        return self.context_current() and self.service is not None and self.service.generation==self.generation and self.service.library is self.host_window.library
 
     def background(self,label,operation,finished,*,resource_kind='ANALYSIS',cancel=None,on_error=None,require_current=False):
-        root=self.window.library.root;self.running=True;self.table.setEnabled(False);self.status.setText(label+' · 共用背景工作排程／核對中，尚未完成或保存')
+        root=self.host_window.library.root;self.running=True;self.table.setEnabled(False);self.status.setText(label+' · 共用背景工作排程／核對中，尚未完成或保存')
         def worker():
             from .storage import Library
             library=None
@@ -90,57 +95,57 @@ class MultiSizeDialog(QDialog):
                 self.status.setText('未完成：'+result['error'])
                 if on_error:on_error(result['error'])
                 return
-            if require_current and (self.window.library.closed or self.window.library.root!=root or not self.context_current()):
+            if require_current and (self.host_window.library.closed or self.host_window.library.root!=root or not self.context_current()):
                 message='較新的輸入／來源已存在，舊結果已忽略；人工版面保留'
                 self.status.setText(message)
                 if on_error:on_error(message)
                 return
             self.status.setText(label+' · 已完成實際計算；採用與輸出仍依各尺寸Gate')
             finished(result['result'])
-        try:self.window.run_job(label,worker,JobCallbacks(completed,lambda error:completed({'error':str(error)})),resource_kind=resource_kind,cancel=cancel)
+        try:self.host_window.run_job(label,worker,JobCallbacks(completed,lambda error:completed({'error':str(error)})),resource_kind=resource_kind,cancel=cancel)
         except Exception:self.running=False;self.table.setEnabled(True);raise
 
     def start(self):
-        if self.running or self.window.busy:return
+        if self.running or self.host_window.busy:return
         try:
             sizes=[s for i,s in enumerate(self.sizes) if self.table.item(i,0).checkState()==Qt.Checked]
             if self.service and (getattr(self,'sync_all',False) or any(c.risk_context.get('manual_edit_receipt') for entry in self.service.entries for c in entry['candidates'])):
                 for entry in self.service.entries:
                     if entry['size_mm'] not in sizes:sizes.append(deepcopy(entry['size_mm']))
             if not sizes:raise ValueError('先勾選要計算的實體尺寸')
-            if getattr(self.window,'active_input_graph',None) is None and not self.service:
-                graph=InputGraph.from_legacy(*self.window.input_data());self.window.adopt_input_graph(graph.data,history=graph)
-            self.inputs=deepcopy(self.window.input_data());self.generation=self.window.generation;self.input_signature=digest(self.inputs);self.context_root=self.window.library.root
-            active=getattr(self.window,'active_input_graph',None)
+            if getattr(self.host_window,'active_input_graph',None) is None and not self.service:
+                graph=InputGraph.from_legacy(*self.host_window.input_data());self.host_window.adopt_input_graph(graph.data,history=graph)
+            self.inputs=deepcopy(self.host_window.input_data());self.generation=self.host_window.generation;self.input_signature=digest(self.inputs);self.context_root=self.host_window.library.root
+            active=getattr(self.host_window,'active_input_graph',None)
             if active:self.graph=active.clone()
             elif not hasattr(self,'graph') or getattr(self,'graph_input_signature',None)!=self.input_signature:self.graph=InputGraph.from_legacy(*self.inputs)
             self.graph_input_signature=self.input_signature;self.stop.clear();self.stale.clear();self.export_button.setEnabled(False)
             inputs,graph,generation,chosen=deepcopy(self.inputs),deepcopy(self.graph.data),self.generation,deepcopy(self.selections)
             previous=deepcopy(self.service.entries) if self.service else []
             scope=None
-            if getattr(self.window,'reorder_template_id',None):
-                snapshot=getattr(self.window,'reorder_customer_snapshot',None)
-                scope=[s['template_id'] for s in snapshot['styles']] if snapshot else [self.window.reorder_template_id]
+            if getattr(self.host_window,'reorder_template_id',None):
+                snapshot=getattr(self.host_window,'reorder_customer_snapshot',None)
+                scope=[s['template_id'] for s in snapshot['styles']] if snapshot else [self.host_window.reorder_template_id]
             def operation(library):
                 service=MultiSizeWorkflow(library,inputs,graph,generation)
                 return service.calculate_preserving(sizes,previous,chosen,scope,self.stop) if previous else service.calculate(sizes,chosen,scope,self.stop)
             def finished(entries):
                 if self.service:self.service.close_format_reviews()
-                self.service=MultiSizeWorkflow(self.window.library,inputs,graph,generation);self.service.entries=entries;self.render_rows()
+                self.service=MultiSizeWorkflow(self.host_window.library,inputs,graph,generation);self.service.entries=entries;self.render_rows()
                 self.export_button.setEnabled(self.is_current())
                 self.status.setText(f'實際處理{len(entries)}個尺寸；未檢查／取消／失敗各自保留狀態。正式與PREVIEW須明確選擇。')
             self.background('逐尺寸計算／保留人工版面驗證',operation,finished,resource_kind='GEOMETRY',cancel=self.stop,require_current=True)
         except (ValueError,KeyError,OSError) as error:self.status.setText('未開始：'+str(error))
 
     def sync_source(self):
-        if self.running or self.window.busy:return
+        if self.running or self.host_window.busy:return
         if not self.service:self.status.setText('先計算明確尺寸集合');return
         self.sync_all=True
         try:self.start()
         finally:self.sync_all=False
 
     def cross_properties(self):
-        if self.running or self.window.busy:return
+        if self.running or self.host_window.busy:return
         try:
             if not self.is_current():raise ValueError('先同步目前資料並完成各尺寸計算')
             from .candidate_sync_dialog import CrossPropertyDialog
@@ -150,7 +155,7 @@ class MultiSizeDialog(QDialog):
         except (ValueError,KeyError,IndexError,StopIteration) as error:self.status.setText('未開啟跨候選比較：'+str(error))
 
     def edit_local_candidate(self):
-        if self.running or self.window.busy:self.status.setText('原背景工作尚未完成，保留目前版面');return
+        if self.running or self.host_window.busy:self.status.setText('原背景工作尚未完成，保留目前版面');return
         try:
             if not self.is_current():raise ValueError('共用資料已改，先保留人工版面同步重驗')
             entry=self.entry();index=next(i for i,c in enumerate(entry['candidates']) if c.template.id==entry['selected'])
@@ -228,7 +233,7 @@ class MultiSizeDialog(QDialog):
             if not ok:return
             cid=companies[labels.index(label)]['id']
             from .logo_choice_dialog import LogoChoiceDialog
-            dialog=LogoChoiceDialog(self.window,self.graph,cid,self,width=entry['size_mm'][0],height=entry['size_mm'][1])
+            dialog=LogoChoiceDialog(self.host_window,self.graph,cid,self,width=entry['size_mm'][0],height=entry['size_mm'][1])
             if dialog.exec()==QDialog.Accepted and dialog.selected_asset:
                 self.selections.setdefault(entry['key'],{})[cid]=dialog.selected_asset['id'];self.changed()
         except (ValueError,KeyError,OSError) as error:self.status.setText(str(error))

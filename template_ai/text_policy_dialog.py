@@ -1,4 +1,9 @@
 """Explicit per-slot design policy, staged in the current version draft."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 from PySide6.QtCore import Qt,QRectF
 from PySide6.QtGui import QImage,QPainter,QPixmap
@@ -11,7 +16,7 @@ from .object_tools import propose
 
 class TextPolicyDialog(QDialog):
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.slot=deepcopy(window.current_slot);self.template_id=window.template.id;self.before=window.template.to_dict();self.setWindowTitle('固定字級／字距與語意分散規則（目前草稿）');self.resize(720,500)
+        super().__init__(window);self.host_window: MainWindow=window;self.slot=deepcopy(window.current_slot);self.template_id=window.template.id;self.before=window.template.to_dict();self.setWindowTitle('固定字級／字距與語意分散規則（目前草稿）');self.resize(720,500)
         outer=QVBoxLayout(self);self.status=QLabel();self.status.setWordWrap(True);outer.addWidget(self.status);form=QFormLayout();self.values=[]
         for label,key in [('設計字距 mm','tracking_mm'),('允許下限 mm','tracking_min_mm'),('允許上限 mm','tracking_max_mm')]:
             spin=QDoubleSpinBox();spin.setRange(0,2);spin.setDecimals(4);spin.setValue(getattr(self.slot,key));self.values.append(spin);form.addRow(label,spin)
@@ -36,9 +41,9 @@ class TextPolicyDialog(QDialog):
     def apply(self):
         try:
             from .font_review import fingerprint
-            if self.window.tabs.currentIndex()!=1 or self.window.template.id!=self.template_id or fingerprint(self.window.template.to_dict())!=fingerprint(self.before):raise ValueError('目前草稿已變更，請重開規則編輯')
+            if self.host_window.tabs.currentIndex()!=1 or self.host_window.template.id!=self.template_id or fingerprint(self.host_window.template.to_dict())!=fingerprint(self.before):raise ValueError('目前草稿已變更，請重開規則編輯')
             slot=self.candidate();patch={key:deepcopy(getattr(slot,key)) for key in ('tracking_mm','tracking_min_mm','tracking_max_mm','align','distribution_approval')};plan=propose(self.before,'TEMPLATE',dict(operation='PATCH',ids=[slot.id],patch=patch))
             if QMessageBox.question(self,'只修改目前模板版本草稿',f'{slot.id}／固定{slot.size_pt:g}pt\n{patch}\n不啟用跨模板規則、不發布，保存後仍需完整驗證。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
-            if not self.window.editable() or self.window.checkpoint() is False:return
-            self.window.template=Template.from_dict(plan['after']);self.window.refresh_editor();self.window.editor_selection([slot.id]);self.accept()
+            if not self.host_window.editable() or self.host_window.checkpoint() is False:return
+            self.host_window.template=Template.from_dict(plan['after']);self.host_window.refresh_editor();self.host_window.editor_selection([slot.id]);self.accept()
         except (ValueError,TypeError) as error:self.status.setText('未套用：'+str(error))

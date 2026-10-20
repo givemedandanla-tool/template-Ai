@@ -40,8 +40,8 @@ class FamilySourceFormTests(unittest.TestCase):
         for object_id,asset in [('given',self.assets[0]),('family',self.assets[1])]:
             index=next(i for i,r in enumerate(self.dialog.runs) if r['source_locator'].get('object_id')==object_id)
             self.dialog.run_choice.setCurrentIndex(index)
-            font_index=next(i for i in range(self.dialog.font.count()) if (self.dialog.font.itemData(i) or {}).get('hash')==asset['hash'])
-            self.dialog.font.setCurrentIndex(font_index);self.dialog.add_span()
+            font_index=next(i for i in range(self.dialog.font_input.count()) if (self.dialog.font_input.itemData(i) or {}).get('hash')==asset['hash'])
+            self.dialog.font_input.setCurrentIndex(font_index);self.dialog.add_span()
 
     def test_actual_composite_form_preserves_complete_runs_and_two_local_faces(self):
         self.add_runs();self.assertEqual([(s['start'],s['end']) for s in self.dialog.spans],[(0,5),(5,12)])

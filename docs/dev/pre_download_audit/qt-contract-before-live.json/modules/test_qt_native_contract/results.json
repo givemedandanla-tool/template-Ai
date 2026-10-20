@@ -1,0 +1,38 @@
+{
+  "records": [
+    {
+      "id": "test_qt_native_contract.QtNativeContractTests.test_main_window_keeps_native_font_and_geometry_methods",
+      "status": "ERROR",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_qt_native_contract.py\", line 32, in test_main_window_keeps_native_font_and_geometry_methods\n    self.assertIsInstance(self.window.font(), QFont)\n                          ^^^^^^^^^^^^^^^^^^\nTypeError: 'PySide6.QtWidgets.QFontComboBox' object is not callable\n"
+      ],
+      "seconds": 0.715452
+    },
+    {
+      "id": "test_qt_native_contract.QtNativeContractTests.test_input_editor_keeps_native_owner_and_scroll_methods",
+      "status": "ERROR",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_qt_native_contract.py\", line 41, in test_input_editor_keeps_native_owner_and_scroll_methods\n    self.assertIs(dialog.window(), dialog)\n                  ^^^^^^^^^^^^^^^\nTypeError: 'MainWindow' object is not callable\n"
+      ],
+      "seconds": 0.627969
+    },
+    {
+      "id": "test_qt_native_contract.QtNativeContractTests.test_font_windows_keep_native_geometry_style_and_result_methods",
+      "status": "FAIL",
+      "details": [
+        "test_font_windows_keep_native_geometry_style_and_result_methods (test_qt_native_contract.QtNativeContractTests.test_font_windows_keep_native_geometry_style_and_result_methods) (dialog='FontCenterDialog')\nTraceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_qt_native_contract.py\", line 51, in test_font_windows_keep_native_geometry_style_and_result_methods\n    self.assertIs(dialog.window(), dialog)\n                  ^^^^^^^^^^^^^^^\nTypeError: 'MainWindow' object is not callable\n",
+        "test_font_windows_keep_native_geometry_style_and_result_methods (test_qt_native_contract.QtNativeContractTests.test_font_windows_keep_native_geometry_style_and_result_methods) (dialog='FontCandidateDialog')\nTraceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_qt_native_contract.py\", line 51, in test_font_windows_keep_native_geometry_style_and_result_methods\n    self.assertIs(dialog.window(), dialog)\n                  ^^^^^^^^^^^^^^^\nTypeError: 'MainWindow' object is not callable\n"
+      ],
+      "seconds": 0.513672
+    },
+    {
+      "id": "test_qt_native_contract.QtNativeContractTests.test_logo_comparison_keeps_native_layout_access",
+      "status": "ERROR",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/tests/test_qt_native_contract.py\", line 60, in test_logo_comparison_keeps_native_layout_access\n    self.assertIsInstance(comparison.layout(), QVBoxLayout)\n                          ^^^^^^^^^^^^^^^^^^^\nTypeError: 'PySide6.QtWidgets.QVBoxLayout' object is not callable\n"
+      ],
+      "seconds": 0.599897
+    }
+  ],
+  "runtime_errors": []
+}

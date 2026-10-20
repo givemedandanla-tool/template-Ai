@@ -3,6 +3,11 @@
 All controls describe inspected source facts. They are never customer typography
 controls, and a default spin-box value is not submitted without explicit review.
 """
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 from pathlib import Path
 import hashlib
@@ -26,7 +31,7 @@ def number(low, high, value=0., decimals=4):
 class FamilySourceDialog(QDialog):
     def __init__(self, window, work_id, parent=None):
         super().__init__(parent or window)
-        self.window=window;self.library=window.library;self.work_id=work_id
+        self.host_window: MainWindow=window;self.library=window.library;self.work_id=work_id
         self.reviewer=SourceTypographyReview(self.library);self.store=self.reviewer.store
         self.spans=[];self.plan=None;self.icon_asset=None
         self.setWindowTitle('專業來源文字／複合字面核對');self.resize(1000,780)
@@ -55,7 +60,7 @@ class FamilySourceDialog(QDialog):
         self.run_choice.currentIndexChanged.connect(self.suggest_range)
         for asset in self.library.fonts():
             label=' / '.join(asset.get('families',[]))+' · '+asset['hash'][:10]
-            self.font.addItem(label,asset);self.label_font.addItem(label,asset)
+            self.font_input.addItem(label,asset);self.label_font.addItem(label,asset)
         self.slots.currentIndexChanged.connect(self.load_slot);self.load_slot()
 
     def button(self,layout,label,action):
@@ -72,10 +77,10 @@ class FamilySourceDialog(QDialog):
     def build_runs(self):
         layout=self.tab('完整文字與來源 run')
         self.field_text=QPlainTextEdit();self.field_text.setReadOnly(True);self.field_text.setMaximumHeight(85);layout.addWidget(self.field_text)
-        form=QFormLayout();self.run_choice=QComboBox();self.font=QComboBox();self.font.addItem('請選擇實際本地字型',None)
+        form=QFormLayout();self.run_choice=QComboBox();self.font_input=QComboBox();self.font_input.addItem('請選擇實際本地字型',None)
         self.start=QSpinBox();self.end=QSpinBox()
         for widget in (self.start,self.end):widget.setRange(0,100000)
-        form.addRow('來源文字 run',self.run_choice);form.addRow('字型檔與字面',self.font)
+        form.addRow('來源文字 run',self.run_choice);form.addRow('字型檔與字面',self.font_input)
         form.addRow('在完整文字中的起點',self.start);form.addRow('終點（不包含）',self.end);layout.addLayout(form)
         metrics=QHBoxLayout();self.metrics=QCheckBox('字寬與字距有獨立量測');metrics.addWidget(self.metrics)
         self.scale=number(.05,10,1);self.tracking=number(-99,99)
@@ -152,7 +157,7 @@ class FamilySourceDialog(QDialog):
         for control in (self.metrics,self.word_review,self.work_pt_review,self.flow_review,self.presentation_review,self.container_review):
             control.setChecked(False)
         self.label_measured.setChecked(False);self.icon_rights.setChecked(False);self.label_text.clear()
-        self.font.setCurrentIndex(0);self.label_font.setCurrentIndex(0);self.label_kind.setCurrentIndex(0)
+        self.font_input.setCurrentIndex(0);self.label_font.setCurrentIndex(0);self.label_kind.setCurrentIndex(0)
         self.container.clear();self.prefix.clear();self.icon_asset=None;self.suggest_range()
 
     def suggest_range(self):
@@ -171,7 +176,7 @@ class FamilySourceDialog(QDialog):
         return result
 
     def add_span(self):
-        selected=self.run_choice.currentData();asset=self.font.currentData()
+        selected=self.run_choice.currentData();asset=self.font_input.currentData()
         if selected is None or asset is None:raise ValueError('請選擇實際來源run與本地字型檔')
         start,end=self.start.value(),self.end.value()
         if end<=start:raise ValueError('完整文字分段範圍不合法')
@@ -296,4 +301,4 @@ class FamilySourceDialog(QDialog):
 
     def open_annotation(self):
         from .annotation_dialog import AnnotationDialog
-        AnnotationDialog(self.window,self.work_id,self).exec()
+        AnnotationDialog(self.host_window,self.work_id,self).exec()

@@ -1,4 +1,9 @@
 """Per-file review, real worker progress and exact safe retry selection."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 import threading
 from pathlib import Path
@@ -13,9 +18,9 @@ class Progress(QObject):updated=Signal(object)
 
 class OutputBatchDialog(QDialog):
     def __init__(self,parent,plan):
-        super().__init__(parent);self.owner=parent;self.window=parent.window;self.engine=OutputBatch(parent.service,plan);self.running=False;self.cancel=threading.Event();self.controls=[];self.setWindowTitle('逐檔FINAL／PREVIEW清單、更名與安全重試');self.resize(1350,780);self.progress=Progress(self);self.progress.updated.connect(self.update_row,Qt.QueuedConnection)
+        super().__init__(parent);self.owner=parent;self.host_window: MainWindow=parent.host_window;self.engine=OutputBatch(parent.service,plan);self.running=False;self.cancel=threading.Event();self.controls=[];self.setWindowTitle('逐檔FINAL／PREVIEW清單、更名與安全重試');self.resize(1350,780);self.progress=Progress(self);self.progress.updated.connect(self.update_row,Qt.QueuedConnection)
         layout=QVBoxLayout(self);self.status=QLabel('確認前不寫檔。新增預設不覆寫；覆寫將保留原檔並重新核對版本，競爭衝突時停止。');self.status.setWordWrap(True);layout.addWidget(self.status)
-        dpi_row=QHBoxLayout();dpi_row.addWidget(QLabel('此清單實際輸出DPI'));self.dpi=QSpinBox();self.dpi.setRange(72,600);self.dpi.setValue(self.window.dpi.value());dpi_row.addWidget(self.dpi);self.review_button=self.button(dpi_row,'核對選取此筆格式／Logo快照',self.review_selected);layout.addLayout(dpi_row);self.dpi.valueChanged.connect(lambda *_:self.cancel.set() if self.running else None)
+        dpi_row=QHBoxLayout();dpi_row.addWidget(QLabel('此清單實際輸出DPI'));self.dpi=QSpinBox();self.dpi.setRange(72,600);self.dpi.setValue(self.host_window.dpi.value());dpi_row.addWidget(self.dpi);self.review_button=self.button(dpi_row,'核對選取此筆格式／Logo快照',self.review_selected);layout.addLayout(dpi_row);self.dpi.valueChanged.connect(lambda *_:self.cancel.set() if self.running else None)
         self.table=QTableWidget(len(self.engine.items),7);self.table.setHorizontalHeaderLabels(['尺寸／類型／格式','預計檔名（可更名）','衝突動作','實際狀態','已嘗試','目的地／原因','暫存／原檔恢復位置']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.ExtendedSelection);layout.addWidget(self.table,2)
         for i,row in enumerate(self.engine.items):
             name=QLineEdit(Path(row['path']).name);action=QComboBox();action.addItem('更名／新增（不覆寫）','CREATE');action.addItem('略過','SKIP');action.addItem('明確覆寫（保留原檔）','OVERWRITE');self.controls.append((name,action));self.table.setCellWidget(i,1,name);self.table.setCellWidget(i,2,action);self.table.setItem(i,0,QTableWidgetItem(row['key']+' mm／'+row['mode']+'／'+Path(row['path']).suffix));self.table.item(i,0).setData(Qt.UserRole,row['id']);self.update_row(row)
@@ -23,7 +28,7 @@ class OutputBatchDialog(QDialog):
         self.details=QPlainTextEdit();self.details.setReadOnly(True);self.details.setPlainText('未輸出尺寸與原因：\n'+str(plan['omitted'])+'\n本次部分輸出：'+str(plan['partial']));layout.addWidget(self.details,1)
     def review_selected(self):
         try:
-            if self.running or self.window.busy:raise ValueError('原背景輸出尚未結束')
+            if self.running or self.host_window.busy:raise ValueError('原背景輸出尚未結束')
             ids=self.ids()
             if len(ids)!=1:raise ValueError('請明確選取一筆FINAL PDF／JPG')
             row=next(r for r in self.engine.items if r['id']==ids[0])
@@ -40,7 +45,7 @@ class OutputBatchDialog(QDialog):
         i=next(i for i in range(self.table.rowCount()) if self.table.item(i,0).data(Qt.UserRole)==row['id']);self.table.setItem(i,3,QTableWidgetItem(row['status']));self.table.setItem(i,4,QTableWidgetItem(str(row['attempts'])));self.table.setItem(i,5,QTableWidgetItem(row['path']+'\n'+row.get('reason','')));self.table.setItem(i,6,QTableWidgetItem('暫存：'+str(row.get('stage_path') or '無')+'\n原檔恢復：'+str(row.get('recovery_path') or '無')))
     def run(self,retry):
         try:
-            if self.running or self.window.busy:return
+            if self.running or self.host_window.busy:return
             if not self.owner.is_current():raise ValueError('輸入已變更，先回多尺寸重算')
             if self.engine.scope is None:self.engine.configure({row['id']:dict(name=name.text(),action=action.currentData()) for row,(name,action) in zip(self.engine.items,self.controls)})
             selected=self.ids() if retry else [row['id'] for row in self.engine.items if row['status']=='PLANNED']
@@ -56,7 +61,7 @@ class OutputBatchDialog(QDialog):
                 return
             self.running=True;self.dpi.setEnabled(False);self.review_button.setEnabled(False);self.cancel.clear();self.start.setEnabled(False);self.retry.setEnabled(False)
             for name,action in self.controls:name.setEnabled(False);action.setEnabled(False)
-            root=self.window.library.root;plan=deepcopy(self.engine.plan);items=deepcopy(self.engine.items);scope=self.engine.scope;entries=deepcopy(self.owner.service.entries);inputs=deepcopy(self.owner.inputs);graph=deepcopy(self.owner.graph.data);generation=self.owner.generation;format_reviews=deepcopy(self.owner.service.format_reviews);dpi=self.dpi.value();stale=self.owner.stale;stop=self.owner.stop
+            root=self.host_window.library.root;plan=deepcopy(self.engine.plan);items=deepcopy(self.engine.items);scope=self.engine.scope;entries=deepcopy(self.owner.service.entries);inputs=deepcopy(self.owner.inputs);graph=deepcopy(self.owner.graph.data);generation=self.owner.generation;format_reviews=deepcopy(self.owner.service.format_reviews);dpi=self.dpi.value();stale=self.owner.stale;stop=self.owner.stop
             def worker():
                 from .storage import Library
                 library=None
@@ -72,7 +77,7 @@ class OutputBatchDialog(QDialog):
                 self.engine.items=result['items']
                 for row in self.engine.items:self.update_row(row)
                 counts={state:sum(r['status']==state for r in self.engine.items) for state in ('SUCCESS','FAILED','BLOCKED','SKIPPED','PLANNED')};self.status.setText('逐檔實際結果 '+str(counts)+'；已成功檔案受保護，未完成者不可算成功。');self.owner.last_output=self.engine.items
-            self.window.run_job('逐檔安全輸出／精確重試',worker,JobCallbacks(finished,lambda error:finished({'error':str(error)}),self.cancel))
+            self.host_window.run_job('逐檔安全輸出／精確重試',worker,JobCallbacks(finished,lambda error:finished({'error':str(error)}),self.cancel))
         except Exception as error:self.running=False;self.start.setEnabled(any(row['status']=='PLANNED' for row in self.engine.items));self.retry.setEnabled(any(row['status']=='FAILED' and row['retryable'] for row in self.engine.items));self.status.setText('未開始：'+str(error))
     def open_folder(self):
         ids=self.ids()

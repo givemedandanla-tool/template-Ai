@@ -1,4 +1,9 @@
 """One transient foreground layout session: copied inputs, one worker, true item counts."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import copy
 import threading
 from PySide6.QtCore import QObject,QRunnable,Signal,Qt
@@ -62,7 +67,7 @@ def canvas_stamp(window):
 
 class LayoutSessionDialog(QDialog):
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.running=False;self.report_state='NOT_CHECKED';self.rows=[];self.worker=None;self.pause_event=threading.Event();self.cancel_event=threading.Event();self.setWindowTitle('當次排版／真實進度與安全停止');self.resize(900,650);l=QVBoxLayout(self)
+        super().__init__(window);self.host_window: MainWindow=window;self.running=False;self.report_state='NOT_CHECKED';self.rows=[];self.worker=None;self.pause_event=threading.Event();self.cancel_event=threading.Event();self.setWindowTitle('當次排版／真實進度與安全停止');self.resize(900,650);l=QVBoxLayout(self)
         self.recovery=LayoutRecovery(window.library.root)
         try:pending=self.recovery.pending()
         except ValueError:pending=True
@@ -83,14 +88,14 @@ class LayoutSessionDialog(QDialog):
         self.start_button.setEnabled(not self.running);self.pause_button.setEnabled(self.running and not self.pause_event.is_set());self.resume_button.setEnabled((self.running and self.pause_event.is_set()) or (not self.running and self.report_state=='CANCELLED' and self.worker is not None));self.cancel_button.setEnabled(self.running);self.adopt_button.setEnabled(any(r.get('candidate') for r in self.rows));self.preview_button.setEnabled(any(r.get('candidate') for r in self.rows))
         self.save_recovery_button.setEnabled(not self.running and self.report_state=='CANCELLED' and bool(self.worker));self.restore_button.setEnabled(not self.running);self.clear_recovery_button.setEnabled(not self.running)
     def start(self,auto_apply=False):
-        if self.running or self.window.busy:self.status.setText('已有背景工作；未開始');return
+        if self.running or self.host_window.busy:self.status.setText('已有背景工作；未開始');return
         try:
-            self.protected_manual=[copy.deepcopy(c) for c in self.window.candidates if c.risk_context.get('manual_edit_receipt')]
+            self.protected_manual=[copy.deepcopy(c) for c in self.host_window.candidates if c.risk_context.get('manual_edit_receipt')]
             self.auto_apply=auto_apply is True and not self.protected_manual;self.auto_first_adopted=False
-            w=self.window;self.generation=w.generation;self.people,self.companies,self.logos=copy.deepcopy(w.input_data());self.size=(w.out_w.value(),w.out_h.value());self.input_digest=digest((self.people,self.companies,self.logos,self.size));self.canvas_stamp=canvas_stamp(w);self.graph_snapshot=copy.deepcopy(w.active_input_graph.data if w.active_input_graph else None);templates=[]
+            w=self.host_window;self.generation=w.generation;self.people,self.companies,self.logos=copy.deepcopy(w.input_data());self.output_size_mm=(w.out_w.value(),w.out_h.value());self.input_digest=digest((self.people,self.companies,self.logos,self.output_size_mm));self.canvas_stamp=canvas_stamp(w);self.graph_snapshot=copy.deepcopy(w.active_input_graph.data if w.active_input_graph else None);templates=[]
             from .diagnostic_snapshot import selected_templates
             for t in selected_templates(w):
-                if (t.width_mm,t.height_mm)!=self.size or t.capacity!=len(self.people) or (getattr(w,'reorder_template_id',None) and w.reorder_template_id!=t.id):continue
+                if (t.width_mm,t.height_mm)!=self.output_size_mm or t.capacity!=len(self.people) or (getattr(w,'reorder_template_id',None) and w.reorder_template_id!=t.id):continue
                 templates.append(copy.deepcopy(t))
             if len(templates)>200:raise ValueError('超過單次200候選預算；請縮小模板範圍，未開始亦未宣稱全部檢查')
             self.template_digests={t.id:digest(t.to_dict()) for t in templates};self.rows=[];self.initialize_scope(templates);self.pause_event.clear();self.cancel_event.clear();self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event,lambda:w.runtime.admit('GEOMETRY',foreground=True),library_root=w.library.root);self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.report_state='RUNNING';self.running=True;w.busy=True;self.controls();self.status.setText(f'已核對{len(templates)}個同尺寸同容量模板，單worker；未遍歷完成前不是全域最佳')
@@ -102,18 +107,18 @@ class LayoutSessionDialog(QDialog):
         if event.get('template_id'):self.scope_status(event['template_id'],PHASE_LABELS.get(event['phase'],event['phase'])+'（已完成'+str(len(self.rows))+'/'+str(event['total'])+'）')
         if event['phase']=='ITEM_FINISHED':
             r=event['row']
-            if r.get('candidate'):bind_source(r['candidate'],self.window.library)
+            if r.get('candidate'):bind_source(r['candidate'],self.host_window.library)
             self.rows.append(r);self.scope_status(r['template_id'],r['candidate'].risk['label'] if r.get('candidate') else '發生錯誤：'+r.get('error','未知錯誤'));self.details.setPlainText(r['candidate'].risk['label']+'\n'+'\n'.join(r['candidate'].issues) if r['candidate'] else r.get('error',''))
         self.controls()
         if event['phase']=='ITEM_FINISHED' and getattr(self,'auto_apply',False) and not self.auto_first_adopted:
             self.adopt(confirmed=True);self.auto_first_adopted=True
     def on_finished(self,result):
-        self.report_state=result['state'];self.running=False;self.window.busy=False;self.rows=result['rows']
+        self.report_state=result['state'];self.running=False;self.host_window.busy=False;self.rows=result['rows']
         finished={row.get('template_id') for row in self.rows}
         for template in self.worker.templates:
             if template.id not in finished:self.scope_status(template.id,'已取消／尚未計算' if self.report_state=='CANCELLED' else '尚未計算')
         if self.report_state=='COMPLETED':
-            try:self.recovery.clear();self.window.navigation.recovery_cleared()
+            try:self.recovery.clear();self.host_window.navigation.recovery_cleared()
             except OSError as error:self.status.setText('計算完成但暫存清理失敗：'+str(error));self.controls();return
         self.status.setText(result['state']+f'；實際完成{len(self.rows)}，結果僅對原快照有效／正式輸出仍需Gate');self.controls()
         if getattr(self,'protected_manual',[]):
@@ -122,7 +127,7 @@ class LayoutSessionDialog(QDialog):
             self.details.setPlainText(details);self.status.setText('已保留目前人工版面；新計算結果待核對差異後明確採用。原過期／硬性阻擋仍有效。')
         if getattr(self,'auto_apply',False):self.adopt(confirmed=True)
         if not self.rows and getattr(self,'auto_apply',False):
-            self.window.export_button.setEnabled(False);self.window.preview_button.setEnabled(False);self.window.issues.setText('無已計算候選；請核對尺寸／容量／已發布模板與來源，不推論所有設計均無解。')
+            self.host_window.export_button.setEnabled(False);self.host_window.preview_button.setEnabled(False);self.host_window.issues.setText('無已計算候選；請核對尺寸／容量／已發布模板與來源，不推論所有設計均無解。')
     def pause(self):
         self.pause_event.set();self.status.setText('暫停要求已提出，當前候選可能尚在安全結束');self.controls()
     def resume(self):
@@ -131,7 +136,7 @@ class LayoutSessionDialog(QDialog):
         if not self.running:
             self.rows=[r for r in self.rows if r.get('state')!='STALE_RECALCULATE'];self.initialize_scope(self.worker.templates)
             for row in self.rows:self.scope_status(row.get('template_id'),row['state'])
-            self.cancel_event.clear();self.pause_event.clear();w=self.window
+            self.cancel_event.clear();self.pause_event.clear();w=self.host_window
             self.worker=LayoutWorker(self.worker.templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event,lambda:w.runtime.admit('GEOMETRY',foreground=True),completed=self.rows,library_root=w.library.root)
             self.worker.signals.progress.connect(self.progress,Qt.QueuedConnection);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection);self.running=True;self.report_state='RUNNING';w.busy=True
             try:w.pool.start(self.worker)
@@ -141,7 +146,7 @@ class LayoutSessionDialog(QDialog):
         self.cancel_event.set();self.pause_event.clear();self.status.setText('正在安全取消；已完成計算仍保留，未聲稱撤銷');self.controls()
     def adopt(self,confirmed=False):
         try:
-            w=self.window
+            w=self.host_window
             if canvas_stamp(w)!=getattr(self,'canvas_stamp',canvas_stamp(w)):raise ValueError('目前畫布已有人工修正／新結果，保留差異，不覆寫；請取消後重新檢查')
             if w.generation!=self.generation or digest((*w.input_data(),(w.out_w.value(),w.out_h.value())))!=self.input_digest:raise ValueError('輸入／人工版本已改變；結果過期')
             current={}
@@ -170,7 +175,7 @@ class LayoutSessionDialog(QDialog):
             self.status.setText('已明確採用當前版本的部分候選；尚未比對者不代表無解，無主檔／模板／來源修改')
         except Exception as e:self.status.setText('未採用：'+str(e))
     def check_current(self):
-        w=self.window
+        w=self.host_window
         if w.generation!=self.generation or digest((*w.input_data(),(w.out_w.value(),w.out_h.value())))!=self.input_digest:raise ValueError('輸入版本已改變，需重新開始')
         current={}
         for saved in self.worker.templates:
@@ -191,9 +196,9 @@ class LayoutSessionDialog(QDialog):
         candidate=row.get('candidate')
         if not candidate:return
         try:
-            self.check_current();bind_source(candidate,self.window.library)
+            self.check_current();bind_source(candidate,self.host_window.library)
             from .render import render_image,preview_height
-            image=render_image(candidate,96,True);self.window.output_canvas.set_content(candidate.template.width_mm,preview_height(candidate),image);self.window.output_canvas.fit();self.window.export_button.setEnabled(False)
+            image=render_image(candidate,96,True);self.host_window.output_canvas.set_content(candidate.template.width_mm,preview_height(candidate),image);self.host_window.output_canvas.fit();self.host_window.export_button.setEnabled(False)
             self.status.setText('僅預覽此已算部分候選；尚未遍歷完整範圍，正式輸出仍需另行採用與重核')
         except ValueError as error:self.status.setText('未預覽：'+str(error))
 
@@ -216,38 +221,38 @@ class LayoutSessionDialog(QDialog):
         for row in self.rows:
             candidate=row.get('candidate')
             if candidate:
-                manual=[c for c in self.window.candidates if c.template.id==candidate.template.id and c.generation==self.generation and c.risk_context.get('manual_edit_receipt') and c.risk_context.get('input_digest')==candidate.risk_context.get('input_digest') and c.risk_context.get('source_template_pin')==candidate.risk_context.get('source_template_pin')]
+                manual=[c for c in self.host_window.candidates if c.template.id==candidate.template.id and c.generation==self.generation and c.risk_context.get('manual_edit_receipt') and c.risk_context.get('input_digest')==candidate.risk_context.get('input_digest') and c.risk_context.get('source_template_pin')==candidate.risk_context.get('source_template_pin')]
                 if len(manual)>1:raise ValueError('同模板有多份人工版面，需先明確選擇恢復對象，未保存')
                 if manual:candidate=manual[0]
             rows.append(dict(**{k:v for k,v in row.items() if k!='candidate'},candidate=encode_candidate(candidate) if candidate else None))
-        return dict(state=self.report_state,generation=self.generation,people=copy.deepcopy(self.people),companies=copy.deepcopy(self.companies),logos=copy.deepcopy(self.logos),size=list(self.size),input_digest=self.input_digest,graph=copy.deepcopy(getattr(self,'graph_snapshot',None)),templates=[t.to_dict() for t in self.worker.templates],template_digests=copy.deepcopy(self.template_digests),rows=rows)
+        return dict(state=self.report_state,generation=self.generation,people=copy.deepcopy(self.people),companies=copy.deepcopy(self.companies),logos=copy.deepcopy(self.logos),size=list(self.output_size_mm),input_digest=self.input_digest,graph=copy.deepcopy(getattr(self,'graph_snapshot',None)),templates=[t.to_dict() for t in self.worker.templates],template_digests=copy.deepcopy(self.template_digests),rows=rows)
 
     def save_recovery(self):
-        if self.running or self.window.busy or self.report_state!='CANCELLED':self.status.setText('先安全取消並等待結束，才可保存實際已算快照；目前未保存');return
+        if self.running or self.host_window.busy or self.report_state!='CANCELLED':self.status.setText('先安全取消並等待結束，才可保存實際已算快照；目前未保存');return
         try:self.check_current();payload=self.recovery_payload()
         except (ValueError,OSError) as error:self.status.setText('未保存：'+str(error));return
         password,ok=QInputDialog.getText(self,'本機短期恢復','設定12字以上密碼；不儲存密碼，遺失無法恢復。24小時後失效，可隨時清除。',QLineEdit.Password)
         if not ok:return
         from .workbench_navigation import work_token
-        token=work_token(self.window);self.window.navigation.recovery_started()
+        token=work_token(self.host_window);self.host_window.navigation.recovery_started()
         def done(receipt):
-            self.window.navigation.recovery_saved(receipt,token)
+            self.host_window.navigation.recovery_saved(receipt,token)
             self.status.setText('已實際驗證加密並落盤，24小時有效；未保存的後續進度不保證可恢復。');self.controls()
         def failed(error):
-            self.window.navigation.recovery_failed(error);self.status.setText('未保存：'+str(error))
-        self.window.run_job('保存短期加密排版快照',lambda:self.recovery.save(payload,password),done,on_error=failed,resource_kind='RESTORE')
+            self.host_window.navigation.recovery_failed(error);self.status.setText('未保存：'+str(error))
+        self.host_window.run_job('保存短期加密排版快照',lambda:self.recovery.save(payload,password),done,on_error=failed,resource_kind='RESTORE')
 
     def clear_recovery(self):
-        if self.running or self.window.busy:return
+        if self.running or self.host_window.busy:return
         if QMessageBox.question(self,'放棄並清除暫存','只刪除本機短期排版恢復資訊，不修改原稿、模板、客戶主檔。確認？')!=QMessageBox.Yes:return
-        try:self.recovery.clear();self.window.navigation.recovery_cleared();self.status.setText('已清除短期恢復暫存；不是磁碟安全抹除')
+        try:self.recovery.clear();self.host_window.navigation.recovery_cleared();self.status.setText('已清除短期恢復暫存；不是磁碟安全抹除')
         except OSError as error:self.status.setText('清除失敗：'+str(error))
 
     def restore_recovery(self):
-        if self.running or self.window.busy:return
+        if self.running or self.host_window.busy:return
         password,ok=QInputDialog.getText(self,'恢復上一次未完成的排版？','輸入原密碼；先核實版本，確認後才替換當次輸入。',QLineEdit.Password)
         if not ok:return
-        generation=self.window.generation;before=canvas_stamp(self.window);root=self.window.library.root
+        generation=self.host_window.generation;before=canvas_stamp(self.host_window);root=self.host_window.library.root
         def work():
             from .storage import Library
             payload=self.recovery.load(password);library=Library(root)
@@ -255,12 +260,12 @@ class LayoutSessionDialog(QDialog):
             finally:library.close()
             return payload,rows
         def done(result):
-            payload,rows=result;w=self.window
+            payload,rows=result;w=self.host_window
             if w.generation!=generation or canvas_stamp(w)!=before:self.status.setText('解密期間當次輸入／人工編輯已改變，保留目前工作，未套用');return
             if QMessageBox.question(self,'核對恢復範圍',f"已核對{len(rows)}個已算紀錄；過期候選需重算。替換目前當次輸入？不寫客戶／模板，舊PASS不當正式輸出授權。")!=QMessageBox.Yes:return
             from .input_graph import InputGraph
             graph=payload.get('graph') or InputGraph.from_legacy(payload['people'],payload['companies'],payload['logos']).data
-            w.adopt_input_graph(graph);self.graph_snapshot=copy.deepcopy(graph);w.out_w.setValue(payload['size'][0]);w.out_h.setValue(payload['size'][1]);self.generation=w.generation;self.people,self.companies,self.logos=copy.deepcopy(w.input_data());self.size=tuple(payload['size']);self.input_digest=digest((self.people,self.companies,self.logos,self.size));self.canvas_stamp=canvas_stamp(w);self.template_digests=payload['template_digests'];templates=[Template.from_dict(t) for t in payload['templates']]
+            w.adopt_input_graph(graph);self.graph_snapshot=copy.deepcopy(graph);w.out_w.setValue(payload['size'][0]);w.out_h.setValue(payload['size'][1]);self.generation=w.generation;self.people,self.companies,self.logos=copy.deepcopy(w.input_data());self.output_size_mm=tuple(payload['size']);self.input_digest=digest((self.people,self.companies,self.logos,self.output_size_mm));self.canvas_stamp=canvas_stamp(w);self.template_digests=payload['template_digests'];templates=[Template.from_dict(t) for t in payload['templates']]
             self.worker=LayoutWorker(templates,self.people,self.companies,self.logos,self.generation,self.pause_event,self.cancel_event);self.rows=rows;self.report_state='CANCELLED';self.initialize_scope(templates)
             for row in rows:
                 if row.get('candidate'):
@@ -268,11 +273,11 @@ class LayoutSessionDialog(QDialog):
                     else:row['candidate'].generation=self.generation
                 self.scope_status(row.get('template_id'),row['state'])
             self.status.setText('已明確恢復已落盤且可核實的部分計算；未自動採用、續算或輸出。過期者需重新開始。');self.controls()
-        self.window.run_job('解密核實短期排版恢復',work,done,on_error=lambda error:self.status.setText('未恢復：'+str(error)),resource_kind='RESTORE')
+        self.host_window.run_job('解密核實短期排版恢復',work,done,on_error=lambda error:self.status.setText('未恢復：'+str(error)),resource_kind='RESTORE')
 
     def report(self):
         from .diagnostic_dialog import DiagnosticReportDialog
-        dialog=DiagnosticReportDialog(self.window,'session',session=self,parent=self)
+        dialog=DiagnosticReportDialog(self.host_window,'session',session=self,parent=self)
         try:dialog.exec()
         finally:dialog.deleteLater()
     def reject(self):

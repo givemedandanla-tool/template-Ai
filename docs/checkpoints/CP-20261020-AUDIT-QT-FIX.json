@@ -1,0 +1,377 @@
+{
+  "id": "CP-20261020-AUDIT-QT-FIX",
+  "kind": "LOCAL_INCREMENTAL_AUDIT",
+  "phase": "PREPARED",
+  "base_commit": "373b6ee3cd58725457e0e0758c35e274355928d0",
+  "requirements": [
+    "CORE-090",
+    "UI-062"
+  ],
+  "summary": "Restore native Qt APIs and stop catalog previews only after safe close; 6 actual-window regressions, full original suite pending.",
+  "files": [
+    {
+      "path": "docs/dev/pre_download_audit/PROGRESS.json",
+      "sha256": "9a83e431fb67c6192a7063c0aaf0639cb061ca97a05d03f2a290503f5e1107d9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/run_local_audit.py",
+      "sha256": "2fbc7ca1e3d1b0ccb9c14883afeaa23370bcbeb835747ada915c1c57fa41c083"
+    },
+    {
+      "path": "template_ai/annotation_dialog.py",
+      "sha256": "58039298b99de0b2fc2030fe13907161d629d3024b3bc0101fc7d73cbeb5c9d6"
+    },
+    {
+      "path": "template_ai/automatic_training_dialog.py",
+      "sha256": "16a318d3653273a49046dd114038967a5934b9d7ed7f5a6794334023831806c0"
+    },
+    {
+      "path": "template_ai/backup_center.py",
+      "sha256": "afd6d282870bcb7d60802b1820b10a117356123219475c4a60b5cc52526d6dd4"
+    },
+    {
+      "path": "template_ai/batch_candidate_ui.py",
+      "sha256": "00c1fd9b8bf4e503d9831ca19e59f56593959d42fb42ea2726388c43df176be6"
+    },
+    {
+      "path": "template_ai/batch_dialog.py",
+      "sha256": "b413513afe3350aa15b8e1c847989cc5766e72ae2d23febdd521cd291dcb2bb0"
+    },
+    {
+      "path": "template_ai/batch_format_review_dialog.py",
+      "sha256": "b4395b804f45bd4621e9590a2dfb32ae2e29ef53def20f9bbcdd756675a6b865"
+    },
+    {
+      "path": "template_ai/batch_objects.py",
+      "sha256": "1c4304b973febb6b443257106a74fbb2b7e9039bdedb596e9a277f145657cf02"
+    },
+    {
+      "path": "template_ai/batch_recovery.py",
+      "sha256": "857013d6655faafcbc25bf5ea7356f76cc9b3f2a0b8982f20fc75a18007ef0ba"
+    },
+    {
+      "path": "template_ai/candidate_edit.py",
+      "sha256": "5f013def57dd9d46b427ad0c81e9b4a0e7101105f02d35cda589e157daa74fd0"
+    },
+    {
+      "path": "template_ai/candidate_results.py",
+      "sha256": "39e9e27b4c0a6f94ad64b7e0bef0e6391d49217e7e26dd7d42e3ae2fc7538a3c"
+    },
+    {
+      "path": "template_ai/candidate_sync_dialog.py",
+      "sha256": "3d6775b388c3b0025a0092972aeabbb4f1856301218b88cc3b79cb0d0d04053b"
+    },
+    {
+      "path": "template_ai/catalog_widget.py",
+      "sha256": "3915851e854bc0959ca3cc682899fb5f30fe0bafc79b8976bcc67aabdd3fa34a"
+    },
+    {
+      "path": "template_ai/coverage_closure_panel.py",
+      "sha256": "736154dee864ac5ec8d1327b6baacc624bf7b58afa87512461f9461e9210bf42"
+    },
+    {
+      "path": "template_ai/coverage_panel.py",
+      "sha256": "4ab9b3fdea5ce5e62f4570bac5b8986d2181c32b3e9a0fe3f0783c4ae597864f"
+    },
+    {
+      "path": "template_ai/custom_layout_dialog.py",
+      "sha256": "5b0e256f8317e64e6010b740bb3a21f3d2ae32bddb278b38a5780adabd0f5173"
+    },
+    {
+      "path": "template_ai/customer_candidates_dialog.py",
+      "sha256": "9e33e650aa072fb1652712ea1646a2ab99bab5aac3ab1fd15e042cdbacce8f0d"
+    },
+    {
+      "path": "template_ai/customer_catalog.py",
+      "sha256": "84ff6b44ecd31a6e08e9dbf04ce5b36586ea93ed8096fa0f3c7b0fa7069279c9"
+    },
+    {
+      "path": "template_ai/customer_dialog.py",
+      "sha256": "13af3f1d180b24478c59bc27ef4e2d88432ff5a2683d995a7cdbcda43ec3050e"
+    },
+    {
+      "path": "template_ai/customer_identity_dialog.py",
+      "sha256": "ab9769417ee0cb95b9c12d88532639d2033a4d4332f65109fc705dc8af804a54"
+    },
+    {
+      "path": "template_ai/customer_sync_dialog.py",
+      "sha256": "e0df1214d6d9a835e9471bcc94b37d8774bdae9fd6067ae68d08d2f7824d092d"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "sha256": "c18189933acd712f8081a9b004cb3a5401eaca2a666ac0d4353d83d2c463e1ec"
+    },
+    {
+      "path": "template_ai/design_learning_dialog.py",
+      "sha256": "9bfbe0b9dec5410c4973ba37c3e8f3502565552b511dfe761e4757d822a0e00b"
+    },
+    {
+      "path": "template_ai/diagnostic_dialog.py",
+      "sha256": "4f1fd83d3d0e0ed6bfa05f649da5da2bbca8bcfaa4a889a3e696e92eca039a1c"
+    },
+    {
+      "path": "template_ai/digital_preflight_panel.py",
+      "sha256": "590a7c5f22bebe36b5276e3b0c30d1b08e3281d4c7a50c375a5a04056fbed644"
+    },
+    {
+      "path": "template_ai/editor_settings.py",
+      "sha256": "1bfdbe5d972a502f01de01f7fe7f13247f3d4c731c93997648fd574033a91b51"
+    },
+    {
+      "path": "template_ai/exception_dialog.py",
+      "sha256": "7c37fa9e915d6c27851d9cda036a05d9856f667d9637d76ef70a944114a30fa5"
+    },
+    {
+      "path": "template_ai/family_compare.py",
+      "sha256": "216816e0fcaa9d6b346e933b98668eff58d65dc80f6a33ff352f0e2afdced587"
+    },
+    {
+      "path": "template_ai/family_source_dialog.py",
+      "sha256": "0f4d39ec5632a7d2f15ca623dee3ceac69815bb054570c3aafb4009fc4dd2678"
+    },
+    {
+      "path": "template_ai/family_workbench.py",
+      "sha256": "58f2e3ddfb78cafbf291fe3bf9b53ea2d886748d94bb0a40408aaaa98f5db37b"
+    },
+    {
+      "path": "template_ai/font_candidate_dialog.py",
+      "sha256": "ea7bf8e428e073270124c48fe9a575a85ac455e67ee0597cdf4fd525deee576d"
+    },
+    {
+      "path": "template_ai/font_dialog.py",
+      "sha256": "94159afeb6ce9780d3aecde626cba7960a0d64828b47e9923047ed89b3e80f4d"
+    },
+    {
+      "path": "template_ai/font_review_dialog.py",
+      "sha256": "9292990e8bf799ce7cad8670aaeb547d6b8335f3390fb358c636ce639ce45bfc"
+    },
+    {
+      "path": "template_ai/gui.py",
+      "sha256": "ba0ebc0ebee4df3593798dd4b27a8e016826d10c2bd41aa85a51d4922ade9658"
+    },
+    {
+      "path": "template_ai/guided_operations.py",
+      "sha256": "7866b810831b62e7554d7ef013e3e7fc3618e546dc605af3fe1d7d41b638e832"
+    },
+    {
+      "path": "template_ai/input_graph_dialog.py",
+      "sha256": "3206327d1c979db253c9bc3ddcce2e1f3073b3f506d43fa972eda2055c813937"
+    },
+    {
+      "path": "template_ai/layout_session.py",
+      "sha256": "6e825ea9f864741f5ee767e45fb17aee653d96b88be287686b1acb0ad661ec04"
+    },
+    {
+      "path": "template_ai/logo_choice_dialog.py",
+      "sha256": "4b03fcedd6aca5299e73dc38ecf741d97f5c12cc26c365e1ebf255421224b226"
+    },
+    {
+      "path": "template_ai/logo_compare.py",
+      "sha256": "a199c9417a87862e29db5d4477321fc050fab9e06d2afe127157a86f02b7963e"
+    },
+    {
+      "path": "template_ai/logo_library_dialog.py",
+      "sha256": "6bd5289febf911a62290fd0cf4cf26c28cdc1d4ffd8c82e65b31794fe469112b"
+    },
+    {
+      "path": "template_ai/major_review_job_ui.py",
+      "sha256": "dd4865437832865eef39975fbe20c72f4ef8766e73339d3b84d8a38a97f67d58"
+    },
+    {
+      "path": "template_ai/major_review_template_ui.py",
+      "sha256": "c1ddde1370af08d786c6633d5aeb2d9b5b0b5a1a8d8129bb75d09cb269694eef"
+    },
+    {
+      "path": "template_ai/multi_size_dialog.py",
+      "sha256": "ad7e095cb5bb4ecac9befa949001e3c6b1c75ae0bd44ebc3e1fc05716440c459"
+    },
+    {
+      "path": "template_ai/multi_size_edit.py",
+      "sha256": "634f1f72c53cabf48b3ad567f5734e933d4471d77ed328084725d3d6b7b6effc"
+    },
+    {
+      "path": "template_ai/noise_hits_panel.py",
+      "sha256": "1b2867e3054031542311c810c73c0d495a8c50af6873927730e950d295cbbf94"
+    },
+    {
+      "path": "template_ai/object_dialog.py",
+      "sha256": "90c165f87aadc3a6bea257d437d28e35dfd75df8dcb0b837786e0224115001af"
+    },
+    {
+      "path": "template_ai/output_batch_dialog.py",
+      "sha256": "25a82ffe6199d0df1b0adebca9e8a669bf1d0ce48d0ac3dd1be541ad0308d297"
+    },
+    {
+      "path": "template_ai/production_bridge.py",
+      "sha256": "a4957a0fd9529e2f62424afb5aadc076f9b04e3818e8747ff4d41c94772d0ea1"
+    },
+    {
+      "path": "template_ai/property_context.py",
+      "sha256": "627aac9b07a9804add3a6471e6b127263d1905d6d5b1a55008ec8197d6ae835d"
+    },
+    {
+      "path": "template_ai/qualified_coverage_panel.py",
+      "sha256": "018d8d620b5def2c6c3278f1da15848b71f6aa7c56f98df9511783ec5171241e"
+    },
+    {
+      "path": "template_ai/quality_evaluation_panel.py",
+      "sha256": "440e68d2b7055062134be8d4a6e205e599442e858126c2c1b3a7c08bf9377a23"
+    },
+    {
+      "path": "template_ai/quality_panel.py",
+      "sha256": "867addaa158dd5ab371e52327dd2384d79c492130fcb151e56287648d194114a"
+    },
+    {
+      "path": "template_ai/quality_repair_dialog.py",
+      "sha256": "1ae5994bfe63be9a500ee79e2747cc0017d1ef78fdd5adf7425d86b118b3d09a"
+    },
+    {
+      "path": "template_ai/recovery_dialog.py",
+      "sha256": "0d6e648caba6020334c20cd02242e96739ba25627a9350a9b64091dd0c726d59"
+    },
+    {
+      "path": "template_ai/review_ledger_dialog.py",
+      "sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98"
+    },
+    {
+      "path": "template_ai/rule_hints_panel.py",
+      "sha256": "a1af226e21d84378b2c016ed348634b60992dad2152481136e45bc35e15776a8"
+    },
+    {
+      "path": "template_ai/rule_review_panel.py",
+      "sha256": "02867c5370950172a39fe8ce216a4bd533ab14dbbd452b98cfb913fd0f3482f6"
+    },
+    {
+      "path": "template_ai/semantic_learning_dialog.py",
+      "sha256": "eee681df712f40deac560c60baacd41dc3e42407120c6ba3b7859a229cb97562"
+    },
+    {
+      "path": "template_ai/source_dialog.py",
+      "sha256": "f54727663f3cb8b6633f5630b08c44498054229448814cfab166884bd256656f"
+    },
+    {
+      "path": "template_ai/source_scan_dialog.py",
+      "sha256": "e3c89aedfdd285e1b84f45931ea25e3872356dca53f0e01910162ba92e0ac255"
+    },
+    {
+      "path": "template_ai/template_versions_dialog.py",
+      "sha256": "106abb0d3b30225b2b77fdb0909cde66d044d71bb837c2253243ebfdb299a0b6"
+    },
+    {
+      "path": "template_ai/text_policy_dialog.py",
+      "sha256": "89ff010e538729490897067f014e161c59ab04ba0c753218ca97a6b58319cb68"
+    },
+    {
+      "path": "template_ai/training_exceptions_panel.py",
+      "sha256": "b11db0155c7b265bed496e98ab132ae6a591b397b190a6f655f9f11ea0f0cf3e"
+    },
+    {
+      "path": "template_ai/training_facts_panel.py",
+      "sha256": "f71bc65b74cec9b81e203316c7979aebe402c81eee0b20c78652547ffc0ef1f9"
+    },
+    {
+      "path": "template_ai/training_quality_dialog.py",
+      "sha256": "13bdac0e94b2578f559cbeea066fce0c483a4a4742b4b4029ee0dc3c55400a75"
+    },
+    {
+      "path": "template_ai/training_queue_panel.py",
+      "sha256": "de7b34aa36fea44b5b191a2e207924d5856b4dda7806cd698b253ae07b63ab4f"
+    },
+    {
+      "path": "template_ai/trusted_sample_dialog.py",
+      "sha256": "0d1c6c2a398a24b033c269c3fae25cd0475cae3485cce98777c5716d284a052a"
+    },
+    {
+      "path": "template_ai/trusted_samples_panel.py",
+      "sha256": "65d37d068c733f6a77f03e5dd3978551ef00b4e47a7411843d5ab117f405c111"
+    },
+    {
+      "path": "template_ai/windows_font_dialog.py",
+      "sha256": "5ba1f02b29eca9de951caa89bda5ea81fa6f3f8ccbc0bd7d8851faba6df00c39"
+    },
+    {
+      "path": "template_ai/work_overview_dialog.py",
+      "sha256": "a484165e7e47c1e457a680a270f6c07987fbc9b1b452b058eb461c95ec465e1f"
+    },
+    {
+      "path": "template_ai/workbench_navigation.py",
+      "sha256": "db0bad42d38a7d132fa59586779ba53155d1e0b254687348e3c74e0637932267"
+    },
+    {
+      "path": "tests/test_batch_candidate_adapter.py",
+      "sha256": "d4a0016e56854274bd8cd96cd64a97c7bd218239623b53736acdbf2c96d8bd30"
+    },
+    {
+      "path": "tests/test_batch_correction_gui.py",
+      "sha256": "16dfdc2fdaaff548e403351b48516322c060189ec035fe671937445c8add28a7"
+    },
+    {
+      "path": "tests/test_batch_format_review_gui.py",
+      "sha256": "aca4f961b70984e069d0a22d7c400ceb00c1c3655012a50c552518ee7879273c"
+    },
+    {
+      "path": "tests/test_candidate_edit_dispatch.py",
+      "sha256": "c65065e70798f8e74a0b205907b5ab1c62192f65b16b389f8762b0c49ffa6da6"
+    },
+    {
+      "path": "tests/test_canvas_command_focus.py",
+      "sha256": "cca8f73d0082aa3ea1fbc3ba18b39c261ce13a39bf1213491c11df8026df87fe"
+    },
+    {
+      "path": "tests/test_family_source_forms.py",
+      "sha256": "0e81cc9ec707b3da889345b35714a933b21a9881fda12b6576175da23812b49c"
+    },
+    {
+      "path": "tests/test_family_workbench.py",
+      "sha256": "fb4d73eb95ab7817981aa88bcb7d8aee85da9910323a010c09fdb03220fff252"
+    },
+    {
+      "path": "tests/test_font_center.py",
+      "sha256": "639249a2f368e127a6a5b37a2dc1417739eed9af3b16c56c34c7e3d01d4406db"
+    },
+    {
+      "path": "tests/test_font_source_context_gui.py",
+      "sha256": "931bceb722b3c12e24fdd40969cc102005d1158780687bbf70e502aaeef262c8"
+    },
+    {
+      "path": "tests/test_guided_operations.py",
+      "sha256": "adeba696d7ccc22bfed96f1f2105cac78cf48f874498426dbc58dec37f449c4b"
+    },
+    {
+      "path": "tests/test_input_learning_integration.py",
+      "sha256": "eae07720f16287e69be4fe610693df4f7b48564655826a22807782460ca8e36f"
+    },
+    {
+      "path": "tests/test_output_batch_gui.py",
+      "sha256": "ff09b96aff73b0c5a017145e6ebbf6331375436d3231e469e6593ef9c7763046"
+    },
+    {
+      "path": "tests/test_property_context.py",
+      "sha256": "aff77f186b3f833bfb88d0ab190ad20beebfa28e13dd64894af49833101a3b9f"
+    },
+    {
+      "path": "tests/test_qt_native_contract.py",
+      "sha256": "5b50aa45a9b64b2cb2576635cb179ce098d0f0eeb711375fdc8a15d3c05a1fdb"
+    },
+    {
+      "path": "tests/test_qualified_coverage_gui.py",
+      "sha256": "292b10060eb87d12ff3aabe0071c749c741d517f7ed199f93386443c5412c483"
+    },
+    {
+      "path": "tools/capture_batch_correction.py",
+      "sha256": "b22ac1bfb2668d20a561bb69d839ae3bfde0ffd1b6437b521465b2f83bcef473"
+    },
+    {
+      "path": "tools/capture_fixed70_ten.py",
+      "sha256": "7d9f50909e71288b2f380ddef00a70d32984719c6329404b2294159febbe5112"
+    },
+    {
+      "path": "tools/capture_property_context.py",
+      "sha256": "5693d21b62df50cf5c5060290d5544fd82c5fc3e4a062babb0b86c0bb4e69857"
+    },
+    {
+      "path": "tools/validate_first_version.py",
+      "sha256": "5f6278713f44b6dcd0b9be1ccd9d01afc0a39e258cf0c8e82ac5f07c2c83fdd8"
+    }
+  ]
+}

@@ -182,7 +182,7 @@ class FamilyWorkbenchTests(FamilyFixture):
             with self.assertRaises(ValueError):dialog.prepare()
             expected=hashlib.sha256(dialog.field_text.toPlainText().encode()).hexdigest()
             index=next(i for i,r in enumerate(dialog.runs) if r['text_sha256']==expected)
-            dialog.run_choice.setCurrentIndex(index);dialog.font.setCurrentIndex(1)
+            dialog.run_choice.setCurrentIndex(index);dialog.font_input.setCurrentIndex(1)
             dialog.basis.setText('Authored exact source inspection');dialog.metrics.setChecked(True)
             dialog.label_kind.setCurrentIndex(dialog.label_kind.findData('NO_FIXED_LABEL'))
             dialog.confirmed.setChecked(True);dialog.add_span();dialog.prepare()

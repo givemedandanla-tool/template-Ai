@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QLineEdit,QCheckBox,QPu
 
 class WindowsFontWorkflowDialog(QDialog):
     def __init__(self,center):
-        super().__init__(center);self.center=center;self.asset=copy.deepcopy(center.selected()['asset']);self.library=center.window.library;self.row_id=center.selected()['id'];self.running=False;self.receipt=None;self.setWindowTitle('安裝至Windows：交接原生字型介面');self.resize(780,520);box=QVBoxLayout(self)
+        super().__init__(center);self.center=center;self.asset=copy.deepcopy(center.selected()['asset']);self.library=center.host_window.library;self.row_id=center.selected()['id'];self.running=False;self.receipt=None;self.setWindowTitle('安裝至Windows：交接原生字型介面');self.resize(780,520);box=QVBoxLayout(self)
         self.source=QLabel('選取來源：'+self.asset['path']+'\n內容身分：'+self.asset['hash']);self.source.setWordWrap(True);box.addWidget(self.source)
         self.source.setTextFormat(Qt.PlainText)
         note=QLabel('這是與程式內匯入分開的動作。此處只開啟Windows原生字型檢視器；安裝仍須在Windows確認來源、授權、目前使用者／全系統範圍及可能管理員權限。\n復原：在Windows設定的字型頁面核對實際安裝字型後移除；移除可能影響其他文件／使用者。未取得Windows結果前不標示安裝成功。');note.setWordWrap(True);box.addWidget(note)
@@ -14,9 +14,9 @@ class WindowsFontWorkflowDialog(QDialog):
         self.status.setTextFormat(Qt.PlainText)
         self.open_button=QPushButton('確認後開啟Windows原生字型檢視器');self.open_button.clicked.connect(self.begin);box.addWidget(self.open_button);buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.rejected.connect(self.reject);box.addWidget(buttons)
     def begin(self):
-        if self.running or self.center.busy or self.center.window.busy:return
+        if self.running or self.center.busy or self.center.host_window.busy:return
         row=self.center.selected()
-        if not row or row['id']!=self.row_id or self.center.window.library is not self.library:self.status.setText('來源選取／專案已變更，請重新開啟');return
+        if not row or row['id']!=self.row_id or self.center.host_window.library is not self.library:self.status.setText('來源選取／專案已變更，請重新開啟');return
         if not self.consent.isChecked() or not self.actor.text().strip() or not self.basis.text().strip():self.status.setText('需具名、來源授權依據及獨立明確同意');return
         if QMessageBox.question(self,'只啟動此來源的Windows流程','來源：'+self.asset['path']+'\n只開啟原生檢視器，不代表已安裝。實際安裝範圍、權限與來源授權仍須在Windows確認。是否啟動？',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
         from .windows_font_workflow import open_windows_font_workflow

@@ -1,4 +1,9 @@
 """Bounded text-alignment batch adapter: reuse proposals, CAS, history and per-item commits."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json,copy,sqlite3
 from PySide6.QtCore import Qt,Signal
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox,QComboBox,QLineEdit,QDoubleSpinBox
@@ -232,7 +237,7 @@ class BatchObjectDialog(QDialog):
     batch_progress=Signal(object)
     def __init__(self,window,origin=None):
         import threading
-        super().__init__(window);self.window=window;self.library=window.library;self.plan=None;self.results=[];self.running=False;self.cancel_event=threading.Event();self.ticket=None;self.preflight_text='';self.last_result_text=''
+        super().__init__(window);self.host_window: MainWindow=window;self.library=window.library;self.plan=None;self.results=[];self.running=False;self.cancel_event=threading.Event();self.ticket=None;self.preflight_text='';self.last_result_text=''
         self.setWindowTitle('批次修正：明確範圍與逐筆結果');self.resize(1200,850);layout=QVBoxLayout(self)
         self.status=QLabel('只改明確勾選的草稿／標記；高風險逐筆核對，不自動發布／正式輸出／學習。');self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);layout.addWidget(self.status)
         bar=QHBoxLayout();self.scope=QComboBox();self.scope.addItem('來源作品標記','ARTWORK');self.scope.addItem('未發布模板草稿','TEMPLATE');bar.addWidget(self.scope);self.search=QLineEdit();self.search.setPlaceholderText('作品／來源ID／人物公司／欄位／尺寸');bar.addWidget(self.search);self.state_filter=QComboBox();self.state_filter.addItems(['全部狀態','待預檢','可核對套用','需人工核對','已處理／待整卡重驗','失敗／過期']);bar.addWidget(self.state_filter);layout.addLayout(bar)
@@ -240,12 +245,12 @@ class BatchObjectDialog(QDialog):
         for label in [self.counts,self.coverage]:label.setWordWrap(True);layout.addWidget(label)
         self.table=QTableWidget(0,7);self.table.setHorizontalHeaderLabels(['勾選','作品／來源','確切物件ID','欄位／歸屬','實體尺寸','風險','逐筆狀態']);self.table.setSelectionBehavior(QTableWidget.SelectRows);layout.addWidget(self.table)
         bar=QHBoxLayout();self.action=QComboBox();self.action.addItems(['文字對齊','框位相對位移','框寬／高（固定字級）']);self.align=QComboBox();[self.align.addItem(label,value) for label,value in [('置中','center'),('靠左','left'),('靠右','right')]];bar.addWidget(self.action);bar.addWidget(self.align)
-        self.dx=QDoubleSpinBox();self.dy=QDoubleSpinBox();self.width=QDoubleSpinBox();self.height=QDoubleSpinBox()
-        for name,spin in [('ΔX',self.dx),('ΔY',self.dy),('寬（0保持）',self.width),('高（0保持）',self.height)]:spin.setRange(-2000 if spin in (self.dx,self.dy) else 0,2000);spin.setDecimals(3);spin.setSuffix(' mm');bar.addWidget(QLabel(name));bar.addWidget(spin)
+        self.dx=QDoubleSpinBox();self.dy=QDoubleSpinBox();self.width_input=QDoubleSpinBox();self.height_input=QDoubleSpinBox()
+        for name,spin in [('ΔX',self.dx),('ΔY',self.dy),('寬（0保持）',self.width_input),('高（0保持）',self.height_input)]:spin.setRange(-2000 if spin in (self.dx,self.dy) else 0,2000);spin.setDecimals(3);spin.setSuffix(' mm');bar.addWidget(QLabel(name));bar.addWidget(spin)
         layout.addLayout(bar);self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details);bar=QHBoxLayout()
         for name,title,slot in [('preview_button','預檢／逐項差異',self.preview),('apply_button','核對後套用／安全重試',self.apply),('cancel_button','停止尚未執行項',self.cancel),('undo_button','核對回復所選交易',self.undo),('locate_button','定位目前列／既有工具',self.locate)]:button=QPushButton(title);setattr(self,name,button);bar.addWidget(button);button.clicked.connect(slot)
         layout.addLayout(bar);self.batch_progress.connect(self.progress,Qt.QueuedConnection);self.scope.currentIndexChanged.connect(self.reload);self.search.textChanged.connect(self.filter_rows);self.state_filter.currentIndexChanged.connect(self.filter_rows);self.table.itemChanged.connect(self.filter_rows)
-        for control in [self.action,self.align,self.dx,self.dy,self.width,self.height]:(control.valueChanged if isinstance(control,QDoubleSpinBox) else control.currentIndexChanged).connect(self.update_counts)
+        for control in [self.action,self.align,self.dx,self.dy,self.width_input,self.height_input]:(control.valueChanged if isinstance(control,QDoubleSpinBox) else control.currentIndexChanged).connect(self.update_counts)
         view_bar=QHBoxLayout()
         for title,slot in [('查看本批原預檢差異',lambda:self.details.setPlainText(self.preflight_text)),('查看最新逐筆結果',lambda:self.details.setPlainText(self.last_result_text))]:button=QPushButton(title);button.clicked.connect(slot);view_bar.addWidget(button)
         layout.insertLayout(layout.indexOf(self.details),view_bar)
@@ -262,10 +267,10 @@ class BatchObjectDialog(QDialog):
         self.table.cellDoubleClicked.connect(lambda *_:self.locate())
         self.reload()
     def valid_context(self):
-        if self.library.closed or self.window.library is not self.library:raise ValueError('Library已切換／關閉；未對其他資料套用')
+        if self.library.closed or self.host_window.library is not self.library:raise ValueError('Library已切換／關閉；未對其他資料套用')
     def reload(self,*_):
         if self.running:return
-        if self.library.closed or self.window.library is not self.library:self.status.setText('來源已切換，請回到原工作核對。');return
+        if self.library.closed or self.host_window.library is not self.library:self.status.setText('來源已切換，請回到原工作核對。');return
         self.plan=None;self.results=[];self.rows=[];self.by_key={};kind=self.scope.currentData();more=False;query=('SELECT id,name,payload FROM artworks' if kind=='ARTWORK' else "SELECT id,'' AS name,payload FROM templates")+' ORDER BY id LIMIT 201'
         if kind=='CANDIDATE':
             try:self.rows,more=self.candidate_batch.rows();self.by_key={r['key']:r for r in self.rows}
@@ -287,7 +292,7 @@ class BatchObjectDialog(QDialog):
         self.preflight_text='';self.last_result_text=''
         self.table.setSortingEnabled(True);self.table.blockSignals(False);self.coverage.setText('已載入 '+str(len(self.rows))+' 個標記，最多200筆；不是全庫問題掃描。'+('還有未載入項目，不能計為已檢查。' if more else '只代表本次載入範圍。'));self.details.clear();self.filter_rows()
     def selected_rows(self):return [self.by_key[self.table.item(i,0).data(Qt.UserRole)] for i in range(self.table.rowCount()) if self.table.item(i,0).checkState()==Qt.Checked]
-    def parameters(self):return [self.action.currentIndex(),self.align.currentData(),self.dx.value(),self.dy.value(),self.width.value(),self.height.value(),self.ratio.value()]
+    def parameters(self):return [self.action.currentIndex(),self.align.currentData(),self.dx.value(),self.dy.value(),self.width_input.value(),self.height_input.value(),self.ratio.value()]
     def selection_pin(self):return sorted(r['key'] for r in self.selected_rows())
     def filter_rows(self,*_):
         terms=self.search.text().casefold().split();wanted=self.state_filter.currentText()
@@ -298,14 +303,14 @@ class BatchObjectDialog(QDialog):
         self.update_counts()
     def update_counts(self,*_):
         candidate=self.scope.currentData()=='CANDIDATE';action=self.action.currentIndex()
-        self.align.setEnabled(action==0);self.dx.setEnabled(action==1);self.dy.setEnabled(action==1);self.width.setEnabled(action==2);self.height.setEnabled(action==2);self.ratio.setEnabled(candidate and action==3)
+        self.align.setEnabled(action==0);self.dx.setEnabled(action==1);self.dy.setEnabled(action==1);self.width_input.setEnabled(action==2);self.height_input.setEnabled(action==2);self.ratio.setEnabled(candidate and action==3)
         selected=self.selected_rows();safe=0
         if self.plan and not self.results and self.selection_pin()==self.selected_ids and self.parameters()==self.preview_parameters:safe=sum(len(r.get('changes',[])) for r in self.plan['rows'] if r['state']=='READY')
         visible=sum(not self.table.isRowHidden(i) for i in range(self.table.rowCount()));hidden=sum(self.table.isRowHidden(i) and self.table.item(i,0).checkState()==Qt.Checked for i in range(self.table.rowCount()));self.counts.setText(f'符合篩選 {visible} 筆／實際勾選 {len(selected)} 筆（篩選外仍勾選 {hidden}）／預檢可修改 {safe} 筆；不是印前PASS。')
     def request(self,ids):
         if self.action.currentIndex()==0:return dict(operation='PATCH',ids=ids,patch={'align':self.align.currentData()},cross_owner=False)
         if self.action.currentIndex()==1:return dict(operation='MOVE',ids=ids,dx=self.dx.value(),dy=self.dy.value(),cross_owner=False)
-        return dict(operation='PATCH',ids=ids,patch={key:spin.value() for key,spin in [('w',self.width),('h',self.height)] if spin.value()>0},cross_owner=False)
+        return dict(operation='PATCH',ids=ids,patch={key:spin.value() for key,spin in [('w',self.width_input),('h',self.height_input)] if spin.value()>0},cross_owner=False)
     def paint(self,entity_key,state,risk=None):
         self.table.blockSignals(True);sorting=self.table.isSortingEnabled();self.table.setSortingEnabled(False)
         plan=getattr(self,'execution_plan',None) if self.running else self.plan
@@ -322,7 +327,7 @@ class BatchObjectDialog(QDialog):
         try:
             self.valid_context()
             from .training_navigation import require_clean_navigation
-            require_clean_navigation(self.window);groups={}
+            require_clean_navigation(self.host_window);groups={}
             for row in self.selected_rows():groups.setdefault((row['kind'],row['id']),[]).extend(row['slot_ids'])
             targets=[dict(kind=kind,id=identity,slot_ids=ids,request=self.request(ids)) for (kind,identity),ids in groups.items()];self.plan=batch_plan(self.library,targets,self.align.currentData());self.preview_parameters=self.parameters();self.selected_ids=self.selection_pin();self.results=[];lines=[]
             for row in self.plan['rows']:
@@ -338,10 +343,10 @@ class BatchObjectDialog(QDialog):
         try:
             if self.running:self.status.setText('正在處理固定範圍；未重複提交。');return
             self.valid_context()
-            if self.window.busy:raise ValueError('既有工作正在處理，先保留此批範圍')
+            if self.host_window.busy:raise ValueError('既有工作正在處理，先保留此批範圍')
             if not self.plan or self.parameters()!=self.preview_parameters or self.selected_ids!=self.selection_pin():raise ValueError('範圍改變或沒有預覽，請重新預檢')
             from .training_navigation import require_clean_navigation
-            require_clean_navigation(self.window);frozen=copy.deepcopy(self.plan);self.details.setPlainText(self.preflight_text)
+            require_clean_navigation(self.host_window);frozen=copy.deepcopy(self.plan);self.details.setPlainText(self.preflight_text)
             if QMessageBox.question(self,'批次差異確認','請核對下方原預檢差異。已完成項依操作紀錄讀回，不重複套用；尚未完成項仍須當前前置條件一致。僅處理 '+str(len(frozen['rows']))+' 個確切草稿／標記交易，不自動發布、正式輸出或學習。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
             self.valid_context()
             if self.plan!=frozen or self.parameters()!=self.preview_parameters or self.selected_ids!=self.selection_pin():raise ValueError('確認期間範圍／預覽已變更；未提交，請重新預檢')
@@ -359,7 +364,7 @@ class BatchObjectDialog(QDialog):
             library=Library(root)
             try:return undo_batch(library,plan,results,True,selected,cancel=cancel.is_set,progress=progress) if inverse else apply_batch(library,plan,True,cancel.is_set,progress)
             finally:library.close()
-        self.window.run_job('批次回復' if inverse else '批次修正',work,lambda rows:self.finished(rows,inverse),on_error=self.failed,cancel=self.cancel_event)
+        self.host_window.run_job('批次回復' if inverse else '批次修正',work,lambda rows:self.finished(rows,inverse),on_error=self.failed,cancel=self.cancel_event)
     def progress(self,value):
         if not self.running or value['ticket']!=self.ticket:return
         row=value['row'];state=self.state_label(row.get('outcome'));self.paint(row['target_key'],state);self.status.setText('本輪固定預檢範圍：'+row['id']+'／'+state+'；不宣稱整批通過。');self.filter_rows()
@@ -375,7 +380,7 @@ class BatchObjectDialog(QDialog):
             reason=row.get('reason') or ('已依目前資料重驗此候選與尺寸；正式輸出仍走既有授權。' if row.get('outcome') in ('APPLIED_VALIDATED','UNDONE_VALIDATED') else '已核實原操作與版面，未重複修改；正式輸出仍核對目前Gate。' if row.get('outcome')=='ALREADY_APPLIED' else '沿用既有歷史核對，尚須整作品重驗')
             lines.append(row['kind']+'/'+row['id']+'：'+self.state_label(row.get('outcome'))+'\n'+reason+('\n歷史 '+row['history_id'] if row.get('history_id') else ''))
         self.last_result_text='\n'.join(lines);self.details.setPlainText(self.last_result_text);summary=batch_summary(rows);self.status.setText(f'逐項結果：核對 {summary["checked"]} 個交易、嘗試 {summary["attempted"]}；本尺寸合格 {summary["validated"]}、原操作已核實 {summary["already_applied"]}、套用待重驗 {summary["applied_pending_validation"]}、失敗 {summary["failed"]}、未核實 {summary["unverified"]}、過期 {summary["stale"]}、需人工 {summary["manual"]}、跳過 {summary["skipped"]}、取消 {summary["cancelled"]}、另有新版 {summary["current_changed"]}、已回復 {summary["undone"]}、回復衝突 {summary["undo_conflicts"]}。不是印前PASS。')
-        if invalidate and self.window.library is self.library and not self.library.closed:self.window.invalidate()
+        if invalidate and self.host_window.library is self.library and not self.library.closed:self.host_window.invalidate()
         self.filter_rows()
     def failed(self,text):
         try:rows=undo_batch(self.library,self.execution_plan,self.results,True,self.undo_selected,cancel=lambda:True) if self.inverse else apply_batch(self.library,self.execution_plan,True,cancel=lambda:True)
@@ -386,7 +391,7 @@ class BatchObjectDialog(QDialog):
         if self.scope.currentData()=='CANDIDATE':return self.candidate_batch.undo()
         try:
             self.valid_context()
-            if self.running or self.window.busy:raise ValueError('既有工作進行中，未重複回復')
+            if self.running or self.host_window.busy:raise ValueError('既有工作進行中，未重複回復')
             if not self.plan or not self.results:raise ValueError('先檢視本批已核實歷史')
             selected={r['kind']+':'+r['id'] for r in self.selected_rows()};self.undo_selected=sorted(selected)
             if not selected:raise ValueError('請明確勾選要回復的交易；同交易全部差異需一併核對')
@@ -406,7 +411,7 @@ class BatchObjectDialog(QDialog):
             row=self.by_key[item.data(Qt.UserRole)];snapshot=self.library.object_snapshot(row['kind'],row['id'])
             if row['slot_ids'][0] not in {s['id'] for s in snapshot['payload']['slots']}:raise ValueError('物件引用已過期，未定位其他物件')
             from .training_navigation import require_clean_navigation
-            require_clean_navigation(self.window);w=self.window;w.navigation.begin('批次修正問題定位')
+            require_clean_navigation(self.host_window);w=self.host_window;w.navigation.begin('批次修正問題定位')
             if row['kind']=='ARTWORK':work=self.library.artwork(row['id']);w.tabs.setCurrentIndex(0);w.refresh_sources(work['source_id']);w.load_work(work);w.train_canvas.select_id(row['slot_ids'][0])
             else:w.tabs.setCurrentIndex(1);w.template_stack.setCurrentIndex(1);w.template=None;w.refresh_templates(row['id']);w.editor_selection(row['slot_ids'])
             w.navigation.finish();self.accept()

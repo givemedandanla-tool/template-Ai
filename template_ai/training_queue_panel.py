@@ -1,4 +1,9 @@
 """One persistent queue UI, current progress, cooperative cancellation and explicit resume."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 import threading
 from PySide6.QtCore import Qt,QObject,Signal,QRunnable,QThreadPool
@@ -21,7 +26,7 @@ class QueueTask(QRunnable):
 
 class TrainingQueuePanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.store=TrainingStore(window.library);self.running=False;self.task=None;self.cancel_event=None;self.token=None;self.current_job=None;self.rows=[];self.offset=0;self.dataset_offset=0;layout=QVBoxLayout(self);bar=QHBoxLayout();self.dataset_combo=QComboBox();self.dataset_combo.currentIndexChanged.connect(self.load_dataset);bar.addWidget(self.dataset_combo,1);self.reload_button=QPushButton('重載持久工作／資料集');self.reload_button.clicked.connect(self.reload);bar.addWidget(self.reload_button);self.dataset_previous=QPushButton('上頁資料集');self.dataset_next=QPushButton('下頁資料集');self.dataset_previous.clicked.connect(lambda:self.dataset_page(-200));self.dataset_next.clicked.connect(lambda:self.dataset_page(200));bar.addWidget(self.dataset_previous);bar.addWidget(self.dataset_next);layout.addLayout(bar);bar=QHBoxLayout();self.prefix=QLineEdit();self.prefix.setMaxLength(100);self.prefix.setPlaceholderText('新幾何草稿名稱前綴');self.actor=QLineEdit();self.actor.setMaxLength(120);self.actor.setPlaceholderText('啟動者');bar.addWidget(self.prefix);bar.addWidget(self.actor);self.retry_failed=QCheckBox('續跑時明確重試FAILED（SUCCESS不重跑）');bar.addWidget(self.retry_failed);layout.addLayout(bar)
+        super().__init__(parent);self.host_window: MainWindow=window;self.store=TrainingStore(window.library);self.running=False;self.task=None;self.cancel_event=None;self.token=None;self.current_job=None;self.rows=[];self.offset=0;self.dataset_offset=0;layout=QVBoxLayout(self);bar=QHBoxLayout();self.dataset_combo=QComboBox();self.dataset_combo.currentIndexChanged.connect(self.load_dataset);bar.addWidget(self.dataset_combo,1);self.reload_button=QPushButton('重載持久工作／資料集');self.reload_button.clicked.connect(self.reload);bar.addWidget(self.reload_button);self.dataset_previous=QPushButton('上頁資料集');self.dataset_next=QPushButton('下頁資料集');self.dataset_previous.clicked.connect(lambda:self.dataset_page(-200));self.dataset_next.clicked.connect(lambda:self.dataset_page(200));bar.addWidget(self.dataset_previous);bar.addWidget(self.dataset_next);layout.addLayout(bar);bar=QHBoxLayout();self.prefix=QLineEdit();self.prefix.setMaxLength(100);self.prefix.setPlaceholderText('新幾何草稿名稱前綴');self.actor=QLineEdit();self.actor.setMaxLength(120);self.actor.setPlaceholderText('啟動者');bar.addWidget(self.prefix);bar.addWidget(self.actor);self.retry_failed=QCheckBox('續跑時明確重試FAILED（SUCCESS不重跑）');bar.addWidget(self.retry_failed);layout.addLayout(bar)
         self.status=QLabel('只處理exact有效TRAIN，幾何DRAFT而非深度模型；source／sample／rule／用途每項再驗。單worker，不發布。');self.status.setWordWrap(True);layout.addWidget(self.status);self.progress_label=QLabel();layout.addWidget(self.progress_label);self.items=QTableWidget(0,3);self.items.setHorizontalHeaderLabels(['明列選取／角色','sample ID／版次','source hash／group']);self.items.setEditTriggers(QTableWidget.NoEditTriggers);layout.addWidget(self.items,1);bar=QHBoxLayout();self.preview_button=QPushButton('預檢明列範圍');self.create_button=QPushButton('確認建立並啟動持久工作');self.preview_button.clicked.connect(self.preview);self.create_button.clicked.connect(self.create_start);bar.addWidget(self.preview_button);bar.addWidget(self.create_button);layout.addLayout(bar)
         self.jobs_table=QTableWidget(0,4);self.jobs_table.setHorizontalHeaderLabels(['目前phase／保存版次','SUCCESS／REUSED／FAILED／待處理','dataset ID','job ID']);self.jobs_table.setEditTriggers(QTableWidget.NoEditTriggers);self.jobs_table.setSelectionBehavior(QTableWidget.SelectRows);self.jobs_table.setSelectionMode(QTableWidget.SingleSelection);self.jobs_table.itemSelectionChanged.connect(self.selected);layout.addWidget(self.jobs_table,1);self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,2);bar=QHBoxLayout();self.previous_button=QPushButton('上頁工作');self.next_button=QPushButton('下頁工作');self.previous_button.clicked.connect(lambda:self.page(-200));self.next_button.clicked.connect(lambda:self.page(200));self.resume_button=QPushButton('明確啟動／中斷續跑選中工作');self.cancel_button=QPushButton('合作取消目前工作');self.resume_button.clicked.connect(self.start_selected);self.cancel_button.clicked.connect(self.cancel)
         for b in (self.previous_button,self.next_button,self.resume_button,self.cancel_button):bar.addWidget(b)
@@ -31,7 +36,7 @@ class TrainingQueuePanel(QWidget):
     def dataset_page(self,delta):self.dataset_offset=max(0,self.dataset_offset+delta);self.reload()
     def page(self,delta):self.offset=max(0,self.offset+delta);self.reload()
     def controls(self):
-        for b in (self.preview_button,self.create_button,self.resume_button,self.reload_button):b.setEnabled(not self.running and not self.window.busy)
+        for b in (self.preview_button,self.create_button,self.resume_button,self.reload_button):b.setEnabled(not self.running and not self.host_window.busy)
         self.cancel_button.setEnabled(self.running);self.dataset_combo.setEnabled(not self.running);self.retry_failed.setEnabled(not self.running)
     def reload(self):
         if self.running:return
@@ -77,14 +82,14 @@ class TrainingQueuePanel(QWidget):
         if self.running:return
         try:
             if not already_confirmed and QMessageBox.question(self,'明確啟動／續跑',json.dumps(job,ensure_ascii=False,indent=2)+'\nSUCCESS／REUSED不重跑；FAILED僅在勾選後重試。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
-            dispatcher=getattr(self.window,'execution_queue',None)
+            dispatcher=getattr(self.host_window,'execution_queue',None)
             if dispatcher:
                 request=dispatcher.submit('JOB',job,self.actor.text() or job['actor'],self.retry_failed.isChecked());self.request_id=request['id'];self.current_job=job['id'];self.running=request['state'] not in ('DONE','BLOCKED','CANCELLED');self.cancel_event=dispatcher.cancel_event;self.status.setText('已保存先進先出執行請求；等待資源或目前工作完成，不代表已訓練。');self.controls();return
-            supervisor=getattr(self.window,'runtime',None)
+            supervisor=getattr(self.host_window,'runtime',None)
             if supervisor:
                 decision=supervisor.admit('GEOMETRY',requested=True)
                 if not decision.allowed:self.status.setText('未取得工作；等待背景資源：'+','.join(decision.reasons));return
-            claimed=self.store.claim_training_job(job['id'],job['revision'],True,self.retry_failed.isChecked());self.current_job=claimed['id'];self.token=claimed['owner']['token'];self.running=True;self.window.busy=True;self.window.import_button.setEnabled(False);self.cancel_event=threading.Event();self.task=QueueTask(self.store.library.root,claimed['id'],self.token,self.cancel_event,(lambda:supervisor.admit('GEOMETRY')) if supervisor else None);self.task.signals.setParent(self);self.task.signals.progress.connect(self.progress,Qt.QueuedConnection);self.task.signals.done.connect(self.done,Qt.QueuedConnection);self.task.signals.error.connect(self.failed,Qt.QueuedConnection);self.controls();self.progress(claimed);QThreadPool.globalInstance().start(self.task)
+            claimed=self.store.claim_training_job(job['id'],job['revision'],True,self.retry_failed.isChecked());self.current_job=claimed['id'];self.token=claimed['owner']['token'];self.running=True;self.host_window.busy=True;self.host_window.import_button.setEnabled(False);self.cancel_event=threading.Event();self.task=QueueTask(self.store.library.root,claimed['id'],self.token,self.cancel_event,(lambda:supervisor.admit('GEOMETRY')) if supervisor else None);self.task.signals.setParent(self);self.task.signals.progress.connect(self.progress,Qt.QueuedConnection);self.task.signals.done.connect(self.done,Qt.QueuedConnection);self.task.signals.error.connect(self.failed,Qt.QueuedConnection);self.controls();self.progress(claimed);QThreadPool.globalInstance().start(self.task)
         except Exception as error:self.status.setText('啟動／續跑阻擋：'+str(error));self.controls()
     def progress(self,job):
         states=[i['state'] for i in job['items']];self.progress_label.setText(f"{job['phase']}／實際SUCCESS{states.count('SUCCESS')}／REUSED{states.count('REUSED')}／FAILED{states.count('FAILED')}／READY{states.count('READY')}／全部{len(states)}／保存r{job['revision']}");self.details.setPlainText(json.dumps(job,ensure_ascii=False,indent=2))
@@ -99,15 +104,15 @@ class TrainingQueuePanel(QWidget):
     def release(self):
         from .training_pipeline import LIVE_OWNERS
         LIVE_OWNERS.discard(self.token)
-        self.running=False;self.window.busy=False;self.window.import_button.setEnabled(True);task=self.task;self.task=None
+        self.running=False;self.host_window.busy=False;self.host_window.import_button.setEnabled(True);task=self.task;self.task=None
         if task:task.signals.deleteLater()
-        self.window.refresh_templates(preserve_editor=True);self.reload();self.controls()
+        self.host_window.refresh_templates(preserve_editor=True);self.reload();self.controls()
     def done(self,job):self.progress(job);self.status.setText('工作已保存 '+job['phase']+'；成果只為幾何DRAFT，未發布');self.release()
     def failed(self,error):self.status.setText('worker已停止：'+error+'；依持久結果／INTERRUPTED明確恢復，不宣稱成功');self.release()
     def cancel(self):
         if not self.running:return
         if self.request_id:
-            try:self.window.execution_queue.cancel(self.request_id);self.status.setText('已請求安全取消／取消尚未啟動的執行請求')
+            try:self.host_window.execution_queue.cancel(self.request_id);self.status.setText('已請求安全取消／取消尚未啟動的執行請求')
             except Exception as error:self.status.setText('取消未保存：'+str(error))
             return
         self.cancel_event.set()

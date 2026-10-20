@@ -47,7 +47,7 @@ class BatchCandidateAdapterTests(unittest.TestCase):
         self.assertEqual(self.a.candidates[self.i].template.to_dict(),before)
     def test_another_view_cannot_consume_exact_same_size_template_preflight(self):
         from template_ai.multi_size_edit import SizeEditAdapter
-        checked=self.checked();other=QDialog(self.f.w);self.addCleanup(other.deleteLater);other.window=self.f.w;other.service=self.f.d.service;other.is_current=self.f.d.is_current;adapter=SizeEditAdapter(other,self.a.entry,self.i);before=self.a.candidates[self.i].template.to_dict()
+        checked=self.checked();other=QDialog(self.f.w);self.addCleanup(other.deleteLater);other.host_window=self.f.w;other.service=self.f.d.service;other.is_current=self.f.d.is_current;adapter=SizeEditAdapter(other,self.a.entry,self.i);before=self.a.candidates[self.i].template.to_dict()
         with self.assertRaisesRegex(ValueError,'視窗'):install_candidate_target(adapter,checked,True)
         self.assertEqual(self.a.candidates[self.i].template.to_dict(),before)
     def test_blocked_size100_missing_own_logo_cannot_inherit_size90_pass(self):

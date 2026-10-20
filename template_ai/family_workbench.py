@@ -1,4 +1,9 @@
 """Professional family tools inside the existing native desktop workflow."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 import json
 
@@ -47,7 +52,7 @@ def checked_items(widget):
 class FamilyWorkbench(QWidget):
     def __init__(self, owner):
         super().__init__(owner)
-        self.owner = owner; self.window = owner.window; self.library = owner.library
+        self.owner = owner; self.host_window: MainWindow = owner.host_window; self.library = owner.library
         self.workspace = FamilyWorkspace(self.library); self.rules = FamilyRuleDrafts(self.library)
         self.scenarios = FamilyScenarios(self.library); self.batches = FamilyBatches(self.library)
         self.store = self.workspace.store
@@ -207,8 +212,8 @@ class FamilyWorkbench(QWidget):
         self.button(bar, '編輯案例資料', lambda:self.edit_case(False)); layout.addLayout(bar)
         self.button(layout,'將目前稿件與位置意圖保存為案例',self.capture_session)
         dims = QHBoxLayout(); self.case_name = QLineEdit('案例一'); dims.addWidget(self.case_name)
-        self.width = QDoubleSpinBox(); self.height = QDoubleSpinBox()
-        for widget in (self.width,self.height):widget.setRange(.01,2000);widget.setDecimals(3);dims.addWidget(widget)
+        self.width_input = QDoubleSpinBox(); self.height_input = QDoubleSpinBox()
+        for widget in (self.width_input,self.height_input):widget.setRange(.01,2000);widget.setDecimals(3);dims.addWidget(widget)
         layout.addLayout(dims)
         self.case_mode = QComboBox(); self.case_mode.addItems(['目前草稿試排','原始規則試排','原始／草稿前後比較'])
         layout.addWidget(self.case_mode); self.button(layout, '執行所選案例', self.run_case)
@@ -523,13 +528,13 @@ class FamilyWorkbench(QWidget):
 
     def annotate_source(self):
         from .annotation_dialog import AnnotationDialog
-        dialog=AnnotationDialog(self.window,self.selected_source()['work_id'],self)
+        dialog=AnnotationDialog(self.host_window,self.selected_source()['work_id'],self)
         dialog.exec()
         self.say('來源標記已由既有工作台處理；若事實改變，請重新建立學習模型。')
 
     def review_source(self):
         from .family_source_dialog import FamilySourceDialog
-        dialog=FamilySourceDialog(self.window,self.selected_source()['work_id'],self)
+        dialog=FamilySourceDialog(self.host_window,self.selected_source()['work_id'],self)
         dialog.exec()
 
     def open_recovery(self):
@@ -546,7 +551,7 @@ class FamilyWorkbench(QWidget):
         self.owner.source_fields.setCurrentIndex(selected);self.owner.load_source_runs();self.owner.open_recovery()
 
     def open_existing(self,method):
-        action=getattr(self.window,method,None)
+        action=getattr(self.host_window,method,None)
         if action is None:raise ValueError('請由完整本體主視窗開啟此既有工具')
         action()
 
@@ -566,7 +571,7 @@ class FamilyWorkbench(QWidget):
             '\n容量校準前：'+str(result['capacity_before'])+'\n容量校準後：'+str(result['capacity_after']))
         self.details.setCurrentIndex(7)
         from .family_compare import FamilyComparisonDialog
-        FamilyComparisonDialog(self.window,refs,self).exec()
+        FamilyComparisonDialog(self.host_window,refs,self).exec()
 
     @staticmethod
     def describe_differences(rows):
@@ -654,9 +659,9 @@ class FamilyWorkbench(QWidget):
         identity=self.case_choice.currentData()
         if identity:
             case=self.store.get('FAMILY_CASE',identity);self.case_name.setText(case['name'])
-            self.width.setValue(case['width_mm']);self.height.setValue(case['height_mm'])
+            self.width_input.setValue(case['width_mm']);self.height_input.setValue(case['height_mm'])
         elif self.profile:
-            self.width.setValue(self.profile['observed_dimensions_mm'][0][0]);self.height.setValue(self.profile['observed_dimensions_mm'][0][1])
+            self.width_input.setValue(self.profile['observed_dimensions_mm'][0][0]);self.height_input.setValue(self.profile['observed_dimensions_mm'][0][1])
         current=self.run_choice.currentData();self.run_choice.blockSignals(True);self.run_choice.clear()
         for run in records(self.store,'FAMILY_RUN'):
             if run['case_ref']['id']==identity:self.run_choice.addItem(('草稿' if run['draft_ref'] else '原規則')+' · '+run['status']+' · '+run['id'][-8:],run['id'])
@@ -669,9 +674,9 @@ class FamilyWorkbench(QWidget):
         identity=None if new else self.case_choice.currentData()
         if not new and not identity:raise ValueError('先選擇案例')
         old=self.scenarios.current(identity) if identity else None
-        dialog=InputGraphDialog(self.window,old['input_graph'] if old else None)
+        dialog=InputGraphDialog(self.host_window,old['input_graph'] if old else None)
         if dialog.exec()!=QDialog.Accepted:return
-        case=self.scenarios.save(self.ref,self.case_name.text(),dialog.graph,self.width.value(),self.height.value(),
+        case=self.scenarios.save(self.ref,self.case_name.text(),dialog.graph,self.width_input.value(),self.height_input.value(),
             self.actor(),case_id=identity,expected_revision=old['revision'] if old else 0,
             intents=old['intents'] if old else [],policy=old['policy'] if old else None)
         self.reload_cases(case['id']);self.remember();self.say('案例資料已保存於本地；不會變成訓練美學真值。')
@@ -695,7 +700,7 @@ class FamilyWorkbench(QWidget):
     def show_run(self):
         identity=self.run_choice.currentData()
         if not identity:
-            self.case_canvas.set_content(max(.01,self.width.value()),max(.01,self.height.value()))
+            self.case_canvas.set_content(max(.01,self.width_input.value()),max(.01,self.height_input.value()))
             self.case_status.setText('尚無目前案例的已驗證試排；沒有沿用其他家族的畫面。');return
         try:
             run=self.scenarios.checked(identity)
@@ -704,11 +709,11 @@ class FamilyWorkbench(QWidget):
                 from .render import card_view_image
                 self.case_canvas.set_content(candidate.template.width_mm,candidate.template.height_mm,
                     image=card_view_image(candidate,120),slots=candidate.template.slots);self.case_canvas.fit()
-            else:self.case_canvas.set_content(self.width.value(),self.height.value())
+            else:self.case_canvas.set_content(self.width_input.value(),self.height_input.value())
             self.case_status.setText(run['status']+'；實測合法候選 '+str(run['observed_legal_results'])+
                 '；'+('已完成有限搜尋' if run['complete_search'] else '搜尋未完整')+'；未取得生產或美學資格。')
         except (ValueError,KeyError,OSError) as error:
-            self.case_canvas.set_content(max(.01,self.width.value()),max(.01,self.height.value()))
+            self.case_canvas.set_content(max(.01,self.width_input.value()),max(.01,self.height_input.value()))
             self.case_status.setText('歷史結果已過期：'+str(error))
 
     def create_session(self):

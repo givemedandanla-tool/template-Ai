@@ -1,4 +1,9 @@
 """One reader/preview for the original issue panels, with a pure-data background encoder."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import copy
 from pathlib import Path
 from PySide6.QtCore import QObject, QRunnable, Signal, Qt, QTimer
@@ -24,7 +29,7 @@ class ReportWorker(QRunnable):
 
 class DiagnosticReportDialog(QDialog):
     def __init__(self,window,kind='input',work_id=None,session=None,loaded=None,parent=None):
-        super().__init__(parent or window);self.window=window;self.kind=kind;self.work_id=work_id;self.session=session
+        super().__init__(parent or window);self.host_window: MainWindow=window;self.kind=kind;self.work_id=work_id;self.session=session
         self.snapshot=None;self.data=None;self.raw=None;self.worker=None;self.running=False;self.external=loaded is not None
         self.setWindowTitle('問題／證據報告 · 安全交接版');self.resize(1050,780)
         layout=QVBoxLayout(self);self.status=QLabel('按需報告；歷史／非正式，未檢查不是PASS。');self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status)
@@ -47,10 +52,10 @@ class DiagnosticReportDialog(QDialog):
         if self.running or self.external:return
         self.raw=None;self.data=None;self.snapshot=None;self.human.clear();self.machine.clear();self.issues.clear()
         try:
-            self.snapshot=make_snapshot(self.window,self.kind,self.work_id,self.session)
+            self.snapshot=make_snapshot(self.host_window,self.kind,self.work_id,self.session)
             self.running=True;self.controls();self.status.setText('已取得同次診斷快照；正在背景封裝安全內容。')
             self.worker=ReportWorker(self.snapshot.data);self.worker.signals.finished.connect(self.on_finished,Qt.QueuedConnection)
-            try:self.window.pool.start(self.worker)
+            try:self.host_window.pool.start(self.worker)
             except Exception:self.running=False;raise
         except Exception as error:
             self.status.setText('未產生報告：'+str(error));self.running=False;self.controls()
@@ -71,22 +76,22 @@ class DiagnosticReportDialog(QDialog):
     def save(self):
         if self.running or self.raw is None:return
         try:
-            if self.snapshot:self.snapshot.check(self.window)
+            if self.snapshot:self.snapshot.check(self.host_window)
             name='DIAGNOSTIC_'+self.data['created_utc'][:10]+'_'+self.data['report_id']+'.zip'
             path,_=QFileDialog.getSaveFileName(self,'保存安全診斷報告',name,'診斷報告 (*.zip)')
             if not path:self.status.setText('已取消保存；未建立檔案。');return
-            check=(lambda:self.snapshot.check(self.window)) if self.snapshot else (lambda:None)
+            check=(lambda:self.snapshot.check(self.host_window)) if self.snapshot else (lambda:None)
             save_bundle(path,self.raw,check)
             self.status.setText('已完整保存安全報告；可解壓HTML供人閱讀、JSON供GPT分析。')
             if self.snapshot:
-                try:LocatorStore(self.window.library).remember(self.snapshot)
+                try:LocatorStore(self.host_window.library).remember(self.snapshot)
                 except Exception:self.status.setText('安全報告已保存；本機定位索引未保存，仍可離線閱讀。')
         except Exception as error:self.status.setText('未保存：'+str(error))
         self.controls()
     def locate_selected(self):
         try:
             if self.data is None:raise ValueError('先產生或開啟報告')
-            locate(self.window,self.data,self.issues.currentRow(),self.snapshot)
+            locate(self.host_window,self.data,self.issues.currentRow(),self.snapshot)
             self.status.setText('已核對版本並定位；未修復、未改主檔、未放行輸出。')
         except Exception as error:self.status.setText('未定位：'+str(error))
     def reject(self):

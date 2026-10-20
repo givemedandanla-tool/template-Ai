@@ -1,4 +1,9 @@
 """同一 Library 的尺寸 Logo 庫、候選審核與新尺寸預測獨立入口。"""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 import json
 import sqlite3
@@ -18,8 +23,8 @@ from .logo_assets import errors
 class LogoLibraryDialog(QDialog):
     def __init__(self,window,exceptions_only=False):
         super().__init__(window)
-        self.size_owner=window;self.window=getattr(window,'service_window',window)
-        if self.window is None:raise ValueError('請從主視窗開啟圖片庫，才能使用匯入與背景處理。')
+        self.size_owner=window;self.host_window: MainWindow=getattr(window,'service_window',window)
+        if self.host_window is None:raise ValueError('請從主視窗開啟圖片庫，才能使用匯入與背景處理。')
         self.store=LogoStore(window.library);self.running=False;self.changed=False
         self.offset=0;self._reloading=False
         self.exceptions_only=exceptions_only
@@ -57,7 +62,7 @@ class LogoLibraryDialog(QDialog):
 
     def guarded(self,action):
         try:
-            if self.running or self.window.busy:raise ValueError('背景工作未完成，保留目前作用範圍')
+            if self.running or self.host_window.busy:raise ValueError('背景工作未完成，保留目前作用範圍')
             action()
         except (ValueError,KeyError,OSError,sqlite3.DatabaseError) as error:self.status.setText('未完成：'+str(error))
 
@@ -70,9 +75,9 @@ class LogoLibraryDialog(QDialog):
         company=self.company.currentData();self.company.blockSignals(True);self.company.clear();self.company.addItem('尚未指定公司身分',None)
         for item in self.store.companies():self.company.addItem(item['name']+'／'+item['id'],item['id'])
         self.company.setCurrentIndex(max(0,self.company.findData(company)));self.company.blockSignals(False)
-        self.assets=self.window.library.logos()
+        self.assets=self.host_window.library.logos()
         sizes={(a['width_mm'],a['height_mm']) for a in self.assets}
-        sizes.update((t.width_mm,t.height_mm) for t in self.window.library.templates())
+        sizes.update((t.width_mm,t.height_mm) for t in self.host_window.library.templates())
         sizes.update((r[0],r[1]) for r in self.store.db.execute("SELECT DISTINCT json_extract(payload,'$.width_mm'),json_extract(payload,'$.height_mm') FROM logo_proposals LIMIT 200"))
         sizes.add(tuple(old_size));self.tree.blockSignals(True);self.tree.clear();selected=None
         for size in sorted(sizes):
@@ -166,7 +171,7 @@ class LogoLibraryDialog(QDialog):
         self.guarded(action)
 
     def background(self,label,operation):
-        root=self.window.library.root;self.running=True;self.status.setText(label+'；背景核對中，尚未宣稱完成。')
+        root=self.host_window.library.root;self.running=True;self.status.setText(label+'；背景核對中，尚未宣稱完成。')
         def worker():
             from .storage import Library
             library=None
@@ -179,7 +184,7 @@ class LogoLibraryDialog(QDialog):
         def finished(result):
             self.running=False;self.reload()
             self.status.setText('未完成：'+result['error'] if 'error' in result else label+'已建立／重用候選，仍需逐項核准。')
-        try:self.window.run_job(label,worker,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
+        try:self.host_window.run_job(label,worker,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
         except Exception:self.running=False;raise
 
     def manual_import(self,base=None):
@@ -199,7 +204,7 @@ class LogoLibraryDialog(QDialog):
     def discover(self):
         def action():
             if self.reference.isChecked():raise ValueError('此處只作新尺寸預測，請回一般庫由來源提出候選')
-            source,work=self.window.source,self.window.work
+            source,work=self.host_window.source,self.host_window.work
             if not source or not work:raise ValueError('先在原訓練工作台選定來源作品')
             sid,wid=source['id'],work['id']
             def operation(store):
@@ -235,7 +240,7 @@ class LogoLibraryDialog(QDialog):
             from .logo_review_dialog import LogoReviewDialog
             dialog=LogoReviewDialog(self.store,self.store.proposal(row['id']),self)
             if dialog.exec()==QDialog.Accepted:
-                self.changed=True;self.window.refresh_logos()
+                self.changed=True;self.host_window.refresh_logos()
             self.reload()
         self.guarded(action)
 
@@ -309,28 +314,28 @@ class LogoLibraryDialog(QDialog):
             # UI 用的 _kind 不屬於資產內容，不放入 CAS 雜湊。
             asset=self.store.asset(row['id'])
             references=[dict(customer_id=r[0],company_entity_id=r[1]) for r in self.store.db.execute('SELECT customer_id,id FROM customer_entities WHERE logo_id=?',(asset['id'],))] if self.store.db.execute("SELECT 1 FROM sqlite_master WHERE name='customer_entities'").fetchone() else []
-            current=getattr(self.window,'active_input_graph',None);work_refs=[c['id'] for c in current.data['companies'] if c['logo_id']==asset['id']] if current else []
+            current=getattr(self.host_window,'active_input_graph',None);work_refs=[c['id'] for c in current.data['companies'] if c['logo_id']==asset['id']] if current else []
             reason,ok=QInputDialog.getText(self,'撤銷版本原因','不刪原圖；原選用候選會失效，必須重新核對')
             if not ok:return
             if QMessageBox.question(self,'確認確切版本與實際引用影響',asset['id']+'\n當次公司：'+str(work_refs)+'\n主檔引用：'+str(references)+'\n不自動替換其他版本，確認撤銷？')!=QMessageBox.Yes:return
-            self.store.revoke(asset['id'],digest(asset),reason,True);self.changed=True;self.window.refresh_logos();self.reload()
+            self.store.revoke(asset['id'],digest(asset),reason,True);self.changed=True;self.host_window.refresh_logos();self.reload()
         self.guarded(action)
 
     def edit_frame(self):
         def action():
-            template=self.window.template
-            if not template or self.window.tabs.currentIndex()!=1 or self.window.template_stack.currentIndex()!=1:
+            template=self.host_window.template
+            if not template or self.host_window.tabs.currentIndex()!=1 or self.host_window.template_stack.currentIndex()!=1:
                 raise ValueError('先在模板庫明確開啟要調整的模板，不從瀏覽 Logo 猜測目標')
             if self.reference.isChecked() or self.selected_size()!=[template.width_mm,template.height_mm]:
                 raise ValueError('框位編輯只限目前模板的同一實體尺寸，先返回一般尺寸庫')
             from .training_navigation import require_clean_navigation
-            require_clean_navigation(self.window)
+            require_clean_navigation(self.host_window)
             if template.state=='published':
                 if QMessageBox.question(self,'建立同模板新版本草稿','保持正式版不變；另建草稿，再由既有物件工具預覽與確認毫米差異？')!=QMessageBox.Yes:return
-                self.window.new_version()
-            if not self.window.template or self.window.template.state!='draft':
+                self.host_window.new_version()
+            if not self.host_window.template or self.host_window.template.state!='draft':
                 raise ValueError('尚未成功建立草稿，沒有變更正式框位')
-            self.window.object_tools()
+            self.host_window.object_tools()
         self.guarded(action)
 
     def closeEvent(self,event):

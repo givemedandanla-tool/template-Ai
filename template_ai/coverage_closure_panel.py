@@ -1,4 +1,9 @@
 """Lazy, paged coverage review. Each high-risk action is one work and one layer."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 import threading
 from pathlib import Path
@@ -14,7 +19,7 @@ DISPOSITION_LABELS={'APPROVED_EXCLUSION':'明確核准排除（不計成功學�
 
 class CoverageClosurePanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.library=window.library;self.root=self.library.root;self.loading=False;self.started=False;self.offset=0;self.batch_offset=0;self.rows=[];self.batch=None;self.detail=None;self.pending=None;self.cancel_event=None
+        super().__init__(parent);self.host_window: MainWindow=window;self.library=window.library;self.root=self.library.root;self.loading=False;self.started=False;self.offset=0;self.batch_offset=0;self.rows=[];self.batch=None;self.detail=None;self.pending=None;self.cancel_event=None
         layout=QVBoxLayout(self);self.status=QLabel('尚未讀取。指定批次的來源、作品與七層審核分開計數；分析完成不代表結案。');self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);layout.addWidget(self.status)
         bar=QHBoxLayout();self.batches=QComboBox();self.batches.setMinimumContentsLength(30);bar.addWidget(self.batches,1)
         self.button(bar,'前50批次',lambda:self.list_batches(-50));self.button(bar,'後50批次',lambda:self.list_batches(50));self.button(bar,'讀回批次',self.load_batch);layout.addLayout(bar)
@@ -29,7 +34,7 @@ class CoverageClosurePanel(QWidget):
         self.reason=QLineEdit();self.reason.setPlaceholderText('本次審核／排除／重開理由（必填）');self.reason.setMaxLength(2000);layout.addWidget(self.reason)
         self.evidence=QLineEdit();self.evidence.setPlaceholderText('實際來源頁、區域及證據定位說明（逐層審核必填）');self.evidence.setMaxLength(2000);layout.addWidget(self.evidence)
         self.segmentation_checked=QCheckBox('我已檢視本檔全部頁面，核對清單中的全部真實作品；沒有以畫板數推定作品數');layout.addWidget(self.segmentation_checked)
-        bar=QHBoxLayout();self.rules=QComboBox();bar.addWidget(self.rules,1);self.button(bar,'預覽本頁同規則低風險分組核實',self.plan_group_rule);self.button(bar,'來源事實／漏標',lambda:self.repair('facts_panel'));self.button(bar,'雜訊事件',lambda:self.repair('hits_panel'));self.button(bar,'客戶來源審查',self.open_customer);self.button(bar,'匯入／Logo例外',self.window.import_exceptions);self.button(bar,'發現重大共通錯誤 → 發起重審',self.open_major_review);layout.addLayout(bar)
+        bar=QHBoxLayout();self.rules=QComboBox();bar.addWidget(self.rules,1);self.button(bar,'預覽本頁同規則低風險分組核實',self.plan_group_rule);self.button(bar,'來源事實／漏標',lambda:self.repair('facts_panel'));self.button(bar,'雜訊事件',lambda:self.repair('hits_panel'));self.button(bar,'客戶來源審查',self.open_customer);self.button(bar,'匯入／Logo例外',self.host_window.import_exceptions);self.button(bar,'發現重大共通錯誤 → 發起重審',self.open_major_review);layout.addLayout(bar)
         bar=QHBoxLayout();self.button(bar,'預覽全檔切分確認',self.plan_segmentation);self.layer=QComboBox()
         for key,label in LAYER_LABELS.items():self.layer.addItem(label,key)
         bar.addWidget(self.layer);self.decision=QComboBox();self.decision.addItem('已個別確認','CONFIRMED');self.decision.addItem('核對來源後確認不存在','VERIFIED_ABSENT');self.decision.addItem('本次未形成版型候選','NO_CANDIDATE_RETAINED');bar.addWidget(self.decision);self.button(bar,'預覽此作品此層審核',self.plan_layer);layout.addLayout(bar)
@@ -46,8 +51,8 @@ class CoverageClosurePanel(QWidget):
 
     def request(self,command,payload,callback):
         if self.loading:return self.status.setText('目前仍在核對；可取消後重新選擇')
-        if self.library.closed or self.window.library is not self.library:return self.status.setText('專案環境已變更，未執行')
-        if self.window.busy:return self.status.setText('已有背景工作執行，請待其完成後重送此明確操作')
+        if self.library.closed or self.host_window.library is not self.library:return self.status.setText('專案環境已變更，未執行')
+        if self.host_window.busy:return self.status.setText('已有背景工作執行，請待其完成後重送此明確操作')
         self.loading=True;self.cancel_event=threading.Event();cancel=self.cancel_event;self.confirm_button.setEnabled(False);self.status.setText('背景核對中；完成持久化讀回前不宣稱已儲存／結案')
         def failed(error):
             from shiboken6 import isValid
@@ -57,9 +62,9 @@ class CoverageClosurePanel(QWidget):
             from shiboken6 import isValid
             if not isValid(self):return
             self.loading=False
-            if self.library.closed or self.window.library is not self.library:return self.status.setText('環境已變更；舊結果未套用，請重新讀回')
+            if self.library.closed or self.host_window.library is not self.library:return self.status.setText('環境已變更；舊結果未套用，請重新讀回')
             callback(value)
-        try:self.window.run_job('核對來源批次審核',lambda:run_command(self.root,command,payload,cancel=cancel),JobCallbacks(done,failed,cancel))
+        try:self.host_window.run_job('核對來源批次審核',lambda:run_command(self.root,command,payload,cancel=cancel),JobCallbacks(done,failed,cancel))
         except Exception as error:failed(error)
 
     def list_batches(self,delta=0):
@@ -181,7 +186,7 @@ class CoverageClosurePanel(QWidget):
             expected=next(w for w in self.detail['works'] if w['work_id']==identity)
             if work_context(CoverageBatches(self.library),identity)['context_digest']!=expected['context_digest']:raise ValueError('作品依賴已變更，請重新核對')
             from .training_navigation import locate_work
-            locate_work(self.window,identity)
+            locate_work(self.host_window,identity)
         self.guarded(run)
     def cancel(self):
         if self.cancel_event:self.cancel_event.set()
@@ -193,7 +198,7 @@ class CoverageClosurePanel(QWidget):
         else:self.status.setText('由標記品質中心開啟對應來源事實／雜訊工具，按確切作品ID定位')
     def open_customer(self):
         from .customer_candidates_dialog import CustomerCandidatesDialog
-        dialog=CustomerCandidatesDialog(self.window,self)
+        dialog=CustomerCandidatesDialog(self.host_window,self)
         try:dialog.exec()
         finally:dialog.deleteLater()
 

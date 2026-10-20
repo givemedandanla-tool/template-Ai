@@ -1,4 +1,9 @@
 """Shared view defaults in existing preferences; no customer/work-session save."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 import math
 from PySide6.QtGui import QKeySequence
@@ -42,7 +47,7 @@ def load(library):
 
 class EditorSettingsDialog(QDialog):
     def __init__(self,window,parent=None):
-        super().__init__(parent or window);self.window=window;self.setWindowTitle('三模式共用畫布設定');layout=QVBoxLayout(self);layout.addWidget(QLabel('僅保存操作輔助預設；不保存未完成客戶工作、修改模板幾何或停用驗證。'));form=QFormLayout();self.fields={};values=load(window.library)
+        super().__init__(parent or window);self.host_window: MainWindow=window;self.setWindowTitle('三模式共用畫布設定');layout=QVBoxLayout(self);layout.addWidget(QLabel('僅保存操作輔助預設；不保存未完成客戶工作、修改模板幾何或停用驗證。'));form=QFormLayout();self.fields={};values=load(window.library)
         for key,label in [('snap_enabled','預設吸附'),('guides_enabled','對齊參考線'),('safety_visible','作品邊界疊圖'),('resize_enabled','單框縮放控制點')]:
             checkbox=QCheckBox();checkbox.setChecked(values[key]);self.fields[key]=checkbox;form.addRow(label,checkbox)
         self.step=QDoubleSpinBox();self.step.setDecimals(2);self.step.setRange(.01,10);self.step.setValue(values['nudge_mm']);form.addRow('鍵盤微調毫米（Shift×10）',self.step);layout.addLayout(form);self.status=QLabel();layout.addWidget(self.status);buttons=QDialogButtonBox(QDialogButtonBox.Save|QDialogButtonBox.Cancel);buttons.accepted.connect(self.save);buttons.rejected.connect(self.reject);layout.addWidget(buttons)
@@ -54,16 +59,16 @@ class EditorSettingsDialog(QDialog):
 
     def save(self):
         try:
-            if self.window.busy:raise ValueError('背景作業中，先保留目前設定')
+            if self.host_window.busy:raise ValueError('背景作業中，先保留目前設定')
             value=validate({key:field.isChecked() for key,field in self.fields.items()}|dict(nudge_mm=self.step.value()))
             commands=validate_commands({key:editor.keySequence().toString(QKeySequence.PortableText) for key,editor in self.command_keys.items()})
-            with self.window.library.db:
-                self.window.library.db.execute("INSERT INTO preferences VALUES('editor_view_defaults',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",(json.dumps(value),))
-                self.window.library.db.execute("INSERT INTO preferences VALUES('canvas_command_bindings',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",(json.dumps(commands),))
+            with self.host_window.library.db:
+                self.host_window.library.db.execute("INSERT INTO preferences VALUES('editor_view_defaults',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",(json.dumps(value),))
+                self.host_window.library.db.execute("INSERT INTO preferences VALUES('canvas_command_bindings',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value",(json.dumps(commands),))
             from .gui import Canvas
-            for canvas in self.window.findChildren(Canvas):canvas.command_bindings=dict(commands)
+            for canvas in self.host_window.findChildren(Canvas):canvas.command_bindings=dict(commands)
             from .object_dialog import ObjectCanvas
-            for canvas in self.window.findChildren(ObjectCanvas):
+            for canvas in self.host_window.findChildren(ObjectCanvas):
                 for key,item in value.items():
                     setattr(canvas,key,item);control=getattr(canvas,'preference_widgets',{}).get(key)
                     if control is not None:

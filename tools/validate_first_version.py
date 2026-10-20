@@ -155,7 +155,7 @@ def main():
     if not center.grab().save(str(artifacts / "font-center-workspace.png")):
         raise ValueError("字型管理中心截圖保存失敗")
     center.kind.setCurrentIndex(center.kind.findData("ASSET")); center.table.selectRow(0)
-    diagnosis = analyze_font(center.selected(),center.text.text(),center.size.value(),center.width.value(),center.minimum.value()/100)
+    diagnosis = analyze_font(center.selected(),center.text.text(),center.size_input.value(),center.width_input.value(),center.minimum.value()/100)
     assert diagnosis["status"] == "FEASIBLE_WIDTH", diagnosis
     center.show_analysis(diagnosis); app.processEvents()
     if not center.grab().save(str(artifacts / "font-center-diagnostics.png")):

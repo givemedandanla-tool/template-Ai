@@ -1,4 +1,9 @@
 """One shared backup manager and serialized, application-open local scheduler."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from datetime import datetime,timezone
 from pathlib import Path
 import json
@@ -108,7 +113,7 @@ class BackupManagerDialog(QDialog):
     phase=Signal(object)
 
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.scheduler=window.backup_scheduler
+        super().__init__(window);self.host_window: MainWindow=window;self.scheduler=window.backup_scheduler
         self.running=False;self.backup_plan=None;self.restore_plan=None;self.last_restore=None
         self.cancel_event=threading.Event();self.password_failures=0;self.failures={};self.offset=0;self.emit_progress=progress_emitter(self.phase)
         self.setWindowTitle('本機完整關聯備份／驗證／安全還原');self.resize(1120,820)
@@ -207,9 +212,9 @@ class BackupManagerDialog(QDialog):
         if not checked:self.scheduler.clear_password()
 
     def start(self,message,work,done,clear_secret=False,archive_key=None):
-        if self.running or self.window.busy:self.status.setText('已有背景工作；保留輸入，尚未開始');return
+        if self.running or self.host_window.busy:self.status.setText('已有背景工作；保留輸入，尚未開始');return
         self.running=True;self.cancel_event.clear();self.emit_progress=progress_emitter(self.phase);self.tabs.setEnabled(False);self.progress.setRange(0,0);self.status.setText(message)
-        root=str(self.window.library.root)
+        root=str(self.host_window.library.root)
         def run():
             library=None
             try:library=Library(root);return {'value':work(library)}
@@ -230,10 +235,10 @@ class BackupManagerDialog(QDialog):
                 except Exception as error:self.status.setText('結果未套用：'+str(error))
             if clear_secret and not self.remember.isChecked():self.password.clear()
             self.refresh_history()
-            self.window.statusBar().showMessage(self.status.text().splitlines()[0])
+            self.host_window.statusBar().showMessage(self.status.text().splitlines()[0])
         try:
-            if getattr(self.window,'runtime',None):self.window.run_job(message,run,finished,resource_kind='RESTORE',cancel=self.cancel_event,on_error=lambda error:finished(dict(error=error)))
-            else:self.window.run_job(message,run,finished)
+            if getattr(self.host_window,'runtime',None):self.host_window.run_job(message,run,finished,resource_kind='RESTORE',cancel=self.cancel_event,on_error=lambda error:finished(dict(error=error)))
+            else:self.host_window.run_job(message,run,finished)
         except Exception:
             self.running=False;self.tabs.setEnabled(True);self.progress.setRange(0,1);raise
 
@@ -285,7 +290,7 @@ class BackupManagerDialog(QDialog):
 
     def preview_restore(self):
         def action():
-            archive=self.archive.text();password=self.secret_for(archive);trusted=self.trusted.isChecked();existing=str(self.window.library.root) if self.mode.currentIndex()==1 else None
+            archive=self.archive.text();password=self.secret_for(archive);trusted=self.trusted.isChecked();existing=str(self.host_window.library.root) if self.mode.currentIndex()==1 else None
             self.start('核對備份來源、加密及現有版本差異',lambda lib:bundle.inspect_restore(archive,password,trusted,existing,self.cancel_event.is_set),self.show_restore_plan,archive_key=archive)
         self.guarded(action)
 
@@ -309,7 +314,7 @@ class BackupManagerDialog(QDialog):
             if not ok:return
             if not name or len(name)>80 or len(Path(name).parts)!=1 or not bundle._portable_member(name):raise ValueError('需可移轉Windows的單一新資料夾名稱')
             target=Path(parent)/name
-            if target.resolve().is_relative_to(self.window.library.root):raise ValueError('新副本請放目前資料庫之外，不嵌入現在環境')
+            if target.resolve().is_relative_to(self.host_window.library.root):raise ValueError('新副本請放目前資料庫之外，不嵌入現在環境')
             if QMessageBox.question(self,'確認隔離還原','目前資料與較新進度保留。只在明列的新目錄重建；不自動合併，不安裝系統字型。新副本還須重新驗證來源／學習與正式輸出。是否確認？')!=QMessageBox.Yes:return
             def work(lib):
                 result=bundle.restore_bundle(plan['archive'],target,password,True,partial,self.cancel_event.is_set,self.emit_progress,plan['archive_sha256'])
@@ -336,7 +341,7 @@ class BackupManagerDialog(QDialog):
         if path:self.destination.setText(path)
 
     def load_schedule(self,initial=False):
-        record=policy.schedule(self.window.library)
+        record=policy.schedule(self.host_window.library)
         if record:
             self.destination.setText(record['directory']);self.interval.setValue(max(1,record['interval_seconds']//60));self.keep.setValue(record['retain_count']);self.days.setValue(record['retain_days']);self.enabled.setChecked(record['enabled'])
             stamp=lambda value:datetime.fromtimestamp(value,timezone.utc).strftime('%Y-%m-%d %H:%M UTC') if value else '尚無'
@@ -348,7 +353,7 @@ class BackupManagerDialog(QDialog):
                 if index>=0:self.limit.setCurrentIndex(index)
 
     def show_schedule_status(self,message):
-        record=policy.schedule(self.window.library)
+        record=policy.schedule(self.host_window.library)
         if record:
             stamp=lambda value:datetime.fromtimestamp(value,timezone.utc).strftime('%Y-%m-%d %H:%M UTC') if value else '尚無'
             message+=f"\n上次成功：{stamp(record.get('last_success'))}；下次計畫：{stamp(record['next_due'])}；程式關閉時不執行"
@@ -356,11 +361,11 @@ class BackupManagerDialog(QDialog):
 
     def save_schedule(self):
         def action():
-            if self.window.busy:raise ValueError('先在目前工作面板安全取消並等完成，再保存排程')
-            old=policy.schedule(self.window.library);options=self.options()
+            if self.host_window.busy:raise ValueError('先在目前工作面板安全取消並等完成，再保存排程')
+            old=policy.schedule(self.host_window.library);options=self.options()
             if not all(options[k] for k in ('customers','templates','training')):raise ValueError('這三類共用一致性資料庫；先恢復完整資料庫範圍')
             if QMessageBox.question(self,'確認本機排程與保留','沿用立即備份頁明列的來源／字型權利及資料預算。只在程式開啟且已提供本次密碼時執行；依最新份數與天數輪替本程式成功備份，至少保留可驗證完整包。是否保存？')!=QMessageBox.Yes:return
-            policy.configure(self.window.library,self.destination.text(),self.interval.value()*60,self.keep.value(),self.days.value(),options,self.enabled.isChecked(),(old or {}).get('revision',0),allow_partial=self.partial.isChecked())
+            policy.configure(self.host_window.library,self.destination.text(),self.interval.value()*60,self.keep.value(),self.days.value(),options,self.enabled.isChecked(),(old or {}).get('revision',0),allow_partial=self.partial.isChecked())
             self.invalidate_backup();self.scheduler.refresh()
             if self.remember.isChecked():self.scheduler.set_session_password(self.secret())
             self.load_schedule();self.status.setText('排程／保留已保存；密碼未持久化，不代表關閉程式也會執行。')
@@ -378,7 +383,7 @@ class BackupManagerDialog(QDialog):
 
     def prune(self):
         def action():
-            record=policy.schedule(self.window.library)
+            record=policy.schedule(self.host_window.library)
             if not record:raise ValueError('先保存目的地與保留政策')
             password=self.secret()
             if QMessageBox.question(self,'確認精確保留範圍','只處理所設目的地內，本程式成功憑證與目前sha完全相符的舊備份；未知／異動檔保留，至少留可驗證完整包。是否執行？')!=QMessageBox.Yes:return
@@ -387,7 +392,7 @@ class BackupManagerDialog(QDialog):
 
     def refresh_history(self):
         if self.running:return
-        self.history_tree.clear();rows=list(reversed(policy.history(self.window.library)));self.offset=min(self.offset,max(0,((len(rows)-1)//50)*50))
+        self.history_tree.clear();rows=list(reversed(policy.history(self.host_window.library)));self.offset=min(self.offset,max(0,((len(rows)-1)//50)*50))
         for record in rows[self.offset:self.offset+50]:
             state=record['state']+('（移轉帶入，無自動刪檔權利）' if not record.get('owned_by_app') else '')
             node=QTreeWidgetItem([Path(record['path']).name+' · '+datetime.fromtimestamp(record['created']).isoformat(timespec='seconds'),record['scope'],state+('／已測試還原' if record['test_restore'] else '／未測試還原'),record['path']]);node.setData(0,Qt.UserRole,record);self.history_tree.addTopLevelItem(node)
@@ -418,7 +423,7 @@ class BackupManagerDialog(QDialog):
 
     def show_recovery(self):
         def action():
-            record=policy.schedule(self.window.library)
+            record=policy.schedule(self.host_window.library)
             if not record:raise ValueError('先選擇備份目的地')
             rows=policy.recovery_entries(record['directory']);self.status.setText(f'輪替恢復區有{len(rows)}筆意圖／結果；保留的.tabi可從還原頁明確選取，未自動刪除。')
         self.guarded(action)

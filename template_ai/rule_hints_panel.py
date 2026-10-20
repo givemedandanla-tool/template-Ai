@@ -1,4 +1,9 @@
 """Confirmed correction evidence stays pending until generalized and validated."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QInputDialog,QMessageBox
@@ -7,7 +12,7 @@ from .training_store import TrainingStore,text
 
 class RuleHintsPanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.store=TrainingStore(window.library);self.offset=0;self.rows=[]
+        super().__init__(parent);self.host_window: MainWindow=window;self.store=TrainingStore(window.library);self.offset=0;self.rows=[]
         layout=QVBoxLayout(self);bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('本頁修正案例／來源／原因搜尋');self.query.textChanged.connect(self.reload);bar.addWidget(self.query);self.order=QComboBox();self.order.addItems(['RISK','SOURCE','STATE']);self.order.currentIndexChanged.connect(self.reload);bar.addWidget(self.order);layout.addLayout(bar)
         self.status=QLabel('修正立即作用於確切作品；候選線索不等於已驗證通用規則。人物／公司歸屬不從單例擴散。');self.status.setWordWrap(True);layout.addWidget(self.status)
         self.table=QTableWidget(0,4);self.table.setHorizontalHeaderLabels(['風險／狀態','來源作品','已知影響','線索ID']);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.SingleSelection);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.itemSelectionChanged.connect(self.selected);layout.addWidget(self.table,1)
@@ -20,7 +25,7 @@ class RuleHintsPanel(QWidget):
         self.rows=[r for r in self.store.records('RULE_HINT',self.offset,200) if all(word in json.dumps(r,ensure_ascii=False).casefold() for word in self.query.text().casefold().split())]
         self.rows.sort(key=lambda r:(r.get({'SOURCE':'work_id','STATE':'state'}.get(self.order.currentText(),'risk'),''),r['id']));self.table.setRowCount(len(self.rows))
         for i,row in enumerate(self.rows):
-            count=self.window.library.db.execute("SELECT count(*) FROM templates WHERE json_extract(payload,'$.source_work_id')=?",(row['work_id'],)).fetchone()[0]
+            count=self.host_window.library.db.execute("SELECT count(*) FROM templates WHERE json_extract(payload,'$.source_work_id')=?",(row['work_id'],)).fetchone()[0]
             for j,value in enumerate((row['risk']+'／'+row['state'],row['work_id'],f'實際1作品＋{count}引用模板；跨作品適用未知',row['id'])):self.table.setItem(i,j,QTableWidgetItem(value))
         self.status.setText(f'本頁讀取最多200線索，篩選後{len(self.rows)}；高風險逐條，支持案例1件，反例／通用前提／泛化測試未取得則明示缺漏。')
 
@@ -37,7 +42,7 @@ class RuleHintsPanel(QWidget):
     def locate(self):
         try:
             from .training_navigation import locate_work
-            row=self.current();after=row['after'];locate_work(self.window,row['work_id'],[after['slot_id']] if after.get('slot_id') else [])
+            row=self.current();after=row['after'];locate_work(self.host_window,row['work_id'],[after['slot_id']] if after.get('slot_id') else [])
         except Exception as error:self.status.setText(str(error))
 
     def decide(self,state):

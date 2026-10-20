@@ -1,4 +1,9 @@
 """Direct source-canvas marking using the existing object canvas and facts store."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 from dataclasses import asdict
 from PySide6.QtCore import Qt,QRectF
@@ -15,7 +20,7 @@ from .training_quality import analyse_work
 
 class AnnotationDialog(QDialog):
     def __init__(self,window,work_id,parent=None):
-        super().__init__(parent or window);self.window=window;self.library=window.library;self.session=AnnotationSession(self.library,work_id);self.ids=[];self.loading=False;self.form_drafts={};self.form_key=None;self.form_baseline=None
+        super().__init__(parent or window);self.host_window: MainWindow=window;self.library=window.library;self.session=AnnotationSession(self.library,work_id);self.ids=[];self.loading=False;self.form_drafts={};self.form_key=None;self.form_baseline=None
         self.setWindowTitle('原作品直接標記／校正：只改學習中介資料');self.resize(1350,850)
         layout=QVBoxLayout(self);self.status=QLabel('作品邊界與欄位框不同；拖曳／改類型只存候選，明確確認才成作品事實。');self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout()
@@ -42,7 +47,7 @@ class AnnotationDialog(QDialog):
 
     def guarded(self,fn):
         try:
-            if self.window.busy:raise ValueError('背景工作執行中，先保留目前草稿')
+            if self.host_window.busy:raise ValueError('背景工作執行中，先保留目前草稿')
             fn()
         except Exception as error:self.status.setText('未套用：'+str(error))
 
@@ -127,7 +132,7 @@ class AnnotationDialog(QDialog):
         def action():
             from .font_dialog import FontCenterDialog
             context=self.source_font_context();self.cache_form()
-            dialog=FontCenterDialog(self.window,source_context=context)
+            dialog=FontCenterDialog(self.host_window,source_context=context)
             try:dialog.refresh();dialog.exec()
             finally:dialog.deleteLater()
         self.guarded(action)
@@ -155,7 +160,7 @@ class AnnotationDialog(QDialog):
             ids=[o['id'] for o in self.session.observations if o.get('slot_id') in self.ids or o['id']==self.observation_id]
             if not ids:raise ValueError('先選明確來源觀察')
             from .training_quality_dialog import TrainingQualityDialog
-            dialog=TrainingQualityDialog(self.window);dialog.tabs.setCurrentWidget(dialog.facts_panel);dialog.facts_panel.focus(self.session.base['id'],ids)
+            dialog=TrainingQualityDialog(self.host_window);dialog.tabs.setCurrentWidget(dialog.facts_panel);dialog.facts_panel.focus(self.session.base['id'],ids)
             dialog.exec();dialog.deleteLater();self.session=AnnotationSession(self.library,self.session.base['id']);self.refresh()
         self.guarded(action)
 
@@ -263,7 +268,7 @@ class AnnotationDialog(QDialog):
             if QMessageBox.question(self,'只確認目前作品所選事實','\n'.join(o['text'] for o in selected)+'\n保留本版本先前已確認項目；不核准通用規則或發布。')!=QMessageBox.Yes:return
             record=self.session.store.facts(work['id']);self.session.store.confirm_facts(work['id'],[o['id'] for o in selected],record['revision'],record['pins'],self.session.store.source_proof(work['id']),'LOCAL_OPERATOR',True)
             self.session.facts=self.session.store.facts(work['id']);self.refresh()
-            if hasattr(self.window,'schedule_affected_work'):self.window.schedule_affected_work(work['id'])
+            if hasattr(self.host_window,'schedule_affected_work'):self.host_window.schedule_affected_work(work['id'])
         self.guarded(action)
 
     def split(self):

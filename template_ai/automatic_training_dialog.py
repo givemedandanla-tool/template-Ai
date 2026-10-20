@@ -1,4 +1,9 @@
 """One preflight/start action with persistent, independently reviewed work units."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import threading
 from copy import deepcopy
 from pathlib import Path
@@ -16,7 +21,7 @@ class Progress(QObject):
 class AutomaticTrainingDialog(QDialog):
     job_created=Signal(object)
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.service=AutomaticTraining(window.library)
+        super().__init__(window);self.host_window: MainWindow=window;self.service=AutomaticTraining(window.library)
         self.report=None;self.running=False;self.job_offset=0;self.cancel_event=threading.Event();self.progress_signal=Progress(self)
         self.progress_signal.updated.connect(self.render,Qt.QueuedConnection)
         self.progress_signal.scanned.connect(self.scan_progress,Qt.QueuedConnection)
@@ -39,19 +44,19 @@ class AutomaticTrainingDialog(QDialog):
         button=QPushButton(label);button.clicked.connect(fn);bar.addWidget(button);return button
 
     def pick_files(self):
-        if self.running or self.window.busy:return
+        if self.running or self.host_window.busy:return
         paths,_=QFileDialog.getOpenFileNames(self,'選來源檔','','設計來源 (*.ai *.eps *.pdf *.svg *.png *.jpg *.jpeg)')
         if paths:self.preflight(paths)
 
     def pick_folder(self):
-        if self.running or self.window.busy:return
+        if self.running or self.host_window.busy:return
         path=QFileDialog.getExistingDirectory(self,'選來源資料夾')
         if path:self.preflight([path])
 
     def preflight(self,paths,expected_hashes=None):
-        if self.running or self.window.busy:return
+        if self.running or self.host_window.busy:return
         self.request_id=None
-        root=self.window.library.root;self.start_button.setEnabled(False);self.report=None;self.running=True;self.cancel_event.clear();self.cancel_button.setEnabled(True);self.table.setRowCount(0);self.status.setText('掃描來源中，取消在目前檔案步驟完成後生效')
+        root=self.host_window.library.root;self.start_button.setEnabled(False);self.report=None;self.running=True;self.cancel_event.clear();self.cancel_button.setEnabled(True);self.table.setRowCount(0);self.status.setText('掃描來源中，取消在目前檔案步驟完成後生效')
         def worker():
             from .storage import Library
             library=None
@@ -71,7 +76,7 @@ class AutomaticTrainingDialog(QDialog):
             import json
             r=self.report
             self.details.setPlainText(f"檔案位元重複{r['file_duplicates']}；健康快取可重用{r['reuse_candidates']}；近似檔案候選{r['near_file_candidates']}；作品重複候選{r['artwork_duplicates']}；模板結構相似{r['template_similarity']}；未核實{r['similarity_unknown']}。\n近似不等於相同；不刪除來源或合併客戶。\n"+json.dumps(r['similarity'],ensure_ascii=False,indent=2))
-        try:self.window.run_job('掃描及來源預檢',worker,finished,on_error=self.job_error,cancel=self.cancel_event)
+        try:self.host_window.run_job('掃描及來源預檢',worker,finished,on_error=self.job_error,cancel=self.cancel_event)
         except Exception as error:self.running=False;self.cancel_button.setEnabled(False);self.status.setText('預檢無法啟動：'+str(error))
 
     def scan_progress(self,progress):
@@ -99,14 +104,14 @@ class AutomaticTrainingDialog(QDialog):
         if job['phase']!='PREFLIGHT':self.status.setText(job['phase']+f"；來源{len(items)}，成功{sum(i.get('state')=='SUCCESS' for i in items)}，待核對{sum(i.get('state')=='WAITING_REVIEW' for i in items)}，失敗{sum(i.get('state')=='FAILED' for i in items)}。未自動發布。")
 
     def start(self):
-        if not self.report or self.running or self.window.busy:return
+        if not self.report or self.running or self.host_window.busy:return
         try:
             if QMessageBox.question(self,'確認預檢並一鍵開始',f"來源{len(self.report['items'])}，位元重複{self.report['file_duplicates']}。\n自動作品候選、標記、品質與已授權幾何學習；不核准新事實、不建立真實客戶、不發布。")==QMessageBox.Yes:self.prepare_job()
         except Exception as error:self.status.setText('未開始：'+str(error))
 
     def prepare_job(self):
         self.request_id=None
-        root=self.window.library.root;report=deepcopy(self.report);actor=self.actor.text();self.running=True;self.cancel_event.clear();self.cancel_button.setEnabled(True);self.start_button.setEnabled(False)
+        root=self.host_window.library.root;report=deepcopy(self.report);actor=self.actor.text();self.running=True;self.cancel_event.clear();self.cancel_button.setEnabled(True);self.start_button.setEnabled(False)
         def worker():
             from .storage import Library
             from .source_links import ScanCancelled
@@ -122,11 +127,11 @@ class AutomaticTrainingDialog(QDialog):
             self.job_created.emit(self.service.get(result['job_id']))
             if self.cancel_event.is_set():self.status.setText('啟動已取消；已保存READY工作未執行，可稍後明確續跑');self.reload();self.start_button.setEnabled(self.report is not None);return
             self.start_job(self.service.get(result['job_id']))
-        try:self.window.run_job('背景核對完整來源／頁次清單',worker,finished,on_error=self.job_error,cancel=self.cancel_event)
+        try:self.host_window.run_job('背景核對完整來源／頁次清單',worker,finished,on_error=self.job_error,cancel=self.cancel_event)
         except Exception as error:self.running=False;self.cancel_button.setEnabled(False);self.start_button.setEnabled(True);self.status.setText('未開始：'+str(error))
 
     def resume(self):
-        if self.running or self.window.busy or not self.jobs.currentData():return
+        if self.running or self.host_window.busy or not self.jobs.currentData():return
         job=self.service.get(self.jobs.currentData())
         if QMessageBox.question(self,'接續確切持久工作',job['id']+'\n保留既有成果，只重分析變更單元；失敗項依勾選重試。')==QMessageBox.Yes:self.start_job(job)
 
@@ -134,16 +139,16 @@ class AutomaticTrainingDialog(QDialog):
         if self.running:return
         claimed=None
         try:
-            dispatcher=getattr(self.window,'execution_queue',None)
+            dispatcher=getattr(self.host_window,'execution_queue',None)
             if dispatcher:
                 request=dispatcher.submit('AUTO_JOB',job,self.actor.text() or job['actor'],self.retry.isChecked());self.request_id=request['id'];self.running=True;self.start_button.setEnabled(False);self.resume_button.setEnabled(False);self.cancel_button.setEnabled(True);self.status.setText('執行範圍已持久確認，依先進先出等待資源；尚未宣稱分析或人審完成');return
-            supervisor=getattr(self.window,'runtime',None)
+            supervisor=getattr(self.host_window,'runtime',None)
             if supervisor:
                 decision=supervisor.admit('ANALYSIS',requested=True)
                 if not decision.allowed:self.status.setText('未取得工作；等待背景資源：'+','.join(decision.reasons));return
             claimed=self.service.claim(job['id'],job['revision'],True,self.retry.isChecked());self.running=True;self.cancel_event.clear()
             self.start_button.setEnabled(False);self.resume_button.setEnabled(False);self.cancel_button.setEnabled(True)
-            root=self.window.library.root;identity=claimed['id'];token=claimed['owner']['token'];cancel=self.cancel_event;signal=self.progress_signal.updated
+            root=self.host_window.library.root;identity=claimed['id'];token=claimed['owner']['token'];cancel=self.cancel_event;signal=self.progress_signal.updated
             def worker():
                 try:return dict(job=run_automatic(root,identity,token,cancel,signal.emit,admission=(lambda:supervisor.admit('ANALYSIS')) if supervisor else None))
                 except Exception as error:return dict(error=str(error))
@@ -151,8 +156,8 @@ class AutomaticTrainingDialog(QDialog):
                 self.running=False;self.cancel_button.setEnabled(False);self.resume_button.setEnabled(True);self.start_button.setEnabled(self.report is not None)
                 if result.get('job'):self.render(result['job'])
                 else:self.status.setText('工作未完成：'+result['error']+'；依持久狀態接續')
-                self.reload();self.window.refresh_sources(preserve_editor=True);self.window.refresh_templates(preserve_editor=True)
-            self.window.run_job('來源→作品→標記→品質→學習候選',worker,finished)
+                self.reload();self.host_window.refresh_sources(preserve_editor=True);self.host_window.refresh_templates(preserve_editor=True)
+            self.host_window.run_job('來源→作品→標記→品質→學習候選',worker,finished)
         except Exception as error:
             if claimed:
                 try:self.service.finish(claimed['id'],claimed['owner']['token'],'FAILED_SYSTEM',str(error))
@@ -171,7 +176,7 @@ class AutomaticTrainingDialog(QDialog):
 
     def cancel(self):
         if self.request_id:
-            try:self.window.execution_queue.cancel(self.request_id)
+            try:self.host_window.execution_queue.cancel(self.request_id)
             except Exception as error:self.status.setText('取消未保存：'+str(error))
         else:self.cancel_event.set()
 

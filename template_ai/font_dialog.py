@@ -1,4 +1,9 @@
 """共用字型中心；查詢與診斷不替換模板，Qt字型物件不跨執行緒。"""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QComboBox,QDialog,QDialogButtonBox,QDoubleSpinBox,QHBoxLayout,QLabel,QLineEdit,
     QPushButton,QTableWidget,QTableWidgetItem,QVBoxLayout)
@@ -9,7 +14,7 @@ from .font_catalog import STATUS_NAMES,analyze_font,build_inventory,filter_inven
 class FontCenterDialog(QDialog):
     def __init__(self,window,source_context=None):
         super().__init__(window)
-        self.window=window
+        self.host_window: MainWindow=window
         self.busy=False
         self.analysis_generation=0
         self.inventory=None
@@ -54,17 +59,17 @@ class FontCenterDialog(QDialog):
         layout.addWidget(self.details)
         inputs=QHBoxLayout()
         self.text=QLineEdit("Alex Example 0900-123-456"); self.text.setMaxLength(4096); inputs.addWidget(self.text,1)
-        self.size=QDoubleSpinBox(); self.size.setRange(1,200); self.size.setValue(10); self.size.setSuffix(" pt"); inputs.addWidget(self.size)
-        self.width=QDoubleSpinBox(); self.width.setRange(.001,2000); self.width.setDecimals(3); self.width.setValue(80); self.width.setSuffix(" mm"); inputs.addWidget(self.width)
+        self.size_input=QDoubleSpinBox(); self.size_input.setRange(1,200); self.size_input.setValue(10); self.size_input.setSuffix(" pt"); inputs.addWidget(self.size_input)
+        self.width_input=QDoubleSpinBox(); self.width_input.setRange(.001,2000); self.width_input.setDecimals(3); self.width_input.setValue(80); self.width_input.setSuffix(" mm"); inputs.addWidget(self.width_input)
         self.minimum=QDoubleSpinBox(); self.minimum.setRange(5,100); self.minimum.setValue(85); self.minimum.setSuffix(" % 最小字寬"); inputs.addWidget(self.minimum)
-        self.style=QComboBox(); inputs.addWidget(self.style)
+        self.style_input=QComboBox(); inputs.addWidget(self.style_input)
         self.analyze_button=QPushButton("診斷所選字面"); self.analyze_button.clicked.connect(self.analyze); self.analyze_button.setEnabled(False); inputs.addWidget(self.analyze_button)
         layout.addLayout(inputs)
-        self.result=QLabel("診斷僅判斷所選單行字形／字寬；不改字級、不截字、不核准完整輸出或授權。")
-        self.result.setTextFormat(Qt.PlainText); self.result.setWordWrap(True); self.result.setTextInteractionFlags(Qt.TextSelectableByMouse); layout.addWidget(self.result)
-        for widget in (self.text,self.size,self.width,self.minimum):
+        self.measurement_label=QLabel("診斷僅判斷所選單行字形／字寬；不改字級、不截字、不核准完整輸出或授權。")
+        self.measurement_label.setTextFormat(Qt.PlainText); self.measurement_label.setWordWrap(True); self.measurement_label.setTextInteractionFlags(Qt.TextSelectableByMouse); layout.addWidget(self.measurement_label)
+        for widget in (self.text,self.size_input,self.width_input,self.minimum):
             (widget.textChanged if widget is self.text else widget.valueChanged).connect(self.diagnostic_inputs_changed)
-        self.style.currentIndexChanged.connect(self.diagnostic_style_changed)
+        self.style_input.currentIndexChanged.connect(self.diagnostic_style_changed)
         actions=QHBoxLayout()
         self.candidates_button=QPushButton("替代候選排名與唯讀預覽"); self.candidates_button.clicked.connect(self.open_candidates); actions.addWidget(self.candidates_button)
         self.import_button=QPushButton("匯入合法本機字型"); self.import_button.clicked.connect(self.import_font); actions.addWidget(self.import_button)
@@ -87,7 +92,7 @@ class FontCenterDialog(QDialog):
     def clear_result(self,*_):
         self.analysis_generation+=1
         self.identity_report=None;self.identity_label.setText('來源身分尚未核對；未變更來源或模板。')
-        self.result.setText("診斷輸入或字面已改變；請重新診斷。字型／模板與輸出未變更。")
+        self.measurement_label.setText("診斷輸入或字面已改變；請重新診斷。字型／模板與輸出未變更。")
 
     def diagnostic_inputs_changed(self,*_):
         self.measurements.clear();self.clear_result();self.filter_rows()
@@ -99,7 +104,7 @@ class FontCenterDialog(QDialog):
 
     def show_cached_analysis(self):
         row=self.selected();value=self.measurements.get(row['id']) if row else None
-        if value and value.get('style')==self.style.currentText():self.show_analysis(value)
+        if value and value.get('style')==self.style_input.currentText():self.show_analysis(value)
 
     def update_windows_action(self):
         import sys
@@ -109,13 +114,13 @@ class FontCenterDialog(QDialog):
     def open_windows_workflow(self):
         import sys
         row=self.selected()
-        if self.busy or self.window.busy:return
+        if self.busy or self.host_window.busy:return
         if sys.platform!='win32' or not row or not row.get('asset'):self.status.setText('需Windows與已核對的程式內字型來源；未啟動或安裝。');return
         from .windows_font_dialog import WindowsFontWorkflowDialog
         dialog=WindowsFontWorkflowDialog(self);dialog.exec();dialog.deleteLater()
 
     def start(self,message,work,done):
-        if self.busy or self.window.busy: return
+        if self.busy or self.host_window.busy: return
         self.busy=True; self.status.setText(message)
         for button in (self.refresh_button,self.analyze_button,self.import_button,self.repair_button,self.candidates_button,self.source_button,self.identity_button,self.windows_button): button.setEnabled(False)
         self.table.setEnabled(False)
@@ -132,11 +137,11 @@ class FontCenterDialog(QDialog):
             self.analyze_button.setEnabled(self.selected() is not None)
             self.identity_button.setEnabled(bool(self.selected() and self.source_reference))
             self.update_windows_action()
-        self.window.run_job(message,guarded,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
+        self.host_window.run_job(message,guarded,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
 
     def refresh(self):
-        if self.busy or self.window.busy: return
-        assets=self.window.library.fonts(); templates=self.window.library.templates()
+        if self.busy or self.host_window.busy: return
+        assets=self.host_window.library.fonts(); templates=self.host_window.library.templates()
         hosts,partial=host_candidates()
         self.inventory=None;self.measurements.clear(); self.table.setRowCount(0); self.clear_result()
         def inventory():
@@ -153,7 +158,7 @@ class FontCenterDialog(QDialog):
 
     def filter_rows(self,*_):
         if self.busy or not self.inventory: return
-        selected=self.selected();old_id=selected['id'] if selected else None;old_style=self.style.currentText()
+        selected=self.selected();old_id=selected['id'] if selected else None;old_style=self.style_input.currentText()
         self.visible_rows=filter_inventory(self.inventory["rows"],self.query.text(),self.kind.currentData(),self.health.currentData(),rights=self.rights.currentData(),glyph=self.glyph.currentData(),measurements=self.measurements)
         self.table.blockSignals(True); self.table.setRowCount(len(self.visible_rows))
         for i,row in enumerate(self.visible_rows):
@@ -173,7 +178,7 @@ class FontCenterDialog(QDialog):
         self.table.blockSignals(False)
         self.selection_changed()
         if index is not None and old_style in self.visible_rows[index]['styles']:
-            self.style.blockSignals(True);self.style.setCurrentText(old_style);self.style.blockSignals(False)
+            self.style_input.blockSignals(True);self.style_input.setCurrentText(old_style);self.style_input.blockSignals(False)
         self.show_cached_analysis()
 
     def selected(self):
@@ -181,14 +186,14 @@ class FontCenterDialog(QDialog):
         return self.visible_rows[rows[0].row()] if rows and rows[0].row()<len(self.visible_rows) else None
 
     def selection_changed(self):
-        row=self.selected(); self.style.blockSignals(True); self.style.clear()
+        row=self.selected(); self.style_input.blockSignals(True); self.style_input.clear()
         if row:
-            self.style.addItems(row["styles"])
+            self.style_input.addItems(row["styles"])
             refs=[f"{r['template_name']} v{r['version']}（{r['state']}）／{r['owner']}／{r['kind']} · {r['slot_id']}"+
                   (" · 引用家族不符" if r.get("binding_valid") is False else "") for r in row["references"]]
             self.details.setText("；".join(row["notes"])+"\n"+"\n".join(refs[:12])+(f"\n另有{len(refs)-12}條引用；本輪僅展示前12條" if len(refs)>12 else ""))
         else: self.details.setText("尚未選取條目；不預設核准或替換字型")
-        self.style.blockSignals(False); self.analyze_button.setEnabled(bool(row) and not self.busy); self.clear_result()
+        self.style_input.blockSignals(False); self.analyze_button.setEnabled(bool(row) and not self.busy); self.clear_result()
         self.show_cached_analysis()
         self.identity_button.setEnabled(bool(row and self.source_reference and not self.busy))
         self.update_windows_action()
@@ -196,12 +201,12 @@ class FontCenterDialog(QDialog):
     def analyze(self):
         row=self.selected()
         if not row or self.busy: return
-        text,size,width,minimum,style=self.text.text(),self.size.value(),self.width.value(),self.minimum.value()/100,self.style.currentText()
+        text,size,width,minimum,style=self.text.text(),self.size_input.value(),self.width_input.value(),self.minimum.value()/100,self.style_input.currentText()
         generation=self.analysis_generation
         def publish(result):
             if generation!=self.analysis_generation:
                 self.filter_rows()
-                self.result.setText("診斷期間輸入已變更，結果過期；請重新診斷。")
+                self.measurement_label.setText("診斷期間輸入已變更，結果過期；請重新診斷。")
                 self.status.setText("未將舊診斷套用到新輸入")
             else:
                 if len(self.measurements)>=64:self.measurements.pop(next(iter(self.measurements)))
@@ -209,7 +214,7 @@ class FontCenterDialog(QDialog):
         self.start("背景核對實際字形與固定字級單行寬度",lambda:analyze_font(row,text,size,width,minimum,style or None),publish)
 
     def choose_source_font(self):
-        if self.busy or self.window.busy:return
+        if self.busy or self.host_window.busy:return
         from PySide6.QtWidgets import QFileDialog,QInputDialog
         from .font_evidence import inspect_font
         path,_=QFileDialog.getOpenFileName(self,'只讀指定有權提供的來源字型參考','','字型 (*.ttf *.otf *.ttc)')
@@ -225,7 +230,7 @@ class FontCenterDialog(QDialog):
 
     def verify_source_identity(self):
         row=self.selected()
-        if self.busy or self.window.busy or not row or not self.source_reference:return
+        if self.busy or self.host_window.busy or not row or not self.source_reference:return
         from .source_text_evidence import identity_match
         reference=dict(self.source_reference);asset=row.get('asset') or {};face=asset.get('font_evidence',{});candidate={**asset,'family':face.get('family') or next(iter(row['families']),''),'postscript_name':face.get('postscript_name'),'unique_name':face.get('unique_name')};generation=self.analysis_generation
         registered_only=False
@@ -253,12 +258,12 @@ class FontCenterDialog(QDialog):
         measured="未核驗" if result["width_mm"] is None else f"{result['width_mm']:.4f} mm"
         scale="未核驗" if result["scale"] is None else f"{result['scale']*100:.3f}%"
         verdict={"FEASIBLE_WIDTH":"此單行字形與寬度範圍可行","BLOCKED":"字形／字面／寬度驗證未通過","NO_TEXT":"無實際文字"}[result["status"]]
-        self.result.setText(f"{verdict} · 固定 {result['size_pt']:g} pt\n實際字面：{result.get('family','未證實')}／{result.get('style','未證實')}\n覆蓋率 {coverage}；實測寬度 {measured}；需要水平比例 {scale}\n"+
+        self.measurement_label.setText(f"{verdict} · 固定 {result['size_pt']:g} pt\n實際字面：{result.get('family','未證實')}／{result.get('style','未證實')}\n覆蓋率 {coverage}；實測寬度 {measured}；需要水平比例 {scale}\n"+
                             "；".join(result["issues"]+result["missing"][:20])+"\n"+result["scope"])
         self.status.setText("所選條目診斷完成；未改模板、來源或輸出核准")
 
     def import_font(self):
-        if not self.busy and not self.window.busy: self.window.import_font(); self.refresh()
+        if not self.busy and not self.host_window.busy: self.host_window.import_font(); self.refresh()
 
     def attest_rights(self):
         from PySide6.QtWidgets import QInputDialog,QMessageBox
@@ -270,17 +275,17 @@ class FontCenterDialog(QDialog):
         if not ok:return
         pdf=QMessageBox.question(self,'PDF嵌入用途','授權是否也明確允許PDF嵌入？\nOpenType技術限制仍會獨立檢查；選否仍可核對點陣輸出。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)==QMessageBox.Yes
         if QMessageBox.question(self,'確認授權範圍','只更新所選字面記錄；既有模板不會被自動改寫，需另建草稿重新套用並驗證。是否確認？',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
-        try:self.window.font_manager.record_output_rights(row['asset'],actor,basis,pdf);self.refresh()
-        except (ValueError,OSError) as error:self.result.setText(str(error))
+        try:self.host_window.font_manager.record_output_rights(row['asset'],actor,basis,pdf);self.refresh()
+        except (ValueError,OSError) as error:self.measurement_label.setText(str(error))
 
     def open_candidates(self):
-        if self.busy or self.window.busy: return
+        if self.busy or self.host_window.busy: return
         from .font_candidate_dialog import FontCandidateDialog
         dialog=FontCandidateDialog(self)
         dialog.exec()
 
     def repair_font(self):
-        if not self.busy and not self.window.busy: self.window.repair_font(); self.refresh()
+        if not self.busy and not self.host_window.busy: self.host_window.repair_font(); self.refresh()
 
     def reject(self):
         if self.busy: self.status.setText("工作正在安全核對；請等候完成再關閉"); return

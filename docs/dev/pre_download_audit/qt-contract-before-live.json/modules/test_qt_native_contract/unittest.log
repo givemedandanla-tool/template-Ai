@@ -1,0 +1,56 @@
+test_main_window_keeps_native_font_and_geometry_methods (test_qt_native_contract.QtNativeContractTests.test_main_window_keeps_native_font_and_geometry_methods) ... ERROR
+test_input_editor_keeps_native_owner_and_scroll_methods (test_qt_native_contract.QtNativeContractTests.test_input_editor_keeps_native_owner_and_scroll_methods) ... ERROR
+test_font_windows_keep_native_geometry_style_and_result_methods (test_qt_native_contract.QtNativeContractTests.test_font_windows_keep_native_geometry_style_and_result_methods) ... 
+  test_font_windows_keep_native_geometry_style_and_result_methods (test_qt_native_contract.QtNativeContractTests.test_font_windows_keep_native_geometry_style_and_result_methods) (dialog='FontCenterDialog') ... ERROR
+  test_font_windows_keep_native_geometry_style_and_result_methods (test_qt_native_contract.QtNativeContractTests.test_font_windows_keep_native_geometry_style_and_result_methods) (dialog='FontCandidateDialog') ... ERROR
+test_logo_comparison_keeps_native_layout_access (test_qt_native_contract.QtNativeContractTests.test_logo_comparison_keeps_native_layout_access) ... ERROR
+
+======================================================================
+ERROR: test_main_window_keeps_native_font_and_geometry_methods (test_qt_native_contract.QtNativeContractTests.test_main_window_keeps_native_font_and_geometry_methods)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_qt_native_contract.py", line 32, in test_main_window_keeps_native_font_and_geometry_methods
+    self.assertIsInstance(self.window.font(), QFont)
+                          ^^^^^^^^^^^^^^^^^^
+TypeError: 'PySide6.QtWidgets.QFontComboBox' object is not callable
+
+======================================================================
+ERROR: test_input_editor_keeps_native_owner_and_scroll_methods (test_qt_native_contract.QtNativeContractTests.test_input_editor_keeps_native_owner_and_scroll_methods)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_qt_native_contract.py", line 41, in test_input_editor_keeps_native_owner_and_scroll_methods
+    self.assertIs(dialog.window(), dialog)
+                  ^^^^^^^^^^^^^^^
+TypeError: 'MainWindow' object is not callable
+
+======================================================================
+ERROR: test_font_windows_keep_native_geometry_style_and_result_methods (test_qt_native_contract.QtNativeContractTests.test_font_windows_keep_native_geometry_style_and_result_methods) (dialog='FontCenterDialog')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_qt_native_contract.py", line 51, in test_font_windows_keep_native_geometry_style_and_result_methods
+    self.assertIs(dialog.window(), dialog)
+                  ^^^^^^^^^^^^^^^
+TypeError: 'MainWindow' object is not callable
+
+======================================================================
+ERROR: test_font_windows_keep_native_geometry_style_and_result_methods (test_qt_native_contract.QtNativeContractTests.test_font_windows_keep_native_geometry_style_and_result_methods) (dialog='FontCandidateDialog')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_qt_native_contract.py", line 51, in test_font_windows_keep_native_geometry_style_and_result_methods
+    self.assertIs(dialog.window(), dialog)
+                  ^^^^^^^^^^^^^^^
+TypeError: 'MainWindow' object is not callable
+
+======================================================================
+ERROR: test_logo_comparison_keeps_native_layout_access (test_qt_native_contract.QtNativeContractTests.test_logo_comparison_keeps_native_layout_access)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_qt_native_contract.py", line 60, in test_logo_comparison_keeps_native_layout_access
+    self.assertIsInstance(comparison.layout(), QVBoxLayout)
+                          ^^^^^^^^^^^^^^^^^^^
+TypeError: 'PySide6.QtWidgets.QVBoxLayout' object is not callable
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.465s
+
+FAILED (errors=5)

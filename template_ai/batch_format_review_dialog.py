@@ -1,4 +1,9 @@
 """Read-only per-target format review using the same proof/detail/review engines."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import copy,json,threading
 from pathlib import Path
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QLineEdit,QCheckBox,QPushButton,QPlainTextEdit
@@ -11,7 +16,7 @@ from .worker_callbacks import JobCallbacks
 
 class BatchFormatReviewDialog(QDialog):
     def __init__(self,batch,row):
-        super().__init__(batch);self.batch=batch;self.workflow=batch.owner.service;self.window=batch.window;self.row=copy.deepcopy(row);self.format=Path(row['path']).suffix[1:].upper();self.dpi=batch.dpi.value();self.proof=None;self.running=False;self.cancel=threading.Event();self.detail=None;self.setWindowTitle('此筆尺寸／格式實際快照核對');self.resize(850,690)
+        super().__init__(batch);self.batch=batch;self.workflow=batch.owner.service;self.host_window: MainWindow=batch.host_window;self.row=copy.deepcopy(row);self.format=Path(row['path']).suffix[1:].upper();self.dpi=batch.dpi.value();self.proof=None;self.running=False;self.cancel=threading.Event();self.detail=None;self.setWindowTitle('此筆尺寸／格式實際快照核對');self.resize(850,690)
         box=QVBoxLayout(self);self.status=QLabel(f'僅此筆 {row["id"]}／{row["key"]}／{self.format}／{self.dpi} DPI；不核准其他尺寸、格式或資料。');self.status.setWordWrap(True);box.addWidget(self.status)
         self.inspect_button=QPushButton('產生此筆原尺寸實際格式快照');self.inspect_button.clicked.connect(self.inspect);box.addWidget(self.inspect_button);self.objects=QComboBox();box.addWidget(self.objects);self.detail_button=QPushButton('選取物件／Logo來源與實際輸出比對');self.detail_button.clicked.connect(self.open_detail);self.detail_button.setEnabled(False);box.addWidget(self.detail_button)
         self.actor=QLineEdit();self.actor.setPlaceholderText('具名格式核對者');self.evidence=QLineEdit();self.evidence.setPlaceholderText('此筆來源／文字／完整Logo及輸出細節核對依據');self.consent=QCheckBox('我已核對此筆原尺寸、格式、DPI的實際快照');box.addWidget(self.actor);box.addWidget(self.evidence);box.addWidget(self.consent)
@@ -32,7 +37,7 @@ class BatchFormatReviewDialog(QDialog):
         except (ValueError,OSError,StopIteration):return False
     def set_running(self,value):self.running=value;self.inspect_button.setEnabled(not value);self.confirm_button.setEnabled(not value);self.detail_button.setEnabled(not value and self.proof is not None)
     def dispatch(self,label,work,done):
-        if self.running or self.window.busy:self.status.setText('原共享背景工作尚未結束');return
+        if self.running or self.host_window.busy:self.status.setText('原共享背景工作尚未結束');return
         self.cancel=threading.Event();cancel=self.cancel;self.set_running(True)
         def run():
             result=work()
@@ -43,7 +48,7 @@ class BatchFormatReviewDialog(QDialog):
             if not self.current():self.status.setText('目標／來源／格式已改變，舊結果未採用。');return
             done(value)
         def failed(error):self.set_running(False);self.status.setText('本筆未確認：'+str(error))
-        self.window.run_job(label,run,JobCallbacks(finished,failed,cancel))
+        self.host_window.run_job(label,run,JobCallbacks(finished,failed,cancel))
     def inspect(self):
         try:
             if not self.current():raise ValueError('目前目標已變，請重新由該筆開啟')
@@ -61,7 +66,7 @@ class BatchFormatReviewDialog(QDialog):
             def opened(value):
                 from .preflight_detail import PreflightDetailDialog
                 if self.detail:self.detail.close();self.detail.deleteLater()
-                a,b,detail,picture=value;self.detail=PreflightDetailDialog(self.window,item,proof,a,b,detail,picture,parent=self);self.detail.show()
+                a,b,detail,picture=value;self.detail=PreflightDetailDialog(self.host_window,item,proof,a,b,detail,picture,parent=self);self.detail.show()
             self.dispatch('逐筆物件來源／實際格式比較',work,opened)
         except (ValueError,OSError,StopIteration) as error:self.status.setText(str(error))
     def form_pin(self):return digest(dict(actor=self.actor.text(),evidence=self.evidence.text(),consent=self.consent.isChecked(),target=self.token()))

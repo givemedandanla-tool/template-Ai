@@ -1,4 +1,9 @@
 """Two-mode advanced object editor: stable selection, dirty patch, previews and durable history."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import copy
 import json
 from PySide6.QtCore import Qt,QPointF,QRectF,Signal
@@ -203,7 +208,7 @@ def canvas_controls(canvas,library=None):
 
 class ObjectToolsDialog(QDialog):
     def __init__(self,window,kind,entity_id,parent=None):
-        super().__init__(parent or window);self.window=window;self.library=window.library;self.kind=kind;self.entity_id=entity_id
+        super().__init__(parent or window);self.host_window: MainWindow=window;self.library=window.library;self.kind=kind;self.entity_id=entity_id
         self.ids=[];self.dirty=set();self.loading=True;self.plan=None;self.request=None;self.generation=0;self._preview_generation=None;self.retained_patch=None;self.incomplete_inputs={}
         self.hidden_ids=set();self.dim_ids=set();self.structure={'status':'UNKNOWN','nodes':[]};self.tree_nodes=[]
         self.setWindowTitle('安全多選／精確對齊 · 候選、鎖定與持久歷史');self.resize(1450,1000)
@@ -461,7 +466,7 @@ class ObjectToolsDialog(QDialog):
             editor=self.editors[key];self.context_form.setRowVisible(editor,text or self.pin_text.isChecked() or self.all_properties.isChecked())
             if not text:editor.setEnabled(False)
     def context_current(self):
-        if not hasattr(self,'snapshot') or self.library.closed or self.window.library is not self.library:return False
+        if not hasattr(self,'snapshot') or self.library.closed or self.host_window.library is not self.library:return False
         try:
             current=self.library.object_snapshot(self.kind,self.entity_id)
             return current['revision']==self.snapshot['revision'] and fingerprint(current['payload'])==fingerprint(self.snapshot['payload'])
@@ -470,7 +475,7 @@ class ObjectToolsDialog(QDialog):
         if not self.context_current():self.update_context();return '來源已變更；請重新載入並選取，未使用過期物件。'
         if self.dirty or self.retained_patch:return '屬性仍待套用／核對；先完成或明確放棄，未改動框位。'
         if self.canvas.readonly:return '來源唯讀；請沿用既有草稿修改流程。'
-        if self.window.busy:return '正在處理既有工作；未重複提交。'
+        if self.host_window.busy:return '正在處理既有工作；未重複提交。'
         return ''
     def canvas_command(self,command):
         if command=='DELETE':self.preview_request(dict(operation='DELETE',ids=self.ids.copy(),cross_owner=self.cross.isChecked()))
@@ -492,10 +497,10 @@ class ObjectToolsDialog(QDialog):
         pins=load_tool_pins(self.library);pins.add('text') if checked else pins.discard('text')
         try:save_tool_pins(self.library,pins)
         except Exception:self.status.setText('工具偏好未保存；當次顯示保留，未變更物件。')
-        context=getattr(self.window,'right_context',None)
+        context=getattr(self.host_window,'right_context',None)
         if context is not None:
             context.pins=pins
-            with QSignalBlocker(self.window.property_pin_checks['text']):self.window.property_pin_checks['text'].setChecked(checked)
+            with QSignalBlocker(self.host_window.property_pin_checks['text']):self.host_window.property_pin_checks['text'].setChecked(checked)
             context.sync()
         self.update_context()
     def inspect_pending(self):
@@ -543,12 +548,12 @@ class ObjectToolsDialog(QDialog):
         except Exception as error:self.plan=None;self.request=None;self.status.setText('候選拒絕：'+str(error));self.apply_button.setEnabled(False)
     def after_write(self):
         self.dirty.clear();self.retained_patch=None;self.incomplete_inputs.clear();self.retained_button.hide()
-        w=self.window
+        w=self.host_window
         if self.kind=='TEMPLATE' and w.template and w.template.id==self.entity_id:w.template=None;w.refresh_templates(self.entity_id)
         elif self.kind=='ARTWORK' and w.work and w.work['id']==self.entity_id:w.load_work(self.library.artwork(self.entity_id))
         w.invalidate();self.reload()
     def main_content_clean(self):
-        w=self.window
+        w=self.host_window
         if self.kind=='TEMPLATE' and w.template and w.template.id==self.entity_id:
             base=getattr(w,'template_base_payload',None)
             if base is None or Template.from_dict(base)!=w.template:raise ValueError('主編輯有未保存手工內容，未覆蓋')

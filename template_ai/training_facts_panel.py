@@ -1,4 +1,9 @@
 """Human source observations and explicit work-fact confirmation, using the shared store."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import copy
 import json
 from PySide6.QtCore import Qt, QThreadPool
@@ -10,7 +15,7 @@ from .training_store import TrainingStore
 
 class FactsPanel(QWidget):
     def __init__(self, window, parent=None):
-        super().__init__(parent); self.window = window; self.store = TrainingStore(window.library); self.loaded = None; self.running = False; self.jobs = {}; self.offset = 0
+        super().__init__(parent); self.host_window: MainWindow = window; self.store = TrainingStore(window.library); self.loaded = None; self.running = False; self.jobs = {}; self.offset = 0
         outer = QVBoxLayout(self); bar = QHBoxLayout(); self.work_combo = QComboBox(); self.work_combo.currentIndexChanged.connect(self.load); bar.addWidget(self.work_combo, 1)
         self.reload_button = QPushButton('重載已保存作品'); self.reload_button.clicked.connect(self.reload); bar.addWidget(self.reload_button)
         self.previous_button = QPushButton('上一頁'); self.next_button = QPushButton('下一頁'); self.previous_button.clicked.connect(lambda: self.page(-200)); self.next_button.clicked.connect(lambda: self.page(200)); bar.addWidget(self.previous_button); bar.addWidget(self.next_button); outer.addLayout(bar)
@@ -83,7 +88,7 @@ class FactsPanel(QWidget):
         self.controls()
 
     def controls(self):
-        enabled = bool(self.loaded) and not self.running and not self.window.busy
+        enabled = bool(self.loaded) and not self.running and not self.host_window.busy
         for button in (self.add_button, self.update_button, self.remove_button, self.confirm_button, self.revoke_button): button.setEnabled(enabled)
         if hasattr(self, 'exclude_button'):
             self.exclude_button.setEnabled(enabled); self.remember_button.setEnabled(enabled); self.undo_noise_button.setEnabled(enabled)
@@ -107,7 +112,7 @@ class FactsPanel(QWidget):
         return {'id': oid, 'slot_id': self.slot_combo.currentData(), 'text': self.observed_text.text(), 'object_type': self.object_type.currentText(), 'classification': self.classification.currentText(), 'region': dict(zip(('x', 'y', 'w', 'h'), (x.value() for x in self.coords)))}
 
     def save(self, observations):
-        if self.running or self.window.busy: raise ValueError('背景工作尚未完成')
+        if self.running or self.host_window.busy: raise ValueError('背景工作尚未完成')
         self.store.save_facts(self.loaded['id'], observations, self.loaded['revision'], self.work_revision); self.load();self._editor_baseline=self.observation('editor-state')
 
     def add(self):
@@ -130,7 +135,7 @@ class FactsPanel(QWidget):
         except Exception as error: self.status.setText('未移除：'+str(error)); self.controls()
 
     def confirm(self):
-        if self.running or self.window.busy: return
+        if self.running or self.host_window.busy: return
         try:
             rows = self.indices()
             if not rows: raise ValueError('先明列選中觀察')

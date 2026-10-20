@@ -1,4 +1,9 @@
 """Explicit exception review; a ranked suggestion never approves a sample or rule."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import copy
 import json
 from pathlib import Path
@@ -12,7 +17,7 @@ from .font_review import fingerprint
 
 class ImportExceptionDialog(QDialog):
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.store=window.import_store;self.busy=False;self.runner=None;self.plan=None;self.rows=[];self.generation=0;self.loading=True
+        super().__init__(window);self.host_window: MainWindow=window;self.store=window.import_store;self.busy=False;self.runner=None;self.plan=None;self.rows=[];self.generation=0;self.loading=True
         self.setWindowTitle('來源匯入例外中心／安全單件處理');self.resize(1240,850);layout=QVBoxLayout(self)
         self.status=QLabel('真實失敗／中斷待辦；排序建議不解除隔離／不核准訓練或規則。');self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('搜尋來源／類型／原因／stable ID');self.search.textChanged.connect(self.reload);bar.addWidget(self.search,1)
@@ -36,21 +41,21 @@ class ImportExceptionDialog(QDialog):
         close=QDialogButtonBox(QDialogButtonBox.Close);close.rejected.connect(self.reject);layout.addWidget(close);self.loading=False;self.reload()
     def open_repair(self):
         try:
-            if self.busy or self.window.busy:raise ValueError('匯入仍在執行，請先等待或安全停止')
+            if self.busy or self.host_window.busy:raise ValueError('匯入仍在執行，請先等待或安全停止')
             rows=self.selection()
             if len(rows)!=1:raise ValueError('一次選一個實際失敗／中斷項；不猜測未登錄作品')
             row=rows[0]
             from .training_quality_dialog import open_repair_center
-            open_repair_center(self.window,dict(origin='IMPORT_EXCEPTION',batch_id=row['batch_id'],item_id=row['item']['id'],expected_revision=row['revision'],description='核對實際來源匯入例外及人工恢復，不自動訓練'))
+            open_repair_center(self.host_window,dict(origin='IMPORT_EXCEPTION',batch_id=row['batch_id'],item_id=row['item']['id'],expected_revision=row['revision'],description='核對實際來源匯入例外及人工恢復，不自動訓練'))
         except (ValueError,KeyError) as error:self.status.setText(str(error))
 
     def open_logo_exceptions(self):
-        if self.busy or self.window.busy:return
+        if self.busy or self.host_window.busy:return
         from .logo_library_dialog import LogoLibraryDialog
-        dialog=LogoLibraryDialog(self.window,exceptions_only=True);dialog.views.setCurrentIndex(1);dialog.exec()
+        dialog=LogoLibraryDialog(self.host_window,exceptions_only=True);dialog.views.setCurrentIndex(1);dialog.exec()
 
     def controls(self):
-        idle=not self.busy and not self.window.busy and not (self.runner and self.runner.isVisible())
+        idle=not self.busy and not self.host_window.busy and not (self.runner and self.runner.isVisible())
         for w in (self.table,self.search,self.order,self.filter,self.reload_button,self.source):w.setEnabled(idle)
         selected=self.selection();self.preview_button.setEnabled(idle and bool(selected));self.apply_button.setEnabled(idle and bool(self.plan));self.exclude_button.setEnabled(idle and bool(selected));self.restore_button.setEnabled(idle and bool(selected));self.locate_button.setEnabled(idle and self.source.count()>0)
     def selection(self):return [self.rows[i.row()] for i in self.table.selectionModel().selectedRows() if i.row()<len(self.rows)]
@@ -59,7 +64,7 @@ class ImportExceptionDialog(QDialog):
         if self.loading or self.busy or (self.runner and self.runner.isVisible()):return
         keys={r['key'] for r in self.selection()};self.invalidate();self.loading=True
         try:
-            self.rows=exception_rows(self.window.library,self.store,self.search.text(),self.order.currentData(),self.filter.currentData());self.table.setRowCount(len(self.rows))
+            self.rows=exception_rows(self.host_window.library,self.store,self.search.text(),self.order.currentData(),self.filter.currentData());self.table.setRowCount(len(self.rows))
             for i,r in enumerate(self.rows):
                 item=r['item'];values=[item['status']+'／'+str(r['severity']),Path(item['path']).name+'／p'+str(item['page']),r['type']+'／'+str(item['attempts']),r['ranking_reason'].split('；')[1],r['ranking_reason'],r['key']]
                 for c,value in enumerate(values):
@@ -76,7 +81,7 @@ class ImportExceptionDialog(QDialog):
     def selected(self):
         if self.loading:return
         self.invalidate();rows=self.selection();self.details.setPlainText(json.dumps(rows,ensure_ascii=False,indent=2));self.source.clear()
-        for sid in sorted({sid for row in rows for sid in row['source_ids']}):self.source.addItem(Path(self.window.library.source(sid)['current_path']).name+'／'+sid,sid)
+        for sid in sorted({sid for row in rows for sid in row['source_ids']}):self.source.addItem(Path(self.host_window.library.source(sid)['current_path']).name+'／'+sid,sid)
         self.controls()
     def scoped(self):
         rows=self.selection()
@@ -85,10 +90,10 @@ class ImportExceptionDialog(QDialog):
         if b['revision']!=rows[0]['revision']:raise ValueError('批次已異動，請重新載入')
         return rows,b
     def preview_retry(self):
-        if self.busy or self.window.busy:return
+        if self.busy or self.host_window.busy:return
         try:rows,b=self.scoped()
         except Exception as error:self.status.setText(str(error));return
-        rows=copy.deepcopy(rows);sources=self.window.library.list_sources();self.invalidate();generation=self.generation;self.busy=True;self.controls();self.status.setText('背景重新核對所選來源；不開始匯入。')
+        rows=copy.deepcopy(rows);sources=self.host_window.library.list_sources();self.invalidate();generation=self.generation;self.busy=True;self.controls();self.status.setText('背景重新核對所選來源；不開始匯入。')
         def work():
             try:return {'plan':prepare_retry(rows,sources)}
             except Exception as error:return {'error':str(error) or type(error).__name__}
@@ -102,24 +107,24 @@ class ImportExceptionDialog(QDialog):
                 self.details.setPlainText(json.dumps(report,ensure_ascii=False,indent=2));self.status.setText('已核對舊／新hash差異；仍未解除隔離，須明確確認才只重試所選項。')
             except Exception as error:self.plan=None;self.status.setText('未完成：'+str(error))
             finally:self.controls()
-        try:self.window.run_job('例外來源重試預檢',work,JobCallbacks(done,lambda error:done({'error':str(error)})))
+        try:self.host_window.run_job('例外來源重試預檢',work,JobCallbacks(done,lambda error:done({'error':str(error)})))
         except Exception as error:self.busy=False;self.plan=None;self.status.setText(str(error));self.controls()
     def apply_retry(self):
-        if not self.plan or self.busy or self.window.busy:return
+        if not self.plan or self.busy or self.host_window.busy:return
         plan=self.plan;before=fingerprint({'batch':plan['batch_id'],'revision':plan['revision'],'ids':plan['ids'],'items':{i:{**x,'proof':x['proof'].__dict__} for i,x in plan['items'].items()}})
         message='只重試 '+str(len(plan['ids']))+' 項；SUCCESS／其他READY項保持。\n'+'\n'.join(i+' · '+('內容異動' if x['changed'] else '同hash')+'\n'+str(x['old_hash'])+' → '+x['new_hash'] for i,x in list(plan['items'].items())[:5])+'\n變更內容會另登錄來源，不覆寫原來源／作品／模板。'
         if QMessageBox.question(self,'核對精確重試與hash差異',message,QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
         try:
             current=fingerprint({'batch':plan['batch_id'],'revision':plan['revision'],'ids':plan['ids'],'items':{i:{**x,'proof':x['proof'].__dict__} for i,x in plan['items'].items()}})
-            if self.plan is not plan or before!=current or self.window.busy:raise ValueError('確認期間候選／背景狀態異動，請重驗')
-            batch=apply_action(self.store,plan['batch_id'],plan['revision'],plan['ids'],'RETRY',plan=plan,confirmed=True);self.invalidate();self.runner=BatchImportDialog(self.window);self.runner.setParent(self,Qt.Dialog);self.runner.setWindowModality(Qt.WindowModal);self.runner.batch=batch;self.runner.render(batch['items']);self.runner.refresh_history();self.runner.setWindowTitle('明確選中例外的單件重試');self.runner.show();self.runner.start_run(plan['ids']);self.runner.finished.connect(self.runner_closed);self.controls()
+            if self.plan is not plan or before!=current or self.host_window.busy:raise ValueError('確認期間候選／背景狀態異動，請重驗')
+            batch=apply_action(self.store,plan['batch_id'],plan['revision'],plan['ids'],'RETRY',plan=plan,confirmed=True);self.invalidate();self.runner=BatchImportDialog(self.host_window);self.runner.setParent(self,Qt.Dialog);self.runner.setWindowModality(Qt.WindowModal);self.runner.batch=batch;self.runner.render(batch['items']);self.runner.refresh_history();self.runner.setWindowTitle('明確選中例外的單件重試');self.runner.show();self.runner.start_run(plan['ids']);self.runner.finished.connect(self.runner_closed);self.controls()
         except Exception as error:self.status.setText('重試未套用：'+str(error));self.controls()
     def runner_closed(self,*_):
         old=self.runner;self.runner=None
         if old:old.deleteLater()
         self.reload()
     def change_status(self,action):
-        if self.busy or self.window.busy:return
+        if self.busy or self.host_window.busy:return
         try:rows,b=self.scoped()
         except Exception as error:self.status.setText(str(error));return
         reason=''
@@ -129,13 +134,13 @@ class ImportExceptionDialog(QDialog):
         ids=sorted(r['item']['id'] for r in rows);selection_before=[r['key'] for r in rows];generation=self.generation
         if QMessageBox.question(self,'核對例外狀態範圍',action+'／'+str(len(ids))+'項\n'+'\n'.join(ids[:8])+'\n排除／恢復不批准規則或訓練。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
         try:
-            if generation!=self.generation or [r['key'] for r in self.selection()]!=selection_before or self.window.busy:raise ValueError('確認期間範圍異動')
+            if generation!=self.generation or [r['key'] for r in self.selection()]!=selection_before or self.host_window.busy:raise ValueError('確認期間範圍異動')
             apply_action(self.store,b['id'],b['revision'],ids,action,reason=reason,confirmed=True);self.reload();self.status.setText('已保存 '+action+' 與歷史；原始來源、其他項、作品／規則未變。')
         except Exception as error:self.status.setText('未套用：'+str(error));self.controls()
     def locate(self):
-        if self.busy or self.window.busy or not self.source.currentData():return
-        if not navigation_clean(self.window):self.status.setText('主工作台尚未套用手工屬性，先明確保存／取消再定位');return
-        sid=self.source.currentData();self.window.refresh_sources(sid);self.window.tabs.setCurrentIndex(0);self.status.setText('已定位精確登錄來源；視覺／資料正確性未自動批准。')
+        if self.busy or self.host_window.busy or not self.source.currentData():return
+        if not navigation_clean(self.host_window):self.status.setText('主工作台尚未套用手工屬性，先明確保存／取消再定位');return
+        sid=self.source.currentData();self.host_window.refresh_sources(sid);self.host_window.tabs.setCurrentIndex(0);self.status.setText('已定位精確登錄來源；視覺／資料正確性未自動批准。')
     def reject(self):
         if self.busy:return
         if self.runner and self.runner.isVisible():self.runner.reject();return

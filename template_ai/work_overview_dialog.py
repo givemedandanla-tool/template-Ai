@@ -1,4 +1,9 @@
 """Paged, source-linked work overview and direct source-coordinate region editor."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from pathlib import Path
 from PySide6.QtCore import Qt,QRectF,QSize
 from PySide6.QtGui import QImageReader,QImage,QPixmap,QIcon,QPen,QColor
@@ -11,7 +16,7 @@ from .batch_import import healthy_source
 
 class WorkOverviewDialog(QDialog):
     def __init__(self,window,parent=None):
-        super().__init__(parent or window);self.window=window;self.store=TrainingStore(window.library);self.offset=0;self.rows=[];self.setWindowTitle('來源／作品總覽：AI候選與確認分開');self.resize(1200,780)
+        super().__init__(parent or window);self.host_window: MainWindow=window;self.store=TrainingStore(window.library);self.offset=0;self.rows=[];self.setWindowTitle('來源／作品總覽：AI候選與確認分開');self.resize(1200,780)
         layout=QVBoxLayout(self);bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('全庫搜尋作品／來源檔名／ID／尺寸，例如90.0x54.0');self.query.textChanged.connect(self.search);bar.addWidget(self.query)
         self.state=QComboBox();self.state.addItems(['ALL','PENDING','CONFIRMED','STALE','SUPERSEDED']);self.state.currentIndexChanged.connect(self.search);bar.addWidget(self.state);layout.addLayout(bar)
         filters=QHBoxLayout();self.source_filter=QLineEdit();self.source_filter.setPlaceholderText('來源ID／檔名');self.page_filter=QLineEdit();self.page_filter.setPlaceholderText('來源頁次，例如1');self.size_filter=QLineEdit();self.size_filter.setPlaceholderText('尺寸，例如90.0x54.0');self.sort=QComboBox();self.sort.addItems(['來源／作品','作品名稱','審核狀態','尺寸'])
@@ -29,7 +34,7 @@ class WorkOverviewDialog(QDialog):
         try:
             query='%'+self.query.text().strip().casefold()+'%';self.rows=[]
             # Filtering occurs before LIMIT/OFFSET; current facts state includes pin/stat checks.
-            self.window.library.db.create_function('work_facts_state',1,self.store.facts_state)
+            self.host_window.library.db.create_function('work_facts_state',1,self.store.facts_state)
             state_sql="CASE WHEN json_extract(a.payload,'$.segmentation_state')='SUPERSEDED' THEN 'SUPERSEDED' ELSE work_facts_state(a.id) END"
             clauses=["lower(a.name||' '||a.id||' '||a.source_id||' '||s.original_path||' '||round(json_extract(a.payload,'$.work_width'),1)||'x'||round(json_extract(a.payload,'$.work_height'),1)) LIKE ?"]
             params=[query]
@@ -41,9 +46,9 @@ class WorkOverviewDialog(QDialog):
             if self.state.currentText()!='ALL':clauses.append(state_sql+'=?');params.append(self.state.currentText())
             order=['a.source_id,a.id','a.name,a.id',state_sql+',a.id',"json_extract(a.payload,'$.work_width'),json_extract(a.payload,'$.work_height'),a.id"][self.sort.currentIndex()]
             sql='SELECT a.id FROM artworks a JOIN sources s ON s.id=a.source_id WHERE '+' AND '.join(clauses)+' ORDER BY '+order+' LIMIT 100 OFFSET ?'
-            for wid, in self.window.library.db.execute(sql,(*params,self.offset)):
-                work=self.window.library.artwork(wid);state='SUPERSEDED' if work['payload'].get('segmentation_state')=='SUPERSEDED' else self.store.facts_state(wid)
-                self.rows.append((work,state,self.window.library.source(work['source_id'])))
+            for wid, in self.host_window.library.db.execute(sql,(*params,self.offset)):
+                work=self.host_window.library.artwork(wid);state='SUPERSEDED' if work['payload'].get('segmentation_state')=='SUPERSEDED' else self.store.facts_state(wid)
+                self.rows.append((work,state,self.host_window.library.source(work['source_id'])))
             self.table.setRowCount(len(self.rows))
             for i,(work,state,source) in enumerate(self.rows):
                 payload=work['payload'];icon=QTableWidgetItem('待核對' if not healthy_source(source) else '')
@@ -61,19 +66,19 @@ class WorkOverviewDialog(QDialog):
         index=self.table.currentRow()
         if not 0<=index<len(self.rows):raise ValueError('先選明確來源作品')
         work=self.rows[index][0]
-        if self.window.library.artwork(work['id'])['revision']!=work['revision']:raise ValueError('作品已更新，先重新核對')
+        if self.host_window.library.artwork(work['id'])['revision']!=work['revision']:raise ValueError('作品已更新，先重新核對')
         return work
 
     def locate(self):
         try:
             from .training_navigation import locate_work
-            locate_work(self.window,self.current()['id'],[]);self.status.setText('已定位來源／作品；沒有核准事實。')
+            locate_work(self.host_window,self.current()['id'],[]);self.status.setText('已定位來源／作品；沒有核准事實。')
         except Exception as error:self.status.setText(str(error))
 
     def edit(self):
         try:
             from .annotation_dialog import AnnotationDialog
-            dialog=AnnotationDialog(self.window,self.current()['id'],self);dialog.exec();dialog.deleteLater();self.reload()
+            dialog=AnnotationDialog(self.host_window,self.current()['id'],self);dialog.exec();dialog.deleteLater();self.reload()
         except Exception as error:self.status.setText('未校正：'+str(error))
 
 

@@ -14,11 +14,11 @@ from .candidate_edit_dispatch import provisional,envelope_current
 
 class SizeEditAdapter(QWidget):
     def __init__(self,owner,entry,index):
-        super().__init__(owner);self.owner=owner;self.service=owner.service;self.entry=entry;self.library=owner.window.library;self.candidates=entry['candidates'];self.editor_closed=False;self.candidate_list=SimpleNamespace(currentRow=lambda:index)
+        super().__init__(owner);self.owner=owner;self.service=owner.service;self.entry=entry;self.library=owner.host_window.library;self.candidates=entry['candidates'];self.editor_closed=False;self.candidate_list=SimpleNamespace(currentRow=lambda:index)
     @property
-    def generation(self):return self.owner.window.generation
+    def generation(self):return self.owner.host_window.generation
     def input_data(self):
-        if self.owner.window.library is not self.library or self.owner.service is not self.service or not self.owner.is_current():raise ValueError('多尺寸來源已變，先同步重驗；不採用舊快照')
+        if self.owner.host_window.library is not self.library or self.owner.service is not self.service or not self.owner.is_current():raise ValueError('多尺寸來源已變，先同步重驗；不採用舊快照')
         return copy.deepcopy((self.service.people,self.service.companies,self.entry['resolved_logos']))
     def choose_candidate(self,index):
         candidate=self.candidates[index];self.entry['selected']=candidate.template.id;self.entry['state']='VALID' if candidate.formal_eligible else 'BLOCKED';self.owner.render_rows();self.owner.export_button.setEnabled(self.owner.is_current())
@@ -36,7 +36,7 @@ class SizeEditController(QObject):
         self.active=False
         if isValid(self.adapter):self.failed.emit(index,str(message));self.release()
     def begin(self,plan,compare=False):
-        if self.active or self.owner.running or self.owner.window.busy:raise ValueError('原背景工作尚未完成；保留人工內容，完成後再套用')
+        if self.active or self.owner.running or self.owner.host_window.busy:raise ValueError('原背景工作尚未完成；保留人工內容，完成後再套用')
         envelope=prepare_edit(self.adapter,plan);self.event=threading.Event();index=plan['index'];self.active=True
         if compare:
             pending=None;envelope.update(mode='COMPARE_ONLY',target_revision=plan['manual_revision'],target_digest=plan['before_digest'],context_token=envelope['before_context_token'])

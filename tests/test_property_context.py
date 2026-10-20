@@ -20,12 +20,12 @@ class PropertyContextTests(unittest.TestCase):
     def logo(self):
         logo=Slot('logo','c1',Rect(65,40,15,10));self.w.template.slots.append(logo);self.w.refresh_editor();self.w.editor_selection([logo.id]);self.sync();return logo
     def test_text_context_uses_original_fixed_size_and_collapse_does_not_modify_model(self):
-        w=self.w;self.sync();before=w.template.to_dict();self.assertIn('文字物件',w.property_context_label.text());self.assertTrue(w.font.isEnabled());self.assertEqual(w.pt.value(),18)
+        w=self.w;self.sync();before=w.template.to_dict();self.assertIn('文字物件',w.property_context_label.text());self.assertTrue(w.font_input.isEnabled());self.assertEqual(w.pt.value(),18)
         for group in w.property_groups.values():group.setChecked(False);group.setChecked(True)
         w.all_property_tools.setChecked(True);self.sync();self.assertEqual(w.template.to_dict(),before);self.assertEqual(w.pt.value(),18)
     def test_pinned_text_stays_visible_but_disabled_for_whole_logo_and_never_changes_it(self):
         w=self.w;w.property_pin_checks['text'].setChecked(True);logo=self.logo();before=copy.deepcopy(logo)
-        self.assertTrue(w.property_groups['text'].isVisible());self.assertIn('不適用',w.property_groups['text'].title());self.assertFalse(w.font.isEnabled());self.assertFalse(w.scale.isEnabled());self.assertFalse(w.property_policy_button.isEnabled())
+        self.assertTrue(w.property_groups['text'].isVisible());self.assertIn('不適用',w.property_groups['text'].title());self.assertFalse(w.font_input.isEnabled());self.assertFalse(w.scale.isEnabled());self.assertFalse(w.property_policy_button.isEnabled())
         self.assertIn('尚未核實',w.property_context_label.text())
         self.assertTrue(w.coords[0].isEnabled());w.all_property_tools.setChecked(True);self.sync();self.assertEqual(logo,before)
     def test_multiple_different_fields_have_blank_mixed_values_and_reuse_existing_editor_ids(self):

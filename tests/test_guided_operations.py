@@ -86,14 +86,14 @@ class GuidedOperationsTests(FamilyFixture):
     def test_actual_case_input_dialog_keeps_local_size_and_does_not_change_main_input(self):
         from template_ai.input_graph_dialog import InputGraphDialog
         before = deepcopy(self.main.input_data())
-        self.dialog.width.setValue(85.); self.dialog.height.setValue(50.)
+        self.dialog.width_input.setValue(85.); self.dialog.height_input.setValue(50.)
         seen = []; errors = []
         def enter():
             modal = APP.activeModalWidget()
             try:
                 self.assertIsInstance(modal, InputGraphDialog)
-                self.assertEqual(modal.window.out_w.value(), 85.)
-                self.assertEqual(modal.window.out_h.value(), 50.)
+                self.assertEqual(modal.host_window.out_w.value(), 85.)
+                self.assertEqual(modal.host_window.out_h.value(), 50.)
                 field = next(row for row in modal.graph.data['fields'] if row['kind'] == 'name')
                 modal.field_editors[field['id']].setText('Authored Case Name')
                 modal.accept(); seen.append(True)
@@ -149,7 +149,7 @@ class GuidedOperationsTests(FamilyFixture):
         self.assertEqual(self.dialog.capacity_jobs.currentData(), job['id'])
         self.assertEqual(self.dialog.capacity_cases.count(), 1)
         self.assertTrue(self.dialog.capacity_canvas.scene().items())
-        self.dialog.style.setCurrentIndex(self.dialog.style.findData(True))
+        self.dialog.style_input.setCurrentIndex(self.dialog.style_input.findData(True))
         self.dialog.style_basis.setText('Authored reviewer inspected actual rendered text and structure')
         reviewed = self.dialog.review_style()
         self.assertTrue(reviewed['qualified_style'])

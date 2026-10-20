@@ -1,4 +1,9 @@
 """Classification/repair/recheck tabs inside the existing training quality center."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QLineEdit,QPlainTextEdit,QPushButton,QMessageBox,QInputDialog,QTableWidget,QTableWidgetItem
@@ -7,7 +12,7 @@ from .quality_evaluation import evaluation_plan,save_evaluation,compare_evaluati
 
 class EvaluationPanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.store=TrainingStore(window.library);self.plan=None;self.setMinimumWidth(600);l=QVBoxLayout(self);self.status=QLabel('分類紀錄評估；不執行模型推論／不宣稱視覺或獨立品質PASS，需真正HOLDOUT。');self.status.setWordWrap(True);l.addWidget(self.status);self.datasets=QComboBox();l.addWidget(self.datasets);bar=QHBoxLayout();self.versions={}
+        super().__init__(parent);self.host_window: MainWindow=window;self.store=TrainingStore(window.library);self.plan=None;self.setMinimumWidth(600);l=QVBoxLayout(self);self.status=QLabel('分類紀錄評估；不執行模型推論／不宣稱視覺或獨立品質PASS，需真正HOLDOUT。');self.status.setWordWrap(True);l.addWidget(self.status);self.datasets=QComboBox();l.addWidget(self.datasets);bar=QHBoxLayout();self.versions={}
         for k in ('model','parser','ocr','rules'):e=QLineEdit('UNVERIFIED-'+k+'-1');e.setPlaceholderText(k+' exact version');self.versions[k]=e;bar.addWidget(e)
         l.addLayout(bar);self.predictions=QPlainTextEdit('[]');self.predictions.setPlaceholderText('[{"sample_id":"…","slot_id":"…","kind":"name","owner":"p1"}]；人工／外部預測，不填真值充當模型輸出');self.predictions.setMaximumHeight(140);l.addWidget(self.predictions);bar=QHBoxLayout()
         for title,fn in [('刷新資料集／評估',self.reload),('計算分類分母與錯誤',self.preview),('確認保存當次評估',self.save),('選取已存評估的問題報告',self.report)]:b=QPushButton(title);b.clicked.connect(fn);bar.addWidget(b)
@@ -39,7 +44,7 @@ class EvaluationPanel(QWidget):
         from .diagnostic_dialog import DiagnosticReportDialog
         selected=self.right.currentData()
         if not selected:self.status.setText('先選取已保存評估紀錄；不把未保存的文案當模型證據');return
-        d=DiagnosticReportDialog(self.window,'evaluation',selected,parent=self)
+        d=DiagnosticReportDialog(self.host_window,'evaluation',selected,parent=self)
         try:d.exec()
         finally:d.deleteLater()
     def compare(self):
@@ -57,7 +62,7 @@ class EvaluationPanel(QWidget):
 
 class RecheckPanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.store=TrainingStore(window.library);self.plan=None;l=QVBoxLayout(self);self.status=QLabel('跨歷史exact規則依賴重審；僅明確依賴，不宣稱模型／Logo／客戶全面掃描。');self.status.setWordWrap(True);l.addWidget(self.status);self.rules=QComboBox();l.addWidget(self.rules);self.reason=QLineEdit();self.reason.setPlaceholderText('重大錯誤證據／原因（必填）');l.addWidget(self.reason);bar=QHBoxLayout()
+        super().__init__(parent);self.host_window: MainWindow=window;self.store=TrainingStore(window.library);self.plan=None;l=QVBoxLayout(self);self.status=QLabel('跨歷史exact規則依賴重審；僅明確依賴，不宣稱模型／Logo／客戶全面掃描。');self.status.setWordWrap(True);l.addWidget(self.status);self.rules=QComboBox();l.addWidget(self.rules);self.reason=QLineEdit();self.reason.setPlaceholderText('重大錯誤證據／原因（必填）');l.addWidget(self.reason);bar=QHBoxLayout()
         for title,fn in [('刷新既有規則',self.reload),('預覽歷史依賴與範圍',self.preview),('確認選中樣本暫停信任',self.start)]:b=QPushButton(title);b.clicked.connect(fn);bar.addWidget(b)
         l.addLayout(bar);self.table=QTableWidget(0,3);self.table.setHorizontalHeaderLabels(['勾選（預設不選）','exact樣本／作品','目前狀態／影響']);l.addWidget(self.table);self.details=QPlainTextEdit();self.details.setReadOnly(True);l.addWidget(self.details);self.reload()
     def reload(self):

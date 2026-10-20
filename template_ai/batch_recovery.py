@@ -20,7 +20,7 @@ def decode_checked(value):
 
 def payload(dialog):
     d=dialog;d.valid_context()
-    if d.running or d.window.busy or not d.plan:raise ValueError('先安全停止並保留有效預檢，未保存進行中工作')
+    if d.running or d.host_window.busy or not d.plan:raise ValueError('先安全停止並保留有效預檢，未保存進行中工作')
     if d.parameters()!=d.preview_parameters or d.selection_pin()!=d.selected_ids:raise ValueError('範圍／參數已變更，請重新預檢後保存')
     if d.results and all(r.get('outcome') in ('APPLIED_VALIDATED','ALREADY_APPLIED','APPLIED_PENDING_FULL_VALIDATION') for r in d.results):raise ValueError('本批已完成套用，不保留正常完成的私人暫存')
     candidate=d.scope.currentData()=='CANDIDATE'
@@ -68,7 +68,7 @@ class BatchRecoveryController:
     def save(self):
         from PySide6.QtWidgets import QInputDialog,QLineEdit
         d=self.d
-        if d.running or d.window.busy:d.status.setText('原工作尚未安全停止；未保存進行中工作');return
+        if d.running or d.host_window.busy:d.status.setText('原工作尚未安全停止；未保存進行中工作');return
         try:
             value=payload(d);password,ok=QInputDialog.getText(d,'保存安全停止的批次','12字以上密碼，24小時有效；不保存密碼。未落盤項不承諾可恢復。',QLineEdit.Password)
             if not ok:return
@@ -76,18 +76,18 @@ class BatchRecoveryController:
             d.running=True
             def done(receipt):d.running=False;d.batch_recovery_receipt=receipt;d.status.setText('已逐位元讀回加密停止快照；未保存的新進度不保證可恢復。')
             def failed(error):d.running=False;d.status.setText('未保存：'+str(error))
-            d.window.run_job('保存短期加密批次快照',lambda:store(d.library.root).save(value,password),done,on_error=failed,resource_kind='RESTORE')
+            d.host_window.run_job('保存短期加密批次快照',lambda:store(d.library.root).save(value,password),done,on_error=failed,resource_kind='RESTORE')
         except Exception as error:d.running=False;d.status.setText('未保存：'+str(error))
     def restore(self):
         from PySide6.QtWidgets import QInputDialog,QLineEdit,QMessageBox
         d=self.d
-        if d.running or d.window.busy:d.status.setText('原工作尚未安全停止；未讀取或載入恢復');return
+        if d.running or d.host_window.busy:d.status.setText('原工作尚未安全停止；未讀取或載入恢復');return
         try:
             d.valid_context()
-            if d.running or d.window.busy:raise ValueError('原工作尚未安全停止')
+            if d.running or d.host_window.busy:raise ValueError('原工作尚未安全停止')
             password,ok=QInputDialog.getText(d,'核對已保存批次','輸入原密碼；先讀回操作紀錄，不自動套用。',QLineEdit.Password)
             if not ok:return
-            root=str(d.library.root);generation=d.window.generation;pin=d.selection_pin();d.running=True
+            root=str(d.library.root);generation=d.host_window.generation;pin=d.selection_pin();d.running=True
             def work():
                 from .storage import Library
                 value=store(root).load(password);library=Library(root)
@@ -95,9 +95,9 @@ class BatchRecoveryController:
                 finally:library.close()
             def done(result):
                 d.running=False;value,rows=result
-                if d.window.generation!=generation or d.selection_pin()!=pin or str(d.window.library.root)!=root:d.status.setText('解密期間目前工作已變更，未載入或套用');return
+                if d.host_window.generation!=generation or d.selection_pin()!=pin or str(d.host_window.library.root)!=root:d.status.setText('解密期間目前工作已變更，未載入或套用');return
                 if QMessageBox.question(d,'核對恢復交易','只載入已保存的明確範圍與讀回結果。來源歷史可核實；候選若原記憶體／視窗已消失，保留未核實，不自動重播位移。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
-                if d.window.generation!=generation or d.selection_pin()!=pin or str(d.window.library.root)!=root:d.status.setText('確認期間工作已變更，未載入');return
+                if d.host_window.generation!=generation or d.selection_pin()!=pin or str(d.host_window.library.root)!=root:d.status.setText('確認期間工作已變更，未載入');return
                 d.scope.setCurrentIndex(d.scope.findData(value['scope']));d.reload();d.plan=copy.deepcopy(value['plan']);d.selected_ids=list(value['selected']);d.preview_parameters=list(value['parameters']);d.preflight_text=value['preflight_text']
                 controls=[d.action,d.align,d.dx,d.dy,d.width,d.height,d.ratio]
                 for control,parameter in zip(controls,d.preview_parameters):
@@ -111,12 +111,12 @@ class BatchRecoveryController:
                 if value['scope']=='CANDIDATE':d.candidate_batch.checked=checked;d.candidate_batch.preview_seal=d.candidate_batch.seal()
                 d.finished(rows,invalidate=False);d.status.setText('已載入保存範圍並讀回逐項結果；未自動續算、套用或正式輸出。\n'+d.status.text())
             def failed(error):d.running=False;d.status.setText('未恢復：'+str(error))
-            d.window.run_job('解密核實批次恢復',work,done,on_error=failed,resource_kind='RESTORE')
+            d.host_window.run_job('解密核實批次恢復',work,done,on_error=failed,resource_kind='RESTORE')
         except Exception as error:d.running=False;d.status.setText('未恢復：'+str(error))
     def clear(self):
         from PySide6.QtWidgets import QMessageBox
         d=self.d
-        if d.running or d.window.busy:return
+        if d.running or d.host_window.busy:return
         if QMessageBox.question(d,'清除批次恢復','只刪除本機批次恢復暫存，不是磁碟安全抹除。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
         try:store(d.library.root).clear();d.status.setText('已清除批次短期暫存；未修改作品或原操作歷史。')
         except OSError as error:d.status.setText('清除未完成：'+str(error))

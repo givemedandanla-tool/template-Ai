@@ -1,4 +1,9 @@
 """字型候選唯讀工作流；沒有套用、正式輸出或安裝動作。"""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import copy
 
 from PySide6.QtCore import Qt
@@ -15,9 +20,9 @@ from .font_candidates import SCOPE, find_candidates, render_candidate
 class FontCandidateDialog(QDialog):
     def __init__(self, center):
         super().__init__(center)
-        self.window = center.window
+        self.host_window: MainWindow = center.host_window
         self.reference = copy.deepcopy(center.selected())
-        self.reference_style = center.style.currentText()
+        self.reference_style = center.style_input.currentText()
         self.busy = False; self.generation = 0; self.report = None; self.preview_data = None
         self.setWindowTitle("字型替代候選 · 唯讀比較與預覽"); self.resize(1160, 780)
         layout = QVBoxLayout(self)
@@ -25,8 +30,8 @@ class FontCandidateDialog(QDialog):
         inputs = QHBoxLayout()
         self.text = QLineEdit(center.text.text()); self.text.setMaxLength(4096)
         self.text.setPlaceholderText("要量測及預覽的完整單行文字"); inputs.addWidget(self.text, 1)
-        self.size = QDoubleSpinBox(); self.size.setRange(1,200); self.size.setValue(center.size.value()); self.size.setSuffix(" pt"); inputs.addWidget(self.size)
-        self.width = QDoubleSpinBox(); self.width.setRange(.001,2000); self.width.setDecimals(3); self.width.setValue(center.width.value()); self.width.setSuffix(" mm"); inputs.addWidget(self.width)
+        self.size_input = QDoubleSpinBox(); self.size_input.setRange(1,200); self.size_input.setValue(center.size_input.value()); self.size_input.setSuffix(" pt"); inputs.addWidget(self.size_input)
+        self.width_input = QDoubleSpinBox(); self.width_input.setRange(.001,2000); self.width_input.setDecimals(3); self.width_input.setValue(center.width_input.value()); self.width_input.setSuffix(" mm"); inputs.addWidget(self.width_input)
         self.minimum = QDoubleSpinBox(); self.minimum.setRange(5,100); self.minimum.setValue(center.minimum.value()); self.minimum.setSuffix(" % 最小水平比例"); inputs.addWidget(self.minimum)
         self.search_button = QPushButton("查詢候選"); self.search_button.clicked.connect(self.search); inputs.addWidget(self.search_button)
         layout.addLayout(inputs)
@@ -54,12 +59,12 @@ class FontCandidateDialog(QDialog):
         scroll = QScrollArea(); scroll.setWidgetResizable(True); scroll.setWidget(self.preview_label); scroll.setMinimumHeight(130); layout.addWidget(scroll, 1)
         self.details = QLabel(SCOPE); self.details.setTextFormat(Qt.PlainText); self.details.setWordWrap(True); layout.addWidget(self.details)
         close = QDialogButtonBox(QDialogButtonBox.Close); close.button(QDialogButtonBox.Close).setText("關閉"); close.rejected.connect(self.reject); layout.addWidget(close)
-        for widget in (self.text,self.size,self.width,self.minimum,self.compare):
+        for widget in (self.text,self.size_input,self.width_input,self.minimum,self.compare):
             signal = widget.textChanged if widget is self.text else widget.toggled if widget is self.compare else widget.valueChanged
             signal.connect(self.invalidate)
 
     def inputs(self):
-        return {"text":self.text.text(), "size_pt":self.size.value(), "width_mm":self.width.value(), "min_scale":self.minimum.value()/100}
+        return {"text":self.text.text(), "size_pt":self.size_input.value(), "width_mm":self.width_input.value(), "min_scale":self.minimum.value()/100}
 
     def invalidate(self, *_):
         self.generation += 1; self.report = None
@@ -79,7 +84,7 @@ class FontCandidateDialog(QDialog):
         self.details.setText(SCOPE)
 
     def start(self, message, work, done):
-        if self.busy or self.window.busy: return
+        if self.busy or self.host_window.busy: return
         generation = self.generation
         self.busy = True; self.status.setText(message)
         self.search_button.setEnabled(False); self.preview_button.setEnabled(False); self.table.setEnabled(False)
@@ -99,16 +104,16 @@ class FontCandidateDialog(QDialog):
                 self.busy = False; self.search_button.setEnabled(True); self.table.setEnabled(True)
                 self.preview_button.setEnabled(self.selected() is not None)
                 self.review_button.setEnabled(bool(self.selected() and self.selected()['row']['kind']=='ASSET'))
-        try: self.window.run_job(message, guarded, JobCallbacks(finished,lambda error:finished({'error':str(error)})))
+        try: self.host_window.run_job(message, guarded, JobCallbacks(finished,lambda error:finished({'error':str(error)})))
         except Exception:
             self.busy = False; self.search_button.setEnabled(True); self.table.setEnabled(True)
             self.preview_button.setEnabled(self.selected() is not None)
             raise
 
     def search(self):
-        if self.busy or self.window.busy: return
+        if self.busy or self.host_window.busy: return
         inputs = self.inputs(); reference = copy.deepcopy(self.reference) if self.compare.isChecked() else None
-        assets = self.window.library.fonts(); templates = self.window.library.templates(); hosts,partial = host_candidates()
+        assets = self.host_window.library.fonts(); templates = self.host_window.library.templates(); hosts,partial = host_candidates()
         self.invalidate()
         def work():
             inventory = build_inventory(assets,templates,hosts,partial,max_bytes=64*1024*1024)
@@ -141,7 +146,7 @@ class FontCandidateDialog(QDialog):
 
     def preview(self):
         candidate = self.selected()
-        if not candidate or self.busy or self.window.busy: return
+        if not candidate or self.busy or self.host_window.busy: return
         inputs = dict(self.report["input"])
         self.preview_data=None; self.preview_label.clear(); self.preview_label.setText("重新核驗中；不沿用舊畫面。")
         self.start("重新核對所選字面與完整文字，建立唯讀预覽", lambda:render_candidate(candidate, inputs), self.show_preview)
@@ -162,7 +167,7 @@ class FontCandidateDialog(QDialog):
         candidate=self.selected()
         if self.busy or not candidate or candidate['row']['kind']!='ASSET':return
         from .font_review_dialog import FontReviewDialog
-        FontReviewDialog(self.window,candidate['row'],self.text.text(),self).exec()
+        FontReviewDialog(self.host_window,candidate['row'],self.text.text(),self).exec()
 
     def closeEvent(self,event):
         if self.busy: event.ignore()

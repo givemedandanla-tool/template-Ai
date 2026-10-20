@@ -337,10 +337,6 @@ class MainWindow(QMainWindow):
         elif hasattr(self,'right_context'):self.right_context.schedule()
         self.property_panel.setToolTip("模板瀏覽為唯讀；先明確開啟模板編輯區" if browsing else "")
 
-    def closeEvent(self,event):
-        if hasattr(self,'template_catalog'):self.template_catalog.close_previews()
-        super().closeEvent(event)
-
     def button(self, text, action, layout):
         button = QPushButton(text)
         button.clicked.connect(action)
@@ -836,9 +832,9 @@ class MainWindow(QMainWindow):
             spin.setSuffix(" mm")
             geometry_form.addRow(name, spin)
             self.coords.append(spin)
-        self.font = QFontComboBox()
+        self.font_input = QFontComboBox()
         from .demo import default_font
-        self.font.setCurrentFont(QFont(default_font()))
+        self.font_input.setCurrentFont(QFont(default_font()))
         self.pt = QDoubleSpinBox()
         self.pt.setRange(1, 200)
         self.pt.setValue(10)
@@ -858,7 +854,7 @@ class MainWindow(QMainWindow):
         identity_form.addRow("類型", self.kind)
         identity_form.addRow("歸屬", self.owner)
         identity_form.addRow("同類資料第幾筆", self.index)
-        form.addRow("字型", self.font)
+        form.addRow("字型", self.font_input)
         form.addRow("定案字級", self.pt)
         form.addRow("文字色彩", self.text_color)
         form.addRow("本模板字寬下限", self.scale)
@@ -1249,7 +1245,7 @@ class MainWindow(QMainWindow):
 
     def make_slot(self, rect,preserve=False):
         defaults=Slot('name','p1',rect)
-        family=self.font.currentFont().family() if self.font.currentText().strip() else defaults.font;asset=self.font_manager.asset_for_family(family)
+        family=self.font_input.currentFont().family() if self.font_input.currentText().strip() else defaults.font;asset=self.font_manager.asset_for_family(family)
         style=""
         displayed=getattr(self,'_selected_font_display',None)
         if self.current_slot and displayed and displayed['slot_id']==self.current_slot.id and family==displayed['display']:
@@ -1308,8 +1304,8 @@ class MainWindow(QMainWindow):
         for spin, value in zip(self.coords, [s.rect.x, s.rect.y, s.rect.w, s.rect.h]):
             spin.setValue(value)
         selected_font=QFontDatabase.font(s.font,s.font_style,10) if s.font_style else QFont(s.font)
-        self.font.setCurrentFont(selected_font)
-        self._selected_font_display={'slot_id':s.id,'display':self.font.currentFont().family()}
+        self.font_input.setCurrentFont(selected_font)
+        self._selected_font_display={'slot_id':s.id,'display':self.font_input.currentFont().family()}
         self.pt.setValue(s.size_pt)
         self.text_color.setText(s.color)
         self.scale.setValue(s.min_scale*100)
@@ -2329,7 +2325,7 @@ class MainWindow(QMainWindow):
                 if not ok:return
                 face_index=labels.index(selected)
             asset = self.font_manager.import_font(path, approved=True,face_index=face_index)
-            self.font.setCurrentFont(QFont(asset["families"][0]))
+            self.font_input.setCurrentFont(QFont(asset["families"][0]))
             self.inform("已保存並載入本程式：" + "、".join(asset["families"]) + "\n重開時會核對內容後自動載入；字型不會隨原始碼包上傳。")
             self.invalidate()
         except Exception as e:
@@ -2355,7 +2351,7 @@ class MainWindow(QMainWindow):
     def mode_changed(self,index=None):
         index=self.tabs.currentIndex() if index is None else index
         if hasattr(self,'navigation') and not self.navigation.restoring:self.navigation.remember(self._active_mode)
-        form=dict(kind=self.kind.currentData(),owner=self.owner.currentData(),index=self.index.value(),coords=[s.value() for s in self.coords],font=self.font.currentFont(),pt=self.pt.value(),color=self.text_color.text(),scale=self.scale.value(),align=self.align.currentData(),required=self.required.isChecked(),font_display=copy.deepcopy(getattr(self,'_selected_font_display',None)))
+        form=dict(kind=self.kind.currentData(),owner=self.owner.currentData(),index=self.index.value(),coords=[s.value() for s in self.coords],font=self.font_input.currentFont(),pt=self.pt.value(),color=self.text_color.text(),scale=self.scale.value(),align=self.align.currentData(),required=self.required.isChecked(),font_display=copy.deepcopy(getattr(self,'_selected_font_display',None)))
         from .property_context import pending_main,source_pin
         form.update(incomplete=copy.deepcopy(self._property_raw_inputs),pending=pending_main(self,self._active_mode),object_pin=getattr(self,'_property_loaded_pin',None),source_pin=getattr(self,'_property_loaded_source',None) if self.current_slot else source_pin(self,self._active_mode))
         self._mode_memory[self._active_mode]=(self.current_slot.id if self.current_slot else None,self.undo_stack,self.redo_stack,form)
@@ -2374,7 +2370,7 @@ class MainWindow(QMainWindow):
             for combo,key in ((self.kind,'kind'),(self.owner,'owner'),(self.align,'align')):combo.setCurrentIndex(combo.findData(form[key]))
             self.index.setValue(form['index'])
             for spin,value in zip(self.coords,form['coords']):spin.setValue(value)
-            self.font.setCurrentFont(form['font']);self.pt.setValue(form['pt']);self.text_color.setText(form['color']);self.scale.setValue(form['scale']);self.required.setChecked(form['required']);self._selected_font_display=form['font_display']
+            self.font_input.setCurrentFont(form['font']);self.pt.setValue(form['pt']);self.text_color.setText(form['color']);self.scale.setValue(form['scale']);self.required.setChecked(form['required']);self._selected_font_display=form['font_display']
             self._property_raw_inputs=copy.deepcopy(form.get('incomplete',{}))
             from .property_context import restore_incomplete
             restore_incomplete(self)
@@ -2427,6 +2423,7 @@ class MainWindow(QMainWindow):
             self.error("保存失敗，尚未安全關閉：" + str(e))
             event.ignore()
             return
+        self.template_catalog.close_previews()
         self.input_timer.stop()
         self.backup_scheduler.shutdown()
         self.source_watch.shutdown()

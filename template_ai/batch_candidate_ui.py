@@ -16,7 +16,7 @@ class CandidateBatchController:
     def rows(self):
         from .multi_size_edit import SizeEditAdapter
         d=self.d;rows=[];self.adapters={};self.checked={};pairs=[]
-        if self.origin is d.window:pairs=[(d.window,i) for i in range(len(d.window.candidates))]
+        if self.origin is d.host_window:pairs=[(d.host_window,i) for i in range(len(d.host_window.candidates))]
         elif self.origin.is_current():
             for entry in self.origin.service.entries:
                 for index in range(len(entry['candidates'])):
@@ -54,12 +54,12 @@ class CandidateBatchController:
 
     def preview(self):
         d=self.d
-        if d.running or d.window.busy:d.status.setText('原背景工作進行中，保留此批固定範圍，稍後再預檢');return
+        if d.running or d.host_window.busy:d.status.setText('原背景工作進行中，保留此批固定範圍，稍後再預檢');return
         try:
             d.valid_context()
-            if d.running or d.window.busy:raise ValueError('原背景工作進行中，稍後再預檢')
+            if d.running or d.host_window.busy:raise ValueError('原背景工作進行中，稍後再預檢')
             from .training_navigation import require_clean_navigation
-            require_clean_navigation(d.window)
+            require_clean_navigation(d.host_window)
             groups={}
             for row in d.selected_rows():groups.setdefault(row['scope_key'],[]).extend(row['slot_ids'])
             if not 1<=len(groups)<=50:raise ValueError('請明確勾選1至50個候選交易')
@@ -95,7 +95,7 @@ class CandidateBatchController:
                 self.checked[key]=checked;row.update(state='READY' if checked['outcome']=='READY' else 'BLOCKED',reason='整卡數位Gate合格，仍需明確核對套用' if checked['outcome']=='READY' else '；'.join(checked['candidate'].issues))
             QTimer.singleShot(0,self.next_preview)
         def failed(message):row.update(state='BLOCKED',reason=str(message));QTimer.singleShot(0,self.next_preview)
-        try:d.window.run_job('批次候選預檢',work,done,on_error=failed,cancel=d.cancel_event)
+        try:d.host_window.run_job('批次候選預檢',work,done,on_error=failed,cancel=d.cancel_event)
         except Exception as error:failed(error)
 
     def finish_preview(self):
@@ -118,7 +118,7 @@ class CandidateBatchController:
 
     def require_preview(self):
         d=self.d;d.valid_context()
-        if d.running or d.window.busy:raise ValueError('既有工作進行中')
+        if d.running or d.host_window.busy:raise ValueError('既有工作進行中')
         if not d.plan or d.parameters()!=d.preview_parameters or d.selection_pin()!=d.selected_ids or self.seal()!=self.preview_seal:raise ValueError('範圍／參數／結果已變更，請重新預檢')
 
     def apply(self):
@@ -149,7 +149,7 @@ class CandidateBatchController:
         d=self.d
         try:
             d.valid_context()
-            if d.running or d.window.busy:raise ValueError('既有工作進行中')
+            if d.running or d.host_window.busy:raise ValueError('既有工作進行中')
             selected={r['scope_key'] for r in d.selected_rows()};receipts={r['target_key']:r for r in d.results if r.get('receipt_id')}
             items=[r for r in d.plan['rows'] if r['target_key'] in selected and r['target_key'] in receipts]
             if not items:raise ValueError('請勾選本批已套用的原交易')
@@ -177,7 +177,7 @@ class CandidateBatchController:
                 else:self.inverse_checked[key]=checked;row.update(state='READY' if checked['outcome']=='READY' else 'BLOCKED',reason='；'.join(checked['candidate'].issues))
                 QTimer.singleShot(0,self.next_undo)
             def failed(message):row.update(state='BLOCKED',reason=str(message));QTimer.singleShot(0,self.next_undo)
-            d.window.run_job('批次候選部分回復預檢',work,done,on_error=failed,cancel=d.cancel_event)
+            d.host_window.run_job('批次候選部分回復預檢',work,done,on_error=failed,cancel=d.cancel_event)
         except Exception as error:row.update(state='BLOCKED',reason=str(error));QTimer.singleShot(0,self.next_undo)
 
     def locate(self):

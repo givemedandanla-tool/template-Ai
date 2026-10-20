@@ -1,4 +1,9 @@
 """Primary C-scope coverage view; inventory is a separately labelled legacy view."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from PySide6.QtCore import Qt,QDateTime
 from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QPushButton,QComboBox,QTreeWidget,QTreeWidgetItem,QPlainTextEdit,QHeaderView
 from shiboken6 import isValid
@@ -11,7 +16,7 @@ VALUES=dict(DERIVATIVE_PATH_NATIVE_TEXT_UNKNOWN='衍生向量路徑；原生文�
 
 class QualifiedCoveragePanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.store=TrainingStore.bind(window.library);self.report=None;self.loading=False;self.loaded=False;self.offset=0;self.dataset_offset=0;self.history_offset=0;self.historical=False;self.generation=0
+        super().__init__(parent);self.host_window: MainWindow=window;self.store=TrainingStore.bind(window.library);self.report=None;self.loading=False;self.loaded=False;self.offset=0;self.dataset_offset=0;self.history_offset=0;self.historical=False;self.generation=0
         layout=QVBoxLayout(self);bar=QHBoxLayout();self.collection=QComboBox()
         for label,value in VIEWS:self.collection.addItem(label,value)
         bar.addWidget(self.collection);self.dataset=QComboBox();self.dataset.addItem('先選明確資料集版本',None);self.dataset.setEnabled(False);bar.addWidget(self.dataset,1);self.button(bar,'資料集前50',lambda:self.datasets(-50));self.button(bar,'資料集後50',lambda:self.datasets(50));layout.addLayout(bar)
@@ -38,8 +43,8 @@ class QualifiedCoveragePanel(QWidget):
     def request(self,command,payload,callback):
         host=self.host()
         if host.quality_panel.loading:raise ValueError('既有背景核對尚未完成，請稍後重算')
-        if self.window.busy:raise ValueError('目前已有背景操作，請完成或取消後重算')
-        if self.store.library.closed or self.window.library is not self.store.library:raise ValueError('專案環境已變更，請重新開啟覆蓋統計')
+        if self.host_window.busy:raise ValueError('目前已有背景操作，請完成或取消後重算')
+        if self.store.library.closed or self.host_window.library is not self.store.library:raise ValueError('專案環境已變更，請重新開啟覆蓋統計')
         self.loading=True;generation=self.generation;self.status.setText('正在本機核對本頁來源與用途，尚未宣稱完成。')
         def done(value):
             if not isValid(self):return
@@ -82,7 +87,7 @@ class QualifiedCoveragePanel(QWidget):
                     row=rows[wid];item=QTreeWidgetItem([row.get('work_name','歷史作品／'+wid[:12])+'／'+row.get('source_name','來源參照'),row['state']+'／'+row['role']]);item.setData(0,Qt.UserRole,wid);group.addChild(item)
         self.status.setText('；'.join(value['notices']));self.details.setPlainText('統計時間：'+QDateTime.fromSecsSinceEpoch(int(value['created'])).toString(Qt.ISODate)+'\n全頁分類可重疊；未知不算已核實類型。\n不以件數判定品質，不生成補樣、訓練或素材搜尋任務。');self.previous_button.setEnabled(self.offset>0 and not self.historical);self.next_button.setEnabled(self.offset+50<value['roster_total'] and not self.historical);self.selected()
     def selected(self):
-        item=self.tree.currentItem();wid=item.data(0,Qt.UserRole) if item else None;enabled=bool(wid) and bool(self.report) and not self.loading and not self.historical and not self.window.busy;self.locate_button.setEnabled(enabled)
+        item=self.tree.currentItem();wid=item.data(0,Qt.UserRole) if item else None;enabled=bool(wid) and bool(self.report) and not self.loading and not self.historical and not self.host_window.busy;self.locate_button.setEnabled(enabled)
         if wid and self.report:
             row=next(row for row in self.report['rows'] if row.get('work_id')==wid);self.details.setPlainText((row.get('work_name') or '歷史作品')+'\n來源：'+str(row.get('source_name','歷史參照'))+'\n標記／記錄版本：'+str(row['record_revision'])+'；作品版本：'+str(row['work_revision'])+'\n角色：'+row['role']+'；目前狀態：'+row['state']+'\n'+'；'.join(row.get('reasons',[]))+('\n保留集狀態：'+{'EXPOSED_NOT_FRESH':'答案已揭露，不能當新獨立來源','CONSUMED_EXISTING_PROTOCOL_ONLY':'已有固定試驗使用紀錄，只可用於原試驗','REGISTERED_GOLD_FRESHNESS_NOT_GRANTED':'僅已登錄，本頁未授予新獨立驗收資格'}.get(row.get('holdout_state'),'未知') if row.get('holdout_state') else ''))
     def locate(self):
@@ -93,9 +98,9 @@ class QualifiedCoveragePanel(QWidget):
         row=next(row for row in self.report['rows'] if row.get('work_id')==wid);host=self.host()
         if host.facts_panel.has_pending_observation():raise ValueError('來源事實有未套用人工內容；保留原編輯，未切換')
         from .qualified_coverage import QualifiedCoverage
-        if QualifiedCoverage(self.window.library).stamp(wid)!=row['scope_stamp']:raise ValueError('來源／作品版本已變更，舊統計需重算')
+        if QualifiedCoverage(self.host_window.library).stamp(wid)!=row['scope_stamp']:raise ValueError('來源／作品版本已變更，舊統計需重算')
         from .training_navigation import locate_work
-        locate_work(self.window,wid);host.facts_panel.focus(wid,[]);host.tabs.setCurrentWidget(host.facts_panel);self.status.setText('已返回同一來源畫布與標記；未更動訓練、客戶或模板。')
+        locate_work(self.host_window,wid);host.facts_panel.focus(wid,[]);host.tabs.setCurrentWidget(host.facts_panel);self.status.setText('已返回同一來源畫布與標記；未更動訓練、客戶或模板。')
     def samples(self):
         host=self.host();host.tabs.setCurrentWidget(host.samples_panel);host.samples_panel.open_pool()
     def histories(self,delta=0):

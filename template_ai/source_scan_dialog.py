@@ -1,4 +1,9 @@
 """Shared watcher workbench; explicit root permissions and candidate-to-UI003 handoff."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from pathlib import Path
 import sqlite3
 from shiboken6 import isValid
@@ -15,7 +20,7 @@ CONFIG_KEYS=['path','recursive','extensions','excludes','mode','archived','requi
 
 class SourceScanDialog(QDialog):
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.store=TrainingStore.bind(window.library);self.service=window.source_watch;self.running=False;self.offset=0;self.scan_offset=0;self.dirty=False;self.loading=True;self.root_snapshot=None;self.training_dialog=None;self.dispatch_context=None;self._context_error=None
+        super().__init__(window);self.host_window: MainWindow=window;self.store=TrainingStore.bind(window.library);self.service=window.source_watch;self.running=False;self.offset=0;self.scan_offset=0;self.dirty=False;self.loading=True;self.root_snapshot=None;self.training_dialog=None;self.dispatch_context=None;self._context_error=None
         self.setWindowTitle('來源監看／安全增量候選');self.resize(1120,740);layout=QVBoxLayout(self)
         note=QLabel('僅明列本機範圍。事件只是提示，程式開啟時600ms去抖、30秒與重啟補掃；最多128個即時提示點。單次500項／雙讀取256MiB，超額明示部分。候選持久保存，真正訓練仍須既有一鍵預檢確認；每頁50筆，只交接本頁明列勾選。');note.setWordWrap(True);layout.addWidget(note)
         self.status=QLabel('選取來源根目錄；掃描只讀原稿，離線不當作刪除。');self.status.setTextFormat(Qt.PlainText);self.status.setWordWrap(True);layout.addWidget(self.status)
@@ -69,7 +74,7 @@ class SourceScanDialog(QDialog):
 
     def add(self):
         if not self.valid_context():return
-        if self.window.busy:self.status.setText('背景工作中；原設定保留，稍後新增');return
+        if self.host_window.busy:self.status.setText('背景工作中；原設定保留，稍後新增');return
         try:
             path=QFileDialog.getExistingDirectory(self,'明確選擇已授權本機來源根目錄')
             if not path:return
@@ -78,7 +83,7 @@ class SourceScanDialog(QDialog):
 
     def commit_settings(self,start=False):
         if not self.valid_context():return
-        if self.window.busy:self.status.setText('請先安全暫停目前背景工作，再保存設定；輸入保留');return
+        if self.host_window.busy:self.status.setText('請先安全暫停目前背景工作，再保存設定；輸入保留');return
         try:
             root=self.store.get('SCAN_ROOT',self.roots.currentData())
             if not root:raise ValueError('先選取來源根目錄')
@@ -151,14 +156,14 @@ class SourceScanDialog(QDialog):
     def inspect_source(self):
         if not self.valid_context():return
         row=self.scan_items.currentData()
-        if self.window.busy or not row:self.status.setText('先選取本頁來源，並等待背景空閒');return
+        if self.host_window.busy or not row:self.status.setText('先選取本頁來源，並等待背景空閒');return
         ids=row.get('affected_source_ids',[]) or row.get('registered_source_ids',[])
         if not ids:self.status.setText('此檔尚未登錄原來源／作品；請先由候選核對預檢');return
         identity=ids[0]
         if len(ids)>1:
             identity,accepted=QInputDialog.getItem(self,'選取保留來源版本','只查看確切來源ID，不改客戶映射',ids,0,False)
             if not accepted:return
-        data_root=self.window.library.root
+        data_root=self.host_window.library.root
         def work():
             from .source_context import snapshot_contexts
             try:return dict(source=snapshot_contexts(data_root,[identity])[0])
@@ -168,16 +173,16 @@ class SourceScanDialog(QDialog):
             if payload.get('error'):self.status.setText('影響查詢未完成：'+payload['error']);return
             from .source_dialog import SourceRelinkDialog
             from .source_discovery import availability
-            source=payload['source'];preview=SourceRelinkDialog(self.window);preview.setParent(self,Qt.Dialog)
+            source=payload['source'];preview=SourceRelinkDialog(self.host_window);preview.setParent(self,Qt.Dialog)
             preview.show_report(dict(status='COMPLETE',roots=[],entries=0,hashed_files=0,errors=[],rows=[dict(source=source,availability=availability(source),candidates=[],same_name_different=[])]))
             preview.show_details();preview.close();preview.deleteLater()
-        try:self.window.run_job('唯讀核對原來源關聯',work,JobCallbacks(done,lambda error:done({'error':str(error)})))
+        try:self.host_window.run_job('唯讀核對原來源關聯',work,JobCallbacks(done,lambda error:done({'error':str(error)})))
         except Exception as error:self.status.setText('未開始影響查詢：'+str(error))
 
     def recheck_existing(self):
         if not self.valid_context():return
         row=self.scan_items.currentData()
-        if self.window.busy or not row or not row.get('registered') or row['state']!='UNCHANGED':self.status.setText('只對已核驗且未變的既有來源重核；修改版請先人工核對新候選');return
+        if self.host_window.busy or not row or not row.get('registered') or row['state']!='UNCHANGED':self.status.setText('只對已核驗且未變的既有來源重核；修改版請先人工核對新候選');return
         from .automatic_training_dialog import AutomaticTrainingDialog
         self.dispatch_context=None;dialog=self.training_view();dialog.preflight([row['path']],expected_hashes={row['path']:row['verified_hash']})
         self.status.setText('已交既有管線重核解析／規則／模型／作品依賴；只重算失效單元，是否重用以實際預檢為準')
@@ -185,7 +190,7 @@ class SourceScanDialog(QDialog):
     def review(self):
         if not self.valid_context():return
         values=self.selected()
-        if self.window.busy or len(values)!=1 or values[0]['state']!='REVIEW_REQUIRED':self.status.setText('請只勾選一筆修改版待審，並等待背景空閒');return
+        if self.host_window.busy or len(values)!=1 or values[0]['state']!='REVIEW_REQUIRED':self.status.setText('請只勾選一筆修改版待審，並等待背景空閒');return
         candidate=values[0]
         if QMessageBox.question(self,'核對獨立新來源候選',f"{candidate['path']}\n原SHA {candidate.get('previous_hash')}\n新SHA {candidate['source_hash']}\n只核准新來源候選進預檢，保留舊版型與客戶歸屬待審，沒有核准正式模板。確認？")!=QMessageBox.Yes:return
         actor=self.actor.text();self.running=True
@@ -198,13 +203,13 @@ class SourceScanDialog(QDialog):
                 if payload.get('error'):raise ValueError(payload['error'])
                 review_candidate(self.store,candidate,payload['proof'],actor,True);self.render_current();self.status.setText('修改版已核對為新來源候選；請交既有預檢，客戶／模板仍未批准')
             except Exception as error:self.status.setText('未核准候選：'+str(error))
-        try:self.window.run_job('核對修改版實際內容',work,JobCallbacks(done,lambda error:done({'error':str(error)})))
+        try:self.host_window.run_job('核對修改版實際內容',work,JobCallbacks(done,lambda error:done({'error':str(error)})))
         except Exception as error:self.running=False;self.status.setText('未開始候選核對：'+str(error))
 
     def launch(self):
         if not self.valid_context():return
         values=self.selected()
-        if self.window.busy or not values:self.status.setText('先明列勾選候選，並等待背景空閒');return
+        if self.host_window.busy or not values:self.status.setText('先明列勾選候選，並等待背景空閒');return
         from .automatic_training_dialog import AutomaticTrainingDialog
         allowed={'QUEUED_FOR_UI003_PREFLIGHT','FOUND_NOT_QUEUED','REVIEWED_NEW_VERSION_CANDIDATE'}
         existing={v.get('auto_job_id') for v in values if v['state']=='DISPATCHED'}
@@ -219,7 +224,7 @@ class SourceScanDialog(QDialog):
     def training_view(self):
         from .automatic_training_dialog import AutomaticTrainingDialog
         if self.training_dialog is None:
-            self.training_dialog=AutomaticTrainingDialog(self.window);self.training_dialog.setParent(self,Qt.Dialog);self.training_dialog.job_created.connect(self.training_created)
+            self.training_dialog=AutomaticTrainingDialog(self.host_window);self.training_dialog.setParent(self,Qt.Dialog);self.training_dialog.job_created.connect(self.training_created)
         self.training_dialog.show();self.training_dialog.raise_();return self.training_dialog
 
     def training_created(self,job):
@@ -234,7 +239,7 @@ class SourceScanDialog(QDialog):
 
     def valid_context(self):
         if not isValid(self):return False
-        if self.store.library is not self.window.library:self._context_error='專案環境已切換，保留本頁輸入但停止舊作用範圍讀寫；請重新開啟'
+        if self.store.library is not self.host_window.library:self._context_error='專案環境已切換，保留本頁輸入但停止舊作用範圍讀寫；請重新開啟'
         if getattr(self.store.library,'closed',False):self._context_error='資料庫已關閉；本頁已停止讀寫，請重新開啟專案環境'
         if not self._context_error:
             try:self.store.db.in_transaction
@@ -244,6 +249,6 @@ class SourceScanDialog(QDialog):
         return True
 
     def reject(self):
-        if self.running or self.window.busy:self.status.setText('背景工作中，請安全取消或等待完成後關閉');return
+        if self.running or self.host_window.busy:self.status.setText('背景工作中，請安全取消或等待完成後關閉');return
         if self.dirty and QMessageBox.question(self,'尚有未保存設定','捨棄目前未保存的根目錄設定並關閉？')!=QMessageBox.Yes:return
         super().reject()

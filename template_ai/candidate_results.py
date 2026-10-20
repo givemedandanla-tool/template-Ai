@@ -1,4 +1,9 @@
 """Present existing candidate results; scores never confer output permission."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import copy,math
 from .training_store import digest
 
@@ -124,7 +129,7 @@ from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,
 class ResultComparisonDialog(QDialog):
     """Two read-only marked views of existing results; selection copies no geometry."""
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.pins=[];self.snapshots=[];self.setWindowTitle('比較既有候選與驗證差異（非正式）');layout=QVBoxLayout(self)
+        super().__init__(window);self.host_window: MainWindow=window;self.pins=[];self.snapshots=[];self.setWindowTitle('比較既有候選與驗證差異（非正式）');layout=QVBoxLayout(self)
         self.status=QLabel('非正式並排檢視；選取只切換目前候選，不跨作品複製框位或解除阻擋。');self.status.setWordWrap(True);layout.addWidget(self.status)
         from .gui import Canvas
         split=QSplitter();self.combos=[];self.canvases=[];self.labels=[];self.view_buttons=[]
@@ -147,10 +152,10 @@ class ResultComparisonDialog(QDialog):
         from .render import card_view_image
         try:
             self.indices=[combo.currentData() for combo in self.combos]
-            if any(index is None or not 0<=index<len(self.window.candidates) for index in self.indices):raise ValueError('沒有可比較的現有候選')
-            self.pins=[selection_pin(self.window,index) for index in self.indices];risks=[current_assessment(self.window,index) for index in self.indices];self.snapshots=[]
+            if any(index is None or not 0<=index<len(self.host_window.candidates) for index in self.indices):raise ValueError('沒有可比較的現有候選')
+            self.pins=[selection_pin(self.host_window,index) for index in self.indices];risks=[current_assessment(self.host_window,index) for index in self.indices];self.snapshots=[]
             for side,(index,risk) in enumerate(zip(self.indices,risks)):
-                c=copy.deepcopy(self.window.candidates[index]);c.risk_context['comparison_only']=True;self.snapshots.append(c);details='；'.join(c.issues[:4]) or '；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS') or '目前必要條件通過；仍需輸出前重核'
+                c=copy.deepcopy(self.host_window.candidates[index]);c.risk_context['comparison_only']=True;self.snapshots.append(c);details='；'.join(c.issues[:4]) or '；'.join(x['reason'] for x in risk['conditions'] if x['status']!='PASS') or '目前必要條件通過；仍需輸出前重核'
                 self.labels[side].setText('非正式比較／'+risk['label']+'；規則分數 '+format(c.score,'.3f')+'，不是信心機率\n'+details)
                 try:image=card_view_image(c)
                 except (ValueError,OSError):image=None
@@ -164,7 +169,7 @@ class ResultComparisonDialog(QDialog):
             self.pins=[];self.status.setText('比較待更新：'+str(error))
             for button in self.view_buttons:button.setEnabled(False)
     def check_current(self):
-        try:current=bool(self.pins) and self.pins==[selection_pin(self.window,index) for index in self.indices]
+        try:current=bool(self.pins) and self.pins==[selection_pin(self.host_window,index) for index in self.indices]
         except (ValueError,OSError,TypeError,KeyError,IndexError):current=False
         if not current:
             self.status.setText('輸入／來源／人工版本已變，比較過期；請重新載入。保留原有候選與風險。')
@@ -172,4 +177,4 @@ class ResultComparisonDialog(QDialog):
         return current
     def select_side(self,side):
         if not self.check_current():return False
-        self.window.candidate_list.setCurrentRow(self.indices[side]);self.window.choose_candidate(self.indices[side]);self.status.setText('已切換查看此候選；未複製座標或解除任何輸出阻擋。');return True
+        self.host_window.candidate_list.setCurrentRow(self.indices[side]);self.host_window.choose_candidate(self.indices[side]);self.status.setText('已切換查看此候選；未複製座標或解除任何輸出阻擋。');return True

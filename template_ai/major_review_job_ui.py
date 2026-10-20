@@ -14,8 +14,8 @@ class MajorJobPageMixin:
         self.job_notice=QLabel('分析沿用原持久共享佇列；尚未排程，不自動訓練、核准或解除隔離。');self.job_notice.setWordWrap(True);layout.addWidget(self.job_notice)
         self.cases.currentIndexChanged.connect(self.invalidate);self.analysis_jobs.currentIndexChanged.connect(self.invalidate)
         self.cases.currentIndexChanged.connect(self.job_case_changed)
-        self.dialog.window.execution_queue.progress.connect(self.job_progress)
-        self.dialog.window.execution_queue.changed.connect(self.job_queue_changed)
+        self.dialog.host_window.execution_queue.progress.connect(self.job_progress)
+        self.dialog.host_window.execution_queue.changed.connect(self.job_queue_changed)
     def case_id(self):
         identity=self.cases.currentData()
         if not self.case or self.case['id']!=identity:raise ValueError('請先明確選取並讀回此持久案件')
@@ -46,7 +46,7 @@ class MajorJobPageMixin:
         value=self.job_plan
         def saved(job):
             self.job_plan=None;self.job_pin=None;d.consent.setChecked(False);self.analysis_job=job;self.analysis_jobs.addItem('來源重分析／'+job['phase']+'／'+job['id'],job['id']);self.analysis_jobs.setCurrentIndex(self.analysis_jobs.count()-1)
-            try:d.window.execution_queue.submit('AUTO_JOB',job,job['actor']);self.job_notice.setText('已保存工作 '+job['id']+' 並送入原公平佇列；等待實際執行，不代表重審通過。')
+            try:d.host_window.execution_queue.submit('AUTO_JOB',job,job['actor']);self.job_notice.setText('已保存工作 '+job['id']+' 並送入原公平佇列；等待實際執行，不代表重審通過。')
             except ValueError as error:self.job_notice.setText('已保存工作 '+job['id']+'，尚未成功加入佇列：'+str(error))
         d.request('MAJOR_CREATE_JOB',dict(value=value,actor=d.actor.text(),reason=d.reason.text(),approved=True),saved)
     def job_progress(self,request_id,job):
@@ -57,7 +57,7 @@ class MajorJobPageMixin:
         if not self.isVisible() or not self.analysis_job:return
         def refresh():
             d=self.dialog
-            if d.window.busy or d.panel.loading or not self.analysis_job or self.analysis_job['scope']['case_id']!=self.cases.currentData():return
+            if d.host_window.busy or d.panel.loading or not self.analysis_job or self.analysis_job['scope']['case_id']!=self.cases.currentData():return
             def loaded(value):
                 job=value['job'];self.analysis_job=job;self.update_job_label(job,value['effective_phase']);saved=sum(item['state']=='SUCCESS' for item in job['items']);self.job_notice.setText(f'已讀回原共享工作：{value["effective_phase"]}，來源已保存 {saved}/{len(job["items"])}；重審仍待人工核對。')
             d.request('MAJOR_JOB',dict(case_id=self.cases.currentData(),job_id=self.analysis_job['id']),loaded)
@@ -76,10 +76,10 @@ class MajorJobPageMixin:
         def loaded(value):
             job=value['job']
             if value['effective_phase']=='COMPLETED':self.job_notice.setText('此分析已完成落盤，請讀回原／新對照；重審尚須人工核對。');return
-            self.analysis_job=job;d.window.execution_queue.submit('AUTO_JOB',job,actor,retry_failed=True);d.consent.setChecked(False);self.job_notice.setText('已明確提交原共享佇列接續；仍重新核對原工作範圍、來源與目前人工版本。')
+            self.analysis_job=job;d.host_window.execution_queue.submit('AUTO_JOB',job,actor,retry_failed=True);d.consent.setChecked(False);self.job_notice.setText('已明確提交原共享佇列接續；仍重新核對原工作範圍、來源與目前人工版本。')
         d.request('MAJOR_JOB',dict(case_id=case_id,job_id=identity),loaded)
     def cancel_job(self):
-        case_id=self.case_id();identity=self.analysis_jobs.currentData();window=self.dialog.window
+        case_id=self.case_id();identity=self.analysis_jobs.currentData();window=self.dialog.host_window
         if not identity:raise ValueError('先選取此案分析工作')
         job=window.execution_queue.queue.store.get('AUTO_JOB',identity)
         if not job or job.get('operation')!='MAJOR_SOURCE_RECHECK' or job.get('scope',{}).get('case_id')!=case_id:raise ValueError('工作不屬於目前案件；未停止其他案件分析')

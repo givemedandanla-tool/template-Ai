@@ -47,7 +47,7 @@ class CrossPropertyDialog(QDialog):
         except (ValueError,KeyError,IndexError,StopIteration) as error:self.plan=None;self.status.setText('未預覽：'+str(error))
     def apply(self):
         try:
-            if self.running or self.owner.running or self.owner.window.busy:raise ValueError('原單一背景工作仍在進行')
+            if self.running or self.owner.running or self.owner.host_window.busy:raise ValueError('原單一背景工作仍在進行')
             if self.plan is None or self.controls()!=self.preview_controls:raise ValueError('目標／物件／屬性已改，先重新預覽')
             if not self.owner.is_current():raise ValueError('來源已改，先同步重驗')
             if QMessageBox.question(self,'逐目標實際作用範圍',self.details.toPlainText()+'\n失敗／不相容目標保留舊版本，通過的目標分別記錄可復原變動。')!=QMessageBox.Yes:return

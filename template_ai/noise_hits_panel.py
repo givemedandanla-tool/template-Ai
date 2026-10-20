@@ -1,4 +1,9 @@
 """Actual stored traces versus fresh decisions, with source/work navigation and bounded counts."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 from collections import Counter
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QLabel, QPushButton, QTableWidget, QTableWidgetItem, QPlainTextEdit
@@ -8,7 +13,7 @@ from .training_navigation import locate_work
 
 class NoiseHitsPanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.store=TrainingStore(window.library);self.rows=[];self.offset=0;self.loading=False;outer=QVBoxLayout(self);bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('全命中完整文字／work／observation／rule ID搜尋');self.search.textChanged.connect(self.search_changed);bar.addWidget(self.search,1);self.reload_button=QPushButton('重查目前決定');self.reload_button.clicked.connect(self.reload);bar.addWidget(self.reload_button);outer.addLayout(bar)
+        super().__init__(parent);self.host_window: MainWindow=window;self.store=TrainingStore(window.library);self.rows=[];self.offset=0;self.loading=False;outer=QVBoxLayout(self);bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('全命中完整文字／work／observation／rule ID搜尋');self.search.textChanged.connect(self.search_changed);bar.addWidget(self.search,1);self.reload_button=QPushButton('重查目前決定');self.reload_button.clicked.connect(self.reload);bar.addWidget(self.reload_button);outer.addLayout(bar)
         self.status=QLabel('新確認觀察對合法已核准條件自動評估，不重問規則批准。儲存命中與目前決定分開。');self.status.setWordWrap(True);outer.addWidget(self.status);self.count=QLabel();self.count.setWordWrap(True);outer.addWidget(self.count)
         self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['目前決定','保存決定／版次','完整文字','作品','規則／版本','觀察ID']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.SingleSelection);self.table.itemSelectionChanged.connect(self.selected);outer.addWidget(self.table,2);self.details=QPlainTextEdit();self.details.setReadOnly(True);outer.addWidget(self.details,2)
         bar=QHBoxLayout();self.previous_button=QPushButton('上一頁');self.next_button=QPushButton('下一頁');self.locate_button=QPushButton('定位exact來源／作品');self.refresh_button=QPushButton('保存選中作品的目前追溯');self.previous_button.clicked.connect(lambda:self.page(-200));self.next_button.clicked.connect(lambda:self.page(200));self.locate_button.clicked.connect(self.locate);self.refresh_button.clicked.connect(self.refresh)
@@ -40,13 +45,13 @@ class NoiseHitsPanel(QWidget):
         finally:self.loading=False;self.selected()
     def selected(self):
         if self.loading:return
-        row=self.selected_row();detail={**row,'history':self.store.history('HIT',row['id'])} if row else {};self.details.setPlainText(json.dumps(detail,ensure_ascii=False,indent=2));self.locate_button.setEnabled(bool(row) and not self.window.busy);self.refresh_button.setEnabled(bool(row) and not self.window.busy)
-        if hasattr(self,'keep_button'):self.keep_button.setEnabled(bool(row) and not self.window.busy);self.whitelist_button.setEnabled(bool(row) and not self.window.busy)
+        row=self.selected_row();detail={**row,'history':self.store.history('HIT',row['id'])} if row else {};self.details.setPlainText(json.dumps(detail,ensure_ascii=False,indent=2));self.locate_button.setEnabled(bool(row) and not self.host_window.busy);self.refresh_button.setEnabled(bool(row) and not self.host_window.busy)
+        if hasattr(self,'keep_button'):self.keep_button.setEnabled(bool(row) and not self.host_window.busy);self.whitelist_button.setEnabled(bool(row) and not self.host_window.busy)
     def locate(self):
         try:
             row=self.selected_row()
             if not row:raise ValueError('先選取追溯')
-            stored=row['stored'];_,observation=self.store.observation(stored['work_id'],stored['observation_id'],confirmed=False);locate_work(self.window,stored['work_id'],[observation['slot_id']] if observation['slot_id'] else []);self.status.setText('已定位exact作品；輔助觀察区域見詳情，沒有改原稿／欄位')
+            stored=row['stored'];_,observation=self.store.observation(stored['work_id'],stored['observation_id'],confirmed=False);locate_work(self.host_window,stored['work_id'],[observation['slot_id']] if observation['slot_id'] else []);self.status.setText('已定位exact作品；輔助觀察区域見詳情，沒有改原稿／欄位')
         except Exception as error:self.status.setText('未定位：'+str(error))
     def refresh(self):
         try:
@@ -59,7 +64,7 @@ class NoiseHitsPanel(QWidget):
         try:
             from PySide6.QtWidgets import QMessageBox
             row=self.selected_row()
-            if not row or self.window.busy:raise ValueError('先選取exact觀察，結束背景工作')
+            if not row or self.host_window.busy:raise ValueError('先選取exact觀察，結束背景工作')
             stored=row['stored'];local=self.store.local_record(stored['work_id']);facts=self.store.facts(stored['work_id'])
             if QMessageBox.question(self,'只恢復此觀察',stored['work_id']+'／'+stored['observation_id']+'\n只保留此項，不建立或批准通用白名單。原稿與欄位不改。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
             self.store.local_keep(stored['work_id'],[stored['observation_id']],local['revision'],facts['revision'],True);self.reload()
@@ -68,7 +73,7 @@ class NoiseHitsPanel(QWidget):
     def whitelist(self):
         try:
             row=self.selected_row()
-            if not row or self.window.busy:raise ValueError('先選取exact觀察')
+            if not row or self.host_window.busy:raise ValueError('先選取exact觀察')
             from .noise_authoring_dialog import NoiseAuthoringDialog
             stored=row['stored'];dialog=NoiseAuthoringDialog(self.store,stored['work_id'],stored['observation_id'],self.actor.text(),self,action='KEEP')
             try:dialog.exec()

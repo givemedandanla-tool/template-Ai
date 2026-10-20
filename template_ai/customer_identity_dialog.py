@@ -1,4 +1,9 @@
 """Shared human-readable identity comparison, not a second customer editor."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from PySide6.QtCore import Qt,Signal
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QTreeWidget,QTreeWidgetItem,QPushButton,QCheckBox,QMessageBox
 
@@ -7,7 +12,7 @@ class IdentityPreviewDialog(QDialog):
     reviewed=Signal(str)
 
     def __init__(self,window,store,plan,parent=None):
-        super().__init__(parent or window);self.window=window;self.store=store;self.plan=plan
+        super().__init__(parent or window);self.host_window: MainWindow=window;self.store=store;self.plan=plan
         self.setWindowTitle('身份合併／拆分逐項核對');self.resize(1180,780)
         layout=QVBoxLayout(self)
         split=plan['operation']=='SPLIT';comparison=plan['operation']=='COMPARE'
@@ -83,12 +88,12 @@ class IdentityPreviewDialog(QDialog):
     def customer_card(self,side):
         from .customer_catalog import CustomerStyleDialog
         current=self.store.get(self.states[side]['customer']['id'])
-        self.card=CustomerStyleDialog(self.window,current,self);self.card.open()
+        self.card=CustomerStyleDialog(self.host_window,current,self);self.card.open()
 
     def locate_source(self):
         node=self.table.currentItem();identity=node.data(0,Qt.UserRole) if node else None
         if not identity:QMessageBox.information(self,'來源定位','先選一個A／B原稿區域');return
         try:
             from .annotation_dialog import AnnotationDialog
-            self.annotation=AnnotationDialog(self.window,identity,self);self.annotation.open()
+            self.annotation=AnnotationDialog(self.host_window,identity,self);self.annotation.open()
         except (ValueError,OSError) as error:QMessageBox.warning(self,'來源未開啟',str(error))

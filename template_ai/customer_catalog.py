@@ -1,4 +1,9 @@
 """Identity confirmed before browsing a customer's exact style links."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QLabel,QDialogButtonBox,QMessageBox
 from PySide6.QtCore import Qt
 from .catalog_widget import CatalogWidget
@@ -17,7 +22,7 @@ def apply_reorder(window,draft):
 
 class CustomerStyleDialog(QDialog):
     def __init__(self,window,snapshot,parent=None):
-        super().__init__(parent or window);self.window=window;self.snapshot=snapshot;self.store=CustomerStore(window.library);self.adopted=False
+        super().__init__(parent or window);self.host_window: MainWindow=window;self.snapshot=snapshot;self.store=CustomerStore(window.library);self.adopted=False
         self.setWindowTitle('客戶exact尺寸／版型版本：先比較，再確認當次沿用');self.resize(1280,780);layout=QVBoxLayout(self)
         label=QLabel('已確認客戶 '+snapshot['code']+' · '+snapshot['name']+' · ID '+snapshot['id']+' · 主檔 v'+str(snapshot['revision'])+'；原值可能過時，預填後仍需重新排版。');label.setTextFormat(Qt.PlainText);label.setWordWrap(True);layout.addWidget(label)
         self.catalog=CatalogWidget(window,snapshot,self.prefill,False);layout.addWidget(self.catalog,1);buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.button(QDialogButtonBox.Close).setText('關閉');buttons.rejected.connect(self.reject);layout.addWidget(buttons)
@@ -37,7 +42,7 @@ class CustomerStyleDialog(QDialog):
         now=self.store.get(self.snapshot['id'])
         if digest(now)!=digest(self.snapshot):raise ValueError('確認期間主檔已更新，未預填')
         self.check_source_ready(entry)
-        draft=self.store.reorder(self.snapshot['id'],entry['link']['id'],True);apply_reorder(self.window,draft);self.adopted=True;self.catalog.status.setText('exact版本已預填本次，主檔未改；請重新排版與逐尺寸驗證')
+        draft=self.store.reorder(self.snapshot['id'],entry['link']['id'],True);apply_reorder(self.host_window,draft);self.adopted=True;self.catalog.status.setText('exact版本已預填本次，主檔未改；請重新排版與逐尺寸驗證')
 
     def check_source_ready(self,entry):
         if entry['template'].get('source_id'):

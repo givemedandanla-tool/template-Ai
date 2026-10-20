@@ -40,20 +40,20 @@ def preview_png(asset, width, height, full_source=False):
 class LogoCompareWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.layout = QVBoxLayout(self)
+        self.root_layout = QVBoxLayout(self)
         self.info = QLabel('尚未選取可核對來源；不顯示猜測縮圖。')
         self.info.setWordWrap(True)
         self.info.setTextFormat(Qt.PlainText)
-        self.layout.addWidget(self.info)
+        self.root_layout.addWidget(self.info)
         buttons = QHBoxLayout()
         for label, action in [('符合框位', self.fit), ('放大', lambda: self.zoom(1.25)),
                               ('縮小', lambda: self.zoom(.8))]:
             button = QPushButton(label)
             button.clicked.connect(action)
             buttons.addWidget(button)
-        self.layout.addLayout(buttons)
+        self.root_layout.addLayout(buttons)
         self.body = QWidget()
-        self.layout.addWidget(self.body, 1)
+        self.root_layout.addWidget(self.body, 1)
         self.views = []
         self.available = False
         self.center, self.zoom_value = QPointF(), 1
@@ -62,7 +62,7 @@ class LogoCompareWidget(QWidget):
     def show_assets(self, candidate, original=None, width=30, height=15):
         old = self.body
         self.body = QWidget()
-        self.layout.replaceWidget(old, self.body)
+        self.root_layout.replaceWidget(old, self.body)
         old.deleteLater()
         self.views = []
         self.available = False

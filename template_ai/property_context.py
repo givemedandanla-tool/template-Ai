@@ -9,7 +9,7 @@ from .customers import digest
 
 
 def property_values(window):
-    family=window.font.currentFont().family();display=getattr(window,'_selected_font_display',None);slot=window.current_slot
+    family=window.font_input.currentFont().family();display=getattr(window,'_selected_font_display',None);slot=window.current_slot
     if slot and display and display['slot_id']==slot.id and family==display['display']:family=slot.font
     return dict(coords=[s.value() for s in window.coords],kind=window.kind.currentData(),owner=window.owner.currentData(),
                 index=window.index.value(),font=family,pt=window.pt.value(),color=window.text_color.text().strip(),
@@ -95,7 +95,7 @@ class RightPropertyContext:
         for key,check in window.property_pin_checks.items():
             check.setChecked(key in self.pins);check.toggled.connect(lambda checked,k=key:self.pin(k,checked))
         window.all_property_tools.toggled.connect(self.expand_all)
-        self.controls=dict(geometry=window.coords,text=[window.font,window.pt,window.text_color,window.scale,window.align,window.property_policy_button],identity=[window.kind,window.owner,window.index,window.required])
+        self.controls=dict(geometry=window.coords,text=[window.font_input,window.pt,window.text_color,window.scale,window.align,window.property_policy_button],identity=[window.kind,window.owner,window.index,window.required])
         for controls in self.controls.values():
             for control in controls:
                 from .viewport_controls import guard_control_wheel
@@ -157,7 +157,7 @@ class RightPropertyContext:
         w=self.w
         if not rows:
             for control in w.coords+[w.pt,w.scale,w.index]:control.clear()
-            for control in (w.kind,w.owner,w.align,w.font):control.setCurrentIndex(-1)
+            for control in (w.kind,w.owner,w.align,w.font_input):control.setCurrentIndex(-1)
             w.text_color.clear();return
         from .object_tools import common_properties
         common=common_properties(payload,[row['id'] for row in rows]);controls=dict(zip(('x','y','w','h'),w.coords));controls.update(size_pt=w.pt,min_scale=w.scale,index=w.index)
@@ -167,8 +167,8 @@ class RightPropertyContext:
             else:control.setValue(value*100 if key=='min_scale' else value+1 if key=='index' else value)
         for key,control in [('kind',w.kind),('owner',w.owner),('align',w.align)]:control.setCurrentIndex(control.findData(common[key]['value']) if not common[key]['mixed'] else -1)
         w.text_color.setText(common['color']['value'] or '')
-        if common['font']['value']:w.font.setCurrentFont(QFont(common['font']['value']))
-        else:w.font.setCurrentIndex(-1)
+        if common['font']['value']:w.font_input.setCurrentFont(QFont(common['font']['value']))
+        else:w.font_input.setCurrentIndex(-1)
 
     def sync(self,*args):
         if not isValid(self.w):return

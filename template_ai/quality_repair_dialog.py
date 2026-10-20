@@ -1,4 +1,9 @@
 """Existing repair and major-review pages over the original quality worker path."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from pathlib import Path
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QTabWidget,QWidget,QScrollArea,QLabel,QLineEdit,QPlainTextEdit,QComboBox,QCheckBox,QPushButton,QTableWidget,QTableWidgetItem,QHeaderView)
@@ -12,7 +17,7 @@ ROOT_NAMES=('來源不完整','作品切分','原生文字效果','本機OCR','�
 
 class QualityRepairDialog(QDialog):
     def __init__(self,panel):
-        super().__init__(panel);self.panel=panel;self.window=panel.window;self.library=panel.library;self.store=panel.store
+        super().__init__(panel);self.panel=panel;self.host_window: MainWindow=panel.host_window;self.library=panel.library;self.store=panel.store
         self.setWindowTitle('局部修復、品質驗證與安全回退');self.resize(1180,880)
         self.issue=None;self.pending=None;self.issue_offset=0;self.work_offset=0;self.job_offset=0;self.roles={};self.catalogs=[]
         outer=QVBoxLayout(self);self.status=QLabel('先核對原稿與人工真值；原問題修好、歷史重審及獨立品質驗收分開判定。');self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);outer.addWidget(self.status)
@@ -159,7 +164,7 @@ class QualityRepairDialog(QDialog):
     def issue_form(self):
         form=self.forms[0];self.issues=self.picker(form,'待修問題','QUALITY_REPAIR_ISSUE');self.button(form,'讀取選中問題',self.load_issue)
         self.source_work=self.line(form,'來源作品（入口或目前畫布定位，無需輸入識別碼）');self.source_work.setReadOnly(True);self.source_name=QLabel();self.source_name.setTextFormat(Qt.PlainText);self.source_name.setWordWrap(True);form.addRow('具名來源',self.source_name);self.source_work.textChanged.connect(self.source_identity_changed);self.description=self.line(form,'原稿問題、重現現象與負面案例')
-        self.button(form,'帶入目前畫布作品',lambda:self.source_work.setText(self.window.work['id'] if self.window.work else ''))
+        self.button(form,'帶入目前畫布作品',lambda:self.source_work.setText(self.host_window.work['id'] if self.host_window.work else ''))
         self.button(form,'預覽原稿問題登錄',lambda:self.source_issue('SOURCE_FACTS',self.source_work.text()))
         self.button(form,'開啟原稿事實核對（保留未儲存編輯）',self.source_facts)
 
@@ -266,7 +271,7 @@ class QualityRepairDialog(QDialog):
             lines=['工作：'+phases.get(row['phase'],'狀態待核對')+'（'+str(row['phase'])+'）','模型：'+model_state]
             for item in row['items']:lines.append(item['work_name']+'：'+('成功' if item['state']=='SUCCESS' else '待核對／處理中')+' / '+str(item.get('error') or actions.get(item.get('action'),'等待來源核對')))
             self.progress.setPlainText('\n'.join(lines));self.status.setText('來源核對完成與模型候選產生分開顯示；不是品質通過。')
-        if self.library.closed or self.window.library is not self.library:raise ValueError('環境已改變，未套用舊進度')
+        if self.library.closed or self.host_window.library is not self.library:raise ValueError('環境已改變，未套用舊進度')
         from .quality_repair_commands import job_status
         loaded(job_status(self.library,self.identity(self.job),offset))
 
@@ -276,11 +281,11 @@ class QualityRepairDialog(QDialog):
         if not job or job.get('operation')!='SEMANTIC_REPAIR_CANDIDATE':raise ValueError('只送入選中的局部修復訓練工作')
         root=self.store.get('QUALITY_REPAIR_ROOT_REVIEW',job['root_review_id'])
         if not root or root['plan']['issue_id']!=self.issue_id():raise ValueError('訓練工作必須屬於同一個目前選取問題，不能借用其他問題的工作')
-        self.window.execution_queue.submit('AUTO_JOB',job,self.actor.text());self.consent.setChecked(False);self.status.setText('已送入既有公平佇列；進度與暫停／取消沿用背景控制。')
+        self.host_window.execution_queue.submit('AUTO_JOB',job,self.actor.text());self.consent.setChecked(False);self.status.setText('已送入既有公平佇列；進度與暫停／取消沿用背景控制。')
 
     def runtime_controls(self):
         from .runtime_panel import RuntimePanel
-        dialog=RuntimePanel(self.window)
+        dialog=RuntimePanel(self.host_window)
         try:dialog.exec()
         finally:dialog.deleteLater()
 
@@ -331,7 +336,7 @@ class QualityRepairDialog(QDialog):
         while parent is not None and not hasattr(parent,'facts_panel'):parent=parent.parentWidget()
         if parent is not None and parent.facts_panel.loaded and parent.facts_panel.loaded['id']!=wid and parent.facts_panel.has_pending_observation():raise ValueError('來源事實仍有未套用人工內容，保留原編輯，不切換')
         from .training_navigation import require_clean_navigation,locate_work
-        require_clean_navigation(self.window);locate_work(self.window,wid)
+        require_clean_navigation(self.host_window);locate_work(self.host_window,wid)
         if parent is not None:
             if not parent.facts_panel.loaded or parent.facts_panel.loaded['id']!=wid:parent.facts_panel.focus(wid,[])
             parent.tabs.setCurrentWidget(parent.facts_panel)

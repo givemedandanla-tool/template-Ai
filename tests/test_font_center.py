@@ -155,12 +155,12 @@ class FontCenterGuiTests(unittest.TestCase):
         with patch.object(self.window,'run_job',side_effect=lambda message,fn,callback:jobs.append((fn,callback))): self.dialog.analyze()
         self.dialog.text.setText('new text entered while analysis running')
         jobs[0][1](jobs[0][0]())
-        self.assertIn('過期',self.dialog.result.text()); self.assertFalse(self.dialog.busy)
+        self.assertIn('過期',self.dialog.measurement_label.text()); self.assertFalse(self.dialog.busy)
 
     def test_gui_measures_selected_asset_without_modifying_published_pin(self):
         self.prepare_selection(); before=[t.to_dict() for t in self.window.library.templates()]
         with patch.object(self.window,'run_job',side_effect=lambda message,fn,callback:callback(fn())): self.dialog.analyze()
-        self.assertIn('單行',self.dialog.result.text()); self.assertIn('mm',self.dialog.result.text()); self.assertIn('100.00%',self.dialog.result.text())
+        self.assertIn('單行',self.dialog.measurement_label.text()); self.assertIn('mm',self.dialog.measurement_label.text()); self.assertIn('100.00%',self.dialog.measurement_label.text())
         self.assertEqual([t.to_dict() for t in self.window.library.templates()],before)
 
     def test_failed_worker_releases_ui_and_repair_refreshes_health(self):
@@ -184,8 +184,8 @@ class FontCenterGuiTests(unittest.TestCase):
         self.assertIsNotNone(self.dialog.inventory)
         self.dialog.kind.setCurrentIndex(self.dialog.kind.findData('ASSET')); self.dialog.table.selectRow(0)
         self.dialog.analyze(); wait_for_work()
-        self.assertIn('100.00%',self.dialog.result.text())
-        self.assertIn('mm',self.dialog.result.text())
+        self.assertIn('100.00%',self.dialog.measurement_label.text())
+        self.assertIn('mm',self.dialog.measurement_label.text())
 
 
 class BackgroundJobTests(unittest.TestCase):

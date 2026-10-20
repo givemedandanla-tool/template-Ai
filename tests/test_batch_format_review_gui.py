@@ -20,7 +20,7 @@ class BatchFormatReviewGuiTests(unittest.TestCase):
         fixture.MultiSizeTests.tearDown(self)
     def make(self):
         self.d,self.parent=self.dialog();self.d.dpi.setValue(96);self.r=BatchFormatReviewDialog(self.d,self.d.engine.items[0]);self.addCleanup(self.r.deleteLater);self.r.show();return self.r
-    def wait(self):self.assertTrue(wait_for_gui(lambda:not self.r.running and not self.r.window.busy,15),self.r.status.text())
+    def wait(self):self.assertTrue(wait_for_gui(lambda:not self.r.running and not self.r.host_window.busy,15),self.r.status.text())
     def inspect(self):self.r.inspect();self.wait();self.assertIsNotNone(self.r.proof,self.r.status.text())
     def test_actual_original_row_entry_uses_unchecked_current_target_and_no_auto_review(self):
         self.d,self.parent=self.dialog();self.d.table.selectRow(0);errors=[]
@@ -38,7 +38,7 @@ class BatchFormatReviewGuiTests(unittest.TestCase):
         self.make();self.inspect();self.r.actor.setText('SYNTHETIC_SOURCE_AUTHOR');self.r.evidence.setText('Authored selected PDF and96DPI actual source reviewed');self.r.consent.setChecked(True);self.r.confirm();self.wait()
         for name,action in self.d.controls[1:]:action.setCurrentIndex(action.findData('SKIP'))
         with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):self.d.run(False)
-        self.assertTrue(wait_for_gui(lambda:not self.d.running and not self.d.window.busy,15),self.d.status.text());self.assertEqual(self.d.engine.items[0]['status'],'SUCCESS',self.d.engine.items[0]);self.assertTrue(Path(self.d.engine.items[0]['path']).is_file());self.assertEqual([r['status'] for r in self.d.engine.items[1:]],['SKIPPED']*5)
+        self.assertTrue(wait_for_gui(lambda:not self.d.running and not self.d.host_window.busy,15),self.d.status.text());self.assertEqual(self.d.engine.items[0]['status'],'SUCCESS',self.d.engine.items[0]);self.assertTrue(Path(self.d.engine.items[0]['path']).is_file());self.assertEqual([r['status'] for r in self.d.engine.items[1:]],['SKIPPED']*5)
     def test_sorted_table_review_identity_uses_userrole_not_visible_row_number(self):
         self.d,self.parent=self.dialog();self.d.table.setSortingEnabled(True);self.d.table.sortItems(0,Qt.DescendingOrder);self.d.table.selectRow(0);identity=self.d.table.item(0,0).data(Qt.UserRole);self.assertEqual(self.d.ids(),[identity])
 

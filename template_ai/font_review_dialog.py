@@ -1,4 +1,9 @@
 """逐欄審核／有界背景驗證／明確新草稿交易／持久Undo與Redo。"""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import copy
 import json
 
@@ -19,7 +24,7 @@ from .comparison_view import CanvasCompareDialog
 class FontReviewDialog(QDialog):
     def __init__(self,window,target=None,seed_text="",parent=None):
         super().__init__(parent or window)
-        self.window=window;self.target=copy.deepcopy(target);self.busy=False;self.generation=0
+        self.host_window: MainWindow=window;self.target=copy.deepcopy(target);self.busy=False;self.generation=0
         self.report=None;self.rows=[];self.approved=set();self.preview_data=None;self.comparisons={};self.comparison_data=None
         if not hasattr(window,'font_review_engine'):window.font_review_engine=FontReviewEngine()
         self.engine=window.font_review_engine
@@ -57,9 +62,9 @@ class FontReviewDialog(QDialog):
         self.reload()
 
     def clean_editor(self):
-        t=self.window.template
+        t=self.host_window.template
         if t and t.state=='draft':
-            saved=next((s['template'] for s in self.window.library.template_snapshots() if s['template']['id']==t.id),None)
+            saved=next((s['template'] for s in self.host_window.library.template_snapshots() if s['template']['id']==t.id),None)
             from .model import Template
             if saved and fingerprint(Template.from_dict(saved).to_dict())!=fingerprint(t.to_dict()):
                 self.status.setText('主工作台有未保存編輯；請先保存或放棄，再進行替代／復原。');return False
@@ -79,7 +84,7 @@ class FontReviewDialog(QDialog):
 
     def reload(self,force=False):
         if self.busy and not force:return
-        self.snapshots=self.window.library.template_snapshots();self.invalidate();self.rows=[]
+        self.snapshots=self.host_window.library.template_snapshots();self.invalidate();self.rows=[]
         for snapshot in self.snapshots:
             t=snapshot['template']
             for slot in t['slots']:
@@ -112,7 +117,7 @@ class FontReviewDialog(QDialog):
         if i is not None and not self.busy:self.table.cellWidget(i,3).setText(self.seed.text())
 
     def start(self,message,work,done,allow_input=True):
-        if self.busy or self.window.busy:return
+        if self.busy or self.host_window.busy:return
         generation=self.generation;self.busy=True;self.status.setText(message)
         for b in (self.check_button,self.refresh_button,self.fill_button,self.apply_button,self.review_button,self.undo_button,self.redo_button):b.setEnabled(False)
         self.table.setEnabled(allow_input);self.history.setEnabled(False)
@@ -132,13 +137,13 @@ class FontReviewDialog(QDialog):
                     self.table.setEnabled(True);self.history.setEnabled(True)
                     self.check_button.setEnabled(self.target is not None);self.refresh_button.setEnabled(True);self.fill_button.setEnabled(True)
                     self.apply_button.setEnabled(self.report is not None);self.selection_changed();self.history_selection()
-        try:self.window.run_job(message,guarded,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
+        try:self.host_window.run_job(message,guarded,JobCallbacks(finished,lambda error:finished({'error':str(error)})))
         except Exception:
             finished({'error':'背景工作未啟動'});raise
 
     def validate(self):
         if not self.target or self.busy:return
-        self.snapshots=self.window.library.template_snapshots()
+        self.snapshots=self.host_window.library.template_snapshots()
         texts={row['key']:self.table.cellWidget(i,3).text() for i,row in enumerate(self.rows)}
         self.invalidate()
         self.start('背景核對每欄固定字級、字形、毫米差異與高度',lambda:self.engine.analyze(self.snapshots,self.target,texts),self.show_report)
@@ -170,13 +175,13 @@ class FontReviewDialog(QDialog):
         inputs={'text':text,'size_pt':s['size_pt'],'width_mm':s['rect']['w'],'min_scale':s['min_scale']}
         candidate={'row':target,'analysis':row['proposed'],'requested_style':row['proposed']['style'],'input':inputs}
         snapshot=next(x for x in self.snapshots if x['template']['id']==row['template_id'])
-        try:context=self.window.library.comparison_source(snapshot['template'])
+        try:context=self.host_window.library.comparison_source(snapshot['template'])
         except ValueError as error:self.status.setText('來源未完成：'+str(error));return
         generation=self.generation
         def current():
             if generation!=self.generation:raise ValueError('輸入已變更，對照過期')
-            self.window.library._template_cas(row['template_id'],row['template_hash'],row['revision'])
-            if fingerprint(self.window.library.comparison_source(snapshot['template']))!=fingerprint(context):raise ValueError('來源登錄已變更，請重新對照')
+            self.host_window.library._template_cas(row['template_id'],row['template_hash'],row['revision'])
+            if fingerprint(self.host_window.library.comparison_source(snapshot['template']))!=fingerprint(context):raise ValueError('來源登錄已變更，請重新對照')
         def approve(result):
             current()
             if QMessageBox.question(self,'逐欄核准草稿字型替代',self.details.text()+'\n核准僅此欄進入勾選候選；不等於正式輸出／原稿一致。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)==QMessageBox.Yes:
@@ -209,7 +214,7 @@ class FontReviewDialog(QDialog):
             for r in self.report['rows']:
                 if r['key'] in keys:
                     snapshot=next(x for x in self.snapshots if x['template']['id']==r['template_id'])
-                    context=self.window.library.comparison_source(snapshot['template']);contexts[r['template_id']]=(snapshot['template'],context)
+                    context=self.host_window.library.comparison_source(snapshot['template']);contexts[r['template_id']]=(snapshot['template'],context)
                     if r['key'] in self.comparisons and fingerprint(context)!=self.comparisons[r['key']]['context_hash']:raise ValueError('對照後來源登錄已變更')
         except ValueError as error:self.status.setText('不能提交：'+str(error));return
         review_id=self.report['review_id'];proofs=copy.deepcopy([self.comparisons[k] for k in keys if k in self.comparisons])
@@ -222,17 +227,17 @@ class FontReviewDialog(QDialog):
             return self.engine.prepare_apply(review_id,selected)
         def apply(token):
             for template,context in contexts.values():
-                if fingerprint(self.window.library.comparison_source(template))!=fingerprint(context):raise ValueError('背景期間來源登錄已變更')
-            record=self.engine.commit(self.window.library,token,confirmed=True)
+                if fingerprint(self.host_window.library.comparison_source(template))!=fingerprint(context):raise ValueError('背景期間來源登錄已變更')
+            record=self.engine.commit(self.host_window.library,token,confirmed=True)
             self.after_commit(record);self.reload(force=True);self.status.setText(f"已原子建立 {len(record['drafts'])} 份新版本草稿；可在下方歷史復原。原版本未改。")
         self.start('背景重新驗證全部勾選欄位與對照來源，再提交草稿交易',prepare,apply,allow_input=False)
 
     def after_commit(self,record):
-        self.window.template=None
-        self.window.refresh_templates(record['drafts'][0]['template_id']);self.window.invalidate()
+        self.host_window.template=None
+        self.host_window.refresh_templates(record['drafts'][0]['template_id']);self.host_window.invalidate()
 
     def refresh_history(self):
-        self.records=self.window.library.font_change_history();self.history.setRowCount(len(self.records))
+        self.records=self.host_window.library.font_change_history();self.history.setRowCount(len(self.records))
         for i,record in enumerate(self.records):
             scope='\n'.join(f"v{d['version']} · {d['template_id']} · {len(d['fields'])}欄" for d in record['drafts'])
             for j,value in enumerate((record['phase']+' / '+record['id'],scope,'驗證文字僅存hash；Redo沿用歷史樣本核驗並重新檢查目標bytes；正式輸出另驗')):
@@ -253,7 +258,7 @@ class FontReviewDialog(QDialog):
         if QMessageBox.question(self,'確認歷史草稿'+('復原' if action=='UNDO' else '重做'),
                 record['id']+'\n僅此批次草稿；後續編輯或發布時拒絕。原字型可能仍失聯，仍須正式輸出重新驗證。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
         def commit(token):
-            result=self.engine.commit(self.window.library,token,confirmed=True);self.after_commit(result);self.reload(force=True)
+            result=self.engine.commit(self.host_window.library,token,confirmed=True);self.after_commit(result);self.reload(force=True)
             self.status.setText('本批草稿已'+('復原' if action=='UNDO' else '重做')+'；正式輸出與原稿一致仍未核准。')
         self.start('背景核對歷史字型與範圍，提交'+action,lambda:self.engine.prepare_history(record,action),commit,allow_input=False)
 

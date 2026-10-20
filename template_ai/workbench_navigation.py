@@ -70,7 +70,7 @@ class WorkbenchNavigation:
         if mode==w._active_mode:
             if w.current_slot is None:return None
             form=dict(kind=w.kind.currentData(),owner=w.owner.currentData(),index=w.index.value(),
-                      coords=[s.value() for s in w.coords],font=w.font.currentFont().family(),
+                      coords=[s.value() for s in w.coords],font=w.font_input.currentFont().family(),
                       pt=w.pt.value(),color=w.text_color.text(),scale=w.scale.value(),
                       align=w.align.currentData(),required=w.required.isChecked(),incomplete=dict(w._property_raw_inputs))
             return digest(dict(slot=w.current_slot.id,form=form))
@@ -231,7 +231,7 @@ class WorkbenchNavigation:
             from .property_context import pending_main
             return pending_main(w)
         form=dict(kind=w.kind.currentData(),owner=w.owner.currentData(),index=w.index.value(),
-                  coords=[s.value() for s in w.coords],font=w.font.currentFont(),pt=w.pt.value(),
+                  coords=[s.value() for s in w.coords],font=w.font_input.currentFont(),pt=w.pt.value(),
                   color=w.text_color.text(),scale=w.scale.value(),align=w.align.currentData(),
                   required=w.required.isChecked(),font_display=getattr(w,'_selected_font_display',None))
         return not self.form_matches(w.current_slot,form)

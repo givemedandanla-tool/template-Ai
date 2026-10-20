@@ -1,4 +1,9 @@
 """Readonly marking overview with stable issue selection and explicit navigation."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog, QWidget, QTabWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QComboBox, QPushButton, QTableWidget, QTableWidgetItem, QPlainTextEdit, QDialogButtonBox,QScrollArea
@@ -8,7 +13,7 @@ from .training_navigation import require_clean_navigation, locate_work
 
 class TrainingQualityDialog(QDialog):
     def __init__(self, window):
-        super().__init__(window); self.window = window; self.rows = []; self.loading = False; self.offset = 0; self.advance = 200; self.page_history = []
+        super().__init__(window); self.host_window: MainWindow = window; self.rows = []; self.loading = False; self.offset = 0; self.advance = 200; self.page_history = []
         self.setWindowTitle('標記完整性／衝突定位'); self.resize(1150, 800)
         outer = QVBoxLayout(self); self.tabs = QTabWidget(); outer.addWidget(self.tabs); quality = QWidget(); self.tabs.addTab(quality, '標記品質'); layout = QVBoxLayout(quality); self.status = QLabel('只讀已保存標記，未知來源內容不當PASS；發布Gate保持原範圍。'); self.status.setWordWrap(True); self.status.setTextFormat(Qt.PlainText); layout.addWidget(self.status)
         bar = QHBoxLayout(); self.search = QLineEdit(); self.search.setPlaceholderText('搜尋問題／作品／exact ID'); self.search.textChanged.connect(self.reload); bar.addWidget(self.search, 1)
@@ -60,7 +65,7 @@ class TrainingQualityDialog(QDialog):
         from .diagnostic_dialog import DiagnosticReportDialog
         row=self.selected_row()
         if not row:self.status.setText('先選取問題，以確定本次只檢查哪個作品');return
-        dialog=DiagnosticReportDialog(self.window,'training',row['work_id'],parent=self)
+        dialog=DiagnosticReportDialog(self.host_window,'training',row['work_id'],parent=self)
         try:dialog.exec()
         finally:dialog.deleteLater()
     def reject(self):
@@ -78,7 +83,7 @@ class TrainingQualityDialog(QDialog):
         if self.loading: return
         selected = self.selected_row(); key = selected['id'] if selected else None; self.loading = True
         try:
-            report = quality_rows(self.window.library, query=self.search.text(), severity=self.filter.currentData(), offset=self.offset)
+            report = quality_rows(self.host_window.library, query=self.search.text(), severity=self.filter.currentData(), offset=self.offset)
             self.rows = report['issues']; self.table.setRowCount(len(self.rows))
             self.advance = report['scanned_works']
             for i, row in enumerate(self.rows):
@@ -95,17 +100,17 @@ class TrainingQualityDialog(QDialog):
     def selected(self):
         if self.loading: return
         row = self.selected_row(); self.details.setPlainText(json.dumps(row, ensure_ascii=False, indent=2) if row else '')
-        self.locate_button.setEnabled(bool(row) and not self.window.busy); self.edit_button.setEnabled(bool(row and row['locatable']) and not self.window.busy)
+        self.locate_button.setEnabled(bool(row) and not self.host_window.busy); self.edit_button.setEnabled(bool(row and row['locatable']) and not self.host_window.busy)
     def fresh_row(self):
         row = self.selected_row()
         if not row: raise ValueError('先選取明確問題')
-        current = self.window.library.artwork(row['work_id'])
+        current = self.host_window.library.artwork(row['work_id'])
         if current['revision'] != row['work_revision']: raise ValueError('作品已變更，請重新檢查')
-        require_clean_navigation(self.window)
+        require_clean_navigation(self.host_window)
         return row
     def locate(self):
         try:
-            row = self.fresh_row(); locate_work(self.window, row['work_id'], row['slot_ids'] if row['locatable'] else ())
+            row = self.fresh_row(); locate_work(self.host_window, row['work_id'], row['slot_ids'] if row['locatable'] else ())
             self.status.setText('已定位exact作品；'+('多框需既有安全編輯器同時核對' if len(row['slot_ids']) > 1 else '未改標記／未核准訓練'))
         except Exception as error: self.status.setText('未定位：'+str(error))
     def edit(self):
@@ -113,7 +118,7 @@ class TrainingQualityDialog(QDialog):
             row = self.fresh_row()
             if not row['locatable']: raise ValueError('重複／未知ID不能自動選取任意物件')
             from .object_dialog import ObjectToolsDialog
-            dialog = ObjectToolsDialog(self.window, 'ARTWORK', row['work_id'], self)
+            dialog = ObjectToolsDialog(self.host_window, 'ARTWORK', row['work_id'], self)
             try: dialog.select_ids(row['slot_ids']); dialog.exec()
             finally: dialog.deleteLater()
             self.reload()

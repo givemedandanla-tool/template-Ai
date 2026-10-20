@@ -1,4 +1,9 @@
 """Lazy native quality workflow, bounded workers, and explicitly exposed diagnosis."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import threading
 from PySide6.QtCore import Qt,QRectF
 from PySide6.QtGui import QImageReader,QPen,QColor
@@ -12,7 +17,7 @@ from .model import KINDS
 
 class QualityPanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.library=window.library;self.root=self.library.root;self.store=TrainingStore.bind(self.library);self.loading=False;self.active=False;self.offset=0;self.protocol_offset=0;self.rows=[];self.pending=None;self.jobs={};self.last_plan=None;self.cancel_event=threading.Event()
+        super().__init__(parent);self.host_window: MainWindow=window;self.library=window.library;self.root=self.library.root;self.store=TrainingStore.bind(self.library);self.loading=False;self.active=False;self.offset=0;self.protocol_offset=0;self.rows=[];self.pending=None;self.jobs={};self.last_plan=None;self.cancel_event=threading.Event()
         layout=QVBoxLayout(self);self.status=QLabel('獨立品質驗收：訓練成功與來源結案均不是品質通過。開啟本頁後才載入目錄。');self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout();self.actor=QLineEdit();self.actor.setPlaceholderText('具名核對者（必填）');self.reason=QLineEdit();self.reason.setPlaceholderText('本次確認／重大錯誤重審依據');bar.addWidget(self.actor);bar.addWidget(self.reason,1);layout.addLayout(bar)
         bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('全庫搜尋固定試驗名稱／版本');self.protocols=QComboBox();bar.addWidget(self.query);bar.addWidget(self.protocols,1)
@@ -51,8 +56,8 @@ class QualityPanel(QWidget):
 
     def request(self,command,payload,callback,on_error=None):
         if self.loading:return self.status.setText('核對仍在執行；可取消並刷新持久結果')
-        if self.library.closed or self.window.library is not self.library:return self.status.setText('專案環境已變更，未執行')
-        if self.window.busy:return self.status.setText('目前已有背景操作，完成後再送出本次明確核對')
+        if self.library.closed or self.host_window.library is not self.library:return self.status.setText('專案環境已變更，未執行')
+        if self.host_window.busy:return self.status.setText('目前已有背景操作，完成後再送出本次明確核對')
         self.loading=True;self.cancel_event=threading.Event();cancel=self.cancel_event;self.status.setText('本機背景核對中；完成讀回前不宣稱保存成功')
         def failed(error):
             from shiboken6 import isValid
@@ -62,10 +67,10 @@ class QualityPanel(QWidget):
             from shiboken6 import isValid
             if not isValid(self):return
             self.loading=False
-            if self.library.closed or self.window.library is not self.library:return self.status.setText('環境已變更；未套用舊結果')
+            if self.library.closed or self.host_window.library is not self.library:return self.status.setText('環境已變更；未套用舊結果')
             try:callback(value)
             except Exception as error:failed(error)
-        try:self.window.run_job('本機品質核對',lambda:run_command(self.root,command,payload,cancel=cancel),JobCallbacks(done,failed,cancel))
+        try:self.host_window.run_job('本機品質核對',lambda:run_command(self.root,command,payload,cancel=cancel),JobCallbacks(done,failed,cancel))
         except Exception as error:failed(error)
 
     def open_major_review(self,entry=None):
@@ -162,7 +167,7 @@ class QualityPanel(QWidget):
             for side in ('BASELINE','CANDIDATE'):
                 job=jobs[side]
                 if job['phase'] not in ('COMPLETED','COMPLETED_WITH_EXCEPTIONS'):
-                    self.window.execution_queue.submit('EVAL_JOB',job,self.actor.text())
+                    self.host_window.execution_queue.submit('EVAL_JOB',job,self.actor.text())
             self.jobs=jobs;self.status.setText('已送入持久公平佇列；工作完成不等於品質通過。暫停／續跑沿用主程式背景資源控制。')
         def status(value):
             if value['jobs']:submit(value)
@@ -188,7 +193,7 @@ class QualityPanel(QWidget):
         if not job:raise ValueError('先刷新並選擇工作')
         request=self.store.db.execute("SELECT id FROM runtime_requests WHERE json_extract(payload,'$.job_id')=? AND json_extract(payload,'$.state') IN ('WAITING','RUNNING','PAUSED_RESOURCES') ORDER BY seq DESC LIMIT 1",(job['id'],)).fetchone()
         if not request:raise ValueError('此側目前沒有可取消的執行請求')
-        self.window.execution_queue.cancel(request[0]);self.status.setText('已要求取消；刷新持久進度後可明確續跑未完成來源。')
+        self.host_window.execution_queue.cancel(request[0]);self.status.setText('已要求取消；刷新持久進度後可明確續跑未完成來源。')
 
     def compare(self):self.request('COMPARE',dict(protocol_id=self.selected()),lambda value:self.previewed('REPORT',value))
 
@@ -223,7 +228,7 @@ class QualityPanel(QWidget):
         while parent is not None and not hasattr(parent,'facts_panel'):parent=parent.parentWidget()
         if parent is not None and parent.facts_panel.loaded and parent.facts_panel.loaded['id']!=work_id and parent.facts_panel.has_pending_observation():raise ValueError('來源事實編輯器仍有尚未套用的人工內容；保留原編輯，不切換')
         from .training_navigation import require_clean_navigation,locate_work
-        require_clean_navigation(self.window);locate_work(self.window,work_id)
+        require_clean_navigation(self.host_window);locate_work(self.host_window,work_id)
         if parent is not None:
             if not parent.facts_panel.loaded or parent.facts_panel.loaded['id']!=work_id:parent.facts_panel.focus(work_id,[])
             parent.tabs.setCurrentWidget(parent.facts_panel)

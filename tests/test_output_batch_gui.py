@@ -21,7 +21,7 @@ class OutputBatchGuiTests(unittest.TestCase):
         d=OutputBatchDialog(parent,self.workflow.plan(self.output,self.requests()));self.addCleanup(d.deleteLater);d.show();APP.processEvents();return d,parent
     def finish(self,d):
         if wait_for_gui(lambda:not d.running,5):return
-        self.fail('output worker did not finish within bounded test wait: '+job_diagnostics(d.window,'EXPORT')+'; dialog='+d.status.text())
+        self.fail('output worker did not finish within bounded test wait: '+job_diagnostics(d.host_window,'EXPORT')+'; dialog='+d.status.text())
     def test_actual_dialog_cancel_rename_skip_then_real_delivery_and_format_defaults(self):
         d,parent=self.dialog();self.assertEqual([k for k,v in parent.preview_formats.items() if v.isChecked()],['png']);self.assertEqual([k for k,v in parent.formats.items() if v.isChecked()],['pdf'])
         for name,action in d.controls[1:]:action.setCurrentIndex(action.findData('SKIP'))

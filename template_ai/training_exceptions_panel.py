@@ -1,3 +1,8 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox,QInputDialog)
 from .automatic_training import AutomaticTraining
@@ -6,7 +11,7 @@ from .training_exceptions import exception_rows,exclude_work,restore_work
 
 class TrainingExceptionsPanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.service=AutomaticTraining(window.library);self.offset=0;self.rows=[]
+        super().__init__(parent);self.host_window: MainWindow=window;self.service=AutomaticTraining(window.library);self.offset=0;self.rows=[]
         layout=QVBoxLayout(self);self.status=QLabel('作品局部隔離；排序不核准資料，其他獨立作品可繼續。');self.status.setWordWrap(True);layout.addWidget(self.status)
         bar=QHBoxLayout();self.query=QLineEdit();self.query.setPlaceholderText('來源／作品／類型／原因');bar.addWidget(self.query)
         self.order=QComboBox()
@@ -26,7 +31,7 @@ class TrainingExceptionsPanel(QWidget):
 
     def reload(self,*_):
         try:
-            self.rows=exception_rows(self.window.library,self.query.text(),self.order.currentData(),self.severity.currentText(),self.offset);self.table.setRowCount(len(self.rows))
+            self.rows=exception_rows(self.host_window.library,self.query.text(),self.order.currentData(),self.severity.currentText(),self.offset);self.table.setRowCount(len(self.rows))
             for i,row in enumerate(self.rows):
                 for col,value in enumerate((row['severity'],row['work_name']+'／'+row['source_id'],row['code']+'：'+row['reason'],str(row['impact_count']),row['ranking_reason'])):
                     cell=QTableWidgetItem(value);cell.setToolTip(value);self.table.setItem(i,col,cell)
@@ -41,7 +46,7 @@ class TrainingExceptionsPanel(QWidget):
         rows=self.selected_rows()
         if not rows:raise ValueError('先明確選取作品問題')
         row=rows[0]
-        if self.window.library.artwork(row['work_id'])['revision']!=row['work_revision']:raise ValueError('作品已更新，先重新核對')
+        if self.host_window.library.artwork(row['work_id'])['revision']!=row['work_revision']:raise ValueError('作品已更新，先重新核對')
         return row
 
     def open_repair(self,major=False):
@@ -55,13 +60,13 @@ class TrainingExceptionsPanel(QWidget):
     def locate(self):
         try:
             row=self.current();from .training_navigation import locate_work
-            locate_work(self.window,row['work_id'],row['slot_ids']);self.status.setText('已定位同一作品／框位，未核准或解除隔離。')
+            locate_work(self.host_window,row['work_id'],row['slot_ids']);self.status.setText('已定位同一作品／框位，未核准或解除隔離。')
         except Exception as error:self.status.setText(str(error))
 
     def edit(self):
         try:
             row=self.current();from .annotation_dialog import AnnotationDialog
-            dialog=AnnotationDialog(self.window,row['work_id'],self);dialog.exec();dialog.deleteLater();self.reload()
+            dialog=AnnotationDialog(self.host_window,row['work_id'],self);dialog.exec();dialog.deleteLater();self.reload()
         except Exception as error:self.status.setText('尚未校正：'+str(error))
 
     def retry(self):
@@ -70,7 +75,7 @@ class TrainingExceptionsPanel(QWidget):
             if QMessageBox.question(self,'精確作品增量重分析','只處理以下作品，其餘不重跑：\n'+'\n'.join(ids))!=QMessageBox.Yes:return
             job=self.service.create_retry(plan,'LOCAL_OPERATOR',True)
             from .automatic_training_dialog import AutomaticTrainingDialog
-            dialog=AutomaticTrainingDialog(self.window);dialog.show();dialog.start_job(job)
+            dialog=AutomaticTrainingDialog(self.host_window);dialog.show();dialog.start_job(job)
         except Exception as error:self.status.setText('未重分析：'+str(error))
 
     def exclude(self):

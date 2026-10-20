@@ -1,4 +1,9 @@
 """Desktop body for shared-rule learning and persistent relative-layout drafts."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 import hashlib
 import threading
@@ -87,7 +92,7 @@ class RelativeCanvas(QGraphicsView):
 
 class DesignLearningDialog(QDialog):
     def __init__(self,window):
-        super().__init__(window);self.window=window;self.library=window.library
+        super().__init__(window);self.host_window: MainWindow=window;self.library=window.library
         self.service_window=window if hasattr(window,'run_job') else getattr(window,'service_window',None)
         self.learning=CrossWorkLearning(self.library);self.sessions=DesignSessions(self.library);self.jobs=DesignJobs(self.library)
         self.font_manager=FontManager(self.library);self.worker=None;self.solve_worker=None;self.session_id=None;self.close_after_worker=False;self.bound_to_main=False
@@ -180,7 +185,7 @@ class DesignLearningDialog(QDialog):
         row=QHBoxLayout();self.artifacts=QComboBox();row.addWidget(self.artifacts,1);self.button(row,'開啟已保存的相同檔案',self.replay);layout.addLayout(row)
 
     def source_candidates(self):
-        if self.bound_to_main:return self.window.source_candidates()
+        if self.bound_to_main:return self.host_window.source_candidates()
         if not self.session_id:return []
         try:_,_,candidate=self.sessions.checked_result(self.session_id)
         except ValueError:return []
@@ -188,7 +193,7 @@ class DesignLearningDialog(QDialog):
 
     def use_main_input(self):
         from .production_bridge import attach
-        if not hasattr(self.window,'input_data'):raise ValueError('請從主視窗的資料輸入入口開啟。')
+        if not hasattr(self.host_window,'input_data'):raise ValueError('請從主視窗的資料輸入入口開啟。')
         attach(self);self.say('已接上主視窗的資料、公司與圖片；請產生稿件。')
     def refresh(self):
         current_model=self.models.currentData();self.models.clear();self.job_choices.clear();self.session_choices.clear();self.source_work.clear()
@@ -214,7 +219,7 @@ class DesignLearningDialog(QDialog):
         from .recovery_dialog import RecoveryDialog
         work_id=self.source_work.currentData()
         if not work_id:
-            RecoveryDialog(self.window).exec()
+            RecoveryDialog(self.host_window).exec()
             return
         work=self.library.artwork(work_id);source=self.library.source(work['source_id'])
         fact=self.source_fields.currentData();slot_id=fact['slot_id'] if fact else None
@@ -234,7 +239,7 @@ class DesignLearningDialog(QDialog):
             if candidate['size_pt'] is not None:self.source_tracking.setValue(candidate['tracking_em']*candidate['size_pt']*25.4/72*sx)
             self.parameter_review.setChecked(False);self.work_pt_review.setChecked(False);self.source_confirm.setChecked(False)
             self.source_basis.setText('本機影像比對候選，待核對；字面 '+candidate['face_fingerprint'][:16])
-        dialog=RecoveryDialog(self.window,source,work=work,field=slot,on_candidate=accept_candidate)
+        dialog=RecoveryDialog(self.host_window,source,work=work,field=slot,on_candidate=accept_candidate)
         if fact:dialog.text.setText(fact.get('text',''))
         dialog.exec()
 
@@ -339,19 +344,19 @@ class DesignLearningDialog(QDialog):
         self.session_id=saved['id'];self.save_workspace()
         from .production_bridge import sync_input
         if self.bound_to_main:
-            self.window.reorder_customer_snapshot=None;self.window.reorder_template_id=None
+            self.host_window.reorder_customer_snapshot=None;self.host_window.reorder_template_id=None
         sync_input(self,dialog.graph)
-        if self.bound_to_main:self.window.production_session_id=saved['id']
+        if self.bound_to_main:self.host_window.production_session_id=saved['id']
         self.refresh();self.say('資料已保存；可以產生完整稿件。')
     def resume_session(self):
         identity=self.session_choices.currentData()
         if not identity:raise ValueError('沒有已保存稿件')
         self.session_id=identity;self.save_workspace();row=self.sessions.current(identity)
         if self.bound_to_main:
-            self.window.reorder_customer_snapshot=None;self.window.reorder_template_id=None
-            self.window.out_w.setValue(row['width_mm']);self.window.out_h.setValue(row['height_mm'])
+            self.host_window.reorder_customer_snapshot=None;self.host_window.reorder_template_id=None
+            self.host_window.out_w.setValue(row['width_mm']);self.host_window.out_h.setValue(row['height_mm'])
             from .production_bridge import sync_input
-            sync_input(self,InputGraph(row['input_graph']));self.window.production_session_id=identity
+            sync_input(self,InputGraph(row['input_graph']));self.host_window.production_session_id=identity
         self.out_w.setValue(row['width_mm']);self.out_h.setValue(row['height_mm']);self.refresh_draft()
     def edit_data(self):
         if self.solve_worker and self.solve_worker.isRunning():raise ValueError('請先停止目前排版，再改資料。')
@@ -371,7 +376,7 @@ class DesignLearningDialog(QDialog):
     def solve_async(self):
         if not self.session_id:raise ValueError('請先填資料，再產生稿件。')
         if self.solve_worker and self.solve_worker.isRunning():return
-        runtime=getattr(self.window,'runtime',None)
+        runtime=getattr(self.host_window,'runtime',None)
         if runtime:
             decision=runtime.admit('GEOMETRY',foreground=True)
             if not decision.allowed:
@@ -389,7 +394,7 @@ class DesignLearningDialog(QDialog):
     def set_solving(self,running):
         for button in (self.new_button,self.edit_button,self.solve_button,self.undo_button,self.redo_button):button.setEnabled(not running)
         self.canvas.setEnabled(not running);self.cancel_solve_button.setEnabled(running)
-        if self.bound_to_main:self.window.busy=running
+        if self.bound_to_main:self.host_window.busy=running
         if running:
             for button in (self.confirm_button,self.export_button,self.formal_button,self.formal_export_button):button.setEnabled(False)
 

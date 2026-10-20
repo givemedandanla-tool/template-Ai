@@ -13,7 +13,7 @@ from . import customer_sync
 class CustomerSyncDialog(QDialog):
     def __init__(self, window, store, snapshot, parent=None):
         super().__init__(parent or window)
-        self.window, self.store, self.snapshot = window, store, deepcopy(snapshot)
+        self.host_window, self.store, self.snapshot = window, store, deepcopy(snapshot)
         source = getattr(window, 'reorder_customer_snapshot', None)
         graph = getattr(window, 'active_input_graph', None)
         self.working = deepcopy(graph.data if graph and source and source['id'] == snapshot['id']
@@ -78,7 +78,7 @@ class CustomerSyncDialog(QDialog):
 
     def edit_work(self):
         from .input_graph_dialog import InputGraphDialog
-        dialog = InputGraphDialog(self.window, self.working)
+        dialog = InputGraphDialog(self.host_window, self.working)
         dialog.setWindowTitle('比較用草稿：新增／刪除／共享關係；未同步主檔')
         if dialog.exec() == QDialog.Accepted:
             self.working = deepcopy(dialog.graph.data)
@@ -100,11 +100,11 @@ class CustomerSyncDialog(QDialog):
             if QMessageBox.question(self, '確認實際增／修／刪及共享影響', message) != QMessageBox.Yes:
                 return
             updated = customer_sync.writeback(self.store, self.snapshot, self.working,
-                selected, approved=True, source_ref='reorder:' + str(getattr(self.window,
+                selected, approved=True, source_ref='reorder:' + str(getattr(self.host_window,
                 'reorder_template_id', '') or ''), restore_of=self.restore_of)
-            if getattr(self.window, 'reorder_customer_snapshot', None) and \
-                    self.window.reorder_customer_snapshot['id'] == updated['id']:
-                self.window.reorder_customer_snapshot = updated
+            if getattr(self.host_window, 'reorder_customer_snapshot', None) and \
+                    self.host_window.reorder_customer_snapshot['id'] == updated['id']:
+                self.host_window.reorder_customer_snapshot = updated
             self.snapshot = updated
             self.restore_of = None
             self.refresh()

@@ -25,10 +25,10 @@ class MajorTemplatePageMixin:
         row=self.template_unit();self.template_target.setText(row.get('approved_template_id') or row['template_id'])
     def template_context_pin(self,action):
         d=self.dialog;value=dict(action=action,case_id=self.case_id(),actor=d.actor.text(),reason=d.reason.text())
-        if action!='CLOSE':value.update(unit_id=self.template_unit()['id'],target=self.template_target.text(),evidence=self.template_evidence.text(),checks={k:b.isChecked() for k,b in self.template_checks.items()},slot_bindings=self.source_bindings.text(),draft_name=self.draft_name.text(),company_bindings=self.draft_bindings.text(),generation=d.window.generation,inputs=d.window.input_data())
+        if action!='CLOSE':value.update(unit_id=self.template_unit()['id'],target=self.template_target.text(),evidence=self.template_evidence.text(),checks={k:b.isChecked() for k,b in self.template_checks.items()},slot_bindings=self.source_bindings.text(),draft_name=self.draft_name.text(),company_bindings=self.draft_bindings.text(),generation=d.host_window.generation,inputs=d.host_window.input_data())
         return digest(value)
     def preview_template(self):
-        d=self.dialog;unit=self.template_unit();pin=self.template_context_pin('TEMPLATE');self.invalidate();self.pending_action='TEMPLATE';self.template_action='TEMPLATE';people,companies,logos=d.window.input_data();bindings=json.loads(self.source_bindings.text()) if self.source_bindings.text().strip() else None
+        d=self.dialog;unit=self.template_unit();pin=self.template_context_pin('TEMPLATE');self.invalidate();self.pending_action='TEMPLATE';self.template_action='TEMPLATE';people,companies,logos=d.host_window.input_data();bindings=json.loads(self.source_bindings.text()) if self.source_bindings.text().strip() else None
         def loaded(value):
             if self.template_context_pin('TEMPLATE')!=pin:d.status.setText('模板重驗期間版本／映射／輸入已變更，舊結果未採用');return
             self.template_plan=value;self.template_plan_pin=pin;lines=['此確切版本完整重驗：'+('可明確核對解除本版本' if value['can_release'] else '仍阻擋'),'模板 '+value['template_id']+'／v'+str(value['template_version']),'原稿／模板一對一映射：']+[a+' → '+b for a,b in value['slot_bindings'].items()]

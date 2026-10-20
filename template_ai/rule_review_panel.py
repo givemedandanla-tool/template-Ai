@@ -1,4 +1,9 @@
 """One review center for current rule versions, evidence, exact known impact and human decisions."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QComboBox, QTableWidget, QTableWidgetItem, QPlainTextEdit, QPushButton, QCheckBox, QMessageBox
@@ -7,7 +12,7 @@ from .training_store import TrainingStore
 
 class RuleReviewPanel(QWidget):
     def __init__(self, window, parent=None):
-        super().__init__(parent); self.window=window; self.store=TrainingStore(window.library); self.rows=[]; self.offset=0; self.loading=False
+        super().__init__(parent); self.host_window: MainWindow=window; self.store=TrainingStore(window.library); self.rows=[]; self.offset=0; self.loading=False
         outer=QVBoxLayout(self);bar=QHBoxLayout();self.search=QLineEdit();self.search.setPlaceholderText('全規則完整文字／ID搜尋（字詞AND）');self.search.textChanged.connect(self.search_changed);bar.addWidget(self.search,1);self.state=QComboBox();self.state.addItems(['ALL','PENDING','DEFERRED','ACTIVE','REJECTED','DISABLED']);self.state.currentIndexChanged.connect(self.search_changed);bar.addWidget(self.state);self.reload_button=QPushButton('重新核對規則');self.reload_button.clicked.connect(self.reload);bar.addWidget(self.reload_button);outer.addLayout(bar)
         self.status=QLabel('LOW同前提可批次；HIGH逐條詳審；BLOCK不可批准。影響只指候選，不改發布模板。');self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);outer.addWidget(self.status)
         self.table=QTableWidget(0,6);self.table.setHorizontalHeaderLabels(['風險','狀態／版次','完整字串','type／scope組','候選排除／保留','規則ID']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);self.table.setSelectionMode(QTableWidget.ExtendedSelection);self.table.itemSelectionChanged.connect(self.selected);outer.addWidget(self.table,2)
@@ -45,9 +50,9 @@ class RuleReviewPanel(QWidget):
     def selected(self):
         if self.loading:return
         ids=self.selected_ids();rows=[r for r in self.rows if r['id'] in ids];self.details.setPlainText(json.dumps(rows,ensure_ascii=False,indent=2))
-        for button in (self.approve_button,self.reject_button,self.defer_button):button.setEnabled(bool(ids) and not self.window.busy)
+        for button in (self.approve_button,self.reject_button,self.defer_button):button.setEnabled(bool(ids) and not self.host_window.busy)
         if hasattr(self,'disable_button'):
-            for button in (self.disable_button,self.rollback_button,self.change_button):button.setEnabled(len(ids)==1 and not self.window.busy)
+            for button in (self.disable_button,self.rollback_button,self.change_button):button.setEnabled(len(ids)==1 and not self.host_window.busy)
 
     def decide(self,action):
         for button in (self.approve_button,self.reject_button,self.defer_button):button.setEnabled(False)
@@ -65,7 +70,7 @@ class RuleReviewPanel(QWidget):
             from PySide6.QtWidgets import QInputDialog
             from .training_store import text
             ids=self.selected_ids()
-            if len(ids)!=1 or self.window.busy:raise ValueError('一次選一條規則且背景工作需結束')
+            if len(ids)!=1 or self.host_window.busy:raise ValueError('一次選一條規則且背景工作需結束')
             actor=text(self.actor.text(),'操作人',120);reason=text(self.reason.text(),'原因');revision=None
             if operation=='ROLLBACK':
                 history=self.store.history('RULE',ids[0]);revision,ok=QInputDialog.getInt(self,'回滾歷史內容','歷史版次（新PENDING版，不覆寫原歷史）',1,1,max(h['revision'] for h in history))
@@ -79,7 +84,7 @@ class RuleReviewPanel(QWidget):
     def change(self):
         try:
             ids=self.selected_ids()
-            if len(ids)!=1 or self.window.busy:raise ValueError('一次選一條規則')
+            if len(ids)!=1 or self.host_window.busy:raise ValueError('一次選一條規則')
             from .rule_change_selector import RuleChangeSelector
             dialog=RuleChangeSelector(self.store,ids[0],self.actor.text(),self.reason.text(),self)
             try:dialog.exec()

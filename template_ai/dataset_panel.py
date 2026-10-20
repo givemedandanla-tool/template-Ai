@@ -1,4 +1,9 @@
 """Explicit sample roles, frozen manifest and source-verified TRAIN-only geometry action."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 import copy
 from PySide6.QtCore import Qt,QThreadPool
@@ -10,14 +15,14 @@ from .source_links import hash_source
 
 class DatasetPanel(QWidget):
     def __init__(self,window,parent=None):
-        super().__init__(parent);self.window=window;self.store=TrainingStore(window.library);self.rows=[];self.offset=0;self.dataset_offset=0;self.running=False;self.jobs={};layout=QVBoxLayout(self);bar=QHBoxLayout();self.name=QLineEdit();self.name.setMaxLength(120);self.name.setPlaceholderText('新資料集名稱');self.actor=QLineEdit();self.actor.setMaxLength(120);self.actor.setPlaceholderText('人工確認者');bar.addWidget(self.name);bar.addWidget(self.actor);self.reload_button=QPushButton('重载样本／資料集');self.reload_button.clicked.connect(self.reload);bar.addWidget(self.reload_button);layout.addLayout(bar);self.status=QLabel('勾選本頁exact樣本與角色；同來源整檔SHA group不能跨集合。預設UNASSIGNED不訓練；來源身份保留、近似UNKNOWN。');self.status.setWordWrap(True);layout.addWidget(self.status)
+        super().__init__(parent);self.host_window: MainWindow=window;self.store=TrainingStore(window.library);self.rows=[];self.offset=0;self.dataset_offset=0;self.running=False;self.jobs={};layout=QVBoxLayout(self);bar=QHBoxLayout();self.name=QLineEdit();self.name.setMaxLength(120);self.name.setPlaceholderText('新資料集名稱');self.actor=QLineEdit();self.actor.setMaxLength(120);self.actor.setPlaceholderText('人工確認者');bar.addWidget(self.name);bar.addWidget(self.actor);self.reload_button=QPushButton('重载样本／資料集');self.reload_button.clicked.connect(self.reload);bar.addWidget(self.reload_button);layout.addLayout(bar);self.status=QLabel('勾選本頁exact樣本與角色；同來源整檔SHA group不能跨集合。預設UNASSIGNED不訓練；來源身份保留、近似UNKNOWN。');self.status.setWordWrap(True);layout.addWidget(self.status)
         self.table=QTableWidget(0,5);self.table.setHorizontalHeaderLabels(['選取樣本／目前資格','角色','來源group／尺寸','work ID','sample ID']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);self.table.setSelectionBehavior(QTableWidget.SelectRows);layout.addWidget(self.table,2);bar=QHBoxLayout();self.previous_button=QPushButton('上頁樣本');self.next_button=QPushButton('下頁樣本');self.previous_button.clicked.connect(lambda:self.page(-200));self.next_button.clicked.connect(lambda:self.page(200));self.preview_button=QPushButton('角色／重複／洩漏預覽');self.create_button=QPushButton('確認建立不可變資料集');self.preview_button.clicked.connect(self.preview);self.create_button.clicked.connect(self.create)
         for b in (self.previous_button,self.next_button,self.preview_button,self.create_button):bar.addWidget(b)
         layout.addLayout(bar);bar=QHBoxLayout();self.dataset_combo=QComboBox();self.dataset_combo.currentIndexChanged.connect(self.load_dataset);bar.addWidget(self.dataset_combo,1);self.dataset_previous=QPushButton('上頁資料集');self.dataset_next=QPushButton('下頁資料集');self.dataset_previous.clicked.connect(lambda:self.dataset_page(-200));self.dataset_next.clicked.connect(lambda:self.dataset_page(200));bar.addWidget(self.dataset_previous);bar.addWidget(self.dataset_next);layout.addLayout(bar);bar=QHBoxLayout();self.sample_combo=QComboBox();bar.addWidget(self.sample_combo,1);self.template_name=QLineEdit();self.template_name.setMaxLength(120);self.template_name.setPlaceholderText('新幾何草稿模板名稱');bar.addWidget(self.template_name);self.learn_button=QPushButton('明確啟動選中TRAIN的幾何學習');self.learn_button.clicked.connect(self.learn);bar.addWidget(self.learn_button);layout.addLayout(bar);self.details=QPlainTextEdit();self.details.setReadOnly(True);layout.addWidget(self.details,2);self.reload()
     def page(self,delta):self.offset=max(0,self.offset+delta);self.reload()
     def dataset_page(self,delta):self.dataset_offset=max(0,self.dataset_offset+delta);self.reload()
     def controls(self):
-        enabled=not self.running and not self.window.busy
+        enabled=not self.running and not self.host_window.busy
         for b in (self.preview_button,self.create_button,self.learn_button):b.setEnabled(enabled)
         self.reload_button.setEnabled(not self.running);self.dataset_combo.setEnabled(not self.running);self.sample_combo.setEnabled(not self.running)
     def reload(self):
@@ -54,7 +59,7 @@ class DatasetPanel(QWidget):
         uses=[self.store.get('USE',r[0]) for r in self.store.db.execute("SELECT id FROM training_records WHERE kind='USE' AND json_extract(payload,'$.dataset_id')=? ORDER BY id LIMIT 200",(did,))];total=self.store.db.execute("SELECT count(*) FROM training_records WHERE kind='USE' AND json_extract(payload,'$.dataset_id')=?",(did,)).fetchone()[0]
         self.details.setPlainText(json.dumps({'dataset':ds,'current_validity':self.store.dataset_validity(did),'actual_geometry_uses':uses,'total_geometry_uses':total,'uses_display_bounded':len(uses)<total},ensure_ascii=False,indent=2))
     def learn(self):
-        if self.running or self.window.busy:return
+        if self.running or self.host_window.busy:return
         try:
             from .training_store import text
             actor=text(self.actor.text(),'啟動者',120);plan=self.store.geometry_learning_plan(self.dataset_combo.currentData(),self.sample_combo.currentData(),self.template_name.text());sample=self.store.get('SAMPLE',plan['entry']['sample_id']);source=copy.deepcopy(self.store.library.source(sample['pins']['source_id']))
@@ -68,7 +73,7 @@ class DatasetPanel(QWidget):
             try:
                 self.details.setPlainText(json.dumps(plan,ensure_ascii=False,indent=2))
                 if QMessageBox.question(self,'明確啟動本機幾何學習',f"資料集{plan['dataset_id']}／TRAIN樣本{plan['entry']['sample_id']} r{plan['sample_revision']}\n範圍SHA {plan['digest']}\n只從人工標記建立新DRAFT幾何模板，保留原作品与發布版，不是神經模型或自動發布。",QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:self.status.setText('已取消，未學習');return
-                template=self.store.learn_dataset_sample(plan,proof,actor,True);self.window.refresh_templates(preserve_editor=True);self.status.setText('已生成DRAFT '+template.id+'；dataset／sample來源與USE已保存；目前人工編輯保持');self.last_template=template
+                template=self.store.learn_dataset_sample(plan,proof,actor,True);self.host_window.refresh_templates(preserve_editor=True);self.status.setText('已生成DRAFT '+template.id+'；dataset／sample來源與USE已保存；目前人工編輯保持');self.last_template=template
             except Exception as error:self.status.setText('學習未完成：'+str(error))
             finally:release()
         job.signals.done.connect(done,Qt.QueuedConnection);job.signals.error.connect(failed,Qt.QueuedConnection);QThreadPool.globalInstance().start(job)

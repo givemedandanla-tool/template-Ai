@@ -1,4 +1,9 @@
 """Native trusted-sample review in the existing training/quality center."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 from PySide6.QtCore import Qt,QDateTime
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QFormLayout,QTabWidget,QWidget,QLabel,QLineEdit,QComboBox,QPushButton,QCheckBox,QSpinBox,QTableWidget,QTableWidgetItem,QPlainTextEdit,QListWidget,QListWidgetItem,QAbstractItemView,QScrollArea)
@@ -11,7 +16,7 @@ PURPOSE_LABELS=('幾何訓練','語意分類訓練','獨立品質驗收','品質
 
 class TrustedSampleReviewDialog(QDialog):
     def __init__(self,panel):
-        super().__init__(panel);self.panel=panel;self.window=panel.window;self.store=panel.store;self.pending=None;self.generation=0;self.offset=0;self.rows=[];self.bindings={};self.binding_widgets={};self.privacy_rows=[]
+        super().__init__(panel);self.panel=panel;self.host_window: MainWindow=panel.host_window;self.store=panel.store;self.pending=None;self.generation=0;self.offset=0;self.rows=[];self.bindings={};self.binding_widgets={};self.privacy_rows=[]
         self.setWindowTitle('可信樣本：核對、准入與用途追溯');self.resize(1120,820);outer=QVBoxLayout(self)
         self.status=QLabel('人工更正、樣本准入、實際訓練與品質驗收分開保存。');self.status.setWordWrap(True);self.status.setTextFormat(Qt.PlainText);outer.addWidget(self.status)
         bar=QHBoxLayout();self.actor=QLineEdit();self.actor.setMaxLength(120);self.actor.setPlaceholderText('本次核實人');bar.addWidget(self.actor);self.basis=QComboBox();self.basis.addItem('請明確選擇訓練權利',None)
@@ -156,7 +161,7 @@ class TrustedSampleReviewDialog(QDialog):
         if parent is None:raise ValueError('請由既有訓練中心核對來源')
         if parent.facts_panel.has_pending_observation():raise ValueError('來源事實有未套用內容，保留原編輯')
         from .training_navigation import require_clean_navigation,locate_work
-        require_clean_navigation(self.window);locate_work(self.window,row['work_id']);parent.facts_panel.focus(row['work_id'],[]);parent.tabs.setCurrentWidget(parent.facts_panel);self.hide()
+        require_clean_navigation(self.host_window);locate_work(self.host_window,row['work_id']);parent.facts_panel.focus(row['work_id'],[]);parent.tabs.setCurrentWidget(parent.facts_panel);self.hide()
     def repair(self):
         row=self.selected();self.panel.open_repair(dict(origin='SOURCE_FACTS',origin_id=row['work_id'],work_id=row['work_id']))
     def preview_restriction(self):

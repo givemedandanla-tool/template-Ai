@@ -22,7 +22,7 @@ class CanvasCommandFocusTests(unittest.TestCase):
         self.assertEqual(w.template.to_dict(),before);self.assertFalse(w.undo_stack);self.assertNotEqual(w.text_color.text(),'#111827')
     def test_numeric_and_combo_focus_never_dispatch_move_to_old_canvas_selection(self):
         w=self.w;before=w.template.to_dict()
-        for control in [w.coords[0],w.font,w.kind]:
+        for control in [w.coords[0],w.font_input,w.kind]:
             self.focus(control);QTest.keyClick(control,Qt.Key_Up);QTest.keyClick(control,Qt.Key_Down)
         self.assertEqual(w.template.to_dict(),before);self.assertFalse(w.undo_stack)
     def test_ime_preedit_on_canvas_blocks_arrow_until_composition_ends(self):
@@ -36,7 +36,7 @@ class CanvasCommandFocusTests(unittest.TestCase):
         event=QInputMethodEvent();event.setCommitString('中文電話');APP.sendEvent(editor,event);self.assertIn('中文',editor.text());cursor=editor.cursorPosition();QTest.keyClick(editor,Qt.Key_Left);self.assertEqual(editor.cursorPosition(),cursor-1);self.assertEqual(w.template.to_dict(),before);self.assertFalse(w.undo_stack)
     def test_pinned_text_then_logo_keyboard_nudge_keeps_whole_logo_attributes(self):
         from template_ai.model import Slot,Rect
-        w=self.w;w.property_pin_checks['text'].setChecked(True);logo=Slot('logo','c1',Rect(65,40,15,10));w.template.slots.append(logo);w.refresh_editor();w.editor_selection([logo.id]);APP.processEvents();w.right_context.sync();before=copy.deepcopy(w.template.slots[-1]);self.assertFalse(w.font.isEnabled());self.focus(w.edit_canvas);QTest.keyClick(w.edit_canvas,Qt.Key_Right);after=w.template.slots[-1];self.assertAlmostEqual(after.rect.x,before.rect.x+.1)
+        w=self.w;w.property_pin_checks['text'].setChecked(True);logo=Slot('logo','c1',Rect(65,40,15,10));w.template.slots.append(logo);w.refresh_editor();w.editor_selection([logo.id]);APP.processEvents();w.right_context.sync();before=copy.deepcopy(w.template.slots[-1]);self.assertFalse(w.font_input.isEnabled());self.focus(w.edit_canvas);QTest.keyClick(w.edit_canvas,Qt.Key_Right);after=w.template.slots[-1];self.assertAlmostEqual(after.rect.x,before.rect.x+.1)
         expected=copy.deepcopy(before);expected.rect.x=after.rect.x;self.assertEqual(after,expected)
     def test_pending_property_prevents_canvas_nudge_without_losing_input(self):
         w=self.w;w.coords[0].setValue(12);self.focus(w.edit_canvas);QTest.keyClick(w.edit_canvas,Qt.Key_Right);self.assertEqual(w.template.slots[0].rect.x,8);self.assertEqual(w.coords[0].value(),12);self.assertIn('待套用',w.statusBar().currentMessage());self.assertFalse(w.undo_stack)

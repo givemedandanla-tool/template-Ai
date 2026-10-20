@@ -1,4 +1,9 @@
 """Expert local recovery diagnostics; share only an explicit content-free view."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 import json
 from pathlib import Path
@@ -25,7 +30,7 @@ class RecoveryWorker(QThread):
 
 class RecoveryDialog(QDialog):
     def __init__(self, window, source=None, *, work=None, field=None,on_candidate=None):
-        super().__init__(window);self.window=window;self.worker=None;self.source=deepcopy(source)
+        super().__init__(window);self.host_window: MainWindow=window;self.worker=None;self.source=deepcopy(source)
         self.report=deepcopy((source or {}).get('recovery',{}));self.last_match=None;self.faces=[];self.offset=0;self.match_pages=[]
         self.on_candidate=on_candidate
         self.setWindowTitle('本地來源還原與字型影像診斷');self.resize(1000,820)
@@ -83,7 +88,7 @@ class RecoveryDialog(QDialog):
 
     def import_source(self):
         from .importer import import_file
-        path=self.path.text();assets=self.window.library.assets
+        path=self.path.text();assets=self.host_window.library.assets
         def recover(worker):
             try:return dict(import_file(path,assets),current_path=path)
             except Exception as error:
@@ -140,7 +145,7 @@ class RecoveryDialog(QDialog):
     def ocr(self):
         from .quality_ocr import freeze
         from .visual_font_match import ocr_text_candidates
-        crop=self.crop();assets=self.window.library.assets;languages=self.ocr_language.currentData()
+        crop=self.crop();assets=self.host_window.library.assets;languages=self.ocr_language.currentData()
         def run(worker):
             import re
             frozen=freeze(assets,dict(languages=languages,psm=6));match=re.search(r'tesseract ([0-9]+(?:\.[0-9]+){1,3})',frozen['runtime']['version'])

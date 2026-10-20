@@ -27,9 +27,9 @@ def capture(folder):
         QTimer.singleShot(0,callback)
     try:
         w.resize(1360,940);case.sync();original=w.template.to_dict();stored=w.library.object_snapshot('TEMPLATE',case.draft.id)
-        assert w.pt.value()==18 and w.font.isEnabled();shot(w,'01-text-fixed-size')
+        assert w.pt.value()==18 and w.font_input.isEnabled();shot(w,'01-text-fixed-size')
         w.property_pin_checks['text'].setChecked(True);logo=case.logo();before=copy.deepcopy(logo)
-        assert not w.scale.isEnabled() and not w.font.isEnabled();assert '尚未核實' in w.property_context_label.text();shot(w,'02-logo-pinned-text-inapplicable')
+        assert not w.scale.isEnabled() and not w.font_input.isEnabled();assert '尚未核實' in w.property_context_label.text();shot(w,'02-logo-pinned-text-inapplicable')
         w.all_property_tools.setChecked(True);case.sync();assert logo==before;shot(w,'03-all-original-properties')
         # Reset authored fixture geometry, not a user navigation or hidden save.
         w.template=None;w.refresh_templates(case.draft.id);w.editor_selection(case.ids[:2]);case.sync()

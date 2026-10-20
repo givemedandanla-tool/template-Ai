@@ -1,4 +1,9 @@
 """多根有界來源搜尋、唯讀快照、明列勾選及可核對批次復原。"""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import threading
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QCheckBox, QComboBox, QDialog, QDialogButtonBox, QFileDialog,
@@ -12,7 +17,7 @@ from .source_links import verify_source
 class SourceRelinkDialog(QDialog):
     def __init__(self, window):
         super().__init__(window)
-        self.window = window
+        self.host_window: MainWindow = window
         self.library = window.library
         self.root = ""
         self.roots = []
@@ -71,7 +76,7 @@ class SourceRelinkDialog(QDialog):
             self.history_combo.addItem(f"{record['kind']} · {len(record['items'])} 筆 · {record['id']}", record["id"])
 
     def choose_root(self):
-        if self.busy or self.window.busy:
+        if self.busy or self.host_window.busy:
             return
         root = QFileDialog.getExistingDirectory(self, "加入已授權搜尋根目錄（最多16個；重疊部分只搜尋一次）")
         if root:
@@ -85,12 +90,12 @@ class SourceRelinkDialog(QDialog):
             self.apply_button.setEnabled(False)
 
     def clear_roots(self):
-        if self.busy or self.window.busy:return
+        if self.busy or self.host_window.busy:return
         self.root='';self.roots=[];self.report=None;self.table.setRowCount(0);self.apply_button.setEnabled(False)
         self.path_label.setText('尚未選取搜尋範圍；不搜尋整台電腦')
 
     def start(self, message, function, callback, cancellable=False):
-        if self.busy or self.window.busy:
+        if self.busy or self.host_window.busy:
             return
         self.busy = True
         for button in (self.choose_button, self.clear_button,self.search_button, self.apply_button, self.undo_button): button.setEnabled(False)
@@ -116,7 +121,7 @@ class SourceRelinkDialog(QDialog):
                 callback(payload["value"])
             except Exception as error:
                 self.status.setText("未完成更新：" + str(error))
-        self.window.run_job(message, work, JobCallbacks(done,lambda error:done({'error':str(error)}),self.cancel_event))
+        self.host_window.run_job(message, work, JobCallbacks(done,lambda error:done({'error':str(error)}),self.cancel_event))
 
     def search(self):
         roots=list(self.roots or ([self.root] if self.root else []))
@@ -213,15 +218,15 @@ class SourceRelinkDialog(QDialog):
         self.apply_button.setEnabled(False)
         self.table.setRowCount(0)
         self.refresh_history()
-        current = self.window.source["id"] if self.window.source else None
+        current = self.host_window.source["id"] if self.host_window.source else None
         self.status.setText(f"已{'復原' if undo_of else '更新'} {len(record['items'])} 筆位置；全批交易保存，原登錄與作品／模板保留")
         try:
-            self.window.refresh_sources(current)
+            self.host_window.refresh_sources(current)
         except Exception as error:
             self.status.setText(f"已保存 {len(record['items'])} 筆位置，但畫面需重新載入：{error}")
 
     def undo_batch(self):
-        if self.busy or self.window.busy: return
+        if self.busy or self.host_window.busy: return
         batch_id = self.history_combo.currentData()
         if not batch_id: return
         record = self.library.relink_batch(batch_id)

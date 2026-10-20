@@ -204,7 +204,7 @@ class InputLearningIntegrationTests(unittest.TestCase):
         def inspect_library():
             modal=APP.activeModalWidget()
             try:
-                self.assertIsInstance(modal,LogoLibraryDialog);self.assertIs(modal.window,w);self.assertIs(modal.size_owner,d)
+                self.assertIsInstance(modal,LogoLibraryDialog);self.assertIs(modal.host_window,w);self.assertIs(modal.size_owner,d)
                 self.assertEqual(modal.selected_size(),[120.,80.]);self.assertEqual((modal.target_w.value(),modal.target_h.value()),(120,80))
                 modal.background('核對自製測試圖片庫',lambda store:dict(companies=len(store.companies())))
                 self.assertTrue(wait_for_gui(lambda:not modal.running and not w.busy,10))

@@ -33,7 +33,7 @@ def routes_to_learning(window):
 
 
 def attach(dialog):
-    window=dialog.window
+    window=dialog.host_window
     graph=current_graph(window)
     if getattr(window,'active_input_graph',None) is None:
         window.adopt_input_graph(graph.data,history=graph)
@@ -80,7 +80,7 @@ def attach(dialog):
 
 def sync_input(dialog,graph):
     if not getattr(dialog,'bound_to_main',False):return
-    window=dialog.window
+    window=dialog.host_window
     window.adopt_input_graph(graph.data,history=graph)
     window.production_generation=window.generation
     window.production_view='LEARNED'
@@ -88,7 +88,7 @@ def sync_input(dialog,graph):
 
 def publish_preview(dialog):
     if not getattr(dialog,'bound_to_main',False) or not dialog.session_id:return
-    window=dialog.window;row=dialog.sessions.current(dialog.session_id)
+    window=dialog.host_window;row=dialog.sessions.current(dialog.session_id)
     if getattr(window,'production_view',None)!='LEARNED' or getattr(window,'production_session_id',None)!=dialog.session_id:return
     if window.generation!=getattr(window,'production_generation',None):return
     if digest(current_graph(window).data)!=digest(row['input_graph']):return

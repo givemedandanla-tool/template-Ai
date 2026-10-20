@@ -4,6 +4,11 @@ This view writes only through the existing learning services.  Draft cases are
 local workspace state, not accepted evidence; every adoption gate remains in the
 core.  No network client, duplicate model store or synthetic promotion path.
 """
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 import json
 
@@ -28,7 +33,7 @@ class GuidedOperationsDialog(QDialog):
     """An actual local workflow, opened with ``GuidedOperationsDialog(main)``."""
     def __init__(self, owner):
         super().__init__(owner)
-        self.window = owner
+        self.host_window: MainWindow = owner
         self.service_window = owner if hasattr(owner, 'run_job') else getattr(owner, 'service_window', None)
         self.library = owner.library
         self.learning = CrossWorkLearning(self.library)
@@ -91,7 +96,7 @@ class GuidedOperationsDialog(QDialog):
             return None
 
     def record_problem(self, message, error=None):
-        controller = getattr(self.window, 'offline_support', None)
+        controller = getattr(self.host_window, 'offline_support', None)
         if controller is not None:
             # The controller classifies fixed codes and never persists this text.
             controller.record_problem(message, error=error)
@@ -129,10 +134,10 @@ class GuidedOperationsDialog(QDialog):
     def open_existing(self, index):
         if self.worker and self.worker.isRunning():
             raise ValueError('請先等目前驗證完成，或暫停後再核對來源。')
-        if getattr(self.window, 'busy', False):
+        if getattr(self.host_window, 'busy', False):
             raise ValueError('目前有背景工作，請完成或暫停後再開啟。')
         from .design_learning_dialog import DesignLearningDialog
-        dialog = DesignLearningDialog(self.window)
+        dialog = DesignLearningDialog(self.host_window)
         dialog.tabs.setCurrentIndex(index)
         self.children_dialogs.append(dialog)
         # Keep the real tool alive; its own closeEvent protects pending workers.
@@ -150,10 +155,10 @@ class GuidedOperationsDialog(QDialog):
         self.split = QComboBox(); self.split.addItem('驗證集合：學習適合範圍', 'VALIDATION'); self.split.addItem('封存保留集合：檢查正式資格', 'HOLDOUT')
         self.sample = QComboBox(); form.addRow('案例用途', self.split); form.addRow('對應的獨立作品', self.sample)
         self.origin = QComboBox(); self.origin.addItem('自製／合成測試資料', 'AUTHORED_SYNTHETIC'); self.origin.addItem('本機真實且已授權的作品', 'REAL_AUTHORIZED_CORPUS'); form.addRow('資料來源', self.origin)
-        sizes = QHBoxLayout(); self.width = QDoubleSpinBox(); self.height = QDoubleSpinBox()
+        sizes = QHBoxLayout(); self.width_input = QDoubleSpinBox(); self.height_input = QDoubleSpinBox()
         # InputGraphDialog and Logo selection use this existing size contract.
-        self.out_w = self.width; self.out_h = self.height
-        for control, value in [(self.width, 90.), (self.height, 54.)]:
+        self.out_w = self.width_input; self.out_h = self.height_input
+        for control, value in [(self.width_input, 90.), (self.height_input, 54.)]:
             control.setRange(1., 2000.); control.setDecimals(2); control.setValue(value); control.setSuffix(' mm'); sizes.addWidget(control)
         form.addRow('成品寬度／高度', sizes)
         self.case_basis = QLineEdit(); self.case_basis.setPlaceholderText('這份輸入與獨立作品相對應的實際依據'); form.addRow('案例核對依據', self.case_basis)
@@ -205,7 +210,7 @@ class GuidedOperationsDialog(QDialog):
         return []
 
     def input_data(self):
-        return self.window.input_data()
+        return self.host_window.input_data()
 
     def add_case(self):
         model_id = self.models.currentData(); sample_id = self.sample.currentData()
@@ -219,7 +224,7 @@ class GuidedOperationsDialog(QDialog):
                 raise ValueError('適合範圍與正式資格使用不同集合。請先完成目前這批案例，再建立另一用途的工作。')
         basis = self.evidence(self.case_basis)
         self.cases.append(dict(id=new_id(), sample_id=sample_id, input_graph=deepcopy(self.case_graph),
-            width_mm=self.width.value(), height_mm=self.height.value(), truth_refs=[basis]))
+            width_mm=self.width_input.value(), height_mm=self.height_input.value(), truth_refs=[basis]))
         self.case_model = model_id; self.case_graph = None; self.case_basis.clear()
         self.case_summary.setText('案例已加入。請填寫下一個案例，或核對後開始驗證。')
         self.render_cases(); self.remember()
@@ -279,8 +284,8 @@ class GuidedOperationsDialog(QDialog):
         from .design_learning_dialog import RelativeCanvas
         self.capacity_canvas = RelativeCanvas(self); self.capacity_canvas.setMinimumHeight(220); layout.addWidget(self.capacity_canvas)
         self.capacity_result = QLabel(); self.capacity_result.setWordWrap(True); layout.addWidget(self.capacity_result)
-        form = QFormLayout(); self.style = QComboBox(); self.style.addItem('尚未決定', None); self.style.addItem('符合合格作品風格', True); self.style.addItem('不符合', False)
-        self.style_basis = QLineEdit(); form.addRow('這份稿件', self.style); form.addRow('實際核對依據', self.style_basis); layout.addLayout(form)
+        form = QFormLayout(); self.style_input = QComboBox(); self.style_input.addItem('尚未決定', None); self.style_input.addItem('符合合格作品風格', True); self.style_input.addItem('不符合', False)
+        self.style_basis = QLineEdit(); form.addRow('這份稿件', self.style_input); form.addRow('實際核對依據', self.style_basis); layout.addLayout(form)
         self.button(layout, '保存這份稿件的核對', self.review_style)
         self.capacity_minimum = QSpinBox(); self.capacity_minimum.setRange(5,10000); self.capacity_minimum.setValue(5)
         self.capacity_lower = QDoubleSpinBox(); self.capacity_lower.setRange(.01,.99); self.capacity_lower.setValue(.8); self.capacity_lower.setSingleStep(.01)
@@ -311,7 +316,7 @@ class GuidedOperationsDialog(QDialog):
         return job, index, rows[index]
 
     def show_capacity_case(self):
-        self.style.setCurrentIndex(0); self.style_basis.clear()
+        self.style_input.setCurrentIndex(0); self.style_basis.clear()
         if self.capacity_cases.currentData() is None: return
         job, index, row = self.chosen_result(self.capacity_jobs, self.capacity_cases)
         serialized = row['learned'].get('serialized')
@@ -330,7 +335,7 @@ class GuidedOperationsDialog(QDialog):
 
     def review_style(self):
         job, index, row = self.chosen_result(self.capacity_jobs, self.capacity_cases)
-        selected = self.style.currentData()
+        selected = self.style_input.currentData()
         if type(selected) is not bool: raise ValueError('請先選擇是否符合合格作品風格。')
         result = self.capacity.review_case(job['id'], index, selected, self.reviewer(), self.evidence(self.style_basis), approved=True)
         self.say('這份稿件的核對已保存。它仍不代表正式模型資格。'); self.show_capacity_case(); return result

@@ -1,4 +1,9 @@
 """Two pinned family/source views, reusing the existing canvas and source verifier."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QDialog,QVBoxLayout,QHBoxLayout,QLabel,QComboBox,QCheckBox,QDialogButtonBox
 
@@ -13,7 +18,7 @@ class FamilyComparisonDialog(QDialog):
     def __init__(self,window,refs,parent=None):
         super().__init__(parent or window)
         if len(refs)!=2:raise ValueError('Choose exactly two family versions')
-        self.window=window;self.workspace=FamilyWorkspace(window.library);self.library=window.library
+        self.host_window: MainWindow=window;self.workspace=FamilyWorkspace(window.library);self.library=window.library
         self.setWindowTitle('兩個家族／版本與來源對照');self.resize(1180,740)
         layout=QVBoxLayout(self);layout.addWidget(QLabel('來源影像與共用規則欄框分開；比較不合併家族，也不授予輸出資格。'))
         self.overlay=QCheckBox('疊加共用規則欄框');layout.addWidget(self.overlay)

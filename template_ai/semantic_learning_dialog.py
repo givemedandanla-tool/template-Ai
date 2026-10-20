@@ -1,4 +1,9 @@
 """Explicit local semantic training / held-out evaluation / activation GUI."""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 import json
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import (QDialog,QVBoxLayout,QHBoxLayout,QLabel,QTableWidget,QTableWidgetItem,QComboBox,QPushButton,QPlainTextEdit,QMessageBox,QInputDialog)
@@ -7,7 +12,7 @@ from .semantic_learning import SemanticLearning
 
 class SemanticLearningDialog(QDialog):
     def __init__(self,window,parent=None):
-        super().__init__(parent or window);self.window=window;self.service=SemanticLearning(window.library);self.plan=None;self.offset=0;self.resize(1200,800);self.setWindowTitle('本機字串語意模型：訓練／留出／獨立啟用')
+        super().__init__(parent or window);self.host_window: MainWindow=window;self.service=SemanticLearning(window.library);self.plan=None;self.offset=0;self.resize(1200,800);self.setWindowTitle('本機字串語意模型：訓練／留出／獨立啟用')
         layout=QVBoxLayout(self);self.status=QLabel('未接付費API／預訓練神經模型。確認文字需另行授權本機語意訓練；模型分數非校準機率。');self.status.setWordWrap(True);layout.addWidget(self.status)
         self.table=QTableWidget(0,3);self.table.setHorizontalHeaderLabels(['確認作品／來源','確認文字數','本次角色']);self.table.setEditTriggers(QTableWidget.NoEditTriggers);layout.addWidget(self.table,2)
         bar=QHBoxLayout()
@@ -17,7 +22,7 @@ class SemanticLearningDialog(QDialog):
 
     def guarded(self,fn):
         try:
-            if self.window.busy:raise ValueError('背景工作中，保留目前選擇稍後再處理')
+            if self.host_window.busy:raise ValueError('背景工作中，保留目前選擇稍後再處理')
             fn()
         except Exception as error:self.status.setText('未執行：'+str(error))
 
@@ -25,9 +30,9 @@ class SemanticLearningDialog(QDialog):
 
     def reload(self):
         self.plan=None;self.rows=[]
-        records=self.window.library.db.execute('SELECT id FROM artworks ORDER BY id LIMIT 100 OFFSET ?',(self.offset,)).fetchall()
+        records=self.host_window.library.db.execute('SELECT id FROM artworks ORDER BY id LIMIT 100 OFFSET ?',(self.offset,)).fetchall()
         for wid, in records:
-            work=self.window.library.artwork(wid)
+            work=self.host_window.library.artwork(wid)
             if work['payload'].get('segmentation_state')!='SUPERSEDED' and self.service.store.facts_state(wid)=='CONFIRMED':self.rows.append(work)
         self.table.setRowCount(len(self.rows))
         for i,work in enumerate(self.rows):

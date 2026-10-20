@@ -1,4 +1,9 @@
 """來源客戶候選的分頁核對入口；自動提出與人工入庫分開。"""
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .gui import MainWindow
 from copy import deepcopy
 import json
 import sqlite3
@@ -16,7 +21,7 @@ from .customers import CustomerStore
 class CustomerCandidatesDialog(QDialog):
     def __init__(self, window, parent=None):
         super().__init__(parent or window)
-        self.window = window
+        self.host_window: MainWindow = window
         self.candidates = CustomerCandidates(CustomerStore(window.library))
         self.offset = self.source_offset = 0
         self.running = False
@@ -68,7 +73,7 @@ class CustomerCandidatesDialog(QDialog):
 
     def guarded(self, action):
         try:
-            if self.running or self.window.busy:
+            if self.running or self.host_window.busy:
                 raise ValueError('背景工作進行中，請保留目前範圍')
             action()
         except (ValueError, KeyError, OSError, sqlite3.DatabaseError) as error:
@@ -77,7 +82,7 @@ class CustomerCandidatesDialog(QDialog):
     def reload_sources(self):
         selected = self.source.currentData()
         self.source.clear()
-        for sid, raw in self.window.library.db.execute(
+        for sid, raw in self.host_window.library.db.execute(
                 'SELECT id,payload FROM sources ORDER BY rowid LIMIT 100 OFFSET ?', (self.source_offset,)):
             from pathlib import Path
             source = json.loads(raw)
@@ -127,7 +132,7 @@ class CustomerCandidatesDialog(QDialog):
 
     def propose(self):
         def action():
-            sid, pattern, root = self.source.currentData(), self.rules.currentData(), self.window.library.root
+            sid, pattern, root = self.source.currentData(), self.rules.currentData(), self.host_window.library.root
             if not sid:
                 raise ValueError('尚無已匯入來源')
             self.running = True
@@ -150,7 +155,7 @@ class CustomerCandidatesDialog(QDialog):
                 self.status.setText('未完成：' + result['error'] if 'error' in result else
                     f"本來源提出／重用 {len(result['ids'])} 筆候選；0筆時請先核對作品並學習確切版型。尚未入庫。")
             try:
-                self.window.run_job('建立來源客戶候選', worker, JobCallbacks(finished,lambda error:finished({'error':str(error)})))
+                self.host_window.run_job('建立來源客戶候選', worker, JobCallbacks(finished,lambda error:finished({'error':str(error)})))
             except Exception:
                 self.running = False
                 raise
@@ -161,7 +166,7 @@ class CustomerCandidatesDialog(QDialog):
             candidate = self.current()
             self.candidates._fresh(candidate)
             from .training_navigation import locate_work
-            locate_work(self.window, candidate['pins']['artwork_id'])
+            locate_work(self.host_window, candidate['pins']['artwork_id'])
             self.status.setText('已定位原始作品；未修改來源或核准候選。')
         self.guarded(action)
 
@@ -209,7 +214,7 @@ class CustomerCandidatesDialog(QDialog):
             code, target, scope = candidate['code_candidate'], None, None
             if decision in ('NEW_SEPARATE', 'LINK_EXISTING'):
                 from .input_graph_dialog import InputGraphDialog
-                editor = InputGraphDialog(self.window, graph)
+                editor = InputGraphDialog(self.host_window, graph)
                 editor.setWindowTitle('核對來源人物／公司／聯絡候選（不改訓練事實或主檔）')
                 if editor.exec() != QDialog.Accepted:
                     return
