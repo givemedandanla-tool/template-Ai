@@ -1,0 +1,21 @@
+test_existing_batch_restore_with_nonblocking_error_observation (test_batch_restore_probe.BatchRestoreProbeTests.test_existing_batch_restore_with_nonblocking_error_observation) ... FAIL
+
+======================================================================
+FAIL: test_existing_batch_restore_with_nonblocking_error_observation (test_batch_restore_probe.BatchRestoreProbeTests.test_existing_batch_restore_with_nonblocking_error_observation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_batch_restore_probe.py", line 20, in test_existing_batch_restore_with_nonblocking_error_observation
+    self.assertEqual(errors, [], 'Actual error dialog contents: ' + repr(errors))
+AssertionError: Lists differ: ["'builtin_function_or_method' object has no attribute 'setCurrentIndex'"] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+"'builtin_function_or_method' object has no attribute 'setCurrentIndex'"
+
+- ["'builtin_function_or_method' object has no attribute 'setCurrentIndex'"]
++ [] : Actual error dialog contents: ["'builtin_function_or_method' object has no attribute 'setCurrentIndex'"]
+
+----------------------------------------------------------------------
+Ran 1 test in 6.896s
+
+FAILED (failures=1)

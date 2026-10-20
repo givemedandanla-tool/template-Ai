@@ -1,0 +1,33 @@
+{
+  "records": [
+    {
+      "id": "test_batch_restore_probe.BatchRestoreProbeTests.test_existing_batch_restore_with_nonblocking_error_observation",
+      "status": "FAIL",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_batch_restore_probe.py\", line 20, in test_existing_batch_restore_with_nonblocking_error_observation\n    self.assertEqual(errors, [], 'Actual error dialog contents: ' + repr(errors))\nAssertionError: Lists differ: [\"'builtin_function_or_method' object has no attribute 'setCurrentIndex'\"] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n\"'builtin_function_or_method' object has no attribute 'setCurrentIndex'\"\n\n- [\"'builtin_function_or_method' object has no attribute 'setCurrentIndex'\"]\n+ [] : Actual error dialog contents: [\"'builtin_function_or_method' object has no attribute 'setCurrentIndex'\"]\n"
+      ],
+      "seconds": 6.894673
+    }
+  ],
+  "modules": [
+    {
+      "module": "test_batch_restore_probe",
+      "owned_pid": 1047263,
+      "exit_code": 1,
+      "seconds": 7.3157,
+      "expected": 1,
+      "completed": 1,
+      "missing_test_ids": [],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": false,
+      "failure": null,
+      "remaining_owned_pids": [],
+      "healthy": false,
+      "stdout_bytes": 150,
+      "stdout_sha256": "f1aa9b66f160e1438e3c1b8beee83bb34d3af8ade06f075e0a751d8d46ebb208"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,15 @@
+test_real_size_controller_accepts_native_events_and_retains_cancel_guard (test_qt_event_contract.QtEventContractTests.test_real_size_controller_accepts_native_events_and_retains_cancel_guard) ... ERROR
+
+======================================================================
+ERROR: test_real_size_controller_accepts_native_events_and_retains_cancel_guard (test_qt_event_contract.QtEventContractTests.test_real_size_controller_accepts_native_events_and_retains_cancel_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_qt_event_contract.py", line 29, in test_real_size_controller_accepts_native_events_and_retains_cancel_guard
+    self.assertIsInstance(controller.event(QEvent(QEvent.User)), bool)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'Event' object is not callable
+
+----------------------------------------------------------------------
+Ran 1 test in 0.690s
+
+FAILED (errors=1)

@@ -34,6 +34,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--module', action='append', default=[])
+    parser.add_argument('--workers', type=int, choices=[1, 2], default=1)
     args = parser.parse_args()
     os.chdir(ROOT)
     os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
@@ -62,9 +63,11 @@ def main():
         'original_catalog_size': len(old), 'expected': len(ids),
         'new_ids': sorted(set(ids) - set(old)),
         'manifest_sha256': hashlib.sha256(json.dumps(source, sort_keys=True).encode()).hexdigest(),
+        'runner_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'workers': args.workers,
     })
     write(args.output / 'catalog.json', ids)
-    result, errors, log = run_modules(ids, args.output / 'live', module_timeout=180, workers=1)
+    result, errors, log = run_modules(ids, args.output / 'live', module_timeout=180, workers=args.workers)
     counts = Counter(record['status'] for record in result.records.values())
     unchanged = manifest(code_only=True) == source
     healthy = sum(module['healthy'] for module in result.modules)

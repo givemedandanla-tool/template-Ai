@@ -1,0 +1,33 @@
+{
+  "records": [
+    {
+      "id": "test_qt_event_contract.QtEventContractTests.test_actual_qt_event_delivery_has_no_python_callback_error",
+      "status": "ERROR",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/docs/dev/pre_download_audit/independent_cases/test_qt_event_contract.py\", line 33, in test_actual_qt_event_delivery_has_no_python_callback_error\n    QCoreApplication.sendEvent(controller, QEvent(QEvent.User))\nTypeError: Error calling Python override of QObject::event(): 'Event' object is not callable\n"
+      ],
+      "seconds": 0.81045
+    }
+  ],
+  "errors": [],
+  "modules": [
+    {
+      "module": "test_qt_event_contract",
+      "owned_pid": 1045973,
+      "exit_code": 1,
+      "seconds": 1.163546,
+      "expected": 1,
+      "completed": 1,
+      "missing_test_ids": [],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": false,
+      "failure": null,
+      "remaining_owned_pids": [],
+      "healthy": false,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

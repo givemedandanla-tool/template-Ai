@@ -99,7 +99,7 @@ class BatchRecoveryController:
                 if QMessageBox.question(d,'核對恢復交易','只載入已保存的明確範圍與讀回結果。來源歷史可核實；候選若原記憶體／視窗已消失，保留未核實，不自動重播位移。',QMessageBox.Yes|QMessageBox.No,QMessageBox.No)!=QMessageBox.Yes:return
                 if d.host_window.generation!=generation or d.selection_pin()!=pin or str(d.host_window.library.root)!=root:d.status.setText('確認期間工作已變更，未載入');return
                 d.scope.setCurrentIndex(d.scope.findData(value['scope']));d.reload();d.plan=copy.deepcopy(value['plan']);d.selected_ids=list(value['selected']);d.preview_parameters=list(value['parameters']);d.preflight_text=value['preflight_text']
-                controls=[d.action,d.align,d.dx,d.dy,d.width,d.height,d.ratio]
+                controls=[d.action,d.align,d.dx,d.dy,d.width_input,d.height_input,d.ratio]
                 for control,parameter in zip(controls,d.preview_parameters):
                     if hasattr(control,'setValue'):control.setValue(parameter)
                     elif control is d.align:control.setCurrentIndex(control.findData(parameter))

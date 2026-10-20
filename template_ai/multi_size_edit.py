@@ -29,7 +29,7 @@ class SizeEditController(QObject):
     failed=Signal(int,str)
     preview_ready=Signal(int,object,object)
     def __init__(self,adapter):
-        super().__init__(adapter);self.adapter=adapter;self.owner=adapter.owner;self.active=False;self.event=threading.Event()
+        super().__init__(adapter);self.adapter=adapter;self.owner=adapter.owner;self.active=False;self.cancel_event=threading.Event()
     def release(self):
         if isValid(self.adapter) and self.adapter.editor_closed and not self.active:self.adapter.deleteLater()
     def error(self,index,message):
@@ -37,7 +37,7 @@ class SizeEditController(QObject):
         if isValid(self.adapter):self.failed.emit(index,str(message));self.release()
     def begin(self,plan,compare=False):
         if self.active or self.owner.running or self.owner.host_window.busy:raise ValueError('原背景工作尚未完成；保留人工內容，完成後再套用')
-        envelope=prepare_edit(self.adapter,plan);self.event=threading.Event();index=plan['index'];self.active=True
+        envelope=prepare_edit(self.adapter,plan);self.cancel_event=threading.Event();index=plan['index'];self.active=True
         if compare:
             pending=None;envelope.update(mode='COMPARE_ONLY',target_revision=plan['manual_revision'],target_digest=plan['before_digest'],context_token=envelope['before_context_token'])
         else:
@@ -46,22 +46,22 @@ class SizeEditController(QObject):
         def done(candidate):
             self.active=False
             if not isValid(self.adapter):return
-            if self.event.is_set():self.error(index,'已取消重驗；人工版面保留且禁止正式輸出');return
+            if self.cancel_event.is_set():self.error(index,'已取消重驗；人工版面保留且禁止正式輸出');return
             if not envelope_current(self.adapter,envelope):self.error(index,'來源／人工版本已更新，舊重驗結果已忽略');return
             if compare:
                 candidate.risk_context['comparison_gate']=candidate.risk;candidate.risk_context['comparison_only']=True;self.preview_ready.emit(index,envelope,candidate)
             else:self.adapter.candidates[index]=candidate;self.adapter.choose_candidate(index);self.completed.emit(index,candidate)
             self.release()
-        try:self.owner.background('目前尺寸人工版面整張重驗',work,done,resource_kind='GEOMETRY',cancel=self.event,on_error=lambda message:self.error(index,message),require_current=True)
+        try:self.owner.background('目前尺寸人工版面整張重驗',work,done,resource_kind='GEOMETRY',cancel=self.cancel_event,on_error=lambda message:self.error(index,message),require_current=True)
         except Exception as error:self.error(index,error);raise
         return envelope if compare else pending
     def submit(self,plan):return self.begin(plan)
     def preview(self,plan):return self.begin(plan,True)
     def adopt_preview(self,envelope,candidate):
         from .candidate_risk import bind_source
-        if self.active or self.event.is_set() or not envelope_current(self.adapter,envelope):raise ValueError('比較已過期／取消，先重新核對')
+        if self.active or self.cancel_event.is_set() or not envelope_current(self.adapter,envelope):raise ValueError('比較已過期／取消，先重新核對')
         candidate=copy.deepcopy(candidate);candidate.risk_context.pop('comparison_only',None);candidate.risk_context.pop('comparison_gate',None);bind_source(candidate,self.adapter.library,require_registered=True)
         if not candidate.formal_eligible:raise ValueError('此尺寸建議未通過完整Gate，不採用')
         index=envelope['plan']['index'];self.adapter.candidates[index]=candidate;self.adapter.choose_candidate(index);self.completed.emit(index,candidate);return candidate
     def cancel(self,index):
-        self.event.set();self.failed.emit(index,'取消此重驗／建議；保留人工版面與風險')
+        self.cancel_event.set();self.failed.emit(index,'取消此重驗／建議；保留人工版面與風險')

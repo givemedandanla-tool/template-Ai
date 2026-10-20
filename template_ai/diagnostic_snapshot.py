@@ -227,7 +227,7 @@ def make_snapshot(window,kind,work_id=None,session=None):
             if not r.get('candidate'):add(issue('WORKER_FAILED','REVIEW'),'候選'+str(i+1))
             else:
                 for row in r['candidate'].diagnostics:add(row,'候選'+str(i+1))
-        if getattr(session,'size',None):data['scope'].update(width_mm=session.size[0],height_mm=session.size[1])
+        if getattr(session,'output_size_mm',None):data['scope'].update(width_mm=session.output_size_mm[0],height_mm=session.output_size_mm[1])
     data['stages'][stage]=data['status']
     if data['omitted_issues']:data['progress']['state']='PARTIAL'
     import math

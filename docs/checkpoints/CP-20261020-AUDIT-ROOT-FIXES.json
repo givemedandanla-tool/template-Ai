@@ -1,0 +1,2946 @@
+{
+  "id": "CP-20261020-AUDIT-ROOT-FIXES",
+  "kind": "LOCAL_INCREMENTAL_AUDIT",
+  "phase": "PREPARED",
+  "base_commit": "65bc1dff297ad91a4d24c822492a85faba213c24",
+  "requirements": [
+    "CORE-090",
+    "UI-062",
+    "CORE-085"
+  ],
+  "summary": "Native Qt event/cancellation regression, repair missed report and recovery reader wiring; independent oracles and original failures retained. Full final regression and diagnostic audit still pending.",
+  "files": [
+    {
+      "path": "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+      "sha256": "76d73a3234734f16a14939684db4ae65032a1095dca6a264d88eecb8f3f59b24"
+    },
+    {
+      "path": "docs/dev/STATE.json",
+      "sha256": "a6f40a552dd16081980edc18ee0ea70fc3628da23d5b5f96df16451020514af6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/PROGRESS.json",
+      "sha256": "5d83cac8b46068a347c57533f0f62ae548d1e76c8eecfd81a498a50d44446c89"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/modules/test_assignment_oracle-expected.json",
+      "sha256": "642e5323749cd8ae0c40e5d875ac0569144632bfd7acd01c122f2f71ac2d9a2d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/modules/test_assignment_oracle-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/modules/test_assignment_oracle/progress.json",
+      "sha256": "6cfe475db70f2ff5de33c48f8fcbbf425aee31466ff7494ea405de25a16902d0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/modules/test_assignment_oracle/progress.jsonl",
+      "sha256": "3e91448f56c3711aa1e2c07379e1dd1fefcb185d218f15d1aa7d330cb674dce4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/modules/test_assignment_oracle/results.json",
+      "sha256": "b0241386513c7344da047f609962ec42c901a6c2c7271c40786b64ae724c003c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/modules/test_assignment_oracle/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/modules/test_assignment_oracle/unittest.log",
+      "sha256": "8dd16cddcc47cab1df154a0d162b17ccb2bb579b972c413ae45b2fcb009d8a34"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/test-catalog.json",
+      "sha256": "642e5323749cd8ae0c40e5d875ac0569144632bfd7acd01c122f2f71ac2d9a2d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/test-modules.json",
+      "sha256": "8196c92d262926e180b67ae5ac4994f3179400f8cfb5193a3f1122ce68810617"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/test-progress.json",
+      "sha256": "bb8218bdab0b4b9b57a879735d29d324a518b19a2d0b3974aa927a54f12845d6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/test-progress.jsonl",
+      "sha256": "3e91448f56c3711aa1e2c07379e1dd1fefcb185d218f15d1aa7d330cb674dce4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-001/timeout-stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/assignment-oracle-summary.json",
+      "sha256": "470a350ee5a04abdaf71957484964e6e14988275c79d0db607bbd600254e16de"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clone-review-ledger.json",
+      "sha256": "5987ef433e799b71aa6e97a0f43fecf116c4227a6433b166b88916f741e1c875"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-001/clones/jscpd-report.json",
+      "sha256": "7aec062d770813eaa1840681372d584524fd8367154bddad18c9d905b9b1cb18"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-001/jscpd-config.json",
+      "sha256": "9b1c20d6ef6319b4795168ad75b8a03d1ae8ce36a2ccb2a10d8d43df1e23189a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-001/report.json",
+      "sha256": "f65932f9aed0a3e5111752b7aff0a89e32b36c7870e5f0cf01505a92dc6150d7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-001/stderr.txt",
+      "sha256": "ee988f5e1469097dbea44336b89ef3cfea9768480533809cced6f699376de5c7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-001/stdout.txt",
+      "sha256": "a415f782e0e232e64aa8aecf064fdc0f87a6f32eddbebe0d491b46f183a1ffa5"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-002/clones/jscpd-report.json",
+      "sha256": "005ce52e115960ec532547bba057ad2ae227f9e16bdbdf9c62cd3e01f8ad2121"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-002/jscpd-config.json",
+      "sha256": "9b1c20d6ef6319b4795168ad75b8a03d1ae8ce36a2ccb2a10d8d43df1e23189a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-002/report.json",
+      "sha256": "9c88f0ec3ca1a610dc85ce9dcb114fe92d40e985e81dfe0080b9cb57350dadab"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-002/stderr.txt",
+      "sha256": "233593b1ca5d627abeeb78899b8f097932dd7d2f6edad4d46406163a07cdf688"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-application-002/stdout.txt",
+      "sha256": "731b2a9bae6b49be51dd5973d952f9fbced20cfc6e7bba05dae0d03b053d7a16"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tests-001/clones/jscpd-report.json",
+      "sha256": "8cd85424e9f9573df12e01e84358e5c5ecce88751d423ab70f7712bfa40c6207"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tests-001/jscpd-config.json",
+      "sha256": "9b1c20d6ef6319b4795168ad75b8a03d1ae8ce36a2ccb2a10d8d43df1e23189a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tests-001/report.json",
+      "sha256": "849b5b9f5464c1ac297e58abf9e4b0b2ec89904d0003bc78d90a30885c5bb0ab"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tests-001/stderr.txt",
+      "sha256": "5ddf88a15af2afa19a5a56483e725dcfb1979aec1538eb751dcd1b44b6633046"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tests-001/stdout.txt",
+      "sha256": "3da8ee973630a457c021db567ec187b70c16a3bdb22eafa7902ed7fd60ce902e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tools-001/clones/jscpd-report.json",
+      "sha256": "2ef59aa83d8b7a9208306234c2733eedd399855bcc2168cae8f68e3446ee2e25"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tools-001/jscpd-config.json",
+      "sha256": "9b1c20d6ef6319b4795168ad75b8a03d1ae8ce36a2ccb2a10d8d43df1e23189a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tools-001/report.json",
+      "sha256": "78c51ed9497107f5d59d2a6f73d083c8a74384d3f775a7d7e3322169d35c59fc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tools-001/stderr.txt",
+      "sha256": "3ec32d4dc05be6cbd549648b5fe2118f2ada949dc7aa3e8d84cada50e0207734"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/clones-tools-001/stdout.txt",
+      "sha256": "24ed5172b5c65d3c8788f9e54d2fa2be5715ef0964c47b07af4671cb8e90b8d6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/diagnostic-ledger.jsonl",
+      "sha256": "cb529aa8e9bbabf817aa0db170068c8c0a5e3e2a507cd7e8d9bde5711c3043c0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-001/startup-or-wrapper-failure.json",
+      "sha256": "4b04f118af6e00a199a18d5ed5fad30f1ed919077b78c8fd49eb4e1aaeb095ff"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/catalog.json",
+      "sha256": "de60868c9cc4aa510db6a17fbdfc2f20b91920c0c588973f404419cab28bd6f0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/interrupted-summary.json",
+      "sha256": "37f848fe99555b63b677b9f8bb5e80d1a872cfb1e5874e290a75c38f7c2ee679"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/interruption-request.json",
+      "sha256": "0481db5a0575ebe2bb30d3b80a74f0199d26f8519be2557e327d8adaa885039d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotation_gui-expected.json",
+      "sha256": "f187c44a95f74f43a48960ac35a9e613761555d1c40a04bb085816ce4b746d9a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotation_gui-stdout.log",
+      "sha256": "daa40938469abd0e1265476e407bfd24e1eadc5140efdba14f39e930dd5332cb"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotation_gui/progress.json",
+      "sha256": "3cb8cbed5f3c7f81b5dfb2146a3c44c11a19db27de56788fc7ea4c9a740a67ca"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotation_gui/progress.jsonl",
+      "sha256": "68d258f7397432ae1e0ee104d0377901cb842bccb09c337909b5471356721fa7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotation_gui/results.json",
+      "sha256": "0e2cbdd8b3e1e19abaf5749bc0717f5065a2c74b7364c8ed34b50bcca9e6d2c5"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotation_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotation_gui/unittest.log",
+      "sha256": "2480558a75226c7e629cbf98ce8580ead91c4a1c41a7bd12b0f2e3d10520409d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotations-expected.json",
+      "sha256": "29dfda8940ecf010d82459996244c4376a0d2ba9d44e974e807a31e138a13de5"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotations-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotations/progress.json",
+      "sha256": "b44f5693330f44aae0b904c0356439a1b71d4616fcb36f81c6ed18140a533e96"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotations/progress.jsonl",
+      "sha256": "dd4bb8db3d1957e0b3805420e782fc82412e90c25de686181d5f5fb6276c63b7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotations/results.json",
+      "sha256": "d200c32af0d4eab4f597254884134ad2e129327d299ed456b61b4c66cff0edab"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotations/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_annotations/unittest.log",
+      "sha256": "ade04dfbc105f776c71e0c7a83cae7c03e2459ed9991c8e43eb626bd42e833a7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_artwork_recovery-expected.json",
+      "sha256": "31817e541cbd1198d0c9f140a9be50cc5c68b7b2c0f1088c5ecdb9429c4cb1ac"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_artwork_recovery-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_artwork_recovery/progress.json",
+      "sha256": "5b105c525bdba08821f93af18e437778c4badfc8f0169ccca79f8a312c97320a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_artwork_recovery/progress.jsonl",
+      "sha256": "f167452a8090b4bd46aa13687a60a291ce5734ab4671c5a8270cfb05cf781051"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_artwork_recovery/results.json",
+      "sha256": "2633c7d22aad8934bea4ee62c75dc01f78feb3d3e6c117ad8b6e1bf3b2f1a781"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_artwork_recovery/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_artwork_recovery/unittest.log",
+      "sha256": "5fa0c9ae0bbbcd167f0fa12a86d964049133d5e803da6bcff524e67beba0a3e3"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_pages-expected.json",
+      "sha256": "774aeeb6d681195ca2fa4b5556f61a7b5a82e10b05452d9831a483bf9b2c4748"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_pages-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_pages/progress.json",
+      "sha256": "ec343c3a08b812a3d487d812fdfd90214d354523bef84dc0d8fe129db67b286e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_pages/progress.jsonl",
+      "sha256": "df27356f491b2153a1f74488947254b553e84a6cfe372c256d44cfbae812ecc6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_pages/results.json",
+      "sha256": "cafe1e0d642f70add419062a8582ae8d0b741bae09a69695fb80529a0728820f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_pages/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_pages/unittest.log",
+      "sha256": "97a78dddaebd7e27ac0b81c4411de07a9f2bab897356b7dac2a77ce543c1f0df"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_training-expected.json",
+      "sha256": "945fc2741882bcc9343384812bc1970d377fb36c3dc36e79c670c0f5220223cf"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_training-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_training/progress.json",
+      "sha256": "17d7bf848b28018d00476003e7c48f891203529ca665ce164e8ad1d81812e10f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_training/progress.jsonl",
+      "sha256": "acca8a8c0f1bb9e2d4ac86a5b11077f008a07cff9927a0f7407c4ef2010aea59"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_training/results.json",
+      "sha256": "d1eb62bfbd7c1e96edbb525dabb051b411152cd5f65f881e96e24d90d43494e0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_training/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_automatic_training/unittest.log",
+      "sha256": "c592a8f41916d94471175044ca2c5832830f32f941cf394132313b27efc73e6c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_center-expected.json",
+      "sha256": "e1191accb82f49f10ab34736c643935746191361bb38d51e45ca32b18ddbca70"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_center-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_center/progress.json",
+      "sha256": "573520daf215bf8af45f20b916f06958d4799bc4482400d1905b3d71eabbcfdc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_center/progress.jsonl",
+      "sha256": "9fb68ed71de1bad95471f2a298697c676ec5ce327dcc35af1aadfb4d06e5cb86"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_center/results.json",
+      "sha256": "5b0e1d989984522a25dda8550e031500742e9497c77845eca6002700ba66bdce"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_center/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_center/unittest.log",
+      "sha256": "c9d01651bd03b41d89e3c8c8745442150a762067b6f8ed8dc0624b45856df03c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_policy-expected.json",
+      "sha256": "676be4b59c8996273e798e1cf58d27d24a0852c8013521aefb558fd14273531c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_policy-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_policy/progress.json",
+      "sha256": "fa27262883d47e2f865de4817d404054ba2fbd407558bf49b2d51269179cf206"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_policy/progress.jsonl",
+      "sha256": "bf273f7edc683639c7718c39c8a77702726a3d2defc1a6b5eb69652777903f8d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_policy/results.json",
+      "sha256": "e635e46e3c9b9bbea5ba116832d7627cc5466a1ac79cb58c3b6e68e84e9fabbc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_policy/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_backup_policy/unittest.log",
+      "sha256": "c667e25fdb992b9829a823d6fb4d715ea55a955def5c8995bb9d50ebda893945"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_adapter-expected.json",
+      "sha256": "7373db650485f22fac953b0e0bdf39771f4eeb54191a3fa6d7905865f6c16d38"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_adapter-stdout.log",
+      "sha256": "4287a2131831379285ab32020c32c9baab5cffa6afd15164dc38d29c9abf8ecb"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_adapter/progress.json",
+      "sha256": "5b06607e1ba1c2c3ff8526caebde8aba60e4bf04b671f004e61652351e62854a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_adapter/progress.jsonl",
+      "sha256": "52be24253f7efe2a5369838d17806b2849c0439ae5c845607cb62431eed6f53f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_adapter/results.json",
+      "sha256": "0fcfd2530bce42a39af0082d4ab9fac1e9d55ec921a63775cb75a46e71109d55"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_adapter/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_adapter/unittest.log",
+      "sha256": "9cd44c1ebd55c290d77fec126cc7a3cf88c7b4911a78ca4a100f04e8149a2c88"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_gui-expected.json",
+      "sha256": "8624afb96c5151683375f3716a3c610ca733771193faa9021c9b393a7ce0b72a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_gui-stdout.log",
+      "sha256": "549fad919ce4696107e5f650113ae1bcf2c0cd6621d91b08cd7c8d0e5eed17ed"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_gui/progress.json",
+      "sha256": "76c603ab0a167c6b44cd14785fed59d35142d11b112a8df429cacdbfd0e26baf"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_gui/progress.jsonl",
+      "sha256": "503c58228f86ae996f78f47296302e8cf14f97a7f8ad9884e01e6dbc5f280dfa"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_gui/results.json",
+      "sha256": "9f90700c1b188d37547759d28615c54931468d7f361d5a22c07b06628dea7b30"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_candidate_gui/unittest.log",
+      "sha256": "ebae33de5d24ed04742e6339a8dbc50807cf5c3aab16eea47d9e5944c41d0cbc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_gui-expected.json",
+      "sha256": "a08ef3bf3fa88352177c441ca5d138ae7218f432bd0ba37e1b0f310223f21f56"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_gui-stdout.log",
+      "sha256": "31ef831540038ffe9ba794965c33031c7ef60591786e4ced6a2b8fb5f2a7e03c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_gui/progress.json",
+      "sha256": "71ab0a10d760810d1e88508454c8fe209122f696d6374a445e63b3aee373242d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_gui/progress.jsonl",
+      "sha256": "d081b80887b8d287140b1659257d152f936c05e6de145c8d0e721726aae12a8e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_gui/results.json",
+      "sha256": "137e85d3568102ef9218074abfc79545d86f69a2c4ee1ede4ac118ee20a95b38"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_gui/unittest.log",
+      "sha256": "aebd078eadfe9b2219166649681eba60049efffc6f140db7be2c7538208fc3b0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_source-expected.json",
+      "sha256": "b7a13683ce94ba185703651cbc426675032404f6f754005208d9924dfe76036b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_source-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_source/progress.json",
+      "sha256": "e6d6ecf5bff9740cd01d4cdadf67de0ef83eea46bd433b33569664833fd34323"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_source/progress.jsonl",
+      "sha256": "0958301fcaa59c684830c0bfb838e4d36bea7438ae7f8c6f66434cc65328345e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_source/results.json",
+      "sha256": "6c04bcb5fb4ab4c2aaee3ac6ba9626450d6dd57b08eb88e69f35eb209a5b69ee"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_source/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_correction_source/unittest.log",
+      "sha256": "52f0299f88632af1780b7ba7108a4286ccc9cd0ad9f39f09391143d74aafa6ea"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review-expected.json",
+      "sha256": "39f971e9cb393e7918416de8c83138164849a4a6b3793e078ab6d760a0996ab4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review/progress.json",
+      "sha256": "e97d2002be1cca9ce5fd3132114056b6a1fea92f4ef2f63a289a0b8bc4091ea9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review/progress.jsonl",
+      "sha256": "4de941341f9fcc149dc054af2bdb12dee53fd80142c18ef38fac0ddcce668960"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review/results.json",
+      "sha256": "61ea7f0543c53757f4d09390e7d282d0828618adc82d61fc14f4cb2748b584df"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review/unittest.log",
+      "sha256": "ce122c7e550220ce69589267cf397351c8354020586eb4d1c8ae150f0a1e9531"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review_gui-expected.json",
+      "sha256": "3c6274eee4951b04222f91a5cd8c3f9032c5c6a1f978d3c12a2623ba9482b8b8"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review_gui-stdout.log",
+      "sha256": "f4d792e65f2f459873628b8c9f2da90dd326b55152916effa9ea455e13697edb"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review_gui/progress.json",
+      "sha256": "a4ea210a37e411a1053655dd0ae5d1259f1843ecfca6d2d37ac9977f093fb586"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review_gui/progress.jsonl",
+      "sha256": "f9bd1609085c6996a2a5a7c61ebca621c092ab2e069e349a2469122762582ee0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review_gui/results.json",
+      "sha256": "6c223268f450bd0b59c8b0dc5b754587fa03a183b0b685eff6b96b7456caab2b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_format_review_gui/unittest.log",
+      "sha256": "6a0198a7f338e389b67948c59624be29767c0d72692b740175087c9898ee4c74"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_import-expected.json",
+      "sha256": "ae56ed6de138a3b3258bbbac55916ae5a0ac9bbf1035bb67d708beba6af7819a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_import-stdout.log",
+      "sha256": "af2af968b2e55e3d2681f0b1c174d027f5cf3036201bb4868d4e2c2b90ed3e11"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_import/progress.json",
+      "sha256": "69fdd636bfa8b8e408618ec40c890b6f1f8e11306f8aab2c73b5c6509f3c6370"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_import/progress.jsonl",
+      "sha256": "a48d0b3cc3bcda4ad1f296fecab27ee9d32089dc2fe9c06499c8ed9978f65d10"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_import/results.json",
+      "sha256": "950687d91939606ca11c94e3dfc259d4019dec6474b9f1b40b95b50027333d8d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_import/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_import/unittest.log",
+      "sha256": "754418e6625e6c1b9de364d348a35d88c296e97b44e5ab833a8f368633ca47d7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_recovery-expected.json",
+      "sha256": "c29e4af18b2d5b5f49732fae26f6257d86d6f139204b84a80b9f570f99ccf946"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_recovery-stdout.log",
+      "sha256": "6819711b0f5fd9c2b3649123dcf448ec59887f245003a3bca4423300b0124da3"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_recovery/progress.json",
+      "sha256": "44a09e473d03c384a08e389210c393c49c60a2e1cf626483720743b60abda30f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_recovery/stacks.log",
+      "sha256": "8ee8b7efda76a398dcc7448a0019c17ca588a3ac38ab80c4e8d8bccabb2a31d7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_source_relink-expected.json",
+      "sha256": "712a01016eb5611173b3381a35fe01fc6c909429cd58af935cee1e9edb972428"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_source_relink-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_source_relink/progress.json",
+      "sha256": "2aced4ddd2985e32cbab897660459363d859e590233367d8cc6d2995eaf480c7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_source_relink/progress.jsonl",
+      "sha256": "4902d7e826053a22e3da1f50a4f2fcf142aa209bac6549795e3bc60120063fbe"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_source_relink/results.json",
+      "sha256": "9eac34d2a983387c1fed0b5269c826762f58220b2b44852df041cdf45ff10e62"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_source_relink/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_batch_source_relink/unittest.log",
+      "sha256": "8bad982a1ac5382356b0f7c4ba0ed838a77f894f2bdf6c37271e1122e4d3c254"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_changes-expected.json",
+      "sha256": "ee286d7df2643f730e6bfd55ad7c60aaafd69bb580b0acf8cb65cf0c6728ed2b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_changes-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_changes/progress.json",
+      "sha256": "1a6620c84be84ea2b7195b5ee28a407aadf89c8e2498598e9207ec1d509cfc70"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_changes/progress.jsonl",
+      "sha256": "a5018ad0fb8188f4ffb72e2a9e94309bcc50b2d99ee6050f2abc8c7182d5a4c2"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_changes/results.json",
+      "sha256": "d2ed24f9343fd4ba5c09314b29dc70c3fd6a5b2493681a0fbf9a0f723593c282"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_changes/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_changes/unittest.log",
+      "sha256": "491f58f5a985ae11800e3cb2d472b22594729738fcbfa250deffbc57b7b555ef"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_dispatch-expected.json",
+      "sha256": "6cc6a642df47f765c4b63372f499540d79d1242ce65bf64939b0d810f7c5ac1d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_dispatch-stdout.log",
+      "sha256": "db7484844f5d4b273fb4e29e93babb845bb3d6e949a79460d7c12ff065d4b718"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_dispatch/progress.json",
+      "sha256": "dc6a7f0fc27e557a444ec2812ad1753b820a6aaac2c2baa85f0344bbd19449ba"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_dispatch/progress.jsonl",
+      "sha256": "5cc988d138a4a623ac3723f1f08cf12da592bcdc283cfb2215e7677deea93ab2"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_dispatch/results.json",
+      "sha256": "9d3dc1715175a6e91d493053727f107dcd18476b1ad4e51deb9aa5eedad87a42"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_dispatch/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_dispatch/unittest.log",
+      "sha256": "fc33a3a63537ef31ba126923cefc40bca2ec0e85bc8ab5ee9b6ac7b9d3417443"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_history-expected.json",
+      "sha256": "4ab90176fd9c8e47220bf7ace5bf5701b0c1b92f40b7361d340465df6a8bd166"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_history-stdout.log",
+      "sha256": "281e322cfb8cda96a9018e0222cb4352aa6b4182657c83cfd8d09a282d161a77"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_history/progress.json",
+      "sha256": "094d276006073860b5c38a9b3c2a67f759b2f198de0747f606502a16c6268e50"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_history/progress.jsonl",
+      "sha256": "c8a90bdd42de2bcd5b1373d4cacaf14e81f66d9f03cb43b4f981ce808cdc764b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_history/results.json",
+      "sha256": "cc438ae47dfacfffefa3b4c3c65715f4691dc9f620945b734e05a5f9344e9526"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_history/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_edit_history/unittest.log",
+      "sha256": "056f5a1f047e90b0c1522247428343a69caa6f673193dfc4c59bf0db65f46ac6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_results-expected.json",
+      "sha256": "558243714ef83cc3454f6123a0d4457966f8c770f31577c69eb50417f8b9481a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_results-stdout.log",
+      "sha256": "88d57c661be0d25a274d7a3aff5e344fdff89e9baaac18a88b663342f98a7255"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_results/progress.json",
+      "sha256": "a494ab5397060fa4ae036c68ff33380e17714aa34874311b6535ac895973d3e8"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_results/progress.jsonl",
+      "sha256": "c870c5a8bef705c8d03d8c129802a95758d3402901c301cecbfb0a6f84f214e4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_results/results.json",
+      "sha256": "6bfc7a264577fb970ca0225a35ac728c651c572be1afc36cb49c36dccc6f599e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_results/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_results/unittest.log",
+      "sha256": "cf4e285934be9165eadca0fe64117dce12efd466a58de49eb26a04968d92223d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk-expected.json",
+      "sha256": "ddc3a9f7ae50533820edfb4534a40aa6311eec12311cd6f1510c0aa642038efd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk/progress.json",
+      "sha256": "22dc8e1b2e696b2dd419fd0a6df236f1a6fa52b863202567dd841024579c1003"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk/progress.jsonl",
+      "sha256": "f63c801b89b075e128e0b353740e2d2c6c497abd95550f6abe456ce1235022f6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk/results.json",
+      "sha256": "054bedd3681531e6aa03e1e0a0516524f80bee2695ae2a6b1d4d11de899638a4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk/unittest.log",
+      "sha256": "a6680c1e6a5c5732b08ecfee0174462c6057fd607895ef2c9c1bec9af6a03e63"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk_gui-expected.json",
+      "sha256": "bc8051534b483521325070ccfa7c8e0ecd7f95d545275d90ea5a859345072552"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk_gui-stdout.log",
+      "sha256": "45a4869698cf4c92de69d89d11eba76eaee4e7f35686eccb0eb6b02c24287170"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk_gui/progress.json",
+      "sha256": "39ff46e5c17210bacd64e424f4a5aec8fda95fc6d48be7174bcdfd76f87751fd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk_gui/progress.jsonl",
+      "sha256": "e43726e42ccc09c4e262aa4b2f7c82372f2ee15be7a705db4551f4cf74b775fd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk_gui/results.json",
+      "sha256": "68a6075683542e5388b8b42f20003a88bd286b76e5925b88bbd5208dc91af618"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_risk_gui/unittest.log",
+      "sha256": "4724e443561b8b350de3bfe72f32939ae9681c325aae12a8f537c201ad548a56"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_source_versions-expected.json",
+      "sha256": "2759b4594a6c6fceec469191c4d7406207d15a812f66225a97a091ef7c5e96ff"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_source_versions-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_source_versions/progress.json",
+      "sha256": "e39bb1f8c15b4caab5ce0e17b9fb9951d0136cf7786f28b0c091afb21dcc3086"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_source_versions/progress.jsonl",
+      "sha256": "6ab7cf668cdcd1174155884fdcef12ae33dc2c395e3a1750a2bc74186b53fc9c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_source_versions/results.json",
+      "sha256": "895d84ad3822c2b85a0ce5eb10a2e65276585b605546938868e405a967334cfa"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_source_versions/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_source_versions/unittest.log",
+      "sha256": "f6de6727b96d3ed43e79436f282cf4b238a54cf12490deaacc1dfd1581a9d2a1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync-expected.json",
+      "sha256": "1f59de88e1a1650d4358c6a759e91a9e33478e5fc385b76924ba6dee44a94c9e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync/progress.json",
+      "sha256": "0e87ab2b053edec75c7d00ea99561b2193594f88993783d37264d34bc53df8bc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync/progress.jsonl",
+      "sha256": "0ff4ad7f2359a60dc8b98a5105f324de048bb7013f74e1ed3a557bf2908900b4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync/results.json",
+      "sha256": "ea87cae051a46b87ad8ab2cea7c8d6f7199e1f28272a7cb1fb95630c1a8beb15"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync/unittest.log",
+      "sha256": "825502d4903bcf37849bbba1445c3c4aab9f7e16253174f21c8082c2bb89a1ce"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_batch-expected.json",
+      "sha256": "1debde42285d9dd9d682270d15cd663ec2b1b3e62ff45126b4d0adf446c9cfad"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_batch-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_batch/progress.json",
+      "sha256": "dece0999fa339ffe5d434fa2eacb4f3106448b0374bdfa2094e034ab74b7312e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_batch/progress.jsonl",
+      "sha256": "c0d6bf4fa35be41ecb3fad51ba68d24bf3ff3c6fe51e93708a7b69dfd3faf347"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_batch/results.json",
+      "sha256": "bd463adbab513ad1cc5badc1d193b4f2160fd816343846bae0e419947f3a04d8"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_batch/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_batch/unittest.log",
+      "sha256": "53dd387219d612bf83c8e9186211985e5d864b20a198bacbdae46b3eb0bdfb48"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_gui-expected.json",
+      "sha256": "97c11728e56b8d73642926eefc0258124574ef7acc2f51941e4de689c617246f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_gui-stdout.log",
+      "sha256": "2bdcb7ee9ec87a00cb3123bbf884cd3f6b14ed70fde387b1433335902425f960"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_gui/progress.json",
+      "sha256": "d34b611d3c67d1924dbc01b8b550137e053ee465f9de69bce77532a40abd78e2"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_gui/progress.jsonl",
+      "sha256": "f6c3f6436bfc46cdee5109bfa199663104765c479360f3324177b22d8e530bc1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_gui/results.json",
+      "sha256": "374c5690353d4c0a627f8a8f1887c0cbae8a5af573a529ee2cdae63713269b8d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_candidate_sync_gui/unittest.log",
+      "sha256": "bc9aa875b78d9bd45cc9691414e46a9545af1576713971749114eba9d9b1fbbc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_command_focus-expected.json",
+      "sha256": "9408a516fb8c295e99004c9cb53b04b9b888a89cc95ea9f36bc68fe14204e260"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_command_focus-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_command_focus/progress.json",
+      "sha256": "c78293f0100901de3f3ef597ea5de94133784e91bd3b5e332c1f2feeffe50c9e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_command_focus/progress.jsonl",
+      "sha256": "dc84ad76fbbcafce44f34ef8de1b1430a7b0403d93152dcf9570bca43b184705"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_command_focus/results.json",
+      "sha256": "d9b90fb5f2eac30f719d4250c30a40ba1df34c4e4d3e0608a4ca27906a478daf"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_command_focus/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_command_focus/unittest.log",
+      "sha256": "ce92d8f98c7d57426b47b19ca2e6b25895192e824c4be5f7070cf43c4c9f77f9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_compare-expected.json",
+      "sha256": "8f29666781630b69d382b2dbd51f8de638b3d5ed5225e5d88d3dd34b94f358ce"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_compare-stdout.log",
+      "sha256": "a1c11fccf4c043d4c77f35e5fb2c262a41b2892bcf733e5f8010108108e3d589"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_compare/progress.json",
+      "sha256": "58ad2900d60df0c963220cc3a8d17a220580461fea8637cba485e210558d5bbf"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_compare/progress.jsonl",
+      "sha256": "aaac8b0b17010607df2324ce2c0059cb14e5e38d46e2f6eb902a7099807dafa8"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_compare/results.json",
+      "sha256": "d8234885c4bb44cf1c8c289a2dc5c1c33539b400fe463249ea1c9ea098322bd7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_compare/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_compare/unittest.log",
+      "sha256": "c2220052fb3ecfcdc77823afb93a6df2108e73bf03646e74b08bcd939eb9a221"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_controls-expected.json",
+      "sha256": "a7279e27ca19935418c4d3315b80e3837f055dce462e8370d705c596b758a268"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_controls-stdout.log",
+      "sha256": "bcd516d5e9014bd0f43bf526bc701b744bbd4ea9c35d16fdd65e6fde7b0270d5"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_controls/progress.json",
+      "sha256": "a30754003ecdfdd5dddcc250d36eccd378ad3231e5a9f1b0f60cc2db17d1918d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_controls/progress.jsonl",
+      "sha256": "aa693a63920ec66f1749ae568b2a2af81d0ac655a6ae0f514e7603337c477da9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_controls/results.json",
+      "sha256": "8973588ae86f9003184d6ab12c8b712b2343627817069e863ea795198d91c039"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_controls/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_controls/unittest.log",
+      "sha256": "b9d1bd263b985c571d0fc9283395ab1d88e3022cd18f9cb865969d294873e21f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_named_commands-expected.json",
+      "sha256": "fbc0ddaa12cac2f03a48126d1c802c2d817c8ece000ed0a962372999d8917344"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_named_commands-stdout.log",
+      "sha256": "d49beb1c0b299708d1d73faafc94ed31f5b2655f09e65f3875092ffdfb414066"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_named_commands/progress.json",
+      "sha256": "1391bb67175017a3d49f60ce141f59f5dc6943c2f09b9972d3e4b0e39fff9209"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_named_commands/progress.jsonl",
+      "sha256": "4b5074775ef656b58123add47c3fe58b2b6a91c6e437b49fdfdf5f04aca64336"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_named_commands/results.json",
+      "sha256": "51f7783cdbde40f6bb25eb4df9989ac7a97bd768ec7e1e8027c7784c04d3ea55"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_named_commands/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_canvas_named_commands/unittest.log",
+      "sha256": "5eaf86950ee7fb4259207c4d0972737cebd349b09ae889addf299c4e596c4a08"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_catalog-expected.json",
+      "sha256": "9d182046a25efc91b4c6780b2717a7dfa6d0b3c493ca9f86330d95f704098b42"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_catalog-stdout.log",
+      "sha256": "03616a5f345dec1fb802e35d181dca1114c9e4c11042d547ff1fbde58d5eb731"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_catalog/progress.json",
+      "sha256": "26afc9551e4897f80d38d274b1fbc91e564c7ba40f560f4b741a4deb27aa4363"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_catalog/progress.jsonl",
+      "sha256": "9153120dfb4c2d28578defe33b282b177b1ce09dd32c3460a7b8fce1d50f05f2"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_catalog/results.json",
+      "sha256": "203c1ef53573c192fd0ec6abd4aead1325dd2f47567708ccf1641bd857346680"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_catalog/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_catalog/unittest.log",
+      "sha256": "c605aee6131375d43b9c9b53140a001d1a2c4a01ae84217d8a9d666d10e75ff7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_batches-expected.json",
+      "sha256": "11380356c479534aac16daa6c726bbae56903ab777565a11c1ca13d71cf79a25"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_batches-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_batches/progress.json",
+      "sha256": "9f9cc8d60ddaadcae8c88f784ebd7751a6e0c69d90f05caed296916129dcd67e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_batches/progress.jsonl",
+      "sha256": "d5622aa1a35beadc5f37bc63cae1be3c87d838dbc425b63563f9657ca3c82cdc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_batches/results.json",
+      "sha256": "52e647ce9d478ba06e5a1f0395bc5cc867560dc2bac243f3cdb673e7e0c95a07"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_batches/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_batches/unittest.log",
+      "sha256": "d59ae7497ed88a6514caf293add50e2752c3942afd98cd01377b9d2253b9b29e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_closure_gui-expected.json",
+      "sha256": "050b4e0eb4ffef8f68ab4de2738b5a0d8d8171ad91de44cb717e66c96e2612eb"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_closure_gui-stdout.log",
+      "sha256": "32fe85704391b81c77a529e152acac8b66e2bbad326cc252e4f21188ca67427d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_closure_gui/progress.json",
+      "sha256": "08be1ef06bc1a699a3c403173a25ab873f3965810bce56af2d208b365bdd3ffd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_closure_gui/progress.jsonl",
+      "sha256": "b93150fa013a4e637574d28f229110cad7ad66dd19da1bc44edbedae0b1a3001"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_closure_gui/results.json",
+      "sha256": "afcaa44cc3c039bf211e8145ea311e4f79203ae5828ede491c63797bc42a2231"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_closure_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_closure_gui/unittest.log",
+      "sha256": "363f7a6e46433d5d99c9ad66a7e6c208b857ee23d6fcc5503d23740a5c67c876"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_rules-expected.json",
+      "sha256": "7b51c218e12e7e89f7d74b8cdfc0b161e84f3bead1795b94dfef63ebc667f573"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_rules-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_rules/progress.json",
+      "sha256": "d9ff3d6c7e170cb17e6bd5c3bf70df7120e88bb781a2c9376ff755af5737434b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_rules/progress.jsonl",
+      "sha256": "2e8bba681466f7dc085f1af12004d2b62761fc71b60f1f75ace5a96e587433f8"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_rules/results.json",
+      "sha256": "e4f4e82e31038517de3464d0167da3a96833ffdb38f4aa8ae2dec2073d18b017"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_rules/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_coverage_rules/unittest.log",
+      "sha256": "bba07eee0f611c7a497a2cbc50f0954611e6e32c607f140e748bbc0966a85df9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_custom_layout-expected.json",
+      "sha256": "bada8d14849d3657a4b3bc26fafaa8a78f620b66815fe99b3cd3c49afb4c395c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_custom_layout-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_custom_layout/progress.json",
+      "sha256": "15177d5645d99f06b457fa86e2f6e4c8f1e5e9af25e9f872b27a82fcadec4fb3"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_custom_layout/progress.jsonl",
+      "sha256": "c1f5b3bb227d7f8e642a99afb5ea119655e30dd8a51623aa4f1850bd668b3e03"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_custom_layout/results.json",
+      "sha256": "e57586a3a425ab2588f19c09f2074ec96f70b6e02b4919f8d4cfa2e0503c1088"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_custom_layout/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_custom_layout/unittest.log",
+      "sha256": "10b765b2e0654a8fdf32af5f053b43a087257ffb1a67807e34be0dce360c1f9e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_candidates-expected.json",
+      "sha256": "a991d6345eb6336731554b7cb32dcc28ef646ba1c2d7dd379e67a500c3bd8b50"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_candidates-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_candidates/progress.json",
+      "sha256": "b594b43a6e25a807b847c1720bb2da17a68092a649df2ec6dc5b072d03078a46"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_candidates/progress.jsonl",
+      "sha256": "bf16a525723e3e1895fa25e4cab6ccbd46bb15061651f5ce70d1182ae20d4d61"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_candidates/results.json",
+      "sha256": "abbec6fb5173d0fdc19d20560786b71d714d4aa8a02a665b587c413012e70fdc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_candidates/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_candidates/unittest.log",
+      "sha256": "fb0100bcb8319c71eca63cc4f536ee796fe0f84b6d5805656bc7f6815d486636"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_graph_sync-expected.json",
+      "sha256": "ee1245d3281c183226b118d965170718836d975d74b3bf2413b91f41447e5b37"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_graph_sync-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_graph_sync/progress.json",
+      "sha256": "85a87a7ecc8c4ddc27c521b76ce27a2e0ae4a8ffbb3ff5eb98efd8b8cd14e322"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_graph_sync/progress.jsonl",
+      "sha256": "954da912e1ea9408947fd0a9ad6549d69b27ce6eb002e5d5e41a6578c61c827e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_graph_sync/results.json",
+      "sha256": "2176c2c36ca2462fc351551d7da13c0f90e136a09fdbb02aea6841c9ba71492b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_graph_sync/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_graph_sync/unittest.log",
+      "sha256": "3b70f3a2bc7604b82f9e7d2fed49a2d6d7a3569317a4f3bd3911fa0eb96daedd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_identity-expected.json",
+      "sha256": "70b7aa20d5177589d9b7cb6757a2f633c818bcff18667db07ec3ae3039642da1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_identity-stdout.log",
+      "sha256": "caeb11f6473c6c7125dd27478e588b85ffd6b31784e9adb1371a60f1661eb00f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_identity/progress.json",
+      "sha256": "ada67fb6e5ce0a3f126b8b5713d191265967ee0f075866af0f0a42c052b052ea"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_identity/progress.jsonl",
+      "sha256": "8860cfd5f632da7f0d27b509cac9d801ec36db7500f2cebf7154997c44f02017"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_identity/results.json",
+      "sha256": "1efb084466998e256accfaf7e5fbfcd9866aa6d1b9195dc9cdea227c1300f510"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_identity/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customer_identity/unittest.log",
+      "sha256": "fd8af0c4bfbe50f50d5f652cfd562ef19056dabadca62b38c1459e4216770610"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customers-expected.json",
+      "sha256": "7db0318230145792f9eeec4ef3ae84b0b1df75ab4a2de7ff54ec5252879b4879"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customers-stdout.log",
+      "sha256": "f1aa9b66f160e1438e3c1b8beee83bb34d3af8ade06f075e0a751d8d46ebb208"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customers/progress.json",
+      "sha256": "9f9289c6ae539162628935a9d14c49a7a3253e87389ffc5a9cedab8cb98800bb"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customers/progress.jsonl",
+      "sha256": "3c76303f4224d72409ba645dbd151865f39014eab1b5f996dae6786689e1dae8"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customers/results.json",
+      "sha256": "8e96625b71dcdafc24a8a457a8a0f8a4d82f52250d7e267b517228dea68ad632"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customers/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_customers/unittest.log",
+      "sha256": "9259cdc82a26d3835af09f0c3dd1e7a74c9e9d1e777ac7d5e929b5ad04ad09a9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dataset_learning-expected.json",
+      "sha256": "eb02dea27f842cb3303a66dbd7dca8e5d557b64ac846109c90dd609e1ad940cf"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dataset_learning-stdout.log",
+      "sha256": "f1aa9b66f160e1438e3c1b8beee83bb34d3af8ade06f075e0a751d8d46ebb208"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dataset_learning/progress.json",
+      "sha256": "f13ce963bb395e98b1e30e6246093d58546f052c4bd865612f193eae98ae19be"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dataset_learning/progress.jsonl",
+      "sha256": "2eb0f2ba3980a302ed73299e9bc59ef2d4b1299c9d8fc886e5d4ef5ade674001"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dataset_learning/results.json",
+      "sha256": "a6e08a7ed38910be287a923c6e3e102ec83a81c2e2b9f3f065ecec4595553c89"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dataset_learning/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dataset_learning/unittest.log",
+      "sha256": "846e701eca5120697ffc51fee220ac556378fe7f1ea72b02c0eab9a4fa2e3fa7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_assignment-expected.json",
+      "sha256": "d8ef1fc5a04d57b68df2aeb578988ffe94746858cb7a9824a2caf3f4e0dd466b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_assignment-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_assignment/progress.json",
+      "sha256": "da7e06bd1d17022fcaa488f402eb3930e7d57e32f925533e7ef7848bbbeea517"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_assignment/progress.jsonl",
+      "sha256": "eededfb0160928012d604c3343eec18df5171ae4a78fa6170c577e7e915003c9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_assignment/results.json",
+      "sha256": "deb25dca04b73e20b4f5858a533f7737e5089a2c6e8e17c12ff45938b6502c99"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_assignment/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_assignment/unittest.log",
+      "sha256": "d0dd063186f2d8ebd7d92afeda49f5fed500643c6f9016bd06ea3c70e3bc8fba"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_components-expected.json",
+      "sha256": "5314e79f5a32534da47e3b113402fd83927c30b7746e779dd8412cab0068b619"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_components-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_components/progress.json",
+      "sha256": "2c2ac2299451acf7ea6c7bd568bfafa256f63e460ca2cf011e69c3144e48dc68"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_components/progress.jsonl",
+      "sha256": "9f5a9d18324b7a00b4057556615fdfc55fa6c23896e9f87dddbbc0b8525d8357"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_components/results.json",
+      "sha256": "04c0d46092fa9e66fa7dbb94444a4c4b8bba48283914ca1f41d74cdb671a0714"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_components/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_components/unittest.log",
+      "sha256": "00bc291f1763f60c2d0162233ed4fd14eea95f5731efc849d7a35cbbfcbdbade"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_composite_learning-expected.json",
+      "sha256": "0f731a2bd4441d7102fbcfc3ce96be1bbf23c41396eef4026ee7b91d6656a6ed"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_composite_learning-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_composite_learning/progress.json",
+      "sha256": "bdf9148bde5995f7a7f1a88927b9d81b22a9d8fe195af46fbc487fa845bffc9c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_composite_learning/progress.jsonl",
+      "sha256": "79c22d20969e80c28a1d75ef867bb9bbda2113bff7f93b4daa356205b9464d30"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_composite_learning/results.json",
+      "sha256": "b1459740d65cddb4fe55b7dddbaa158841066dce30ccf8c6eefb95af9d1cb548"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_composite_learning/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_composite_learning/unittest.log",
+      "sha256": "b9d91a632309b6bfcd2b808b642e4c2c4659b9f215f3c9e601e7a82979c253af"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_evaluation-expected.json",
+      "sha256": "c5a9f061681f3092d0359a53dc502e4d81983ba2a0cb1c04ba878ba5facef6ba"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_evaluation-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_evaluation/progress.json",
+      "sha256": "b12ad9ee7d4cb808bbea4ca5c77b90ad65ff721f28b58d3439433a14e5068b4b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_evaluation/progress.jsonl",
+      "sha256": "b3e3735afab2b62c2840f0312ea3e4a90071d133eae22aa548a017231f9a2463"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_evaluation/results.json",
+      "sha256": "2267b5fa2b71c7dec7180817b3f7d74a65e33367c88cabe53731d69425e3ae13"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_evaluation/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_evaluation/unittest.log",
+      "sha256": "9b6ea44b2ec6d42cc79e71636199a348b0e8b4465a01672b90e27af79fe9d301"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_family-expected.json",
+      "sha256": "c42b4939fcba03d8488717329714d02566427058bc4561b6c4dd54e1671c6534"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_family-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_family/progress.json",
+      "sha256": "70346dcbef9ef55484dd1198f03eccaa47577a87ceaac2010ffc552b8c16e8e3"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_family/progress.jsonl",
+      "sha256": "89c0ab36d9032b541140c9ae212b119c546851721c8692c58d89575321d29668"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_family/results.json",
+      "sha256": "367349362ad0bccfa5f7ed026f2f4b1d5357d87a44f106c802069912340a2302"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_family/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_family/unittest.log",
+      "sha256": "aa8c30cb7df1304232b6c6ad0b0340e9c79a48fce0209afd420654e07d6aa60b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_feedback_qualification-expected.json",
+      "sha256": "3c2b402e78eb8131e76dbe198dba5e6a5e7d70bea14461c9cca6189fbba0404d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_feedback_qualification-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_feedback_qualification/progress.json",
+      "sha256": "1cf61ea86e6b8029cc1a194af87411182b3e65ce55dd59c1c235cdb530a4300a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_feedback_qualification/progress.jsonl",
+      "sha256": "92a52b182a2edcd3f3f3a18cfecc7355dcec81a24b9909ac450859813d0a6050"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_feedback_qualification/results.json",
+      "sha256": "8a7775d9a7cc00e07513a3a9cf221ecbe70acc01c4c6ffd57accd0d4e625d5fd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_feedback_qualification/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_feedback_qualification/unittest.log",
+      "sha256": "4b8bda3469b0f0c094f16d9f6e3ce8139d72edc57882d1548340b954ca1df4a1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_jobs-expected.json",
+      "sha256": "a6abebbcfc44b012455929f42689d9f13ddfbebb414a82d49414fbed0092025e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_jobs-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_jobs/progress.json",
+      "sha256": "701b5ac75f538a188b58fe6647a7c16023c7d131b7ffb24d09599522dcad836d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_jobs/progress.jsonl",
+      "sha256": "c5a685b19965a6121f5fa14a1a6591643ce30d0bbdc708dc35c72a8d0c1bee3f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_jobs/results.json",
+      "sha256": "8e8f348ef79ac374af676c1a9d45dcc0497f22975678dd1dcf9c64c66c7da779"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_jobs/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_jobs/unittest.log",
+      "sha256": "ba2f5318e0165ee510a8e03a64a122367693fde839e7af0158ecb71e3396db2a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_joint-expected.json",
+      "sha256": "05a1020e1d7d6302dfd2ada30b548b1599ed15c07dfe6d0a4f4d156b9db6360e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_joint-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_joint/progress.json",
+      "sha256": "d19e37ce6f783a299b3643527b7a098c45ae8074f13c17d419430c15c9e38830"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_joint/progress.jsonl",
+      "sha256": "73cc4a682a1b2849ec699790f28a30fd20b98495bdb3c2e4c8d053e59334eb16"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_joint/results.json",
+      "sha256": "44c7d8c2691eb5ed40e464f02558e863f40f76c8e9d10cdfc5959377d400d16b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_joint/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_joint/unittest.log",
+      "sha256": "8fd9741c819f301d8d5d9ea40a60130373930841156fd8b0c0f3b764e10b1ae2"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning-expected.json",
+      "sha256": "11b82af390ca99609b61a15a3ea8653241a040cf340397aa3acbb2891c4d570e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning/progress.json",
+      "sha256": "63c01315d770c8b53415891445e683b32ea5927b2b24a4195ba612e14173ad88"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning/progress.jsonl",
+      "sha256": "aabd83eb12cc92ebd45ddd1265840a31e6a44f1bc69792bb89b2f9505ea8085a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning/results.json",
+      "sha256": "f4f11bc5b5558470786d88426f44d1c21731a2894f719c07ecc3296ab1c5e6cc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning/unittest.log",
+      "sha256": "26164507bb9dc8e8c1c854ee071c8af3c27272d49c14217d2403a114fef2fc2c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning_gui-expected.json",
+      "sha256": "a8a1f6fc967a76fd3b76d3f99736cb83756e27b1435b05f133563f70fb1b4851"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning_gui-stdout.log",
+      "sha256": "6819711b0f5fd9c2b3649123dcf448ec59887f245003a3bca4423300b0124da3"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning_gui/progress.json",
+      "sha256": "0c310ff99a03fc613299d9b520e064c1ee70a58911a4df3c5e6ac1a890609d71"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning_gui/progress.jsonl",
+      "sha256": "fd8c6a59bf4c84a554ec0cb72c092c62805d5b856e8c492504988ced5ba0283e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning_gui/results.json",
+      "sha256": "f9f330e644d4042e2066e06110d01f37ca3b5a36f3decd59587fb887c75816cb"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_learning_gui/unittest.log",
+      "sha256": "bce485fb2d31871eee391ce94e885304454e43ba2920df62ffdf2d759df50315"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_logo_synthesis-expected.json",
+      "sha256": "3b0acbc59a5d684df5874b9f3d9a49ba4532566b1549507e623bd902495fbea4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_logo_synthesis-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_logo_synthesis/progress.json",
+      "sha256": "2637883f09b8c8a506f57e901cb8ce1bdd0c16fb852a2384738a4748bda98e19"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_logo_synthesis/progress.jsonl",
+      "sha256": "5d52b62ad527a134e7b2e834b09f11036f626b857e3d1de48459ea63dfdd6d50"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_logo_synthesis/results.json",
+      "sha256": "9105f9c2199590de77038c8f07023047f1e652e74e515f1aad2a2d10247cba22"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_logo_synthesis/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_logo_synthesis/unittest.log",
+      "sha256": "16321e4a1355a966e91beb937a7e59c3b2ed71a15ea00720ce3c5d03a392b906"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_observation-expected.json",
+      "sha256": "015ed95697e0d02fd8c4f5503903e8cb3b2bccacece45fcdcdfaa4f61be1f5c1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_observation-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_observation/progress.json",
+      "sha256": "d2b50c7e1224d756ea96790f36217e22e86490512be97359aa8cc5fb70d5bd38"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_observation/progress.jsonl",
+      "sha256": "5b0fa26fd58e8e7494fa121b7c8cb7f82b1d87e42d198aceb4948ebd2319fd71"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_observation/results.json",
+      "sha256": "081d27c85924d8124a9960d25072a9ede67457ec94ed3f820e54e7f7ab2ee64c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_observation/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_observation/unittest.log",
+      "sha256": "c140f967af872f19d7d018dfc5fb6fac9723a8d164def09096e0db78f4443625"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_ranking-expected.json",
+      "sha256": "70d5a06655b505687492e4a782c9ca34ae464c6b1dcb5166cb9843869888317e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_ranking-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_ranking/progress.json",
+      "sha256": "9b8edc3bd1b61ef728defe21be24037db7c9907bf1ac31a8d6bf0a440a6ee763"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_ranking/progress.jsonl",
+      "sha256": "8313ccb1de7e937fefc2234823355623b16fa6a41c064675cd43426caecf21e6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_ranking/results.json",
+      "sha256": "34209019e4ae7b4e5b3b9e3f8f31bbee04eaf83616ac71a7265f2e7c4073acd4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_ranking/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_ranking/unittest.log",
+      "sha256": "13a38ae35fba0b244013975ab98732442cad088c7b3452dbec143e1736734b68"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rich_text-expected.json",
+      "sha256": "f197ce040953bfab04d85efd955eba7a420deb29bf73c9604677ab8f085b6931"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rich_text-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rich_text/progress.json",
+      "sha256": "9c0500cb32cfbb21f050cccda01e017a0511a9671ef7171595001defa0c0ef79"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rich_text/progress.jsonl",
+      "sha256": "073a3f0e0b391e22c76679357cd9eada8251d2c5a2dd88e5a349f60c5a354dbb"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rich_text/results.json",
+      "sha256": "c4036d992d8d551ad961d2bc73f4b14294b6cffe9f0338eefa98c8bd31c698a1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rich_text/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rich_text/unittest.log",
+      "sha256": "e7692a57d23c1f593315ca48deb3cd50155c8fc934f9520d625a8efb55bc7eb5"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rule_extensions-expected.json",
+      "sha256": "6f52e731010dda1208af0a2473f93faa22e3be638339c9d9e22a0199ab8dde9c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rule_extensions-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rule_extensions/progress.json",
+      "sha256": "4d453018e87d4b785abdc719edff5235055abe2c5112e03e464917b206c63f5b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rule_extensions/progress.jsonl",
+      "sha256": "46a69e8311d73d50eeccd871ed9c7bdebdf2b40f22ec4e4049f0fc1eff720330"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rule_extensions/results.json",
+      "sha256": "8e0197c38a17b63a5311a60b958f0aa22827f3b187f099079d7aaedd863944fa"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rule_extensions/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_rule_extensions/unittest.log",
+      "sha256": "cea66d34e67b7d1d5601d34ea7a491ca5f20c7f1efdb6340c1da47a70ee3029a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_session-expected.json",
+      "sha256": "b0cf846d2339947b7049e156b6cd3dfcb1ca7a4571f5f19185bc2ceef52e34d6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_session-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_session/progress.json",
+      "sha256": "631b03c92942e45c7ea8de6199c20da5fc9967a18d79078e7dbad4c4a0d80a1c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_session/progress.jsonl",
+      "sha256": "b3624bacd0cc28278fbaf573342404aeebb9780d3584c1d2fe41cfbf75f278f3"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_session/results.json",
+      "sha256": "8e5861104c969772c20e030b045ee23dc79b4839e564d49ed9f38805a155bb1e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_session/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_session/unittest.log",
+      "sha256": "3151c69e6a60daa0752e1f6517bfdc085ab8686775e5efce80f6cc312f98e694"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_source_binding-expected.json",
+      "sha256": "1fae2d072bad0cb6e20cbfda761fde9bbe0bc172bd7fc04e84938eec0457d222"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_source_binding-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_source_binding/progress.json",
+      "sha256": "4a0fd4ec620eae75cc5b415a6dafbad628dedd03bf3ecdf7d5ffec6dc92b88bb"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_source_binding/progress.jsonl",
+      "sha256": "339cc20f898d790351f562718cf0608c2ae375821c191fad5a6f810024ab4b0b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_source_binding/results.json",
+      "sha256": "7eea9ac69cffb918a5642b9fae342f36e7090703afa81504d42c622d4c03e05e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_source_binding/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_source_binding/unittest.log",
+      "sha256": "83f22dccead78f2f5dd0f9f103147370384a15b69b6d8833ebb39994753dd004"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_synthesis-expected.json",
+      "sha256": "db29466ffa2206ec258672d2add469132520bb8358474ee28a2e1ed16cb33239"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_synthesis-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_synthesis/progress.json",
+      "sha256": "b4ca0145b4c8c48116792d3b9732badc0d5f4d815080054fffd07811ff557d22"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_synthesis/progress.jsonl",
+      "sha256": "2e52881a91275e2c8387767543ee1b47b7b8ac9a03321eff25142cfce8d6a340"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_synthesis/results.json",
+      "sha256": "aa9488299ec49dfe2404725b40c256e61e9b3a0da53b7608bfb34a5ad58d62b6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_synthesis/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_synthesis/unittest.log",
+      "sha256": "aa194039435921168e5a59dcc27d85d46cd434819034632f762fe8b75a52bd26"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_text_flow-expected.json",
+      "sha256": "2d028e0a20a6197c58db59fe8e4f896409846336722c7ad5b3251d2b873b7b97"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_text_flow-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_text_flow/progress.json",
+      "sha256": "6a6b457dbfd7d5901598c0e913c767cbe8dbb2e5fc9e293d706a60ff48f32acc"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_text_flow/progress.jsonl",
+      "sha256": "09b5da625c9d9a0ea211c6623e2eaa3202dec0467d8ee2c20509a13a395f58ee"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_text_flow/results.json",
+      "sha256": "66146e2c9b224e1e131dc409d26142d34536e696365a7b19b059f53f6b2ca3a4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_text_flow/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_design_text_flow/unittest.log",
+      "sha256": "ae5e67c62e0a02ab51d9dacc76b2ffa945eaee68660bad4fce11d22e6bcc5fe6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_desktop_workspace-expected.json",
+      "sha256": "8fb51cbf22533c54edf6bec6ddb65795b96894657ea350fe0c6b517356006c38"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_desktop_workspace-stdout.log",
+      "sha256": "6819711b0f5fd9c2b3649123dcf448ec59887f245003a3bca4423300b0124da3"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_desktop_workspace/progress.json",
+      "sha256": "f29032d16963ea32bfae279b60a5b8170a78de98bcbac92e1532c93dd3de840c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_desktop_workspace/progress.jsonl",
+      "sha256": "a651330f06f80afffa6b6786af17c08c4410ebed19ed03054c4029a60f32dcce"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_desktop_workspace/results.json",
+      "sha256": "7c63c3b925bebcd8e554de568e3f2c104dd846e8db24290dd514288e7fb043b0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_desktop_workspace/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_desktop_workspace/unittest.log",
+      "sha256": "896eb8f397d84565d4a111ce2d010926595c6df88232ba93b8684aab5683afb3"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_framework-expected.json",
+      "sha256": "03fcb8d22149b0e8792fc2e9c78791e7b5d8af389dc84df61eff57eacf482694"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_framework-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_framework/progress.json",
+      "sha256": "5e2490092eb6cb6185645002280c6e32d853b68ca663413ccbec7f34c5862647"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_framework/progress.jsonl",
+      "sha256": "eef5bac1f815071c2f68a5018e57b0816c1c9dd5ee873c0eff59771bbdaf1397"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_framework/results.json",
+      "sha256": "594d9f5e01ce3d62c952465e404b6c17a204ab8920b96be0a926d54252b704ae"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_framework/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_framework/unittest.log",
+      "sha256": "cce394c10c656bfca1352de72e28237d9fc196a57aaa16b2dfdf0cdfae2bd36e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_progress-expected.json",
+      "sha256": "9ce47720d050fdcde2d32de31c7e2d1663274b0aa484d484f9dd012e0aef07f1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_progress-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_progress/progress.json",
+      "sha256": "c42dc688cd213c353d4a51fddff931301dd04c52965fa277ca23b830423730fa"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_progress/progress.jsonl",
+      "sha256": "c7111db5c8a669faa2896eb0c2e3730a7e28bdee9730d3502db5c8b2db258c36"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_progress/results.json",
+      "sha256": "c2fab5a94e237fcd42a595d519464486951392346b9ec3c9f77fc90164bdc467"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_progress/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_dev_progress/unittest.log",
+      "sha256": "aeb25d45e8efa22620e4204a5f1aa608c9bcb9724878c118058a8c200022bae9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_diagnostic_reports-expected.json",
+      "sha256": "1f6ba7351b802120ff5547774d03222a29ebb1047fe7f16c9d1a4db1c30eb34b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_diagnostic_reports-stdout.log",
+      "sha256": "9e72a56f393edd59e267f33b7d5685ac1556bcdb5dd9fecea97f5410e9aff1b0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_diagnostic_reports/progress.json",
+      "sha256": "c89c5ef9edb9a9d82b66bbba667d2139edbbec16b6c96350d93829299dc5797c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_diagnostic_reports/progress.jsonl",
+      "sha256": "bc4fde2adfa705c705289e2921f51fff2225e6dfa5789694e777cac5938edf60"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_diagnostic_reports/results.json",
+      "sha256": "8b4fc9651c36a1d252218823bc24690cc2f38f3a5780beb4a3b6dc190222dd40"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_diagnostic_reports/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_diagnostic_reports/unittest.log",
+      "sha256": "ad5c319fff1ca846504b3c207b90c91f572795b7780886396cfb56ca42608a3e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_output_proof-expected.json",
+      "sha256": "bfcfacb94b74f98af10ebf54f460ab71833052baca62e080090d1ebcc31797ff"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_output_proof-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_output_proof/progress.json",
+      "sha256": "42a8e8cd7f10ae475a3c8e61607e5a2957a37d1636a518b51b4b1f8112c6ce65"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_output_proof/progress.jsonl",
+      "sha256": "3c223f536236822edbf69b82c8f620c8dbdaa1b5929936d9bffd79c7c010e838"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_output_proof/results.json",
+      "sha256": "6e45058af72a155bf9913fce8ca90ab059f7610a418a7b3b20eaca266412e5b1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_output_proof/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_output_proof/unittest.log",
+      "sha256": "5772f0ff02a62fe7160657bf870f187899e1d4d4fd3b1685b125166b2394840e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight-expected.json",
+      "sha256": "78ad1ae73393e479d371f8d31046a99605a57aa10910aa0baf4fa75cc3b39230"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight/progress.json",
+      "sha256": "91f901fe361326e907a799d5d58b0841233cc7c8620bc5175afff874de00c809"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight/progress.jsonl",
+      "sha256": "9b822b7a52c2125e18dfb780971ed780e2e670498ccbf466cfe51bff1ee44c27"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight/results.json",
+      "sha256": "8449433b9328fef8b4867ba429a3ec2fffb5eb2934784ded9f2fab20e67f4306"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight/unittest.log",
+      "sha256": "37872d69d6773638339e1f40b12fb06376eebcdcee1fbda9b8f637f4b7db0daa"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight_gui-expected.json",
+      "sha256": "05a68b8a08c7eec2f519f4a8cbb7cad7a6b4beafea0b6391824868afa6cf1811"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight_gui-stdout.log",
+      "sha256": "cd2e6783c66661b2267e66486261eea0deed0cffc92191d2679455de2415dda5"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight_gui/progress.json",
+      "sha256": "b171121b6e94ae1e160b93a06709bfcfdebb039d368708fdbc9309c33c53e284"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight_gui/progress.jsonl",
+      "sha256": "e2b3507a8e1895d41a020c4347074a9c599ac0b0534aefa3c3449e6737fae139"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight_gui/results.json",
+      "sha256": "5ec02cf309d6f25c0f840892540d78599bdb3775611b7a6a6a723665b65cdf64"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_preflight_gui/unittest.log",
+      "sha256": "448be763b3b3bdf7dac14258775f641d9eae1b5bdbe347b5f46e3ffbe9d78a34"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review-expected.json",
+      "sha256": "1ebfa2b6c3832d86558639ca981cf8f1a8b7be6af5582f61076412a6aee9b798"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review/progress.json",
+      "sha256": "88e4915fb56ded57311a83e0ffe4caa45ba18f28180ab0ce1d0144dca9ed812b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review/progress.jsonl",
+      "sha256": "aebab16a9551baf8e379c68af29c87b38cb7f5eeb835d560c688ef55289ed5ec"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review/results.json",
+      "sha256": "31f6dcd976926f1ad7ff7e523a4dc6d9779228c9450657832b35b1200fa58f7f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review/unittest.log",
+      "sha256": "0c86057bb36973a7c1fdeb940637eb3e643060983eeeb2ab1df4fa5e328a4f61"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review_gui-expected.json",
+      "sha256": "bda40e22f7ed450b22f4dea99a1a95f1e55e73b7baa7b753f4faabee69000a2f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review_gui-stdout.log",
+      "sha256": "6933ffb03d208cfa1b79522c727cbd6a4506ba138dee82af0479a9686a3b5df6"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review_gui/progress.json",
+      "sha256": "05bd76a0704b9a5ab33695390dc96147560ecf1cf82804a29b44538f9d2e8507"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review_gui/progress.jsonl",
+      "sha256": "0511168a313701c68b7b904dbe06ef81fdd5c1debc06dfeabbb1376c24d5d210"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review_gui/results.json",
+      "sha256": "92f9f431f92e671df2018c0f1cb46c99826844f259a28af5bd9af02059dcea54"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review_gui/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_digital_review_gui/unittest.log",
+      "sha256": "43fd028e6afc8e3d57a28cfe52cb82e291353e5be11f2224726231b227c0f582"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_entity_relations-expected.json",
+      "sha256": "7bd66b5a361a5b1a9bcf383c6d90ee3163618dbe4fd9cc7dd8df80cab18613fd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_entity_relations-stdout.log",
+      "sha256": "f1aa9b66f160e1438e3c1b8beee83bb34d3af8ade06f075e0a751d8d46ebb208"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_entity_relations/progress.json",
+      "sha256": "69abd336552646d620d8a00c55bcb8caf7a54e396e1c620873d6b73e10ef12e8"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_entity_relations/progress.jsonl",
+      "sha256": "949f5684d0c4e05a0c25a98548f2ced13d57e1476f892c8c413c3391623d68d5"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_entity_relations/results.json",
+      "sha256": "a799818ac37a129e2335b89416900c48da1de2115d4e41016a6c0f98290dc264"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_entity_relations/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_entity_relations/unittest.log",
+      "sha256": "876bfc8931357256249c90583c07ca4d249297d42e68ade939d84cc88e162edd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_modules-expected.json",
+      "sha256": "a0b0dc19dac0023bbb16eaaa46be08e801f18276797eff6e48b2a9d046ab0879"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_modules-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_modules/progress.json",
+      "sha256": "1b3b28a276e197ccacb79eebe20a6fdd14f637680b39b143d5780b2a858e08dd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_modules/progress.jsonl",
+      "sha256": "b71ff30d669bf0809a85fd2f2d277ca5728b96be0f911f0294b4b30c1fcce2c9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_modules/results.json",
+      "sha256": "c5e563d9afd5c287d21442fb6a1959a0a9cbdaf92cf2d2c44f21fe0024e9b5fe"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_modules/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_modules/unittest.log",
+      "sha256": "b61b91b05abbecb31309f76ce828ac70973fb355fc8e035aaaff4935fc22d0d4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_publication-expected.json",
+      "sha256": "c397b3ab1da14410240bc2e5595d41593a33797bbb998dae61410c6380a4700d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_publication-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_publication/progress.json",
+      "sha256": "86225dabbc655eff31d70f4d2a968bae5425a073bc1c4f8d9d86767108b534ae"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_publication/progress.jsonl",
+      "sha256": "7b6d9cf68415c98cbf6f496a8efffa5baa2838f0d027ce941cec20ae88bd7290"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_publication/results.json",
+      "sha256": "3251079967dd8e5550cef6337120d8916ff60ae70023dcd4e0e2b7185f18c40f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_publication/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_publication/unittest.log",
+      "sha256": "c84a73e7ed3c1eede3d0d9b94370bb798c78fca2472b32438399b91732e38918"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_redaction-expected.json",
+      "sha256": "6b51523af946018cc16380b3cb6c181bf3a230bbc2f3e07408a65de3204b02cd"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_redaction-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_redaction/progress.json",
+      "sha256": "77b9b8a3e69585e22512604969f472e5ffbdde166f8eaed7115486d1d95951e7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_redaction/progress.jsonl",
+      "sha256": "ef4e4bd953f4cf504f0d9838a1309723906b481138f83f0ae6e3a9344e496b21"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_redaction/results.json",
+      "sha256": "f916741bd3fe7be94a4274cda08147cae71f2fc3b028d9f1ffbcc14a9a84ce12"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_redaction/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_evidence_redaction/unittest.log",
+      "sha256": "9d3716da946b170fcaccb451caf6b40c9fdde06f87a14c86e7e0633ba6ce8447"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_index_scale-expected.json",
+      "sha256": "8679796f9274f2b8694dda0031a06c627d786624979f0d3b5dfc15a3899db70b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_index_scale-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_index_scale/progress.json",
+      "sha256": "c2ca15bcac023bc85383c60430d1f99470be8614db0a239188f97bed181fe548"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_index_scale/progress.jsonl",
+      "sha256": "404bd0ced025c636d1b5ea9d0dbc688ce4cba4962f0f3eb115461749c2507455"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_index_scale/results.json",
+      "sha256": "970065ffca601a302a6d866c77543081d2e2692cb28e8a9508cfa9700d0c5855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_index_scale/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_index_scale/unittest.log",
+      "sha256": "36bb9cca663cdf6d8a0a2fe34618b6eaadf657defa3bfe77284aa83e99f3c1d3"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_review_extensions-expected.json",
+      "sha256": "f930ebc6c66aeda976dfdba10ca0714c5e25c4bd6e73669071491bb38920aae4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_review_extensions-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_review_extensions/progress.json",
+      "sha256": "ca233392f66219417c8fbff4c499550e35a801e20c9cde1d105590829c6a724e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_review_extensions/progress.jsonl",
+      "sha256": "fa70ea1974a0acd962907c9e866965d8b9c01469c108593e73fd639cc5d759e7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/modules/test_family_review_extensions/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/test-catalog.json",
+      "sha256": "de60868c9cc4aa510db6a17fbdfc2f20b91920c0c588973f404419cab28bd6f0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/test-modules.json",
+      "sha256": "9178cda699cf5630d96c6976f52e55d3f44ad3c54fd5ee0a1f3087d67491edb4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/test-progress.json",
+      "sha256": "948146cd6a7077998237e664c21b5283e79bf4e832cc4b387f2d186ac5b35d6b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/test-progress.jsonl",
+      "sha256": "2357d2786c6fe77ee4b86f3af4d5e40d8796f720a694ca7c8765f55e1447b545"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/live/timeout-stacks.log",
+      "sha256": "5509018e83919dc6b69c42f7fbfad640d68ac21a134e500afee7e8c189ca212f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-002/source.json",
+      "sha256": "2e9549105e08539ce289c462b95324b4103945f137b518143cf928457ce3ec4f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/gui-signal-inventory.json",
+      "sha256": "a5d93559802f4fdd4d7ba9a14a25db0e299f9bdf7e772769e3b124b60c6e869a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/independent_cases/test_assignment_oracle.py",
+      "sha256": "64badfbd44d373b3d3d5698480cf57c0b204a03f1a5d6a5bd5ff4d8fb7b8e267"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/independent_cases/test_joint_oracle.py",
+      "sha256": "56045eb3ea9e22fdd48508afd91506936dd1da0d9612e25bb29fd46d9fe8dbfe"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/independent_cases/test_qt_event_contract.py",
+      "sha256": "7a65ff888949dc4761ce1d3626f67b67fa2a40c9586a0f278891a249dfb948a2"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/modules/test_joint_oracle-expected.json",
+      "sha256": "a42caa344d38e979d2df8c07bdd732deda02f0ca0e8ffb77e129a4485ccf431b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/modules/test_joint_oracle-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/modules/test_joint_oracle/progress.json",
+      "sha256": "d2aec8707080ea02ddbd7a172183ef716fbff411869a951be0660da35531ef35"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/modules/test_joint_oracle/progress.jsonl",
+      "sha256": "1bf6e749e35ce58fa0eecff982f49e862b08e053970c5c2031b218b64bf0548d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/modules/test_joint_oracle/results.json",
+      "sha256": "713b87c70b6615d3c401a554aa83f560406199706e661dd10a9b20eb85ae88c9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/modules/test_joint_oracle/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/modules/test_joint_oracle/unittest.log",
+      "sha256": "25e0e92baebb5b599aecd33fb7026f82c24d739a13a0c82400ecade5627b198f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/test-catalog.json",
+      "sha256": "a42caa344d38e979d2df8c07bdd732deda02f0ca0e8ffb77e129a4485ccf431b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/test-modules.json",
+      "sha256": "3e44e5c7037359dbbebf3e3a3396bac94fa4bdb97d8dfb9660c00141f23c9260"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/test-progress.json",
+      "sha256": "deeee4c86d3e376ab4ea5013ce46abdbff1a7efa1b97d8c560349b48196c0204"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/test-progress.jsonl",
+      "sha256": "1bf6e749e35ce58fa0eecff982f49e862b08e053970c5c2031b218b64bf0548d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-001/timeout-stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/joint-oracle-summary.json",
+      "sha256": "7aa358c150c6542e5878cf789199c1f30a11be07b7457303b822d84bb933301f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-after-drag.png",
+      "sha256": "76986932a8a4c5312f7a45a7689282143c927ab1fe7e9fb1a1ad2f0722735a5a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-confirmed.png",
+      "sha256": "aa390d8009a72cf8e57f97d863661c9a2729734819362f03d3b7d5ef947f42ea"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-corrected-preview.png",
+      "sha256": "db511b7c78d4da2675c044669d6317485fec3d1f73b7412c31dea8120f9e0529"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-guidance.png",
+      "sha256": "ca7ed9d047a6bdf949f1b17dd8c243fbb15bec8a61b2711bd29c700942446e05"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-learned-preview.png",
+      "sha256": "9d4e1bebb86a9f49f9df9fcf75826e61cc262ae799c1058a9c6d1fb4e8311dca"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-mode-0.png",
+      "sha256": "db3f5ec52e547f02af5d7fac2a49d6171fe9e84d672be0a3e5e42b3e47128bee"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-mode-1.png",
+      "sha256": "861ee900af69ba4caacbaadeb8ea0331d38dfc050ed4e131e7d3f4a60d73effe"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-mode-2.png",
+      "sha256": "0d7d574fd667f6dac4431d9dd3a0a6882cfb6692dbf1f6887c3b9b1e3801e73c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-offline-support.png",
+      "sha256": "98f548e48d6aaf8fcb91d4ceb5e5893bb9e9296c8ad639c6f72396888176ad74"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-runner-result.json",
+      "sha256": "3800f3f1950a737a7c6bd464ed894189b98d88cfc5fe710db17848c82f3137fb"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-small-window.png",
+      "sha256": "21359243226eedb2ad0c427b23c41255cdb0b2d3cb3aa489c333d166ae531752"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-stale-after-correction.png",
+      "sha256": "c78b0b44f5c168081cb79d16b56baafd6858dd2592f095dfcd5ab4bccad23e13"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop-workspace-audit.json",
+      "sha256": "b8ac307fb11f71c0df2c3e6e950811598e0dbec35a2d44f808c6197b4fdfa40b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/desktop.log",
+      "sha256": "998dd2de1f5f8383c85e0d9e708996972e350a968014b1b6e0b8a64074dc0877"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/native-runner-progress.json",
+      "sha256": "3ccbbc9e3a1b156c07c82cf1e596bceedf4de37105623d1dade6912cc65927de"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/native-runner-result.json",
+      "sha256": "83414e47f314f4dc68be1690c4e91575f96f4ee7bd0d2c3c35750cf91f5b1b01"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/parent-navigation-runner-result.json",
+      "sha256": "5f0183c14394825aeb7b4f29b8a905f3f927aca9dce22caf8abfcaaac02048a2"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/parent-navigation.log",
+      "sha256": "ab8c68f9a821b79de4e360a9261af6b635082704a07a0693f69f6e43fc9cceb0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-gui-001/xvfb.log",
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-owned-window-001/owned-workspace-0.png",
+      "sha256": "caab3154f7549c7389351adf7cbeb5b2dc348135ccb53f55f098988172b2e525"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-owned-window-001/owned-workspace-1.png",
+      "sha256": "28038da723b6836daa0cad9b2aee2e1571107dec152ecb4af721cfb86951705a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-owned-window-001/owned-workspace-2.png",
+      "sha256": "bde9efa3b34be193312e181ef644f313745f24a883f6bc9a8d35f042af47f162"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-owned-window-001/owned-workspace-review.json",
+      "sha256": "7ef269af2ce21e5a5f09b6e1a47876ed903784a5073c46800e9732061895f94f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/native-owned-window-001/owned-xvfb.log",
+      "sha256": "94c9328135dec8033a74602bf42660545fe8ad502dfa26af7b85c4339c9f08d8"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-all-base-collisions.json",
+      "sha256": "7cce6f6131677c861561a44ddcc4c80bfedf33b419ff7993bd7d97f8e6bc9a77"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_diagnostic_reports-expected.json",
+      "sha256": "1f6ba7351b802120ff5547774d03222a29ebb1047fe7f16c9d1a4db1c30eb34b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_diagnostic_reports-stdout.log",
+      "sha256": "ac72c4291fb9b00a5d8bdc63a38ef2591b44f547f85d01e6ea4645c73f03eff1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_diagnostic_reports/progress.json",
+      "sha256": "af84b43feaf923eda00693f9ec098da80aaf72928a4ed908640dee82b8b67120"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_diagnostic_reports/progress.jsonl",
+      "sha256": "b940a8a86e2ee37cd75ad37267bbf67ad77bde5e28e6dc38f2876e955bf73e0f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_diagnostic_reports/results.json",
+      "sha256": "3da9a437a83e5007bb793e9a6af9702ec4687044d64939160d3cd0c79eedac54"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_diagnostic_reports/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_diagnostic_reports/unittest.log",
+      "sha256": "b8b18079eda912b8e829035439c05f318d9b00f6ae24a3b6ff2b2ec6c938d226"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_multi_size_manual_sync-expected.json",
+      "sha256": "73c49a4bc7db0fc15359a27f8f58026c7746ce34d42159769a546a05193ec163"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_multi_size_manual_sync-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_multi_size_manual_sync/progress.json",
+      "sha256": "3598450b82825ab5882aa8414f4bf13879963aa5ca6d23ceeabb5a96e7ea9080"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_multi_size_manual_sync/progress.jsonl",
+      "sha256": "870a0215007c281f3889b034a9e726d25a2162e5195d44995aa1f0ba04b6059e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_multi_size_manual_sync/results.json",
+      "sha256": "475008545f4064c46db3595d7dc9259f53bd7d33051d509fdc38e1ac56483743"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_multi_size_manual_sync/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_multi_size_manual_sync/unittest.log",
+      "sha256": "5b7964f244432c03447b531bb78428566899c7bc40730a77c4cf40176fd338ea"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_event_contract-expected.json",
+      "sha256": "7371f0088dfaffe1f1338d21498409667bbf4a842498c2de56b9d9073fc2ec34"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_event_contract-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_event_contract/progress.json",
+      "sha256": "59e71ecf1d9ae42bc02ad2ec27e8d8f5b789881a18645c0727320a8f2da56f4f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_event_contract/progress.jsonl",
+      "sha256": "1b48f027ed646edfb51fbc0db345936ced88c331e05a194b1085f929f8e5c497"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_event_contract/results.json",
+      "sha256": "ac70b362a16ba2fbfe8191173947b742d8f995a5292fe56577229ec29fc4368d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_event_contract/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_event_contract/unittest.log",
+      "sha256": "9afa0715cb894a7af544a7edc18404b52e0879b1014fe0918f1ec189ff88b530"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_native_contract-expected.json",
+      "sha256": "cbcdbb15bc894bf97cec7b8b0e98c0b818705834709f8126afdef516af939759"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_native_contract-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_native_contract/progress.json",
+      "sha256": "43538995aeba202096c98fb748f7fcf4af4cd916df30b54c9cea453fe66b36d9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_native_contract/progress.jsonl",
+      "sha256": "2b2b2bdab06ad80dddd2f83c7b1ec297bdf146d81c9d4003c91c2a4dd9b2d699"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_native_contract/results.json",
+      "sha256": "29a0d9ab250b9786658a97c8f38ad61758f72cb8199b0627847f28f34dcbceb9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_native_contract/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/modules/test_qt_native_contract/unittest.log",
+      "sha256": "76352b654f13f54ef6392685ef92be50c404956648626fdabe488f72c70c7084"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/modules/test_diagnostic_reports-expected.json",
+      "sha256": "1f6ba7351b802120ff5547774d03222a29ebb1047fe7f16c9d1a4db1c30eb34b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/modules/test_diagnostic_reports-stdout.log",
+      "sha256": "ac72c4291fb9b00a5d8bdc63a38ef2591b44f547f85d01e6ea4645c73f03eff1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/modules/test_diagnostic_reports/progress.json",
+      "sha256": "af84b43feaf923eda00693f9ec098da80aaf72928a4ed908640dee82b8b67120"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/modules/test_diagnostic_reports/progress.jsonl",
+      "sha256": "b940a8a86e2ee37cd75ad37267bbf67ad77bde5e28e6dc38f2876e955bf73e0f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/modules/test_diagnostic_reports/results.json",
+      "sha256": "3da9a437a83e5007bb793e9a6af9702ec4687044d64939160d3cd0c79eedac54"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/modules/test_diagnostic_reports/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/modules/test_diagnostic_reports/unittest.log",
+      "sha256": "b8b18079eda912b8e829035439c05f318d9b00f6ae24a3b6ff2b2ec6c938d226"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/test-catalog.json",
+      "sha256": "1f6ba7351b802120ff5547774d03222a29ebb1047fe7f16c9d1a4db1c30eb34b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/test-modules.json",
+      "sha256": "6ebe649609ed374ec48d14a0b27d025b4f3d8b4df4f422ae04e03fd7c13ea4fe"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/test-progress.json",
+      "sha256": "a8c9f24b89289340bd0de87d1e37a24f3f23581c965bd0d84432a78dbbcd9873"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/test-progress.jsonl",
+      "sha256": "b940a8a86e2ee37cd75ad37267bbf67ad77bde5e28e6dc38f2876e955bf73e0f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_diagnostic_reports/timeout-stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/modules/test_multi_size_manual_sync-expected.json",
+      "sha256": "73c49a4bc7db0fc15359a27f8f58026c7746ce34d42159769a546a05193ec163"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/modules/test_multi_size_manual_sync-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/modules/test_multi_size_manual_sync/progress.json",
+      "sha256": "3598450b82825ab5882aa8414f4bf13879963aa5ca6d23ceeabb5a96e7ea9080"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/modules/test_multi_size_manual_sync/progress.jsonl",
+      "sha256": "870a0215007c281f3889b034a9e726d25a2162e5195d44995aa1f0ba04b6059e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/modules/test_multi_size_manual_sync/results.json",
+      "sha256": "475008545f4064c46db3595d7dc9259f53bd7d33051d509fdc38e1ac56483743"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/modules/test_multi_size_manual_sync/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/modules/test_multi_size_manual_sync/unittest.log",
+      "sha256": "5b7964f244432c03447b531bb78428566899c7bc40730a77c4cf40176fd338ea"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/test-catalog.json",
+      "sha256": "73c49a4bc7db0fc15359a27f8f58026c7746ce34d42159769a546a05193ec163"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/test-modules.json",
+      "sha256": "4ce144d0a1fbd60c87c75a18bd82cff5118f48bb6d07b8ca491b59d3d513d855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/test-progress.json",
+      "sha256": "6cd63689440de4a9bfaf09ac6bc7d5d92165f1d9d036d2d8a52f75340b502e29"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/test-progress.jsonl",
+      "sha256": "870a0215007c281f3889b034a9e726d25a2162e5195d44995aa1f0ba04b6059e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_multi_size_manual_sync/timeout-stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/modules/test_qt_event_contract-expected.json",
+      "sha256": "7371f0088dfaffe1f1338d21498409667bbf4a842498c2de56b9d9073fc2ec34"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/modules/test_qt_event_contract-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/modules/test_qt_event_contract/progress.json",
+      "sha256": "59e71ecf1d9ae42bc02ad2ec27e8d8f5b789881a18645c0727320a8f2da56f4f"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/modules/test_qt_event_contract/progress.jsonl",
+      "sha256": "1b48f027ed646edfb51fbc0db345936ced88c331e05a194b1085f929f8e5c497"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/modules/test_qt_event_contract/results.json",
+      "sha256": "ac70b362a16ba2fbfe8191173947b742d8f995a5292fe56577229ec29fc4368d"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/modules/test_qt_event_contract/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/modules/test_qt_event_contract/unittest.log",
+      "sha256": "9afa0715cb894a7af544a7edc18404b52e0879b1014fe0918f1ec189ff88b530"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/test-catalog.json",
+      "sha256": "7371f0088dfaffe1f1338d21498409667bbf4a842498c2de56b9d9073fc2ec34"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/test-modules.json",
+      "sha256": "4a459c140fe6f73d05a7db75e86a316f7e46db1507fa44fd3ff0685f323e3090"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/test-progress.json",
+      "sha256": "b2044cb476082b10de396b5dac21846365b5dc20b74c749b0394b1be392588f2"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/test-progress.jsonl",
+      "sha256": "1b48f027ed646edfb51fbc0db345936ced88c331e05a194b1085f929f8e5c497"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_event_contract/timeout-stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/modules/test_qt_native_contract-expected.json",
+      "sha256": "cbcdbb15bc894bf97cec7b8b0e98c0b818705834709f8126afdef516af939759"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/modules/test_qt_native_contract-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/modules/test_qt_native_contract/progress.json",
+      "sha256": "43538995aeba202096c98fb748f7fcf4af4cd916df30b54c9cea453fe66b36d9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/modules/test_qt_native_contract/progress.jsonl",
+      "sha256": "2b2b2bdab06ad80dddd2f83c7b1ec297bdf146d81c9d4003c91c2a4dd9b2d699"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/modules/test_qt_native_contract/results.json",
+      "sha256": "29a0d9ab250b9786658a97c8f38ad61758f72cb8199b0627847f28f34dcbceb9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/modules/test_qt_native_contract/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/modules/test_qt_native_contract/unittest.log",
+      "sha256": "76352b654f13f54ef6392685ef92be50c404956648626fdabe488f72c70c7084"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/test-catalog.json",
+      "sha256": "cbcdbb15bc894bf97cec7b8b0e98c0b818705834709f8126afdef516af939759"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/test-modules.json",
+      "sha256": "9ccbb243fca50bc8fa774c18c22e8d574c2933bedcdb35605ea5db16d6c70872"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/test-progress.json",
+      "sha256": "c8c0562b31bb0d5826556014a14398bfe5241a62b67d7fc8e98024b010e378ec"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/test-progress.jsonl",
+      "sha256": "2b2b2bdab06ad80dddd2f83c7b1ec297bdf146d81c9d4003c91c2a4dd9b2d699"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/parallel-parts/test_qt_native_contract/timeout-stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/test-catalog.json",
+      "sha256": "a930f6383431c830426293669e6cf18e9fc7553282ed84b8f55d7d86fe66f3b4"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/test-modules.json",
+      "sha256": "70ff7562aa9818706cbcb354fd84afc8ca0fd1ea5464f06ec5a948bfd4237bfa"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/test-progress.json",
+      "sha256": "a1b52fa131d83e974b6c09773ca93e4079232dcec04b9eb7e24875ac2f90cdef"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/test-progress.jsonl",
+      "sha256": "704d04ea67d63cecf190e1dd89355f6f0f7df0c1f0c094b1bc061014359c2d21"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-001/timeout-stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-and-report-targeted-summary.json",
+      "sha256": "549cc3589408e7f1c8a9661fc31e3fe9d9619b220cc2afeb845350624584c133"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-diagnostic-root-links.json",
+      "sha256": "56f52aae8f3babb5d1e66d13b5c999abc5e608b480344ab7159138d2579ca7da"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before-summary.json",
+      "sha256": "b73c51416277fc86bf280035177dbb8408b5fa83d3f57719bce4fbed07bd90c9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/modules/test_qt_event_contract-expected.json",
+      "sha256": "6fb756ca641b242b2fef5dc2800a6f3827a419342bdcfea50c9394469c464814"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/modules/test_qt_event_contract-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/modules/test_qt_event_contract/progress.json",
+      "sha256": "38335f058edf390b176eb20707f7714726f06266eb63c7fbf55d5452959b41e1"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/modules/test_qt_event_contract/progress.jsonl",
+      "sha256": "04e6d3dadeddec118cc2dc936adb176431b44d6684b5c7100f4090c52c8f152b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/modules/test_qt_event_contract/results.json",
+      "sha256": "1dab567889e697de2518ba12a5518c91a2506e492d75b17cc0ad00606fa25655"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/modules/test_qt_event_contract/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/modules/test_qt_event_contract/unittest.log",
+      "sha256": "93d45394acbb53a37bfefbc91e4637325971cde3eef7a027df5f4bc4f656dd57"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/test-catalog.json",
+      "sha256": "6fb756ca641b242b2fef5dc2800a6f3827a419342bdcfea50c9394469c464814"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/test-modules.json",
+      "sha256": "5cb070b1e3eef8afb986198be3f0a38c6ba0eb27983a941dab379005b0684441"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/test-progress.json",
+      "sha256": "7873a08a0a8a0e799c5433e5791424d33c982b5a1473be69594a6674ca33fe8a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/test-progress.jsonl",
+      "sha256": "04e6d3dadeddec118cc2dc936adb176431b44d6684b5c7100f4090c52c8f152b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-before/timeout-stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before-summary.json",
+      "sha256": "b6e0abf0a0e0974323004714da104ad6119efe39f69336da5444e4d8dc7e0575"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/modules/test_qt_event_contract-expected.json",
+      "sha256": "e4bf665aa8e4fecfd5c0dd5f3a14ed413958630a69144a9c2c47fc2dffd33a1b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/modules/test_qt_event_contract-stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/modules/test_qt_event_contract/progress.json",
+      "sha256": "b3eaf12e4a47582b60ab5f437eeb54cf2f84585bb4c1faaca7d962f854d3d895"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/modules/test_qt_event_contract/progress.jsonl",
+      "sha256": "186f026a520e5e0646c399643b135dedc438327c19b66fff85e5fafe2a18d8e0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/modules/test_qt_event_contract/results.json",
+      "sha256": "cabd6b94bacb326b1ab0706221d350e9ed768b2788be7e866a83e3e29bb0184c"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/modules/test_qt_event_contract/stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/modules/test_qt_event_contract/unittest.log",
+      "sha256": "e71e5d766e4c2222052566bce06c2b02538ced12975cfda931a834673918869a"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/test-catalog.json",
+      "sha256": "e4bf665aa8e4fecfd5c0dd5f3a14ed413958630a69144a9c2c47fc2dffd33a1b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/test-modules.json",
+      "sha256": "64fffef007e7bc433cf6497c8f22b9de4316a0373163c87243ddd55afb199856"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/test-progress.json",
+      "sha256": "87acfa73e62ec26a5a8d0088be6ac8da95ce400beeb0efb75e77e3b6bca80b10"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/test-progress.jsonl",
+      "sha256": "186f026a520e5e0646c399643b135dedc438327c19b66fff85e5fafe2a18d8e0"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-event-delivery-before/timeout-stacks.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/qt-owner-alias-proof.json",
+      "sha256": "061227575f262fe7c07605131e1ab7280c27f56feb8d3179837067dbe5e0dba9"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/run_local_audit.py",
+      "sha256": "3bf40d76dcf98bec241ad138360c0065c335d7d5371da242783047ab61e32c36"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/run_native_audit.py",
+      "sha256": "c64e1a9e0b102e9866519e64ebe8a25fe623b9ece0893ebddc7353eca13ee65b"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tests-001/pyrightconfig.json",
+      "sha256": "43f242d7a9fedaf44834a06954d56f7812c3027f7e60d1e163914569a5cb8983"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tests-001/report.json",
+      "sha256": "4c5d52969af480ea5daa6d9e7e895d46865f22283513b1038eb98633e5f7a1aa"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tests-001/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tests-001/stdout.txt",
+      "sha256": "1eb11dc44e8bd83e9bdc17e685e9338689b88fcc20dd3ee4a69b30e606ff86da"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tools-001/pyrightconfig.json",
+      "sha256": "bcd0b463095cc981e056cf3fdd4979ee2db238ae98017c518e351895fb97e6ce"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tools-001/startup-or-wrapper-failure.json",
+      "sha256": "968767417e2030a234dac284879b35a552f8ff8850044b045b52f74c4ffc3df5"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tools-001/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tools-001/stdout.txt",
+      "sha256": "a9254e1654ca8d9889036c4a2a75ba40670671541a7340f8df362ff01e7e7908"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tools-002/pyrightconfig.json",
+      "sha256": "bcd0b463095cc981e056cf3fdd4979ee2db238ae98017c518e351895fb97e6ce"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tools-002/report.json",
+      "sha256": "bfed5530a4b97267bd373a04d71d2151c4ba17a492fb29e1e6ee21e617f86d43"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tools-002/stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/runtime-pyright-tools-002/stdout.txt",
+      "sha256": "32702af706583ece2e685dfb5853a5f0aa9acc917633f03d21b28e709632f777"
+    },
+    {
+      "path": "template_ai/batch_recovery.py",
+      "sha256": "8bf5ba29d5cc6abc088d0f22a00bacc9bf16237ead048b4adff67d031e22bc78"
+    },
+    {
+      "path": "template_ai/diagnostic_snapshot.py",
+      "sha256": "97c9c6c3249f19fa4c95ac03827f69bb829bee7124648988e5aa259126390480"
+    },
+    {
+      "path": "template_ai/multi_size_edit.py",
+      "sha256": "d14d8483df1c9f7972dc009e572413e1b2fbdcbd970466c40515ea0623e72f92"
+    },
+    {
+      "path": "tests/test_assignment_oracle.py",
+      "sha256": "64badfbd44d373b3d3d5698480cf57c0b204a03f1a5d6a5bd5ff4d8fb7b8e267"
+    },
+    {
+      "path": "tests/test_joint_oracle.py",
+      "sha256": "56045eb3ea9e22fdd48508afd91506936dd1da0d9612e25bb29fd46d9fe8dbfe"
+    },
+    {
+      "path": "tests/test_qt_event_contract.py",
+      "sha256": "7a65ff888949dc4761ce1d3626f67b67fa2a40c9586a0f278891a249dfb948a2"
+    }
+  ]
+}
