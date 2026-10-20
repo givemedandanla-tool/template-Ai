@@ -56,13 +56,13 @@ def size_note(value):
 
 
 def region_hypotheses(texts, page):
-    from sklearn.cluster import DBSCAN
     notes=[dict(object_id=key,rect=asdict(rect),**size_note(value))
            for key,value,rect in texts if size_note(value)]
     content=[(key,value,rect) for key,value,rect in texts if not size_note(value)]
     result=dict(version='unframed-size-clues-1',notes=notes,candidates=[],
         state='NO_UNAMBIGUOUS_SIZE_REGION',identity='UNKNOWN',review_required=True)
     if not notes or not content:return result
+    from sklearn.cluster import DBSCAN
     # Named engineering hypothesis radius; not a learned print tolerance.
     radius=min(math.hypot(row['width_mm'],row['height_mm']) for row in notes)*.35
     coordinates=[[rect.x+rect.w/2,rect.y+rect.h/2] for _,_,rect in content]
