@@ -1,0 +1,25 @@
+{
+  "id": "DEV-QUALITY-001",
+  "kind": "DEVELOPMENT_TOOLING_NOT_PRODUCT_FEATURE",
+  "base_commit": "0e7b8aee82331ff6efa02a1a8233ff85689b660a",
+  "branch": "dev/v0.1-first-version",
+  "authorization": "User explicitly requested zero-additional-cost local tooling installation, configuration, verification and handoff; no agents or paid resources.",
+  "governance_references": ["GOV-001", "GOV-002", "GOV-003", "GOV-004", "GOV-006"],
+  "product_changes": false,
+  "remote_write": "BLOCKED_COST_NOT_VERIFIED",
+  "acceptance": {
+    "A01": "Single Codex, no new paid service/trial/model/runner; remote triggers inspected.",
+    "A02": "Pinned tool/skill sources, licenses, dependencies and integrity checks.",
+    "A03": "Isolated repeatable bootstrap and offline ordinary check entrypoint.",
+    "A04": "Two skill entries rebuilt, explicitly read/applied; platform auto-discovery reported separately.",
+    "A05": "Ruff catches a deliberate real violation through the production entrypoint.",
+    "A06": "Pyright uses the application interpreter and catches incompatible types.",
+    "A07": "jscpd catches a sufficiently long deliberate clone.",
+    "A08": "Changed-to-unchanged clones and baseline-new findings cannot disappear.",
+    "A09": "Nonempty actual application/tools/tests scans with source/config hashes and review backlog.",
+    "A10": "Relevant existing tests and scoped tooling tests executed, failures preserved.",
+    "A11": "Concise handoff, local commits/checkpoint and independently verified recovery patch/bundle; no remote claim."
+  },
+  "status": "IN_PROGRESS",
+  "deferred_qualifications": "Unchanged: private corpus, Windows/hardware, production/print qualifications; EXE/web/mobile out of scope."
+}
