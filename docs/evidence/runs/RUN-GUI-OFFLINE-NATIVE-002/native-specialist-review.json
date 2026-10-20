@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "source_commit": "9f6e7f66cdc558475fe3dd65a0e8dc114bb8ac95",
+  "qt_platform": "xcb",
+  "actual_gui": true,
+  "owned_window_capture": {
+    "command": ".venv/bin/python docs/dev/gui_tooling/capture_owned_workspace.py --native --output /tmp/template-ai-owned-gui-final-002",
+    "exit_code": 0,
+    "elapsed_seconds": 5.407,
+    "source_unchanged": true,
+    "application_sources": 269,
+    "captures": [
+      {
+        "page_index": 0,
+        "width": 1280,
+        "height": 860,
+        "screenshot": "owned-workspace-0.png",
+        "sha256": "7b8319a267df915e3c64e4b2b8bcfc2464d3bd62c771efa7a786b07e9e79423a",
+        "visible_enabled_buttons": 19,
+        "focusable_controls": 26,
+        "unnamed_button_warnings": [],
+        "tab_focus_moved": true
+      },
+      {
+        "page_index": 1,
+        "width": 1280,
+        "height": 860,
+        "screenshot": "owned-workspace-1.png",
+        "sha256": "7839de0f4edb27aa7330d2595669321b47cb4bbd2f6486074f05ab6f8822a930",
+        "visible_enabled_buttons": 16,
+        "focusable_controls": 23,
+        "unnamed_button_warnings": [],
+        "tab_focus_moved": true
+      },
+      {
+        "page_index": 2,
+        "width": 1280,
+        "height": 860,
+        "screenshot": "owned-workspace-2.png",
+        "sha256": "6cba92030e4620d5cb037604d32706dd9ad53c7c5f6b1b679301934b177c4532",
+        "visible_enabled_buttons": 18,
+        "focusable_controls": 28,
+        "unnamed_button_warnings": [],
+        "tab_focus_moved": true
+      }
+    ]
+  },
+  "desktop_workflow": {
+    "command": ".venv/bin/python tools/capture_desktop_workspace.py --folder /tmp/template-ai-desktop-native-002",
+    "source_commit": "9f6e7f66cdc558475fe3dd65a0e8dc114bb8ac95",
+    "qt_platform": "xcb",
+    "exit_code": 0,
+    "outer_timeout_seconds": 600,
+    "elapsed_seconds": 233.853,
+    "isolated_xvfb_tcp_disabled": true,
+    "test_ids": [
+      "test_desktop_workspace.DesktopNavigationTests.test_real_background_job_records_duration_without_private_message",
+      "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages",
+      "test_desktop_workspace.DesktopNavigationTests.test_real_navigation_keeps_three_modes_and_original_commands",
+      "test_desktop_workspace.DesktopNavigationTests.test_real_support_navigation_exports_local_safe_report",
+      "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+      "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+      "test_desktop_workspace.DesktopProductionTests.test_embedded_primary_confirms_and_exports_same_real_preview",
+      "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+      "test_desktop_workspace.DesktopProductionTests.test_real_background_cancel_stays_enabled_and_close_waits_for_worker",
+      "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+      "test_desktop_workspace.DesktopProductionTests.test_resume_selector_updates_main_graph_dimensions_and_embedded_session"
+    ],
+    "expected_test_count": 11,
+    "source_head_unchanged": true,
+    "status": "PASS",
+    "tests_run": 11,
+    "unittest_seconds": 232.872,
+    "source_unchanged": true,
+    "source_manifest_sha256": "a979c760fb7f5470bfdd0553a6d1a731657b8803a2a4d1b4d9f2254683f237d7",
+    "screenshots": {
+      "desktop-mode-0.png": {
+        "sha256": "9ecf7fa3a4fcf4f0ba6c4e480fedd36dac8ea14da842d659fd91ccd02be31007",
+        "bytes": 119412
+      },
+      "desktop-mode-1.png": {
+        "sha256": "ae622d4d61823834d77b1665a077ea776fff058d71cf9ae9bc122864d8084e52",
+        "bytes": 119442
+      },
+      "desktop-mode-2.png": {
+        "sha256": "c743ee64c08ab511b3b6af92becb41953ce993f6a4ea7afe32c4e725e5778f76",
+        "bytes": 151041
+      },
+      "desktop-small-window.png": {
+        "sha256": "9d1b140d123f8971b2278173599dd26939206f862d865fec781a2ae2d47f9d28",
+        "bytes": 135575
+      },
+      "desktop-guidance.png": {
+        "sha256": "ca7ed9d047a6bdf949f1b17dd8c243fbb15bec8a61b2711bd29c700942446e05",
+        "bytes": 82150
+      },
+      "desktop-offline-support.png": {
+        "sha256": "98f548e48d6aaf8fcb91d4ceb5e5893bb9e9296c8ad639c6f72396888176ad74",
+        "bytes": 126170
+      },
+      "desktop-learned-preview.png": {
+        "sha256": "39dc55eb4cb11546ab80341bcc6e70b334270c1c065ce223aac13d35d3a90807",
+        "bytes": 206003
+      },
+      "desktop-confirmed.png": {
+        "sha256": "64117bcf3a5e0fb03a532a8d027d22b170e1288295694a59640a8fcfa2326ab9",
+        "bytes": 206218
+      },
+      "desktop-stale-after-correction.png": {
+        "sha256": "a957d4fac2189cc291d88b1944ecd6a661731c62b63afcd848ed9674b0eb6487",
+        "bytes": 172405
+      },
+      "desktop-corrected-preview.png": {
+        "sha256": "cd77712857fed31280245fe9ccae2dac893fe6e505a82d007f5357a92b6ded1c",
+        "bytes": 176089
+      },
+      "desktop-after-drag.png": {
+        "sha256": "79dad7514a2bd821fe31fba7592b7d353106174fc789f67318e3daa387966ffd",
+        "bytes": 204902
+      }
+    },
+    "all_image_hashes_rechecked": true
+  },
+  "visual_review": {
+    "reviewer": "/root/gui_tooling_research, same-team specialist",
+    "viewed": [
+      "owned-workspace-1.png",
+      "owned-workspace-2.png",
+      "desktop-guidance.png",
+      "desktop-offline-support.png",
+      "desktop-learned-preview.png",
+      "desktop-after-drag.png",
+      "desktop-confirmed.png",
+      "desktop-stale-after-correction.png",
+      "desktop-corrected-preview.png",
+      "desktop-small-window.png"
+    ],
+    "findings": [
+      "The production workspace centers the complete generated draft; contact fields are visibly identifiable for relative-position dragging.",
+      "The after-drag image exchanges phone/email ordering while name and title remain in place; the core test validates the actual intent and retained data.",
+      "Confirmation changes the primary action to save the preview. Data correction disables old confirmation/export and shows an explicit update warning; regeneration visibly includes the changed phone string.",
+      "The default data area uses plain input and issue guidance; optional expert controls remain collapsed.",
+      "The advanced guide shows four explicit steps and explains missing local models instead of claiming training or production qualification.",
+      "The offline report interface explains manual ZIP sharing and that private artwork/fonts/database are excluded.",
+      "At 960×640 the primary action remains completely visible and the preview viewport retains usable space; secondary data controls scroll independently."
+    ],
+    "limitations": [
+      "Screenshot inspection is a same-team visual check, not a human beginner study.",
+      "Template catalog still retains expert metadata such as source thumbnail UNKNOWN in its expert workspace; no production correctness conclusion follows from that label.",
+      "No Windows/IME, physical print or real artwork qualification."
+    ]
+  },
+  "source_head_at_finish": "9f6e7f66cdc558475fe3dd65a0e8dc114bb8ac95",
+  "not_counted_as_new_unique_tests": "These are repeat platform executions of existing 11 test IDs from the full software suite."
+}

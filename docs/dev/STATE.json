@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "GUI_OFFLINE_SOURCE_READY_FULL_VERIFICATION_PENDING",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-WIP2.receipt.json",
-  "last_confirmed_commit": "f519007a26d4ec215a57e826aadf54594560c787",
+  "active_task": "GUI_OFFLINE_FULL_REGRESSION_ALL002_RUNNING",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-WIP3.receipt.json",
+  "last_confirmed_commit": "9f6e7f66cdc558475fe3dd65a0e8dc114bb8ac95",
   "latest_evidence_run": null,
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -20,9 +20,9 @@
     "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
   ],
   "next_tasks": [
-    "Publish WIP3 with property/candidate/focus fixes",
-    "Run all1849 on frozen new source and native11 scenarios",
-    "Restore only actually verified registry clauses and save final checkpoint"
+    "Poll existing RUN-GUI-OFFLINE-ALL-002 owner before starting any duplicate suite",
+    "Source9f6 immutable;native11/owned3 passed;wait1849 regression and captures",
+    "Adopt only full clean software execution;finish registry/reports/checkpoint"
   ],
   "blocked": [
     {
@@ -46,9 +46,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261020-GUI-OFFLINE-WIP3"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-INPUT-GUI-FINAL.json",
@@ -1482,5 +1480,6 @@
       "audit": "docs/qa/plans/GUI-WIP1-PREPARE-BASE-ERROR.json"
     }
   ],
-  "latest_incomplete_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-001/interrupted.json"
+  "latest_incomplete_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-001/interrupted.json",
+  "current_native_gui_run": "docs/evidence/runs/RUN-GUI-OFFLINE-NATIVE-002/desktop-workspace-audit.json"
 }
