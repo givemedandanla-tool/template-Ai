@@ -1,5 +1,7 @@
 # Template AI｜矩形區域自動排版與模板 AI
 
+開發用[除錯與查重工具](docs/dev/debug_tooling/README.md)已在既有環境建置：固定版本、本地掃描、保留歷史基準與安全交接。這批新增內容因遠端費用未能核實而只在本機交付包，沒有觸發GitHub CI；產品離線操作不依賴這些工具。
+
 ## Human／AI 從這裡開始
 
 開發或恢復先讀 [AGENTS.md](AGENTS.md) → [開發狀態](docs/dev/STATE.json) → [交接](docs/dev/HANDOFF.md) → [要求與功能清單](docs/dev/FEATURES.md)／[機器登錄](docs/dev/REQUIREMENTS.json) → [工作紀錄](docs/dev/WORK_LOG.md)。[checkpoint 流程](docs/dev/DEVELOPMENT_PROTOCOL.md)與[證據設計／成熟來源](docs/dev/EVIDENCE_DESIGN.md)供 Human 和 GPT 共用。不要只讀歷史第一版狀態。每輪開發的計數見 [進度統計](docs/dev/PROGRESS.md)，前後差異見 docs/dev/progress/。

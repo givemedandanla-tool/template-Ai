@@ -11,7 +11,15 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
-## 當前：桌面GUI、進階引導與離線回報已自我驗證
+## 當前補充：零新增費用的開發除錯／查重工具
+
+本輪DEV-QUALITY-001只新增開發工具，見[操作與限制](docs/dev/debug_tooling/README.md)、[交付](docs/dev/debug_tooling/FINAL_REPORT.md)、BACKLOG與STATE.debug_tooling。固定Ruff／Pyright／jscpd及兩個skill；一般quality.py check不下載、不安裝、全程單一Codex。保留初始基準，不把新增問題刷新成歷史；新程式與完整舊程式比較。沒有授權全庫重構或產品功能。
+
+**本輪零新增費用條件優先於例行GitHub持久化**：缺少可核實的遠端觸發費用證據，不push／開PR／執行CI，不改帳務、保護或必要檢查。原碼僅本機提交與PREPARED checkpoint；最終差異包、精確HEAD與還原核對見`.cache/debug-tooling/delivery/receipt.json`及同目錄ZIP，沒有REMOTE_VERIFIED。雲端草稿只是未發布的重建說明，不能代替原碼備份。使用者須保存交付ZIP；新對話先核對其base/head再恢復。
+
+18項針對性驗證PASS（新工具11＋既有7），原產品程式與1850項證據未改、不冒稱重跑。Ruff有3個保留的解析限制；Pyright歷史診斷待判讀。兩個skill已建入口與顯式使用；平台原生自動辨識未驗證，按需直接讀skills/的SKILL.md。雲端實際Python3.12.14／PySide6 6.8.3；3.11語法核對不等於原生3.11／Windows實機測試。
+
+## 當前產品：桌面GUI、進階引導與離線回報已自我驗證
 
 先依STATE／ACTIVE_DEVELOPMENT_HANDOFF及GUI_OFFLINE_FINAL_REPORT_20261020.md。CORE-090十條PASS；來源4ebfff6f，FULL0061850PASS／236健康模組／0runtime／397附件，原1798保留新52。native005桌面12＋原導航3及owned3頁Tab通過。172登錄：父題69／75已驗證、3部分3延後，CORE90／90、GOV7／7；原AI8包50條完整真實資格仍8部分／0完整。原有外部資格不變；不把合成或Linux結果當Windows／真人／印刷資格。
 

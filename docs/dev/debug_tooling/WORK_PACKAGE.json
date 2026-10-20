@@ -4,7 +4,13 @@
   "base_commit": "0e7b8aee82331ff6efa02a1a8233ff85689b660a",
   "branch": "dev/v0.1-first-version",
   "authorization": "User explicitly requested zero-additional-cost local tooling installation, configuration, verification and handoff; no agents or paid resources.",
-  "governance_references": ["GOV-001", "GOV-002", "GOV-003", "GOV-004", "GOV-006"],
+  "governance_references": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-003",
+    "GOV-004",
+    "GOV-006"
+  ],
   "product_changes": false,
   "remote_write": "BLOCKED_COST_NOT_VERIFIED",
   "acceptance": {
@@ -20,6 +26,28 @@
     "A10": "Relevant existing tests and scoped tooling tests executed, failures preserved.",
     "A11": "Concise handoff, local commits/checkpoint and independently verified recovery patch/bundle; no remote claim."
   },
-  "status": "IN_PROGRESS",
-  "deferred_qualifications": "Unchanged: private corpus, Windows/hardware, production/print qualifications; EXE/web/mobile out of scope."
+  "status": "LOCAL_TOOLING_READY_WITH_DOCUMENTED_LIMITATIONS",
+  "deferred_qualifications": "Unchanged: private corpus, Windows/hardware, production/print qualifications; EXE/web/mobile out of scope.",
+  "results": {
+    "A01": "PASS",
+    "A02": "PASS",
+    "A03": "PASS",
+    "A04": "PARTIAL_NATIVE_DISCOVERY_UNVERIFIED",
+    "A05": "PASS",
+    "A06": "PASS",
+    "A07": "PASS",
+    "A08": "PASS",
+    "A09": "PASS",
+    "A10": "PASS",
+    "A11": "EXACT_FINAL_RECOVERY_STATUS_IN_EXTERNAL_DELIVERY_RECEIPT"
+  },
+  "evidence": {
+    "scans": "reports/scan-summary.json",
+    "baseline": "reports/baseline-verification.json",
+    "tool_tests": "reports/tooling-tests.json",
+    "existing_tests": "reports/existing-tests.json",
+    "offline_rebuild": "reports/offline-rebuild.json",
+    "backlog": "BACKLOG.json",
+    "final_receipt": ".cache/debug-tooling/delivery/receipt.json"
+  }
 }

@@ -1704,3 +1704,6 @@ FULL006來源4ebfff6f：1850PASS／236健康模組／0runtime／capture0／397�
 FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE_VERIFIED；397附件永久保存。嚴格require-evidence及publication-scope治理皆PASS172／166，原外部5資格及3PARTIAL/3DEFERRED不改。只釋放已驗ZIP cache；保存收據、治理結果及STATE，下一步雲端設定草稿（不等於發布）。
 
 雲端設定草稿revision6保存且重新讀回：repo固定已含FINAL收據的6ce180c5，完整start_skill及既有安裝後追加真MainWindow native smoke；network/secrets/runtime requirements逐項與修改前一致。完整/workspace Git發現0錯、template專案與UIUX工具依賴明確分開。draft requires_publish=true，不冒稱套用／發布；當前環境已native005驗證。公開receipt／重建說明／發現清單保存Git，不含秘密值。
+
+
+2026-10-20 DEV-QUALITY-001：零新增費用的本地開發工具建置／三範圍基準／18項針對性驗證；產品來源與資格未改。費用未核實，不push／PR／CI。完整紀錄與恢復方式見debug_tooling/README.md、FINAL_REPORT.md及STATE.debug_tooling。

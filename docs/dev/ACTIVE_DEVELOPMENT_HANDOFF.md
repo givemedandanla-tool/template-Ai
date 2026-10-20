@@ -1,4 +1,14 @@
-# 當前交接：桌面GUI、進階引導與離線回報已自驗
+# 當前交接：DEV-QUALITY-001本地工具；產品GUI維持已自驗
+
+本輪沒有推送／PR／CI：零新增費用優先，沒有充分帳戶額度與連帶觸發證據。最近遠端確認基底0e7b8aee；本輪精確本機HEAD、patch/bundle封裝hash與隔離還原結果見`.cache/debug-tooling/delivery/receipt.json`及同目錄ZIP。若receipt不存在，最後封裝驗證仍未完成；不將本機checkpoint稱為REMOTE_VERIFIED。
+
+- 讀[工具說明](debug_tooling/README.md)、[結果](debug_tooling/FINAL_REPORT.md)、[待辦](debug_tooling/BACKLOG.json)。固定Ruff0.17.1／Pyright1.1.414／jscpd5.4.1及兩個MIT skill；一般檢查不下載或安裝，單一Codex、不全庫整改。skill可顯式讀取，平台自動辨識未驗證。
+- 576個Python輸入按應用270／工具60／測試246分開掃描。新工具／測試0診斷；舊Pyright11798筆待判讀、Ruff3個工具解析限制保留。7組exact重複6保留、1低優先候選。沒有改產品。
+- 新工具11＋既有相關7＝18針對性PASS／0runtime；9項隔離示範及全新目錄離線重建PASS。application正式check新增0，其餘對精確完整掃描結果分類。實際Linux／Python3.12.14／PySide6 6.8.3，3.11僅最低語法模式核對。
+- 雲端草稿rev7保存未發布，沒有改repository ref／network／secret需求；遠端沒有本輪工具原碼，缺檔時明示LOCAL_ONLY。必須保存交付ZIP，新對話先核對其base/head再還原，不能依賴本機工作區永久存在。
+- 本輪工具交付後停止；沒有新任務不繼續重構。EXE／網頁／手機及已延後資格維持原範圍。
+
+## 產品GUI交接（保持原資格與證據）
 
 先跑`.venv/bin/python tools/resume_status.py`；分支`dev/v0.1-first-version`／PR2，不合併main。STATE與最新REMOTE_VERIFIED收據為保存依據。
 

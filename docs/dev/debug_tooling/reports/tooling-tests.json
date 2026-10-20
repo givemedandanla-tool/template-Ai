@@ -1,0 +1,106 @@
+{
+  "label": "TARGETED_TOOLING_NOT_FULL_PRODUCT_ACCEPTANCE",
+  "catalog": [
+    "test_quality.BaselineSafetyTests.test_duplicate_occurrence_is_new_even_when_fingerprint_matches",
+    "test_quality.BaselineSafetyTests.test_initial_baseline_cannot_overwrite_evidence",
+    "test_quality.BaselineSafetyTests.test_line_shift_does_not_hide_or_reclassify_same_issue",
+    "test_quality.BaselineSafetyTests.test_tool_or_profile_changes_cannot_reuse_old_baseline",
+    "test_quality.LiveLocalToolTests.test_known_ruff_parser_limit_is_retained_and_classified",
+    "test_quality.LiveLocalToolTests.test_real_tools_catch_then_clear_only_isolated_new_findings",
+    "test_quality.ScopeAndIntegrityTests.test_ambiguous_or_unlisted_report_paths_are_rejected",
+    "test_quality.ScopeAndIntegrityTests.test_empty_and_missing_scope_never_pass",
+    "test_quality.ScopeAndIntegrityTests.test_existing_report_directory_not_overwritten",
+    "test_quality.ScopeAndIntegrityTests.test_inventory_includes_new_untracked_and_entrypoint_but_no_private_or_vendor",
+    "test_quality.ScopeAndIntegrityTests.test_tampered_skill_refuses_use"
+  ],
+  "records": [
+    {
+      "id": "test_quality.BaselineSafetyTests.test_duplicate_occurrence_is_new_even_when_fingerprint_matches",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.000454
+    },
+    {
+      "id": "test_quality.BaselineSafetyTests.test_initial_baseline_cannot_overwrite_evidence",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.000472
+    },
+    {
+      "id": "test_quality.BaselineSafetyTests.test_line_shift_does_not_hide_or_reclassify_same_issue",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.000317
+    },
+    {
+      "id": "test_quality.BaselineSafetyTests.test_tool_or_profile_changes_cannot_reuse_old_baseline",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.00024
+    },
+    {
+      "id": "test_quality.LiveLocalToolTests.test_known_ruff_parser_limit_is_retained_and_classified",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.004487
+    },
+    {
+      "id": "test_quality.LiveLocalToolTests.test_real_tools_catch_then_clear_only_isolated_new_findings",
+      "status": "PASS",
+      "details": [],
+      "seconds": 3.169553
+    },
+    {
+      "id": "test_quality.ScopeAndIntegrityTests.test_ambiguous_or_unlisted_report_paths_are_rejected",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.000457
+    },
+    {
+      "id": "test_quality.ScopeAndIntegrityTests.test_empty_and_missing_scope_never_pass",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.000325
+    },
+    {
+      "id": "test_quality.ScopeAndIntegrityTests.test_existing_report_directory_not_overwritten",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.000364
+    },
+    {
+      "id": "test_quality.ScopeAndIntegrityTests.test_inventory_includes_new_untracked_and_entrypoint_but_no_private_or_vendor",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.001258
+    },
+    {
+      "id": "test_quality.ScopeAndIntegrityTests.test_tampered_skill_refuses_use",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.000336
+    }
+  ],
+  "runtime_errors": [],
+  "modules": [
+    {
+      "module": "test_quality",
+      "owned_pid": 1006639,
+      "exit_code": 0,
+      "seconds": 3.533423,
+      "expected": 11,
+      "completed": 11,
+      "missing_test_ids": [],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": false,
+      "failure": null,
+      "remaining_owned_pids": [],
+      "healthy": true,
+      "stdout_bytes": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "log": "Owned module test_quality: exit=0; completed=11/11; healthy=True\ntest_duplicate_occurrence_is_new_even_when_fingerprint_matches (test_quality.BaselineSafetyTests.test_duplicate_occurrence_is_new_even_when_fingerprint_matches) ... ok\ntest_initial_baseline_cannot_overwrite_evidence (test_quality.BaselineSafetyTests.test_initial_baseline_cannot_overwrite_evidence) ... ok\ntest_line_shift_does_not_hide_or_reclassify_same_issue (test_quality.BaselineSafetyTests.test_line_shift_does_not_hide_or_reclassify_same_issue) ... ok\ntest_tool_or_profile_changes_cannot_reuse_old_baseline (test_quality.BaselineSafetyTests.test_tool_or_profile_changes_cannot_reuse_old_baseline) ... ok\ntest_known_ruff_parser_limit_is_retained_and_classified (test_quality.LiveLocalToolTests.test_known_ruff_parser_limit_is_retained_and_classified) ... ok\ntest_real_tools_catch_then_clear_only_isolated_new_findings (test_quality.LiveLocalToolTests.test_real_tools_catch_then_clear_only_isolated_new_findings) ... ok\ntest_ambiguous_or_unlisted_report_paths_are_rejected (test_quality.ScopeAndIntegrityTests.test_ambiguous_or_unlisted_report_paths_are_rejected) ... ok\ntest_empty_and_missing_scope_never_pass (test_quality.ScopeAndIntegrityTests.test_empty_and_missing_scope_never_pass) ... ok\ntest_existing_report_directory_not_overwritten (test_quality.ScopeAndIntegrityTests.test_existing_report_directory_not_overwritten) ... ok\ntest_inventory_includes_new_untracked_and_entrypoint_but_no_private_or_vendor (test_quality.ScopeAndIntegrityTests.test_inventory_includes_new_untracked_and_entrypoint_but_no_private_or_vendor) ... ok\ntest_tampered_skill_refuses_use (test_quality.ScopeAndIntegrityTests.test_tampered_skill_refuses_use) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 3.181s\n\nOK\n"
+}
