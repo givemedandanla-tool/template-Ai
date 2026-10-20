@@ -1,3 +1,7 @@
+# 2026-10-20 GUI / OFFLINE BEGIN
+
+使用者確認四類條件暫擱，授權整體GUI、進階引導、全離線手動回報及更多skill/agent同步開發。基底33d24c2、CORE-090十條，原1798測試與版本/身份契約保留；不以外部條件阻擋本輪、不索取私人作品。
+
 # CATALOG正式428全PASS，原UI009/044完整化
 
 第一輪正式全428PASS/0SKIP；source 6fa3b900817c73c20269fd33f11ff54b0c007808、capture0/source unchanged、89本機附件。新19功能測試，+2CORE、+2原完整父題；原75=6完整66部分3延後，CORE87/GOV7；固定70已完整化4、剩66，未將進度當產品完成百分比。12契約條件及18原來源條款具名claims/digest核對。實際畫面已檢視模板縮圖及客戶並排兩張，其他capture操作有Qtassert，無新受限素材事件。下一UI045完整主檔圖同步，仍先契約checkpoint；REV04已問具體硬體資訊，其他工作持續。待最終GitHub checkpoint／乾淨text／PR讀回。

@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "INPUT_INTEGRATION_AND_GUI_DESIGN_TOOLING_COMPLETE",
+  "active_task": "GUI_OFFLINE_DELIVERY_IN_PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-INPUT-GUI-FINAL.receipt.json",
   "last_confirmed_commit": "f033ecb17b5b2a92db4b6ca3fa54ea1ab1e8b93a",
   "latest_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
@@ -20,9 +20,10 @@
     "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
   ],
   "next_tasks": [
-    "Current integration/tooling scope complete;follow GUI_PANEL_DESIGN_PLAN if subsequent panel implementation is requested",
-    "Use local selftest/diagnostic guide for private Windows artwork;do not require uploads",
-    "Cloud GUI configuration draft saved;publish environment settings only when activating a new snapshot"
+    "Implement modern shared desktop workspace and advanced guidance",
+    "Offline local diagnostics and manual safe report export",
+    "Discover/test additional GUI skills and agent roles",
+    "Full regression and native GUI evidence;GitHub checkpoints"
   ],
   "blocked": [
     {
@@ -46,9 +47,11 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261020-GUI-OFFLINE-BEGIN"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-TEMPLATE-EDITOR-ALL-006/run.json",
-  "progress_baseline": "docs/dev/progress/PROGRESS-20261019-TEMPLATE-EDITOR-BASELINE.json",
+  "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-INPUT-GUI-FINAL.json",
   "progress_report": "docs/dev/PROGRESS.md",
   "pending_pr_metadata": null,
@@ -56,7 +59,7 @@
   "project_goal": "docs/dev/PROJECT_GOAL.md",
   "project_roadmap": "docs/dev/PROJECT_ROADMAP.json",
   "active_contract": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
-  "next_work_package": "NONE_IN_CURRENT_AUTHORIZED_INTEGRATION_SCOPE;MODERN_PANEL_IMPLEMENTATION_IS_FUTURE_PLAN",
+  "next_work_package": "CORE-090",
   "three_packages": {
     "contract": "docs/dev/THREE_PACKAGES_DESIGN.md",
     "completed": 3,
@@ -1464,5 +1467,12 @@
     "receipt": "docs/dev/CLOUD_GUI_REPOSITORY_DRAFT_RECEIPT_20261020.json",
     "runtime_already_validated": true,
     "published_new_environment_snapshot": false
-  }
+  },
+  "active_gui_contract": "docs/dev/GUI_OFFLINE_DELIVERY_CONTRACT_20261020.md",
+  "current_deferred_by_user_20261020": [
+    "Analysis capability expansion",
+    "Real corpus quality",
+    "Windows and specified hardware benchmarking",
+    "Previously deferred functions"
+  ]
 }
