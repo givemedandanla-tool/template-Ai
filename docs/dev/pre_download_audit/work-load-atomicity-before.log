@@ -1,0 +1,55 @@
+test_source_navigation_failure_retains_original_source_and_work (work_load_draft.WorkLoadAtomicityTests.test_source_navigation_failure_retains_original_source_and_work) ... This plugin does not support propagateSizeHints()
+FAIL
+test_unreadable_work_does_not_partially_replace_live_state (work_load_draft.WorkLoadAtomicityTests.test_unreadable_work_does_not_partially_replace_live_state) ... FAIL
+test_work_navigation_failure_does_not_persist_failed_selection (work_load_draft.WorkLoadAtomicityTests.test_work_navigation_failure_does_not_persist_failed_selection) ... This plugin does not support propagateSizeHints()
+FAIL
+
+======================================================================
+FAIL: test_source_navigation_failure_retains_original_source_and_work (work_load_draft.WorkLoadAtomicityTests.test_source_navigation_failure_retains_original_source_and_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_work_load_atomicity.py.txt", line 56, in test_source_navigation_failure_retains_original_source_and_work
+    self.assertEqual(self.state(),self.before);self.assertEqual(self.w.library.artwork(bad['id']),bad)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'source': '4628a2b6dfef4c039193b19a1968128b', 'work'[116 chars]4.0)} != {'source': '01bfaee076684dda822a3c06706b2de7', 'work'[116 chars]4.0)}
+  {'crop': {'h': 60.0, 'w': 100.0, 'x': 0, 'y': 0},
+   'size': (90.0, 54.0),
+   'slots': [],
+-  'source': '4628a2b6dfef4c039193b19a1968128b',
+-  'work': '3214b9ec43b247bfaa04a9459fd2ae6e'}
++  'source': '01bfaee076684dda822a3c06706b2de7',
++  'work': 'da822f6a576f4e90a699387e66420935'}
+
+======================================================================
+FAIL: test_unreadable_work_does_not_partially_replace_live_state (work_load_draft.WorkLoadAtomicityTests.test_unreadable_work_does_not_partially_replace_live_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_work_load_atomicity.py.txt", line 50, in test_unreadable_work_does_not_partially_replace_live_state
+    self.assertEqual(self.state(),self.before)
+AssertionError: {'sou[46 chars]k': 'bf221a78cbb24901b28a58ac9289a8a1', 'crop'[72 chars]4.0)} != {'sou[46 chars]k': '0198d97158524d8a9d538a0cf1f9b242', 'crop'[72 chars]4.0)}
+  {'crop': {'h': 60.0, 'w': 100.0, 'x': 0, 'y': 0},
+   'size': (90.0, 54.0),
+   'slots': [],
+   'source': '2fcb149109964312b19be975fdb8a637',
+-  'work': 'bf221a78cbb24901b28a58ac9289a8a1'}
++  'work': '0198d97158524d8a9d538a0cf1f9b242'}
+
+======================================================================
+FAIL: test_work_navigation_failure_does_not_persist_failed_selection (work_load_draft.WorkLoadAtomicityTests.test_work_navigation_failure_does_not_persist_failed_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/dev/pre_download_audit/prepared-fixes/test_work_load_atomicity.py.txt", line 61, in test_work_navigation_failure_does_not_persist_failed_selection
+    self.assertEqual(self.state(),self.before);self.assertEqual(self.w.library.active_artwork(good['source_id'])['id'],good['id']);self.assertEqual(self.w.library.artwork(bad['id']),bad)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'sou[46 chars]k': '64d7e295c50d4ab5bf51d850663a0912', 'crop'[72 chars]4.0)} != {'sou[46 chars]k': '983b31595b90499bb3beb5a019e7528d', 'crop'[72 chars]4.0)}
+  {'crop': {'h': 60.0, 'w': 100.0, 'x': 0, 'y': 0},
+   'size': (90.0, 54.0),
+   'slots': [],
+   'source': '1aafadb41bb145d3a5fef49a82034b03',
+-  'work': '64d7e295c50d4ab5bf51d850663a0912'}
++  'work': '983b31595b90499bb3beb5a019e7528d'}
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.753s
+
+FAILED (failures=3)

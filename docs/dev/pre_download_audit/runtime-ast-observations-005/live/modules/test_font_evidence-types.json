@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_font_evidence.py": {
+      "source_sha256": "3fcd17b2256082f0324a81f28cf03542e582648a4fd73ebdbf5eeb0b3257063e",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 1,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 1,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-TES-07532": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 1
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 1
+      },
+      "test_contexts": [
+        "test_font_evidence.FontEvidenceTests.test_technical_embedding_flags_never_supply_legal_rights_and_pdf_restrictions_are_stricter"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07533": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 1
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 1
+      },
+      "test_contexts": [
+        "test_font_evidence.FontEvidenceTests.test_technical_embedding_flags_never_supply_legal_rights_and_pdf_restrictions_are_stricter"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_design_session.py": {
+      "source_sha256": "efc70f54daeae0a426aedcd060745d531bec33ec0599c5deb0e706e349a9f2ef",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 1,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation_store.py": {
+      "source_sha256": "884945432fa826422293d05131c1bfa2caf8b7229ac6c424facf08e27dd8bc2d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 3,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_session.py": {
+      "source_sha256": "f7bbb6c1e822efae2432bc37bc2729ab00a3419ae92cef7dbf7c9b2616fe5a98",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/candidate_risk.py": {
+      "source_sha256": "13937a5f3d72c04afa22e06bbdf30b2b60a1324b5d0c4c6a257fb9d90f7962eb",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 3,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_noise_authoring.py": {
+      "source_sha256": "32254efae5924774477897db8f1c1c40bb7b19d2c096599760e4b368215efed4",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 3,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/gui.py": {
+      "source_sha256": "8c1a050660f0247265b441827ee91b063a501d9177553573fe830529c256f5b3",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 40,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/trusted_sample_pool.py": {
+      "source_sha256": "b3c9a39e3ddf514dfceb3de434fa14f58e63917d081fcc3725be44e0b9b42737",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 0,
+      "skipped_target_keys": [
+        [
+          "D-APP-03958",
+          "value",
+          null
+        ]
+      ],
+      "unmatched_ranges": [
+        [
+          100,
+          16,
+          100,
+          22
+        ]
+      ]
+    },
+    "/workspace/template-Ai/template_ai/quality_rechecks.py": {
+      "source_sha256": "8e52388db529c672048f12eefbe2790f3648fc68f6ccb2209dd859e867ca55d9",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/source_analysis.py": {
+      "source_sha256": "195029aa219275367399b45ffe4ffc6b66b3b617a0241f4ac6064b529f94bea0",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/original_text_observation.py": {
+      "source_sha256": "c93207d78df03439e7bb9d304fa6baff6c4b35f3b75ba74b1c3491302f27f8c0",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/family_workspace.py": {
+      "source_sha256": "2ff34e49eb78c90e0582bc6b770877e7603e5a3d20b3334b3f55d93dd2f9c1f0",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-00949": {
+      "visits": 128,
+      "values": {
+        "value": {
+          "builtins.dict": 43,
+          "builtins.list": 43
+        },
+        "iterable": {
+          "builtins.list": 42
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02710": {
+      "visits": 128,
+      "values": {
+        "value": {
+          "builtins.dict": 32,
+          "builtins.str": 32
+        },
+        "argument": {
+          "builtins.tuple": 32
+        },
+        "call_result": {
+          "template_ai.design_observation.ObservedScalar": 32
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06604": {
+      "visits": 2,
+      "values": {
+        "value": {
+          "template_ai.input_graph.InputGraph": 1,
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_session.DesignSessionTests.test_accepted_artifact_reuses_exact_bytes_after_new_model_activation"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

@@ -1,0 +1,383 @@
+{
+  "duplicates": [
+    {
+      "firstFile": {
+        "end": 381,
+        "endLoc": {
+          "column": 12,
+          "line": 381,
+          "position": 32156
+        },
+        "name": "template_ai/backup_center.py",
+        "start": 371,
+        "startLoc": {
+          "column": 139,
+          "line": 371,
+          "position": 31841
+        }
+      },
+      "format": "python",
+      "fragment": "            self.load_schedule();self.status.setText('排程／保留已保存；密碼未持久化，不代表關閉程式也會執行。')\n        self.guarded(action)\n\n    def arm(self):\n        def action():\n            password=self.secret();self.remember.setChecked(True);self.scheduler.set_session_password(password);self.scheduler.tick();self.load_schedule()\n        self.guarded(action)\n\n    def run_due(self):\n        def action():\n            password=self.secret();self.remember.setChecked(True);self.scheduler.set_session_password(password);self.scheduler.tick();self.load_schedule()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 386,
+        "endLoc": {
+          "column": 12,
+          "line": 386,
+          "position": 32384
+        },
+        "name": "template_ai/backup_center.py",
+        "start": 376,
+        "startLoc": {
+          "column": 153,
+          "line": 376,
+          "position": 32067
+        }
+      },
+      "tokens": 86
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 41,
+          "line": 13,
+          "position": 553
+        },
+        "name": "template_ai/coverage_closure_panel.py",
+        "start": 1,
+        "startLoc": {
+          "column": 81,
+          "line": 1,
+          "position": 81
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"Lazy, paged coverage review. Each high-risk action is one work and one layer.\"\"\"\nfrom __future__ import annotations\nfrom typing import TYPE_CHECKING\n\nif TYPE_CHECKING:\n    from .gui import MainWindow\nimport json\nimport threading\nfrom pathlib import Path\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtWidgets import (QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QPushButton,QComboBox,QPlainTextEdit,QTableWidget,QTableWidgetItem,QHeaderView,QCheckBox,QFileDialog)\nfrom .worker_callbacks import JobCallbacks\nfrom .coverage_command import run_command",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 45,
+          "line": 13,
+          "position": 562
+        },
+        "name": "template_ai/exception_dialog.py",
+        "start": 1,
+        "startLoc": {
+          "column": 83,
+          "line": 1,
+          "position": 83
+        }
+      },
+      "tokens": 101
+    },
+    {
+      "firstFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 4,
+          "line": 11,
+          "position": 440
+        },
+        "name": "template_ai/dataset_panel.py",
+        "start": 1,
+        "startLoc": {
+          "column": 90,
+          "line": 1,
+          "position": 90
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"Explicit sample roles, frozen manifest and source-verified TRAIN-only geometry action.\"\"\"\nfrom __future__ import annotations\nfrom typing import TYPE_CHECKING\n\nif TYPE_CHECKING:\n    from .gui import MainWindow\nimport json\nimport copy\nfrom PySide6.QtCore import Qt,QThreadPool\nfrom PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,QComboBox,QPushButton,QTableWidget,QTableWidgetItem,QPlainTextEdit,QMessageBox\nfrom .model import new_id",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 10,
+        "endLoc": {
+          "column": 158,
+          "line": 10,
+          "position": 443
+        },
+        "name": "template_ai/trusted_samples_panel.py",
+        "start": 1,
+        "startLoc": {
+          "column": 97,
+          "line": 1,
+          "position": 97
+        }
+      },
+      "tokens": 74
+    },
+    {
+      "firstFile": {
+        "end": 989,
+        "endLoc": {
+          "column": 26,
+          "line": 989,
+          "position": 57785
+        },
+        "name": "template_ai/gui.py",
+        "start": 977,
+        "startLoc": {
+          "column": 177,
+          "line": 977,
+          "position": 57332
+        }
+      },
+      "format": "python",
+      "fragment": "        self.statusBar().showMessage(\"來源已保存；\" + (\"重用同內容解析，保留本次來源登錄\" if result.get(\"reused\") else \"視覺一致性仍待原稿核對\"))\n\n    def automatic_training(self):\n        if self.busy:return\n        from .automatic_training_dialog import AutomaticTrainingDialog\n        dialog=AutomaticTrainingDialog(self);dialog.exec();dialog.deleteLater()\n\n    def semantic_learning(self):\n        if self.busy:return\n        from .semantic_learning_dialog import SemanticLearningDialog\n        dialog=SemanticLearningDialog(self);dialog.exec();dialog.deleteLater()\n\n    def work_overview(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 994,
+        "endLoc": {
+          "column": 35,
+          "line": 994,
+          "position": 57988
+        },
+        "name": "template_ai/gui.py",
+        "start": 982,
+        "startLoc": {
+          "column": 78,
+          "line": 982,
+          "position": 57546
+        }
+      },
+      "tokens": 95
+    },
+    {
+      "firstFile": {
+        "end": 1102,
+        "endLoc": {
+          "column": 8,
+          "line": 1102,
+          "position": 63778
+        },
+        "name": "template_ai/gui.py",
+        "start": 1092,
+        "startLoc": {
+          "column": 63,
+          "line": 1092,
+          "position": 63391
+        }
+      },
+      "format": "python",
+      "fragment": "            self.choose_source(self.source_combo.currentIndex())\n\n    def source_page(self,delta):\n        from .training_navigation import require_clean_navigation\n        try:require_clean_navigation(self);self.source_offset=max(0,self.source_offset+delta);self.refresh_sources()\n        except Exception as error:self.error(str(error))\n\n    def choose_source(self, index):\n        if not 0 <= index < len(self.sources):\n            return\n        try:",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 1631,
+        "endLoc": {
+          "column": 8,
+          "line": 1631,
+          "position": 94475
+        },
+        "name": "template_ai/gui.py",
+        "start": 1621,
+        "startLoc": {
+          "column": 50,
+          "line": 1621,
+          "position": 94080
+        }
+      },
+      "tokens": 101
+    },
+    {
+      "firstFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 4,
+          "line": 17,
+          "position": 652
+        },
+        "name": "template_ai/quality_command.py",
+        "start": 7,
+        "startLoc": {
+          "column": 0,
+          "line": 7,
+          "position": 186
+        }
+      },
+      "format": "python",
+      "fragment": "    from .storage import Library\n    from .training_store import TrainingStore\n    from .quality_gold import QualityGold\n    from .quality_sets import QualitySets\n    from .quality_policy import QualityPolicies\n    from .quality_pipeline import QualityPipelines\n    from .quality_protocol import QualityProtocols\n    from .quality_jobs import EvaluationJobs\n    from .quality_reports import QualityReports\n    from .quality_diagnostics import QualityDiagnostics\n    from .quality_rechecks import QualityRechecks",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 702
+        },
+        "name": "template_ai/quality_command.py",
+        "start": 8,
+        "startLoc": {
+          "column": 0,
+          "line": 8,
+          "position": 219
+        }
+      },
+      "tokens": 91
+    },
+    {
+      "firstFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 4,
+          "line": 21,
+          "position": 734
+        },
+        "name": "template_ai/training_store.py",
+        "start": 11,
+        "startLoc": {
+          "column": 38,
+          "line": 11,
+          "position": 319
+        }
+      },
+      "format": "python",
+      "fragment": "from .source_links import hash_source, check_verified\nfrom .noise import NoiseMixin\nfrom .noise_review import RuleReviewMixin\nfrom .noise_hits import NoiseHitMixin\nfrom .noise_recovery import NoiseRecoveryMixin\nfrom .trusted_samples import TrustedSampleMixin\nfrom .datasets import DatasetMixin\nfrom .quality_coverage import CoverageMixin\nfrom .training_pipeline import TrainingQueueMixin\nfrom .design_observation_store import DesignObservationMixin\nfrom .metadata_record import training_record",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 24,
+        "endLoc": {
+          "column": 3,
+          "line": 24,
+          "position": 780
+        },
+        "name": "template_ai/training_store.py",
+        "start": 12,
+        "startLoc": {
+          "column": 18,
+          "line": 12,
+          "position": 353
+        }
+      },
+      "tokens": 74
+    },
+    {
+      "firstFile": {
+        "end": 190,
+        "endLoc": {
+          "column": 25,
+          "line": 190,
+          "position": 14991
+        },
+        "name": "template_ai/diagnostic_bundle.py",
+        "nodes": 321,
+        "start": 180,
+        "startLoc": {
+          "column": 0,
+          "line": 180,
+          "position": 14192
+        }
+      },
+      "format": "python",
+      "fragment": "def build_bundle(data):\n    public=encoded(validate(data)); page=report_html(data)\n    manifest=encoded({'schema_version':1,'integrity':'SHA256_NOT_SIGNATURE',\n                      'files':{n:{'bytes':len(b),'sha256':sha(b)} for n,b in [('report.json',public),('report.html',page)]}})\n    if sum(map(len,(public,page,manifest)))>MAX_BYTES:raise ValueError('報告超過2MiB，請縮小範圍')\n    out=io.BytesIO()\n    with zipfile.ZipFile(out,'w',compression=zipfile.ZIP_STORED) as z:\n        for name,body in [('report.json',public),('report.html',page),('manifest.json',manifest)]:\n            info=zipfile.ZipInfo(name,date_time=(1980,1,1,0,0,0));info.compress_type=zipfile.ZIP_STORED;info.create_system=3;info.external_attr=0o600<<16\n            z.writestr(info,body)\n    return out.getvalue()",
+      "isNew": false,
+      "kind": "similar",
+      "lines": 11,
+      "method": "ast",
+      "secondFile": {
+        "end": 270,
+        "endLoc": {
+          "column": 25,
+          "line": 270,
+          "position": 14583
+        },
+        "name": "template_ai/offline_support.py",
+        "nodes": 321,
+        "start": 254,
+        "startLoc": {
+          "column": 0,
+          "line": 254,
+          "position": 13590
+        }
+      },
+      "similarity": 0.886,
+      "tokens": 237
+    },
+    {
+      "firstFile": {
+        "end": 246,
+        "endLoc": {
+          "column": 17,
+          "line": 246,
+          "position": 18058
+        },
+        "name": "template_ai/diagnostic_bundle.py",
+        "nodes": 340,
+        "start": 230,
+        "startLoc": {
+          "column": 0,
+          "line": 230,
+          "position": 17210
+        }
+      },
+      "format": "python",
+      "fragment": "def save_bundle(target,raw,check=lambda:None):\n    \"\"\"Same-directory staging + exclusive hard-link publication, matching the artwork writer policy.\"\"\"\n    read_bundle(raw)\n    target=Path(target)\n    if target.suffix.lower()!='.zip' or not target.parent.is_dir():raise ValueError('請選既有本機資料夾及ZIP檔名')\n    if target.exists() or target.is_symlink():raise FileExistsError('不覆寫既有報告，請更名')\n    check()\n    fd,name=tempfile.mkstemp(prefix='.diagnostic-',suffix='.zip',dir=target.parent)\n    try:\n        with os.fdopen(fd,'wb') as f:\n            f.write(raw);f.flush();os.fsync(f.fileno())\n        read_bundle(Path(name).read_bytes());check()\n        from .safe_publish import publish_complete\n        publish_complete(name,target,check)\n    finally:\n        Path(name).unlink(missing_ok=True)\n    return target",
+      "isNew": false,
+      "kind": "similar",
+      "lines": 17,
+      "method": "ast",
+      "secondFile": {
+        "end": 314,
+        "endLoc": {
+          "column": 17,
+          "line": 314,
+          "position": 16684
+        },
+        "name": "template_ai/offline_support.py",
+        "nodes": 323,
+        "start": 295,
+        "startLoc": {
+          "column": 0,
+          "line": 295,
+          "position": 15828
+        }
+      },
+      "similarity": 0.805,
+      "tokens": 208
+    }
+  ],
+  "statistics": {
+    "detectionDate": "2026-10-20T20:54:33.385Z",
+    "formats": {
+      "python": {
+        "clones": 9,
+        "duplicatedLines": 109,
+        "duplicatedTokens": 1067,
+        "lines": 43447,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 0.2508803829953737,
+        "percentageTokens": 0.13777466159986468,
+        "sources": 266,
+        "tokens": 774453
+      }
+    },
+    "total": {
+      "clones": 9,
+      "duplicatedLines": 109,
+      "duplicatedTokens": 1067,
+      "lines": 43447,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 0.2508803829953737,
+      "percentageTokens": 0.13777466159986468,
+      "sources": 266,
+      "tokens": 774453
+    }
+  }
+}

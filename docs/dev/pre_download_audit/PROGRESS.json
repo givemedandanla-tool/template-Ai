@@ -1,24 +1,24 @@
 {
   "status": "RUNNING",
   "source_base": "83908944a907804a18a1d85feadddbc780644e4a",
-  "phase": "Complete remaining source/type review before final stable-source stock regression",
+  "phase": "Last 110 original occurrences plus refreshed/new/profile-only disposition; final regression pending",
   "original_diagnostics": 11798,
   "classified_tool_limitations": 1824,
-  "unreviewed": 386,
+  "unreviewed": 110,
   "confirmed_defects": 10,
   "fixed_defects": 10,
   "new_test_execution": null,
   "original_1850_rerun": "Full005 source92977b77:1886PASS/243healthy/0runtime; root7 final1889 rerun pending",
-  "next": "Finish original386 and all final/new/runtime-profile dispositions; root10 targeted verification; bind matrices, final1901 stock/captures/native; local restore bundle",
+  "next": "Finish remaining original/new/runtime-only review; final1914 stock +27captures +19native, matrices, local restore package",
   "provenance": "LOCAL_ONLY",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
   "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
   "diagnostic_statuses": {
-    "TYPE_CONTRACT_GAP": 8834,
-    "TOOL_LIMITATION": 1840,
-    "FIXED_AND_VERIFIED": 729,
-    "UNREVIEWED": 386,
-    "BLOCKED_EXTERNAL": 9
+    "TYPE_CONTRACT_GAP": 9081,
+    "TOOL_LIMITATION": 1854,
+    "FIXED_AND_VERIFIED": 738,
+    "UNREVIEWED": 110,
+    "BLOCKED_EXTERNAL": 15
   },
   "fixed_defects_pending_full_regression": 3,
   "new_targeted_tests": {
@@ -164,5 +164,12 @@
     "fix_source": "3a2ef142",
     "after": "work-load-after-002 running"
   },
-  "full006": "INTERRUPTED_NOT_FULL_PASS:273 cases completed before additional SQL snapshot fixes; source281b53af. Preserve receipts; final1901 not run yet"
+  "full006": "INTERRUPTED_NOT_FULL_PASS:273 cases completed before additional SQL snapshot fixes; source281b53af. Preserve receipts; final1901 not run yet",
+  "latest_source": "3bf8e4602933117ad81cfa8d721ca5df23e01bfc",
+  "modal_context": {
+    "before": "7FAIL/1PASS; eighth learn path already refused in old core",
+    "after": "100PASS/7healthy/0runtime/source unchanged"
+  },
+  "expected_final_catalog": 1914,
+  "final_regression_status": "NOT_YET_RUN_CURRENT_SOURCE"
 }

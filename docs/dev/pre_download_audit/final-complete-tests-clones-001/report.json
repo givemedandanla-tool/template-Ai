@@ -1,0 +1,3816 @@
+{
+  "profile": "AUDIT_CLONES_V1",
+  "scope": "tests",
+  "purpose": "Supplemental evidence; not comparable with or a replacement for immutable original baseline",
+  "source": {
+    "docs/dev/debug_tooling/tests/test_quality.py": {
+      "sha256": "c807f7e3ce7d512aad3c55cb39213f22a701755f58bafc08072562cd562f3ead",
+      "bytes": 6646
+    },
+    "tests/authored_font_fixture.py": {
+      "sha256": "1e02ff8e7486dbe0820f93467f3af05daf114aabb85f4f30550c49388690bcc6",
+      "bytes": 2086
+    },
+    "tests/digital_review_fixture.py": {
+      "sha256": "dfe06852c39daa60871456415f461b2f725b9384b7e15ef66e001014d3f38797",
+      "bytes": 503
+    },
+    "tests/family_fixture.py": {
+      "sha256": "6021e0217fe9e46062e4b7a59541e2bfa08ed5ee9b268543cb68e26187662b28",
+      "bytes": 1649
+    },
+    "tests/gui_wait.py": {
+      "sha256": "864ab709d23cc3eae78164284a3465aa9b8e21b3ec501281a0749765493d5f95",
+      "bytes": 3592
+    },
+    "tests/quality_acceptance_fixture.py": {
+      "sha256": "10a426013c9fe6548e4c934013425db243b984062fd1de868133e3c257c286c8",
+      "bytes": 6771
+    },
+    "tests/quality_repair_acceptance_fixture.py": {
+      "sha256": "1670f7e7cb7650c89be16038846321efcdf40de0b32e438e6f56d3697ecda6b9",
+      "bytes": 8810
+    },
+    "tests/runtime_fixture.py": {
+      "sha256": "c0e58c0883bab99c88f0611ea7a0f0b5915113ed946a01bb876ed5db4a262560",
+      "bytes": 721
+    },
+    "tests/sync_workflow_fixture.py": {
+      "sha256": "dcf529167850fbc2d9b32586cb0dc9610a87a58956fa2befcdd7a846e7c652e2",
+      "bytes": 5738
+    },
+    "tests/test_annotation_gui.py": {
+      "sha256": "2d79192dd8fba9f5d4de9bfa80993a7fc510d09c519c052fb12a7f2596cb702b",
+      "bytes": 13941
+    },
+    "tests/test_annotations.py": {
+      "sha256": "a48d6d70165d592e0ab428207c1746120e7a3bfabd8c568da74fa7dcc0d4b61b",
+      "bytes": 4969
+    },
+    "tests/test_artwork_recovery.py": {
+      "sha256": "3c9a771640b24b69caa5931fae8993b835a8293693fd574b867f132515f99496",
+      "bytes": 10100
+    },
+    "tests/test_assignment_oracle.py": {
+      "sha256": "64badfbd44d373b3d3d5698480cf57c0b204a03f1a5d6a5bd5ff4d8fb7b8e267",
+      "bytes": 3864
+    },
+    "tests/test_automatic_pages.py": {
+      "sha256": "4113d7f685b1a68e738093b9141a1e96997de76ee90fcf72b4f0d9c8501e6e63",
+      "bytes": 2512
+    },
+    "tests/test_automatic_training.py": {
+      "sha256": "5fc37ab088501a1e553cdae0256f6a0fa356900dd7f26a85b6a534a14baae502",
+      "bytes": 14065
+    },
+    "tests/test_backup_center.py": {
+      "sha256": "421b231feba4d021a57673b6a38a4535c00d7016eb55e87b1f504dbf2114d9a2",
+      "bytes": 8892
+    },
+    "tests/test_backup_policy.py": {
+      "sha256": "0060c87563f78802447cbf1a3fb87b101be64546b9b2bf07b3c30a193c8983d5",
+      "bytes": 7222
+    },
+    "tests/test_batch_candidate_adapter.py": {
+      "sha256": "d4a0016e56854274bd8cd96cd64a97c7bd218239623b53736acdbf2c96d8bd30",
+      "bytes": 11513
+    },
+    "tests/test_batch_candidate_gui.py": {
+      "sha256": "0ee7587356dde3f1ef4ba327c6d25dc9749ad1f4fbe2d84f829e89a6697bb8ec",
+      "bytes": 6385
+    },
+    "tests/test_batch_correction_gui.py": {
+      "sha256": "16dfdc2fdaaff548e403351b48516322c060189ec035fe671937445c8add28a7",
+      "bytes": 8428
+    },
+    "tests/test_batch_correction_source.py": {
+      "sha256": "bbe1ebf47d61d62040e9851458be6cfffb804bea387269b048cd221676683f0b",
+      "bytes": 9055
+    },
+    "tests/test_batch_format_review.py": {
+      "sha256": "603058d5e9af7b33a7db876e532c37f86d854b7f3f7e95a429928513f70e80a1",
+      "bytes": 3379
+    },
+    "tests/test_batch_format_review_gui.py": {
+      "sha256": "aca4f961b70984e069d0a22d7c400ceb00c1c3655012a50c552518ee7879273c",
+      "bytes": 4268
+    },
+    "tests/test_batch_import.py": {
+      "sha256": "9032bbef5fbd68474a348d7628bbfa5f8390e8f266905f0edec582bf1bcf7b9d",
+      "bytes": 16099
+    },
+    "tests/test_batch_recovery.py": {
+      "sha256": "ef5164ff200b8b80a8e8b051854c2989b0e3513aa9b23629fdde81dd31c15c5a",
+      "bytes": 12489
+    },
+    "tests/test_batch_source_relink.py": {
+      "sha256": "7d1d1396959f2e2fa1001e167a41ecb0439fe0933d6ea408fa2fde4363bca41e",
+      "bytes": 17305
+    },
+    "tests/test_candidate_changes.py": {
+      "sha256": "7d7ec67d1928435c65b9256c7f62344db1ce12f44963508fdaa79543552cc9b3",
+      "bytes": 10275
+    },
+    "tests/test_candidate_edit_dispatch.py": {
+      "sha256": "c65065e70798f8e74a0b205907b5ab1c62192f65b16b389f8762b0c49ffa6da6",
+      "bytes": 14827
+    },
+    "tests/test_candidate_edit_history.py": {
+      "sha256": "a74c58f809108dde933e061b3ba5366228426d0e8290b922a7d1786a35e3d45b",
+      "bytes": 5891
+    },
+    "tests/test_candidate_results.py": {
+      "sha256": "ccac1b2d74ab5afef0b428929416d8d74abc907094e567ed5694577b91c8937f",
+      "bytes": 12083
+    },
+    "tests/test_candidate_risk.py": {
+      "sha256": "8714af07c16af90685150d4432d038692221cb18ea7da80e639772d9469055bf",
+      "bytes": 7285
+    },
+    "tests/test_candidate_risk_gui.py": {
+      "sha256": "4fc2fcf9dd19e52166c3d0614fb180d3a136538f1afcade461c60f4cae95a135",
+      "bytes": 4047
+    },
+    "tests/test_candidate_source_versions.py": {
+      "sha256": "6bb74659044844edf00400141f410ae4bcd12c01e6110db7155db3bd589afacc",
+      "bytes": 4199
+    },
+    "tests/test_candidate_sync.py": {
+      "sha256": "649125270b5152b1f0ebcd13960bc9b3dd1b844fddbcdefa382c84db385cc57a",
+      "bytes": 5023
+    },
+    "tests/test_candidate_sync_batch.py": {
+      "sha256": "bc4dcba74cc3cf096b89885c0e3a57ae39ab2f7c4403a6e21b970d00e890b99f",
+      "bytes": 8826
+    },
+    "tests/test_candidate_sync_gui.py": {
+      "sha256": "f5499a24e753cf253a5b06f866bdc38586f71d20c35a6ef258e1254650c0c187",
+      "bytes": 6274
+    },
+    "tests/test_canvas_command_focus.py": {
+      "sha256": "cca8f73d0082aa3ea1fbc3ba18b39c261ce13a39bf1213491c11df8026df87fe",
+      "bytes": 9255
+    },
+    "tests/test_canvas_compare.py": {
+      "sha256": "00ae8c29ea69176488c9f6d4f49fa6d64fc915fee677080ffbd9957ace089bdf",
+      "bytes": 18402
+    },
+    "tests/test_canvas_controls.py": {
+      "sha256": "71d991e450d68681e2f059c5f79534718b4e22c23e8469c745a68422eb9f130f",
+      "bytes": 4940
+    },
+    "tests/test_canvas_named_commands.py": {
+      "sha256": "dd322839c3bd897a6f8c2244077e75d630fc1975ade4d9596d3946aaaa7053d7",
+      "bytes": 11120
+    },
+    "tests/test_catalog.py": {
+      "sha256": "4982a50bf17573378f055983942e96a23623269a6f0eeffffa96ec1d127d02d3",
+      "bytes": 20155
+    },
+    "tests/test_coverage_batches.py": {
+      "sha256": "810638759db42020e9231d1b2f33008deb5c0a471b4c88b7a0859230192a2654",
+      "bytes": 27763
+    },
+    "tests/test_coverage_closure_gui.py": {
+      "sha256": "5ff8f0c6b866d5f32848bb6b3ff661f3c0a39f762826a93fc51a4d103ec01d58",
+      "bytes": 8114
+    },
+    "tests/test_coverage_rules.py": {
+      "sha256": "d96438331c52ca30008a7ae15d83950d56cc45200e9feb3aaac69123975a3708",
+      "bytes": 5157
+    },
+    "tests/test_custom_layout.py": {
+      "sha256": "440240a199fbaa110808fedfcbdf2c3d205a997488c9e5d129fc84a5037cdd4f",
+      "bytes": 5706
+    },
+    "tests/test_customer_candidates.py": {
+      "sha256": "d1e91f3606b51fe936b920dd6111795286fe4523889210cd0037816cf92177c5",
+      "bytes": 13378
+    },
+    "tests/test_customer_graph_sync.py": {
+      "sha256": "b96857fa168c90bf216c98074a170763d005d22bb314456d8db24440950afb02",
+      "bytes": 11193
+    },
+    "tests/test_customer_identity.py": {
+      "sha256": "563512ba18cb9158523ff4b74ce16812cd6c3cbae67acd68ed162030b0dc3c0a",
+      "bytes": 13072
+    },
+    "tests/test_customers.py": {
+      "sha256": "1103d1bcc19580ed7defa219f3a05ebfa5988493b300a1ddf72d66a8297ddcb9",
+      "bytes": 8328
+    },
+    "tests/test_dataset_learning.py": {
+      "sha256": "88f0aa15194f8a2e9210c096c671760723b2b596f362aac0e4d2541fed095a69",
+      "bytes": 11002
+    },
+    "tests/test_design_assignment.py": {
+      "sha256": "f4bcac21dd77cbc165766ee4d6ab376bc6b222eb70d95e412b1f2578811f1fde",
+      "bytes": 1899
+    },
+    "tests/test_design_components.py": {
+      "sha256": "8ee119abda7b6d1267e8f3d363663a449811cc781b540b167f709e9f27be9caa",
+      "bytes": 7020
+    },
+    "tests/test_design_composite_learning.py": {
+      "sha256": "7ecdd7fb83690ffdbf9d1fd0f633085dc49a01b2a918331898adf66ba662bb02",
+      "bytes": 7086
+    },
+    "tests/test_design_evaluation.py": {
+      "sha256": "adbf1b86d588388bda7c39c29b111eb4686b81008166e1e289680b2d6fd70c8a",
+      "bytes": 6338
+    },
+    "tests/test_design_family.py": {
+      "sha256": "c2143d2d236811525bcaa9739487cacafa384caf934bbadc16b564da77c59644",
+      "bytes": 10070
+    },
+    "tests/test_design_feedback_qualification.py": {
+      "sha256": "00b440202adb21c6cb3aa6d740acf92e58994bd811cb43813e4a5c30c3dc08dc",
+      "bytes": 9087
+    },
+    "tests/test_design_jobs.py": {
+      "sha256": "733f9fe020b39ebed0bfb03564cfe652f24c436b500da78de69db48a2b86b0c5",
+      "bytes": 3699
+    },
+    "tests/test_design_joint.py": {
+      "sha256": "c03cbcdfe9002d9062c0f5ccea3b6d4b1461275818586030c84e114a7997afd9",
+      "bytes": 5909
+    },
+    "tests/test_design_learning.py": {
+      "sha256": "4eef62079aef3c24f2afe818c8f6abf09371a8ae771d038b5cba5033450f88df",
+      "bytes": 7811
+    },
+    "tests/test_design_learning_gui.py": {
+      "sha256": "c612be07d630b972ebf2edf3895f71a6f827f5a4c327c8730666cc1dfa2cc563",
+      "bytes": 4861
+    },
+    "tests/test_design_logo_synthesis.py": {
+      "sha256": "420bb7f7d043b19623da014decb21f0a3c912319acbc7b288534a035d369c869",
+      "bytes": 3244
+    },
+    "tests/test_design_observation.py": {
+      "sha256": "2635ad16fafd5a61340a8c7af703f3bec0567830fb6eac9ed56b04078983c956",
+      "bytes": 18873
+    },
+    "tests/test_design_ranking.py": {
+      "sha256": "539a631ba44312c47e13ffa7a5cf787f9be9e37cccbc8136f016dcb5151a0a93",
+      "bytes": 3148
+    },
+    "tests/test_design_rich_text.py": {
+      "sha256": "d1f3ec71a2ff638bf5a9129536d779094452f75b70bcd320377d8cdb1060c061",
+      "bytes": 6514
+    },
+    "tests/test_design_rule_extensions.py": {
+      "sha256": "aea57155e685bea294a766044411120752533a193eb17a7c01228ad82a6368fa",
+      "bytes": 10465
+    },
+    "tests/test_design_session.py": {
+      "sha256": "efc70f54daeae0a426aedcd060745d531bec33ec0599c5deb0e706e349a9f2ef",
+      "bytes": 8293
+    },
+    "tests/test_design_source_binding.py": {
+      "sha256": "fc56178ca0f93e66283e8b6dd04e11f415846a0d40f3931df8b20ee08e1710f4",
+      "bytes": 8186
+    },
+    "tests/test_design_synthesis.py": {
+      "sha256": "ea8bc45e759c88cba3c4ace442b73718ccdf7af29b8663a1dbb6470538e8d4b5",
+      "bytes": 12085
+    },
+    "tests/test_design_text_flow.py": {
+      "sha256": "b168353a20d89e34cda3cfcfb8fc6ef6f7268a4da48ad715daf7a2b0ef87c670",
+      "bytes": 5103
+    },
+    "tests/test_desktop_workspace.py": {
+      "sha256": "0c03432979a5fb8cc0ec701846bb3c5cee079be152a30199ef3873136c8a24f5",
+      "bytes": 18203
+    },
+    "tests/test_dev_framework.py": {
+      "sha256": "5c0c81529b35baf0025952f573db1fbe2fd646e99d7333c72dd1faf4f8ddd7e7",
+      "bytes": 10359
+    },
+    "tests/test_dev_progress.py": {
+      "sha256": "6891bcb254c9cc383d5a8e22449cbdea23714d081dfa5ad3df287b79371acd64",
+      "bytes": 3373
+    },
+    "tests/test_diagnostic_reports.py": {
+      "sha256": "fd782834da433cd8635b74fd54cfb207eaceb4d1d291b8934f30f19d0c334f95",
+      "bytes": 26715
+    },
+    "tests/test_digital_output_proof.py": {
+      "sha256": "9ba2cc1bb4af36608f840728a66bb12724d68e0d5627d548b785cad3b1a42aee",
+      "bytes": 5366
+    },
+    "tests/test_digital_preflight.py": {
+      "sha256": "ddf2ccbbaf66b864bfaf9e4b53ea6883d21d8c89eda9b756eead3d65beb04fae",
+      "bytes": 6254
+    },
+    "tests/test_digital_preflight_gui.py": {
+      "sha256": "35cf2276a81029476cacac16105c7efe622b1c0b34e3e40e59e2e834e665ff3f",
+      "bytes": 7373
+    },
+    "tests/test_digital_review.py": {
+      "sha256": "8be7fe9a25535b8f502d6a9e9e821338125aa9168f83567f46c581cabd747c79",
+      "bytes": 3738
+    },
+    "tests/test_digital_review_gui.py": {
+      "sha256": "5fec7d540ce9e14d8c991884d5aafdfa860030624451ca5c9f71e2925dffb2d4",
+      "bytes": 3554
+    },
+    "tests/test_dispatched_job_reopen.py": {
+      "sha256": "42ba15b8afbc848ff063dc212a2e9ae12030d96e6eed2d8c9c063f5d4e1cce3a",
+      "bytes": 2133
+    },
+    "tests/test_entity_relations.py": {
+      "sha256": "2361529385beb9bd742b55f9416fb44cb3f9feab9bb5977179113045d5637b59",
+      "bytes": 29991
+    },
+    "tests/test_evidence_modules.py": {
+      "sha256": "57259f284a565dd7f9e2964a6a1eabfde7cf193306e62f6698abcea4adaa8a55",
+      "bytes": 6036
+    },
+    "tests/test_evidence_publication.py": {
+      "sha256": "c28c74c723b17c618e292ddeed07a759da3a44e826390c5b0d57bc803b9ecb89",
+      "bytes": 6249
+    },
+    "tests/test_evidence_redaction.py": {
+      "sha256": "54ef05687701f8d08c0fa5425d6c2bb2cc69115fa1e271d32e2b4382aeb4f91d",
+      "bytes": 1049
+    },
+    "tests/test_family_index_scale.py": {
+      "sha256": "9ff6a563cba4eebbfd35c601916cb2f7acbde1b967e3f5352ae6488817c6f38d",
+      "bytes": 653
+    },
+    "tests/test_family_review_extensions.py": {
+      "sha256": "20bf07f49feae56c53c6fbf589e1f57f05bdb5854f2e583a9835f99e6c3c9f36",
+      "bytes": 6572
+    },
+    "tests/test_family_rules.py": {
+      "sha256": "c27156582faebf1b28a199fe9acf8d29aa4325bc3468586aa78068501b3baef3",
+      "bytes": 5941
+    },
+    "tests/test_family_scenarios_batch.py": {
+      "sha256": "965e0cfc41b99f405ff7d30d5e69453fa439e477e503c4408e2df4772755bd30",
+      "bytes": 5791
+    },
+    "tests/test_family_source_forms.py": {
+      "sha256": "0e81cc9ec707b3da889345b35714a933b21a9881fda12b6576175da23812b49c",
+      "bytes": 5115
+    },
+    "tests/test_family_workbench.py": {
+      "sha256": "fb4d73eb95ab7817981aa88bcb7d8aee85da9910323a010c09fdb03220fff252",
+      "bytes": 11925
+    },
+    "tests/test_family_workspace.py": {
+      "sha256": "7b5c8c5513dd36623003c70e5b795c8275bc6526f72e1dd76b56041ef2371119",
+      "bytes": 4880
+    },
+    "tests/test_final_digital_preflight.py": {
+      "sha256": "4022a8d93811ff5576adeabeb82856acf0f50152333437bb5e44a2f69e26472e",
+      "bytes": 5651
+    },
+    "tests/test_first_version.py": {
+      "sha256": "c0778ec2aad9b6fe7a2488384117872f1d85553e8f03eebc0799efa1913c4ce9",
+      "bytes": 13071
+    },
+    "tests/test_font_candidates.py": {
+      "sha256": "b725655e2040278ac6b4066fe7266d337dd8058747867a74299f06d6d6609aae",
+      "bytes": 18555
+    },
+    "tests/test_font_capture_privacy.py": {
+      "sha256": "f5ec86d6d666d53249753b011ff0fd37c872096dbf2e80d86c11284ec7a3f730",
+      "bytes": 1236
+    },
+    "tests/test_font_center.py": {
+      "sha256": "639249a2f368e127a6a5b37a2dc1417739eed9af3b16c56c34c7e3d01d4406db",
+      "bytes": 15489
+    },
+    "tests/test_font_center_filters.py": {
+      "sha256": "35219902311cb9449ee88db9b896cf89c6db2d9d0d0be3d47664cdfafb37e715",
+      "bytes": 2646
+    },
+    "tests/test_font_collection_shaping.py": {
+      "sha256": "398fd4af7f26458df34837ad2ffc49ea27a0d9bfc31337f6c3ed3fc3a3b5cb89",
+      "bytes": 1920
+    },
+    "tests/test_font_evidence.py": {
+      "sha256": "3fcd17b2256082f0324a81f28cf03542e582648a4fd73ebdbf5eeb0b3257063e",
+      "bytes": 6263
+    },
+    "tests/test_font_repair.py": {
+      "sha256": "6eeb255360d88d2b4c365266c77047ac7d6b6a6c1dd87ce2d806ac28b63717b1",
+      "bytes": 11211
+    },
+    "tests/test_font_review.py": {
+      "sha256": "c20d54170243917fed587e33c014e2dc248fa6796a19f51310e8bb5303ce0180",
+      "bytes": 26100
+    },
+    "tests/test_font_source_context_gui.py": {
+      "sha256": "931bceb722b3c12e24fdd40969cc102005d1158780687bbf70e502aaeef262c8",
+      "bytes": 4487
+    },
+    "tests/test_font_source_identity.py": {
+      "sha256": "4dee5eb702e0fa500e8c3a60d3df13b8705885ac6a228aa96d87e83f4374b6a6",
+      "bytes": 4147
+    },
+    "tests/test_git_readback.py": {
+      "sha256": "3b5ae783786bca26e61bf7439eb7428674ef2636b2d5cf9ac13f132a750be90a",
+      "bytes": 3198
+    },
+    "tests/test_gui_convergence_trace.py": {
+      "sha256": "2d4a9f9a60d59425e12cd5007a520ad16f2b3be0a2b5280c90f6846a9fb79d95",
+      "bytes": 2805
+    },
+    "tests/test_gui_tooling_extensions.py": {
+      "sha256": "e65649835180de3cc82d4e04f03db727dbf1d21901511ae286324ea5418874e0",
+      "bytes": 3262
+    },
+    "tests/test_guided_operations.py": {
+      "sha256": "adeba696d7ccc22bfed96f1f2105cac78cf48f874498426dbc58dec37f449c4b",
+      "bytes": 10865
+    },
+    "tests/test_host_font_source_rights.py": {
+      "sha256": "23cb6b8f761c3d121cae87598cfe2232bc1722fac8005dedb94d1755124b133e",
+      "bytes": 1558
+    },
+    "tests/test_import_exceptions.py": {
+      "sha256": "36e614f44a2122d9e02d8eabe26494aae6fc9c9564341898ce55770d41941719",
+      "bytes": 14203
+    },
+    "tests/test_import_pages.py": {
+      "sha256": "8f765b30d00fcf46ea89ee4ecf8b03b287d5e19998e42ed9577b206c3af02dcc",
+      "bytes": 4158
+    },
+    "tests/test_independent_scope_evidence.py": {
+      "sha256": "f31c55ed2c91423f55dddc7ffe8828a87db2e51aa7f2ec4ff1f7b2eb71462649",
+      "bytes": 3093
+    },
+    "tests/test_input_learning_integration.py": {
+      "sha256": "eae07720f16287e69be4fe610693df4f7b48564655826a22807782460ca8e36f",
+      "bytes": 29409
+    },
+    "tests/test_input_plain_language.py": {
+      "sha256": "0397ef5d260f28822b2098549ea46e69675a538731f6c2756a5f8844bcfb9bac",
+      "bytes": 3500
+    },
+    "tests/test_input_warnings.py": {
+      "sha256": "0e09d96cea2df087d2f54b5c6f1dc99a7248986f696b025c95b911f99f5e3b5b",
+      "bytes": 3166
+    },
+    "tests/test_joint_oracle.py": {
+      "sha256": "56045eb3ea9e22fdd48508afd91506936dd1da0d9612e25bb29fd46d9fe8dbfe",
+      "bytes": 2383
+    },
+    "tests/test_layout_recovery.py": {
+      "sha256": "821b20611743a7a50396f4e1a891e486abab73039ccb41cbf169bc5a52e266fc",
+      "bytes": 5152
+    },
+    "tests/test_layout_session_extended.py": {
+      "sha256": "c805df68e8e655c7e4338b9ae48856c5b77db141fd79e3827b817ed658b16f4a",
+      "bytes": 8182
+    },
+    "tests/test_local_acceptance.py": {
+      "sha256": "f2fed3a69ad1d912a60572ce73a87d744781f858a7d1038029cf6e1a845ce931",
+      "bytes": 1535
+    },
+    "tests/test_local_recovery.py": {
+      "sha256": "3ac1b052617ea4fc2ea2a55772ff612c053fb3e100701b07273b675401ef401c",
+      "bytes": 14889
+    },
+    "tests/test_local_start.py": {
+      "sha256": "a817a4aa20e8bc41d44123a892e946e3c28b814d3443608f362e5f03da2f555b",
+      "bytes": 2777
+    },
+    "tests/test_local_visual_binding.py": {
+      "sha256": "07f3b6ea45cd33276032fa9260e59dfddc9f9d4392b9a82a750aee22af7e293a",
+      "bytes": 5115
+    },
+    "tests/test_logo_lifecycle.py": {
+      "sha256": "f54879359cd00acb8fcc01bf400db888587416d35494ec41b8223648f4a1941a",
+      "bytes": 15135
+    },
+    "tests/test_logo_ocr.py": {
+      "sha256": "055bc2fbf638d3423ac53ce851e1669dc1a34e01fcd324387f0af5474fefeaa6",
+      "bytes": 4582
+    },
+    "tests/test_logo_output_proof.py": {
+      "sha256": "415b4f17049c8137963dcdbf2ecd2ea10890aba32a9f15147cc44e2a6a2d95f1",
+      "bytes": 2288
+    },
+    "tests/test_logo_workflow_gui.py": {
+      "sha256": "4eb73d8ecdf2f64b0be23b14fc4e6e52642799c7003b7e8a2bcc65d403026c40",
+      "bytes": 16603
+    },
+    "tests/test_major_review_closure.py": {
+      "sha256": "c03c5f89fbb6d93a138f176dad265ed34bdc70e298103297d7f57593009f6232",
+      "bytes": 6362
+    },
+    "tests/test_major_review_dependencies.py": {
+      "sha256": "bfd831aab485997510c2e2c1b4a08eeb03c06d2d023fda90145cc3460bc8f865",
+      "bytes": 4432
+    },
+    "tests/test_major_review_entries.py": {
+      "sha256": "61f59fec8ee3d0d3f43a79a5fdc1de7bcefb7fb0c46db253ff3fdd826d9fdca8",
+      "bytes": 5915
+    },
+    "tests/test_major_review_finding_gui.py": {
+      "sha256": "66d90daca9b00ad2c4a27599c1a3ace93ef655e023a13a219b288db6959eeaa3",
+      "bytes": 3438
+    },
+    "tests/test_major_review_findings.py": {
+      "sha256": "dafb86bdf8d9af1b8417b758ced97f29033f3bb736768f37fd269a0fa6341bbc",
+      "bytes": 7148
+    },
+    "tests/test_major_review_gui.py": {
+      "sha256": "bb9340d9eec7c633151588e8a26b719e0da6804befa8882494a2b4f46ca13282",
+      "bytes": 5583
+    },
+    "tests/test_major_review_job_gui.py": {
+      "sha256": "adbc38ec0d7a2202a6cbfdd2cac2c8f683e0ce404b36e6dca7f2395e35e78655",
+      "bytes": 6331
+    },
+    "tests/test_major_review_jobs.py": {
+      "sha256": "e9356a58950660cba8b5f5320699eb91659d1fdc2e31874c810bf7b056a22b83",
+      "bytes": 8900
+    },
+    "tests/test_major_review_template_gui.py": {
+      "sha256": "969fdd52db3e0c6d0fd29561b66f491925c6dd1ba18b8f35ada60bc9f2843906",
+      "bytes": 5204
+    },
+    "tests/test_major_template_review.py": {
+      "sha256": "605357fe522b7301d0f13a05704b55aca819b5ca79eb85beaa4e26950bd2f250",
+      "bytes": 6899
+    },
+    "tests/test_marker_review.py": {
+      "sha256": "2e8184fe3eb8774bea542863f56487cd91aa420c4ffaa14c9589668696e3cfdb",
+      "bytes": 5840
+    },
+    "tests/test_multi_size.py": {
+      "sha256": "54001a94489c773b19ff9e92c9f27cca76604ffc3b4e8066f7be20d40eee2a85",
+      "bytes": 11011
+    },
+    "tests/test_multi_size_edit_gui.py": {
+      "sha256": "d0dfd7e15cf2e0deceedb3405b6ee55bc2c895a76b18796648b349cb488ff4e4",
+      "bytes": 9299
+    },
+    "tests/test_multi_size_manual_sync.py": {
+      "sha256": "ce3bce820c53176985ead711814f9758f25548c6af2f304c24a626ee98165b80",
+      "bytes": 5696
+    },
+    "tests/test_noise_authoring.py": {
+      "sha256": "32254efae5924774477897db8f1c1c40bb7b19d2c096599760e4b368215efed4",
+      "bytes": 8782
+    },
+    "tests/test_noise_hits.py": {
+      "sha256": "e1b90ef2ab534790d032ab422534621ef2f71b9da43c4f77d49d68f85dc9e98e",
+      "bytes": 8662
+    },
+    "tests/test_noise_recovery.py": {
+      "sha256": "6c6a86f0a2b209e3b47ac2dbdd51e754489836d8fabb1ef7536a7bb523adfeca",
+      "bytes": 10751
+    },
+    "tests/test_object_index.py": {
+      "sha256": "e1c03fae14e9d7dbbaaab304740556d23eced9c8324e1e8af0d75e5df91e7355",
+      "bytes": 8291
+    },
+    "tests/test_object_tools.py": {
+      "sha256": "0ba1632a9ea91c63fb3696dba47d612f5092f155bc7b343fcbb740234d1f1865",
+      "bytes": 26041
+    },
+    "tests/test_offline_support.py": {
+      "sha256": "7ef4646d0e02c6ac409e4aceb1e5b4b27d3cff286bd2e54340a5e2a20774da4b",
+      "bytes": 18700
+    },
+    "tests/test_original_pdf_glyphs.py": {
+      "sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44",
+      "bytes": 6309
+    },
+    "tests/test_original_text_observation.py": {
+      "sha256": "ab3b4d7dc44891a697b420c05bd1740d178ed3718ef098cf02fd86b4b319202f",
+      "bytes": 9472
+    },
+    "tests/test_output_batch.py": {
+      "sha256": "2a50e1cbdfe51e14ddec09594b9d5bac866fe74eafd3e1b85194ae2770cb9d7a",
+      "bytes": 6353
+    },
+    "tests/test_output_batch_gui.py": {
+      "sha256": "ff09b96aff73b0c5a017145e6ebbf6331375436d3231e469e6593ef9c7763046",
+      "bytes": 3740
+    },
+    "tests/test_parent_navigation.py": {
+      "sha256": "60a7f1029ebca13ba089e47b925fb9951f097d98241a4196be7fb9026ae46ebe",
+      "bytes": 5258
+    },
+    "tests/test_persistent_fonts.py": {
+      "sha256": "bb9836e725f1a7dbfc802c2a33f3748e3b6d9067d32562f0a01d6e2982137ee2",
+      "bytes": 6690
+    },
+    "tests/test_preflight_progress.py": {
+      "sha256": "11ff6f1daa5a82c6830833349c337c16a9f2bf3348b8a14e62e4cc01c04eea1b",
+      "bytes": 2812
+    },
+    "tests/test_property_context.py": {
+      "sha256": "aff77f186b3f833bfb88d0ab190ad20beebfa28e13dd64894af49833101a3b9f",
+      "bytes": 9836
+    },
+    "tests/test_property_form_versions.py": {
+      "sha256": "1008aea06611e72cdba84a83e579404d0c9126e6777c25da10d39c654b2546b1",
+      "bytes": 6160
+    },
+    "tests/test_property_lifecycle.py": {
+      "sha256": "8b83aa643b7142322786f10d5c06a5c5c0539f3474bfe2cf32ecd59138d9ed71",
+      "bytes": 4719
+    },
+    "tests/test_property_selection.py": {
+      "sha256": "df0c7da1ad9511564aabe9ca7108e39fcaf94279d48cb8428fa32e38abf68e70",
+      "bytes": 4496
+    },
+    "tests/test_qt_event_contract.py": {
+      "sha256": "7a65ff888949dc4761ce1d3626f67b67fa2a40c9586a0f278891a249dfb948a2",
+      "bytes": 2396
+    },
+    "tests/test_qt_native_contract.py": {
+      "sha256": "5b50aa45a9b64b2cb2576635cb179ce098d0f0eeb711375fdc8a15d3c05a1fdb",
+      "bytes": 3444
+    },
+    "tests/test_qualified_coverage.py": {
+      "sha256": "cbd1b397a36ed31008dc47eedf324cba0e74ca741f7a69224d8fe3c33b5e6dd9",
+      "bytes": 6882
+    },
+    "tests/test_qualified_coverage_evidence.py": {
+      "sha256": "f4ffc01509447d18dfbc73f2f42fc586eee9efa6bfd82aafad0de6009175e20b",
+      "bytes": 6584
+    },
+    "tests/test_qualified_coverage_gui.py": {
+      "sha256": "292b10060eb87d12ff3aabe0071c749c741d517f7ed199f93386443c5412c483",
+      "bytes": 5570
+    },
+    "tests/test_quality_commands.py": {
+      "sha256": "4d396860e91ed5419c7170cff014d0302be6c0d5fd5e157ecd9946c047c34f95",
+      "bytes": 1782
+    },
+    "tests/test_quality_component_trust.py": {
+      "sha256": "369eda19959b7ff2aef5464f24b3aab8b2ea80cc2e3fd28d694f53db7be9f077",
+      "bytes": 3014
+    },
+    "tests/test_quality_coverage.py": {
+      "sha256": "50027f7ec7fd901b5ccbf8570dac9a55e111441c183ca2b31a0511151ece209c",
+      "bytes": 7155
+    },
+    "tests/test_quality_decisions.py": {
+      "sha256": "ed03d8e9b7099066872ab03c923aa749eeb05f9fceea9fd84a73449616e0e24f",
+      "bytes": 4570
+    },
+    "tests/test_quality_dispatch.py": {
+      "sha256": "8a0fa944eb8909d427161d2db7e37a223ef4808c801acb3bef45d6ab29839618",
+      "bytes": 6156
+    },
+    "tests/test_quality_domains.py": {
+      "sha256": "9eada42629c0fa1ad61e1dc57948a5544a45c009e85cab8b48f51ed1fb39ff98",
+      "bytes": 5256
+    },
+    "tests/test_quality_engine.py": {
+      "sha256": "51c8626d6313134d3805e3bfbe990cf558cd463f70369f3021f01c1f1769bc26",
+      "bytes": 3252
+    },
+    "tests/test_quality_gold_sets.py": {
+      "sha256": "796442225af9741c9e48158bf8233b95b92e677a71085c8979067f7cc4617850",
+      "bytes": 12312
+    },
+    "tests/test_quality_groups.py": {
+      "sha256": "3f01e6a54909a76a5814b6470e1880949ce7b3ac33d447b98adbbcbc13bc0411",
+      "bytes": 7505
+    },
+    "tests/test_quality_jobs.py": {
+      "sha256": "b4c64319cc9a6befbd44a7c2b5e1112077e7f06897bb4f266f497975b2fdcb10",
+      "bytes": 6782
+    },
+    "tests/test_quality_logo.py": {
+      "sha256": "a6f6a4560dc9d836d124f13944aca35ede5f97aef3ba53264a786a58094a7f77",
+      "bytes": 7326
+    },
+    "tests/test_quality_mapping.py": {
+      "sha256": "a03a07cb1c9b6e6fea5aed516fe7aa06299d949c091611a54dcca1990b041542",
+      "bytes": 7137
+    },
+    "tests/test_quality_metrics.py": {
+      "sha256": "ce4367501a4f253e2a17729cc606759a2a9db4f91ffbdc88d17266e35a5ae5a4",
+      "bytes": 3224
+    },
+    "tests/test_quality_ocr.py": {
+      "sha256": "c4b1271ee08ae0647c54339cc5ef3ecb45ee89aefd3d1247d61d8fd658007845",
+      "bytes": 5019
+    },
+    "tests/test_quality_operations.py": {
+      "sha256": "0702d90a35ae9255e34ec0fed7762e49c6d18874069aee96f981caca1deab806",
+      "bytes": 14629
+    },
+    "tests/test_quality_panel.py": {
+      "sha256": "75062be6318da1bcb41e1c3401432fe20f789502d0a90e84f3b1ce5a9541a975",
+      "bytes": 6014
+    },
+    "tests/test_quality_pipeline.py": {
+      "sha256": "9e40bcadb1b24df3d959b60dcdad75ee351634ced597464fc440bcecebcf0fb9",
+      "bytes": 2537
+    },
+    "tests/test_quality_policy.py": {
+      "sha256": "a97d662bd0ab74f6312f3188ce29c458176565db004feb67e604880cfffe92e6",
+      "bytes": 4586
+    },
+    "tests/test_quality_protocol.py": {
+      "sha256": "55f60f216103c3c9eeb0683a73d4845a51b481e3b95672bb8da31351ce175716",
+      "bytes": 5756
+    },
+    "tests/test_quality_provenance.py": {
+      "sha256": "d071e47a0f402a0dcc536f7ecbcc10778e1623e31e1e2b470aefa7e0fcd79e0d",
+      "bytes": 6599
+    },
+    "tests/test_quality_rechecks.py": {
+      "sha256": "d9379f6fcc1a7a9bd28fbd01950a2d1b4f71af67cf5577bd8c21b9a7ffb16f63",
+      "bytes": 6030
+    },
+    "tests/test_quality_repair_commands.py": {
+      "sha256": "14ee19cbb14d42ada455ce5887cde251d46f71be88b76c3f7de59c6b5c4fef0b",
+      "bytes": 3606
+    },
+    "tests/test_quality_repair_entries.py": {
+      "sha256": "519f566efa0038737b09e43a45b81c93436f4d926cc8e95fdb834fcff8447722",
+      "bytes": 3504
+    },
+    "tests/test_quality_repair_full_chain.py": {
+      "sha256": "90bf1970230513309a2498be8be3659a677e2ef0f6bdc1e0252c86f22678a431",
+      "bytes": 1300
+    },
+    "tests/test_quality_repair_gates.py": {
+      "sha256": "2b0f432635111f55ad90392efc1739d48dda7559526ede1eb95de505223101ad",
+      "bytes": 7614
+    },
+    "tests/test_quality_repair_gui.py": {
+      "sha256": "d0c1437541429bd08a0a6c6818cb21400fa4b00e6dfa60fa45264e9b66c4313d",
+      "bytes": 6052
+    },
+    "tests/test_quality_repair_gui_actions.py": {
+      "sha256": "679c12082c5ff74544bac252f574c7a401a104974f1a69f2d921bb5f9d931669",
+      "bytes": 8627
+    },
+    "tests/test_quality_repair_impact.py": {
+      "sha256": "ff288ec4165168d6147e4ad200f33592ff9a0b315c4ff9d4ee1e9ef550aaef40",
+      "bytes": 3684
+    },
+    "tests/test_quality_repair_import_canvas.py": {
+      "sha256": "c8aee683fa6495a2dad8714735529d2a06608ad6c29720d72e07c9be920508f0",
+      "bytes": 3433
+    },
+    "tests/test_quality_repair_releases.py": {
+      "sha256": "1e9e43c9112620383c1e7b0422aafb1d434bdc04a2c6168d4b21cfc899b497f0",
+      "bytes": 6861
+    },
+    "tests/test_quality_repair_replay.py": {
+      "sha256": "d99a9580b0fa566ca321242db2bc3de3656db633f0a18475335cf7984f25e010",
+      "bytes": 5299
+    },
+    "tests/test_quality_repair_rules.py": {
+      "sha256": "48dbfa875c5b5bc58dd269d98c9f1a0b346227984152b3d363f90b7991486668",
+      "bytes": 6556
+    },
+    "tests/test_quality_repair_training.py": {
+      "sha256": "0178e876c616d33c43888d1e61662e55cb00586d0051f82a32fd2f27c42ebd34",
+      "bytes": 11422
+    },
+    "tests/test_quality_repair_truth.py": {
+      "sha256": "8a8ef4e32dba734eed7a01ac419cc91bb9bf776ad5d86b81a80fd05ba49605f3",
+      "bytes": 5502
+    },
+    "tests/test_quality_repairs.py": {
+      "sha256": "84fabd9c8eaf3ee09c87c0e576ecaa72b83244542c5930e24b33140bddbb4815",
+      "bytes": 6344
+    },
+    "tests/test_quality_reports.py": {
+      "sha256": "2335e69334c61089aadeb7f59c0065738923d8203aaa509f032698f795b04698",
+      "bytes": 3543
+    },
+    "tests/test_quality_review_gui.py": {
+      "sha256": "97841cd2965835c402d3f23994160d856ea55ce37cb89f31a5070812ba2ad33e",
+      "bytes": 5071
+    },
+    "tests/test_quality_roles.py": {
+      "sha256": "3be5cdcd954cee36c0261ecd3de10d0e40dce141ccef7b729febafc8572c9e83",
+      "bytes": 6512
+    },
+    "tests/test_quality_rule_selector.py": {
+      "sha256": "cc8785262a5513bc9bf6c5a28d62fc674c6f418a6826afda848240044a629340",
+      "bytes": 3657
+    },
+    "tests/test_quality_rules.py": {
+      "sha256": "6f059147e620e405dff1f6a67247d5114d40bcebd16d848745c557624c0e20ea",
+      "bytes": 4139
+    },
+    "tests/test_quality_source_review.py": {
+      "sha256": "76f4599373db3989a8eeeb5516fa14661391fb9f1b3be3d20eba3cb72d207e28",
+      "bytes": 10774
+    },
+    "tests/test_quality_statistics.py": {
+      "sha256": "325b6f49d8e6605436cb9c3e97e091e46ca5a4c07addb5bac1f5261d2cb43e0e",
+      "bytes": 5121
+    },
+    "tests/test_record_snapshot_oracle.py": {
+      "sha256": "052b73fc7ed4403ac0b005554f8307acebe928f13c42c837e75c2dcdcef7de21",
+      "bytes": 8333
+    },
+    "tests/test_region_no_clustering.py": {
+      "sha256": "32c9f3fb560124ba380b04842bfcd53f17ff17de694f0d78904f62bddfcfb6f0",
+      "bytes": 1360
+    },
+    "tests/test_relational_backup.py": {
+      "sha256": "f6aec964c72f0d5e9598afeed666fdac0751f5d91df44cca64c601576c085e74",
+      "bytes": 24705
+    },
+    "tests/test_review_ledger.py": {
+      "sha256": "df65392e4482e8db59f123fc4b5b76a51b56b096e001a3b1696327ceb76e1da4",
+      "bytes": 7954
+    },
+    "tests/test_rule_review.py": {
+      "sha256": "fb46238cb9a7dfd677f2e705158d9ea3b4303a4b50a55294ccf847c2118b1548",
+      "bytes": 8649
+    },
+    "tests/test_runtime_dispatch.py": {
+      "sha256": "f5054b850ba2ef6231046bee51f2fbd21def93fd13442a08c0511b72bad583d6",
+      "bytes": 7958
+    },
+    "tests/test_runtime_execution.py": {
+      "sha256": "640e115f146c2dbeb1bdfec0796d98d96970875b3e468b3e193ce70fa81acc74",
+      "bytes": 3917
+    },
+    "tests/test_runtime_queue.py": {
+      "sha256": "1e5c2df2596384cb8b5c37ca2ca52c61e3bbda924556d4e3c79acad81205acf1",
+      "bytes": 9333
+    },
+    "tests/test_runtime_resources.py": {
+      "sha256": "f7dbc64035b1f518152e9fd4bd58785f9021a2a2fc9eb37c06176f5072510418",
+      "bytes": 6268
+    },
+    "tests/test_runtime_supervisor.py": {
+      "sha256": "81a64ebc54f256bfaab2750e828bfc6c22ac5f11c3177c04c99d072e80a42cc0",
+      "bytes": 5827
+    },
+    "tests/test_runtime_worker.py": {
+      "sha256": "6c7a7869eab0f7d67438f279ed5c529aacf596315f97a2eb983f8dc4cd8c655a",
+      "bytes": 3876
+    },
+    "tests/test_semantic_fields.py": {
+      "sha256": "091c5e27531ca43234eb00461ed81ed24adf8d8807036c5776aae8c7c9dd36b1",
+      "bytes": 4609
+    },
+    "tests/test_semantic_learning.py": {
+      "sha256": "7861c4bab96760190709032c3c8078c368c7b843c31995c012727ba498a374b8",
+      "bytes": 9486
+    },
+    "tests/test_seventy_ui.py": {
+      "sha256": "5ac6a6ef567d0397a080fa297b377eff45c7f7fd57d3acca4579c2a8545ae5d7",
+      "bytes": 11868
+    },
+    "tests/test_similarity_preflight.py": {
+      "sha256": "b4d5475fa09e85820cf5110df62d556f243387c4e69fb85b43b9ca1655b06e09",
+      "bytes": 4026
+    },
+    "tests/test_solve_callback_lifetime.py": {
+      "sha256": "303faf619d4822a9180faaf371fc7af14eff1fc6071d7e92ba37e1c3f913c4c9",
+      "bytes": 4612
+    },
+    "tests/test_source_cache.py": {
+      "sha256": "cafbbadd19ab476f017409033939414ce9c117164ebf24d39376a1b95d06f052",
+      "bytes": 4979
+    },
+    "tests/test_source_change_impact.py": {
+      "sha256": "e51f35c5055d0ba6ef8cf276376a67a1128442e2232d1c8bfd4c4dd7276c456d",
+      "bytes": 2005
+    },
+    "tests/test_source_history_gui.py": {
+      "sha256": "e350921ac8c349491535eded1c862f4a72f85d3137c9eec2c19d4045e313222c",
+      "bytes": 2462
+    },
+    "tests/test_source_region_hypotheses.py": {
+      "sha256": "ccdfa7d922d365dd730fa66cf15cee19c8e966f5693151c7ae700addc6d7e5c7",
+      "bytes": 2414
+    },
+    "tests/test_source_relink.py": {
+      "sha256": "1f7dfb02c1bca6e88d4413522bec54f742166029a48a0db79c510b1f10033715",
+      "bytes": 9440
+    },
+    "tests/test_source_relink_scope.py": {
+      "sha256": "5cce9f1a0d5ad37768cc91c0f1f5485827aa3ebcd6b92edfd7deb7b8192cc270",
+      "bytes": 11464
+    },
+    "tests/test_source_text_budget.py": {
+      "sha256": "b5bee1e22a74fdbf36dad9fa0d52cba093c9272b7d2d75b3e63aa39c3987ab6c",
+      "bytes": 2955
+    },
+    "tests/test_source_text_diagnostics.py": {
+      "sha256": "562639218a94077dce764bdddb95991468f33cf5e9d243335da47c791ffa2fdb",
+      "bytes": 5033
+    },
+    "tests/test_source_text_evidence.py": {
+      "sha256": "9ffde5875174134d9598a817533325ecab53bc0f1d2c7b6e8a13123a9de6f3c9",
+      "bytes": 2808
+    },
+    "tests/test_source_watch_center.py": {
+      "sha256": "b996a417f9ba7e13e553806e6e7fb945661c9cd60fd591f0b79f66a8d64a51a9",
+      "bytes": 11521
+    },
+    "tests/test_source_watch_index.py": {
+      "sha256": "025112fbecbc98ab27406c3b9822890be14e0aeeb3c0aa3dd527c7f5f26431e8",
+      "bytes": 11335
+    },
+    "tests/test_source_watch_service.py": {
+      "sha256": "c20b169bf8e122b8d6359da2b538be1099482b75666b96066950afaf1651371b",
+      "bytes": 11856
+    },
+    "tests/test_startup_catalog.py": {
+      "sha256": "d5caedc7a572e5f998288304fc7826399ee164ed2311678b2375448b4dc8de45",
+      "bytes": 6651
+    },
+    "tests/test_svg_preflight.py": {
+      "sha256": "9275beb0444016a3b06b5b5e86fdd301c5eac8b83967cce8cec9a59aa2f2c7f4",
+      "bytes": 2859
+    },
+    "tests/test_sync_workflow.py": {
+      "sha256": "5cf7eb7245573e4d4f0e95df8a86befd103a915bf4a378725e677d92a4ec0081",
+      "bytes": 9713
+    },
+    "tests/test_template_versions.py": {
+      "sha256": "70a1c33120e5914f6b2f423c9be1c96ebca52d0b8819406c248f863d459ae961",
+      "bytes": 4637
+    },
+    "tests/test_text_ink_bounds.py": {
+      "sha256": "f92d9c372b975f7ad5e8133c898554c3aa1ec68fb3010eac1f9cd5fd50dff2e0",
+      "bytes": 1891
+    },
+    "tests/test_text_policy.py": {
+      "sha256": "e31c5b86dd05591d177493df4a73e64aa16d8bcfcb78b19ad8b661cca98f794b",
+      "bytes": 5698
+    },
+    "tests/test_text_policy_context.py": {
+      "sha256": "9f2782175e0ae3b92bf2e7726c49f7861a68626455f7d77304c17094d5201180",
+      "bytes": 2197
+    },
+    "tests/test_training_facts.py": {
+      "sha256": "147d489437a715b59cec5ef4d9bf6cdd2ef1cf759883aae397d4a0961ecdc9aa",
+      "bytes": 8803
+    },
+    "tests/test_training_pipeline.py": {
+      "sha256": "6444b5bf113fa29b31cab3560d715c159884ef4610ecbb7a403abc9302dca6ad",
+      "bytes": 15357
+    },
+    "tests/test_training_quality.py": {
+      "sha256": "5d4ea31ce30531a26f98bb6fa8e98ee0a4076355890603b46ebe296379d8320c",
+      "bytes": 8334
+    },
+    "tests/test_trusted_sample_boundaries.py": {
+      "sha256": "5138071ac0f8b2a0db9ae2489d96d1536572e50e27f893ba3296c9a156e96b63",
+      "bytes": 4956
+    },
+    "tests/test_trusted_sample_directory.py": {
+      "sha256": "675b8ccd1d35892d75b9843f0ca6d6cadedbb6e3fa95bec122dee08e33cc2b5c",
+      "bytes": 4224
+    },
+    "tests/test_trusted_sample_gui.py": {
+      "sha256": "b5cc9cbbdfb348a2ffcc8d925dfa2383e86fd792d195705fb351bee6c44e9cd0",
+      "bytes": 5374
+    },
+    "tests/test_trusted_sample_pool.py": {
+      "sha256": "bc883c1cc03fbe2eb14afcb40d639ba9fa468e40b55243c2efc62aa9afd29c93",
+      "bytes": 12083
+    },
+    "tests/test_trusted_sample_prediction.py": {
+      "sha256": "9bf06db5fde446f3acb582e5542b049e62076efc58c3551042f72d4956e64477",
+      "bytes": 3531
+    },
+    "tests/test_trusted_sample_privacy.py": {
+      "sha256": "614f57089bedcba02fd04c7492c98733bf3ddd7a8deb1528742dd20489bb866a",
+      "bytes": 3234
+    },
+    "tests/test_trusted_samples.py": {
+      "sha256": "2f56025acf61424b4a983b38ab9e45d780c0bf59adc32f98a15778a6ff86d7c7",
+      "bytes": 9351
+    },
+    "tests/test_type3_glyph_unknown.py": {
+      "sha256": "9f3fa51a9f2c99cd90764e0e93663665d5ea568bc3d24a6fca67583f067e8343",
+      "bytes": 2857
+    },
+    "tests/test_viewport_workbench.py": {
+      "sha256": "ea17214373f54a74287b0b29a5f713790fcee0a69b54154cb59b5175b01b1d38",
+      "bytes": 3928
+    },
+    "tests/test_visual_background.py": {
+      "sha256": "490da264fdcaa62a34c41eca29997c406178963861f0ab20c25a90c81f716ec7",
+      "bytes": 10017
+    },
+    "tests/test_windows_font_sources.py": {
+      "sha256": "b4950a9f971da707e2b3242a1197ecd257b7af04bc53bcaf888a2491c9ca4593",
+      "bytes": 4170
+    },
+    "tests/test_windows_font_workflow.py": {
+      "sha256": "a66edb8988c1712548cd7049a06c15b690d318de20a3e7dff18836ae8b36ce92",
+      "bytes": 3460
+    },
+    "tests/test_windows_font_workflow_gui.py": {
+      "sha256": "f5bcb9aedb10fbb045a13c32233dee2ab682703170cfcba8f7e6a4d5261cf640",
+      "bytes": 2422
+    },
+    "tests/test_workbench_multi_navigation.py": {
+      "sha256": "6703e784890d194138563ac014c4e6e8a84e36d8018feba68b4110ed49a469ab",
+      "bytes": 3565
+    },
+    "tests/test_workbench_navigation.py": {
+      "sha256": "b39b945f24af13bd71f65493d59c4a619fc25829e07c0d2d40753eaa58d8f121",
+      "bytes": 14971
+    },
+    "tests/training_fixture.py": {
+      "sha256": "2542d4a27d09ad8f274a7cc2c6c33037895070c200e8e0503a04f10b3f221f7e",
+      "bytes": 1843
+    }
+  },
+  "input_files": 256,
+  "coverage": {
+    "detectionDate": "2026-10-20T20:55:50.233Z",
+    "formats": {
+      "python": {
+        "clones": 65,
+        "duplicatedLines": 829,
+        "duplicatedTokens": 5722,
+        "lines": 23180,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 3.5763589301121654,
+        "percentageTokens": 1.2139908091433325,
+        "sources": 254,
+        "tokens": 471338
+      }
+    },
+    "total": {
+      "clones": 65,
+      "duplicatedLines": 829,
+      "duplicatedTokens": 5722,
+      "lines": 23180,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 3.5763589301121654,
+      "percentageTokens": 1.2139908091433325,
+      "sources": 254,
+      "tokens": 471338
+    }
+  },
+  "versions": {
+    "ruff": "0.17.1",
+    "pyright": "1.1.414",
+    "jscpd": "5.4.1"
+  },
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/workspace/template-Ai/.cache/debug-tooling/node/node_modules/jscpd/run-jscpd.js",
+    "--config",
+    "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-tests-clones-001/jscpd-config.json",
+    "--no-gitignore",
+    "--output",
+    "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-tests-clones-001/clones",
+    "--silent",
+    "--ignore-identifiers",
+    "--max-gap-lines",
+    "1",
+    "--similarity=0.8",
+    "/workspace/template-Ai/docs/dev/debug_tooling/tests/test_quality.py",
+    "/workspace/template-Ai/tests/authored_font_fixture.py",
+    "/workspace/template-Ai/tests/digital_review_fixture.py",
+    "/workspace/template-Ai/tests/family_fixture.py",
+    "/workspace/template-Ai/tests/gui_wait.py",
+    "/workspace/template-Ai/tests/quality_acceptance_fixture.py",
+    "/workspace/template-Ai/tests/quality_repair_acceptance_fixture.py",
+    "/workspace/template-Ai/tests/runtime_fixture.py",
+    "/workspace/template-Ai/tests/sync_workflow_fixture.py",
+    "/workspace/template-Ai/tests/test_annotation_gui.py",
+    "/workspace/template-Ai/tests/test_annotations.py",
+    "/workspace/template-Ai/tests/test_artwork_recovery.py",
+    "/workspace/template-Ai/tests/test_assignment_oracle.py",
+    "/workspace/template-Ai/tests/test_automatic_pages.py",
+    "/workspace/template-Ai/tests/test_automatic_training.py",
+    "/workspace/template-Ai/tests/test_backup_center.py",
+    "/workspace/template-Ai/tests/test_backup_policy.py",
+    "/workspace/template-Ai/tests/test_batch_candidate_adapter.py",
+    "/workspace/template-Ai/tests/test_batch_candidate_gui.py",
+    "/workspace/template-Ai/tests/test_batch_correction_gui.py",
+    "/workspace/template-Ai/tests/test_batch_correction_source.py",
+    "/workspace/template-Ai/tests/test_batch_format_review.py",
+    "/workspace/template-Ai/tests/test_batch_format_review_gui.py",
+    "/workspace/template-Ai/tests/test_batch_import.py",
+    "/workspace/template-Ai/tests/test_batch_recovery.py",
+    "/workspace/template-Ai/tests/test_batch_source_relink.py",
+    "/workspace/template-Ai/tests/test_candidate_changes.py",
+    "/workspace/template-Ai/tests/test_candidate_edit_dispatch.py",
+    "/workspace/template-Ai/tests/test_candidate_edit_history.py",
+    "/workspace/template-Ai/tests/test_candidate_results.py",
+    "/workspace/template-Ai/tests/test_candidate_risk.py",
+    "/workspace/template-Ai/tests/test_candidate_risk_gui.py",
+    "/workspace/template-Ai/tests/test_candidate_source_versions.py",
+    "/workspace/template-Ai/tests/test_candidate_sync.py",
+    "/workspace/template-Ai/tests/test_candidate_sync_batch.py",
+    "/workspace/template-Ai/tests/test_candidate_sync_gui.py",
+    "/workspace/template-Ai/tests/test_canvas_command_focus.py",
+    "/workspace/template-Ai/tests/test_canvas_compare.py",
+    "/workspace/template-Ai/tests/test_canvas_controls.py",
+    "/workspace/template-Ai/tests/test_canvas_named_commands.py",
+    "/workspace/template-Ai/tests/test_catalog.py",
+    "/workspace/template-Ai/tests/test_coverage_batches.py",
+    "/workspace/template-Ai/tests/test_coverage_closure_gui.py",
+    "/workspace/template-Ai/tests/test_coverage_rules.py",
+    "/workspace/template-Ai/tests/test_custom_layout.py",
+    "/workspace/template-Ai/tests/test_customer_candidates.py",
+    "/workspace/template-Ai/tests/test_customer_graph_sync.py",
+    "/workspace/template-Ai/tests/test_customer_identity.py",
+    "/workspace/template-Ai/tests/test_customers.py",
+    "/workspace/template-Ai/tests/test_dataset_learning.py",
+    "/workspace/template-Ai/tests/test_design_assignment.py",
+    "/workspace/template-Ai/tests/test_design_components.py",
+    "/workspace/template-Ai/tests/test_design_composite_learning.py",
+    "/workspace/template-Ai/tests/test_design_evaluation.py",
+    "/workspace/template-Ai/tests/test_design_family.py",
+    "/workspace/template-Ai/tests/test_design_feedback_qualification.py",
+    "/workspace/template-Ai/tests/test_design_jobs.py",
+    "/workspace/template-Ai/tests/test_design_joint.py",
+    "/workspace/template-Ai/tests/test_design_learning.py",
+    "/workspace/template-Ai/tests/test_design_learning_gui.py",
+    "/workspace/template-Ai/tests/test_design_logo_synthesis.py",
+    "/workspace/template-Ai/tests/test_design_observation.py",
+    "/workspace/template-Ai/tests/test_design_ranking.py",
+    "/workspace/template-Ai/tests/test_design_rich_text.py",
+    "/workspace/template-Ai/tests/test_design_rule_extensions.py",
+    "/workspace/template-Ai/tests/test_design_session.py",
+    "/workspace/template-Ai/tests/test_design_source_binding.py",
+    "/workspace/template-Ai/tests/test_design_synthesis.py",
+    "/workspace/template-Ai/tests/test_design_text_flow.py",
+    "/workspace/template-Ai/tests/test_desktop_workspace.py",
+    "/workspace/template-Ai/tests/test_dev_framework.py",
+    "/workspace/template-Ai/tests/test_dev_progress.py",
+    "/workspace/template-Ai/tests/test_diagnostic_reports.py",
+    "/workspace/template-Ai/tests/test_digital_output_proof.py",
+    "/workspace/template-Ai/tests/test_digital_preflight.py",
+    "/workspace/template-Ai/tests/test_digital_preflight_gui.py",
+    "/workspace/template-Ai/tests/test_digital_review.py",
+    "/workspace/template-Ai/tests/test_digital_review_gui.py",
+    "/workspace/template-Ai/tests/test_dispatched_job_reopen.py",
+    "/workspace/template-Ai/tests/test_entity_relations.py",
+    "/workspace/template-Ai/tests/test_evidence_modules.py",
+    "/workspace/template-Ai/tests/test_evidence_publication.py",
+    "/workspace/template-Ai/tests/test_evidence_redaction.py",
+    "/workspace/template-Ai/tests/test_family_index_scale.py",
+    "/workspace/template-Ai/tests/test_family_review_extensions.py",
+    "/workspace/template-Ai/tests/test_family_rules.py",
+    "/workspace/template-Ai/tests/test_family_scenarios_batch.py",
+    "/workspace/template-Ai/tests/test_family_source_forms.py",
+    "/workspace/template-Ai/tests/test_family_workbench.py",
+    "/workspace/template-Ai/tests/test_family_workspace.py",
+    "/workspace/template-Ai/tests/test_final_digital_preflight.py",
+    "/workspace/template-Ai/tests/test_first_version.py",
+    "/workspace/template-Ai/tests/test_font_candidates.py",
+    "/workspace/template-Ai/tests/test_font_capture_privacy.py",
+    "/workspace/template-Ai/tests/test_font_center.py",
+    "/workspace/template-Ai/tests/test_font_center_filters.py",
+    "/workspace/template-Ai/tests/test_font_collection_shaping.py",
+    "/workspace/template-Ai/tests/test_font_evidence.py",
+    "/workspace/template-Ai/tests/test_font_repair.py",
+    "/workspace/template-Ai/tests/test_font_review.py",
+    "/workspace/template-Ai/tests/test_font_source_context_gui.py",
+    "/workspace/template-Ai/tests/test_font_source_identity.py",
+    "/workspace/template-Ai/tests/test_git_readback.py",
+    "/workspace/template-Ai/tests/test_gui_convergence_trace.py",
+    "/workspace/template-Ai/tests/test_gui_tooling_extensions.py",
+    "/workspace/template-Ai/tests/test_guided_operations.py",
+    "/workspace/template-Ai/tests/test_host_font_source_rights.py",
+    "/workspace/template-Ai/tests/test_import_exceptions.py",
+    "/workspace/template-Ai/tests/test_import_pages.py",
+    "/workspace/template-Ai/tests/test_independent_scope_evidence.py",
+    "/workspace/template-Ai/tests/test_input_learning_integration.py",
+    "/workspace/template-Ai/tests/test_input_plain_language.py",
+    "/workspace/template-Ai/tests/test_input_warnings.py",
+    "/workspace/template-Ai/tests/test_joint_oracle.py",
+    "/workspace/template-Ai/tests/test_layout_recovery.py",
+    "/workspace/template-Ai/tests/test_layout_session_extended.py",
+    "/workspace/template-Ai/tests/test_local_acceptance.py",
+    "/workspace/template-Ai/tests/test_local_recovery.py",
+    "/workspace/template-Ai/tests/test_local_start.py",
+    "/workspace/template-Ai/tests/test_local_visual_binding.py",
+    "/workspace/template-Ai/tests/test_logo_lifecycle.py",
+    "/workspace/template-Ai/tests/test_logo_ocr.py",
+    "/workspace/template-Ai/tests/test_logo_output_proof.py",
+    "/workspace/template-Ai/tests/test_logo_workflow_gui.py",
+    "/workspace/template-Ai/tests/test_major_review_closure.py",
+    "/workspace/template-Ai/tests/test_major_review_dependencies.py",
+    "/workspace/template-Ai/tests/test_major_review_entries.py",
+    "/workspace/template-Ai/tests/test_major_review_finding_gui.py",
+    "/workspace/template-Ai/tests/test_major_review_findings.py",
+    "/workspace/template-Ai/tests/test_major_review_gui.py",
+    "/workspace/template-Ai/tests/test_major_review_job_gui.py",
+    "/workspace/template-Ai/tests/test_major_review_jobs.py",
+    "/workspace/template-Ai/tests/test_major_review_template_gui.py",
+    "/workspace/template-Ai/tests/test_major_template_review.py",
+    "/workspace/template-Ai/tests/test_marker_review.py",
+    "/workspace/template-Ai/tests/test_multi_size.py",
+    "/workspace/template-Ai/tests/test_multi_size_edit_gui.py",
+    "/workspace/template-Ai/tests/test_multi_size_manual_sync.py",
+    "/workspace/template-Ai/tests/test_noise_authoring.py",
+    "/workspace/template-Ai/tests/test_noise_hits.py",
+    "/workspace/template-Ai/tests/test_noise_recovery.py",
+    "/workspace/template-Ai/tests/test_object_index.py",
+    "/workspace/template-Ai/tests/test_object_tools.py",
+    "/workspace/template-Ai/tests/test_offline_support.py",
+    "/workspace/template-Ai/tests/test_original_pdf_glyphs.py",
+    "/workspace/template-Ai/tests/test_original_text_observation.py",
+    "/workspace/template-Ai/tests/test_output_batch.py",
+    "/workspace/template-Ai/tests/test_output_batch_gui.py",
+    "/workspace/template-Ai/tests/test_parent_navigation.py",
+    "/workspace/template-Ai/tests/test_persistent_fonts.py",
+    "/workspace/template-Ai/tests/test_preflight_progress.py",
+    "/workspace/template-Ai/tests/test_property_context.py",
+    "/workspace/template-Ai/tests/test_property_form_versions.py",
+    "/workspace/template-Ai/tests/test_property_lifecycle.py",
+    "/workspace/template-Ai/tests/test_property_selection.py",
+    "/workspace/template-Ai/tests/test_qt_event_contract.py",
+    "/workspace/template-Ai/tests/test_qt_native_contract.py",
+    "/workspace/template-Ai/tests/test_qualified_coverage.py",
+    "/workspace/template-Ai/tests/test_qualified_coverage_evidence.py",
+    "/workspace/template-Ai/tests/test_qualified_coverage_gui.py",
+    "/workspace/template-Ai/tests/test_quality_commands.py",
+    "/workspace/template-Ai/tests/test_quality_component_trust.py",
+    "/workspace/template-Ai/tests/test_quality_coverage.py",
+    "/workspace/template-Ai/tests/test_quality_decisions.py",
+    "/workspace/template-Ai/tests/test_quality_dispatch.py",
+    "/workspace/template-Ai/tests/test_quality_domains.py",
+    "/workspace/template-Ai/tests/test_quality_engine.py",
+    "/workspace/template-Ai/tests/test_quality_gold_sets.py",
+    "/workspace/template-Ai/tests/test_quality_groups.py",
+    "/workspace/template-Ai/tests/test_quality_jobs.py",
+    "/workspace/template-Ai/tests/test_quality_logo.py",
+    "/workspace/template-Ai/tests/test_quality_mapping.py",
+    "/workspace/template-Ai/tests/test_quality_metrics.py",
+    "/workspace/template-Ai/tests/test_quality_ocr.py",
+    "/workspace/template-Ai/tests/test_quality_operations.py",
+    "/workspace/template-Ai/tests/test_quality_panel.py",
+    "/workspace/template-Ai/tests/test_quality_pipeline.py",
+    "/workspace/template-Ai/tests/test_quality_policy.py",
+    "/workspace/template-Ai/tests/test_quality_protocol.py",
+    "/workspace/template-Ai/tests/test_quality_provenance.py",
+    "/workspace/template-Ai/tests/test_quality_rechecks.py",
+    "/workspace/template-Ai/tests/test_quality_repair_commands.py",
+    "/workspace/template-Ai/tests/test_quality_repair_entries.py",
+    "/workspace/template-Ai/tests/test_quality_repair_full_chain.py",
+    "/workspace/template-Ai/tests/test_quality_repair_gates.py",
+    "/workspace/template-Ai/tests/test_quality_repair_gui.py",
+    "/workspace/template-Ai/tests/test_quality_repair_gui_actions.py",
+    "/workspace/template-Ai/tests/test_quality_repair_impact.py",
+    "/workspace/template-Ai/tests/test_quality_repair_import_canvas.py",
+    "/workspace/template-Ai/tests/test_quality_repair_releases.py",
+    "/workspace/template-Ai/tests/test_quality_repair_replay.py",
+    "/workspace/template-Ai/tests/test_quality_repair_rules.py",
+    "/workspace/template-Ai/tests/test_quality_repair_training.py",
+    "/workspace/template-Ai/tests/test_quality_repair_truth.py",
+    "/workspace/template-Ai/tests/test_quality_repairs.py",
+    "/workspace/template-Ai/tests/test_quality_reports.py",
+    "/workspace/template-Ai/tests/test_quality_review_gui.py",
+    "/workspace/template-Ai/tests/test_quality_roles.py",
+    "/workspace/template-Ai/tests/test_quality_rule_selector.py",
+    "/workspace/template-Ai/tests/test_quality_rules.py",
+    "/workspace/template-Ai/tests/test_quality_source_review.py",
+    "/workspace/template-Ai/tests/test_quality_statistics.py",
+    "/workspace/template-Ai/tests/test_record_snapshot_oracle.py",
+    "/workspace/template-Ai/tests/test_region_no_clustering.py",
+    "/workspace/template-Ai/tests/test_relational_backup.py",
+    "/workspace/template-Ai/tests/test_review_ledger.py",
+    "/workspace/template-Ai/tests/test_rule_review.py",
+    "/workspace/template-Ai/tests/test_runtime_dispatch.py",
+    "/workspace/template-Ai/tests/test_runtime_execution.py",
+    "/workspace/template-Ai/tests/test_runtime_queue.py",
+    "/workspace/template-Ai/tests/test_runtime_resources.py",
+    "/workspace/template-Ai/tests/test_runtime_supervisor.py",
+    "/workspace/template-Ai/tests/test_runtime_worker.py",
+    "/workspace/template-Ai/tests/test_semantic_fields.py",
+    "/workspace/template-Ai/tests/test_semantic_learning.py",
+    "/workspace/template-Ai/tests/test_seventy_ui.py",
+    "/workspace/template-Ai/tests/test_similarity_preflight.py",
+    "/workspace/template-Ai/tests/test_solve_callback_lifetime.py",
+    "/workspace/template-Ai/tests/test_source_cache.py",
+    "/workspace/template-Ai/tests/test_source_change_impact.py",
+    "/workspace/template-Ai/tests/test_source_history_gui.py",
+    "/workspace/template-Ai/tests/test_source_region_hypotheses.py",
+    "/workspace/template-Ai/tests/test_source_relink.py",
+    "/workspace/template-Ai/tests/test_source_relink_scope.py",
+    "/workspace/template-Ai/tests/test_source_text_budget.py",
+    "/workspace/template-Ai/tests/test_source_text_diagnostics.py",
+    "/workspace/template-Ai/tests/test_source_text_evidence.py",
+    "/workspace/template-Ai/tests/test_source_watch_center.py",
+    "/workspace/template-Ai/tests/test_source_watch_index.py",
+    "/workspace/template-Ai/tests/test_source_watch_service.py",
+    "/workspace/template-Ai/tests/test_startup_catalog.py",
+    "/workspace/template-Ai/tests/test_svg_preflight.py",
+    "/workspace/template-Ai/tests/test_sync_workflow.py",
+    "/workspace/template-Ai/tests/test_template_versions.py",
+    "/workspace/template-Ai/tests/test_text_ink_bounds.py",
+    "/workspace/template-Ai/tests/test_text_policy.py",
+    "/workspace/template-Ai/tests/test_text_policy_context.py",
+    "/workspace/template-Ai/tests/test_training_facts.py",
+    "/workspace/template-Ai/tests/test_training_pipeline.py",
+    "/workspace/template-Ai/tests/test_training_quality.py",
+    "/workspace/template-Ai/tests/test_trusted_sample_boundaries.py",
+    "/workspace/template-Ai/tests/test_trusted_sample_directory.py",
+    "/workspace/template-Ai/tests/test_trusted_sample_gui.py",
+    "/workspace/template-Ai/tests/test_trusted_sample_pool.py",
+    "/workspace/template-Ai/tests/test_trusted_sample_prediction.py",
+    "/workspace/template-Ai/tests/test_trusted_sample_privacy.py",
+    "/workspace/template-Ai/tests/test_trusted_samples.py",
+    "/workspace/template-Ai/tests/test_type3_glyph_unknown.py",
+    "/workspace/template-Ai/tests/test_viewport_workbench.py",
+    "/workspace/template-Ai/tests/test_visual_background.py",
+    "/workspace/template-Ai/tests/test_windows_font_sources.py",
+    "/workspace/template-Ai/tests/test_windows_font_workflow.py",
+    "/workspace/template-Ai/tests/test_windows_font_workflow_gui.py",
+    "/workspace/template-Ai/tests/test_workbench_multi_navigation.py",
+    "/workspace/template-Ai/tests/test_workbench_navigation.py",
+    "/workspace/template-Ai/tests/training_fixture.py"
+  ],
+  "exit_code": 0,
+  "seconds": 0.7406615639920346,
+  "configuration_sha256": "9b1c20d6ef6319b4795168ad75b8a03d1ae8ce36a2ccb2a10d8d43df1e23189a",
+  "source_unchanged": true,
+  "findings": [
+    {
+      "firstFile": {
+        "end": 16,
+        "endLoc": {
+          "column": 3,
+          "line": 16,
+          "position": 700
+        },
+        "name": "quality_acceptance_fixture.py",
+        "start": 6,
+        "startLoc": {
+          "column": 17,
+          "line": 6,
+          "position": 263
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.customers import CustomerStore\nfrom template_ai.quality_gold import QualityGold,DOMAINS,USE\nfrom template_ai.quality_sets import QualitySets\nfrom template_ai.quality_policy import QualityPolicies\nfrom template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_protocol import QualityProtocols\nfrom template_ai.quality_groups import QualityGroups\nfrom template_ai.quality_jobs import EvaluationJobs,run_evaluation\n\n\ndef actual_positive_pair(case,execute=True):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 10,
+        "endLoc": {
+          "column": 44,
+          "line": 10,
+          "position": 443
+        },
+        "name": "sync_workflow_fixture.py",
+        "start": 3,
+        "startLoc": {
+          "column": 5,
+          "line": 3,
+          "position": 106
+        }
+      },
+      "tokens": 74
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 8,
+          "line": 29,
+          "position": 887
+        },
+        "name": "test_artwork_recovery.py",
+        "start": 18,
+        "startLoc": {
+          "column": 35,
+          "line": 18,
+          "position": 557
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.model import Rect, learn_from_labels, new_id\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ArtworkRecoveryTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        image = QImage(900, 540, QImage.Format_ARGB32)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 8,
+          "line": 30,
+          "position": 960
+        },
+        "name": "test_batch_source_relink.py",
+        "start": 19,
+        "startLoc": {
+          "column": 36,
+          "line": 19,
+          "position": 633
+        }
+      },
+      "tokens": 87
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 8,
+          "line": 29,
+          "position": 887
+        },
+        "name": "test_artwork_recovery.py",
+        "start": 19,
+        "startLoc": {
+          "column": 31,
+          "line": 19,
+          "position": 615
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ArtworkRecoveryTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        image = QImage(900, 540, QImage.Format_ARGB32)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 8,
+          "line": 23,
+          "position": 758
+        },
+        "name": "test_import_pages.py",
+        "start": 13,
+        "startLoc": {
+          "column": 45,
+          "line": 13,
+          "position": 490
+        }
+      },
+      "tokens": 75
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 8,
+          "line": 29,
+          "position": 887
+        },
+        "name": "test_artwork_recovery.py",
+        "start": 19,
+        "startLoc": {
+          "column": 0,
+          "line": 19,
+          "position": 584
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ArtworkRecoveryTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        image = QImage(900, 540, QImage.Format_ARGB32)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 32,
+        "endLoc": {
+          "column": 8,
+          "line": 32,
+          "position": 983
+        },
+        "name": "test_offline_support.py",
+        "start": 21,
+        "startLoc": {
+          "column": 0,
+          "line": 21,
+          "position": 634
+        }
+      },
+      "tokens": 82
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 34,
+          "line": 18,
+          "position": 556
+        },
+        "name": "test_artwork_recovery.py",
+        "start": 5,
+        "startLoc": {
+          "column": 13,
+          "line": 5,
+          "position": 159
+        }
+      },
+      "format": "python",
+      "fragment": "from pathlib import Path\nimport sqlite3\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nos.environ.setdefault(\"QT_QPA_PLATFORM\", \"offscreen\")\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.demo import demo_template\nfrom template_ai.gui import MainWindow\nfrom template_ai.importer import import_file\nfrom template_ai.model import Rect, learn_from_labels, new_id",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 39,
+          "line": 21,
+          "position": 596
+        },
+        "name": "test_persistent_fonts.py",
+        "start": 8,
+        "startLoc": {
+          "column": 0,
+          "line": 8,
+          "position": 188
+        }
+      },
+      "tokens": 89
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 57,
+          "line": 22,
+          "position": 756
+        },
+        "name": "test_automatic_training.py",
+        "start": 12,
+        "startLoc": {
+          "column": 17,
+          "line": 12,
+          "position": 407
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.training_pipeline import LIVE_OWNERS\nfrom training_fixture import source_work\nfrom test_training_pipeline import pipeline_samples\nfrom test_dataset_learning import frozen\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass AutomaticTrainingTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name);self.library=Library(self.root/'data');self.service=AutomaticTraining(self.library)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 62,
+          "line": 23,
+          "position": 790
+        },
+        "name": "test_quality_coverage.py",
+        "start": 14,
+        "startLoc": {
+          "column": 5,
+          "line": 14,
+          "position": 455
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 32,
+        "endLoc": {
+          "column": 22,
+          "line": 32,
+          "position": 1069
+        },
+        "name": "test_batch_source_relink.py",
+        "start": 22,
+        "startLoc": {
+          "column": 48,
+          "line": 22,
+          "position": 750
+        }
+      },
+      "format": "python",
+      "fragment": "APP = QApplication.instance() or QApplication([])\n\n\nclass BatchSourceTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / \"data\")\n        self.addCleanup(self.library.close)\n        self.search = self.root / \"search\"",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 36,
+        "endLoc": {
+          "column": 23,
+          "line": 36,
+          "position": 1435
+        },
+        "name": "test_font_repair.py",
+        "start": 28,
+        "startLoc": {
+          "column": 77,
+          "line": 28,
+          "position": 1118
+        }
+      },
+      "tokens": 91
+    },
+    {
+      "firstFile": {
+        "end": 32,
+        "endLoc": {
+          "column": 22,
+          "line": 32,
+          "position": 1069
+        },
+        "name": "test_batch_source_relink.py",
+        "start": 22,
+        "startLoc": {
+          "column": 48,
+          "line": 22,
+          "position": 750
+        }
+      },
+      "format": "python",
+      "fragment": "APP = QApplication.instance() or QApplication([])\n\n\nclass BatchSourceTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / \"data\")\n        self.addCleanup(self.library.close)\n        self.search = self.root / \"search\"",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 40,
+        "endLoc": {
+          "column": 23,
+          "line": 40,
+          "position": 1518
+        },
+        "name": "test_persistent_fonts.py",
+        "start": 32,
+        "startLoc": {
+          "column": 92,
+          "line": 32,
+          "position": 1197
+        }
+      },
+      "tokens": 91
+    },
+    {
+      "firstFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 23,
+          "line": 30,
+          "position": 975
+        },
+        "name": "test_batch_source_relink.py",
+        "start": 14,
+        "startLoc": {
+          "column": 44,
+          "line": 14,
+          "position": 386
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication, QMessageBox\nfrom template_ai.gui import MainWindow\nfrom template_ai.importer import import_file\nfrom template_ai.source_dialog import SourceRelinkDialog\nfrom template_ai.source_discovery import discover_sources\nfrom template_ai.source_links import hash_source, verify_source\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass BatchSourceTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / \"data\")",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 17,
+      "secondFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 24,
+          "line": 30,
+          "position": 980
+        },
+        "name": "test_source_relink.py",
+        "start": 14,
+        "startLoc": {
+          "column": 43,
+          "line": 14,
+          "position": 424
+        }
+      },
+      "tokens": 137
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 42,
+          "line": 13,
+          "position": 536
+        },
+        "name": "test_candidate_sync.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 106
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.model import Template,Slot,Rect\nfrom template_ai.layout import generate\nfrom template_ai.candidate_sync import cross_property_plan,verify_cross_plan,field_reference\nAPP=QApplication.instance() or QApplication([])\n\n\nclass CandidateSyncTests(unittest.TestCase):\n    def setUp(self):\n        self.graph=InputGraph.from_legacy([dict(name=['Same name'],phone=['123'],company='c1'),dict(name=['Same name'],phone=['123'],company='c2')],[dict(name='Synthetic A'),dict(name='Synthetic B')]);self.inputs=self.graph.compile()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 46,
+          "line": 21,
+          "position": 743
+        },
+        "name": "test_object_tools.py",
+        "start": 11,
+        "startLoc": {
+          "column": 0,
+          "line": 11,
+          "position": 330
+        }
+      },
+      "tokens": 94
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 20,
+          "line": 14,
+          "position": 533
+        },
+        "name": "test_coverage_closure_gui.py",
+        "start": 4,
+        "startLoc": {
+          "column": 20,
+          "line": 4,
+          "position": 93
+        }
+      },
+      "format": "python",
+      "fragment": "from pathlib import Path\nfrom unittest.mock import patch\nfrom PySide6.QtCore import QTimer,Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.coverage_batches import CoverageBatches\nfrom template_ai.coverage_closure_panel import CoverageClosurePanel\nfrom template_ai.coverage_command import run_command\nfrom runtime_fixture import controlled_resources",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 16,
+          "line": 21,
+          "position": 779
+        },
+        "name": "test_design_composite_learning.py",
+        "start": 11,
+        "startLoc": {
+          "column": 58,
+          "line": 11,
+          "position": 307
+        }
+      },
+      "tokens": 87
+    },
+    {
+      "firstFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 8,
+          "line": 17,
+          "position": 612
+        },
+        "name": "test_custom_layout.py",
+        "start": 5,
+        "startLoc": {
+          "column": 55,
+          "line": 5,
+          "position": 163
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication,QMessageBox,QTableWidgetItem\nfrom PySide6.QtTest import QTest\nfrom template_ai.storage import Library\nfrom template_ai.demo import demo_template\nfrom template_ai.custom_layout import CustomLayout\nfrom template_ai.custom_layout_dialog import CustomLayoutDialog\nfrom template_ai.layout import generate\nfrom template_ai.gui import MainWindow\nAPP=QApplication.instance() or QApplication([])\n\nclass CustomLayoutTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name);self.library=Library(self.root/'data');self.addCleanup(self.library.close);self.t=demo_template();self.t.slots[0].rect.w=20;self.library.publish(self.t);self.service=CustomLayout(self.library);self.people=[dict(name=['Alex Example'],title=['Designer'],phone=['123'],email=['a@example.test'])];self.policy=dict(move_mm=0,expand_mm=40,gap_mm=0)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 28,
+        "endLoc": {
+          "column": 8,
+          "line": 28,
+          "position": 1021
+        },
+        "name": "test_design_composite_learning.py",
+        "start": 14,
+        "startLoc": {
+          "column": 42,
+          "line": 14,
+          "position": 488
+        }
+      },
+      "tokens": 97
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 16,
+          "line": 13,
+          "position": 398
+        },
+        "name": "test_customer_candidates.py",
+        "start": 1,
+        "startLoc": {
+          "column": 80,
+          "line": 1,
+          "position": 80
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"UI043：真實來源、人工事實、客戶候選與 SQLite 原子入庫。\"\"\"\nfrom copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.customer_candidates import CustomerCandidates\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 21,
+          "line": 12,
+          "position": 436
+        },
+        "name": "test_design_learning.py",
+        "start": 1,
+        "startLoc": {
+          "column": 76,
+          "line": 1,
+          "position": 76
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 38,
+          "line": 15,
+          "position": 544
+        },
+        "name": "test_customer_candidates.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 150
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.customer_candidates import CustomerCandidates\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog\nfrom template_ai.customers import CustomerStore\nfrom template_ai.gui import MainWindow",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 54,
+          "line": 12,
+          "position": 521
+        },
+        "name": "test_family_review_extensions.py",
+        "start": 4,
+        "startLoc": {
+          "column": 20,
+          "line": 4,
+          "position": 79
+        }
+      },
+      "tokens": 78
+    },
+    {
+      "firstFile": {
+        "end": 31,
+        "endLoc": {
+          "column": 19,
+          "line": 31,
+          "position": 1140
+        },
+        "name": "test_customer_candidates.py",
+        "start": 21,
+        "startLoc": {
+          "column": 48,
+          "line": 21,
+          "position": 796
+        }
+      },
+      "format": "python",
+      "fragment": "APP = QApplication.instance() or QApplication([])\n\n\nclass CustomerCandidateTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / 'library')\n        self.store = CustomerStore(self.library)\n        self.candidates = CustomerCandidates(self.store)\n        self.source, self.work, self.template = self.make_source('00001.svg')",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 37,
+        "endLoc": {
+          "column": 20,
+          "line": 37,
+          "position": 1489
+        },
+        "name": "test_logo_lifecycle.py",
+        "start": 27,
+        "startLoc": {
+          "column": 90,
+          "line": 27,
+          "position": 1148
+        }
+      },
+      "tokens": 92
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 47,
+          "line": 14,
+          "position": 505
+        },
+        "name": "test_customer_candidates.py",
+        "start": 2,
+        "startLoc": {
+          "column": 10,
+          "line": 2,
+          "position": 93
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.customer_candidates import CustomerCandidates\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog\nfrom template_ai.customers import CustomerStore",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 45,
+          "line": 12,
+          "position": 399
+        },
+        "name": "test_noise_authoring.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 41
+        }
+      },
+      "tokens": 82
+    },
+    {
+      "firstFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 16,
+          "line": 17,
+          "position": 608
+        },
+        "name": "test_customer_candidates.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 150
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\n\nfrom template_ai.customer_candidates import CustomerCandidates\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog\nfrom template_ai.customers import CustomerStore\nfrom template_ai.gui import MainWindow\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.model import Slot, Rect, learn_from_labels",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 21,
+          "line": 15,
+          "position": 530
+        },
+        "name": "test_rule_review.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 94
+        }
+      },
+      "tokens": 90
+    },
+    {
+      "firstFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 49,
+          "line": 23,
+          "position": 752
+        },
+        "name": "test_customer_graph_sync.py",
+        "start": 13,
+        "startLoc": {
+          "column": 28,
+          "line": 13,
+          "position": 439
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.demo import demo_template\nfrom template_ai.gui import MainWindow\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass CustomerGraphSyncTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 20,
+        "endLoc": {
+          "column": 54,
+          "line": 20,
+          "position": 553
+        },
+        "name": "test_input_plain_language.py",
+        "start": 8,
+        "startLoc": {
+          "column": 43,
+          "line": 8,
+          "position": 216
+        }
+      },
+      "tokens": 75
+    },
+    {
+      "firstFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 12,
+          "line": 12,
+          "position": 383
+        },
+        "name": "test_customer_identity.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.customer_identity import CustomerIdentity\nfrom template_ai.customers import CustomerStore\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library\nfrom pathlib import Path",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 16,
+          "line": 13,
+          "position": 400
+        },
+        "name": "test_design_session.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 26
+        }
+      },
+      "tokens": 79
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 8,
+          "line": 19,
+          "position": 524
+        },
+        "name": "test_customer_identity.py",
+        "start": 7,
+        "startLoc": {
+          "column": 42,
+          "line": 7,
+          "position": 176
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.customer_identity import CustomerIdentity\nfrom template_ai.customers import CustomerStore\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library\nfrom pathlib import Path\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass CustomerIdentityTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 8,
+          "line": 21,
+          "position": 688
+        },
+        "name": "test_design_text_flow.py",
+        "start": 9,
+        "startLoc": {
+          "column": 52,
+          "line": 9,
+          "position": 255
+        }
+      },
+      "tokens": 77
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 82,
+          "line": 19,
+          "position": 598
+        },
+        "name": "test_customer_identity.py",
+        "start": 9,
+        "startLoc": {
+          "column": 29,
+          "line": 9,
+          "position": 270
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library\nfrom pathlib import Path\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass CustomerIdentityTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 82,
+          "line": 13,
+          "position": 499
+        },
+        "name": "test_parent_navigation.py",
+        "start": 5,
+        "startLoc": {
+          "column": 43,
+          "line": 5,
+          "position": 166
+        }
+      },
+      "tokens": 79
+    },
+    {
+      "firstFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 39,
+          "line": 11,
+          "position": 370
+        },
+        "name": "test_customer_identity.py",
+        "start": 1,
+        "startLoc": {
+          "column": 10,
+          "line": 1,
+          "position": 10
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.customer_identity import CustomerIdentity\nfrom template_ai.customers import CustomerStore\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.storage import Library",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 53,
+          "line": 15,
+          "position": 528
+        },
+        "name": "test_record_snapshot_oracle.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 124
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 3,
+          "line": 19,
+          "position": 694
+        },
+        "name": "test_dataset_learning.py",
+        "start": 9,
+        "startLoc": {
+          "column": 43,
+          "line": 9,
+          "position": 248
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog\nfrom template_ai.source_links import VerifiedSource,fingerprint\nfrom training_fixture import source_work\nfrom test_noise_authoring import confirmed\nfrom test_trusted_samples import admitted\nAPP=QApplication.instance() or QApplication([])",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 4,
+          "line": 15,
+          "position": 577
+        },
+        "name": "test_design_source_binding.py",
+        "start": 5,
+        "startLoc": {
+          "column": 30,
+          "line": 5,
+          "position": 113
+        }
+      },
+      "tokens": 78
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 16,
+          "line": 14,
+          "position": 447
+        },
+        "name": "test_dataset_learning.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 21,
+          "line": 14,
+          "position": 483
+        },
+        "name": "test_noise_hits.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 100
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 16,
+          "line": 14,
+          "position": 447
+        },
+        "name": "test_dataset_learning.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 21,
+          "line": 14,
+          "position": 483
+        },
+        "name": "test_trusted_samples.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 100
+    },
+    {
+      "firstFile": {
+        "end": 27,
+        "endLoc": {
+          "column": 25,
+          "line": 27,
+          "position": 906
+        },
+        "name": "test_design_observation.py",
+        "start": 17,
+        "startLoc": {
+          "column": 0,
+          "line": 17,
+          "position": 497
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.storage import Library\nfrom template_ai.training_pipeline import LIVE_OWNERS\nfrom template_ai.training_store import TrainingStore\nfrom training_fixture import source_work, observations\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ObservationMetricTests(unittest.TestCase):\n    def test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected(self):\n        self.assertIsNone(ObservedScalar(None, 'pt', 'UNKNOWN', 'No source').value)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 16,
+          "line": 22,
+          "position": 722
+        },
+        "name": "test_training_facts.py",
+        "start": 13,
+        "startLoc": {
+          "column": 0,
+          "line": 13,
+          "position": 379
+        }
+      },
+      "tokens": 75
+    },
+    {
+      "firstFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 121,
+          "line": 29,
+          "position": 1156
+        },
+        "name": "test_design_rich_text.py",
+        "start": 17,
+        "startLoc": {
+          "column": 35,
+          "line": 17,
+          "position": 618
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.model import Rect, Slot\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom test_noise_authoring import confirmed\nfrom test_trusted_samples import admitted\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass CompositeSourceTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.root=Path(self.temp.name)\n        self.library=Library(self.root/'data');self.addCleanup(self.library.close);self.manager=FontManager(self.library)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 30,
+        "endLoc": {
+          "column": 121,
+          "line": 30,
+          "position": 1187
+        },
+        "name": "test_local_visual_binding.py",
+        "start": 18,
+        "startLoc": {
+          "column": 31,
+          "line": 18,
+          "position": 628
+        }
+      },
+      "tokens": 135
+    },
+    {
+      "firstFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 46,
+          "line": 12,
+          "position": 383
+        },
+        "name": "test_design_session.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.fonts import FontManager\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 57,
+          "line": 11,
+          "position": 430
+        },
+        "name": "test_design_source_binding.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 83
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 16,
+          "line": 14,
+          "position": 462
+        },
+        "name": "test_design_session.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.fonts import FontManager\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.design_learning import CrossWorkLearning,USE\nfrom template_ai.design_source_binding import SourceTypographyReview",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 26,
+          "line": 14,
+          "position": 497
+        },
+        "name": "test_design_synthesis.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 97
+    },
+    {
+      "firstFile": {
+        "end": 26,
+        "endLoc": {
+          "column": 4,
+          "line": 26,
+          "position": 902
+        },
+        "name": "test_design_session.py",
+        "start": 1,
+        "startLoc": {
+          "column": 10,
+          "line": 1,
+          "position": 10
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.fonts import FontManager\nfrom template_ai.demo import demo_template\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.design_learning import CrossWorkLearning,USE\nfrom template_ai.design_source_binding import SourceTypographyReview\nfrom template_ai.design_session import DesignSessions\nfrom template_ai.design_synthesis import input_facts\nfrom authored_font_fixture import bind_authored_fonts\nfrom training_fixture import source_work\nfrom test_noise_authoring import confirmed\nfrom test_trusted_samples import admitted\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass DesignSessionTests(unittest.TestCase):\n    @classmethod",
+      "isNew": false,
+      "kind": "similar",
+      "lines": 26,
+      "method": "gap",
+      "secondFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 4,
+          "line": 22,
+          "position": 711
+        },
+        "name": "test_quality_coverage.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 41
+        }
+      },
+      "similarity": 0.829,
+      "tokens": 141
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 13,
+          "line": 22,
+          "position": 804
+        },
+        "name": "test_desktop_workspace.py",
+        "start": 11,
+        "startLoc": {
+          "column": 25,
+          "line": 11,
+          "position": 294
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtGui import QMouseEvent\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QComboBox, QDialog, QPushButton, QFileDialog, QMessageBox\n\nfrom template_ai.gui import MainWindow\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.input_graph_dialog import InputGraphDialog\nfrom template_ai.design_learning import CrossWorkLearning\nfrom template_ai.design_session import DesignSessions\nfrom template_ai.design_synthesis import input_facts\nfrom template_ai.model import new_id\nfrom gui_wait import wait_for_gui, dispose_main_window",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 16,
+          "line": 19,
+          "position": 739
+        },
+        "name": "test_logo_workflow_gui.py",
+        "start": 8,
+        "startLoc": {
+          "column": 30,
+          "line": 8,
+          "position": 228
+        }
+      },
+      "tokens": 101
+    },
+    {
+      "firstFile": {
+        "end": 16,
+        "endLoc": {
+          "column": 42,
+          "line": 16,
+          "position": 481
+        },
+        "name": "test_first_version.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 142
+        }
+      },
+      "format": "python",
+      "fragment": "import copy\nimport json\nimport os\nfrom pathlib import Path\nimport shutil\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\n\nos.environ.setdefault(\"QT_QPA_PLATFORM\", \"offscreen\")\nfrom PySide6.QtCore import QSize\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtPdf import QPdfDocument\nfrom PySide6.QtWidgets import QApplication",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 49,
+          "line": 15,
+          "position": 451
+        },
+        "name": "test_font_candidates.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 93
+        }
+      },
+      "tokens": 81
+    },
+    {
+      "firstFile": {
+        "end": 40,
+        "endLoc": {
+          "column": 8,
+          "line": 40,
+          "position": 1472
+        },
+        "name": "test_first_version.py",
+        "start": 27,
+        "startLoc": {
+          "column": 5,
+          "line": 27,
+          "position": 956
+        }
+      },
+      "format": "python",
+      "fragment": "from authored_font_fixture import bind_authored_fonts\n\nAPP = QApplication.instance() or QApplication([])\nDATA = [{\"name\": \"林小明\", \"title\": \"設計顧問\", \"phone\": \"0900-123-456\", \"email\": \"hello@example.test\"}]\n\n\nclass FirstVersionTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.library = Library(self.root / \"data\")\n        self.addCleanup(self.library.close)\n        self.template = demo_template()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 38,
+        "endLoc": {
+          "column": 8,
+          "line": 38,
+          "position": 1485
+        },
+        "name": "test_visual_background.py",
+        "start": 25,
+        "startLoc": {
+          "column": 17,
+          "line": 25,
+          "position": 991
+        }
+      },
+      "tokens": 136
+    },
+    {
+      "firstFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 3,
+          "line": 23,
+          "position": 787
+        },
+        "name": "test_font_candidates.py",
+        "start": 13,
+        "startLoc": {
+          "column": 23,
+          "line": 13,
+          "position": 339
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication\nfrom template_ai.demo import demo_template\nfrom template_ai.font_catalog import analyze_font, build_inventory\nfrom template_ai.font_candidates import find_candidates, render_candidate\nfrom template_ai.font_candidate_dialog import FontCandidateDialog\nfrom template_ai.font_dialog import FontCenterDialog\nfrom template_ai.fonts import FontManager\nfrom template_ai.gui import MainWindow\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 43,
+          "line": 15,
+          "position": 495
+        },
+        "name": "test_logo_lifecycle.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 152
+        }
+      },
+      "tokens": 81
+    },
+    {
+      "firstFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 93,
+          "line": 15,
+          "position": 592
+        },
+        "name": "test_font_collection_shaping.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 106
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom fontTools.ttLib import TTFont\nimport test_multi_size as fixture\nfrom template_ai.background import file_digest\nfrom template_ai.render import render_image\nfrom template_ai.font_catalog import analyze_font,raw_asset,face_fingerprint\n\n\nclass FontCollectionShapingTests(unittest.TestCase):\n    setUp=fixture.MultiSizeTests.setUp\n    tearDown=fixture.MultiSizeTests.tearDown\n\n    def test_actual_extracted_collection_face_measures_and_renders_with_same_shaped_face(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 20,
+          "line": 14,
+          "position": 558
+        },
+        "name": "test_multi_size_manual_sync.py",
+        "start": 3,
+        "startLoc": {
+          "column": 11,
+          "line": 3,
+          "position": 127
+        }
+      },
+      "tokens": 81
+    },
+    {
+      "firstFile": {
+        "end": 28,
+        "endLoc": {
+          "column": 1,
+          "line": 28,
+          "position": 1042
+        },
+        "name": "test_font_repair.py",
+        "start": 16,
+        "startLoc": {
+          "column": 42,
+          "line": 16,
+          "position": 554
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.fonts import FontManager, font_errors\nfrom template_ai.gui import MainWindow\nfrom template_ai.layout import generate\nfrom template_ai.render import export\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\nFONT = next((p for p in (Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),\n                        Path('/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf'),\n                        Path(r'C:\\Windows\\Fonts\\arial.ttf')) if p.is_file()), None)\n\n\n@unittest.skipUnless(FONT, \"無可用環境字型，實際修復驗證跳過\")",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 29,
+        "endLoc": {
+          "column": 4,
+          "line": 29,
+          "position": 994
+        },
+        "name": "test_persistent_fonts.py",
+        "start": 19,
+        "startLoc": {
+          "column": 29,
+          "line": 19,
+          "position": 505
+        }
+      },
+      "tokens": 102
+    },
+    {
+      "firstFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 32,
+          "line": 23,
+          "position": 782
+        },
+        "name": "test_import_pages.py",
+        "start": 10,
+        "startLoc": {
+          "column": 75,
+          "line": 10,
+          "position": 389
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtGui import QColor, QImage, QPageLayout, QPageSize, QPainter, QPdfWriter\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.importer import import_file, svg_size\n\nAPP = QApplication.instance() or QApplication([])\n\n\nclass ImportPageTests(unittest.TestCase):\n    def setUp(self):\n        self.temp = tempfile.TemporaryDirectory()\n        self.addCleanup(self.temp.cleanup)\n        self.root = Path(self.temp.name)\n        self.path = self.root / \"two-pages.pdf\"",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 36,
+          "line": 23,
+          "position": 686
+        },
+        "name": "test_source_cache.py",
+        "start": 11,
+        "startLoc": {
+          "column": 25,
+          "line": 11,
+          "position": 288
+        }
+      },
+      "tokens": 108
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 41,
+          "line": 14,
+          "position": 454
+        },
+        "name": "test_local_visual_binding.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 57
+        }
+      },
+      "format": "python",
+      "fragment": "from pathlib import Path\nimport tempfile\nimport unittest\n\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtWidgets import QApplication\n\nfrom template_ai.background import file_digest\nfrom template_ai.demo import demo_template\nfrom template_ai.design_learning import CrossWorkLearning,USE\nfrom template_ai.design_source_binding import SourceTypographyReview\nfrom template_ai.fonts import FontManager",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 10,
+        "endLoc": {
+          "column": 48,
+          "line": 10,
+          "position": 400
+        },
+        "name": "test_similarity_preflight.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 78
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 110,
+          "line": 14,
+          "position": 556
+        },
+        "name": "test_major_review_finding_gui.py",
+        "start": 4,
+        "startLoc": {
+          "column": 5,
+          "line": 4,
+          "position": 141
+        }
+      },
+      "format": "python",
+      "fragment": "from training_fixture import observations\nfrom template_ai.quality_rechecks import blocked\nAPP=fixture.APP\n\n\nclass MajorFindingGuiTests(unittest.TestCase):\n    setUp=fixture.MajorReviewGuiTests.setUp\n    dispose=fixture.MajorReviewGuiTests.dispose\n    wait=fixture.MajorReviewGuiTests.wait\n    def case(self):\n        self.page.preview();self.wait();self.d.consent.setChecked(True);self.d.confirm();self.wait();self.page.table.selectRow(0);self.page.finding_evidence.setPlainText('Original source, all text objects and current human facts explicitly checked')",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 121,
+          "line": 17,
+          "position": 733
+        },
+        "name": "test_major_review_job_gui.py",
+        "start": 7,
+        "startLoc": {
+          "column": 17,
+          "line": 7,
+          "position": 290
+        }
+      },
+      "tokens": 103
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 779
+        },
+        "name": "test_major_review_jobs.py",
+        "start": 7,
+        "startLoc": {
+          "column": 42,
+          "line": 7,
+          "position": 375
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.major_review_jobs import plan,create\nfrom template_ai.major_review_commands import execute\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.model import new_id\nfrom template_ai.training_store import digest\nfrom template_ai.quality_rechecks import blocked\n\n\nclass MajorReviewJobTests(unittest.TestCase):\n    setUp=fixture.QualitySourceReviewTests.setUp\n    source_plan=fixture.QualitySourceReviewTests.plan\n    def make(self,twins=False,selected=None):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 4,
+          "line": 17,
+          "position": 750
+        },
+        "name": "test_major_template_review.py",
+        "start": 6,
+        "startLoc": {
+          "column": 51,
+          "line": 6,
+          "position": 342
+        }
+      },
+      "tokens": 74
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 779
+        },
+        "name": "test_major_review_jobs.py",
+        "start": 7,
+        "startLoc": {
+          "column": 47,
+          "line": 7,
+          "position": 380
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.major_review_jobs import plan,create\nfrom template_ai.major_review_commands import execute\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.model import new_id\nfrom template_ai.training_store import digest\nfrom template_ai.quality_rechecks import blocked\n\n\nclass MajorReviewJobTests(unittest.TestCase):\n    setUp=fixture.QualitySourceReviewTests.setUp\n    source_plan=fixture.QualitySourceReviewTests.plan\n    def make(self,twins=False,selected=None):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 4,
+          "line": 21,
+          "position": 938
+        },
+        "name": "test_quality_provenance.py",
+        "start": 10,
+        "startLoc": {
+          "column": 41,
+          "line": 10,
+          "position": 490
+        }
+      },
+      "tokens": 72
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 803
+        },
+        "name": "test_major_template_review.py",
+        "start": 7,
+        "startLoc": {
+          "column": 5,
+          "line": 7,
+          "position": 362
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.template_versions import TemplateVersions\nfrom template_ai.model import new_id\nfrom template_ai.training_store import digest\nfrom template_ai.candidate_risk import bind_source\nfrom template_ai.layout import generate\n\n\nclass MajorTemplateReviewTests(unittest.TestCase):\n    setUp=fixture.QualitySourceReviewTests.setUp\n    source_plan=fixture.QualitySourceReviewTests.plan\n    publish=fixture.QualitySourceReviewTests.publish\n    candidate=fixture.QualitySourceReviewTests.candidate",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 4,
+          "line": 23,
+          "position": 997
+        },
+        "name": "test_quality_provenance.py",
+        "start": 11,
+        "startLoc": {
+          "column": 5,
+          "line": 11,
+          "position": 512
+        }
+      },
+      "tokens": 77
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 860
+        },
+        "name": "test_major_template_review.py",
+        "start": 8,
+        "startLoc": {
+          "column": 4,
+          "line": 8,
+          "position": 420
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.model import new_id\nfrom template_ai.training_store import digest\nfrom template_ai.candidate_risk import bind_source\nfrom template_ai.layout import generate\n\n\nclass MajorTemplateReviewTests(unittest.TestCase):\n    setUp=fixture.QualitySourceReviewTests.setUp\n    source_plan=fixture.QualitySourceReviewTests.plan\n    publish=fixture.QualitySourceReviewTests.publish\n    candidate=fixture.QualitySourceReviewTests.candidate\n    def make(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 813
+        },
+        "name": "test_quality_rule_selector.py",
+        "start": 7,
+        "startLoc": {
+          "column": 4,
+          "line": 7,
+          "position": 327
+        }
+      },
+      "tokens": 77
+    },
+    {
+      "firstFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 4,
+          "line": 15,
+          "position": 497
+        },
+        "name": "test_marker_review.py",
+        "start": 3,
+        "startLoc": {
+          "column": 19,
+          "line": 3,
+          "position": 61
+        }
+      },
+      "format": "python",
+      "fragment": "from unittest.mock import patch\nfrom PySide6.QtWidgets import QInputDialog\nfrom template_ai.semantic_fields import review_issues\nimport test_annotation_gui as fixture\nAPP=fixture.APP\n\nclass MarkerReviewTests(unittest.TestCase):\n    setUp=fixture.AnnotationGuiTests.setUp\n    tearDown=fixture.AnnotationGuiTests.tearDown\n    job=fixture.AnnotationGuiTests.job\n    run_job=fixture.AnnotationGuiTests.run_job\n    window=fixture.AnnotationGuiTests.window\n    ready=fixture.AnnotationGuiTests.ready",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 13,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 4,
+          "line": 14,
+          "position": 500
+        },
+        "name": "test_source_text_budget.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 25
+        }
+      },
+      "tokens": 83
+    },
+    {
+      "firstFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 50,
+          "line": 18,
+          "position": 695
+        },
+        "name": "test_marker_review.py",
+        "start": 2,
+        "startLoc": {
+          "column": 0,
+          "line": 2,
+          "position": 26
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom unittest.mock import patch\nfrom PySide6.QtWidgets import QInputDialog\nfrom template_ai.semantic_fields import review_issues\nimport test_annotation_gui as fixture\nAPP=fixture.APP\n\nclass MarkerReviewTests(unittest.TestCase):\n    setUp=fixture.AnnotationGuiTests.setUp\n    tearDown=fixture.AnnotationGuiTests.tearDown\n    job=fixture.AnnotationGuiTests.job\n    run_job=fixture.AnnotationGuiTests.run_job\n    window=fixture.AnnotationGuiTests.window\n    ready=fixture.AnnotationGuiTests.ready\n\n    def test_rejected_and_quarantined_marker_persists_reason_and_blocks_truth_until_explicit_restore(self):\n        w,d=self.ready();o=d.session.observations[0];identity=o['id'];slot=o['slot_id'];original=deepcopy(d.session.base)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 17,
+      "secondFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 53,
+          "line": 22,
+          "position": 864
+        },
+        "name": "test_viewport_workbench.py",
+        "start": 5,
+        "startLoc": {
+          "column": 19,
+          "line": 5,
+          "position": 132
+        }
+      },
+      "tokens": 126
+    },
+    {
+      "firstFile": {
+        "end": 20,
+        "endLoc": {
+          "column": 34,
+          "line": 20,
+          "position": 680
+        },
+        "name": "test_multi_size.py",
+        "start": 9,
+        "startLoc": {
+          "column": 20,
+          "line": 9,
+          "position": 246
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtCore import Qt\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtPdf import QPdfDocument\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QFileDialog,QMessageBox\n\nfrom template_ai.customers import digest\nfrom template_ai.gui import MainWindow\nfrom template_ai.importer import import_file\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.logo_store import LogoStore\nfrom template_ai.model import Rect,Slot,Template",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 15,
+        "endLoc": {
+          "column": 69,
+          "line": 15,
+          "position": 588
+        },
+        "name": "test_noise_recovery.py",
+        "start": 5,
+        "startLoc": {
+          "column": 0,
+          "line": 5,
+          "position": 94
+        }
+      },
+      "tokens": 97
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 42,
+          "line": 13,
+          "position": 403
+        },
+        "name": "test_multi_size.py",
+        "start": 2,
+        "startLoc": {
+          "column": 10,
+          "line": 2,
+          "position": 103
+        }
+      },
+      "format": "python",
+      "fragment": "from copy import deepcopy\nfrom pathlib import Path\nimport tempfile\nimport threading\nimport unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtPdf import QPdfDocument\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QFileDialog,QMessageBox",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 47,
+          "line": 14,
+          "position": 474
+        },
+        "name": "test_record_snapshot_oracle.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 89
+        }
+      },
+      "tokens": 73
+    },
+    {
+      "firstFile": {
+        "end": 16,
+        "endLoc": {
+          "column": 38,
+          "line": 16,
+          "position": 508
+        },
+        "name": "test_multi_size.py",
+        "start": 6,
+        "startLoc": {
+          "column": 0,
+          "line": 6,
+          "position": 177
+        }
+      },
+      "format": "python",
+      "fragment": "import unittest\nfrom unittest.mock import patch\n\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtGui import QImage\nfrom PySide6.QtPdf import QPdfDocument\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QFileDialog,QMessageBox\n\nfrom template_ai.customers import digest\nfrom template_ai.gui import MainWindow",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 48,
+          "line": 17,
+          "position": 777
+        },
+        "name": "test_seventy_ui.py",
+        "start": 9,
+        "startLoc": {
+          "column": 21,
+          "line": 9,
+          "position": 310
+        }
+      },
+      "tokens": 79
+    },
+    {
+      "firstFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 45,
+          "line": 12,
+          "position": 399
+        },
+        "name": "test_noise_authoring.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "format": "python",
+      "fragment": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.noise import relative_region, normalized",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 12,
+      "secondFile": {
+        "end": 12,
+        "endLoc": {
+          "column": 45,
+          "line": 12,
+          "position": 399
+        },
+        "name": "test_rule_review.py",
+        "start": 1,
+        "startLoc": {
+          "column": 0,
+          "line": 1,
+          "position": 0
+        }
+      },
+      "tokens": 89
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 54,
+          "line": 13,
+          "position": 351
+        },
+        "name": "test_object_index.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 55
+        }
+      },
+      "format": "python",
+      "fragment": "import hashlib\nimport json\nimport os\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nos.environ.setdefault('QT_QPA_PLATFORM','offscreen')\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 62,
+          "line": 13,
+          "position": 478
+        },
+        "name": "test_object_tools.py",
+        "start": 3,
+        "startLoc": {
+          "column": 0,
+          "line": 3,
+          "position": 154
+        }
+      },
+      "tokens": 70
+    },
+    {
+      "firstFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 4,
+          "line": 21,
+          "position": 727
+        },
+        "name": "test_quality_jobs.py",
+        "start": 8,
+        "startLoc": {
+          "column": 16,
+          "line": 8,
+          "position": 221
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_policy import QualityPolicies\nfrom template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_protocol import QualityProtocols\nfrom template_ai.quality_jobs import EvaluationJobs,run_evaluation\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.runtime_worker import run_isolated\nfrom template_ai.model import new_id\nfrom test_runtime_execution import ALLOW,HOLD\n\n\nclass QualityJobTests(unittest.TestCase):\n    setUp=gold_fixture.QualityGoldSetTests.setUp\n\n    def build(self,two_sources=False):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 4,
+          "line": 18,
+          "position": 784
+        },
+        "name": "test_quality_repair_training.py",
+        "start": 6,
+        "startLoc": {
+          "column": 16,
+          "line": 6,
+          "position": 288
+        }
+      },
+      "tokens": 89
+    },
+    {
+      "firstFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 3,
+          "line": 14,
+          "position": 572
+        },
+        "name": "test_quality_panel.py",
+        "start": 4,
+        "startLoc": {
+          "column": 43,
+          "line": 4,
+          "position": 124
+        }
+      },
+      "format": "python",
+      "fragment": "from PySide6.QtWidgets import QApplication,QMessageBox\nimport test_quality_jobs as fixtures\nimport test_quality_dispatch as gui_fixture\nfrom template_ai.quality_jobs import run_evaluation\nfrom template_ai.quality_panel import QualityPanel,QualityCaseDialog\nfrom template_ai.quality_setup import QualitySetupDialog\nfrom template_ai.quality_diagnostics import QualityDiagnostics\nfrom template_ai.quality_command import run_command\nfrom template_ai.quality_protocol import QualityProtocols\n\nAPP=QApplication.instance() or QApplication([])",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 4,
+          "line": 13,
+          "position": 617
+        },
+        "name": "test_quality_provenance.py",
+        "start": 4,
+        "startLoc": {
+          "column": 26,
+          "line": 4,
+          "position": 157
+        }
+      },
+      "tokens": 71
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 4,
+          "line": 22,
+          "position": 801
+        },
+        "name": "test_quality_panel.py",
+        "start": 8,
+        "startLoc": {
+          "column": 51,
+          "line": 8,
+          "position": 320
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_panel import QualityPanel,QualityCaseDialog\nfrom template_ai.quality_setup import QualitySetupDialog\nfrom template_ai.quality_diagnostics import QualityDiagnostics\nfrom template_ai.quality_command import run_command\nfrom template_ai.quality_protocol import QualityProtocols\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass QualityPanelTests(unittest.TestCase):\n    setUp=fixtures.QualityJobTests.setUp\n    build=fixtures.QualityJobTests.build\n    window=gui_fixture.QualityDispatchTests.window\n\n    def completed(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 15,
+      "secondFile": {
+        "end": 23,
+        "endLoc": {
+          "column": 4,
+          "line": 23,
+          "position": 919
+        },
+        "name": "test_quality_repair_gui_actions.py",
+        "start": 10,
+        "startLoc": {
+          "column": 32,
+          "line": 10,
+          "position": 416
+        }
+      },
+      "tokens": 86
+    },
+    {
+      "firstFile": {
+        "end": 20,
+        "endLoc": {
+          "column": 4,
+          "line": 20,
+          "position": 749
+        },
+        "name": "test_quality_panel.py",
+        "start": 7,
+        "startLoc": {
+          "column": 36,
+          "line": 7,
+          "position": 253
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_jobs import run_evaluation\nfrom template_ai.quality_panel import QualityPanel,QualityCaseDialog\nfrom template_ai.quality_setup import QualitySetupDialog\nfrom template_ai.quality_diagnostics import QualityDiagnostics\nfrom template_ai.quality_command import run_command\nfrom template_ai.quality_protocol import QualityProtocols\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass QualityPanelTests(unittest.TestCase):\n    setUp=fixtures.QualityJobTests.setUp\n    build=fixtures.QualityJobTests.build\n    window=gui_fixture.QualityDispatchTests.window",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 712
+        },
+        "name": "test_quality_repair_import_canvas.py",
+        "start": 5,
+        "startLoc": {
+          "column": 33,
+          "line": 5,
+          "position": 209
+        }
+      },
+      "tokens": 90
+    },
+    {
+      "firstFile": {
+        "end": 24,
+        "endLoc": {
+          "column": 8,
+          "line": 24,
+          "position": 1030
+        },
+        "name": "test_quality_provenance.py",
+        "start": 9,
+        "startLoc": {
+          "column": 41,
+          "line": 9,
+          "position": 436
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.training_pipeline import LIVE_OWNERS\nfrom template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_rechecks import blocked\nfrom template_ai.coverage_batches import CoverageBatches\nfrom template_ai.coverage_evidence import work_context\nfrom template_ai.source_analysis import ANALYSER_VERSION\nfrom template_ai.training_store import digest\n\n\nclass QualityProducerProvenanceTests(unittest.TestCase):\n    setUp=recheck_fixture.QualityRecheckTests.setUp\n    build=recheck_fixture.QualityRecheckTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical\n\n    def trained_model(self):\n        self.semantic=SemanticLearning(self.library)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 16,
+      "secondFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 8,
+          "line": 18,
+          "position": 785
+        },
+        "name": "test_quality_repair_impact.py",
+        "start": 3,
+        "startLoc": {
+          "column": 33,
+          "line": 3,
+          "position": 130
+        }
+      },
+      "tokens": 98
+    },
+    {
+      "firstFile": {
+        "end": 24,
+        "endLoc": {
+          "column": 21,
+          "line": 24,
+          "position": 1043
+        },
+        "name": "test_quality_provenance.py",
+        "start": 10,
+        "startLoc": {
+          "column": 40,
+          "line": 10,
+          "position": 489
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_rechecks import blocked\nfrom template_ai.coverage_batches import CoverageBatches\nfrom template_ai.coverage_evidence import work_context\nfrom template_ai.source_analysis import ANALYSER_VERSION\nfrom template_ai.training_store import digest\n\n\nclass QualityProducerProvenanceTests(unittest.TestCase):\n    setUp=recheck_fixture.QualityRecheckTests.setUp\n    build=recheck_fixture.QualityRecheckTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical\n\n    def trained_model(self):\n        self.semantic=SemanticLearning(self.library)",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 15,
+      "secondFile": {
+        "end": 18,
+        "endLoc": {
+          "column": 21,
+          "line": 18,
+          "position": 712
+        },
+        "name": "test_quality_repairs.py",
+        "start": 4,
+        "startLoc": {
+          "column": 31,
+          "line": 4,
+          "position": 170
+        }
+      },
+      "tokens": 92
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 834
+        },
+        "name": "test_quality_provenance.py",
+        "start": 8,
+        "startLoc": {
+          "column": 61,
+          "line": 8,
+          "position": 381
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.automatic_training import AutomaticTraining,run_automatic\nfrom template_ai.training_pipeline import LIVE_OWNERS\nfrom template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_rechecks import blocked\nfrom template_ai.coverage_batches import CoverageBatches\nfrom template_ai.coverage_evidence import work_context\nfrom template_ai.source_analysis import ANALYSER_VERSION\nfrom template_ai.training_store import digest\n\n\nclass QualityProducerProvenanceTests(unittest.TestCase):\n    setUp=recheck_fixture.QualityRecheckTests.setUp",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 587
+        },
+        "name": "test_record_snapshot_oracle.py",
+        "start": 7,
+        "startLoc": {
+          "column": 7,
+          "line": 7,
+          "position": 162
+        }
+      },
+      "tokens": 74
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 4,
+          "line": 22,
+          "position": 809
+        },
+        "name": "test_quality_repair_gui.py",
+        "start": 9,
+        "startLoc": {
+          "column": 66,
+          "line": 9,
+          "position": 390
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_repair_dialog import QualityRepairDialog,TITLES\nfrom template_ai.quality_repairs import QualityRepairs\nfrom template_ai.training_quality_dialog import TrainingQualityDialog\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass QualityRepairGuiTests(unittest.TestCase):\n    setUp=fixtures.QualityGoldSetTests.setUp\n    window=gui_fixture.QualityPanelTests.window\n    panel=gui_fixture.QualityPanelTests.panel\n    wait=gui_fixture.QualityPanelTests.wait\n\n    def dialog(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 24,
+        "endLoc": {
+          "column": 4,
+          "line": 24,
+          "position": 967
+        },
+        "name": "test_quality_repair_gui_actions.py",
+        "start": 12,
+        "startLoc": {
+          "column": 40,
+          "line": 12,
+          "position": 538
+        }
+      },
+      "tokens": 76
+    },
+    {
+      "firstFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 4,
+          "line": 17,
+          "position": 681
+        },
+        "name": "test_quality_repair_impact.py",
+        "start": 2,
+        "startLoc": {
+          "column": 12,
+          "line": 2,
+          "position": 88
+        }
+      },
+      "format": "python",
+      "fragment": "import copy,unittest\nimport test_quality_provenance as fixtures\nfrom template_ai.quality_rechecks import QualityRechecks\nfrom template_ai.quality_repairs import QualityRepairs\nfrom template_ai.demo import demo_template\nfrom template_ai.customers import CustomerStore\nfrom template_ai.input_graph import InputGraph\nfrom template_ai.model import new_id\n\n\nclass QualityRepairImpactTests(unittest.TestCase):\n    setUp=fixtures.QualityProducerProvenanceTests.setUp\n    trained_model=fixtures.QualityProducerProvenanceTests.trained_model\n    actual_work=fixtures.QualityProducerProvenanceTests.actual_work\n\n    def test_actual_training_producer_and_historical_templates_reach_customer_without_writes(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 16,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 4,
+          "line": 17,
+          "position": 753
+        },
+        "name": "test_quality_rule_selector.py",
+        "start": 3,
+        "startLoc": {
+          "column": 36,
+          "line": 3,
+          "position": 143
+        }
+      },
+      "tokens": 96
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 4,
+          "line": 22,
+          "position": 915
+        },
+        "name": "test_quality_repair_releases.py",
+        "start": 9,
+        "startLoc": {
+          "column": 83,
+          "line": 9,
+          "position": 455
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_repair_releases import QualityRepairReleases,ACTIVE,EVENT,KEY\nfrom template_ai.automatic_training import AutomaticTraining\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.runtime_worker import run_isolated\nfrom template_ai.model import new_id\nfrom test_runtime_execution import ALLOW\n\n\nclass QualityRepairReleaseTests(unittest.TestCase):\n    setUp=fixtures.QualityGoldSetTests.setUp\n    build=recheck_fixture.QualityRecheckTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical\n\n    def accepted(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 17,
+        "endLoc": {
+          "column": 4,
+          "line": 17,
+          "position": 703
+        },
+        "name": "test_quality_repair_replay.py",
+        "start": 5,
+        "startLoc": {
+          "column": 37,
+          "line": 5,
+          "position": 242
+        }
+      },
+      "tokens": 78
+    },
+    {
+      "firstFile": {
+        "end": 13,
+        "endLoc": {
+          "column": 4,
+          "line": 13,
+          "position": 634
+        },
+        "name": "test_quality_repair_training.py",
+        "start": 3,
+        "startLoc": {
+          "column": 25,
+          "line": 3,
+          "position": 148
+        }
+      },
+      "format": "python",
+      "fragment": "from unittest.mock import patch\nimport test_semantic_learning as fixtures\nfrom template_ai.automatic_training import AutomaticTraining,run_automatic\nfrom template_ai.quality_repairs import QualityRepairs\nfrom template_ai.quality_repair_training import create\nfrom template_ai.runtime_queue import RuntimeQueue\nfrom template_ai.runtime_worker import run_isolated,WorkerTimeout\nfrom template_ai.training_pipeline import LIVE_OWNERS\nfrom template_ai.storage import Library\nfrom template_ai.model import new_id\nfrom test_runtime_execution import ALLOW,HOLD",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 5,
+          "line": 19,
+          "position": 777
+        },
+        "name": "test_quality_roles.py",
+        "start": 7,
+        "startLoc": {
+          "column": 28,
+          "line": 7,
+          "position": 243
+        }
+      },
+      "tokens": 85
+    },
+    {
+      "firstFile": {
+        "end": 21,
+        "endLoc": {
+          "column": 4,
+          "line": 21,
+          "position": 767
+        },
+        "name": "test_quality_review_gui.py",
+        "start": 8,
+        "startLoc": {
+          "column": 5,
+          "line": 8,
+          "position": 267
+        }
+      },
+      "format": "python",
+      "fragment": "from quality_acceptance_fixture import actual_positive_pair\nfrom template_ai.quality_reports import QualityReports\nfrom template_ai.quality_rechecks import blocked\n\n\nclass QualityReviewGuiTests(unittest.TestCase):\n    setUp=fixtures.QualityGoldSetTests.setUp\n    window=gui_fixture.QualityPanelTests.window\n    panel=gui_fixture.QualityPanelTests.panel\n    wait=gui_fixture.QualityPanelTests.wait\n    build=jobs_fixture.QualityJobTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical\n\n    def test_actual_native_compare_accept_and_withdraw_preserves_original_decision(self):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 14,
+      "secondFile": {
+        "end": 20,
+        "endLoc": {
+          "column": 4,
+          "line": 20,
+          "position": 915
+        },
+        "name": "test_quality_rule_selector.py",
+        "start": 8,
+        "startLoc": {
+          "column": 17,
+          "line": 8,
+          "position": 406
+        }
+      },
+      "tokens": 81
+    },
+    {
+      "firstFile": {
+        "end": 19,
+        "endLoc": {
+          "column": 4,
+          "line": 19,
+          "position": 708
+        },
+        "name": "test_quality_review_gui.py",
+        "start": 8,
+        "startLoc": {
+          "column": 38,
+          "line": 8,
+          "position": 300
+        }
+      },
+      "format": "python",
+      "fragment": "from quality_acceptance_fixture import actual_positive_pair\nfrom template_ai.quality_reports import QualityReports\nfrom template_ai.quality_rechecks import blocked\n\n\nclass QualityReviewGuiTests(unittest.TestCase):\n    setUp=fixtures.QualityGoldSetTests.setUp\n    window=gui_fixture.QualityPanelTests.window\n    panel=gui_fixture.QualityPanelTests.panel\n    wait=gui_fixture.QualityPanelTests.wait\n    build=jobs_fixture.QualityJobTests.build\n    critical=recheck_fixture.QualityRecheckTests.critical",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 14,
+        "endLoc": {
+          "column": 4,
+          "line": 14,
+          "position": 535
+        },
+        "name": "test_svg_preflight.py",
+        "start": 3,
+        "startLoc": {
+          "column": 32,
+          "line": 3,
+          "position": 121
+        }
+      },
+      "tokens": 70
+    },
+    {
+      "firstFile": {
+        "end": 22,
+        "endLoc": {
+          "column": 28,
+          "line": 22,
+          "position": 893
+        },
+        "name": "test_quality_roles.py",
+        "start": 11,
+        "startLoc": {
+          "column": 17,
+          "line": 11,
+          "position": 433
+        }
+      },
+      "format": "python",
+      "fragment": "from template_ai.quality_pipeline import QualityPipelines\nfrom template_ai.quality_protocol import QualityProtocols\nfrom template_ai.quality_jobs import EvaluationJobs,run_evaluation\nfrom template_ai.quality_reports import QualityReports\nfrom template_ai.quality_diagnostics import QualityDiagnostics\nfrom template_ai.quality_statistics import aggregate\n\n\nclass QualityRoleTests(unittest.TestCase):\n    setUp=gold_fixture.QualityGoldSetTests.setUp\n\n    def diagnostic_gold(self,use=DIAGNOSTIC_USE):",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 12,
+      "secondFile": {
+        "end": 16,
+        "endLoc": {
+          "column": 102,
+          "line": 16,
+          "position": 816
+        },
+        "name": "test_trusted_sample_boundaries.py",
+        "start": 7,
+        "startLoc": {
+          "column": 5,
+          "line": 7,
+          "position": 275
+        }
+      },
+      "tokens": 75
+    },
+    {
+      "firstFile": {
+        "end": 65,
+        "endLoc": {
+          "column": 15,
+          "line": 65,
+          "position": 2432
+        },
+        "name": "test_solve_callback_lifetime.py",
+        "start": 55,
+        "startLoc": {
+          "column": 37,
+          "line": 55,
+          "position": 2015
+        }
+      },
+      "format": "python",
+      "fragment": "        old, current = self.worker(), self.worker()\n        self.dialog.solve_worker = current\n        self.dialog.bound_to_main = True\n        self.dialog.set_solving(True)\n        old.finished.connect(self.dialog.solve_finished)\n        old.finished.emit()\n        self.assertTrue(self.window.busy)\n        self.assertTrue(self.dialog.cancel_solve_button.isEnabled())\n\n    def test_current_worker_finish_still_releases_busy_state(self):\n        current = self.worker()",
+      "isNew": false,
+      "kind": "renamed",
+      "lines": 11,
+      "secondFile": {
+        "end": 75,
+        "endLoc": {
+          "column": 14,
+          "line": 75,
+          "position": 2878
+        },
+        "name": "test_solve_callback_lifetime.py",
+        "start": 65,
+        "startLoc": {
+          "column": 17,
+          "line": 65,
+          "position": 2434
+        }
+      },
+      "tokens": 92
+    }
+  ],
+  "structural_test_file_exclusion": "jscpd similarity excludes test files by design; token-based renamed comparison still covers explicit inputs",
+  "paid_or_remote_model": false
+}

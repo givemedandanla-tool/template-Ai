@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_offline_support.py": {
+      "source_sha256": "7ef4646d0e02c6ac409e4aceb1e5b4b27d3cff286bd2e54340a5e2a20774da4b",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/offline_support.py": {
+      "source_sha256": "53f91bba4d4e5eed3ede96f6685476fb616ba8c5d48ad22bc43f080361c64baf",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/diagnostic_bundle.py": {
+      "source_sha256": "73f26c27d41879e88b6d72a06841a30a1e1746ae27c23a0175ba29763fd87909",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 5,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-TES-08711": {
+      "visits": 3,
+      "values": {
+        "receiver": {
+          "test_offline_support.Window": 3
+        }
+      },
+      "member_checks": {
+        "test_offline_support.Window:False": 3
+      },
+      "test_contexts": [
+        "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+        "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+        "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08712": {
+      "visits": 3,
+      "values": {
+        "receiver": {
+          "test_offline_support.Window": 3
+        }
+      },
+      "member_checks": {
+        "test_offline_support.Window:False": 3
+      },
+      "test_contexts": [
+        "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+        "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+        "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08713": {
+      "visits": 6,
+      "values": {
+        "receiver": {
+          "test_offline_support.Window": 3
+        },
+        "member_value": {
+          "PySide6.QtWidgets.QTabWidget": 3
+        }
+      },
+      "member_checks": {
+        "test_offline_support.Window:True": 3
+      },
+      "test_contexts": [
+        "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+        "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+        "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-08714": {
+      "visits": 6,
+      "values": {
+        "receiver": {
+          "test_offline_support.Window": 3
+        },
+        "member_value": {
+          "PySide6.QtWidgets.QTabWidget": 3
+        }
+      },
+      "member_checks": {
+        "test_offline_support.Window:True": 3
+      },
+      "test_contexts": [
+        "test_offline_support.OfflineSupportGuiTests.test_corrupt_report_and_cancelled_export_preserve_current_report",
+        "test_offline_support.OfflineSupportGuiTests.test_real_panel_marks_missing_information_and_exports_same_report",
+        "test_offline_support.OfflineSupportGuiTests.test_status_input_hooks_never_copy_private_visible_messages"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

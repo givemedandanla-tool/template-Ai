@@ -1,0 +1,109 @@
+{
+  "duplicates": [
+    {
+      "firstFile": {
+        "end": 26,
+        "endLoc": {
+          "column": 4,
+          "line": 26,
+          "position": 1455
+        },
+        "name": "capture_batch_correction.py",
+        "start": 14,
+        "startLoc": {
+          "column": 168,
+          "line": 14,
+          "position": 747
+        }
+      },
+      "format": "python",
+      "fragment": "    case=BatchCorrectionGuiTests('runTest');case.setUp();d=case.make(3);w=case.w;app=QApplication.instance();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n    def shot(widget,name):\n        app.processEvents();path=folder/('batch-correction-'+name+'.png');assert widget.grab().save(str(path));screens.append(path.name)\n    def confirm(name,yes=True):\n        def respond():\n            box=QApplication.activeModalWidget()\n            try:\n                assert isinstance(box,QMessageBox);shot(box,name);box.button(QMessageBox.Yes if yes else QMessageBox.No).click()\n            except BaseException as error:errors.append(str(error))\n            finally:\n                if box and box.isVisible():box.reject()\n        QTimer.singleShot(0,respond)\n    release=threading.Event()",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 13,
+      "secondFile": {
+        "end": 71,
+        "endLoc": {
+          "column": 4,
+          "line": 71,
+          "position": 7005
+        },
+        "name": "capture_batch_correction.py",
+        "start": 59,
+        "startLoc": {
+          "column": 120,
+          "line": 59,
+          "position": 6297
+        }
+      },
+      "tokens": 210
+    },
+    {
+      "firstFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 17,
+          "line": 11,
+          "position": 431
+        },
+        "name": "capture_fixed70_ten.py",
+        "start": 1,
+        "startLoc": {
+          "column": 97,
+          "line": 1,
+          "position": 97
+        }
+      },
+      "format": "python",
+      "fragment": "\"\"\"十父題新增流程的真實 Qt 擷取；只使用本機合成 fixture，不代替測試。\"\"\"\nimport argparse\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nsys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[1]/'tests')]\nos.environ.setdefault('QT_QPA_PLATFORM','offscreen')\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.gui import MainWindow\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog",
+      "isNew": false,
+      "kind": "exact",
+      "lines": 11,
+      "secondFile": {
+        "end": 11,
+        "endLoc": {
+          "column": 17,
+          "line": 11,
+          "position": 414
+        },
+        "name": "capture_next_twenty.py",
+        "start": 1,
+        "startLoc": {
+          "column": 80,
+          "line": 1,
+          "position": 80
+        }
+      },
+      "tokens": 97
+    }
+  ],
+  "statistics": {
+    "detectionDate": "2026-10-20T20:54:44.607Z",
+    "formats": {
+      "python": {
+        "clones": 2,
+        "duplicatedLines": 24,
+        "duplicatedTokens": 307,
+        "lines": 4996,
+        "newClones": 0,
+        "newDuplicatedLines": 0,
+        "percentage": 0.4803843074459567,
+        "percentageTokens": 0.31202357963207644,
+        "sources": 59,
+        "tokens": 98390
+      }
+    },
+    "total": {
+      "clones": 2,
+      "duplicatedLines": 24,
+      "duplicatedTokens": 307,
+      "lines": 4996,
+      "newClones": 0,
+      "newDuplicatedLines": 0,
+      "percentage": 0.4803843074459567,
+      "percentageTokens": 0.31202357963207644,
+      "sources": 59,
+      "tokens": 98390
+    }
+  }
+}

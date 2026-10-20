@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/logo_output_proof.py": {
+      "source_sha256": "e38f4406e03ac438ccd6519476b311ceb2cbcfccb97fb67abfa84de8ac159e5c",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 4,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/render.py": {
+      "source_sha256": "8209686d71ca5ee2dae2771954afcff0c6579914b0107834a01da8718ce332f8",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 4,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/layout.py": {
+      "source_sha256": "875862aa49c51fc19a8e7633dca6be8c2d6a14156dd244bd077e9c4c361e88fe",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/pdf_geometry.py": {
+      "source_sha256": "4b377a879aa4db760310ffd6916b0a16b323df823b9a012c60284e7d1143fc85",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-02277": {
+      "visits": 8,
+      "values": {
+        "value": {
+          "PySide6.QtGui.QImage": 2,
+          "builtins.builtin_function_or_method": 2
+        },
+        "call_receiver": {
+          "PySide6.QtGui.QImage": 2
+        },
+        "call_result": {
+          "builtins.bool": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_output_proof.LogoOutputProofTests.test_actual_three_formats_readback_physical_dimensions_transparency_and_no_approval"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02279": {
+      "visits": 8,
+      "values": {
+        "call_receiver": {
+          "PySide6.QtGui.QImage": 2
+        },
+        "value": {
+          "builtins.str": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "call_result": {
+          "builtins.bool": 2
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_output_proof.LogoOutputProofTests.test_actual_three_formats_readback_physical_dimensions_transparency_and_no_approval"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-02742": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.list": 1
+        },
+        "argument": {
+          "builtins.list": 1
+        },
+        "call_result": {
+          "pypdf.generic._rectangle.RectangleObject": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_logo_output_proof.LogoOutputProofTests.test_actual_three_formats_readback_physical_dimensions_transparency_and_no_approval"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

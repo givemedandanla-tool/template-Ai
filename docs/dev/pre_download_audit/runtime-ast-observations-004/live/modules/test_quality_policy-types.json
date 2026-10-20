@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_quality_policy.py": {
+      "source_sha256": "a97d662bd0ab74f6312f3188ce29c458176565db004feb67e604880cfffe92e6",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 4,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 1,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation_store.py": {
+      "source_sha256": "884945432fa826422293d05131c1bfa2caf8b7229ac6c424facf08e27dd8bc2d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 3,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation.py": {
+      "source_sha256": "255e58b284a97d510f3aba40932fa61451eee8d8a12371e8743f1b64f93fa603",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 9,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/coverage_review.py": {
+      "source_sha256": "12eb83992eb0265fe9c93b8d0e150812b734619cea95ce65eb9287dc683899c0",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/source_discovery.py": {
+      "source_sha256": "14fd8a7fb189efa4192bfbfebe4590d8dee3a5a9961b752797a493e7c7f8af5d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 11,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-TES-09806": {
+      "visits": 3,
+      "values": {
+        "value": {
+          "builtins.type": 1,
+          "builtins.dict": 1
+        },
+        "call_result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_policy.QualityPolicyTests.test_missing_domain_nan_or_empty_denominator_policy_cannot_be_approved"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-09807": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.dict": 1
+        },
+        "call_result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_quality_policy.QualityPolicyTests.test_missing_domain_nan_or_empty_denominator_policy_cannot_be_approved"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

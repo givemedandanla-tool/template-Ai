@@ -1,0 +1,236 @@
+{
+  "method": "Minimal native type contracts, authored small values, no private assets.",
+  "proof": {
+    "D-APP-02058": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/input_warning_delegate.py",
+        "line": 11,
+        "message": "Cannot assign to attribute \"rect\" for class \"QStyleOptionViewItem\"\n  Attribute \"rect\" is unknown",
+        "context": "text_option=QStyleOptionViewItem(option);text_option.rect=option.rect.adjusted(0,0,0,-18);super().paint(painter,text_option,index)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d54602cc48f20bfcb7643442435621cb5261798d12c69fda1490f532896de0c0"
+      },
+      "reason": "Pinned native QStyleOptionViewItem copy has a writable QRect rect; adjusting the copy changes its native rectangle and preserves the original. The static descriptor declaration omits this inherited value field.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "e75cfce0fd7db1108aa25f785f3926156547102c6d5d07001ce4cce8fbdc9ec7",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-03448": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/review_ledger_dialog.py",
+        "line": 39,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"\n  ...",
+        "context": "errors.extend(bytes(process.readAllStandardError()));del errors[:-4096]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "11c333a1a08f04c033ee61d4598fbc8a2630b26d98ab5e8cc5789154896474fe"
+      },
+      "reason": "QProcess.readAllStandardError returns QByteArray. Native QByteArray implements the buffer protocol accepted by bytes, as the independent authored-byte roundtrip proves. Only bounded owned-process stderr is retained by the original code.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-03449": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/review_ledger_dialog.py",
+        "line": 39,
+        "message": "Argument of type \"QByteArray\" cannot be assigned to parameter \"o\" of type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\" in function \"__new__\"\n  Type \"QByteArray\" is not assignable to type \"Iterable[SupportsIndex] | SupportsIndex | SupportsBytes | ReadableBuffer\"\n    \"QByteArray\" is incompatible with protocol \"Iterable[SupportsIndex]\"\n      \"__iter__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"QByteArray\" is incompatible with protocol \"SupportsBytes\"\n      \"__bytes__\" is not present\n    \"QByteArray\" is incompatible with protocol \"Buffer\"",
+        "context": "errors.extend(bytes(process.readAllStandardError()));del errors[:-4096]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6e77524f365e3bd2b51354725acc40716e935daff12fcb0864888a59aeab6176"
+      },
+      "reason": "QProcess.readAllStandardError returns QByteArray. Native QByteArray implements the buffer protocol accepted by bytes, as the independent authored-byte roundtrip proves. Only bounded owned-process stderr is retained by the original code.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "8250c7f9385dc8e029faab379da4471d023a2ffe3d787cb381395ceadcd43e98",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-04105": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/visual_font_match.py",
+        "line": 134,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "chamfer = float((distance_transform_edt(~a)[b].mean()+distance_transform_edt(~b)[a].mean())/(2*max(1,a.shape[0])))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "13c447ff5735c9c7d5902e1ff55e9393375144d81b4497714804abcc829a5bd8"
+      },
+      "reason": "SciPy distance_transform_edt with omitted output arrays and default return_distances=True/return_indices=False returns ndarray. Its multi-return annotation includes None for the separate caller-supplied-output mode. The exact defaults used by shape_error are checked with a hand-calculated 2x2 distance case.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "6a5d863284db5459348de3091f715063ad2662f2a6e7fe2f62dd0ab035115645",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-04106": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportOptionalSubscript",
+        "path": "template_ai/visual_font_match.py",
+        "line": 134,
+        "message": "Object of type \"None\" is not subscriptable",
+        "context": "chamfer = float((distance_transform_edt(~a)[b].mean()+distance_transform_edt(~b)[a].mean())/(2*max(1,a.shape[0])))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "13c447ff5735c9c7d5902e1ff55e9393375144d81b4497714804abcc829a5bd8"
+      },
+      "reason": "SciPy distance_transform_edt with omitted output arrays and default return_distances=True/return_indices=False returns ndarray. Its multi-return annotation includes None for the separate caller-supplied-output mode. The exact defaults used by shape_error are checked with a hand-calculated 2x2 distance case.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "6a5d863284db5459348de3091f715063ad2662f2a6e7fe2f62dd0ab035115645",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-01888": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/importer.py",
+        "line": 196,
+        "message": "Cannot assign to attribute \"recovery_report\" for class \"ValueError\"\n  Attribute \"recovery_report\" is unknown",
+        "context": "error.recovery_report = dict(source_kind='OTHER', semantic_status='FAILED', fidelity_status='UNKNOWN', issues=[issue('CONVERSION_FAILED')])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b1c196691c74489811ea79495f7ba54add52e2dcf2f1806f4d96f122c2c6732a"
+      },
+      "reason": "The immediately constructed ValueError supports its Python instance dictionary, including the new recovery_report metadata name. This does not shadow any builtin exception property. The static builtin exception annotation omits this application report DTO.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-03346": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/recovery_dialog.py",
+        "line": 91,
+        "message": "Cannot assign to attribute \"recovery_report\" for class \"Exception\"\n  Attribute \"recovery_report\" is unknown",
+        "context": "error.recovery_report=dict(semantic_status='FAILED',fidelity_status='UNKNOWN',",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0ab5d6379d7d07331fd454fd62baac111637ba4e7b9b241b6aef40afc7f8368b"
+      },
+      "reason": "Actual background witness is builtins.ValueError (test_local_recovery owned-module receipt). Standard ValueError supports the recovery_report Python data member, independently calibrated on owned exceptions. The broad caught Exception annotation does not declare the existing report DTO; arbitrary future custom exceptions are not certified.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "0d6e648caba6020334c20cd02242e96739ba25627a9350a9b64091dd0c726d59",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-03349": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/recovery_dialog.py",
+        "line": 122,
+        "message": "Cannot assign to attribute \"catalog_complete\" for class \"RecoveryDialog*\"\n  Attribute \"catalog_complete\" is unknown",
+        "context": "self.catalog_complete=report.get('status')=='COMPLETE'",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "4d37949efb36389aa0a2c6d67dc91c824bbc22ed2e31c0a19b9efe5904e51778"
+      },
+      "reason": "Exact RecoveryDialog MRO has no native/property catalog_complete collision and no custom __setattr__. Its initialized QDialog supports the inherited Python data namespace; assigning this bool progress flag is valid. This is missing class-field typing, not proof this file-picker branch was exercised.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "0d6e648caba6020334c20cd02242e96739ba25627a9350a9b64091dd0c726d59",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-03351": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "template_ai/recovery_dialog.py",
+        "line": 137,
+        "message": "Cannot assign to attribute \"catalog_complete\" for class \"RecoveryDialog*\"\n  Attribute \"catalog_complete\" is unknown",
+        "context": "def done(faces):self.faces=faces;self.offset=0;self.catalog_complete=True;self.status.setText(f'已核對所選 {len(faces)} 個字面。')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "dd293d4b5d28eed72011a5f10179c47ebe8e537a18ef79b97de9de6eecfef72e"
+      },
+      "reason": "Exact RecoveryDialog MRO has no native/property catalog_complete collision and no custom __setattr__. Its initialized QDialog supports the inherited Python data namespace; assigning this bool progress flag is valid. This is missing class-field typing, not proof this file-picker branch was exercised.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "0d6e648caba6020334c20cd02242e96739ba25627a9350a9b64091dd0c726d59",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-02695": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "template_ai/offline_support.py",
+        "line": 471,
+        "message": "Object of type \"object\" is not callable\n  Attribute \"__call__\" is unknown",
+        "context": "old(kind, context, message)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "697fb1093c130f400089e6321a3103bd7cc445812a68b7f583b1e8b3c2a15928"
+      },
+      "reason": "qInstallMessageHandler returns the previously installed Python callable or None. The actual two-handler roundtrip returns the identical prior callable, invokes it through native Qt logging and restores the original handler. old is checked non-null before forwarding; the object stub lacks the callback signature.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "53f91bba4d4e5eed3ede96f6685476fb616ba8c5d48ad22bc43f080361c64baf",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    },
+    "D-APP-02742": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/pdf_geometry.py",
+        "line": 11,
+        "message": "Argument of type \"list[int | Unknown]\" cannot be assigned to parameter \"arr\" of type \"RectangleObject | Tuple[float, float, float, float]\" in function \"__init__\"\n  Type \"list[int | Unknown]\" is not assignable to type \"RectangleObject | Tuple[float, float, float, float]\"\n    \"list[int | Unknown]\" is not assignable to \"RectangleObject\"\n    \"list[int | Unknown]\" is not assignable to \"Tuple[float, float, float, float]\"",
+        "context": "box=RectangleObject([0,0,width_mm*72/25.4,height_mm*72/25.4])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1bb0f695a7058c756085867ee93d2e9ed045206c0f36c70733dbb4d27e047447"
+      },
+      "reason": "Pinned pypdf RectangleObject accepts numeric coordinate sequences and normalizes them to PDF numeric objects. The independent 90x54mm literal coordinate case roundtrips width to90mm within1e-9. The element annotation is narrower than the constructor normalization; no print quality qualification.",
+      "versions": {
+        "pyside": "6.8.3",
+        "scipy": "1.16.3",
+        "numpy": "2.3.5"
+      },
+      "source_sha256": "4b377a879aa4db760310ffd6916b0a16b323df823b9a012c60284e7d1143fc85",
+      "demonstration": "bytes(QByteArray), QStyleOptionViewItem native QRect copy/set and 2x2 exact chamfer=.5 all PASS",
+      "scope": "Only these pinned native signatures, not font identity, arbitrary inputs or native Windows qualification"
+    }
+  }
+}

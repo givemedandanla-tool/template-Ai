@@ -11,10 +11,12 @@ app=QApplication.instance() or QApplication([])
 rows=[json.loads(x) for x in (F/'diagnostic-ledger.jsonl').read_text().splitlines()];proof=json.loads((F/'qobject-data-attribute-proof.json').read_text()).get('proof',{}) if (F/'qobject-data-attribute-proof.json').exists() else {};dummy=QDialog();marker=object()
 for runname,result_file in [('runtime-ast-observations-001','tests.json'),('ast-module-contexts-003','tests.json'),('runtime-ast-observations-004','tests.json'),('capture-type-evidence-001','capture-contexts.json')]:
  o=json.loads((F/runname/'observations.json').read_text());results={r['id']:r['status'] for r in json.loads((F/runname/result_file).read_text())};assert not o['observer_errors'] and o['business_ast_equivalence_verified']
+ module_contexts=json.loads((F/runname/'module-contexts.json').read_text()) if (F/runname/'module-contexts.json').exists() else {}
  for row in rows:
   if row['status']!='UNREVIEWED' or row['rule']!='reportAttributeAccessIssue' or not row['original']['message'].startswith('Cannot assign to attribute'):continue
   import re
   match=re.match(r'Cannot assign to attribute "([^"]+)"',row['original']['message']);member=match[1] if match else None;r=o['rows'].get(row['id'],{});types=set(r.get('values',{}).get('receiver',{}));contexts=[t for t in r.get('test_contexts',[]) if results.get(t)=='PASS']
+  if not contexts:contexts=['owned-module:'+m for m in r.get('module_contexts',[]) if m in module_contexts and module_contexts[m]['receipt']['healthy'] and all(results.get(t)=='PASS' for t in module_contexts[m]['tests'])]
   if not member or not types or not contexts:continue
   evidence=[]
   for name in types:

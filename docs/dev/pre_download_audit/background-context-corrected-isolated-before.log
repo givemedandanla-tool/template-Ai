@@ -1,0 +1,48 @@
+test_changed_background_choice_during_review_is_not_overwritten (background_context_corrected.BackgroundContextTests.test_changed_background_choice_during_review_is_not_overwritten) ... This plugin does not support propagateSizeHints()
+FAIL
+test_missing_draft_after_file_picker_is_plain_rejection (background_context_corrected.BackgroundContextTests.test_missing_draft_after_file_picker_is_plain_rejection) ... ERROR
+test_registered_draft_switch_during_review_is_not_overwritten (background_context_corrected.BackgroundContextTests.test_registered_draft_switch_during_review_is_not_overwritten) ... This plugin does not support propagateSizeHints()
+FAIL
+
+======================================================================
+ERROR: test_missing_draft_after_file_picker_is_plain_rejection (background_context_corrected.BackgroundContextTests.test_missing_draft_after_file_picker_is_plain_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/prepared-fixes/test_background_context.py.txt", line 34, in test_missing_draft_after_file_picker_is_plain_rejection
+    with patch('template_ai.gui.QFileDialog.getOpenFileName',side_effect=choose):self.w.import_background()
+                                                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/template-ai-audit-background-before/template_ai/gui.py", line 1772, in import_background
+    template_id, version = self.template.id, self.template.version
+                           ^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'id'
+
+======================================================================
+FAIL: test_changed_background_choice_during_review_is_not_overwritten (background_context_corrected.BackgroundContextTests.test_changed_background_choice_during_review_is_not_overwritten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/prepared-fixes/test_background_context.py.txt", line 67, in test_changed_background_choice_during_review_is_not_overwritten
+    def test_changed_background_choice_during_review_is_not_overwritten(self):self.approval_race(False)
+                                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/prepared-fixes/test_background_context.py.txt", line 61, in approval_race
+    APP.processEvents();self.assertEqual(transition_errors,[]);self.assertEqual(seen,[True],'The actual product review dialog must be reached once');self.assertEqual(self.w.template.to_dict(),expected[0]);self.assertTrue(self.notices)
+                                                                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'nam[1987 chars]sets/f9ce000c13680483175cfbb0e22e304997ff603f8[776 chars] 0.0} != {'nam[1987 chars]sets/225f6408bf41ae4425b5cda496f753c36bbb63d2c[776 chars] 0.0}
+Diff is 4761 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_registered_draft_switch_during_review_is_not_overwritten (background_context_corrected.BackgroundContextTests.test_registered_draft_switch_during_review_is_not_overwritten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/prepared-fixes/test_background_context.py.txt", line 66, in test_registered_draft_switch_during_review_is_not_overwritten
+    def test_registered_draft_switch_during_review_is_not_overwritten(self):self.approval_race(True)
+                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/prepared-fixes/test_background_context.py.txt", line 61, in approval_race
+    APP.processEvents();self.assertEqual(transition_errors,[]);self.assertEqual(seen,[True],'The actual product review dialog must be reached once');self.assertEqual(self.w.template.to_dict(),expected[0]);self.assertTrue(self.notices)
+                                                                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'nam[1949 chars]nd': {'image': '/tmp/tmps6lhrs2p/data/assets/f[816 chars] 0.0} != {'nam[1949 chars]nd': None, 'source_work_id': '', 'source_work_[59 chars] 0.0}
+Diff is 4133 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 3 tests in 4.999s
+
+FAILED (failures=2, errors=1)

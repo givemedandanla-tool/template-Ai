@@ -1,0 +1,381 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_font_repair.py": {
+      "source_sha256": "6eeb255360d88d2b4c365266c77047ac7d6b6a6c1dd87ce2d806ac28b63717b1",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 15,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/fonts.py": {
+      "source_sha256": "13068091887cde61d9efc460ef14bbd1f9cd9965d03c56b7ca54ae5193fd0138",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 16,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/gui.py": {
+      "source_sha256": "ba0ebc0ebee4df3593798dd4b27a8e016826d10c2bd41aa85a51d4922ade9658",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 212,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/layout.py": {
+      "source_sha256": "875862aa49c51fc19a8e7633dca6be8c2d6a14156dd244bd077e9c4c361e88fe",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/render.py": {
+      "source_sha256": "8209686d71ca5ee2dae2771954afcff0c6579914b0107834a01da8718ce332f8",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 4,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/font_evidence.py": {
+      "source_sha256": "8b617d07575e254d51c85ca71b882d8cab7c7902b4cbf579faedc3d5378637b7",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 2,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 0,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-01561": {
+      "visits": 32,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 16
+        },
+        "member_value": {
+          "builtins.int": 16
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 16
+      },
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01562": {
+      "visits": 32,
+      "values": {
+        "receiver": {
+          "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2": 16
+        },
+        "member_value": {
+          "builtins.int": 16
+        }
+      },
+      "member_checks": {
+        "fontTools.ttLib.tables.O_S_2f_2.table_O_S_2f_2:True": 16
+      },
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01622": {
+      "visits": 32,
+      "values": {
+        "value": {
+          "builtins.dict": 8,
+          "builtins.list": 8
+        },
+        "argument": {
+          "builtins.list": 8
+        },
+        "call_result": {
+          "builtins.int": 8
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01623": {
+      "visits": 24,
+      "values": {
+        "value": {
+          "builtins.type": 8,
+          "builtins.dict": 8
+        },
+        "call_result": {
+          "builtins.dict": 8
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01624": {
+      "visits": 16,
+      "values": {
+        "container": {
+          "builtins.list": 8
+        },
+        "result": {
+          "builtins.dict": 8
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01625": {
+      "visits": 32,
+      "values": {
+        "value": {
+          "builtins.dict": 8,
+          "builtins.list": 8
+        },
+        "argument": {
+          "builtins.dict": 8
+        },
+        "call_result": {
+          "builtins.dict": 8
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01626": {
+      "visits": 32,
+      "values": {
+        "value": {
+          "builtins.dict": 8,
+          "builtins.list": 8
+        },
+        "argument": {
+          "builtins.list": 8
+        },
+        "call_result": {
+          "builtins.int": 8
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01627": {
+      "visits": 24,
+      "values": {
+        "value": {
+          "builtins.type": 8,
+          "builtins.dict": 8
+        },
+        "call_result": {
+          "builtins.dict": 8
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01628": {
+      "visits": 16,
+      "values": {
+        "container": {
+          "builtins.list": 8
+        },
+        "result": {
+          "builtins.dict": 8
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-APP-01629": {
+      "visits": 32,
+      "values": {
+        "value": {
+          "builtins.dict": 8,
+          "builtins.list": 8
+        },
+        "argument": {
+          "builtins.dict": 8
+        },
+        "call_result": {
+          "builtins.dict": 8
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-07534": {
+      "visits": 40,
+      "values": {
+        "call_receiver": {
+          "template_ai.fonts.FontManager": 8
+        },
+        "value": {
+          "pathlib.PosixPath": 8,
+          "builtins.dict": 8
+        },
+        "argument": {
+          "pathlib.PosixPath": 8
+        },
+        "call_result": {
+          "builtins.dict": 8
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_font_repair.FontRepairTests.test_completion_event_failure_restores_corrupt_copy_and_pending_intent",
+        "test_font_repair.FontRepairTests.test_external_catalog_path_not_modified",
+        "test_font_repair.FontRepairTests.test_failed_file_rollback_releases_lock_and_restart_verifies_actual_copy",
+        "test_font_repair.FontRepairTests.test_missing_copy_event_failure_stays_missing",
+        "test_font_repair.FontRepairTests.test_prepared_repair_recovery_requires_actual_expected_bytes",
+        "test_font_repair.FontRepairTests.test_qt_parse_failure_does_not_replace_or_create_repair_intent",
+        "test_font_repair.FontRepairTests.test_symlink_target_never_overwrites_original_font",
+        "test_font_repair.FontRepairTests.test_unapproved_or_different_content_rejected_without_writes"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

@@ -1,0 +1,65 @@
+test_direct_foreign_work_cannot_be_mixed_with_current_source (work_load_corrected.WorkLoadAtomicityTests.test_direct_foreign_work_cannot_be_mixed_with_current_source) ... FAIL
+test_source_navigation_failure_retains_original_source_and_work (work_load_corrected.WorkLoadAtomicityTests.test_source_navigation_failure_retains_original_source_and_work) ... This plugin does not support propagateSizeHints()
+FAIL
+test_unreadable_work_does_not_partially_replace_live_state (work_load_corrected.WorkLoadAtomicityTests.test_unreadable_work_does_not_partially_replace_live_state) ... FAIL
+test_work_navigation_failure_does_not_persist_failed_selection (work_load_corrected.WorkLoadAtomicityTests.test_work_navigation_failure_does_not_persist_failed_selection) ... This plugin does not support propagateSizeHints()
+FAIL
+
+======================================================================
+FAIL: test_direct_foreign_work_cannot_be_mixed_with_current_source (work_load_corrected.WorkLoadAtomicityTests.test_direct_foreign_work_cannot_be_mixed_with_current_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/prepared-fixes/test_work_load_atomicity_corrected4.py.txt", line 64, in test_direct_foreign_work_cannot_be_mixed_with_current_source
+    with self.assertRaisesRegex(ValueError,'不屬於'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_source_navigation_failure_retains_original_source_and_work (work_load_corrected.WorkLoadAtomicityTests.test_source_navigation_failure_retains_original_source_and_work)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/prepared-fixes/test_work_load_atomicity_corrected4.py.txt", line 56, in test_source_navigation_failure_retains_original_source_and_work
+    self.assertEqual(self.state(),self.before);self.assertEqual(self.w.library.artwork(bad['id']),bad)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'source': '5c0345365aaa490bb22760d7c363373a', 'work'[116 chars]4.0)} != {'source': 'f87dbc7154874a5a9b7b5d3214130d2f', 'work'[116 chars]4.0)}
+  {'crop': {'h': 60.0, 'w': 100.0, 'x': 0, 'y': 0},
+   'size': (90.0, 54.0),
+   'slots': [],
+-  'source': '5c0345365aaa490bb22760d7c363373a',
+-  'work': 'bc56e0bdf9734067959bd06d33db6843'}
++  'source': 'f87dbc7154874a5a9b7b5d3214130d2f',
++  'work': 'e54f2339fd20490fa531cce75a4af12c'}
+
+======================================================================
+FAIL: test_unreadable_work_does_not_partially_replace_live_state (work_load_corrected.WorkLoadAtomicityTests.test_unreadable_work_does_not_partially_replace_live_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/prepared-fixes/test_work_load_atomicity_corrected4.py.txt", line 50, in test_unreadable_work_does_not_partially_replace_live_state
+    self.assertEqual(self.state(),self.before)
+AssertionError: {'sou[47 chars]': '09e61e7c47144b5e9a7c64ce35e82057', 'crop':[71 chars]4.0)} != {'sou[47 chars]': '0677c53c657b429b8b80daaf3b098a70', 'crop':[71 chars]4.0)}
+  {'crop': {'h': 60.0, 'w': 100.0, 'x': 0, 'y': 0},
+   'size': (90.0, 54.0),
+   'slots': [],
+   'source': '149bc71ce90045ce949c37ed1add5f2e',
+-  'work': '09e61e7c47144b5e9a7c64ce35e82057'}
++  'work': '0677c53c657b429b8b80daaf3b098a70'}
+
+======================================================================
+FAIL: test_work_navigation_failure_does_not_persist_failed_selection (work_load_corrected.WorkLoadAtomicityTests.test_work_navigation_failure_does_not_persist_failed_selection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/prepared-fixes/test_work_load_atomicity_corrected4.py.txt", line 61, in test_work_navigation_failure_does_not_persist_failed_selection
+    self.assertEqual(self.state(),self.before);self.assertEqual(self.w.library.active_artwork(good['source_id'])['id'],good['id']);self.assertEqual(self.w.library.artwork(bad['id']),bad)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'sou[46 chars]k': 'ca9a861d4557435993f90cdcce103649', 'crop'[72 chars]4.0)} != {'sou[46 chars]k': '4441ee760563426d996b25741e7ee0cc', 'crop'[72 chars]4.0)}
+  {'crop': {'h': 60.0, 'w': 100.0, 'x': 0, 'y': 0},
+   'size': (90.0, 54.0),
+   'slots': [],
+   'source': 'feddd5b2493a405880d82d232836c1c7',
+-  'work': 'ca9a861d4557435993f90cdcce103649'}
++  'work': '4441ee760563426d996b25741e7ee0cc'}
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.284s
+
+FAILED (failures=4)

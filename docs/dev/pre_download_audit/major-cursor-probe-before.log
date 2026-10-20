@@ -1,0 +1,92 @@
+test_cases_delete (__main__.MajorCursorProbe.test_cases_delete) ... ERROR
+test_cases_update (__main__.MajorCursorProbe.test_cases_update) ... FAIL
+test_jobs_delete (__main__.MajorCursorProbe.test_jobs_delete) ... ERROR
+test_jobs_update (__main__.MajorCursorProbe.test_jobs_update) ... FAIL
+
+======================================================================
+ERROR: test_cases_delete (__main__.MajorCursorProbe.test_cases_delete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 27, in test_cases_delete
+    def test_cases_delete(self):self.check('CASES','delete')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 23, in check
+    try:actual=execute(reader,command,dict(case_id='synthetic-case'))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/major_review_commands.py", line 72, in execute
+    case=store.get('QUALITY_MAJOR_RECHECK',identity[0]);rows.append(dict(id=case['id'],revision=case['revision'],state=case['state'],category=case['plan']['category'],affected_works=case['affected_works'],affected_templates=case['affected_templates']))
+                                                                            ~~~~^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+ERROR: test_jobs_delete (__main__.MajorCursorProbe.test_jobs_delete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 29, in test_jobs_delete
+    def test_jobs_delete(self):self.check('JOBS','delete')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 23, in check
+    try:actual=execute(reader,command,dict(case_id='synthetic-case'))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/template_ai/major_review_commands.py", line 79, in execute
+    job=store.get('AUTO_JOB',row[0]);rows.append(dict(id=job['id'],phase=AutomaticTraining(library).phase(job),source_count=len(job['items']),work_count=len(job['scope']['work_ids'])))
+                                                         ~~~^^^^^^
+TypeError: 'NoneType' object is not subscriptable
+
+======================================================================
+FAIL: test_cases_update (__main__.MajorCursorProbe.test_cases_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 28, in test_cases_update
+    def test_cases_update(self):self.check('CASES','update')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 25, in check
+    self.assertEqual(changed,[True]);self.assertEqual(actual,expected)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'row[45 chars]on': 2, 'state': 'UPDATED', 'category': 'AUDIT[88 chars]': 0} != {'row[45 chars]on': 1, 'state': 'OPEN', 'category': 'AUDIT', [85 chars]': 0}
+  {'offset': 0,
+   'rows': [{'affected_templates': [],
+             'affected_works': ['synthetic-work'],
+             'category': 'AUDIT',
+             'id': 'synthetic-audit-record',
+-            'revision': 2,
+?                        ^
+
++            'revision': 1,
+?                        ^
+
+-            'state': 'UPDATED'}],
+?                      ^ --- ^
+
++            'state': 'OPEN'}],
+?                      ^  ^
+
+   'total': 1}
+
+======================================================================
+FAIL: test_jobs_update (__main__.MajorCursorProbe.test_jobs_update)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 30, in test_jobs_update
+    def test_jobs_update(self):self.check('JOBS','update')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/template-Ai/docs/dev/pre_download_audit/probe_major_read_snapshot.py", line 25, in check
+    self.assertEqual(changed,[True]);self.assertEqual(actual,expected)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'row[43 chars]e': 'CANCELLED', 'source_count': 1, 'work_coun[28 chars]': 0} != {'row[43 chars]e': 'READY', 'source_count': 1, 'work_count': [24 chars]': 0}
+  {'offset': 0,
+   'rows': [{'id': 'synthetic-audit-record',
+-            'phase': 'CANCELLED',
+?                      ^ ------
+
++            'phase': 'READY',
+?                      ^^  +
+
+             'source_count': 1,
+             'work_count': 1}],
+   'total': 1}
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.014s
+
+FAILED (failures=2, errors=2)

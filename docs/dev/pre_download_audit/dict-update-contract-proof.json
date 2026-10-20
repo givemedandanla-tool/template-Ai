@@ -1230,6 +1230,61 @@
       "source": "runtime-ast-observations-004/source.json",
       "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
       "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
+    },
+    "D-APP-00313": {
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/candidate_edit_dispatch.py",
+        "line": 44,
+        "message": "Argument of type \"Event\" cannot be assigned to parameter \"cancel\" of type \"str\" in function \"update\"\n  \"Event\" is not assignable to \"str\"",
+        "context": "envelope=prepare_edit(self.window,plan);candidate=provisional(envelope);envelope.update(target_revision=candidate.risk_context['manual_revision'],target_digest=digest(candidate.template.to_dict()),context_token=review_context_token(candidate.risk_context),cancel=threading.Event());self.pending[plan['index']]=envelope;self.window.candidates[plan['index']]=candidate;self.window.choose_candidate(plan['index']);self.timer.start();return candidate",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d2b18f78bc3a77508edb96628f48ae7cc7c5f11e26ed23b7f32e6d1199541d2e"
+      },
+      "exact_call": {
+        "label": "call_result",
+        "expression": "envelope.update(target_revision=candidate.risk_context['manual_revision'], target_digest=digest(candidate.template.to_dict()), context_token=review_context_token(candidate.risk_context), cancel=threading.Event())",
+        "range": [
+          44,
+          80,
+          44,
+          289
+        ],
+        "original_expression_range": [
+          44,
+          80,
+          44,
+          289
+        ]
+      },
+      "named_fields": [
+        "target_revision",
+        "target_digest",
+        "context_token",
+        "cancel"
+      ],
+      "observed_types": {
+        "call_receiver": {
+          "builtins.dict": 2
+        },
+        "value": {
+          "builtins.module": 2,
+          "builtins.type": 2
+        },
+        "argument": {
+          "threading.Event": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "contexts": [
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write"
+      ],
+      "source": "runtime-ast-observations-005/source.json",
+      "bounds": "Only executed exact builtin dict update. Does not establish every value is semantically valid for every consumer, nor any unexecuted branch.",
+      "followup": "Declare tagged/TypedDict record per producer and consumer; original raw warning remains retained"
     }
   }
 }

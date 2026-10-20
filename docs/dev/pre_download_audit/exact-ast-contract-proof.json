@@ -201699,17 +201699,5315 @@
       "observations": "ast-module-contexts-003/observations.json",
       "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
       "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-APP-01625": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/fonts.py",
+        "line": 119,
+        "message": "Argument of type \"str | Unknown\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"str | Unknown\" is not assignable to type \"Iterable[tuple[str, Unknown]]\"\n    \"str\" is not assignable to \"Iterable[tuple[str, Unknown]]\"\n      Type parameter \"_T_co@Iterable\" is covariant, but \"str\" is not a subtype of \"tuple[str, Unknown]\"\n        \"str\" is not assignable to \"tuple[str, Unknown]\"",
+        "context": "updated['font_evidence']=dict(evidence['faces'][0],source_hash=expected.get('font_evidence',{}).get('source_hash',evidence['hash']))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3451d31ae6ea70731ad2a170b1f6f4f89ea5c41be5138d30766604182679d194"
+      },
+      "original_range": {
+        "start": {
+          "line": 118,
+          "character": 38
+        },
+        "end": {
+          "line": 118,
+          "character": 58
+        }
+      },
+      "point": {
+        "id": "D-APP-01625",
+        "scope": "application",
+        "path": "template_ai/fonts.py",
+        "line": 119,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "evidence['faces']",
+            "range": [
+              119,
+              38,
+              119,
+              55
+            ],
+            "original_expression_range": [
+              119,
+              38,
+              119,
+              55
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "evidence",
+            "range": [
+              119,
+              38,
+              119,
+              46
+            ],
+            "original_expression_range": [
+              119,
+              38,
+              119,
+              46
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "evidence['faces'][0]",
+            "range": [
+              119,
+              38,
+              119,
+              58
+            ],
+            "original_expression_range": [
+              119,
+              38,
+              119,
+              58
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(evidence['faces'][0], source_hash=expected.get('font_evidence', {}).get('source_hash', evidence['hash']))",
+            "range": [
+              119,
+              33,
+              119,
+              140
+            ],
+            "original_expression_range": [
+              119,
+              33,
+              119,
+              140
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            119,
+            33,
+            119,
+            140
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": null,
+        "source_sha256": "13068091887cde61d9efc460ef14bbd1f9cd9965d03c56b7ca54ae5193fd0138"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 12,
+          "builtins.list": 12
+        },
+        "argument": {
+          "builtins.dict": 12
+        },
+        "call_result": {
+          "builtins.dict": 12
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_font_evidence.FontEvidenceTests.test_technical_embedding_flags_never_supply_legal_rights_and_pdf_restrictions_are_stricter",
+        "test_font_repair.FontRepairTests.test_corrupted_copy_retained_in_quarantine_and_reference_unchanged",
+        "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate",
+        "test_font_repair.FontRepairTests.test_healthy_copy_repair_is_idempotent",
+        "test_font_repair.FontRepairTests.test_missing_copy_restored_and_reopened_without_changing_published_pin"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-APP-01629": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/fonts.py",
+        "line": 143,
+        "message": "Argument of type \"str | Unknown\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"str | Unknown\" is not assignable to type \"Iterable[tuple[str, str | int | list[Unknown]]]\"\n    \"str\" is not assignable to \"Iterable[tuple[str, str | int | list[Unknown]]]\"\n      Type parameter \"_T_co@Iterable\" is covariant, but \"str\" is not a subtype of \"tuple[str, str | int | list[Unknown]]\"\n        \"str\" is not assignable to \"tuple[str, str | int | list[Unknown]]\"",
+        "context": "evidence = dict(proof['faces'][face_index], source_hash=proof['hash'],",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3581af727bf30a1c0d19bd690b594cdf7d523e2723c90e7050284c283c65bafa"
+      },
+      "original_range": {
+        "start": {
+          "line": 142,
+          "character": 24
+        },
+        "end": {
+          "line": 142,
+          "character": 50
+        }
+      },
+      "point": {
+        "id": "D-APP-01629",
+        "scope": "application",
+        "path": "template_ai/fonts.py",
+        "line": 143,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "proof['faces']",
+            "range": [
+              143,
+              24,
+              143,
+              38
+            ],
+            "original_expression_range": [
+              143,
+              24,
+              143,
+              38
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "proof",
+            "range": [
+              143,
+              24,
+              143,
+              29
+            ],
+            "original_expression_range": [
+              143,
+              24,
+              143,
+              29
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "proof['faces'][face_index]",
+            "range": [
+              143,
+              24,
+              143,
+              50
+            ],
+            "original_expression_range": [
+              143,
+              24,
+              143,
+              50
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(proof['faces'][face_index], source_hash=proof['hash'], source_name=path.name, collection=proof['collection'])",
+            "range": [
+              143,
+              19,
+              144,
+              78
+            ],
+            "original_expression_range": [
+              143,
+              19,
+              144,
+              78
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            143,
+            19,
+            144,
+            78
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": null,
+        "source_sha256": "13068091887cde61d9efc460ef14bbd1f9cd9965d03c56b7ca54ae5193fd0138"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 242,
+          "builtins.list": 242
+        },
+        "argument": {
+          "builtins.dict": 242
+        },
+        "call_result": {
+          "builtins.dict": 242
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_another_view_cannot_consume_exact_same_size_template_preflight",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_fixed_x_ratio_uses_each_target_original_measurement_and_preserves_other_candidate_sizes",
+        "test_batch_candidate_adapter.BatchCandidateAdapterTests.test_old_receipt_same_attribute_conflict_and_tampered_cached_result_do_not_overwrite",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_bad_size_and_logo_remain_manual_while_legal_card_applies",
+        "test_batch_candidate_gui.BatchCandidateGuiTests.test_sorted_hidden_checked_exact_targets_keep_their_own_coordinates",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row",
+        "test_batch_format_review_gui.BatchFormatReviewGuiTests.test_sorted_table_review_identity_uses_userrole_not_visible_row_number",
+        "test_batch_recovery.BatchRecoveryCandidateTests.test_tampered_cached_candidate_is_rejected_before_any_adoption",
+        "test_candidate_changes.CandidateChangeTests.test_actual_inverse_restores_geometry_then_whole_card_is_actually_regenerated",
+        "test_candidate_changes.CandidateChangeTests.test_company_rebind_reaches_person_and_old_new_company_not_unrelated_company",
+        "test_candidate_changes.CandidateChangeTests.test_delta_contains_only_changed_coordinate_and_no_people_or_customer_snapshot",
+        "test_candidate_changes.CandidateChangeTests.test_explicit_many_company_link_and_malformed_link_conservatively_recheck",
+        "test_candidate_changes.CandidateChangeTests.test_inverse_preserves_later_untouched_coordinate_and_other_objects",
+        "test_candidate_changes.CandidateChangeTests.test_later_touched_property_receipt_tamper_and_repeated_undo_are_blocked",
+        "test_candidate_changes.CandidateChangeTests.test_lock_blocks_real_new_move_but_does_not_reset_manual_to_unchanged_base",
+        "test_candidate_changes.CandidateChangeTests.test_stable_field_identity_change_is_not_hidden_by_equal_display_text",
+        "test_candidate_results.CandidateResultsTests.test_native_comparison_is_nonformal_and_safe_selection_never_erases_blocks",
+        "test_candidate_results.CandidateResultsTests.test_structured_input_problem_opens_exact_stable_field_without_adoption",
+        "test_candidate_results.CandidateResultsTests.test_typed_phone_problem_focuses_actual_legacy_owner_field_and_slot",
+        "test_candidate_sync_gui.CandidateSyncGuiTests.test_actual_confirmation_applies_safe90_only_and_failed100_keeps_original",
+        "test_canvas_compare.CanvasCompareTests.test_decline_prompt_mutation_and_post_approval_apply_gate",
+        "test_canvas_compare.CanvasCompareTests.test_real_review_entry_worker_failure_retry_stale_and_no_writes",
+        "test_design_components.SeparateComponentTests.test_long_values_do_not_overwrite_or_move_static_components_silently",
+        "test_design_components.SeparateComponentTests.test_overlap_missing_icon_and_secondary_font_rights_block_admission",
+        "test_design_components.SeparateComponentTests.test_source_binding_checks_original_label_run_and_physical_ratio",
+        "test_design_components.SeparateComponentTests.test_static_icon_cannot_claim_company_logo_identity",
+        "test_design_composite_learning.CompositeLearningIntegrationTests.test_actual_multisource_training_generates_new_mixed_face_and_static_components",
+        "test_design_rich_text.CompositeSourceTests.test_actual_multirun_binding_persists_all_fonts_and_new_text_selectors",
+        "test_design_source_binding.SourceTypographyBindingTests.test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography",
+        "test_design_synthesis.DesignSynthesisTests.test_distributed_style_uses_conditional_source_bounds_and_actual_fixed_pt_measurement",
+        "test_design_synthesis.DesignSynthesisTests.test_missing_source_typography_is_unknown_instead_of_default_font",
+        "test_design_synthesis.DesignSynthesisTests.test_oversized_input_is_retained_and_cannot_be_silently_truncated",
+        "test_design_synthesis.DesignSynthesisTests.test_same_appearance_different_review_ids_merges_but_unlearned_size_stays_preview",
+        "test_design_synthesis.DesignSynthesisTests.test_semantic_phone_assignment_uses_learned_default_independent_of_input_order",
+        "test_design_synthesis.DesignSynthesisTests.test_source_observed_expanded_width_is_core_controlled_and_actually_measured",
+        "test_design_synthesis.DesignSynthesisTests.test_supported_baseline_rule_uses_actual_render_metrics_after_font_change",
+        "test_design_synthesis.DesignSynthesisTests.test_supported_new_size_prediction_is_not_displaced_by_unverified_source_copy",
+        "test_digital_output_proof.DigitalOutputProofTests.test_actual_vector_logo_pdf_contains_curve_operators_without_raster_xobject",
+        "test_digital_output_proof.DigitalOutputProofTests.test_exact_selected_slot_crop_uses_encoded_pixels_and_rejects_changed_candidate",
+        "test_digital_preflight.DigitalPreflightTests.test_corrupt_or_missing_actual_source_is_blocked_even_with_optimistic_flags",
+        "test_digital_preflight.DigitalPreflightTests.test_crop_available_pixels_use_whole_mark_contain_actual_geometry",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_logo_detail_keeps_vector_picture_and_encoded_pixels_with_original_pan_zoom",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_actual_original_worker_populates_named_checks_and_marked_format_readback",
+        "test_digital_preflight_gui.DigitalPreflightGuiTests.test_problem_row_routes_exact_slot_to_existing_canvas_without_moving_it",
+        "test_digital_review.DigitalReviewTests.test_changed_actual_reference_file_is_rejected_without_publishing",
+        "test_digital_review.DigitalReviewTests.test_pdf_signature_captures_actual_vectors_and_images_but_ignores_subset_resource_ids",
+        "test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas",
+        "test_first_version.FirstVersionTests.test_unused_contact_and_wrong_capacity_block",
+        "test_font_candidates.FontCandidateTests.test_preview_real_png_fixed_point_size_and_bounded_frame",
+        "test_font_center.FontCenterGuiTests.test_failed_worker_releases_ui_and_repair_refreshes_health",
+        "test_font_collection_shaping.FontCollectionShapingTests.test_actual_same_family_with_changed_metric_table_is_still_rejected_for_shaping",
+        "test_font_evidence.FontEvidenceTests.test_collection_requires_face_then_persists_actual_selected_family_and_source_hash",
+        "test_font_evidence.FontEvidenceTests.test_technical_embedding_flags_never_supply_legal_rights_and_pdf_restrictions_are_stricter",
+        "test_font_repair.FontRepairTests.test_corrupted_copy_retained_in_quarantine_and_reference_unchanged",
+        "test_font_repair.FontRepairTests.test_gui_repair_preserves_asset_and_invalidates_previous_candidate",
+        "test_font_repair.FontRepairTests.test_healthy_copy_repair_is_idempotent",
+        "test_font_repair.FontRepairTests.test_missing_copy_restored_and_reopened_without_changing_published_pin",
+        "test_font_review.FontReviewGuiTests.test_changed_text_clears_approval_selection_and_late_result",
+        "test_font_review.FontReviewGuiTests.test_final_decline_no_selection_and_unsaved_editor_do_not_write",
+        "test_font_review.FontReviewGuiTests.test_geometry_and_color_edit_preserve_pinned_italic_style",
+        "test_font_review.FontReviewGuiTests.test_real_gui_review_apply_history_undo_redo_complete_workflow",
+        "test_font_review.FontReviewGuiTests.test_real_worker_failure_controls_recover_and_retry",
+        "test_input_learning_integration.InputLearningIntegrationTests.test_explicit_fixed_preview_remains_edit_export_target_after_model_activation",
+        "test_local_acceptance.LocalSyntheticAcceptanceTests.test_actual_pdf_compatible_ai_pipeline_pauses_reopens_and_fits_shared_rules",
+        "test_local_visual_binding.VisualSourceBindingTests.test_reproduced_visual_match_becomes_traceable_learning_evidence_without_native_truth",
+        "test_logo_lifecycle.LogoLifecycleTests.test_revocation_invalidates_old_object_and_never_silently_selects_other_version",
+        "test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files",
+        "test_multi_size.MultiSizeTests.test_existing_success_is_not_overwritten_and_late_failure_does_not_delete_other_files",
+        "test_multi_size.MultiSizeTests.test_omitted_size_and_all_known_reasons_remain_visible_in_confirmation",
+        "test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_local_comparison_does_not_apply_until_explicit_current_gate_adoption",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue",
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_source_sync_preserves_previously_unchecked_manual_size",
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_missing_size_specific_logo_never_borrows_other_size_pass_after_sync",
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_new_equal_text_entity_cannot_inherit_old_person_manual_positions",
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_restored_exact_source_reference_resolves_only_derived_sync_gap",
+        "test_multi_size_manual_sync.MultiSizeManualSyncTests.test_shared_name_update_keeps_manual_geometry_and_other_size_independent",
+        "test_persistent_fonts.PersistentFontTests.test_changed_or_missing_asset_blocks_even_if_system_font_exists",
+        "test_persistent_fonts.PersistentFontTests.test_copy_reopen_and_original_removal_do_not_lose_font",
+        "test_persistent_fonts.PersistentFontTests.test_new_python_process_loads_persisted_font",
+        "test_persistent_fonts.PersistentFontTests.test_same_family_different_file_is_not_silently_replaced",
+        "test_persistent_fonts.PersistentFontTests.test_unapproved_invalid_and_duplicate_font_protect_catalog",
+        "test_source_history_gui.SourceHistoryGuiTests.test_actual_undo_then_redo_require_impact_confirmation_and_stay_unadopted",
+        "test_sync_workflow.SyncWorkflowTests.test_actual_three_candidate_alignment_flow_does_not_copy_a_geometry_to_b_or_failed100",
+        "test_sync_workflow.SyncWorkflowTests.test_authored_scope_has_two_real_qualified90_candidates_and_failed100_specific_logo",
+        "test_sync_workflow.SyncWorkflowTests.test_common_source_gate_rechecks_removed_binding_and_recovers_only_derived_condition",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_from_different_same_named_company_cannot_match_by_string",
+        "test_sync_workflow.SyncWorkflowTests.test_explicit_logo_without_confirmed_entity_binding_stays_unverified",
+        "test_sync_workflow.SyncWorkflowTests.test_phone_a_updates_all_true_consumers_and_same_string_b_is_unchanged",
+        "test_visual_background.VisualBackgroundTests.test_gui_background_controls_respect_published_version",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_logo_cancel_returns_original100_candidate_and_preserves_missing_logo_block",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_actual_source_button_supplies_multi_origin_and_unmodified_cancel_keeps_source",
+        "test_workbench_multi_navigation.WorkbenchMultiNavigationTests.test_multi_same_named_company_binding_removal_invalidates_return_without_global_generation_change"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-APP-02900": {
+      "kind": "EXACT_COMPATIBLE_ARGUMENT_AND_RETURN",
+      "reason": "Parameter spec expects ModuleSpec; its exact observed argument type is compatible and the actual selected call returned normally. Other union members/preconditions remain guarded; callback/generic-content mismatches are not waived.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_engine.py",
+        "line": 76,
+        "message": "Argument of type \"ModuleSpec | None\" cannot be assigned to parameter \"spec\" of type \"ModuleSpec\" in function \"module_from_spec\"\n  Type \"ModuleSpec | None\" is not assignable to type \"ModuleSpec\"\n    \"None\" is not assignable to \"ModuleSpec\"",
+        "context": "module=importlib.util.module_from_spec(spec);sys.modules[prefix]=module",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a722b18102ffa6056e3abf6316cb14e510d376ed8e7151e55984bb9bb2189a46"
+      },
+      "original_range": {
+        "start": {
+          "line": 75,
+          "character": 47
+        },
+        "end": {
+          "line": 75,
+          "character": 51
+        }
+      },
+      "point": {
+        "id": "D-APP-02900",
+        "scope": "application",
+        "path": "template_ai/quality_engine.py",
+        "line": 76,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "importlib.util.module_from_spec(spec)",
+            "range": [
+              76,
+              15,
+              76,
+              52
+            ],
+            "original_expression_range": [
+              76,
+              15,
+              76,
+              52
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "spec",
+            "range": [
+              76,
+              47,
+              76,
+              51
+            ],
+            "original_expression_range": [
+              76,
+              47,
+              76,
+              51
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "spec",
+            "range": [
+              76,
+              47,
+              76,
+              51
+            ],
+            "original_expression_range": [
+              76,
+              47,
+              76,
+              51
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "importlib.util.module_from_spec(spec)",
+            "range": [
+              76,
+              15,
+              76,
+              52
+            ],
+            "original_expression_range": [
+              76,
+              15,
+              76,
+              52
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "importlib.util",
+            "range": [
+              76,
+              15,
+              76,
+              29
+            ],
+            "original_expression_range": [
+              76,
+              15,
+              76,
+              29
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            76,
+            15,
+            76,
+            52
+          ]
+        ],
+        "producer_names": [
+          "module_from_spec"
+        ],
+        "test_id": null,
+        "source_sha256": "9ce2724ccff552c5ff675d4b779e51f5a204ec85c53d0b5e986b234abd658a62"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "builtins.module": 120
+        },
+        "value": {
+          "_frozen_importlib.ModuleSpec": 120,
+          "builtins.module": 120
+        },
+        "argument": {
+          "_frozen_importlib.ModuleSpec": 120
+        },
+        "call_result": {
+          "builtins.module": 120
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_major_review_dependencies.MajorGoldDeploymentTests.test_source_gold_dependency_suspends_existing_accepted_runtime_without_rewriting_it",
+        "test_qualified_coverage_evidence.QualifiedCoverageEvidenceTests.test_actual_local_ocr_source_admission_counts_recorded_ocr_without_loading_model_again",
+        "test_quality_decisions.QualityDecisionTests.test_actual_authored_source_qualification_explicit_acceptance_and_withdraw_preserve_business_data",
+        "test_quality_decisions.QualityDecisionTests.test_actual_qualified_decision_disk_failure_rolls_back_without_replacing_prior_version",
+        "test_quality_decisions.QualityDecisionTests.test_actual_zero_error_source_samples_remain_visible_and_fake_case_text_is_rejected",
+        "test_quality_decisions.QualityDecisionTests.test_known_bad_actual_parser_blocks_previously_accepted_version_and_new_id_clone",
+        "test_quality_panel.QualityPanelTests.test_actual_global_case_query_and_facets_preserve_source_denominator",
+        "test_quality_panel.QualityPanelTests.test_predicted_work_tamper_is_rejected_even_with_unchanged_item_receipt",
+        "test_quality_provenance.QualityProducerProvenanceTests.test_actual_auto_parser_and_model_provenance_are_found_and_quarantined",
+        "test_quality_provenance.QualityProducerProvenanceTests.test_same_weights_other_version_is_potential_impact_and_review_keeps_actual_source_model",
+        "test_quality_rechecks.QualityRecheckTests.test_actual_critical_result_finds_closed_historical_batch_and_quarantines_it",
+        "test_quality_repair_gates.QualityRepairGateTests.test_sparse_unaffected_controls_save_failed_receipt_and_block_new_acceptance",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_quality_acceptance_preserves_exact_report_and_does_not_activate",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_real_cross_recheck_entry_uses_persisted_work_quarantine_and_quality_side_data",
+        "test_quality_repair_releases.QualityRepairReleaseTests.test_actual_critical_recheck_quarantines_same_parser_and_no_old_fallback_is_assumed_safe",
+        "test_quality_repair_replay.QualityRepairReplayTests.test_bound_replay_keeps_actual_holdout_exposure_roles_and_original_consumption",
+        "test_quality_repair_replay.QualityRepairReplayTests.test_tampered_independence_or_root_receipt_cannot_freeze",
+        "test_quality_repairs.QualityRepairIssueTests.test_invented_case_and_unapproved_creation_cannot_impersonate_actual_failure",
+        "test_quality_reports.QualityReportTests.test_actual_pair_same_scope_denominators_and_insufficient_blocks_decision",
+        "test_quality_review_gui.QualityReviewGuiTests.test_actual_native_single_work_resolution_requires_new_facts_and_keeps_model_quarantine",
+        "test_quality_roles.QualityRoleTests.test_actual_train_diagnostics_never_admit_train_or_qualify_independent_quality",
+        "test_quality_rule_selector.QualityRuleSelectorTests.test_actual_isolated_rule_selected_by_name_and_frozen_via_reused_native_setup",
+        "test_trusted_sample_boundaries.TrustedQualityUseTests.test_actual_accepted_quality_receipt_trace_and_source_withdrawal_block_old_recommendation"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-APP-03512": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/runtime_queue.py",
+        "line": 70,
+        "message": "Argument of type \"dict[str, Any] | None\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"dict[str, Any] | None\" is not assignable to type \"Iterable[tuple[str, str | dict[str, int | str] | bool | None]]\"\n    \"dict[str, Any]\" is not assignable to \"Iterable[tuple[str, str | dict[str, int | str] | bool | None]]\"\n      Type parameter \"_T_co@Iterable\" is covariant, but \"str\" is not a subtype of \"tuple[str, str | dict[str, int | str] | bool | None]\"\n        \"str\" is not assignable to \"tuple[str, str | dict[str, int | str] | bool | None]\"",
+        "context": "return self._write(dict(request,state='WAITING',owner=None,actor=actor.strip(),consent_session=session,consent_owner=dict(pid=os.getpid(),token=session),retry_failed=retry_failed,message=None),request['revision'],'resume_scope_confirmed')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "228de9958b5e695bb6f1987ec5c354b5664f81360fda6d877bc4f6276253e04d"
+      },
+      "original_range": {
+        "start": {
+          "line": 69,
+          "character": 40
+        },
+        "end": {
+          "line": 69,
+          "character": 47
+        }
+      },
+      "point": {
+        "id": "D-APP-03512",
+        "scope": "application",
+        "path": "template_ai/runtime_queue.py",
+        "line": 74,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "dict(request, state='WAITING', owner=None, actor=actor.strip(), consent_session=session, consent_owner=dict(pid=os.getpid(), token=session), retry_failed=retry_failed, message=None)",
+            "range": [
+              74,
+              35,
+              74,
+              208
+            ],
+            "original_expression_range": [
+              70,
+              35,
+              70,
+              208
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "request",
+            "range": [
+              74,
+              40,
+              74,
+              47
+            ],
+            "original_expression_range": [
+              70,
+              40,
+              70,
+              47
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "request",
+            "range": [
+              74,
+              40,
+              74,
+              47
+            ],
+            "original_expression_range": [
+              70,
+              40,
+              70,
+              47
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(request, state='WAITING', owner=None, actor=actor.strip(), consent_session=session, consent_owner=dict(pid=os.getpid(), token=session), retry_failed=retry_failed, message=None)",
+            "range": [
+              74,
+              35,
+              74,
+              208
+            ],
+            "original_expression_range": [
+              70,
+              35,
+              70,
+              208
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            74,
+            35,
+            74,
+            208
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": null,
+        "source_sha256": "5098d88ba4f8b781c1677df75c81339448965986b2f3df0fdcffe803ab833e4e"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 4
+        },
+        "argument": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_runtime_queue.RuntimeQueueTests.test_dead_session_does_not_auto_resume_and_explicit_resume_keeps_original_arrival_rank"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-APP-03521": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/runtime_queue.py",
+        "line": 88,
+        "message": "Argument of type \"dict[str, Any] | None\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"dict[str, Any] | None\" is not assignable to type \"Iterable[tuple[str, str | None]]\"\n    \"dict[str, Any]\" is not assignable to \"Iterable[tuple[str, str | None]]\"\n      Type parameter \"_T_co@Iterable\" is covariant, but \"str\" is not a subtype of \"tuple[str, str | None]\"\n        \"str\" is not assignable to \"tuple[str, str | None]\"",
+        "context": "value=dict(request,state='DONE' if committed else 'INTERRUPTED',consent_session=None,result_phase=job['phase'] if committed else 'INTERRUPTED',message='已從原工作提交讀回遺失收據' if committed else '原執行者已離開；明確確認恢復，已保存單位保留')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "bd010a9be286a7468555fdd3378c917da9fcd95028a529e76888a03c9cd3d808"
+      },
+      "original_range": {
+        "start": {
+          "line": 87,
+          "character": 31
+        },
+        "end": {
+          "line": 87,
+          "character": 38
+        }
+      },
+      "point": {
+        "id": "D-APP-03521",
+        "scope": "application",
+        "path": "template_ai/runtime_queue.py",
+        "line": 92,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "dict(request, state='DONE' if committed else 'INTERRUPTED', consent_session=None, result_phase=job['phase'] if committed else 'INTERRUPTED', message='已從原工作提交讀回遺失收據' if committed else '原執行者已離開；明確確認恢復，已保存單位保留')",
+            "range": [
+              92,
+              26,
+              92,
+              300
+            ],
+            "original_expression_range": [
+              88,
+              26,
+              88,
+              300
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "request",
+            "range": [
+              92,
+              31,
+              92,
+              38
+            ],
+            "original_expression_range": [
+              88,
+              31,
+              88,
+              38
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "request",
+            "range": [
+              92,
+              31,
+              92,
+              38
+            ],
+            "original_expression_range": [
+              88,
+              31,
+              88,
+              38
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(request, state='DONE' if committed else 'INTERRUPTED', consent_session=None, result_phase=job['phase'] if committed else 'INTERRUPTED', message='已從原工作提交讀回遺失收據' if committed else '原執行者已離開；明確確認恢復，已保存單位保留')",
+            "range": [
+              92,
+              26,
+              92,
+              300
+            ],
+            "original_expression_range": [
+              88,
+              26,
+              88,
+              300
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            92,
+            26,
+            92,
+            300
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": null,
+        "source_sha256": "5098d88ba4f8b781c1677df75c81339448965986b2f3df0fdcffe803ab833e4e"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 4
+        },
+        "argument": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_runtime_queue.RuntimeQueueTests.test_dead_running_request_is_recoverable_and_keeps_all_original_backend_results"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-APP-03530": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/runtime_queue.py",
+        "line": 103,
+        "message": "Argument of type \"dict[str, Any] | None\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"dict[str, Any] | None\" is not assignable to type \"Iterable[tuple[str, str | bool]]\"\n    \"dict[str, Any]\" is not assignable to \"Iterable[tuple[str, str | bool]]\"\n      Type parameter \"_T_co@Iterable\" is covariant, but \"str\" is not a subtype of \"tuple[str, str | bool]\"\n        \"str\" is not assignable to \"tuple[str, str | bool]\"",
+        "context": "self._write(dict(current,state='RUNNING',owner=claimed['owner'],job_revision=claimed['revision'],retry_failed=False),current['revision'],'claimed_with_existing_worker_lease')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7f96b3a244b56f28937b8432490a8381daf3f1ac19017c44398ae7aa2767ad1f"
+      },
+      "original_range": {
+        "start": {
+          "line": 102,
+          "character": 29
+        },
+        "end": {
+          "line": 102,
+          "character": 36
+        }
+      },
+      "point": {
+        "id": "D-APP-03530",
+        "scope": "application",
+        "path": "template_ai/runtime_queue.py",
+        "line": 107,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "dict(current, state='RUNNING', owner=claimed['owner'], job_revision=claimed['revision'], retry_failed=False)",
+            "range": [
+              107,
+              24,
+              107,
+              128
+            ],
+            "original_expression_range": [
+              103,
+              24,
+              103,
+              128
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "current",
+            "range": [
+              107,
+              29,
+              107,
+              36
+            ],
+            "original_expression_range": [
+              103,
+              29,
+              103,
+              36
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "current",
+            "range": [
+              107,
+              29,
+              107,
+              36
+            ],
+            "original_expression_range": [
+              103,
+              29,
+              103,
+              36
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(current, state='RUNNING', owner=claimed['owner'], job_revision=claimed['revision'], retry_failed=False)",
+            "range": [
+              107,
+              24,
+              107,
+              128
+            ],
+            "original_expression_range": [
+              103,
+              24,
+              103,
+              128
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            107,
+            24,
+            107,
+            128
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": null,
+        "source_sha256": "5098d88ba4f8b781c1677df75c81339448965986b2f3df0fdcffe803ab833e4e"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 100
+        },
+        "argument": {
+          "builtins.dict": 50
+        },
+        "call_result": {
+          "builtins.dict": 50
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_major_review_jobs.MajorReviewJobTests.test_shared_fifo_claims_source_jobs_in_original_order_and_preserves_other_source",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_gui_dispatcher_uses_existing_fifo_worker_and_preserves_quality_boundary",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_pool_launch_failure_releases_eval_lease_without_false_source_result",
+        "test_quality_dispatch.QualityDispatchTests.test_real_owned_stalled_child_kill_rolls_back_then_persists_last_failed_source_receipt",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_training_selection_owned_candidate_job_and_shared_fifo",
+        "test_quality_repair_replay.QualityRepairReplayTests.test_bound_replay_keeps_actual_holdout_exposure_roles_and_original_consumption",
+        "test_quality_repair_training.RepairCandidateTrainingTests.test_owned_timeout_rolls_back_actually_trained_uncommitted_model_and_isolates_source",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims",
+        "test_runtime_queue.RuntimeQueueTests.test_dead_running_request_is_recoverable_and_keeps_all_original_backend_results",
+        "test_runtime_queue.RuntimeQueueTests.test_fifo_does_not_follow_wall_clock_and_atomic_claim_cannot_bypass_older_live_scope",
+        "test_runtime_queue.RuntimeQueueTests.test_other_window_cannot_duplicate_worker_and_stale_request_cas_rolls_back",
+        "test_runtime_queue.RuntimeQueueTests.test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units",
+        "test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure",
+        "test_runtime_queue.RuntimeQueueTests.test_scope_changed_request_is_blocked_and_next_eligible_is_not_starved",
+        "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-APP-03535": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/runtime_queue.py",
+        "line": 117,
+        "message": "Argument of type \"dict[str, Any] | None\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"dict[str, Any] | None\" is not assignable to type \"Iterable[tuple[str, str | None]]\"\n    \"dict[str, Any]\" is not assignable to \"Iterable[tuple[str, str | None]]\"\n      Type parameter \"_T_co@Iterable\" is covariant, but \"str\" is not a subtype of \"tuple[str, str | None]\"\n        \"str\" is not assignable to \"tuple[str, str | None]\"",
+        "context": "return self._write(dict(request,state=state,owner=None,result_phase=phase,message=str(error)[:4000] if error else (result.get('last_error') or result.get('system_error')),consent_session=request['consent_session'] if state in ELIGIBLE else None),request['revision'],'result_committed')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "72376ca6b5395d0044c829c6328b6a8ab26054d4f8ded83a71ca8e9403932e55"
+      },
+      "original_range": {
+        "start": {
+          "line": 116,
+          "character": 36
+        },
+        "end": {
+          "line": 116,
+          "character": 43
+        }
+      },
+      "point": {
+        "id": "D-APP-03535",
+        "scope": "application",
+        "path": "template_ai/runtime_queue.py",
+        "line": 121,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "dict(request, state=state, owner=None, result_phase=phase, message=str(error)[:4000] if error else result.get('last_error') or result.get('system_error'), consent_session=request['consent_session'] if state in ELIGIBLE else None)",
+            "range": [
+              121,
+              31,
+              121,
+              257
+            ],
+            "original_expression_range": [
+              117,
+              31,
+              117,
+              257
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "request",
+            "range": [
+              121,
+              36,
+              121,
+              43
+            ],
+            "original_expression_range": [
+              117,
+              36,
+              117,
+              43
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "request",
+            "range": [
+              121,
+              36,
+              121,
+              43
+            ],
+            "original_expression_range": [
+              117,
+              36,
+              117,
+              43
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(request, state=state, owner=None, result_phase=phase, message=str(error)[:4000] if error else result.get('last_error') or result.get('system_error'), consent_session=request['consent_session'] if state in ELIGIBLE else None)",
+            "range": [
+              121,
+              31,
+              121,
+              257
+            ],
+            "original_expression_range": [
+              117,
+              31,
+              117,
+              257
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            121,
+            31,
+            121,
+            257
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": null,
+        "source_sha256": "5098d88ba4f8b781c1677df75c81339448965986b2f3df0fdcffe803ab833e4e"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 84
+        },
+        "argument": {
+          "builtins.dict": 42
+        },
+        "call_result": {
+          "builtins.dict": 42
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_major_review_jobs.MajorReviewJobTests.test_shared_fifo_claims_source_jobs_in_original_order_and_preserves_other_source",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_gui_dispatcher_uses_existing_fifo_worker_and_preserves_quality_boundary",
+        "test_quality_dispatch.QualityDispatchTests.test_actual_pool_launch_failure_releases_eval_lease_without_false_source_result",
+        "test_quality_dispatch.QualityDispatchTests.test_real_owned_stalled_child_kill_rolls_back_then_persists_last_failed_source_receipt",
+        "test_quality_repair_gui_actions.QualityRepairGuiActionTests.test_actual_native_training_selection_owned_candidate_job_and_shared_fifo",
+        "test_quality_repair_replay.QualityRepairReplayTests.test_bound_replay_keeps_actual_holdout_exposure_roles_and_original_consumption",
+        "test_quality_repair_training.RepairCandidateTrainingTests.test_owned_timeout_rolls_back_actually_trained_uncommitted_model_and_isolates_source",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pause_gui_preserves_pending_request_then_resume_runs_and_keeps_human_review_pending",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_actual_pool_launch_failure_is_visible_and_requires_explicit_retry_without_auto_loop",
+        "test_runtime_dispatch.RuntimeDispatchTests.test_multiple_actual_jobs_run_fifo_and_cancelled_waiting_scope_never_claims",
+        "test_runtime_queue.RuntimeQueueTests.test_pressure_resume_uses_same_confirmed_scope_and_persisted_completed_units",
+        "test_runtime_queue.RuntimeQueueTests.test_real_timeout_isolates_only_active_source_then_continues_other_files_without_retrying_failure",
+        "test_source_watch_center.SourceWatchCenterTests.test_actual_ui003_handoff_requires_explicit_start_then_keeps_two_alias_source_ids_and_real_job_receipts"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-04930": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_backup_policy.py",
+        "line": 33,
+        "message": "Argument of type \"Any | None\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"Any | None\" is not assignable to type \"Iterable[tuple[str, str]]\"\n    \"None\" is incompatible with protocol \"Iterable[tuple[str, str]]\"\n      \"__iter__\" is not present",
+        "context": "self.assertEqual(policy.due_state(dict(failed,directory=str(self.root/'offline')),10061,True),'DESTINATION_OFFLINE')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "086ee743ef1c480e098b85166e94cb28d551e9bfa52e20cd7269a1f143f038ca"
+      },
+      "original_range": {
+        "start": {
+          "line": 32,
+          "character": 47
+        },
+        "end": {
+          "line": 32,
+          "character": 53
+        }
+      },
+      "point": {
+        "id": "D-TES-04930",
+        "scope": "tests",
+        "path": "tests/test_backup_policy.py",
+        "line": 33,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "dict(failed, directory=str(self.root / 'offline'))",
+            "range": [
+              33,
+              42,
+              33,
+              89
+            ],
+            "original_expression_range": [
+              33,
+              42,
+              33,
+              89
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "failed",
+            "range": [
+              33,
+              47,
+              33,
+              53
+            ],
+            "original_expression_range": [
+              33,
+              47,
+              33,
+              53
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "failed",
+            "range": [
+              33,
+              47,
+              33,
+              53
+            ],
+            "original_expression_range": [
+              33,
+              47,
+              33,
+              53
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(failed, directory=str(self.root / 'offline'))",
+            "range": [
+              33,
+              42,
+              33,
+              89
+            ],
+            "original_expression_range": [
+              33,
+              42,
+              33,
+              89
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            33,
+            42,
+            33,
+            89
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": "test_backup_policy.BackupPolicyTests.test_schedule_cas_offline_key_busy_sleep_catchup_and_clock_rollback_never_store_password",
+        "source_sha256": "0060c87563f78802447cbf1a3fb87b101be64546b9b2bf07b3c30a193c8983d5"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 4
+        },
+        "argument": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_backup_policy.BackupPolicyTests.test_schedule_cas_offline_key_busy_sleep_catchup_and_clock_rollback_never_store_password"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08811": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 97,
+        "message": "Argument of type \"str | Any\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"str | Any\" is not assignable to type \"Iterable[tuple[str, str]]\"\n    \"str\" is not assignable to \"Iterable[tuple[str, str]]\"\n      Type parameter \"_T_co@Iterable\" is covariant, but \"str\" is not a subtype of \"tuple[str, str]\"\n        \"str\" is not assignable to \"tuple[str, str]\"",
+        "context": "bad=dict(run['glyph_evidence'],digest='0'*64)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "a399c82e941e7b0695632ee7e3a3763b50d61ed5563f71a0a5a4253f5587cddd"
+      },
+      "original_range": {
+        "start": {
+          "line": 96,
+          "character": 21
+        },
+        "end": {
+          "line": 96,
+          "character": 42
+        }
+      },
+      "point": {
+        "id": "D-TES-08811",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 97,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "run['glyph_evidence']",
+            "range": [
+              97,
+              21,
+              97,
+              42
+            ],
+            "original_expression_range": [
+              97,
+              21,
+              97,
+              42
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "run",
+            "range": [
+              97,
+              21,
+              97,
+              24
+            ],
+            "original_expression_range": [
+              97,
+              21,
+              97,
+              24
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "run['glyph_evidence']",
+            "range": [
+              97,
+              21,
+              97,
+              42
+            ],
+            "original_expression_range": [
+              97,
+              21,
+              97,
+              42
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(run['glyph_evidence'], digest='0' * 64)",
+            "range": [
+              97,
+              16,
+              97,
+              57
+            ],
+            "original_expression_range": [
+              97,
+              16,
+              97,
+              57
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            97,
+            16,
+            97,
+            57
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 4
+        },
+        "argument": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_addressed_observation_keeps_detail_out_of_default_graph_and_resolves_exactly"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09389": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_gold_sets.py",
+        "line": 24,
+        "message": "Argument of type \"dict[str | Unknown, Unknown | None] | str | list[Unknown] | bool\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"dict[str | Unknown, Unknown | None] | str | list[Unknown] | bool\" is not assignable to type \"Iterable[tuple[str, str]]\"\n    \"bool\" is incompatible with protocol \"Iterable[tuple[str, str]]\"\n      \"__iter__\" is not present",
+        "context": "plan=self.plan();wrong=dict(plan['rights'],use='GEOMETRY_TRAINING_LOCAL')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "bbd4e7c27ec4f25184b188d6bc6b4c1225c97cbf942707a96370962831093508"
+      },
+      "original_range": {
+        "start": {
+          "line": 23,
+          "character": 36
+        },
+        "end": {
+          "line": 23,
+          "character": 50
+        }
+      },
+      "point": {
+        "id": "D-TES-09389",
+        "scope": "tests",
+        "path": "tests/test_quality_gold_sets.py",
+        "line": 24,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "plan['rights']",
+            "range": [
+              24,
+              36,
+              24,
+              50
+            ],
+            "original_expression_range": [
+              24,
+              36,
+              24,
+              50
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "plan",
+            "range": [
+              24,
+              36,
+              24,
+              40
+            ],
+            "original_expression_range": [
+              24,
+              36,
+              24,
+              40
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "plan['rights']",
+            "range": [
+              24,
+              36,
+              24,
+              50
+            ],
+            "original_expression_range": [
+              24,
+              36,
+              24,
+              50
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(plan['rights'], use='GEOMETRY_TRAINING_LOCAL')",
+            "range": [
+              24,
+              31,
+              24,
+              81
+            ],
+            "original_expression_range": [
+              24,
+              31,
+              24,
+              81
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            24,
+            31,
+            24,
+            81
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": "test_quality_gold_sets.QualityGoldSetTests.test_geometry_rights_or_unconfirmed_ai_candidates_cannot_be_gold",
+        "source_sha256": "796442225af9741c9e48158bf8233b95b92e677a71085c8979067f7cc4617850"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 4
+        },
+        "argument": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_gold_sets.QualityGoldSetTests.test_geometry_rights_or_unconfirmed_ai_candidates_cannot_be_gold"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09807": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_policy.py",
+        "line": 31,
+        "message": "Argument of type \"int | dict[Unknown, Unknown] | str\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"int | dict[Unknown, Unknown] | str\" is not assignable to type \"Iterable[tuple[str, None]]\"\n    \"int\" is incompatible with protocol \"Iterable[tuple[str, None]]\"\n      \"__iter__\" is not present",
+        "context": "for bad in (thresholds,{},dict(plan['thresholds'],field_types=None)):",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "285e89ca7ba0cb409f421406edbb92aaf0370c6b758e32487994871d29937d32"
+      },
+      "original_range": {
+        "start": {
+          "line": 30,
+          "character": 39
+        },
+        "end": {
+          "line": 30,
+          "character": 57
+        }
+      },
+      "point": {
+        "id": "D-TES-09807",
+        "scope": "tests",
+        "path": "tests/test_quality_policy.py",
+        "line": 31,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "plan['thresholds']",
+            "range": [
+              31,
+              39,
+              31,
+              57
+            ],
+            "original_expression_range": [
+              31,
+              39,
+              31,
+              57
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "plan",
+            "range": [
+              31,
+              39,
+              31,
+              43
+            ],
+            "original_expression_range": [
+              31,
+              39,
+              31,
+              43
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "plan['thresholds']",
+            "range": [
+              31,
+              39,
+              31,
+              57
+            ],
+            "original_expression_range": [
+              31,
+              39,
+              31,
+              57
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(plan['thresholds'], field_types=None)",
+            "range": [
+              31,
+              34,
+              31,
+              75
+            ],
+            "original_expression_range": [
+              31,
+              34,
+              31,
+              75
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            31,
+            34,
+            31,
+            75
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": "test_quality_policy.QualityPolicyTests.test_missing_domain_nan_or_empty_denominator_policy_cannot_be_approved",
+        "source_sha256": "a97d662bd0ab74f6312f3188ce29c458176565db004feb67e604880cfffe92e6"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 4
+        },
+        "argument": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_policy.QualityPolicyTests.test_missing_domain_nan_or_empty_denominator_policy_cannot_be_approved"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-10636": {
+      "kind": "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD",
+      "reason": "The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_roles.py",
+        "line": 24,
+        "message": "Argument of type \"dict[str | Unknown, Unknown | None] | str | list[Unknown] | bool\" cannot be assigned to parameter \"iterable\" of type \"Iterable[tuple[str, _VT@dict]]\" in function \"__init__\"\n  Type \"dict[str | Unknown, Unknown | None] | str | list[Unknown] | bool\" is not assignable to type \"Iterable[tuple[str, str]]\"\n    \"bool\" is incompatible with protocol \"Iterable[tuple[str, str]]\"\n      \"__iter__\" is not present",
+        "context": "plan=self.gold.plan(self.work['id'],dict(base['rights'],use=use),base['domain_truth'],base['reason'],base['evidence'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "d49fc2e172881c7f6f5726f9b615155167eab8f5f78c9340315f2a1ac6d368e4"
+      },
+      "original_range": {
+        "start": {
+          "line": 23,
+          "character": 49
+        },
+        "end": {
+          "line": 23,
+          "character": 63
+        }
+      },
+      "point": {
+        "id": "D-TES-10636",
+        "scope": "tests",
+        "path": "tests/test_quality_roles.py",
+        "line": 24,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "base['rights']",
+            "range": [
+              24,
+              49,
+              24,
+              63
+            ],
+            "original_expression_range": [
+              24,
+              49,
+              24,
+              63
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "base",
+            "range": [
+              24,
+              49,
+              24,
+              53
+            ],
+            "original_expression_range": [
+              24,
+              49,
+              24,
+              53
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "base['rights']",
+            "range": [
+              24,
+              49,
+              24,
+              63
+            ],
+            "original_expression_range": [
+              24,
+              49,
+              24,
+              63
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "dict(base['rights'], use=use)",
+            "range": [
+              24,
+              44,
+              24,
+              72
+            ],
+            "original_expression_range": [
+              24,
+              44,
+              24,
+              72
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            24,
+            44,
+            24,
+            72
+          ]
+        ],
+        "producer_names": [
+          "dict"
+        ],
+        "test_id": null,
+        "source_sha256": "3be5cdcd954cee36c0261ecd3de10d0e40dce141ccef7b729febafc8572c9e83"
+      },
+      "observed_types": {
+        "value": {
+          "builtins.dict": 4
+        },
+        "argument": {
+          "builtins.dict": 2
+        },
+        "call_result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_roles.QualityRoleTests.test_actual_train_diagnostics_never_admit_train_or_qualify_independent_quality"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-07580": {
+      "kind": "EXACT_COMPATIBLE_ARGUMENT_AND_RETURN",
+      "reason": "Parameter spec expects ModuleSpec; its exact observed argument type is compatible and the actual selected call returned normally. Other union members/preconditions remain guarded; callback/generic-content mismatches are not waived.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_gui_tooling_extensions.py",
+        "line": 14,
+        "message": "Argument of type \"ModuleSpec | None\" cannot be assigned to parameter \"spec\" of type \"ModuleSpec\" in function \"module_from_spec\"\n  Type \"ModuleSpec | None\" is not assignable to type \"ModuleSpec\"\n    \"None\" is not assignable to \"ModuleSpec\"",
+        "context": "EXTENSIONS = importlib.util.module_from_spec(SPEC)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "bb24efe514c3e9d3176bd01222a19e7af88e5d5de4a3340f00cb3616f8d24177"
+      },
+      "original_range": {
+        "start": {
+          "line": 13,
+          "character": 45
+        },
+        "end": {
+          "line": 13,
+          "character": 49
+        }
+      },
+      "point": {
+        "id": "D-TES-07580",
+        "scope": "tests",
+        "path": "tests/test_gui_tooling_extensions.py",
+        "line": 14,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "importlib.util.module_from_spec(SPEC)",
+            "range": [
+              14,
+              13,
+              14,
+              50
+            ],
+            "original_expression_range": [
+              14,
+              13,
+              14,
+              50
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "SPEC",
+            "range": [
+              14,
+              45,
+              14,
+              49
+            ],
+            "original_expression_range": [
+              14,
+              45,
+              14,
+              49
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "SPEC",
+            "range": [
+              14,
+              45,
+              14,
+              49
+            ],
+            "original_expression_range": [
+              14,
+              45,
+              14,
+              49
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "importlib.util.module_from_spec(SPEC)",
+            "range": [
+              14,
+              13,
+              14,
+              50
+            ],
+            "original_expression_range": [
+              14,
+              13,
+              14,
+              50
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "importlib.util",
+            "range": [
+              14,
+              13,
+              14,
+              27
+            ],
+            "original_expression_range": [
+              14,
+              13,
+              14,
+              27
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            14,
+            13,
+            14,
+            50
+          ]
+        ],
+        "producer_names": [
+          "module_from_spec"
+        ],
+        "test_id": null,
+        "source_sha256": "e65649835180de3cc82d4e04f03db727dbf1d21901511ae286324ea5418874e0"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "builtins.module": 1
+        },
+        "value": {
+          "_frozen_importlib.ModuleSpec": 1,
+          "builtins.module": 1
+        },
+        "argument": {
+          "_frozen_importlib.ModuleSpec": 1
+        },
+        "call_result": {
+          "builtins.module": 1
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "owned-module:test_gui_tooling_extensions"
+      ],
+      "context_granularity": "MODULE_ONLY",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-003/source.json",
+      "observations": "ast-module-contexts-003/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-06299": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_family.py",
+        "line": 37,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "self.assertEqual(artifact['families'][0]['independent_support'],8)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "26696b2f49e8bc65a409669e36e4348f47bf5f9f476c2a78680b6d745165625a"
+      },
+      "original_range": {
+        "start": {
+          "line": 36,
+          "character": 25
+        },
+        "end": {
+          "line": 36,
+          "character": 48
+        }
+      },
+      "point": {
+        "id": "D-TES-06299",
+        "scope": "tests",
+        "path": "tests/test_design_family.py",
+        "line": 37,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "artifact['families']",
+            "range": [
+              37,
+              25,
+              37,
+              45
+            ],
+            "original_expression_range": [
+              37,
+              25,
+              37,
+              45
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "artifact['families'][0]",
+            "range": [
+              37,
+              25,
+              37,
+              48
+            ],
+            "original_expression_range": [
+              37,
+              25,
+              37,
+              48
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "artifact['families'][0]['independent_support']",
+            "range": [
+              37,
+              25,
+              37,
+              71
+            ],
+            "original_expression_range": [
+              37,
+              25,
+              37,
+              71
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertEqual(artifact['families'][0]['independent_support'], 8)",
+            "range": [
+              37,
+              8,
+              37,
+              74
+            ],
+            "original_expression_range": [
+              37,
+              8,
+              37,
+              74
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              37,
+              8,
+              37,
+              12
+            ],
+            "original_expression_range": [
+              37,
+              8,
+              37,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            37,
+            8,
+            37,
+            74
+          ]
+        ],
+        "producer_names": [
+          "assertEqual"
+        ],
+        "test_id": "test_design_family.DesignFamilyTests.test_same_geometry_from_distinct_designs_learns_shared_family_not_templates",
+        "source_sha256": "c2143d2d236811525bcaa9739487cacafa384caf934bbadc16b564da77c59644"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_design_family.DesignFamilyTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.int": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_design_family.DesignFamilyTests.test_same_geometry_from_distinct_designs_learns_shared_family_not_templates"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-06379": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_family.py",
+        "line": 149,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "rows,family,_=self.model(); changed=deepcopy(family); changed['families'][0]['independent_support']=100",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c647bf86fc9962a88e6f0b2780105690f68f559ba411d11762271ed12e5f54e8"
+      },
+      "original_range": {
+        "start": {
+          "line": 148,
+          "character": 62
+        },
+        "end": {
+          "line": 148,
+          "character": 84
+        }
+      },
+      "point": {
+        "id": "D-TES-06379",
+        "scope": "tests",
+        "path": "tests/test_design_family.py",
+        "line": 149,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "changed['families']",
+            "range": [
+              149,
+              62,
+              149,
+              81
+            ],
+            "original_expression_range": [
+              149,
+              62,
+              149,
+              81
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "changed['families'][0]",
+            "range": [
+              149,
+              62,
+              149,
+              84
+            ],
+            "original_expression_range": [
+              149,
+              62,
+              149,
+              84
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_design_family.DesignProfileTests.test_profiles_reject_tampered_family_and_validation_rows",
+        "source_sha256": "c2143d2d236811525bcaa9739487cacafa384caf934bbadc16b564da77c59644"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_design_family.DesignProfileTests.test_profiles_reject_tampered_family_and_validation_rows"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-06388": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_design_family.py",
+        "line": 163,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "self.assertEqual(artifact['families'][0]['independent_support'],12)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "54d8c6ab18efcc5dd3e77902efdceacc63897e3835fe250912e656f2a64dbdb6"
+      },
+      "original_range": {
+        "start": {
+          "line": 162,
+          "character": 25
+        },
+        "end": {
+          "line": 162,
+          "character": 48
+        }
+      },
+      "point": {
+        "id": "D-TES-06388",
+        "scope": "tests",
+        "path": "tests/test_design_family.py",
+        "line": 163,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "artifact['families']",
+            "range": [
+              163,
+              25,
+              163,
+              45
+            ],
+            "original_expression_range": [
+              163,
+              25,
+              163,
+              45
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "artifact['families'][0]",
+            "range": [
+              163,
+              25,
+              163,
+              48
+            ],
+            "original_expression_range": [
+              163,
+              25,
+              163,
+              48
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "artifact['families'][0]['independent_support']",
+            "range": [
+              163,
+              25,
+              163,
+              71
+            ],
+            "original_expression_range": [
+              163,
+              25,
+              163,
+              71
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertEqual(artifact['families'][0]['independent_support'], 12)",
+            "range": [
+              163,
+              8,
+              163,
+              75
+            ],
+            "original_expression_range": [
+              163,
+              8,
+              163,
+              75
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              163,
+              8,
+              163,
+              12
+            ],
+            "original_expression_range": [
+              163,
+              8,
+              163,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            163,
+            8,
+            163,
+            75
+          ]
+        ],
+        "producer_names": [
+          "assertEqual"
+        ],
+        "test_id": "test_design_family.StructureBeforeSemanticFamilyTests.test_equivalent_semantic_substitution_does_not_itself_split_geometry_families",
+        "source_sha256": "c2143d2d236811525bcaa9739487cacafa384caf934bbadc16b564da77c59644"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_design_family.StructureBeforeSemanticFamilyTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.int": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_design_family.StructureBeforeSemanticFamilyTests.test_equivalent_semantic_substitution_does_not_itself_split_geometry_families"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08722": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 15,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "run=extract_pdf_glyphs(source,data)['runs'][0]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ae389e884b05e640e43d709449480eeebfecabbe337fb3820490e724987028d0"
+      },
+      "original_range": {
+        "start": {
+          "line": 14,
+          "character": 12
+        },
+        "end": {
+          "line": 14,
+          "character": 54
+        }
+      },
+      "point": {
+        "id": "D-TES-08722",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 15,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "extract_pdf_glyphs(source, data)['runs']",
+            "range": [
+              15,
+              12,
+              15,
+              51
+            ],
+            "original_expression_range": [
+              15,
+              12,
+              15,
+              51
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "extract_pdf_glyphs(source, data)['runs'][0]",
+            "range": [
+              15,
+              12,
+              15,
+              54
+            ],
+            "original_expression_range": [
+              15,
+              12,
+              15,
+              54
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_original_word_spacing_is_distinct_from_character_spacing"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08738": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 38,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "result=extract_pdf_glyphs(source,data,include_private_text=True);run=result['runs'][0]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "288c0a8177b4ee801dde771506db0b6e9ae043829e2a42b12f8d18f7cd564044"
+      },
+      "original_range": {
+        "start": {
+          "line": 37,
+          "character": 77
+        },
+        "end": {
+          "line": 37,
+          "character": 94
+        }
+      },
+      "point": {
+        "id": "D-TES-08738",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 38,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "result['runs']",
+            "range": [
+              38,
+              77,
+              38,
+              91
+            ],
+            "original_expression_range": [
+              38,
+              77,
+              38,
+              91
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "result['runs'][0]",
+            "range": [
+              38,
+              77,
+              38,
+              94
+            ],
+            "original_expression_range": [
+              38,
+              77,
+              38,
+              94
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_actual_glyph_origins_follow_tc_tz_not_bbox_height_guess"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08764": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 50,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "self.assertEqual(result['runs'][0]['source_pt']['value'],48)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7c7910c5ba58a72a7db81f415c988f85b12f4714368ca162f96bf68f170f831e"
+      },
+      "original_range": {
+        "start": {
+          "line": 49,
+          "character": 25
+        },
+        "end": {
+          "line": 49,
+          "character": 42
+        }
+      },
+      "point": {
+        "id": "D-TES-08764",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 50,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "result['runs']",
+            "range": [
+              50,
+              25,
+              50,
+              39
+            ],
+            "original_expression_range": [
+              50,
+              25,
+              50,
+              39
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "result['runs'][0]",
+            "range": [
+              50,
+              25,
+              50,
+              42
+            ],
+            "original_expression_range": [
+              50,
+              25,
+              50,
+              42
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "result['runs'][0]['source_pt']['value']",
+            "range": [
+              50,
+              25,
+              50,
+              64
+            ],
+            "original_expression_range": [
+              50,
+              25,
+              50,
+              64
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertEqual(result['runs'][0]['source_pt']['value'], 48)",
+            "range": [
+              50,
+              8,
+              50,
+              68
+            ],
+            "original_expression_range": [
+              50,
+              8,
+              50,
+              68
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              50,
+              8,
+              50,
+              12
+            ],
+            "original_expression_range": [
+              50,
+              8,
+              50,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            50,
+            8,
+            50,
+            68
+          ]
+        ],
+        "producer_names": [
+          "assertEqual"
+        ],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_uniform_cm_and_user_unit_produce_physical_pt_and_rotated_canvas",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.float": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_uniform_cm_and_user_unit_produce_physical_pt_and_rotated_canvas"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08769": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 55,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "run=extract_pdf_glyphs(source,data)['runs'][0]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ae389e884b05e640e43d709449480eeebfecabbe337fb3820490e724987028d0"
+      },
+      "original_range": {
+        "start": {
+          "line": 54,
+          "character": 12
+        },
+        "end": {
+          "line": 54,
+          "character": 54
+        }
+      },
+      "point": {
+        "id": "D-TES-08769",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 55,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "extract_pdf_glyphs(source, data)['runs']",
+            "range": [
+              55,
+              12,
+              55,
+              51
+            ],
+            "original_expression_range": [
+              55,
+              12,
+              55,
+              51
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "extract_pdf_glyphs(source, data)['runs'][0]",
+            "range": [
+              55,
+              12,
+              55,
+              54
+            ],
+            "original_expression_range": [
+              55,
+              12,
+              55,
+              54
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_anisotropic_transform_keeps_original_tf_without_inventing_unique_effective_pt",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_anisotropic_transform_keeps_original_tf_without_inventing_unique_effective_pt"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08778": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 62,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "self.assertEqual(result['runs'][0]['visibility'],'NONPAINTING_TEXT')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9e2eec160304eb33c666771464edaf3086aa8f84b945daafb47c25d5470d3fc1"
+      },
+      "original_range": {
+        "start": {
+          "line": 61,
+          "character": 25
+        },
+        "end": {
+          "line": 61,
+          "character": 42
+        }
+      },
+      "point": {
+        "id": "D-TES-08778",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 62,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "result['runs']",
+            "range": [
+              62,
+              25,
+              62,
+              39
+            ],
+            "original_expression_range": [
+              62,
+              25,
+              62,
+              39
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "result['runs'][0]",
+            "range": [
+              62,
+              25,
+              62,
+              42
+            ],
+            "original_expression_range": [
+              62,
+              25,
+              62,
+              42
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "result['runs'][0]['visibility']",
+            "range": [
+              62,
+              25,
+              62,
+              56
+            ],
+            "original_expression_range": [
+              62,
+              25,
+              62,
+              56
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertEqual(result['runs'][0]['visibility'], 'NONPAINTING_TEXT')",
+            "range": [
+              62,
+              8,
+              62,
+              76
+            ],
+            "original_expression_range": [
+              62,
+              8,
+              62,
+              76
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              62,
+              8,
+              62,
+              12
+            ],
+            "original_expression_range": [
+              62,
+              8,
+              62,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            62,
+            8,
+            62,
+            76
+          ]
+        ],
+        "producer_names": [
+          "assertEqual"
+        ],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_invisible_text_and_viewport_mismatch_are_not_visible_original_design_proof"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08782": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 68,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "self.assertNotEqual(first['runs'][0]['id'],second['runs'][0]['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0cb3de3157d64bad5c1ba2fc00d80da52ca48d49a4e25c5fcd2c97ddb245cb8e"
+      },
+      "original_range": {
+        "start": {
+          "line": 67,
+          "character": 28
+        },
+        "end": {
+          "line": 67,
+          "character": 44
+        }
+      },
+      "point": {
+        "id": "D-TES-08782",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 68,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "first['runs']",
+            "range": [
+              68,
+              28,
+              68,
+              41
+            ],
+            "original_expression_range": [
+              68,
+              28,
+              68,
+              41
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "first['runs'][0]",
+            "range": [
+              68,
+              28,
+              68,
+              44
+            ],
+            "original_expression_range": [
+              68,
+              28,
+              68,
+              44
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "first['runs'][0]['id']",
+            "range": [
+              68,
+              28,
+              68,
+              50
+            ],
+            "original_expression_range": [
+              68,
+              28,
+              68,
+              50
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertNotEqual(first['runs'][0]['id'], second['runs'][0]['id'])",
+            "range": [
+              68,
+              8,
+              68,
+              75
+            ],
+            "original_expression_range": [
+              68,
+              8,
+              68,
+              75
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              68,
+              8,
+              68,
+              12
+            ],
+            "original_expression_range": [
+              68,
+              8,
+              68,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            68,
+            8,
+            68,
+            75
+          ]
+        ],
+        "producer_names": [
+          "assertNotEqual"
+        ],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08786": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 68,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "self.assertNotEqual(first['runs'][0]['id'],second['runs'][0]['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0cb3de3157d64bad5c1ba2fc00d80da52ca48d49a4e25c5fcd2c97ddb245cb8e"
+      },
+      "original_range": {
+        "start": {
+          "line": 67,
+          "character": 51
+        },
+        "end": {
+          "line": 67,
+          "character": 68
+        }
+      },
+      "point": {
+        "id": "D-TES-08786",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 68,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "second['runs']",
+            "range": [
+              68,
+              51,
+              68,
+              65
+            ],
+            "original_expression_range": [
+              68,
+              51,
+              68,
+              65
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "second['runs'][0]",
+            "range": [
+              68,
+              51,
+              68,
+              68
+            ],
+            "original_expression_range": [
+              68,
+              51,
+              68,
+              68
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "second['runs'][0]['id']",
+            "range": [
+              68,
+              51,
+              68,
+              74
+            ],
+            "original_expression_range": [
+              68,
+              51,
+              68,
+              74
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertNotEqual(first['runs'][0]['id'], second['runs'][0]['id'])",
+            "range": [
+              68,
+              8,
+              68,
+              75
+            ],
+            "original_expression_range": [
+              68,
+              8,
+              68,
+              75
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              68,
+              8,
+              68,
+              12
+            ],
+            "original_expression_range": [
+              68,
+              8,
+              68,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            68,
+            8,
+            68,
+            75
+          ]
+        ],
+        "producer_names": [
+          "assertNotEqual"
+        ],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08790": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 69,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "self.assertEqual(second['runs'][0]['source_pt']['value'],15)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f445c350d6c9404230b4325e07b40c3625566d66eac0e9a8390a14b007d575f9"
+      },
+      "original_range": {
+        "start": {
+          "line": 68,
+          "character": 25
+        },
+        "end": {
+          "line": 68,
+          "character": 42
+        }
+      },
+      "point": {
+        "id": "D-TES-08790",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 69,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "second['runs']",
+            "range": [
+              69,
+              25,
+              69,
+              39
+            ],
+            "original_expression_range": [
+              69,
+              25,
+              69,
+              39
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "second['runs'][0]",
+            "range": [
+              69,
+              25,
+              69,
+              42
+            ],
+            "original_expression_range": [
+              69,
+              25,
+              69,
+              42
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "second['runs'][0]['source_pt']['value']",
+            "range": [
+              69,
+              25,
+              69,
+              64
+            ],
+            "original_expression_range": [
+              69,
+              25,
+              69,
+              64
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertEqual(second['runs'][0]['source_pt']['value'], 15)",
+            "range": [
+              69,
+              8,
+              69,
+              68
+            ],
+            "original_expression_range": [
+              69,
+              8,
+              69,
+              68
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              69,
+              8,
+              69,
+              12
+            ],
+            "original_expression_range": [
+              69,
+              8,
+              69,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            69,
+            8,
+            69,
+            68
+          ]
+        ],
+        "producer_names": [
+          "assertEqual"
+        ],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.float": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_page_selection_and_original_content_identity_are_exact"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08796": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 82,
+        "message": "Argument of type \"Literal[1]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[1]\" is not assignable to \"str\"",
+        "context": "self.assertGreater(first['runs'][1]['baseline_anchor_mm']['x'],first['runs'][0]['baseline_anchor_mm']['x'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "dc034b4f22c8843ca3607a785f7f3df9fd3fab28431fc60f70d24e2b9d3d282a"
+      },
+      "original_range": {
+        "start": {
+          "line": 81,
+          "character": 27
+        },
+        "end": {
+          "line": 81,
+          "character": 43
+        }
+      },
+      "point": {
+        "id": "D-TES-08796",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 82,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "first['runs']",
+            "range": [
+              82,
+              27,
+              82,
+              40
+            ],
+            "original_expression_range": [
+              82,
+              27,
+              82,
+              40
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "first['runs'][1]",
+            "range": [
+              82,
+              27,
+              82,
+              43
+            ],
+            "original_expression_range": [
+              82,
+              27,
+              82,
+              43
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "first['runs'][1]['baseline_anchor_mm']['x']",
+            "range": [
+              82,
+              27,
+              82,
+              70
+            ],
+            "original_expression_range": [
+              82,
+              27,
+              82,
+              70
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertGreater(first['runs'][1]['baseline_anchor_mm']['x'], first['runs'][0]['baseline_anchor_mm']['x'])",
+            "range": [
+              82,
+              8,
+              82,
+              115
+            ],
+            "original_expression_range": [
+              82,
+              8,
+              82,
+              115
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              82,
+              8,
+              82,
+              12
+            ],
+            "original_expression_range": [
+              82,
+              8,
+              82,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            82,
+            8,
+            82,
+            115
+          ]
+        ],
+        "producer_names": [
+          "assertGreater"
+        ],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.float": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08801": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 82,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "self.assertGreater(first['runs'][1]['baseline_anchor_mm']['x'],first['runs'][0]['baseline_anchor_mm']['x'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5556e255a526db096d7228d4c470d8a650a28ebad450d96d03ed47a47ee51dbd"
+      },
+      "original_range": {
+        "start": {
+          "line": 81,
+          "character": 71
+        },
+        "end": {
+          "line": 81,
+          "character": 87
+        }
+      },
+      "point": {
+        "id": "D-TES-08801",
+        "scope": "tests",
+        "path": "tests/test_original_pdf_glyphs.py",
+        "line": 82,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "first['runs']",
+            "range": [
+              82,
+              71,
+              82,
+              84
+            ],
+            "original_expression_range": [
+              82,
+              71,
+              82,
+              84
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "first['runs'][0]",
+            "range": [
+              82,
+              71,
+              82,
+              87
+            ],
+            "original_expression_range": [
+              82,
+              71,
+              82,
+              87
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "first['runs'][0]['baseline_anchor_mm']['x']",
+            "range": [
+              82,
+              71,
+              82,
+              114
+            ],
+            "original_expression_range": [
+              82,
+              71,
+              82,
+              114
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertGreater(first['runs'][1]['baseline_anchor_mm']['x'], first['runs'][0]['baseline_anchor_mm']['x'])",
+            "range": [
+              82,
+              8,
+              82,
+              115
+            ],
+            "original_expression_range": [
+              82,
+              8,
+              82,
+              115
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              82,
+              8,
+              82,
+              12
+            ],
+            "original_expression_range": [
+              82,
+              8,
+              82,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            82,
+            8,
+            82,
+            115
+          ]
+        ],
+        "producer_names": [
+          "assertGreater"
+        ],
+        "test_id": "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids",
+        "source_sha256": "1b31444d438b87be837d2831a583fa17e9a208d2522a17f9da18ea72b6b8bc44"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_original_pdf_glyphs.OriginalPdfGlyphTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.float": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_original_pdf_glyphs.OriginalPdfGlyphTests.test_separate_text_shows_have_real_cursor_advances_and_stable_run_ids"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09343": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_domains.py",
+        "line": 23,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "gold,prediction,policy=self.fixture();prediction['predictions'][0]['slots'][2]['owner']='p2'",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "25685f2b667f62bd0991a5459b6a975516370b23b83f8adc05c577e2c009cfb0"
+      },
+      "original_range": {
+        "start": {
+          "line": 22,
+          "character": 46
+        },
+        "end": {
+          "line": 22,
+          "character": 74
+        }
+      },
+      "point": {
+        "id": "D-TES-09343",
+        "scope": "tests",
+        "path": "tests/test_quality_domains.py",
+        "line": 23,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "prediction['predictions']",
+            "range": [
+              23,
+              46,
+              23,
+              71
+            ],
+            "original_expression_range": [
+              23,
+              46,
+              23,
+              71
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "prediction['predictions'][0]",
+            "range": [
+              23,
+              46,
+              23,
+              74
+            ],
+            "original_expression_range": [
+              23,
+              46,
+              23,
+              74
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "source_sha256": "9eada42629c0fa1ad61e1dc57948a5544a45c009e85cab8b48f51ed1fb39ff98"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09346": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_domains.py",
+        "line": 23,
+        "message": "Argument of type \"Literal[2]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[2]\" is not assignable to \"str\"",
+        "context": "gold,prediction,policy=self.fixture();prediction['predictions'][0]['slots'][2]['owner']='p2'",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "94b62ee7c0b0bea2e6f993a344da0ac10a9295d36a2508f208a30c1300d1fd7b"
+      },
+      "original_range": {
+        "start": {
+          "line": 22,
+          "character": 46
+        },
+        "end": {
+          "line": 22,
+          "character": 86
+        }
+      },
+      "point": {
+        "id": "D-TES-09346",
+        "scope": "tests",
+        "path": "tests/test_quality_domains.py",
+        "line": 23,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "prediction['predictions'][0]['slots']",
+            "range": [
+              23,
+              46,
+              23,
+              83
+            ],
+            "original_expression_range": [
+              23,
+              46,
+              23,
+              83
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "prediction['predictions'][0]['slots'][2]",
+            "range": [
+              23,
+              46,
+              23,
+              86
+            ],
+            "original_expression_range": [
+              23,
+              46,
+              23,
+              86
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error",
+        "source_sha256": "9eada42629c0fa1ad61e1dc57948a5544a45c009e85cab8b48f51ed1fb39ff98"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_domains.QualityDomainTests.test_correct_easy_fields_cannot_hide_one_known_cross_person_contact_error"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09351": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_domains.py",
+        "line": 35,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "gold,prediction,policy=self.fixture();prediction['predictions'][0]['work_width']=91",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "c1fba92346b4a893acfaed8eaf8efa916140b452173fe3c4602326f2cff9ce2e"
+      },
+      "original_range": {
+        "start": {
+          "line": 34,
+          "character": 46
+        },
+        "end": {
+          "line": 34,
+          "character": 74
+        }
+      },
+      "point": {
+        "id": "D-TES-09351",
+        "scope": "tests",
+        "path": "tests/test_quality_domains.py",
+        "line": 35,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "prediction['predictions']",
+            "range": [
+              35,
+              46,
+              35,
+              71
+            ],
+            "original_expression_range": [
+              35,
+              46,
+              35,
+              71
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "prediction['predictions'][0]",
+            "range": [
+              35,
+              46,
+              35,
+              74
+            ],
+            "original_expression_range": [
+              35,
+              46,
+              35,
+              74
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution",
+        "source_sha256": "9eada42629c0fa1ad61e1dc57948a5544a45c009e85cab8b48f51ed1fb39ff98"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_domains.QualityDomainTests.test_physical_size_has_mm_error_and_no_classification_precision_substitution"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09356": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_domains.py",
+        "line": 50,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "gold,prediction,policy=self.fixture();prediction['predictions'][0]['work_width']=float('nan')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7eb80a16c8c362e5f2acb9818739bc75ec5389c3f810ad52297e0872b321d45a"
+      },
+      "original_range": {
+        "start": {
+          "line": 49,
+          "character": 46
+        },
+        "end": {
+          "line": 49,
+          "character": 74
+        }
+      },
+      "point": {
+        "id": "D-TES-09356",
+        "scope": "tests",
+        "path": "tests/test_quality_domains.py",
+        "line": 50,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "prediction['predictions']",
+            "range": [
+              50,
+              46,
+              50,
+              71
+            ],
+            "original_expression_range": [
+              50,
+              46,
+              50,
+              71
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "prediction['predictions'][0]",
+            "range": [
+              50,
+              46,
+              50,
+              74
+            ],
+            "original_expression_range": [
+              50,
+              46,
+              50,
+              74
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error",
+        "source_sha256": "9eada42629c0fa1ad61e1dc57948a5544a45c009e85cab8b48f51ed1fb39ff98"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_domains.QualityDomainTests.test_nonfinite_physical_output_cannot_become_zero_error"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09362": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_domains.py",
+        "line": 54,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "gold,prediction,policy=self.fixture();prediction['predictions'][0]['slots'][0]['owner']='c1'",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5e81ff724d1c0e0a1bfc3e31fcf569a27cc34331789fc947087d202efc2b74f6"
+      },
+      "original_range": {
+        "start": {
+          "line": 53,
+          "character": 46
+        },
+        "end": {
+          "line": 53,
+          "character": 74
+        }
+      },
+      "point": {
+        "id": "D-TES-09362",
+        "scope": "tests",
+        "path": "tests/test_quality_domains.py",
+        "line": 54,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "prediction['predictions']",
+            "range": [
+              54,
+              46,
+              54,
+              71
+            ],
+            "original_expression_range": [
+              54,
+              46,
+              54,
+              71
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "prediction['predictions'][0]",
+            "range": [
+              54,
+              46,
+              54,
+              74
+            ],
+            "original_expression_range": [
+              54,
+              46,
+              54,
+              74
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "source_sha256": "9eada42629c0fa1ad61e1dc57948a5544a45c009e85cab8b48f51ed1fb39ff98"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09365": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_domains.py",
+        "line": 54,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "gold,prediction,policy=self.fixture();prediction['predictions'][0]['slots'][0]['owner']='c1'",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5e81ff724d1c0e0a1bfc3e31fcf569a27cc34331789fc947087d202efc2b74f6"
+      },
+      "original_range": {
+        "start": {
+          "line": 53,
+          "character": 46
+        },
+        "end": {
+          "line": 53,
+          "character": 86
+        }
+      },
+      "point": {
+        "id": "D-TES-09365",
+        "scope": "tests",
+        "path": "tests/test_quality_domains.py",
+        "line": 54,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "prediction['predictions'][0]['slots']",
+            "range": [
+              54,
+              46,
+              54,
+              83
+            ],
+            "original_expression_range": [
+              54,
+              46,
+              54,
+              83
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "prediction['predictions'][0]['slots'][0]",
+            "range": [
+              54,
+              46,
+              54,
+              86
+            ],
+            "original_expression_range": [
+              54,
+              46,
+              54,
+              86
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner",
+        "source_sha256": "9eada42629c0fa1ad61e1dc57948a5544a45c009e85cab8b48f51ed1fb39ff98"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_domains.QualityDomainTests.test_invalid_person_root_prefix_cannot_be_matched_into_valid_owner"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09586": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_mapping.py",
+        "line": 55,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "work=prediction['predictions'][0];wrong={key:oracle[key] for key in ('customer_id','style_id','template_id','template_hash')};wrong['customer_id']='different-customer'",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "63998c68a803301975dd176490744002b4e71fe62a06e3c3228c7f4157b25a73"
+      },
+      "original_range": {
+        "start": {
+          "line": 54,
+          "character": 13
+        },
+        "end": {
+          "line": 54,
+          "character": 41
+        }
+      },
+      "point": {
+        "id": "D-TES-09586",
+        "scope": "tests",
+        "path": "tests/test_quality_mapping.py",
+        "line": 55,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "prediction['predictions']",
+            "range": [
+              55,
+              13,
+              55,
+              38
+            ],
+            "original_expression_range": [
+              55,
+              13,
+              55,
+              38
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "prediction['predictions'][0]",
+            "range": [
+              55,
+              13,
+              55,
+              41
+            ],
+            "original_expression_range": [
+              55,
+              13,
+              55,
+              41
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_quality_mapping.QualityMappingTests.test_wrong_customer_is_critical_and_abstention_remains_false_negative",
+        "source_sha256": "a03a07cb1c9b6e6fea5aed516fe7aa06299d949c091611a54dcca1990b041542"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_mapping.QualityMappingTests.test_wrong_customer_is_critical_and_abstention_remains_false_negative"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09633": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_metrics.py",
+        "line": 16,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "self.assertEqual(result['matching']['matches'][0]['prediction_id'],'wrong');self.assertEqual(result['per_class']['email']['fn'],1);self.assertEqual(result['per_class']['phone']['fp'],1)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "9d63bc97d26fb12b18acb8e35921d3fa1f8912df6da014cd6931978a39b169c1"
+      },
+      "original_range": {
+        "start": {
+          "line": 15,
+          "character": 25
+        },
+        "end": {
+          "line": 15,
+          "character": 57
+        }
+      },
+      "point": {
+        "id": "D-TES-09633",
+        "scope": "tests",
+        "path": "tests/test_quality_metrics.py",
+        "line": 16,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "result['matching']['matches']",
+            "range": [
+              16,
+              25,
+              16,
+              54
+            ],
+            "original_expression_range": [
+              16,
+              25,
+              16,
+              54
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "result['matching']['matches'][0]",
+            "range": [
+              16,
+              25,
+              16,
+              57
+            ],
+            "original_expression_range": [
+              16,
+              25,
+              16,
+              57
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "result['matching']['matches'][0]['prediction_id']",
+            "range": [
+              16,
+              25,
+              16,
+              74
+            ],
+            "original_expression_range": [
+              16,
+              25,
+              16,
+              74
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.assertEqual(result['matching']['matches'][0]['prediction_id'], 'wrong')",
+            "range": [
+              16,
+              8,
+              16,
+              83
+            ],
+            "original_expression_range": [
+              16,
+              8,
+              16,
+              83
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self",
+            "range": [
+              16,
+              8,
+              16,
+              12
+            ],
+            "original_expression_range": [
+              16,
+              8,
+              16,
+              12
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            16,
+            8,
+            16,
+            83
+          ]
+        ],
+        "producer_names": [
+          "assertEqual"
+        ],
+        "test_id": "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification",
+        "source_sha256": "ce4367501a4f253e2a17729cc606759a2a9db4f91ffbdc88d17266e35a5ae5a4"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "test_quality_metrics.QualityMetricTests": 2
+        },
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        },
+        "argument": {
+          "builtins.str": 2
+        },
+        "call_result": {
+          "builtins.NoneType": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_metrics.QualityMetricTests.test_matching_cannot_choose_correct_label_to_hide_spatially_best_misclassification"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09711": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_ocr.py",
+        "line": 67,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "prediction['predictions'][0]['evidence']=dict(ocr=dict(unassigned_source_text_lines=[line]))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "54f68f115aa89c4bbb038f0d0a499abf2937c77fb410906854f0b860de02e3ca"
+      },
+      "original_range": {
+        "start": {
+          "line": 66,
+          "character": 8
+        },
+        "end": {
+          "line": 66,
+          "character": 36
+        }
+      },
+      "point": {
+        "id": "D-TES-09711",
+        "scope": "tests",
+        "path": "tests/test_quality_ocr.py",
+        "line": 67,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "prediction['predictions']",
+            "range": [
+              67,
+              8,
+              67,
+              33
+            ],
+            "original_expression_range": [
+              67,
+              8,
+              67,
+              33
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "prediction['predictions'][0]",
+            "range": [
+              67,
+              8,
+              67,
+              36
+            ],
+            "original_expression_range": [
+              67,
+              8,
+              67,
+              36
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate",
+        "source_sha256": "c4b1271ee08ae0647c54339cc5ef3ecb45ee89aefd3d1247d61d8fd658007845"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 2
+        },
+        "result": {
+          "builtins.dict": 2
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_ocr.QualityOcrTests.test_unassigned_ocr_line_is_retained_and_blocks_false_complete_text_rate"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-001/source.json",
+      "observations": "ast-module-contexts-001/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-09539": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_logo.py",
+        "line": 52,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "work=prediction['predictions'][0];work['slots'].append(dict(id='logo',kind='logo',owner='c1'))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "5c9c58bd46c0fcc4315cd965468adc3e232c33f0b7208654c1eea96f2bcc4d63"
+      },
+      "original_range": {
+        "start": {
+          "line": 51,
+          "character": 13
+        },
+        "end": {
+          "line": 51,
+          "character": 41
+        }
+      },
+      "point": {
+        "id": "D-TES-09539",
+        "scope": "tests",
+        "path": "tests/test_quality_logo.py",
+        "line": 52,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "prediction['predictions']",
+            "range": [
+              52,
+              13,
+              52,
+              38
+            ],
+            "original_expression_range": [
+              52,
+              13,
+              52,
+              38
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "prediction['predictions'][0]",
+            "range": [
+              52,
+              13,
+              52,
+              41
+            ],
+            "original_expression_range": [
+              52,
+              13,
+              52,
+              41
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [],
+        "producer_names": [],
+        "test_id": null,
+        "source_sha256": "a6f6a4560dc9d836d124f13944aca35ede5f97aef3ba53264a786a58094a7f77"
+      },
+      "observed_types": {
+        "container": {
+          "builtins.list": 4
+        },
+        "result": {
+          "builtins.dict": 4
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_logo.QualityLogoTests.test_actual_path_tag_cannot_erase_human_confirmed_outlined_logo_text",
+        "test_quality_logo.QualityLogoTests.test_no_manual_text_partition_keeps_logo_text_completeness_unknown",
+        "test_quality_logo.QualityLogoTests.test_same_bbox_truncated_logo_is_critical_and_logo_text_remains_denominator"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-003/source.json",
+      "observations": "ast-module-contexts-003/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-10470": {
+      "kind": "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX",
+      "reason": "The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_quality_repair_truth.py",
+        "line": 23,
+        "message": "Argument of type \"Literal[0]\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  \"Literal[0]\" is not assignable to \"str\"",
+        "context": "old=self.store.get('QUALITY_GOLD',preview['gold_refs'][0]['id'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "dc9c53c5f290d3d03b7c27b158b3f32aae617d37a0b9132ab79b8386460cf9e1"
+      },
+      "original_range": {
+        "start": {
+          "line": 22,
+          "character": 42
+        },
+        "end": {
+          "line": 22,
+          "character": 65
+        }
+      },
+      "point": {
+        "id": "D-TES-10470",
+        "scope": "tests",
+        "path": "tests/test_quality_repair_truth.py",
+        "line": 23,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "container",
+            "expression": "preview['gold_refs']",
+            "range": [
+              23,
+              42,
+              23,
+              62
+            ],
+            "original_expression_range": [
+              23,
+              42,
+              23,
+              62
+            ]
+          },
+          {
+            "label": "result",
+            "expression": "preview['gold_refs'][0]",
+            "range": [
+              23,
+              42,
+              23,
+              65
+            ],
+            "original_expression_range": [
+              23,
+              42,
+              23,
+              65
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "preview['gold_refs'][0]['id']",
+            "range": [
+              23,
+              42,
+              23,
+              71
+            ],
+            "original_expression_range": [
+              23,
+              42,
+              23,
+              71
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.store.get('QUALITY_GOLD', preview['gold_refs'][0]['id'])",
+            "range": [
+              23,
+              12,
+              23,
+              72
+            ],
+            "original_expression_range": [
+              23,
+              12,
+              23,
+              72
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self.store",
+            "range": [
+              23,
+              12,
+              23,
+              22
+            ],
+            "original_expression_range": [
+              23,
+              12,
+              23,
+              22
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            23,
+            12,
+            23,
+            72
+          ]
+        ],
+        "producer_names": [
+          "get"
+        ],
+        "test_id": null,
+        "source_sha256": "8a8ef4e32dba734eed7a01ac419cc91bb9bf776ad5d86b81a80fd05ba49605f3"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "template_ai.training_store.TrainingStore": 3
+        },
+        "container": {
+          "builtins.list": 3
+        },
+        "result": {
+          "builtins.dict": 3
+        },
+        "argument": {
+          "builtins.str": 3
+        },
+        "call_result": {
+          "builtins.dict": 3
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_quality_repair_truth.QualityRepairTruthTests.test_explicit_approval_and_late_audit_failure_leave_no_partial_truth_binding",
+        "test_quality_repair_truth.QualityRepairTruthTests.test_later_fact_edit_stales_new_truth_and_blocks_old_root_again",
+        "test_quality_repair_truth.QualityRepairTruthTests.test_new_truth_unblocks_current_review_and_actual_replay_but_never_fresh_holdout"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "ast-module-contexts-003/source.json",
+      "observations": "ast-module-contexts-003/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-APP-02462": {
+      "kind": "EXACT_COMPATIBLE_ARGUMENT_AND_RETURN",
+      "reason": "Parameter text expects str; its exact observed argument type is compatible and the actual selected call returned normally. Other union members/preconditions remain guarded; callback/generic-content mismatches are not waived.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/multi_size_dialog.py",
+        "line": 177,
+        "message": "Argument of type \"str | None\" cannot be assigned to parameter \"text\" of type \"str\" in function \"setText\"\n  Type \"str | None\" is not assignable to type \"str\"\n    \"None\" is not assignable to \"str\"",
+        "context": "self.table.setCellWidget(row,2,combo);self.table.item(row,3).setText(states.get(entry['state'],entry['state']))",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7b0d9220bc7cec891a4ec052e0bb3edc454614e03ae07c7cbbf2fd8b425f4338"
+      },
+      "original_range": {
+        "start": {
+          "line": 176,
+          "character": 81
+        },
+        "end": {
+          "line": 176,
+          "character": 122
+        }
+      },
+      "point": {
+        "id": "D-APP-02462",
+        "scope": "application",
+        "path": "template_ai/multi_size_dialog.py",
+        "line": 182,
+        "rule": "reportArgumentType",
+        "targets": [
+          {
+            "label": "value",
+            "expression": "states.get",
+            "range": [
+              182,
+              81,
+              182,
+              91
+            ],
+            "original_expression_range": [
+              177,
+              81,
+              177,
+              91
+            ]
+          },
+          {
+            "label": "value",
+            "expression": "states",
+            "range": [
+              182,
+              81,
+              182,
+              87
+            ],
+            "original_expression_range": [
+              177,
+              81,
+              177,
+              87
+            ]
+          },
+          {
+            "label": "argument",
+            "expression": "states.get(entry['state'], entry['state'])",
+            "range": [
+              182,
+              81,
+              182,
+              122
+            ],
+            "original_expression_range": [
+              177,
+              81,
+              177,
+              122
+            ]
+          },
+          {
+            "label": "call_result",
+            "expression": "self.table.item(row, 3).setText(states.get(entry['state'], entry['state']))",
+            "range": [
+              182,
+              50,
+              182,
+              123
+            ],
+            "original_expression_range": [
+              177,
+              50,
+              177,
+              123
+            ]
+          },
+          {
+            "label": "call_receiver",
+            "expression": "self.table.item(row, 3)",
+            "range": [
+              182,
+              50,
+              182,
+              72
+            ],
+            "original_expression_range": [
+              177,
+              50,
+              177,
+              72
+            ]
+          }
+        ],
+        "member": null,
+        "call_ranges": [
+          [
+            182,
+            50,
+            182,
+            123
+          ]
+        ],
+        "producer_names": [
+          "get",
+          "item",
+          "setText"
+        ],
+        "test_id": null,
+        "source_sha256": "ad7e095cb5bb4ecac9befa949001e3c6b1c75ae0bd44ebc3e1fc05716440c459"
+      },
+      "observed_types": {
+        "call_receiver": {
+          "PySide6.QtWidgets.QTableWidgetItem": 10
+        },
+        "value": {
+          "builtins.dict": 10,
+          "builtins.builtin_function_or_method": 10
+        },
+        "argument": {
+          "builtins.str": 10
+        },
+        "call_result": {
+          "builtins.NoneType": 10
+        }
+      },
+      "member_checks": {},
+      "passing_contexts": [
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "runtime-ast-observations-005/source.json",
+      "observations": "runtime-ast-observations-005/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-05418": {
+      "kind": "EXACT_EXECUTED_MEMBER",
+      "reason": "Original attribute evaluation succeeded on its actual receiver, including dynamic factories/proxies. Getter is evaluated once; this does not guarantee a nullable member value is non-null.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_candidate_edit_history.py",
+        "line": 37,
+        "message": "Cannot access attribute \"apply_button\" for class \"CandidateEditDialog\"\n  Attribute \"apply_button\" is unknown",
+        "context": "with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(d.apply_button,Qt.LeftButton);APP.processEvents()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0e967d293e630464465417e0ae87e9d23e886bb2cd2fd9153c393365429d1c67"
+      },
+      "original_range": {
+        "start": {
+          "line": 36,
+          "character": 98
+        },
+        "end": {
+          "line": 36,
+          "character": 110
+        }
+      },
+      "point": {
+        "id": "D-TES-05418",
+        "scope": "tests",
+        "path": "tests/test_candidate_edit_history.py",
+        "line": 37,
+        "rule": "reportAttributeAccessIssue",
+        "targets": [
+          {
+            "label": "receiver",
+            "expression": "d",
+            "range": [
+              37,
+              96,
+              37,
+              97
+            ],
+            "original_expression_range": [
+              37,
+              96,
+              37,
+              97
+            ]
+          },
+          {
+            "label": "member_value",
+            "expression": "d.apply_button",
+            "range": [
+              37,
+              96,
+              37,
+              110
+            ],
+            "original_expression_range": [
+              37,
+              96,
+              37,
+              110
+            ]
+          }
+        ],
+        "member": "apply_button",
+        "call_ranges": [
+          [
+            37,
+            79,
+            37,
+            125
+          ]
+        ],
+        "producer_names": [
+          "mouseClick"
+        ],
+        "test_id": "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write",
+        "source_sha256": "a74c58f809108dde933e061b3ba5366228426d0e8290b922a7d1786a35e3d45b"
+      },
+      "observed_types": {
+        "receiver": {
+          "template_ai.candidate_edit.CandidateEditDialog": 1
+        },
+        "member_value": {
+          "PySide6.QtWidgets.QPushButton": 1
+        }
+      },
+      "member_checks": {
+        "template_ai.candidate_edit.CandidateEditDialog:True": 1
+      },
+      "passing_contexts": [
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "runtime-ast-observations-005/source.json",
+      "observations": "runtime-ast-observations-005/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-05425": {
+      "kind": "EXACT_EXECUTED_MEMBER",
+      "reason": "Original attribute evaluation succeeded on its actual receiver, including dynamic factories/proxies. Getter is evaluated once; this does not guarantee a nullable member value is non-null.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_candidate_edit_history.py",
+        "line": 39,
+        "message": "Cannot access attribute \"apply_button\" for class \"CandidateEditDialog\"\n  Attribute \"apply_button\" is unknown",
+        "context": "with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(d.apply_button,Qt.LeftButton);APP.processEvents()",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0e967d293e630464465417e0ae87e9d23e886bb2cd2fd9153c393365429d1c67"
+      },
+      "original_range": {
+        "start": {
+          "line": 38,
+          "character": 98
+        },
+        "end": {
+          "line": 38,
+          "character": 110
+        }
+      },
+      "point": {
+        "id": "D-TES-05425",
+        "scope": "tests",
+        "path": "tests/test_candidate_edit_history.py",
+        "line": 39,
+        "rule": "reportAttributeAccessIssue",
+        "targets": [
+          {
+            "label": "receiver",
+            "expression": "d",
+            "range": [
+              39,
+              96,
+              39,
+              97
+            ],
+            "original_expression_range": [
+              39,
+              96,
+              39,
+              97
+            ]
+          },
+          {
+            "label": "member_value",
+            "expression": "d.apply_button",
+            "range": [
+              39,
+              96,
+              39,
+              110
+            ],
+            "original_expression_range": [
+              39,
+              96,
+              39,
+              110
+            ]
+          }
+        ],
+        "member": "apply_button",
+        "call_ranges": [
+          [
+            39,
+            79,
+            39,
+            125
+          ]
+        ],
+        "producer_names": [
+          "mouseClick"
+        ],
+        "test_id": "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write",
+        "source_sha256": "a74c58f809108dde933e061b3ba5366228426d0e8290b922a7d1786a35e3d45b"
+      },
+      "observed_types": {
+        "receiver": {
+          "template_ai.candidate_edit.CandidateEditDialog": 1
+        },
+        "member_value": {
+          "PySide6.QtWidgets.QPushButton": 1
+        }
+      },
+      "member_checks": {
+        "template_ai.candidate_edit.CandidateEditDialog:True": 1
+      },
+      "passing_contexts": [
+        "test_candidate_edit_history.CandidateEditHistoryTests.test_actual_dialog_undo_preview_then_explicit_apply_has_no_business_write"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "runtime-ast-observations-005/source.json",
+      "observations": "runtime-ast-observations-005/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08533": {
+      "kind": "EXACT_EXECUTED_MEMBER",
+      "reason": "Original attribute evaluation succeeded on its actual receiver, including dynamic factories/proxies. Getter is evaluated once; this does not guarantee a nullable member value is non-null.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_multi_size_edit_gui.py",
+        "line": 40,
+        "message": "Cannot access attribute \"apply_button\" for class \"CandidateEditDialog\"\n  Attribute \"apply_button\" is unknown",
+        "context": "with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(dialog.apply_button,Qt.LeftButton)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8769e1567dbfe0a98ab04cfbbd25e082bc47396de41b9c71ead471493c871edd"
+      },
+      "original_range": {
+        "start": {
+          "line": 39,
+          "character": 103
+        },
+        "end": {
+          "line": 39,
+          "character": 115
+        }
+      },
+      "point": {
+        "id": "D-TES-08533",
+        "scope": "tests",
+        "path": "tests/test_multi_size_edit_gui.py",
+        "line": 40,
+        "rule": "reportAttributeAccessIssue",
+        "targets": [
+          {
+            "label": "receiver",
+            "expression": "dialog",
+            "range": [
+              40,
+              96,
+              40,
+              102
+            ],
+            "original_expression_range": [
+              40,
+              96,
+              40,
+              102
+            ]
+          },
+          {
+            "label": "member_value",
+            "expression": "dialog.apply_button",
+            "range": [
+              40,
+              96,
+              40,
+              115
+            ],
+            "original_expression_range": [
+              40,
+              96,
+              40,
+              115
+            ]
+          }
+        ],
+        "member": "apply_button",
+        "call_ranges": [
+          [
+            40,
+            79,
+            40,
+            130
+          ]
+        ],
+        "producer_names": [
+          "mouseClick"
+        ],
+        "test_id": "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue",
+        "source_sha256": "d0dfd7e15cf2e0deceedb3405b6ee55bc2c895a76b18796648b349cb488ff4e4"
+      },
+      "observed_types": {
+        "receiver": {
+          "template_ai.candidate_edit.CandidateEditDialog": 1
+        },
+        "member_value": {
+          "PySide6.QtWidgets.QPushButton": 1
+        }
+      },
+      "member_checks": {
+        "template_ai.candidate_edit.CandidateEditDialog:True": 1
+      },
+      "passing_contexts": [
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "runtime-ast-observations-005/source.json",
+      "observations": "runtime-ast-observations-005/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
+    },
+    "D-TES-08538": {
+      "kind": "EXACT_EXECUTED_MEMBER",
+      "reason": "Original attribute evaluation succeeded on its actual receiver, including dynamic factories/proxies. Getter is evaluated once; this does not guarantee a nullable member value is non-null.",
+      "original": {
+        "tool": "pyright",
+        "rule": "reportAttributeAccessIssue",
+        "path": "tests/test_multi_size_edit_gui.py",
+        "line": 42,
+        "message": "Cannot access attribute \"apply_button\" for class \"CandidateEditDialog\"\n  Attribute \"apply_button\" is unknown",
+        "context": "with patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):QTest.mouseClick(dialog.apply_button,Qt.LeftButton)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8769e1567dbfe0a98ab04cfbbd25e082bc47396de41b9c71ead471493c871edd"
+      },
+      "original_range": {
+        "start": {
+          "line": 41,
+          "character": 103
+        },
+        "end": {
+          "line": 41,
+          "character": 115
+        }
+      },
+      "point": {
+        "id": "D-TES-08538",
+        "scope": "tests",
+        "path": "tests/test_multi_size_edit_gui.py",
+        "line": 42,
+        "rule": "reportAttributeAccessIssue",
+        "targets": [
+          {
+            "label": "receiver",
+            "expression": "dialog",
+            "range": [
+              42,
+              96,
+              42,
+              102
+            ],
+            "original_expression_range": [
+              42,
+              96,
+              42,
+              102
+            ]
+          },
+          {
+            "label": "member_value",
+            "expression": "dialog.apply_button",
+            "range": [
+              42,
+              96,
+              42,
+              115
+            ],
+            "original_expression_range": [
+              42,
+              96,
+              42,
+              115
+            ]
+          }
+        ],
+        "member": "apply_button",
+        "call_ranges": [
+          [
+            42,
+            79,
+            42,
+            130
+          ]
+        ],
+        "producer_names": [
+          "mouseClick"
+        ],
+        "test_id": "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue",
+        "source_sha256": "d0dfd7e15cf2e0deceedb3405b6ee55bc2c895a76b18796648b349cb488ff4e4"
+      },
+      "observed_types": {
+        "receiver": {
+          "template_ai.candidate_edit.CandidateEditDialog": 1
+        },
+        "member_value": {
+          "PySide6.QtWidgets.QPushButton": 1
+        }
+      },
+      "member_checks": {
+        "template_ai.candidate_edit.CandidateEditDialog:True": 1
+      },
+      "passing_contexts": [
+        "test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue"
+      ],
+      "context_granularity": "EXACT_CASE_OR_CAPTURE",
+      "execution_kind": "tests",
+      "source": "runtime-ast-observations-005/source.json",
+      "observations": "runtime-ast-observations-005/observations.json",
+      "bounds": "Only retained authored samples, max128 observations per point; no private corpus/Windows/physical print/arbitrary input qualification",
+      "followup": "Precise producer DTO/host/callable typing remains P2; do not use Any, ignore rules, or refresh baseline."
     }
   },
   "counts": {
     "EXACT_EXECUTED_CONTAINER": 546,
-    "EXACT_COMPATIBLE_ARGUMENT_AND_RETURN": 141,
-    "EXACT_EXECUTED_MEMBER": 439,
+    "EXACT_COMPATIBLE_ARGUMENT_AND_RETURN": 144,
+    "EXACT_EXECUTED_MEMBER": 443,
     "EXACT_EXECUTED_DICT_KEY_CONTRACT": 390,
     "EXACT_EXECUTED_ITERABLE": 138,
     "EXACT_COMPLETED_OPERATOR": 81,
     "EXACT_QT_STRING_CONSTRUCTOR_OVERLOAD": 2,
     "EXACT_SHARED_FIXTURE_HOST_CONTRACT": 53,
-    "EXACT_COMPLETED_OVERLOAD_BINDING": 34
+    "EXACT_COMPLETED_OVERLOAD_BINDING": 34,
+    "EXACT_MAPPING_CONSTRUCTOR_OVERLOAD": 11,
+    "EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX": 24
   }
 }

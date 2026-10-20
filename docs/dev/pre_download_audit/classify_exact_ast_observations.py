@@ -59,6 +59,7 @@ def compatible_argument(expected,types):
     if expected in ['dict[Unknown, Unknown]','dict'] and types=={'builtins.dict'}:return True
     if any(expected.startswith(x) for x in ['SupportsRSub[','SupportsDunderLT[','SupportsDunderLE[','SupportsAbs[','SupportsRound[']):
         return types<={'builtins.int','builtins.float','numpy.float64','numpy.int64'}
+    if expected=='ModuleSpec':return types=={'_frozen_importlib.ModuleSpec'}
     if expected=='PathLike[bytes]':return False
     if expected in ['Path','PathLike[str]','PathLike','PurePath']:
         allowed={'pathlib.PosixPath','pathlib.WindowsPath'}
@@ -89,6 +90,12 @@ for row in rows:
         kind='EXACT_EXECUTED_CONTAINER';reason='The exact indexed receiver is a concrete builtin container on the listed executed paths. No claim that arbitrary keys or indices exist.'
     elif rule in ['reportArgumentType','reportCallIssue'] and any(op in message for op in ['__getitem__','__setitem__']) and containers=={'builtins.dict'}:
         kind='EXACT_EXECUTED_DICT_KEY_CONTRACT';reason='The exact indexed object is a dict, not a list/string/int member of the inferred heterogeneous union. Keep independent key/ownership validation.'
+    elif rule in ['reportArgumentType','reportCallIssue'] and '__getitem__' in message and containers and containers<={'builtins.list','builtins.tuple'} and types.get('result'):
+        from coordinate_contract import index_for_diagnostic
+        original_text=(ORIGINAL/row['original']['path']).read_text()
+        indexed=index_for_diagnostic(ast.parse(original_text),original_text.splitlines(),row['original_range'],rule)
+        if indexed is not None and isinstance(indexed.slice,ast.Constant) and type(indexed.slice.value) is int:
+            kind='EXACT_COMPLETED_CONSTANT_SEQUENCE_INDEX';reason='The precisely selected indexed receiver is a builtin list/tuple, its original key is a literal integer, and the original indexing operation completed with a recorded result. Static record-union inference instead selects a string-key mapping/slice overload. This does not guarantee arbitrary indices or future list lengths.'
     elif rule in ['reportAttributeAccessIssue','reportOptionalMemberAccess'] and not message.startswith('Cannot assign') and receivers and 'builtins.NoneType' not in receivers and types.get('member_value'):
         kind='EXACT_EXECUTED_MEMBER';reason='Original attribute evaluation succeeded on its actual receiver, including dynamic factories/proxies. Getter is evaluated once; this does not guarantee a nullable member value is non-null.'
     elif rule in ['reportGeneralTypeIssues','reportOptionalIterable'] and exact_original(row,point,'iterable') and types.get('iterable') and types['iterable']<={'builtins.list','builtins.tuple','builtins.dict','builtins.str','builtins.bytes','builtins.set','builtins.frozenset','builtins.range','builtins.dict_keys','builtins.dict_values','builtins.dict_items','builtins.generator'}:
@@ -105,6 +112,8 @@ for row in rows:
             same=(name==function[1] or function[1] in ['__init__','__new__'] and name and (name[0].isupper() or name in ['str','int','float','dict','list','set','tuple','bytes','bool']))
             if same and function[1] in ['__init__','__new__'] and name in ['QTableWidgetItem','QLineEdit','QLabel'] and types['argument']=={'builtins.str'} and all(t.startswith('PySide6.') and t.rsplit('.',1)[-1]==name for t in types['call_result']):
                 kind='EXACT_QT_STRING_CONSTRUCTOR_OVERLOAD';reason='The exact argument is str and the actual Qt string constructor completed with its expected widget/item type. The diagnostic selects the int/parent overload from an untyped union. None/other constructor arguments are not waived.'
+            elif same and name=='dict' and types['argument']=={'builtins.dict'} and types['call_result']=={'builtins.dict'} and match[2].startswith('Iterable[tuple['):
+                kind='EXACT_MAPPING_CONSTRUCTOR_OVERLOAD';reason='The exact dict constructor received a builtin mapping and completed as dict, matching its Mapping overload. The inferred homogeneous kwargs value type selects a narrower Iterable-of-tuples signature. Heterogeneous named-field schema remains DTO debt; no arbitrary payload content or output qualification is approved.'
             elif same and compatible_argument(match[2],types['argument']):
                 kind='EXACT_COMPATIBLE_ARGUMENT_AND_RETURN';reason=f'Parameter {match[1]} expects {match[2]}; its exact observed argument type is compatible and the actual selected call returned normally. Other union members/preconditions remain guarded; callback/generic-content mismatches are not waived.'
     if kind is None and types.get('call_result'):

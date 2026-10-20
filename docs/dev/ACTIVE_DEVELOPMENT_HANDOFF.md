@@ -1,12 +1,12 @@
 # 最新接手：全面查證仍在執行，不可提前結案
 
-先讀 pre_download_audit/PROGRESS.json、README、PRE_DOWNLOAD_AUDIT_PLAN_20261020。原11798筆逐筆台帳不可刷新；目前386未審（即時台帳優先）。最新產品3a2ef142，10類根因已實作修正，root10相鄰驗證進行中；未到最終全通過。root8 Type3字型兩實際PDF原先2ERROR、root9重開工作兩真GUI原先2ERROR，修後相關23PASS。SQL列表root4另補重大重審/工作兩讀者：4實際並行SQLite案例原先2ERROR2FAIL，修後37PASS。root10損壞草稿部分替換目前來源/作品：修正測試第三案例前置active選取後，隔離1cef015a舊源4FAIL，新源相關驗證work-load-after-002。保留先前錯誤fixture與未完成結果，不能當根因證據。
+即時狀態見pre_download_audit/PROGRESS.json與11798筆不可刷新台帳。產品HEAD3bf8e460，原110未審；10類根因已修，最後全套仍待跑。Root7擴充背景/其他可變對象確認視窗：更正版背景舊源2FAIL1ERROR，修後29PASS；其他操作8案例舊源7FAIL1PASS（學習原已拒絕，不能宣稱8缺陷），修後相關100PASS/7健康/0runtime。發布附加revision CAS；不得改寫已確認稿。Logo SQL快照2例舊源1ERROR1FAIL、修後34PASS。原報告測試仍寫舊size欄位已修671f8，強化尺寸斷言前1FAIL、修後31PASS；不漏報此次測試整合錯誤。
 
-full005(92977b77)1886PASS/243健康/0runtime/原1850保留。full006(281b53af)在273案例後因新增SQL實例修正中斷，不算完整PASS。最終catalog預計1901=原1850+本輪51有意義新增案例；尚未跑最終全套。27組原版GUI擷取全部PASS/來源281b53af未變，未包裝程式；最新GUI/root4變更後要按剩餘風險補驗。native00319PASS/11PNG，7獨立數學+原SQL12保留。原真實模型/Windows/私人AI/實體印刷資格不變。
+最後完整乾淨stock full005 source92977b77：1886PASS/243健康/0runtime/原1850保留；006在273、007在637中斷，不算完整PASS。最終預計1914案例（原1850+64），250模組以新發現為準。27原版擷取在281b53af全PASS、native003在92977b77為19PASS；最新修改後還須最終重跑。7獨立數學與18雙連線SQL案例保留，外部真實作品/Windows/印刷資格不變。
 
-精確AST型別見證001387PASS、0031502PASS（合計原當時1889，兩份清單不重複），皆0runtime/觀察器錯誤/來源未變，移除包裝後業務AST相同；004針對更精確座標91PASS。它們是受限型別證據，不代替原版產品回歸。被拒絕297筆內層座標舊證據與中途改helper的觀察002不可引用。最新三scope標準/runtime-aware/近似查重已跑，但後續修正後仍需更新及審查新增，不能漏掉runtime profile獨有診斷。
+精確AST型別見證001387PASS+0031502PASS為受限型別證據，不能取代原版回歸。297內外座標錯誤見證、版本未凍結及錯誤fixture均保留拒絕原因。餘下原始/新增/runtime-profile獨有診斷與最新查重均須判讀，不刷新基準。
 
-零新增費用優先；未用子代理/新API/付費服務，未push/PR/CI。正式治理Gate因歷史證據來源過期而FAIL，且新正式run需要真實遠端來源讀回；不能偽造GitHub JSON或關閉Gate。完成本機查證後可標LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED，不得REMOTE_VERIFIED。最新audit還原ZIP未製作，舊ZIP不含本輪修正。每10分鐘保存本機checkpoint；私人資料/字型/資料庫不入Git。
+零新增費用優先；未用子代理/API/付費資源，未push/PR/CI。正式治理Gate因舊來源證據不匹配FAIL；新正式證據缺真實GitHub讀回，不能偽造或關Gate。本機查證完成後最多LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED，不得REMOTE_VERIFIED。最新audit還原ZIP尚未製作；舊ZIP不含此次修正，需打包並隔離還原核對。私人作品/字型/資料庫不入Git。
 
 ## 產品GUI交接（保持原資格與證據）
 

@@ -1,0 +1,260 @@
+{
+  "schema": 1,
+  "worker_sha256": "c1a87f4567a56b22701f830c55c8e92f5d438e0cf08bfebaefaa82f01b8eaea3",
+  "worker_source_unchanged": true,
+  "mode": "AST_EXACT_EXPRESSION_TYPES_ONLY_NO_PAYLOADS",
+  "runtime_instrumented": true,
+  "source_files_changed": false,
+  "assertions_or_window_replaced": false,
+  "observer_errors": {},
+  "modules": {
+    "/workspace/template-Ai/tools/run_evidence.py": {
+      "source_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 6,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/tests/test_design_family.py": {
+      "source_sha256": "c2143d2d236811525bcaa9739487cacafa384caf934bbadc16b564da77c59644",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 20,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_family.py": {
+      "source_sha256": "70c3949305b2a5888286a93ccab05e8855f58d3db342fe571a2e13c1f4c4fbfa",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 5,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/batch_import.py": {
+      "source_sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 1,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/importer.py": {
+      "source_sha256": "4bfd63cc3dfcca264bcd0ccfcb1f8ad4f7c91b940e42999688083fca55b2552d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 8,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation_store.py": {
+      "source_sha256": "884945432fa826422293d05131c1bfa2caf8b7229ac6c424facf08e27dd8bc2d",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 3,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_observation.py": {
+      "source_sha256": "255e58b284a97d510f3aba40932fa61451eee8d8a12371e8743f1b64f93fa603",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 9,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    },
+    "/workspace/template-Ai/template_ai/design_joint.py": {
+      "source_sha256": "5791515767264d827ee3b26d01b08f726d18136719ca3a2666348d9d25bfc4ca",
+      "business_ast_identical_after_unwrapping": true,
+      "instrumented_expressions": 5,
+      "skipped_target_keys": [],
+      "unmatched_ranges": []
+    }
+  },
+  "rows": {
+    "D-APP-00824": {
+      "visits": 128,
+      "values": {
+        "call_receiver": {
+          "builtins.list": 39
+        },
+        "value": {
+          "builtins.list": 6,
+          "builtins.tuple": 6
+        },
+        "argument": {
+          "builtins.tuple": 6,
+          "builtins.list": 33
+        },
+        "call_result": {
+          "builtins.NoneType": 38
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_family.DesignFamilyTests.test_same_geometry_from_distinct_designs_learns_shared_family_not_templates"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06299": {
+      "visits": 5,
+      "values": {
+        "call_receiver": {
+          "test_design_family.DesignFamilyTests": 1
+        },
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.int": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_family.DesignFamilyTests.test_same_geometry_from_distinct_designs_learns_shared_family_not_templates"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06329": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "test_design_family.DesignProfileTests": 1,
+          "builtins.method": 1
+        },
+        "call_receiver": {
+          "test_design_family.DesignProfileTests": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_family.DesignProfileTests.test_optional_field_patterns_learn_their_own_shared_geometry"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06330": {
+      "visits": 4,
+      "values": {
+        "call_receiver": {
+          "test_design_family.DesignProfileTests": 1
+        },
+        "value": {
+          "builtins.float": 1
+        },
+        "argument": {
+          "builtins.float": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_family.DesignProfileTests.test_optional_field_patterns_learn_their_own_shared_geometry"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06331": {
+      "visits": 4,
+      "values": {
+        "value": {
+          "test_design_family.DesignProfileTests": 1,
+          "builtins.method": 1
+        },
+        "call_receiver": {
+          "test_design_family.DesignProfileTests": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_family.DesignProfileTests.test_optional_field_patterns_learn_their_own_shared_geometry"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06332": {
+      "visits": 4,
+      "values": {
+        "call_receiver": {
+          "test_design_family.DesignProfileTests": 1
+        },
+        "value": {
+          "builtins.float": 1
+        },
+        "argument": {
+          "builtins.float": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_family.DesignProfileTests.test_optional_field_patterns_learn_their_own_shared_geometry"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06379": {
+      "visits": 2,
+      "values": {
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_family.DesignProfileTests.test_profiles_reject_tampered_family_and_validation_rows"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    },
+    "D-TES-06388": {
+      "visits": 5,
+      "values": {
+        "call_receiver": {
+          "test_design_family.StructureBeforeSemanticFamilyTests": 1
+        },
+        "container": {
+          "builtins.list": 1
+        },
+        "result": {
+          "builtins.dict": 1
+        },
+        "argument": {
+          "builtins.int": 1
+        },
+        "call_result": {
+          "builtins.NoneType": 1
+        }
+      },
+      "member_checks": {},
+      "test_contexts": [
+        "test_design_family.StructureBeforeSemanticFamilyTests.test_equivalent_semantic_substitution_does_not_itself_split_geometry_families"
+      ],
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {}
+    }
+  }
+}

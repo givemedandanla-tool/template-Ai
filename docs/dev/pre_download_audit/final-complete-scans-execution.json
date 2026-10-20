@@ -1,0 +1,152 @@
+[
+  {
+    "scope": "application",
+    "mode": "standard",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "docs/dev/debug_tooling/quality.py",
+      "scan",
+      "--scope",
+      "application",
+      "--output",
+      "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-application-standard-001"
+    ],
+    "exit_code": 0,
+    "report": "final-complete-application-standard-001",
+    "output": "{\"status\": \"SCAN_COMPLETE_WITH_FINDINGS\", \"scope\": \"application\", \"counts\": {\"ruff\": 3, \"pyright\": 3435}, \"coverage\": {\"expected\": 271, \"cpython_compile\": 271, \"ruff\": 271, \"ruff_parser_limitations\": 3, \"pyright_files_analyzed\": 271, \"pyright_include\": 271, \"jscpd_explicit_inputs\": 271, \"jscpd_eligible_sources\": 265, \"jscpd_below_min_lines\": [\"template_ai/__init__.py\", \"template_ai/metadata_record.py\", \"template_ai/runtime_admission.py\", \"template_ai/runtime_labels.py\", \"template_ai/text_metrics.py\"], \"jscpd_additional_below_min_tokens\": 1}}\n"
+  },
+  {
+    "scope": "application",
+    "mode": "runtime-pyright",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "docs/dev/pre_download_audit/supplemental_scans.py",
+      "--scope",
+      "application",
+      "--mode",
+      "runtime-pyright",
+      "--output",
+      "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-application-runtime-pyright-001"
+    ],
+    "exit_code": 0,
+    "report": "final-complete-application-runtime-pyright-001",
+    "output": "{\"scope\": \"application\", \"mode\": \"runtime-pyright\", \"inputs\": 271, \"findings\": 3435, \"source_unchanged\": true}\n"
+  },
+  {
+    "scope": "application",
+    "mode": "clones",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "docs/dev/pre_download_audit/supplemental_scans.py",
+      "--scope",
+      "application",
+      "--mode",
+      "clones",
+      "--output",
+      "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-application-clones-001"
+    ],
+    "exit_code": 0,
+    "report": "final-complete-application-clones-001",
+    "output": "{\"scope\": \"application\", \"mode\": \"clones\", \"inputs\": 271, \"findings\": 9, \"source_unchanged\": true}\n"
+  },
+  {
+    "scope": "tools",
+    "mode": "standard",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "docs/dev/debug_tooling/quality.py",
+      "scan",
+      "--scope",
+      "tools",
+      "--output",
+      "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-tools-standard-001"
+    ],
+    "exit_code": 0,
+    "report": "final-complete-tools-standard-001",
+    "output": "{\"status\": \"SCAN_COMPLETE_WITH_FINDINGS\", \"scope\": \"tools\", \"counts\": {\"pyright\": 514, \"jscpd\": 2}, \"coverage\": {\"expected\": 60, \"cpython_compile\": 60, \"ruff\": 60, \"ruff_parser_limitations\": 0, \"pyright_files_analyzed\": 60, \"pyright_include\": 60, \"jscpd_explicit_inputs\": 60, \"jscpd_eligible_sources\": 59, \"jscpd_below_min_lines\": [\"tools/public_evidence.py\"], \"jscpd_additional_below_min_tokens\": 0}}\n"
+  },
+  {
+    "scope": "tools",
+    "mode": "runtime-pyright",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "docs/dev/pre_download_audit/supplemental_scans.py",
+      "--scope",
+      "tools",
+      "--mode",
+      "runtime-pyright",
+      "--output",
+      "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-tools-runtime-pyright-001"
+    ],
+    "exit_code": 0,
+    "report": "final-complete-tools-runtime-pyright-001",
+    "output": "{\"scope\": \"tools\", \"mode\": \"runtime-pyright\", \"inputs\": 60, \"findings\": 648, \"source_unchanged\": true}\n"
+  },
+  {
+    "scope": "tools",
+    "mode": "clones",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "docs/dev/pre_download_audit/supplemental_scans.py",
+      "--scope",
+      "tools",
+      "--mode",
+      "clones",
+      "--output",
+      "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-tools-clones-001"
+    ],
+    "exit_code": 0,
+    "report": "final-complete-tools-clones-001",
+    "output": "{\"scope\": \"tools\", \"mode\": \"clones\", \"inputs\": 60, \"findings\": 7, \"source_unchanged\": true}\n"
+  },
+  {
+    "scope": "tests",
+    "mode": "standard",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "docs/dev/debug_tooling/quality.py",
+      "scan",
+      "--scope",
+      "tests",
+      "--output",
+      "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-tests-standard-001"
+    ],
+    "exit_code": 0,
+    "report": "final-complete-tests-standard-001",
+    "output": "{\"status\": \"SCAN_COMPLETE_WITH_FINDINGS\", \"scope\": \"tests\", \"counts\": {\"pyright\": 7109, \"jscpd\": 5}, \"coverage\": {\"expected\": 256, \"cpython_compile\": 256, \"ruff\": 256, \"ruff_parser_limitations\": 0, \"pyright_files_analyzed\": 256, \"pyright_include\": 256, \"jscpd_explicit_inputs\": 256, \"jscpd_eligible_sources\": 254, \"jscpd_below_min_lines\": [\"tests/digital_review_fixture.py\", \"tests/test_evidence_redaction.py\"], \"jscpd_additional_below_min_tokens\": 0}}\n"
+  },
+  {
+    "scope": "tests",
+    "mode": "runtime-pyright",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "docs/dev/pre_download_audit/supplemental_scans.py",
+      "--scope",
+      "tests",
+      "--mode",
+      "runtime-pyright",
+      "--output",
+      "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-tests-runtime-pyright-001"
+    ],
+    "exit_code": 0,
+    "report": "final-complete-tests-runtime-pyright-001",
+    "output": "{\"scope\": \"tests\", \"mode\": \"runtime-pyright\", \"inputs\": 256, \"findings\": 7116, \"source_unchanged\": true}\n"
+  },
+  {
+    "scope": "tests",
+    "mode": "clones",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "docs/dev/pre_download_audit/supplemental_scans.py",
+      "--scope",
+      "tests",
+      "--mode",
+      "clones",
+      "--output",
+      "/workspace/template-Ai/docs/dev/pre_download_audit/final-complete-tests-clones-001"
+    ],
+    "exit_code": 0,
+    "report": "final-complete-tests-clones-001",
+    "output": "{\"scope\": \"tests\", \"mode\": \"clones\", \"inputs\": 256, \"findings\": 65, \"source_unchanged\": true}\n"
+  }
+]
