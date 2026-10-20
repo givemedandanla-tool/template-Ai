@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "status": "TOOLS_NATIVE_SELF_VERIFIED",
+  "scope": "Development tools and source-fenced real MainWindow native capture; not final full GUI workflow acceptance",
+  "created_utc": "2026-10-20T09:11:39.434034+00:00",
+  "source_commit_at_capture": "f519007a26d4ec215a57e826aadf54594560c787",
+  "source_unchanged": true,
+  "application_source_manifest_sha256": "10a751c186063fce8374572d2f1b8f68a86f47745bdaf7b5f3cfaab5b23be184",
+  "application_source_count": 269,
+  "native_platform": "xcb",
+  "capture_backend": "Original OpenAI screenshot helper; explicit owned window ID; test mode disabled",
+  "command": ".venv/bin/python docs/dev/gui_tooling/capture_owned_workspace.py --native --output /tmp/template-ai-owned-gui-review-tools-final",
+  "exit_code": 0,
+  "elapsed_seconds": 5.127,
+  "captures": [
+    {
+      "page_index": 0,
+      "width": 1280,
+      "height": 860,
+      "screenshot": "owned-workspace-0.png",
+      "sha256": "7b8319a267df915e3c64e4b2b8bcfc2464d3bd62c771efa7a786b07e9e79423a",
+      "visible_enabled_buttons": 19,
+      "focusable_controls": 26,
+      "unnamed_button_warnings": [],
+      "tab_focus_moved": true
+    },
+    {
+      "page_index": 1,
+      "width": 1280,
+      "height": 860,
+      "screenshot": "owned-workspace-1.png",
+      "sha256": "7839de0f4edb27aa7330d2595669321b47cb4bbd2f6486074f05ab6f8822a930",
+      "visible_enabled_buttons": 16,
+      "focusable_controls": 23,
+      "unnamed_button_warnings": [],
+      "tab_focus_moved": true
+    },
+    {
+      "page_index": 2,
+      "width": 1280,
+      "height": 860,
+      "screenshot": "owned-workspace-2.png",
+      "sha256": "d5340b9583b5c0fdfd5235968d803917546b3ac74c4754557f156aab6b6bad02",
+      "visible_enabled_buttons": 18,
+      "focusable_controls": 28,
+      "unnamed_button_warnings": [],
+      "tab_focus_moved": true
+    }
+  ],
+  "tool_hashes": {
+    "bootstrap_gui.py": "72df9a9e51013c68a6c7cc5ac8c91542ab956f72504f4d7be86207df33035ebe",
+    "tooling_extensions.py": "6f81115e8e5796fe9aefde9a9749f524a55dfbe5bf3023e3f0080ab4614ce600",
+    "agent_task.py": "2dc81b1c256f5802a635e5fff62ef6bc414af0db6ca4c209facdc121b556856d",
+    "capture_owned_workspace.py": "bb10a61c343d37d339d843746e39727430f999a1997ea829cb558b5faf100247"
+  },
+  "failure_record": "docs/dev/gui_tooling/TOOLING_NATIVE_FOCUS_FAILURE_20261020.json",
+  "original_receipt_preserved": "docs/dev/gui_tooling/EXTENSION_READINESS_20261020.json",
+  "data_scope": "Generated empty local library; no private data opened",
+  "not_verified": [
+    "Human beginner usability",
+    "Windows and IME",
+    "Full accessibility qualification",
+    "Layout engine or production print qualification"
+  ],
+  "evidence_publication": "Native PNGs/report are awaiting root unified evidence save; this receipt does not claim remote publication of their bytes."
+}

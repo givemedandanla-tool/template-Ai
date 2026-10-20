@@ -1287,6 +1287,9 @@ class MainWindow(QMainWindow):
                 if not discard_pending_selection(self):restore_main_selection(self);return False
             else:retain_pending_main(self)
         self.current_slot=selected;self._property_mode=self.tabs.currentIndex()
+        if selected is not None and self.tabs.currentIndex() != 2 and hasattr(self, 'desktop_workspace'):
+            self.property_panel.show()
+            self.desktop_workspace.professional.setText('收合編輯工具')
         self._property_raw_inputs={}
         s = self.current_slot
         self.property_button.setEnabled(s is not None and not s.locked and self.tabs.currentIndex() != 2 and (self.tabs.currentIndex()==0 or (self.template and self.template.state=='draft')))

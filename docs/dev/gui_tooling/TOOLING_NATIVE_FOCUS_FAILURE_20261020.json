@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "status": "FAILED_DIAGNOSED_AND_CORRECTED",
+  "source_commit_at_start": "f519007a26d4ec215a57e826aadf54594560c787",
+  "helper_sha256_before_fix": "e4b493fc0f7e006612a1bb6e28d8d0377d970e713b44e5b5a25e107fdc58445a",
+  "command": ".venv/bin/python docs/dev/gui_tooling/capture_owned_workspace.py --native --output /tmp/template-ai-owned-gui-review-final",
+  "exit_code": 1,
+  "exception": "RuntimeError: A visible workspace could not move keyboard focus with Tab",
+  "partial_screenshots": {
+    "owned-workspace-0.png": "f5e7233895d3531aed3063a053d969bbacd6b4df7b65fb47de09ee259a6de2d2"
+  },
+  "diagnosis": [
+    "Native Xvfb has no window manager; the helper did not activate its mapped window, leaving activeWindow/focusWidget empty.",
+    "With the owned MainWindow explicitly active, Tab still remained at the professional-tools button: a visible QTabWidget retained a hidden QTabBar focus proxy.",
+    "A separate minimal two-button native Qt window moved focus correctly; this distinguished the actual product focus-chain defect from unavailable native keyboard events."
+  ],
+  "runtime_only_experiments": {
+    "baseline_hidden_proxy": "TAB_DID_NOT_MOVE",
+    "tabs_no_focus_only": "TAB_MOVED_TO_workspaceNav2; Qt also propagated NoFocus to proxy bar",
+    "bar_no_focus_only": "TAB_MOVED_TO_workspaceNav2",
+    "proxy_none_only": "TAB_MOVED_TO_QTabWidget",
+    "all_three": "TAB_MOVED_TO_workspaceNav2"
+  },
+  "corrections": {
+    "product": "Root set the hidden tabs/tabBar to NoFocus and added actual navigation Tab regression.",
+    "helper": "Explicit existing xdotool windowfocus --sync for the owned winId, bounded event processing before assertions.",
+    "assertions": "Original strict Tab-movement check unchanged."
+  },
+  "superseded_by": "docs/dev/gui_tooling/EXTENSION_READINESS_FINAL_20261020.json",
+  "not_final_gui_acceptance": true
+}

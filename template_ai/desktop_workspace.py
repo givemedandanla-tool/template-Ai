@@ -5,7 +5,7 @@ from PySide6.QtCore import QObject, QTimer, Qt
 from PySide6.QtWidgets import (
     QDialog, QHBoxLayout, QLabel, QMenu, QPushButton, QScrollArea,
     QSplitter, QStackedWidget, QVBoxLayout, QWidget, QGroupBox, QSizePolicy, QLayout,
-    QComboBox,
+    QComboBox, QToolButton,
 )
 from PySide6.QtCore import QSignalBlocker
 
@@ -55,14 +55,37 @@ def button(text, action, name=""):
     return result
 
 
+class Disclosure(QWidget):
+    """Hide advanced content without changing its independent core-enabled state."""
+    def __init__(self, title, widget):
+        super().__init__()
+        self.content = widget
+        self.header = QToolButton()
+        self.header.setText(title)
+        self.header.setAccessibleName(title)
+        self.header.setCheckable(True)
+        self.header.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(self.header)
+        layout.addWidget(widget)
+        self.header.toggled.connect(self._apply)
+        self._apply(False)
+
+    def _apply(self, opened):
+        self.header.setArrowType(Qt.DownArrow if opened else Qt.RightArrow)
+        self.content.setVisible(opened)
+
+    def isChecked(self):
+        return self.header.isChecked()
+
+    def setChecked(self, value):
+        self.header.setChecked(bool(value))
+        self._apply(bool(value))
+
+
 def disclosure(title, widget):
-    group = QGroupBox(title)
-    group.setCheckable(True)
-    layout = QVBoxLayout(group)
-    layout.addWidget(widget)
-    group.toggled.connect(widget.setVisible)
-    group.setChecked(False)
-    return group
+    return Disclosure(title, widget)
 
 
 class DesktopWorkspace(QObject):
@@ -149,6 +172,10 @@ class DesktopWorkspace(QObject):
         old.setParent(self.legacy_root)
         w.function_rail = rail
         w.tabs.tabBar().hide()
+        # A hidden QTabBar remains QTabWidget's focus proxy unless both are
+        # removed from keyboard navigation; the visible sidebar owns navigation.
+        w.tabs.setFocusPolicy(Qt.NoFocus)
+        w.tabs.tabBar().setFocusPolicy(Qt.NoFocus)
         w.workspace_splitter.setSizes([170, 1000, 280])
         outer.addWidget(w.workspace_splitter, 1)
         self.footer_host = QVBoxLayout()
@@ -189,8 +216,10 @@ class DesktopWorkspace(QObject):
         w.graph_button.setText("填寫人物與公司資料")
         w.graph_button.setAccessibleName("填寫人物與公司資料")
         data_layout.addWidget(w.graph_button)
-        data_layout.addWidget(w.graph_status)
-        data_layout.addWidget(w.input_state)
+        self.input_overview = label("先填寫人物與公司資料。熟悉表格的同仁也可以展開下方表格。")
+        data_layout.addWidget(self.input_overview)
+        self.input_guidance = label("填好資料後再產生稿件；輸出前會再次檢查。")
+        data_layout.addWidget(self.input_guidance)
         w.graph_status.setWordWrap(True)
         w.input_state.setWordWrap(True)
         for control in (w.graph_status, w.input_state):
@@ -312,6 +341,8 @@ class DesktopWorkspace(QObject):
         row.addWidget(w.page)
         layout.addLayout(row)
         layout.addWidget(w.source_info)
+        if not w.source:
+            w.source_info.setText("選擇或匯入作品，核對分析結果後再學習共用版面規則；同一個檔案可以包含多件作品。")
         split = QSplitter()
         split.addWidget(w.train_canvas)
         split.addWidget(w.slot_list)
@@ -343,9 +374,10 @@ class DesktopWorkspace(QObject):
         self.hint.setText(self.HINTS[index])
         for current, control in self.nav_buttons.items():
             control.setChecked(current == index)
-        self.window.property_panel.setVisible(False)
+        show_properties = index != 2 and self.window.current_slot is not None
+        self.window.property_panel.setVisible(show_properties)
         self.production_footer.setVisible(index == 2)
-        self.professional.setText("顯示編輯工具")
+        self.professional.setText("收合編輯工具" if show_properties else "顯示編輯工具")
         self.refresh()
 
     def toggle_properties(self):
@@ -396,7 +428,12 @@ class DesktopWorkspace(QObject):
             self.editor.details_group.setChecked(True)
             self._open_widget(self.editor.result_details, "這份稿件的詳細原因")
         else:
-            self.window.diagnostic_report("candidate")
+            if self.window.input_problems.count():
+                self.window.open_diagnostic("input")
+            elif self.window.candidate_list.currentRow() >= 0:
+                self.window.diagnostic_report("candidate")
+            else:
+                self.state.setText("請先產生稿件；如果處理未完成，可到「問題與報告」查看並匯出紀錄。")
 
     def ensure_editor(self):
         from .production_bridge import attach
@@ -590,6 +627,19 @@ class DesktopWorkspace(QObject):
         if w.library.closed:
             self.timer.stop()
             return
+        graph = getattr(w, 'active_input_graph', None)
+        if graph is not None:
+            info = f"{len(graph.data['people'])} 位人物 · {len(graph.data['companies'])} 家公司 · {len(graph.data['fields'])} 筆資料。\n修改內容請按上方按鈕；客戶原有資料仍保留。"
+        else:
+            info = "先填寫人物與公司資料。熟悉表格的同仁也可以展開下方表格。"
+        if self.input_overview.text() != info:
+            self.input_overview.setText(info)
+        count = w.input_problems.count()
+        guidance = (f"有 {count} 項資料需要核對，可按「查看這份稿件的問題」了解原因。"
+                    if count else "資料已輸入，請產生稿件並檢查預覽。" if graph is not None
+                    else "填好資料後再產生稿件；輸出前會再次檢查。")
+        if self.input_guidance.text() != guidance:
+            self.input_guidance.setText(guidance)
         w.candidate_scroll.setVisible(self.other_fixed.isChecked() and not self._editor_is_current())
         editor = self.editor
         current = self._editor_is_current()

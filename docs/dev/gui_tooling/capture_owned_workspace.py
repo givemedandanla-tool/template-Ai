@@ -80,6 +80,13 @@ def main() -> None:
             QTest.qWait(200)
             app.processEvents()
             win_id = int(window.winId())
+            if args.native:
+                # An isolated Xvfb has no window manager to activate a mapped window.
+                # Establish that prerequisite before checking real keyboard movement.
+                subprocess.run([str(native / 'usr/bin/xdotool'), 'windowfocus', '--sync', str(win_id)],
+                               check=True, timeout=5, capture_output=True, text=True)
+                QTest.qWait(80)
+                app.processEvents()
             for page in range(window.tabs.count()):
                 window.tabs.setCurrentIndex(page)
                 QTest.qWait(120)

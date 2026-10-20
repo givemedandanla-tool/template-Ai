@@ -9,3 +9,5 @@ root整合desktop_workspace；offline_diagnostics負責離線診斷與app.py；g
 WIP1：新desktop_workspace已接正式MainWindow；三工作區導航/固定footer/嵌入真DesignSession畫布與進階選項/白話狀態。學習頁也重組，舊工具仍可由更多入口使用。離線日誌/安全ZIP/guard、進階引導、3新skill與5agent角色已實作；目標測試通過不當完整回歸。後續須新製作路徑具名測試及來源凍結全回歸，舊1798全部保留。
 
 來源準備WIP2：本輪新增51具名測試，原1798保留，合計1849待完整回歸。新桌面11案例來源圍欄擷取中；四類暫擱不影響GUI核心。WIP1的base metadata輸入錯誤已保留並棄用，不ack；實際WIP來源e95eb68逐檔Git讀回。後續checkpoint直接用git rev-parse HEAD取得基底。
+
+WIP3：完整001已保留中斷(241完成239PASS/2FAIL)，定位屬性及收合停用候選均修，原25測試PASS，三頁Tab+兩原失敗7PASS。hidden TabBar焦點陷阱與native工具自有視窗未啟用分開修；原生owned工具3頁嚴格Tab通過。下一新來源完整1849及原生11，勿把001部分當完成。
