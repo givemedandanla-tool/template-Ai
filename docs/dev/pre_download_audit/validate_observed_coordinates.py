@@ -2,7 +2,7 @@
 import ast,json,re
 from pathlib import Path
 F=Path(__file__).resolve().parent;O=Path('/tmp/template-ai-audit-original-373b6ee')
-ledger=F/'diagnostic-ledger.jsonl';rows=[json.loads(x) for x in ledger.read_text().splitlines()];byid={r['id']:r for r in rows};p=F/'observed-contract-proof.json';doc=json.loads(p.read_text());valid={};rejected={};cache={}
+ledger=F/'diagnostic-ledger.jsonl';rows=[json.loads(x) for x in ledger.read_text().splitlines()];byid={r['id']:r for r in rows};p=F/'observed-contract-proof.json';doc=json.loads(p.read_text());valid={};rejected=json.loads((F/'observed-coordinate-rejections.json').read_text()) if (F/'observed-coordinate-rejections.json').exists() else {};cache={}
 def canonical(t):
  for a,b in {'host_window':'window','width_input':'width','height_input':'height','size_input':'size','font_input':'font','output_size_mm':'size'}.items():t=re.sub(r'\.'+a+r'\b','.'+b,t)
  return re.sub(r'\s+','',t)
@@ -27,6 +27,6 @@ for key,proof in doc['proof'].items():
   if row['status']=='TYPE_CONTRACT_GAP' and any('observed-contract-proof' in e for e in row.get('evidence',[])):
    row.update(status='UNREVIEWED',severity='NOT_YET_ASSESSED',root_cause_or_blocker='Runtime coordinate proof rejected: nested expression ambiguity; requires exact outer container observation or independent source contract',evidence=['observed-coordinate-rejections.json#'+key])
 # Keep the draft evidence and rejection, rather than hiding the checker mistake.
-(F/'observed-contract-proof-draft.json').write_text(json.dumps(doc,ensure_ascii=False,indent=2)+'\n')
+if not (F/'observed-contract-proof-draft.json').exists():(F/'observed-contract-proof-draft.json').write_text(json.dumps(doc,ensure_ascii=False,indent=2)+'\n')
 doc['proof']=valid;doc['counts']={kind:sum(v['kind']==kind for v in valid.values()) for kind in ['REAL_CONTAINER_SCHEMA','REAL_RECEIVER_MEMBER','RECORD_STRING_KEY_NOT_SEQUENCE_INDEX']};doc['coordinate_validation']='Exact original object/full-index/key range required; ambiguous inner-container draft observations rejected'
 p.write_text(json.dumps(doc,ensure_ascii=False,indent=2)+'\n');(F/'observed-coordinate-rejections.json').write_text(json.dumps(rejected,ensure_ascii=False,indent=2)+'\n');ledger.write_text(''.join(json.dumps(r,ensure_ascii=False,separators=(',',':'))+'\n' for r in rows));print('accepted',len(valid),'rejected',len(rejected))

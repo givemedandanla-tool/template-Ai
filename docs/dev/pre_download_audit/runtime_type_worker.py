@@ -27,8 +27,9 @@ def resolve(node,frame):
         return MISSING
     if isinstance(node,ast.Subscript):
         obj=resolve(node.value,frame)
-        if type(obj) not in (dict,list,tuple,str,bytes) or not isinstance(node.slice,ast.Constant) or type(node.slice.value) not in (str,int):return MISSING
-        try:return obj[node.slice.value]
+        key=resolve(node.slice,frame) if isinstance(node.slice,(ast.Constant,ast.Name)) else MISSING
+        if type(obj) not in (dict,list,tuple,str,bytes) or type(key) not in (str,int):return MISSING
+        try:return obj[key]
         except (KeyError,IndexError,TypeError):return MISSING
     if isinstance(node,ast.Call) and isinstance(node.func,ast.Attribute) and node.func.attr=='get' and 1<=len(node.args)<=2 and not node.keywords:
         obj=resolve(node.func.value,frame)
@@ -71,7 +72,7 @@ class Observer:
             path=code.co_filename
             if path in self.by_file:
                 self.by_code[code]=self.by_file[path]
-                self.monitor.set_local_events(self.tool,code,self.monitor.events.LINE|self.monitor.events.PY_RETURN|self.monitor.events.PY_UNWIND|self.monitor.events.CALL)
+                self.monitor.set_local_events(self.tool,code,self.monitor.events.LINE|self.monitor.events.PY_RETURN|self.monitor.events.CALL)
                 self.local_codes.add(code)
             elif path.startswith(str(ROOT/'template_ai')+os.sep):
                 self.monitor.set_local_events(self.tool,code,self.monitor.events.PY_RETURN)
@@ -95,10 +96,14 @@ class Observer:
                 key='UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE' if obj is MISSING else typename(obj)
                 values=row['values'].setdefault(label,{})
                 values[key]=values.get(key,0)+1
+                by_phase=row.setdefault('values_by_phase',{}).setdefault(phase,{}).setdefault(label,{})
+                by_phase[key]=by_phase.get(key,0)+1
                 if obj is not MISSING and p.get('member') and label=='receiver':
                     try:inspect.getattr_static(obj,p['member']);exists=True
                     except AttributeError:exists=False
                     state=typename(obj)+':'+str(exists);row['member_checks'][state]=row['member_checks'].get(state,0)+1
+                    by_phase=row.setdefault('member_checks_by_phase',{}).setdefault(phase,{})
+                    by_phase[state]=by_phase.get(state,0)+1
 
     def line(self,code,line):
         try:
@@ -119,7 +124,21 @@ class Observer:
         points=self.by_code.get(code)
         if not points:return self.monitor.DISABLE
         f=self.frame(code)
-        if f is None or f.f_lineno not in points:return self.monitor.DISABLE
+        if f is None:return self.monitor.DISABLE
+        position=self.position(code,offset)
+        if position is None or position[0] is None:return
+        actual=[position[0],position[2],position[1],position[3]]
+        for p in points.get(f.f_lineno,[]):
+            if actual not in p['call_ranges'] or not p.get('member'):continue
+            if not isinstance(func,(types.MethodType,types.BuiltinFunctionType,types.BuiltinMethodType)):continue
+            receiver=object.__getattribute__(func,'__self__')
+            name=object.__getattribute__(func,'__name__')
+            if receiver is None or name!=p['member']:continue
+            row=self.rows[p['id']];kind=typename(receiver)
+            bucket=row['values'].setdefault('receiver',{});bucket[kind]=bucket.get(kind,0)+1
+            state=kind+':True';row['member_checks'][state]=row['member_checks'].get(state,0)+1
+            bucket=row.setdefault('member_checks_by_phase',{}).setdefault('EXACT_BOUND_METHOD_CALL',{});bucket[state]=bucket.get(state,0)+1
+            self.context(row)
 
     def position(self,code,offset):
         if code not in self.positions:self.positions[code]=list(code.co_positions())
@@ -154,13 +173,16 @@ class Observer:
             for p in points:
                 if code.co_name not in p['producer_names']:continue
                 row=self.rows[p['id']];key=code.co_qualname+':'+typename(value)
+                for label,target in p['_targets']:
+                    if label=='container' and isinstance(target,ast.Call) and ast.unparse(target.func).split('.')[-1]==code.co_name:
+                        bucket=row['values'].setdefault('container_return',{});kind=typename(value);bucket[kind]=bucket.get(kind,0)+1
                 if sum(row['returns'].values())<128:row['returns'][key]=row['returns'].get(key,0)+1;self.context(row)
         except BaseException as error:self.errors['PY_RETURN_'+type(error).__name__]+=1
 
     def install(self):
         m=self.monitor;t=self.tool
         for e,fn in [(m.events.PY_START,self.start),(m.events.LINE,self.line),(m.events.CALL,self.call),(m.events.C_RETURN,self.c_result),(m.events.C_RAISE,lambda *a:self.c_result(*a,raised=True)),(m.events.PY_RETURN,self.returned),(m.events.PY_UNWIND,self.unwind)]:m.register_callback(t,e,fn)
-        m.set_events(t,m.events.PY_START|m.events.CALL|m.events.C_RETURN|m.events.C_RAISE)
+        m.set_events(t,m.events.PY_START|m.events.CALL|m.events.C_RETURN|m.events.C_RAISE|m.events.PY_UNWIND)
 
     def finish(self):
         m=self.monitor;m.set_events(self.tool,0)

@@ -1,12 +1,12 @@
-# 最新接手：全面查證仍在執行，不可宣稱結案
+# 最新接手：全面查證仍在執行，不可提前結案
 
-先讀pre_download_audit/PROGRESS.json、README與PRE_DOWNLOAD_AUDIT_PLAN_20261020。原始11798筆診斷已逐筆保留；目前2417未審，38筆新增待對照，不能當全部誤判。已修6類根因：Qt原生API、預覽安全關閉、QObject.event覆蓋、SQLite列表快照、逾期／舊工作回呼、無尺寸線索時不必要的分群套件載入。來源92977b77；新增37測試，完整1886項full-regression-005執行中，不能提前填PASS。
+先讀pre_download_audit/PROGRESS.json、README與PRE_DOWNLOAD_AUDIT_PLAN_20261020。原始11798診斷保留，目前2453未審（以PROGRESS即時值優先），38新增已另審。已修7根因：Qt原生API、安全關閉、QObject.event覆蓋、SQLite完整列表快照、舊／逾期回呼、無尺寸線索時不載入分群、確認前後草稿保護。產品最新修正bb7f65a9；正確的3競態測試在afa0e33f（先前設定未到達確認的2失敗已明確拒絕，不當證據）。隔離92977b77舊源對照3FAIL；新版3PASS，相關33PASS／4健康／0runtime。
 
-full003保留1865PASS／240健康／0runtime；full004保留1877斷言PASS但1runtime，整輪FAIL。回呼修正6項PASS；分群載入3項由FAIL轉PASS，原預檢GUI逾時案例原時限內通過。最新native-gui-003：桌面12＋導航3＋event2＋報告1＋恢復1，共19PASS、11PNG，實際X11、來源未變；已檢視學習預覽與拖動後圖片。7項獨立數學案例PASS及12項SQLite快照／版次案例保留。外部Windows／私人作品／實體印刷資格仍未通過，沒有改寫舊資格。
+full005：92977b77上1886PASS／243健康／0runtime／來源未變，原1850保留。full0031865PASS／0runtime；full0041877斷言PASS但1runtime，保留FAIL。最新native00319PASS／11PNG，已實際檢視學習預覽與拖動後；7獨立數學＋12SQLite案例保留。原真實模型／Windows／私人AI／實體印刷資格未變。
 
-型別觀察001：498選定測試497PASS／1預檢逾時，0runtime／0觀察器錯誤；逾時根因已修。002為避免完整套件加觀察套件超出整體2-worker配置而中斷，保留局部檔案，不算全輪PASS。下一步逐筆審查剩餘契約、故障與入口矩陣，完成full005與可恢復交付。不可因通過案例而全面豁免其他輸入。
+逐筆型別審查還在進行：觀察001有497PASS／1已修預檢逾時，0觀察器錯誤；002為資源排程中斷並精確停止自有程序，局部不算全通過。精確座標校正撤回297筆內層索引證據，不能再引用其安全結論；現有效證據已單獨保存。新AST透明表達式觀察器保留原始檔、真實Qt、斷言及getter求值次數；移除包裝後AST逐模組相同，4項校準PASS／0錯誤。它是受限型別證據，不是stock產品資格。下一步使用runtime-points-006.json（建置中）跑既有選定測試，判讀剩餘診斷；再綁定入口／故障矩陣、最終1889原版完整回歸及本機復原包。
 
-既有Pro可用能力仍禁止額外收費；無權益證據暫不啟用代理。GitHub連帶費用不能核實，未push／開PR／跑CI；本輪只是本機提交與PREPARED checkpoint，尚無最新復原交付ZIP、沒有REMOTE_VERIFIED。先保留現有原始碼／證據與舊交付ZIP，再完成新差異包。
+可使用既有Pro能力但禁額外費用；無權益證據仍未用代理。未push／PR／CI／部署，沒有REMOTE_VERIFIED。最新audit復原ZIP尚未產生，舊delivery ZIP不含本輪修正。中斷先做本機checkpoint，勿靠整串聊天。
 
 ## 產品GUI交接（保持原資格與證據）
 

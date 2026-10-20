@@ -1,0 +1,29 @@
+"""Authored developer observation calibration, not product regression evidence."""
+import tempfile,unittest
+from pathlib import Path
+from PySide6.QtWidgets import QApplication,QTableWidget,QLineEdit
+from template_ai.storage import Library
+from template_ai.training_store import TrainingStore
+APP=QApplication.instance() or QApplication([])
+
+class ObserverCalibrationTests(unittest.TestCase):
+    def test_computed_widget_receiver(self):
+        table=QTableWidget(1,1);table.setCellWidget(0,0,QLineEdit())
+        table.cellWidget(0,0).setText('AUTHORED_PRIVATE_MARKER')
+        self.assertEqual(table.cellWidget(0,0).text(),'AUTHORED_PRIVATE_MARKER')
+        table.deleteLater()
+
+    def test_exact_python_container_return(self):
+        with tempfile.TemporaryDirectory() as temp:
+            library=Library(Path(temp)/'library')
+            try:
+                store=TrainingStore(library)
+                with store.transaction():store._write('CALIBRATION','authored',dict(flag=True),0,'authored')
+                revision=store.get('CALIBRATION','authored')['revision']
+                self.assertEqual(revision,1)
+            finally:library.close()
+
+    def test_post_line_binding(self):
+        widget=QLineEdit();widget.setObjectName('authored-control')
+        self.assertEqual(widget.objectName(),'authored-control')
+        widget.deleteLater()

@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "mode": "TYPE_NAMES_ONLY_NO_PAYLOADS_NO_PROPERTY_GETTERS",
+  "bounded_visits_per_point": 128,
+  "observer_errors": {},
+  "rows": {
+    "D-TOO-04654": {
+      "visits": 1,
+      "values": {
+        "receiver": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_evidence_publication.PublicationTests.test_unlisted_run_no_blanket_waiver_and_untrusted_policy_refused"
+      ],
+      "member_checks": {}
+    },
+    "D-TES-07273": {
+      "visits": 1,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "test_evidence_publication.PublicationTests": 1
+        },
+        "operator_left": {
+          "builtins.dict": 1
+        },
+        "operator_right": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_evidence_publication.PublicationTests.test_unlisted_run_no_blanket_waiver_and_untrusted_policy_refused"
+      ],
+      "member_checks": {}
+    },
+    "D-TES-07274": {
+      "visits": 1,
+      "values": {
+        "value": {
+          "builtins.dict": 1,
+          "test_evidence_publication.PublicationTests": 1
+        },
+        "operator_left": {
+          "builtins.dict": 1
+        },
+        "operator_right": {
+          "UNAVAILABLE_WITHOUT_EXECUTING_USER_CODE": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_evidence_publication.PublicationTests.test_diagnostic_policy_does_not_waive_json_or_unlisted_run"
+      ],
+      "member_checks": {}
+    }
+  }
+}

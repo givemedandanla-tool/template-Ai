@@ -48,6 +48,7 @@ for row in rows:
   options=[n for n in attrs if member is None or n.attr==member]
   if options:
    chosen=min(options,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset));wanted.append(('receiver',chosen.value));member=chosen.attr
+   if isinstance(chosen.ctx,ast.Load):wanted.append(('member_value',chosen))
  else:
   options=[n for n in nodes if isinstance(n,ast.expr) and not isinstance(n,(ast.Constant,ast.Name))]
   if options:wanted.append(('value',min(options,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset))))
@@ -57,7 +58,7 @@ for row in rows:
   operations=[n for n in nodes if isinstance(n,ast.BinOp)]
   if operations:
    op=min(operations,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset))
-   wanted += [('operator_left',op.left),('operator_right',op.right)]
+   wanted += [('operator_left',op.left),('operator_right',op.right),('operation',op)]
  if rule in ['reportGeneralTypeIssues','reportOptionalIterable'] and 'iterable' in message:
   sources=[n.iter for n in nodes if isinstance(n,(ast.For,ast.AsyncFor))]
   for n in nodes:
@@ -65,20 +66,31 @@ for row in rows:
   if sources:
    source=min(sources,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset))
    wanted.append(('iterable',source))
- parent_calls=[n for n in nodes if isinstance(n,ast.Call)]
+ end_p=tuple(row['original_range']['end'][k] for k in ['line','character'])
+ parent_calls=[n for n in nodes if isinstance(n,ast.Call) and coord(n.end_lineno,n.end_col_offset)>=end_p]
+ if member:
+  named=[n for n in parent_calls if isinstance(n.func,ast.Attribute) and n.func.attr==member]
+  if named:parent_calls=named
  if rule=='reportArgumentType' and parent_calls:
   call=min(parent_calls,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset))
   args=[arg for arg in [*call.args,*[k.value for k in call.keywords]] if coord(arg.lineno,arg.col_offset)<=p<coord(arg.end_lineno,arg.end_col_offset)]
   if len(args)==1:wanted.append(('argument',args[0]))
  if parent_calls:
   chosen=min(parent_calls,key=lambda n:(n.end_lineno-n.lineno,n.end_col_offset-n.col_offset));calls.append(chosen)
+  if rule in ['reportArgumentType','reportCallIssue']:
+   wanted.append(('call_result',chosen))
+   if isinstance(chosen.func,ast.Attribute):wanted.append(('call_receiver',chosen.func.value))
   if isinstance(chosen.func,ast.Attribute) and chosen.func.attr in ['len','get']:pass
  targets=[]
  for label,expr in wanted:
   if isinstance(expr,ast.Starred):expr=expr.value
   text=canonical(ast.unparse(expr));matches=[n for n in at_line if canonical(ast.unparse(n))==text]
   # Repeated identical expressions on a line are equivalent read-only targets.
-  if matches:targets.append({'label':label,'expression':ast.unparse(matches[0])})
+  old_peers=sorted([n for n in ast.walk(old['tree']) if isinstance(n,ast.expr) and n.lineno<=p[0]+1<=n.end_lineno and scope(old,n)==old_scope and canonical(ast.unparse(n))==text],key=span)
+  matches=sorted([n for n in matches if scope(new,n)==old_scope],key=span)
+  if expr in old_peers and len(matches)==len(old_peers):
+   chosen=matches[old_peers.index(expr)]
+   targets.append({'label':label,'expression':ast.unparse(chosen),'range':span(chosen),'original_expression_range':span(expr)})
  call_ranges=[];producer_names=[]
  for call in calls:
   key=canonical(ast.unparse(call));matches=[n for n in at_line if isinstance(n,ast.Call) and canonical(ast.unparse(n))==key]

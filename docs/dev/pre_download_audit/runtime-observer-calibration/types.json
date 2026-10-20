@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "mode": "TYPE_NAMES_ONLY_NO_PAYLOADS_NO_PROPERTY_GETTERS",
+  "bounded_visits_per_point": 128,
+  "observer_errors": {
+    "START_ValueError": 5
+  },
+  "rows": {
+    "CAL-NATIVE": {
+      "visits": 0,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QLineEdit": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_observer_contract.ObserverCalibrationTests.test_computed_widget_receiver"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QLineEdit:True": 1
+      },
+      "member_checks_by_phase": {
+        "EXACT_BOUND_METHOD_CALL": {
+          "PySide6.QtWidgets.QLineEdit:True": 1
+        }
+      }
+    },
+    "CAL-RETURN": {
+      "visits": 0,
+      "values": {
+        "container_return": {
+          "builtins.dict": 1
+        }
+      },
+      "returns": {
+        "TrainingStore.get:builtins.dict": 1
+      },
+      "normal_calls": {},
+      "raised_calls": {},
+      "test_contexts": [
+        "test_observer_contract.ObserverCalibrationTests.test_exact_python_container_return"
+      ],
+      "member_checks": {}
+    },
+    "CAL-POST": {
+      "visits": 0,
+      "values": {
+        "receiver": {
+          "PySide6.QtWidgets.QLineEdit": 1
+        }
+      },
+      "returns": {},
+      "normal_calls": {
+        "NATIVE_CALL_EXACT_SOURCE_RANGE": 1
+      },
+      "raised_calls": {},
+      "test_contexts": [
+        "test_observer_contract.ObserverCalibrationTests.test_post_line_binding"
+      ],
+      "member_checks": {
+        "PySide6.QtWidgets.QLineEdit:True": 1
+      },
+      "member_checks_by_phase": {
+        "EXACT_BOUND_METHOD_CALL": {
+          "PySide6.QtWidgets.QLineEdit:True": 1
+        }
+      }
+    }
+  }
+}

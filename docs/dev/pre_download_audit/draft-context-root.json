@@ -1,6 +1,6 @@
 {
   "id": "BUG-DRAFT-CONTEXT-007",
-  "status": "FIX_IMPLEMENTED_CORRECTED_ORACLE3PASS_RELATED_RERUN_PENDING",
+  "status": "FIXED_AND_VERIFIED",
   "before": {
     "FAIL": 2,
     "ERROR": 1,
@@ -15,5 +15,12 @@
   },
   "corrected_after_evidence": "text-policy-context-after-corrected.log",
   "rejected_attempt": "First before/after fixture had tracking above its max and never reached confirmation. Those 2 comparison failures do not prove overwrite; retained as rejected fixture attempt. Corrected cases explicitly assert confirmation callback exactly once and real registered replacement draft navigation.",
-  "isolated_before": "root7-isolated-before-source.json"
+  "isolated_before": "root7-isolated-before-source.json",
+  "targeted_related": {
+    "PASS": 33,
+    "runtime_errors": 0,
+    "healthy_modules": 4,
+    "source": "afa0e33f"
+  },
+  "regression": "draft-context-after-003/summary.json"
 }

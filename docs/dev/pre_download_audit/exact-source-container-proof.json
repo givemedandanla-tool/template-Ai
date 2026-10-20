@@ -1,0 +1,731 @@
+{
+  "method": "Prove an exact highlighted object is a builtin container, without assuming keys exist.",
+  "proof": {
+    "D-APP-00736": {
+      "original_range": {
+        "start": {
+          "line": 75,
+          "character": 96
+        },
+        "end": {
+          "line": 75,
+          "character": 106
+        }
+      },
+      "exact_object_expression": "f",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/customers.py",
+          "line": 55,
+          "expression": "dict(zip(('id', 'owner', 'kind', 'value'), x))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/customers.py",
+        "line": 76,
+        "message": "Argument of type \"Literal['value']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['value']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['value']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['value']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "if new!=old['value']:rows.append({**old,'old':old['value'],'new':new,'current':next(f['value'] for f in current['fields'] if f['id']==fid),'operation':'CLEAR' if new=='' else 'EDIT','owner_entity_id':graph.field(fid)['owner_id'] if graph else None,'affected_entities':graph.field_impact(fid) if graph else [],'source_revision':snapshot['revision']})",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "8b29a1f128df9f2c7c333777cd6d2a6bc843a6a60e249acc073eb8e7991a56b7"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-00737": {
+      "original_range": {
+        "start": {
+          "line": 75,
+          "character": 137
+        },
+        "end": {
+          "line": 75,
+          "character": 144
+        }
+      },
+      "exact_object_expression": "f",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/customers.py",
+          "line": 55,
+          "expression": "dict(zip(('id', 'owner', 'kind', 'value'), x))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/customers.py",
+        "line": 76,
+        "message": "Argument of type \"Literal['id']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['id']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['id']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['id']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "if new!=old['value']:rows.append({**old,'old':old['value'],'new':new,'current':next(f['value'] for f in current['fields'] if f['id']==fid),'operation':'CLEAR' if new=='' else 'EDIT','owner_entity_id':graph.field(fid)['owner_id'] if graph else None,'affected_entities':graph.field_impact(fid) if graph else [],'source_revision':snapshot['revision']})",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "6c6579511a4ddcdf5d1bebe8fb34d3cc1c20d9d53ed4fb23a3eb095eb2a82665"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-00742": {
+      "original_range": {
+        "start": {
+          "line": 105,
+          "character": 29
+        },
+        "end": {
+          "line": 105,
+          "character": 39
+        }
+      },
+      "exact_object_expression": "f",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/customers.py",
+          "line": 55,
+          "expression": "dict(zip(('id', 'owner', 'kind', 'value'), x))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/customers.py",
+        "line": 106,
+        "message": "Argument of type \"Literal['owner']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['owner']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['owner']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['owner']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "for owner in sorted({f['owner'] for f in c['fields']},key=lambda x:int(x[1:])):",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "11c791cc8a6a6cf76bb1c5bdade6b8498d0a0b991dfc78481808b60dd3ec6be1"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-00743": {
+      "original_range": {
+        "start": {
+          "line": 108,
+          "character": 19
+        },
+        "end": {
+          "line": 108,
+          "character": 29
+        }
+      },
+      "exact_object_expression": "f",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/customers.py",
+          "line": 55,
+          "expression": "dict(zip(('id', 'owner', 'kind', 'value'), x))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/customers.py",
+        "line": 109,
+        "message": "Argument of type \"Literal['owner']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['owner']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['owner']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['owner']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "if f['owner']==owner and f['value']:p.setdefault(f['kind'],[]).append(f['value'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "47a658ee00ca4517498e1c92a054717fc9d1814af8ac544df03260997e8931d9"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-00744": {
+      "original_range": {
+        "start": {
+          "line": 108,
+          "character": 41
+        },
+        "end": {
+          "line": 108,
+          "character": 51
+        }
+      },
+      "exact_object_expression": "f",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/customers.py",
+          "line": 55,
+          "expression": "dict(zip(('id', 'owner', 'kind', 'value'), x))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/customers.py",
+        "line": 109,
+        "message": "Argument of type \"Literal['value']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['value']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['value']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['value']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "if f['owner']==owner and f['value']:p.setdefault(f['kind'],[]).append(f['value'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1d3998147bbc8f8ff44be54f8d365265e50d96e3116d597754ed0caac66171f5"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-00745": {
+      "original_range": {
+        "start": {
+          "line": 108,
+          "character": 65
+        },
+        "end": {
+          "line": 108,
+          "character": 74
+        }
+      },
+      "exact_object_expression": "f",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/customers.py",
+          "line": 55,
+          "expression": "dict(zip(('id', 'owner', 'kind', 'value'), x))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/customers.py",
+        "line": 109,
+        "message": "Argument of type \"Literal['kind']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['kind']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['kind']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['kind']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "if f['owner']==owner and f['value']:p.setdefault(f['kind'],[]).append(f['value'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "30334a377e1dceb6567d5efb2dba8e2daf9f6b6e4ed9da42b55fe9f0fe1dfc30"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-00746": {
+      "original_range": {
+        "start": {
+          "line": 108,
+          "character": 86
+        },
+        "end": {
+          "line": 108,
+          "character": 96
+        }
+      },
+      "exact_object_expression": "f",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/customers.py",
+          "line": 55,
+          "expression": "dict(zip(('id', 'owner', 'kind', 'value'), x))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/customers.py",
+        "line": 109,
+        "message": "Argument of type \"Literal['value']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['value']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['value']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['value']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "if f['owner']==owner and f['value']:p.setdefault(f['kind'],[]).append(f['value'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "1d3998147bbc8f8ff44be54f8d365265e50d96e3116d597754ed0caac66171f5"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-00747": {
+      "original_range": {
+        "start": {
+          "line": 109,
+          "character": 62
+        },
+        "end": {
+          "line": 109,
+          "character": 69
+        }
+      },
+      "exact_object_expression": "f",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/customers.py",
+          "line": 55,
+          "expression": "dict(zip(('id', 'owner', 'kind', 'value'), x))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/customers.py",
+        "line": 110,
+        "message": "Argument of type \"Literal['id']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['id']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['id']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['id']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "p['source_owner_id']=owner;p['source_field_ids']=[f['id'] for f in c['fields'] if f['owner']==owner];people.append(p)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "84c729a5d855c0d2c5836324aa2040a6c4206cc0859cfecb0086453260a5266b"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-00748": {
+      "original_range": {
+        "start": {
+          "line": 109,
+          "character": 94
+        },
+        "end": {
+          "line": 109,
+          "character": 104
+        }
+      },
+      "exact_object_expression": "f",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/customers.py",
+          "line": 55,
+          "expression": "dict(zip(('id', 'owner', 'kind', 'value'), x))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/customers.py",
+        "line": 110,
+        "message": "Argument of type \"Literal['owner']\" cannot be assigned to parameter \"key\" of type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\" in function \"__getitem__\"\n  Type \"Literal['owner']\" is not assignable to type \"SupportsIndex | slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"\n    \"Literal['owner']\" is incompatible with protocol \"SupportsIndex\"\n      \"__index__\" is not present\n    \"Literal['owner']\" is not assignable to \"slice[SupportsIndex | None, SupportsIndex | None, SupportsIndex | None]\"",
+        "context": "p['source_owner_id']=owner;p['source_field_ids']=[f['id'] for f in c['fields'] if f['owner']==owner];people.append(p)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "3963c7c6c7e0f048ced6799ec4133542d1128aa72cd422208ae2523544715662"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-00889": {
+      "original_range": {
+        "start": {
+          "line": 268,
+          "character": 62
+        },
+        "end": {
+          "line": 268,
+          "character": 91
+        }
+      },
+      "exact_object_expression": "review",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/design_learning_dialog.py",
+          "line": 268,
+          "expression": "dict(source_identity_confirmed=True, basis=self.source_basis.text(), label_binding=label, source_alignment=self.source_alignment.currentData())"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/design_learning_dialog.py",
+        "line": 269,
+        "message": "Argument of type \"dict[str, bool | str]\" cannot be assigned to parameter \"value\" of type \"bool | str | dict[str, str | list[str]]\" in function \"__setitem__\"\n  Type \"dict[str, bool | str]\" is not assignable to type \"bool | str | dict[str, str | list[str]]\"\n    \"dict[str, bool | str]\" is not assignable to \"bool\"\n    \"dict[str, bool | str]\" is not assignable to \"str\"\n    \"dict[str, bool | str]\" is not assignable to \"dict[str, str | list[str]]\"\n      Type parameter \"_VT@dict\" is invariant, but \"bool | str\" is not the same as \"str | list[str]\"\n      Consider switching from \"dict\" to \"Mapping\" which is covariant in the value type",
+        "context": "if self.source_alignment.currentData()=='distributed':review['source_distribution']=dict(approved=True,actor=self.actor.text(),reason=self.source_basis.text())",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ae2d0862988abf09f7a6286a4ae3e906daf9eb2483bce4bc55fda03affdf46eb"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-01248": {
+      "original_range": {
+        "start": {
+          "line": 214,
+          "character": 12
+        },
+        "end": {
+          "line": 214,
+          "character": 39
+        }
+      },
+      "exact_object_expression": "result",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/family_source_dialog.py",
+          "line": 206,
+          "expression": "dict(source_identity_confirmed=True, basis=self.basis.text(), source_alignment=self.alignment.currentData(), **self.measured_review())"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/family_source_dialog.py",
+        "line": 215,
+        "message": "Argument of type \"dict[str, str | list[str]]\" cannot be assigned to parameter \"value\" of type \"bool | str\" in function \"__setitem__\"\n  Type \"dict[str, str | list[str]]\" is not assignable to type \"bool | str\"\n    \"dict[str, str | list[str]]\" is not assignable to \"bool\"\n    \"dict[str, str | list[str]]\" is not assignable to \"str\"",
+        "context": "result['container_binding']=dict(status='CONFIRMED',key=self.container.text().strip(),evidence_refs=[self.basis.text()])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "b036abfc4fab495b3b26f9d671f65eba3d9c053010cf4ca1a7e04ad12e65e363"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-01249": {
+      "original_range": {
+        "start": {
+          "line": 220,
+          "character": 16
+        },
+        "end": {
+          "line": 220,
+          "character": 36
+        }
+      },
+      "exact_object_expression": "flow",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/family_source_dialog.py",
+          "line": 217,
+          "expression": "dict(status='HUMAN_CONFIRMED_SOURCE_RULE', evidence_refs=[self.basis.text()], break_rule=self.break_rule.currentData(), max_lines_observed=self.max_lines.value(), line_height_factor=self.leading.value(), alignment=self.flow_align.currentData())"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/family_source_dialog.py",
+        "line": 221,
+        "message": "Argument of type \"dict[str, str | list[str] | float]\" cannot be assigned to parameter \"value\" of type \"str | list[str] | int | float\" in function \"__setitem__\"\n  Type \"dict[str, str | list[str] | float]\" is not assignable to type \"str | list[str] | int | float\"\n    \"dict[str, str | list[str] | float]\" is not assignable to \"str\"\n    \"dict[str, str | list[str] | float]\" is not assignable to \"list[str]\"\n    \"dict[str, str | list[str] | float]\" is not assignable to \"int\"\n    \"dict[str, str | list[str] | float]\" is not assignable to \"float\"",
+        "context": "flow['spacing_rule']=dict(status='HUMAN_CONFIRMED_SOURCE_RULE',evidence_refs=[self.basis.text()],mode=mode,",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "abf4ad1741ca9222bfb9f872c09e5e80f953912f76cc1b6b66b1ec1ce269df43"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-01250": {
+      "original_range": {
+        "start": {
+          "line": 225,
+          "character": 12
+        },
+        "end": {
+          "line": 225,
+          "character": 38
+        }
+      },
+      "exact_object_expression": "result",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/family_source_dialog.py",
+          "line": 206,
+          "expression": "dict(source_identity_confirmed=True, basis=self.basis.text(), source_alignment=self.alignment.currentData(), **self.measured_review())"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/family_source_dialog.py",
+        "line": 226,
+        "message": "Argument of type \"dict[str, str | list[str] | int | float]\" cannot be assigned to parameter \"value\" of type \"bool | str\" in function \"__setitem__\"\n  Type \"dict[str, str | list[str] | int | float]\" is not assignable to type \"bool | str\"\n    \"dict[str, str | list[str] | int | float]\" is not assignable to \"bool\"\n    \"dict[str, str | list[str] | int | float]\" is not assignable to \"str\"",
+        "context": "result['source_text_flow']=flow",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f030a40f04410de3e6ec5f6f3d3836d8d12a12054381459d928de0a335ab26de"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-02285": {
+      "original_range": {
+        "start": {
+          "line": 110,
+          "character": 12
+        },
+        "end": {
+          "line": 110,
+          "character": 33
+        }
+      },
+      "exact_object_expression": "data",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/logo_store.py",
+          "line": 107,
+          "expression": "dict(asset=asset, width_mm=width, height_mm=height, origin=origin, company_id=company_id, pins=deepcopy(pins), evidence=deepcopy(evidence or {}), family_base=family_base, review=None)"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/logo_store.py",
+        "line": 111,
+        "message": "Argument of type \"str\" cannot be assigned to parameter \"value\" of type \"None\" in function \"__setitem__\"\n  \"str\" is not assignable to \"None\"",
+        "context": "data['candidate_key'] = digest([pins, asset.get('crop'),",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "43f4d36e030cdbec97962bfc631bac6889ba55cad76cf6442318553027fa69a2"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-02380": {
+      "original_range": {
+        "start": {
+          "line": 53,
+          "character": 16
+        },
+        "end": {
+          "line": 53,
+          "character": 126
+        }
+      },
+      "exact_object_expression": "{'TEMPLATE': 'MAJOR_CONFIRM_TEMPLATE', 'REPAIR': 'MAJOR_CREATE_REPAIR_DRAFT', 'CLOSE': 'MAJOR_CLOSE_SCOPE'}",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/major_review_template_ui.py",
+          "line": 54,
+          "expression": "{'TEMPLATE': 'MAJOR_CONFIRM_TEMPLATE', 'REPAIR': 'MAJOR_CREATE_REPAIR_DRAFT', 'CLOSE': 'MAJOR_CLOSE_SCOPE'}"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/major_review_template_ui.py",
+        "line": 54,
+        "message": "Argument of type \"str | None\" cannot be assigned to parameter \"key\" of type \"str\" in function \"__getitem__\"\n  Type \"str | None\" is not assignable to type \"str\"\n    \"None\" is not assignable to \"str\"",
+        "context": "command={'TEMPLATE':'MAJOR_CONFIRM_TEMPLATE','REPAIR':'MAJOR_CREATE_REPAIR_DRAFT','CLOSE':'MAJOR_CLOSE_SCOPE'}[action]",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "7a81924b5e6f77d525327ff9df181b74c5f9f313816f238935caceed27f88b97"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-02717": {
+      "original_range": {
+        "start": {
+          "line": 314,
+          "character": 16
+        },
+        "end": {
+          "line": 314,
+          "character": 46
+        }
+      },
+      "exact_object_expression": "document",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/original_text_observation.py",
+          "line": 267,
+          "expression": "dict(version=VERSION, source_hash=source['hash'], page=source.get('page', 1), scope='SOURCE_PAGE_NOT_WORK_OR_FIELD', state='UNSUPPORTED', channel='UNKNOWN', native_illustrator_editability='UNKNOWN', qualification='NOT_EVALUATED', runs=[])"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/original_text_observation.py",
+        "line": 315,
+        "message": "Argument of type \"dict[str, str | list[Any]]\" cannot be assigned to parameter \"value\" of type \"str | list[Any]\" in function \"__setitem__\"\n  Type \"dict[str, str | list[Any]]\" is not assignable to type \"str | list[Any]\"\n    \"dict[str, str | list[Any]]\" is not assignable to \"str\"\n    \"dict[str, str | list[Any]]\" is not assignable to \"list[Any]\"",
+        "context": "document['pdf_glyph_evidence']=dict(state='BUDGET_EXCEEDED',runs=[],reason='NO_PARTIAL_GLYPH_RESULT')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "0ee15a788d1cc37ccfb2fcb073eb01cdffbf2ab1ebae35a8472563082601f99d"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-02718": {
+      "original_range": {
+        "start": {
+          "line": 316,
+          "character": 16
+        },
+        "end": {
+          "line": 316,
+          "character": 46
+        }
+      },
+      "exact_object_expression": "document",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/original_text_observation.py",
+          "line": 267,
+          "expression": "dict(version=VERSION, source_hash=source['hash'], page=source.get('page', 1), scope='SOURCE_PAGE_NOT_WORK_OR_FIELD', state='UNSUPPORTED', channel='UNKNOWN', native_illustrator_editability='UNKNOWN', qualification='NOT_EVALUATED', runs=[])"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/original_text_observation.py",
+        "line": 317,
+        "message": "Argument of type \"dict[str, str | list[Any]]\" cannot be assigned to parameter \"value\" of type \"str | list[Any]\" in function \"__setitem__\"\n  Type \"dict[str, str | list[Any]]\" is not assignable to type \"str | list[Any]\"\n    \"dict[str, str | list[Any]]\" is not assignable to \"str\"\n    \"dict[str, str | list[Any]]\" is not assignable to \"list[Any]\"",
+        "context": "document['pdf_glyph_evidence']=dict(state='UNAVAILABLE',runs=[],reason=type(error).__name__)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "f4a4850832654e06df78e2ff12d1e778e69a258455303993a8a9bbcfadb2cd33"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-APP-03324": {
+      "original_range": {
+        "start": {
+          "line": 100,
+          "character": 37
+        },
+        "end": {
+          "line": 100,
+          "character": 61
+        }
+      },
+      "exact_object_expression": "data",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/quality_setup.py",
+          "line": 98,
+          "expression": "dict(minimum_independent_groups=int(value(1)), minimum_gold_objects=int(value(2)), maximum_group_failure_rate=float(value(5)))"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "template_ai/quality_setup.py",
+        "line": 101,
+        "message": "Argument of type \"list[str]\" cannot be assigned to parameter \"value\" of type \"float\" in function \"__setitem__\"\n  \"list[str]\" is not assignable to \"float\"",
+        "context": "if domain=='field_types':data['required_classes']=list(KINDS)",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "81458efd039f25bf8e69af9140b0fadc65b4b0455d3177cb86772abc7484a5c1"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-TOO-04651": {
+      "original_range": {
+        "start": {
+          "line": 64,
+          "character": 8
+        },
+        "end": {
+          "line": 64,
+          "character": 41
+        }
+      },
+      "exact_object_expression": "result",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "tools/capture_workbench_navigation.py",
+          "line": 64,
+          "expression": "dict(status='PASS', screens=screens, qt_errors=errors, actual_gui=True, scope='Authored controlled Linux, existing GUI/worker and actual encrypted disk writes; no reference Windows/private Illustrator qualification', actual_cases=['Exact Main candidate/size/view/problem selection after real Logo mod"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tools/capture_workbench_navigation.py",
+        "line": 65,
+        "message": "Argument of type \"dict[str, list[int] | str]\" cannot be assigned to parameter \"value\" of type \"str | bool | list[Unknown]\" in function \"__setitem__\"\n  Type \"dict[str, list[int] | str]\" is not assignable to type \"str | bool | list[Unknown]\"\n    \"dict[str, list[int] | str]\" is not assignable to \"str\"\n    \"dict[str, list[int] | str]\" is not assignable to \"bool\"\n    \"dict[str, list[int] | str]\" is not assignable to \"list[Unknown]\"",
+        "context": "result['small_window_visibility']=small_window_visibility",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "17f2fd02f89c8cad2d49a5b44fa7b04ecc3e459e228114db3e9d2aa4553e7e78"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-TES-05215": {
+      "original_range": {
+        "start": {
+          "line": 42,
+          "character": 139
+        },
+        "end": {
+          "line": 42,
+          "character": 159
+        }
+      },
+      "exact_object_expression": "r['merged']",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "tests/test_candidate_changes.py",
+          "line": 42,
+          "expression": "dict(size_pt=current)"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "tests/test_candidate_changes.py",
+        "line": 43,
+        "message": "No overloads for \"__getitem__\" match the provided arguments",
+        "context": "r=merge_properties(dict(owner='p1'),dict(owner='p1'),dict(owner='p2'));self.assertEqual(r['conflicts'],['owner']);self.assertEqual(r['merged']['owner'],'p1')",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "2224f8692d6a5c35088a8b21e2d807a30f6b6cfb59c70c0cf7764b0a95b9341d"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-TES-05235": {
+      "original_range": {
+        "start": {
+          "line": 77,
+          "character": 26
+        },
+        "end": {
+          "line": 77,
+          "character": 43
+        }
+      },
+      "exact_object_expression": "old[0]",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "tests/test_candidate_changes.py",
+          "line": 10,
+          "expression": "dict(name=['Alex Example'], title=['Designer'], phone=['123'], email=['qa@example.test'])"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportArgumentType",
+        "path": "tests/test_candidate_changes.py",
+        "line": 78,
+        "message": "Argument of type \"Literal[1]\" cannot be assigned to parameter \"value\" of type \"list[str]\" in function \"__setitem__\"\n  \"Literal[1]\" is not assignable to \"list[str]\"",
+        "context": "old=self.people();old[0]['company']=1;new=copy.deepcopy(old);new[0]['company']=2;r=affected(self.template,old,companies,new,companies);self.assertEqual(r['affected_slot_ids'],sorted(s.id for s in self.template.slots));self.assertTrue(r['whole_card_validation_required'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "42f6c7c61c241b4cd6517a155457adaf26f6fe2b342a22204e6fd8f95bed90f6"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    },
+    "D-TES-11155": {
+      "original_range": {
+        "start": {
+          "line": 68,
+          "character": 144
+        },
+        "end": {
+          "line": 68,
+          "character": 187
+        }
+      },
+      "exact_object_expression": "current['context']",
+      "object_kind": "dict",
+      "source_origins": [
+        {
+          "path": "template_ai/source_context.py",
+          "line": 64,
+          "expression": "dict(source={key: source.get(key) for key in ['id', 'hash', 'byte_size', 'original_path', 'current_path', 'link_revision']}, records=records, customers=customers, customer_aliases=aliases, customer_redirects=redirects, customer_associations=associations, customer_styles=styles, customer_style_scopes"
+        }
+      ],
+      "original": {
+        "tool": "pyright",
+        "rule": "reportCallIssue",
+        "path": "tests/test_source_relink_scope.py",
+        "line": 69,
+        "message": "No overloads for \"__getitem__\" match the provided arguments",
+        "context": "self.assertEqual(stored['impact_sha256'],current['context_sha256']);self.assertEqual(stored['impact_snapshot']['customer_associations'],current['context']['customer_associations'])",
+        "category": "UNREVIEWED_STATIC_DIAGNOSTIC",
+        "fingerprint": "ead09a1ac1d797dd06653864b69aa8c62b5cef0c8114b7f64ec893b18f7f6d7b"
+      },
+      "condition": "Literal/consistent source-factory normal return; no nullable/unknown source accepted; exact UTF-16 range required",
+      "not_claimed": "Key/index presence, arbitrary caller validity, or a replacement for runtime/revision validation"
+    }
+  }
+}

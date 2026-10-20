@@ -4,20 +4,20 @@
   "phase": "Full005 on92977b77 running; final native19PASS; remaining static contracts under review",
   "original_diagnostics": 11798,
   "classified_tool_limitations": 888,
-  "unreviewed": 2481,
+  "unreviewed": 2453,
   "confirmed_defects": 7,
-  "fixed_defects": 6,
+  "fixed_defects": 7,
   "new_test_execution": null,
   "original_1850_rerun": "Full004 all1877 assertions PASS but one runtime error, explicitly FAIL; root5 now repaired with6 targeted PASS; final complete rerun pending",
-  "next": "Complete full005 then apply queued root7 guard/fail-first3; exact remaining contracts/type observer3, matrices and delivery remain pending",
+  "next": "Calibrated exact expression AST type observation; remaining original diagnostics, fault/entry matrices, final1889 stock regression and restorable local delivery remain pending",
   "provenance": "LOCAL_ONLY",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
   "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
   "diagnostic_statuses": {
-    "TYPE_CONTRACT_GAP": 6769,
-    "TOOL_LIMITATION": 1821,
+    "TYPE_CONTRACT_GAP": 6794,
+    "TOOL_LIMITATION": 1824,
     "FIXED_AND_VERIFIED": 727,
-    "UNREVIEWED": 2481
+    "UNREVIEWED": 2453
   },
   "fixed_defects_pending_full_regression": 2,
   "new_targeted_tests": {
@@ -39,21 +39,7 @@
     "owned_workspace_pages": 3,
     "status": "PASS"
   },
-  "open_confirmed_defects": [
-    {
-      "id": "BUG-DRAFT-CONTEXT-007",
-      "status": "CONFIRMED_FIX_PREPARED_NOT_APPLIED_DURING_FULL005",
-      "before": {
-        "FAIL": 2,
-        "ERROR": 1,
-        "PASS": 0
-      },
-      "evidence": "text-policy-context-before.log",
-      "severity": "P0_STALE_DRAFT_OVERWRITE",
-      "fix": "Check exact draft id/content/tab both before and after confirmation; missing draft gives existing plain rejection; no broad exception swallowing",
-      "next": "Apply prepared patch after unchanged-source full005 completes, run real-dialog3 and existing text policy/related UI tests. Final overall audit remains OPEN."
-    }
-  ],
+  "open_confirmed_defects": [],
   "final_regression_003": "RUNNING_ON_EFA1E958_NO_PRODUCT_CHANGES_DURING_RUN",
   "native_gui_latest": {
     "source": "92977b77",
@@ -95,5 +81,39 @@
     },
     "new_candidates_reviewed": 5
   },
-  "coordinate_evidence_correction": "297 draft inner-container proofs rejected; 1189 retained with exact ranges; additional99 valid dict overload occurrences linked"
+  "coordinate_evidence_correction": "297 draft inner-container proofs rejected; 1189 retained with exact ranges; additional99 valid dict overload occurrences linked",
+  "full_regression_005": {
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "source_commit": "92977b77465ea0a5ccf463118fe2d9fadaa20331",
+    "software_execution": "PASS",
+    "planned": 1886,
+    "completed": 1886,
+    "statuses": {
+      "PASS": 1886
+    },
+    "modules": 243,
+    "healthy_modules": 243,
+    "runtime_errors": 0,
+    "source_unchanged_during_run": true,
+    "original_test_ids_preserved": true,
+    "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
+    "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
+  },
+  "draft_context_latest": {
+    "qualification": "LOCAL_ONLY_NOT_REMOTE_VERIFIED",
+    "source_commit": "afa0e33f90f53cf8b37d58d25c218bf2416e9d03",
+    "software_execution": "PASS",
+    "planned": 33,
+    "completed": 33,
+    "statuses": {
+      "PASS": 33
+    },
+    "modules": 4,
+    "healthy_modules": 4,
+    "runtime_errors": 0,
+    "source_unchanged_during_run": true,
+    "original_test_ids_preserved": null,
+    "remote_gate": "NOT_EXECUTED_REMOTE_PROVENANCE_UNAVAILABLE",
+    "windows_private_corpus_physical_print": "NOT_QUALIFIED_BY_THIS_RUN"
+  }
 }

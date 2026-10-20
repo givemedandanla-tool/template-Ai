@@ -1,0 +1,95 @@
+{
+  "source_files": {
+    "docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py": "0b3fabf8664945885a3f0309595775cc9e99f3ce8ec03acf57430966edbfe943"
+  },
+  "points": [
+    {
+      "id": "AST-NATIVE",
+      "path": "docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py",
+      "line": 12,
+      "targets": [
+        {
+          "label": "receiver",
+          "expression": "table.cellWidget(0, 0)",
+          "range": [
+            12,
+            8,
+            12,
+            29
+          ]
+        }
+      ],
+      "member": "setText",
+      "call_ranges": [],
+      "producer_names": [],
+      "test_id": "test_observer_contract.ObserverCalibrationTests.test_computed_widget_receiver",
+      "source_sha256": "0b3fabf8664945885a3f0309595775cc9e99f3ce8ec03acf57430966edbfe943"
+    },
+    {
+      "id": "AST-RETURN",
+      "path": "docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py",
+      "line": 22,
+      "targets": [
+        {
+          "label": "container",
+          "expression": "store.get('CALIBRATION', 'authored')",
+          "range": [
+            22,
+            25,
+            22,
+            60
+          ]
+        }
+      ],
+      "member": null,
+      "call_ranges": [],
+      "producer_names": [],
+      "test_id": "test_observer_contract.ObserverCalibrationTests.test_exact_python_container_return",
+      "source_sha256": "0b3fabf8664945885a3f0309595775cc9e99f3ce8ec03acf57430966edbfe943"
+    },
+    {
+      "id": "AST-POST",
+      "path": "docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py",
+      "line": 27,
+      "targets": [
+        {
+          "label": "receiver",
+          "expression": "widget",
+          "range": [
+            27,
+            8,
+            27,
+            14
+          ]
+        }
+      ],
+      "member": "setObjectName",
+      "call_ranges": [],
+      "producer_names": [],
+      "test_id": "test_observer_contract.ObserverCalibrationTests.test_post_line_binding",
+      "source_sha256": "0b3fabf8664945885a3f0309595775cc9e99f3ce8ec03acf57430966edbfe943"
+    },
+    {
+      "id": "AST-ONCE",
+      "path": "docs/dev/pre_download_audit/runtime-observer-calibration/test_observer_contract.py",
+      "line": 36,
+      "targets": [
+        {
+          "label": "container",
+          "expression": "source.value",
+          "range": [
+            36,
+            31,
+            36,
+            43
+          ]
+        }
+      ],
+      "member": null,
+      "call_ranges": [],
+      "producer_names": [],
+      "test_id": "test_observer_contract.ObserverCalibrationTests.test_property_evaluated_once_and_identity_preserved",
+      "source_sha256": "0b3fabf8664945885a3f0309595775cc9e99f3ce8ec03acf57430966edbfe943"
+    }
+  ]
+}
