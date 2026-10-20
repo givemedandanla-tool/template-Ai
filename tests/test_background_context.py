@@ -60,7 +60,7 @@ class BackgroundContextTests(unittest.TestCase):
             while (self.w.busy or not seen) and time.monotonic()<end:APP.processEvents();QTest.qWait(10)
             APP.processEvents();self.assertEqual(transition_errors,[]);self.assertEqual(seen,[True],'The actual product review dialog must be reached once');self.assertEqual(self.w.template.to_dict(),expected[0]);self.assertTrue(self.notices)
             self.assertEqual(self.w.library.object_snapshot('TEMPLATE',self.template.id),self.original)
-            if replace:self.assertEqual(self.w.library.template(replacement.id).to_dict(),expected[0])
+            if replace:self.assertEqual(self.w.library.object_snapshot('TEMPLATE',replacement.id)['payload'],expected[0])
         finally:timer.stop()
 
     def test_registered_draft_switch_during_review_is_not_overwritten(self):self.approval_race(True)
