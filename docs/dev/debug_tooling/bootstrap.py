@@ -90,14 +90,18 @@ def setup(base: Path, offline: bool = False) -> dict:
         venv.EnvBuilder(with_pip=True).create(base / "python")
     ruff = executable(base / "python", "ruff")
     ready = ruff.is_file() and subprocess.run([str(ruff), "--version"], capture_output=True, text=True, check=True).stdout.strip() == "ruff " + load_lock()["tools"]["ruff"]
-    if not ready:
-        command = [str(python), "-m", "pip", "install", "--disable-pip-version-check", "--require-hashes", "--no-deps", "--only-binary=:all:", "--cache-dir", str(base / "pip-cache"), "-r", str(HERE / "requirements-tools.txt")]
+    wheels = base / "wheels"
+    wheels.mkdir(exist_ok=True)
+    if not list(wheels.glob("ruff-" + load_lock()["tools"]["ruff"] + "-*.whl")):
         if offline:
-            command += ["--no-index", "--find-links", str(base / "wheels")]
+            raise RuntimeError("Offline setup needs the matching hash-pinned wheelhouse copied into the tool home")
+        subprocess.run([str(python), "-m", "pip", "download", "--disable-pip-version-check", "--require-hashes", "--no-deps", "--only-binary=:all:", "--cache-dir", str(base / "pip-cache"), "--dest", str(wheels), "-r", str(HERE / "requirements-tools.txt")], check=True, timeout=180)
+    if not ready:
+        command = [str(python), "-m", "pip", "install", "--disable-pip-version-check", "--require-hashes", "--no-deps", "--only-binary=:all:", "--no-index", "--find-links", str(wheels), "-r", str(HERE / "requirements-tools.txt")]
         subprocess.run(command, check=True, timeout=180)
     target = base / "node"
     target.mkdir(parents=True, exist_ok=True)
-    refresh = not (target / "node_modules/pyright/index.js").is_file()
+    refresh = not all((target / name).is_file() for name in ("node_modules/pyright/index.js", "node_modules/jscpd/run-jscpd.js"))
     for name in ("package.json", "package-lock.json"):
         original = (HERE / "node" / name).read_bytes()
         if not (target / name).is_file() or (target / name).read_bytes() != original:
