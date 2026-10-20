@@ -98,7 +98,7 @@ def layout_dependency(t, logos):
         font=QFont(family);font.setPixelSize(1000)
         if style:font.setStyleName(style)
         raw=QRawFont.fromFont(font)
-        fonts.append((family,style,face_fingerprint(raw),list(QFontDatabase.styles(family))))
+        fonts.append((family,style,face_fingerprint(raw),sorted(QFontDatabase.styles(family))))
     return hashlib.sha256(json.dumps([stamps,fonts],sort_keys=True).encode()).hexdigest()
 
 

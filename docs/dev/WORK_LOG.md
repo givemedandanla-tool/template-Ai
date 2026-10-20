@@ -1642,3 +1642,5 @@ TEMPLATE-EDITOR final publication:CP-20261019-TEMPLATE-EDITOR-FINALREMOTE_VERIFI
 
 ## 2026-10-20 internal production integration BEGIN
 User clarified the current data entry is an internal staff production tool;complete integration with learned family/core first,then connect GUI development aids and research a common simple production panel. CORE-089 contract records9scoped checks;actual input/drag/recovery tests required,not mocked UI entry. Baseline1779tests/170requirements;no full AI qualification or public frontend claim.
+
+INPUT integration WIP2: actual new/edit dialogs,clipboard loss prevention,pointer drag/undo/redo,legacy table to learned draft/export,accepted-session lookup,capacity advice and white-language report implemented. Original22PASS,new10PASS,expanded83PASS;first8case fixture mistakes and second run one transient font dependency failure retained. Styles enumeration is now sorted while exact face/file fingerprints remain; single native reproduction and subsequent10/83PASS do not establish all causes of earlier transient failure. Full current-source regression required.

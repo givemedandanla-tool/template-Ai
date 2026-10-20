@@ -65,10 +65,14 @@ class InputGraphDialog(QDialog):
             self.status.setText('未套用：'+str(error));return False
 
     def undo(self):
+        if any(len(value)>2048 for value in self.pending_input.values()):
+            self.status.setText('過長欄位原文仍保留，請先縮短或另存，再復原其他資料。');return
         if not self.graph.undo_stack:return
         if self.confirm_source_history(self.graph.undo_stack[-1],'復原'):self.graph.undo();self.rebuild()
 
     def redo(self):
+        if any(len(value)>2048 for value in self.pending_input.values()):
+            self.status.setText('過長欄位原文仍保留，請先縮短或另存，再重做其他資料。');return
         if not self.graph.redo_stack:return
         if self.confirm_source_history(self.graph.redo_stack[-1],'重做'):self.graph.redo();self.rebuild()
 

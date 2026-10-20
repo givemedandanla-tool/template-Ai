@@ -1,6 +1,7 @@
 from copy import deepcopy
 from pathlib import Path
 import unittest
+import os
 from unittest.mock import patch
 
 from PySide6.QtCore import Qt,QTimer,QPointF
@@ -50,6 +51,7 @@ class InputLearningIntegrationTests(unittest.TestCase):
                 field=next(f for f in modal.graph.data['fields'] if f['kind']==kind)
                 editor=modal.field_editors[field['id']];editor.selectAll();QTest.keyClicks(editor,value)
                 observations.append(field['id'])
+                self.capture(modal,'input-integration-real-data-entry.png')
                 QTest.mouseClick(modal.adopt_button,Qt.LeftButton)
             except BaseException as error:
                 errors.append(error)
@@ -61,6 +63,11 @@ class InputLearningIntegrationTests(unittest.TestCase):
         if errors:raise errors[0]
         self.assertTrue(observations,'Actual input dialog never opened')
         return observations[0]
+
+    def capture(self,widget,name):
+        folder=os.environ.get('TEMPLATE_AI_INPUT_CAPTURE_DIR')
+        if folder:
+            path=Path(folder);path.mkdir(parents=True,exist_ok=True);self.assertTrue(widget.grab().save(str(path/name)))
 
     def test_real_new_input_modal_keeps_data_and_does_not_require_main_candidates(self):
         learning=self.dialog.learning;active=learning.store.get('DESIGN_ACTIVE','local-layout')
@@ -87,6 +94,7 @@ class InputLearningIntegrationTests(unittest.TestCase):
         original=deepcopy(modal.graph.data);modal.show();editor.setFocus();editor.selectAll();APP.clipboard().setText('X'*2050);editor.paste()
         self.assertTrue(wait_for_gui(lambda:not modal.adopt_button.isEnabled(),2))
         self.assertEqual(editor.text(),'X'*2050);self.assertEqual(modal.graph.data,original)
+        self.capture(modal,'input-integration-long-paste-retained.png')
         modal.accept();self.assertNotEqual(modal.result(),QDialog.Accepted);self.assertEqual(editor.text(),'X'*2050)
         editor.selectAll();QTest.keyClicks(editor,'+1 202 555 0199')
         self.assertTrue(wait_for_gui(lambda:modal.adopt_button.isEnabled(),2));QTest.mouseClick(modal.adopt_button,Qt.LeftButton)
@@ -107,6 +115,7 @@ class InputLearningIntegrationTests(unittest.TestCase):
         self.assertEqual(check_layout(candidate,InputGraph(row['input_graph']),row['intents'])['status'],'PASS')
         positions={item.slot.kind:item.slot.rect for item in candidate.items}
         self.assertLess(positions['name'].y,positions['title'].y)
+        self.capture(d,'input-integration-dragged-preview.png')
 
     def test_background_cancel_retains_new_data_and_cannot_install_old_confirmation(self):
         d=self.dialog;d.solve();d.confirm_preview();row=self.sessions.current(d.session_id)
@@ -126,6 +135,19 @@ class InputLearningIntegrationTests(unittest.TestCase):
         self.assertIsNone(self.sessions.current(d.session_id)['confirmation'])
         self.assertEqual(self.sessions.find_accepted(self.graph,90,54,production=False)['sha256'],artifact['sha256'])
 
+    def test_new_model_activation_keeps_exact_accepted_session_for_reorder(self):
+        d=self.dialog;d.solve();d.confirm_preview()
+        artifact=self.sessions.export(d.session_id,self.root/('PREVIEW-repeat-'+d.session_id+'.png'),preview=True)
+        newer=d.learning.train(self.model['dataset_id'],'Author',approved=True)
+        active=d.learning.store.get('DESIGN_ACTIVE','local-layout')
+        d.learning.activate(newer['id'],active['revision'],'Author',dict(version='newer-policy-1',basis='Authored newer model test',approved=True,production=False),True)
+        from template_ai.gui import MainWindow
+        w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w));w.adopt_input_graph(self.graph.data)
+        reopened=DesignLearningDialog(w);self.addCleanup(reopened.close);row=attach(reopened)
+        self.assertEqual(row['id'],d.session_id);self.assertEqual(row['model_id'],self.model['id'])
+        self.assertEqual(reopened.matching_accepted_id,artifact['id'])
+        self.assertEqual(reopened.sessions.replay_artifact(artifact['id'])['sha256'],artifact['sha256'])
+
     def test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data(self):
         from template_ai.gui import MainWindow
         w=MainWindow(self.library.root);self.addCleanup(lambda:dispose_main_window(w));controlled_resources(w)
@@ -141,6 +163,7 @@ class InputLearningIntegrationTests(unittest.TestCase):
                 if not observations:observations.append(modal.session_id)
                 row=modal.sessions.current(modal.session_id)
                 if row['result_state']!='CURRENT' or modal.solve_worker and modal.solve_worker.isRunning():return
+                self.capture(modal,'input-integration-legacy-to-learned-preview.png')
                 modal.confirm_preview();modal.close();timer.stop()
             except BaseException as error:
                 errors.append(error);timer.stop()
@@ -155,6 +178,7 @@ class InputLearningIntegrationTests(unittest.TestCase):
         target=self.root/('PREVIEW-main-input-'+current['id']+'.png')
         with patch('PySide6.QtWidgets.QFileDialog.getSaveFileName',return_value=(str(target),'PNG')):artifact=export_current(w,True)
         self.assertTrue(target.is_file());self.assertEqual(artifact['session_id'],current['id'])
+        self.capture(w,'input-integration-main-preview.png')
         w.reorder_template_id='explicit-historical-style';self.assertFalse(uses_learning(w))
 
     def test_shared_company_graph_and_dimensions_are_not_flattened_by_legacy_adapter(self):
@@ -168,6 +192,27 @@ class InputLearningIntegrationTests(unittest.TestCase):
         self.assertEqual(len(row['input_graph']['links']),2)
         phone_ids=[f['id'] for f in row['input_graph']['fields'] if f['kind']=='phone'];self.assertEqual(len(set(phone_ids)),2)
         before=w.generation;w.invalidate();publish_preview(d);self.assertGreater(w.generation,before);self.assertFalse(w.preview_button.isEnabled())
+
+    def test_font_style_enumeration_order_does_not_invalidate_same_face(self):
+        self.dialog.solve();_,_,candidate=self.sessions.checked_result(self.row['id'])
+        from template_ai.layout import layout_dependency
+        with patch('PySide6.QtGui.QFontDatabase.styles',return_value=['Regular','Bold']):a=layout_dependency(candidate.template,{})
+        with patch('PySide6.QtGui.QFontDatabase.styles',return_value=['Bold','Regular']):b=layout_dependency(candidate.template,{})
+        self.assertEqual(a,b)
+
+    def test_input_advice_and_failure_explanations_keep_unknown_and_plain_summary(self):
+        from template_ai.production_report import input_advice,explain_error,result_report
+        advice=input_advice(self.library,self.graph,90,54,self.model['id']);self.assertIsNone(advice['hard_limit'])
+        self.assertEqual(advice['model_id'],self.model['id']);self.assertTrue(advice['actual_layout_required'])
+        self.dialog.solve();row,result,candidate=self.sessions.checked_result(self.row['id'])
+        report=result_report(self.library,row,result,candidate);self.assertIn('尚未核實',report['capacity_summary'])
+        error=explain_error(ValueError('Font/asset/engine dependencies changed'))
+        self.assertTrue(error['summary']);self.assertTrue(error['next_step']);self.assertIn('dependencies',error['details'])
+        from template_ai.diagnostic_bundle import plain_overview,report_html
+        from template_ai.diagnostic_snapshot import make_snapshot
+        from template_ai.gui import MainWindow
+        w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w))
+        data=make_snapshot(w,'input').data;self.assertIn('接下來怎麼做',plain_overview(data));self.assertIn('白話摘要',report_html(data).decode())
 
 
 if __name__=='__main__':unittest.main()

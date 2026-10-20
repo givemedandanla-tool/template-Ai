@@ -857,8 +857,9 @@ class MainWindow(QMainWindow):
         QMessageBox.information(self, "Template AI", text)
 
     def error(self, text):
-        self.statusBar().showMessage("操作未完成：" + text[:150])
-        QMessageBox.warning(self, "需要處理", text)
+        from .production_report import explain_error
+        report=explain_error(text);self.statusBar().showMessage(report['summary'])
+        QMessageBox.warning(self,'需要處理',report['summary']+'\n'+report['next_step']+'\n\n詳細原因：\n'+report['details'])
 
     def runtime_center(self):
         from .runtime_panel import RuntimePanel
@@ -1423,7 +1424,7 @@ class MainWindow(QMainWindow):
             try:
                 from .production_bridge import attach
                 attach(dialog)
-                if solve_current:QTimer.singleShot(0,dialog,lambda:dialog.attempt(dialog.solve_async))
+                if solve_current and not dialog.matching_accepted_id:QTimer.singleShot(0,dialog,lambda:dialog.attempt(dialog.solve_async))
             except (ValueError,TypeError,OSError) as error:
                 dialog.close();dialog.deleteLater();self.error(str(error));return
         if family_tools:dialog.tabs.setCurrentWidget(dialog.family_workbench)

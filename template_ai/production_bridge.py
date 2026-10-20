@@ -36,6 +36,16 @@ def attach(dialog):
     origin=deepcopy(getattr(window,'reorder_customer_snapshot',None))
     origin_ref=dict(id=origin['id'],revision=origin['revision'],code=origin['code']) if origin else None
     if row and row.get('customer_reference')!=origin_ref:row=None
+    if row is None:
+        # The exact accepted artifact takes precedence over a newer active
+        # model. Reuse its session only while it still describes that artifact.
+        from .design_learning import CrossWorkLearning
+        _,active=CrossWorkLearning(window.library).active()
+        accepted=dialog.sessions.find_accepted(graph,*size,production=active.get('policy',{}).get('production') is True)
+        if accepted:
+            saved=dialog.sessions.current(accepted['session_id'])
+            if (saved['input_graph']==graph.data and not saved['intents'] and saved.get('result_id')==accepted['result_id']
+                    and saved.get('confirmation') and saved.get('customer_reference')==origin_ref):row=saved
     if row:
         if row['input_graph']!=graph.data:
             from .model import new_id
@@ -94,7 +104,7 @@ def export_current(window,preview):
     if not confirmation or not preview and not confirmation.get('for_production'):
         window.shared_design_learning(use_current_input=True)
         return
-    target,_=QFileDialog.getSaveFileName(window,'儲存這份已確認的稿件','PREVIEW-design.png' if preview else 'design.png','PNG (*.png);;PDF (*.pdf);;SVG (*.svg)')
+    target,_=QFileDialog.getSaveFileName(window,'儲存這份已確認的稿件','PREVIEW-design.png' if preview else 'design.png','PNG (*.png);;PDF (*.pdf);;JPG (*.jpg)')
     if not target:return
     artifact=sessions.export(row['id'],target,preview=preview)
     window.statusBar().showMessage('已儲存稿件：'+artifact['path'])

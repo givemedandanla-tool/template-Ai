@@ -104,6 +104,17 @@ def validate(data):
     return data
 
 
+def plain_overview(data):
+    validate(data)
+    blocked=any(row['severity']=='BLOCK' for row in data['issues'])
+    stale=data['status']=='STALE_RESULT'
+    state=('資料或規則已更新，這份舊結果需要重新檢查。' if stale else
+           '有項目需要修正，現在不能把這份結果當作完成稿。' if blocked else
+           '這份報告記錄了當時的檢查；沒有列出問題，也不等於已完成所有驗證。')
+    return {'目前情況':state,'對工作的影響':'原始資料仍保留。這份報告本身不會更改稿件，也不能代替輸出前的檢查。',
+            '接下來怎麼做':'先看下方問題清單，回軟體修正後重新檢查。需要協助時，把完整報告交給維護人員；量測與代碼保留在後面的詳細內容。'}
+
+
 def report_html(data):
     validate(data)
     # HTML order must be stable before and after JSON round trips, including every numeric table.
@@ -135,6 +146,8 @@ def report_html(data):
                  titles[r['origin_stage']]+' → '+titles[r['impact_stage']],
                  '回到原問題核對後重新驗證；'+('原快照有定位識別，仍須本機核對版本' if r['locatable'] else '無可靠定位，需人工核對')) for i,r in enumerate(rows)]
     local_time=datetime.fromisoformat(data['created_utc'].replace('Z','+00:00')).astimezone(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S（UTC+8）')
+    novice=plain_overview(data)
+    beginner=table(['先看這裡','白話說明'],[(key,novice[key]) for key in ('目前情況','對工作的影響','接下來怎麼做')])
     summary=table(['報告項目','內容'],[
         ('檢查環節',titles[data['stage']]),('當時狀態',states[data['status']]),('產生時間',local_time),
         ('來源健康',source_states[data['source_health']]),('模型品質','未驗證'),('實體印刷','未驗證'),
@@ -157,7 +170,7 @@ def report_html(data):
             '<title>診斷報告</title></head><body><h1>診斷報告 · 歷史快照 · 非正式</h1>'
             '<p>只代表列明的檢查範圍；不是當前驗證、模型品質、視覺一致或正式印刷可用證明。'
             '安全交接版省略原始文字、路徑與原稿。匿名代號僅限此報告；校驗碼不保證作者或內容真實。</p>'
-            +'<p>環節：'+titles[data['stage']]+'；當時狀態：'+states[data['status']]+'；時間：'+local_time+'</p>'+'<h2>問題與處理方向</h2>'+issues+'<h2>指定字型的實際量測</h2>'+measurements+'<h2>報告摘要</h2>'+summary+
+            +'<p>環節：'+titles[data['stage']]+'；當時狀態：'+states[data['status']]+'；時間：'+local_time+'</p>'+'<h2>白話摘要</h2>'+beginner+'<h2>問題與處理方向</h2>'+issues+'<h2>指定字型的實際量測</h2>'+measurements+'<h2>報告摘要</h2>'+summary+
             '<h2>本次檢查範圍</h2>'+scope+'<h2>工作進度</h2>'+progress+
             '<h2>三個環節的檢查狀態</h2>'+table(['環節','狀態'],[(titles[k],states[v]) for k,v in data['stages'].items()])+classification+
             '<p>安全交接版不含原始姓名／電話／Email／公司名稱／來源路徑／原圖／字型／自由備註。'

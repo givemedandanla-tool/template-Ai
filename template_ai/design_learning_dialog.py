@@ -70,7 +70,7 @@ class RelativeCanvas(QGraphicsView):
     def resizeEvent(self,event):
         super().resizeEvent(event)
         if not self.sceneRect().isEmpty():self.fitInView(self.sceneRect(),Qt.KeepAspectRatio)
-    def show_candidate(self,candidate):
+    def show_candidate(self,candidate,*,editable=True):
         from .render import card_view_image
         self.scene().clear();self.boxes=[]
         if candidate is None:return
@@ -78,6 +78,7 @@ class RelativeCanvas(QGraphicsView):
         item.setScale(candidate.template.width_mm/image.width());item.setZValue(-1)
         movable=set(self.owner.current_policy().get('movable_kinds',('phone','email','line','ig','address')))
         for placed in candidate.items:
+            if not editable:break
             if placed.slot.kind not in movable:continue
             box=RelativeBox(placed.slot.id,placed.slot.rect,self);self.scene().addItem(box);self.boxes.append(box)
         self.setSceneRect(0,0,candidate.template.width_mm,candidate.template.height_mm)
@@ -358,7 +359,13 @@ class DesignLearningDialog(QDialog):
     def solve_async(self):
         if not self.session_id:raise ValueError('請先填資料，再產生稿件。')
         if self.solve_worker and self.solve_worker.isRunning():return
+        runtime=getattr(self.window,'runtime',None)
+        if runtime:
+            decision=runtime.admit('GEOMETRY',foreground=True)
+            if not decision.allowed:
+                self.solve_status.setText('電腦目前較忙，這次尚未開始排版；資料已保留，稍後可重試。');return
         row=self.sessions.current(self.session_id)
+        self.last_solve_error=None
         self.solve_worker=DraftSolveWorker(self.library.root,row['id'],row['revision'],self)
         self.solve_worker.completed.connect(self.solve_completed);self.solve_worker.failed.connect(self.solve_failed)
         self.solve_worker.progress.connect(lambda value:self.solve_status.setText(f"正在比較可用版面：{value['done']+1}／{value['total']}。資料仍保留，可停止。"))
@@ -384,12 +391,16 @@ class DesignLearningDialog(QDialog):
         self.say('稿件已更新，請檢視後確認。' if result['selected'] else '尚未找到合適稿件；請展開詳細原因。')
 
     def solve_failed(self,error):
+        self.last_solve_error=error
         self.refresh_draft()
         from .production_report import explain_error
         report=explain_error(error);self.solve_status.setText(report['summary']+' '+report['next_step']);self.result_details.setPlainText(report['details'])
 
     def solve_finished(self):
         self.set_solving(False);self.refresh_draft()
+        if getattr(self,'last_solve_error',None):
+            from .production_report import explain_error
+            report=explain_error(self.last_solve_error);self.solve_status.setText(report['summary']+' '+report['next_step']);self.result_details.setPlainText(report['details'])
         if self.close_after_worker:self.close()
 
     def set_relation(self,subject,relation,reference,*,background=False):
@@ -411,7 +422,7 @@ class DesignLearningDialog(QDialog):
         if not self.session_id:return
         row=self.sessions.current(self.session_id);self.sessions.select_candidate(row['id'],row['revision'],self.candidate_choices.currentIndex());self.refresh_draft()
     def refresh_draft(self):
-        self.subject.clear();self.reference.clear();self.artifacts.clear();self.candidate_choices.clear();candidate=None;current=None;result=None
+        self.subject.clear();self.reference.clear();self.artifacts.clear();self.candidate_choices.clear();candidate=None;current=None;result=None;accepted=None;self.matching_accepted_id=None
         if self.session_id:
             current=self.sessions.current(self.session_id)
             index=self.session_choices.findData(self.session_id)
@@ -433,6 +444,7 @@ class DesignLearningDialog(QDialog):
                 accepted=self.sessions.find_accepted(graph,current['width_mm'],current['height_mm'],current['intents'],production=current['policy'].get('production') is True)
                 if accepted and self.artifacts.findData(accepted['id'])<0:self.artifacts.insertItem(0,'可沿用的已確認稿：'+accepted['path'],accepted['id'])
                 if accepted:self.artifacts.setCurrentIndex(self.artifacts.findData(accepted['id']))
+                if accepted:self.matching_accepted_id=accepted['id']
             except ValueError as error:self.solve_status.setText('先前確認稿目前不能沿用；請查看原因。'+str(error))
             from .production_report import result_report,explain_error
             try:
@@ -446,7 +458,12 @@ class DesignLearningDialog(QDialog):
             and current['policy'].get('production') is True and candidate.risk_context.get('design_size_admission')=='SOURCE_OR_LEARNED_DOMAIN'))
         self.formal_export_button.setEnabled(bool(candidate and current and (current.get('confirmation') or {}).get('for_production') and candidate.formal_eligible))
         self.formal_button.setToolTip('需要真實作品驗證及正式模型資格；尺寸須有來源或學習範圍支持')
-        self.canvas.show_candidate(candidate);self.confirm_button.setEnabled(candidate is not None)
+        if candidate is None and accepted and accepted.get('accepted_candidate'):
+            from .design_session import _candidate
+            self.canvas.show_candidate(_candidate(accepted['accepted_candidate']),editable=False)
+            self.solve_status.setText('已找到相同資料的確認稿。可直接「開啟已保存的相同檔案」沿用；如要重新排版，請明確按產生稿件。')
+        else:self.canvas.show_candidate(candidate)
+        self.confirm_button.setEnabled(candidate is not None)
         self.export_button.setEnabled(candidate is not None and bool(current and current.get('confirmation')))
         self.out_w.setEnabled(True);self.out_h.setEnabled(True)
         if current:
@@ -465,13 +482,13 @@ class DesignLearningDialog(QDialog):
         self.sessions.confirm(row['id'],row['revision'],self.actor.text(),for_production=True)
         self.refresh_draft();self.say('已核對並確認目前正式數位稿；輸出仍會再次核驗資產與格式。')
     def export_formal(self):
-        path,_=QFileDialog.getSaveFileName(self,'保存已確認正式數位稿','design.png','PNG (*.png);;PDF (*.pdf);;SVG (*.svg)')
+        path,_=QFileDialog.getSaveFileName(self,'保存已確認正式數位稿','design.png','PNG (*.png);;PDF (*.pdf);;JPG (*.jpg)')
         if not path:return
         artifact=self.sessions.export(self.session_id,path,preview=False);self.refresh_draft();self.say('已保存正式數位檔與原版本憑證：'+artifact['path'])
     def confirm_preview(self):
         row=self.sessions.current(self.session_id);self.sessions.confirm(row['id'],row['revision'],self.actor.text());self.refresh_draft();self.say('已確認目前顯示的完整預覽稿。')
     def export_preview(self):
-        path,_=QFileDialog.getSaveFileName(self,'保存已確認預覽稿','PREVIEW-design.png','PNG (*.png);;PDF (*.pdf);;SVG (*.svg)')
+        path,_=QFileDialog.getSaveFileName(self,'保存已確認預覽稿','PREVIEW-design.png','PNG (*.png);;PDF (*.pdf);;JPG (*.jpg)')
         if not path:return
         artifact=self.sessions.export(self.session_id,path,preview=True);self.refresh_draft();self.say('已保存相同稿件的檔案與完整性憑證：'+artifact['path'])
     def replay(self):
