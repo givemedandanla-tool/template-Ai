@@ -54,8 +54,8 @@ class CustomerCandidates:
     def list(self, offset=0, limit=100):
         if type(offset) is not int or offset < 0 or type(limit) is not int or not 1 <= limit <= 100:
             raise ValueError('候選查詢需有效分頁，每頁最多100筆')
-        return [self.get(r[0]) for r in self.db.execute(
-            'SELECT id FROM customer_import_candidates ORDER BY rowid LIMIT ? OFFSET ?', (limit, offset))]
+        return [dict(id=row[0],revision=row[1],state=row[2],**json.loads(row[3])) for row in self.db.execute(
+            'SELECT id,revision,state,payload FROM customer_import_candidates ORDER BY rowid LIMIT ? OFFSET ?', (limit, offset))]
 
     def _save(self, identity, payload, state, revision):
         row = self.db.execute('SELECT revision FROM customer_import_candidates WHERE id=?', (identity,)).fetchone()

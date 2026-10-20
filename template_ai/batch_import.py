@@ -114,10 +114,13 @@ class BatchStore:
     def get(self,batch_id):
         row=self.db.execute('SELECT revision,payload FROM import_batches WHERE id=?',(batch_id,)).fetchone()
         if not row:raise ValueError('批次不存在')
+        return self._selected(row)
+    @staticmethod
+    def _selected(row):
         data=json.loads(row[1])
         if data['revision']!=row[0]:raise ValueError('批次索引／revision不一致')
         return data
-    def list(self):return [self.get(r[0]) for r in self.db.execute('SELECT id FROM import_batches ORDER BY rowid DESC')]
+    def list(self):return [self._selected((row[1],row[2])) for row in self.db.execute('SELECT id,revision,payload FROM import_batches ORDER BY rowid DESC')]
     def create(self,report,confirmed=False):
         if not confirmed:raise ValueError('需核對預檢摘要並明確確認')
         items=copy.deepcopy(report['items'])

@@ -6,6 +6,7 @@ from .training_quality import analyse_work
 from .batch_import import healthy_source
 from pathlib import Path
 from .source_links import fingerprint
+from .metadata_record import training_record
 
 
 def cache_stamps(source):
@@ -94,9 +95,9 @@ class TrustedSampleMixin:
 
     def sample_usage_impact(self,sample_id):
         datasets=[r[0] for r in self.db.execute("SELECT DISTINCT d.id FROM training_records d,json_each(d.payload,'$.entries') e WHERE d.kind='DATASET' AND json_extract(e.value,'$.sample_id')=? ORDER BY d.id LIMIT 201",(sample_id,))]
-        uses=[self.get('USE',r[0]) for r in self.db.execute("SELECT id FROM training_records WHERE kind='USE' AND json_extract(payload,'$.sample_id')=? ORDER BY id LIMIT 201",(sample_id,))]
+        uses=[training_record(row) for row in self.db.execute("SELECT id,revision,payload FROM training_records WHERE kind='USE' AND json_extract(payload,'$.sample_id')=? ORDER BY id LIMIT 201",(sample_id,))]
         jobs=[r[0] for r in self.db.execute("SELECT DISTINCT j.id FROM training_records j,json_each(j.payload,'$.items') i WHERE j.kind='JOB' AND json_extract(i.value,'$.sample_id')=? ORDER BY j.id LIMIT 201",(sample_id,))]
-        design_uses=[self.get('DESIGN_USE',r[0]) for r in self.db.execute("SELECT id FROM training_records WHERE kind='DESIGN_USE' AND json_extract(payload,'$.sample_id')=? ORDER BY id LIMIT 201",(sample_id,))]
+        design_uses=[training_record(row) for row in self.db.execute("SELECT id,revision,payload FROM training_records WHERE kind='DESIGN_USE' AND json_extract(payload,'$.sample_id')=? ORDER BY id LIMIT 201",(sample_id,))]
         rankers=[row[0] for row in self.db.execute("SELECT DISTINCT r.id FROM training_records r,json_each(r.payload,'$.examples') e JOIN training_records p ON p.kind='DESIGN_PREFERENCE_EXAMPLE' AND p.id=json_extract(e.value,'$.id') WHERE r.kind='DESIGN_RANKER' AND json_extract(p.payload,'$.sample_id')=? ORDER BY r.id LIMIT 201",(sample_id,))]
         return {'dataset_ids':datasets[:200],'template_ids':sorted({u['template_id'] for u in uses[:200]}),'job_ids':jobs[:200],'current_geometry_training_use':bool(uses),'design_model_ids':sorted({row['model_id'] for row in design_uses[:200]}),'current_cross_work_training_use':bool(design_uses),'design_ranker_ids':rankers[:200],'scope':'sample.used_for_training is historical AT_ADMISSION; current use is this exact USE ledger','complete':len(datasets)<=200 and len(uses)<=200 and len(jobs)<=200 and len(design_uses)<=200 and len(rankers)<=200,'models_decontaminated':False,'originals_and_published_templates_unchanged':True}
 

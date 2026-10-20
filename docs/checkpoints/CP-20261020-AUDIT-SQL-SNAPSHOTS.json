@@ -1,0 +1,89 @@
+{
+  "id": "CP-20261020-AUDIT-SQL-SNAPSHOTS",
+  "kind": "LOCAL_INCREMENTAL_AUDIT",
+  "phase": "PREPARED",
+  "base_commit": "cd1ec0fc863899ede6c426b3419d04fa12aa6823",
+  "summary": "Full run003 on EFA: 1865 PASS/240 healthy/0runtime. Four SQLite list APIs and training metadata readers now decode the complete selected row. Before12: 7FAIL/3ERROR/2PASS; after12PASS. Batch revision gate and write-readback protection preserved; final new-source full run pending.",
+  "requirements": [
+    "CORE-085",
+    "CORE-090"
+  ],
+  "files": [
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-003/live/parallel-parts/test_quality_repair_releases/modules/test_quality_repair_releases/progress.json",
+      "sha256": "01f358166f5462b4a7ae94dd295f59f0286f85704303be0c58296f8dc0137976"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-003/live/parallel-parts/test_quality_repair_releases/modules/test_quality_repair_releases/progress.jsonl",
+      "sha256": "c691a4af48338120ee02a774499a75f80f0cb519daa98ade6212e27a34867589"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-003/live/parallel-parts/test_quality_repair_releases/test-progress.json",
+      "sha256": "98289930c153b87d81d76d2b5bd4aae95127d3fa88f305589e565d18da39b1ea"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-003/live/parallel-parts/test_quality_repair_truth/modules/test_quality_repair_truth/progress.json",
+      "sha256": "0eec705f52309ddfde8b3a2f15ea2fe90855e53aa769a486cc2a0b45ba68eb19"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-003/live/parallel-parts/test_quality_repair_truth/modules/test_quality_repair_truth/progress.jsonl",
+      "sha256": "b03f0149863e87244e5889eb50a64b17e72ce11ffdf63e4710cdff492117942e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-003/live/parallel-parts/test_quality_repair_truth/test-progress.json",
+      "sha256": "442a66dc8cf289b21c48619e9a5eea8e3ffb7ee9abad9d1bfd5b5598e4aa8f65"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-003/live/test-modules.json",
+      "sha256": "954c47c01f1cdd9e584a430d2edf53b16b28d69e5fbc81258b406c733ddd7d9e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/full-regression-003/live/test-progress.json",
+      "sha256": "4e1a30505557766f27ceec661348f880228495bb78a9ec2c2198a700d452846e"
+    },
+    {
+      "path": "docs/dev/pre_download_audit/independent_cases/test_record_snapshot_oracle.py",
+      "sha256": "052b73fc7ed4403ac0b005554f8307acebe928f13c42c837e75c2dcdcef7de21"
+    },
+    {
+      "path": "template_ai/automatic_training.py",
+      "sha256": "47ea8b5ecf1a3c23af00e9889a0291f200a668f714b31c20655f9b0853ca44ba"
+    },
+    {
+      "path": "template_ai/batch_import.py",
+      "sha256": "615e2f4dbf977a76a719e1a1584c7da44e68f2a80920be9da1327235d1193231"
+    },
+    {
+      "path": "template_ai/customer_candidates.py",
+      "sha256": "e2bfd45d6b9fdbeae240f43ea8ed56ff5f356c638edc73224e5a933253e31818"
+    },
+    {
+      "path": "template_ai/dataset_panel.py",
+      "sha256": "6db3e9aca149ea81a1131dfaf72155a07794cdd907c27b76d323b6939a6a7aaf"
+    },
+    {
+      "path": "template_ai/metadata_record.py",
+      "sha256": "3fbbe35dad3dcf2135d6fdc357c42f581679aff5ab7b0491cf0e48ecafaa8cf7"
+    },
+    {
+      "path": "template_ai/runtime_queue.py",
+      "sha256": "5098d88ba4f8b781c1677df75c81339448965986b2f3df0fdcffe803ab833e4e"
+    },
+    {
+      "path": "template_ai/training_exceptions.py",
+      "sha256": "94dc9472884666bbc9313c3315ad88a9123da82b59caa75b226dce224115a079"
+    },
+    {
+      "path": "template_ai/training_store.py",
+      "sha256": "d4c78bc2bfc2e108b3800bbd036505a756a171bb9197e51eab67c399b134927b"
+    },
+    {
+      "path": "template_ai/trusted_samples.py",
+      "sha256": "8fbfda87664f066ba658043e1cb6cb334e44f66fea76ef0e4062ba370cde5f15"
+    },
+    {
+      "path": "tests/test_record_snapshot_oracle.py",
+      "sha256": "052b73fc7ed4403ac0b005554f8307acebe928f13c42c837e75c2dcdcef7de21"
+    }
+  ]
+}

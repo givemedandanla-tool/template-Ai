@@ -39,12 +39,16 @@ class RuntimeQueue:
         row=self.db.execute('SELECT seq,revision,payload FROM runtime_requests WHERE id=?',(identity,)).fetchone()
         return dict(json.loads(row[2]),id=identity,seq=row[0],revision=row[1]) if row else None
 
+    @staticmethod
+    def _selected(row):
+        return dict(json.loads(row[3]),id=row[0],seq=row[1],revision=row[2])
+
     def page(self,offset=0,limit=50):
         if type(offset) is not int or offset<0 or type(limit) is not int or not 1<=limit<=200:raise ValueError('工作佇列需有效分頁，最多200項')
-        return [self.get(row[0]) for row in self.db.execute('SELECT id FROM runtime_requests ORDER BY seq DESC LIMIT ? OFFSET ?',(limit,offset))]
+        return [self._selected(row) for row in self.db.execute('SELECT id,seq,revision,payload FROM runtime_requests ORDER BY seq DESC LIMIT ? OFFSET ?',(limit,offset))]
 
     def eligible(self,session=None):
-        rows=[self.get(row[0]) for row in self.db.execute("SELECT id FROM runtime_requests WHERE json_extract(payload,'$.state') IN ('WAITING','PAUSED_RESOURCES') ORDER BY seq LIMIT 200")]
+        rows=[self._selected(row) for row in self.db.execute("SELECT id,seq,revision,payload FROM runtime_requests WHERE json_extract(payload,'$.state') IN ('WAITING','PAUSED_RESOURCES') ORDER BY seq LIMIT 200")]
         return [row for row in rows if (session is None or row['consent_session']==session) and owner_alive(row.get('consent_owner'))]
 
     def _write(self,value,expected,action):

@@ -153,7 +153,7 @@ class AutomaticTraining:
         facts=self.store.facts(work['id']);quality=analyse_work(work,self.library.source(work['source_id']))+review_issues(work,facts,self.store.facts_state(work['id'])=='CONFIRMED')
         noise=self.store.noise_decisions(work['id']);issues=[r for r in quality if r['severity'] in ('BLOCK','REVIEW')]
         templates=[];state='WAITING_REVIEW'
-        approved=[self.store.get('SAMPLE',sid) for sid, in self.db.execute("SELECT id FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id LIMIT 201",(work['id'],))]
+        approved=[training_record(row) for row in self.db.execute("SELECT id,revision,payload FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? ORDER BY id LIMIT 201",(work['id'],))]
         if len(approved)>200:raise ValueError('單作品樣本超過200，需縮小已授權學習範圍')
         for sample in approved:
             if self.store.sample_state(sample['id'])!='APPROVED':continue
@@ -295,3 +295,4 @@ def run_automatic(root,identity,token,cancel=None,progress=None,admission=None):
 
 
 from xml.etree.ElementTree import ParseError as ET_PARSE_ERROR
+from .metadata_record import training_record

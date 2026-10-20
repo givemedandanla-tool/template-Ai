@@ -18,6 +18,7 @@ from .datasets import DatasetMixin
 from .quality_coverage import CoverageMixin
 from .training_pipeline import TrainingQueueMixin
 from .design_observation_store import DesignObservationMixin
+from .metadata_record import training_record
 
 
 def digest(value):
@@ -58,12 +59,12 @@ class TrainingStore(NoiseMixin, RuleReviewMixin, NoiseHitMixin, NoiseRecoveryMix
 
     def get(self, kind, record_id):
         row = self.db.execute('SELECT revision,payload FROM training_records WHERE kind=? AND id=?', (kind, record_id)).fetchone()
-        return {'id': record_id, 'revision': row[0], **json.loads(row[1])} if row else None
+        return training_record((record_id, row[0], row[1])) if row else None
 
     def records(self, kind, offset=0, limit=200):
         if type(offset) is not int or offset < 0 or type(limit) is not int or not 1 <= limit <= 200:
             raise ValueError('查詢需有效分頁，最多200項')
-        return [self.get(kind, r[0]) for r in self.db.execute('SELECT id FROM training_records WHERE kind=? ORDER BY id LIMIT ? OFFSET ?', (kind, limit, offset))]
+        return [training_record(row) for row in self.db.execute('SELECT id,revision,payload FROM training_records WHERE kind=? ORDER BY id LIMIT ? OFFSET ?', (kind, limit, offset))]
 
     def count(self, kind):
         return self.db.execute('SELECT count(*) FROM training_records WHERE kind=?', (kind,)).fetchone()[0]

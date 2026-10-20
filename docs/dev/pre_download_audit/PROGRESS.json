@@ -9,7 +9,7 @@
   "fixed_defects": 0,
   "new_test_execution": null,
   "original_1850_rerun": "Intermediate run stopped after 706 completed records and one confirmed report-reader error; final complete run pending",
-  "next": "Commit event/report fix plus independent oracles; final 1865-test run with 2 fresh owned module workers; continue unresolved diagnostic classification",
+  "next": "Run new-source full1877 tests plus complete remaining diagnostic/accounting, interface and fault ledgers; final recovery delivery not yet ready",
   "provenance": "LOCAL_ONLY",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN",
   "root_fix": "Qt native QWidget/QDialog APIs restored, fail-first 4 cases now PASS; broad regression pending",
@@ -42,9 +42,9 @@
   "open_confirmed_defects": [
     {
       "id": "BUG-METADATA-SNAPSHOT-004",
-      "status": "REPRODUCED_FIX_PENDING",
-      "proof": "record-snapshot-before-summary.json",
-      "next": "Use one SELECT of id/revision/payload, preserving exact selected snapshot rather than N+1 re-query; test delete/update interleavings"
+      "status": "IMPLEMENTED_12_TARGETED_PASS_FULL_PENDING",
+      "sites": 10,
+      "proof": "record-collections-after-summary.json"
     }
   ],
   "final_regression_003": "RUNNING_ON_EFA1E958_NO_PRODUCT_CHANGES_DURING_RUN",
@@ -53,5 +53,12 @@
     "status": "PASS",
     "tests": 19,
     "full_real_windows": true
+  },
+  "full_regression_003": {
+    "source": "efa1e958",
+    "PASS": 1865,
+    "healthy_modules": 240,
+    "runtime_errors": 0,
+    "original1850_preserved": true
   }
 }

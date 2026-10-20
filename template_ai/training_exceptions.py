@@ -2,6 +2,7 @@
 from .automatic_training import AutomaticTraining
 from .training_quality import analyse_work
 from .semantic_fields import review_issues
+from .metadata_record import training_record
 
 
 def exception_rows(library,query='',order='SMART',severity='ALL',offset=0):
@@ -16,8 +17,8 @@ def exception_rows(library,query='',order='SMART',severity='ALL',offset=0):
     rank="CASE WHEN json_extract(u.payload,'$.state')='FAILED' THEN 3 ELSE COALESCE((SELECT max(CASE json_extract(e.value,'$.severity') WHEN 'BLOCK' THEN 3 WHEN 'REVIEW' THEN 2 ELSE 1 END) FROM json_each(u.payload,'$.issues') e),0) END DESC"
     impact="(SELECT count(*) FROM templates t WHERE json_extract(t.payload,'$.source_work_id')=a.id) DESC"
     ordering={'SMART':rank+','+impact+",a.source_id,a.id",'SEVERITY':rank+",a.source_id,a.id",'SOURCE':"a.source_id,a.id",'TYPE':"COALESCE(json_extract(u.payload,'$.issues[0].code'),''),a.source_id,a.id"}[order]
-    sql="SELECT u.id FROM training_records u JOIN artworks a ON a.id=json_extract(u.payload,'$.work_id') JOIN sources s ON s.id=a.source_id WHERE "+' AND '.join(where)+' ORDER BY '+ordering+' LIMIT 100 OFFSET ?'
-    units=[service.store.get('AUTO_UNIT',identity) for identity, in library.db.execute(sql,(*args,offset))]
+    sql="SELECT u.id,u.revision,u.payload FROM training_records u JOIN artworks a ON a.id=json_extract(u.payload,'$.work_id') JOIN sources s ON s.id=a.source_id WHERE "+' AND '.join(where)+' ORDER BY '+ordering+' LIMIT 100 OFFSET ?'
+    units=[training_record(row) for row in library.db.execute(sql,(*args,offset))]
     for unit in units:
         work=library.artwork(unit['work_id']);source=library.source(work['source_id']);issues=analyse_work(work,source)+review_issues(work,service.store.facts(work['id']),service.store.facts_state(work['id'])=='CONFIRMED')
         if work['payload'].get('segmentation_state')=='SUPERSEDED':continue

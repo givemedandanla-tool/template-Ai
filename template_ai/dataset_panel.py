@@ -11,6 +11,7 @@ from PySide6.QtWidgets import QWidget,QVBoxLayout,QHBoxLayout,QLabel,QLineEdit,Q
 from .model import new_id
 from .training_store import TrainingStore
 from .source_links import hash_source
+from .metadata_record import training_record
 
 
 class DatasetPanel(QWidget):
@@ -56,7 +57,7 @@ class DatasetPanel(QWidget):
         if not did:return
         ds=self.store.get('DATASET',did)
         for entry in ds.get('entries',[]):self.sample_combo.addItem(entry['role']+' / '+entry['sample_id'],entry['sample_id'])
-        uses=[self.store.get('USE',r[0]) for r in self.store.db.execute("SELECT id FROM training_records WHERE kind='USE' AND json_extract(payload,'$.dataset_id')=? ORDER BY id LIMIT 200",(did,))];total=self.store.db.execute("SELECT count(*) FROM training_records WHERE kind='USE' AND json_extract(payload,'$.dataset_id')=?",(did,)).fetchone()[0]
+        uses=[training_record(row) for row in self.store.db.execute("SELECT id,revision,payload FROM training_records WHERE kind='USE' AND json_extract(payload,'$.dataset_id')=? ORDER BY id LIMIT 200",(did,))];total=self.store.db.execute("SELECT count(*) FROM training_records WHERE kind='USE' AND json_extract(payload,'$.dataset_id')=?",(did,)).fetchone()[0]
         self.details.setPlainText(json.dumps({'dataset':ds,'current_validity':self.store.dataset_validity(did),'actual_geometry_uses':uses,'total_geometry_uses':total,'uses_display_bounded':len(uses)<total},ensure_ascii=False,indent=2))
     def learn(self):
         if self.running or self.host_window.busy:return
