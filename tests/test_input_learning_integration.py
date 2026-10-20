@@ -51,6 +51,7 @@ class InputLearningIntegrationTests(unittest.TestCase):
                 field=next(f for f in modal.graph.data['fields'] if f['kind']==kind)
                 editor=modal.field_editors[field['id']];editor.selectAll();QTest.keyClicks(editor,value)
                 observations.append(field['id'])
+                modal.refresh_warnings()
                 self.capture(modal,'input-integration-real-data-entry.png')
                 QTest.mouseClick(modal.adopt_button,Qt.LeftButton)
             except BaseException as error:
@@ -147,6 +148,24 @@ class InputLearningIntegrationTests(unittest.TestCase):
         self.assertEqual(row['id'],d.session_id);self.assertEqual(row['model_id'],self.model['id'])
         self.assertEqual(reopened.matching_accepted_id,artifact['id'])
         self.assertEqual(reopened.sessions.replay_artifact(artifact['id'])['sha256'],artifact['sha256'])
+
+    def test_resume_other_saved_draft_updates_main_input_size_and_export_reference(self):
+        from template_ai.gui import MainWindow
+        w=MainWindow(self.library.root);controlled_resources(w);self.addCleanup(lambda:dispose_main_window(w));w.adopt_input_graph(self.graph.data)
+        d=DesignLearningDialog(w);self.addCleanup(d.close);attach(d)
+        graph=InputGraph.from_legacy([dict(name='Second Person',title='Designer',phone='+1 202 555 0199',email='second@example.test')],[])
+        other=self.sessions.create(graph,120,80,'Author',self.model['id'],dict(version='resume-size-test-1',approved=True,production=False))
+        d.refresh();d.session_choices.setCurrentIndex(d.session_choices.findData(other['id']));d.resume_session()
+        self.assertEqual(w.production_session_id,other['id']);self.assertEqual(w.active_input_graph.data,graph.data)
+        self.assertEqual((w.out_w.value(),w.out_h.value()),(120,80));self.assertEqual(d.session_choices.currentData(),other['id'])
+        self.assertIsNone(w.reorder_customer_snapshot)
+
+    def test_shared_learning_preview_preserves_original_pdf_png_jpg_formats(self):
+        self.dialog.solve();self.dialog.confirm_preview()
+        for suffix in ('png','pdf','jpg'):
+            target=self.root/('PREVIEW-formats-'+self.row['id']+'.'+suffix)
+            artifact=self.sessions.export(self.row['id'],target,preview=True)
+            self.assertGreater(target.stat().st_size,100);self.assertEqual(self.sessions.replay_artifact(artifact['id'])['sha256'],artifact['sha256'])
 
     def test_main_legacy_table_enters_real_learned_preview_and_exports_exact_confirmed_data(self):
         from template_ai.gui import MainWindow

@@ -333,6 +333,8 @@ class DesignLearningDialog(QDialog):
         saved=self.sessions.create(dialog.graph,self.out_w.value(),self.out_h.value(),self.actor.text())
         self.session_id=saved['id'];self.save_workspace()
         from .production_bridge import sync_input
+        if self.bound_to_main:
+            self.window.reorder_customer_snapshot=None;self.window.reorder_template_id=None
         sync_input(self,dialog.graph)
         if self.bound_to_main:self.window.production_session_id=saved['id']
         self.refresh();self.say('資料已保存；可以產生完整稿件。')
@@ -340,6 +342,11 @@ class DesignLearningDialog(QDialog):
         identity=self.session_choices.currentData()
         if not identity:raise ValueError('沒有已保存稿件')
         self.session_id=identity;self.save_workspace();row=self.sessions.current(identity)
+        if self.bound_to_main:
+            self.window.reorder_customer_snapshot=None;self.window.reorder_template_id=None
+            self.window.out_w.setValue(row['width_mm']);self.window.out_h.setValue(row['height_mm'])
+            from .production_bridge import sync_input
+            sync_input(self,InputGraph(row['input_graph']));self.window.production_session_id=identity
         self.out_w.setValue(row['width_mm']);self.out_h.setValue(row['height_mm']);self.refresh_draft()
     def edit_data(self):
         if self.solve_worker and self.solve_worker.isRunning():raise ValueError('請先停止目前排版，再改資料。')
@@ -426,7 +433,10 @@ class DesignLearningDialog(QDialog):
         if self.session_id:
             current=self.sessions.current(self.session_id)
             index=self.session_choices.findData(self.session_id)
-            if index>=0:self.session_choices.setItemText(index,self.session_id+' · '+current['result_state'])
+            if index<0:self.session_choices.addItem('',self.session_id);index=self.session_choices.count()-1
+            states={'CURRENT':'稿件已更新','STALE':'資料已改，需重新排版','NEEDS_SOLVE':'待排版'}
+            self.session_choices.setItemText(index,'目前稿件 · '+states.get(current['result_state'],'待核對'))
+            self.session_choices.setCurrentIndex(index)
             graph=InputGraph(current['input_graph']);movable=set(current['policy'].get('movable_kinds',('phone','email','line','ig','address')))
             for field in input_facts(graph):
                 from .model import KINDS
