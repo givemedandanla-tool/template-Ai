@@ -70,6 +70,14 @@ def inkscape_path() -> str | None:
 
 
 def _run(executable: str, arguments: list[str], directory: Path) -> str:
+    from .offline_runtime import assert_local_document, assert_local_path
+    assert_local_path(executable)
+    assert_local_path(directory)
+    for argument in arguments:
+        value = argument.split('=', 1)[1] if argument.startswith('--') and '=' in argument else argument
+        assert_local_path(value)
+        if not argument.startswith('--') and Path(value).suffix.lower() == '.svg' and Path(value).is_file():
+            assert_local_document(value)
     env = os.environ.copy()
     env["INKSCAPE_PROFILE_DIR"] = str(directory / "inkscape-profile")
     result = subprocess.run([executable, *arguments], cwd=directory, env=env, capture_output=True, text=True,
@@ -98,6 +106,9 @@ def svg_size(path: Path) -> tuple[float, float]:
 
 
 def render_svg(path: Path, target: Path, width_px: int = 1600) -> None:
+    from .offline_runtime import assert_local_document, assert_local_path
+    assert_local_document(path, require_svg=True)
+    assert_local_path(target)
     renderer = QSvgRenderer(str(path))
     if not renderer.isValid():
         raise ValueError("SVG 無法由 Qt 正確讀取")
@@ -114,6 +125,13 @@ def render_svg(path: Path, target: Path, width_px: int = 1600) -> None:
 
 def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
     """已知 PDF 相容 AI 可用 Qt PDF；其他 AI 優先嘗試 Inkscape，失敗不偽造結果。"""
+    from .offline_runtime import assert_local_document, assert_local_path
+    assert_local_path(path)
+    assert_local_path(assets)
+    assert_local_document(path)
+    if Path(path).suffix.lower() in ('.png', '.jpg', '.jpeg'):
+        from .offline_runtime import assert_local_raster
+        assert_local_raster(path)
     path, assets = Path(path).resolve(), Path(assets).resolve()
     if type(page) is not int or not 1 <= page <= 999:
         raise ValueError("頁碼必須是 1～999 的整數")
@@ -171,6 +189,7 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
             _run(converter, args, folder)
             if not svg_path.is_file():
                 raise ValueError("Inkscape 未建立可用 SVG")
+            assert_local_document(svg_path)
             width, height = svg_size(svg_path)
             _run(converter, [str(svg_path), "--export-type=png", "--export-width=1600", "--export-background=white", "--export-background-opacity=1", "--export-filename=" + str(image_path)], folder)
             converted = True

@@ -37,6 +37,21 @@ INPUT_LEARNING_INTERFACE_MAP.md 與 GUI_PANEL_DESIGN_PLAN_20261020.md。
 8. 依主倉庫 checkpoint／GitHub 讀回規則保存方案、修改與測試。
    不啟動付費服務、不安裝無關插件、不因技能存在就自動啟動平行代理。
 
+## 新增專項工具與 agent
+
+本輪使用者已授權以專項 agent 協作重構 GUI；這不成為其他任務的永久授權。
+`bootstrap_gui.py` 同時核對 EXTENSIONS.json 的15件公開來源並重建以下專案 skill：
+
+- [桌面視覺審查](skills/desktop-visual-review/SKILL.md)：適配 OpenAI screenshot 與
+  Anthropic frontend-design；只擷取自建測試視窗，採用白話文案與截圖審查原則。
+- [Qt 操作審查](skills/qt-interaction-review/SKILL.md)：真視窗、鍵盤、焦點與版本回復。
+- [GUI 程式審查](skills/gui-code-review/SKILL.md)：適配 Superpowers 只讀審查模板，
+  保留本專案的授權、單一 checkout 與 checkpoint 規則。
+
+`python docs/dev/gui_tooling/agent_task.py --list` 列出可重用的5個專項任務規格，
+由主代理交給實際 collaboration 工具使用；不改平台模型或虛稱安裝新的模型種類。
+完整來源、採用／棄用及實際驗證見 GUI_ADDITIONAL_TOOLING_20261020.md。
+
 ## 來源與限制
 
 UI/UX Pro Max MIT 固定版與原始檔 hash 見 UPSTREAM.json；保留 LICENSE。

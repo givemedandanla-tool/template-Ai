@@ -53,6 +53,8 @@ def errors(asset, require_approved=True):
                     or file_digest(path) != expected:
                 raise ValueError('Logo 來源失聯／變更，不能替代原版通過')
         if asset.get('svg'):
+            from .offline_runtime import assert_local_document
+            assert_local_document(asset['svg'], require_svg=True)
             from PySide6.QtSvg import QSvgRenderer
             if not QSvgRenderer(asset['svg']).isValid():raise ValueError('Logo向量來源無法解碼，不可用預覽勾選取代來源檢查')
         elif asset.get('image'):

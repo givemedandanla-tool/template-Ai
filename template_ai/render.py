@@ -54,10 +54,21 @@ def draw_text(p: QPainter, rect: QRectF, text: str, family: str, pt: float, scal
 
 
 def draw_logo(p: QPainter, target: QRectF, asset: dict) -> None:
+    from .offline_runtime import assert_local_document, assert_local_path, assert_local_raster
+    for key in ('svg', 'image'):
+        if asset.get(key):
+            assert_local_path(asset[key])
     from .logo_assets import errors as logo_errors
     health = logo_errors(asset, require_approved=False)
     if health:
         raise ValueError('；'.join(health))
+    try:
+        if asset.get('svg'):
+            assert_local_document(asset['svg'], require_svg=True)
+        elif asset.get('image'):
+            assert_local_raster(asset['image'])
+    except OSError as error:
+        raise ValueError('Logo 圖片或向量來源不可讀，請重新核對本機資產。') from error
     crop = asset.get("crop")
     full_w, full_h = asset["source_width_mm"], asset["source_height_mm"]
     x, y, w, h = (crop[k] for k in ("x", "y", "w", "h")) if crop else (0, 0, full_w, full_h)

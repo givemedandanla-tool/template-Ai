@@ -24,9 +24,12 @@ def vector_objects(source,assets):
     verify_source(source['current_path'],source['hash'])
     channel='semantic_svg' if source.get('semantic_svg') else 'svg'
     path=Path(source.get(channel) or '')
+    from .offline_runtime import assert_local_document, assert_local_path
+    assert_local_path(path)
     if not source.get(channel) or not path.is_file():raise ValueError('無可核對向量結構，請人工作品框選／本機OCR線索，不假稱已解析')
     expected=source['file_hashes'][channel]
     if path.is_symlink() or path.stat().st_size>2_000_000 or file_digest(path)!=expected:raise ValueError('向量來源已變更或超出2MB結構預算')
+    assert_local_document(path, require_svg=True)
     root=ET.parse(path).getroot();elements=list(root.iter())
     if len(elements)>4000:raise ValueError('來源超過4000物件，需按作品縮小分析範圍')
     executable=inkscape_path()

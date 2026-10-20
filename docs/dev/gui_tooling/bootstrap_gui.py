@@ -4,11 +4,12 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 from pathlib import Path
 import platform
 import subprocess
 import urllib.request
+
+from tooling_extensions import discover_skills, verify_extensions
 
 
 def main() -> None:
@@ -24,18 +25,12 @@ def main() -> None:
     for name, expected in upstream['files'].items():
         if hashlib.sha256((vendor / name).read_bytes()).hexdigest() != expected:
             raise RuntimeError('Vendored skill changed: ' + name)
-    entry = repository / '.agents/skills/template-ai-gui'
-    entry.parent.mkdir(parents=True, exist_ok=True)
-    relative = os.path.relpath(here, entry.parent)
-    if entry.is_symlink():
-        if entry.resolve() != here:
-            raise RuntimeError('A different project skill already exists; it was not overwritten')
-    elif entry.exists():
-        raise RuntimeError('An existing skill directory was not overwritten')
-    else:
-        entry.symlink_to(relative, target_is_directory=True)
-    result = dict(skill='template-ai-gui', entry=str(entry.relative_to(repository)),
-                  upstream_files_verified=len(upstream['files']), x11='NOT_REQUESTED')
+    extensions = verify_extensions(here)
+    entries = discover_skills(repository, here, extensions)
+    result = dict(skill='template-ai-gui', entry=entries[0], additional_entries=entries[1:],
+                  upstream_files_verified=len(upstream['files']),
+                  additional_upstream_files_verified=len(extensions['sources']),
+                  agent_roles=list(extensions['agent_roles']), x11='NOT_REQUESTED')
     if args.with_x11:
         release = Path('/etc/os-release').read_text()
         if 'VERSION_ID="13"' not in release or platform.machine() != 'x86_64':

@@ -77,7 +77,10 @@ class OutputBatchDialog(QDialog):
     def open_folder(self):
         ids=self.ids()
         if ids:
-            row=self.engine.items[int(ids[0])];QDesktopServices.openUrl(QUrl.fromLocalFile(str(Path(row['path']).parent)))
+            row=self.engine.items[int(ids[0])]
+            from .offline_runtime import assert_local_path
+            assert_local_path(row['path'])
+            QDesktopServices.openUrl(QUrl.fromLocalFile(str(Path(row['path']).parent)))
     def cleanup(self):
         if self.running:return
         try:

@@ -1,19 +1,14 @@
 @echo off
+setlocal
 chcp 65001 >nul
 cd /d "%~dp0"
 if not exist .venv\Scripts\python.exe (
-  py -3.11 -m venv .venv
-  if errorlevel 1 (
-    echo 請先安裝 Python 3.11，並勾選 Python Launcher。
-    pause
-    exit /b 1
-  )
-)
-.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
-if errorlevel 1 (
-  echo 依賴安裝失敗，請保留錯誤訊息以便診斷。
+  echo 尚未完成首次準備。請先執行 PREPARE_WINDOWS.bat，或查看本機快速開始文件。
+  echo 這次啟動不會下載或安裝任何套件。
   pause
-  exit /b 1
+  exit /b 2
 )
-.venv\Scripts\python.exe app.py
-if errorlevel 1 pause
+.venv\Scripts\python.exe tools\local_start.py %*
+set "TEMPLATE_AI_EXIT=%errorlevel%"
+if not "%TEMPLATE_AI_EXIT%"=="0" pause
+exit /b %TEMPLATE_AI_EXIT%

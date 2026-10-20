@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from collections import Counter
 from datetime import datetime, timezone
+from functools import lru_cache
+import hashlib
 import html
 import importlib.metadata
 import io
@@ -40,6 +42,8 @@ CODES = {
     'REPORT_OPENED': '已開啟問題回報', 'REPORT_EXPORTED': '已手動保存問題報告',
     'REPORT_SAVE_FAILED': '問題報告尚未保存', 'GUI_STATUS_CHANGED': '操作狀態已更新',
     'PREVIOUS_SESSION_FOUND': '已找到上次使用紀錄', 'LOG_READ_FAILED': '上次紀錄無法驗證',
+    'PREVIOUS_SESSION_INTERRUPTED': '上次使用未記錄正常結束',
+    'USER_REPORTED_PROBLEM': '使用者標記需要協助的問題',
 }
 ERRORS = {'NONE', 'VALUE', 'TYPE', 'FILE_MISSING', 'PERMISSION', 'OS', 'RUNTIME', 'MEMORY', 'OTHER'}
 MISSING = {
@@ -64,6 +68,27 @@ def error_kind(error):
         if isinstance(error, cls):
             return key
     return 'NONE' if error is None else 'OTHER'
+
+
+def missing_from_hint(message):
+    """Classify a visible hint; the original message is never stored or returned.
+
+    A classification is a troubleshooting lead, not proof that a resource is
+    absent. Detailed layout/recovery reports retain their original authority.
+    """
+    if not isinstance(message, str):
+        return 'UNCLASSIFIED'
+    value = message.casefold()
+    for keywords, kind in ((('inkscape', '轉換器', '轉換工具'), 'CONVERTER'),
+                           (('tesseract', 'ocr', '語言模型'), 'OCR'),
+                           (('字型', '字體', 'glyph'), 'FONT'),
+                           (('容量', 'capacity'), 'CAPACITY'),
+                           (('資格', '正式啟用'), 'QUALIFICATION'),
+                           (('模型', 'model'), 'MODEL'),
+                           (('來源', '原稿', 'source'), 'SOURCE')):
+        if any(keyword in value for keyword in keywords):
+            return kind
+    return 'UNCLASSIFIED'
 
 
 def safe_location(tb):
@@ -115,14 +140,44 @@ def _version(name):
     return value if re.fullmatch(r'[0-9A-Za-z.+_-]{1,48}', value) else 'UNKNOWN'
 
 
+@lru_cache(maxsize=1)
+def implementation_fingerprint():
+    """Fingerprint only trusted software modules, never the user's library."""
+    package = Path(__file__).parent
+    files = sorted(package.glob('*.py'))
+    if (package.parent / 'app.py').is_file():
+        files.append(package.parent / 'app.py')
+    digest = hashlib.sha256()
+    try:
+        for path in files:
+            if path.is_symlink():
+                return 'UNAVAILABLE'
+            body = path.read_bytes()
+            digest.update(path.name.encode() + b'\0' + len(body).to_bytes(8, 'big') + body)
+    except OSError:
+        return 'UNAVAILABLE'
+    return digest.hexdigest() if files else 'UNAVAILABLE'
+
+
 def environment_facts():
     """No hostname, username, serial number, font list, GPU identifier or paths."""
     os_name = platform.system()
     if os_name not in ('Windows', 'Linux', 'Darwin'):
         os_name = 'OTHER'
-    return {'os': os_name, 'python': platform.python_version(),
+    try:
+        import psutil
+        memory_mib = round(psutil.virtual_memory().total / (1024 * 1024))
+    except Exception:
+        memory_mib = None
+    release = platform.version()
+    release = release if re.fullmatch(r'\d+(?:\.\d+){0,3}', release) else 'UNKNOWN'
+    return {'os': os_name, 'os_version': release, 'python': platform.python_version(),
             'app': __version__, 'pyside6': _version('PySide6'), 'numpy': _version('numpy'),
-            'scipy': _version('scipy'), 'cpu_count': os.cpu_count(),
+            'scipy': _version('scipy'), 'scikit_learn': _version('scikit-learn'),
+            'hdbscan': _version('hdbscan'), 'kiwisolver': _version('kiwisolver'),
+            'cpu_count': os.cpu_count(), 'memory_mib': memory_mib,
+            'implementation_sha256': implementation_fingerprint(),
+            'implementation_scope': 'APP_AND_PACKAGE_PY',
             'python_network_guard': offline_guard_enabled(),
             'native_process_firewall': 'NOT_CLAIMED'}
 
@@ -139,14 +194,20 @@ def validate_report(data):
     if not isinstance(data['created_utc'], str) or not re.fullmatch(r'\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ', data['created_utc']):
         raise ValueError('問題報告時間不合法')
     env = data['environment']
-    exact(env, {'os', 'python', 'app', 'pyside6', 'numpy', 'scipy', 'cpu_count', 'python_network_guard', 'native_process_firewall'})
+    exact(env, {'os', 'os_version', 'python', 'app', 'pyside6', 'numpy', 'scipy', 'scikit_learn', 'hdbscan', 'kiwisolver',
+                'cpu_count', 'memory_mib', 'implementation_sha256', 'implementation_scope',
+                'python_network_guard', 'native_process_firewall'})
     if env['os'] not in ('Windows', 'Linux', 'Darwin', 'OTHER') or type(env['python_network_guard']) is not bool or env['native_process_firewall'] != 'NOT_CLAIMED':
         raise ValueError('環境資訊不合法')
-    for key in ('python', 'app', 'pyside6', 'numpy', 'scipy'):
+    for key in ('os_version', 'python', 'app', 'pyside6', 'numpy', 'scipy', 'scikit_learn', 'hdbscan', 'kiwisolver'):
         if not isinstance(env[key], str) or not re.fullmatch(r'[0-9A-Za-z.+_-]{1,48}', env[key]):
             raise ValueError('版本資訊不合法')
     if env['cpu_count'] is not None and (type(env['cpu_count']) is not int or not 1 <= env['cpu_count'] <= 100000):
         raise ValueError('處理器數量不合法')
+    if env['memory_mib'] is not None:
+        _number(env['memory_mib'])
+    if (env['implementation_sha256'] != 'UNAVAILABLE' and not re.fullmatch('[0-9a-f]{64}', env['implementation_sha256'])) or env['implementation_scope'] != 'APP_AND_PACKAGE_PY':
+        raise ValueError('程式版本指紋不合法')
     if type(data['events']) is not list or len(data['events']) > MAX_EVENTS:
         raise ValueError('操作紀錄超出預算')
     for event in data['events']:
@@ -161,7 +222,7 @@ def validate_report(data):
 
 
 def report_summary(data):
-    errors = sum(e['code'] in ('ACTION_FAILED', 'UNHANDLED_ERROR', 'REPORT_SAVE_FAILED', 'LOG_READ_FAILED') for e in data['events'])
+    errors = sum(e['code'] in ('ACTION_FAILED', 'UNHANDLED_ERROR', 'REPORT_SAVE_FAILED', 'LOG_READ_FAILED', 'USER_REPORTED_PROBLEM') for e in data['events'])
     missing = sorted({e['missing'] for e in data['events']} - {'NONE'})
     return {'發生什麼': f'這份本地紀錄包含 {len(data["events"])} 筆操作與 {errors} 筆問題。',
             '影響什麼': '報告只記錄使用情況；不修改原稿，也不代表模型、字型或印刷已驗證。',
@@ -171,6 +232,9 @@ def report_summary(data):
 
 def report_html(data):
     validate_report(data)
+    # Canonical ordering keeps the rendered content byte-identical after JSON
+    # round trips (including summary and optional location dictionaries).
+    data = parse_json(encoded(data))
     esc = lambda value: html.escape(str(value))
     overview = ''.join(f'<h2>{esc(k)}</h2><p>{esc(v)}</p>' for k, v in data['summary'].items())
     rows = ''.join('<tr>' + ''.join(f'<td>{esc(v)}</td>' for v in
@@ -269,9 +333,12 @@ class OfflineJournal:
         except (OSError, ValueError, TypeError, KeyError, AttributeError):
             self.read_failed = True
         previous = bool(self.events)
+        unfinished = previous and self.events[-1]['code'] != 'APP_CLOSED'
         self.record('APPLICATION', 'APP_STARTED')
         if previous:
             self.record('APPLICATION', 'PREVIOUS_SESSION_FOUND')
+        if unfinished:
+            self.record('APPLICATION', 'PREVIOUS_SESSION_INTERRUPTED')
         if self.read_failed:
             self.record('SUPPORT', 'LOG_READ_FAILED')
 
@@ -279,7 +346,7 @@ class OfflineJournal:
         try:
             import psutil
             rss = round(psutil.Process().memory_info().rss / (1024 * 1024), 2)
-        except (ImportError, OSError):
+        except Exception:
             rss = None
         event = {'utc': utc_now(), 'session': self.session, 'stage': stage, 'code': code,
                  'error': error_kind(error), 'missing': missing,
@@ -324,7 +391,56 @@ class OfflineJournal:
             self.persisted = False
         finally:
             if temporary:
-                Path(temporary).unlink(missing_ok=True)
+                try:
+                    Path(temporary).unlink(missing_ok=True)
+                except OSError:
+                    pass
 
     def bundle(self):
         return build_support_bundle(self.report())
+
+
+def install_exception_reporting(journal, notify=None):
+    """Opt-in app entrypoint hooks. Never serializes exception text or locals.
+
+    Returns an explicit restore callback, so in-process launch tests and orderly
+    shutdown do not leave handlers attached to a destroyed application window.
+    """
+    import sys
+    old_main, old_thread, old_unraisable = sys.excepthook, threading.excepthook, sys.unraisablehook
+
+    def capture(error, tb):
+        try:
+            journal.capture_exception(error, tb)
+        except Exception:
+            pass
+        if notify is not None:
+            try:
+                notify()
+            except Exception:
+                pass
+        print('Template AI 遇到問題；請使用本機「問題回報」或 --support-report 匯出安全報告。', file=sys.stderr)
+
+    def main_hook(kind, error, tb):
+        if kind in (KeyboardInterrupt, SystemExit):
+            return old_main(kind, error, tb)
+        capture(error, tb)
+
+    def thread_hook(args):
+        if args.exc_type is SystemExit:
+            return
+        capture(args.exc_value, args.exc_traceback)
+
+    def unraisable_hook(args):
+        capture(args.exc_value, args.exc_traceback)
+
+    sys.excepthook, threading.excepthook, sys.unraisablehook = main_hook, thread_hook, unraisable_hook
+
+    def restore():
+        if sys.excepthook is main_hook:
+            sys.excepthook = old_main
+        if threading.excepthook is thread_hook:
+            threading.excepthook = old_thread
+        if sys.unraisablehook is unraisable_hook:
+            sys.unraisablehook = old_unraisable
+    return restore

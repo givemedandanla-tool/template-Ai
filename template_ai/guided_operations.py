@@ -21,6 +21,7 @@ from .design_session import _candidate
 from .input_graph import InputGraph
 from .model import new_id
 from .training_store import digest
+from .family_workspace import records
 
 
 class GuidedOperationsDialog(QDialog):
@@ -83,16 +84,31 @@ class GuidedOperationsDialog(QDialog):
         try:
             return action()
         except (ValueError, KeyError, TypeError, OSError) as error:
+            self.record_problem(str(error), error)
             from .production_report import explain_error
             report = explain_error(error)
             self.say(report['summary'] + ' ' + report['next_step'], report['details'])
             return None
+
+    def record_problem(self, message, error=None):
+        controller = getattr(self.window, 'offline_support', None)
+        if controller is not None:
+            # The controller classifies fixed codes and never persists this text.
+            controller.record_problem(message, error=error)
+
+    def worker_failed(self, message):
+        self.record_problem(message, RuntimeError(message))
+        self.say('本次驗證遇到問題；資料仍在，可查看詳情後接續。', message)
 
     def reviewer(self):
         value = self.actor.text().strip()
         if not value:
             raise ValueError('請先填寫核對人員，再保存審查結果。')
         return value
+
+    def current_policy(self):
+        # Preview-only canvases never emit edits or acquire production rights.
+        return {}
 
     @staticmethod
     def evidence(widget):
@@ -135,6 +151,8 @@ class GuidedOperationsDialog(QDialog):
         self.sample = QComboBox(); form.addRow('案例用途', self.split); form.addRow('對應的獨立作品', self.sample)
         self.origin = QComboBox(); self.origin.addItem('自製／合成測試資料', 'AUTHORED_SYNTHETIC'); self.origin.addItem('本機真實且已授權的作品', 'REAL_AUTHORIZED_CORPUS'); form.addRow('資料來源', self.origin)
         sizes = QHBoxLayout(); self.width = QDoubleSpinBox(); self.height = QDoubleSpinBox()
+        # InputGraphDialog and Logo selection use this existing size contract.
+        self.out_w = self.width; self.out_h = self.height
         for control, value in [(self.width, 90.), (self.height, 54.)]:
             control.setRange(1., 2000.); control.setDecimals(2); control.setValue(value); control.setSuffix(' mm'); sizes.addWidget(control)
         form.addRow('成品寬度／高度', sizes)
@@ -166,7 +184,9 @@ class GuidedOperationsDialog(QDialog):
         except (ValueError, KeyError): return
         for index, row in enumerate(dataset['entries']):
             if row['role'] == self.split.currentData():
-                self.sample.addItem('獨立作品 ' + str(index + 1) + ' · ' + row['sample_id'][:8], row['sample_id'])
+                try: title = self.library.artwork(row['work_id'])['name']
+                except (ValueError, KeyError): title = '獨立作品 ' + str(index + 1)
+                self.sample.addItem(title + ' · 樣本版本 ' + str(row['sample_revision']), row['sample_id'])
 
     def edit_case(self):
         from .input_graph_dialog import InputGraphDialog
@@ -192,6 +212,11 @@ class GuidedOperationsDialog(QDialog):
         if not model_id or not sample_id: raise ValueError('請先選擇規則版本與對應的獨立作品。')
         if not self.case_graph: raise ValueError('請先填寫這個案例的資料。')
         if self.case_model and self.case_model != model_id: raise ValueError('待驗證案例屬於另一規則版本；請先移除或切回原版本。')
+        if self.cases:
+            _, dataset = self.learning.checked_model(model_id)
+            roles = {row['sample_id']: row['role'] for row in dataset['entries']}
+            if any(roles.get(row['sample_id']) != self.split.currentData() for row in self.cases):
+                raise ValueError('適合範圍與正式資格使用不同集合。請先完成目前這批案例，再建立另一用途的工作。')
         basis = self.evidence(self.case_basis)
         self.cases.append(dict(id=new_id(), sample_id=sample_id, input_graph=deepcopy(self.case_graph),
             width_mm=self.width.value(), height_mm=self.height.value(), truth_refs=[basis]))
@@ -230,7 +255,7 @@ class GuidedOperationsDialog(QDialog):
         self.worker = DesignWorker(self.library.root, job['id'], claimed['owner']['token'], self)
         self.worker.progress.connect(lambda row: self.say('已保存 ' + str(row['done']) + '／' + str(row['total']) + ' 個驗證案例。'))
         self.worker.completed.connect(lambda row: self.say('驗證結果已保存，可接著核對適合範圍或正式資格。' if row['phase'] == 'COMPLETE' else '已暫停，已完成的案例仍在本機。'))
-        self.worker.failed.connect(lambda error: self.say('本次驗證遇到問題；資料仍在，可查看詳情後接續。', error))
+        self.worker.failed.connect(self.worker_failed)
         self.worker.finished.connect(self.worker_finished); self.start_button.setEnabled(False); self.worker.start()
 
     def pause(self):
@@ -252,7 +277,7 @@ class GuidedOperationsDialog(QDialog):
         self.capacity_jobs = QComboBox(); self.capacity_cases = QComboBox()
         layout.addWidget(self.capacity_jobs); layout.addWidget(self.capacity_cases)
         from .design_learning_dialog import RelativeCanvas
-        self.capacity_canvas = RelativeCanvas(); self.capacity_canvas.setMinimumHeight(220); layout.addWidget(self.capacity_canvas)
+        self.capacity_canvas = RelativeCanvas(self); self.capacity_canvas.setMinimumHeight(220); layout.addWidget(self.capacity_canvas)
         self.capacity_result = QLabel(); self.capacity_result.setWordWrap(True); layout.addWidget(self.capacity_result)
         form = QFormLayout(); self.style = QComboBox(); self.style.addItem('尚未決定', None); self.style.addItem('符合合格作品風格', True); self.style.addItem('不符合', False)
         self.style_basis = QLineEdit(); form.addRow('這份稿件', self.style); form.addRow('實際核對依據', self.style_basis); layout.addLayout(form)
@@ -263,11 +288,12 @@ class GuidedOperationsDialog(QDialog):
         self.capacity_bins = QLineEdit(); self.capacity_bins.setPlaceholderText('每個聯合需求維度的分組寬度，以逗號分隔')
         form = QFormLayout(); form.addRow('至少幾組獨立作品', self.capacity_minimum); form.addRow('成功率下界至少', self.capacity_lower); form.addRow('單側錯誤機率', self.capacity_alpha); form.addRow('進階：聯合需求分組寬度', self.capacity_bins); layout.addLayout(form)
         self.capacity_approved = QCheckBox('已核對每份驗證稿及上述統計條件；只建立有證據的適合範圍。'); layout.addWidget(self.capacity_approved)
+        note = QLabel('預填數值是待核對的統計起點，不是學到的字數或欄位上限。最低組數達標也不保證成功率下界達標。'); note.setWordWrap(True); layout.addWidget(note)
         self.button(layout, '建立適合範圍', self.calibrate)
         self.capacity_jobs.currentIndexChanged.connect(self.load_capacity_cases); self.capacity_cases.currentIndexChanged.connect(self.show_capacity_case)
 
     def completed_jobs(self):
-        rows = self.store.records('DESIGN_JOB', limit=1000)
+        rows = records(self.store, 'DESIGN_JOB')
         return [self.jobs.current(row['id']) for row in rows if row.get('kind') == 'EVALUATE_LAYOUTS']
 
     def load_capacity_cases(self):
@@ -292,8 +318,12 @@ class GuidedOperationsDialog(QDialog):
         self.capacity_canvas.scene().clear()
         if serialized:
             candidate = _candidate(serialized); self.capacity_canvas.show_candidate(candidate, editable=False)
-            context, demand = joint_demand(candidate, InputGraph(job['plan']['items'][index]['input_graph']), job['plan']['items'][index]['width_mm'], job['plan']['items'][index]['height_mm'])
-            if not self.capacity_bins.text(): self.capacity_bins.setText(', '.join(str(4. if i%2 == 0 else .5) for i in range(len(demand))))
+            try:
+                context, demand = joint_demand(candidate, InputGraph(job['plan']['items'][index]['input_graph']), job['plan']['items'][index]['width_mm'], job['plan']['items'][index]['height_mm'])
+                if not self.capacity_bins.text(): self.capacity_bins.setText(', '.join(str(4. if i%2 == 0 else .5) for i in range(len(demand))))
+            except (ValueError, KeyError, TypeError):
+                self.capacity_bins.clear()
+                self.say('這份稿件的完整文字量測仍有缺項。可以查看與核對，但目前不能用它建立適合範圍。')
         saved = self.store.get('DESIGN_JOB_ITEM', self.jobs.item_key(job['id'], index))
         review = self.store.get('DESIGN_STYLE_REVIEW', digest([job['id'], index, saved['result_digest']]))
         self.capacity_result.setText(('已保存風格核對，不能覆寫。' if review else '尚未核對風格。') + (' 這份結果可供檢查。' if serialized else ' 這份案例未取得可排版結果，不會當成合格。'))
@@ -320,11 +350,13 @@ class GuidedOperationsDialog(QDialog):
     def build_qualification(self):
         layout = self.page('4 審查正式啟用', '只有本機真實授權資料、獨立封存作品及完整審查，才可能取得正式資格。自製測試資料可驗證流程，不能轉成生產證書。')
         self.qualification_jobs = QComboBox(); self.qualification_cases = QComboBox(); layout.addWidget(self.qualification_jobs); layout.addWidget(self.qualification_cases)
+        self.qualification_state = QLabel(); self.qualification_state.setWordWrap(True); layout.addWidget(self.qualification_state)
         from .design_learning_dialog import RelativeCanvas
-        pair = QHBoxLayout(); self.learned_canvas = RelativeCanvas(); self.baseline_canvas = RelativeCanvas()
+        pair = QHBoxLayout(); self.learned_canvas = RelativeCanvas(self); self.baseline_canvas = RelativeCanvas(self)
         for title, canvas in [('新規則稿', self.learned_canvas), ('基準稿', self.baseline_canvas)]:
             pane = QVBoxLayout(); pane.addWidget(QLabel(title)); canvas.setMinimumHeight(180); pane.addWidget(canvas); pair.addLayout(pane)
         layout.addLayout(pair)
+        self.preference_state = QLabel(); self.preference_state.setWordWrap(True); layout.addWidget(self.preference_state)
         self.preference = QComboBox()
         for title, code in [('尚未決定',None),('新規則稿較適合','LEARNED'),('兩份相當','TIE'),('基準稿較適合','BASELINE'),('兩份都不適合','NEITHER')]: self.preference.addItem(title, code)
         self.preference_basis = QLineEdit(); form = QFormLayout(); form.addRow('逐稿比較', self.preference); form.addRow('比較依據', self.preference_basis); layout.addLayout(form)
@@ -346,10 +378,14 @@ class GuidedOperationsDialog(QDialog):
     def load_qualification_cases(self):
         self.pending_certificate = None; self.qualification_cases.clear(); self.corpus_reviews.clear()
         identity = self.qualification_jobs.currentData()
-        if not identity: return
+        if not identity:
+            self.qualification_state.setText('尚無已完成的封存稿件。可先到「準備驗證」建立封存案例；真實資格不影響自製案例的流程測試。')
+            return
+        job = self.jobs.current(identity)
+        self.qualification_state.setText('這批是自製／合成測試，只能檢查流程；不能保存真實來源資格。' if job['plan']['origin'] != 'REAL_AUTHORIZED_CORPUS' else '這批標記為本機真實作品，仍需逐稿比較、來源審查及全部核心資格檢查。')
         for index, row in enumerate(self.jobs.results(identity)):
             if row['role'] == 'HOLDOUT': self.qualification_cases.addItem('封存稿 ' + str(index + 1), index)
-        for row in self.store.records('DESIGN_CORPUS_REVIEW', limit=1000):
+        for row in records(self.store, 'DESIGN_CORPUS_REVIEW'):
             if row['job_id'] == identity: self.corpus_reviews.addItem('已保存的來源審查 · ' + row['id'][:8], row['id'])
 
     def show_qualification_case(self):
@@ -359,10 +395,14 @@ class GuidedOperationsDialog(QDialog):
         for canvas, key in [(self.learned_canvas, 'learned'), (self.baseline_canvas, 'baseline')]:
             canvas.scene().clear(); serialized = row[key].get('serialized')
             if serialized: canvas.show_candidate(_candidate(serialized), editable=False)
+        both = all(row[key].get('placement_digest') for key in ['learned', 'baseline'])
+        self.preference_state.setText('請對照兩份實際稿件，再保存比較依據。' if both else '尚未同時取得兩份可比較稿件。請查看技術詳情及來源問題；目前不能保存美感比較。')
 
     def review_preference(self):
         job, index, _ = self.chosen_result(self.qualification_jobs, self.qualification_cases)
         if self.preference.currentData() is None: raise ValueError('請先比較兩份實際稿件。')
+        if any(row['job_id'] == job['id'] and row['index'] == index for row in records(self.store, 'DESIGN_PREFERENCE_REVIEW')):
+            raise ValueError('這份稿件已有保存的比較結果。不可重複建立衝突證據；請改以新的獨立驗證工作重審。')
         result = self.evaluation.review_preference(job['id'], index, self.preference.currentData(), self.reviewer(), self.evidence(self.preference_basis), scope='REVIEWED_STYLE')
         self.say('比較結果已保存；不會修改本次已凍結的模型。'); return result
 
@@ -396,7 +436,7 @@ class GuidedOperationsDialog(QDialog):
 
     def refresh(self):
         selected = self.models.currentData(); self.models.blockSignals(True); self.models.clear()
-        models = self.store.records('DESIGN_MODEL', limit=1000)
+        models = list(records(self.store, 'DESIGN_MODEL'))
         for index, row in enumerate(models):
             self.models.addItem('規則版本 ' + str(index + 1) + ' · ' + row['id'][:8], row['id'])
         preferred = self.case_model or selected
@@ -412,7 +452,7 @@ class GuidedOperationsDialog(QDialog):
                 roles = {row['role'] for row in self.jobs.results(job['id'])}
                 if 'VALIDATION' in roles: self.capacity_jobs.addItem(title, job['id'])
                 if 'HOLDOUT' in roles: self.qualification_jobs.addItem(title + (' · 自製測試，不能取得正式資格' if job['plan']['origin'] != 'REAL_AUTHORIZED_CORPUS' else ' · 真實資料待審查'), job['id'])
-            elif job['phase'] in ('PENDING', 'PAUSED', 'FAILED', 'WAITING_RESOURCE'):
+            elif self.jobs.state(job['id']) in ('QUEUED', 'PAUSED', 'FAILED', 'WAITING_RESOURCE', 'INTERRUPTED'):
                 self.resume_jobs.addItem(title + ' · ' + job['phase'], job['id'])
         for choices, value in [(self.capacity_jobs, selected_capacity), (self.qualification_jobs, selected_qual)]:
             index = choices.findData(value)

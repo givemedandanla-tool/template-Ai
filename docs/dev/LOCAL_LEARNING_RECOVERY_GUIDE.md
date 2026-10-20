@@ -8,7 +8,7 @@
 
 ## Windows 準備
 
-取得 `dev/v0.1-first-version` 分支的原始碼；`main` 尚未合併本輪變更。安裝 Python 3.11 與 Python Launcher，雙擊 `START_WINDOWS.bat` 建立本機 `.venv`、安裝鎖定依賴並啟動。既有私人資料先保留本地備份，不放入公開 Git 倉庫。
+取得 `dev/v0.1-first-version` 分支的原始碼；`main` 尚未合併本輪變更。安裝 64 位元 Python 3.11 與 Python Launcher，首次明確執行 `PREPARE_WINDOWS.bat` 建立本機 `.venv` 並安裝鎖定依賴；日後雙擊 `START_WINDOWS.bat` 僅離線啟動，不自動下載套件。無網路首次準備、指定資料夾及安全報告操作見[本機快速開始](LOCAL_DESKTOP_QUICK_START.md)。既有私人資料先保留本地備份，不放入公開 Git 倉庫。
 
 安裝 Inkscape；程式會檢查 PATH 及標準安裝路徑，非標準位置可設定 `TEMPLATE_AI_INKSCAPE` 為實際執行檔。要使用 OCR，另安裝本機 Tesseract 及 `eng.traineddata`／`chi_tra.traineddata`；沒有 OCR 時仍可走來源文字或人工核對路線。
 

@@ -106,6 +106,8 @@ class DesignLearningDialog(QDialog):
     def attempt(self,action):
         try:return action()
         except (ValueError,OSError,KeyError,TypeError) as error:
+            support = getattr(self.service_window, 'offline_support', None)
+            if support: support.record_problem(str(error), error=error)
             from .production_report import explain_error
             report=explain_error(error);self.say(report['summary']+' '+report['next_step'])
             if hasattr(self,'result_details'):self.result_details.setPlainText(report['details'])
@@ -401,6 +403,8 @@ class DesignLearningDialog(QDialog):
         self.say('稿件已更新，請檢視後確認。' if result['selected'] else '尚未找到合適稿件；請展開詳細原因。')
 
     def solve_failed(self,error):
+        support = getattr(self.service_window, 'offline_support', None)
+        if support: support.record_problem(str(error), error=error)
         self.last_solve_error=error
         self.refresh_draft()
         from .production_report import explain_error
@@ -516,6 +520,8 @@ class DesignLearningDialog(QDialog):
         identity=self.artifacts.currentData()
         if not identity:raise ValueError('尚無已確認並保存的檔案')
         artifact=self.sessions.replay_artifact(identity)
+        from .offline_runtime import assert_local_path
+        assert_local_path(artifact['path'])
         from PySide6.QtCore import QUrl
         from PySide6.QtGui import QDesktopServices
         QDesktopServices.openUrl(QUrl.fromLocalFile(artifact['path']))

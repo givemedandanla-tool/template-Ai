@@ -308,6 +308,10 @@ class MainWindow(QMainWindow):
         if (self.library.root/'RESTORE_REPORT.json').is_file():
             self.setWindowTitle(self.windowTitle()+' · 還原副本（需重新驗證）')
             self.statusBar().showMessage('目前為隔離還原副本；原環境保留，來源／字型／學習與正式輸出需重新驗證')
+        from .desktop_workspace import install_desktop_workspace
+        install_desktop_workspace(self)
+        from .offline_support_dialog import install_offline_support
+        install_offline_support(self)
 
     def recover_import_startup(self):
         if self.library.closed:return
@@ -876,6 +880,8 @@ class MainWindow(QMainWindow):
         QMessageBox.information(self, "Template AI", text)
 
     def error(self, text):
+        if hasattr(self, 'offline_support'):
+            self.offline_support.record_problem(text)
         from .production_report import explain_error
         report=explain_error(text);self.statusBar().showMessage(report['summary'])
         QMessageBox.warning(self,'需要處理',report['summary']+'\n'+report['next_step']+'\n\n詳細原因：\n'+report['details'])
@@ -2384,6 +2390,8 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         if self.library.closed:
             event.accept();return
+        if hasattr(self, 'desktop_workspace') and not self.desktop_workspace.can_close():
+            event.ignore();return
         if self.busy:
             self.inform("背景工作尚未安全結束，請等待完成或先在目前工作面板安全取消")
             event.ignore()
@@ -2405,5 +2413,9 @@ class MainWindow(QMainWindow):
         self.source_watch.shutdown()
         if hasattr(self,'digital_preflight_panel'):self.digital_preflight_panel.close_session()
         self.font_manager.close()
+        if hasattr(self, 'desktop_workspace'):
+            self.desktop_workspace.timer.stop()
+        if hasattr(self, 'offline_support'):
+            self.offline_support.close()
         self.library.close()
         event.accept()

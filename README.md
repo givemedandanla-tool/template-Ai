@@ -20,7 +20,7 @@
 
 目前採原始碼啟動；EXE 打包與 Windows 成品驗收延後。最新來源綁定驗收見 [STATE](docs/dev/STATE.json) 與 [進度](docs/dev/PROGRESS.md)，證明媒體保存例外見 [本輪清單](docs/dev/DIAGNOSTIC_REPORTS_PUBLICATION.json)；程式／測試／文字證據完整保存，原附件及hash清單保留。
 
-原始碼：安裝 Python 3.11 後，Windows 雙擊 `START_WINDOWS.bat`；或安裝 `requirements-lock.txt`，執行 `python app.py`。
+原始碼：第一次安裝 64 位元 Python 3.11，明確執行 `PREPARE_WINDOWS.bat` 準備專案依賴；日後雙擊 `START_WINDOWS.bat` 完全離線啟動，不再自動安裝套件。首次離線準備、私人資料備份及手動匯出安全報告見[本機快速開始](docs/dev/LOCAL_DESKTOP_QUICK_START.md)。
 
 最快路徑：「模板與 Logo」加入合成示範 → 驗證並發布 →「排版與輸出」填入匿名示範 → 開始排版 → 輸出 PDF／PNG／JPG。
 

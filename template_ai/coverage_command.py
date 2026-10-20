@@ -76,6 +76,8 @@ def run_command(root,command,payload,*,cancel=None,timeout=120,module='template_
 
 
 def main(executor=execute):
+    from .offline_runtime import enable_offline_guard
+    enable_offline_guard()
     try:
         raw=sys.stdin.buffer.read(MAX_BYTES+1)
         if len(raw)>MAX_BYTES:raise ValueError('命令超過有界metadata')

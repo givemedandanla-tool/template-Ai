@@ -26,11 +26,14 @@ def discover(store, source_id, work_id):
     if not svg or not inkscape_path():
         raise ValueError('此來源無可查詢的向量群組；請使用原工作台框選完整 Logo 候選，未假稱已解析')
     path = Path(svg)
+    from .offline_runtime import assert_local_document, assert_local_path
+    assert_local_path(path)
     if not path.is_file() or path.stat().st_size > 2_000_000 or path.is_symlink():
         raise ValueError('自動結構分析需2MB內的可信向量快取；較大來源可人工框選')
     expected = source.get('file_hashes', {}).get('svg')
     if not expected or file_digest(path) != expected:
         raise ValueError('向量快取與已匯入來源不符')
+    assert_local_document(path, require_svg=True)
     root = ET.parse(path).getroot()
     elements = list(root.iter())
     if len(elements) > 4000:

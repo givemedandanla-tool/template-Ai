@@ -43,6 +43,8 @@ def checked_icon(asset):
     if len(nodes)>4000 or any(node.tag.rsplit('}',1)[-1] in ('text','image','script','foreignObject') for node in nodes):
         raise ValueError('Static icon must be bounded self-contained vector geometry')
     ensure_embedded_svg(path)
+    from .offline_runtime import assert_local_document
+    assert_local_document(path, require_svg=True)
     renderer=QSvgRenderer(raw)
     if not renderer.isValid():raise ValueError('Static icon cannot render')
     return renderer
