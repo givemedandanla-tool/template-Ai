@@ -1,7 +1,7 @@
 """Preserve original occurrence multiset, include runtime-only diagnostics, no baseline mutation."""
 import argparse,collections,json,re,hashlib
 from pathlib import Path
-F=Path(__file__).resolve().parent;ROOT=F.parents[2];p=argparse.ArgumentParser();p.add_argument('--prefix',default='final-delivery');p.add_argument('--output',default='delivery-diagnostic-comparison.json');a=p.parse_args()
+F=Path(__file__).resolve().parent;ROOT=F.parents[2];p=argparse.ArgumentParser();p.add_argument('--prefix',default='final-delivery');p.add_argument('--iteration',default='001');p.add_argument('--output',default='delivery-diagnostic-comparison.json');a=p.parse_args()
 original=[json.loads(x) for x in (F/'diagnostic-ledger.jsonl').read_text().splitlines()]
 renames={'host_window':'window','font_input':'font','size_input':'size','width_input':'width','height_input':'height','style_input':'style','measurement_label':'result','root_layout':'layout','scroll_area':'scroll','output_size_mm':'size','cancel_event':'event'}
 def norm(s):
@@ -13,7 +13,7 @@ for r in original:index[key(r['original'])].append(r);source_index[key(r['origin
 profiles=[];union={}
 for scope in ('application','tools','tests'):
  for mode in ('standard','runtime-pyright'):
-  q=F/f'{a.prefix}-{scope}-{mode}-001/report.json';report=json.loads(q.read_text());counts=collections.Counter();matched=0;pending=0;profile_id=q.parent.name
+  q=F/f'{a.prefix}-{scope}-{mode}-{a.iteration}/report.json';report=json.loads(q.read_text());counts=collections.Counter();matched=0;pending=0;profile_id=q.parent.name
   for finding in report['findings']:
    if finding['tool']!='pyright':continue
    k=key(finding);counts[k]+=1;ordinal=counts[k];identity=k+(ordinal,)

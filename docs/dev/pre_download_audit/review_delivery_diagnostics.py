@@ -5,6 +5,8 @@ import argparse,ast,hashlib,json,re
 from pathlib import Path
 F=Path(__file__).resolve().parent;ROOT=F.parents[2];p=argparse.ArgumentParser();p.add_argument('--input',default='delivery-diagnostic-comparison.json');a=p.parse_args();dest=F/a.input;doc=json.loads(dest.read_text());old=json.loads((F/'new-diagnostics.json').read_text());prior={(r['finding']['path'],r['finding']['rule'],r['finding']['context'],r['finding']['message']):r for r in old['findings']}
 notes={
+ 'tests/test_read_view_snapshot.py':'Six authored real SQLite/Qt cases use a constructed actual MainWindow, existing populated panels and a second independent writer. Template/work/rule/hit rows exist before controlled update; current optional APIs remain nullable otherwise. Native Qt widget/PNG bindings and delegated host state are the same pinned contracts. Metadata rows have named list/count/string fields. First five corrected cases fail on isolated62b2, all six pass after fix; sixth additionally proves nested/exception read snapshots preserve callers pending write. No arbitrary corrupt-database qualification.',
+ 'template_ai/noise_hits_panel.py':'Selected stored hit rows now decode full id/revision/payload from one SQL statement. Current decision is separately recomputed and labeled, so it can differ from historical stored trace. Counts/states/text/match lists are separate named fields; no ID-then-get race remains in selected stored rows. Real two-connection filter test and noise-hit UI regressions verify this behavior.',
  'template_ai/gui.py':'Background commit follows changed_context() refusal, which re-captures and compares the original draft token and returns false only for an existing unchanged draft. Thus template is non-null before background assignment and current ID refresh. Type checker does not infer the interprocedural guard; actual picker/async/approval context changes are independently tested. No modal/event pumping occurs between the final token check and assignment.',
  'tests/test_diagnostic_reports.py':'DiagnosticReportTests setUp delegates fixture initialization assigning real w. The updated test deliberately sets main size to100 after session captured90x54 and asserts report stays90x54 plus QWidget.size remains callable. Deferred self initialization is a fixture typing gap; entire31case report module passes.',
  'template_ai/customer_dialog.py':'getattr(reorder_customer_snapshot,None) short-circuits before reading its ID; no event loop or assignment occurs between the same synchronous reads. The non-empty dict is the current snapshot. None remains valid in unselected state; a captured local would make narrowing explicit.',
@@ -29,6 +31,13 @@ for row in doc['findings']:
  f=row['finding'];path=f['path'];name=Path(path).name;k=(path,f['rule'],f['context'],f['message']);evidence=[];reason=None
  if k in prior and name!='text_policy_dialog.py':reason=prior[k]['review'];evidence=['new-diagnostics.json#'+prior[k]['id']]
  if path in notes:reason=notes[path]
+ if path=='template_ai/gui.py':
+  if f['context'].startswith('page=editor_page'):reason='editor_page offset and total are integer fields, items/issues separate lists. self.source_offset/template_offset is assigned only that offset and passed back to the preserved int parameter. Named page DTO typing is needed; ParamSpec intentionally keeps public argument checking active. Startup/catalog and real read-view tests retain pagination and selected IDs.'
+  elif 'QDialogButtonBox.Ok' in f['context']:
+   from PySide6.QtWidgets import QDialogButtonBox
+   assert QDialogButtonBox.Ok==QDialogButtonBox.StandardButton.Ok
+   reason='Actual pinned Qt alias equality QDialogButtonBox.Ok==StandardButton.Ok verified. It disables the real background approval button on a changed draft; no custom window replaces it.'
+  else:assert f['context'].startswith(('self.template.background =','self.refresh_templates(self.template.id)')),'Unexpected GUI expression needs individual review'
  if row.get('same_source_original_candidates'):
   reason=(reason+' ' if reason else '')+'Same rule and exact normalized source context also occur in the original reviewed ledger; the runtime profile changed inferred diagnostic details. Preserve both messages and occurrence IDs. Original producer/guard proof applies only to the identical named operation, not arbitrary metadata.';evidence+=['diagnostic-ledger.jsonl#'+key for key in row['same_source_original_candidates']]
  if path.startswith('tools/capture_'):

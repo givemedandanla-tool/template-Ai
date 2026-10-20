@@ -1,0 +1,377 @@
+{
+  "status": "ALL_7_REVIEWED",
+  "new_exact_groups": 0,
+  "reviews": [
+    {
+      "finding": {
+        "tool": "jscpd",
+        "rule": "exact",
+        "paths": [
+          "tools/capture_batch_correction.py",
+          "tools/capture_batch_correction.py"
+        ],
+        "ranges": [
+          [
+            14,
+            26
+          ],
+          [
+            59,
+            71
+          ]
+        ],
+        "lines": 13,
+        "fragment_sha256": "56e7c99c77719e15241932abf8d5997d009a6b184830a358a41df45fdcf940ea",
+        "fingerprint": "2a4d416ef67d682c577edf4153cc794390993f8b8cd6f7c1269e237c5159ccea",
+        "review": "UNREVIEWED_CANDIDATE_NOT_CONFIRMED_DEFECT"
+      },
+      "status": "REVIEWED",
+      "decision": "CANDIDATE_EXTRACTION_NOT_AUTHORIZED",
+      "reason": "Two modal-response closures used by source-batch and candidate-batch capture flows. Both read the active dialog, capture, click Yes/No and close on error; closure-owned screenshots/errors and Qt timer lifetime differ by owner. A narrowly named capture helper might be useful in a separate task; preserve current callers and assertions now.",
+      "callers": [
+        "capture_source.confirm/respond",
+        "capture_candidate.confirm/respond"
+      ],
+      "locations": [
+        {
+          "path": "tools/capture_batch_correction.py",
+          "range": [
+            14,
+            26
+          ],
+          "source_sha256": "b22ac1bfb2668d20a561bb69d839ae3bfde0ffd1b6437b521465b2f83bcef473",
+          "snippet": "    case=BatchCorrectionGuiTests('runTest');case.setUp();d=case.make(3);w=case.w;app=QApplication.instance();folder=Path(folder);folder.mkdir(parents=True,exist_ok=True);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n    def shot(widget,name):\n        app.processEvents();path=folder/('batch-correction-'+name+'.png');assert widget.grab().save(str(path));screens.append(path.name)\n    def confirm(name,yes=True):\n        def respond():\n            box=QApplication.activeModalWidget()\n            try:\n                assert isinstance(box,QMessageBox);shot(box,name);box.button(QMessageBox.Yes if yes else QMessageBox.No).click()\n            except BaseException as error:errors.append(str(error))\n            finally:\n                if box and box.isVisible():box.reject()\n        QTimer.singleShot(0,respond)\n    release=threading.Event()"
+        },
+        {
+          "path": "tools/capture_batch_correction.py",
+          "range": [
+            59,
+            71
+          ],
+          "source_sha256": "b22ac1bfb2668d20a561bb69d839ae3bfde0ffd1b6437b521465b2f83bcef473",
+          "snippet": "    case=BatchCandidateGuiTests('runTest');case.setUp();d=case.d;f=case.f;app=QApplication.instance();folder=Path(folder);screens=[];errors=[];previous=sys.excepthook;sys.excepthook=lambda typ,error,tb:errors.append(str(error))\n    def shot(widget,name):\n        app.processEvents();path=folder/('batch-correction-'+name+'.png');assert widget.grab().save(str(path));screens.append(path.name)\n    def confirm(name,yes=True):\n        def respond():\n            box=QApplication.activeModalWidget()\n            try:\n                assert isinstance(box,QMessageBox);shot(box,name);box.button(QMessageBox.Yes if yes else QMessageBox.No).click()\n            except BaseException as error:errors.append(str(error))\n            finally:\n                if box and box.isVisible():box.reject()\n        QTimer.singleShot(0,respond)\n    def password(name):"
+        }
+      ],
+      "profile": "final-release-tools-standard-002/report.json",
+      "baseline_refreshed": false
+    },
+    {
+      "finding": {
+        "tool": "jscpd",
+        "rule": "exact",
+        "paths": [
+          "tools/capture_fixed70_ten.py",
+          "tools/capture_next_twenty.py"
+        ],
+        "ranges": [
+          [
+            1,
+            11
+          ],
+          [
+            1,
+            11
+          ]
+        ],
+        "lines": 11,
+        "fragment_sha256": "a18d4ad695a7a33f0786dd1e5a88239c0fbe90c2f966e81ff8e0c0530bd69b5b",
+        "fingerprint": "c52503a8735d56c5d044a464d895e59519838eff4932ef431f538362c58fa4df",
+        "review": "UNREVIEWED_CANDIDATE_NOT_CONFIRMED_DEFECT"
+      },
+      "status": "REVIEWED",
+      "decision": "KEEP_STANDALONE_CAPTURE_ENTRYPOINT",
+      "reason": "Identical argument/path/bootstrap/Qt imports for independently runnable evidence capture entrypoints; following dialogs and tested requirements differ. Preserve standalone execution and historical evidence rather than extracting a broad framework.",
+      "callers": [
+        "capture_fixed70_ten.capture",
+        "capture_next_twenty.capture"
+      ],
+      "locations": [
+        {
+          "path": "tools/capture_fixed70_ten.py",
+          "range": [
+            1,
+            11
+          ],
+          "source_sha256": "e74b62705bc28760c68f55e99d6a39c21913ea82391e3703ad9989371ad5c681",
+          "snippet": "\"\"\"十父題新增流程的真實 Qt 擷取；只使用本機合成 fixture，不代替測試。\"\"\"\nimport argparse\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nsys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[1]/'tests')]\nos.environ.setdefault('QT_QPA_PLATFORM','offscreen')\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.gui import MainWindow\nfrom template_ai.customer_candidates_dialog import CustomerCandidatesDialog"
+        },
+        {
+          "path": "tools/capture_next_twenty.py",
+          "range": [
+            1,
+            11
+          ],
+          "source_sha256": "8667bede8566735314250d20abd16dc63e39d0eef4d449e9812c1a59d79fda47",
+          "snippet": "\"\"\"Source-bound Qt evidence for the ongoing twenty-parent work, not completion.\"\"\"\nimport argparse\nimport json\nimport os\nfrom pathlib import Path\nimport sys\nsys.path[:0]=[str(Path(__file__).resolve().parents[1]),str(Path(__file__).resolve().parents[1]/'tests')]\nos.environ.setdefault('QT_QPA_PLATFORM','offscreen')\nfrom PySide6.QtWidgets import QApplication\nfrom template_ai.gui import MainWindow\nfrom template_ai.automatic_training_dialog import AutomaticTrainingDialog"
+        }
+      ],
+      "profile": "final-release-tools-standard-002/report.json",
+      "baseline_refreshed": false
+    },
+    {
+      "finding": {
+        "tool": "jscpd",
+        "rule": "exact",
+        "paths": [
+          "tests/test_dataset_learning.py",
+          "tests/test_noise_hits.py"
+        ],
+        "ranges": [
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            12
+          ]
+        ],
+        "lines": 12,
+        "fragment_sha256": "35e0c2f078b6989ce6616d64fec822281be20247de4eb75b1f6db9b247acec0d",
+        "fingerprint": "b92a19e4e84eeeca7a27830a430f10497988ad68ddf6ec34f288b613862454f9",
+        "review": "UNREVIEWED_CANDIDATE_NOT_CONFIRMED_DEFECT"
+      },
+      "status": "REVIEWED",
+      "decision": "KEEP_INTENTIONAL_IMPORT_BOILERPLATE",
+      "reason": "Shared standard/Qt/storage imports at the start of independently collected test modules; subsequent tested contracts and fixtures differ. Consolidating imports does not consolidate the underlying behaviors and would obscure dependencies or couple test initialization.",
+      "callers": [
+        "test_dataset_learning module import / unittest collection",
+        "test_noise_hits module import / unittest collection"
+      ],
+      "locations": [
+        {
+          "path": "tests/test_dataset_learning.py",
+          "range": [
+            1,
+            12
+          ],
+          "source_sha256": "88f0aa15194f8a2e9210c096c671760723b2b596f362aac0e4d2541fed095a69",
+          "snippet": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template"
+        },
+        {
+          "path": "tests/test_noise_hits.py",
+          "range": [
+            1,
+            12
+          ],
+          "source_sha256": "e1b90ef2ab534790d032ab422534621ef2f71b9da43c4f77d49d68f85dc9e98e",
+          "snippet": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.gui import MainWindow"
+        }
+      ],
+      "profile": "final-release-tests-standard-002/report.json",
+      "baseline_refreshed": false
+    },
+    {
+      "finding": {
+        "tool": "jscpd",
+        "rule": "exact",
+        "paths": [
+          "tests/test_dataset_learning.py",
+          "tests/test_trusted_samples.py"
+        ],
+        "ranges": [
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            12
+          ]
+        ],
+        "lines": 12,
+        "fragment_sha256": "35e0c2f078b6989ce6616d64fec822281be20247de4eb75b1f6db9b247acec0d",
+        "fingerprint": "3670be9576fd4c0eebd9ee09455113d09f8c9acb5c2cd4722a477a5dccac8ae6",
+        "review": "UNREVIEWED_CANDIDATE_NOT_CONFIRMED_DEFECT"
+      },
+      "status": "REVIEWED",
+      "decision": "KEEP_INTENTIONAL_IMPORT_BOILERPLATE",
+      "reason": "Shared standard/Qt/storage imports at the start of independently collected test modules; subsequent tested contracts and fixtures differ. Consolidating imports does not consolidate the underlying behaviors and would obscure dependencies or couple test initialization.",
+      "callers": [
+        "test_dataset_learning module import / unittest collection",
+        "test_trusted_samples module import / unittest collection"
+      ],
+      "locations": [
+        {
+          "path": "tests/test_dataset_learning.py",
+          "range": [
+            1,
+            12
+          ],
+          "source_sha256": "88f0aa15194f8a2e9210c096c671760723b2b596f362aac0e4d2541fed095a69",
+          "snippet": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.model import Template"
+        },
+        {
+          "path": "tests/test_trusted_samples.py",
+          "range": [
+            1,
+            12
+          ],
+          "source_sha256": "2f56025acf61424b4a983b38ab9e45d780c0bf59adc32f98a15778a6ff86d7c7",
+          "snippet": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.gui import MainWindow"
+        }
+      ],
+      "profile": "final-release-tests-standard-002/report.json",
+      "baseline_refreshed": false
+    },
+    {
+      "finding": {
+        "tool": "jscpd",
+        "rule": "exact",
+        "paths": [
+          "tests/test_font_repair.py",
+          "tests/test_persistent_fonts.py"
+        ],
+        "ranges": [
+          [
+            17,
+            28
+          ],
+          [
+            20,
+            29
+          ]
+        ],
+        "lines": 12,
+        "fragment_sha256": "5271dda141ca232b048b67174f93780eda8379330237f1202a01ba378b1b0568",
+        "fingerprint": "10d0b4b788994461889b6113a2ab04bc3ab9c16bca41748a60a227552e38e2d6",
+        "review": "UNREVIEWED_CANDIDATE_NOT_CONFIRMED_DEFECT"
+      },
+      "status": "REVIEWED",
+      "decision": "KEEP_ISOLATED_FIXTURE",
+      "reason": "Overlapping imports, QApplication creation and environment font selection. Different tests exercise font repair versus persistence/reload. Keep independent module lifecycle and explicit font-availability skip contracts; no shared global QApplication/font state introduced.",
+      "callers": [
+        "FontRepairTests.setUp",
+        "PersistentFontTests.setUp"
+      ],
+      "locations": [
+        {
+          "path": "tests/test_font_repair.py",
+          "range": [
+            17,
+            28
+          ],
+          "source_sha256": "6eeb255360d88d2b4c365266c77047ac7d6b6a6c1dd87ce2d806ac28b63717b1",
+          "snippet": "from template_ai.gui import MainWindow\nfrom template_ai.layout import generate\nfrom template_ai.render import export\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\nFONT = next((p for p in (Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),\n                        Path('/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf'),\n                        Path(r'C:\\Windows\\Fonts\\arial.ttf')) if p.is_file()), None)\n\n\n@unittest.skipUnless(FONT, \"無可用環境字型，實際修復驗證跳過\")"
+        },
+        {
+          "path": "tests/test_persistent_fonts.py",
+          "range": [
+            20,
+            29
+          ],
+          "source_sha256": "bb9836e725f1a7dbfc802c2a33f3748e3b6d9067d32562f0a01d6e2982137ee2",
+          "snippet": "from template_ai.gui import MainWindow\nfrom template_ai.layout import generate\nfrom template_ai.render import export\nfrom template_ai.storage import Library\n\nAPP = QApplication.instance() or QApplication([])\nFONT = next((p for p in (Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'),\n                        Path('/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf'),\n                        Path(r'C:\\Windows\\Fonts\\arial.ttf')) if p.is_file()), None)\nDATA = [{\"name\": \"Alex Example\", \"title\": \"Consultant\", \"phone\": \"0900-123-456\", \"email\": \"hello@example.test\"}]"
+        }
+      ],
+      "profile": "final-release-tests-standard-002/report.json",
+      "baseline_refreshed": false
+    },
+    {
+      "finding": {
+        "tool": "jscpd",
+        "rule": "exact",
+        "paths": [
+          "tests/test_noise_authoring.py",
+          "tests/test_rule_review.py"
+        ],
+        "ranges": [
+          [
+            1,
+            12
+          ],
+          [
+            1,
+            12
+          ]
+        ],
+        "lines": 12,
+        "fragment_sha256": "34920397b66eca0f8e66de8b22cd015c0fba2f4430ae9cde90708191be93feed",
+        "fingerprint": "0eab0ccff06fef5477ccae6dab45dec3d4d5c72e09186d4413132c611a5cb8cf",
+        "review": "UNREVIEWED_CANDIDATE_NOT_CONFIRMED_DEFECT"
+      },
+      "status": "REVIEWED",
+      "decision": "KEEP_INTENTIONAL_IMPORT_BOILERPLATE",
+      "reason": "Shared standard/Qt/storage imports at the start of independently collected test modules; subsequent tested contracts and fixtures differ. Consolidating imports does not consolidate the underlying behaviors and would obscure dependencies or couple test initialization.",
+      "callers": [
+        "test_noise_authoring module import / unittest collection",
+        "test_rule_review module import / unittest collection"
+      ],
+      "locations": [
+        {
+          "path": "tests/test_noise_authoring.py",
+          "range": [
+            1,
+            12
+          ],
+          "source_sha256": "32254efae5924774477897db8f1c1c40bb7b19d2c096599760e4b368215efed4",
+          "snippet": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.noise import relative_region, normalized"
+        },
+        {
+          "path": "tests/test_rule_review.py",
+          "range": [
+            1,
+            12
+          ],
+          "source_sha256": "fb46238cb9a7dfd677f2e705158d9ea3b4303a4b50a55294ccf847c2118b1548",
+          "snippet": "from gui_wait import dispose_main_window\nimport copy\nfrom pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication, QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.noise import relative_region"
+        }
+      ],
+      "profile": "final-release-tests-standard-002/report.json",
+      "baseline_refreshed": false
+    },
+    {
+      "finding": {
+        "tool": "jscpd",
+        "rule": "exact",
+        "paths": [
+          "tests/test_noise_hits.py",
+          "tests/test_trusted_samples.py"
+        ],
+        "ranges": [
+          [
+            3,
+            15
+          ],
+          [
+            3,
+            15
+          ]
+        ],
+        "lines": 13,
+        "fragment_sha256": "6b62cafe1c038f1cbd06c538c56104488379cee8ea80833d5f29db89dd8646d1",
+        "fingerprint": "43b2b152734b2640a62936c54fc45019886cd863ca4ec6e779d84aefbec21f85",
+        "review": "UNREVIEWED_CANDIDATE_NOT_CONFIRMED_DEFECT"
+      },
+      "status": "REVIEWED",
+      "decision": "KEEP_INTENTIONAL_IMPORT_BOILERPLATE",
+      "reason": "Shared standard/Qt/storage imports at the start of independently collected test modules; subsequent tested contracts and fixtures differ. Consolidating imports does not consolidate the underlying behaviors and would obscure dependencies or couple test initialization.",
+      "callers": [
+        "test_noise_hits module import / unittest collection",
+        "test_trusted_samples module import / unittest collection"
+      ],
+      "locations": [
+        {
+          "path": "tests/test_noise_hits.py",
+          "range": [
+            3,
+            15
+          ],
+          "source_sha256": "e1b90ef2ab534790d032ab422534621ef2f71b9da43c4f77d49d68f85dc9e98e",
+          "snippet": "from pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog\nfrom training_fixture import source_work,observations\nfrom test_rule_review import pending_rule"
+        },
+        {
+          "path": "tests/test_trusted_samples.py",
+          "range": [
+            3,
+            15
+          ],
+          "source_sha256": "2f56025acf61424b4a983b38ab9e45d780c0bf59adc32f98a15778a6ff86d7c7",
+          "snippet": "from pathlib import Path\nimport tempfile\nimport unittest\nfrom unittest.mock import patch\nfrom PySide6.QtCore import Qt\nfrom PySide6.QtTest import QTest\nfrom PySide6.QtWidgets import QApplication,QMessageBox\nfrom template_ai.storage import Library\nfrom template_ai.training_store import TrainingStore\nfrom template_ai.gui import MainWindow\nfrom template_ai.training_quality_dialog import TrainingQualityDialog\nfrom training_fixture import source_work,observations\nfrom test_noise_authoring import confirmed"
+        }
+      ],
+      "profile": "final-release-tests-standard-002/report.json",
+      "baseline_refreshed": false
+    }
+  ]
+}

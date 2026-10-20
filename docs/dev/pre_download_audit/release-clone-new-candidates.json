@@ -1,0 +1,16 @@
+[
+  {
+    "scope": "tests",
+    "index": 6,
+    "kind": "renamed",
+    "paths": [
+      "tests/test_automatic_training.py",
+      "tests/test_read_view_snapshot.py"
+    ],
+    "start": [
+      8,
+      10
+    ],
+    "fragment": "from template_ai.automatic_training import AutomaticTraining,run_automatic\nfrom template_ai.source_analysis import analyse_source\nfrom template_ai.storage import Library\nfrom template_ai.importer import import_file\nfrom template_ai.training_pipeline import LIVE_OWNERS\nfrom training_fixture import source_work\nfrom test_training_pipeline import pipeline_samples\nfrom test_dataset_learning import frozen\n\nAPP=QApplication.instance() or QApplication([])\n\n\nclass AutomaticTrainingTests(unittest.TestCase):\n    def setUp(self):\n        self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name);self.library=Library(self.root/'data');self.ser"
+  }
+]
