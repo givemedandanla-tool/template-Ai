@@ -68,3 +68,15 @@ class ReadViewSnapshotTests(unittest.TestCase):
             with read_snapshot(self.reader.db):raise ValueError('authored refusal')
         self.assertEqual(self.reader.db.execute('SELECT count(*) FROM authored_pending').fetchone()[0],1)
         self.assertTrue(self.reader.db.in_transaction);self.reader.db.rollback();self.assertEqual(self.reader.db.execute('SELECT count(*) FROM authored_pending').fetchone()[0],0)
+
+    def test_queued_rule_reload_after_real_window_close_has_no_callback_error(self):
+        import sys
+        from PySide6.QtCore import QEventLoop,QTimer
+        panel=RuleReviewPanel(self.w,self.w);self.addCleanup(panel.deleteLater);errors=[];called=[];loop=QEventLoop();previous_hook=sys.excepthook;previous_quit=APP.quitOnLastWindowClosed();APP.setQuitOnLastWindowClosed(False)
+        def callback():called.append(True);panel.reload()
+        def capture(kind,error,traceback):errors.append(kind.__name__);loop.quit()
+        sys.excepthook=capture
+        try:
+            QTimer.singleShot(0,callback);self.assertTrue(self.w.close());self.assertTrue(self.reader.closed);QTimer.singleShot(50,loop.quit);loop.exec()
+        finally:sys.excepthook=previous_hook;APP.setQuitOnLastWindowClosed(previous_quit)
+        self.assertEqual(called,[True],'Actual deferred callback must execute');self.assertEqual(errors,[]);self.assertIn('失敗',panel.status.text())

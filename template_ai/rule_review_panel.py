@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEd
 from .training_store import TrainingStore
 
 
-from .metadata_snapshot import snapshot_read
+from .metadata_snapshot import read_snapshot
 
 class RuleReviewPanel(QWidget):
     def __init__(self, window, parent=None):
@@ -31,22 +31,22 @@ class RuleReviewPanel(QWidget):
     def search_changed(self,*_):self.offset=0;self.reload()
     def page(self,delta):self.offset=max(0,self.offset+delta);self.reload()
     def selected_ids(self):return [self.rows[r.row()]['id'] for r in self.table.selectionModel().selectedRows() if r.row()<len(self.rows)]
-    @snapshot_read(lambda self,*args,**kwargs:self.store.db)
     def reload(self,*_):
         if self.loading:return
         old=self.selected_ids();self.loading=True
         try:
-            where=['kind=?'];args=['RULE']
-            for token in self.search.text().casefold().split():where.append("training_casefold(payload||id) LIKE ? ESCAPE '\\'");args.append('%'+token.replace('\\','\\\\').replace('%','\\%').replace('_','\\_')+'%')
-            if self.state.currentText()!='ALL':where.append("json_extract(payload,'$.state')=?");args.append(self.state.currentText())
-            condition=' AND '.join(where);total=self.store.db.execute('SELECT count(*) FROM training_records WHERE '+condition,args).fetchone()[0]
-            ids=[r[0] for r in self.store.db.execute('SELECT id FROM training_records WHERE '+condition+' ORDER BY id LIMIT 200 OFFSET ?',args+[self.offset])]
-            self.rows=[self.store.inspect_rule(rid) for rid in ids];self.rows.sort(key=lambda r:({'BLOCK':0,'HIGH':1,'LOW':2}[r['risk']],r['scope_group'],r['id']));self.table.setRowCount(len(self.rows))
-            for i,row in enumerate(self.rows):
-                excluded=sum(r['decision_if_active']=='EXCLUDED_RULE' for r in row['matches']);values=(row['risk'],row['state']+' / r'+str(row['revision']),row['rule']['literal'],row['rule']['scope']['object_type']+' / '+row['scope_group'][:12],f"{excluded}／{len(row['matches'])-excluded}",row['id'])
-                for j,value in enumerate(values):item=QTableWidgetItem(value);item.setToolTip(value);self.table.setItem(i,j,item)
-                if row['id'] in old:self.table.selectRow(i)
-            self.count.setText(f'本頁{len(self.rows)}／搜尋總數{total}／全規則{self.store.count("RULE")}；風險與scope固定排序僅本頁');self.previous_button.setEnabled(self.offset>0);self.next_button.setEnabled(self.offset+len(ids)<total)
+            with read_snapshot(self.store.db):
+                where=['kind=?'];args=['RULE']
+                for token in self.search.text().casefold().split():where.append("training_casefold(payload||id) LIKE ? ESCAPE '\\'");args.append('%'+token.replace('\\','\\\\').replace('%','\\%').replace('_','\\_')+'%')
+                if self.state.currentText()!='ALL':where.append("json_extract(payload,'$.state')=?");args.append(self.state.currentText())
+                condition=' AND '.join(where);total=self.store.db.execute('SELECT count(*) FROM training_records WHERE '+condition,args).fetchone()[0]
+                ids=[r[0] for r in self.store.db.execute('SELECT id FROM training_records WHERE '+condition+' ORDER BY id LIMIT 200 OFFSET ?',args+[self.offset])]
+                self.rows=[self.store.inspect_rule(rid) for rid in ids];self.rows.sort(key=lambda r:({'BLOCK':0,'HIGH':1,'LOW':2}[r['risk']],r['scope_group'],r['id']));self.table.setRowCount(len(self.rows))
+                for i,row in enumerate(self.rows):
+                    excluded=sum(r['decision_if_active']=='EXCLUDED_RULE' for r in row['matches']);values=(row['risk'],row['state']+' / r'+str(row['revision']),row['rule']['literal'],row['rule']['scope']['object_type']+' / '+row['scope_group'][:12],f"{excluded}／{len(row['matches'])-excluded}",row['id'])
+                    for j,value in enumerate(values):item=QTableWidgetItem(value);item.setToolTip(value);self.table.setItem(i,j,item)
+                    if row['id'] in old:self.table.selectRow(i)
+                self.count.setText(f'本頁{len(self.rows)}／搜尋總數{total}／全規則{self.store.count("RULE")}；風險與scope固定排序僅本頁');self.previous_button.setEnabled(self.offset>0);self.next_button.setEnabled(self.offset+len(ids)<total)
         except Exception as error:self.rows=[];self.table.setRowCount(0);self.status.setText('規則核對失敗：'+str(error))
         finally:self.loading=False;self.selected()
 
