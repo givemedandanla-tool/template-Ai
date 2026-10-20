@@ -1162,11 +1162,26 @@ class MainWindow(QMainWindow):
             self.refresh_works()
             self.error(str(e))
 
+    def _operation_token(self,subject):
+        from .operation_context import capture
+        token=capture(self,subject)
+        if token is None:self.inform('目前資料不可用或有待套用的欄位輸入；請先核對，再重新操作。')
+        return token
+
+    def _operation_current(self,token):
+        from .operation_context import unchanged
+        if unchanged(self,token):return True
+        self.inform('確認期間資料或操作對象已變更；這次尚未套用，請重新核對。')
+        return False
+
     def rename_work(self):
         if not self.work:
             return
+        token=self._operation_token(0)
+        if token is None:return
         name, ok = QInputDialog.getText(self, "作品名稱", "作品名稱（最多 120 字）", text=self.work["name"])
         if ok:
+            if not self._operation_current(token):return
             try:
                 self.library.rename_artwork(self.work["id"], name)
                 self.work["name"] = name.strip()
@@ -1180,14 +1195,18 @@ class MainWindow(QMainWindow):
         from datetime import datetime
         try:
             self.save_labels(silent=True)
+            token=self._operation_token(0)
+            if token is None:return
             history = self.library.artwork_history(self.work["id"])
             choices = [f"r{item['revision']} · {datetime.fromtimestamp(item['created']).strftime('%Y-%m-%d %H:%M:%S')}" for item in history]
             choice, ok = QInputDialog.getItem(self, "恢復標記歷史", "選擇版次；會保存為新版本，不刪除後續歷史", choices, 0, False)
             if not ok:
                 return
+            if not self._operation_current(token):return
             revision = history[choices.index(choice)]["revision"]
             if QMessageBox.question(self, "恢復作品標記", f"恢復至 r{revision} 的框位、毫米及視覺確認狀態？\n已發布模板不會跟著改動。") != QMessageBox.Yes:
                 return
+            if not self._operation_current(token):return
             self.load_work(self.library.restore_artwork(self.work["id"], revision, self.work["revision"]))
             self.statusBar().showMessage("歷史標記已恢復並保存，後續版本仍保留")
         except Exception as e:
@@ -1569,13 +1588,17 @@ class MainWindow(QMainWindow):
         if not self.visual.isChecked():
             self.error("請先與可信原稿對照，確認此作品視覺一致")
             return
+        token=self._operation_token(0)
+        if token is None:return
         name, ok = QInputDialog.getText(self, "學習模板", "此作品模板名稱")
         if not ok or not name.strip():
             return
+        if not self._operation_current(token):return
         try:
             bindings = self.ask_bindings(self.slots)
             if bindings is None:
                 return
+            if not self._operation_current(token):return
             self.save_labels(silent=True)
             t = learn_from_labels(name, self.work_width, self.work_height, self.slots, self.source["id"], self.crop, bindings,
                                   source_work_id=self.work["id"], source_work_revision=self.work["revision"])
@@ -1766,17 +1789,11 @@ class MainWindow(QMainWindow):
     def import_background(self):
         if self.tabs.currentIndex()!=1 or not self.template or not self.editable() or self.busy:
             return
-        from .property_context import source_pin
-        from .font_review import fingerprint
-        pin=source_pin(self,1);draft_digest=fingerprint(self.template.to_dict());assets_dir=self.library.assets
-        def context_current():
-            if (self.library.closed or self.tabs.currentIndex()!=1 or self.template is None
-                    or self.template.state!='draft' or source_pin(self,1)!=pin):return False
-            try:
-                current=self.library.object_snapshot('TEMPLATE',self.template.id)
-                return (fingerprint(self.template.to_dict())==draft_digest
-                        and current['revision']==pin[3] and fingerprint(current['payload'])==pin[4])
-            except (ValueError,TypeError,OSError,sqlite3.Error):return False
+        from .operation_context import unchanged
+        token=self._operation_token(1)
+        if token is None:return
+        assets_dir=self.library.assets
+        def context_current():return unchanged(self,token)
         def changed_context():
             if context_current():return False
             self.inform('目前草稿或使用的來源已變更，本次背景尚未套用；請回到原草稿重新匯入。')
@@ -1853,8 +1870,11 @@ class MainWindow(QMainWindow):
             return
         if self.template.background is None:
             return
+        token=self._operation_token(1)
+        if token is None:return
         if QMessageBox.question(self, "移除固定背景", "將此草稿改為空白背景？原始背景檔與已發布歷史版本會保留。") != QMessageBox.Yes:
             return
+        if not self._operation_current(token):return
         self.template.background = None
         self.save_current_template()
         self.refresh_templates(self.template.id)
@@ -1893,17 +1913,24 @@ class MainWindow(QMainWindow):
         if not self.template or self.template.state != "draft":
             return
         if not self.editor_fresh():return
+        token=self._operation_token(1)
+        if token is None:return
         bindings = self.ask_bindings(self.template.slots)
         if bindings is None:
             return
+        if not self._operation_current(token):return
         self.template.company_bindings = bindings
         errors = template_errors(self.template)
         if errors:
             self.error("\n".join(errors))
             return
+        token=self._operation_token(1)
+        if token is None:return
         if QMessageBox.question(self, "發布模板", "確認發布目前幾何與語意規則？\n發布後本版本唯讀；數位輸出仍依實際人物資料、字型及同尺寸 Logo 再驗證。") != QMessageBox.Yes:
             return
-        self.library.publish(self.template)
+        if not self._operation_current(token):return
+        try:self.library.publish(self.template,expected_revision=self.template_revision)
+        except (ValueError,OSError,sqlite3.Error) as error:self.error('尚未發布：'+str(error));return
         self.refresh_templates(self.template.id)
         self.invalidate()
 
@@ -1996,8 +2023,12 @@ class MainWindow(QMainWindow):
         if self.active_input_graph is not None:
             self.edit_input_graph();return
         if table.currentRow() >= 0 and table.rowCount() > 1:
+            token=self._operation_token(2);row=table.currentRow()
+            if token is None:return
             if QMessageBox.question(self, "移除資料", "移除後序號可能變動，請重新核對人物公司關聯。繼續？") == QMessageBox.Yes:
-                table.removeRow(table.currentRow())
+                if not self._operation_current(token):return
+                if table.currentRow()!=row:self.inform('選取的資料列已變更；這次未移除，請重新核對。');return
+                table.removeRow(row)
                 self.invalidate()
 
     def edit_input_graph(self,*,focus_field_id=None,focus_entity_id=None,return_origin=None):
@@ -2039,14 +2070,17 @@ class MainWindow(QMainWindow):
         self.invalidate()
 
     def clear_input_graph(self):
+        token=self._operation_token(2)
+        if token is None:return
         if QMessageBox.question(self,"清除當次輸入","清除目前人物／公司／聯絡資料與重訂來源，保留客戶主檔及模板。確認？")!=QMessageBox.Yes:return
+        if not self._operation_current(token):return
         self.active_input_graph=None;self.reorder_customer_snapshot=None
         self.production_session_id=None;self.production_generation=None;self.production_view=None
         self.reorder_template_id=None
         self.people.clearContents();self.people.setRowCount(1);self.companies.clearContents();self.companies.setRowCount(1)
         for table in (self.people,self.companies):table.setEditTriggers(QTableWidget.DoubleClicked|QTableWidget.EditKeyPressed|QTableWidget.AnyKeyPressed)
         self.legacy_input_panel.setChecked(True)
-        self.graph_status.setText("簡易表格模式；可隨時轉入人物ROOT卡片。")
+        self.graph_status.setText("簡易表格模式；可隨時轉入人物卡片。")
         self.refresh_logos();self.invalidate()
 
     def input_data(self):
@@ -2325,7 +2359,10 @@ class MainWindow(QMainWindow):
 
     def demo_input(self):
         if self.active_input_graph is not None:
+            token=self._operation_token(2)
+            if token is None:return
             if QMessageBox.question(self,"替換當次輸入","示範資料將替換目前卡片，客戶主檔保留。繼續？")!=QMessageBox.Yes:return
+            if not self._operation_current(token):return
             self.production_session_id=None;self.production_generation=None;self.production_view=None;self.reorder_customer_snapshot=None;self.reorder_template_id=None
             from .input_graph import InputGraph
             self.adopt_input_graph(InputGraph.from_legacy([{"name":["林小明"],"title":["設計顧問"],"phone":["0900-123-456"],"email":["hello@example.test"]}],[]).data);return

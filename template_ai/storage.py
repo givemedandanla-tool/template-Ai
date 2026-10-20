@@ -335,7 +335,7 @@ class Library:
             self._bump_template_clock(t.id)
             self.event(t.id, "save_draft")
 
-    def publish(self, t: Template) -> None:
+    def publish(self, t: Template, *, expected_revision: int | None = None) -> None:
         self._template_provenance(t,for_publication=True)
         errors = template_errors(t)
         from PySide6.QtGui import QFontDatabase,QGuiApplication
@@ -353,6 +353,11 @@ class Library:
         published = copy.deepcopy(t)
         published.state = "published"
         with self.db:
+            if expected_revision is not None:
+                if not self.db.in_transaction:self.db.execute('BEGIN IMMEDIATE')
+                current=self.object_snapshot('TEMPLATE',t.id)
+                if current['revision']!=expected_revision:
+                    raise ValueError('模板版次已變更，尚未發布；請重新讀回並確認')
             # 發布與審核事件同一交易；失敗不讓畫面物件誤變成已發布。
             row = self.db.execute("SELECT state FROM templates WHERE id=?", (t.id,)).fetchone()
             if row and row[0] == "published":
