@@ -3,12 +3,12 @@ from copy import deepcopy
 import unittest
 from unittest.mock import patch
 from PySide6.QtWidgets import QMessageBox
-from test_text_policy import TextPolicyTests
+import test_text_policy as text_policy_source
 from template_ai.text_policy_dialog import TextPolicyDialog
 
 
 class TextPolicyContextTests(unittest.TestCase):
-    setUp=TextPolicyTests.setUp
+    setUp=text_policy_source.TextPolicyTests.setUp
     # Reuse real MainWindow setup without adding parent test copies.
     def dialog(self):
         self.w.editor_selection([self.w.template.slots[1].id])
