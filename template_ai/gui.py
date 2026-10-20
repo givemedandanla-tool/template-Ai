@@ -1107,8 +1107,7 @@ class MainWindow(QMainWindow):
             from dataclasses import asdict
             work = self.library.initialize_artwork(source["id"], {"crop": asdict(Rect(0, 0, width, height)),
                 "work_width": width, "work_height": height, "slots": [], "visual_confirmed": False})
-            self.source = source
-            self.load_work(work)
+            self.load_work(work,source=source)
             self.library.select_source(source["id"])
         except Exception as e:
             self.error(str(e))
@@ -1127,12 +1126,18 @@ class MainWindow(QMainWindow):
             self.work_combo.setCurrentIndex(self.work_combo.findData(self.work["id"]))
         self.work_combo.blockSignals(False)
 
-    def load_work(self, work):
-        self.work = work
+    def load_work(self, work, source=None):
         saved = work["payload"]
-        self.crop = Rect(**saved["crop"])
-        self.slots = [Slot(**{**s, "rect": Rect(**s["rect"])}) for s in saved["slots"]]
-        self.font_manager.ensure_slots(self.slots)
+        self.library._artwork_payload(work["source_id"],saved)
+        crop = Rect(**saved["crop"])
+        slots = [Slot(**{**s, "rect": Rect(**s["rect"])}) for s in saved["slots"]]
+        self.font_manager.ensure_slots(slots)
+        if source is not None and source['id']!=work['source_id']:
+            raise ValueError('作品不屬於目前來源，不能跨來源混配')
+        self.work = work
+        self.crop = crop
+        self.slots = slots
+        if source is not None:self.source=source
         self.work_width, self.work_height = saved["work_width"], saved["work_height"]
         self.visual.blockSignals(True)
         self.visual.setChecked(bool(saved.get("visual_confirmed")))
@@ -1150,7 +1155,8 @@ class MainWindow(QMainWindow):
         work_id = self.works[index]["id"]
         try:
             self.save_labels(silent=True)
-            self.load_work(self.library.select_artwork(self.source["id"], work_id))
+            self.load_work(self.library.artwork(work_id))
+            self.library.select_artwork(self.source["id"], work_id)
         except Exception as e:
             self.refresh_works()
             self.error(str(e))
