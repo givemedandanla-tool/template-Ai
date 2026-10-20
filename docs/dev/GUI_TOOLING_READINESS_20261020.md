@@ -42,3 +42,5 @@ QT_QPA_PLATFORM=offscreen .venv/bin/python docs/dev/gui_tooling/preview.py --cap
 安裝指令維持`bash tools/cloud_setup.sh`，接續本地GUI bootstrap與離屏概念稿smoke。start instructions指向AGENTS／STATE／交接及專案GUI skill。
 
 後端已確認設定草稿saved且requires_publish=true，回覆見`CLOUD_GUI_CONFIG_DRAFT_RECEIPT_20261020.json`。**目前環境已完成驗證，設定草稿儲存成功；設定尚未因此套用或發布為新環境快照**。若需新實例自動使用，需在環境設定儲存並發布。倉庫仍保存完整重建指令，沒有因草稿待發布而停止其他工作。
+
+補充：最終凍結來源73c7722的既有輸入介面也在原生Linux xcb／Xvfb上跑過同5情境，全PASS、6截圖；見RUN-INPUT-INTEGRATION-NATIVE-003，185.717秒測例／186.437秒啟動至完成。包含剪貼簿長文、真實滑鼠拖動、巢狀Logo視窗、主預覽與同稿輸出，以及statusBar／timer後的學習稿狀態。這是原5測例的補充平台證據，不增加唯一測試數，也不作Windows／印前資格。可重現腳本保存docs/qa/plans/INPUT-NATIVE-003-REPRODUCTION.py，執行前需改用新的輸出目錄以保留歷史。

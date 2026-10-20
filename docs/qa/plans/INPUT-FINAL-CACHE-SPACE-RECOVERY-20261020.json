@@ -1,0 +1,29 @@
+{
+  "status": "VERIFIED_OLD_LOCAL_ZIP_CACHE_REMOVED",
+  "reason": "Reserve space for complete source-bound UI evidence and final checkpoint",
+  "removed": [
+    {
+      "checkpoint": "CP-20261020-INPUT-BEGIN",
+      "removed_local_archive": ".checkpoints/CP-20261020-INPUT-BEGIN/source.zip",
+      "bytes": 570239722,
+      "sha256": "4f6b50a1ea1e44343f30f93cda1fee0e8a95059fc4f1e9d254ac27a35663e76c",
+      "remote_snapshot": "bb471f3ccb48dbf82ba7512602f9da22c2cab2b2",
+      "receipt_phase": "REMOTE_VERIFIED"
+    },
+    {
+      "checkpoint": "CP-20261020-INPUT-WIP1",
+      "removed_local_archive": ".checkpoints/CP-20261020-INPUT-WIP1/source.zip",
+      "bytes": 570883110,
+      "sha256": "8daaef3b6eb2ff473d90cc057419a46a899cd705692927f18efb6d90774fc309",
+      "remote_snapshot": "b53a5351325b29c605c8e8d14d5d0294a79d53ae",
+      "receipt_phase": "REMOTE_VERIFIED"
+    }
+  ],
+  "retained_latest_sources": [
+    "CP-20261020-INPUT-STORAGE-SOURCE",
+    "CP-20261020-INPUT-VIEWPORT-SOURCE",
+    "CP-20261020-INPUT-STATUS-SOURCE"
+  ],
+  "preserved": "Code,permanent evidence,private files,receipts and GitHub commits retained",
+  "restore_limit": "Exact old ZIP bytes are no longer locally available;source contents remain recoverable from the verified Git commit;do not promise byte-identical archive recreation"
+}

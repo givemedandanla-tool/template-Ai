@@ -41,8 +41,12 @@ def capture(folder):
         assert not w.navigation.return_to_work();assert not w.navigation.recovery_current();assert w.candidates[0].template.to_dict()==manual;shot(w,'07-new-manual-version-safe-fallback')
         w.resize(960,640);app.processEvents();w.function_rail.setVisible(True);w.property_panel.setVisible(False);w.navigation.update();app.processEvents()
         QTest.mouseClick(next(b for b in w.function_rail.findChildren(QPushButton) if b.text()=='排版與輸出'),Qt.LeftButton)
-        assert wait_for_gui(lambda:w.output_canvas.visibleRegion().boundingRect().height()>=180,2)
-        assert w.rect().contains(w.return_work_button.mapTo(w,w.return_work_button.rect().center()));assert w.output_canvas.viewport().width()>=240
+        # QGraphicsView paints into its viewport. The outer widget's region
+        # can be empty when all frame edges are clipped but the content is visible.
+        assert wait_for_gui(lambda:w.output_canvas.viewport().visibleRegion().boundingRect().height()>=180,2)
+        visible=w.output_canvas.viewport().visibleRegion().boundingRect()
+        assert w.rect().contains(w.return_work_button.mapTo(w,w.return_work_button.rect().center()));assert visible.width()>=240
+        small_window_visibility=dict(requested=[960,640],painted_viewport=list(visible.getRect()),outer_frame=list(w.output_canvas.visibleRegion().boundingRect().getRect()),minimum_visible=[240,180],measurement='Actual clipped QGraphicsView.viewport visibleRegion;not decorative outer frame')
         shot(w,'08-small-window-current-work-return-visible')
         multi=SyncWorkflowFixture();multi.d.resize(1250,850);multi.select('C100');before=multi.candidate('C100').template.to_dict()
         def multi_logo_cancel():
@@ -58,6 +62,7 @@ def capture(folder):
         assert w.navigation.return_to_work();assert w.coords[0].value()==old_x+1 and w.slots[0].rect.x==old_x and w.navigation.pending_form();shot(w,'12-return-preserves-unapplied-property')
         assert not errors,errors
         result=dict(status='PASS',screens=screens,qt_errors=errors,actual_gui=True,scope='Authored controlled Linux, existing GUI/worker and actual encrypted disk writes; no reference Windows/private Illustrator qualification',actual_cases=['Exact Main candidate/size/view/problem selection after real Logo modal cancel','Actual unsaved close Stay','Actual disk failure then encrypted readback/stat receipt success; newer manual revision safe fallback','Small 960x640 requested window with current/back visible, collapsed existing property pane','Actual 100mm origin not Main90; missing dedicated Logo stays blocked','Changed shared source invalidates return and preserves original instances','Selected-frame return keeps unapplied X without changing stored geometry'],automatic_training=False,paid_services=False)
+        result['small_window_visibility']=small_window_visibility
         (folder/'workbench-navigation-metadata.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');return result
     finally:
         if multi:multi.close()
