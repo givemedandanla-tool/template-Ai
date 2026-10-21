@@ -108,7 +108,7 @@ class PipelineGuiTests(unittest.TestCase):
         script=('from pathlib import Path;import time\nfrom template_ai.training_store import TrainingStore\noriginal=TrainingStore.source_proof\n'
                 +'def blocked(store,wid):\n    marker=Path('+repr(str(entered))+')\n    if not marker.exists():\n        marker.write_text("ready")\n        deadline=time.monotonic()+5\n        while not Path('+repr(str(release))+').exists() and time.monotonic()<deadline:time.sleep(.01)\n    return original(store,wid)\n'
                 +'TrainingStore.source_proof=blocked\nfrom template_ai.runtime_worker import child_main\nraise SystemExit(child_main())')
-        def factory(command,**options):return subprocess.Popen([sys.executable,'-c',script,*command[3:]],**options)
+        def factory(command,**options):return subprocess.Popen([sys.executable,'-c',script,*command[command.index('--root'):]],**options)
         def isolated(*args,**kwargs):return run_isolated(*args,**kwargs,process_factory=factory)
         with patch('template_ai.runtime_dispatch.run_isolated',isolated),patch.object(QMessageBox,'question',return_value=QMessageBox.Yes):
             QTest.mouseClick(self.p.create_button,Qt.LeftButton)
