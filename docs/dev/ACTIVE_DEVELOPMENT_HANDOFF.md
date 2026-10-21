@@ -1,5 +1,7 @@
 # 當前精簡交接
 
+**當前d34e1310a17067763ce9acc60b3214ea5d67846a為[frozen-probe-only]不發佈診斷，已推送及獨立讀回73520個tree項目。** docs run_frozen_probe只在原authored fixture tearDown前讀取worker-observation.json，原清理/視窗/斷言/期限不變；Linux source smoke兩階段PASS且actual_frozen=false，已如實保存。等其Windows實際狀態，查明_pause_worker根因，正常發布之後仍需完整176。主要checkpoint必須保留CP-WINDOWS-COMPLETE-EVIDENCE-001的396項完整覆蓋，不再讓小型輔助CP覆蓋它。
+
 **最新03a7/run39623436705原生176/176PASS、16健康、49原案例分組、0runtime；PyInstaller成功產實際EXE。** 真EXE前11檢查通過（訓練、產稿預覽、真滑鼠拖動、更正、輸出、拒絕未資格正式稿、JSONpipeworker），在release_check._pause_worker原檢查285行失敗，無tag/Release。原證據windows-native-005-frozen-pause-failed。下一步只跑[frozen-probe-only]診斷（不重跑176也不發佈），加source父程序只讀觀察fixture DB，取得真實phase/count/issues，原檢查不變。產品/tools/tests/manifest0c4未變；查根因後正常發佈仍完整176/EXE/下載。
 
 **當前正常候選03a7c692a365c64227807154a76bb3047077f0cd已推送並獨立讀回73497條tree項目；run39623436705有RUNNING回執。** 它包含完整396項主要證據checkpoint收據及有界NTFS讀取，嚴格Gate在提交後實際PASS。前一個cee5f6df仍指向小型checkpoint，預期由原Gate拒絕，不能當本候選。只等03a7的實際176/frozen/download結果，並按其來源保存；不得重跑Linux或放寬發佈條件。
