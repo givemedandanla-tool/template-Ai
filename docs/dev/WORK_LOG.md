@@ -1749,3 +1749,5 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 ### 2026-10-21 發佈與維護協作方案研究（草案）
 
 依使用者本輪要求研究SemVer、Keep a Changelog、GitHub Releases／草稿／不可變發佈與PyInstaller，6份原文固定commit及hash核對。盤點現有0.1.28／README0.1.26／打包v0.1命名差異、14天暫存artifact及舊Windows驗證入口；提出beta／rc／修正／功能版本、精確成品、資料相容與回報狀態流程。RELEASE_MAINTENANCE_PROPOSAL.md狀態DRAFT_FOR_DISCUSSION_NOT_ADOPTED，未改產品版本、程式、workflow、原資格或EXE政策。文件型checkpoint與原軟體CP004分開，不冒稱EXE已發布。
+
+草案文件 checkpoint：b138ccca970a3889a9de3b4e93e038569870e1d6已獨立原生Git讀回，6份scope文件與checkpoint共7條逐blob吻合；文件收據REMOTE_VERIFIED，仍未採用草案。原軟體CP004及EXE政策不變，治理檢查PASS；未重跑應用測試，因code manifest完全未變。
