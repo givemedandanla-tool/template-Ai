@@ -1,5 +1,7 @@
 # 當前精簡交接
 
+正式保存已修復：CP-WINDOWS-COMPLETE-EVIDENCE-001包含369正式附件與CI有界重試證據，共396項獨立讀回REMOTE_VERIFIED；strict require-evidence/publication-scope已實際PASS172/166/75/1963。小型CI checkpoint不能取代涵蓋全部正式附件的主要checkpoint。產品manifest0c4仍完全不變。下一次正常release-request提交需全部176/真EXE/兩次下載實際通過。
+
 最新：77e21544/run39619925888失敗於CI監看progress.json EACCES；已完成8完整模組82PASS，含輸入19/19，未產EXE。原失敗windows-native-004-ci-read-failed；新metadata-read-controls-001四個隔離控制PASS。僅docs adapter對Windows EACCES做8次x20ms有界重試，持續拒絕仍拋出；產品/tools/tests/manifest0c4不變，需新正常候選完整176及凍結/下載驗證。下列舊run敘述是歷史，按STATE與本段最新狀態。
 
 2026-10-21：da809cf5／run39612727807正式Windows建置在來源測試失敗，未產EXE、未tag、未發布。176預定、169PASS，input模組12/19後180秒程序watchdog。原始證據見releases/v0.2.0-beta.1/windows-native-003-failed。新CI設定將全部原ID按每程序至多4例分組，同桌面serial1、原180秒不變，原工具/產品/測試不變；原5安全案例新入口5/5PASS跨2程序，刻意失敗負例正確拒絕。見grouped-qt-config-001。下一個正常release-request分支提交不能帶[native-tests-only]標記；仍須176完整通過、實際凍結EXE及兩次下載驗證才可發布。精確來源77e215440d7e4fe1aaa9fd49b143acbb8dc17c14，run39619925888已有RUNNING原生回執，CP-WINDOWS-QT-GROUPS-001已獨立讀回38項REMOTE_VERIFIED。候選後的dev僅交接收據變更，不觸發額外Windows建置。
