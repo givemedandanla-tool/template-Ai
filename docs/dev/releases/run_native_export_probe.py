@@ -11,9 +11,12 @@ target.mkdir(parents=True,exist_ok=True)
 def retain_startup_error(kind,value,tb):
     (target/'native-export-probe-error.log').write_text(
         ''.join(traceback.format_exception(kind,value,tb))[-64000:],encoding='utf-8')
+    for name in ['results.json','progress.json','stacks.log','unittest.log']:
+        source=ROOT/'artifacts/native-export-probe/modules/test_input_learning_integration'/name
+        if source.is_file():(target/('export-probe-'+name)).write_bytes(source.read_bytes()[-64000:])
     sys.__excepthook__(kind,value,tb)
 sys.excepthook=retain_startup_error
-sys.path.insert(0,str(ROOT/'tools'))
+sys.path[:0]=[str(ROOT),str(ROOT/'tools')]
 from dev_common import write_json
 from evidence_modules import run_modules
 
