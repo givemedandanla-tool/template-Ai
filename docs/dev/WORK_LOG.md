@@ -1840,3 +1840,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 使用者詢問已安裝Illustrator是否更好。核對目前無原生串接，保留原生讀取優先／Inkscape備援／OCR補救提案；混合樣式、座標、轉外框、字型替代、多人同畫板及stable ID規則不省略。官方說明本環境403，原生API與本機驗證未聲稱完成。不改目前Windows候選，私人資料留本機。
 
 2026-10-21 v0.2.0-beta.1交付：8b95b10b/run39638803778原176、真frozen EXE14+7全PASS，83已知第三方testdata只在freeze前排除，原inventory PASS；tag解參照8b95，草稿與公開各完整下載校驗，最終1220檔hash PASS。原生Git a913證據獨立讀回180tree項，雲端未登入manifest/checksums逐byte相同／公開頁HTTP200。ZIP125923070bytes SHA0429fcbf…d526。已公開，非僅請求。原外部資格不升級；未合併main、未刪既有檔案，無新付費／試用／子代理。最後完整交接CP準備中。
+
+2026-10-21 最後交接CP-20261021-WINDOWS-BETA-PUBLISHED-001：7bb7a189快照449項REMOTE_VERIFIED，含完整369正式附件／實際Windows發佈與公開下載讀回；增量ZIP448檔隔離還原hash全部PASS、指定基底4734990a。已公開成品來源仍不可變8b95，未重新建置或替換資產；完成收據閉合與嚴格治理檢查。

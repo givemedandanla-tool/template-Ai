@@ -10,7 +10,7 @@
 
 ## 主證據與歷史
 
-主CP目前CP-20261021-WINDOWS-PAYLOAD-READY-001，443項REMOTE_VERIFIED，含369正式附件。本輪將準備完整發佈交接CP；最後確認指標以STATE為準，不以小型輔助讀回覆蓋主正式證據。產品/tools/tests manifest仍0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274，Linux正式1963與原27GUI不重跑；strict gate172要求／166scoped／75父題不改。原私人作品／使用者Windows硬體效能／實印／新手／OS級斷網資格不自動升級，AI8包50原資格不改。
+主CP為CP-20261021-WINDOWS-BETA-PUBLISHED-001，快照7bb7a189已449項REMOTE_VERIFIED，含369正式附件、原生發佈、公開精確讀回及本輪交接。ZIP隔離還原448文件PASS，完整還原仍需指定基底4734990a；不是獨立全產品備份。最後確認指標以STATE為準，不以小型輔助讀回覆蓋主正式證據。產品/tools/tests manifest仍0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274，Linux正式1963與原27GUI不重跑；strict gate172要求／166scoped／75父題不改。原私人作品／使用者Windows硬體效能／實印／新手／OS級斷網資格不自動升級，AI8包50原資格不改。
 
 03a7原176已PASS但EXEcache錯誤，d34e讀到0units，c45實際UTF8 A/B原14+7PASS；044原176與真EXE21PASS但原inventory攔sklearn自帶testdata；f203新增報告目錄契約錯誤在發佈前發現並取消（公開頁確認）。修正固定UTF8及freeze前已知第三方tests過濾83檔，報告放artifacts根、真EXE檢查成功後才複製；原產品、exercise全新目錄／斷言／期限與最終inventory不變。9配置控制及來源21診斷PASS，均非真Windows資格；最後8b95正常全流程才是交付證據。所有原失敗／取消保留。
 
