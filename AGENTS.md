@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新討論：教學機制與面板簡化草案
+
+2026-10-21使用者要求參考成熟軟體、開源、心理學及設計學，設計教學機制與規則供參考。見[待核對方案](docs/dev/TUTORIAL_AND_PANEL_SIMPLIFICATION_PROPOSAL.md)及固定來源TUTORIAL_AND_PANEL_SIMPLIFICATION_RESEARCH.json。狀態DRAFT_FOR_DISCUSSION_NOT_ADOPTED：方案提出常用面板簡化、就地提示、獨立範例練習、任務查找與錯誤回復，重用現有製作核心及進階引導，教學進度不當業務資格。尚未修改GUI、實作教學或做新手實測；不自動開發或改原完成數／外部資格，網頁手機與EXE仍延後。已採用的發佈維護規則維持有效。按STATE接續討論，不把草案當已採用規格。
+
 ## 最新規則：EXE發佈與版本維護已採用
 
 2026-10-21使用者確認方案後，已採用[發佈與維護規則](docs/dev/RELEASE_MAINTENANCE_POLICY.md)，決策見docs/decisions/2026-10-21-RELEASE-MAINTENANCE-RULES.md。版本／相容性／發布授權／真實EXE驗證／下載校驗／資料保護／維護狀態依該規則，不再當未核對草案重問。原草案及研究／收據保留歷史。首次Windows實測規劃v0.2.0-beta.1尚未改號，發佈工具仍需落地；本次規則採用不包含立即建置或發佈EXE、合併main、部署或新付費服務。現行EXE延後及原外部資格不變。文件收據與軟體CP004分開保存，依STATE接續。

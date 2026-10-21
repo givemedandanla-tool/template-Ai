@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "RELEASE_MAINTENANCE_RULES_ADOPTED",
+  "active_task": "TUTORIAL_AND_PANEL_SIMPLIFICATION_PROPOSAL_DELIVERED",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-NONCODE-COMPLETE-004.receipt.json",
   "last_confirmed_commit": "8105571e2ffe5f2804155b11e0be9272e1f42d34",
   "latest_evidence_run": "docs/evidence/runs/RUN-NONCODE-ALL-001/run.json",
@@ -18,7 +18,7 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "依已採用發佈與維護規則接續；使用者明確要求準備／發佈時再完成建置與Release接線。採用規則不等於自行打包、改號或發佈，原外部資格維持。"
+    "依使用者後續指令討論／採用教學與面板簡化方案；本輪僅研究與設計，不實作GUI或教學，不變更已採用發佈規則／EXE延後及原外部資格。"
   ],
   "blocked": [
     {
@@ -1665,5 +1665,17 @@
     "snapshot_commit": "f5ddaf0feb4ed03cb1baa1d8e6f4fcdcfc57ca3d",
     "verified_files": 7,
     "checkpoint": "docs/dev/RELEASE_MAINTENANCE_POLICY.checkpoint.json"
+  },
+  "tutorial_and_panel_proposal": {
+    "status": "DRAFT_FOR_DISCUSSION_NOT_ADOPTED",
+    "document": "docs/dev/TUTORIAL_AND_PANEL_SIMPLIFICATION_PROPOSAL.md",
+    "research": "docs/dev/TUTORIAL_AND_PANEL_SIMPLIFICATION_RESEARCH.json",
+    "baseline_commit": "e1ff30092efb224d1477df00b249a8ee7c33fb49",
+    "source_count": 7,
+    "gui_changed": false,
+    "tutorial_implemented": false,
+    "novice_test_performed": false,
+    "remote_status": "PENDING_READBACK",
+    "receipt": "docs/dev/TUTORIAL_AND_PANEL_SIMPLIFICATION_PROPOSAL.receipt.json"
   }
 }

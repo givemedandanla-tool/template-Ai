@@ -1756,3 +1756,8 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 ### 2026-10-21 採用發佈與維護規則
 
 使用者回覆「好，規則是否已持久化入github」，據此將方案正式採用為RELEASE_MAINTENANCE_POLICY.md／規則版本1，新增決策並更新AGENTS、STATE與精簡交接。原草案與來源收據保留。僅規則及文件採用，未修改程式0.1.28、EXE延後、產品／測試／workflow或原資格，未建置／發佈EXE。後續明確要求準備／發佈時按規則執行，不重問已決規則。
+
+
+### 2026-10-21 教學與面板簡化方案（研究草案）
+
+依使用者要求研究VSCode walkthrough／通知、Fluent教學提示、Carpentries專家盲點／記憶負荷／回饋及Mayer與Moreno2003論文選段，7份文件固定commit/hash。核對既有三工作區、進階引導與同碼原生畫面，提出面板簡化＋常用任務教學＋獨立本地練習＋錯誤回復，強調教學完成不等於業務或印刷資格。草案TUTORIAL_AND_PANEL_SIMPLIFICATION_PROPOSAL.md供參考，未採用／實作、未做新手實驗；不改產品程式、版本、原8AI／75父題、發佈規則及EXE政策。
