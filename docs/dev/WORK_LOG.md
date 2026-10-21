@@ -1778,3 +1778,5 @@ Windows beta validation WIP2：固定來源4406e11d的Linux全回歸在676項／
 Windows beta matrix finalized：完整catalog有明確Linux-only字型路徑／Windows symlink skip，原先全catalog直接在Windows跑並要求全部PASS不成立。改為保留Linux完整1958＋原27GUI的同源正式Gate，Windows15個已核對可適用核心模組全PASS無skip＋實際EXE兩階段；不改既有skip、不刪測試、不宣稱其Windows通過。工具／授權metadata補齊pycparser，發布manifest保存分工與未驗證範圍。linux002／stock002在工具範圍定案前明確中斷非PASS，保留歷史；之後固定來源不再修改程式／測試／工具。Windows請求branch仍舊來源，取得正式同源Gate後才更新，避免無效建置。
 
 Windows beta progress checkpoint001：來源094f8f9a原生Git完整52442條讀回；Linux來源流程011真實GUI／模型兩階段PASS，但明確不是frozen Windows。全1958目前約746PASS、0失敗，未完成不可當PASS。原stock003首項queue.running斷言失敗，保留不覆蓋，待全回歸結束後隔離負載用原版腳本再驗證。Windows請求無回執、API仍Forbidden，網路草稿未生效；未發布。
+
+Windows beta：進度WIP001快照7e1a51dd原生Git完整52456條讀回；專用收據僅WIP文件，不冒稱1958完整／Windows已驗證。補記7個Windows建置工具精確版本與官方wheel SHA256（.github/windows-build-lock.json），requirements-build固定轉依賴且與runtime分離；尚未在本環境安裝或Windows驗證。程式code manifest仍46bd03f6，不影響進行中的同源回歸。
