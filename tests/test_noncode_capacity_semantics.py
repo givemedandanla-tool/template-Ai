@@ -54,3 +54,22 @@ class QualifiedCapacityMeaningTests(unittest.TestCase):
         model['digest']=digest({k:v for k,v in model.items() if k!='digest'})
         with self.assertRaisesRegex(ValueError,'changed or incompatible'):
             capacity_advice(model,self.context,[2.,2.])
+
+    def test_conditional_advice_does_not_borrow_other_context_field_count(self):
+        # Same three text fields, with an additional Logo in the other context:
+        # joint_demand measures text only but field_count includes Logo facts.
+        small=dict(self.context,field_count=3,roles=['p1:name:0','p1:phone:0','c1:name:0'])
+        large=dict(self.context,family_id='another-family',field_count=4,width_mm=180.,
+                   roles=small['roles']+['c1:logo:0'])
+        demand=[4.,2.,8.,4.,6.,3.]
+        policy=dict(self.policy,bin_widths=[20.]*6)
+        records=[dict(id=f'{group}-{i}',lineage_group=f'{group}-{i}',role='VALIDATION',
+                      context=context,demand=demand,layout_pass=True,qualified_style=True,
+                      evidence_refs=['Authored text-and-logo context oracle'])
+                 for group,context in enumerate((small,large)) for i in range(30)]
+        artifact=fit_capacity(records,policy)
+        self.assertEqual(artifact['maximum_validated_field_count'],4)
+        advice=capacity_advice(artifact,small,demand)
+        self.assertEqual(advice['status'],'WITHIN_VALIDATED_EMPIRICAL_REGION')
+        self.assertEqual(advice['maximum_validated_field_count'],3)
+        self.assertIsNone(advice['hard_global_capacity'])

@@ -66,6 +66,7 @@ def fit_capacity(records,policy):
             source_case_ids=sorted(r['id'] for r in items),source_refs=sorted({v for r in items for v in r['evidence_refs']})))
     artifact=dict(version=VERSION,policy=deepcopy(policy),cells=cells,source_digest=digest(records),
         maximum_validated_field_count=max((c['context']['field_count'] for c in cells if c['status']=='VALIDATED_EMPIRICAL_REGION'),default=None),
+        maximum_validated_field_count_scope='ALL_CONTEXTS_SUMMARY_NOT_QUERY_LIMIT',
         hard_global_capacity=None,scope='JOINT_EMPIRICAL_ADVICE;ACTUAL_LAYOUT_REQUIRED;NO_UNOBSERVED_CAPACITY_CLAIM')
     artifact['digest']=digest(artifact);return artifact
 
@@ -88,7 +89,8 @@ def capacity_advice(artifact,context,demand):
         if distance>artifact['policy'].get('maximum_support_distance',.25):continue
         return dict(status='WITHIN_VALIDATED_EMPIRICAL_REGION',actual_layout_required=True,
             suitable_intervals=list(zip(cell['observed_lower'],cell['observed_upper'])),
-            maximum_validated_field_count=artifact['maximum_validated_field_count'],hard_global_capacity=None,
+            maximum_validated_field_count=cell['context']['field_count'],
+            maximum_validated_field_count_scope='MATCHED_CONTEXT_ONLY',hard_global_capacity=None,
             independent_groups=cell['independent_groups'],lower_bound=cell['one_sided_success_lower_bound'])
     return dict(status='UNKNOWN_OR_OUTSIDE_VALIDATED_REGION',actual_layout_required=True,hard_global_capacity=None)
 
