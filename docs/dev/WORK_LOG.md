@@ -1766,3 +1766,5 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 ### 2026-10-21 獨立可搜尋知識庫方案（研究草案）
 
 使用者追加本體之外的教學／功能資料庫。研究Diataxis、Microsoft Style Guide、Material離線／中文搜尋及其MIT程式、MiniSearch，重用前輪心理學選段；16份固定來源紀錄含重用與閱讀範圍。提出共用內容、四類知識＋問題／版本入口、中文與受控別名、版本和可用狀態、file://實證、全資源本地化及文件維護交付；記錄offline插件預設CDN與動態版本功能的限制。EXTERNAL_KNOWLEDGE_BASE_PROPOSAL.md為DRAFT，補充原教學草案。未安裝／建站／建索引／做搜尋或新手驗收，未改GUI、軟體版本、原資格、發佈規則或EXE政策。
+
+2026-10-21 Windows beta release：使用者明確授權發佈程式EXE；修改前計畫與驗收見releases/v0.2.0-beta.1-plan.md。起點7eab2c86、clean；治理PASS1942。發現frozen worker與備份啟動入口需整合；本機Release API被網路政策阻擋，必要草稿已保存。
