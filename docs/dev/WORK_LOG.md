@@ -1731,3 +1731,8 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 2026-10-21 NONCODE執行起點349788c3：32主題開工，未改原父題／AI計數。UI042僅交易分類被UI043取代、主檔授權仍有效，暫不全域替換。NCA-ISSUE-001容量語意反例已重現：3種已知負例被適合區域接納，另新增1版本守衛預期，共4FAIL；原始預設Python缺產品依賴的1ERROR保留為無效環境，不算產品故障。尚未修正／尚未正式全回歸。
 
 2026-10-21 NONCODE checkpoint：source4f763f87，容量負例支持／跨條件欄位最大值兩項語意問題已修，路線圖鏡像已同步且原快照保留。32針對測試／4真核心probe PASS；full0011141中斷以處理新確認問題，不算全套PASS，full0021942執行中。22規則／6scope裁決／825條映射及63個實際斷言來源已保存；映射不當PASS。GitHub認證缺失，正常讀／push皆無法執行，已非費用限制；不偽造REMOTE，完整本機工作持續。無效環境與fixture結果保留。
+
+
+### 2026-10-21 非代碼排查中途 checkpoint／GitHub 恢復
+
+使用者重新連線後正常推送至 e558311c；獨立 bare Git 重新 fetch、核對完整 tree 與 CP-20261021-NONCODE-EXEC-LOCAL-001 的40條範圍，收據 REMOTE_VERIFIED。新增2個容量語意根因修正、1個過期進度視圖修正；32 targeted、4 actual core probes、33 offline measured tests、7 evidence negative controls通過。完整1942項與27原版GUI流程仍執行中，未宣稱完成。新應用診斷0；54個新增測試型別診斷保留P3，不放寬／刷新基準。外部資格不變。

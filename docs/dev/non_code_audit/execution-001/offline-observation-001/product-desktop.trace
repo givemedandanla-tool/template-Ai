@@ -1,0 +1,115 @@
+1425415 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425417, si_uid=1000, si_status=0, si_utime=0, si_stime=0} ---
+1425415 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425425, si_uid=1000, si_status=0, si_utime=2 /* 0.02 s */, si_stime=16 /* 0.16 s */} ---
+1425550 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425700, si_uid=1000, si_status=0, si_utime=0, si_stime=1 /* 0.01 s */} ---
+1425453 sendfile(13, 8, [0] => [16435860], 16435860) = 16435860
+1425453 sendfile(13, 8, [16435860], 16435860) = 0
+1425760 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1425760 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1425760 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1425760 getpeername(2, 0x7fff707471f0, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425453 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425760, si_uid=1000, si_status=0, si_utime=14 /* 0.14 s */, si_stime=15 /* 0.15 s */} ---
+1425805 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1425805 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1425805 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1425805 getpeername(2, 0x7ffeb25a0cc0, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425550 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425805, si_uid=1000, si_status=0, si_utime=21 /* 0.21 s */, si_stime=12 /* 0.12 s */} ---
+1425847 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1425847 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1425847 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1425550 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425847, si_uid=1000, si_status=0, si_utime=4 /* 0.04 s */, si_stime=5 /* 0.05 s */} ---
+1425453 sendfile(13, 8, [0] => [462], 8388608) = 462
+1425453 sendfile(13, 8, [462], 8388608) = 0
+1425874 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1425874 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1425874 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1425874 getpeername(2, 0x7fffb1118240, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425453 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425874, si_uid=1000, si_status=0, si_utime=13 /* 0.13 s */, si_stime=12 /* 0.12 s */} ---
+1425898 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1425898 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1425898 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1425898 getpeername(2, 0x7ffd5e47f3e0, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425453 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425898, si_uid=1000, si_status=0, si_utime=21 /* 0.21 s */, si_stime=9 /* 0.09 s */} ---
+1425453 sendfile(13, 8, [0] => [462], 8388608) = 462
+1425453 sendfile(13, 8, [462], 8388608) = 0
+1425946 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1425946 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1425946 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1425946 getpeername(2, 0x7ffe82bde360, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425453 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425946, si_uid=1000, si_status=0, si_utime=11 /* 0.11 s */, si_stime=10 /* 0.10 s */} ---
+1425968 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1425968 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1425968 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1425968 getpeername(2, 0x7ffd93a9d9f0, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425453 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425968, si_uid=1000, si_status=0, si_utime=23 /* 0.23 s */, si_stime=9 /* 0.09 s */} ---
+1425453 sendfile(13, 8, [0] => [462], 8388608) = 462
+1425453 sendfile(13, 8, [462], 8388608) = 0
+1426024 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426024 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426024 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426024 getpeername(2, 0x7fff3a1910e0, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425550 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426024, si_uid=1000, si_status=0, si_utime=13 /* 0.13 s */, si_stime=6 /* 0.06 s */} ---
+1426052 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426052 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426052 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426052 getpeername(2, 0x7fff11cc1890, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425453 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426052, si_uid=1000, si_status=0, si_utime=22 /* 0.22 s */, si_stime=7 /* 0.07 s */} ---
+1425453 sendfile(13, 8, [0] => [462], 8388608) = 462
+1425453 sendfile(13, 8, [462], 8388608) = 0
+1426126 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426126 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426126 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426126 getpeername(2, 0x7ffc036e6ec0, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425453 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426126, si_uid=1000, si_status=0, si_utime=14 /* 0.14 s */, si_stime=7 /* 0.07 s */} ---
+1426153 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426153 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426153 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426153 getpeername(2, 0x7ffedad26390, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425453 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426153, si_uid=1000, si_status=0, si_utime=19 /* 0.19 s */, si_stime=14 /* 0.14 s */} ---
+1425453 sendfile(13, 8, [0] => [462], 8388608) = 462
+1425453 sendfile(13, 8, [462], 8388608) = 0
+1426219 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426219 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426219 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426219 getpeername(2, 0x7ffcbd9725e0, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425550 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426219, si_uid=1000, si_status=0, si_utime=13 /* 0.13 s */, si_stime=7 /* 0.07 s */} ---
+1426239 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426239 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426239 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426239 getpeername(2, 0x7ffff89e90b0, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425550 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426239, si_uid=1000, si_status=0, si_utime=19 /* 0.19 s */, si_stime=5 /* 0.05 s */} ---
+1425453 sendfile(13, 8, [0] => [462], 8388608) = 462
+1425453 sendfile(13, 8, [462], 8388608) = 0
+1426282 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426282 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426282 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426282 getpeername(2, 0x7fff33587be0, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425550 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426282, si_uid=1000, si_status=0, si_utime=11 /* 0.11 s */, si_stime=12 /* 0.12 s */} ---
+1426297 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426297 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426297 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426297 getpeername(2, 0x7fff95f9bc70, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425550 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426297, si_uid=1000, si_status=0, si_utime=17 /* 0.17 s */, si_stime=15 /* 0.15 s */} ---
+1425453 sendfile(13, 8, [0] => [462], 8388608) = 462
+1425453 sendfile(13, 8, [462], 8388608) = 0
+1426306 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426306 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426306 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426306 getpeername(2, 0x7ffc30074230, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425453 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426306, si_uid=1000, si_status=0, si_utime=12 /* 0.12 s */, si_stime=11 /* 0.11 s */} ---
+1426332 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC|SOCK_NONBLOCK, 0) = 5
+1426332 setsockopt(5, SOL_TCP, TCP_NODELAY, [1], 4) = -1 EOPNOTSUPP (Operation not supported)
+1426332 connect(5, {sa_family=AF_UNIX, sun_path=@"/workspace/.cache/broadway1.socket"}, 37) = -1 ECONNREFUSED (Connection refused)
+1426332 getpeername(2, 0x7ffc94f17450, [128]) = -1 ENOTSOCK (Socket operation on non-socket)
+1425550 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426332, si_uid=1000, si_status=0, si_utime=20 /* 0.20 s */, si_stime=13 /* 0.13 s */} ---
+1425453 sendfile(13, 8, [0] => [462], 8388608) = 462
+1425453 sendfile(13, 8, [462], 8388608) = 0
+1425415 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1425453, si_uid=1000, si_status=0, si_utime=6006 /* 60.06 s */, si_stime=1879 /* 18.79 s */} ---
+1426953 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426957, si_uid=1000, si_status=0, si_utime=11 /* 0.11 s */, si_stime=8 /* 0.08 s */} ---
+1426958 socket(AF_UNIX, SOCK_STREAM|SOCK_CLOEXEC, 0) = 3
+1426951 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426958, si_uid=1000, si_status=0, si_utime=2 /* 0.02 s */, si_stime=2 /* 0.02 s */} ---
+1426953 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426959, si_uid=1000, si_status=0, si_utime=11 /* 0.11 s */, si_stime=8 /* 0.08 s */} ---
+1426960 --- SIGABRT {si_signo=SIGABRT, si_code=SI_TKILL, si_pid=1426960, si_uid=1000} ---
+1426960 +++ killed by SIGABRT +++
+1426951 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_KILLED, si_pid=1426960, si_uid=1000, si_status=SIGABRT, si_utime=14 /* 0.14 s */, si_stime=6 /* 0.06 s */} ---
+1426951 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426962, si_uid=1000, si_status=0, si_utime=5 /* 0.05 s */, si_stime=10 /* 0.10 s */} ---
+1425415 --- SIGCHLD {si_signo=SIGCHLD, si_code=CLD_EXITED, si_pid=1426951, si_uid=1000, si_status=0, si_utime=77 /* 0.77 s */, si_stime=41 /* 0.41 s */} ---

@@ -84,11 +84,12 @@
     },
     {
       "id": "NCA-C02",
-      "independent_expected_intent": "Independent shared structure is learned;raw customer text/default fonts do not become family features.",
+      "independent_expected_intent": "Independent shared structure is learned;raw customer text/default fonts do not become family features;equivalent semantic substitutions can share geometry.",
       "test_refs": [
         "test_noncode_invariants.LearningMeaningOracles.test_family_features_ignore_customer_text_and_unverified_defaults",
         "test_noncode_invariants.LearningMeaningOracles.test_shared_style_is_not_one_family_per_work_and_aliases_do_not_create_support",
-        "test_design_family.DesignFamilyTests.test_batch_reestimation_is_deterministic_and_preserves_rare_observations"
+        "test_design_family.DesignFamilyTests.test_batch_reestimation_is_deterministic_and_preserves_rare_observations",
+        "test_design_family.StructureBeforeSemanticFamilyTests.test_equivalent_semantic_substitution_does_not_itself_split_geometry_families"
       ],
       "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
     },
@@ -547,6 +548,20 @@
         "self.assertEqual(a, b)",
         "self.assertEqual(set(a['assignment']), {row['id'] for row in rows})",
         "self.assertNotIn('partial_fit', a['algorithm'])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_family.StructureBeforeSemanticFamilyTests.test_equivalent_semantic_substitution_does_not_itself_split_geometry_families": {
+      "test_id": "test_design_family.StructureBeforeSemanticFamilyTests.test_equivalent_semantic_substitution_does_not_itself_split_geometry_families",
+      "path": "tests/test_design_family.py",
+      "line": 156,
+      "function_sha256": "0ecdec1bcd63241176fddb4aeb4711d55dd344f9db07779ffc1c25ee550c03cb",
+      "assertions": [
+        "self.assertEqual(feature_vector(rows[0]), feature_vector(rows[1]))",
+        "self.assertEqual(len(artifact['families']), 1)",
+        "self.assertEqual(artifact['families'][0]['independent_support'], 12)",
+        "self.assertEqual(len(profile['grammar']['observed_joint_counts']), 2)",
+        "self.assertTrue(any((row['semantic_type'] == 'email' for row in profile['data_requirement_profiles'])))"
       ],
       "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
     },
