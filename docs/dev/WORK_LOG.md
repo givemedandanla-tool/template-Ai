@@ -1830,3 +1830,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 Inkscape依賴說明核對：使用者詢問未安裝是否仍可使用EXE。依importer實際分支，啟動／既有模板流程不依賴Inkscape；PDF相容.ai／PDF、SVG與圖片有內建備援，讀取不等於來源語意／正式資格完整。無PDF相容內容.ai需轉換器或支援格式，不保證私有完整還原。只修正快速開始與發佈說明，git diff --check PASS，不改產品／測試或重啟正在執行的044正常發佈；其實際Release回執仍待讀回。
 
 2026-10-21 04418ac0/run39632714813原176及真EXE14+7全PASS，原包Gate正確拒絕sklearn自帶tests資料，因此不發佈。釘定官方hook全collect根因；docs建置配置只在freeze前移除已知第三方tests，runtime/license/產品/原inventory Gate不變，7控制PASS。所有原始失敗保留，準備完整checkpoint與新正常精確來源重驗。
+
+2026-10-21 Inkscape問答再核source_analysis與logo_discovery：啟動及既有模板流程可不用；PDF／SVG備援能讀不等於自動學習全流程。現有自動向量幾何／Logo群組分析需要本機Inkscape，缺少時保持待人工，快速開始已明確補上。僅docs修改，不重啟正在正常驗證的f203。

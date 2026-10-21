@@ -3,13 +3,13 @@
 Windows內部實測目標為 **v0.2.0-beta.1**，目前仍在驗證與發佈準備，尚不能宣稱可下載。最新狀態見[發佈追蹤](docs/dev/STATE.json)與[Windows測試版說明](docs/dev/releases/WINDOWS_BETA_QUICK_START.md)；下方既有版本介紹保留歷史脈絡。
 
 
-開發用[除錯與查重工具](docs/dev/debug_tooling/README.md)已在既有環境建置：固定版本、本地掃描、保留歷史基準與安全交接。這批新增內容因遠端費用未能核實而只在本機交付包，沒有觸發GitHub CI；產品離線操作不依賴這些工具。
+開發用[除錯與查重工具](docs/dev/debug_tooling/README.md)已在既有環境建置：固定版本、本地掃描、保留歷史基準與安全交接。開發工具與來源、報告及交接沿既有GitHub工作脈絡保存；產品離線操作不依賴這些工具，實際遠端狀態以STATE與讀回收據為準。
 
 ## Human／AI 從這裡開始
 
 開發或恢復先讀 [AGENTS.md](AGENTS.md) → [開發狀態](docs/dev/STATE.json) → [交接](docs/dev/HANDOFF.md) → [要求與功能清單](docs/dev/FEATURES.md)／[機器登錄](docs/dev/REQUIREMENTS.json) → [工作紀錄](docs/dev/WORK_LOG.md)。[checkpoint 流程](docs/dev/DEVELOPMENT_PROTOCOL.md)與[證據設計／成熟來源](docs/dev/EVIDENCE_DESIGN.md)供 Human 和 GPT 共用。不要只讀歷史第一版狀態。每輪開發的計數見 [進度統計](docs/dev/PROGRESS.md)，前後差異見 docs/dev/progress/。
 
-**開發以零例行問答、checkpoint 與 GitHub 持久化為核心。EXE 已延後，不再自動打包或重試；先完成清單要求及其證據。**
+**開發以零例行問答、checkpoint 與 GitHub 持久化為核心。目前已明確授權 v0.2.0-beta.1 Windows 內部實測版建置與發佈；一般開發提交不自動打包，下載狀態見頁首與 STATE。**
 
 **v0.1.26：新增程式內問題報告、安全HTML／JSON離線保存與歷史重開／版本定位。** 詳見[報告操作指南](docs/dev/DIAGNOSTIC_REPORTS_USER_GUIDE.md)。產品不自動外傳，正式驗收以STATE為準。
 
