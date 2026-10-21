@@ -1828,3 +1828,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 c45/run39630607193真EXE A/B PASS：mode0同cacheFAIL0units，mode1原14+7全PASS含暫停/重啟/重播；0c4 unchanged。根因為frozen文字編碼，啟用官方Xutf8，不改product或gate。仍未tag/發布；進入全證據checkpoint與正常176+EXE+兩次下載最後流程。
 
 2026-10-21 Inkscape依賴說明核對：使用者詢問未安裝是否仍可使用EXE。依importer實際分支，啟動／既有模板流程不依賴Inkscape；PDF相容.ai／PDF、SVG與圖片有內建備援，讀取不等於來源語意／正式資格完整。無PDF相容內容.ai需轉換器或支援格式，不保證私有完整還原。只修正快速開始與發佈說明，git diff --check PASS，不改產品／測試或重啟正在執行的044正常發佈；其實際Release回執仍待讀回。
+
+2026-10-21 04418ac0/run39632714813原176及真EXE14+7全PASS，原包Gate正確拒絕sklearn自帶tests資料，因此不發佈。釘定官方hook全collect根因；docs建置配置只在freeze前移除已知第三方tests，runtime/license/產品/原inventory Gate不變，7控制PASS。所有原始失敗保留，準備完整checkpoint與新正常精確來源重驗。

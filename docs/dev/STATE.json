@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "NORMAL_UTF8_SAFE_FINAL_WINDOWS_RELEASE",
+  "active_task": "FIX_PUBLIC_DEPENDENCY_TEST_DATA_FREEZE_POLICY",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-UTF8-READY-001.receipt.json",
   "last_confirmed_commit": "a3fc928f5f9f123bde81c7066af61af350a7d1d7",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
@@ -43,7 +43,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261021-WINDOWS-PAYLOAD-READY-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1701,22 +1703,22 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "NORMAL_UTF8_FINAL_NATIVE_BUILD_RUNNING",
+    "status": "WINDOWS_176_AND_EXE_PASS_PACKAGE_TEST_DATA_REJECTED",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Normal release request: all original176, actual UTF8 EXE21checks/two phases, immutabletag, draft and published complete downloads. Claim release only after exact RELEASE_PUBLISHED_DOWNLOAD_VERIFIED readback.",
+    "next": "Exclude pinned third-party test data before freeze, retaining original inventory guard; complete new exact-source Windows tests, EXE acceptance, package and download verification.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
       "linux_source_flow": "009 two phases PASS but dirty source demonstration only; repeat source-bound",
-      "actual_windows_exe": "c45 actual A/B verified: mode0 exactcacheFAIL; mode1 original14+7checksPASS, both phases, actual_frozen=true, source matches/unchanged; diagnostic notpublication",
+      "actual_windows_exe": "04418ac0: actual frozen Windows EXE original14+7 checks PASS, both phases, source matches/unchanged, utf8mode1; package blocked third-party sklearn test data",
       "report_regression": "32 PASS",
       "runtime_refresh": "2 new cases PASS; original unmodified capture_runtime fixed004 PASS",
       "windows_safety_regressions": "5 PASS locally, actual foreign-process survival and bounded atomic-write failures",
       "evidence_module_regression": "7 PASS",
-      "native_windows_source": "176/176PASS source03a7/run39623436705, all originalIDs,16healthy,49freshgroups,zeroerrors"
+      "native_windows_source": "04418ac0/run39632714813:176/176PASS,16healthy,49freshQtgroups,0runtime,source unchanged"
     },
     "authorization": {
       "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -1727,7 +1729,7 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "RUNNING_EXACT04418_READ_BACK",
+    "windows_receipt": "docs/dev/releases/v0.2.0-beta.1/windows-native-006-payload-failed/status.json",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "04418ac0fbc39011a6aebbcbd8e475cba3cc0f01",
     "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",

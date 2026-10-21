@@ -4,7 +4,7 @@
 
 ## 當前正常發佈
 
-**尚未發佈，無tag。當前正常無diagnostic標記候選04418ac0fbc39011a6aebbcbd8e475cba3cc0f01已推送並獨立Git讀回；run39632714813已讀到RUNNING回執。** 最新已實證修復是frozenUTF8，不需改產品。正常流程仍完整原176、真EXE兩階段、tag、草稿與公開下載全部檔案SHA。只有RELEASE_PUBLISHED_DOWNLOAD_VERIFIED原生回執精確讀回，才能說已發佈。
+**尚未發佈，無tag。04418ac0/run39632714813原176/176、16healthy、49Qtgroups、0runtime及真EXE14+7兩階段均PASS；最終包內容Gate攔下sklearn自帶tests/data，原始失敗保留windows-native-006-payload-failed。** 釘定官方hook全量collect_data_files根因已核對，docs建置配置在freeze與EXE驗證前移除三個已知第三方tests資料；原包Gate不變，7配置控制PASS。正在保存完整checkpoint後啟動新的正常完整原176+EXE+tag+兩次全下載流程。禁止僅複製044結果改來源，只有RELEASE_PUBLISHED_DOWNLOAD_VERIFIED精確讀回才算發佈。見PAYLOAD_POLICY_REPAIR.md。
 
 原生Windows03a7c692/run39623436705已176/176PASS、16健康、49新Qt程序、0runtime、source unchanged；真EXE當時快取失效。d34e/run39628676683觀察到0AUTO_UNIT、COMPLETED_WITH_EXCEPTIONS、來源快取錯誤，未到暫停，不是暫停控制失效。
 
