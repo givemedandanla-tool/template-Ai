@@ -99,6 +99,30 @@ def main():
     shutil.copyfile(a.execution / 'tests.json', folder / 'tests.json')
     shutil.copyfile(a.execution / 'summary.json', folder / 'execution-summary.json')
     shutil.copyfile(a.execution / 'source.json', folder / 'execution-source.json')
+    module_inputs=[]
+    if source.get('qualification_provenance'):
+        require(source['qualification_provenance']=='module-revalidation.json','Unknown module qualification provenance')
+        selection=read_json(a.execution/'module-revalidation.json')
+        require(selection['kind']=='ACTUAL_SAME_SOURCE_MODULE_REVALIDATION_NOT_A_SINGLE_FRESH_FULL_ATTEMPT','Unknown qualification strategy')
+        require(len(selection['inputs'])==2 and selection['initial_failed_attempt_preserved'],'Original failed attempt must remain visible')
+        input_records={}
+        required_files={'source.json','summary.json','tests.json','catalog.json','runtime-errors.json','live/test-modules.json'}
+        for index,item in enumerate(selection['inputs']):
+            origin=(ROOT/item['path']).resolve()
+            require(origin.is_relative_to(ROOT/'docs/dev/releases'),'Module execution input outside release evidence')
+            require(set(item['files'])==required_files,'Incomplete original execution files')
+            require(read_json(origin/'source.json')['source_manifest']==current,'Module input source differs from current source')
+            prefix=folder/'module-inputs'/str(index)
+            for name,expected_hash in item['files'].items():
+                require(digest((origin/name).read_bytes())==expected_hash,'Original execution input hash mismatch')
+                target=prefix/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(origin/name,target)
+            input_records[item['path']]={r['id']:r for r in read_json(origin/'tests.json')}
+            module_inputs.append(dict(original=item['path'],archive='module-inputs/'+str(index)))
+        for record in records:
+            origin=selection['selected_case_origins'].get(record['id'])
+            require(origin in input_records and input_records[origin].get(record['id'])==record,'Qualified case was not actually recorded in its declared execution')
+        shutil.copyfile(a.execution/'module-revalidation.json',folder/'module-revalidation.json')
+        shutil.copyfile(a.execution/'retained-initial-runtime-errors.json',folder/'retained-initial-runtime-errors.json')
     shutil.copyfile(a.stock / 'summary.json', folder / 'capture-summary.json')
     shutil.copyfile(a.stock / 'jobs.json', folder / 'capture-jobs.json')
     shutil.copyfile(a.stock / 'image-manifest.json', folder / 'capture-image-manifest.json')
@@ -115,6 +139,9 @@ def main():
                       equivalent_source_basis='Exact per-path content/blob manifest equality; documentation-only commit difference allowed.',
                       original_claim_generator_sha256=original_hash,
                       original_overall_status_preserved=status, original_not_verified=sum(c['status'] != 'PASS' for c in claims))
+    if module_inputs:
+        provenance['module_execution_inputs']=module_inputs
+        provenance['qualification_strategy']='Explicit same-source module revalidation; initial timeout retained, not a single fresh full attempt.'
     write_json(folder / 'adoption-provenance.json', provenance)
     attachments = {p.relative_to(folder).as_posix(): dict(bytes=p.stat().st_size, sha256=digest(p.read_bytes()), mime=mimetypes.guess_type(p.name)[0] or 'text/plain')
                    for p in folder.rglob('*') if p.is_file()}

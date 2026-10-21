@@ -1,0 +1,24 @@
+Owned module test_source_watch_service
+Thread 0x00007fc9ac9cd6c0 (most recent call first):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 359 in wait
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 655 in wait
+  File "/workspace/template-Ai/template_ai/runtime_resources.py", line 134 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1012 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1075 in _bootstrap_inner
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 1032 in _bootstrap
+
+Current thread 0x00007fc9b3f1b740 (most recent call first):
+  File "/workspace/template-Ai/template_ai/gui.py", line 883 in inform
+  File "/workspace/template-Ai/template_ai/gui.py", line 2479 in closeEvent
+  File "/workspace/template-Ai/tests/test_source_watch_service.py", line 19 in <lambda>
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 597 in _callCleanup
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 671 in doCleanups
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 638 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122 in run
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84 in __call__
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240 in run
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 40 in main
+  File "/workspace/template-Ai/tools/evidence_test_worker.py", line 59 in <module>

@@ -1,0 +1,29 @@
+{
+  "strategy": "SERIAL_OWNED_FRESH_MODULE_PROCESSES",
+  "module_timeout_seconds": 180,
+  "planned_tests": 11,
+  "completed_tests": 9,
+  "modules": [
+    {
+      "module": "test_source_watch_service",
+      "owned_pid": 1676996,
+      "exit_code": 0,
+      "seconds": 180.250504,
+      "expected": 11,
+      "completed": 9,
+      "missing_test_ids": [
+        "test_source_watch_service.SourceWatchServiceTests.test_shutdown_stops_qt_watchers_and_timers_before_library_close",
+        "test_source_watch_service.SourceWatchServiceTests.test_source_index_changed_during_scan_cannot_commit_a_stale_candidate_or_overwrite_real_new_source"
+      ],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": true,
+      "failure": "MODULE_DEADLINE_EXCEEDED",
+      "remaining_owned_pids": [],
+      "healthy": false,
+      "stdout_bytes": 50,
+      "stdout_sha256": "caeb11f6473c6c7125dd27478e588b85ffd6b31784e9adb1371a60f1661eb00f"
+    }
+  ]
+}

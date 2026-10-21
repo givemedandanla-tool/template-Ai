@@ -1,0 +1,464 @@
+[
+  {
+    "id": "STOCK-CAPTURE-01",
+    "script": "tools/validate_first_version.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/validate_first_version.py",
+      "--skip-tests",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006",
+      "--dpi",
+      "96"
+    ],
+    "deadline_seconds": 180,
+    "seconds": 50.83232492802199,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "01-validate_first_version.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-02",
+    "script": "tools/capture_next_twenty.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_next_twenty.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 90,
+    "seconds": 5.336234226997476,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "02-capture_next_twenty.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-03",
+    "script": "tools/capture_next_twentyeight.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_next_twentyeight.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 90,
+    "seconds": 16.018259893986396,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "03-capture_next_twentyeight.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-04",
+    "script": "tools/capture_remaining28.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_remaining28.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 44.748877462989185,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "04-capture_remaining28.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-05",
+    "script": "tools/capture_quality_repair.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_quality_repair.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 72.32802747102687,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "05-capture_quality_repair.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-06",
+    "script": "tools/capture_trusted_samples.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_trusted_samples.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 60,
+    "seconds": 5.893067686003633,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "06-capture_trusted_samples.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-07",
+    "script": "tools/capture_qualified_coverage.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_qualified_coverage.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 60,
+    "seconds": 7.790442070981953,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "07-capture_qualified_coverage.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-08",
+    "script": "tools/capture_layout_risk_session.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_layout_risk_session.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 60,
+    "seconds": 5.83202439697925,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "08-capture_layout_risk_session.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-09",
+    "script": "tools/capture_candidate_changes.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_candidate_changes.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 6.936578588967677,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "09-capture_candidate_changes.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-10",
+    "script": "tools/capture_candidate_results.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_candidate_results.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 22.993236615031492,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "10-capture_candidate_results.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-11",
+    "script": "tools/capture_sync_workflow.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_sync_workflow.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 43.67017671500798,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "11-capture_sync_workflow.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-12",
+    "script": "tools/capture_workbench_navigation.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_workbench_navigation.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 11.015555856982246,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "12-capture_workbench_navigation.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-13",
+    "script": "tools/capture_property_context.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_property_context.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 9.796548524987884,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "13-capture_property_context.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-14",
+    "script": "tools/capture_canvas_commands.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_canvas_commands.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 2.471786741982214,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "14-capture_canvas_commands.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-15",
+    "script": "tools/capture_batch_correction.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_batch_correction.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 13.809844725008588,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "15-capture_batch_correction.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-16",
+    "script": "tools/capture_major_review.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_major_review.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 12.858465552038979,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "16-capture_major_review.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-17",
+    "script": "tools/capture_digital_preflight.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_digital_preflight.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 27.0570766350138,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "17-capture_digital_preflight.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-18",
+    "script": "tools/capture_font_source_workflow.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_font_source_workflow.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 2.121365903003607,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "18-capture_font_source_workflow.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-19",
+    "script": "tools/capture_source_text_diagnostics.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_source_text_diagnostics.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 120,
+    "seconds": 2.9254226380144246,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "19-capture_source_text_diagnostics.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-20",
+    "script": "tools/capture_fixed70_ten.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_fixed70_ten.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 60,
+    "seconds": 12.805453339999076,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "20-capture_fixed70_ten.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-21",
+    "script": "tools/capture_diagnostics.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_diagnostics.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 60,
+    "seconds": 2.8730825720122084,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "21-capture_diagnostics.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-22",
+    "script": "tools/capture_entities.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_entities.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 60,
+    "seconds": 1.6189391770167276,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "22-capture_entities.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-23",
+    "script": "tools/capture_catalog.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_catalog.py",
+      "--artifacts-dir",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 60,
+    "seconds": 2.120812050998211,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "23-capture_catalog.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-24",
+    "script": "tools/capture_local_recovery.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_local_recovery.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 60,
+    "seconds": 2.221363800985273,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "24-capture_local_recovery.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-25",
+    "script": "tools/capture_family_workbench.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_family_workbench.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 180,
+    "seconds": 36.5168352079927,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "25-capture_family_workbench.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-26",
+    "script": "tools/capture_input_integration.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_input_integration.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 180,
+    "seconds": 36.95526172401151,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "26-capture_input_integration.log",
+    "status": "PASS"
+  },
+  {
+    "id": "STOCK-CAPTURE-27",
+    "script": "tools/capture_desktop_workspace.py",
+    "command": [
+      "/workspace/template-Ai/.venv/bin/python",
+      "tools/capture_desktop_workspace.py",
+      "--folder",
+      "/workspace/template-Ai/.cache/release-beta-stock-006"
+    ],
+    "deadline_seconds": 240,
+    "seconds": 78.23685860302066,
+    "exit_code": 0,
+    "timed_out": false,
+    "runtime_flags": [],
+    "log": "27-capture_desktop_workspace.log",
+    "status": "PASS"
+  }
+]

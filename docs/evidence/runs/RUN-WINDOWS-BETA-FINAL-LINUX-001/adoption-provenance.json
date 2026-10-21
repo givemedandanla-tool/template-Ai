@@ -1,0 +1,34 @@
+{
+  "kind": "ADOPT_ACTUAL_COMPLETED_EXECUTION_NO_TEST_RERUN",
+  "command": [
+    "docs/dev/non_code_audit/adopt_verified_execution.py",
+    "--execution",
+    "docs/dev/releases/v0.2.0-beta.1/linux-regression-006-requalified",
+    "--stock",
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-006",
+    "--readback",
+    ".checkpoints/WINDOWS-FINAL-SAME-SOURCE-006/native-readback",
+    "--run-id",
+    "RUN-WINDOWS-BETA-FINAL-LINUX-001"
+  ],
+  "driver_sha256": "2fab8b8ad46316265413a52f5880abdfe23a85f8189557d8ca16d1e7d9e17eb8",
+  "execution": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006-requalified",
+  "captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-006",
+  "actual_execution_commit": "a322683a3e1082f5fefad8230d51436bb5847f52",
+  "remote_snapshot": "bea79a10dbafc42b3545bdc9f3e95d51956cbcf2",
+  "equivalent_source_basis": "Exact per-path content/blob manifest equality; documentation-only commit difference allowed.",
+  "original_claim_generator_sha256": "4d2713e11b5d36c32680904a39505bb0bc070268484c141295b7ff0676fe964f",
+  "original_overall_status_preserved": "FAIL",
+  "original_not_verified": 5,
+  "module_execution_inputs": [
+    {
+      "original": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006",
+      "archive": "module-inputs/0"
+    },
+    {
+      "original": "docs/dev/releases/v0.2.0-beta.1/linux-source-watch-isolated-006",
+      "archive": "module-inputs/1"
+    }
+  ],
+  "qualification_strategy": "Explicit same-source module revalidation; initial timeout retained, not a single fresh full attempt."
+}

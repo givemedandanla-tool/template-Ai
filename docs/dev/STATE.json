@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "PARALLEL_NATIVE_DIAGNOSIS_AND_REQUALIFICATION",
+  "active_task": "WINDOWS_FINAL_SAME_SOURCE_QUALIFICATION_CHECKPOINT",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-REQUALIFY-WIP-002.receipt.json",
   "last_confirmed_commit": "9cb37c2af7dfca6524518a4d5804c35c60838617",
-  "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/run.json",
+  "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
   "exe_policy": "EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -18,9 +18,9 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Wait for original single export-case diagnosis and native176 serial result; Linux1963 workers4 simultaneously. Keep full source/GUI qualification and release disabled until current-source gates actually PASS.",
-    "Do not increase original180s module limits, drop cases, suppress SQLite cleanup errors, or treat native-only diagnosis as release qualification.",
-    "Storage assessment complete, no existing data cleanup."
+    "Checkpoint all actual inputs/formal369attachments and strictgate, then normal release request without diagnostic marker; actual frozenEXE and public asset verification still required.",
+    "Retain rawLinux4way timeout and successful isolated11cases; selected qualification is explicit, not a first-attempt allPASS claim.",
+    "Storage assessment complete; no existing backup/private-data cleanup."
   ],
   "blocked": [
     {
@@ -44,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1702,12 +1704,12 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "DIAGNOSTIC_ONLY_NO_EXE_OR_PUBLISH",
+    "status": "FINAL_QUALIFICATION_REMOTE_COVERAGE_PENDING",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Wait for original single export-case diagnosis and native176 serial result; Linux1963 workers4 simultaneously. Keep full source/GUI qualification and release disabled until current-source gates actually PASS.",
+    "next": "Checkpoint all actual inputs/formal369attachments and strictgate, then normal release request without diagnostic marker; actual frozenEXE and public asset verification still required.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1727,26 +1729,28 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "RUNNING_DIAGNOSTIC_ONLY_ACTUAL_RECEIPT_OBSERVED",
+    "windows_receipt": "NATIVE176_ALL_PASS_DIAGNOSTIC_ONLY",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "429bd302eece95477e462fbdaef6c427bedf42a1",
     "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
     "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.json",
     "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.receipt.json",
     "last_full_run": {
-      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-005/summary.json",
-      "status": "PASS",
+      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006-requalified/summary.json",
+      "status": "PASS_SELECTED_ACTUAL_MODULE_ATTEMPTS",
       "passed": 1963,
       "healthy_modules": 259,
-      "runtime_errors": 0,
-      "source_unchanged": true,
-      "source_commit": "429bd302eece95477e462fbdaef6c427bedf42a1"
+      "runtime_errors_selected": 0,
+      "initial_raw_run": "linux-regression-006",
+      "initial_raw_status": "FAIL_TIMEOUT_1_MODULE",
+      "isolated_revalidation": "linux-source-watch-isolated-006",
+      "isolated_cases_passed": 11
     },
     "code_change_commit": "255e563516172add9c6b399c8683792138b23397",
-    "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006",
+    "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006-requalified",
     "current_original_captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-006",
-    "original_captures_status": "27/27PASS on repair source; scripts/commands/deadlines unchanged",
-    "linux_formal_run": "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/run.json",
+    "original_captures_status": "27/27PASS006; original script bytes/commands/deadlines unchanged",
+    "linux_formal_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
     "local_validation": {
       "full": 1958,
       "passed": 1958,
@@ -1769,7 +1773,7 @@
     "software_snapshot_commit": "ded89cf6638da2f72c2611ebebaeb6553496a1c2",
     "software_verified_files": 11713,
     "governance_gate": "PASS_REQUIRE_EVIDENCE_PUBLICATION_SCOPE",
-    "current_request_source": "a4799a309cbd6587c0f39ff2b8a7b6f751e0f9b6",
+    "current_request_source": "bea79a10dbafc42b3545bdc9f3e95d51956cbcf2",
     "previous_public_runs": [
       {
         "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
@@ -1791,15 +1795,15 @@
       "failed": 1,
       "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
     },
-    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39606517382",
+    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39607635193",
     "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-002-failed",
     "native_result": {
       "planned": 176,
-      "completed": 175,
-      "passed": 174,
-      "errors": 1,
-      "missing": 1,
-      "runtime_errors": 1
+      "completed": 176,
+      "passed": 176,
+      "errors": 0,
+      "runtime_errors": 0,
+      "healthy_modules": 16
     },
     "native_expected_tests": 176,
     "regression_progress": {
@@ -1808,7 +1812,7 @@
     "source_checkpoint": "CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001",
     "source_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
     "software_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
-    "native_mode": "DIAGNOSTIC_ONLY_WITH_BOUNDED_STARTUP_TRACE"
+    "native_mode": "DIAGNOSTIC_PASSED_NOT_PUBLISHED"
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",
