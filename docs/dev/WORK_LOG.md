@@ -1744,3 +1744,8 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 
 
 最終讀回：CP-20261021-NONCODE-COMPLETE-004／8105571e2ffe5f2804155b11e0be9272e1f42d34，7061條逐blob吻合，phase REMOTE_VERIFIED；增量ZIP7060檔隔離還原SHA全吻合。遠端6份精簡檔可重建完成狀態與1942筆實測；正式治理再次PASS。原172要求scope/status/completed及AI8契約逐項／逐byte未變。最終閉合提交僅收據與交接狀態，不改產品程式。
+
+
+### 2026-10-21 發佈與維護協作方案研究（草案）
+
+依使用者本輪要求研究SemVer、Keep a Changelog、GitHub Releases／草稿／不可變發佈與PyInstaller，6份原文固定commit及hash核對。盤點現有0.1.28／README0.1.26／打包v0.1命名差異、14天暫存artifact及舊Windows驗證入口；提出beta／rc／修正／功能版本、精確成品、資料相容與回報狀態流程。RELEASE_MAINTENANCE_PROPOSAL.md狀態DRAFT_FOR_DISCUSSION_NOT_ADOPTED，未改產品版本、程式、workflow、原資格或EXE政策。文件型checkpoint與原軟體CP004分開，不冒稱EXE已發布。

@@ -1,0 +1,101 @@
+{
+  "status": "RESEARCH_FOR_DRAFT_NOT_RELEASE_VALIDATION",
+  "retrieved_utc": "2026-10-21T06:08:33.948494+00:00",
+  "project_baseline": "bad720bb1b65edc7ad118e586ba6e3a8219f7468",
+  "sources": [
+    {
+      "name": "semver",
+      "repository": "semver/semver",
+      "commit": "f99d5485190a47c0863949e7da810a5553e0ed4d",
+      "path": "semver.md",
+      "url": "https://github.com/semver/semver/blob/f99d5485190a47c0863949e7da810a5553e0ed4d/semver.md",
+      "sha256": "33ebae1a97845991d0b916f3295a88b499e2ec71a6c1fe84c12429077b19ce08",
+      "status": "PINNED_CONTENT_VERIFIED"
+    },
+    {
+      "name": "changelog",
+      "repository": "olivierlacan/keep-a-changelog",
+      "commit": "08d0df5a7e93b71d902def8be0f0d40025b56289",
+      "path": "CHANGELOG.md",
+      "url": "https://github.com/olivierlacan/keep-a-changelog/blob/08d0df5a7e93b71d902def8be0f0d40025b56289/CHANGELOG.md",
+      "sha256": "663c710db14ea1168045f260b2bd4f9f8944f19fe6ece78bc52e1a46ef3243d9",
+      "status": "PINNED_CONTENT_VERIFIED"
+    },
+    {
+      "name": "github-releases",
+      "repository": "github/docs",
+      "commit": "3a444c04d005e5d91e29ee0658fd5c9bbeaecf24",
+      "path": "content/repositories/releasing-projects-on-github/about-releases.md",
+      "url": "https://github.com/github/docs/blob/3a444c04d005e5d91e29ee0658fd5c9bbeaecf24/content/repositories/releasing-projects-on-github/about-releases.md",
+      "sha256": "4feedd93b6247e24cc148937348910ff5f3a0506d165821ae187557b5d11904c",
+      "status": "PINNED_CONTENT_VERIFIED"
+    },
+    {
+      "name": "github-manage",
+      "repository": "github/docs",
+      "commit": "3a444c04d005e5d91e29ee0658fd5c9bbeaecf24",
+      "path": "content/repositories/releasing-projects-on-github/managing-releases-in-a-repository.md",
+      "url": "https://github.com/github/docs/blob/3a444c04d005e5d91e29ee0658fd5c9bbeaecf24/content/repositories/releasing-projects-on-github/managing-releases-in-a-repository.md",
+      "sha256": "2c2aca86ea05f7fba3534b0e637c19a0b53d71876bf6794c0d2a3d43861fdd4a",
+      "status": "PINNED_CONTENT_VERIFIED"
+    },
+    {
+      "name": "github-immutable",
+      "repository": "github/docs",
+      "commit": "3a444c04d005e5d91e29ee0658fd5c9bbeaecf24",
+      "path": "content/code-security/concepts/supply-chain-security/immutable-releases.md",
+      "url": "https://github.com/github/docs/blob/3a444c04d005e5d91e29ee0658fd5c9bbeaecf24/content/code-security/concepts/supply-chain-security/immutable-releases.md",
+      "sha256": "67e8d2bc3b3d68ec3fc9b5b37542e9ed4ee8c0d2d10a927a5e0678a9e59ede7e",
+      "status": "PINNED_CONTENT_VERIFIED"
+    },
+    {
+      "name": "pyinstaller",
+      "repository": "pyinstaller/pyinstaller",
+      "commit": "4be552d10c6a0083fced48c7a3c028f21d5d681b",
+      "path": "doc/operating-mode.rst",
+      "url": "https://github.com/pyinstaller/pyinstaller/blob/4be552d10c6a0083fced48c7a3c028f21d5d681b/doc/operating-mode.rst",
+      "sha256": "e9de7053ac0c4c3f67b9230210c509a2219b306130c286cc2b2245ed9e83c857",
+      "status": "PINNED_CONTENT_VERIFIED"
+    }
+  ],
+  "project_anchors": [
+    {
+      "path": "template_ai/__init__.py",
+      "source_sha256": "eec50a294c25f7cf572641c226f94b5ffbf3ade1088a7ef0f893fb9cae2fdb10"
+    },
+    {
+      "path": "README.md",
+      "source_sha256": "adb12ad64a3289f3fbc11e9556ad8a7b6cadc40baa0ae95455886c6bad3e88be"
+    },
+    {
+      "path": ".github/workflows/first-version.yml",
+      "source_sha256": "2450e64d933734b20d8a33b85049bbec89bee43df0f99a2466416b211032d880"
+    },
+    {
+      "path": "tools/build_windows.ps1",
+      "source_sha256": "fdd71d3fe43e9e083a450fd76d52a1aaa0e01279ccbae5aee2caccb7c411d9b7"
+    },
+    {
+      "path": "template_ai/diagnostic_snapshot.py",
+      "source_sha256": "97c9c6c3249f19fa4c95ac03827f69bb829bee7124648988e5aa259126390480"
+    },
+    {
+      "path": "template_ai/offline_support.py",
+      "source_sha256": "53f91bba4d4e5eed3ede96f6685476fb616ba8c5d48ad22bc43f080361c64baf"
+    },
+    {
+      "path": "app.py",
+      "source_sha256": "77dac25a2e47dd09c221bf4ff85819ae45b211bf16a10c50d23f39dae34e3fad"
+    },
+    {
+      "path": "requirements-build.txt",
+      "source_sha256": "f788619a27353387ce5bb07ea4b9cca030bf07d800aedd925c42070afecbc73b"
+    }
+  ],
+  "recommendation_limits": [
+    "SemVer concerns declared public contracts; application/data/workflow compatibility is an explicit adaptation.",
+    "Pre-1.0 compatibility promises are project-specific and remain proposed.",
+    "Pinned upstream develop/main documents are research references, not changed build dependencies.",
+    "No actual build, Release API write, executable upload or migration performed."
+  ]
+}

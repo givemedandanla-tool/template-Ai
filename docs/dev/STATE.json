@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "NON_CODE_AUDIT_LOCAL_SCOPE_COMPLETED",
+  "active_task": "RELEASE_MAINTENANCE_PROPOSAL_DELIVERED",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-NONCODE-COMPLETE-004.receipt.json",
   "last_confirmed_commit": "8105571e2ffe5f2804155b11e0be9272e1f42d34",
   "latest_evidence_run": "docs/evidence/runs/RUN-NONCODE-ALL-001/run.json",
@@ -18,7 +18,7 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "本地下載試用後，由問題與報告手動匯出安全報告；維持原真實作品／Windows／效能／印刷／新手資格，按回饋再開發。"
+    "依使用者後續指令溝通／採用發佈與維護草案；採用後實作版本及發佈接線。本輪沒有打包或發佈授權，現行EXE延後與外部資格不變。"
   ],
   "blocked": [
     {
@@ -1632,5 +1632,17 @@
     "fixed_issues": 4,
     "formal_governance": "PASS",
     "external_qualification_unchanged": true
+  },
+  "release_maintenance_proposal": {
+    "status": "DRAFT_FOR_DISCUSSION_NOT_ADOPTED",
+    "document": "docs/dev/RELEASE_MAINTENANCE_PROPOSAL.md",
+    "research": "docs/dev/RELEASE_MAINTENANCE_RESEARCH.json",
+    "recommended_first_test_version": "0.2.0-beta.1",
+    "version_applied": false,
+    "exe_built": false,
+    "release_published": false,
+    "source_baseline": "bad720bb1b65edc7ad118e586ba6e3a8219f7468",
+    "receipt": "docs/dev/RELEASE_MAINTENANCE_PROPOSAL.receipt.json",
+    "scope": "Proposal documentation only; software checkpoint and current EXE policy unchanged."
   }
 }

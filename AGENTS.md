@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新討論：EXE發佈與版本維護草案
+
+2026-10-21使用者要求研究並溝通交接、版本命名、GitHub EXE發佈及後續修正流程。見[待核對草案](docs/dev/RELEASE_MAINTENANCE_PROPOSAL.md)與固定來源RELEASE_MAINTENANCE_RESEARCH.json。此為DRAFT_FOR_DISCUSSION_NOT_ADOPTED；建議v0.2.0-beta.1尚未改號，未建置／上傳EXE、未變更workflow或EXE延後政策，不把保存草案當採用或發版授權。草案的文件收據與下列軟體驗證checkpoint分開保存；以STATE指標恢復討論。核對後依後續使用者授權落地，不重問已決選項。
+
 ## 最新任務：非代碼排查執行交付完成
 
 見[完成報告](docs/dev/non_code_audit/FINAL_REPORT.md)、STATE與精簡交接。32項處置：28 PASS／4 UNKNOWN；所有可執行子範圍已完成，原真實作品／Windows／實印／新手／斷網隔離資格不冒稱通過。1942／1942測試、254健康模組、0runtime；27原版GUI、19原生桌面與4核心後置條件通過。原1921保留，新21。修正2容量語意缺陷、1過期視圖、1正式證據來源缺口。54個新測試型別診斷保留P3，1個低優先文案候選待本地新手回饋；基準未刷新。原172／825、75父題及8AI／50條資格未更改。
