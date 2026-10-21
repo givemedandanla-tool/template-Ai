@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "NORMAL_PAYLOAD_FRESH_OUTPUT_WINDOWS_RELEASE",
+  "active_task": "NORMAL_FRESH_OUTPUT_FINAL_WINDOWS_RELEASE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-PAYLOAD-READY-001.receipt.json",
   "last_confirmed_commit": "4734990a7a3152eaa6af62daf36f3abd6e160405",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
@@ -1701,7 +1701,7 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "PREPARE_EXPLICIT_PREPACKAGE_RUN_REPLACEMENT",
+    "status": "NORMAL_FRESH_OUTPUT_FINAL_NATIVE_BUILD_RUNNING",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
@@ -1727,9 +1727,9 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "RUNNING_EXACT_F20343B3_READ_BACK",
+    "windows_receipt": "RUNNING_EXACT_8B95B10B_READ_BACK",
     "regression_matrix": ".github/windows-release-test-scope.json",
-    "source_candidate": "PENDING_REPLACEMENT_REQUEST_SHA",
+    "source_candidate": "8b95b10b300dbead4c51264100af7bdd644433ce",
     "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
     "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.json",
     "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.receipt.json",
@@ -1810,11 +1810,12 @@
     "utf8_causal_evidence": "docs/dev/releases/v0.2.0-beta.1/frozen-utf8-ab-001-passed",
     "previous_completed_candidate": "04418ac0fbc39011a6aebbcbd8e475cba3cc0f01",
     "build_policy_controls": "docs/dev/releases/v0.2.0-beta.1/payload-filter-controls-002.json",
-    "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39636966203",
+    "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39638803778",
     "superseded_prepublication_run": {
       "source": "f20343b3a786f8fc5565730e57cf77826c4f0926",
       "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39636966203",
-      "reason": "New build report path would precreate original fresh acceptance directory; detected before publication. Not a completed or published run."
+      "reason": "New build report path would precreate original fresh acceptance directory; detected before publication. Not a completed or published run.",
+      "status": "CANCELLED_CONFIRMED_PUBLIC_HTML"
     }
   },
   "storage_assessment": {
