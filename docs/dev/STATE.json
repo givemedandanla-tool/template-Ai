@@ -5,10 +5,10 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "WINDOWS_BETA_RELEASE_IN_PROGRESS",
+  "active_task": "WINDOWS_BETA_LINUX_VALIDATED_PERSISTING_FORMAL_EVIDENCE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-NONCODE-COMPLETE-004.receipt.json",
   "last_confirmed_commit": "8105571e2ffe5f2804155b11e0be9272e1f42d34",
-  "latest_evidence_run": "docs/evidence/runs/RUN-NONCODE-ALL-001/run.json",
+  "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-LINUX-001/run.json",
   "exe_policy": "EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -18,11 +18,10 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Inspect linux-regression-004 completion; do not alter source while it runs",
-    "After full1958 PASS, adopt actual execution plus stock004 original27 and release-beta-source-005 native Git proof as RUN-WINDOWS-BETA-LINUX-001",
-    "Update completed requirement evidence pointers, generate views, prepare incremental checkpoint covering every new formal attachment; push/read back/ack and preserve receipt",
-    "Only after governance require-evidence publication-scope PASS, push final release-request/v0.2.0-beta.1 candidate; inspect actual Windows171 plus frozen EXE before tag/Release and actual download verification",
-    "GitHub API is currently network-policy Forbidden; saved network draft needs platform settings application. No Windows execution receipt observed; never claim an EXE already built/published."
+    "Prepare CP-20261021-WINDOWS-BETA-SOURCE-002 incremental checkpoint including all RUN-WINDOWS-BETA-LINUX-001 attachments, release docs, .github and build lock; base570ecebe",
+    "Push, independent native Git readback, standard acknowledge, persist receipt closure; require-evidence publication-scope must PASS",
+    "Push final exact HEAD to release-request/v0.2.0-beta.1; verify actual Windows171 and frozen EXE, tag, prerelease, actual download hashes",
+    "If API/network or Actions access remains unavailable, keep built=false published=false and exact access blocker; resume after environment network draft is applied"
   ],
   "blocked": [
     {
@@ -46,7 +45,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261021-WINDOWS-BETA-SOURCE-002"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1704,7 +1705,7 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "ORIGINAL27_PASS_FINAL_FULL_REGRESSION_RUNNING",
+    "status": "LINUX_VALIDATION_PASS_CHECKPOINT_PENDING",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
@@ -1744,6 +1745,25 @@
     "code_change_commit": "7d43d956441bab529d60f734dd331241fd9abfe2",
     "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-004",
     "current_original_captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-004",
-    "original_captures_status": "27/27 PASS; isolated run; original scripts/assertions/deadlines unchanged"
+    "original_captures_status": "27/27 PASS; isolated run; original scripts/assertions/deadlines unchanged",
+    "linux_formal_run": "docs/evidence/runs/RUN-WINDOWS-BETA-LINUX-001/run.json",
+    "local_validation": {
+      "full": 1958,
+      "passed": 1958,
+      "healthy_modules": 258,
+      "runtime_errors": 0,
+      "original_gui_captures": 27
+    },
+    "status_report": "docs/dev/releases/v0.2.0-beta.1/STATUS.md",
+    "checkpoint_recovery": {
+      "status": "ABANDONED_RESTORE_FAILED_NOT_REMOTE_VERIFIED",
+      "id": "CP-20261021-WINDOWS-BETA-SOURCE-001",
+      "reason": "ENOSPC on separate /tmp mount during isolated restore; workspace remains available",
+      "archive_sha256": "401e8a98819dcee08373169fa57f790c8dbeedde861fbd8bb8cd1f1480fe5bb0",
+      "archive_bytes": 61611484,
+      "checkpoint_record_created": false,
+      "software_validation_unchanged": "1958 PASS and original27 PASS",
+      "recovery": "Keep failed local archive; use new unique CP002 with isolated restore under workspace .checkpoints; remove orphan pending entry"
+    }
   }
 }

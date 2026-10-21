@@ -51,7 +51,7 @@ with zipfile.ZipFile(archive, 'x', zipfile.ZIP_DEFLATED) as bundle:
     for relative in files:
         bundle.write(ROOT / relative, relative)
     bundle.writestr('CHECKPOINT_MANIFEST.json', json.dumps(files, ensure_ascii=False, indent=2))
-with zipfile.ZipFile(archive) as bundle, tempfile.TemporaryDirectory(prefix='noncode-restore-') as raw:
+with zipfile.ZipFile(archive) as bundle, tempfile.TemporaryDirectory(prefix='noncode-restore-',dir=ROOT/'.checkpoints') as raw:
     assert bundle.testzip() is None
     target = Path(raw)
     for relative, info in files.items():

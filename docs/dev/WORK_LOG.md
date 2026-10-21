@@ -1786,3 +1786,7 @@ Windows beta full003：1958完成，1956PASS／1ERROR／1FAIL、258模組256健�
 Windows beta：stock004在隔離負載下原27／27PASS、source unchanged，原腳本／斷言／deadline完全未改；舊stock失敗／中斷保留。新固定來源570ecebe／code3cd6da4b的full004開始，原1942保留、新16，當前1958尚未完整通過不能算完成。正式adoption／checkpoint及Windows實測仍待辦，GitHub API網路草稿尚未生效。
 
 Windows beta WIP002：full004約1124／1958PASS、尚未完成；stock004原27全PASS，來源3cd6da4b未改。Git讀回helper已移入docs/dev/releases/verify_git_readback.py，實際獨立Git核對137f8d3f完整57405條PASS，可重建而不依賴/tmp腳本；仍重用標準ack，blobless metadata取回不冒稱REST。增量checkpoint缺scope root的負例PASS且STATE不變；新helper只屬開發交接，不進EXE。
+
+Windows beta full004完整1958／1958PASS、258健康、0runtime，source未改；stock004原27全PASS。已用既有adopter採錄真實同源執行＋原生Git來源為RUN-WINDOWS-BETA-LINUX-001，355附件，software PASS且原5未驗證保留整體FAIL。166已完成範圍重新指向新run，普通治理PASS1958，views及結束snapshot對初始baseline父題／scope／完成數delta全0；不把16新測試當新父題。尚待全部附件遠端checkpoint、Windows171／實際EXE與Release下載校驗，未發布。
+
+Windows beta CP001還原遇ENOSPC：/tmp獨立17G分割區僅103M可用，workspace仍1.8G；archive約59M／邏輯98M＋11712檔案配置超出/tmp，非程式驗證失敗。保留原archive及失敗紀錄，不建立假record、移除孤立pending；helper隔離還原改在workspace/.checkpoints，後續CP002，不刪他人成果或加資源。最終602檔Python3.11 grammar再查PASS、code3cd6da4b未改。
