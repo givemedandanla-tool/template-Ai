@@ -92,6 +92,8 @@ def main():
     write_json(OUT / 'PROGRESS.json', progress)
     issues = [json.loads(l) for l in (OUT / 'issues.jsonl').read_text().splitlines() if l]
     for row in issues:
+        if row['id'] not in {'NCA-ISSUE-001', 'NCA-ISSUE-002', 'NCA-ISSUE-003', 'NCA-ISSUE-004'}:
+            continue
         row['status'] = 'FIXED_AND_REVERIFIED'
         row['verification'] = ['full-regression-002/summary.json', 'formal-governance-check.json']
         if row['id'] == 'NCA-ISSUE-004':

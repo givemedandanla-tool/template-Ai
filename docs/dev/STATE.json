@@ -8,7 +8,7 @@
   "active_task": "NON_CODE_AUDIT_EXECUTION_IN_PROGRESS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-NONCODE-EXEC-LOCAL-001.receipt.json",
   "last_confirmed_commit": "e558311c2a2dddd4b89328d33f05d71a9b7489d0",
-  "latest_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
+  "latest_evidence_run": "docs/evidence/runs/RUN-NONCODE-ALL-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
@@ -43,8 +43,10 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
-  "previous_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
+  "pending_remote": [
+    "CP-20261021-NONCODE-FORMAL-003"
+  ],
+  "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
   "progress_report": "docs/dev/PROGRESS.md",
@@ -1618,6 +1620,6 @@
     "current_code_commit": "4f763f87458f0f65914d7e7c9a04b0a46f8dd912",
     "local_checkpoint": "CP-20261021-NONCODE-EXEC-LOCAL-001",
     "remote_receipt": "docs/checkpoints/CP-20261021-NONCODE-EXEC-LOCAL-001.receipt.json",
-    "formal_evidence": "CURRENT_COMPLETE_EXECUTION_PENDING_FINALIZATION"
+    "formal_evidence": "CURRENT_SOURCE_EXECUTION_PACKAGED_ORIGINAL5QUALIFICATIONS_NOT_VERIFIED"
   }
 }

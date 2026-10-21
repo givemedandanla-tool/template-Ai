@@ -1,0 +1,23 @@
+{
+  "kind": "ADOPT_ACTUAL_COMPLETED_EXECUTION_NO_TEST_RERUN",
+  "command": [
+    "docs/dev/non_code_audit/adopt_verified_execution.py",
+    "--execution",
+    "docs/dev/non_code_audit/execution-001/full-regression-002",
+    "--stock",
+    "docs/dev/non_code_audit/execution-001/stock-gui-001",
+    "--readback",
+    ".checkpoints/CP-20261021-NONCODE-EXEC-LOCAL-001/native-readback",
+    "--run-id",
+    "RUN-NONCODE-ALL-001"
+  ],
+  "driver_sha256": "f812a7add8a0551940b67c0993ceb81f35a5f69965b7d5647b8ce1ddcc69d36b",
+  "execution": "docs/dev/non_code_audit/execution-001/full-regression-002",
+  "captures": "docs/dev/non_code_audit/execution-001/stock-gui-001",
+  "actual_execution_commit": "4f763f87458f0f65914d7e7c9a04b0a46f8dd912",
+  "remote_snapshot": "e558311c2a2dddd4b89328d33f05d71a9b7489d0",
+  "equivalent_source_basis": "Exact per-path content/blob manifest equality; documentation-only commit difference allowed.",
+  "original_claim_generator_sha256": "0791cc2306242726a967fc0065b7658ba8e75102d0c9a5503e408b65b15d06ee",
+  "original_overall_status_preserved": "FAIL",
+  "original_not_verified": 5
+}
