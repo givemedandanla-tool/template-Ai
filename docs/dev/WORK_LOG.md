@@ -1723,3 +1723,5 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 2026-10-21 GitHub保存恢復：使用者確認無付款方式，固定版本官方Actions超額停用政策已核對。44個提交0e7b8aee→a4a448f2正常推送；獨立空bare從GitHub下載，43887檔案條目及原始commit/完整物件核對一致，fsck0，FULL010程式manifest不變。CP-20261021-AUDIT-GITHUB-READBACK是原生Git遠端收據，非REST回應；收據與交接後續小提交保存。正式治理舊來源登錄仍過期，未重發或改寫既有FAIL；未新增產品修改/測試執行/付費能力/代理/EXE/合併/部署。
 
 2026-10-21使用者修正費用與效率規定：確認無API key，要求不自縛手腳。已在決策／AGENTS／核心持久化規則／Copilot入口／工具說明／STATE／機器計畫同步：既有Pro、免費工具與正常GitHub直接使用，不反覆要求帳務或權益證明；額外購買、加購、試用與另計費服務仍不啟用。代理依任務與平台授權，沒有以本次更新啟用代理。標準checkpoint951b62bd已原生Git讀回並ack42539條目；純文件操作未重跑產品測試或重建既有交付ZIP。
+
+2026-10-21 NONCODE-AUDIT-001設計交付：依使用者要求研究Adobe InDesign API、Camunda DMN、Scribus、Great Expectations、MLflow、Hypothesis、Z3的固定commit內容／hash。8面向32檢查主題，獨立期望、正反例、UNKNOWN、條款映射、資源上限與原外部資格均明列。只設計，0正式檢查執行；初步3項文件／證據訊號不當產品缺陷。未改產品／原需求完成數／基準／外部資格，沒有裝工具／重跑產品測試／啟用付費服務或代理。使用小型增量文件checkpoint與GitHub精確讀回，不重建完整產品ZIP。

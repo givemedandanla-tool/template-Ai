@@ -11,7 +11,11 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
-## 最新任務：第一次下載前全面查證計畫
+## 最新任務：非代碼排查方案（本輪只設計）
+
+使用者要求參考成熟商業方案、優秀GitHub專案與邏輯學，設計非代碼錯誤排查方案並報告。入口為[PLAN.md](docs/dev/non_code_audit/PLAN.md)、PLAN.json、SOURCES.json與PRELIMINARY_OBSERVATIONS.json。已完成7個固定版本來源研究、8個面向／32項檢查主題；目前0項正式執行，未改產品／原資格／問題基準。3項初步文件／證據訊號不等於3個產品缺陷。32項不是新AI工作包或新父題；本輪到設計交付為止，不自動開始產品整改。正式執行先校準核准規則及證據，再按P0/P1風險查反例；Windows／真實作品／新手獨立實測／印刷等外部子範圍保留。STATE與最新設計checkpoint收據為接手依據。
+
+## 先前任務：第一次下載前全面查證計畫
 
 本機全面查證已完成，見[完成報告](docs/dev/pre_download_audit/FINAL_REPORT.md)、STATE與精簡交接。來源見完成報告：1921PASS/原1850保留/0runtime，27原版GUI作業與19實際桌面項目通過；原11798及最後新增/變體均判讀，基準未刷新。2026-10-21已恢復正常GitHub保存：44個提交推送到原開發分支，獨立空Git倉庫重新下載後逐項核對43887個檔案條目，收據CP-20261021-AUDIT-GITHUB-READBACK為REMOTE_VERIFIED（原生Git，非REST API）。費用依據與限制見[本次保存說明](docs/dev/pre_download_audit/github-persistence-20261021/README.md)。歷史正式治理的證據來源過期問題仍未重發，不把遠端保存成功當新正式run通過；Windows/真實作品/印刷資格不變。本機ZIP仍是6c07597c快照，與較新的GitHub交接更新分開。沒有自動EXE/網頁/手機/全庫整改授權。下文DEV-QUALITY-001為先前建置歷史，不代替本輪查證結果。
 
