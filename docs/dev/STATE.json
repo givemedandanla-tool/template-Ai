@@ -1703,12 +1703,12 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "LINUX_FULL_RUNNING_WINDOWS_ACK_MISSING",
+    "status": "FINAL_FIXTURE_ADAPTERS_CORRECTED",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Run immutable Linux full1958 and original27 captures; adopt genuine formal evidence and remote checkpoint; only then update release-request ref. Windows actual build/release still unconfirmed.",
+    "next": "Run original stock-captures-004 alone; then linux-regression-004 with no source changes; restore formal evidence and checkpoint before Windows release request.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1728,9 +1728,17 @@
     ],
     "windows_receipt": "NOT_OBSERVED_REQUEST_PUSH_DOES_NOT_PROVE_RUN_STARTED",
     "regression_matrix": ".github/windows-release-test-scope.json",
-    "source_candidate": "094f8f9a72bd2aa1711435e677192b5e8261aa93",
-    "source_manifest_sha256": "46bd03f60853a001221cfc3f5ff3503fe198f6369824d1a78dec7d92ed84378e",
+    "source_candidate": "7d43d956441bab529d60f734dd331241fd9abfe2",
+    "source_manifest_sha256": "3cd6da4bbe162df29746c17e12e55992a4eabc09042f4492896a0b54b9c9c95f",
     "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-001.json",
-    "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-001.receipt.json"
+    "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-001.receipt.json",
+    "last_full_run": {
+      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-003/summary.json",
+      "status": "FAIL",
+      "passed": 1956,
+      "error": 1,
+      "failed": 1,
+      "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
+    }
   }
 }

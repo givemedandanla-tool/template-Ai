@@ -1,3 +1,7 @@
+# 當前接手：Windows beta驗證持續，尚未發布
+
+依STATE.windows_release來源與next接續。full003完整1958為1956PASS／2未通過，原因是兩測試子程序攔截器固定索引，已只修測試參數定位，21相關測試PASS。原斷言與逾時未改。下一步先單獨stock004（不要與全回歸同跑），再linux004完整1958；新來源全通過並完成同源正式run及遠端checkpoint後才推最新release-request。已存在舊請求不代表Windows已啟動，API政策仍擋住查詢；待套用環境網路草稿，不能索取私人資料或API key。
+
 # 當前接手：Windows測試版發佈已授權
 
 當前固定來源094f8f9a；完整1958在linux-regression-003執行，見STATE.windows_release與checkpoint-progress-001.json。原1942全部保留、新16。source-flow011兩階段PASS但僅Linux/Python來源，不是frozen Windows。stock003在與全回歸同跑時首項工作未完成斷言失敗；保留結果，完整回歸後再單獨跑原版stock004，不改原斷言／時限。API主機網路草稿未生效，Windows執行回執未讀到，不能宣稱已打包／發布。新正式Gate／全部附件遠端checkpoint完成後才更新release-request候選分支。

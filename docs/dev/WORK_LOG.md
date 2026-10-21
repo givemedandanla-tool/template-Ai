@@ -1780,3 +1780,5 @@ Windows beta matrix finalized：完整catalog有明確Linux-only字型路徑／W
 Windows beta progress checkpoint001：來源094f8f9a原生Git完整52442條讀回；Linux來源流程011真實GUI／模型兩階段PASS，但明確不是frozen Windows。全1958目前約746PASS、0失敗，未完成不可當PASS。原stock003首項queue.running斷言失敗，保留不覆蓋，待全回歸結束後隔離負載用原版腳本再驗證。Windows請求無回執、API仍Forbidden，網路草稿未生效；未發布。
 
 Windows beta：進度WIP001快照7e1a51dd原生Git完整52456條讀回；專用收據僅WIP文件，不冒稱1958完整／Windows已驗證。補記7個Windows建置工具精確版本與官方wheel SHA256（.github/windows-build-lock.json），requirements-build固定轉依賴且與runtime分離；尚未在本環境安裝或Windows驗證。程式code manifest仍46bd03f6，不影響進行中的同源回歸。
+
+Windows beta full003：1958完成，1956PASS／1ERROR／1FAIL、258模組256健康、0runtime；不能當完整通過。兩未通過均測試process_factory取command[3:]，新增source/frozen共用launcher後包含module名，導致argparse未進入逾時／取消注入；改為從實際--root定位，未改2.5秒逾時、5秒取消邊界、SQLite回滾、隔離續跑及去重斷言。對應9＋12共21既有測試PASS，不計新增。全部舊1942及新16名稱不變。接著先單獨原版27GUI，再以新固定來源完整回歸；Windows實測回執仍未取得，未發布。
