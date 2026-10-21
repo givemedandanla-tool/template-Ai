@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "scope": "WINDOWS_APPLICABLE_CORE_REGRESSION_PLUS_ACTUAL_FROZEN_EXECUTABLE",
+  "full_source_gate": "dev_governance check --require-evidence --publication-scope; requires same-source full Linux regression and original captures",
+  "reason": "Existing full catalog includes explicitly Linux-only font fixtures and Windows-symlink skips. Those stay in the full Linux gate; they are not relabelled as Windows PASS. Every selected Windows test must actually PASS, with no skipped tests.",
+  "modules": [
+    "test_first_version",
+    "test_input_learning_integration",
+    "test_design_session",
+    "test_design_family",
+    "test_desktop_workspace",
+    "test_runtime_worker",
+    "test_runtime_source_refresh",
+    "test_runtime_queue",
+    "test_offline_support",
+    "test_diagnostic_reports",
+    "test_persistent_fonts",
+    "test_logo_workflow_gui",
+    "test_frozen_launch",
+    "test_release_authorization",
+    "test_release_download"
+  ],
+  "not_qualified": [
+    "All Linux-specific tests on Windows",
+    "Windows symlink/junction privilege qualification",
+    "Private Illustrator corpus quality and user hardware performance",
+    "Windows OCR installation and real corpus OCR quality",
+    "Physical print and independent novice qualification"
+  ]
+}

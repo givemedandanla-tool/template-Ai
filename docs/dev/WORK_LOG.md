@@ -1774,3 +1774,5 @@ Windows beta WIP：版本／frozen白名單背景入口與副本啟動整合、W
 Windows beta preflight：13新回歸及10既有治理測試PASS。合成來源流程009兩階段PASS（Linux、source-only、當時未提交，不當固定來源／frozen證據）；修復從非倉庫cwd啟動子程序的模組查找，全部既有worker共用有限白名單入口。GUI等待改用既有真實QEventLoop模式，未放寬原逾時或斷言；同時保留實際資源與合成固定負載的資格界線。治理僅允許本次精確發佈請求分支與手動dispatch，一般push／PR仍拒絕。固定來源後重跑。
 
 Windows beta validation WIP2：固定來源4406e11d的Linux全回歸在676項／645PASS後因已確認beta報告版本缺陷停止，保留INTERRUPTED_NOT_PASS與全部觀察，不能冒稱完整PASS；31失敗不以重跑消失。原stock001在第4項失敗而停止（3PASS/1FAIL/23未跑）。根因診斷排除原始幾何不一致：真實CLI輸出一致；背景資源暫停後的清單刷新建立手工整頁作品，改變接續分割範圍。修復preserve_editor也保留空編輯器，不改演算法／作品真值。新增強制邊界暫停→刷新→接續回歸；原始capture_runtime fixed004 PASS。報告32項PASS，beta/rc嚴格白名單，不允許任意版本字串／私人payload。原13項source-refresh初查含11既有imported TestCase重複，已改module alias避免污染catalog，只有2項新增。尚未取得Windows執行回執／未發佈。
+
+Windows beta matrix finalized：完整catalog有明確Linux-only字型路徑／Windows symlink skip，原先全catalog直接在Windows跑並要求全部PASS不成立。改為保留Linux完整1958＋原27GUI的同源正式Gate，Windows15個已核對可適用核心模組全PASS無skip＋實際EXE兩階段；不改既有skip、不刪測試、不宣稱其Windows通過。工具／授權metadata補齊pycparser，發布manifest保存分工與未驗證範圍。linux002／stock002在工具範圍定案前明確中斷非PASS，保留歷史；之後固定來源不再修改程式／測試／工具。Windows請求branch仍舊來源，取得正式同源Gate後才更新，避免無效建置。

@@ -40,7 +40,7 @@ def persist(status):
             git(folder, 'checkout', '--orphan', 'evidence')
         target = folder / source
         target.mkdir(exist_ok=True)
-        names = ['WINDOWS_RUNTIME.txt', 'installed-dependencies.txt', 'pyinstaller.log', 'release-manifest.json',
+        names = ['WINDOWS_RUNTIME.txt', 'installed-dependencies.txt', 'pyinstaller.log', 'release-manifest.json', 'governance-gate.json',
                  'SHA256SUMS.txt', 'download/download-verification.json', 'source-tests/summary.json',
                  'source-tests/tests.json', 'source-tests/catalog.json', 'source-tests/runtime-errors.json',
                  'source-tests/live/test-modules.json']

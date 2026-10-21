@@ -1700,12 +1700,12 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "LOCAL_RELEASE_BLOCKERS_FIXED_WINDOWS_RECEIPT_PENDING",
+    "status": "FINAL_SOURCE_MATRIX_VALIDATION_IN_PROGRESS",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Push exact authorized release-request branch; inspect real Windows source regression and frozen executable results before publishing.",
+    "next": "Run immutable Linux full1958 and original27 captures; adopt genuine formal evidence and remote checkpoint; only then update release-request ref. Windows actual build/release still unconfirmed.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1723,6 +1723,7 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "NOT_OBSERVED_REQUEST_PUSH_DOES_NOT_PROVE_RUN_STARTED"
+    "windows_receipt": "NOT_OBSERVED_REQUEST_PUSH_DOES_NOT_PROVE_RUN_STARTED",
+    "regression_matrix": ".github/windows-release-test-scope.json"
   }
 }

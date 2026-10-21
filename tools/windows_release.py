@@ -155,17 +155,25 @@ def package():
         entries.append(dict(path=relative.as_posix(), bytes=path.stat().st_size, sha256=sha(path)))
     source_tests = json.loads((artifacts / 'source-tests/summary.json').read_text(encoding='utf-8'))
     acceptance = json.loads((artifacts / 'package-check/summary.json').read_text(encoding='utf-8'))
+    governance = json.loads((artifacts / 'governance-gate.json').read_text(encoding='utf-8-sig'))
+    state = json.loads((ROOT / 'docs/dev/STATE.json').read_text(encoding='utf-8'))
+    full_run = json.loads((ROOT / state['latest_evidence_run']).read_text(encoding='utf-8'))
+    windows_scope = json.loads((ROOT / '.github/windows-release-test-scope.json').read_text(encoding='utf-8'))
     if (source_tests.get('software_execution') != 'PASS' or source_tests.get('source_commit') != source_commit()
             or not source_tests.get('source_unchanged_during_run') or source_tests.get('runtime_errors') != 0
             or acceptance.get('status') != 'PASS' or not acceptance.get('actual_frozen_executable')
             or not acceptance.get('source_matches_head') or not acceptance.get('source_unchanged_during_run')
             or acceptance.get('source_commit') != source_commit() or acceptance.get('version') != __version__
-            or acceptance.get('executable_sha256') != sha(executable)):
+            or acceptance.get('executable_sha256') != sha(executable)
+            or governance.get('status') != 'PASS'
+            or full_run.get('source_manifest_sha256') != source_identity()['source_manifest_sha256']):
         raise RuntimeError('Current exact Windows source and packaged bytes must have passed acceptance')
     manifest = dict(version=__version__, tag='v' + __version__, source_commit=source_commit(),
                     architecture='windows-x64', python=platform.python_version(), signed=False,
                     package_files=entries, package_file_count=len(entries),
                     test_summary=source_tests, packaged_acceptance=acceptance,
+                    regression_matrix=dict(windows=windows_scope, linux_full_run=state['latest_evidence_run'],
+                         linux_full_source_manifest=full_run['source_manifest_sha256'], governance=governance),
                     known_limits=['Real private AI corpus quality', 'User Windows hardware/performance',
                                   'Physical print qualification', 'Independent novice usability',
                                   'Inkscape and authorized local fonts installed separately'],
