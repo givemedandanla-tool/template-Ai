@@ -5,7 +5,7 @@
 1. 從GitHub Release下載 TemplateAI-v0.2.0-beta.1-windows-x64.zip，完整解壓到本機資料夾。
 2. 開啟資料夾中的 TemplateAI.exe；不必另裝Python，請保留旁邊的_internal資料夾與所有檔案。
 3. 初次先用測試副本，不直接使用唯一客戶資料庫。程式資料預設存在%LOCALAPPDATA%\TemplateAI\TemplateAI，與程式分開；可用TemplateAI.exe --data-dir "D:\TemplateAI-Test"指定獨立測試目錄。
-4. 使用本機Inkscape轉換支援的.ai／PDF／SVG；Inkscape未隨包提供。建置驗證使用1.4.2；請由官方來源自行安裝。舊版非PDF相容.ai與原稿完整還原仍有邊界。
+4. 沒有安裝Inkscape也能啟動EXE，使用既有模板輸入、排版、預覽及符合既有資格的輸出。PDF相容.ai／PDF、SVG與PNG／JPG有內建備援讀取；可讀取不代表已完整取得可編輯文字、原稿字型或通過訓練／正式輸出資格。要擴大作品轉換支援範圍，再另外安裝免費的[Inkscape](https://inkscape.org/release/)；建置驗證使用1.4.2，包內未附。無PDF相容內容的.ai需要可用的轉換器或另存支援格式；即使安裝Inkscape，也不保證完整還原所有Illustrator私有內容。
 5. 字型使用您本機已合法安裝／匯入的檔案；本包不附私人或商業字型。缺字、來源不足與正式資格未通過時，程式仍會阻擋相關操作。
 6. 從「學習作品」開始匯入、檢查分析／雜訊與來源；再到「製作稿件」輸入、產稿、預覽、拖動修正、重新確認及輸出。進階來源審查／容量／資格仍有後台流程，不是全自動認證。
 
