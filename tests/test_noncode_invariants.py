@@ -216,13 +216,16 @@ class SessionMeaningOracles(unittest.TestCase):
     def test_safe_local_production_report_contains_measurements_not_customer_text(self):
         from template_ai.production_report import save_report
         graph=InputGraph(self.session['input_graph'])
-        canaries={'name':'PRIVATE_CANARY_PERSON_0001','phone':'+1 202 555 0199','email':'private-canary@example.test'}
+        canaries={'name':'CANARY0001','phone':'+12025550199','email':'canary@example.test'}
         for field in graph.data['fields']:
             if field['kind'] in canaries:field['value']=canaries[field['kind']]
-        current=self.sessions.replace_input(self.session['id'],self.session['revision'],'safe-report-'+self.session['id'],graph)
+        self.sessions.replace_input(self.session['id'],self.session['revision'],'safe-report-'+self.session['id'],graph)
+        current=self.sessions.current(self.session['id'])
         self.sessions.solve(current['id'],current['revision']);current=self.sessions.current(current['id'])
         target=self.root/('safe-'+current['id']+'.json');save_report(self.sessions,current['id'],current['revision'],target)
         body=target.read_text();data=json.loads(body)
         for value in canaries.values():self.assertNotIn(value,body)
         self.assertIn('plain_summary',data);self.assertFalse(data['technical']['formal_output_allowed'])
+        self.assertTrue(data['technical']['result_valid_for_current_input'])
+        self.assertTrue(data['technical']['fields'])
         self.assertNotIn(str(self.root),body)
