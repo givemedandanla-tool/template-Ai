@@ -1818,3 +1818,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 Windows正式重試：da809原始169PASS/7未完成的FAIL保留；準備原176案例每程序最多4例、serial1、180秒不變的CI隔離設定。Linux配置原5/5PASS及隔離刻意失敗負例PASS。產品/tools/tests及已資格化manifest未變；尚無EXE/tag/發布。空間評估完成但未刪任何既有備份。
 
 2026-10-21 native77e21544：8完整模組82PASS後CI進度read EACCES，FAIL保留。docs-only Windows metadata read有界8次重試，4控制PASS；原0c4產品manifest未變，需完整新正式原生/EXE驗證。
+
+2026-10-21 工作區舊ZIP只讀補查：55/55 archive SHA256符合紀錄、全內容CRC PASS，19.42GiB，182.249秒，未解壓或刪除；unique/full restore/remote blob recovery仍未執行，不升級為刪除核准。Windows03a7正式run39623436705仍在執行。
