@@ -1,27 +1,25 @@
 # 當前精簡交接
 
-使用者已公開倉庫，授權重試Windows EXE發佈及工作區文件用途/清理評估。繼續直到實際Release，不問例行確認、不合併main、不刪既有資料、不新增付費資源。開發分支dev/v0.1-first-version。
+## Windows實測版已實際交付
 
-## 當前正常發佈
+**v0.2.0-beta.1已公開發布，RELEASE_PUBLISHED_DOWNLOAD_VERIFIED精確Git讀回。** 來源8b95b10b300dbead4c51264100af7bdd644433ce；run39638803778；tag5de3a353的commit解參照同8b95。證據分支a913a5f92f86a6adab950777e467fa59888f6c37獨立原始Git／180tree項核對PASS。
 
-**尚未發佈，無tag。04418ac0/run39632714813原176/176、16healthy、49Qtgroups、0runtime及真EXE14+7兩階段均PASS；最終包內容Gate攔下sklearn自帶tests/data，原始失敗保留windows-native-006-payload-failed。** 釘定官方hook全量collect_data_files根因已核對，docs建置配置在freeze與EXE驗證前移除三個已知第三方tests資料；原包Gate不變，7配置控制PASS。完整CP已443項REMOTE_VERIFIED，新的正常候選f20343b3a786f8fc5565730e57cf77826c4f0926已推送精確release-request並獨立Git讀回73589paths；run39636966203將由明確prepackage標記替換：新報告路徑會預建原exercise全新目錄，已提前發現並改存artifacts根，原驗證成功後才複製。9控制與Linux來源21均PASS（非真Windows），正常新候選8b95b10b300dbead4c51264100af7bdd644433ce已精確Git讀回73602paths，run39638803778原生RUNNING已讀回；舊run取消亦公開頁核對。新候選完整重驗，原產品manifest仍0c4。禁止僅複製044結果改來源，只有RELEASE_PUBLISHED_DOWNLOAD_VERIFIED精確讀回才算發佈。見PAYLOAD_POLICY_REPAIR.md。
+下載：https://github.com/givemedandanla-tool/template-Ai/releases/download/v0.2.0-beta.1/TemplateAI-v0.2.0-beta.1-windows-x64.zip 。ZIP125923070bytes（約126MB），SHA256 0429fcbf0d4b2edb17a459b90ab6c04903a577570a739bc6247f33424ec0d526。完整解壓、保留_internal、執行TemplateAI.exe，不需另裝Python。用獨立資料副本，問題附版本、重現步驟與「問題與報告」手動安全ZIP；不要求私人作品／字型／DB／模型上傳。
 
-原生Windows03a7c692/run39623436705已176/176PASS、16健康、49新Qt程序、0runtime、source unchanged；真EXE當時快取失效。d34e/run39628676683觀察到0AUTO_UNIT、COMPLETED_WITH_EXCEPTIONS、來源快取錯誤，未到暫停，不是暫停控制失效。
+原176/176Windows案例PASS，16healthy／49新Qt程序／0runtime；真frozen EXE原14+7兩階段PASS、實測utf8_mode1、來源匹配且不變。草稿全部資產下載校驗成功後才公開，再完整重新下載1220包內檔核對。雲端未登入公開manifest／checksums HTTP200且逐byte等同原生Git證據，公開頁亦200。詳releases/v0.2.0-beta.1/windows-native-007-published/README.md及原始資料。不得重推不可變tag、合併main或把重新建置當相同已驗證bytes。
 
-**c45dc236/run39630607193實際EXE UTF8 A/B PASS**：同一0c4產品、同主機，baseline實測utf8_mode0+同cacheFAIL+0單位exit1；fixed實測mode1，原14+7檢查兩階段全PASS，含first-unit pause/explicit resume/unchanged replay/safe report/window close；實際EXE/source match/unchanged均true。資料releases/v0.2.0-beta.1/frozen-utf8-ab-001-passed。這是診斷，不冒稱新跑176或已發佈。正常spec透過configure_frozen_utf8.py加釘定PyInstaller6.22.3官方Xutf8選項，runtimehook/父程序檢查實際mode1；原cacheGate/產品/視窗/斷言/期限不變。
+## 主證據與歷史
 
-## 來源資格與主要checkpoint
+主CP目前CP-20261021-WINDOWS-PAYLOAD-READY-001，443項REMOTE_VERIFIED，含369正式附件。本輪將準備完整發佈交接CP；最後確認指標以STATE為準，不以小型輔助讀回覆蓋主正式證據。產品/tools/tests manifest仍0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274，Linux正式1963與原27GUI不重跑；strict gate172要求／166scoped／75父題不改。原私人作品／使用者Windows硬體效能／實印／新手／OS級斷網資格不自動升級，AI8包50原資格不改。
 
-產品/tools/tests code manifest仍0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274，只有.github/docs配置修改；Linux不無故重跑。RUN-WINDOWS-BETA-FINAL-LINUX-001是1963唯一實際PASS、原27GUI，原5外部UNKNOWN保留。不是首次全綠：raw006為1961PASS/SourceWatch deadlineFAIL，同bytes整個11例在原180秒獨占33.855sPASS，requalified逐case/inputhash/原失敗均保留。原1958ID/原27腳本命令deadline不變。
+03a7原176已PASS但EXEcache錯誤，d34e讀到0units，c45實際UTF8 A/B原14+7PASS；044原176與真EXE21PASS但原inventory攔sklearn自帶testdata；f203新增報告目錄契約錯誤在發佈前發現並取消（公開頁確認）。修正固定UTF8及freeze前已知第三方tests過濾83檔，報告放artifacts根、真EXE檢查成功後才複製；原產品、exercise全新目錄／斷言／期限與最終inventory不變。9配置控制及來源21診斷PASS，均非真Windows資格；最後8b95正常全流程才是交付證據。所有原失敗／取消保留。
 
-**當前主要checkpoint CP-20261021-WINDOWS-PAYLOAD-READY-001.receipt.json**：4734990a快照，443項REMOTE_VERIFIED，含369正式附件、044原生176與真EXE21、A/B、7項新配置控制及工作區55備份完整性報告。strict require-evidence/publication-scope實際PASS172/166/75/1963。不要用小型輔助CP覆蓋主要指標；補主要CP須含完整正式run附件。輔助Git讀回不加--ack。改產品/tools/tests bytes會改source，須重資格，不能混用舊結果。原私人作品/硬體/實印等外部資格不升級。
+## 使用者最新依賴討論
 
-## 工作區評估完成
+目前包沒有Inkscape（原生測試用本機1.4.2）或OCR工具，尚未串接Illustrator。啟動／既有模板製作不強制Inkscape；PDF相容.ai／PDF、SVG及圖片有備援，完整自動幾何／Logo分析目前仍需要Inkscape，缺少保持待人工。使用者詢問為何不附帶、已裝Illustrator是否更好；已保存BUNDLED_INKSCAPE_PROPOSAL.md與ILLUSTRATOR_LOCAL_ADAPTER_PROPOSAL.md，均提案尚未實作，不冒稱本版能力。建議本機Illustrator原生讀取優先、Inkscape備援、OCR補救，仍走相同學習核心／stable ID／來源與資格契約；轉外框／混合樣式／替代字型／多人同畫板不省略核對。官方Adobe頁本環境403已如實記錄，無真Illustrator執行。
 
-maintenance/STORAGE_ASSESSMENT_20261021.md/JSON、原226列CSV、OLD_CHECKPOINT_INTEGRITY_20261021.json。55/55舊實體ZIP SHA256與全CRC PASS、19.42GiB、182秒；2996b606已獨立Git讀回。仍未逐包unique/full restore/remote blob復原，不是刪除核准；刪除0。81舊ZIP失效連結可追溯Git歷史，不冒稱完整復原。保留程式/.git/正式證據/需求交接/私人資料/使用中工具及新checkpoint。盤點大小as-of非即時。
+## 工作區與後續
 
-## 操作／最終交付
+maintenance/STORAGE_ASSESSMENT_20261021.md／JSON與原226列CSV已交付。55/55舊ZIP SHA+全CRC PASS、19.42GiB，182秒；unique/full restore/remote blob恢復仍未全部證明，不等於可刪核准。81舊ZIP失效連結保留Git追溯，沒有刪既有檔案。程式/.git/需求交接/正式證據/使用中工具/最新CP與私人資料保留。
 
-公開標準windows-latest可用；無新付費/API/試用/子代理。api.github.com仍Forbidden，但公開HTML/原生Git可讀寫，不要求API key/重連。watch_receipt.py只觀察；20分窗口到期可同source重啟，不當CI失敗。結果在release-evidence/v0.2.0-beta.1精確按source取回。
-
-本機空間少（/workspace數百MiB、/tmp101MiB），不要亂刪。CI本身兩次實際下載全部ZIP驗證，雲端再核小manifest/checksum/公開URL即可，不為第三次大下載清資料。成功後給完整ZIP連結、解壓後TemplateAI.exe、實際驗證數量/真作品待本機回饋，以及工作區評估連結。細節按需讀STATUS與獨立資料夾，每批工具輸出≤1600tokens。
+開發分支dev/v0.1-first-version／PR2，main仍保留原歷史，未合併。公開標準Windows runner及原生Git、官方免費工具可用；無新收費服務／試用／外部模型／子代理，帳戶總帳單未稽核。本機api.github.com仍Forbidden，但原生Git與公開GitHub下載可用，不需API key或再重連。後續依使用者本機回饋工作，網頁／手機與教學／知識庫草案保持原狀。

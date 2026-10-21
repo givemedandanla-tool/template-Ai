@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新結果：Windows測試版已發佈且下載校驗完成
+
+v0.2.0-beta.1來源8b95b10b／run39638803778已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED，原176Windows＋真EXE21檢查及1220包內下載hash PASS，公開manifest/checksums已未登入精確讀回。先讀STATE／精簡交接與releases/v0.2.0-beta.1/windows-native-007-published；不要重新建置／覆寫既有tag。等待使用者獨立資料副本實測與安全報告，私人資料留本機。Inkscape仍另備、Illustrator尚未串接；使用者依賴問答已保存兩份提案，不能當現有能力。
+
 ## 最新任務：已明確授權Windows測試版發佈
 
 使用者要求「好，現在我要你在github發佈程式本體exe，讓我投入實機測試」。依STATE.windows_release與docs/dev/releases/v0.2.0-beta.1-plan.md執行；此授權取代舊EXE延後，僅本次v0.2.0-beta.1，不合併main、不實作教學草案。一般dev/main/PR不打包；只有人工dispatch或本次精確release-request/v0.2.0-beta.1分支啟動Windows原生建置。通過來源回歸與實際EXE合成流程後才可建tag／發布；原資格不放寬。實際下載校驗及來源證據保存在release-evidence/v0.2.0-beta.1分支，必須實際讀回，不把推送請求當發佈成功。

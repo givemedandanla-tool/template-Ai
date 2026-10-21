@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "NORMAL_FRESH_OUTPUT_FINAL_WINDOWS_RELEASE",
+  "active_task": "WINDOWS_BETA_RELEASE_DELIVERED_AWAITING_LOCAL_FEEDBACK",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-PAYLOAD-READY-001.receipt.json",
   "last_confirmed_commit": "4734990a7a3152eaa6af62daf36f3abd6e160405",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
@@ -13,13 +13,14 @@
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
-    "docs/dev/non_code_audit/PLAN.md",
-    "docs/dev/non_code_audit/PLAN.json",
-    "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
+    "docs/dev/releases/WINDOWS_BETA_QUICK_START.md",
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/README.md",
+    "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Normal release request: all original176, actual UTF8 EXE21checks/two phases, immutabletag, draft and published complete downloads. Claim release only after exact RELEASE_PUBLISHED_DOWNLOAD_VERIFIED readback.",
-    "Workspace evaluation complete;55/55hashCRC PASS, still no deletion approval or deletions."
+    "User local testing and safe feedback with version; private artworks/fonts/DB/models remain local.",
+    "Bundled Inkscape / local Illustrator native extraction proposals are preserved; current beta has neither bundled Inkscape nor Illustrator integration.",
+    "Workspace assessment delivered;55/55old ZIP hashCRC PASS but uniqueness/full recovery not qualified, no existing files deleted."
   ],
   "blocked": [
     {
@@ -43,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261021-WINDOWS-BETA-PUBLISHED-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -793,7 +796,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Continue active pre-download audit to completion: remaining original386 diagnostics plus final/runtime-profile new findings, root10 targeted verification, full stable1901 regression, stock/native GUI and restore-verified LOCAL_ONLY delivery. No push/PR/CI or REMOTE_VERIFIED; current governance stale-source gate remains blocked.",
+  "next_step": "User downloads v0.2.0-beta.1 complete Windows ZIP, tests separate local data copy, returns version/reproduction and existing safe report. Release is actually published and download-verified; do not rebuild or overwrite the immutable tag. Bundled Inkscape and local Illustrator adapter remain proposals, not implemented.",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -1545,10 +1548,10 @@
     "remote_readback": "docs/checkpoints/CP-20261021-AUDIT-GITHUB-READBACK.receipt.json"
   },
   "remote_save_policy_for_current_task": {
-    "priority": "ZERO_ADDITIONAL_COST_OVER_REMOTE_PERSISTENCE",
-    "user_authorized_local_commits_and_patch": true,
-    "push_pr_ci": "DO_NOT_EXECUTE_WITHOUT_SUFFICIENT_ZERO_ADDITIONAL_COST_EVIDENCE",
-    "billing_evidence": "NOT_AVAILABLE_NO_AMOUNT_CLAIM"
+    "priority": "NO_NEW_PURCHASE_TRIAL_EXTERNAL_PAID_API_OR_RESOURCE",
+    "push_pr_ci": "EXISTING_GIT_PUSH_AND_AUTHORIZED_PUBLIC_STANDARD_WINDOWS_RELEASE_RUNNER_ALLOWED_NO_MAIN_MERGE_OR_FORCE_OVERWRITE",
+    "billing_evidence": "NO_NEW_PAID_RESOURCE_ENABLED_ACCOUNT_TOTAL_NOT_AUDITED",
+    "release": "PUBLISHED_DOWNLOAD_VERIFIED_EXACT8B95"
   },
   "active_audit_plan": "docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.json",
   "audit_plan_status": "LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED",
@@ -1701,22 +1704,23 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "NORMAL_FRESH_OUTPUT_FINAL_NATIVE_BUILD_RUNNING",
+    "status": "RELEASE_PUBLISHED_DOWNLOAD_VERIFIED",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
-    "built": false,
-    "published": false,
+    "built": true,
+    "published": true,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Explicitly replace known prepublication attempt; complete original176 and actual filtered EXE21, unchanged inventory and both full downloads.",
+    "next": "User downloads complete ZIP and tests separate local data copy; return version/reproduction and safe support report. Bundled Inkscape and Illustrator integration remain recorded proposals, not shipped functionality.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
       "linux_source_flow": "009 two phases PASS but dirty source demonstration only; repeat source-bound",
-      "actual_windows_exe": "04418ac0: actual frozen Windows EXE original14+7 checks PASS, both phases, source matches/unchanged, utf8mode1; package blocked third-party sklearn test data",
+      "actual_windows_exe": "8b95b10b: actual frozen Windows EXE original14+7 checks PASS, both phases, source matches/unchanged, utf8mode1",
       "report_regression": "32 PASS",
       "runtime_refresh": "2 new cases PASS; original unmodified capture_runtime fixed004 PASS",
       "windows_safety_regressions": "5 PASS locally, actual foreign-process survival and bounded atomic-write failures",
       "evidence_module_regression": "7 PASS",
-      "native_windows_source": "04418ac0/run39632714813:176/176PASS,16healthy,49freshQtgroups,0runtime,source unchanged"
+      "native_windows_source": "8b95b10b/run39638803778:176/176PASS,16healthy,49freshQtgroups,0runtime,source unchanged",
+      "published_download": "Draft and published complete assets downloaded; published1220members SHA PASS; cloud anonymous manifest/checksum bytes exactly match native Git evidence; immutable tag dereference matches8b95."
     },
     "authorization": {
       "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -1727,7 +1731,7 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "RUNNING_EXACT_8B95B10B_READ_BACK",
+    "windows_receipt": "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/status.json",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "8b95b10b300dbead4c51264100af7bdd644433ce",
     "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
@@ -1816,6 +1820,30 @@
       "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39636966203",
       "reason": "New build report path would precreate original fresh acceptance directory; detected before publication. Not a completed or published run.",
       "status": "CANCELLED_CONFIRMED_PUBLIC_HTML"
+    },
+    "source_commit": "8b95b10b300dbead4c51264100af7bdd644433ce",
+    "delivery_report": "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/README.md",
+    "release_url": "https://github.com/givemedandanla-tool/template-Ai/releases/tag/v0.2.0-beta.1",
+    "download_url": "https://github.com/givemedandanla-tool/template-Ai/releases/download/v0.2.0-beta.1/TemplateAI-v0.2.0-beta.1-windows-x64.zip",
+    "archive": {
+      "name": "TemplateAI-v0.2.0-beta.1-windows-x64.zip",
+      "bytes": 125923070,
+      "sha256": "0429fcbf0d4b2edb17a459b90ab6c04903a577570a739bc6247f33424ec0d526"
+    },
+    "checked_package_files": 1220,
+    "tag_refs": {
+      "refs/tags/v0.2.0-beta.1": "5de3a35394e2ac564d201746389619d189a1f5b1",
+      "refs/tags/v0.2.0-beta.1^{}": "8b95b10b300dbead4c51264100af7bdd644433ce"
+    },
+    "native_evidence_commit": "a913a5f92f86a6adab950777e467fa59888f6c37",
+    "public_asset_readback": "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/public-readback.json",
+    "dependency_discussion": {
+      "inkscape": "EXTERNAL_NOT_BUNDLED_1.4.2_USED_IN_NATIVE_VALIDATION",
+      "illustrator": "NOT_INTEGRATED_PROPOSED_LOCAL_ADAPTER",
+      "proposals": [
+        "docs/dev/releases/BUNDLED_INKSCAPE_PROPOSAL.md",
+        "docs/dev/releases/ILLUSTRATOR_LOCAL_ADAPTER_PROPOSAL.md"
+      ]
     }
   },
   "storage_assessment": {

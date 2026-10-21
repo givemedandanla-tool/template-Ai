@@ -1838,3 +1838,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 使用者詢問為何不直接內嵌Inkscape；已說明可隨包提供背景工具，更符合下載即用，現行外部依賴是打包選擇而非技術不可能。提案BUNDLED_INKSCAPE_PROPOSAL保存為尚未實作，不冒稱目前8b95包已附帶或無Inkscape真EXE全流程已驗證；版本／授權／hash／獨立環境驗收及原資料Gate須保留。
 
 2026-10-21 使用者詢問已安裝Illustrator是否更好。核對目前無原生串接，保留原生讀取優先／Inkscape備援／OCR補救提案；混合樣式、座標、轉外框、字型替代、多人同畫板及stable ID規則不省略。官方說明本環境403，原生API與本機驗證未聲稱完成。不改目前Windows候選，私人資料留本機。
+
+2026-10-21 v0.2.0-beta.1交付：8b95b10b/run39638803778原176、真frozen EXE14+7全PASS，83已知第三方testdata只在freeze前排除，原inventory PASS；tag解參照8b95，草稿與公開各完整下載校驗，最終1220檔hash PASS。原生Git a913證據獨立讀回180tree項，雲端未登入manifest/checksums逐byte相同／公開頁HTTP200。ZIP125923070bytes SHA0429fcbf…d526。已公開，非僅請求。原外部資格不升級；未合併main、未刪既有檔案，無新付費／試用／子代理。最後完整交接CP準備中。
