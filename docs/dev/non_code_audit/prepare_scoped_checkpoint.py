@@ -27,14 +27,14 @@ record = ROOT / 'docs/checkpoints' / (a.id + '.json')
 folder = ROOT / '.checkpoints' / a.id
 if record.exists() or folder.exists():
     raise FileExistsError('Immutable checkpoint ID already exists')
+roots = [safe_path(ROOT, a.run_path), *[safe_path(ROOT, path) for path in a.extra_root]]
+if a.scope == 'completion':
+    roots += [ROOT / 'docs/dev/non_code_audit']
+if not all(root.exists() for root in roots):raise ValueError('Checkpoint scope root missing; not an empty scan')
 state_path = ROOT / 'docs/dev/STATE.json'
 state = read_json(state_path)
 state['pending_remote'] = list(dict.fromkeys([*state.get('pending_remote', []), a.id]))
 write_json(state_path, state)
-roots = [safe_path(ROOT, a.run_path), *[safe_path(ROOT, path) for path in a.extra_root]]
-if not all(root.exists() for root in roots):raise ValueError('Checkpoint scope root missing; not an empty scan')
-if a.scope == 'completion':
-    roots += [ROOT / 'docs/dev/non_code_audit']
 paths = {path for root in roots for path in ([root] if root.is_file() else root.rglob('*'))
          if path.is_file() and not path.is_symlink() and '__pycache__' not in path.parts}
 paths |= {ROOT / name for name in ['AGENTS.md', 'docs/dev/STATE.json', 'docs/dev/REQUIREMENTS.json', 'docs/dev/FEATURES.md',

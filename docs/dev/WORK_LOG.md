@@ -1784,3 +1784,5 @@ Windows beta：進度WIP001快照7e1a51dd原生Git完整52456條讀回；專用�
 Windows beta full003：1958完成，1956PASS／1ERROR／1FAIL、258模組256健康、0runtime；不能當完整通過。兩未通過均測試process_factory取command[3:]，新增source/frozen共用launcher後包含module名，導致argparse未進入逾時／取消注入；改為從實際--root定位，未改2.5秒逾時、5秒取消邊界、SQLite回滾、隔離續跑及去重斷言。對應9＋12共21既有測試PASS，不計新增。全部舊1942及新16名稱不變。接著先單獨原版27GUI，再以新固定來源完整回歸；Windows實測回執仍未取得，未發布。
 
 Windows beta：stock004在隔離負載下原27／27PASS、source unchanged，原腳本／斷言／deadline完全未改；舊stock失敗／中斷保留。新固定來源570ecebe／code3cd6da4b的full004開始，原1942保留、新16，當前1958尚未完整通過不能算完成。正式adoption／checkpoint及Windows實測仍待辦，GitHub API網路草稿尚未生效。
+
+Windows beta WIP002：full004約1124／1958PASS、尚未完成；stock004原27全PASS，來源3cd6da4b未改。Git讀回helper已移入docs/dev/releases/verify_git_readback.py，實際獨立Git核對137f8d3f完整57405條PASS，可重建而不依賴/tmp腳本；仍重用標準ack，blobless metadata取回不冒稱REST。增量checkpoint缺scope root的負例PASS且STATE不變；新helper只屬開發交接，不進EXE。
