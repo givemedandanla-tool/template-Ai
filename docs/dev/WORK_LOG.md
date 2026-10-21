@@ -1751,3 +1751,8 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 依使用者本輪要求研究SemVer、Keep a Changelog、GitHub Releases／草稿／不可變發佈與PyInstaller，6份原文固定commit及hash核對。盤點現有0.1.28／README0.1.26／打包v0.1命名差異、14天暫存artifact及舊Windows驗證入口；提出beta／rc／修正／功能版本、精確成品、資料相容與回報狀態流程。RELEASE_MAINTENANCE_PROPOSAL.md狀態DRAFT_FOR_DISCUSSION_NOT_ADOPTED，未改產品版本、程式、workflow、原資格或EXE政策。文件型checkpoint與原軟體CP004分開，不冒稱EXE已發布。
 
 草案文件 checkpoint：b138ccca970a3889a9de3b4e93e038569870e1d6已獨立原生Git讀回，6份scope文件與checkpoint共7條逐blob吻合；文件收據REMOTE_VERIFIED，仍未採用草案。原軟體CP004及EXE政策不變，治理檢查PASS；未重跑應用測試，因code manifest完全未變。
+
+
+### 2026-10-21 採用發佈與維護規則
+
+使用者回覆「好，規則是否已持久化入github」，據此將方案正式採用為RELEASE_MAINTENANCE_POLICY.md／規則版本1，新增決策並更新AGENTS、STATE與精簡交接。原草案與來源收據保留。僅規則及文件採用，未修改程式0.1.28、EXE延後、產品／測試／workflow或原資格，未建置／發佈EXE。後續明確要求準備／發佈時按規則執行，不重問已決規則。

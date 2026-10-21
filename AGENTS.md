@@ -11,9 +11,9 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
-## 最新討論：EXE發佈與版本維護草案
+## 最新規則：EXE發佈與版本維護已採用
 
-2026-10-21使用者要求研究並溝通交接、版本命名、GitHub EXE發佈及後續修正流程。見[待核對草案](docs/dev/RELEASE_MAINTENANCE_PROPOSAL.md)與固定來源RELEASE_MAINTENANCE_RESEARCH.json。此為DRAFT_FOR_DISCUSSION_NOT_ADOPTED；建議v0.2.0-beta.1尚未改號，未建置／上傳EXE、未變更workflow或EXE延後政策，不把保存草案當採用或發版授權。草案的文件收據與下列軟體驗證checkpoint分開保存；以STATE指標恢復討論。核對後依後續使用者授權落地，不重問已決選項。
+2026-10-21使用者確認方案後，已採用[發佈與維護規則](docs/dev/RELEASE_MAINTENANCE_POLICY.md)，決策見docs/decisions/2026-10-21-RELEASE-MAINTENANCE-RULES.md。版本／相容性／發布授權／真實EXE驗證／下載校驗／資料保護／維護狀態依該規則，不再當未核對草案重問。原草案及研究／收據保留歷史。首次Windows實測規劃v0.2.0-beta.1尚未改號，發佈工具仍需落地；本次規則採用不包含立即建置或發佈EXE、合併main、部署或新付費服務。現行EXE延後及原外部資格不變。文件收據與軟體CP004分開保存，依STATE接續。
 
 ## 最新任務：非代碼排查執行交付完成
 

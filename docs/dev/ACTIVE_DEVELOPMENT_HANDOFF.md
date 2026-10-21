@@ -1,4 +1,6 @@
-# 當前接手：非代碼排查已完成本機範圍
+# 當前接手：發佈與維護規則已採用
+
+正式規則見[RELEASE_MAINTENANCE_POLICY.md](RELEASE_MAINTENANCE_POLICY.md)及STATE.release_maintenance_policy；使用者已確認採用，不再詢問規則是否接受。版本與發佈工具尚未實作或執行，本輪未打包／發佈EXE；按後續指派落地，EXE延後政策維持。下列既有軟體交付及外部限制繼續有效。
 
 先跑 `python tools/resume_status.py`，核對STATE、分支 `dev/v0.1-first-version`／既有PR2與最新不可變遠端收據。不得合併main或部署。
 
