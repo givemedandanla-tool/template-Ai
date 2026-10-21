@@ -1019,14 +1019,14 @@
       "next_step": "Retain regression and versioned evidence."
     }
   ],
-  "completed_checks": 0,
+  "completed_checks": 32,
   "issues": [
     "NCA-ISSUE-001",
     "NCA-ISSUE-002",
     "NCA-ISSUE-003",
     "NCA-ISSUE-004"
   ],
-  "next": "Finish full002;then original stock/native captures,OS network trace,case evidence validation and restore-verified local delivery. Never fake remote proof.",
+  "next": "Await local safe support reports and original external qualifications; no repeated full audit without a concrete remaining risk.",
   "resource_budget": {
     "total_candidates": 200,
     "seeds": [
@@ -1040,7 +1040,7 @@
   },
   "targeted_tests_passed": 32,
   "semantic_probes_passed": 4,
-  "remote_status": "BLOCKED_GITHUB_AUTHENTICATION",
+  "remote_status": "REMOTE_VERIFIED",
   "current_code_commit": "4f763f87458f0f65914d7e7c9a04b0a46f8dd912",
   "interrupted_full_run": {
     "path": "full-regression-001/interruption.json",
@@ -1048,11 +1048,10 @@
     "reason": "New independently confirmed conditional field-count fix;not a completePASS"
   },
   "remote": {
-    "status": "FORMAL_EVIDENCE_REMOTE_VERIFIED_COMPLETION_PENDING",
-    "snapshot_commit": "b337dac57b720f85abb32bac1691b400e380f6ee",
-    "receipt": "docs/checkpoints/CP-20261021-NONCODE-FORMAL-003.receipt.json",
-    "verified_files": 368,
-    "completion_checkpoint": "CP-20261021-NONCODE-COMPLETE-004"
+    "status": "REMOTE_VERIFIED",
+    "snapshot_commit": "8105571e2ffe5f2804155b11e0be9272e1f42d34",
+    "receipt": "docs/checkpoints/CP-20261021-NONCODE-COMPLETE-004.receipt.json",
+    "verified_files": 7061
   },
   "remaining": [
     "合成評估、回饋追溯與拒絕偽造資格已驗證；真實作品的泛化、偏好與信心校準仍需本地留出資料。",
@@ -1069,7 +1068,7 @@
     "test_static_new_unique": 54,
     "test_static_disposition": "Retained P3 typing debt; baseline unchanged"
   },
-  "completed_utc": "2026-10-21T04:36:56.315280+00:00",
+  "completed_utc": "2026-10-21T04:42:33.454251+00:00",
   "completed_dispositions": 32,
   "local_passes": 32,
   "results": {
@@ -1081,5 +1080,9 @@
   "new_product_tests": 21,
   "selected_assertion_sources": 64,
   "formal_run": "docs/evidence/runs/RUN-NONCODE-ALL-001/run.json",
-  "formal_governance": "PASS_WITH_ORIGINAL_EXTERNAL_QUALIFICATIONS"
+  "formal_governance": "PASS_WITH_ORIGINAL_EXTERNAL_QUALIFICATIONS",
+  "retained_followups": [
+    "54 unique P3 test typing diagnostics; historical static/clone backlog unchanged.",
+    "One P3 generic input hint wording candidate; await local novice feedback."
+  ]
 }

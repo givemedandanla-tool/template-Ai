@@ -60,7 +60,7 @@
 - 實測完整回歸：`execution-001/full-regression-002/`；正式來源綁定 `e558311c2a2dddd4b89328d33f05d71a9b7489d0`，程式 manifest 完全相同。
 - 正式實測採錄：`docs/evidence/runs/RUN-NONCODE-ALL-001/`。採錄明確記錄來源與原指令，直接使用未改寫的 `tools/run_evidence.py` AST 產生條款判定，沒有冒稱重新執行整套或捏造 API 回應。
 - 已核對正式證據快照：`b337dac57b720f85abb32bac1691b400e380f6ee`；收據 `CP-20261021-NONCODE-FORMAL-003.receipt.json`，368條吻合。
-- 最終執行報告／交接 checkpoint：`CP-20261021-NONCODE-COMPLETE-004`，精確遠端狀態與提交以 `STATE.json` 及該不可變收據為準。增量 ZIP 僅供搭配所記 Git 基底還原，逐檔已在隔離目錄核對；不是完整產品安裝包或 EXE。
+- 最終執行報告／交接 checkpoint：`CP-20261021-NONCODE-COMPLETE-004`，快照 `8105571e2ffe5f2804155b11e0be9272e1f42d34` 已獨立讀回7061條，`REMOTE_VERIFIED`；收據與閉合狀態以 `STATE.json` 為準。增量 ZIP 僅供搭配所記 Git 基底還原，逐檔已在隔離目錄核對；不是完整產品安裝包或 EXE。
 
 下次可直接指派：**「讀取 AGENTS、STATE 與精簡交接，核對最新遠端收據及這份非代碼報告，再依我提供的本地安全報告處理問題；不要重做已完成掃描或要求私人作品上傳。」**
 

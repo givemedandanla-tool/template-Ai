@@ -84,6 +84,8 @@ def main():
     (OUT / 'case-results.jsonl').write_text(''.join(json.dumps(r, ensure_ascii=False) + '\n' for r in rows))
     progress = read_json(OUT / 'PROGRESS.json')
     progress.update(status='COMPLETED_LOCAL_SCOPE_WITH_EXPLICIT_EXTERNAL_LIMITS', phase='All32 dispositions recorded; original external qualifications retained',
+                    completed_checks=32, next='Await local safe support reports and original external qualifications; no repeated full audit without a concrete remaining risk.',
+                    remote_status=read_json(ROOT / 'docs/dev/STATE.json')['non_code_audit_execution'].get('remote_status', 'CHECK_STATE'),
                     completed_utc=datetime.now(timezone.utc).isoformat(), checks=rows,
                     completed_dispositions=32, local_passes=32, results=dict(Counter(r['result'] for r in rows)),
                     unique_product_tests=1942, prior1921_preserved=True, new_product_tests=21,
@@ -103,7 +105,7 @@ def main():
     state = read_json(ROOT / 'docs/dev/STATE.json')
     state.update(active_task='NON_CODE_AUDIT_LOCAL_SCOPE_COMPLETED',
                  next_tasks=['本地下載試用後，由問題與報告手動匯出安全報告；維持原真實作品／Windows／效能／印刷／新手資格，按回饋再開發。'],
-                 non_code_audit_execution=dict(status=progress['status'], progress='docs/dev/non_code_audit/execution-001/PROGRESS.json',
+                 non_code_audit_execution=dict(**{k:v for k,v in state.get('non_code_audit_execution', {}).items() if k not in ('status','progress','report','source_commit','code_manifest_sha256','checks','local_passes','total_results','product_tests','new_tests','fixed_issues','formal_governance','external_qualification_unchanged')}, status=progress['status'], progress='docs/dev/non_code_audit/execution-001/PROGRESS.json',
                                               report='docs/dev/non_code_audit/FINAL_REPORT.md', source_commit=run['source_commit'],
                                               code_manifest_sha256=manifest_digest(current), checks=32, local_passes=32,
                                               total_results=progress['results'], product_tests=1942, new_tests=21,
