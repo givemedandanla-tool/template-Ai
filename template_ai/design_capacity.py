@@ -12,7 +12,7 @@ from scipy.stats import beta
 
 from .training_store import digest, text
 
-VERSION='conditional-capacity-calibration-1'
+VERSION='conditional-capacity-calibration-2'
 
 
 def fit_capacity(records,policy):
@@ -53,10 +53,15 @@ def fit_capacity(records,policy):
         passed=sum(all(r['layout_pass'] and r['qualified_style'] for r in rows) for rows in by_group.values())
         total=len(by_group);lower=float(beta.ppf(alpha,passed,total-passed+1)) if passed else 0.
         eligible=total>=minimum and lower>=probability
+        positive=[r for r in items if r['layout_pass'] and r['qualified_style']]
+        negative=[r for r in items if not (r['layout_pass'] and r['qualified_style'])]
         cells.append(dict(context=deepcopy(items[0]['context']),context_digest=context_id,bucket=list(bucket),
-            observed_lower=[min(r['demand'][i] for r in items) for i in range(len(bins))],
-            observed_upper=[max(r['demand'][i] for r in items) for i in range(len(bins))],
-            joint_support=[r['demand'] for r in items],independent_groups=total,successful_groups=passed,
+            observed_lower=[min(r['demand'][i] for r in positive) for i in range(len(bins))] if positive else [],
+            observed_upper=[max(r['demand'][i] for r in positive) for i in range(len(bins))] if positive else [],
+            joint_support=[list(r['demand']) for r in positive],
+            negative_joint_support=[list(r['demand']) for r in negative],
+            positive_case_ids=sorted(r['id'] for r in positive),negative_case_ids=sorted(r['id'] for r in negative),
+            independent_groups=total,successful_groups=passed,
             one_sided_success_lower_bound=lower,status='VALIDATED_EMPIRICAL_REGION' if eligible else 'INSUFFICIENT_OR_FAILED',
             source_case_ids=sorted(r['id'] for r in items),source_refs=sorted({v for r in items for v in r['evidence_refs']})))
     artifact=dict(version=VERSION,policy=deepcopy(policy),cells=cells,source_digest=digest(records),
@@ -74,6 +79,10 @@ def capacity_advice(artifact,context,demand):
     context_id=digest(context);bucket=[math.floor(v/w) for v,w in zip(demand,bins)]
     for cell in artifact['cells']:
         if cell['context_digest']!=context_id or cell['bucket']!=bucket or cell['status']!='VALIDATED_EMPIRICAL_REGION':continue
+        # Confidence across a bucket does not turn an explicit failed/unqualified
+        # point into positive evidence, even if other records at that point pass.
+        if any(all(math.isclose(a,b,rel_tol=1e-12,abs_tol=1e-12) for a,b in zip(demand,row))
+               for row in cell['negative_joint_support']):continue
         if not all(a<=v<=b for a,v,b in zip(cell['observed_lower'],demand,cell['observed_upper'])):continue
         distance=min(math.sqrt(sum(((a-b)/w)**2 for a,b,w in zip(demand,row,bins))) for row in cell['joint_support'])
         if distance>artifact['policy'].get('maximum_support_distance',.25):continue
@@ -136,6 +145,8 @@ class LocalCapacityCalibration:
         model,_=self.learning.checked_model(record['model_id'])
         if model['weights_digest']!=record['weights_digest'] or model['manifest_digest']!=record['manifest_digest']:
             raise ValueError('Capacity model dependencies changed')
+        if record['artifact'].get('version')!=VERSION:
+            raise ValueError('Capacity calibration version changed;explicit recalibration required')
         if digest({k:v for k,v in record['artifact'].items() if k!='digest'})!=record['artifact']['digest']:
             raise ValueError('Capacity calibration changed')
         return record
