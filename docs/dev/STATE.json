@@ -6,8 +6,8 @@
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
   "active_task": "WINDOWS_RELEASE_BOUNDED_QT_NORMAL_RETRY",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001.receipt.json",
-  "last_confirmed_commit": "a697fb7a487d3a82954b5b81e92343ed74424e1f",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-QT-GROUPS-001.receipt.json",
+  "last_confirmed_commit": "77e215440d7e4fe1aaa9fd49b143acbb8dc17c14",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
   "exe_policy": "EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -18,7 +18,7 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Run all original176 native cases in serial fresh Qt groups of at most4 with unchanged180s watchdog, then actual frozen EXE acceptance and published-download verification; never claim source diagnostic equals EXE.",
+    "Observe native run for exact 77e215440d7e4fe1aaa9fd49b143acbb8dc17c14; preserve all original176 cases and actual frozen/package/download gates.",
     "Storage assessment complete; no existing backups or private files deleted."
   ],
   "blocked": [
@@ -43,9 +43,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261021-WINDOWS-QT-GROUPS-001"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1703,7 +1701,7 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "NORMAL_RETRY_WITH_BOUNDED_QT_GROUPS_PREPARED",
+    "status": "NORMAL_WINDOWS_BOUNDED_QT_BUILD_REQUEST_PUSHED",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
@@ -1728,7 +1726,7 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "DA809_FAILED_BEFORE_PACKAGING",
+    "windows_receipt": "WAITING_FOR_NEW_NATIVE_RUN",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "429bd302eece95477e462fbdaef6c427bedf42a1",
     "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
@@ -1772,7 +1770,7 @@
     "software_snapshot_commit": "a697fb7a487d3a82954b5b81e92343ed74424e1f",
     "software_verified_files": 11713,
     "governance_gate": "PASS_REQUIRE_EVIDENCE_PUBLICATION_SCOPE",
-    "current_request_source": "NEXT_COMMIT_EXACT_SHA_RECORDED_AFTER_PUSH",
+    "current_request_source": "77e215440d7e4fe1aaa9fd49b143acbb8dc17c14",
     "previous_public_runs": [
       {
         "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
