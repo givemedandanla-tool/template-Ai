@@ -1,0 +1,21 @@
+{
+  "attempt": "PUBLIC_REPOSITORY_RETRY_001",
+  "observed_utc": "2026-10-21T11:19:25.223034+00:00",
+  "source_before_retry": "62fcaef116e033bf4acd5f75f5c9647f4f61e256",
+  "repository_public": true,
+  "public_read": {
+    "repository_http": 200,
+    "workflow_http": 200,
+    "release_http": 404
+  },
+  "prior_run": {
+    "url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39587259422",
+    "conclusion": "FAILURE_BEFORE_JOB_START",
+    "annotation": "The job was not started because recent account payments have failed or your spending limit needs to be increased. Please check the Billing & plans section in your settings",
+    "account_billing_cause": "NOT_INDEPENDENTLY_VERIFIED"
+  },
+  "api_access": "Forbidden from current cloud network; public GitHub HTML and native Git work",
+  "retry_authorization": "User made repository public and explicitly requested retry packaging/publication. Standard windows-latest only; no billing edits or paid resources.",
+  "code_or_test_changes": false,
+  "completion": "REQUEST_NOT_YET_SENT; this note records the actual pre-retry observation, not successful build or publication."
+}
