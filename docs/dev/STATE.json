@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "WINDOWS_NORMAL_RELEASE_REQUEST_READY",
+  "active_task": "NORMAL_WINDOWS_FROZEN_BUILD_AND_RELEASE_RUNNING",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001.receipt.json",
   "last_confirmed_commit": "a697fb7a487d3a82954b5b81e92343ed74424e1f",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
@@ -18,7 +18,7 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Normal request without diagnostic marker; actual176 and frozenEXE must pass, then immutabletag/prerelease and actual published download hashes.",
+    "Wait for exactda809 normal build; only actual frozenEXE and publishedasset verification permits release claim. Preserve failure reports and repair without changing successful source unnecessarily.",
     "Retain rawLinux4way timeout and successful isolated11cases; selected qualification is explicit, not a first-attempt allPASS claim.",
     "Storage assessment complete; no existing backup/private-data cleanup."
   ],
@@ -1702,12 +1702,12 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "FINAL_CURRENT_SOURCE_REMOTE_VERIFIED_READY_FOR_EXE",
+    "status": "NORMAL_EXE_BUILD_ACTUAL_RUN_RUNNING",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Normal request without diagnostic marker; actual176 and frozenEXE must pass, then immutabletag/prerelease and actual published download hashes.",
+    "next": "Wait for exactda809 normal build; only actual frozenEXE and publishedasset verification permits release claim. Preserve failure reports and repair without changing successful source unnecessarily.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1727,7 +1727,7 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "NATIVE176_ALL_PASS_DIAGNOSTIC_ONLY",
+    "windows_receipt": "RUNNING_ACTUAL_NORMAL_BUILD_RECEIPT",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "429bd302eece95477e462fbdaef6c427bedf42a1",
     "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
@@ -1771,7 +1771,7 @@
     "software_snapshot_commit": "a697fb7a487d3a82954b5b81e92343ed74424e1f",
     "software_verified_files": 11713,
     "governance_gate": "PASS_REQUIRE_EVIDENCE_PUBLICATION_SCOPE",
-    "current_request_source": "bea79a10dbafc42b3545bdc9f3e95d51956cbcf2",
+    "current_request_source": "da809cf55b07b45060dbf455a73d494493a1bc65",
     "previous_public_runs": [
       {
         "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
@@ -1793,7 +1793,7 @@
       "failed": 1,
       "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
     },
-    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39607635193",
+    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39612727807",
     "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-002-failed",
     "native_result": {
       "planned": 176,
@@ -1810,7 +1810,7 @@
     "source_checkpoint": "CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001",
     "source_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001.receipt.json",
     "software_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
-    "native_mode": "NORMAL_RELEASE_REQUEST_REQUIRES_FROZEN_EXE"
+    "native_mode": "NORMAL_RELEASE_WITH_FROZEN_EXE_AND_PUBLISHED_DOWNLOAD_GATES"
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",
