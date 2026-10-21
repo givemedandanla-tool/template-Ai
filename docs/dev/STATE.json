@@ -18,10 +18,11 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Complete linux-regression-003 without code changes",
-    "Run stock-captures-004 alone with original scripts/deadlines/assertions",
-    "Adopt actual same-source execution and original27 into formal run, update requirement evidence pointers and checkpoint",
-    "Require governance PASS before updating release-request branch; build/test actual Windows EXE and verify published download"
+    "Inspect linux-regression-004 completion; do not alter source while it runs",
+    "After full1958 PASS, adopt actual execution plus stock004 original27 and release-beta-source-005 native Git proof as RUN-WINDOWS-BETA-LINUX-001",
+    "Update completed requirement evidence pointers, generate views, prepare incremental checkpoint covering every new formal attachment; push/read back/ack and preserve receipt",
+    "Only after governance require-evidence publication-scope PASS, push final release-request/v0.2.0-beta.1 candidate; inspect actual Windows171 plus frozen EXE before tag/Release and actual download verification",
+    "GitHub API is currently network-policy Forbidden; saved network draft needs platform settings application. No Windows execution receipt observed; never claim an EXE already built/published."
   ],
   "blocked": [
     {
@@ -1703,7 +1704,7 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "FINAL_FIXTURE_ADAPTERS_CORRECTED",
+    "status": "ORIGINAL27_PASS_FINAL_FULL_REGRESSION_RUNNING",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
@@ -1728,7 +1729,7 @@
     ],
     "windows_receipt": "NOT_OBSERVED_REQUEST_PUSH_DOES_NOT_PROVE_RUN_STARTED",
     "regression_matrix": ".github/windows-release-test-scope.json",
-    "source_candidate": "7d43d956441bab529d60f734dd331241fd9abfe2",
+    "source_candidate": "570ecebe1e5135b0fc271b6c0d56639fdae55566",
     "source_manifest_sha256": "3cd6da4bbe162df29746c17e12e55992a4eabc09042f4492896a0b54b9c9c95f",
     "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-001.json",
     "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-001.receipt.json",
@@ -1739,6 +1740,10 @@
       "error": 1,
       "failed": 1,
       "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
-    }
+    },
+    "code_change_commit": "7d43d956441bab529d60f734dd331241fd9abfe2",
+    "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-004",
+    "current_original_captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-004",
+    "original_captures_status": "27/27 PASS; isolated run; original scripts/assertions/deadlines unchanged"
   }
 }
