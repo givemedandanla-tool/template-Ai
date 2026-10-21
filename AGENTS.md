@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新任務：已明確授權Windows測試版發佈
+
+使用者要求「好，現在我要你在github發佈程式本體exe，讓我投入實機測試」。依STATE.windows_release與docs/dev/releases/v0.2.0-beta.1-plan.md執行；此授權取代舊EXE延後，僅本次v0.2.0-beta.1，不合併main、不實作教學草案。一般dev/main/PR不打包；只有人工dispatch或本次精確release-request/v0.2.0-beta.1分支啟動Windows原生建置。通過來源回歸與實際EXE合成流程後才可建tag／發布；原資格不放寬。實際下載校驗及來源證據保存在release-evidence/v0.2.0-beta.1分支，必須實際讀回，不把推送請求當發佈成功。
+
 ## 最新補充：本體之外的可搜尋知識庫草案
 
 2026-10-21使用者追加獨立教學與功能說明資料庫，需關鍵字搜尋及成熟軟體／開源／心理學／設計學參考。見[知識庫方案](docs/dev/EXTERNAL_KNOWLEDGE_BASE_PROPOSAL.md)及EXTERNAL_KNOWLEDGE_BASE_RESEARCH.json。它補充下列軟體內教學，兩份均DRAFT_FOR_DISCUSSION_NOT_ADOPTED。方案為共用內容來源、版本化離線HTML、中文與別名搜尋、內容分類／核對／維護；不得將歷史／規劃全文直接當現有功能。尚未建站、索引、安裝工具或驗證離線搜尋，不自動實作。此說明中心不是對外排版網站，網頁／手機產品仍延後；已採用發佈規則及原軟體資格保持不變，按STATE接續。

@@ -66,7 +66,9 @@ class ReviewLedgerDialog(QDialog):
         def failed(error):
             if error==QProcess.FailedToStart and self.process is process:self.process=None;self.status.setText('無法啟動核實；保留上次快照');process.deleteLater()
         process.readyReadStandardOutput.connect(stdout);process.readyReadStandardError.connect(stderr);process.finished.connect(done);process.errorOccurred.connect(failed);QTimer.singleShot(30000,process,timeout)
-        process.setProgram(sys.executable);process.setArguments(['-m','template_ai.review_ledger','--root',str(self.library.root),'--mode',self.mode.currentData(),'--query',self.query.text(),'--source',self.source_filter.text().strip(),'--offset',str(self.offset)]);process.start()
+        from .launch import worker_command
+        command=worker_command('template_ai.review_ledger','--root',self.library.root,'--mode',self.mode.currentData(),'--query',self.query.text(),'--source',self.source_filter.text().strip(),'--offset',self.offset)
+        process.setProgram(command[0]);process.setArguments(command[1:]);process.start()
 
     def current(self):
         row=self.table.currentRow();return self.rows[row] if 0<=row<len(self.rows) else None

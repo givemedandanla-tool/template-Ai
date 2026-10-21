@@ -56,7 +56,8 @@ def run_command(root,command,payload,*,cancel=None,timeout=120,module='template_
     data=json.dumps(payload,ensure_ascii=False,allow_nan=False).encode()
     if len(data)>MAX_BYTES:raise ValueError('命令metadata超過32MiB，需明確分組')
     if cancel and cancel.is_set():raise ValueError('已取消，尚未開始')
-    process=subprocess.Popen([sys.executable,'-m',module,str(root),command],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    from .launch import worker_command
+    process=subprocess.Popen(worker_command(module,root,command),stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
     start=time.monotonic();first=True
     try:
         while True:

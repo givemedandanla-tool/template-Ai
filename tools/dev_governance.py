@@ -8,6 +8,29 @@ import re
 from dev_common import ROOT, contract_digest, digest, manifest, manifest_digest, read_json, safe_path
 
 
+def verify_exe_authorization(root, state):
+    """Preserve manual-only history; allow only the explicitly requested beta ref."""
+    workflow = (Path(root) / '.github/workflows/first-version.yml').read_text(encoding='utf-8')
+    if state['exe_policy'] == 'DEFERRED_NO_AUTOMATIC_BUILD':
+        if re.search(r'^  (push|pull_request):', workflow, re.MULTILINE):
+            raise ValueError('EXE 工作流程仍會自動觸發')
+        return
+    release = state.get('windows_release', {})
+    authorization = release.get('authorization', {})
+    if (state['exe_policy'] != 'EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD'
+            or release.get('version') != '0.2.0-beta.1'
+            or authorization.get('scope') != 'PUBLISH_WINDOWS_INTERNAL_BETA'
+            or authorization.get('user_request') != '好，現在我要你在github發佈程式本體exe，讓我投入實機測試'):
+        raise ValueError('EXE 發佈缺少本次明確授權')
+    expected = ['  workflow_dispatch:', '  push:', "    branches: ['release-request/v0.2.0-beta.1']"]
+    if workflow.count('\non:\n') != 1:
+        raise ValueError('EXE 觸發條件必須唯一且明確')
+    section = workflow.split('\non:\n', 1)[1].split('\npermissions:', 1)[0]
+    lines = [line for line in section.splitlines() if line.strip() and not line.lstrip().startswith('#')]
+    if lines != expected:
+        raise ValueError('只允許人工啟動或本次明確發佈分支，禁止一般push／PR自動打包')
+
+
 def test_ids(root):
     ids = set()
     for path in (Path(root) / "tests").glob("test_*.py"):
@@ -123,14 +146,10 @@ def check(root=ROOT, require_evidence=False, publication_scope=False):
         run, results = runs[run_path]
         claims = read_json(safe_path(root, run_path).parent / "claims.json")
         verify_acceptance(row,run,results,claims)
-    if state["exe_policy"] != "DEFERRED_NO_AUTOMATIC_BUILD":
-        raise ValueError("EXE 政策與使用者要求不符")
+    verify_exe_authorization(root, state)
     if "GOV-006" in ids:
         from dev_progress import validate
         validate(root)
-    workflow = (root / ".github/workflows/first-version.yml").read_text(encoding="utf-8")
-    if re.search(r"^  (push|pull_request):", workflow, re.MULTILINE):
-        raise ValueError("EXE 工作流程仍會自動觸發")
     receipt = read_json(safe_path(root, state["last_confirmed_checkpoint"]))
     if receipt["phase"] != "REMOTE_VERIFIED":
         raise ValueError("交接沒有已確認 GitHub checkpoint")

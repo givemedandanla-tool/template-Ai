@@ -1700,16 +1700,22 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "IMPLEMENTATION_WIP_NOT_BUILT",
+    "status": "READY_FOR_SOURCE_BOUND_WINDOWS_BUILD",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Implement frozen worker dispatch and exact-tag Windows build/verification/release; preserve external qualifications.",
+    "next": "Push exact authorized release-request branch; inspect real Windows source regression and frozen executable results before publishing.",
     "validation": {
-      "launcher_tests": "5 PASS",
-      "source_executable_acceptance": "INVESTIGATING_BOUNDED_SYNTHETIC_GUI_BLOCK",
+      "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
+      "existing_governance_regression": "10 PASS",
+      "linux_source_flow": "009 two phases PASS but dirty source demonstration only; repeat source-bound",
       "actual_windows_exe": "NOT_RUN"
+    },
+    "authorization": {
+      "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
+      "user_request": "好，現在我要你在github發佈程式本體exe，讓我投入實機測試",
+      "date": "2026-10-21"
     }
   }
 }

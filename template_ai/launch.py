@@ -33,3 +33,11 @@ def desktop_arguments(root):
     """A frozen executable is its own launcher; Python still needs app.py."""
     prefix = [] if getattr(sys, 'frozen', False) else [str(Path(__file__).resolve().parents[1] / 'app.py')]
     return [*prefix, '--data-dir', str(root)]
+
+
+def worker_command(module, *arguments):
+    """Use the same fixed dispatcher from any working directory, source or EXE."""
+    if module not in WORKER_MODULES:
+        raise ValueError('不支援的內部背景工作入口')
+    prefix = [] if getattr(sys, 'frozen', False) else [str(Path(__file__).resolve().parents[1] / 'app.py')]
+    return [sys.executable, *prefix, '-m', module, *map(str, arguments)]

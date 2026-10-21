@@ -1770,3 +1770,5 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 2026-10-21 Windows beta release：使用者明確授權發佈程式EXE；修改前計畫與驗收見releases/v0.2.0-beta.1-plan.md。起點7eab2c86、clean；治理PASS1942。發現frozen worker與備份啟動入口需整合；本機Release API被網路政策阻擋，必要草稿已保存。
 
 Windows beta WIP：版本／frozen白名單背景入口與副本啟動整合、Windows原生程序隔離建置及draft→下載核對→發布→再下載核對流程已落檔。5項launcher回歸PASS；合成來源驗證已走到拖動／資料更正，但重產或關閉流程仍調查，未標PASS、未建置Windows、未發布。第一次來源示範錯把venv symlink解析成base Python，已修正並保留失敗。
+
+Windows beta preflight：13新回歸及10既有治理測試PASS。合成來源流程009兩階段PASS（Linux、source-only、當時未提交，不當固定來源／frozen證據）；修復從非倉庫cwd啟動子程序的模組查找，全部既有worker共用有限白名單入口。GUI等待改用既有真實QEventLoop模式，未放寬原逾時或斷言；同時保留實際資源與合成固定負載的資格界線。治理僅允許本次精確發佈請求分支與手動dispatch，一般push／PR仍拒絕。固定來源後重跑。

@@ -46,7 +46,8 @@ def stop_tree(process):
 
 def run_isolated(root,kind,identity,token,*,cancel=None,progress=None,admission=None,unit_timeout=120,cancel_grace=10,process_factory=subprocess.Popen):
     if unit_timeout<=0 or cancel_grace<=0:raise ValueError('worker timeout需正值')
-    command=[sys.executable,'-m','template_ai.runtime_worker','--root',str(root),'--kind',kind,'--job',identity,'--token',token]
+    from .launch import worker_command
+    command=worker_command('template_ai.runtime_worker','--root',root,'--kind',kind,'--job',identity,'--token',token)
     process=process_factory(command,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,cwd=str(Path(__file__).resolve().parents[1]),creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     events=queue.Queue(maxsize=32);commands=queue.Queue(maxsize=1);errors=deque(maxlen=8);reader_error=threading.Event();stopped=threading.Event()
     def read_stdout():

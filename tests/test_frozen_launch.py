@@ -39,3 +39,13 @@ class FrozenLaunchTests(unittest.TestCase):
 
     def test_gui_arguments_are_not_dispatched_as_background_work(self):
         self.assertFalse(dispatch_worker(['--data-dir', 'data']))
+
+    def test_child_pipe_works_when_started_outside_the_source_checkout(self):
+        with tempfile.TemporaryDirectory() as root:
+            code = ('import sys;sys.path.insert(0,' + repr(str(ROOT)) + ');'
+                    'from template_ai.coverage_command import run_command;'
+                    'import json;print(json.dumps(run_command(' + repr(root) + ',"BATCHES",{})))')
+            result = subprocess.run([sys.executable, '-c', code], cwd=root,
+                                    capture_output=True, text=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stderr[-2000:])
+            self.assertEqual(json.loads(result.stdout)['total'], 0)

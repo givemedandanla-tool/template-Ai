@@ -23,8 +23,11 @@ def run(spec_path):
     root = Path(spec['root']).resolve()
     require(root == spec_path.parent, '驗證資料必須與明確合成標記位於同一目錄')
     require((root / 'SYNTHETIC_ONLY').read_text() == 'NO_PRIVATE_DATA', '缺少合成資料標記')
+    import faulthandler
+    import sys
+    faulthandler.dump_traceback_later(45, file=sys.stderr)
     from PySide6.QtWidgets import QApplication, QDialog, QComboBox, QPushButton, QMessageBox
-    from PySide6.QtCore import Qt, QPointF, QEvent, QTimer
+    from PySide6.QtCore import Qt, QPointF, QEvent, QTimer, QEventLoop
     from PySide6.QtGui import QMouseEvent
     from PySide6.QtTest import QTest
     from . import __version__
@@ -63,9 +66,25 @@ def run(spec_path):
         print('release-check:', name, flush=True)
 
     def wait(predicate, seconds=30):
-        deadline = time.monotonic() + seconds
-        while not predicate() and time.monotonic() < deadline:
-            QTest.qWait(25)
+        if predicate():
+            return
+        # Match the established Qt process-isolation harness: tight Python
+        # qWait polling can starve cold worker imports of the GIL.
+        loop = QEventLoop()
+        poll = QTimer()
+        deadline = QTimer()
+        deadline.setSingleShot(True)
+        poll.timeout.connect(lambda: loop.quit() if predicate() else None)
+        deadline.timeout.connect(loop.quit)
+        poll.start(10)
+        deadline.start(int(seconds * 1000))
+        try:
+            loop.exec()
+        finally:
+            poll.stop()
+            deadline.stop()
+        if not predicate():
+            faulthandler.dump_traceback(file=sys.stderr)
         require(predicate(), '背景操作未於限定時間完成')
 
     def capture(name):
@@ -135,11 +154,15 @@ def run(spec_path):
             capture('packaged-preview')
             QTest.mouseClick(desk.primary, Qt.LeftButton)
             checked('confirm_actual_preview', bool(editor.sessions.current(editor.session_id)['confirmation']))
+            QTest.qWait(100)
+            QTest.mouseClick(desk.fit_preview_button, Qt.LeftButton)
+            QTest.qWait(100)
             before_graph = editor.sessions.current(editor.session_id)['input_graph']
             box, target = editor.canvas.boxes[:2]
             start = editor.canvas.mapFromScene(box.sceneBoundingRect().center())
             end = editor.canvas.mapFromScene(target.sceneBoundingRect().center() + QPointF(0, 3))
             viewport = editor.canvas.viewport()
+            checked('drag_targets_visible_in_actual_viewport', viewport.rect().contains(start) and viewport.rect().contains(end))
             QTest.mousePress(viewport, Qt.LeftButton, Qt.NoModifier, start)
             movement = QMouseEvent(QEvent.MouseMove, QPointF(end), QPointF(viewport.mapToGlobal(end)),
                                    Qt.NoButton, Qt.LeftButton, Qt.NoModifier)
@@ -217,10 +240,14 @@ def run(spec_path):
         checked('actual_window_close_preserves_durable_session', window.library.closed)
         result['status'] = 'PASS'
     except Exception as error:
+        import traceback
         result['failure_type'] = type(error).__name__
         # Synthetic acceptance only. No arbitrary payload, path or traceback persisted.
         result['failure_check'] = 'after:' + (checks[-1] if checks else 'startup')
+        result['failure_location'] = [dict(module=Path(f.filename).name, function=f.name, line=f.lineno)
+                                      for f in traceback.extract_tb(error.__traceback__)]
     finally:
+        faulthandler.cancel_dump_traceback_later()
         watchdog.stop()
         if window:
             if window.desktop_workspace.editor:

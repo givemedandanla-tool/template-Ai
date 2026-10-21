@@ -32,6 +32,16 @@ def source_commit():
     return subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
 
 
+def source_identity():
+    sys.path.insert(0, str(ROOT / 'tools'))
+    from dev_common import manifest, manifest_digest
+    files = manifest(ROOT, code_only=True)
+    lines = subprocess.check_output(['git', 'ls-tree', '-r', 'HEAD'], cwd=ROOT, text=True).splitlines()
+    blobs = {line.split('\t', 1)[1]: line.split('\t', 1)[0].split()[2] for line in lines}
+    return dict(source_commit=source_commit(), source_manifest_sha256=manifest_digest(files),
+                source_matches_head=all(blobs.get(p) == row['git_blob_sha1'] for p, row in files.items()))
+
+
 def make_spec():
     """Keep product .py bytes for existing immutable engine/source fingerprints."""
     target = ROOT / 'build' / 'release'
@@ -76,6 +86,7 @@ coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name='TemplateA
 def exercise(executable, output):
     """Keep fixture sources alive while two real executable processes use them."""
     source_mode = os.path.samefile(executable, sys.executable)
+    identity = source_identity()
     sys.path[:0] = [str(ROOT / 'tests'), str(ROOT / 'tools')]
     from test_design_session import DesignSessionTests
     from test_automatic_training import AutomaticTrainingTests
@@ -111,8 +122,9 @@ def exercise(executable, output):
                         shutil.copytree(evidence, output, dirs_exist_ok=True)
             if result.returncode:
                 raise RuntimeError('Actual executable acceptance failed in ' + phase + '; inspect bounded evidence')
-        write(output / 'summary.json', dict(status='PASS', source_commit=source_commit(), version=__version__,
+        write(output / 'summary.json', dict(status='PASS', **identity, version=__version__,
               executable_sha256=sha(executable), platform=platform.platform(), phases=['exercise', 'resume'],
+              source_unchanged_during_run=identity == source_identity(),
               actual_frozen_executable=not source_mode, real_corpus_qualified=False))
     finally:
         worker.tearDown()
@@ -144,6 +156,7 @@ def package():
     if (source_tests.get('software_execution') != 'PASS' or source_tests.get('source_commit') != source_commit()
             or not source_tests.get('source_unchanged_during_run') or source_tests.get('runtime_errors') != 0
             or acceptance.get('status') != 'PASS' or not acceptance.get('actual_frozen_executable')
+            or not acceptance.get('source_matches_head') or not acceptance.get('source_unchanged_during_run')
             or acceptance.get('source_commit') != source_commit() or acceptance.get('version') != __version__
             or acceptance.get('executable_sha256') != sha(executable)):
         raise RuntimeError('Current exact Windows source and packaged bytes must have passed acceptance')
@@ -165,15 +178,22 @@ def package():
     (artifacts / 'SHA256SUMS.txt').write_text(''.join(sha(p) + '  ' + p.name + '\n' for p in checksum_files), encoding='utf-8')
 
 
-def verify_download(folder):
+def verify_download(folder, expected_manifest=None):
+    expected_manifest = expected_manifest or ROOT / 'artifacts/release-manifest.json'
+    if sha(folder / 'release-manifest.json') != sha(expected_manifest):
+        raise RuntimeError('Downloaded manifest differs from the locally tested package')
     manifest = json.loads((folder / 'release-manifest.json').read_text(encoding='utf-8'))
     archive = folder / manifest['archive']['name']
     if sha(archive) != manifest['archive']['sha256'] or manifest['source_commit'] != source_commit() or manifest['version'] != __version__:
         raise RuntimeError('Downloaded version/source/archive mismatch')
+    checksum_names = []
     for row in (folder / 'SHA256SUMS.txt').read_text(encoding='utf-8').splitlines():
         expected, name = row.split('  ', 1)
+        checksum_names.append(name)
         if Path(name).name != name or sha(folder / name) != expected:
             raise RuntimeError('Downloaded checksum mismatch')
+    if sorted(checksum_names) != sorted([archive.name, 'release-manifest.json']):
+        raise RuntimeError('Downloaded checksum inventory differs')
     with zipfile.ZipFile(archive) as bundle:
         expected = {'TemplateAI/' + row['path']: row for row in manifest['package_files']}
         if set(bundle.namelist()) != set(expected) or len(bundle.namelist()) != len(expected):
