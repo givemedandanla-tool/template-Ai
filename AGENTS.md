@@ -11,6 +11,10 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新補充：本體之外的可搜尋知識庫草案
+
+2026-10-21使用者追加獨立教學與功能說明資料庫，需關鍵字搜尋及成熟軟體／開源／心理學／設計學參考。見[知識庫方案](docs/dev/EXTERNAL_KNOWLEDGE_BASE_PROPOSAL.md)及EXTERNAL_KNOWLEDGE_BASE_RESEARCH.json。它補充下列軟體內教學，兩份均DRAFT_FOR_DISCUSSION_NOT_ADOPTED。方案為共用內容來源、版本化離線HTML、中文與別名搜尋、內容分類／核對／維護；不得將歷史／規劃全文直接當現有功能。尚未建站、索引、安裝工具或驗證離線搜尋，不自動實作。此說明中心不是對外排版網站，網頁／手機產品仍延後；已採用發佈規則及原軟體資格保持不變，按STATE接續。
+
 ## 最新討論：教學機制與面板簡化草案
 
 2026-10-21使用者要求參考成熟軟體、開源、心理學及設計學，設計教學機制與規則供參考。見[待核對方案](docs/dev/TUTORIAL_AND_PANEL_SIMPLIFICATION_PROPOSAL.md)及固定來源TUTORIAL_AND_PANEL_SIMPLIFICATION_RESEARCH.json。狀態DRAFT_FOR_DISCUSSION_NOT_ADOPTED：方案提出常用面板簡化、就地提示、獨立範例練習、任務查找與錯誤回復，重用現有製作核心及進階引導，教學進度不當業務資格。尚未修改GUI、實作教學或做新手實測；不自動開發或改原完成數／外部資格，網頁手機與EXE仍延後。已採用的發佈維護規則維持有效。按STATE接續討論，不把草案當已採用規格。

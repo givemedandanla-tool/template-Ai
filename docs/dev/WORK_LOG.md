@@ -1761,3 +1761,8 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 ### 2026-10-21 教學與面板簡化方案（研究草案）
 
 依使用者要求研究VSCode walkthrough／通知、Fluent教學提示、Carpentries專家盲點／記憶負荷／回饋及Mayer與Moreno2003論文選段，7份文件固定commit/hash。核對既有三工作區、進階引導與同碼原生畫面，提出面板簡化＋常用任務教學＋獨立本地練習＋錯誤回復，強調教學完成不等於業務或印刷資格。草案TUTORIAL_AND_PANEL_SIMPLIFICATION_PROPOSAL.md供參考，未採用／實作、未做新手實驗；不改產品程式、版本、原8AI／75父題、發佈規則及EXE政策。
+
+
+### 2026-10-21 獨立可搜尋知識庫方案（研究草案）
+
+使用者追加本體之外的教學／功能資料庫。研究Diataxis、Microsoft Style Guide、Material離線／中文搜尋及其MIT程式、MiniSearch，重用前輪心理學選段；16份固定來源紀錄含重用與閱讀範圍。提出共用內容、四類知識＋問題／版本入口、中文與受控別名、版本和可用狀態、file://實證、全資源本地化及文件維護交付；記錄offline插件預設CDN與動態版本功能的限制。EXTERNAL_KNOWLEDGE_BASE_PROPOSAL.md為DRAFT，補充原教學草案。未安裝／建站／建索引／做搜尋或新手驗收，未改GUI、軟體版本、原資格、發佈規則或EXE政策。
