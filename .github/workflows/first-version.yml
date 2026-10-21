@@ -19,6 +19,10 @@ jobs:
       QT_QPA_PLATFORM: windows
       PYTHONUTF8: '1'
       GH_TOKEN: ${{ github.token }}
+      NATIVE_TESTS_ONLY: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[native-tests-only]') }}
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
     steps:
       - name: Preserve source bytes for immutable fingerprints
         shell: pwsh
@@ -53,7 +57,11 @@ jobs:
             if (!(Test-Path $selectedPython)) { throw 'The configured setup-python interpreter is missing' }
             # Inkscape bundles Python too; keep the build on setup-python 3.11.
             $env:PATH = "$env:pythonLocation;$env:pythonLocation\Scripts;$env:PATH"
-            & ./tools/build_windows.ps1
+            if ($env:NATIVE_TESTS_ONLY -eq 'true') {
+              & ./tools/build_windows.ps1 -NativeTestsOnly
+            } else {
+              & ./tools/build_windows.ps1
+            }
             if ($LASTEXITCODE -ne 0) { throw "Windows build exited with code $LASTEXITCODE" }
           } catch {
             # Retain failures that occur before the build script can create logs.
@@ -65,7 +73,12 @@ jobs:
             "Python before explicit selection: $pythonBefore" | Out-File -Encoding utf8 artifacts/pyinstaller.log -Append
             "Selected setup-python interpreter: $selectedPython" | Out-File -Encoding utf8 artifacts/pyinstaller.log -Append
           }
+      - name: Record native diagnosis without release qualification
+        if: success() && env.NATIVE_TESTS_ONLY == 'true'
+        shell: pwsh
+        run: python tools/persist_release_evidence.py --status NATIVE_TESTS_DIAGNOSTIC_PASS_NOT_PUBLISHED
       - name: Create immutable beta tag and draft assets
+        if: env.NATIVE_TESTS_ONLY != 'true'
         shell: pwsh
         run: |
           git config user.name 'github-actions[bot]'
@@ -77,6 +90,7 @@ jobs:
           gh release create v0.2.0-beta.1 --verify-tag --draft --prerelease --title 'Template AI v0.2.0-beta.1 — Windows 實測版' --notes-file docs/dev/releases/v0.2.0-beta.1-notes.md artifacts/TemplateAI-v0.2.0-beta.1-windows-x64.zip artifacts/release-manifest.json artifacts/SHA256SUMS.txt
           if ($LASTEXITCODE -ne 0) { throw 'Draft Release publication failed' }
       - name: Download and verify every draft package file
+        if: env.NATIVE_TESTS_ONLY != 'true'
         shell: pwsh
         run: |
           gh release download v0.2.0-beta.1 --dir artifacts/download
@@ -84,6 +98,7 @@ jobs:
           python tools/windows_release.py verify-download --output artifacts/download
           if ($LASTEXITCODE -ne 0) { throw 'Downloaded draft differs' }
       - name: Publish prerelease and verify published bytes
+        if: env.NATIVE_TESTS_ONLY != 'true'
         shell: pwsh
         run: |
           gh release edit v0.2.0-beta.1 --draft=false --prerelease

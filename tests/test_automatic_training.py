@@ -30,6 +30,9 @@ class AutomaticTrainingTests(unittest.TestCase):
 
     def tearDown(self):
         for token in self.tokens:LIVE_OWNERS.discard(token)
+        # Registered secondary windows own SQLite handles too. Close them before
+        # removing their directory; Windows correctly rejects deleting open DBs.
+        self.doCleanups()
         self.library.close();self.temp.cleanup()
 
     def job(self,paths=None):
