@@ -2,6 +2,8 @@
 
 本輪使用者只要求設計方案與報告。見`non_code_audit/PLAN.md`與PLAN.json：8個面向、32項檢查主題，依7個已取得固定commit／hash的公開來源設計；0項正式排查執行，未改產品、原需求完成數、型別／查重基準或外部資格。初步3項線索見PRELIMINARY_OBSERVATIONS.json：治理來源過期為已知證據缺口，進度狀態與UI引用差異需先核對scope，沒有宣稱3個產品故障。
 
+交付索引：`non_code_audit/DELIVERY.md`。設計來源`150ef4e4`已原生Git獨立讀回，11份scope文件與checkpoint本身（共12條）吻合；收據`docs/checkpoints/CP-20261021-NONCODE-DESIGN.receipt.json`隨後續文件提交保存，精確最後確認版本依STATE。8項文件一致性核對PASS，不當成32項排查通過。
+
 方案交付後停止；若下一輪指派執行，先建規則台帳與完整條款映射，先查歸屬／定稿／錯稿／隱私反例，再查學習、條件交換、確定性、真介面、輸出與證據。現有1921PASS／27GUI／19桌面結果與私人資料留本地政策不變。使用既有正常工具及Git保存，不重複查帳或為純設計重跑全套／打包；精確來源與收據依STATE。
 
 ## 既有全面查證與產品交接
