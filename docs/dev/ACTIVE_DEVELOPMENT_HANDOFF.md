@@ -1,17 +1,17 @@
-# 交接：修正版本正在原生 Windows 建置
+# 交接：Windows診斷與Linux重新驗證同時執行
 
-2026-10-21。使用者已將倉庫公開，要求重試EXE發佈，並評估雲端文件是否應刪。**目前未建立EXE/tag/Release；沒有清理既有資料。** 不合併main、不覆寫tag、不調帳務或啟用新付費資源。
+使用者要求公開template-Ai後重試Windows EXE發布，另評估工作區用途/刪除建議。**尚無已驗證EXE、tag或Release；未清理既有備份/私人資料。** 不合併main、不強推、不新增付費資源/模型/子代理。
 
-目前原生請求精確來源fac43f21072113abc95355c531e104921aca040a，已push/readback；run39601136869實際RUNNING，https://github.com/givemedandanla-tool/template-Ai/actions/runs/39601136869 。branch release-request/v0.2.0-beta.1；dev後續只存交接。原生結果在release-evidence/v0.2.0-beta.1/latest.json與來源子目錄，可git fetch讀回。api.github.com仍被此雲端policy擋，但公開HTML及Git可用，無需API key或繞proxy。觀察腳本.cache/release-public-retry/watch_receipt.py及owned session75929仍可能運作，先查現況，不重複觸發runner。
+當前產品原始碼的Windows存活探測與atomic progress修正已完成；舊source435dc0d8的Linux1963/1963、259健康、0runtime及原GUI27/27全部PASS，正式RUN-WINDOWS-BETA-REPAIR-LINUX-001與412項CP/ded89cf6已REMOTE_VERIFIED、嚴格gate曾PASS。這些是舊manifest，不能當成當前fixture/build-helper新來源已合格。
 
-實際code來源429bd302，manifest435dc0d88501c6de7394378ab26c535a0da9e6e5a7228747cd67cd0d2f08b70f。linux-regression-005已1963/1963PASS、259健康、0runtime、sourceunchanged；stock-captures-005原27/27PASS，沒有和完整回歸並行。原1958測試ID全保留，原27個capture腳本/命令/deadline不變；新增5安全案例。source-compatibility-005.json可核對。
+目前並行兩項（不要重複啟動）：
+1. Linux完整linux-regression-006，owned session11563，source a322683a，4個獨立Qt程序，每程序OMP/OPENBLAS/MKL1thread，TMPDIR=.cache/test-tmp-006，既有4CPU/32GiB。原CLI只允許1/2，已在.cache隔離校準4程序同時運作4/4PASS後，僅擴充docs/dev/pre_download_audit/run_local_audit.py的CLIchoice到4；原案例/180秒限制不變。配置與校準報告已存releases/v0.2.0-beta.1。最近744/1963PASS，未完成；查live/test-progress.json與實際程序。跑完才能單獨stock-captures-006，不和完整回歸並行。
+2. Windows診斷來源a4799a309cbd6587c0f39ff2b8a7b6f751e0f9b6，run39606517382，實際RUNNING；owned watcher84201，.cache/release-public-retry/watch_receipt.py。Git fetch release-evidence/v0.2.0-beta.1/latest.json與來源目錄；公共Actions HTML也可讀，api.github.com仍被雲端policy擋。此為[native-tests-only]模式，不建EXE/tag/Release。先執行原input三種格式輸出案例單獨probe，再原176全部Windows模組逐一執行，原180秒不變。失敗讀package-check/native-export-probe-error.log、export-probe-*、pyinstaller.log尾端完整啟動trace。前次255e5635診斷入口只有概括錯誤，報告native-diagnostic-001-startup-failed；新入口增加excepthook與workflowTee，未改產品/測試核心。
 
-正式RUN-WINDOWS-BETA-REPAIR-LINUX-001採錄真實同源執行+355附件；softwarePASS，原5外部未驗證保留整體FAIL。166完成範圍重新引用新run，原條款/完成旗標不變，進度delta全0。CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001快照ded89cf6，REMOTE_VERIFIED412項，增量基底308491fc；完整Linux4946項另有CP-WINDOWS-REPAIR-FULL005-001。嚴格require-evidence/publication-scope已PASS1963。不重跑已通過Linux/GUI，除非有新source/失敗或具體風險。
+最新正式Windows失敗fac43f21/run39601136869：176中175完成174PASS1ERROR，1未完成。windows-native-002-failed完整保留。SQLite ERROR是fixture先刪temp，addCleanup(other.close)在tearDown後才跑；tests/test_automatic_training.py現在刪資料夾前doCleanups，targeted RuntimeQueue9/9PASS。Input18項共124.75秒，最後3格式案例到模組180秒仍未完；不能先認定產品bug或任意延長時間。單例+序列Windows測試及每程序1maththread用來區分原因。源PS1與fixture已改，所以重新建立當前同源證據。原WindowsPID0殺程序/rename衝突/字型與短路徑fixture問題已在上輪改善，剩餘不能略過。
 
-下一步等待本次Windows16模組176項全部PASS無skip，真正frozenEXE兩階段也PASS，才建立不可變v0.2.0-beta.1tag/Pre-release、上傳ZIP/manifest/SHA256、公開後實際逐檔下載校驗。確認原生回執與tag解參照來源、實際公開附件，才給下載連結。若失敗讀有界unittest/progress/stack/packaginglog，按根因修正，不停用測試、換假視窗或放寬期限。
+下一步：處理診斷實際root cause；若改產品/tools/tests再重建同源證據，docs/CI入口修正不改code-only manifest但須記錄實際driver。Linux006全PASS後原stock27單獨執行，確認原1958測試ID與27script/command/deadline全部保留；採錄新正式run，166完成範圍證據引用更新但資格不變，render/snapshot與全部新附件checkpoint/remote讀回後嚴格gate。最後普通提交（不含[native-tests-only]）才推release-request/v0.2.0-beta.1，正常模式仍強制完整gate→Windows176→真正EXE→tag/Pre-release→公開下載逐檔校驗。診斷PASS不是發布資格，built/published保持false直到真實完成。
 
-三次舊public run失敗保留：5fc96/b0e依賴安裝錯；35d133/run39592388094為Windows171中129PASS2ERROR40未完成，報告windows-native-001-failed。已確認Inkscape附帶Python遮蔽setup-python，workflow明確選3.11。真實Windows os.kill(pid,0)會殺程序，程式改既有psutil；progress重用atomicJSON並有限分享衝突重試；合成測試用實際可用字型及canonical路徑，原缺字型/版本/hash斷言不放寬。input-integration舊deadline未解釋，若重現讀新增Windows近原截止時間的一次stack，不提高deadline。
+空間評估已完成並GitHub讀回：docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.md、JSON、盤點時226列CSV；81失效開發ZIP連結但歷史commit/tree可追溯，55舊實體ZIP19.42GiB為條件候選，未逐份hash/獨有內容/還原核對；兩保留包hash/CRC/base2/2PASS。不清空.checkpoints、/tmp、正式證據、Git或私人資料。工作區現約1.3GiB可用，tmp約102MiB，新增測試tmp已放workspace自有cache。
 
-空間評估已完成並REMOTE_VERIFIED：docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.md、JSON及盤點時226列CSV。81失效ZIP連結的歷史commit/tree可追溯；55舊實體ZIP19.42GiB只是需hash/獨有內容/還原核對的候選；兩個保留包hash/CRC/base2/2PASS。不清空tmp/checkpoints、正式證據/Git/私人資料。啟動指引草稿已保存改正過期EXE延後/LOCAL_ONLY，尚未套用或發布環境。
-
-原172需求/75父題/166完成範圍與AI8包真實資格不變。真實作品、使用者Windows硬體、實印、新手/隔離資格待本機回饋；私人資料留本機。教學/知識庫草案未採用，網頁手機延後。沒有子代理、外部模型或新增收費服務。
+原172需求/75父題/166完成範圍與AI8包真實資格不變；真實作品/用戶Windows硬體/實印/新手/隔離等原5外部資格仍未知，不靠合成或HostedWindows升級。教學/知識庫未採用草案，網頁手機延後。啟動指引草稿已保存待環境設定review/save/publish，不阻塞當前GitHub runner。零例行確認，新對話從STATE/本交接/真實run接續，保留執行中程序。

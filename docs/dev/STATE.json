@@ -18,7 +18,7 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Native-tests-only request runs isolated original export case and all176 serially, never builds/publishes. In parallel run full1963 on4available Linux cores with1BLASthread per process; then stock27 alone and same-source formal adoption.",
+    "Wait for original single export-case diagnosis and native176 serial result; Linux1963 workers4 simultaneously. Keep full source/GUI qualification and release disabled until current-source gates actually PASS.",
     "Do not increase original180s module limits, drop cases, suppress SQLite cleanup errors, or treat native-only diagnosis as release qualification.",
     "Storage assessment complete, no existing data cleanup."
   ],
@@ -44,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261021-WINDOWS-REQUALIFY-WIP-002"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1707,7 +1709,7 @@
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Native-tests-only request runs isolated original export case and all176 serially, never builds/publishes. In parallel run full1963 on4available Linux cores with1BLASthread per process; then stock27 alone and same-source formal adoption.",
+    "next": "Wait for original single export-case diagnosis and native176 serial result; Linux1963 workers4 simultaneously. Keep full source/GUI qualification and release disabled until current-source gates actually PASS.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1769,7 +1771,7 @@
     "software_snapshot_commit": "ded89cf6638da2f72c2611ebebaeb6553496a1c2",
     "software_verified_files": 11713,
     "governance_gate": "PASS_REQUIRE_EVIDENCE_PUBLICATION_SCOPE",
-    "current_request_source": "255e563516172add9c6b399c8683792138b23397",
+    "current_request_source": "a4799a309cbd6587c0f39ff2b8a7b6f751e0f9b6",
     "previous_public_runs": [
       {
         "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
@@ -1791,7 +1793,7 @@
       "failed": 1,
       "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
     },
-    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39605245059",
+    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39606517382",
     "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-002-failed",
     "native_result": {
       "planned": 176,
@@ -1808,7 +1810,7 @@
     "source_checkpoint": "CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001",
     "source_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
     "software_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
-    "native_mode": "DIAGNOSTIC_STARTUP_FAILED_RETAIN_FULL_TRACE_RETRY"
+    "native_mode": "DIAGNOSTIC_ONLY_WITH_BOUNDED_STARTUP_TRACE"
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",
