@@ -13,7 +13,7 @@ def tree(rev):
  return result
 
 def main():
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args();out=a.output.resolve();out.relative_to(ROOT/'.cache');assert not git('status','--porcelain').stdout,'Commit tracked delivery first'
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);a=p.parse_args();requested=a.output.absolute();requested.relative_to(ROOT/'.cache');out=requested.resolve();out.relative_to((ROOT/'.cache/debug-tooling').resolve());assert not git('status','--porcelain').stdout,'Commit tracked delivery first'
  audit=ROOT/'docs/dev/pre_download_audit';full=json.loads((audit/'full-regression-final-010/summary.json').read_text());assert full['software_execution']=='PASS' and full['planned']==1921 and full['original_test_ids_preserved'] and full['source_unchanged_during_run']
  stock=json.loads((audit/'gui-stock-captures-final-003/summary.json').read_text());assert stock['status']=='PASS' and stock['passed']==27 and stock['source_unchanged']
  native=json.loads((audit/'native-gui-final-006/native-runner-result.json').read_text());assert native['status']=='PASS' and native['source_unchanged']
