@@ -1,0 +1,2088 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001",
+  "kind": "INCREMENTAL_FORMAL",
+  "phase": "PREPARED",
+  "base_commit": "308491fc9a8c703797969580cc0ab84993f3496b",
+  "created_utc": "2026-10-21T12:37:02.480719+00:00",
+  "summary": "Repaired code435dc0d8:1963/1963PASS, original27GUI PASS; complete new formal355attachments retained, original5external qualifications unchanged. Incremental restore requires base308491fc. NativeWindows176 and frozenEXE not yet verified.",
+  "source_files": {
+    ".github/copilot-instructions.md": {
+      "bytes": 847,
+      "sha256": "0e51e8d2d243d374c4b088161b7e1c781d0b1635efabfb5135ea1c2e01244fbe",
+      "git_blob_sha1": "afa51285d4dc9b31f6ae7d58862f3bf8fc726b4c"
+    },
+    ".github/windows-build-lock.json": {
+      "bytes": 3881,
+      "sha256": "9f71395dab1fe27eb23a6b3e6b2beb56b5e2a81736d346abade317c08cacb03a",
+      "git_blob_sha1": "366aa66fca210b41d6d0f6dc16c6cf1155fc7fd2"
+    },
+    ".github/windows-release-test-scope.json": {
+      "bytes": 1317,
+      "sha256": "6bf7c1fdbb073bd6a1b59d5bdd80b97ddefae0f8a52c79300b81df7dacde0d56",
+      "git_blob_sha1": "a64f8c05e68615759df3dccd85eb5f4cd8c67b79"
+    },
+    ".github/workflows/development-verification.yml": {
+      "bytes": 2040,
+      "sha256": "065a34f46dd7a6081ce6c20dfd255d68c7fb4c31b2dbea86c430cabc64d92104",
+      "git_blob_sha1": "25804532245ba889ce0faf077ac50346687610d6"
+    },
+    ".github/workflows/first-version.yml": {
+      "bytes": 5569,
+      "sha256": "9e442f76e1f8e62f42878f2e7f08c1cebf13e5642929f652ab1455d70aa1ee2d",
+      "git_blob_sha1": "57d1362a7543e7ffb94701954652950c9e9c1d48"
+    },
+    "AGENTS.md": {
+      "bytes": 22147,
+      "sha256": "66f9f570a655f9889a5c8a8147369a33d8dc5f6e11f464e13c5b2f28fee63a15",
+      "git_blob_sha1": "66c4c6f9e22c6ff6ff31af00f55c7ecb4f36a787"
+    },
+    "README.md": {
+      "bytes": 10470,
+      "sha256": "ab60c62dd01037c19ed7ad0d58e112949457f07ec18f770d58324f95767a7a77",
+      "git_blob_sha1": "e5b9938d0144708412f2120565f0ecfac08ac517"
+    },
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 3736,
+      "sha256": "f66ac69d4eeb5a8f967f03cea80a6ecd1211bbade321a59e91882d17a1625b02",
+      "git_blob_sha1": "6371cabe6a4e25898c5b1d1836c594e2aed1c8ae"
+    },
+    "docs/dev/CURRENT_PROGRESS.json": {
+      "bytes": 36009,
+      "sha256": "827da70c12cbe74a9397c7a4657f79099fa168dc8d413845bc23d9973fc719ff",
+      "git_blob_sha1": "baf3654f05bf94b8786804e337b6018961ea3180"
+    },
+    "docs/dev/FEATURES.md": {
+      "bytes": 58086,
+      "sha256": "dc7716e5876fb1f221ee9028b58591b47970f8f925e1e7e628b4adb5fcf5f9a4",
+      "git_blob_sha1": "ff75e9261bb57c913166f6eb1277b1d70b640b40"
+    },
+    "docs/dev/HANDOFF.md": {
+      "bytes": 1037,
+      "sha256": "1533b50245db00d14d401bcefb40ddc2516ef3460cd76332036a4e6bb308a100",
+      "git_blob_sha1": "69939ac3d9f721ad28caa7a980c2186cd029612e"
+    },
+    "docs/dev/PROGRESS.md": {
+      "bytes": 904,
+      "sha256": "c1619cc87267240c3dfa477c14fd8e6e51e2af94ef21fbd951ce8d066cf6018e",
+      "git_blob_sha1": "1dd2ca7e9c78634af5f6bab27ad2ceaad35e14a3"
+    },
+    "docs/dev/PROJECT_ROADMAP.json": {
+      "bytes": 561737,
+      "sha256": "556d23283890115f639f738c988b78ce3b66b1661aee57c37e68e48c6574b6de",
+      "git_blob_sha1": "d234483300907a667fd41c7f54899f31022f2a33"
+    },
+    "docs/dev/PROJECT_ROADMAP.md": {
+      "bytes": 6701,
+      "sha256": "fea5c9721b962bf2236e734fe9fd9019738b835904ac239ab7b89e4a2251c422",
+      "git_blob_sha1": "4717a05b09d724ebcf09d2b20830ce7c3d4ca082"
+    },
+    "docs/dev/REQUIREMENTS.json": {
+      "bytes": 2821206,
+      "sha256": "f9523c8c73084836970ffc04998319d7de4ba66543b61624e26b74a314a4d894",
+      "git_blob_sha1": "d7695d55697bca9f0682606facf656233bfd5104"
+    },
+    "docs/dev/STATE.json": {
+      "bytes": 87698,
+      "sha256": "e1d564328d0fcc3adba9bd05cb399604773b6ff484bfee8d628c5a4ef94cb731",
+      "git_blob_sha1": "7e5bbcea76bee724f832826c8d0f64ba438b6c2a"
+    },
+    "docs/dev/WORK_LOG.md": {
+      "bytes": 314556,
+      "sha256": "98612612189d21f3f4a7d973360d50bc63da7f189a63e417726ad15be03f1386",
+      "git_blob_sha1": "f965e5f29cbc5387aba44b1542676e0d9ec94e81"
+    },
+    "docs/dev/progress/SNAP-20261021-WINDOWS-BETA-REPAIR-001.json": {
+      "bytes": 36970,
+      "sha256": "495319ed60494b26ada35371dbc66534c36972ef82de76e3bc492b505c76ec60",
+      "git_blob_sha1": "166f4b54385891e593d94e5223a439ce94061057"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/WINDOWS_NATIVE_REPAIRS.md": {
+      "bytes": 2261,
+      "sha256": "ae235ab033e5e055f42ded5f9b6995d4c87ce2d2630d5279c1973b986edf9a1d",
+      "git_blob_sha1": "e61b05f8fd72a2425579afbfb33ce0af0fec4099"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/evidence-link-revalidation-005.json": {
+      "bytes": 617,
+      "sha256": "0c49ecea252d9370f289d4d53f8f8ef80c6bb9000356709765300a2acdfdc2c6",
+      "git_blob_sha1": "d7be372002ddce79ba135f2627d98b7550f9d367"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/governance-gate-linux-005.json": {
+      "bytes": 276,
+      "sha256": "e35faf5b59a0baea8ab55aee5016ad6ab5334f72195c0530a0161cdb132abb22",
+      "git_blob_sha1": "7b22a516af49036980ddb5c69070edaea0c62fc8"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/source-compatibility-005.json": {
+      "bytes": 1069,
+      "sha256": "daa0118f2a9e8dba8999d9aa219a8b9276b3fb740cebae9402d46e0be0626e61",
+      "git_blob_sha1": "02bc0901f91c15b21a411ef32287325744a56271"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/01-validate_first_version.log": {
+      "bytes": 1774,
+      "sha256": "3db2612455134e4689443285b8ac971c9edb94eb9d1cb3417c0ac6765178e4d1",
+      "git_blob_sha1": "fa8b6d7d47c7471e9e7f52cae57b6b5df51bee2d"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/02-capture_next_twenty.log": {
+      "bytes": 434,
+      "sha256": "517041165fd467c797d9987bd3a04d31fe60cfb980a7055e7fad2a3b1e474901",
+      "git_blob_sha1": "3a20079037fafaca5cb51d76f612bd9bab1fac7f"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/03-capture_next_twentyeight.log": {
+      "bytes": 558,
+      "sha256": "016040de5a864b70a9e0384be0c357bb9094adab6b40627e0a2f9988df39f502",
+      "git_blob_sha1": "65823b7cfe14e36d53b071fdabf991bb1d692027"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/04-capture_remaining28.log": {
+      "bytes": 2733,
+      "sha256": "219e89fbe74fd665d3c6224a09e3531a44eef9129b0bfce93711e422102433fa",
+      "git_blob_sha1": "4edb30334fb8347b7561337a958cbc5cb39dc1dc"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/05-capture_quality_repair.log": {
+      "bytes": 2227,
+      "sha256": "43410bcfa07276a9e2054d9e2969bf4d9aea0eb90492d79310c55c3b18bfc740",
+      "git_blob_sha1": "63dae3e4839250b2f1107c1f0f53db2d212809ea"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/06-capture_trusted_samples.log": {
+      "bytes": 249,
+      "sha256": "e8ff4a33fc2bee03dca5e633507c379473ea2ce711796e57a1292a6813e06249",
+      "git_blob_sha1": "b102fd8dce0aa0a9fc23c65176b51e9f24b07f03"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/07-capture_qualified_coverage.log": {
+      "bytes": 99,
+      "sha256": "86641c1386d8bea420a935ab66c3ca39c5d3f91f442556ba23e263d0cc2fe9c9",
+      "git_blob_sha1": "83d01c053513e29eb9a5c627a7b152d97a33884c"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/08-capture_layout_risk_session.log": {
+      "bytes": 1079,
+      "sha256": "defbaa003ebb12a08e359fc538e2faa9ee09e1a06a2eb083271a0056ff2d496c",
+      "git_blob_sha1": "4bb9afb3a6e327909bcb0712c5e539d10aaadb15"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/09-capture_candidate_changes.log": {
+      "bytes": 831,
+      "sha256": "2e81c590239caa23e27d43d242c3efa0910781a48ab069ad05b16072f6e0dfee",
+      "git_blob_sha1": "ab9b31cc82d1928290088857718352b29ff91835"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/10-capture_candidate_results.log": {
+      "bytes": 774,
+      "sha256": "3e275199eaaabcd6273af40b64e1dbb7759374a127264bb6c0fed261b1306ed2",
+      "git_blob_sha1": "0c80d9eb4a4cb30e0f818185e2504a1cadf6830e"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/11-capture_sync_workflow.log": {
+      "bytes": 1842,
+      "sha256": "cdd312bd178e64f9959ddacb873192e454745c15d6deb63831cfb9e073388796",
+      "git_blob_sha1": "dbdb7b1d3b5821244dc0c97cf4c80707e668928f"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/12-capture_workbench_navigation.log": {
+      "bytes": 1536,
+      "sha256": "b80413050c9bbbf514ea6370df7875e7b5291d320a4654cae6d262b240d0744e",
+      "git_blob_sha1": "3e205947a7d6e158c03e8b34492db9e27d66d5b2"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/13-capture_property_context.log": {
+      "bytes": 897,
+      "sha256": "eadb10cbe55323f4f6442aa89d26bc96beff197d9b0ac8b503da5232f2ca0222",
+      "git_blob_sha1": "c30b77727ee26de5f72b8507bf7b3bef66e4bb6c"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/14-capture_canvas_commands.log": {
+      "bytes": 986,
+      "sha256": "ed1842cd16556ccb5de73b1d2c755c90bf59c37bb29b63837a1b4975893c43b7",
+      "git_blob_sha1": "b15710692a9dc909d1be568a712f135faf779b3b"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/15-capture_batch_correction.log": {
+      "bytes": 1520,
+      "sha256": "2629fee2c9afd3812a061b7d9b56bbd9a46b4daab1fe3a31748e869a45fdf60a",
+      "git_blob_sha1": "89e225ff9f2ccbc254511d9acb1cbca707d8a3c3"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/16-capture_major_review.log": {
+      "bytes": 613,
+      "sha256": "2ca2db9e8c162dd9dc256788b8211d12b8a806b82e94729fa16a0662b2654d3b",
+      "git_blob_sha1": "5ac5871d9499426f76a6ad0346ad04a4cb170660"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/17-capture_digital_preflight.log": {
+      "bytes": 746,
+      "sha256": "a5dbfdeab8bae8a99aecee9ea499e96952849e9a4a004064ec1ef20e96e498e8",
+      "git_blob_sha1": "ac7fe17f18b61c91c849941f4dc27ae49e9e4419"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/18-capture_font_source_workflow.log": {
+      "bytes": 1068,
+      "sha256": "e99e769f14bab567e2279bb50f514d0b72ad41b4115f17b219274cb4a5924223",
+      "git_blob_sha1": "d0d47790ba78bc0efd00ed2f3c05d592dec711c7"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/19-capture_source_text_diagnostics.log": {
+      "bytes": 798,
+      "sha256": "d25edf9f9981583ba6445103bac7060e9a8bb7801bfc5338a985a0cd378be08d",
+      "git_blob_sha1": "be0d8451bc3ebeb528306732fcd8e828c603b444"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/20-capture_fixed70_ten.log": {
+      "bytes": 782,
+      "sha256": "529fed07cf1920b2a5ce66f2a25cac3e69525f03ae27c25403b5b1df5882dbc1",
+      "git_blob_sha1": "9349ae5337d729e98667056c18ed7f1c9ddbce54"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/21-capture_diagnostics.log": {
+      "bytes": 804,
+      "sha256": "fb550dea8fb8462298f0e61a715143cc74afc4ffcaca71df4b2e346aab1fb883",
+      "git_blob_sha1": "8c33cff422941ab82ba783c2307ec38efe655b1a"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/22-capture_entities.log": {
+      "bytes": 528,
+      "sha256": "738ead36973b31d2f088be1ebf02678c0d2d433baca9af5e2bb55400bf64c669",
+      "git_blob_sha1": "4812b514ebf2d68c61921d7f80eef48398b3b5b7"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/23-capture_catalog.log": {
+      "bytes": 712,
+      "sha256": "c542d8f8daa74ee7c38e93e4653e88f2f3b14a9ce0590aec8a28953315fcc4a1",
+      "git_blob_sha1": "27086c41abc99a7292b1454dd716b13c4d0f1662"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/24-capture_local_recovery.log": {
+      "bytes": 50,
+      "sha256": "caeb11f6473c6c7125dd27478e588b85ffd6b31784e9adb1371a60f1661eb00f",
+      "git_blob_sha1": "09ad41611f1dae26907b1bdf8e6eb6c323cb72a4"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/25-capture_family_workbench.log": {
+      "bytes": 272,
+      "sha256": "77cda4bef0af864b2cb44b888bc8c04798e84c18b51b7dfc0ffa82169bf23658",
+      "git_blob_sha1": "299a60173f53300b2bb5c9ab69a3d7904c2d822e"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/26-capture_input_integration.log": {
+      "bytes": 670,
+      "sha256": "b721500744461d3d15da0b62679ceedac6369367761e38e2d550a2dcbdc4dfd5",
+      "git_blob_sha1": "afbd8e99a362d351af86d8efc38458a3d55175cb"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/27-capture_desktop_workspace.log": {
+      "bytes": 402,
+      "sha256": "2912cf741c14513ffb4db1e568986a02fcd673b773482607245c91c119dd847c",
+      "git_blob_sha1": "f45b0c2108d56637845da9a88101c0a70dabf651"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/image-manifest.json": {
+      "bytes": 41067,
+      "sha256": "588e242659c627fd58d557b32acb68bd09bff00f7b3ec5dbe26473fe6243a86a",
+      "git_blob_sha1": "85c81b6647d72dbb037897446d4575f6d0557c00"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/jobs.json": {
+      "bytes": 13115,
+      "sha256": "30020a6416e9ea8e444ccca4f12ded2e1940bd6ea58113911f4f22524a974dfe",
+      "git_blob_sha1": "cbf5123269459bf2b87216d3c467e0c4581d1592"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/progress.json": {
+      "bytes": 104,
+      "sha256": "634672efa534dcf6ea6db35dcbcb5dddc4f4a67b4bd1efc4a7b721a53f8fc4c1",
+      "git_blob_sha1": "3b74493f6788cb7606db4c0f7db2a8e2cd6f37d2"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/source.json": {
+      "bytes": 134905,
+      "sha256": "24b1e1ff2c3c81b0efddfc2a615c47e4ab40db8eecbfa1e1709f7c092d12959d",
+      "git_blob_sha1": "1c00573ebff8b37b5e6ac87981d5be604b328040"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/stock-captures-005/summary.json": {
+      "bytes": 219,
+      "sha256": "bbbff652bbdcd688f7909650da9acc2d38ac0cba46fb2411409de98a0126574d",
+      "git_blob_sha1": "d49a91fc16000f00e1dcac6d6c2137677ae2c73d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/adoption-provenance.json": {
+      "bytes": 1109,
+      "sha256": "9f2d138ed5c26aca5b66d9338f897d2db44fcafa16997a693c70e28ab0d4e9a3",
+      "git_blob_sha1": "d96aec84f820f77d24785165bf41b433259da8cd"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/capture-image-manifest.json": {
+      "bytes": 41067,
+      "sha256": "588e242659c627fd58d557b32acb68bd09bff00f7b3ec5dbe26473fe6243a86a",
+      "git_blob_sha1": "85c81b6647d72dbb037897446d4575f6d0557c00"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/capture-jobs.json": {
+      "bytes": 13115,
+      "sha256": "30020a6416e9ea8e444ccca4f12ded2e1940bd6ea58113911f4f22524a974dfe",
+      "git_blob_sha1": "cbf5123269459bf2b87216d3c467e0c4581d1592"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/capture-summary.json": {
+      "bytes": 219,
+      "sha256": "bbbff652bbdcd688f7909650da9acc2d38ac0cba46fb2411409de98a0126574d",
+      "git_blob_sha1": "d49a91fc16000f00e1dcac6d6c2137677ae2c73d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/anonymous-smoke-data-0.2.0-beta.1/assets/0aed4f2107b19ab118fbccb0358ad9cfa353a21ef0e81c93b8570653fc1da2e7-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 8323,
+      "sha256": "2c87b5931e916d10981658b75fd6b3fb2b775da9f756ebe72543aa17d1c8a927",
+      "git_blob_sha1": "3e987534ec002f8e655395efc5253f2c4382602f"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/anonymous-smoke-data-0.2.0-beta.1/assets/3623d830e3efe4687b8376b1cef1640b62495fb95973ed21e8b5593c843946f4-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 60773,
+      "sha256": "cf3ee0f169ae0537384c434cff66f4fbf7dd31418ced8386a5cef81d241b8321",
+      "git_blob_sha1": "41f0e3568a0e770001891d56f05866608e0f39d1"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/anonymous-smoke-data-0.2.0-beta.1/assets/4aae36ead699295758de4bf689e7e77b96e16a862d6e26e7e582fe1e219e9644-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 13583,
+      "sha256": "e5a374e78c547b08cc7cd54194dcb0ff95b012534fbea15d9b39e4e1972fd6b4",
+      "git_blob_sha1": "6b89151398b087d4123091d942966d4d1fed4725"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/anonymous-smoke-data-0.2.0-beta.1/assets/6a5b6623511078fce67de16fccec317cf4982556bc40932df7112c9f6eb63c8d-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 8322,
+      "sha256": "ae871c01bfe734d97d156d8728cfc2bb8ca232d5b16d9ee09c7398ca08025787",
+      "git_blob_sha1": "b4d3f6f4cdcdbb32c7ab8766fc56f591471d0f39"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/anonymous-smoke-data-0.2.0-beta.1/assets/b79cb1326924e1e6c82b2b3d2760fd8aea6274f5e4e6640ccd4a6a55437b92f7-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 8329,
+      "sha256": "3568c93f2c2f98871b55928ce7b459ebadd55dec9cae329e7ae218f1682720be",
+      "git_blob_sha1": "ecd6d34b5c1d92e1d1f2366d8a98f54608641c76"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/anonymous-smoke-data-0.2.0-beta.1/assets/cd66c870f6ebc08fcc85a67d8150afe956ab983d9e7512c65fcca985267b2721-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 64118,
+      "sha256": "6004c83cee77a676812c324781dd4fda2533e11840ce0b44f77c84018762d39c",
+      "git_blob_sha1": "c571ba455f085053cdd5f990ff5f633e2cfb8f8f"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-01-loaded-coverage-no-global-claim.png": {
+      "bytes": 178069,
+      "sha256": "5e4190ad140fbf687aa8cb02c9ad489ec357b9781d970a4371c9a1e64ff935c8",
+      "git_blob_sha1": "73b501fe78ef7b84ecedbae9a59bc5fd0486a7ed"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-02-filtered-hidden-explicit-selection.png": {
+      "bytes": 131444,
+      "sha256": "3efa777fc02dd85feb3e31fa4f5c7b593e52a33ee8de3f8306b223c401dd1698",
+      "git_blob_sha1": "1826ebd893a49ed7ceac5662e80575e8cbb5cc72"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-03-real-preflight-fixed-font-differences.png": {
+      "bytes": 222191,
+      "sha256": "71c62c20996084cc35b4e8f6a246d6eba74d1b3aabae13215f76a88d3720d550",
+      "git_blob_sha1": "2fbceef3ecfe1d97dd106a3b2468bf4dcb6559cd"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-03a-source-readonly-before-after.png": {
+      "bytes": 37541,
+      "sha256": "e4091dda8420b29f2137b0a051a543110854378f477f377462160b09a97e5f79",
+      "git_blob_sha1": "ba4c174cb5e8d8dc703908ed6bab559fd97e8cac"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-04-real-cancel-scope-confirmation.png": {
+      "bytes": 25928,
+      "sha256": "ea43cbd5aadcbf469fa49c40b368665fab5fbec7a8dd25e9bc82dc3dd07fe347",
+      "git_blob_sha1": "5baa52e975dc426bb8f906c7bbbbf755fa463350"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-05-real-approved-fixed-scope.png": {
+      "bytes": 25928,
+      "sha256": "ea43cbd5aadcbf469fa49c40b368665fab5fbec7a8dd25e9bc82dc3dd07fe347",
+      "git_blob_sha1": "5baa52e975dc426bb8f906c7bbbbf755fa463350"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-06-real-shared-worker-processing.png": {
+      "bytes": 223166,
+      "sha256": "a3d80aa294f273280b4dd22ddf394832a16babe5502cf257c0e5cdd694a04108",
+      "git_blob_sha1": "42a80e6231c61cf9ef690b63ab9fb5961c7120a9"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-07-partial-results-no-full-pass.png": {
+      "bytes": 210900,
+      "sha256": "509c936698eaf95df8a020efab5f3167145d278e123e80d3e029ce2e4b528bf6",
+      "git_blob_sha1": "aa1eed52a358528b57b13f66fdf69ccf6ae712f1"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-08-real-safe-retry-confirmation.png": {
+      "bytes": 25928,
+      "sha256": "ea43cbd5aadcbf469fa49c40b368665fab5fbec7a8dd25e9bc82dc3dd07fe347",
+      "git_blob_sha1": "5baa52e975dc426bb8f906c7bbbbf755fa463350"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-09-operation-readback-no-duplicate-write.png": {
+      "bytes": 207370,
+      "sha256": "f3b244f5112863a5ebeadae28527d3123037d7a50f28744e0b4a9399aec9e95a",
+      "git_blob_sha1": "9abdb6e1f411d82acec3756c2a7069e10f06b2cc"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-10-real-single-transaction-inverse-scope.png": {
+      "bytes": 23777,
+      "sha256": "c3bcf7a4b3399dd262418e436a80748c47fe52eac1289e61e5834d710adc60eb",
+      "git_blob_sha1": "9cd43d159954cdb94562e50baa0529f6f930f503"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-11-single-inverse-retains-other-success.png": {
+      "bytes": 166209,
+      "sha256": "07927f45421b5466c5756b12a9ecfef6c2700c82beb3b840dfa4bf335d6b64c0",
+      "git_blob_sha1": "7b2d0da891a8beb98674ad5136a5f891d830f618"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-12-exact-locked-source-existing-location.png": {
+      "bytes": 204990,
+      "sha256": "fca297f1d6725e501e6f1087cf3cb4d70746366c9033f63b58f0cdab336e0435",
+      "git_blob_sha1": "f8b70373f2d1caee7aa69c807793867a29256cb1"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-13-candidate-exact-sizes-and-context.png": {
+      "bytes": 202007,
+      "sha256": "0710e936e949701158987517e339b07baa4323d3a03d4402c1cf94ac150f8662",
+      "git_blob_sha1": "9354e70f46d09c949e9310d642a3953976d55e6e"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-14-candidate-filter-retains-hidden-logo.png": {
+      "bytes": 168778,
+      "sha256": "026f7b7f6ff1529eb1dca1d3f1ccf65184b07c43ce9cfb1759bfe0d93ec7bf3d",
+      "git_blob_sha1": "f75dfe17e6988f40f8ba5f9ad9ba3d2d2a8bfb77"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-15-candidate-preflight-own-geometry-fixed-font.png": {
+      "bytes": 296697,
+      "sha256": "194ac4d557a9e90e916553076d44eaf11a50bcc7250c72d1265c7ccc1e303998",
+      "git_blob_sha1": "c49b23331419c60505e82d0ae857dfa7982a007f"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-16-original-canvas-readonly-before-after.png": {
+      "bytes": 54771,
+      "sha256": "040b5aa16597d58d8def5070b7dc32edf1f265b4c503d03b709f37cdb41edcc1",
+      "git_blob_sha1": "7a0971150c39ca6ef560fe9d22d195260cfcb34c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-17-candidate-real-no-confirmation.png": {
+      "bytes": 14872,
+      "sha256": "04ae87e2a85b65c8c8d55ed4adc63f61e9394aef94cefc4beabacc4a5b783e0c",
+      "git_blob_sha1": "6efdf8db4d00072d1944917e936584ac1fe992a5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-18-candidate-real-yes-confirmation.png": {
+      "bytes": 14872,
+      "sha256": "04ae87e2a85b65c8c8d55ed4adc63f61e9394aef94cefc4beabacc4a5b783e0c",
+      "git_blob_sha1": "6efdf8db4d00072d1944917e936584ac1fe992a5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-19-two-qualified-one-manual-no-batch-pass.png": {
+      "bytes": 262484,
+      "sha256": "487cadb5bc86e3c19bc60ba91c596b6186081e1f68b830853b9a89c2a8668009",
+      "git_blob_sha1": "7e8d88ee85105ce4ecfa725c8fc4390b60caa5b0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-20-candidate-real-retry-confirmation.png": {
+      "bytes": 14872,
+      "sha256": "04ae87e2a85b65c8c8d55ed4adc63f61e9394aef94cefc4beabacc4a5b783e0c",
+      "git_blob_sha1": "6efdf8db4d00072d1944917e936584ac1fe992a5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-21-exact-receipts-no-duplicate-geometry.png": {
+      "bytes": 268611,
+      "sha256": "dbe8e5c9000a11539ed455a8aadee4047c7230da08768f2c1efc9ae2f9002783",
+      "git_blob_sha1": "de567a840a9c2ea245aac2a88c179009de44affb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-22-real-encrypted-stop-password.png": {
+      "bytes": 12572,
+      "sha256": "749c283cbd3746771816ffca0cf5d8d19d06cc7b2178b3a1d12726e78742213c",
+      "git_blob_sha1": "b6ffe1a20791de625169e9dfb9c15594f596aa7c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-23-actual-ciphertext-readback-receipt.png": {
+      "bytes": 255288,
+      "sha256": "1908b80bc6ab2b49b959ee528b65428889ecaed172b30b2d5c72484036466bb1",
+      "git_blob_sha1": "773d8fa4a0b5a4c5cee73d38345ae44ca189c676"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-24-real-recovery-password.png": {
+      "bytes": 9615,
+      "sha256": "170035112632f73940ba7c0c98c025c5a45dc3030e6c2aba4e8802b3790e13f8",
+      "git_blob_sha1": "60ec5ea41b9cda33660d6b00f9cf9b7cd9b0e596"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-25-real-recovery-scope-confirmation.png": {
+      "bytes": 20060,
+      "sha256": "690b8cb0eca0bb5279af1ba13b8a7694766d13d2ab1ed3c5278ccb1db6b77517",
+      "git_blob_sha1": "707bccc564c99349df3e4a8278a53f718d127f57"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-26-recovery-verified-receipts-unverified-others.png": {
+      "bytes": 280648,
+      "sha256": "08c32fe7d1af88401b0e105ec9b2f555f190eda2448453814acbbe0920baef2d",
+      "git_blob_sha1": "329248f6aa2b93c2e830605b2045e3bc6020261f"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-27-selected-original-transaction-inverse.png": {
+      "bytes": 15571,
+      "sha256": "cae141249016df850d114832c89390b5b160233fe8f29977c31184a5894e2f2d",
+      "git_blob_sha1": "60fc2f8e2d8a577a9259aaf82715e07b330ba48c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-correction-28-partial-inverse-retains-other-candidate.png": {
+      "bytes": 231917,
+      "sha256": "8ad2c58a532e644331aea10f05c40fd0e27c3be094a54fc0b53af610223eafcb",
+      "git_blob_sha1": "2bb405f80520f75fa5aed2d7b055d93851e1f77d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-import-cancelled.png": {
+      "bytes": 113493,
+      "sha256": "f25fb318b18e5306b66b2907cf3d6f60718d2e0dce5196f91c678baf15575099",
+      "git_blob_sha1": "9b039a29d3627dfc693bb54d70fce335e06b3cd8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-import-preflight.png": {
+      "bytes": 103357,
+      "sha256": "f2ef7953f9a6e98c245965ade54b296cab2a4b7e904488abb2f8b4c55b92a6a5",
+      "git_blob_sha1": "5ad4932ab23edeb18252e563cdc7deafc3baba72"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-import-resumed.png": {
+      "bytes": 117006,
+      "sha256": "652be75b657fd8d286b3a4caf519cb95b12ade302966f281d8eb7f9a7ee8fb45",
+      "git_blob_sha1": "3b7b14c1e43e318468990c4e40388809e85a3cf8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-import-running.png": {
+      "bytes": 102677,
+      "sha256": "7a15943308d9b21ffc5439531021607ccad10a215239c41606fdab4f9684cb22",
+      "git_blob_sha1": "f1e0f58ed53230df396ed6a05cdc1ab6e0e1b776"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/batch-source-preview.png": {
+      "bytes": 140921,
+      "sha256": "769c7c3e84964ae2fa465d3c0d6520446b9062cf33fad828ac336a7f72bdefd5",
+      "git_blob_sha1": "416030c36fa7f36e802ba0bbc798ba95d90eaf1f"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-changes-01-core-difference-before-apply.png": {
+      "bytes": 141116,
+      "sha256": "8c13fb8191fe64c22f87956bc07dfeb816a39f0119c568de41123e1b555ea834",
+      "git_blob_sha1": "d0e5fc7bb57df75fb46728ba45044efb3a638a89"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-changes-02-manual-kept-worker-pending.png": {
+      "bytes": 141219,
+      "sha256": "e0d3b7b4ad99be90d549f71ae81ab3b285a6ab589f73767f8db3ee5302ec9ec6",
+      "git_blob_sha1": "f0accbddfd555bfaa52a1f979f3962fb7092a4b5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-changes-03-verified-separate-nonformal-comparison.png": {
+      "bytes": 150818,
+      "sha256": "ea2809c13a4d7c6c676cce759cb19ead64074a8ed70338f740476ba4bf7830e2",
+      "git_blob_sha1": "5007add733e6ac4405c5812aa7a5647c69dd1030"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-changes-04-keep-manual-explicitly.png": {
+      "bytes": 149577,
+      "sha256": "a981846a42eddaaafba00ccb492d0706278da12a710b8c1ef315fa9518253c6b",
+      "git_blob_sha1": "94ea31e8b350087fb8fbfb04c46a2c3eb7797674"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-changes-05-phone-dependency-stale-not-exportable.png": {
+      "bytes": 207214,
+      "sha256": "0d54ae41f8a5aeb855cc8fd3fe510739f20d8656b1231aa9be384d4251a5fee6",
+      "git_blob_sha1": "1e0b7f1d1f8fef9acfb70cbe6ffc713a6acadd11"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-changes-06-long-phone-conflict-no-auto-shrink.png": {
+      "bytes": 156231,
+      "sha256": "404c8ba4ae61bf218621b686a5c0258020fb9776e6e79bf8992f0d9ec76c00ff",
+      "git_blob_sha1": "cae4ef9d36bd7d61e7edcb8299ea9a8f4a737fc9"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-changes-07-single-delta-undo-current-full-gate.png": {
+      "bytes": 147285,
+      "sha256": "e439f444a74349cf279f163d589c0bd07c780e810220fdc5cfabf4ade35a4c8c",
+      "git_blob_sha1": "8c02b107b9d05431b2c81beb9768efd50f2bffd1"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-changes-08-explicit-lock-current-candidate-only.png": {
+      "bytes": 147864,
+      "sha256": "1093eb7b6e73227238e3532aafef368b8107aee37134422bd0ca7d44201b8618",
+      "git_blob_sha1": "c0a7ae11d91b56587e6487839839131a21f293dc"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-results-01-current-qualified-finite-recommendation.png": {
+      "bytes": 201574,
+      "sha256": "aa380d665f268bac63a592bc577db381d368a369236a5c0d20313f90e0e23a0d",
+      "git_blob_sha1": "e44311adbd8b8baadd829412619ae4d4a2af127c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-results-02-nonformal-gate-differences.png": {
+      "bytes": 148784,
+      "sha256": "d592d885a242c5a57586ada2cda4081706794fa443e0873be38200f1538c472c",
+      "git_blob_sha1": "768e63b103f45cc354b8efe02e3ca3e90c1bc072"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-results-03-blocked-selection-retains-qualified-recommendation.png": {
+      "bytes": 265545,
+      "sha256": "9f3ceac34fbfeff1689f0916ac4ae9b2a5b5420ad050c8233303de05a8e543dd",
+      "git_blob_sha1": "8b7ebcac04acd7fa10e214a9431df371ca37080a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-results-04-typed-name-field-and-frame-location.png": {
+      "bytes": 235696,
+      "sha256": "45384e92fd91158e852d14c750df517cceae077f8d1cb80a102e3999d7744a96",
+      "git_blob_sha1": "9693409f56d3a01936a8c1800c817b1982b04ac5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-results-05-stale-comparison-not-selected.png": {
+      "bytes": 150920,
+      "sha256": "ee1c1fbae06c395b2733bf9da2bf6ca787b2cd5e3ef302ac8dd7cbcc1dced7c2",
+      "git_blob_sha1": "3411e09338c02ea1b5fea8cf9879810420ff39e9"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-results-06-long-phone-no-safe-recommendation.png": {
+      "bytes": 258668,
+      "sha256": "334776a292342f0e4de99dfdeb76293b4775b9be09620c919e5048ce3f399209",
+      "git_blob_sha1": "6636a6979096d3265452c2f0eef891761721eb84"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-results-07-stable-field-in-actual-person-card.png": {
+      "bytes": 144281,
+      "sha256": "2dd4158cba198575e79572122237d304c41213a7ccd576b8f0f7964c55893abd",
+      "git_blob_sha1": "01b064080d404c5c79ccea805a279d1b0785e23a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/candidate-results-08-partial-scope-not-global-optimum.png": {
+      "bytes": 259739,
+      "sha256": "15547bedc783fbe19f990afe943ad7671a3d168a899f276c4286aaa41032563b",
+      "git_blob_sha1": "2a293ce74711986b4c5ed01908a6b3ca7ab7b76b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-01-focused-mm-nudge-current-id.png": {
+      "bytes": 246517,
+      "sha256": "ff9a13bc504e9e62649e1599cf45b670fdc2f12777f81ec973b4fa88ea1dd290",
+      "git_blob_sha1": "e0a84929e612d81f8f3ccf64459d70e7b1db5e45"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-02-existing-work-undo-redo.png": {
+      "bytes": 265545,
+      "sha256": "f71418fb9193795bf9b4387a08c18460d4cb6e44d42e807ef3533fcd33893a7d",
+      "git_blob_sha1": "a2aa063604925399c80156c4842e5849b4bcc79f"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-03-text-focus-undo-keeps-work.png": {
+      "bytes": 265625,
+      "sha256": "0c1517e61c1a1d735870bfcf4ab87fea5b3af62cead7e3727012f26a6cfc4351",
+      "git_blob_sha1": "e03ef33ef26e358bbca5d769f54a0afee5cd376b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-04-unapplied-field-blocks-nudge.png": {
+      "bytes": 266464,
+      "sha256": "a0538320edbcc4433b10a2bebbe942e9e94c23be4208e18dc349c26253bb6c78",
+      "git_blob_sha1": "a9b8b0f756d3f5b876e7c54bf30625c851c274c6"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-05-real-pending-discard-scope.png": {
+      "bytes": 18029,
+      "sha256": "74f92417e49bcafb2d7c3eadd38d228ac35b41341bc6cd0a636908fb02b4808e",
+      "git_blob_sha1": "6ed7319be18c5c14d2ba9aef7ff8bcd492f6fc6d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-06-real-history-scope-confirmation.png": {
+      "bytes": 17837,
+      "sha256": "52f6f9a836c2ccca6c608cf088ebba0648286cefb076bc003b779482386ef227",
+      "git_blob_sha1": "dcf5a686eeb0a43e05e7b1759f640431c9d5b8b0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-07-actual-f1-overview-and-mouse-routes.png": {
+      "bytes": 104768,
+      "sha256": "9d3a10eb9e9df851d07ebc174451c4f3f9c7f5cf2bf368cae3b433eb8164e9b6",
+      "git_blob_sha1": "d33797aba5035d0f706142582379fe77d4af26cc"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-08-real-delete-preview-no-write.png": {
+      "bytes": 238301,
+      "sha256": "683309b44f61a0e4ccc618acecee529f12a777fbeb0b3c541c96c5ac92f241b4",
+      "git_blob_sha1": "e0bfbbd5ee4c5cd3549e5d4e2f4ca432ca5816d8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-09-locked-delete-remains-blocked.png": {
+      "bytes": 221809,
+      "sha256": "bd8c58727dc1cdbc272c61b47fa014abf700ccd283f7c444703daf758ba27099",
+      "git_blob_sha1": "fef1492a74033ceadf75d5989a850a2ab6e774e8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-10-stale-source-no-old-key-transaction.png": {
+      "bytes": 259201,
+      "sha256": "548ce557c1a0580b9a7cdef856e7322a78ad6d7a653d0813761016805c7bc247",
+      "git_blob_sha1": "86dee9af39cf86bdf4fd947876a290fac56e73fb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-11-real-key-conflict-no-save.png": {
+      "bytes": 77597,
+      "sha256": "6a56f9ac7505d15ee5819f55a89c7c72c2185739d7d93d56ee82ac55cfaaa4b2",
+      "git_blob_sha1": "66b86167eeb29326ea8d673e82f223345a8eb00a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-12-explicit-remap-reopens-from-preferences.png": {
+      "bytes": 68140,
+      "sha256": "5fc58cacf775448302083d561b04318135e5adc3e7649997df40817b4c961a09",
+      "git_blob_sha1": "f769a1bb1c346e1bbe8e97e33584faeb2cc3cbc8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-13-space-visible-view-only-mode.png": {
+      "bytes": 264899,
+      "sha256": "f6ba21442e738b2d9f0ee98b0d6c78582e1a05bcbd17b3defc2860b4d77df05b",
+      "git_blob_sha1": "a4ce7d206245a82a7009c2f7485b32c2f34f7dbc"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-14-release-restores-exact-tool-and-data.png": {
+      "bytes": 265793,
+      "sha256": "e67aa4edfe758e9b6e024e6aac2061a1532d4085c97a9543b72e9a56b9b03761",
+      "git_blob_sha1": "9c60666620e985d6897172710a07005548922328"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-command-15-actual-operation-version-scope-receipt.png": {
+      "bytes": 30719,
+      "sha256": "17cf043e7163bf629b5a73e48a24ca237a3ef403ac5ff4662abbca06a6be7d82",
+      "git_blob_sha1": "b690a251b284f9953eadf93fc6b8818f70d7acef"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-compare-after.png": {
+      "bytes": 14633,
+      "sha256": "59578ebd80e4170bc9373aba74b2c9a3416cccb2063f775a62c9aacd816f8014",
+      "git_blob_sha1": "6a239c9f28598b6eb3bbb34da87db6bb083ca60c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-compare-before.png": {
+      "bytes": 15290,
+      "sha256": "12215bc9b405013a7c9587d22ade02d56270773fb39cf11a8a3fe6a5be73b592",
+      "git_blob_sha1": "f207de0f2831cd6af0252cb375da1eeb9b9790e0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-compare-focused.png": {
+      "bytes": 105363,
+      "sha256": "196a57c951d2ee0aa80601a9a7554dd470086f3b831c781a73e71795e8d4ca18",
+      "git_blob_sha1": "4576da20ae7f316e63d91fc9ea476e07493b4afe"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-compare-overview.png": {
+      "bytes": 96824,
+      "sha256": "4216ed79310b2628f472a50c9e5825742166fb7baa711bcbfa92002e629c4a97",
+      "git_blob_sha1": "be283aa76f00da9a2dab4a053eab4fbc3536c445"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/canvas-compare-source.png": {
+      "bytes": 60773,
+      "sha256": "cf3ee0f169ae0537384c434cff66f4fbf7dd31418ced8386a5cef81d241b8321",
+      "git_blob_sha1": "41f0e3568a0e770001891d56f05866608e0f39d1"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-customer-compare.png": {
+      "bytes": 132452,
+      "sha256": "2f8894a1ab16b6c5e61cdc46c1d44f5527fa909f59a23230c3cbf61c8a82cb6b",
+      "git_blob_sha1": "cf35cfd24c7027758084ba1e4a2ee4674dd839a0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-customer-prefilled.png": {
+      "bytes": 165710,
+      "sha256": "3e6f0c56c07d9a28f542164715e581fd1804b25540788ed88a89d4745d8ddbac",
+      "git_blob_sha1": "227139ee482a4b7127819c6ff02ee1e80dd89aad"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-customer-source-preview.png": {
+      "bytes": 168631,
+      "sha256": "12d2f6dd69c51aca73b7bc8592ce7c97d4ef7bba3abd5ec14fb08d3267b010ca",
+      "git_blob_sha1": "717f43cc7beb18fa7c9aefefdefc9a08cd417d81"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-explicit-editor.png": {
+      "bytes": 215059,
+      "sha256": "88427113a79bdad98bf001aaf40ebf9a5640dc252fafdf11c2e323040da4a785",
+      "git_blob_sha1": "5a33c3db1545607c7899ba63236dc5f55f912727"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-local-data/assets/0910635696bcadabfa032a08cf091f6d84accaf289e7f59d63cb57d9060d79ee-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 16619,
+      "sha256": "0910635696bcadabfa032a08cf091f6d84accaf289e7f59d63cb57d9060d79ee",
+      "git_blob_sha1": "46d2178e21c51a51d5472157fa585669b7e8f97c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-local-data/assets/6ea5ca06e2e7ca980e4a81fe672a45fab50e7f2df5b1e5cdcbea5069bffbf84f-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 17029,
+      "sha256": "6ea5ca06e2e7ca980e4a81fe672a45fab50e7f2df5b1e5cdcbea5069bffbf84f",
+      "git_blob_sha1": "71c7796e0202ff148781eafdfae77e4aa09888a7"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-narrow-source-preview.png": {
+      "bytes": 197616,
+      "sha256": "5febc9a86d14302d5ca2d3afda0b904426d6ce11a59255fe2effbd28abcfa42c",
+      "git_blob_sha1": "47e970e28b10761d2015bc56c5b88eef1334d117"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-synthetic-source-v1.png": {
+      "bytes": 16619,
+      "sha256": "0910635696bcadabfa032a08cf091f6d84accaf289e7f59d63cb57d9060d79ee",
+      "git_blob_sha1": "46d2178e21c51a51d5472157fa585669b7e8f97c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-synthetic-source-v2.png": {
+      "bytes": 17029,
+      "sha256": "6ea5ca06e2e7ca980e4a81fe672a45fab50e7f2df5b1e5cdcbea5069bffbf84f",
+      "git_blob_sha1": "71c7796e0202ff148781eafdfae77e4aa09888a7"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-template-icons.png": {
+      "bytes": 213169,
+      "sha256": "d82f4f673ae662ff4903c59635f1c2570377ac69aa3447878cfb6599fe6900fe",
+      "git_blob_sha1": "5a30b8babb98d1c2f72d96bb925138a26bc16376"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/catalog-template-list.png": {
+      "bytes": 212304,
+      "sha256": "fa0c29269689d77bdad61c63b370cc44b991e28d71d712deb087548d6416d4a9",
+      "git_blob_sha1": "ac26f57247339069c03fbb062ecd0e15108f5eef"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/decorated-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "742eb545ec519f462e339ad125f4448eba0f08a4b6533c14bf1b03614d284320",
+      "git_blob_sha1": "d82f92d90d2c06315e5780d26ac5e2a391451386"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/decorated-output-workspace.png": {
+      "bytes": 200446,
+      "sha256": "517679b09f467bd2c7d6437dfd0a871ca20bf37a1c2d2cbb19be4a4323401acb",
+      "git_blob_sha1": "d8b5dd3f14d926578ef58f686d8b148e9f8e7c86"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-after-drag.png": {
+      "bytes": 203449,
+      "sha256": "76986932a8a4c5312f7a45a7689282143c927ab1fe7e9fb1a1ad2f0722735a5a",
+      "git_blob_sha1": "1c54c09ba25ed3a9fc0e21eb79fa7669f4920622"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-confirmed.png": {
+      "bytes": 204367,
+      "sha256": "9fc396e210a9d1cccaf3c859237ff9ab1babaa40ceb00c476b1d68ca9b601c79",
+      "git_blob_sha1": "56b5e1c094230027b7ef8c66e91c4d850e358935"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-corrected-preview.png": {
+      "bytes": 180066,
+      "sha256": "db511b7c78d4da2675c044669d6317485fec3d1f73b7412c31dea8120f9e0529",
+      "git_blob_sha1": "e0605bae8a90d2f103e503e0315bbcaecbb6e4b3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-guidance.png": {
+      "bytes": 82150,
+      "sha256": "ca7ed9d047a6bdf949f1b17dd8c243fbb15bec8a61b2711bd29c700942446e05",
+      "git_blob_sha1": "f56f52aeed550f6aea06f916044a29e9840f8e25"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-learned-preview.png": {
+      "bytes": 203525,
+      "sha256": "881f07921a3b4f4110e94bd6bc081b9f247510db042f0f8cbc17ee637a835ffa",
+      "git_blob_sha1": "0921083006cb963d9c92e5a4adf58fd2b3205571"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-mode-0.png": {
+      "bytes": 120277,
+      "sha256": "db3f5ec52e547f02af5d7fac2a49d6171fe9e84d672be0a3e5e42b3e47128bee",
+      "git_blob_sha1": "f10f61a9151d4f7b14a5625ec0c1fbb0f05c7135"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-mode-1.png": {
+      "bytes": 120303,
+      "sha256": "861ee900af69ba4caacbaadeb8ea0331d38dfc050ed4e131e7d3f4a60d73effe",
+      "git_blob_sha1": "0f09debb0587c3a2402488564782bb1cc15bcf10"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-mode-2.png": {
+      "bytes": 153223,
+      "sha256": "0d7d574fd667f6dac4431d9dd3a0a6882cfb6692dbf1f6887c3b9b1e3801e73c",
+      "git_blob_sha1": "f9fcb1a52cc0d016258f266e6b2dc3928cc90e5a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-offline-support.png": {
+      "bytes": 126170,
+      "sha256": "98f548e48d6aaf8fcb91d4ceb5e5893bb9e9296c8ad639c6f72396888176ad74",
+      "git_blob_sha1": "4186891afbe10185e886e62d419bf5e456bb0031"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-small-window.png": {
+      "bytes": 126294,
+      "sha256": "36d66bee01163ce40183daf1f0affcab984f11316346f28163bad084479ed52d",
+      "git_blob_sha1": "720d7af045c1c07121940715bd98c6cee677b92a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/desktop-stale-after-correction.png": {
+      "bytes": 175873,
+      "sha256": "c78b0b44f5c168081cb79d16b56baafd6858dd2592f095dfcd5ab4bccad23e13",
+      "git_blob_sha1": "6755e76f698a78aad0a67e59650451f08c4f16a3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/diagnostic-local-data/assets/b84c9a1111faf893915eb8e18a65c2c44ab18c03de59a64e046ead16842bd5b4-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 8282,
+      "sha256": "2d34650e484bd1828bbb5d2c84cf5e88a57caff07439896f2243a1104d89e43b",
+      "git_blob_sha1": "49973c24e369a51c7fa86162791e726e8f05f90b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/diagnostic-preview.png": {
+      "bytes": 176033,
+      "sha256": "2a2388aff1c861a6d2fda822a2236921d4ec3939807da7ac7418c77729ae9077",
+      "git_blob_sha1": "335ef12ff0cf2a50e87fbc5cf830d509f5e3aece"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/diagnostic-saved-reopened.png": {
+      "bytes": 172664,
+      "sha256": "b9892fd4cac23039be9842b803aae4f144e3d5a75b2bcd56d7a098ad0d6095d4",
+      "git_blob_sha1": "1f08a868db110cdf5d1897cee2d3de67cffc191d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/diagnostic-stale-refused.png": {
+      "bytes": 174566,
+      "sha256": "d56908fa6d69f2f0e03eac3b1176d3f1680ba4923e51d563ba503de8b685aa2f",
+      "git_blob_sha1": "0286004f6c9ebfba40e8db9549718209cb1817a7"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/diagnostic-work-issues.png": {
+      "bytes": 187885,
+      "sha256": "970c9102055281af1b30b2f1b2fa283e0d726c3ec2d89d08fe8a5adf6e03111b",
+      "git_blob_sha1": "967d7ccb73638d76d5c719bcfbc27db322f949dd"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-01-original-canvas-unchecked-guides.png": {
+      "bytes": 282062,
+      "sha256": "174c6ed4e9372b0db06f8d029595faf13bcea1d31a42751f7f073bda2b5fcb03",
+      "git_blob_sha1": "3f271a3da8a69070e276681c0caea4b5ee511aa4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-02-actual-pdf-checklist-no-consent.png": {
+      "bytes": 320824,
+      "sha256": "f3f883ab56e2ef75566d200e8fdaf096aa18db796ab2618687025abc84d5d094",
+      "git_blob_sha1": "510428ecb9545f4552b15dd163b68a472c49f534"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-03-logo-source-vector-and-actual-pdf.png": {
+      "bytes": 79587,
+      "sha256": "b3679ce3e6c8706669cef2870c807640c03630708fff53e5b93158a6910d3f20",
+      "git_blob_sha1": "773fbd2d50ea6cb6a03d67fe79fb991889d06725"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-04-text-source-and-actual-pdf.png": {
+      "bytes": 79247,
+      "sha256": "a5ac1693f9ba0f6f9f8597e7fb1e4b10984f9c2ff03491a58511bca806bbce8e",
+      "git_blob_sha1": "351ffa51ecb69ef15a698ea4fa2e0ad5d01fd027"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-05-default-no-formal-still-blocked.png": {
+      "bytes": 327744,
+      "sha256": "786321802f2cb087185dc664dd003c82e3f173a9b84dae4b64efa72a016bec89",
+      "git_blob_sha1": "211ee3597f4c030235256fb776ac6976e9fbbfe3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-06-explicit-current-format-review.png": {
+      "bytes": 318261,
+      "sha256": "8cc0f0b2151668b3be6157de2cb9e0eb9e8ddfb61079f8b1c172525a4f079a10",
+      "git_blob_sha1": "08dae84636e2c064ed2b417c4ce6fa1f728b3468"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-07-original-final-export-readback.png": {
+      "bytes": 320297,
+      "sha256": "c819c233d33ac0c0558699173a6ca7e45ae3493666e87d02400d288abce72f15",
+      "git_blob_sha1": "50019af0191b558f8b2bc93e70f7586434bc467a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-08-new-dpi-clears-old-review.png": {
+      "bytes": 285405,
+      "sha256": "72308f1fab77e4189247a683c2786c6d8d1bf11773375f3dc89c32f413afb602",
+      "git_blob_sha1": "c031730f8cdf4fb8544270605fb071188afea2ef"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-09-lossless-png-proof-current-size.png": {
+      "bytes": 311176,
+      "sha256": "8f538061f0e2baff7a5280bf4d419483d509182f63c11677229ebc7bb986be68",
+      "git_blob_sha1": "8a4db7c4ed52a8eda7b45e7db00d35db7ea15278"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-10-exact-logo-locator.png": {
+      "bytes": 308450,
+      "sha256": "8a3f1c3641d10cdf3bbd8a5cefba45342383a94c7d66fa443e5503a1b0b1686b",
+      "git_blob_sha1": "fac625a26272ecd74ded6aa6f96b9c6907c2fc89"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-11-original-batch-target-default-no.png": {
+      "bytes": 51546,
+      "sha256": "e6127d04a2a630653cd1cd0fa0e2499c9b6abc3c196eca121f51f1a2fae3e68c",
+      "git_blob_sha1": "ecb113df6041ad52efe4edf69fff0b4604b6f062"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-12-batch-same-format-proof.png": {
+      "bytes": 79566,
+      "sha256": "2ec0a2ae70a82c7f287c9cae2fefe688a81b3140ab074d146745a43738292389",
+      "git_blob_sha1": "8c690a512dce2a5cd82e267f3a1561b410e70e46"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-13-batch-source-and-actual-format.png": {
+      "bytes": 64049,
+      "sha256": "1c72f4eaca3b5617cca2aa5c8a8b3092777fde96cfe072b3d1ee45efa4d56f14",
+      "git_blob_sha1": "ece12ef3586e75235769bfc7d838b2940190d734"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-14-exact-batch-row-review.png": {
+      "bytes": 77517,
+      "sha256": "7d6fc77808112dd3f85938727065f979b8579241c61274296e6e9a34922ca705",
+      "git_blob_sha1": "eca9b59009e78f8b65ad97d96af14eb5ce9fb86c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-15-batch-new-dpi-rejects-old-snapshot.png": {
+      "bytes": 74725,
+      "sha256": "a3db108be81c77277a0e3a3b58634b3eecae30f460840ed086127589fc9f8f21",
+      "git_blob_sha1": "96d7bf66e02cefbe148e0abd3d7e0cd063ef2252"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-16-current-font-source-and-use-rights.png": {
+      "bytes": 334085,
+      "sha256": "f8c7f2ea604ee20fe7aa22ac99d6a56f5c0860c9f050427309d7c8eb20e3eefe",
+      "git_blob_sha1": "8f5218a55e47831aaca24bbad4fb46ff5b66a88a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/digital-preflight-17-unknown-font-source-blocks-current-output.png": {
+      "bytes": 371039,
+      "sha256": "25ac85bb9c2198d87121f516da6f60a4b8c41cd559c292a6eb4d120385636b8a",
+      "git_blob_sha1": "9bb0493203a5d161cef1e6149afedfe59c4b76b1"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/entity-adopted-input.png": {
+      "bytes": 161257,
+      "sha256": "e33ac64d159b4c97a8934ef2cc509df1a80eeb666115250842d06f5e98407f81",
+      "git_blob_sha1": "971b6700efd959c8d5706f2f818a448117a06480"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/entity-customer-diff.png": {
+      "bytes": 126188,
+      "sha256": "ecbca1ffd734e38abfff720a7564ea2c7c09957d49c39585502b3ebe9f636e5d",
+      "git_blob_sha1": "8db262bef317993a1ae99ad190e7701473aa8b22"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/entity-person-cards.png": {
+      "bytes": 146774,
+      "sha256": "44b10897091f9ab16f70a3ba585dd54527447c34ef8be4b092076ef64652be96",
+      "git_blob_sha1": "425d24158fd7d419b58b618fc5856728f8503294"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/exception-center-excluded.png": {
+      "bytes": 131726,
+      "sha256": "0eb464eb8b32016ec645cde21c89d60675d178014e4daf17e6f236a05a54972f",
+      "git_blob_sha1": "66ae4aac98b0697c65c6b9c7aae993aafe9f8d5c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/exception-center-ranked.png": {
+      "bytes": 132140,
+      "sha256": "58df07268f4aa52ca346ea9bb336a03a87f86a7a30181dab0e932d124cc5f2ed",
+      "git_blob_sha1": "7e6ff800446721d922d39bd4d0c37a3a6e5cd494"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/exception-center-restored.png": {
+      "bytes": 131367,
+      "sha256": "93407cc08168342c283a816e6a11eb033594a1121f7775c41ab59f315b63bc4d",
+      "git_blob_sha1": "7e41a79ad430646a9f55a61d68caec18f9f864ae"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/exception-center-retried.png": {
+      "bytes": 93837,
+      "sha256": "d52475bd9b33fc20ddd01914cd38df22cd8c2d012a3f1c523c25f24692cb01e3",
+      "git_blob_sha1": "ba1545a9e318e670c15621506e01464dc6bf6404"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/exception-center-retry-preview.png": {
+      "bytes": 122948,
+      "sha256": "4d553d7343afbddace96cb803c4d85678ea02ce904b4b1039b7d1deef21b1e8b",
+      "git_blob_sha1": "20805f8b50c6ecc766bef23d9df324c61c4469b7"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/family-workbench-case.png": {
+      "bytes": 136425,
+      "sha256": "f5c0164f65734fca4fd5f5959269df7a93ef480c3d114942047db96e434d67cb",
+      "git_blob_sha1": "a1ef75332723de3b1f3c24d84e44a69f904ee0d5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/family-workbench-compatibility.png": {
+      "bytes": 143166,
+      "sha256": "739671d60d9f634edd2a214f5b4a925e3d9243e7d6186701bdbf76ee21c347fe",
+      "git_blob_sha1": "2674303b78b11d914dd47192296d655949f0dae7"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/family-workbench-composite-source.png": {
+      "bytes": 113921,
+      "sha256": "53b962f233b382509c6b688548cb9b881e069be3321ff1bc46c1724eb2fcbd25",
+      "git_blob_sha1": "186081cfdaedfd0718976d717a647e60ddefcc66"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/family-workbench-impact.png": {
+      "bytes": 171097,
+      "sha256": "65aaf78532d80e3b46be4c5d3c2967bdfffaba9dce03c7c29574bc1db85135ba",
+      "git_blob_sha1": "3e549724960d8bd1989e04c8ba0dbf9f3a12626c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/family-workbench-joint-style.png": {
+      "bytes": 176285,
+      "sha256": "26141fc6792605caf8861416ef28a8aa38cce343519ec5ca16e5deab966dc99b",
+      "git_blob_sha1": "70f4638244faf4425cb819d11d71d583c1571fb2"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/family-workbench-overview.png": {
+      "bytes": 130943,
+      "sha256": "49019317a87a19cc9ed3a81d87ce0e0efbb29efe4c1245ab11940c14ca3bc1f5",
+      "git_blob_sha1": "7bdd49922c53ba21f956e18b4e04de2299d76053"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/family-workbench-source-comparison.png": {
+      "bytes": 59727,
+      "sha256": "cf870726ed2f84c5616d50675a88fe37626526465225928566e300a96143ad23",
+      "git_blob_sha1": "50bf421f23030afee22bb73289e1f6e2784029a0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/family-workbench-variants.png": {
+      "bytes": 132482,
+      "sha256": "fa1ce99f288f14e3afea4a411e5d499f833c9dfe45286acbd8331e080888502d",
+      "git_blob_sha1": "854df7eadd4d3d9a02a0e2c1087dda79e3068e81"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/fixed70-customer-selective-sync.png": {
+      "bytes": 78531,
+      "sha256": "720dc484b8facfe9e39fb609a4bad6e58f0f76589d32aab1e85217bb75376266",
+      "git_blob_sha1": "7bf5ba285c6707065bc2c17cdb0ff1053f1c597b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/fixed70-customer-source-candidates.png": {
+      "bytes": 79576,
+      "sha256": "199d75e3ba0284b20bdfcb29c9d4669e9d236867826f6753859c4cf98b23f204",
+      "git_blob_sha1": "ea0b16d4c62cc99c17b5f6c31d4813873cda7b59"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/fixed70-layout_100x60mm_PREVIEW.png": {
+      "bytes": 433496,
+      "sha256": "5b47998e2271f69166db7b37c6b9693591bffeadcd01d482d9dba6249bae0909",
+      "git_blob_sha1": "0e0f2735256c88b976295f215469df6bd2ba3409"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/fixed70-layout_90x54mm_FINAL.png": {
+      "bytes": 278169,
+      "sha256": "01c091622eaafe3b0a7f2969a7405e83a5be8a187db3c63da2664b82c36ff41a",
+      "git_blob_sha1": "d678d2ac8b9dd76883b7166eacd8aad18591586e"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/fixed70-logo-size-library.png": {
+      "bytes": 163925,
+      "sha256": "5499cbdea32096a13638151d6dd31251cc3da5eea2bf31222f1c8c737933c8cd",
+      "git_blob_sha1": "e067115b155f3d3d872708ac19300915da29305d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/fixed70-logo-source-review.png": {
+      "bytes": 108870,
+      "sha256": "989fc1f59ce845c809a326b9184ed6f5d35d6c39cdd6cc8f78a3b0efaded39a9",
+      "git_blob_sha1": "2c80a7a7673725535e7df3bba2456abe72748fb0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/fixed70-multi-size-overview.png": {
+      "bytes": 122256,
+      "sha256": "a52c5e91ca80f7117439173b0c70ef0bab0473a6b5ac56a1967bf77d10f4aabb",
+      "git_blob_sha1": "00f5aa301b3cd964f7e1bfdcaaaba34c986f2ef8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-candidate-line.png": {
+      "bytes": 5364,
+      "sha256": "06192704f07406ff8c6bb0cc568ac8c72bdb326c067a0f50be46632dd251d707",
+      "git_blob_sha1": "e7e44d91aed6f6d60897ae31134d5bfa41506236"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-candidates-preview.png": {
+      "bytes": 270949,
+      "sha256": "eb1545617c196c79f38a61962de83a696560c61164b482ecb5de503f8ce07821",
+      "git_blob_sha1": "77b8d72e14162fd197025700ebc900fc9a5d7432"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-candidates-ranked.png": {
+      "bytes": 261181,
+      "sha256": "06f6dafaf2bbc10dfba0868aa80f64e926c91bcd862ab92376787fd527bc7ed5",
+      "git_blob_sha1": "43911b83a33a607773ec27f542e17a3b64ae921a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-center-diagnostics.png": {
+      "bytes": 282101,
+      "sha256": "e348db5ffb6a6d4f924cc7718e20adf82bef9b13fb5a65160db83626b48a3d85",
+      "git_blob_sha1": "0540e3860961da3a555daf0d1a032979f4e36452"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-center-workspace.png": {
+      "bytes": 307724,
+      "sha256": "4f5f75eeaebe859bc7e5dc49e16394bb50eeddacd5a56e73b175b3defc4cc15e",
+      "git_blob_sha1": "114339f4922d2d56dafb00c6fe8c6ea3883b31ff"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-review-approved.png": {
+      "bytes": 274599,
+      "sha256": "19b9672fce057cf902b15d86883b43ae04f2483e6b187b39e6ba8b271e782d1a",
+      "git_blob_sha1": "1e236ada2a232186a87c947d18f7ca46a6532528"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-review-differences.png": {
+      "bytes": 263416,
+      "sha256": "7e35ef6833d834219665d0494325fbb1a022c3e21d16aa954238ab53f8257172",
+      "git_blob_sha1": "fcda7c827e662665fee653312aa138221bb2b13f"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-review-draft-history.png": {
+      "bytes": 248767,
+      "sha256": "19e60454dcd6032da0199d30974f3a48fa32278031ad972c6828a4fcc8af7948",
+      "git_blob_sha1": "4e198511066193e847fb5da370bac23d58ddf16b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-review-undone.png": {
+      "bytes": 247530,
+      "sha256": "17bef8caf493602de2f0312d6942838abb8c0fbfddfd952d37c7fbfd5bc9da1c",
+      "git_blob_sha1": "f002dfdad9fe0d228cb25bdf4814dc63ce6443bd"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-01-original-centre-unknown-source-use.png": {
+      "bytes": 192835,
+      "sha256": "08ef400fed4ea1327c6f3c501c0a4105009338c92cedb2832d10f2d39bd169cb",
+      "git_blob_sha1": "ad8cc28936ff5f9925d965785f3413125c228452"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-02-actual-reference-file-and-face-not-native-origin.png": {
+      "bytes": 186265,
+      "sha256": "55e75c568aaddb15daae97927155891668d02a2332568b25f7cc2e36393a8387",
+      "git_blob_sha1": "68e98703b67f4a3f4f893cb6bd563c77c9d3e152"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-03-measured-current-glyph-covered.png": {
+      "bytes": 204311,
+      "sha256": "f83516d0f33c42922c927e6a594dec1177b88205a9036aace316b5d1e10adbeb",
+      "git_blob_sha1": "f088d37070d7f2cb071a10a0d9a83f11b76831eb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-04-real-missing-glyph-no-old-coverage.png": {
+      "bytes": 204572,
+      "sha256": "00d6fd8a52935389a786da288632c4a618805b4227b9e93286b4bc1c6a1015eb",
+      "git_blob_sha1": "d87501aae4ff38a1c8f793725f9931f96a5d6936"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-05-pdf-rights-default-no.png": {
+      "bytes": 16238,
+      "sha256": "6c9acd6e66950f328b867979acaa375055c952baebe17985bbf32b915269dc9f",
+      "git_blob_sha1": "5e0774580ea76f2c079d10e61c7d03270e5ae1b4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-06-final-rights-default-no.png": {
+      "bytes": 16315,
+      "sha256": "8036395a94b56e21f9aefee5dfc2c3fd6cb783eb0e4202b3c63b64f5788259f7",
+      "git_blob_sha1": "5ea5ba79a9f50a1aaeac3a664abee813bc9eb535"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-07-pdf-rights-explicit-yes.png": {
+      "bytes": 16238,
+      "sha256": "6c9acd6e66950f328b867979acaa375055c952baebe17985bbf32b915269dc9f",
+      "git_blob_sha1": "5e0774580ea76f2c079d10e61c7d03270e5ae1b4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-08-final-rights-explicit-yes.png": {
+      "bytes": 16315,
+      "sha256": "8036395a94b56e21f9aefee5dfc2c3fd6cb783eb0e4202b3c63b64f5788259f7",
+      "git_blob_sha1": "5ea5ba79a9f50a1aaeac3a664abee813bc9eb535"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-09-recorded-rights-filter-original-template-unchanged.png": {
+      "bytes": 203755,
+      "sha256": "c736f5a094b3d7c852ee5f9d95986d960e970e26793a7f6554cab7f5ff549c88",
+      "git_blob_sha1": "b62323f572b7117f0656d36792f106d866e70df3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/font-source-10-linux-windows-action-unavailable-no-install.png": {
+      "bytes": 188813,
+      "sha256": "5cd1dcb9aa1e27ad6f668156159c461401b31f33758d4506e9f1f8f97a21e9cf",
+      "git_blob_sha1": "be5d092ceb7a2d77e3ecaf53e566871f0b67adeb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/input-integration-dragged-preview.png": {
+      "bytes": 102187,
+      "sha256": "5dc6c2b3adba08ba20cf3dfedf5885ab87ec31481ccc19c4327c35c95cdbbeeb",
+      "git_blob_sha1": "bbbcdf0958ab81bebda2aad6b87edaff9127b384"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/input-integration-legacy-to-learned-preview.png": {
+      "bytes": 110784,
+      "sha256": "bc2f3855c48319e52eec9da7b1020c5083ecce966f964e134f95e3016b7e3cce",
+      "git_blob_sha1": "b7baf666f84ea1f91efdab0561f7c399ad64d8bb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/input-integration-logo-library.png": {
+      "bytes": 105237,
+      "sha256": "edf1aa2c4bea306b0b13e70edc029cc1d588c76ee65009e90f5da36963e122fe",
+      "git_blob_sha1": "f083a132a07af1607b06fd97b5580594cac8c6cb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/input-integration-long-paste-retained.png": {
+      "bytes": 110871,
+      "sha256": "23f30c5ee6216ef0be536af8d031b3b8e277227fc27806894c6034c7d931ab3a",
+      "git_blob_sha1": "40a5d0e5a5f0406365224dfde9ecc906dd9f4a5b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/input-integration-main-preview.png": {
+      "bytes": 175643,
+      "sha256": "354ecda0d4488939ff9ca9697a2c28d788414b95ee98022c462bddcc00205fa6",
+      "git_blob_sha1": "b958c27f36cabc7b205bd31bd066f57391c83321"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/input-integration-real-data-entry.png": {
+      "bytes": 68972,
+      "sha256": "c40793f1dcf0fcd9b908aaad626f13d173a99690e2e0c39dc533af613d4301a6",
+      "git_blob_sha1": "ee3890a5f4a5047044a9d8b4de0b6f446442698d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-01-safe-current-gates.png": {
+      "bytes": 221644,
+      "sha256": "7b1ea705309aed32dd2e05f4a7584ce559d06e9dcd602f41fdca43fcb9453c88",
+      "git_blob_sha1": "40ba87e42d64b01fc5de9126de351bac817cfada"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-02-hard-blocked.png": {
+      "bytes": 254274,
+      "sha256": "88c80508343124d08de04ee742350444fff6cd61c088b7646f5677a91534d695",
+      "git_blob_sha1": "6de83dc6791c39a82742d6dc552f98849bdcb801"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-03-review-draft-marked.png": {
+      "bytes": 251558,
+      "sha256": "6875f17fdd99e7188d381964b59889807f564a199830bc9469de9b758d193782",
+      "git_blob_sha1": "28b3d6568bce107ae8985438581ba854c56ae67d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-04-evidence-required.png": {
+      "bytes": 261683,
+      "sha256": "63d5b4f759bfdafff4b46dedce1b49ee23f1ccc5e3f41d51688d9555c67ab6e5",
+      "git_blob_sha1": "34a92bd25be253558dddd4042dbf6d24bbd2cb8d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-05-real-resource-wait-pending-scope.png": {
+      "bytes": 73306,
+      "sha256": "12d0232f13e7adb805fb55ecad5f002618b4df3e3aee947bdf96f161b2b3634d",
+      "git_blob_sha1": "92015eccf789a4612bac274690fcfec0ebcd1ea0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-06-partial-preview-only.png": {
+      "bytes": 204257,
+      "sha256": "1d47f64823424ed2ae4ad14d5f71cb9e1f1056037e28b5c6b6bd74b7585583bb",
+      "git_blob_sha1": "e45aeaa595ff8b161f0ba71f5173011325b70a3c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-07-cancelled-valid-partial.png": {
+      "bytes": 68413,
+      "sha256": "02c091597f52ee69cda4350f3468841bdf3b976f37fd18f67c3557c68ec1ac4b",
+      "git_blob_sha1": "ab4e17e2c164a52f14227bdd9b748218debb62cd"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-08-encrypted-safe-save.png": {
+      "bytes": 69890,
+      "sha256": "38467af434b1ab5f1e39938c11adb3c860d0b88a38621c5e15e292931741cd6a",
+      "git_blob_sha1": "4229fd0156f22691bca7ab794104e2e247aa56f4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-09-explicit-restore-prompt.png": {
+      "bytes": 44960,
+      "sha256": "f975a016c21a3eb519bc59d7a62ed45748993e40b950a3c273ed07c0b4f7f178",
+      "git_blob_sha1": "c8e04f5473f8f2f8c4309eca62e703a534d81044"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-10-restored-current-not-auto-adopted.png": {
+      "bytes": 65084,
+      "sha256": "3b641cadea78ee3229990f01482e4ba0ffc67d4a0ddeb3720bdb15de0a718bff",
+      "git_blob_sha1": "39a1446e0545a88ac29013f3a7c1bc996cfa9589"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-11-explicit-local-clear.png": {
+      "bytes": 57832,
+      "sha256": "92ff298e14e3cfc3cb4f2894d2e68b0217f0b0a967b7bd51db489f79da906bf4",
+      "git_blob_sha1": "46c36b1ead8d36be2f2b1824b1ee64aa44ea9685"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-12-existing-manual-preserved-differences.png": {
+      "bytes": 81113,
+      "sha256": "8666b57c8ee8d63a83bb1f13417086b9885750f9edd0d2e995f3441630446157",
+      "git_blob_sha1": "3df09c0d93ccd20062bc22c5d44a1c27fdf09844"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/layout-risk-session-13-encrypted-current-manual-geometry.png": {
+      "bytes": 74482,
+      "sha256": "adce18122d6c369cef7a7b7238a8160830044cbf69c9fd9d552e7989d33131a8",
+      "git_blob_sha1": "5cede7b6b6a8ef9a3c3699762e12919609c7c272"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/local-recovery-desktop.png": {
+      "bytes": 138799,
+      "sha256": "66bbee381911d2017121f7bca1bf7354b657f482cb3baa7afc1760beb710b90c",
+      "git_blob_sha1": "8629e854b3ce369b93e2921b24ab4827a604feec"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-01-source-examples-sealed-scope.png": {
+      "bytes": 185293,
+      "sha256": "ff3001ef023bb85c21567609f94b79249693eac3c0386ab3dfa87e189afdfed2",
+      "git_blob_sha1": "472c7003dfd0791b573806b39cab1d5d8650f2bf"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-02-no-consent-no-quarantine.png": {
+      "bytes": 181069,
+      "sha256": "b13bb2dafeaeff0661f39e8cf55a53c901c8f92c3a90021f9e92f6e43c033beb",
+      "git_blob_sha1": "7cdc9d195ec3a431f29402ceafb3654e34d03697"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-03-persisted-actual-scope-denominator.png": {
+      "bytes": 193463,
+      "sha256": "002c7b919b66d1e4c19bba195c4ac7591ac3a1bdc24073bf27787e9d42915f02",
+      "git_blob_sha1": "e868c39b528b6f107ad9d4889b18a4e49e4c5397"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-04-explicit-incremental-source-plan.png": {
+      "bytes": 214780,
+      "sha256": "c5a6f2cdc71d5a546fa086f62f0d275e4110d693be50054aeb52b2e897ecd9e8",
+      "git_blob_sha1": "5dfc5dad01fdf7f1953acf448f10bb1470f6829b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-05-owned-job-old-new-no-auto-release.png": {
+      "bytes": 233252,
+      "sha256": "b57be6771fe32142fcdd63da820d9fd049de7bda1ddb258ff5728ce0fd6e15dc",
+      "git_blob_sha1": "71d21aeecdef1201e7a157549fc71c020a337d51"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-05a-authored-observations-original-editor.png": {
+      "bytes": 190894,
+      "sha256": "6115ce1c214ca51a40f4cd4553114dffdad361ded103dc13a40ef6f98b4da557",
+      "git_blob_sha1": "c5d032ac0c8cdd71cfcd3fd38967773803e9bdfb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-06-real-default-no-fact-confirmation.png": {
+      "bytes": 40386,
+      "sha256": "cbc79144265bf801a309d308af2d98787a7ce2cec3f058e7f10dcd80c9ecc97d",
+      "git_blob_sha1": "b7ea0d34455727cfddebee8b1734d63a114baa6c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-07-real-yes-exact-source-human-facts.png": {
+      "bytes": 40386,
+      "sha256": "cbc79144265bf801a309d308af2d98787a7ce2cec3f058e7f10dcd80c9ecc97d",
+      "git_blob_sha1": "b7ea0d34455727cfddebee8b1734d63a114baa6c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-08-original-source-facts-persisted.png": {
+      "bytes": 193158,
+      "sha256": "f0aac4c527a9f1a6a21ba70849dfcb97d541cead0deac03458e36874b34b5599",
+      "git_blob_sha1": "a99d785e5334fb3df05fa2e2703b00ef70034034"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-09-new-human-finding-preview.png": {
+      "bytes": 212788,
+      "sha256": "acca06ae8c748d932db0a567cee046f487ccabcf69336ea15e1ab478cecd9bbd",
+      "git_blob_sha1": "6a8e74494dd6e78df87dc7162119a5e3e13c3221"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-10-work-cleared-template-still-held.png": {
+      "bytes": 213766,
+      "sha256": "613095f2035815fc91004c661fd8a7492a51b2720a75d4810c0bd0f1c17e8966",
+      "git_blob_sha1": "e9c1354e9a0b35b19abafab5762161dc33461e6a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-11-exact-old-template-physical-qa-preview.png": {
+      "bytes": 206981,
+      "sha256": "124563509cead33649cb9a9fcbf2c5c329ae4285c3f61e46522a18b7e262907c",
+      "git_blob_sha1": "ba163a0f79d3b64ad6d6cd54292a725c9a232aeb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-12-controlled-current-source-draft-preview.png": {
+      "bytes": 199897,
+      "sha256": "f00f7706d09c8d852665fc891b493d16b013bfb1f1d45f5f50640610fdef9747",
+      "git_blob_sha1": "18e6f5b83d64ab99fd13086c4399f58241bfbfd5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-13-new-version-full-checks-no-global-release.png": {
+      "bytes": 225685,
+      "sha256": "75d90b58374f62ad1f876552cfe96b60573105aca8146e02a9fb23c46001f663",
+      "git_blob_sha1": "df7e681dc4b4b9a6349a780c05c4f2d15c0f6211"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-14-pinned-scope-completion-preview.png": {
+      "bytes": 197794,
+      "sha256": "557c56fb476ab52c41f90c1659256fe7de4500423bb90ead421929094a6d9ff6",
+      "git_blob_sha1": "4c4874653d6d2189ca3e7f41fce0f8555f80979f"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-15-completed-scope-model-corpus-unknown.png": {
+      "bytes": 192449,
+      "sha256": "c1e0bab14b7b7e8bf63fcea504e54063276bf95f2089131938349f073033d8a1",
+      "git_blob_sha1": "9eb46ef5123fd17e5bfecb5b1e60c5cc18c5bcfc"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/major-review-16-new-doubt-reopens-retains-old-receipt.png": {
+      "bytes": 189919,
+      "sha256": "59694299e2777fe47e5da67e751b2ebb72c138d4d259ba17138c3c8b73ed53b3",
+      "git_blob_sha1": "ce6a212fcce700d8a7768316be49322a5a3b0ea1"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/multiple-artworks-workspace.png": {
+      "bytes": 155569,
+      "sha256": "2b17f6bbddd4d89860afbfd56e3387e5c518f24030cc1aa4bd4778ceeb25a6de",
+      "git_blob_sha1": "62883806322182abd13a5c6ab1393c45cd3e84f3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next20-automatic-source-work-stages.png": {
+      "bytes": 61483,
+      "sha256": "b2a116a6424eb462c6bb9bc0d717c67e1b208cc2e9d0270bc2168d091d2f32ea",
+      "git_blob_sha1": "ba7c44092850f05bb64a362432843b6cba2935f1"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next20-canvas-safety-preview-unpublished.png": {
+      "bytes": 279421,
+      "sha256": "ea29a7047dd8e0ab145cfe5130303c06dfa0bc9137fc6ea449cbbc9c85503154",
+      "git_blob_sha1": "76766a8a4e335e626c2324b8fcd6f8185ba5df20"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next20-local-semantic-model-heldout.png": {
+      "bytes": 71731,
+      "sha256": "48db4b60695c5274edabbc22ae49aa52e5d2b25ad77ea4818fe3a09dbd0f34db",
+      "git_blob_sha1": "f4d88dffb27a713d20fbb8391d8f8e866044f815"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next20-source-marking-and-evidence.png": {
+      "bytes": 200052,
+      "sha256": "d6c3333c325cb91108f49810b464da7b9f01102d2403e8dda9b98e1edc5b518f",
+      "git_blob_sha1": "ea5f6a822e5925503f6670c9bf0e6b04f81513fa"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next20-source-work-overview.png": {
+      "bytes": 91275,
+      "sha256": "c7b7964c57d8e62abaef168f771bc8e24061e9f54c1f4a94ad86ad34542bf2bc",
+      "git_blob_sha1": "dce8a8dc3d30b7a9c75d80f714425575e52a2cd8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next20-source-work-region-candidates.png": {
+      "bytes": 44202,
+      "sha256": "8ea3aa5de457b54a00385d62b0308954a48d9492dd96aa67c3101d379da255c7",
+      "git_blob_sha1": "4a8aa796e7705d71a82712b0c34596a9b02c3ea0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next20-template-version-difference.png": {
+      "bytes": 91183,
+      "sha256": "cb2eb8ec299520d5e5e640fff423d28cc11601d246ba138cfeba2adc82fcf50c",
+      "git_blob_sha1": "8bcc59321408396b82e994dc8d7318ee009968c3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next28-all-readable-pages-persistent.png": {
+      "bytes": 67688,
+      "sha256": "affd8878af90308310f0ef9dea3c147615353159082c17086cb6a4df51715616",
+      "git_blob_sha1": "213bdd76c87c1d7ccc3cff362755517504a8268d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next28-cassowary-unpublished-custom.png": {
+      "bytes": 170100,
+      "sha256": "0e7773868a865e19aee865581dbe3c5036201e5fbc524df97f09f138f1345a1b",
+      "git_blob_sha1": "d466262110e1d4e5257946b29deeebb82fa46f81"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next28-fixed-point-tracking-preview.png": {
+      "bytes": 60703,
+      "sha256": "238d15b344d561bbb656bcbefacf316126e870b96b9dab230cb74f4b815bd3f5",
+      "git_blob_sha1": "62cf6a474e3b8292e2708c7a99a45f778648021d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next28-live-input-field-warning.png": {
+      "bytes": 107330,
+      "sha256": "ad4876fe9db7f2946d8eb46604f510cff435e9f5e9ebd1f691f5e3214fff4ba2",
+      "git_blob_sha1": "24d579ed89d7cdfc4c9c181c89cc5bf9f01b1d80"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next28-marking-linked-before-after.png": {
+      "bytes": 83955,
+      "sha256": "dd4993485b530f9ea6a12b2d78dadc4bb43d6244c540d366e63b20e61a390a03",
+      "git_blob_sha1": "a832585b3d8b6251d3e6530fa171b0b31d577f4d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next28-per-file-output-results.png": {
+      "bytes": 148244,
+      "sha256": "d979db3abfba9a3ffeb665c29a0a19dda678f828401d21c23e30e01438c6dc8a",
+      "git_blob_sha1": "5c6ece6a24dbe27310261e8801a3fb5174e721f5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next28-qualified-diagnostic-separate.png": {
+      "bytes": 189267,
+      "sha256": "66971c50968ea544b24c685521195450a04bd2897072a9dee92e86870071e64e",
+      "git_blob_sha1": "70fd0c5a77f5d8ab2044171fcbd8bcf272c692ce"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next28-safe-batch-final.png": {
+      "bytes": 2717870,
+      "sha256": "0a8c6bd76102bddd04b99549efc27374e1722cfe9dc15722da812b44e810909a",
+      "git_blob_sha1": "5ef4c2bda478e53d5a4aa872b92f3dafdd8f0a6f"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/next28-safe-batch-preview.png": {
+      "bytes": 4231054,
+      "sha256": "28e09cc8e8e234767e9286939053c264b8e17d031627e57ffdcff2f8a692958f",
+      "git_blob_sha1": "99d54a497b92fe9dfa334ab84c568114d7a35b42"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/object-tools-difference.png": {
+      "bytes": 248607,
+      "sha256": "455a332ae07c878400a21bab134ff5996955f3e8848a869a05a87e8e9c1c0bdb",
+      "git_blob_sha1": "393c2e86341ab5ef694a661efe2c2969939537d3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/object-tools-history.png": {
+      "bytes": 237497,
+      "sha256": "34b5ce2b3eda3260b27a2e31068b63f746d530bcf77e19586ead9a3f5de197a1",
+      "git_blob_sha1": "df579be6850bd3098962a38dc7648c2ce33baf32"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/object-tools-locked.png": {
+      "bytes": 250299,
+      "sha256": "c8acaf7548b777113a6515f94c24b981ea4bf9f329e8aca47f1ca450371b85a2",
+      "git_blob_sha1": "11205c54cc48989184518392bf343e0ba78fddc0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/object-tools-mixed-patch.png": {
+      "bytes": 249795,
+      "sha256": "d3b702f67295f5f619ca107b64303d04c77489b67590239def296db2012a2aea",
+      "git_blob_sha1": "3852df57ab70a9396599fdac8b4d07a87fbdf87e"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/object-tools-multiselect.png": {
+      "bytes": 235370,
+      "sha256": "45bd692c11a1a6860903f949d533b99a7f08ce2ca81093fa123f42b4d88f26d2",
+      "git_blob_sha1": "12eec11bd1be0b11ce648385bcfff061158cee59"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/object-tools-training.png": {
+      "bytes": 269565,
+      "sha256": "8e906c29732621bd1d3c43a411c4dc4e48180d13214a0df8a36f4d4c785877f3",
+      "git_blob_sha1": "a4c37b71d745784c5f91e0dc1521cdf70a148d3a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/output-workspace.png": {
+      "bytes": 188385,
+      "sha256": "774342c906e53af425205d407898264f22a554818b810167c34a695c74d7b2d8",
+      "git_blob_sha1": "2b16713bf06fffa5e1e7700646a15b94ad45a913"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-01-text-fixed-size.png": {
+      "bytes": 259625,
+      "sha256": "36a2b325fd631388ed4e2942f10d500521f17ba467fa440c9f2bf7b28ea8e843",
+      "git_blob_sha1": "bd7bc0c99514b47c5229289db7379f77bffd1569"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-02-logo-pinned-text-inapplicable.png": {
+      "bytes": 273103,
+      "sha256": "1c8c2bab526569d6e20f5f7a088a5f6ad52f64e3befc24bfc7bb13d4bd86735f",
+      "git_blob_sha1": "fb3ecaad601117e1907a431760c2304e61efbc71"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-03-all-original-properties.png": {
+      "bytes": 273147,
+      "sha256": "21101dd5ce6d429084ce96edba7a5e6d4f2fef7e28e36f1eda040c72d76ca998",
+      "git_blob_sha1": "aae1fbbfb4def5dc5b418d8f5aa300a4715452b0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-04-mixed-exact-selection.png": {
+      "bytes": 256979,
+      "sha256": "27ab8de71cbdfa29c43e5ef610a80578c23908e60c9885847d54f525ff4c0adc",
+      "git_blob_sha1": "6b914cac76296f2f3eb57f81f244721355d82ce9"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-05-unapplied-original-object.png": {
+      "bytes": 258090,
+      "sha256": "44c08e1a185e09b46e4960c5e40234eac4115a67e27f2428a50f051239547ffb",
+      "git_blob_sha1": "d3331d45f347acd75d069e618b0c6b7c90d13c8c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-06-real-selection-stay.png": {
+      "bytes": 18029,
+      "sha256": "74f92417e49bcafb2d7c3eadd38d228ac35b41341bc6cd0a636908fb02b4808e",
+      "git_blob_sha1": "6ed7319be18c5c14d2ba9aef7ff8bcd492f6fc6d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-07-narrow-scroll-apply.png": {
+      "bytes": 156346,
+      "sha256": "f4e3eae939ae655ec9e48d1d89a2fbf9ab63641e69214df4f363fd0cc5ba9219",
+      "git_blob_sha1": "f8ff82c14737adb5a66aa28452f5399967674933"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-08-new-source-old-input-retained.png": {
+      "bytes": 244146,
+      "sha256": "a75b9567ac885672da2cd31f2f1a47901157fe0504f058d8fa179e73563e82b3",
+      "git_blob_sha1": "14fe3b2267d92ebbdad5295771a1bc849164e349"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-09-real-readonly-conflict.png": {
+      "bytes": 18247,
+      "sha256": "94f3d0b80dae9c33742e58e6e8563e20ab0e683d50089323956735eb487fc2c9",
+      "git_blob_sha1": "d0053d2138f35c9c581b3e9f7b4cdf70215338ba"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-10-existing-mixed-property-editor.png": {
+      "bytes": 232812,
+      "sha256": "a69026e271c80c27edc089ca166c9d7ec6e6e3a8440ff0ff427f16572f20c8a6",
+      "git_blob_sha1": "b84b8c941f5f0d996ef7efb8393f46052d6c6813"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-11-real-editor-close-stay.png": {
+      "bytes": 17755,
+      "sha256": "d02663974d7bae6c634a403104101f04ac940ee73704898c9e9b6a6632e627bf",
+      "git_blob_sha1": "912e5890ce32eb9ac61a6543c41da342d9b242db"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-12-stale-editor-retained-patch.png": {
+      "bytes": 231523,
+      "sha256": "41a866038770da5de7deaaa89d35db22e09567c36a51865a82a87bda9efe5a69",
+      "git_blob_sha1": "69566fc84f2af58ba6ee348e2ac7e471fad92a0c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-13-exact-local-problem-blocked.png": {
+      "bytes": 243510,
+      "sha256": "98ed0e307658fde1b700520444b625563580a74219b765c48e76fcf086eaec18",
+      "git_blob_sha1": "43c11fc923f39267b971eb78b2ea97a330f0458c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-14-current-exact-text-readonly.png": {
+      "bytes": 243510,
+      "sha256": "98ed0e307658fde1b700520444b625563580a74219b765c48e76fcf086eaec18",
+      "git_blob_sha1": "43c11fc923f39267b971eb78b2ea97a330f0458c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/property-context-15-hidden-panel-keeps-formal-gate.png": {
+      "bytes": 243510,
+      "sha256": "98ed0e307658fde1b700520444b625563580a74219b765c48e76fcf086eaec18",
+      "git_blob_sha1": "43c11fc923f39267b971eb78b2ea97a330f0458c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/qualified-coverage-01-trainable-alias-denominators.png": {
+      "bytes": 218951,
+      "sha256": "ce0e5a99b625539fcaf9cbdca65e2816fbb377791a924ffbfdd4c75dfebaaf80",
+      "git_blob_sha1": "23d8abe675d11558a9c1985eacef8e0618b6e978"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/qualified-coverage-02-pending-not-training.png": {
+      "bytes": 234075,
+      "sha256": "4126bd0bf93961d15a0b4cc22c497815e20f68aab506bbed084baf691a6d1279",
+      "git_blob_sha1": "1d012e374a10e435f8fa5bb0f716d2664bd803f7"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/qualified-coverage-03-development-validation.png": {
+      "bytes": 214612,
+      "sha256": "29d1018c71604bbeeeeae7b1c79bc696eacac01c1418307a6ff028d6e39d54ef",
+      "git_blob_sha1": "6a8e5c1560ca361dbcab39a2f81802199440e9a3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/qualified-coverage-04-independent-set-is-separate.png": {
+      "bytes": 234018,
+      "sha256": "ef12954e707fd916cdb9f91dc9b6550948eb567e891d8ac61c564aa1df519ca9",
+      "git_blob_sha1": "0b23809b621d8c1d2a9932fb966924e8ccc87e3d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/qualified-coverage-05-exact-role-pinned-manifest.png": {
+      "bytes": 217971,
+      "sha256": "02e53a7b6f2d1d09276a5a9f586787cb9be58ca5f1dd68107af00b7ae0089444",
+      "git_blob_sha1": "cab57fc59074674070c9de7640fb756f94164988"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/qualified-coverage-06-revoked-current-empty.png": {
+      "bytes": 115536,
+      "sha256": "6f9f7bafb0ce67b731b9e5dff93173281f268e9e592be21d6d465b842e4f9c9a",
+      "git_blob_sha1": "d32462909592967dbce844e92aab0b3a7edf192b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/qualified-coverage-07-historical-not-current.png": {
+      "bytes": 249404,
+      "sha256": "b3893bb9495e3239be334a3b1b7c40385dbe8197a266ec05baa9eb5ff4d8a90d",
+      "git_blob_sha1": "fa5e5f5b1d29bd94a147d629d33532cad69dda47"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-backup-existing-differences.png": {
+      "bytes": 246372,
+      "sha256": "8a28bcebf0093f69149bcf931e9ceab9396d292641a4ff95da01a943b6922d22",
+      "git_blob_sha1": "9886a1f4f7dfc8285ef3ae25d0847f6a94ee494d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-backup-scope.png": {
+      "bytes": 170860,
+      "sha256": "e4565b5ff5adb42b0c6aecf72a7fc83f79c10d5fa20efd92b482988b849125ef",
+      "git_blob_sha1": "a073687305a8fa29cfae7be30ea24bbce4860a76"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-backup-tested-restore.png": {
+      "bytes": 114841,
+      "sha256": "488739d52269dd96175aa1f9d3192d7e59c1d9797dfa67be43cb356bee4bab7d",
+      "git_blob_sha1": "d4d672f498cc438d90c3be3bbcd0bd9d0ae2a40b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-coverage-600-file-page.png": {
+      "bytes": 286118,
+      "sha256": "ed84db940da6cd0f4ccee5247832a1c0faa04c100b2aae27e23afb50b21e49cb",
+      "git_blob_sha1": "8cf4135b1b8a014b3305858949a9df1d8bf8bc61"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-coverage-alias-pending.png": {
+      "bytes": 295177,
+      "sha256": "65e112a53c7bd795c312fd19035f2559de05aba61ed45862c47159f674a1e813",
+      "git_blob_sha1": "eac359a425ce4e5b9d1449552b3d99386b08cdd4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-coverage-blocked-closure.png": {
+      "bytes": 236871,
+      "sha256": "f6c13eab00b41d707710a07605ed82cebb5bcf3a3791025a3a99c036a45178cb",
+      "git_blob_sha1": "c8f1591b6722d064199105ad2fc92971c41e6eda"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-coverage-committed-receipt.png": {
+      "bytes": 171551,
+      "sha256": "2e98943e94e5b0435cd14061642d98a12aace0501a2d5e3108d96e6941ce3c27",
+      "git_blob_sha1": "641a01b9885e5853ef2a2c1bab59a1a22e780abc"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-coverage-stale-source.png": {
+      "bytes": 181626,
+      "sha256": "39f0347be4457358ea7ab4105f7c175a71c90301d4b6fa90c36eac032011920d",
+      "git_blob_sha1": "3764d1262ce969d7d30834f0ec145a1d13d61fa2"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-identity-merge-preview.png": {
+      "bytes": 218365,
+      "sha256": "312fc53809da64b400ec85445d7e6603e3d184d2d9f5dd8416cda34523820452",
+      "git_blob_sha1": "0b3ef185cb34b50caf495df7f95c39677e9220fb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-identity-split-preview.png": {
+      "bytes": 231776,
+      "sha256": "d66fac32122bbcef68e271ad98b7d341c2491d79469f47127f4954b5791b11bf",
+      "git_blob_sha1": "597d5c124a8dbefa134c18db49050040888f3cff"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-quality-all-source-samples.png": {
+      "bytes": 238511,
+      "sha256": "3f67ec4ca972027c84a7592c7cead82c15e37c3ee8307cef9c61ead1ba1b8fbc",
+      "git_blob_sha1": "d4df1150252aeae30fd032b8ea0e17a5808bee23"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-quality-explicit-decision.png": {
+      "bytes": 219188,
+      "sha256": "9db2af57144abe153aa33eab02a97d3f1be8a093a0df9e0e68beee3a8f537634",
+      "git_blob_sha1": "97381c72ffedbaa60e8298f87c62db047616c6cf"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-quality-explicit-empty-policy.png": {
+      "bytes": 87003,
+      "sha256": "1183354976460a276800b5370c301d72fdbbab226b6088d89394de16f9ed17f3",
+      "git_blob_sha1": "425470dc3db92e55fd3a5060b5f0d9a364eb0034"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-quality-gold-vs-actual-ai.png": {
+      "bytes": 91349,
+      "sha256": "9dae0ed2fa983c4bfb389198067874d0155e3e1d82c97923902b0d313cf14196",
+      "git_blob_sha1": "0ac3319d83e2b8845efe4f38fb1b283ae7aea4c6"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-quality-historical-pass-invalid.png": {
+      "bytes": 252818,
+      "sha256": "1e23ea128ea39f7502c5f47ad41ef8232cf1d349dabe99660a35c91a2df2b6f4",
+      "git_blob_sha1": "e94cbb8a6deb779b4fa6a107e3ab2e2b9babc04b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-quality-nine-domain-counts.png": {
+      "bytes": 221564,
+      "sha256": "c95caf36f7b80ca1050897336b78eac6fddfbbafad8ea7e47a6920e2a0af950d",
+      "git_blob_sha1": "3eb07ad469daf9265a478353af60a047cd6a84ec"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-quality-paused-fifo.png": {
+      "bytes": 103377,
+      "sha256": "16cb3904d0b8e8e2b10a0a81cdbcf8dce1de02248d7deecd060f7d556df9863f",
+      "git_blob_sha1": "4cb80e3297c03437cec35e8e4d50a8fd004e540a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-quality-withdrawn-no-fallback.png": {
+      "bytes": 222820,
+      "sha256": "819a234e1702776cb7d817c990d8aa267a23e8905bbf64b4e5a6d95881a59fb5",
+      "git_blob_sha1": "477ad373f56b38cd3c21010382df1d93b701af88"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-relink-dependency-details.png": {
+      "bytes": 246416,
+      "sha256": "96a9373f6b7bcd349e8314cb127870bba35b6015913831431821ae59fe2b13df",
+      "git_blob_sha1": "d08ae54d6ce77d12a65cbc869aebf076c87a3082"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-relink-history-restored.png": {
+      "bytes": 61757,
+      "sha256": "4ff84e51267b69aac2035aa7e316d9bf39c701a3297fcc32618b8da58ec6c27a",
+      "git_blob_sha1": "46025902c58c4a5abef6ed0e905f2686b01f1d15"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-relink-multi-root.png": {
+      "bytes": 83931,
+      "sha256": "384537c86c9eb9a12624e3d690abcc009dc091aee2e7a6f47f44cf8a9794c94d",
+      "git_blob_sha1": "94508c88d38b13eb6919503e977bf55fb7c67ca2"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-repair-01-issues.png": {
+      "bytes": 135372,
+      "sha256": "8fa4c9578d8d947bebffbb1fe3913d5d9cd2ac71a74f39d317d83685c1fac849",
+      "git_blob_sha1": "1974d8bdebc02e0219a142a4064d477dc73f81ee"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-repair-02-root-impact.png": {
+      "bytes": 172983,
+      "sha256": "9a8c2b0848945ab89d1a8119dd341678751684439df874d5ee351eb4f78ee2f9",
+      "git_blob_sha1": "6ff2a9309c367079488efe57baf8cc329033c4b4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-repair-03-selected-training.png": {
+      "bytes": 174462,
+      "sha256": "9b9c452453da941cbec8b88012869a1bab79c3f3617081c5730d66d20363c0d6",
+      "git_blob_sha1": "f6532964904585f5ce14bb662af0ae82f2033930"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-repair-04-actual-progress.png": {
+      "bytes": 144597,
+      "sha256": "9c588ade7c156b8ac7d83052faeae4b005dea1d51e2fbf1c0caab09fcc731114",
+      "git_blob_sha1": "e851fbd334875ce3dcb79bb7810a5dfe0a658a76"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-repair-05-actual-quality-difference.png": {
+      "bytes": 202411,
+      "sha256": "a9a87b28d7ec25390a7733d1fe57d809fb47a8d477ecd1ca74edb06847c57e9a",
+      "git_blob_sha1": "f3a312035aa02e80153f88d1a60f6098917cc278"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-repair-06-adopted-version.png": {
+      "bytes": 157867,
+      "sha256": "cd0a905109a21a41cea43ca5b8dc7757f9dcd989f8b06e795cf55fa4778b25cd",
+      "git_blob_sha1": "dd2f9a403266d892b1b210372cdd821e5930f0c7"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-repair-07-blocked-recovery.png": {
+      "bytes": 138956,
+      "sha256": "a169e952f400611b7cce4171adbb0e7d465803e8f778bd1d9b96e8ad457dd075",
+      "git_blob_sha1": "19ab0375ebbdbc03a8a9441d95d77087674038f1"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-runtime-fifo-results.png": {
+      "bytes": 107572,
+      "sha256": "e07cdf7e1fbb27f38f509852ecf4d04a63e21b863f43647137d07bf52e43a090",
+      "git_blob_sha1": "40339baafd33cb0c020b0630fbcb9c3570ab9615"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-runtime-human-review.png": {
+      "bytes": 170322,
+      "sha256": "ef0f654a53e29daf947d14bce5a831c48894f492800dfd77a0a7e74bf02c39c3",
+      "git_blob_sha1": "65c4b28fc4fabf2d304618a64d756b97c6bc2540"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-runtime-paused-queue.png": {
+      "bytes": 103311,
+      "sha256": "69ba59e3073b905ad657218d816bbb177187906bf220c1baa34bedfb10797f3b",
+      "git_blob_sha1": "68c8efecc235811b2bb8097ed0330f215ccf9739"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-runtime-source-ledger.png": {
+      "bytes": 141418,
+      "sha256": "e73452bc40d64702bac84f1397086cfaf51533f0b0ea00c28bbe9edb41372f56",
+      "git_blob_sha1": "e268f79bbff8706b6084a85d7a066dca7f183551"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-watch-explicit-scope.png": {
+      "bytes": 128282,
+      "sha256": "cf88a5a6ac3f22860fd27cc2dd1c0c61468ee73da42572f94df6cf23d9edfede",
+      "git_blob_sha1": "45352f98689ec59738452cf92c075e5bf8130eda"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-watch-live-candidates.png": {
+      "bytes": 212237,
+      "sha256": "e3cca3c6f54e1e5cbe18537d79819f85c18c9618c456b13feb22ca5db1e31097",
+      "git_blob_sha1": "5aac73316ec8686a7189aa533821d7dcc881dcce"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-watch-modified-version-review.png": {
+      "bytes": 217038,
+      "sha256": "a94981e117f85af8f8087ba87893bac2bf59d72e71bce737db30cbf3f6ec0597",
+      "git_blob_sha1": "0ad2d94fd625e42a93c2476f62ed471f508a875a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-watch-registered-works.png": {
+      "bytes": 216976,
+      "sha256": "cdfda6636334b66d908867b7d543441d2b2d411d9e7fce5c66bf5cfe32c0a1c8",
+      "git_blob_sha1": "0761f6d50de82abf1f109ccdd7fedf2ca3d73ed4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/remaining28-watch-ui003-preflight.png": {
+      "bytes": 118324,
+      "sha256": "05bd540c7d5a5e95b705b5db2a9a7c6ca1c76a6a12b80d5dd6d769b866795afd",
+      "git_blob_sha1": "217abedeebb3d5753db194b611f44470d6697428"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/semantic-derived-structure.png": {
+      "bytes": 260827,
+      "sha256": "732f1ed9c5d4f2d1a85970dad8ecd2f1e5cec602b64a55cfa0ebf41829a4ca4b",
+      "git_blob_sha1": "5fd26b451482cb663b958eb9c06d477a96de9323"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/semantic-search-preserved.png": {
+      "bytes": 235775,
+      "sha256": "ee5df64f24f53b3a864ab379b76e6fc620e87bd716d28d7f6d4ac144577879e9",
+      "git_blob_sha1": "b26ccefbccb2262aa61d2e1c965a16bda39be5aa"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/semantic-tree-shared.png": {
+      "bytes": 248936,
+      "sha256": "29e2491838497bddc1fddd08b93c433f9daa444371dcbafeb67f442473bc555f",
+      "git_blob_sha1": "8147f3cc7942df40b36bf363251aae535b90d500"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/semantic-viewport-isolated.png": {
+      "bytes": 238830,
+      "sha256": "40ec05ebde0c83820d3d8b65354ea7e346633a0e619398fc3e484c00f7b0fba1",
+      "git_blob_sha1": "286edc0869610f5fca713f9a62140a1aee60edcd"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/source-text-01-original-object-source-literal-unknown-native.png": {
+      "bytes": 229315,
+      "sha256": "a7a86eddaeac74038ab95c24f932bc0f2ab9e06bdc72f3398cfbaa5dcac4376d",
+      "git_blob_sha1": "75eaa4c041bb0568039133c101270d2fa4e9f3f8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/source-text-02-shared-centre-source-object-not-original-font-proof.png": {
+      "bytes": 219344,
+      "sha256": "7a8b7cb56ec4626832f3a2ce16d3cc4abc79b26432924363d670062b42e8553d",
+      "git_blob_sha1": "ac58b145b9719c72e41690477f5627f5cc45ed94"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/source-text-03-unsaved-local-draft-preserved-no-asset-change.png": {
+      "bytes": 229240,
+      "sha256": "3665b678b667eee961bc15a9626498c2eaa57b40d5dfe8c7f6760d87a0849452",
+      "git_blob_sha1": "ab6d71284b3acbe62a78e0129a1d4290c73516bd"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/source-text-04-whole-logo-font-action-refused.png": {
+      "bytes": 237721,
+      "sha256": "aa72259192a8576e6741f2ee853a6e0a4ccb794e338c1aa51d9cc4caaf999397",
+      "git_blob_sha1": "699f971caad1e0c4aa3683ee6b380fdbbd45bb39"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-01-two-people-companies-three-candidates-two-sizes.png": {
+      "bytes": 127890,
+      "sha256": "7c8629de910201063729777ac78987c097c7561157a28ebbe6884def41097c82",
+      "git_blob_sha1": "6798eb9300844cb9835cedc1064795de73bfd1e2"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-02-manual-a-only-actual-difference.png": {
+      "bytes": 168369,
+      "sha256": "1794a7695af95ef23b30cf2daa1b57e1f39bfe06cf81a2665a31db8abdfcd7c9",
+      "git_blob_sha1": "6c8408b62b74ad1a5b1a40518ea04c46c91d7385"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-03-exact-person-a-phone-consumers-before-adoption.png": {
+      "bytes": 140189,
+      "sha256": "e32e3eaf618bc62a629208be0e031aaf503b60f801e7ce0fae7553c9ffc25a7a",
+      "git_blob_sha1": "396a38597183cdcca67e91136e79dfcc13a6e535"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-04-shared-source-stale-no-new-pass.png": {
+      "bytes": 134296,
+      "sha256": "74dd0d9705a171d2b4469512f488bf2a6c3ef90f61cb31a558b2e1912f225e92",
+      "git_blob_sha1": "c9e630049b0de43fa69ffcf1c5437ccde4d23ed3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-05-synced-phones-preserved-manual-a-and-logos.png": {
+      "bytes": 34626,
+      "sha256": "ebbf995470a1554b74ea9d08c95c4380ba73a5805698de451031140f93b9be7c",
+      "git_blob_sha1": "d52cccb640d505a59c5a5cf8430a169a3350c257"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-06-missing-beta-size-logo-stays-marked-preview.png": {
+      "bytes": 43171,
+      "sha256": "eb86137b461abf8d069bcba82e1c2c9564537a024e1fc6d4c21b928ac46e42c1",
+      "git_blob_sha1": "0e6268f07fc75c79a56023dfbfffbca57af4ed13"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-07-explicit-cross-target-differences-and-current-risks.png": {
+      "bytes": 143407,
+      "sha256": "0cd708f96630d3c98772e57f733eee6126c07c3cb20c459fe06a3fa3c98e78b7",
+      "git_blob_sha1": "cb3100fb320cb482f2f06c39b7e4c685147e3b43"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-08-safe-b90-only-failed100-keeps-old-version.png": {
+      "bytes": 120963,
+      "sha256": "1d3d07dd0068a2b772524eb07f2952ce582dfa33fc714f0b1020358f05443928",
+      "git_blob_sha1": "0ef6ff3df31daf44ef76f17dc7be41ccb6fafbca"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-09-explicit-alpha90-logo-beta90-unchanged-alpha100-independent.png": {
+      "bytes": 34480,
+      "sha256": "21c9fe05152de34588a798216e64ddf79e1b7710e424c559a93211e9e43b4356",
+      "git_blob_sha1": "008573e3d04e195bca90a93129811338e5173e7e"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-10-source-undo-all-true-consumers-confirmation.png": {
+      "bytes": 82940,
+      "sha256": "351318ff6a349348aea25ad17ba8b33efc6db9b4f5ba3ef372f4c554686ecf40",
+      "git_blob_sha1": "c5b36db00266bae37a326e22662416c30af5ceb8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-11-source-undo-remains-draft-until-adopted.png": {
+      "bytes": 142331,
+      "sha256": "e64cab8deb1a4d9c9d341fdce8c7bf306fa7746174b914363e3ada1cccdfd07a",
+      "git_blob_sha1": "7059fcdfce582c11d305ba1efb16e5aca2c7e6b5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-12-single-target-undo-keeps-source-and-other-manual.png": {
+      "bytes": 176323,
+      "sha256": "a19823cb3806825accd5b66bc594acae344b3272fdee0f1758844634b6eca808",
+      "git_blob_sha1": "346a8b21e4e904599cf1caf14cf83af22ccccff3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/sync-workflow-13-actual-qualified90-final-and-failed100-separate-preview.png": {
+      "bytes": 107386,
+      "sha256": "dbc5134b9a361c111b94c18b6c0c7967ad4260b936c05ae34b56c106e66aa6eb",
+      "git_blob_sha1": "e06dc223f5ddb0177805175662f99ab0a423ba3d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/synthetic-FINAL.png": {
+      "bytes": 278169,
+      "sha256": "bbe406834015e4e501b0058971b06f917b33b81d5a7700138b48de65a30dd003",
+      "git_blob_sha1": "ef436e87e571d557022b5b54211a6619e3c94519"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/template-workspace.png": {
+      "bytes": 135306,
+      "sha256": "2100ee0cc51bae434584a97c515f315f6042731f2db25d315f0783cf7371d6cd",
+      "git_blob_sha1": "a76ab9514f2ee54e0b10b281de1582f894911265"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-coverage-distribution.png": {
+      "bytes": 115636,
+      "sha256": "afdb4b09ecde8ab8ab8b2a30f012c363c17f3f763060bf8847b2b0c8c46a7b19",
+      "git_blob_sha1": "af5ebb99bea780c343fff10c5643f6096b14f99a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-dataset-learned-draft.png": {
+      "bytes": 124235,
+      "sha256": "fd1a7a2e8ce378dd37123bd1f0aaceb94aaed98e9815f07eaf2e31cf10ac16ac",
+      "git_blob_sha1": "525f9f79838713dc62da66289469781048b1224a"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-facts-confirmed.png": {
+      "bytes": 163954,
+      "sha256": "965370c338a8a4fe652b035f445110f8e3e1c65260da40f459426d28f92e7f89",
+      "git_blob_sha1": "7956bd3504118388a305ac58510a2bd7e2dac834"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-noise-authoring.png": {
+      "bytes": 90249,
+      "sha256": "e4a4ebfd35013343c32659aba1f4945ed4297224c5ef26c9b09055d46cdeb6b9",
+      "git_blob_sha1": "92330b1e3c0655c1c55c6bcf084ffba3140c47c2"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-noise-auto-hit.png": {
+      "bytes": 150590,
+      "sha256": "fd330c5f6798be62d4c79b933729eb3d83378043c32e44acb9ecf4c87c5020fe",
+      "git_blob_sha1": "76d8a2e0960055fec33b80c258a8e2d15c515c4b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-noise-recovery.png": {
+      "bytes": 127297,
+      "sha256": "d97feb9dc287dc1f755333ad68d212f18463504146096bf881813d67598d9767",
+      "git_blob_sha1": "bd22e4523f7538a661ae35e681e1bfaabeb77327"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-package-data/assets/2e3fe6e8c4c2a845a4c66497fcb55779fd70bfcf0a2c676ea4067d7ef59e73e3-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 62842,
+      "sha256": "1e8211e5871d304afd63a360704623cea283049dda87bf6a8983092b86211269",
+      "git_blob_sha1": "51f8628ea249704289b7e447d617c269135745e4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-package-data/assets/978880349185f1584052a935c5deae87267a4eae1337ce6aa5a399acb4fe9414-p1-visual-import-0.2.0-dual-recovery/preview.png": {
+      "bytes": 64944,
+      "sha256": "810bef90d028ee8157dbcdaff4af7739a05223340d8565e34d0c5d05ff9c5ea6",
+      "git_blob_sha1": "b320b1a6cb036f2c2d73644021090970e85560f8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-quality-overview.png": {
+      "bytes": 135324,
+      "sha256": "d0934344dbfe8f63d44cb94f7b2a28a6d2ff7635b65fdd6f67e909d48190f790",
+      "git_blob_sha1": "b497c6a133f2e4cc9cd454794ffa40c57f548d29"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-rule-review.png": {
+      "bytes": 133104,
+      "sha256": "5f474edb3596cd7a6d7cac74740d9048ca548f20fa0b3dfd968b5b68f99dd48b",
+      "git_blob_sha1": "09c84151742da5440d855ce6ff63199f2031ace0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-training-queue-completed.png": {
+      "bytes": 138751,
+      "sha256": "c25117947888093af9f8976016fe4976de608b7866a4f3483eb6ee0d79ff8a55",
+      "git_blob_sha1": "d163bfd0fe3af434f2d372ee088331eef890e3f4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/ten-trusted-sample.png": {
+      "bytes": 139244,
+      "sha256": "e38f0dcab657ab250c68c49c5ae11d669565b8a75682a0dc9043a96bb74e8ce3",
+      "git_blob_sha1": "9b128664fe6f0f1fcf0cc36c88d1a0c4daad653c"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/training-workspace.png": {
+      "bytes": 137445,
+      "sha256": "c04455d68ecb2b200c1a7baaf71fc9967496f3e71c0fd2b852686969c0340f4c",
+      "git_blob_sha1": "c76cfaba973cac9f0c555869c9529233337d4603"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/trusted-samples-01-source-review.png": {
+      "bytes": 131891,
+      "sha256": "0d84442f232b8bf7622a21ccef6c281e2a9bdc005daee989c86b0d33513afdb9",
+      "git_blob_sha1": "099b922bf478ac76e9ed3856008e269dba8a011b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/trusted-samples-02-exact-admission-preview.png": {
+      "bytes": 126008,
+      "sha256": "999e7bdac069537b1dd5f719ae4530b80efda4136ced89cac673cc098202b831",
+      "git_blob_sha1": "afa07471651866a8a1e663f3e13c9b3f419bbb58"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/trusted-samples-03-admitted-not-trained.png": {
+      "bytes": 131762,
+      "sha256": "27943b8429d124962f749406f61079c9d5b06228af1f137c4266c4cbcde3de5c",
+      "git_blob_sha1": "b4c421efb04ca7a3672e268385b56acee48bd259"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/trusted-samples-04-actual-use-lineage.png": {
+      "bytes": 133761,
+      "sha256": "67f0ec1b6598f0a272af86333c750a91cc18b6e8fe4154b795e37f6e4a70a6fd",
+      "git_blob_sha1": "57160949e24db9ca52303fc01fde8fd5dbd7f6d6"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/trusted-samples-05-stop-use-preview.png": {
+      "bytes": 137282,
+      "sha256": "2d3e81581a6a540a8adc316857ec734a33f70d8e8e8efe95e79933752f58af87",
+      "git_blob_sha1": "b6c5987599f8c1d87b6afdf6377b7d7a3653cba6"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/trusted-samples-06-local-copy-redaction-preview.png": {
+      "bytes": 145075,
+      "sha256": "f949b42ee7b74e54052083f5ca5929b069257c97363406c43f24c28bb92f7885",
+      "git_blob_sha1": "f1063d94e9fa589082f2d5fe74ed1f67f7be06c8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/trusted-samples-07-minimal-privacy-receipt.png": {
+      "bytes": 150395,
+      "sha256": "4a85ae9a659459e66ddaabe659a358e32ee97c6f5607be5576f0de5ebe425812",
+      "git_blob_sha1": "acd3f3d542d406c71fd7a65df33e83dc6d1fcda5"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-01-current-candidate-context.png": {
+      "bytes": 197912,
+      "sha256": "8fdc3c43b9352eba89cee204160ccdaf2ff0770b1eea5bdb3e00a86c892d3f53",
+      "git_blob_sha1": "a01139c4c659e4c535b0e91f89b1894b97ad66f3"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-02-existing-logo-correction.png": {
+      "bytes": 113224,
+      "sha256": "909a22952c4e85ecd3b7a78e4e582a7bbe62d3b4660b4e9d4b7d87879a88c815",
+      "git_blob_sha1": "0c919d0b6b01ca9839a2189602b26480b466f07b"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-03-exact-candidate-view-return.png": {
+      "bytes": 197818,
+      "sha256": "462f8a23526a2b3582e694ef264dbcebecfbc5a9d05173572736ac6bc7371c6b",
+      "git_blob_sha1": "9aa08f0fc783b673274ed1f323905a3c1ced6644"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-04-real-unsaved-close-choices.png": {
+      "bytes": 31727,
+      "sha256": "fb4e135966fe4d8dea3df9edb378c1f7495ba463e7e3b1f17dd67e2bef093958",
+      "git_blob_sha1": "0193e7a0306a35431dcb1aa016989b7fb8a2e1e8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-05-actual-save-failure-not-saved.png": {
+      "bytes": 201464,
+      "sha256": "8e04b6cc4269fe3640e1e8db10dec62a2c634e4b09fa7a634dd9a896f9af636a",
+      "git_blob_sha1": "4b76e020b122df7dccc48a0e5aee46f90aebd927"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-06-actual-encrypted-short-recovery.png": {
+      "bytes": 199464,
+      "sha256": "63499cc8854e94808bb6b4282bf6256ed193c2d00e80107a15e6300177f4e039",
+      "git_blob_sha1": "29cc2203ff5b12f13335499961ee08e66e941e19"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-07-new-manual-version-safe-fallback.png": {
+      "bytes": 196823,
+      "sha256": "3fdbe94b622f77865ba8be8ca2de3dc046c400f54263759e32febea48500c77e",
+      "git_blob_sha1": "21f84640fd733a955024bd44265d9b223bb7d0dd"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-08-small-window-current-work-return-visible.png": {
+      "bytes": 162912,
+      "sha256": "62480bea9d7408d5b698fcbcf5efe80cc3a2cbd3e509d8618bddfef7ff4d4fef",
+      "git_blob_sha1": "66a818fb90acc88747955be3946fb214ac5286fb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-09-size100-existing-logo-correction.png": {
+      "bytes": 173429,
+      "sha256": "3c223d56c132bcdc4e4190587f7ff50d8683b59440c45cd27b2cfcac2e57fb09",
+      "git_blob_sha1": "1f21039db027aa21ae6b0845ac52cbb7276d75e4"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-10-return-original100-blocked-candidate.png": {
+      "bytes": 127279,
+      "sha256": "91d1fb536d37782f9c81c1f3b0c33a3bd4144374bdca63c1685a220c16b861c1",
+      "git_blob_sha1": "c0a900be6521ff7e75c39477b62841335aec9d23"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-11-changed-shared-source-size-pending.png": {
+      "bytes": 144197,
+      "sha256": "06d45114e85b3da7c4e0de46abe62de241da50fcf3c8161d9ed4eeed03587249",
+      "git_blob_sha1": "71e694bdce29a5b16237d4e6c83f7901d363a55e"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/captures/workbench-navigation-12-return-preserves-unapplied-property.png": {
+      "bytes": 178887,
+      "sha256": "c2898cba296ef8aa7aa0e6b789cb3ef39fc16aa850f7f484540c84cac1cc90e3",
+      "git_blob_sha1": "206bd74c1e9efe43b9ad81eeae11fa4552201001"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/claims.json": {
+      "bytes": 2545934,
+      "sha256": "fa6f26e4323617beb98442bcb662ec5ee283665fb1e4b1af9f679727b292e007",
+      "git_blob_sha1": "966daace4d9b68882320489fcc76ed6c3af82044"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/commit.json": {
+      "bytes": 788,
+      "sha256": "8e128e781908e0948b5815cecc1bc7fa0e232fb995b6b02c1535a22cf087f8f4",
+      "git_blob_sha1": "f03a02d135fb10361d287d7ba81cb9eac21720fc"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/execution-source.json": {
+      "bytes": 148548,
+      "sha256": "6e94daabd95ba87fe5cf87310b4d59b04f22aba6372f3a3aeb35ff3b32f4cff7",
+      "git_blob_sha1": "2f2855561259b52aaff2ef725cdd328aa0f2a803"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/execution-summary.json": {
+      "bytes": 509,
+      "sha256": "16b0fd3ee64b53d0e1b83a78b75e1a0b5a2159f4df274b8c7869d9bb6f9bd865",
+      "git_blob_sha1": "69dc8c34985be75ddbdb5ffade4af2fc2a574260"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/fixed70-ten-parent-audit.json": {
+      "bytes": 345336,
+      "sha256": "62072f059cf032352eab60a21a6fecdb093c51f260692d31aca16867d90d27f8",
+      "git_blob_sha1": "ddbf72e3ae14f699b919be86ed16b223734ceafe"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/fixed70-twentyeight-parent-audit.json": {
+      "bytes": 1241416,
+      "sha256": "6a1b78445d1ee7cfc17ce8067fa029cedba7042e272b16b5508098a81530a924",
+      "git_blob_sha1": "5c62ce9922a9d18261449f109e0b5fa87749dfde"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/proof.json": {
+      "bytes": 607,
+      "sha256": "1f6a765abeb0164cfa3cad15733c9a76ed27fb10c7a84d7267cb77f481f3c33e",
+      "git_blob_sha1": "92c64494903db5c3161dc39080070ff23a9a07eb"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/remaining28-full-parent-audit.json": {
+      "bytes": 757804,
+      "sha256": "a9343370354560e438e961028c6ec620a72d516a0b059b2c8561acf5506a4bf3",
+      "git_blob_sha1": "8a2da7babff7ff31610b343e954ffe7775fc5a28"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/run.json": {
+      "bytes": 75203,
+      "sha256": "83b3b24dde5f6fc63858aeb47ffb2d37907e792231221264c885e13b32348989",
+      "git_blob_sha1": "13074427577179fc0a500c35f44958b9cbd62bce"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/seventy-parent-audit.json": {
+      "bytes": 34845,
+      "sha256": "f61af4b36f2074b920c747da201c84bb56e4bcdbab7b0aa2ddfe88bc68afc8f0",
+      "git_blob_sha1": "247b7da5f1bd06b8f8b24013ad07844cd501585d"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/source-manifest.json": {
+      "bytes": 128453,
+      "sha256": "23d98fcf0fca06858c06e803216e7fae0915cfd49f65722bbe29b7c25eb853d4",
+      "git_blob_sha1": "f1f8cf9775644f061a764389077d7df52eda92d0"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/tests.json": {
+      "bytes": 398440,
+      "sha256": "5655c709511606f87e3dc1307a248e239400712a8e54ba74a72ab8ff567082c4",
+      "git_blob_sha1": "b167a0ad049950ae09ae94d40492d90c56c367b8"
+    },
+    "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/tree.json": {
+      "bytes": 15125893,
+      "sha256": "f60d60cf9c260c5cd3e20dfe5c43270eb13767a8c8a96c878e8630dbdfa46b7e",
+      "git_blob_sha1": "4843af673003922f54f5a9a6ed6c7aef3158b29d"
+    },
+    "requirements-build.txt": {
+      "bytes": 335,
+      "sha256": "61692362aeaa9477f99ac4def21dabe89dc230b0eb0e424415af7bbeb3152afe",
+      "git_blob_sha1": "34103e665527e56eb516c3fa4712e2e758c24163"
+    }
+  },
+  "source_manifest_sha256": "eea490afaf4ab90172b9d2867cf8aa129d59afd7288b3bb0145216333d5415e3",
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001/source.zip",
+    "sha256": "4e82603d0317ac6c0cdc7df418e6d3777b4e1cca0f40510eea61b165ceef0d01"
+  },
+  "requirement_ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+  ],
+  "next_step": "Use compact repository handoff; local feedback via manually exported safe support report.",
+  "remote_confirmation": "PENDING_ACTUAL_REMOTE_READBACK",
+  "restore_verification": {
+    "status": "PASS",
+    "kind": "INCREMENTAL_CHANGED_PATH_RESTORE_NOT_STANDALONE_PRODUCT",
+    "files": 411,
+    "base_commit_required": "308491fc9a8c703797969580cc0ab84993f3496b",
+    "archive_sha256": "4e82603d0317ac6c0cdc7df418e6d3777b4e1cca0f40510eea61b165ceef0d01",
+    "isolated_temporary_restore": true,
+    "all_hashes_match": true,
+    "user_data_included": false
+  }
+}

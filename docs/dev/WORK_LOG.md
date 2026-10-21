@@ -1801,3 +1801,6 @@ Windows repair source429bd302 remotely read back, code fixed and targeted5 safet
 
 
 Windows repair linux-regression-005 completed1963/1963PASS,259healthy modules,0runtime,source unchanged. Original1958 IDs all actually passed;5new safety cases added, all27 original capture script bytes unchanged. Stock-captures-005 now runs alone, no concurrency with full source test run. This milestone is source-level only, native176/frozenEXE/Release/download remain pending.
+
+
+Repaired-source full1963 and original stock27 bothPASS; original1958 IDs and all27script/command/deadline recipes preserved. Adopted RUN-WINDOWS-BETA-REPAIR-LINUX-001 with355attachments, softwarePASS and original5external NOT_VERIFIED preserved. First registry gate correctly rejected stale evidence citations;166completed clauses were revalidated against current actual run with unchanged scopes/flags, then only permanent remote-coverage gate remains pending the new formal checkpoint. No source changes or relaxed checks.

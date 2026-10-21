@@ -1,0 +1,16 @@
+{
+  "checks": [
+    {
+      "phase": "initial_current_source_check",
+      "status": "FAIL",
+      "reason": "166 completed clauses still referenced the prior3cd6da4b run; new run itself verified on current435dc0d8."
+    },
+    {
+      "phase": "after_pointer_revalidation",
+      "status": "PENDING_REMOTE_CHECKPOINT",
+      "reason": "Current clauses verified; new permanent attachments not yet covered by a remotely confirmed checkpoint."
+    }
+  ],
+  "changes": "Evidence citations/history only,166completed flags and all acceptance scopes unchanged; no checks disabled.",
+  "original_external_not_verified": 5
+}
