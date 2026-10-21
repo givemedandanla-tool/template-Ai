@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261021-WINDOWS-NATIVE-FAILURE-001",
+  "kind": "INCREMENTAL_FORMAL",
+  "phase": "PREPARED",
+  "base_commit": "27ed0c06b6d14da4d1df617e5d0e24bb0fbaab04",
+  "created_utc": "2026-10-21T11:46:56.090224+00:00",
+  "summary": "Actual first native Windows source results preserved:129PASS2ERROR40not completed; process liveness, progress sharing and fixture portability need repair. No EXE built or published, no deletions.",
+  "source_files": {
+    "AGENTS.md": {
+      "bytes": 22147,
+      "sha256": "66f9f570a655f9889a5c8a8147369a33d8dc5f6e11f464e13c5b2f28fee63a15",
+      "git_blob_sha1": "66c4c6f9e22c6ff6ff31af00f55c7ecb4f36a787"
+    },
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 2817,
+      "sha256": "a8b55a39b777b3cbafc6aab896227fa6c18050a521da80472bedd7983550f201",
+      "git_blob_sha1": "c2683eb9bb76857f6623eaa56d918c3184569c24"
+    },
+    "docs/dev/CURRENT_PROGRESS.json": {
+      "bytes": 36009,
+      "sha256": "54fc12bade478dce99bb4d3fed9e2fa857b7eb1b57eefe2df933b125f606580c",
+      "git_blob_sha1": "33b30498f131d0e34f2234daf95e737ee5260463"
+    },
+    "docs/dev/FEATURES.md": {
+      "bytes": 56924,
+      "sha256": "07f0c50504e76251814b7217f24e064d705b43ff23e9df8ba139e9545a94d845",
+      "git_blob_sha1": "3a61cbb4e22ff8d8c745166cb883f81c9d1c559c"
+    },
+    "docs/dev/HANDOFF.md": {
+      "bytes": 1037,
+      "sha256": "1533b50245db00d14d401bcefb40ddc2516ef3460cd76332036a4e6bb308a100",
+      "git_blob_sha1": "69939ac3d9f721ad28caa7a980c2186cd029612e"
+    },
+    "docs/dev/PROGRESS.md": {
+      "bytes": 904,
+      "sha256": "c1619cc87267240c3dfa477c14fd8e6e51e2af94ef21fbd951ce8d066cf6018e",
+      "git_blob_sha1": "1dd2ca7e9c78634af5f6bab27ad2ceaad35e14a3"
+    },
+    "docs/dev/PROJECT_ROADMAP.json": {
+      "bytes": 561737,
+      "sha256": "556d23283890115f639f738c988b78ce3b66b1661aee57c37e68e48c6574b6de",
+      "git_blob_sha1": "d234483300907a667fd41c7f54899f31022f2a33"
+    },
+    "docs/dev/PROJECT_ROADMAP.md": {
+      "bytes": 6701,
+      "sha256": "fea5c9721b962bf2236e734fe9fd9019738b835904ac239ab7b89e4a2251c422",
+      "git_blob_sha1": "4717a05b09d724ebcf09d2b20830ce7c3d4ca082"
+    },
+    "docs/dev/REQUIREMENTS.json": {
+      "bytes": 2755040,
+      "sha256": "afeef5480cfac0090afcf6228b5bb652ae972d7c4f9a2c044eb807c2408675cf",
+      "git_blob_sha1": "139b7c4d18c2c49614d2148328d668c29dffe046"
+    },
+    "docs/dev/STATE.json": {
+      "bytes": 87402,
+      "sha256": "1639a96babea9546bd71bcd27826c8dfced5eb903464a032182240f2691b64eb",
+      "git_blob_sha1": "e84bc19571bcef663d551d34ac8cb39257f4a86e"
+    },
+    "docs/dev/WORK_LOG.md": {
+      "bytes": 312988,
+      "sha256": "84ab6bc2f287f09f5f8524eebf80b5a5dfa54192b0debc267d0d83af89ca4507",
+      "git_blob_sha1": "43794f8c9a15d2ac22ceee849dae7069e1fe807c"
+    },
+    "docs/dev/maintenance/RETAINED_CHECKPOINT_VALIDATION_20261021.json": {
+      "bytes": 1074,
+      "sha256": "22e0bd06650e00f11e18cbcdcd375153ff0e64c9b82384b230aeb41ff0d0f55d",
+      "git_blob_sha1": "4c5ab93a3615dae1da6a117fda7cf341f61a38cb"
+    },
+    "docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.json": {
+      "bytes": 6844,
+      "sha256": "85acbbc53c6c35772516337e8cac744a72cea35aef8b0c2beb0ec67c3f85786e",
+      "git_blob_sha1": "030359f943c78fc1b22a72cb71a49e600091e2c3"
+    },
+    "docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.md": {
+      "bytes": 7362,
+      "sha256": "5bb145be773d0243386d990628423e9989e55fd300c0f4720019d00b4c60fc41",
+      "git_blob_sha1": "f13168aab230dd4d1c507feef6bb07f9086e2fce"
+    },
+    "docs/dev/maintenance/STORAGE_CHECKPOINT_INVENTORY_20261021.csv": {
+      "bytes": 47801,
+      "sha256": "1d6a65363f66d1a2eb8393f7f1b713eda603c55bbf80ed8f1025749f112cb4de",
+      "git_blob_sha1": "6aa076cc4feafbc497a1528fb0116de6c0f865f2"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/WINDOWS_RUNTIME.txt": {
+      "bytes": 63,
+      "sha256": "73cddd65f8003a60ca4d3b95a3c7c081e0743307d8b0d99a5455a77126924b06",
+      "git_blob_sha1": "6adf42d351563c33c16d1161dc8a4f8775b47c88"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/failed-modules/test_desktop_workspace-stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/failed-modules/test_first_version-stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/failed-modules/test_input_learning_integration-stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/failed-modules/test_logo_workflow_gui-stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/failed-modules/test_runtime_queue-stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/failed-modules/test_runtime_source_refresh-stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/failed-modules/test_runtime_worker-stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_blob_sha1": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/governance-gate.json": {
+      "bytes": 108,
+      "sha256": "08672dfe04ac90abfb3dbff0eb285a9e106016da550e6f23074a50422fb2a2e6",
+      "git_blob_sha1": "fa687cdafcc6ce4db6352601c9843b904283539d"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/installed-dependencies.txt": {
+      "bytes": 511,
+      "sha256": "966d8d3399ef3fa3ac3d01d647f3700edb8f145545b355c1a73c562b8ecd59d0",
+      "git_blob_sha1": "2bdc7f94af73f0218394dfe957850e1678039963"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/pyinstaller.log": {
+      "bytes": 1192,
+      "sha256": "06c6990608f94fc48bcec6da8bca7d80aca16b8c13bfc4006b843d04f57e9044",
+      "git_blob_sha1": "5668cabf6b03b8ce871e053653daecf793a80906"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/source-tests/catalog.json": {
+      "bytes": 20228,
+      "sha256": "533a02725d7b37754379f043795f4460d5c2f0386bc5493ea82bf3f455bd2374",
+      "git_blob_sha1": "1457322d704a76b9334445363512f0906ae99eef"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/source-tests/live/test-modules.json": {
+      "bytes": 12883,
+      "sha256": "df1584c2e3155025f2f0341ae17b7e490d36d1a8c117bdd34714d64b2387c5fb",
+      "git_blob_sha1": "bad672c26fdef9bc1bec9205bd25ecb6f2e850d3"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/source-tests/runtime-errors.json": {
+      "bytes": 5150,
+      "sha256": "d894bef770910d74137a9cb59c4ffafd9591a924b5ad08c8f51201017c757307",
+      "git_blob_sha1": "742016f1693218ecc8e7117923fcb8014fa6a382"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/source-tests/summary.json": {
+      "bytes": 537,
+      "sha256": "8575fe9a807eeed76b668787fd128f2f5a8f23d7331c25284b650add3ae79bfb",
+      "git_blob_sha1": "26644ae105d3cbc543a9e13f5dfeafc72a9f5e01"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/source-tests/tests.json": {
+      "bytes": 27827,
+      "sha256": "9b17433421e94ede83035af2c10e33ca0130f6a1734de810268f9d0ff7f0ffcb",
+      "git_blob_sha1": "f465d15c97e3931ff2b3e20af3533a1f687f711a"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed/status.json": {
+      "bytes": 360,
+      "sha256": "4fb8903b8aceb4d50c2d3235cbcdf8bdb7f5d037e668b3587c79321e6e9681a6",
+      "git_blob_sha1": "55b470723a397ad26c94c4f55dc386bfe83bc7ed"
+    }
+  },
+  "source_manifest_sha256": "47941384b6a9a7380974f37e9ab6d1dcd7de6fd8c75f75e2c5c79be5ff0dbf63",
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261021-WINDOWS-NATIVE-FAILURE-001/source.zip",
+    "sha256": "a0e4e097d05722dfcc19bf5bb0694678c27ecb61bad2a94fd47916d830bc4868"
+  },
+  "requirement_ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+  ],
+  "next_step": "Use compact repository handoff; local feedback via manually exported safe support report.",
+  "remote_confirmation": "PENDING_ACTUAL_REMOTE_READBACK",
+  "restore_verification": {
+    "status": "PASS",
+    "kind": "INCREMENTAL_CHANGED_PATH_RESTORE_NOT_STANDALONE_PRODUCT",
+    "files": 32,
+    "base_commit_required": "27ed0c06b6d14da4d1df617e5d0e24bb0fbaab04",
+    "archive_sha256": "a0e4e097d05722dfcc19bf5bb0694678c27ecb61bad2a94fd47916d830bc4868",
+    "isolated_temporary_restore": true,
+    "all_hashes_match": true,
+    "user_data_included": false
+  }
+}

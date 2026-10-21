@@ -18,9 +18,9 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Inspect current release-request/v0.2.0-beta.1 native runner receipt and retained error logs; public GitHub pages and native Git work despite cloud API denial.",
-    "Complete Windows171 and actual frozen EXE gates, immutable tag, prerelease, upload and downloaded-byte verification. Do not merge main.",
-    "Storage assessment is complete, zero deletions. Conditional candidates require archive hash/unique-content/restore checks before any cleanup; preserve current source/evidence and private data."
+    "Repair actual Windows process liveness and evidence-file sharing, portable fixture fonts/canonical paths; run new safety regressions, full same-source Linux and stock GUI evidence before another Windows request.",
+    "Preserve original native failure evidence and limits; investigate input-integration deadline using bounded native stack diagnostics if it persists.",
+    "Storage assessment complete and remote verified; zero deletion."
   ],
   "blocked": [
     {
@@ -44,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261021-WINDOWS-NATIVE-FAILURE-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1702,12 +1704,12 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "PUBLIC_NATIVE_RETRY_PENDING_ACTUAL_RESULT",
+    "status": "NATIVE_WINDOWS_FAILURE_ROOT_CAUSE_REPAIR",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Observe the explicit public-repository Windows request and persisted native receipts; fix actual failures without weakening source, Windows171, frozen EXE or download gates.",
+    "next": "Repair actual Windows process liveness and evidence-file sharing, portable fixture fonts/canonical paths; run new safety regressions, full same-source Linux and stock GUI evidence before another Windows request.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1725,7 +1727,7 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "RUNNING_ACTUAL_NATIVE_RECEIPT_OBSERVED",
+    "windows_receipt": "FAILED_ACTUAL_NATIVE_RECEIPT_OBSERVED",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "570ecebe1e5135b0fc271b6c0d56639fdae55566",
     "source_manifest_sha256": "3cd6da4bbe162df29746c17e12e55992a4eabc09042f4492896a0b54b9c9c95f",
@@ -1789,7 +1791,16 @@
       "failed": 1,
       "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
     },
-    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39592388094"
+    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39592388094",
+    "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed",
+    "native_result": {
+      "planned": 171,
+      "completed": 131,
+      "passed": 129,
+      "errors": 2,
+      "runtime_errors": 3,
+      "missing": 40
+    }
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",
