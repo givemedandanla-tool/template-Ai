@@ -7,7 +7,7 @@
   "requirements_qualifications_unchanged": true,
   "human_summary": "本機範圍查證及最終測試完成；10類問題已修，私人作品與Windows等實機資格保持原延後狀態。遠端未推送，請保留還原包與收據。",
   "status": "LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED",
-  "phase": "All local execution/triage complete; committed recovery package must still be exported and restored",
+  "phase": "All local software verification complete. Delivery completion is attested by the post-commit receipt or ZIP RESTORE_RECEIPT.",
   "completed_at": "2026-10-21T00:01:06.689343+00:00",
   "original_diagnostics": 11798,
   "diagnostic_statuses": {
@@ -59,7 +59,7 @@
     "new_or_variant": 397,
     "unreviewed": 0
   },
-  "next": "Commit final docs/checkpoint; export_local_delivery.py; verify receipt and clean Git. Do not expand scope or push unknown fee triggers.",
+  "next": "Check receipt.json or ZIP RESTORE_RECEIPT: when restore is verified, this audit is complete and waits for the next authorized task. Export only if no verified receipt exists.",
   "final_delivery_status": "CHECK_POST_COMMIT_RECEIPT_OR_ZIP_RESTORE_RECEIPT",
   "remote_write": "NOT_PERFORMED_COST_UNKNOWN"
 }
