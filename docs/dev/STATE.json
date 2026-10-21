@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "WINDOWS_BETA_BUILD_REQUEST_READY",
+  "active_task": "WINDOWS_PUBLIC_RETRY_AND_STORAGE_ASSESSMENT",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-SOURCE-002.receipt.json",
   "last_confirmed_commit": "956c89c86522615a7833accfba0c4b72727766be",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-LINUX-001/run.json",
@@ -18,10 +18,9 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Push exact closure HEAD to release-request/v0.2.0-beta.1; regular dev/main/PR pushes do not build",
-    "Inspect release-evidence/v0.2.0-beta.1 actual runner receipt and/or GitHub Actions API; current api.github.com network policy returns Forbidden until saved draft is applied",
-    "Windows171 and actual frozen EXE must PASS; then immutable tag, prerelease, asset upload and published download per-file hashes",
-    "If external access remains blocked, preserve source/evidence and report not released; no need for private corpus or API key"
+    "Inspect current release-request/v0.2.0-beta.1 native runner receipt and retained error logs; public GitHub pages and native Git work despite cloud API denial.",
+    "Complete Windows171 and actual frozen EXE gates, immutable tag, prerelease, upload and downloaded-byte verification. Do not merge main.",
+    "Storage assessment is complete, zero deletions. Conditional candidates require archive hash/unique-content/restore checks before any cleanup; preserve current source/evidence and private data."
   ],
   "blocked": [
     {
@@ -45,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261021-PUBLIC-RETRY-STORAGE-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1703,12 +1704,12 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "SOURCE_REMOTE_VERIFIED_WINDOWS_REQUEST_READY",
+    "status": "PUBLIC_NATIVE_RETRY_PENDING_ACTUAL_RESULT",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Run original stock-captures-004 alone; then linux-regression-004 with no source changes; restore formal evidence and checkpoint before Windows release request.",
+    "next": "Observe the explicit public-repository Windows request and persisted native receipts; fix actual failures without weakening source, Windows171, frozen EXE or download gates.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1766,6 +1767,31 @@
     "software_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-SOURCE-002.receipt.json",
     "software_snapshot_commit": "956c89c86522615a7833accfba0c4b72727766be",
     "software_verified_files": 11713,
-    "governance_gate": "PASS_REQUIRE_EVIDENCE_PUBLICATION_SCOPE"
+    "governance_gate": "PASS_REQUIRE_EVIDENCE_PUBLICATION_SCOPE",
+    "current_request_source": "35d133cd869bd8352f5a92e2342fbca56d793b58",
+    "previous_public_runs": [
+      {
+        "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
+        "run_id": "39591183044",
+        "status": "FAILED_NOT_VERIFIED"
+      },
+      {
+        "source": "b0e1bc84bcb45149d038e2f9a0a29594d6a8c39e",
+        "run_id": "39591928487",
+        "status": "FAILED_NOT_VERIFIED",
+        "reason": "Pinned dependency installation failed"
+      }
+    ]
+  },
+  "storage_assessment": {
+    "status": "COMPLETED_READ_ONLY_NO_DELETIONS",
+    "report": "docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.md",
+    "data": "docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.json",
+    "inventory": "docs/dev/maintenance/STORAGE_CHECKPOINT_INVENTORY_20261021.csv",
+    "archive_entries": 226,
+    "broken_links": 81,
+    "old_physical_conditional_candidates": 55,
+    "deleted_files": 0,
+    "retention_policy_changed": false
   }
 }

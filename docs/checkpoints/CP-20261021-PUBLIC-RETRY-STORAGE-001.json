@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261021-PUBLIC-RETRY-STORAGE-001",
+  "kind": "INCREMENTAL_FORMAL",
+  "phase": "PREPARED",
+  "base_commit": "35d133cd869bd8352f5a92e2342fbca56d793b58",
+  "created_utc": "2026-10-21T11:31:53.927376+00:00",
+  "summary": "Read-only storage assessment and public Windows build retry; zero deletions; incremental restore requires base35d133cd. Native Windows result is not yet qualified.",
+  "source_files": {
+    ".github/copilot-instructions.md": {
+      "bytes": 847,
+      "sha256": "0e51e8d2d243d374c4b088161b7e1c781d0b1635efabfb5135ea1c2e01244fbe",
+      "git_blob_sha1": "afa51285d4dc9b31f6ae7d58862f3bf8fc726b4c"
+    },
+    ".github/windows-build-lock.json": {
+      "bytes": 3881,
+      "sha256": "9f71395dab1fe27eb23a6b3e6b2beb56b5e2a81736d346abade317c08cacb03a",
+      "git_blob_sha1": "366aa66fca210b41d6d0f6dc16c6cf1155fc7fd2"
+    },
+    ".github/windows-release-test-scope.json": {
+      "bytes": 1282,
+      "sha256": "bd81120e0de8bb0531e936d80ce937bc73a03a0e972d5e12dafd5746bb5f8fe6",
+      "git_blob_sha1": "68c4a58a41407f5be3581da6cf61d2efa512b0a4"
+    },
+    ".github/workflows/development-verification.yml": {
+      "bytes": 2040,
+      "sha256": "065a34f46dd7a6081ce6c20dfd255d68c7fb4c31b2dbea86c430cabc64d92104",
+      "git_blob_sha1": "25804532245ba889ce0faf077ac50346687610d6"
+    },
+    ".github/workflows/first-version.yml": {
+      "bytes": 5569,
+      "sha256": "9e442f76e1f8e62f42878f2e7f08c1cebf13e5642929f652ab1455d70aa1ee2d",
+      "git_blob_sha1": "57d1362a7543e7ffb94701954652950c9e9c1d48"
+    },
+    "AGENTS.md": {
+      "bytes": 22147,
+      "sha256": "66f9f570a655f9889a5c8a8147369a33d8dc5f6e11f464e13c5b2f28fee63a15",
+      "git_blob_sha1": "66c4c6f9e22c6ff6ff31af00f55c7ecb4f36a787"
+    },
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 2817,
+      "sha256": "a8b55a39b777b3cbafc6aab896227fa6c18050a521da80472bedd7983550f201",
+      "git_blob_sha1": "c2683eb9bb76857f6623eaa56d918c3184569c24"
+    },
+    "docs/dev/CURRENT_PROGRESS.json": {
+      "bytes": 36009,
+      "sha256": "54fc12bade478dce99bb4d3fed9e2fa857b7eb1b57eefe2df933b125f606580c",
+      "git_blob_sha1": "33b30498f131d0e34f2234daf95e737ee5260463"
+    },
+    "docs/dev/FEATURES.md": {
+      "bytes": 56924,
+      "sha256": "07f0c50504e76251814b7217f24e064d705b43ff23e9df8ba139e9545a94d845",
+      "git_blob_sha1": "3a61cbb4e22ff8d8c745166cb883f81c9d1c559c"
+    },
+    "docs/dev/HANDOFF.md": {
+      "bytes": 1037,
+      "sha256": "1533b50245db00d14d401bcefb40ddc2516ef3460cd76332036a4e6bb308a100",
+      "git_blob_sha1": "69939ac3d9f721ad28caa7a980c2186cd029612e"
+    },
+    "docs/dev/PROGRESS.md": {
+      "bytes": 904,
+      "sha256": "c1619cc87267240c3dfa477c14fd8e6e51e2af94ef21fbd951ce8d066cf6018e",
+      "git_blob_sha1": "1dd2ca7e9c78634af5f6bab27ad2ceaad35e14a3"
+    },
+    "docs/dev/PROJECT_ROADMAP.json": {
+      "bytes": 561737,
+      "sha256": "556d23283890115f639f738c988b78ce3b66b1661aee57c37e68e48c6574b6de",
+      "git_blob_sha1": "d234483300907a667fd41c7f54899f31022f2a33"
+    },
+    "docs/dev/PROJECT_ROADMAP.md": {
+      "bytes": 6701,
+      "sha256": "fea5c9721b962bf2236e734fe9fd9019738b835904ac239ab7b89e4a2251c422",
+      "git_blob_sha1": "4717a05b09d724ebcf09d2b20830ce7c3d4ca082"
+    },
+    "docs/dev/REQUIREMENTS.json": {
+      "bytes": 2755040,
+      "sha256": "afeef5480cfac0090afcf6228b5bb652ae972d7c4f9a2c044eb807c2408675cf",
+      "git_blob_sha1": "139b7c4d18c2c49614d2148328d668c29dffe046"
+    },
+    "docs/dev/STATE.json": {
+      "bytes": 86346,
+      "sha256": "eafa2fc2015c62638e06424e466c7a9e223ef8d024844b0c1408816d536cd6ab",
+      "git_blob_sha1": "d37ad2047ee8cffbf517a654c61cae6c882b6c7a"
+    },
+    "docs/dev/WORK_LOG.md": {
+      "bytes": 312988,
+      "sha256": "84ab6bc2f287f09f5f8524eebf80b5a5dfa54192b0debc267d0d83af89ca4507",
+      "git_blob_sha1": "43794f8c9a15d2ac22ceee849dae7069e1fe807c"
+    },
+    "docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.json": {
+      "bytes": 6844,
+      "sha256": "85acbbc53c6c35772516337e8cac744a72cea35aef8b0c2beb0ec67c3f85786e",
+      "git_blob_sha1": "030359f943c78fc1b22a72cb71a49e600091e2c3"
+    },
+    "docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.md": {
+      "bytes": 7003,
+      "sha256": "caba1253a2b9d36f9dc75454453edc3b11a8a7b53123289f38cb00445629a31d",
+      "git_blob_sha1": "76816f3c1b6c40aa4c0ff39372a7163abeb59dea"
+    },
+    "docs/dev/maintenance/STORAGE_CHECKPOINT_INVENTORY_20261021.csv": {
+      "bytes": 47801,
+      "sha256": "1d6a65363f66d1a2eb8393f7f1b713eda603c55bbf80ed8f1025749f112cb4de",
+      "git_blob_sha1": "6aa076cc4feafbc497a1528fb0116de6c0f865f2"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/public-retry-001-result.json": {
+      "bytes": 792,
+      "sha256": "784aa28a45139b92460fb5aa882b1c3ff2903b9f9c6a204c6d23c66ba4758185",
+      "git_blob_sha1": "ed775a48263dc1806d8b25d72d82a1e637cf2f10"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/public-retry-001.json": {
+      "bytes": 1145,
+      "sha256": "8a8c43eca3458e89c0cc08d8a89666b02e8307a4cacb4e6ab2ba287d06903583",
+      "git_blob_sha1": "ce842eb166a9e26d88efe1095c11b6387cb34b3f"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/public-retry-002-result.json": {
+      "bytes": 688,
+      "sha256": "26c5b688aec2ec6771b089e3bc2386fa406d7f7c4b0ce2768b9aba63feca5c8d",
+      "git_blob_sha1": "16a40323ef86f79adb8d4a1f587a8bb2cf9eebf5"
+    }
+  },
+  "source_manifest_sha256": "2d74297c3ba5309b71670a925aac019aa5ed41644c45eb67cf030729f56c7320",
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261021-PUBLIC-RETRY-STORAGE-001/source.zip",
+    "sha256": "a271e807e4326316b59fc8d761025a5dd983a0587342f04a75b443248951efa7"
+  },
+  "requirement_ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+  ],
+  "next_step": "Use compact repository handoff; local feedback via manually exported safe support report.",
+  "remote_confirmation": "PENDING_ACTUAL_REMOTE_READBACK",
+  "restore_verification": {
+    "status": "PASS",
+    "kind": "INCREMENTAL_CHANGED_PATH_RESTORE_NOT_STANDALONE_PRODUCT",
+    "files": 22,
+    "base_commit_required": "35d133cd869bd8352f5a92e2342fbca56d793b58",
+    "archive_sha256": "a271e807e4326316b59fc8d761025a5dd983a0587342f04a75b443248951efa7",
+    "isolated_temporary_restore": true,
+    "all_hashes_match": true,
+    "user_data_included": false
+  }
+}

@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "observed_utc": "2026-10-21T11:21:19.790207+00:00",
+  "verified_remote_source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
+  "scope": "Read-only storage purpose/importance assessment; no deletion or retention-rule change authorized/executed.",
+  "deleted_files": 0,
+  "filesystem": {
+    "/workspace": {
+      "total_bytes": 33770192896,
+      "available_bytes": 1742475264
+    },
+    "/tmp": {
+      "total_bytes": 17871880192,
+      "available_bytes": 107102208
+    }
+  },
+  "archive_totals": {
+    "count": 226,
+    "available_bytes_including_link_targets": 35347974798,
+    "dangling_links": 81,
+    "receipt_groups": {
+      "REMOTE_VERIFIED": 214,
+      "NO_RECEIPT": 12
+    }
+  },
+  "old_real_archive_candidates": {
+    "count": 55,
+    "bytes": 20855701550,
+    "qualification": "Potential candidates only. Historical receipt + commit/tree ancestry is not a fresh full restore/hash check or deletion approval."
+  },
+  "tmp_old_archive_directory_bytes": 9736421376,
+  "historical_receipt_ancestry_check": {
+    "verified_remote_source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
+    "results": {
+      "reachable": 213,
+      "unconfirmed": 1
+    },
+    "scope": "Commit reachability and recorded tree only; not a full archive hash/restore verification. Broken local links remain unusable."
+  },
+  "missing_local_archive_links": {
+    "count": 81,
+    "historical_commit_and_tree_reachable": 81,
+    "local_restore_status": "UNAVAILABLE_UNTIL_RECONSTRUCTED; not repaired by this audit"
+  },
+  "unconfirmed_ancestor": [
+    "CP-20261019-JOINT-PARAM-PLAN"
+  ],
+  "sizes": {
+    "/workspace": [
+      {
+        "name": "workspace",
+        "allocated_bytes": 30292611072
+      },
+      {
+        "name": "template-Ai",
+        "allocated_bytes": 29866360832
+      },
+      {
+        "name": ".cache",
+        "allocated_bytes": 357453824
+      },
+      {
+        "name": "template-ai-gui-tools",
+        "allocated_bytes": 60583936
+      },
+      {
+        "name": "template-ai-gui-tools-clean-restore",
+        "allocated_bytes": 8187904
+      },
+      {
+        "name": "shared",
+        "allocated_bytes": 8192
+      },
+      {
+        "name": "library-files",
+        "allocated_bytes": 4096
+      },
+      {
+        "name": "scratch",
+        "allocated_bytes": 4096
+      },
+      {
+        "name": ".agents",
+        "allocated_bytes": 0
+      },
+      {
+        "name": ".git",
+        "allocated_bytes": 0
+      },
+      {
+        "name": ".aws",
+        "allocated_bytes": 0
+      },
+      {
+        "name": ".codex",
+        "allocated_bytes": 0
+      }
+    ],
+    "/workspace/template-Ai": [
+      {
+        "name": "template-Ai",
+        "allocated_bytes": 29866360832
+      },
+      {
+        "name": ".checkpoints",
+        "allocated_bytes": 24757518336
+      },
+      {
+        "name": "docs",
+        "allocated_bytes": 2654310400
+      },
+      {
+        "name": ".venv",
+        "allocated_bytes": 1013465088
+      },
+      {
+        "name": ".git",
+        "allocated_bytes": 766836736
+      },
+      {
+        "name": ".cache",
+        "allocated_bytes": 648007680
+      },
+      {
+        "name": "template_ai",
+        "allocated_bytes": 10469376
+      },
+      {
+        "name": "tests",
+        "allocated_bytes": 7782400
+      },
+      {
+        "name": "local-data",
+        "allocated_bytes": 6508544
+      },
+      {
+        "name": "tools",
+        "allocated_bytes": 1105920
+      },
+      {
+        "name": "examples",
+        "allocated_bytes": 106496
+      },
+      {
+        "name": ".ruff_cache",
+        "allocated_bytes": 90112
+      }
+    ],
+    "/workspace/template-Ai/.checkpoints": [
+      {
+        "name": ".checkpoints",
+        "allocated_bytes": 24757518336
+      },
+      {
+        "name": "evidence-workspaces",
+        "allocated_bytes": 1131491328
+      },
+      {
+        "name": "CP-20261021-AUDIT-GITHUB-RESUME",
+        "allocated_bytes": 808751104
+      },
+      {
+        "name": "CP-20261020-DEV-QUALITY-LOCAL",
+        "allocated_bytes": 734597120
+      },
+      {
+        "name": "CP-20261020-INPUT-SOURCE",
+        "allocated_bytes": 572174336
+      },
+      {
+        "name": "CP-20261020-INPUT-WIP2",
+        "allocated_bytes": 571535360
+      },
+      {
+        "name": "CP-20261019-TEMPLATE-EDITOR-FINAL",
+        "allocated_bytes": 569606144
+      },
+      {
+        "name": "CP-20261019-TEMPLATE-EDITOR-CAPTURE-WIP",
+        "allocated_bytes": 515182592
+      },
+      {
+        "name": "CP-20261019-TEMPLATE-EDITOR-FULL006-MID2",
+        "allocated_bytes": 514338816
+      },
+      {
+        "name": "CP-20261019-TEMPLATE-EDITOR-FULL006-MID",
+        "allocated_bytes": 513736704
+      },
+      {
+        "name": "CP-20261019-TEMPLATE-EDITOR-FROZEN-005",
+        "allocated_bytes": 512782336
+      },
+      {
+        "name": "CP-20261019-TEMPLATE-EDITOR-FULL005-MID",
+        "allocated_bytes": 512122880
+      }
+    ],
+    "/workspace/template-Ai/.cache": [
+      {
+        "name": ".cache",
+        "allocated_bytes": 648007680
+      },
+      {
+        "name": "noncode-stock-gui-001",
+        "allocated_bytes": 82460672
+      },
+      {
+        "name": "audit-stock-final-003",
+        "allocated_bytes": 82456576
+      },
+      {
+        "name": "pre-download-stock-gui-final-001",
+        "allocated_bytes": 82448384
+      },
+      {
+        "name": "release-beta-stock-004",
+        "allocated_bytes": 82444288
+      },
+      {
+        "name": "audit-stock-final-002",
+        "allocated_bytes": 82423808
+      },
+      {
+        "name": "pre-download-gui-capture-001",
+        "allocated_bytes": 81510400
+      },
+      {
+        "name": "release-beta-stock-002",
+        "allocated_bytes": 79560704
+      },
+      {
+        "name": "release-beta-stock-001",
+        "allocated_bytes": 40361984
+      },
+      {
+        "name": "release-beta-stock-003",
+        "allocated_bytes": 30097408
+      },
+      {
+        "name": "release-public-retry",
+        "allocated_bytes": 1511424
+      },
+      {
+        "name": "fixed70-corrected-control",
+        "allocated_bytes": 1339392
+      }
+    ],
+    "/workspace/template-Ai/docs": [
+      {
+        "name": "docs",
+        "allocated_bytes": 2654310400
+      },
+      {
+        "name": "evidence",
+        "allocated_bytes": 1133973504
+      },
+      {
+        "name": "dev",
+        "allocated_bytes": 771620864
+      },
+      {
+        "name": "checkpoints",
+        "allocated_bytes": 476626944
+      },
+      {
+        "name": "qa",
+        "allocated_bytes": 271237120
+      },
+      {
+        "name": "decisions",
+        "allocated_bytes": 225280
+      },
+      {
+        "name": "audits",
+        "allocated_bytes": 16384
+      }
+    ]
+  },
+  "raw_inventory": "Local .cache/release-public-retry/storage-inventory.json; includes temp directory names only, not file contents."
+}
