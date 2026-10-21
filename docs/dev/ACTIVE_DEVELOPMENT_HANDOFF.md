@@ -14,7 +14,7 @@
 
 產品/tools/tests code manifest仍0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274，只有.github/docs配置修改；Linux不無故重跑。RUN-WINDOWS-BETA-FINAL-LINUX-001是1963唯一實際PASS、原27GUI，原5外部UNKNOWN保留。不是首次全綠：raw006為1961PASS/SourceWatch deadlineFAIL，同bytes整個11例在原180秒獨占33.855sPASS，requalified逐case/inputhash/原失敗均保留。原1958ID/原27腳本命令deadline不變。
 
-**當前主要checkpoint CP-20261021-WINDOWS-UTF8-READY-001.receipt.json**：a3fc928f快照，430項REMOTE_VERIFIED，含369正式附件、原生176、真EXE A/B及工作區55備份完整性報告。strict require-evidence/publication-scope實際PASS172/166/75/1963。不要用小型輔助CP覆蓋主要指標；補主要CP須含完整正式run附件。輔助Git讀回不加--ack。改產品/tools/tests bytes會改source，須重資格，不能混用舊結果。原私人作品/硬體/實印等外部資格不升級。
+**當前主要checkpoint CP-20261021-WINDOWS-PAYLOAD-READY-001.receipt.json**：4734990a快照，443項REMOTE_VERIFIED，含369正式附件、044原生176與真EXE21、A/B、7項新配置控制及工作區55備份完整性報告。strict require-evidence/publication-scope實際PASS172/166/75/1963。不要用小型輔助CP覆蓋主要指標；補主要CP須含完整正式run附件。輔助Git讀回不加--ack。改產品/tools/tests bytes會改source，須重資格，不能混用舊結果。原私人作品/硬體/實印等外部資格不升級。
 
 ## 工作區評估完成
 
