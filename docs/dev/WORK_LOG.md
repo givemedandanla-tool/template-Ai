@@ -1804,3 +1804,6 @@ Windows repair linux-regression-005 completed1963/1963PASS,259healthy modules,0r
 
 
 Repaired-source full1963 and original stock27 bothPASS; original1958 IDs and all27script/command/deadline recipes preserved. Adopted RUN-WINDOWS-BETA-REPAIR-LINUX-001 with355attachments, softwarePASS and original5external NOT_VERIFIED preserved. First registry gate correctly rejected stale evidence citations;166completed clauses were revalidated against current actual run with unchanged scopes/flags, then only permanent remote-coverage gate remains pending the new formal checkpoint. No source changes or relaxed checks.
+
+
+Repaired formal source CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001 restored and remote acknowledged412items including355formal attachments; strict governance PASS172requirements/166scoped/75parents/1963tests. Scope/progress snapshot deltas all0. Exact fac43f21072113abc95355c531e104921aca040a pushed to explicit release request and independently read back; native run39601136869 actually RUNNING, receipt recorded12:38:53UTC. No nativePASS, EXE, tag or Release claim yet.

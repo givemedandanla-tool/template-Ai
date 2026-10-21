@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "WINDOWS_REPAIRED_BETA_REQUEST_READY",
+  "active_task": "WINDOWS_REPAIRED_BETA_NATIVE_RUNNING",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
   "last_confirmed_commit": "ded89cf6638da2f72c2611ebebaeb6553496a1c2",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/run.json",
@@ -18,7 +18,7 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Push exact closure to release-request/v0.2.0-beta.1, read actual native176/frozenEXE receipts, publish only after all gates PASS.",
+    "Read native176/frozenEXE result for exact fac43f21; preserve and repair actual failures, or verify immutable tag and downloaded published bytes after PASS.",
     "NativeWindows176 and actual frozenEXE must PASS; then immutable tag/prerelease and actual downloaded-byte verification.",
     "Storage assessment is complete; zero deletions."
   ],
@@ -1702,12 +1702,12 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "REPAIRED_SOURCE_REMOTE_VERIFIED_WINDOWS_REQUEST_READY",
+    "status": "REPAIRED_SOURCE_NATIVE_WINDOWS_RUNNING",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Push exact closure to release-request/v0.2.0-beta.1, read actual native176/frozenEXE receipts, publish only after all gates PASS.",
+    "next": "Read native176/frozenEXE result for exact fac43f21; preserve and repair actual failures, or verify immutable tag and downloaded published bytes after PASS.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1727,7 +1727,7 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "FAILED_ACTUAL_NATIVE_RECEIPT_OBSERVED",
+    "windows_receipt": "RUNNING_ACTUAL_NATIVE_RECEIPT_OBSERVED",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "429bd302eece95477e462fbdaef6c427bedf42a1",
     "source_manifest_sha256": "118460d20ebd68a32bc97b8b55b5b76d451732c6ca35e27efc2c4f0fc6def7b7",
@@ -1766,10 +1766,10 @@
       "recovery": "Keep failed local archive; use new unique CP002 with isolated restore under workspace .checkpoints; remove orphan pending entry"
     },
     "software_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-SOURCE-002.receipt.json",
-    "software_snapshot_commit": "956c89c86522615a7833accfba0c4b72727766be",
+    "software_snapshot_commit": "ded89cf6638da2f72c2611ebebaeb6553496a1c2",
     "software_verified_files": 11713,
     "governance_gate": "PASS_REQUIRE_EVIDENCE_PUBLICATION_SCOPE",
-    "current_request_source": "35d133cd869bd8352f5a92e2342fbca56d793b58",
+    "current_request_source": "fac43f21072113abc95355c531e104921aca040a",
     "previous_public_runs": [
       {
         "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
@@ -1791,7 +1791,7 @@
       "failed": 1,
       "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
     },
-    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39592388094",
+    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39601136869",
     "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-001-failed",
     "native_result": {
       "planned": 171,
@@ -1809,7 +1809,8 @@
       "qualification": "FULL_SOURCE_LOCAL_PASS_GUI005_PENDING"
     },
     "source_checkpoint": "CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001",
-    "source_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json"
+    "source_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
+    "software_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json"
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",
