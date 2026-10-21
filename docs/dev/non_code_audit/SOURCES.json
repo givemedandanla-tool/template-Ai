@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "status": "RESEARCH_COMPLETE_DESIGN_IN_PROGRESS",
+  "recorded_utc": "2026-10-21T02:54:04.980423+00:00",
+  "sources": [
+    {
+      "id": "REF-ADOBE",
+      "kind": "commercial-public-api",
+      "repository": "AdobeDocs/indesign-api-docs",
+      "commit": "925739605f818540368b429a2d8a756198966b94",
+      "path": "README.md",
+      "url": "https://github.com/AdobeDocs/indesign-api-docs/blob/925739605f818540368b429a2d8a756198966b94/README.md",
+      "raw_url": "https://raw.githubusercontent.com/AdobeDocs/indesign-api-docs/925739605f818540368b429a2d8a756198966b94/README.md",
+      "bytes": 41349,
+      "sha256": "15868984aecfde2a960e48cd6d5877dac40d1002e3ecad54776aa7491d8a356b",
+      "read_anchors": [
+        {
+          "needle": "Get the status of a job",
+          "line": 269
+        },
+        {
+          "needle": "\"assets\"",
+          "line": 28
+        },
+        {
+          "needle": "\"outputs\"",
+          "line": 34
+        }
+      ],
+      "adopted_idea": "資產、工作與輸出分開核對；工作執行成功不能取代內容與印前驗證。",
+      "boundary": "只參考公開契約；不呼叫Adobe雲端、不需要key、不購買服務。",
+      "verification": "FETCHED_FIXED_COMMIT_AND_READ_RELEVANT_SECTIONS;NO_TOOL_INSTALLED_OR_EXECUTED"
+    },
+    {
+      "id": "REF-DMN",
+      "kind": "commercial-public-docs",
+      "repository": "camunda/camunda-docs",
+      "commit": "899f47508b60c67d15e9a39a8080f5148dc04ad0",
+      "path": "docs/components/modeler/dmn/decision-table-hit-policy.md",
+      "url": "https://github.com/camunda/camunda-docs/blob/899f47508b60c67d15e9a39a8080f5148dc04ad0/docs/components/modeler/dmn/decision-table-hit-policy.md",
+      "raw_url": "https://raw.githubusercontent.com/camunda/camunda-docs/899f47508b60c67d15e9a39a8080f5148dc04ad0/docs/components/modeler/dmn/decision-table-hit-policy.md",
+      "bytes": 8098,
+      "sha256": "8a7af3b9c4437c3b614e208ad913595a2e16cd5b6193f48cc8fa10bd8209c414",
+      "read_anchors": [
+        {
+          "needle": "## Unique",
+          "line": 63
+        },
+        {
+          "needle": "## First",
+          "line": 107
+        },
+        {
+          "needle": "## Any",
+          "line": 93
+        }
+      ],
+      "adopted_idea": "用決策表查規則重疊、空缺與多命中；合法多解以明確優選處理，不把UNIQUE誤當FIRST。",
+      "boundary": "不導入Camunda平台；穩定ID與規則優先級沿用本專案契約。",
+      "verification": "FETCHED_FIXED_COMMIT_AND_READ_RELEVANT_SECTIONS;NO_TOOL_INSTALLED_OR_EXECUTED"
+    },
+    {
+      "id": "REF-SCRIBUS",
+      "kind": "open-source-layout",
+      "repository": "scribusproject/scribus",
+      "commit": "7f2b1e62a43ab58748503f1171f41dd439ad8976",
+      "path": "scribus/documentchecker.cpp",
+      "url": "https://github.com/scribusproject/scribus/blob/7f2b1e62a43ab58748503f1171f41dd439ad8976/scribus/documentchecker.cpp",
+      "raw_url": "https://raw.githubusercontent.com/scribusproject/scribus/7f2b1e62a43ab58748503f1171f41dd439ad8976/scribus/documentchecker.cpp",
+      "bytes": 29982,
+      "sha256": "4783a2a40199397fdaa83b4570c81a005e2c6cfe8a519a3a59b9f7e8c2abbc0d",
+      "read_anchors": [
+        {
+          "needle": "checkerSettings.checkGlyphs",
+          "line": 423
+        },
+        {
+          "needle": "checkerSettings.checkOverflow",
+          "line": 391
+        },
+        {
+          "needle": "checkerSettings.checkResolution",
+          "line": 302
+        }
+      ],
+      "adopted_idea": "依檢查設定分類缺字、溢出與圖片解析度，將輸出前檢查與一般排版成功分開。",
+      "boundary": "僅研究公開檢查思路，不複製GPL程式、不安裝另一套引擎；不宣稱完整印前能力。",
+      "verification": "FETCHED_FIXED_COMMIT_AND_READ_RELEVANT_SECTIONS;NO_TOOL_INSTALLED_OR_EXECUTED"
+    },
+    {
+      "id": "REF-GX",
+      "kind": "open-source-data-quality",
+      "repository": "great-expectations/great_expectations",
+      "commit": "3be49de7094282176c27e6b8fe04c131b88b08f9",
+      "path": "docs/docusaurus/docs/core/define_expectations/create_an_expectation.md",
+      "url": "https://github.com/great-expectations/great_expectations/blob/3be49de7094282176c27e6b8fe04c131b88b08f9/docs/docusaurus/docs/core/define_expectations/create_an_expectation.md",
+      "raw_url": "https://raw.githubusercontent.com/great-expectations/great_expectations/3be49de7094282176c27e6b8fe04c131b88b08f9/docs/docusaurus/docs/core/define_expectations/create_an_expectation.md",
+      "bytes": 6421,
+      "sha256": "cbbcf6e7c660d409c66eb8fcaf8af8b60b84a56fe199f52868adee7f29537d1b",
+      "read_anchors": [
+        {
+          "needle": "Expectation",
+          "line": 2
+        },
+        {
+          "needle": "mostly",
+          "line": 57
+        },
+        {
+          "needle": "Validation",
+          "line": 57
+        }
+      ],
+      "adopted_idea": "用可命名的資料期望與批次結果保存來源、失敗樣本和理由。",
+      "boundary": "先用現有SQLite/規則/unittest，不安裝GX全套；歸屬/資料遺失不採容許一定比例錯誤。",
+      "verification": "FETCHED_FIXED_COMMIT_AND_READ_RELEVANT_SECTIONS;NO_TOOL_INSTALLED_OR_EXECUTED"
+    },
+    {
+      "id": "REF-MLFLOW",
+      "kind": "open-source-ml-lifecycle",
+      "repository": "mlflow/mlflow",
+      "commit": "24620be1f657da1179657fa1c5e81f028ec69c98",
+      "path": "mlflow/tracking/_model_registry/client.py",
+      "url": "https://github.com/mlflow/mlflow/blob/24620be1f657da1179657fa1c5e81f028ec69c98/mlflow/tracking/_model_registry/client.py",
+      "raw_url": "https://raw.githubusercontent.com/mlflow/mlflow/24620be1f657da1179657fa1c5e81f028ec69c98/mlflow/tracking/_model_registry/client.py",
+      "bytes": 32992,
+      "sha256": "2bc182f616ee6f6a9d84d0bcabfb47c96f5ed59c3538bd26ae3552dfd2c6fff7",
+      "read_anchors": [
+        {
+          "needle": "def create_model_version(",
+          "line": 226
+        },
+        {
+          "needle": "def set_registered_model_alias(",
+          "line": 439
+        }
+      ],
+      "adopted_idea": "將資料、訓練run、模型版本與輸出建立lineage；區分可變alias與不可變版本。",
+      "boundary": "沿用現有TrainingStore/DesignModels/Library，無新資料庫、tracking server或外部模型。",
+      "verification": "FETCHED_FIXED_COMMIT_AND_READ_RELEVANT_SECTIONS;NO_TOOL_INSTALLED_OR_EXECUTED"
+    },
+    {
+      "id": "REF-HYPOTHESIS",
+      "kind": "open-source-property-testing",
+      "repository": "HypothesisWorks/hypothesis",
+      "commit": "169ed49ff5aa488ef7335d32edc132ab86857535",
+      "path": "README.md",
+      "url": "https://github.com/HypothesisWorks/hypothesis/blob/169ed49ff5aa488ef7335d32edc132ab86857535/README.md",
+      "raw_url": "https://raw.githubusercontent.com/HypothesisWorks/hypothesis/169ed49ff5aa488ef7335d32edc132ab86857535/README.md",
+      "bytes": 1642,
+      "sha256": "bdea363861e973606d7728f0b7b893e0eb3efa2b3d8afa21a139d3ec8e80c003",
+      "read_anchors": [
+        {
+          "needle": "edge cases",
+          "line": 13
+        },
+        {
+          "needle": "simplest possible",
+          "line": 24
+        }
+      ],
+      "adopted_idea": "用性質、變形與最小反例檢查規則，不只比對一張固定截圖。",
+      "boundary": "先用既有unittest與可重播小型列舉；大量生成確有需要時再評估本地工具，設seed/次數/時間上限。",
+      "verification": "FETCHED_FIXED_COMMIT_AND_READ_RELEVANT_SECTIONS;NO_TOOL_INSTALLED_OR_EXECUTED"
+    },
+    {
+      "id": "REF-Z3",
+      "kind": "open-source-logic-solver",
+      "repository": "Z3Prover/z3",
+      "commit": "68a8a751070f04be175eed528109053e8ce9b84f",
+      "path": "src/api/python/z3/z3.py",
+      "url": "https://github.com/Z3Prover/z3/blob/68a8a751070f04be175eed528109053e8ce9b84f/src/api/python/z3/z3.py",
+      "raw_url": "https://raw.githubusercontent.com/Z3Prover/z3/68a8a751070f04be175eed528109053e8ce9b84f/src/api/python/z3/z3.py",
+      "bytes": 372389,
+      "sha256": "07d21278b9b6074955de700b710f1f85f2a968d71b90b07c1dbdde409d087334",
+      "read_anchors": [
+        {
+          "needle": "def assert_and_track(",
+          "line": 7723
+        },
+        {
+          "needle": "def unsat_core(",
+          "line": 7812
+        },
+        {
+          "needle": "def check(",
+          "line": 7753
+        }
+      ],
+      "adopted_idea": "在明確有界/可表達子模型檢查可滿足性、反例及衝突核心，保留sat/unsat/unknown。",
+      "boundary": "不把solver結果當審美、真實模型品質或全程式正確性證明；unsat core不保證最小。",
+      "verification": "FETCHED_FIXED_COMMIT_AND_READ_RELEVANT_SECTIONS;NO_TOOL_INSTALLED_OR_EXECUTED"
+    }
+  ],
+  "notes": [
+    "Only public source/document review; no project data uploaded to analysis services.",
+    "Initial obsolete URLs returning404 were excluded; only successfully fetched fixed-commit references are relied on.",
+    "Research transfer is our engineering proposal, not a claim about proprietary implementation details."
+  ]
+}
