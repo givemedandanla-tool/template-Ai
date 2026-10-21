@@ -277,5 +277,25 @@
       }
     ]
   },
-  "raw_inventory": "Local .cache/release-public-retry/storage-inventory.json; includes temp directory names only, not file contents."
+  "raw_inventory": "Local .cache/release-public-retry/storage-inventory.json; includes temp directory names only, not file contents.",
+  "root_directory_followup": {
+    "observed_utc": "2026-10-21T14:52:27.286637+00:00",
+    "empty_platform_reserved": [
+      ".agents",
+      ".aws",
+      ".codex",
+      ".git"
+    ],
+    "empty_workspace_locations": [
+      "library-files",
+      "scratch"
+    ],
+    "shared": {
+      "direct_entries": 1,
+      "allocated_bytes": 8192,
+      "purpose_not_inspected": true
+    },
+    "deleted_files": 0,
+    "recommendation": "Preserve platform/shared locations; negligible reclaimable space. Archive inventory remains as-of its original observation, not a live latest-checkpoint claim."
+  }
 }
