@@ -1,38 +1,33 @@
-# v0.2.0-beta.1 發佈狀態
+# v0.2.0-beta.1 實際進度
 
-**目前尚未確認Windows EXE建置或發布成功。** 不能把本地來源驗證、推送請求或暫存附件當成可下載成品。
+2026-10-21：**Linux 來源已驗證；公開倉庫的原生 Windows 建置重試中，尚未發布 EXE。** 此為內部實測版，不是私人作品、指定硬體或正式印刷品質認證。
 
-本輪已完成程式與發佈接線，並實際修復：
-- 打包後的背景工作與還原副本啟動入口；從其他資料夾啟動也能找到正確程式。
-- 測試版版本號導致診斷報告被拒絕；保留嚴格版本及隱私白名單。
-- 暫停後刷新清單自行建立整頁空作品，影響接續分割；清單刷新現在保持唯讀。
-- 兩個測試攔截器改依真正參數定位，原逾時／取消／回滾／接續斷言未放寬。
+## 已有可核對成果
 
-## 已執行
+- linux-regression-004：1958／1958 PASS、258健康模組、0 runtime錯誤，來源未變，原測試ID全部保留。
+- stock-captures-004：原版27／27 PASS，原腳本、斷言及deadline未放寬，單獨執行。
+- RUN-WINDOWS-BETA-LINUX-001：採錄同源真實結果及355附件；software_execution_status=PASS，原5外部未驗證條款保留整體FAIL。
+- 來源CP-20261021-WINDOWS-BETA-SOURCE-002：快照956c89c8，獨立Git讀回11713項、隔離還原PASS；增量包依賴基底570ecebe。code manifest3cd6da4bbe162df29746c17e12e55992a4eabc09042f4492896a0b54b9c9c95f。
+- 嚴格治理require-evidence/publication-scope PASS。172需求／75父題／166完成範圍及AI8包資格未更改。新一輪workflow接線調整另有7個既有發佈測試PASS；未改產品、tools、測試或依賴pin，未重跑無關整套測試。
 
-- Linux完整回歸：1958／1958 PASS，258健康程序、0runtime；原1942全保留，新16。
-- 原版GUI：27／27 PASS，原腳本／斷言／時限未改；在隔離負載下執行。
-- 來源GUI兩階段操作：合成學習、輸入、產稿、拖動、更正、確認、允許預覽輸出、報告、暫停／重啟及重播；此項為Python來源，不是假稱frozen Windows。
-- 602個程式／工具／測試檔Python3.11語法檢查，以及下載校驗替換負例、限定發佈觸發與交接負例。
-- 正式run：docs/evidence/runs/RUN-WINDOWS-BETA-LINUX-001。software_execution_status=PASS；原5外部未驗證條款仍使整體status=FAIL，不改為生產合格。
+## 原生 Windows 重試
 
-172要求／75父題（69已驗證、3部分、3延後）、90 CORE／7治理範圍與AI8包50條真實資格維持原狀；本次沒有增加父題或虛增完成率。詳細run及失敗歷史均保留，未刷新查重／型別警告基準。
+公開倉庫已實際確認，標準windows-latest能啟動。舊run39587259422的公開annotation證明當時在工作啟動前被帳務／支出限制擋下；帳戶具體原因未獨立核實，未改帳務。
 
-## 尚待實際完成
+1. source5fc96ce4／run39591183044：真正啟動並安裝Inkscape，建置失敗，尚無初始錯誤檔。
+2. sourceb0e1bc84／run39591928487：補上啟動失敗紀錄，取得Pinned dependency installation failed，第6行；來源171測試／EXE尚未執行。
+3. source35d133cd／run39592388094：明確選用setup-python3.11，避免Inkscape/bin影響解譯器。原生RUNNING回執已讀回；PATH假說與完成結果仍待實際紀錄，不先宣稱成功。
 
-1. 已完成：CP-20261021-WINDOWS-BETA-SOURCE-002獨立Git讀回11713條（含record），355正式附件全部涵蓋；隔離還原PASS，require-evidence publication-scope Gate PASS。Windows步驟仍待完成。
-2. 推送具體最終候選到release-request/v0.2.0-beta.1，取得GitHub標準Windows runner實際結果。
-3. Windows15模組共171案例全PASS無skip，實際frozen EXE兩階段檢查通過，才建立不可變tag及Pre-release。
-4. 上傳ZIP／manifest／SHA256，實際下載草稿與公開後附件，逐檔核對，保存release-evidence分支回執。
+實際狀態與有界報告保存在release-evidence/v0.2.0-beta.1，各來源目錄不可拿別次結果替代。此雲端api.github.com仍Forbidden，但公開HTML和原生Git讀寫可用；不再將API限制當成完全無法觀察或啟動工作。
 
-本雲端環境Git讀寫正常，但api.github.com仍回Forbidden；所需API／uploads／objects主機的環境網路草稿已保存，尚未生效。需在平台環境設定套用後再確認既有GitHub連線及Actions／Release權限，無需向聊天提供API key。沒有讀到Windows執行回執，不捏造建置／發布／下載結果。
+## 發佈前仍須完成
 
-## 使用與界線
+Windows15模組171案例全PASS無skip、真正frozen EXE兩階段檢查、不可變tag、Pre-release、ZIP/manifest/SHA256上傳，以及草稿與公開後附件實際逐檔下載核對。任何一項未完成，就不能給出已發佈下載宣告。普通dev/main/PR不建置，不合併main，不覆寫tag。
 
-未來成品為TemplateAI-v0.2.0-beta.1-windows-x64.zip，完整解壓後開啟TemplateAI.exe；先以本機資料副本試用。Inkscape、合法字型與可選OCR工具／模型需本機就緒；包內不放私稿／客戶庫／私人字型／訓練資料，無自動上傳。錯誤從「問題與報告」手動匯出安全ZIP回Codex。
+成品預定TemplateAI-v0.2.0-beta.1-windows-x64.zip，完整解壓後開啟TemplateAI.exe。本機Inkscape、合法字型及可選OCR工具需另行就緒，私人資料與模型不隨包上傳；問題報告由使用者手動匯出。
 
-真實作品學習品質、完整私人.ai還原、使用者Windows硬體／效能、實印、新手及完整網路隔離資格待本機回饋。教學／外部知識庫仍為未採用草案，網頁／手機仍延後。
+## 空間與外部限制
 
-沒有新付費API、模型、試用、付費runner、Codespaces、付款或帳務設定；未啟用子代理。請求的是既有GitHub標準runner，沒有帳戶扣款證據，不聲稱整個帳戶帳單為零。
+唯讀空間評估見docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.md及226列CSV；零刪除。55份舊實體ZIP共19.42GiB只是條件候選，尚需逐份hash／獨有資料／還原核對。最新來源包與本輪評估包2／2 hash/CRC/基底檢查PASS，不等於全部歷史備份皆可用。
 
-正式來源快照956c89c86522615a7833accfba0c4b72727766be；source／fixture版本570ecebe，code manifest3cd6da4b。CP001還原因/tmp分割區不足失敗保留，改用workspace建立新CP002，未刪他人成果或加資源。
+真實作品學習品質、完整私人.ai還原、使用者Windows硬體／效能、實印、新手及完整網路隔離資格仍待本機回饋。教學／知識庫為未採用草案，網頁／手機延後。沒有新增付費API、外部模型、試用、付費runner、Codespaces、付款方式或子代理；不臆測整個帳戶帳單數字。

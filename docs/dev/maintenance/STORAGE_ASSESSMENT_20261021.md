@@ -54,3 +54,5 @@
 完整 226 個入口及分級見 `STORAGE_CHECKPOINT_INVENTORY_20261021.csv`；機器摘要見 `STORAGE_ASSESSMENT_20261021.json`。原始唯讀盤點保留在本機 `.cache/release-public-retry/storage-inventory.json`，未讀私人文件內容。
 
 本輪使用 `du`／`statvfs`、收據內容及 Git 提交／tree 祖先核對；不是逐份 ZIP hash 或完整還原驗證。未執行刪除、垃圾回收、Git 歷史壓縮、套件卸載或清空暫存區。
+
+補充核對：為確認建議保留的資料仍可讀，另對最新來源 CP002 與本輪空間評估 CP001 兩個 ZIP 實際重算 SHA-256、檢查 ZIP CRC、清單檔名及所需基底提交，**2／2 PASS**。詳見 `RETAINED_CHECKPOINT_VALIDATION_20261021.json`；這不是對全部歷史包的重新驗收，也沒有再次宣稱完整產品還原。

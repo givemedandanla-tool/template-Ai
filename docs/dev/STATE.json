@@ -1725,19 +1725,20 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "NOT_OBSERVED_REQUEST_PUSH_DOES_NOT_PROVE_RUN_STARTED",
+    "windows_receipt": "RUNNING_ACTUAL_NATIVE_RECEIPT_OBSERVED",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "570ecebe1e5135b0fc271b6c0d56639fdae55566",
     "source_manifest_sha256": "3cd6da4bbe162df29746c17e12e55992a4eabc09042f4492896a0b54b9c9c95f",
     "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.json",
     "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.receipt.json",
     "last_full_run": {
-      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-003/summary.json",
-      "status": "FAIL",
-      "passed": 1956,
-      "error": 1,
-      "failed": 1,
-      "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
+      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-004/summary.json",
+      "status": "PASS",
+      "passed": 1958,
+      "failed": 0,
+      "errors": 0,
+      "healthy_modules": 258,
+      "source_unchanged": true
     },
     "code_change_commit": "7d43d956441bab529d60f734dd331241fd9abfe2",
     "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-004",
@@ -1779,7 +1780,16 @@
         "status": "FAILED_NOT_VERIFIED",
         "reason": "Pinned dependency installation failed"
       }
-    ]
+    ],
+    "historical_failed_full_run": {
+      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-003/summary.json",
+      "status": "FAIL",
+      "passed": 1956,
+      "error": 1,
+      "failed": 1,
+      "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
+    },
+    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39592388094"
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",
@@ -1790,6 +1800,16 @@
     "broken_links": 81,
     "old_physical_conditional_candidates": 55,
     "deleted_files": 0,
-    "retention_policy_changed": false
+    "retention_policy_changed": false,
+    "retained_archive_validation": "docs/dev/maintenance/RETAINED_CHECKPOINT_VALIDATION_20261021.json",
+    "retained_archives_hash_crc_base_passed": 2
+  },
+  "environment_startup_draft_update": {
+    "status": "SAVED_NOT_PUBLISHED",
+    "fields": [
+      "start_skill"
+    ],
+    "requires_publish": true,
+    "scope": "Replace stale EXE deferral/LOCAL_ONLY instructions with actual release and storage handoff; no new credentials, install steps or network changes."
   }
 }
