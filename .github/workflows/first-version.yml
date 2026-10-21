@@ -8,7 +8,9 @@ permissions:
   contents: read
 concurrency:
   group: windows-v0.2.0-beta.1
-  cancel-in-progress: false
+  # Only explicitly supersede a known pre-publication attempt. Ordinary requests
+  # retain serialization, protecting an immutable tag/publish already in flight.
+  cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[supersede-prepackage-run]') }}
 jobs:
   windows:
     runs-on: windows-latest

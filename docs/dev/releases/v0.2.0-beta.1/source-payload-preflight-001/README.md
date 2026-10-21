@@ -1,0 +1,3 @@
+# Linux來源相容性預檢，非Windows成品資格
+
+原始exercise/resume兩階段14+7檢查PASS，actual_frozen_executable=false。產品manifest0c4未變，執行時docs配置仍有未提交修正；這不驗證Windows打包或取代原176。原始入口與新資料夾條件不放寬，合成內容／安全報告／暫停續跑行為保持。產生spec的報告位置／原錯誤負例另在payload-filter-controls-002的9項控制驗證；真正過濾後WindowsEXE仍待新正常流程。

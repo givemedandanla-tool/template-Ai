@@ -9,3 +9,7 @@
 隔離控制7項PASS，包含Windows分隔符、保留runtime／license／私人候選、零命中拒絕、未知形狀拒絕、真實產生spec讀取及mock執行順序、UTF8選項和重複配置拒絕。這是配置示範，不是真實Windows EXE驗證。新正常候選仍須完整原176與過濾後真EXE21檢查、原打包Gate及兩次完整下載校驗，不複製舊來源提交的PASS來代替。
 
 使用者另詢問Inkscape：啟動與既有模板製作不強制依賴；PDF相容.ai／PDF、SVG及圖片已有Qt備援，讀取不代表語意／資格完整。快速開始已補正，此輪未更改匯入程式或要求使用者新付費服務。
+
+## 預先發現並修正的新目錄契約問題
+
+最初7個配置控制漏掉原exercise要求output.mkdir(exist_ok=False)。初版filter把報告寫在package-check內，會預建輸出目錄；這是新增docs配置的接線缺陷。尚未跑到該步的f203／run39636966203不視為通過，明確替換其發佈前流程。新配置把建置報告寫在artifacts根，原EXE驗證成功後才複製到證據目錄，原exercise不修改。第二版9控制PASS，包含真檔案系統重現舊錯誤與新目錄契約；Linux原兩階段21來源檢查PASS，明確非WindowsEXE資格。工作流程僅在帶[supersede-prepackage-run]的明確新請求時取消已確認發佈前舊run，日常仍序列且不打包。新候選仍完整重跑原176、真EXE、原inventory及下載校驗。

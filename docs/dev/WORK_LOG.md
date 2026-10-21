@@ -1832,3 +1832,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 04418ac0/run39632714813原176及真EXE14+7全PASS，原包Gate正確拒絕sklearn自帶tests資料，因此不發佈。釘定官方hook全collect根因；docs建置配置只在freeze前移除已知第三方tests，runtime/license/產品/原inventory Gate不變，7控制PASS。所有原始失敗保留，準備完整checkpoint與新正常精確來源重驗。
 
 2026-10-21 Inkscape問答再核source_analysis與logo_discovery：啟動及既有模板流程可不用；PDF／SVG備援能讀不等於自動學習全流程。現有自動向量幾何／Logo群組分析需要本機Inkscape，缺少時保持待人工，快速開始已明確補上。僅docs修改，不重啟正在正常驗證的f203。
+
+2026-10-21 預檢發現新filter報告原路徑預建exercise所需全新目錄；這是新增配置缺陷。改存artifacts根、原EXE驗證後再複製；9控制含舊錯誤負例／新freshdir真檔案系統PASS，原Linux來源14+7流程PASS（非Windows）。明確替換仍在發佈前的f203run，原產品/176/EXE/Gate不放寬，主443CP保留；新精確Git讀回不以小CP覆蓋主正式證據。

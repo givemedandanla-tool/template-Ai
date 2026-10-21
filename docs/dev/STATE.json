@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "NORMAL_PAYLOAD_SAFE_FINAL_WINDOWS_RELEASE",
+  "active_task": "NORMAL_PAYLOAD_FRESH_OUTPUT_WINDOWS_RELEASE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-PAYLOAD-READY-001.receipt.json",
   "last_confirmed_commit": "4734990a7a3152eaa6af62daf36f3abd6e160405",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
@@ -1701,12 +1701,12 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "NORMAL_PAYLOAD_SAFE_FINAL_NATIVE_BUILD_RUNNING",
+    "status": "PREPARE_EXPLICIT_PREPACKAGE_RUN_REPLACEMENT",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Exclude pinned third-party test data before freeze, retaining original inventory guard; complete new exact-source Windows tests, EXE acceptance, package and download verification.",
+    "next": "Explicitly replace known prepublication attempt; complete original176 and actual filtered EXE21, unchanged inventory and both full downloads.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1729,7 +1729,7 @@
     ],
     "windows_receipt": "RUNNING_EXACT_F20343B3_READ_BACK",
     "regression_matrix": ".github/windows-release-test-scope.json",
-    "source_candidate": "f20343b3a786f8fc5565730e57cf77826c4f0926",
+    "source_candidate": "PENDING_REPLACEMENT_REQUEST_SHA",
     "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
     "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.json",
     "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.receipt.json",
@@ -1809,8 +1809,13 @@
     "binary_generated": true,
     "utf8_causal_evidence": "docs/dev/releases/v0.2.0-beta.1/frozen-utf8-ab-001-passed",
     "previous_completed_candidate": "04418ac0fbc39011a6aebbcbd8e475cba3cc0f01",
-    "build_policy_controls": "docs/dev/releases/v0.2.0-beta.1/payload-filter-controls-001.json",
-    "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39636966203"
+    "build_policy_controls": "docs/dev/releases/v0.2.0-beta.1/payload-filter-controls-002.json",
+    "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39636966203",
+    "superseded_prepublication_run": {
+      "source": "f20343b3a786f8fc5565730e57cf77826c4f0926",
+      "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39636966203",
+      "reason": "New build report path would precreate original fresh acceptance directory; detected before publication. Not a completed or published run."
+    }
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",

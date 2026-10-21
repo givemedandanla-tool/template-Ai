@@ -18,7 +18,7 @@ def configure(*,baseline=False):
     text=text.replace(payload_needle,
         "sys.path.insert(0, str(root / 'docs/dev/releases'))\n"
         "from freeze_payload_policy import filter_payload\n"
-        "a.datas = filter_payload(a.datas, root / 'artifacts/package-check/build-payload-filter.json')\n"
+        "a.datas = filter_payload(a.datas, root / 'artifacts/build-payload-filter.json')\n"
         + payload_needle)
     ast.parse(text)
     path.write_text(text,encoding='utf-8')
