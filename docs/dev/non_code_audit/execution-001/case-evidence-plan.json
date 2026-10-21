@@ -1,0 +1,1099 @@
+{
+  "cases": [
+    {
+      "id": "NCA-A01",
+      "independent_expected_intent": "Later rules are scoped;withdrawn customer commands are refused,not all professional editing.",
+      "test_refs": [
+        "test_design_synthesis.DesignSynthesisTests.test_cycles_and_customer_fine_parameter_commands_are_rejected"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-A02",
+      "independent_expected_intent": "Multiple matching roles need declared permission/default;one physical container cannot be allocated twice.",
+      "test_refs": [
+        "test_design_assignment.ConditionalContainerAssignmentTests.test_cross_type_substitution_requires_policy_even_with_observed_same_container",
+        "test_design_assignment.ConditionalContainerAssignmentTests.test_one_equivalent_container_cannot_be_double_allocated_or_borrowed_across_people"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-A03",
+      "independent_expected_intent": "Finite independent matchings provideSAT/UNSAT witnesses;explicit relative cycles must be rejected.",
+      "test_refs": [
+        "test_noncode_invariants.ConditionalRuleOracles.test_small_exhaustive_matching_oracle_finds_both_sat_and_unsat",
+        "test_noncode_invariants.LayoutMeaningOracles.test_contradictory_relative_cycle_is_rejected_instead_of_silently_dropped"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-A04",
+      "independent_expected_intent": "Shared family learning is distinct from import count/template creation and real qualification.",
+      "test_refs": [
+        "test_noncode_invariants.LearningMeaningOracles.test_shared_style_is_not_one_family_per_work_and_aliases_do_not_create_support",
+        "test_design_learning.CrossWorkLearningTests.test_freeze_uses_existing_store_and_pins_roles_without_creating_templates"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-B01",
+      "independent_expected_intent": "Explicit format candidates preserve original string values and customer leading zeros.",
+      "test_refs": [
+        "test_noncode_invariants.DataMeaningOracles.test_explicit_semantic_candidates_do_not_mutate_original_strings",
+        "test_noncode_invariants.DataMeaningOracles.test_engineering_input_budget_rejects_without_silent_truncation",
+        "test_customer_candidates.CustomerCandidateTests.test_review_and_commit_keep_leading_zeros_exact_versions_and_source_scope"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-B02",
+      "independent_expected_intent": "Equal strings are not shared identity;explicit shared users retain one source owner and stable field IDs.",
+      "test_refs": [
+        "test_noncode_invariants.DataMeaningOracles.test_same_text_and_shared_use_keep_distinct_identity_and_owner",
+        "test_noncode_invariants.DataMeaningOracles.test_clearing_one_value_keeps_other_value_stable_id_and_position"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-B03",
+      "independent_expected_intent": "Explicit size units do not infer identity;unframed candidate crops need review;multiwork state reopens exactly.",
+      "test_refs": [
+        "test_source_region_hypotheses.SourceRegionHypothesesTests.test_explicit_units_are_required_and_normalized_without_identity_inference",
+        "test_source_region_hypotheses.SourceRegionHypothesesTests.test_separated_unframed_works_have_review_only_size_conditioned_crops",
+        "test_artwork_recovery.ArtworkRecoveryTests.test_two_works_reopen_active_selection_and_marks"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-B04",
+      "independent_expected_intent": "Unknown/default/nonuniform typography cannot become source truth.",
+      "test_refs": [
+        "test_design_observation.ObservationMetricTests.test_anisotropy_shear_unknown_and_template_defaults_do_not_become_source_pt",
+        "test_design_observation.ObservationMetricTests.test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-C01",
+      "independent_expected_intent": "Correlated sources cannot cross dataset roles;sealedHOLDOUT never fits.",
+      "test_refs": [
+        "test_design_learning.CrossWorkLearningTests.test_cross_file_correlations_cannot_span_dataset_roles",
+        "test_noncode_invariants.LearningMeaningOracles.test_holdout_cannot_be_used_to_fit_even_if_appearance_matches"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-C02",
+      "independent_expected_intent": "Independent shared structure is learned;raw customer text/default fonts do not become family features.",
+      "test_refs": [
+        "test_noncode_invariants.LearningMeaningOracles.test_family_features_ignore_customer_text_and_unverified_defaults",
+        "test_noncode_invariants.LearningMeaningOracles.test_shared_style_is_not_one_family_per_work_and_aliases_do_not_create_support",
+        "test_design_family.DesignFamilyTests.test_batch_reestimation_is_deterministic_and_preserves_rare_observations"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-C03",
+      "independent_expected_intent": "Known negatives cannot enlarge/support the suitable region;conditional maxima stay in their own context.",
+      "test_refs": [
+        "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_unqualified_outlier_cannot_expand_suitable_region",
+        "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_layout_failure_inside_otherwise_supported_region_abstains",
+        "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_conditional_advice_does_not_borrow_other_context_field_count",
+        "test_design_joint.JointRegressionTests.test_extrapolation_and_unobserved_joint_input_holes_abstain"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-C04",
+      "independent_expected_intent": "Synthetic evaluation is not a real-corpus certificate;forged/generated references cannot authorize production.",
+      "test_refs": [
+        "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_synthetic_evaluation_cannot_obtain_real_corpus_certificate",
+        "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_forged_qualification_state_or_generated_reference_cannot_enable_formal_output",
+        "test_design_rule_extensions.RankerCompletionTests.test_explicit_production_quality_policy_rejects_synthetic_or_incomplete_evidence"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-D01",
+      "independent_expected_intent": "A→B and B→C in different contexts do not imply A→C;cross-owner borrowing is rejected.",
+      "test_refs": [
+        "test_noncode_invariants.ConditionalRuleOracles.test_cross_type_permissions_do_not_create_transitive_container_access",
+        "test_noncode_invariants.ConditionalRuleOracles.test_semantic_default_and_owner_survive_nonsemantic_enumeration_order"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-D02",
+      "independent_expected_intent": "An explicit legal swap stays in the family;unsupported overcapacity is not silently truncated.",
+      "test_refs": [
+        "test_design_synthesis.DesignSynthesisTests.test_same_input_repeat_and_explicit_swap_keep_same_family_and_stable_geometry",
+        "test_design_synthesis.DesignSynthesisTests.test_oversized_input_is_retained_and_cannot_be_silently_truncated"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-D03",
+      "independent_expected_intent": "Unmoved pair topology is protected;actual pointer edits affect intent,not data;core controls typography.",
+      "test_refs": [
+        "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+        "test_design_synthesis.DesignSynthesisTests.test_source_observed_expanded_width_is_core_controlled_and_actually_measured",
+        "test_design_synthesis.DesignSynthesisTests.test_distributed_style_uses_conditional_source_bounds_and_actual_fixed_pt_measurement"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-D04",
+      "independent_expected_intent": "Explicit defaults are invariant to nonsemantic role enumeration;accepted artifacts reuseexact bytes after model change.",
+      "test_refs": [
+        "test_noncode_invariants.LayoutMeaningOracles.test_profile_enumeration_order_is_not_a_new_customer_preference",
+        "test_noncode_invariants.ConditionalRuleOracles.test_semantic_default_and_owner_survive_nonsemantic_enumeration_order",
+        "test_design_session.DesignSessionTests.test_accepted_artifact_reuses_exact_bytes_after_new_model_activation"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-E01",
+      "independent_expected_intent": "An unconfirmed/changed input cannot reuse an approval or publish output.",
+      "test_refs": [
+        "test_noncode_invariants.SessionMeaningOracles.test_unconfirmed_and_changed_data_cannot_reuse_confirmation",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-E02",
+      "independent_expected_intent": "Correcting content and undoing layout preserve new phone/owner;real modal input invalidates and regenerates preview.",
+      "test_refs": [
+        "test_design_session.DesignSessionTests.test_correct_data_then_undo_layout_preserves_new_phone_and_owner",
+        "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-E03",
+      "independent_expected_intent": "Cancel/resume retains completed items;late solves cannot install obsolete input.",
+      "test_refs": [
+        "test_training_pipeline.PipelineTests.test_cooperative_cancel_after_actual_item_then_reopen_resume_no_success_rerun",
+        "test_design_session.DesignSessionTests.test_late_solve_cannot_install_old_data_over_new_input"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-E04",
+      "independent_expected_intent": "New current models do not rewrite accepted artifacts;external revisions invalidate the old displayed confirmation.",
+      "test_refs": [
+        "test_design_session.DesignSessionTests.test_accepted_artifact_reuses_exact_bytes_after_new_model_activation",
+        "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-F01",
+      "independent_expected_intent": "Declared units and actual encoded dimensions are independently checked.",
+      "test_refs": [
+        "test_source_region_hypotheses.SourceRegionHypothesesTests.test_explicit_units_are_required_and_normalized_without_identity_inference",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-F02",
+      "independent_expected_intent": "Actual shaping is bounded;missing typography is unknown;oversized data is retained,not cut.",
+      "test_refs": [
+        "test_noncode_invariants.LayoutMeaningOracles.test_unfittable_string_is_kept_and_cannot_be_promoted_to_a_complete_draft",
+        "test_design_synthesis.DesignSynthesisTests.test_missing_source_typography_is_unknown_instead_of_default_font",
+        "test_design_rule_extensions.CharacterJustificationTests.test_single_cluster_and_combining_mark_are_not_split"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-F03",
+      "independent_expected_intent": "Every new dynamic value is present with correct owner;whole Logo may carry company name only by its supported contract.",
+      "test_refs": [
+        "test_noncode_invariants.LayoutMeaningOracles.test_authored_complete_data_and_nonoverlap_are_independent_output_invariants",
+        "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-F04",
+      "independent_expected_intent": "A preview/computation success is not formal encoded output or physical print proof.",
+      "test_refs": [
+        "test_design_session.DesignSessionTests.test_actual_source_bound_model_input_solve_confirm_and_preview_output",
+        "test_digital_preflight.DigitalPreflightTests.test_real_complete_candidate_still_needs_actual_encoded_format_evidence",
+        "test_final_digital_preflight.FinalDigitalPreflightTests.test_corrupt_pdf_after_page_box_writer_cannot_publish"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-G01",
+      "independent_expected_intent": "A real small desktop retains primary work/canvas and task guidance;independent novice learning is not measured by developer tests.",
+      "test_refs": [
+        "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+        "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-G02",
+      "independent_expected_intent": "Plain summaries and detailed reports omit authored sensitive canaries while retaining real measurements.",
+      "test_refs": [
+        "test_noncode_invariants.SessionMeaningOracles.test_safe_local_production_report_contains_measurements_not_customer_text",
+        "test_offline_support.OfflineSupportTests.test_report_roundtrip_has_beginner_summary_and_no_private_content",
+        "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-G03",
+      "independent_expected_intent": "Prepared local runtime refuses remote resources and network;observe real desktop operations underOS syscall tracing.",
+      "test_refs": [
+        "test_offline_support.OfflineSupportTests.test_remote_svg_references_are_blocked_but_displayed_urls_and_embedded_images_remain",
+        "test_offline_support.OfflineSupportTests.test_python_network_guard_blocks_ipv4_ipv6_dns_and_unc_but_allows_unix"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-G04",
+      "independent_expected_intent": "Batch failures remain counted;retry/restore does not overwrite newer values or silently duplicate work.",
+      "test_refs": [
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_eight_applied_two_failed_one_manual_counts_are_exact_and_not_global_pass",
+        "test_batch_correction_source.BatchCorrectionSourceTests.test_relative_move_retry_reads_existing_operation_instead_of_moving_twice",
+        "test_relational_backup.RelationalBackupTests.test_authenticated_unknown_schema_is_blocked_and_incomplete_restore_cannot_open_as_library"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-H01",
+      "independent_expected_intent": "Each current clause maps to a normative expectation and assertion;current source and formal provenance are distinct.",
+      "test_refs": [],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-H02",
+      "independent_expected_intent": "Only actual fresh remote tree/blob proof authorizes remote status;local restore verification does not impersonate GitHub.",
+      "test_refs": [],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-H03",
+      "independent_expected_intent": "Wrong owners,cycles,unqualified support,stale confirmations and tampered evidence must be rejected in isolated controls.",
+      "test_refs": [
+        "test_noncode_invariants.LayoutMeaningOracles.test_contradictory_relative_cycle_is_rejected_instead_of_silently_dropped",
+        "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_unqualified_outlier_cannot_expand_suitable_region",
+        "test_noncode_invariants.SessionMeaningOracles.test_unconfirmed_and_changed_data_cannot_reuse_confirmation"
+      ],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    },
+    {
+      "id": "NCA-H04",
+      "independent_expected_intent": "Resume uses explicit saved version,counts,scope and next step;no silent promotion or dependence on chat history.",
+      "test_refs": [],
+      "review_basis": "Human-authored normative intent plus actual assertion source anchors,not test name matching alone."
+    }
+  ],
+  "source_assertions": {
+    "test_design_synthesis.DesignSynthesisTests.test_cycles_and_customer_fine_parameter_commands_are_rejected": {
+      "test_id": "test_design_synthesis.DesignSynthesisTests.test_cycles_and_customer_fine_parameter_commands_are_rejected",
+      "path": "tests/test_design_synthesis.py",
+      "line": 114,
+      "function_sha256": "601ad534ecc74be4c9e387f4e8c90af693cf2bb6fd57f270a2535c071966da5e",
+      "assertions": [
+        "self.assertRaises(ValueError)",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_assignment.ConditionalContainerAssignmentTests.test_cross_type_substitution_requires_policy_even_with_observed_same_container": {
+      "test_id": "test_design_assignment.ConditionalContainerAssignmentTests.test_cross_type_substitution_requires_policy_even_with_observed_same_container",
+      "path": "tests/test_design_assignment.py",
+      "line": 15,
+      "function_sha256": "e26916ad3e8a85a61dcefbd8daf72550e824b2fce7eeec3e6482e1331a0838ac",
+      "assertions": [
+        "self.assertNotEqual(self.solve([self.field('email')])['status'], 'ASSIGNED')",
+        "self.assertEqual(allowed['status'], 'ASSIGNED')",
+        "self.assertEqual(allowed['assignments'][0]['container_key'], 'contact')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_assignment.ConditionalContainerAssignmentTests.test_one_equivalent_container_cannot_be_double_allocated_or_borrowed_across_people": {
+      "test_id": "test_design_assignment.ConditionalContainerAssignmentTests.test_one_equivalent_container_cannot_be_double_allocated_or_borrowed_across_people",
+      "path": "tests/test_design_assignment.py",
+      "line": 20,
+      "function_sha256": "6dd1fc508f4eb350db7622a04a116f4504bb5a1e446dc5a2d1eec374ef9bc07a",
+      "assertions": [
+        "self.assertNotEqual(self.solve([self.field('phone'), self.field('email')], True)['status'], 'ASSIGNED')",
+        "self.assertNotEqual(self.solve([self.field('phone', 'p2')], True)['status'], 'ASSIGNED')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.ConditionalRuleOracles.test_small_exhaustive_matching_oracle_finds_both_sat_and_unsat": {
+      "test_id": "test_noncode_invariants.ConditionalRuleOracles.test_small_exhaustive_matching_oracle_finds_both_sat_and_unsat",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 106,
+      "function_sha256": "aca3715d716823490434d1c9c2c0e26ead6f510f185abfb2a382026533d064bb",
+      "assertions": [
+        "self.assertEqual(result['status'] == 'ASSIGNED', possible, mask)",
+        "self.assertTrue(chosen <= allowed)",
+        "self.assertEqual(len({j for _, j in chosen}), 3)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.LayoutMeaningOracles.test_contradictory_relative_cycle_is_rejected_instead_of_silently_dropped": {
+      "test_id": "test_noncode_invariants.LayoutMeaningOracles.test_contradictory_relative_cycle_is_rejected_instead_of_silently_dropped",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 176,
+      "function_sha256": "12534f8f48073d0bca9f46f6e63e16b131583f930ce2034d28316db19428bd3b",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, 'cycle')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.LearningMeaningOracles.test_shared_style_is_not_one_family_per_work_and_aliases_do_not_create_support": {
+      "test_id": "test_noncode_invariants.LearningMeaningOracles.test_shared_style_is_not_one_family_per_work_and_aliases_do_not_create_support",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 131,
+      "function_sha256": "204f6777495489cf91f170ec8d6272db6801399eea6c2cfeb3df87a141b64344",
+      "assertions": [
+        "self.assertEqual(len(artifact['families']), 1)",
+        "self.assertEqual(artifact['independent_group_count'], 8)",
+        "self.assertEqual(unsupported['families'], [])",
+        "self.assertEqual(unsupported['independent_group_count'], 1)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_learning.CrossWorkLearningTests.test_freeze_uses_existing_store_and_pins_roles_without_creating_templates": {
+      "test_id": "test_design_learning.CrossWorkLearningTests.test_freeze_uses_existing_store_and_pins_roles_without_creating_templates",
+      "path": "tests/test_design_learning.py",
+      "line": 42,
+      "function_sha256": "9eceaa2ef4dc73cf08d7a49d271c13c2b002e541a83f3b3f88b838e5912d20bc",
+      "assertions": [
+        "self.assertEqual(self.learning.checked_dataset(dataset['id']), dataset)",
+        "self.assertEqual(self.library.templates(), [])",
+        "self.assertEqual(self.store.count('DATASET'), 1)",
+        "self.assertEqual(self.store.get('GROUP_ROLE', self.sources[-1]['hash'])['role'], 'HOLDOUT')",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.DataMeaningOracles.test_explicit_semantic_candidates_do_not_mutate_original_strings": {
+      "test_id": "test_noncode_invariants.DataMeaningOracles.test_explicit_semantic_candidates_do_not_mutate_original_strings",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 24,
+      "function_sha256": "6a83b1fe4ab9540fb4e3b8e673662984a9c1ffb3e9cf6fc0e4b5d30bd8603f82",
+      "assertions": [
+        "self.assertEqual(phone['value'], value)",
+        "self.assertEqual(graph.label(graph.data['people'][0]['id']), '00001')",
+        "self.assertEqual(recognize(value)['semantic_type'], kind)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.DataMeaningOracles.test_engineering_input_budget_rejects_without_silent_truncation": {
+      "test_id": "test_noncode_invariants.DataMeaningOracles.test_engineering_input_budget_rejects_without_silent_truncation",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 58,
+      "function_sha256": "51ce979301e15ff5dc6583293540a31eddde11b201a7a0d50c3305274eb7ae0b",
+      "assertions": [
+        "self.assertEqual(next((f for f in graph.data['fields'] if f['kind'] == 'address'))['value'], original)",
+        "self.assertEqual(next((f for f in graph.data['fields'] if f['kind'] == 'address'))['value'], original)",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_customer_candidates.CustomerCandidateTests.test_review_and_commit_keep_leading_zeros_exact_versions_and_source_scope": {
+      "test_id": "test_customer_candidates.CustomerCandidateTests.test_review_and_commit_keep_leading_zeros_exact_versions_and_source_scope",
+      "path": "tests/test_customer_candidates.py",
+      "line": 68,
+      "function_sha256": "f3795960782c1cd853ede2312c5b57ed31a98add483debd0160fa9c634a2cfbf",
+      "assertions": [
+        "self.assertEqual(customer['code'], '00001')",
+        "self.assertEqual(customer['styles'][0]['template_id'], self.template.id)",
+        "self.assertEqual(row[:2], (self.source['id'], self.work['id']))",
+        "self.assertEqual(json.loads(row[2]), [p['id'] for p in customer['graph']['people']])",
+        "self.assertNotIn('purchased', str(customer).lower())",
+        "self.assertEqual(self.candidates.get(candidate['id'])['state'], 'COMMITTED')",
+        "self.assertEqual(self.library.db.execute('SELECT count(*) FROM customers').fetchone()[0], 1)",
+        "self.assertRaises(ValueError)",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.DataMeaningOracles.test_same_text_and_shared_use_keep_distinct_identity_and_owner": {
+      "test_id": "test_noncode_invariants.DataMeaningOracles.test_same_text_and_shared_use_keep_distinct_identity_and_owner",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 35,
+      "function_sha256": "e54e4cc17bce1c7e55e7fa6b92f267c54e6b198fbd8702396ebae37b3af8facb",
+      "assertions": [
+        "self.assertNotEqual(phones[0]['id'], phones[1]['id'])",
+        "self.assertEqual(people[0]['field_ids']['phone'], [phones[0]['id']])",
+        "self.assertEqual(people[1]['field_ids']['phone'], [phones[0]['id'], phones[1]['id']])",
+        "self.assertEqual(graph.field(phones[0]['id'])['owner_id'], a['id'])",
+        "self.assertEqual(graph.field(phones[1]['id'])['value'], '0212345678')",
+        "self.assertEqual(graph.field(phones[0]['id'])['value'], '0212345678')",
+        "self.assertEqual(graph.field(phones[0]['id'])['value'], '0299999999')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.DataMeaningOracles.test_clearing_one_value_keeps_other_value_stable_id_and_position": {
+      "test_id": "test_noncode_invariants.DataMeaningOracles.test_clearing_one_value_keeps_other_value_stable_id_and_position",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 50,
+      "function_sha256": "ae75394c5a2b782b57f9f951106e245bdf1b03cb4577b1f8d909dbfa71c7c75c",
+      "assertions": [
+        "self.assertEqual(people[0]['phone'], ['', '0912345678'])",
+        "self.assertEqual(people[0]['field_ids']['phone'], ids)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_source_region_hypotheses.SourceRegionHypothesesTests.test_explicit_units_are_required_and_normalized_without_identity_inference": {
+      "test_id": "test_source_region_hypotheses.SourceRegionHypothesesTests.test_explicit_units_are_required_and_normalized_without_identity_inference",
+      "path": "tests/test_source_region_hypotheses.py",
+      "line": 12,
+      "function_sha256": "04eb4a42ebf46505b08727ac942e9dce3cec6317b5d3c74f68e3a7e3857233fc",
+      "assertions": [
+        "self.assertEqual(size_note('8.5 × 5.4 cm')['width_mm'], 85.0)",
+        "self.assertEqual(size_note('85mm x 54mm')['height_mm'], 54.0)",
+        "self.assertIsNone(size_note('85 x 54'))",
+        "self.assertIsNone(size_note('ID 85-54'))"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_source_region_hypotheses.SourceRegionHypothesesTests.test_separated_unframed_works_have_review_only_size_conditioned_crops": {
+      "test_id": "test_source_region_hypotheses.SourceRegionHypothesesTests.test_separated_unframed_works_have_review_only_size_conditioned_crops",
+      "path": "tests/test_source_region_hypotheses.py",
+      "line": 18,
+      "function_sha256": "f0f66a762279ffd7d4b026db98bb9d5bd8f968cc39a602ba268f9a5559f73bd2",
+      "assertions": [
+        "self.assertEqual(len(report['candidates']), 2)",
+        "self.assertTrue(all((row['review_required'] for row in report['candidates'])))",
+        "self.assertEqual(report['identity'], 'UNKNOWN')",
+        "self.assertEqual(report, region_hypotheses(rows, Rect(0, 0, 300, 150)))"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_artwork_recovery.ArtworkRecoveryTests.test_two_works_reopen_active_selection_and_marks": {
+      "test_id": "test_artwork_recovery.ArtworkRecoveryTests.test_two_works_reopen_active_selection_and_marks",
+      "path": "tests/test_artwork_recovery.py",
+      "line": 39,
+      "function_sha256": "914d6f4795d417402e56ed8fbb7e7a7152621dbf68d32575370143656430c705",
+      "assertions": [
+        "self.assertEqual(other.active_artwork(self.source['id'])['id'], first['id'])",
+        "self.assertEqual(other.artwork(first['id'])['payload'], self.payload)",
+        "self.assertEqual(other.artwork(second['id'])['payload'], back)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_observation.ObservationMetricTests.test_anisotropy_shear_unknown_and_template_defaults_do_not_become_source_pt": {
+      "test_id": "test_design_observation.ObservationMetricTests.test_anisotropy_shear_unknown_and_template_defaults_do_not_become_source_pt",
+      "path": "tests/test_design_observation.py",
+      "line": 46,
+      "function_sha256": "98d49c23ed1ec6143264a5f70c7ed61a184991d922a296d2ae2c218522c9f81b",
+      "assertions": [
+        "self.assertIsNone(effective_point_size(default, (2, 0, 0, 2, 0, 0)).value)",
+        "self.assertIsNone(effective_point_size(absent, (1, 0, 0, 1, 0, 0)).value)",
+        "self.assertEqual(effective_point_size(point, matrix).status, 'UNKNOWN')",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_observation.ObservationMetricTests.test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected": {
+      "test_id": "test_design_observation.ObservationMetricTests.test_unknown_defaults_untraceable_and_nonfinite_metrics_rejected",
+      "path": "tests/test_design_observation.py",
+      "line": 26,
+      "function_sha256": "90a53a1e6d89d5e67e265ce968685bc399dd18e12c9d6e9156c9a861c512831f",
+      "assertions": [
+        "self.assertIsNone(ObservedScalar(None, 'pt', 'UNKNOWN', 'No source').value)",
+        "self.assertRaises(ValueError)",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_learning.CrossWorkLearningTests.test_cross_file_correlations_cannot_span_dataset_roles": {
+      "test_id": "test_design_learning.CrossWorkLearningTests.test_cross_file_correlations_cannot_span_dataset_roles",
+      "path": "tests/test_design_learning.py",
+      "line": 55,
+      "function_sha256": "91815963f2197c38a3fe353daf633ac9855b3598b5ec8504220c7051c879a266",
+      "assertions": [
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.LearningMeaningOracles.test_holdout_cannot_be_used_to_fit_even_if_appearance_matches": {
+      "test_id": "test_noncode_invariants.LearningMeaningOracles.test_holdout_cannot_be_used_to_fit_even_if_appearance_matches",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 141,
+      "function_sha256": "a22ff45d28d010cb366a6baa046d2592d2ccb8e6ce52d0ea74a3a1d1988d6f96",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, 'TRAIN')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.LearningMeaningOracles.test_family_features_ignore_customer_text_and_unverified_defaults": {
+      "test_id": "test_noncode_invariants.LearningMeaningOracles.test_family_features_ignore_customer_text_and_unverified_defaults",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 125,
+      "function_sha256": "b98f85371c0145f3492f336348f037a45c89ff93fa1f7799186e42c2f6c5c9f8",
+      "assertions": [
+        "self.assertEqual(feature_vector(a), feature_vector(b))"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_family.DesignFamilyTests.test_batch_reestimation_is_deterministic_and_preserves_rare_observations": {
+      "test_id": "test_design_family.DesignFamilyTests.test_batch_reestimation_is_deterministic_and_preserves_rare_observations",
+      "path": "tests/test_design_family.py",
+      "line": 47,
+      "function_sha256": "026181fff35ae3e947b273b432d5b7719a13a4ff80b11733b0da16e960cbd158",
+      "assertions": [
+        "self.assertEqual(a, b)",
+        "self.assertEqual(set(a['assignment']), {row['id'] for row in rows})",
+        "self.assertNotIn('partial_fit', a['algorithm'])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_unqualified_outlier_cannot_expand_suitable_region": {
+      "test_id": "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_unqualified_outlier_cannot_expand_suitable_region",
+      "path": "tests/test_noncode_capacity_semantics.py",
+      "line": 29,
+      "function_sha256": "9f040e0136e571f8e982e18c3a041ce1cc1d11e439617c0449851c6fd79302f8",
+      "assertions": [
+        "self.assertEqual(capacity_advice(model, self.context, [2.0, 2.0])['status'], 'WITHIN_VALIDATED_EMPIRICAL_REGION')",
+        "self.assertEqual(capacity_advice(model, self.context, [18.0, 2.0])['status'], 'UNKNOWN_OR_OUTSIDE_VALIDATED_REGION')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_layout_failure_inside_otherwise_supported_region_abstains": {
+      "test_id": "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_layout_failure_inside_otherwise_supported_region_abstains",
+      "path": "tests/test_noncode_capacity_semantics.py",
+      "line": 37,
+      "function_sha256": "901bf6266d0fcc6751b454d61b20652875d5c645f56d9c1310893531ba052305",
+      "assertions": [
+        "self.assertEqual(capacity_advice(model, self.context, [2.5, 2.0])['status'], 'UNKNOWN_OR_OUTSIDE_VALIDATED_REGION')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_conditional_advice_does_not_borrow_other_context_field_count": {
+      "test_id": "test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_conditional_advice_does_not_borrow_other_context_field_count",
+      "path": "tests/test_noncode_capacity_semantics.py",
+      "line": 58,
+      "function_sha256": "5363fec82068c965227443cd6f54b3efcf782e327fb45b53ad7da7a326823725",
+      "assertions": [
+        "self.assertEqual(artifact['maximum_validated_field_count'], 4)",
+        "self.assertEqual(advice['status'], 'WITHIN_VALIDATED_EMPIRICAL_REGION')",
+        "self.assertEqual(advice['maximum_validated_field_count'], 3)",
+        "self.assertIsNone(advice['hard_global_capacity'])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_joint.JointRegressionTests.test_extrapolation_and_unobserved_joint_input_holes_abstain": {
+      "test_id": "test_design_joint.JointRegressionTests.test_extrapolation_and_unobserved_joint_input_holes_abstain",
+      "path": "tests/test_design_joint.py",
+      "line": 78,
+      "function_sha256": "b54f803030fb0cde07ec43b234b250e7fa0c7be26c521d5aadec4e06fa49720a",
+      "assertions": [
+        "self.assertEqual(predict_joint(artifact, 100.0, 54.0, 2.4), [])",
+        "self.assertEqual(predict_joint(artifact, 90.0, 54.0, 4.0), [])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_synthetic_evaluation_cannot_obtain_real_corpus_certificate": {
+      "test_id": "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_synthetic_evaluation_cannot_obtain_real_corpus_certificate",
+      "path": "tests/test_design_feedback_qualification.py",
+      "line": 77,
+      "function_sha256": "43c08b6ae6fa72c0a35891401d31c15475e3d983e5aa866d9156ab5ea9943004",
+      "assertions": [
+        "self.assertRaisesRegex(ValueError, 'synthetic')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_forged_qualification_state_or_generated_reference_cannot_enable_formal_output": {
+      "test_id": "test_design_feedback_qualification.ExactFeedbackQualificationTests.test_forged_qualification_state_or_generated_reference_cannot_enable_formal_output",
+      "path": "tests/test_design_feedback_qualification.py",
+      "line": 87,
+      "function_sha256": "c312df028c6ea2983e3b2ba0226264a75261679080458db322310e01fae8f1ad",
+      "assertions": [
+        "self.assertFalse(candidate.formal_eligible)",
+        "self.assertRaises(ValueError)",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_rule_extensions.RankerCompletionTests.test_explicit_production_quality_policy_rejects_synthetic_or_incomplete_evidence": {
+      "test_id": "test_design_rule_extensions.RankerCompletionTests.test_explicit_production_quality_policy_rejects_synthetic_or_incomplete_evidence",
+      "path": "tests/test_design_rule_extensions.py",
+      "line": 138,
+      "function_sha256": "50f08719ca80bf2c2cf898b7dceb655e09b5388c1b4afb0f66f49da12e670e0e",
+      "assertions": [
+        "self.assertEqual(rank_quality_errors(report, policy), [])",
+        "self.assertIn('REAL_CORPUS_REVIEW_REQUIRED', rank_quality_errors(dict(report, origin='AUTHORED_SYNTHETIC'), policy))",
+        "self.assertIn('INCOMPLETE_INDEPENDENT_GRADES', rank_quality_errors(dict(report, unknown_queries=1), policy))",
+        "self.assertIn('RANKING_QUALITY_BELOW_POLICY', rank_quality_errors(dict(report, group_macro_ndcg_at_k=0.7), policy))"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.ConditionalRuleOracles.test_cross_type_permissions_do_not_create_transitive_container_access": {
+      "test_id": "test_noncode_invariants.ConditionalRuleOracles.test_cross_type_permissions_do_not_create_transitive_container_access",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 76,
+      "function_sha256": "ff6e218e185c50dacf12cad421afefa250e8322daad57be16abed5946a0ca785",
+      "assertions": [
+        "self.assertEqual(result['status'], 'ASSIGNED')",
+        "self.assertEqual({a['render_id']: a['container_key'] for a in result['assignments']}, {'phone': 'left', 'line': 'right'})",
+        "self.assertNotEqual(assign_fields(profile, fields, policy, options)['status'], 'ASSIGNED')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.ConditionalRuleOracles.test_semantic_default_and_owner_survive_nonsemantic_enumeration_order": {
+      "test_id": "test_noncode_invariants.ConditionalRuleOracles.test_semantic_default_and_owner_survive_nonsemantic_enumeration_order",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 92,
+      "function_sha256": "2d1acf6994506debf900c7b1b38b7a75a913c102c6a30d9d04e2a8d12333c601",
+      "assertions": [
+        "self.assertNotEqual(assign_fields(profile, foreign, {}, options)['status'], 'ASSIGNED')",
+        "self.assertEqual({a['render_id']: a['container_key'] for a in result['assignments']}, {'mobile': 'left', 'landline': 'right'})"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_synthesis.DesignSynthesisTests.test_same_input_repeat_and_explicit_swap_keep_same_family_and_stable_geometry": {
+      "test_id": "test_design_synthesis.DesignSynthesisTests.test_same_input_repeat_and_explicit_swap_keep_same_family_and_stable_geometry",
+      "path": "tests/test_design_synthesis.py",
+      "line": 103,
+      "function_sha256": "7d7715fd42aec67f72c1dcc5f24893cd2c01c965a1588c98c2da355f65b9ad88",
+      "assertions": [
+        "self.assertEqual(base['candidates'][0]['geometry_digest'], again['candidates'][0]['geometry_digest'])",
+        "self.assertEqual(result['status'], 'FEASIBLE_PREVIEW')",
+        "self.assertGreaterEqual(items[phones[0]['render_id']].slot.rect.y, items[phones[1]['render_id']].slot.rect.y + items[phones[1]['render_id']].slot.rect.h)",
+        "self.assertEqual(candidate.template.family_id, base['family_id'])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_synthesis.DesignSynthesisTests.test_oversized_input_is_retained_and_cannot_be_silently_truncated": {
+      "test_id": "test_design_synthesis.DesignSynthesisTests.test_oversized_input_is_retained_and_cannot_be_silently_truncated",
+      "path": "tests/test_design_synthesis.py",
+      "line": 125,
+      "function_sha256": "cedb3fe39f20de16db30cc3dfdb5b33dbb90b22243b1db7195c3eb0a2c0d2ac6",
+      "assertions": [
+        "self.assertNotEqual(result['status'], 'FEASIBLE_PREVIEW')",
+        "self.assertEqual(phone['value'], '1234567890' * 20)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data": {
+      "test_id": "test_desktop_workspace.DesktopProductionTests.test_embedded_pointer_drag_keeps_same_core_intent_and_data",
+      "path": "tests/test_desktop_workspace.py",
+      "line": 355,
+      "function_sha256": "18a65b40e7e25641e67dce15b424fd47184ccd162fb970d17bbd87e3bc9908eb",
+      "assertions": [
+        "self.assertLess(editor.canvas.transform().m11(), zoom)",
+        "self.assertEqual(editor.sessions.current(editor.session_id), pinned)",
+        "self.assertTrue(wait_for_gui(lambda: bool(editor.sessions.current(editor.session_id)['intents']), 5))",
+        "self.assertTrue(wait_for_gui(lambda: not self.w.busy, 15))",
+        "self.assertEqual(row['input_graph'], before)",
+        "self.assertIsNone(row.get('confirmation'))",
+        "self.assertTrue(row['intents'])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_synthesis.DesignSynthesisTests.test_source_observed_expanded_width_is_core_controlled_and_actually_measured": {
+      "test_id": "test_design_synthesis.DesignSynthesisTests.test_source_observed_expanded_width_is_core_controlled_and_actually_measured",
+      "path": "tests/test_design_synthesis.py",
+      "line": 145,
+      "function_sha256": "b80dcfcbc13dc07ce275baf67c3b02204cd6b4a22e2c95247457559808479f48",
+      "assertions": [
+        "self.assertEqual(result['status'], 'FEASIBLE_PREVIEW', result['issues'])",
+        "self.assertTrue(all((item.scale == 1.1 for item in candidate.items)))",
+        "self.assertEqual(check_layout(candidate, self.graph)['status'], 'PASS')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_synthesis.DesignSynthesisTests.test_distributed_style_uses_conditional_source_bounds_and_actual_fixed_pt_measurement": {
+      "test_id": "test_design_synthesis.DesignSynthesisTests.test_distributed_style_uses_conditional_source_bounds_and_actual_fixed_pt_measurement",
+      "path": "tests/test_design_synthesis.py",
+      "line": 155,
+      "function_sha256": "d9ee3af9bfe0c44e0ac2331f283135fe187a54eddb440d73a2a502880505b48f",
+      "assertions": [
+        "self.assertEqual(result['status'], 'FEASIBLE_PREVIEW', result['issues'])",
+        "self.assertEqual(item.slot.align, 'distributed')",
+        "self.assertEqual(item.slot.size_pt, 10.0)",
+        "self.assertGreaterEqual(item.tracking_mm, 0.0)",
+        "self.assertLessEqual(item.tracking_mm, 1.4 + 1e-09)",
+        "self.assertFalse(errors)",
+        "self.assertLessEqual(width, item.slot.rect.w + 0.0001)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.LayoutMeaningOracles.test_profile_enumeration_order_is_not_a_new_customer_preference": {
+      "test_id": "test_noncode_invariants.LayoutMeaningOracles.test_profile_enumeration_order_is_not_a_new_customer_preference",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 168,
+      "function_sha256": "332f1f662e330686c7ea6ebfec35e00925aa161586dc85f4c7451ed8fd82fa1a",
+      "assertions": [
+        "self.assertEqual(result['status'], 'FEASIBLE_PREVIEW')",
+        "self.assertEqual(self.signature(result['candidates'][0]['candidate']), self.signature(original))"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_session.DesignSessionTests.test_accepted_artifact_reuses_exact_bytes_after_new_model_activation": {
+      "test_id": "test_design_session.DesignSessionTests.test_accepted_artifact_reuses_exact_bytes_after_new_model_activation",
+      "path": "tests/test_design_session.py",
+      "line": 117,
+      "function_sha256": "dc387dea426bbe3a14cfdeaedf6e3572fbbf30bdf8f7329415869b43004fc496",
+      "assertions": [
+        "self.assertEqual(found['id'], artifact['id'])",
+        "self.assertEqual(replay['sha256'], artifact['sha256'])",
+        "self.assertEqual(replay['model_id'], self.model['id'])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.SessionMeaningOracles.test_unconfirmed_and_changed_data_cannot_reuse_confirmation": {
+      "test_id": "test_noncode_invariants.SessionMeaningOracles.test_unconfirmed_and_changed_data_cannot_reuse_confirmation",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 202,
+      "function_sha256": "875dbac3204bdc59d4357fb95a98f1f85cb466c1ecad9dc0085d1d2acfbb9154",
+      "assertions": [
+        "self.assertFalse(target.exists())",
+        "self.assertEqual(self.sessions.solve(self.session['id'], self.session['revision'])['status'], 'FEASIBLE_PREVIEW')",
+        "self.assertFalse(target.exists())",
+        "self.assertIsNone(current['confirmation'])",
+        "self.assertEqual(next((f for f in current['input_graph']['fields'] if f['id'] == phone['id']))['value'], '+1 202 555 0199')",
+        "self.assertRaises(ValueError)",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval": {
+      "test_id": "test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval",
+      "path": "tests/test_final_digital_preflight.py",
+      "line": 37,
+      "function_sha256": "3abbfabde3c44f89d6922f31711902e68f3ab3352b370278323f7e90235f1d5f",
+      "assertions": [
+        "self.assertFalse(target.exists())",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_session.DesignSessionTests.test_correct_data_then_undo_layout_preserves_new_phone_and_owner": {
+      "test_id": "test_design_session.DesignSessionTests.test_correct_data_then_undo_layout_preserves_new_phone_and_owner",
+      "path": "tests/test_design_session.py",
+      "line": 74,
+      "function_sha256": "bbd28fc2b103c23714de84c52d6b09ba61c7ed9bf97a21d276eb8d7a98447c38",
+      "assertions": [
+        "self.assertEqual(result['status'], 'FEASIBLE_PREVIEW')",
+        "self.assertEqual(next((f for f in after['input_graph']['fields'] if f['kind'] == 'phone'))['value'], '+1 202 555 0199')",
+        "self.assertEqual(after['data_revision'], 2)",
+        "self.assertEqual(after['intents'], [])",
+        "self.assertEqual(self.solve()['status'], 'FEASIBLE_PREVIEW')",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data": {
+      "test_id": "test_desktop_workspace.DesktopProductionTests.test_real_main_input_edit_invalidates_old_canvas_then_regenerates_latest_data",
+      "path": "tests/test_desktop_workspace.py",
+      "line": 270,
+      "function_sha256": "f9c80a6db9742934ae7377242ffe25e078d174e7de68d3f87cd94a2b6624d119",
+      "assertions": [
+        "self.assertIs(self.desk.preview_stack.currentWidget(), self.w.output_canvas)",
+        "self.assertFalse(self.w.preview_button.isEnabled())",
+        "self.assertTrue(any((f['value'] == '+1 202 555 0199' for f in self.w.active_input_graph.data['fields'])))",
+        "self.assertTrue(wait_for_gui(lambda: editor.solve_worker is None or not editor.solve_worker.isRunning(), 15))",
+        "self.assertIsNone(row.get('confirmation'))",
+        "self.assertTrue(any((f['value'] == '+1 202 555 0199' for f in row['input_graph']['fields'])))",
+        "self.assertIs(self.desk.preview_stack.currentWidget(), editor.canvas)",
+        "self.assertIsInstance(dialog, InputGraphDialog)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_training_pipeline.PipelineTests.test_cooperative_cancel_after_actual_item_then_reopen_resume_no_success_rerun": {
+      "test_id": "test_training_pipeline.PipelineTests.test_cooperative_cancel_after_actual_item_then_reopen_resume_no_success_rerun",
+      "path": "tests/test_training_pipeline.py",
+      "line": 39,
+      "function_sha256": "b161c51e34cc0546f67aec3c0aeee0ab9c4122a14b578b79ace02c44e6a4da28",
+      "assertions": [
+        "self.assertEqual(stopped['phase'], 'CANCELLED')",
+        "self.assertEqual(sum((i['state'] == 'SUCCESS' for i in stopped['items'])), 1)",
+        "self.assertEqual(done['phase'], 'COMPLETED')",
+        "self.assertEqual(len(other.templates()), 2)",
+        "self.assertIn(first, [i['template_id'] for i in done['items']])",
+        "self.assertTrue(all((i['attempts'] == 1 for i in done['items'])))"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_session.DesignSessionTests.test_late_solve_cannot_install_old_data_over_new_input": {
+      "test_id": "test_design_session.DesignSessionTests.test_late_solve_cannot_install_old_data_over_new_input",
+      "path": "tests/test_design_session.py",
+      "line": 101,
+      "function_sha256": "3fc5baa94ce725d991894b0b43f1019ae07214bc09685c7f3c851c0e0ff60c1f",
+      "assertions": [
+        "self.assertEqual(next((f for f in current['input_graph']['fields'] if f['kind'] == 'phone'))['value'], '+1 202 555 0111')",
+        "self.assertNotEqual(current['result_state'], 'CURRENT')",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation": {
+      "test_id": "test_desktop_workspace.DesktopProductionTests.test_external_session_revision_clears_embedded_old_result_and_confirmation",
+      "path": "tests/test_desktop_workspace.py",
+      "line": 297,
+      "function_sha256": "fa5f14e5a0028ec6671faa30e16c7e256c1e6b188acf26905e59e106c8c883ec",
+      "assertions": [
+        "self.assertFalse(editor.confirm_button.isEnabled())",
+        "self.assertFalse(editor.export_button.isEnabled())",
+        "self.assertEqual(editor.canvas.boxes, [])",
+        "self.assertEqual(self.desk.primary.text(), '產生稿件')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone": {
+      "test_id": "test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone",
+      "path": "tests/test_final_digital_preflight.py",
+      "line": 31,
+      "function_sha256": "a09eee222c6c572cac774e4d9c3969d3fbe61e8a2bddda43dc7f38274ec67373",
+      "assertions": [
+        "self.assertFalse(target.exists())",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.LayoutMeaningOracles.test_unfittable_string_is_kept_and_cannot_be_promoted_to_a_complete_draft": {
+      "test_id": "test_noncode_invariants.LayoutMeaningOracles.test_unfittable_string_is_kept_and_cannot_be_promoted_to_a_complete_draft",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 182,
+      "function_sha256": "1475cab6541d871f03e6e9ee915111e0cc48c054dd0d7c9efa03c8d8f4f533be",
+      "assertions": [
+        "self.assertNotEqual(result['status'], 'FEASIBLE_PREVIEW')",
+        "self.assertEqual(graph.field(field['id'])['value'], '9' * 1000)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_synthesis.DesignSynthesisTests.test_missing_source_typography_is_unknown_instead_of_default_font": {
+      "test_id": "test_design_synthesis.DesignSynthesisTests.test_missing_source_typography_is_unknown_instead_of_default_font",
+      "path": "tests/test_design_synthesis.py",
+      "line": 119,
+      "function_sha256": "f542e98252545d977a060ae632dab1640db57230f2053826b5772b978e287ba9",
+      "assertions": [
+        "self.assertEqual(result['status'], 'SOURCE_EVIDENCE_REQUIRED')",
+        "self.assertEqual(result['candidates'], [])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_rule_extensions.CharacterJustificationTests.test_single_cluster_and_combining_mark_are_not_split": {
+      "test_id": "test_design_rule_extensions.CharacterJustificationTests.test_single_cluster_and_combining_mark_are_not_split",
+      "path": "tests/test_design_rule_extensions.py",
+      "line": 69,
+      "function_sha256": "a857205f127f9463c091f7a0d6b431679141ea444ca6f5ed2ea3a05934811ca3",
+      "assertions": [
+        "self.assertEqual(result['boundary_justification'][0]['boundary_count'], 0)",
+        "self.assertIsNone(result['positioned_runs'])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.LayoutMeaningOracles.test_authored_complete_data_and_nonoverlap_are_independent_output_invariants": {
+      "test_id": "test_noncode_invariants.LayoutMeaningOracles.test_authored_complete_data_and_nonoverlap_are_independent_output_invariants",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 154,
+      "function_sha256": "c18283198a0f93f3ea2354cb276414be33ae83627dd8ede37f7a3394249bed0b",
+      "assertions": [
+        "self.assertEqual(result['status'], 'FEASIBLE_PREVIEW')",
+        "self.assertEqual(sorted((i.text for i in candidate.items)), ['0123456789', '0987654321', 'Alex Example'])",
+        "self.assertFalse(candidate.valid)",
+        "self.assertEqual(candidate.template.state, 'draft')",
+        "self.assertGreaterEqual(box.x, -1e-08)",
+        "self.assertGreaterEqual(box.y, -1e-08)",
+        "self.assertLessEqual(box.x + box.w, 90 + 1e-08)",
+        "self.assertLessEqual(box.y + box.h, 54 + 1e-08)",
+        "self.assertTrue(x.x + x.w <= y.x + 1e-08 or y.x + y.w <= x.x + 1e-08 or x.y + x.h <= y.y + 1e-08 or (y.y + y.h <= x.y + 1e-08))"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission": {
+      "test_id": "test_design_logo_synthesis.SharedWholeLogoSynthesisTests.test_complete_logo_carries_company_name_without_silent_omission",
+      "path": "tests/test_design_logo_synthesis.py",
+      "line": 37,
+      "function_sha256": "38a8657d3f361c6fde48298223be27523217b36e134d7e5c6ac649b0fb9128d7",
+      "assertions": [
+        "self.assertEqual(result['status'], 'FEASIBLE_PREVIEW', result['issues'])",
+        "self.assertEqual(len(marks), 1)",
+        "self.assertEqual(marks[0].text, 'Synthetic Brand')",
+        "self.assertEqual(marks[0].logo['id'], self.asset['id'])",
+        "self.assertFalse(any((item.slot.kind == 'company' for item in candidate.items)))"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_design_session.DesignSessionTests.test_actual_source_bound_model_input_solve_confirm_and_preview_output": {
+      "test_id": "test_design_session.DesignSessionTests.test_actual_source_bound_model_input_solve_confirm_and_preview_output",
+      "path": "tests/test_design_session.py",
+      "line": 63,
+      "function_sha256": "487161976636dfa4c0581190baf72c92cdb678f155f44554c5c4618bfe2ae123",
+      "assertions": [
+        "self.assertEqual(result['status'], 'FEASIBLE_PREVIEW')",
+        "self.assertEqual(confirmed['confirmation']['scope'], 'PREVIEW_ONLY')",
+        "self.assertTrue(target.is_file())",
+        "self.assertFalse(artifact['production'])",
+        "self.assertEqual(self.sessions.replay_artifact(artifact['id'])['sha256'], artifact['sha256'])",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_digital_preflight.DigitalPreflightTests.test_real_complete_candidate_still_needs_actual_encoded_format_evidence": {
+      "test_id": "test_digital_preflight.DigitalPreflightTests.test_real_complete_candidate_still_needs_actual_encoded_format_evidence",
+      "path": "tests/test_digital_preflight.py",
+      "line": 20,
+      "function_sha256": "a7a883debab45b903bcb2ab59a01ca62c55206b8104ce9af9bc114984ed525ba",
+      "assertions": [
+        "self.assertTrue(value['can_encode'])",
+        "self.assertFalse(value['formal_output_allowed'])",
+        "self.assertFalse(value['output_written'])",
+        "self.assertFalse(value['physical_print_verified'])",
+        "self.assertEqual(next((r for r in value['rows'] if r['code'] == 'ENCODED_FORMAT'))['status'], 'NOT_CHECKED')",
+        "self.assertEqual(c.template.to_dict(), before)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_final_digital_preflight.FinalDigitalPreflightTests.test_corrupt_pdf_after_page_box_writer_cannot_publish": {
+      "test_id": "test_final_digital_preflight.FinalDigitalPreflightTests.test_corrupt_pdf_after_page_box_writer_cannot_publish",
+      "path": "tests/test_final_digital_preflight.py",
+      "line": 49,
+      "function_sha256": "b5df784eb9923d209525ad593e332d4de4047511fdbe38affa3551a38dc2990b",
+      "assertions": [
+        "self.assertFalse(target.exists())",
+        "self.assertRaises(ValueError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling": {
+      "test_id": "test_desktop_workspace.DesktopNavigationTests.test_small_window_keeps_primary_and_canvas_visible_without_scrolling",
+      "path": "tests/test_desktop_workspace.py",
+      "line": 83,
+      "function_sha256": "ebebbd55a550ba477d0d7288da3d0531dd39dfaa499e3c00ee01f5a94fed0875",
+      "assertions": [
+        "self.assertGreaterEqual(visible.width(), 240)",
+        "self.assertGreaterEqual(visible.height(), 180)",
+        "self.assertEqual(desk.primary.visibleRegion().boundingRect(), desk.primary.rect())",
+        "self.assertFalse(desk.other_fixed.isChecked())",
+        "self.assertFalse(w.candidate_scroll.isVisible())",
+        "self.assertTrue(w.candidate_scroll.isVisible())",
+        "self.assertTrue(w.preview_button.isVisible())"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages": {
+      "test_id": "test_desktop_workspace.DesktopNavigationTests.test_real_guidance_navigation_opens_four_task_pages",
+      "path": "tests/test_desktop_workspace.py",
+      "line": 133,
+      "function_sha256": "afd4969add0e1e7a18ce4efa8ff74454cba59c7832e4853f4286504b6d4cadfe",
+      "assertions": [
+        "self.assertIsInstance(dialog, GuidedOperationsDialog)",
+        "self.assertEqual(dialog.tabs.count(), 4)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_noncode_invariants.SessionMeaningOracles.test_safe_local_production_report_contains_measurements_not_customer_text": {
+      "test_id": "test_noncode_invariants.SessionMeaningOracles.test_safe_local_production_report_contains_measurements_not_customer_text",
+      "path": "tests/test_noncode_invariants.py",
+      "line": 216,
+      "function_sha256": "180c2244dbac27d314604c8f4bf314599b3c339536dbcf98563a01ec4be81194",
+      "assertions": [
+        "self.assertIn('plain_summary', data)",
+        "self.assertFalse(data['technical']['formal_output_allowed'])",
+        "self.assertTrue(data['technical']['result_valid_for_current_input'])",
+        "self.assertTrue(data['technical']['fields'])",
+        "self.assertNotIn(str(self.root), body)",
+        "self.assertNotIn(value, body)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_offline_support.OfflineSupportTests.test_report_roundtrip_has_beginner_summary_and_no_private_content": {
+      "test_id": "test_offline_support.OfflineSupportTests.test_report_roundtrip_has_beginner_summary_and_no_private_content",
+      "path": "tests/test_offline_support.py",
+      "line": 34,
+      "function_sha256": "5880489b3c4f04613a770804ccac7f23749ac68c8fa0dfa1381eb84621a6bb63",
+      "assertions": [
+        "self.assertEqual(data['events'][-1]['error'], 'VALUE')",
+        "self.assertEqual(data['events'][-1]['duration_ms'], 25.5)",
+        "self.assertIn('本機字型', data['summary']['缺少資訊'])",
+        "self.assertNotIn(canary, self.journal.path.read_text())",
+        "self.assertEqual(set(archive.namelist()), {'support.json', 'support.html', 'manifest.json'})",
+        "self.assertIn('接下來怎麼做'.encode(), archive.read('support.html'))",
+        "self.assertNotIn(canary.encode(), body)",
+        "self.assertNotIn(str(self.root).encode(), body)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors": {
+      "test_id": "test_diagnostic_reports.DiagnosticReportTests.test_all_payloads_omit_synthetic_personal_ids_paths_notes_and_unknown_errors",
+      "path": "tests/test_diagnostic_reports.py",
+      "line": 89,
+      "function_sha256": "a88d8756b1382023725effc916e5c344f1fd5272284f03ac51c0a7772c3c90f8",
+      "assertions": [
+        "self.assertIn('UNCLASSIFIED', [r['code'] for r in s.data['issues']])",
+        "self.assertNotIn('reason', s.data['issues'][-1])",
+        "self.assertEqual(set(z.namelist()), {'report.html', 'report.json', 'manifest.json'})",
+        "self.assertNotIn(value.encode(), b)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_offline_support.OfflineSupportTests.test_remote_svg_references_are_blocked_but_displayed_urls_and_embedded_images_remain": {
+      "test_id": "test_offline_support.OfflineSupportTests.test_remote_svg_references_are_blocked_but_displayed_urls_and_embedded_images_remain",
+      "path": "tests/test_offline_support.py",
+      "line": 154,
+      "function_sha256": "45f0fec0e26890660b66d5a61474b3757651f62488d154d180e0dce109c35473",
+      "assertions": [
+        "self.assertRaises(OfflineAccessError)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_offline_support.OfflineSupportTests.test_python_network_guard_blocks_ipv4_ipv6_dns_and_unc_but_allows_unix": {
+      "test_id": "test_offline_support.OfflineSupportTests.test_python_network_guard_blocks_ipv4_ipv6_dns_and_unc_but_allows_unix",
+      "path": "tests/test_offline_support.py",
+      "line": 215,
+      "function_sha256": "d32a3757c0dcf2679eb5fff0b84d68013a0b7328376bebc92fbbe412904ae011",
+      "assertions": [
+        "self.assertEqual(result.returncode, 0, result.stderr)",
+        "self.assertIn('guard-pass', result.stdout)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_batch_correction_source.BatchCorrectionSourceTests.test_eight_applied_two_failed_one_manual_counts_are_exact_and_not_global_pass": {
+      "test_id": "test_batch_correction_source.BatchCorrectionSourceTests.test_eight_applied_two_failed_one_manual_counts_are_exact_and_not_global_pass",
+      "path": "tests/test_batch_correction_source.py",
+      "line": 27,
+      "function_sha256": "b65a38e9e00e51245b05fa5f1fcc6120958ca41676ca89ef56be046451946138",
+      "assertions": [
+        "self.assertEqual(summary['checked'], 11)",
+        "self.assertEqual(summary['attempted'], 10)",
+        "self.assertEqual(summary['applied_pending_validation'], 8)",
+        "self.assertEqual(summary['failed'], 2)",
+        "self.assertEqual(summary['manual'], 1)",
+        "self.assertEqual(summary['status'], 'PARTIAL_OR_BLOCKED')",
+        "self.assertFalse(summary['formal_eligible'])"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_batch_correction_source.BatchCorrectionSourceTests.test_relative_move_retry_reads_existing_operation_instead_of_moving_twice": {
+      "test_id": "test_batch_correction_source.BatchCorrectionSourceTests.test_relative_move_retry_reads_existing_operation_instead_of_moving_twice",
+      "path": "tests/test_batch_correction_source.py",
+      "line": 39,
+      "function_sha256": "5b4504bb25f86d2b9d175ecb80b365cdd6b16a125321f6c2318cc359b8a32de4",
+      "assertions": [
+        "self.assertEqual(again[0]['state'], 'ALREADY_APPLIED')",
+        "self.assertEqual(first[0]['history_id'], again[0]['history_id'])",
+        "self.assertEqual(self.lib.artwork(work['id']), current)",
+        "self.assertAlmostEqual(current['payload']['slots'][0]['rect']['x'], 8.2)"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    },
+    "test_relational_backup.RelationalBackupTests.test_authenticated_unknown_schema_is_blocked_and_incomplete_restore_cannot_open_as_library": {
+      "test_id": "test_relational_backup.RelationalBackupTests.test_authenticated_unknown_schema_is_blocked_and_incomplete_restore_cannot_open_as_library",
+      "path": "tests/test_relational_backup.py",
+      "line": 105,
+      "function_sha256": "80e7c1910ff12fc36d321a7cc08e5c05bdb5e447deca49c11baeff9a70337405",
+      "assertions": [
+        "self.assertFalse((self.root / 'unsupported').exists())",
+        "self.assertFalse((incomplete / 'restored-library/library.sqlite3').exists())",
+        "self.assertRaisesRegex(ValueError, 'trigger/view')",
+        "self.assertRaisesRegex(ValueError, '尚未完成')"
+      ],
+      "limits": "Assertion intent reviewed in approved scoped context;not proof of all branches or real-corpus quality."
+    }
+  }
+}

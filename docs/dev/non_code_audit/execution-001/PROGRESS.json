@@ -4,7 +4,7 @@
   "authorized_scope": "Execute full planned audit and necessary root-cause fixes;no new unrelated product features",
   "baseline_commit": "349788c31879e30433228ecadc6040e1abfb3c58",
   "started_utc": "2026-10-21T03:21:14.755265+00:00",
-  "phase": "Capacity semantic counterexample reproduced;normative mapping in progress",
+  "phase": "Final source4f763f87 regression002 running;32targeted/4semantic probes pass",
   "checks": [
     {
       "id": "NCA-A01",
@@ -233,9 +233,12 @@
   ],
   "completed_checks": 0,
   "issues": [
-    "NCA-ISSUE-001"
+    "NCA-ISSUE-001",
+    "NCA-ISSUE-002",
+    "NCA-ISSUE-003",
+    "NCA-ISSUE-004"
   ],
-  "next": "Save before-fix proof,correct qualified/negative support with artifact version guard,run related regressions",
+  "next": "Finish full002;then original stock/native captures,OS network trace,case evidence validation and restore-verified local delivery. Never fake remote proof.",
   "resource_budget": {
     "total_candidates": 200,
     "seeds": [
@@ -246,5 +249,14 @@
     "total_seconds": 120,
     "solver_seconds_per_submodel": 10,
     "limit_effect": "Stop at first exhausted budget; incomplete/unresolved coverage isUNKNOWN. Existing Qt/unittest deadlines and isolation unchanged."
+  },
+  "targeted_tests_passed": 32,
+  "semantic_probes_passed": 4,
+  "remote_status": "BLOCKED_GITHUB_AUTHENTICATION",
+  "current_code_commit": "4f763f87458f0f65914d7e7c9a04b0a46f8dd912",
+  "interrupted_full_run": {
+    "path": "full-regression-001/interruption.json",
+    "completed_before_stop": 1141,
+    "reason": "New independently confirmed conditional field-count fix;not a completePASS"
   }
 }
