@@ -310,5 +310,26 @@
       "remote blob recovery"
     ],
     "deleted_files": 0
+  },
+  "project_root_roles_followup": {
+    "preserve": [
+      ".github",
+      "requirements.txt",
+      "requirements-lock.txt",
+      "requirements-build.txt",
+      "START_WINDOWS.bat",
+      "PREPARE_WINDOWS.bat",
+      ".gitignore",
+      "examples",
+      ".agents/skills"
+    ],
+    "skill_links_target_and_entry_present": 6,
+    "skill_native_auto_loading": "NOT_VERIFIED_BY_THIS_FILE_ASSESSMENT",
+    "conditionally_rebuildable_after_work": [
+      "build",
+      ".ruff_cache",
+      "__pycache__"
+    ],
+    "deleted_existing_files": 0
   }
 }
