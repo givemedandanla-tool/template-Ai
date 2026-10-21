@@ -21,8 +21,15 @@ if ($LASTEXITCODE -ne 0) { throw 'Original Windows regression failed; do not pac
 }
 if ($NativeTestsOnly) { return }
 # Reuse the same packaging/spec, actual-EXE acceptance and download verifier.
+if ($FrozenProbeOnly -and $env:FROZEN_UTF8_AB -eq 'true') {
+    python docs/dev/releases/run_frozen_utf8_ab.py
+    if ($LASTEXITCODE -ne 0) { throw 'Actual frozen UTF8 baseline/fixed comparison failed' }
+    return
+}
 python tools/windows_release.py spec
 if ($LASTEXITCODE -ne 0) { throw 'Release specification failed' }
+python docs/dev/releases/configure_frozen_utf8.py
+if ($LASTEXITCODE -ne 0) { throw 'Documented UTF8 interpreter configuration failed' }
 python -m PyInstaller --noconfirm --clean build/release/TemplateAI.spec *> artifacts/pyinstaller.log
 if ($LASTEXITCODE -ne 0) { throw 'Packaging failed' }
 python docs/dev/releases/run_frozen_probe.py --executable dist/TemplateAI/TemplateAI.exe --output artifacts/package-check

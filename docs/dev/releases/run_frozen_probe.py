@@ -41,6 +41,11 @@ def main():
     AutomaticTrainingTests.tearDown=observe_then_cleanup
     try:
         windows_release.exercise(args.executable.absolute(),args.output.resolve())
+        summary=json.loads((args.output/'summary.json').read_text(encoding='utf-8'))
+        if summary['actual_frozen_executable'] and sys.platform=='win32':
+            for phase in ['exercise','resume']:
+                if 'FROZEN_UTF8_MODE=1' not in (args.output/(phase+'.log')).read_text(encoding='utf-8',errors='replace'):
+                    raise RuntimeError('Actual frozen interpreter UTF8 mode was not verified')
     finally:
         AutomaticTrainingTests.tearDown=original
 

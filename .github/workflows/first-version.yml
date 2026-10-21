@@ -21,6 +21,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       NATIVE_TESTS_ONLY: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[native-tests-only]') }}
       FROZEN_PROBE_ONLY: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[frozen-probe-only]') }}
+      FROZEN_UTF8_AB: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[utf8-ab]') }}
       OMP_NUM_THREADS: '1'
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'

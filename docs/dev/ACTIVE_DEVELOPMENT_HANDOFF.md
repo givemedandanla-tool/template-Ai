@@ -6,7 +6,9 @@
 
 **尚未發佈，無tag。** source03a7c692a365c64227807154a76bb3047077f0cd／run39623436705：原生176/176PASS、16健康模組、49個新Qt程序、0runtime、source unchanged。PyInstaller已產真EXE，真EXE通過11項（含合成訓練、產稿/預覽、滑鼠拖動、更正、預覽輸出、拒絕未資格正式稿、JSONpipe worker），在release_check._pause_worker保存邊界檢查失敗。原始證據releases/v0.2.0-beta.1/windows-native-005-frozen-pause-failed。不能把產生EXE說成可交付。
 
-**當前只做診斷候選d34e1310a17067763ce9acc60b3214ea5d67846a**，[frozen-probe-only]，run39628676683已有RUNNING原生回執。此模式不跑/不聲稱新176，不建tag、不package、不發佈。docs/dev/releases/run_frozen_probe.py呼叫原真EXE驗收，在原authored fixture tearDown前只讀worker-observation.json，再照原方式清理；未換視窗/斷言/期限。Linux source smoke兩階段PASS、actual_frozen=false，見frozen-parent-probe-001。等實際phase/unit count/issues找根因，不先猜或放寬原_pause檢查。
+**下一步實際UTF8 A/B診斷（見frozen-utf8-controls-001）；d34e1310原診斷已FAIL，phase=COMPLETED_WITH_EXCEPTIONS、0 AUTO_UNIT，item.error來源或衍生快取失效，未到暫停。** 合成真快取UTF8 healthy=true/CP1252 cache_matches=false，僅控制示範。PyInstaller6.22.3官方釘定docs支持X utf8選項；新CI只調spec，不改產品/快取Gate。A/B要求原設定實測mode0+同錯誤；fixedmode1+原兩階段全PASS；不符合就FAIL，不發布。
+
+歷史只做診斷候選d34e1310a17067763ce9acc60b3214ea5d67846a，[frozen-probe-only]，run39628676683已有RUNNING原生回執。此模式不跑/不聲稱新176，不建tag、不package、不發佈。docs/dev/releases/run_frozen_probe.py呼叫原真EXE驗收，在原authored fixture tearDown前只讀worker-observation.json，再照原方式清理；未換視窗/斷言/期限。Linux source smoke兩階段PASS、actual_frozen=false，見frozen-parent-probe-001。等實際phase/unit count/issues找根因，不先猜或放寬原_pause檢查。
 
 ## 來源資格與保存規則
 

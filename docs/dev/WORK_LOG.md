@@ -1822,3 +1822,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 工作區舊ZIP只讀補查：55/55 archive SHA256符合紀錄、全內容CRC PASS，19.42GiB，182.249秒，未解壓或刪除；unique/full restore/remote blob recovery仍未執行，不升級為刪除核准。Windows03a7正式run39623436705仍在執行。
 
 2026-10-21 03a7原生176/176PASS、16healthy、49freshgroups、0runtime，真EXE產生並通過11檢查後暫停邊界檢查失敗。全原始有界報告持久化，不發佈；新增只讀父程序合成fixture診斷，先取真實phase/count，原檢查/產品/tools/tests不變。
+
+2026-10-21 d34e frozen診斷取得0AUTO_UNIT、COMPLETED_WITH_EXCEPTIONS、cache invalid，非已完成單位的暫停錯誤。ControlledUTF8/cp1252真cache對照重現，3spec設定控制PASS；釘定官方docs Xutf8，準備原/fixed實際EXE A/B，不改產品或Gate、不發布。
