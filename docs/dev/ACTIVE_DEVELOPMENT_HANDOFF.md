@@ -2,6 +2,8 @@
 
 ## 當前任務與真實狀態
 
+**最新c45dc236/run39630607193實際UTF8 A/B PASS（仍未發布）**：baseline實測utf8_mode0，原快取失效0單位exit1；fixed實測mode1，原14+7完整兩階段全PASS，含first-unit pause/explicit resume/unchanged replay/safe report/window close。source0c4完全不變。證據frozen-utf8-ab-001-passed。下一步補一個含369正式附件、原生176、AB全部資料的完整主要checkpoint，再正常無diag標記提交，strictGate後重跑原176、真EXE與下載發佈。原故障確定是frozen讀檔文字編碼差異，不是暫停控制錯誤；禁止修改原cacheGate或原_pause斷言。
+
 使用者已將倉庫改公開，要求重試Windows EXE打包發佈及工作區文件用途/刪除評估。繼續直到實際Release，不再問例行確認；不合併main、不刪既有資料、不新增付費資源。開發在dev/v0.1-first-version。
 
 **尚未發佈，無tag。** source03a7c692a365c64227807154a76bb3047077f0cd／run39623436705：原生176/176PASS、16健康模組、49個新Qt程序、0runtime、source unchanged。PyInstaller已產真EXE，真EXE通過11項（含合成訓練、產稿/預覽、滑鼠拖動、更正、預覽輸出、拒絕未資格正式稿、JSONpipe worker），在release_check._pause_worker保存邊界檢查失敗。原始證據releases/v0.2.0-beta.1/windows-native-005-frozen-pause-failed。不能把產生EXE說成可交付。

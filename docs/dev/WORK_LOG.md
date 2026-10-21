@@ -1824,3 +1824,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 03a7原生176/176PASS、16healthy、49freshgroups、0runtime，真EXE產生並通過11檢查後暫停邊界檢查失敗。全原始有界報告持久化，不發佈；新增只讀父程序合成fixture診斷，先取真實phase/count，原檢查/產品/tools/tests不變。
 
 2026-10-21 d34e frozen診斷取得0AUTO_UNIT、COMPLETED_WITH_EXCEPTIONS、cache invalid，非已完成單位的暫停錯誤。ControlledUTF8/cp1252真cache對照重現，3spec設定控制PASS；釘定官方docs Xutf8，準備原/fixed實際EXE A/B，不改產品或Gate、不發布。
+
+2026-10-21 c45/run39630607193真EXE A/B PASS：mode0同cacheFAIL0units，mode1原14+7全PASS含暫停/重啟/重播；0c4 unchanged。根因為frozen文字編碼，啟用官方Xutf8，不改product或gate。仍未tag/發布；進入全證據checkpoint與正常176+EXE+兩次下載最後流程。

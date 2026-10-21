@@ -46,3 +46,8 @@ run39619925888完成前8模組82原案例PASS，後續進度JSON讀取EACCES使�
 ## 03a7原生完整PASS，真EXE暫停檢查失敗
 
 run39623436705 Windows176/176PASS、16健康、49新Qt程序、0runtime、source unchanged。PyInstaller已產EXE，前11實際EXE檢查PASS，_pause_worker保存邊界檢查FAIL；未tag/發佈。原始資料windows-native-005-frozen-pause-failed。下一個[frozen-probe-only]只診斷實際EXE並讀取純合成fixture狀態，不把原176說成重新執行、不發佈；正式發佈Gate原樣保留。
+
+
+## UTF8根因已在實際EXE對照確認
+
+c45dc236/run39630607193：原設定實測mode0、0單位、同cache錯誤exit1；啟用mode1實際EXE原14+7檢查兩階段全PASS，source matches/unchanged。詳見frozen-utf8-ab-001-passed。只改CI編譯選項，產品/tools/tests/0c4不變、原cache及pause檢查未放寬。仍是診斷未發布，接著正常176+EXE+下載流程。
