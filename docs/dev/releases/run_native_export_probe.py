@@ -3,8 +3,16 @@ from pathlib import Path
 import json
 import subprocess
 import sys
+import traceback
 
 ROOT=Path(__file__).resolve().parents[3]
+target=ROOT/'artifacts/package-check'
+target.mkdir(parents=True,exist_ok=True)
+def retain_startup_error(kind,value,tb):
+    (target/'native-export-probe-error.log').write_text(
+        ''.join(traceback.format_exception(kind,value,tb))[-64000:],encoding='utf-8')
+    sys.__excepthook__(kind,value,tb)
+sys.excepthook=retain_startup_error
 sys.path.insert(0,str(ROOT/'tools'))
 from dev_common import write_json
 from evidence_modules import run_modules
@@ -12,8 +20,6 @@ from evidence_modules import run_modules
 expected=['test_input_learning_integration.InputLearningIntegrationTests.test_shared_learning_preview_preserves_original_pdf_png_jpg_formats']
 folder=ROOT/'artifacts/native-export-probe'
 result,errors,log=run_modules(expected,folder,test_root=ROOT/'tests',workers=1,module_timeout=180)
-target=ROOT/'artifacts/package-check'
-target.mkdir(parents=True,exist_ok=True)
 passed=result.wasSuccessful() and not errors
 write_json(target/'native-export-probe.json',dict(
     status='PASS' if passed else 'FAIL',
