@@ -4,7 +4,7 @@
 
 ## 當前正常發佈
 
-**尚未發佈，無tag。準備正常無diagnostic標記提交。** 最新已實證修復是frozenUTF8，不需改產品。正常流程仍完整原176、真EXE兩階段、tag、草稿與公開下載全部檔案SHA。只有RELEASE_PUBLISHED_DOWNLOAD_VERIFIED原生回執精確讀回，才能說已發佈。
+**尚未發佈，無tag。當前正常無diagnostic標記候選04418ac0fbc39011a6aebbcbd8e475cba3cc0f01已推送並獨立Git讀回。** 最新已實證修復是frozenUTF8，不需改產品。正常流程仍完整原176、真EXE兩階段、tag、草稿與公開下載全部檔案SHA。只有RELEASE_PUBLISHED_DOWNLOAD_VERIFIED原生回執精確讀回，才能說已發佈。
 
 原生Windows03a7c692/run39623436705已176/176PASS、16健康、49新Qt程序、0runtime、source unchanged；真EXE當時快取失效。d34e/run39628676683觀察到0AUTO_UNIT、COMPLETED_WITH_EXCEPTIONS、來源快取錯誤，未到暫停，不是暫停控制失效。
 
