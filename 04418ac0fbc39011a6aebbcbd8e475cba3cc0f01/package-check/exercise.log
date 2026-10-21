@@ -1,0 +1,29 @@
+FROZEN_UTF8_MODE=1
+release-check: version_in_actual_window
+release-check: actual_executable_trains_frozen_synthetic_dataset
+release-check: input_generate_embedded_preview
+release-check: confirm_actual_preview
+release-check: drag_targets_visible_in_actual_viewport
+release-check: real_pointer_drag_preserves_data_invalidates_confirmation
+release-check: content_correction_clears_stale_preview
+release-check: regenerate_latest_input
+release-check: allowed_preview_export_matches_saved_bytes
+release-check: unqualified_formal_export_still_refused
+release-check: frozen_json_pipe_worker
+release-check: actual_frozen_background_worker_pauses_at_saved_boundary
+release-check: safe_report_does_not_include_authored_content
+Timeout (0:00:45)!
+Thread 0x00001ad0 (most recent call first):
+  File "template_ai\design_learning.py", line 92 in dataset_plan
+  File "template_ai\design_learning.py", line 159 in checked_dataset
+  File "template_ai\design_learning.py", line 207 in checked_model
+  File "template_ai\production_report.py", line 31 in input_advice
+  File "template_ai\production_report.py", line 47 in result_report
+  File "template_ai\design_learning_dialog.py", line 497 in refresh_draft
+  File "template_ai\desktop_workspace.py", line 708 in refresh
+  File "template_ai\workbench_navigation.py", line 285 in confirm_close
+  File "template_ai\gui.py", line 2482 in closeEvent
+  File "template_ai\release_check.py", line 239 in run
+  File "app.py", line 39 in main
+  File "app.py", line 100 in <module>
+release-check: actual_window_close_preserves_durable_session
