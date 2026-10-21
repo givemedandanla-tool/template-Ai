@@ -2,7 +2,7 @@
 
 2026-10-21。使用者已將倉庫改公開，要求重試Windows EXE發布，並評估雲端文件是否應刪。**尚未建立EXE、tag或Release；本輪刪除0檔。** 不合併main、不覆寫tag、不改帳務或新增付費資源。
 
-目前程式修正來源429bd302已推送dev/v0.1-first-version並獨立Git讀回；新5個安全測試及既有7個證據工具測試PASS。code manifest以STATE.windows_release為準。linux-regression-005正在兩個owned程序執行1963項，未完成，不可拿中途計數當PASS。測試中不改產品/tools/tests；文件checkpoint不改code manifest。完成後單獨執行原27個stock captures，指令：QT_QPA_PLATFORM=offscreen .venv/bin/python docs/dev/pre_download_audit/run_stock_capture_audit.py --output docs/dev/releases/v0.2.0-beta.1/stock-captures-005 --workspace /workspace/template-Ai/.cache/release-beta-stock-005。不能與完整回歸並行。
+目前程式修正來源429bd302已推送dev/v0.1-first-version並獨立Git讀回；新5個安全測試及既有7個證據工具測試PASS。code manifest以STATE.windows_release為準。linux-regression-005已完成1963/1963PASS、259健康模組、0runtime且來源未變；原stock-captures-005正在單獨執行，仍待整輪結果。測試中不改產品/tools/tests；文件checkpoint不改code manifest。完成後單獨執行原27個stock captures，指令：QT_QPA_PLATFORM=offscreen .venv/bin/python docs/dev/pre_download_audit/run_stock_capture_audit.py --output docs/dev/releases/v0.2.0-beta.1/stock-captures-005 --workspace /workspace/template-Ai/.cache/release-beta-stock-005。不能與完整回歸並行。
 
 公開重試3次實際結果保留：前2次建置依賴失敗；第三source35d133cd/run39592388094治理PASS、Windows171預定131完成129PASS2ERROR、40未完成，報告在releases/v0.2.0-beta.1/windows-native-001-failed。真實原因包含Inkscape附帶Python遮蔽setup-python（workflow已修正）；Windows的os.kill(pid,0)會殺程序（改既有psutil）；進度檔rename分享衝突（重用atomic helper，限定錯誤有限重試）；合成測試的Noto字型與短路徑假設（使用實際字型及resolve，不放寬原斷言）。input-integration deadline未解釋，未提高期限；加入Windows近原截止時間的一次stack dump及有界失敗log，若再現讀實際stack。
 

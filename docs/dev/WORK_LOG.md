@@ -1798,3 +1798,6 @@ Windows beta來源正式CP002：11712 scoped檔案隔離還原PASS，實際snaps
 
 
 Windows repair source429bd302 remotely read back, code fixed and targeted5 safety+7 evidence-module tests PASS. Full linux-regression-005 is still running on unchanged source,1963 planned; intermediate progress is not final qualification. Next run stock27 alone, adopt formal same-source evidence, then nativeWindows176 and actualEXE. New code reusespsutil for process liveness, existing atomic JSON helper with boundedWindows retries, portable test preconditions and deadline-only Windows stack diagnostics. No private data, deletions, main merge or paid services. WIP checkpoint preserves source and next steps without copying mutable live test outputs.
+
+
+Windows repair linux-regression-005 completed1963/1963PASS,259healthy modules,0runtime,source unchanged. Original1958 IDs all actually passed;5new safety cases added, all27 original capture script bytes unchanged. Stock-captures-005 now runs alone, no concurrency with full source test run. This milestone is source-level only, native176/frozenEXE/Release/download remain pending.

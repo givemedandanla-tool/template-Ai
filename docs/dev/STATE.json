@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "WINDOWS_NATIVE_REPAIR_FULL_REGRESSION",
+  "active_task": "WINDOWS_NATIVE_REPAIR_GUI_REGRESSION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-REPAIR-WIP-001.receipt.json",
   "last_confirmed_commit": "c644e77d7106c9ef91c2711078b7fb4f0b91d7e2",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-LINUX-001/run.json",
@@ -18,7 +18,7 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Run full1963 and original stock27 separately on fixed repair source, adopt same-source formal evidence and exact remote checkpoint; then request native Windows176 and frozen EXE.",
+    "Finish original stock27 alone; adopt new same-source formal run, strict gate and remote checkpoint; then native176 and actual EXE.",
     "If input-integration deadline persists on Windows, inspect retained progress and deadline stack; do not relax deadlines or skip tests.",
     "Storage assessment complete, no deletions; updated future-start draft saved but not applied/published."
   ],
@@ -44,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261021-WINDOWS-REPAIR-FULL005-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1702,12 +1704,12 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "NATIVE_REPAIRS_AWAIT_SAME_SOURCE_VALIDATION",
+    "status": "FULL1963_PASS_ORIGINAL_GUI005_RUNNING",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Run full1963 and original stock27 separately on fixed repair source, adopt same-source formal evidence and exact remote checkpoint; then request native Windows176 and frozen EXE.",
+    "next": "Finish original stock27 alone; adopt new same-source formal run, strict gate and remote checkpoint; then native176 and actual EXE.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
@@ -1734,13 +1736,13 @@
     "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.json",
     "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.receipt.json",
     "last_full_run": {
-      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-004/summary.json",
+      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-005/summary.json",
       "status": "PASS",
-      "passed": 1958,
-      "failed": 0,
-      "errors": 0,
-      "healthy_modules": 258,
-      "source_unchanged": true
+      "passed": 1963,
+      "healthy_modules": 259,
+      "runtime_errors": 0,
+      "source_unchanged": true,
+      "source_commit": "429bd302eece95477e462fbdaef6c427bedf42a1"
     },
     "code_change_commit": "7d43d956441bab529d60f734dd331241fd9abfe2",
     "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-005",
@@ -1803,13 +1805,10 @@
     },
     "native_expected_tests": 176,
     "regression_progress": {
-      "observed_utc": "2026-10-21T12:06:09.978263+00:00",
-      "source_commit": "429bd302eece95477e462fbdaef6c427bedf42a1",
-      "completed": 784,
+      "completed": 1963,
       "planned": 1963,
-      "passed": 784,
-      "failed_ids": [],
-      "qualification": "IN_PROGRESS_NOT_FINAL"
+      "passed": 1963,
+      "qualification": "FULL_SOURCE_LOCAL_PASS_GUI005_PENDING"
     }
   },
   "storage_assessment": {
