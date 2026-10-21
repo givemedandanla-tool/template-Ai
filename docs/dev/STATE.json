@@ -1657,7 +1657,7 @@
     "decision": "docs/decisions/2026-10-21-RELEASE-MAINTENANCE-RULES.md",
     "adopted_on": "2026-10-21",
     "first_test_version_plan": "0.2.0-beta.1",
-    "tooling_status": "NOT_IMPLEMENTED_BY_POLICY_ADOPTION",
+    "tooling_status": "IMPLEMENTED_PENDING_REAL_WINDOWS_BUILD_AND_RELEASE_VERIFICATION",
     "exe_built": false,
     "release_published": false,
     "remote_status": "REMOTE_VERIFIED_DOCUMENTATION_ONLY",
@@ -1700,7 +1700,7 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "READY_FOR_SOURCE_BOUND_WINDOWS_BUILD",
+    "status": "LOCAL_RELEASE_BLOCKERS_FIXED_WINDOWS_RECEIPT_PENDING",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
@@ -1710,12 +1710,19 @@
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
       "linux_source_flow": "009 two phases PASS but dirty source demonstration only; repeat source-bound",
-      "actual_windows_exe": "NOT_RUN"
+      "actual_windows_exe": "NOT_RUN",
+      "report_regression": "32 PASS",
+      "runtime_refresh": "2 new cases PASS; original unmodified capture_runtime fixed004 PASS"
     },
     "authorization": {
       "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
       "user_request": "好，現在我要你在github發佈程式本體exe，讓我投入實機測試",
       "date": "2026-10-21"
-    }
+    },
+    "known_fixed": [
+      "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
+      "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
+    ],
+    "windows_receipt": "NOT_OBSERVED_REQUEST_PUSH_DOES_NOT_PROVE_RUN_STARTED"
   }
 }

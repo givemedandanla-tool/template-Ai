@@ -1,0 +1,9 @@
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+DIAGNOSTIC_SYNTHETIC_FIXTURE_NOT_QUALIFICATION {"sources": 2, "units": 3, "jobs": [{"phase": "COMPLETED_WITH_EXCEPTIONS", "system_error": null, "items": [{"state": "WAITING_REVIEW", "error": null, "analysed_units": 1, "reused_units": 0, "stages_complete": true}, {"state": "WAITING_REVIEW", "error": null, "analysed_units": 2, "reused_units": 0, "stages_complete": true}]}]}
+Traceback (most recent call last):
+  File "<stdin>", line 12, in <module>
+  File "/workspace/template-Ai/tools/capture_runtime.py", line 33, in capture_runtime
+    if len(sources)!=2 or len({s['id'] for s in sources})!=2 or len(units)!=4 or any(case.service.store.facts(u['work_id'])['confirmation'] is not None for u in units):raise RuntimeError('actual aliases or review independence failed')
+                                                                                                                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: actual aliases or review independence failed

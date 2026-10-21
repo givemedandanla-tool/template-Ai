@@ -62,7 +62,7 @@ from PyInstaller.utils.hooks import collect_submodules, copy_metadata, collect_d
 root = Path(SPECPATH).parent.parent
 datas = [(str(path), 'template_ai') for path in sorted((root / 'template_ai').glob('*.py'))]
 datas += [(str(root / 'app.py'), '.'), (str(root / 'build/release/release-info.json'), '.')]
-for distribution in ['PySide6', 'PySide6_Addons', 'PySide6_Essentials', 'shiboken6', 'cryptography', 'cffi',
+for distribution in ['PySide6', 'PySide6_Addons', 'PySide6_Essentials', 'shiboken6', 'cryptography', 'cffi', 'pycparser',
     'pypdf', 'phonenumbers', 'kiwisolver', 'fonttools', 'psutil', 'networkx', 'scikit-learn', 'numpy', 'scipy',
     'joblib', 'threadpoolctl', 'pdfminer.six', 'charset-normalizer']:
     datas += copy_metadata(distribution)
@@ -91,7 +91,9 @@ def exercise(executable, output):
     from test_design_session import DesignSessionTests
     from test_automatic_training import AutomaticTrainingTests
     from PySide6.QtWidgets import QApplication
-    app = QApplication.instance() or QApplication([])
+    application = QApplication.instance() or QApplication([])
+    if application.platformName() not in ('windows', 'offscreen', 'xcb'):
+        raise RuntimeError('Unexpected Qt acceptance platform')
     DesignSessionTests.setUpClass()
     worker = AutomaticTrainingTests()
     worker.setUp()

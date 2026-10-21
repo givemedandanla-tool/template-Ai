@@ -1071,6 +1071,7 @@ class MainWindow(QMainWindow):
         self.run_job("核對原稿內容與完整關聯，尚不改位置",work,finished)
 
     def refresh_sources(self, select=None, preserve_editor=False):
+        explicit_select=select
         retained=self.source['id'] if preserve_editor and self.source else None
         from .startup_catalog import editor_page
         selected=retained or select or (self.library.active_source_id() if self.source is None else None)
@@ -1087,8 +1088,13 @@ class MainWindow(QMainWindow):
         select = retained or select or self.library.active_source_id()
         if select:
             self.source_combo.setCurrentIndex(next((i for i, s in enumerate(self.sources) if s["id"] == select), 0))
+        if preserve_editor and not retained and explicit_select is None:
+            # A background metadata refresh must preserve an empty editor too.
+            # Selecting a registered-but-not-yet-analysed source here creates a
+            # manual full-page work and changes the worker's segmentation scope.
+            self.source_combo.setCurrentIndex(-1)
         self.source_combo.blockSignals(False)
-        if self.sources and not retained:
+        if self.sources and not retained and (not preserve_editor or explicit_select is not None):
             self.choose_source(self.source_combo.currentIndex())
 
     def source_page(self,delta):

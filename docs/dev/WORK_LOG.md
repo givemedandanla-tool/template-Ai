@@ -1772,3 +1772,5 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 Windows beta WIP：版本／frozen白名單背景入口與副本啟動整合、Windows原生程序隔離建置及draft→下載核對→發布→再下載核對流程已落檔。5項launcher回歸PASS；合成來源驗證已走到拖動／資料更正，但重產或關閉流程仍調查，未標PASS、未建置Windows、未發布。第一次來源示範錯把venv symlink解析成base Python，已修正並保留失敗。
 
 Windows beta preflight：13新回歸及10既有治理測試PASS。合成來源流程009兩階段PASS（Linux、source-only、當時未提交，不當固定來源／frozen證據）；修復從非倉庫cwd啟動子程序的模組查找，全部既有worker共用有限白名單入口。GUI等待改用既有真實QEventLoop模式，未放寬原逾時或斷言；同時保留實際資源與合成固定負載的資格界線。治理僅允許本次精確發佈請求分支與手動dispatch，一般push／PR仍拒絕。固定來源後重跑。
+
+Windows beta validation WIP2：固定來源4406e11d的Linux全回歸在676項／645PASS後因已確認beta報告版本缺陷停止，保留INTERRUPTED_NOT_PASS與全部觀察，不能冒稱完整PASS；31失敗不以重跑消失。原stock001在第4項失敗而停止（3PASS/1FAIL/23未跑）。根因診斷排除原始幾何不一致：真實CLI輸出一致；背景資源暫停後的清單刷新建立手工整頁作品，改變接續分割範圍。修復preserve_editor也保留空編輯器，不改演算法／作品真值。新增強制邊界暫停→刷新→接續回歸；原始capture_runtime fixed004 PASS。報告32項PASS，beta/rc嚴格白名單，不允許任意版本字串／私人payload。原13項source-refresh初查含11既有imported TestCase重複，已改module alias避免污染catalog，只有2項新增。尚未取得Windows執行回執／未發佈。

@@ -52,7 +52,7 @@ def validate(data):
         raise ValueError('報告識別不合法')
     if not isinstance(data['created_utc'],str) or not re.fullmatch(r'\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ',data['created_utc']):
         raise ValueError('報告時間不合法')
-    if not isinstance(data['app_version'],str) or not re.fullmatch(r'\d{1,3}\.\d{1,3}\.\d{1,3}',data['app_version']):
+    if not isinstance(data['app_version'],str) or not re.fullmatch(r'\d{1,3}\.\d{1,3}\.\d{1,3}(?:-(?:alpha|beta|rc)\.[1-9]\d{0,3})?',data['app_version']):
         raise ValueError('報告程式版本不合法')
     if data['historical'] is not True or data['nonformal'] is not True or data['privacy'] != 'SAFE_ALLOWLIST_NO_SOURCE_ATTACHMENTS':
         raise ValueError('缺少歷史／非正式／安全內容標記')

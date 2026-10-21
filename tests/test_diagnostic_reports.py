@@ -102,6 +102,15 @@ class DiagnosticReportTests(unittest.TestCase):
             data=copy.deepcopy(s.data);change(data)
             with self.assertRaises(ValueError):build_bundle(data)
         self.assertNotIn(b'<script',report_html(s.data));self.assertNotIn(b'<img',report_html(s.data))
+
+    def test_beta_and_rc_reports_round_trip_without_allowing_freeform_version_payloads(self):
+        data=make_snapshot(self.w,'input').data
+        for version in ['0.1.28','0.2.0-beta.1','0.2.0-rc.2']:
+            data['app_version']=version
+            self.assertEqual(read_bundle(build_bundle(data))['app_version'],version)
+        for version in ['0.2.0-CUSTOMER-NAME','0.2.0-beta.0','0.2.0-beta.1<script>','0.2.0-beta.10000']:
+            data['app_version']=version
+            with self.assertRaises(ValueError):build_bundle(data)
     def test_anonymous_targets_dont_merge_same_names_and_exact_input_navigation(self):
         from PySide6.QtWidgets import QTableWidgetItem
         self.w.people.setRowCount(2)
