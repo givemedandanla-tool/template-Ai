@@ -1,11 +1,12 @@
 """One owned unittest module; raw completion journal survives native crashes."""
-import argparse,faulthandler,io,json,os,re,signal,sys,traceback,unittest
+import argparse,faulthandler,io,json,os,re,signal,sys,time,traceback,unittest
 from pathlib import Path
 from dev_common import ROOT,write_json
 
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--expected',type=Path,required=True);parser.add_argument('--test-root',type=Path,required=True);parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--deadline-at',type=float)
     args=parser.parse_args();args.output.mkdir(parents=True,exist_ok=False)
     expected=json.loads(args.expected.read_text());assert isinstance(expected,list) and 1<=len(expected)<=2000 and len(expected)==len(set(expected))
     if any(not isinstance(x,str) or not re.fullmatch(r'test_[A-Za-z0-9_]+(?:\.[A-Za-z_][A-Za-z0-9_]*){2,}',x) for x in expected):raise ValueError('Only exact existing unittest IDs are allowed')
@@ -22,6 +23,11 @@ def main():
     # Fatal faults still dump; the owner requests a stack on an actual deadline.
     stack_signal=getattr(signal,'SIGUSR1',None) if os.name=='posix' else None
     if stack_signal is not None:faulthandler.register(stack_signal,file=stacks,all_threads=True)
+    deadline_dump=os.name=='nt' and args.deadline_at is not None
+    if deadline_dump:
+        # Windows has no SIGUSR1. One dump at the owner's impending deadline,
+        # not a periodic stack walk or an extension of the allowed test time.
+        faulthandler.dump_traceback_later(max(.01,args.deadline_at-time.monotonic()-.2),file=stacks)
     try:
         if os.name=='posix':
             import resource
@@ -41,6 +47,7 @@ def main():
         errors.append(dict(type=type(error).__name__,message=str(error),traceback=traceback.format_exc()))
     finally:
         sys.excepthook=old
+        if deadline_dump:faulthandler.cancel_dump_traceback_later()
         if stack_signal is not None:faulthandler.unregister(stack_signal)
         faulthandler.disable();stacks.close()
         records=list(result.records.values()) if result else []

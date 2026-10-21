@@ -6,6 +6,7 @@ import unittest
 from unittest.mock import patch
 
 from PySide6.QtCore import Qt, QTimer
+from PySide6.QtGui import QFontInfo
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication, QDialog, QMessageBox, QFileDialog, QLabel, QPushButton
 
@@ -211,7 +212,7 @@ class LogoWorkflowGuiTests(unittest.TestCase):
     def test_frame_adjustment_uses_existing_versioned_draft_and_never_mutates_published(self):
         from template_ai.model import Template,Slot,Rect
         template=Template('Synthetic protected logo frame',90,54,
-            [Slot('name','p1',Rect(3,3,60,8)),Slot('logo','c1',Rect(3,20,30,15))],
+            [Slot('name','p1',Rect(3,3,60,8),font=QFontInfo(APP.font()).family()),Slot('logo','c1',Rect(3,20,30,15))],
             company_bindings={'p1':'c1'})
         self.window.library.publish(template);before=deepcopy(template.to_dict())
         self.window.refresh_templates(template.id);self.window.open_catalog_editor(template.id)

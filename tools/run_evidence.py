@@ -32,7 +32,7 @@ class EvidenceResult(unittest.TextTestResult):
         if self.progress_path is None:return
         completed=[record for record in self.records.values() if 'seconds' in record]
         value=dict(phase=phase,current_test=test.id() if test else None,started=len(self.records),completed=len(completed),passed=sum(record['status']=='PASS' for record in completed),failed_ids=[record['id'] for record in completed if record['status'] in ('FAIL','ERROR','UNEXPECTED_SUCCESS')][:20],formal_complete=False,updated_at=datetime.now(timezone.utc).isoformat())
-        temporary=self.progress_path.with_suffix('.tmp');write_json(temporary,value);os.replace(temporary,self.progress_path)
+        write_json(self.progress_path,value)
 
     def startTest(self, test):
         super().startTest(test)

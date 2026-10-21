@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "WINDOWS_PUBLIC_RETRY_AND_STORAGE_ASSESSMENT",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-PUBLIC-RETRY-STORAGE-001.receipt.json",
-  "last_confirmed_commit": "eb496ae9389850073a02bbe2ed01cf36d71ea670",
+  "active_task": "WINDOWS_NATIVE_REPAIR_FULL_REGRESSION",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-NATIVE-FAILURE-001.receipt.json",
+  "last_confirmed_commit": "8b21267b9ccc94768b181712b8d4305bde331c8a",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-LINUX-001/run.json",
   "exe_policy": "EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -18,9 +18,9 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Repair actual Windows process liveness and evidence-file sharing, portable fixture fonts/canonical paths; run new safety regressions, full same-source Linux and stock GUI evidence before another Windows request.",
-    "Preserve original native failure evidence and limits; investigate input-integration deadline using bounded native stack diagnostics if it persists.",
-    "Storage assessment complete and remote verified; zero deletion."
+    "Run full1963 and original stock27 separately on fixed repair source, adopt same-source formal evidence and exact remote checkpoint; then request native Windows176 and frozen EXE.",
+    "If input-integration deadline persists on Windows, inspect retained progress and deadline stack; do not relax deadlines or skip tests.",
+    "Storage assessment complete, no deletions; updated future-start draft saved but not applied/published."
   ],
   "blocked": [
     {
@@ -44,9 +44,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261021-WINDOWS-NATIVE-FAILURE-001"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1704,19 +1702,21 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "NATIVE_WINDOWS_FAILURE_ROOT_CAUSE_REPAIR",
+    "status": "NATIVE_REPAIRS_AWAIT_SAME_SOURCE_VALIDATION",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Repair actual Windows process liveness and evidence-file sharing, portable fixture fonts/canonical paths; run new safety regressions, full same-source Linux and stock GUI evidence before another Windows request.",
+    "next": "Run full1963 and original stock27 separately on fixed repair source, adopt same-source formal evidence and exact remote checkpoint; then request native Windows176 and frozen EXE.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
       "linux_source_flow": "009 two phases PASS but dirty source demonstration only; repeat source-bound",
       "actual_windows_exe": "NOT_RUN",
       "report_regression": "32 PASS",
-      "runtime_refresh": "2 new cases PASS; original unmodified capture_runtime fixed004 PASS"
+      "runtime_refresh": "2 new cases PASS; original unmodified capture_runtime fixed004 PASS",
+      "windows_safety_regressions": "5 PASS locally, actual foreign-process survival and bounded atomic-write failures",
+      "evidence_module_regression": "7 PASS"
     },
     "authorization": {
       "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -1730,7 +1730,7 @@
     "windows_receipt": "FAILED_ACTUAL_NATIVE_RECEIPT_OBSERVED",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "570ecebe1e5135b0fc271b6c0d56639fdae55566",
-    "source_manifest_sha256": "3cd6da4bbe162df29746c17e12e55992a4eabc09042f4492896a0b54b9c9c95f",
+    "source_manifest_sha256": "118460d20ebd68a32bc97b8b55b5b76d451732c6ca35e27efc2c4f0fc6def7b7",
     "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.json",
     "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.receipt.json",
     "last_full_run": {
@@ -1743,8 +1743,8 @@
       "source_unchanged": true
     },
     "code_change_commit": "7d43d956441bab529d60f734dd331241fd9abfe2",
-    "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-004",
-    "current_original_captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-004",
+    "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-005",
+    "current_original_captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-005",
     "original_captures_status": "27/27 PASS; isolated run; original scripts/assertions/deadlines unchanged",
     "linux_formal_run": "docs/evidence/runs/RUN-WINDOWS-BETA-LINUX-001/run.json",
     "local_validation": {
@@ -1800,7 +1800,8 @@
       "errors": 2,
       "runtime_errors": 3,
       "missing": 40
-    }
+    },
+    "native_expected_tests": 176
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",

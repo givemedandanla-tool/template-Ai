@@ -27,7 +27,16 @@ def write_json(path, data):
             stream.write("\n")
             stream.flush()
             os.fsync(stream.fileno())
-        os.replace(name, path)
+        # A Windows progress reader may briefly deny replacing the old file.
+        # Preserve complete JSON and fail rather than masking persistent denial.
+        import time
+        for attempt in range(8):
+            try:
+                os.replace(name,path)
+                break
+            except PermissionError as error:
+                if getattr(error,'winerror',None) not in (5,32,33) or attempt==7:raise
+                time.sleep(.02)
     finally:
         Path(name).unlink(missing_ok=True)
 

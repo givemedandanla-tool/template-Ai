@@ -263,7 +263,7 @@ class DesktopProductionTests(unittest.TestCase):
             QTest.mouseClick(self.desk.primary, Qt.LeftButton)
         self.assertTrue(path.is_file())
         saved = editor.sessions.store.records("DESIGN_ACCEPTED_ARTIFACT")
-        artifact = next(x for x in saved if x["session_id"] == row["id"] and x["path"] == str(path))
+        artifact = next(x for x in saved if x["session_id"] == row["id"] and x["path"] == str(path.resolve()))
         self.assertEqual(artifact["sha256"], hashlib.sha256(path.read_bytes()).hexdigest())
         self.assertFalse(artifact["production"])
 

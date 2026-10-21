@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import time
 import weakref
+import psutil
 from .model import new_id
 from .source_links import hash_source,verify_source,check_verified,ScanCancelled
 from .importer import import_file,cache_matches,MAX_PIXELS
@@ -187,7 +188,7 @@ class BatchStore:
             else:
                 try:
                     if type(pid) is not int or pid<=0:raise ProcessLookupError()
-                    os.kill(pid,0);alive=True
+                    alive=psutil.pid_exists(pid)
                 except ProcessLookupError:alive=False
                 except PermissionError:alive=True
             if alive:continue

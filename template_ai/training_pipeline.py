@@ -3,6 +3,7 @@ import copy
 import os
 import threading
 import time
+import psutil
 from .model import new_id
 
 LIVE_OWNERS=set()
@@ -12,9 +13,10 @@ SUCCESS_STATES={'SUCCESS','REUSED'}
 def owner_alive(owner):
     if not isinstance(owner,dict):return False
     if owner.get('pid')==os.getpid():return owner.get('token') in LIVE_OWNERS
-    try:os.kill(owner['pid'],0);return True
-    except ProcessLookupError:return False
-    except (PermissionError,OSError):return True
+    try:
+        pid=owner['pid']
+        return type(pid) is int and pid>0 and psutil.pid_exists(pid)
+    except (PermissionError,psutil.AccessDenied):return True
     except (KeyError,TypeError,ValueError):return False
 
 

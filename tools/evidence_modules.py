@@ -80,7 +80,7 @@ def run_modules(expected,live,*,test_root=None,module_timeout=120,workers=1):
     for module,identities in groups.items():
         requested=workspace/(module+'-expected.json');write_json(requested,identities);output=workspace/module;stdout=workspace/(module+'-stdout.log')
         started=time.monotonic();timed_out=False;failure=None;last_child=None;remaining=[];progress(module)
-        command=[sys.executable,str(ROOT/'tools/evidence_test_worker.py'),'--expected',str(requested),'--test-root',str(test_root),'--output',str(output)]
+        command=[sys.executable,str(ROOT/'tools/evidence_test_worker.py'),'--expected',str(requested),'--test-root',str(test_root),'--output',str(output),'--deadline-at',str(started+module_timeout)]
         with stdout.open('wb') as stream:
             process=subprocess.Popen(command,cwd=ROOT,stdin=subprocess.DEVNULL,stdout=stream,stderr=subprocess.STDOUT,start_new_session=os.name=='posix')
             try:

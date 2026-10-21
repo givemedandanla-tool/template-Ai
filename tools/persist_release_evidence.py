@@ -68,6 +68,12 @@ def persist(status):
                     dest = target / 'failed-modules' / name
                     dest.parent.mkdir(exist_ok=True)
                     dest.write_bytes(path.read_bytes()[-64000:])
+                for diagnostic in ['unittest.log','stacks.log','progress.json']:
+                    path=artifacts/'source-tests/live/modules'/module['module']/diagnostic
+                    if path.is_file():
+                        dest=target/'failed-modules'/(module['module']+'-'+diagnostic)
+                        dest.parent.mkdir(exist_ok=True)
+                        dest.write_bytes(path.read_bytes()[-64000:])
         for path in [target / 'status.json', folder / 'latest.json']:
             path.write_text(json.dumps(evidence, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         git(folder, 'add', '.')
