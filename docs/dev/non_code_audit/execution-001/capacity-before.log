@@ -1,0 +1,47 @@
+FFFF
+======================================================================
+FAIL: test_conflicting_outcomes_at_same_measured_demand_do_not_claim_certainty (test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_conflicting_outcomes_at_same_measured_demand_do_not_claim_certainty)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_noncode_capacity_semantics.py", line 46, in test_conflicting_outcomes_at_same_measured_demand_do_not_claim_certainty
+    self.assertEqual(capacity_advice(model,self.context,[2.,2.])['status'],
+AssertionError: 'WITHIN_VALIDATED_EMPIRICAL_REGION' != 'UNKNOWN_OR_OUTSIDE_VALIDATED_REGION'
+- WITHIN_VALIDATED_EMPIRICAL_REGION
++ UNKNOWN_OR_OUTSIDE_VALIDATED_REGION
+
+
+======================================================================
+FAIL: test_known_layout_failure_inside_otherwise_supported_region_abstains (test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_layout_failure_inside_otherwise_supported_region_abstains)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_noncode_capacity_semantics.py", line 40, in test_known_layout_failure_inside_otherwise_supported_region_abstains
+    self.assertEqual(capacity_advice(model,self.context,[2.5,2.])['status'],
+AssertionError: 'WITHIN_VALIDATED_EMPIRICAL_REGION' != 'UNKNOWN_OR_OUTSIDE_VALIDATED_REGION'
+- WITHIN_VALIDATED_EMPIRICAL_REGION
++ UNKNOWN_OR_OUTSIDE_VALIDATED_REGION
+
+
+======================================================================
+FAIL: test_known_unqualified_outlier_cannot_expand_suitable_region (test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_unqualified_outlier_cannot_expand_suitable_region)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_noncode_capacity_semantics.py", line 34, in test_known_unqualified_outlier_cannot_expand_suitable_region
+    self.assertEqual(capacity_advice(model,self.context,[18.,2.])['status'],
+AssertionError: 'WITHIN_VALIDATED_EMPIRICAL_REGION' != 'UNKNOWN_OR_OUTSIDE_VALIDATED_REGION'
+- WITHIN_VALIDATED_EMPIRICAL_REGION
++ UNKNOWN_OR_OUTSIDE_VALIDATED_REGION
+
+
+======================================================================
+FAIL: test_old_artifact_without_negative_support_contract_needs_recalibration (test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_old_artifact_without_negative_support_contract_needs_recalibration)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/template-Ai/tests/test_noncode_capacity_semantics.py", line 55, in test_old_artifact_without_negative_support_contract_needs_recalibration
+    with self.assertRaisesRegex(ValueError,'changed or incompatible'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.007s
+
+FAILED (failures=4)
