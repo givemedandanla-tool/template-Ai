@@ -1813,3 +1813,6 @@ Native fac43f21/run39601136869:175/176completed,174PASS,1SQLite cleanupERROR,1in
 
 
 Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSourceWatch cleanup modal at180s retainedFAIL. Whole unchanged11case module passed alone33.855s with original180s cap. Qualified1963 unique actual records from healthy module attempts with exact shared source and per-case origin hashes; negative control rejects old different-source before output. Existing adoption strengthened to verify origin records and archive12inputJSONs; formal369attachments preserves initial failure, no assertions/deadlines/requirements relaxed. Stock006original27/27PASS, original1958IDs and27recipes preserved. Nativebea79/run39607635193diagnostic176/176PASS16healthy0runtime; isolated3format casePASS7.575s. NoEXE/tag/Release fromdiagnosis. Normal exact-source build remainsrequired.
+
+
+2026-10-21 Windows正式重試：da809原始169PASS/7未完成的FAIL保留；準備原176案例每程序最多4例、serial1、180秒不變的CI隔離設定。Linux配置原5/5PASS及隔離刻意失敗負例PASS。產品/tools/tests及已資格化manifest未變；尚無EXE/tag/發布。空間評估完成但未刪任何既有備份。

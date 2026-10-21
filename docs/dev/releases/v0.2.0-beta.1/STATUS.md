@@ -31,3 +31,8 @@ Windows15模組171案例全PASS無skip、真正frozen EXE兩階段檢查、不�
 唯讀空間評估見docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.md及226列CSV；零刪除。55份舊實體ZIP共19.42GiB只是條件候選，尚需逐份hash／獨有資料／還原核對。最新來源包與本輪評估包2／2 hash/CRC/基底檢查PASS，不等於全部歷史備份皆可用。
 
 真實作品學習品質、完整私人.ai還原、使用者Windows硬體／效能、實印、新手及完整網路隔離資格仍待本機回饋。教學／知識庫為未採用草案，網頁／手機延後。沒有新增付費API、外部模型、試用、付費runner、Codespaces、付款方式或子代理；不臆測整個帳戶帳單數字。
+
+
+## 正式重試 da809 的實際結果與分組設定
+
+run39612727807來源169PASS/7未完成，input模組到180秒watchdog，未產EXE。原失敗完整有界資料見windows-native-003-failed。新CI設定見grouped-qt-config-001：最多4原案例/程序，serial1，原180秒不變；5案例配置試跑及負例驗證通過。來源manifest0c4c11c8不變，嚴格證據Gate172/166/75/1963仍PASS。即將再跑全部176及實際EXE；未完成前不建成功標記。

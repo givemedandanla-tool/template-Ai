@@ -58,9 +58,9 @@ jobs:
             # Inkscape bundles Python too; keep the build on setup-python 3.11.
             $env:PATH = "$env:pythonLocation;$env:pythonLocation\Scripts;$env:PATH"
             if ($env:NATIVE_TESTS_ONLY -eq 'true') {
-              & ./tools/build_windows.ps1 -NativeTestsOnly *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
+              & ./.github/build_windows_ci.ps1 -NativeTestsOnly *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
             } else {
-              & ./tools/build_windows.ps1 *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
+              & ./.github/build_windows_ci.ps1 *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
             }
             if ($LASTEXITCODE -ne 0) { throw "Windows build exited with code $LASTEXITCODE" }
           } catch {

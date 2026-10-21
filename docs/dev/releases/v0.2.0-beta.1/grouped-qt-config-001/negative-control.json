@@ -1,0 +1,70 @@
+{
+  "status": "PASS_NEGATIVE_CONTROL",
+  "expected": [
+    "test_bounded_failure_control.Control.test_0",
+    "test_bounded_failure_control.Control.test_1",
+    "test_bounded_failure_control.Control.test_2",
+    "test_bounded_failure_control.Control.test_3",
+    "test_bounded_failure_control.Control.test_4"
+  ],
+  "records": [
+    {
+      "id": "test_bounded_failure_control.Control.test_0",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.001198
+    },
+    {
+      "id": "test_bounded_failure_control.Control.test_1",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.00062
+    },
+    {
+      "id": "test_bounded_failure_control.Control.test_2",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.000651
+    },
+    {
+      "id": "test_bounded_failure_control.Control.test_3",
+      "status": "PASS",
+      "details": [],
+      "seconds": 0.000831
+    },
+    {
+      "id": "test_bounded_failure_control.Control.test_4",
+      "status": "FAIL",
+      "details": [
+        "Traceback (most recent call last):\n  File \"/workspace/template-Ai/.cache/release-public-retry/grouped-negative-001/test_bounded_failure_control.py\", line 7, in test_4\n    def test_4(self): self.assertTrue(False)\n                      ^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true\n"
+      ],
+      "seconds": 0.001648
+    }
+  ],
+  "runtime_errors": [],
+  "modules": [
+    {
+      "module": "test_bounded_failure_control",
+      "owned_pid": null,
+      "owned_pids": [
+        1689780,
+        1689781
+      ],
+      "exit_code": 1,
+      "seconds": 0.520294,
+      "expected": 5,
+      "completed": 5,
+      "missing_test_ids": [],
+      "unexpected_test_ids": [],
+      "duplicate_ids": false,
+      "parse_error": null,
+      "timed_out": false,
+      "failure": "OWNED_QT_GROUP_FAILED",
+      "remaining_owned_pids": [],
+      "healthy": false,
+      "process_groups": 2,
+      "max_cases_per_owned_process": 4,
+      "per_process_watchdog_seconds": 180
+    }
+  ]
+}
