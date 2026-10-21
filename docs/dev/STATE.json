@@ -6,8 +6,8 @@
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
   "active_task": "PARALLEL_NATIVE_DIAGNOSIS_AND_REQUALIFICATION",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
-  "last_confirmed_commit": "ded89cf6638da2f72c2611ebebaeb6553496a1c2",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-DIAGNOSTIC-WIP-001.receipt.json",
+  "last_confirmed_commit": "255e563516172add9c6b399c8683792138b23397",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-REPAIR-LINUX-001/run.json",
   "exe_policy": "EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -44,9 +44,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261021-WINDOWS-DIAGNOSTIC-WIP-001"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1729,7 +1727,7 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "FAILED_ACTUAL_NATIVE_RECEIPT_OBSERVED",
+    "windows_receipt": "RUNNING_DIAGNOSTIC_ONLY_ACTUAL_RECEIPT_OBSERVED",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "429bd302eece95477e462fbdaef6c427bedf42a1",
     "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
@@ -1744,7 +1742,7 @@
       "source_unchanged": true,
       "source_commit": "429bd302eece95477e462fbdaef6c427bedf42a1"
     },
-    "code_change_commit": "429bd302eece95477e462fbdaef6c427bedf42a1",
+    "code_change_commit": "255e563516172add9c6b399c8683792138b23397",
     "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006",
     "current_original_captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-006",
     "original_captures_status": "27/27PASS on repair source; scripts/commands/deadlines unchanged",
@@ -1771,7 +1769,7 @@
     "software_snapshot_commit": "ded89cf6638da2f72c2611ebebaeb6553496a1c2",
     "software_verified_files": 11713,
     "governance_gate": "PASS_REQUIRE_EVIDENCE_PUBLICATION_SCOPE",
-    "current_request_source": "fac43f21072113abc95355c531e104921aca040a",
+    "current_request_source": "255e563516172add9c6b399c8683792138b23397",
     "previous_public_runs": [
       {
         "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
@@ -1793,7 +1791,7 @@
       "failed": 1,
       "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
     },
-    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39601136869",
+    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39605245059",
     "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-002-failed",
     "native_result": {
       "planned": 176,
@@ -1809,7 +1807,8 @@
     },
     "source_checkpoint": "CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001",
     "source_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
-    "software_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json"
+    "software_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
+    "native_mode": "NATIVE_TESTS_ONLY_NO_EXE_NO_RELEASE"
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",

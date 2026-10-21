@@ -1,0 +1,22 @@
+{
+  "source_commit": "CURRENT_CHECKOUT_RECORDED_BY_RUNNER",
+  "cpu_quota": "400000 100000",
+  "memory_limit_bytes": 34359738368,
+  "owned_module_workers": 4,
+  "environment": {
+    "QT_QPA_PLATFORM": "offscreen",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "TMPDIR": "/workspace/template-Ai/.cache/test-tmp-006"
+  },
+  "scope": "Same original full1963 cases; original module deadlines unchanged; stock GUI must run separately.",
+  "startup_attempts": [
+    {
+      "workers": 4,
+      "status": "CLI_REJECTED_BEFORE_TEST_EXECUTION",
+      "reason": "Original driver choices1/2; underlying owned-process pool supports4. Extended only CLI choice after isolated4process calibrationPASS; all original tests/deadlines unchanged."
+    }
+  ],
+  "orchestrator_calibration": "four-process-calibration-006.json"
+}

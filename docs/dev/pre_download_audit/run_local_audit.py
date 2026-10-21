@@ -34,7 +34,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--module', action='append', default=[])
-    parser.add_argument('--workers', type=int, choices=[1, 2], default=1)
+    parser.add_argument('--workers', type=int, choices=[1, 2, 4], default=1)
     args = parser.parse_args()
     os.chdir(ROOT)
     os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
