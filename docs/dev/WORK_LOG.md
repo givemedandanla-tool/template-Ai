@@ -1836,3 +1836,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 預檢發現新filter報告原路徑預建exercise所需全新目錄；這是新增配置缺陷。改存artifacts根、原EXE驗證後再複製；9控制含舊錯誤負例／新freshdir真檔案系統PASS，原Linux來源14+7流程PASS（非Windows）。明確替換仍在發佈前的f203run，原產品/176/EXE/Gate不放寬，主443CP保留；新精確Git讀回不以小CP覆蓋主正式證據。
 
 2026-10-21 使用者詢問為何不直接內嵌Inkscape；已說明可隨包提供背景工具，更符合下載即用，現行外部依賴是打包選擇而非技術不可能。提案BUNDLED_INKSCAPE_PROPOSAL保存為尚未實作，不冒稱目前8b95包已附帶或無Inkscape真EXE全流程已驗證；版本／授權／hash／獨立環境驗收及原資料Gate須保留。
+
+2026-10-21 使用者詢問已安裝Illustrator是否更好。核對目前無原生串接，保留原生讀取優先／Inkscape備援／OCR補救提案；混合樣式、座標、轉外框、字型替代、多人同畫板及stable ID規則不省略。官方說明本環境403，原生API與本機驗證未聲稱完成。不改目前Windows候選，私人資料留本機。
