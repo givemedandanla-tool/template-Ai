@@ -1,5 +1,7 @@
 # 當前精簡交接
 
+最新：77e21544/run39619925888失敗於CI監看progress.json EACCES；已完成8完整模組82PASS，含輸入19/19，未產EXE。原失敗windows-native-004-ci-read-failed；新metadata-read-controls-001四個隔離控制PASS。僅docs adapter對Windows EACCES做8次x20ms有界重試，持續拒絕仍拋出；產品/tools/tests/manifest0c4不變，需新正常候選完整176及凍結/下載驗證。下列舊run敘述是歷史，按STATE與本段最新狀態。
+
 2026-10-21：da809cf5／run39612727807正式Windows建置在來源測試失敗，未產EXE、未tag、未發布。176預定、169PASS，input模組12/19後180秒程序watchdog。原始證據見releases/v0.2.0-beta.1/windows-native-003-failed。新CI設定將全部原ID按每程序至多4例分組，同桌面serial1、原180秒不變，原工具/產品/測試不變；原5安全案例新入口5/5PASS跨2程序，刻意失敗負例正確拒絕。見grouped-qt-config-001。下一個正常release-request分支提交不能帶[native-tests-only]標記；仍須176完整通過、實際凍結EXE及兩次下載驗證才可發布。精確來源77e215440d7e4fe1aaa9fd49b143acbb8dc17c14，run39619925888已有RUNNING原生回執，CP-WINDOWS-QT-GROUPS-001已獨立讀回38項REMOTE_VERIFIED。候選後的dev僅交接收據變更，不觸發額外Windows建置。
 
 已完成當前來源資格：RUN-WINDOWS-BETA-FINAL-LINUX-001，softwarePASS1963與原GUI27；原5外部未知保留overallFAIL。CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001快照a697fb7a，REMOTE_VERIFIED5388條、369正式附件及原始執行資料，增量基底bea79a10；嚴格require-evidence/publication-scope實際PASS172/166/75/1963，進度delta全0。原1958ID與27capture script/command/deadline均保留。Windowsbea79/run39607635193診斷176/176PASS、16健康、0runtime；單獨3格式輸出PASS7.575s；這是diagnostic不是EXE。

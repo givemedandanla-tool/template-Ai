@@ -3,13 +3,35 @@ from collections import OrderedDict
 import hashlib
 import importlib.util
 import json
+import errno
+import os
 from pathlib import Path
 import sys
+import time
 
 ROOT=Path(__file__).resolve().parents[3]
 sys.path[:0]=[str(ROOT),str(ROOT/'tools')]
 from dev_common import write_json
 from evidence_modules import ModuleResults,run_modules
+import evidence_modules
+
+_original_read=evidence_modules.read_bounded
+
+def bounded_metadata_read(path,*,reader=_original_read,windows=None,pause=time.sleep):
+    """Retry only NTFS-style access conflicts; preserve size guards and errors."""
+    windows=os.name=='nt' if windows is None else windows
+    for attempt in range(8):
+        try:
+            return reader(path)
+        except PermissionError as error:
+            sharing=(windows and error.errno==errno.EACCES
+                     and getattr(error,'winerror',None) in (None,5,32,33))
+            if not sharing or attempt==7:
+                raise
+            pause(.02)
+
+if os.name=='nt':
+    evidence_modules.read_bounded=bounded_metadata_read
 
 GROUP_SIZE=4
 

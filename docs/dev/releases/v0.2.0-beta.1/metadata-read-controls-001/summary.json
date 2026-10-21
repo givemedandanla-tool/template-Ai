@@ -1,0 +1,31 @@
+{
+  "qualification": "ISOLATED_CONTROLLED_IO_FAILURE_DEMONSTRATION_NOT_NATIVE_WINDOWS",
+  "checks": [
+    {
+      "label": "transient",
+      "calls": 4,
+      "pause_seconds": 0.06,
+      "outcome": "PASS",
+      "eventual_read": true
+    },
+    {
+      "label": "permanent",
+      "calls": 8,
+      "pause_seconds": 0.14,
+      "outcome": "PASS",
+      "eventual_read": false
+    },
+    {
+      "label": "non_windows",
+      "calls": 1,
+      "pause_seconds": 0,
+      "outcome": "PASS",
+      "eventual_read": false
+    },
+    {
+      "label": "unrelated_error",
+      "calls": 1,
+      "outcome": "PASS"
+    }
+  ]
+}

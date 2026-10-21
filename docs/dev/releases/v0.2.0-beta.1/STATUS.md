@@ -36,3 +36,8 @@ Windows15模組171案例全PASS無skip、真正frozen EXE兩階段檢查、不�
 ## 正式重試 da809 的實際結果與分組設定
 
 run39612727807來源169PASS/7未完成，input模組到180秒watchdog，未產EXE。原失敗完整有界資料見windows-native-003-failed。新CI設定見grouped-qt-config-001：最多4原案例/程序，serial1，原180秒不變；5案例配置試跑及負例驗證通過。來源manifest0c4c11c8不變，嚴格證據Gate172/166/75/1963仍PASS。即將再跑全部176及實際EXE；未完成前不建成功標記。
+
+
+## 77e21544原始CI讀取失敗
+
+run39619925888完成前8模組82原案例PASS，後續進度JSON讀取EACCES使監看程序中止；未產EXE。Windows CI metadata讀取新增8次x20ms有界重試，4個控制示範PASS；原產品/案例/watchdog/Gate未變。詳見windows-native-004-ci-read-failed與metadata-read-controls-001。將重新跑全部176，不將部分82計作完整通過。
