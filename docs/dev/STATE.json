@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "WINDOWS_RELEASE_NTFS_METADATA_RETRY",
+  "active_task": "ACTUAL_FROZEN_PAUSE_FAILURE_DIAGNOSIS",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-COMPLETE-EVIDENCE-001.receipt.json",
   "last_confirmed_commit": "3fb5d882d7789e106be971260c464f282b20238b",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
@@ -18,8 +18,8 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Observe exact03a7c692 normal run; comprehensive396-file proof already acknowledged and strict gatePASS; wait all original176 cases, actual frozen EXE and public download bytes.",
-    "Storage assessment complete and independently read back at4cfa7586; no existing files deleted."
+    "Run explicitly nonpublishing frozen-only probe with original acceptance and read-only authored worker state capture. Original pause assertion remains; diagnose actual phase/unit count before fixing. Normal release still reruns all176 plus actualEXE/download.",
+    "Archive integrity55/55hashCRC PASS at2996b606 independently read back; still not deletion approval."
   ],
   "blocked": [
     {
@@ -1701,21 +1701,22 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "NORMAL_FULL_EVIDENCE_NATIVE_BUILD_RUNNING",
+    "status": "NATIVE176_PASS_FROZEN_PAUSE_CHECK_FAILED_DIAGNOSIS",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
     "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "Observe next exact normal candidate after full-evidence checkpoint ack; all original176 native cases, actual frozen EXE and both asset downloads remain mandatory.",
+    "next": "Run explicitly nonpublishing frozen-only probe with original acceptance and read-only authored worker state capture. Original pause assertion remains; diagnose actual phase/unit count before fixing. Normal release still reruns all176 plus actualEXE/download.",
     "validation": {
       "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
       "existing_governance_regression": "10 PASS",
       "linux_source_flow": "009 two phases PASS but dirty source demonstration only; repeat source-bound",
-      "actual_windows_exe": "NOT_RUN",
+      "actual_windows_exe": "Generated actual EXE;11actual acceptance checks PASS then original saved-boundary pause check FAIL; no release",
       "report_regression": "32 PASS",
       "runtime_refresh": "2 new cases PASS; original unmodified capture_runtime fixed004 PASS",
       "windows_safety_regressions": "5 PASS locally, actual foreign-process survival and bounded atomic-write failures",
-      "evidence_module_regression": "7 PASS"
+      "evidence_module_regression": "7 PASS",
+      "native_windows_source": "176/176PASS source03a7/run39623436705, all originalIDs,16healthy,49freshgroups,zeroerrors"
     },
     "authorization": {
       "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -1726,7 +1727,7 @@
       "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
-    "windows_receipt": "RUNNING_EXACT03A7_READ_BACK",
+    "windows_receipt": "03A7_FAILED_ACTUAL_FROZEN_PAUSE_CHECK",
     "regression_matrix": ".github/windows-release-test-scope.json",
     "source_candidate": "03a7c692a365c64227807154a76bb3047077f0cd",
     "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
@@ -1770,7 +1771,7 @@
     "software_snapshot_commit": "a697fb7a487d3a82954b5b81e92343ed74424e1f",
     "software_verified_files": 11713,
     "governance_gate": "PASS172/166/75/1963 against comprehensive396-file independently verified checkpoint",
-    "current_request_source": "03a7c692a365c64227807154a76bb3047077f0cd",
+    "current_request_source": "NEXT_FROZEN_DIAGNOSTIC_COMMIT_PENDING",
     "previous_public_runs": [
       {
         "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
@@ -1793,8 +1794,8 @@
       "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
     },
     "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39623436705",
-    "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-004-ci-read-failed",
-    "native_result": "82_PASS_8_LOGICAL_MODULES_CI_METADATA_READ_PERMISSION_ERROR",
+    "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-005-frozen-pause-failed",
+    "native_result": "176/176_PASS_16_HEALTHY_49_FRESH_QT_PROCESSES_ZERO_RUNTIME_ERRORS",
     "native_expected_tests": 176,
     "regression_progress": {
       "qualification": "PENDING_NEW_FIXTURE_AND_BUILD_HELPER_SOURCE"
@@ -1804,7 +1805,8 @@
     "software_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-REPAIR-SOURCE-001.receipt.json",
     "native_mode": "NORMAL_BUILD_WITH_ORIGINAL_CASES_BOUNDED_QT_PROCESSES",
     "ci_group_configuration": "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001",
-    "publication_evidence_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-COMPLETE-EVIDENCE-001.receipt.json"
+    "publication_evidence_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-COMPLETE-EVIDENCE-001.receipt.json",
+    "binary_generated": true
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",

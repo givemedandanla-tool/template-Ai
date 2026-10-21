@@ -41,3 +41,8 @@ run39612727807來源169PASS/7未完成，input模組到180秒watchdog，未產EX
 ## 77e21544原始CI讀取失敗
 
 run39619925888完成前8模組82原案例PASS，後續進度JSON讀取EACCES使監看程序中止；未產EXE。Windows CI metadata讀取新增8次x20ms有界重試，4個控制示範PASS；原產品/案例/watchdog/Gate未變。詳見windows-native-004-ci-read-failed與metadata-read-controls-001。將重新跑全部176，不將部分82計作完整通過。
+
+
+## 03a7原生完整PASS，真EXE暫停檢查失敗
+
+run39623436705 Windows176/176PASS、16健康、49新Qt程序、0runtime、source unchanged。PyInstaller已產EXE，前11實際EXE檢查PASS，_pause_worker保存邊界檢查FAIL；未tag/發佈。原始資料windows-native-005-frozen-pause-failed。下一個[frozen-probe-only]只診斷實際EXE並讀取純合成fixture狀態，不把原176說成重新執行、不發佈；正式發佈Gate原樣保留。

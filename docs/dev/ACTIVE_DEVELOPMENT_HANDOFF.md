@@ -1,5 +1,7 @@
 # 當前精簡交接
 
+**最新03a7/run39623436705原生176/176PASS、16健康、49原案例分組、0runtime；PyInstaller成功產實際EXE。** 真EXE前11檢查通過（訓練、產稿預覽、真滑鼠拖動、更正、輸出、拒絕未資格正式稿、JSONpipeworker），在release_check._pause_worker原檢查285行失敗，無tag/Release。原證據windows-native-005-frozen-pause-failed。下一步只跑[frozen-probe-only]診斷（不重跑176也不發佈），加source父程序只讀觀察fixture DB，取得真實phase/count/issues，原檢查不變。產品/tools/tests/manifest0c4未變；查根因後正常發佈仍完整176/EXE/下載。
+
 **當前正常候選03a7c692a365c64227807154a76bb3047077f0cd已推送並獨立讀回73497條tree項目；run39623436705有RUNNING回執。** 它包含完整396項主要證據checkpoint收據及有界NTFS讀取，嚴格Gate在提交後實際PASS。前一個cee5f6df仍指向小型checkpoint，預期由原Gate拒絕，不能當本候選。只等03a7的實際176/frozen/download結果，並按其來源保存；不得重跑Linux或放寬發佈條件。
 
 正式保存已修復：CP-WINDOWS-COMPLETE-EVIDENCE-001包含369正式附件與CI有界重試證據，共396項獨立讀回REMOTE_VERIFIED；strict require-evidence/publication-scope已實際PASS172/166/75/1963。小型CI checkpoint不能取代涵蓋全部正式附件的主要checkpoint。產品manifest0c4仍完全不變。下一次正常release-request提交需全部176/真EXE/兩次下載實際通過。

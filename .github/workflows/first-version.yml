@@ -20,6 +20,7 @@ jobs:
       PYTHONUTF8: '1'
       GH_TOKEN: ${{ github.token }}
       NATIVE_TESTS_ONLY: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[native-tests-only]') }}
+      FROZEN_PROBE_ONLY: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[frozen-probe-only]') }}
       OMP_NUM_THREADS: '1'
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
@@ -57,7 +58,9 @@ jobs:
             if (!(Test-Path $selectedPython)) { throw 'The configured setup-python interpreter is missing' }
             # Inkscape bundles Python too; keep the build on setup-python 3.11.
             $env:PATH = "$env:pythonLocation;$env:pythonLocation\Scripts;$env:PATH"
-            if ($env:NATIVE_TESTS_ONLY -eq 'true') {
+            if ($env:FROZEN_PROBE_ONLY -eq 'true') {
+              & ./.github/build_windows_ci.ps1 -FrozenProbeOnly *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
+            } elseif ($env:NATIVE_TESTS_ONLY -eq 'true') {
               & ./.github/build_windows_ci.ps1 -NativeTestsOnly *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
             } else {
               & ./.github/build_windows_ci.ps1 *>&1 | Tee-Object -FilePath artifacts/build-transcript.log
@@ -80,8 +83,12 @@ jobs:
         if: success() && env.NATIVE_TESTS_ONLY == 'true'
         shell: pwsh
         run: python tools/persist_release_evidence.py --status NATIVE_TESTS_DIAGNOSTIC_PASS_NOT_PUBLISHED
+      - name: Record frozen probe without publication
+        if: success() && env.FROZEN_PROBE_ONLY == 'true'
+        shell: pwsh
+        run: python tools/persist_release_evidence.py --status FROZEN_DIAGNOSTIC_PASS_NOT_PUBLISHED
       - name: Create immutable beta tag and draft assets
-        if: env.NATIVE_TESTS_ONLY != 'true'
+        if: env.NATIVE_TESTS_ONLY != 'true' && env.FROZEN_PROBE_ONLY != 'true'
         shell: pwsh
         run: |
           git config user.name 'github-actions[bot]'
@@ -93,7 +100,7 @@ jobs:
           gh release create v0.2.0-beta.1 --verify-tag --draft --prerelease --title 'Template AI v0.2.0-beta.1 — Windows 實測版' --notes-file docs/dev/releases/v0.2.0-beta.1-notes.md artifacts/TemplateAI-v0.2.0-beta.1-windows-x64.zip artifacts/release-manifest.json artifacts/SHA256SUMS.txt
           if ($LASTEXITCODE -ne 0) { throw 'Draft Release publication failed' }
       - name: Download and verify every draft package file
-        if: env.NATIVE_TESTS_ONLY != 'true'
+        if: env.NATIVE_TESTS_ONLY != 'true' && env.FROZEN_PROBE_ONLY != 'true'
         shell: pwsh
         run: |
           gh release download v0.2.0-beta.1 --dir artifacts/download
@@ -101,7 +108,7 @@ jobs:
           python tools/windows_release.py verify-download --output artifacts/download
           if ($LASTEXITCODE -ne 0) { throw 'Downloaded draft differs' }
       - name: Publish prerelease and verify published bytes
-        if: env.NATIVE_TESTS_ONLY != 'true'
+        if: env.NATIVE_TESTS_ONLY != 'true' && env.FROZEN_PROBE_ONLY != 'true'
         shell: pwsh
         run: |
           gh release edit v0.2.0-beta.1 --draft=false --prerelease
