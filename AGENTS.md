@@ -15,13 +15,13 @@
 
 本機全面查證已完成，見[完成報告](docs/dev/pre_download_audit/FINAL_REPORT.md)、STATE與精簡交接。來源見完成報告：1921PASS/原1850保留/0runtime，27原版GUI作業與19實際桌面項目通過；原11798及最後新增/變體均判讀，基準未刷新。2026-10-21已恢復正常GitHub保存：44個提交推送到原開發分支，獨立空Git倉庫重新下載後逐項核對43887個檔案條目，收據CP-20261021-AUDIT-GITHUB-READBACK為REMOTE_VERIFIED（原生Git，非REST API）。費用依據與限制見[本次保存說明](docs/dev/pre_download_audit/github-persistence-20261021/README.md)。歷史正式治理的證據來源過期問題仍未重發，不把遠端保存成功當新正式run通過；Windows/真實作品/印刷資格不變。本機ZIP仍是6c07597c快照，與較新的GitHub交接更新分開。沒有自動EXE/網頁/手機/全庫整改授權。下文DEV-QUALITY-001為先前建置歷史，不代替本輪查證結果。
 
-使用者後續修正單一Codex限制：可以使用ChatGPT Pro已包含的能力與額度，包含可確認屬於方案內的子代理；不得啟用訂閱外另行收費項目、加購或繞過合理使用限制。費用無法確認的能力跳過，繼續其他工作。2026-10-21使用者確認GitHub沒有付款方式；官方文件確認無有效付款方式時Actions超額會停止，因此可使用既有正常Git保存與標準CI，不改帳務、不加購。本輪未使用額外代理；未取得Pro方案內代理權益的獨立證據。此最新規則優先於下列歷史單一Codex與費用未知而停止推送的記錄；不變更原產品／AI包計數。
+2026-10-21最新費用／效率規則：見[既有方案正常使用](docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md)。使用者確認GitHub無付款方式、目前無API key；既有Pro／Codex能力、免費本機工具與正常GitHub保存／標準CI預設可用，不再要求帳單或獨立權益證明，不因帳務API不可讀而停工。舊單一Codex的費用禁令取消；代理仍依任務授權及平台／較高優先指令。只有額外購買、加購、試用或另行計費服務才停止該項操作；額度不足不付費續用。批次獨立查詢、重用已驗證證據與ZIP，不為純文件修改重跑全套或重新打包。正常checkpoint／推送／讀回直接做；舊「費用未知所以不push／不使用既有能力」段落僅屬歷史，不再是現行規則。
 
 ## 當前補充：零新增費用的開發除錯／查重工具
 
 本輪DEV-QUALITY-001只新增開發工具，見[操作與限制](docs/dev/debug_tooling/README.md)、[交付](docs/dev/debug_tooling/FINAL_REPORT.md)、BACKLOG與STATE.debug_tooling。固定Ruff／Pyright／jscpd及兩個skill；一般quality.py check不下載、不安裝、全程單一Codex。保留初始基準，不把新增問題刷新成歷史；新程式與完整舊程式比較。沒有授權全庫重構或產品功能。
 
-**本輪零新增費用條件優先於例行GitHub持久化**：缺少可核實的遠端觸發費用證據，不push／開PR／執行CI，不改帳務、保護或必要檢查。原碼僅本機提交與PREPARED checkpoint；最終差異包、精確HEAD與還原核對見`.cache/debug-tooling/delivery/receipt.json`及同目錄ZIP，沒有REMOTE_VERIFIED。雲端草稿只是未發布的重建說明，不能代替原碼備份。使用者須保存交付ZIP；新對話先核對其base/head再恢復。
+**DEV-QUALITY建置當日保存歷史**：當時僅本機提交與PREPARED checkpoint，後續已隨全面查證保存GitHub。現行費用與效率規則以上段及2026-10-21決策為準，不再因缺少帳務讀取而阻擋正常Git操作。舊差異包仍可還原原快照；雲端草稿不等於已發布。最新標準checkpoint為CP-20261021-AUDIT-GITHUB-RESUME，依STATE讀已確認收據。
 
 18項針對性驗證PASS（新工具11＋既有7），原產品程式與1850項證據未改、不冒稱重跑。Ruff有3個保留的解析限制；Pyright歷史診斷待判讀。兩個skill已建入口與顯式使用；平台原生自動辨識未驗證，按需直接讀skills/的SKILL.md。雲端實際Python3.12.14／PySide6 6.8.3；3.11語法核對不等於原生3.11／Windows實機測試。
 

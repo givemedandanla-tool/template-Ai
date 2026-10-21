@@ -6,13 +6,14 @@
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
   "active_task": "PRE_DOWNLOAD_AUDIT_LOCAL_COMPLETE_REMOTE_SAVED",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-FINAL.receipt.json",
-  "last_confirmed_commit": "5cfa9dac1d0ccb1eaedfd2cb9fbdb3847fd54e92",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-AUDIT-GITHUB-RESUME.receipt.json",
+  "last_confirmed_commit": "951b62bdcdfdea246e153b0c08436c3b6a3f4d8e",
   "latest_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+    "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md",
     "docs/dev/pre_download_audit/FINAL_REPORT.md",
     "docs/dev/pre_download_audit/PROGRESS.json",
     "docs/dev/INPUT_INTEGRATION_FINAL_REPORT_20261020.md",
@@ -22,7 +23,7 @@
     "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
   ],
   "next_tasks": [
-    "Resume from GitHub development branch and latest readback receipt; no longer depend solely on local ZIP.",
+    "Resume from GitHub development branch and CP-20261021-AUDIT-GITHUB-RESUME receipt; existing tools and normal Git operations are authorized without repeated billing proof.",
     "If formal governance reconciliation is next authorized work, bind genuine source proof and actual existing/new evidence without relaxing gates; original external qualifications unchanged.",
     "Await next authorized task or user safe offline report; do not auto-start EXE/web/mobile/whole-repo cleanup."
   ],
@@ -48,9 +49,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261021-AUDIT-GITHUB-RESUME"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1574,13 +1573,26 @@
   "audit_final_checkpoint": "docs/checkpoints/CP-20261020-AUDIT-LOCAL-FINAL.json",
   "audit_source_commit": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
   "audit_recovery_receipt": ".cache/debug-tooling/audit-delivery-20261020/receipt.json",
-  "pending_remote_audit_scope": "Original43 audit/tooling commits plus authorization published to a4a448f2 and independently fetched from GitHub;43887 file entries verified. Updated receipt/handoff will be saved in a follow-up documentation commit.",
+  "pending_remote_audit_scope": "All original43 audit commits plus authorization and prepared checkpoint published through951b62bd; full independent native Git readback and standard acknowledgement verified42539 checkpoint entries. Receipt and current efficiency policy are saved by follow-up documentation commit.",
   "audit_remote_readback": {
     "receipt": "docs/dev/pre_download_audit/github-persistence-20261021/snapshot-readback.json",
     "method": "NATIVE_GIT_INDEPENDENT_EMPTY_REPOSITORY",
     "phase": "REMOTE_VERIFIED",
     "documentation_followup": "Read back final documentation commit separately; receipt points to earlier snapshot to avoid a cycle.",
-    "formal_checkpoint": "CP-20261021-AUDIT-GITHUB-RESUME to be prepared, published and acknowledged separately"
+    "formal_checkpoint": "docs/checkpoints/CP-20261021-AUDIT-GITHUB-RESUME.receipt.json"
   },
-  "audit_formal_governance_status": "Historical registered source manifests expired; not reissued this documentation/persistence task. See governance-final-disposition.json. Persistence success does not imply formal Gate PASS."
+  "audit_formal_governance_status": "Historical registered source manifests expired; not reissued this documentation/persistence task. See governance-final-disposition.json. Persistence success does not imply formal Gate PASS.",
+  "execution_policy": {
+    "document": "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md",
+    "existing_pro_codex_tools": "USE_NORMALLY_WITHIN_TASK_AND_PLATFORM_AUTHORIZATION",
+    "free_local_tools": "USE_NORMALLY",
+    "normal_git_push_pr_existing_ci": "USE_NORMALLY_WITHOUT_REPEATED_BILLING_PROOF",
+    "paid_addons_trials_new_billed_services": "DO_NOT_ENABLE",
+    "agents": "Old cost-based single-Codex restriction removed; follow task/platform authorization, not hypothetical unverified fees.",
+    "user_payment_and_api_context": {
+      "github_payment_method": "NONE_USER_CONFIRMED",
+      "api_keys": "NONE_USER_CONFIRMED"
+    },
+    "efficiency": "Batch independent work; reuse validated evidence; no full retest or delivery rebuild for documentation-only changes."
+  }
 }

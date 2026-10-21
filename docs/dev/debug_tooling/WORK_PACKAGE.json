@@ -3,7 +3,7 @@
   "kind": "DEVELOPMENT_TOOLING_NOT_PRODUCT_FEATURE",
   "base_commit": "0e7b8aee82331ff6efa02a1a8233ff85689b660a",
   "branch": "dev/v0.1-first-version",
-  "authorization": "User explicitly requested zero-additional-cost local tooling installation, configuration, verification and handoff; no agents or paid resources.",
+  "authorization": "User-authorized zero-additional-purchase tooling and audit. Existing Pro/Codex and normal GitHub capabilities are usable without repeated billing proof; follow task/platform agent authorization. No paid add-ons or trials.",
   "governance_references": [
     "GOV-001",
     "GOV-002",
@@ -12,7 +12,7 @@
     "GOV-006"
   ],
   "product_changes": false,
-  "remote_write": "BLOCKED_COST_NOT_VERIFIED",
+  "remote_write": "PUBLISHED_AND_NATIVE_GIT_READBACK_VERIFIED",
   "acceptance": {
     "A01": "Single Codex, no new paid service/trial/model/runner; remote triggers inspected.",
     "A02": "Pinned tool/skill sources, licenses, dependencies and integrity checks.",
@@ -49,5 +49,8 @@
     "offline_rebuild": "reports/offline-rebuild.json",
     "backlog": "BACKLOG.json",
     "final_receipt": ".cache/debug-tooling/delivery/receipt.json"
-  }
+  },
+  "historical_initial_authorization": "User explicitly requested zero-additional-cost local tooling installation, configuration, verification and handoff; no agents or paid resources.",
+  "current_execution_policy": "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md",
+  "remote_receipt": "docs/checkpoints/CP-20261021-AUDIT-GITHUB-RESUME.receipt.json"
 }

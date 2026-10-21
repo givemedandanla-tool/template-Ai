@@ -83,10 +83,11 @@
     "No false remote verification or actual Windows/private-corpus claim"
   ],
   "budget": {
-    "agents": false,
-    "external_models": false,
+    "included_pro_codex": "USE_NORMALLY",
+    "agents": "TASK_AND_PLATFORM_AUTHORIZATION;NO_EXTRA_BILLING_PROOF_FOR_INCLUDED_CAPABILITIES",
+    "external_paid_apis": false,
     "new_paid_resources": false,
-    "push_pr_ci": "BLOCKED_WITHOUT_ZERO_ADDITIONAL_COST_EVIDENCE"
+    "push_pr_existing_standard_ci": "USE_NORMALLY"
   },
   "execution_limitations": [
     "Workspace has about 50MB free; resolve owned caches/temp routing before full runs",
@@ -96,9 +97,20 @@
   "local_checkpoint": "CP-20261020-PRE-DOWNLOAD-AUDIT-PLAN",
   "local_recovery_receipt": ".cache/debug-tooling/plan-delivery-20261020/receipt.json",
   "execution_progress": "docs/dev/pre_download_audit/PROGRESS.json",
-  "agent_policy_current": "Existing Pro entitlements and reasonable-use quota only; subagents permitted if inclusion is verifiable. Currently no billing/entitlement proof, so no new agents.",
+  "agent_policy_current": "Included native capabilities may be used according to task/platform authorization. Prior single-Codex cost restriction and repeated entitlement-proof prerequisite superseded by2026-10-21 decision.",
   "completion_report": "docs/dev/pre_download_audit/FINAL_REPORT.md",
   "source_commit": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
   "completed_at": "2026-10-21T00:01:06.689343+00:00",
-  "qualification": "Local available-condition execution complete; external/native/real-corpus and current formal remote evidence qualifications unchanged"
+  "qualification": "Local available-condition execution complete; external/native/real-corpus and current formal remote evidence qualifications unchanged",
+  "historical_initial_budget": {
+    "agents": false,
+    "external_models": false,
+    "new_paid_resources": false,
+    "push_pr_ci": "BLOCKED_WITHOUT_ZERO_ADDITIONAL_COST_EVIDENCE"
+  },
+  "current_execution_policy": "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md",
+  "remote_persistence": {
+    "status": "REMOTE_VERIFIED_NATIVE_GIT",
+    "receipt": "docs/checkpoints/CP-20261021-AUDIT-GITHUB-RESUME.receipt.json"
+  }
 }

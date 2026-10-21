@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "CP-20261021-AUDIT-GITHUB-RESUME",
+  "phase": "REMOTE_VERIFIED",
+  "snapshot_commit": "951b62bdcdfdea246e153b0c08436c3b6a3f4d8e",
+  "tree_sha": "ee27d4bb79384be476f798c20a656c870332298a",
+  "verified_utc": "2026-10-21T02:11:20.929817+00:00",
+  "verified_files": 42539,
+  "source_manifest_sha256": "3cd32b6735bef242d3f5e4187600410089c122c7b2ff0bc6fc6143242dd92cb0",
+  "next_step": "Push prepared snapshot, fresh Git readback, acknowledge every manifest blob and checkpoint, then publish receipt; no new product scope.",
+  "verification": "Native authenticated Git: independent bare repository fetched from GitHub; exact raw commit and recursive path/mode/blob tree compared; all42538 checkpoint manifest blobs plus checkpoint record verified. JSON is an explicit projection of fetched Git objects, not a REST API response. Initial full object fsck proof is preserved in github-persistence-20261021/snapshot-readback.json."
+}

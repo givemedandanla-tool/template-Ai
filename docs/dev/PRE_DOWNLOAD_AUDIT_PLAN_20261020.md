@@ -1,4 +1,4 @@
-> 最新結果：本機範圍已完成；1921PASS、原版27GUI作業PASS、實際桌面19項PASS。正式遠端治理仍阻擋，沒有推送。詳見[完成報告](pre_download_audit/FINAL_REPORT.md)。原計畫與資格限制保留如下。
+> 最新結果：本機查證1921PASS／27GUI作業PASS／實際桌面19項PASS，成果已保存GitHub並完成原生Git讀回與標準checkpoint確認。費用／效率依2026-10-21決策：既有能力與正常Git操作預設可用，不重複查帳；下文單一Codex、費用未知不推送等為原計畫歷史。正式治理舊來源登錄仍待正常更新。詳見[完成報告](pre_download_audit/FINAL_REPORT.md)。
 
 # 第一次下載前：全面查證與修正計畫
 
