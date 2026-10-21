@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "NON_CODE_AUDIT_EXECUTION_IN_PROGRESS",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-NONCODE-EXEC-LOCAL-001.receipt.json",
-  "last_confirmed_commit": "e558311c2a2dddd4b89328d33f05d71a9b7489d0",
+  "active_task": "NON_CODE_AUDIT_LOCAL_SCOPE_COMPLETED",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-NONCODE-FORMAL-003.receipt.json",
+  "last_confirmed_commit": "b337dac57b720f85abb32bac1691b400e380f6ee",
   "latest_evidence_run": "docs/evidence/runs/RUN-NONCODE-ALL-001/run.json",
   "exe_policy": "DEFERRED_NO_AUTOMATIC_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -18,8 +18,7 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Continue authorized32-topic audit and necessary verified fixes;persist checkpoints until completion.",
-    "Preserve original product/AI counts and external qualifications;do not count deferred scopes asPASS."
+    "本地下載試用後，由問題與報告手動匯出安全報告；維持原真實作品／Windows／效能／印刷／新手資格，按回饋再開發。"
   ],
   "blocked": [
     {
@@ -44,7 +43,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261021-NONCODE-FORMAL-003"
+    "CP-20261021-NONCODE-COMPLETE-004"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
@@ -1577,7 +1576,7 @@
     "documentation_followup": "Read back final documentation commit separately; receipt points to earlier snapshot to avoid a cycle.",
     "formal_checkpoint": "docs/checkpoints/CP-20261021-AUDIT-GITHUB-RESUME.receipt.json"
   },
-  "audit_formal_governance_status": "Historical registered source manifests expired; not reissued this documentation/persistence task. See governance-final-disposition.json. Persistence success does not imply formal Gate PASS.",
+  "audit_formal_governance_status": "CURRENT_SOURCE_PASS_ORIGINAL_EXTERNAL_QUALIFICATIONS_RETAINED",
   "execution_policy": {
     "document": "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md",
     "existing_pro_codex_tools": "USE_NORMALLY_WITHIN_TASK_AND_PLATFORM_AUTHORIZATION",
@@ -1612,14 +1611,24 @@
     "design_document_checks_passed": 8
   },
   "non_code_audit_execution": {
+    "status": "COMPLETED_LOCAL_SCOPE_WITH_EXPLICIT_EXTERNAL_LIMITS",
     "progress": "docs/dev/non_code_audit/execution-001/PROGRESS.json",
-    "baseline_commit": "349788c31879e30433228ecadc6040e1abfb3c58",
-    "status": "IN_PROGRESS",
-    "plan": "docs/dev/non_code_audit/PLAN.md",
-    "remote_status": "REMOTE_VERIFIED_CHECKPOINT001",
+    "report": "docs/dev/non_code_audit/FINAL_REPORT.md",
+    "source_commit": "e558311c2a2dddd4b89328d33f05d71a9b7489d0",
+    "code_manifest_sha256": "a79795720cef3b429c904e4d44bbddd8c55b03449fad38e7ee29f64402e83d83",
+    "checks": 32,
+    "local_passes": 32,
+    "total_results": {
+      "PASS": 28,
+      "UNKNOWN": 4
+    },
+    "product_tests": 1942,
+    "new_tests": 21,
+    "fixed_issues": 4,
+    "formal_governance": "PASS",
+    "external_qualification_unchanged": true,
     "current_code_commit": "4f763f87458f0f65914d7e7c9a04b0a46f8dd912",
-    "local_checkpoint": "CP-20261021-NONCODE-EXEC-LOCAL-001",
-    "remote_receipt": "docs/checkpoints/CP-20261021-NONCODE-EXEC-LOCAL-001.receipt.json",
-    "formal_evidence": "CURRENT_SOURCE_EXECUTION_PACKAGED_ORIGINAL5QUALIFICATIONS_NOT_VERIFIED"
+    "remote_status": "FORMAL_EVIDENCE_REMOTE_VERIFIED_COMPLETION_DOCS_PENDING",
+    "final_checkpoint": "CP-20261021-NONCODE-COMPLETE-004"
   }
 }

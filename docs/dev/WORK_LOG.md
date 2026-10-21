@@ -1736,3 +1736,8 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 ### 2026-10-21 非代碼排查中途 checkpoint／GitHub 恢復
 
 使用者重新連線後正常推送至 e558311c；獨立 bare Git 重新 fetch、核對完整 tree 與 CP-20261021-NONCODE-EXEC-LOCAL-001 的40條範圍，收據 REMOTE_VERIFIED。新增2個容量語意根因修正、1個過期進度視圖修正；32 targeted、4 actual core probes、33 offline measured tests、7 evidence negative controls通過。完整1942項與27原版GUI流程仍執行中，未宣稱完成。新應用診斷0；54個新增測試型別診斷保留P3，不放寬／刷新基準。外部資格不變。
+
+
+### 2026-10-21 非代碼方案32項完成處置
+
+完成報告 non_code_audit/FINAL_REPORT.md；28PASS／4UNKNOWN，所有本機子範圍已執行，原外部資格維持。1942PASS／254健康／0runtime、原1921保留；27原版GUI、19native、11PNG、4核心probe與7證據反例。2產品容量根因修正、1進度視圖、1正式證據登錄修復。54新測試型別診斷P3、1操作提示候選保留；基準不刷新。正式run採錄實際同源結果，治理含publication scope PASS；總體FAIL保留原5外部資格。CP003 b337dac5已獨立讀回368條；CP002無效基底在推送前棄用，歷史與新增拒絕控制保留，不是正式收據。下一步本地安全報告回饋，不擴張EXE／網頁／手機／全庫整改。

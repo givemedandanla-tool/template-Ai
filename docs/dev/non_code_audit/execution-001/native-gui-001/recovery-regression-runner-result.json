@@ -1,0 +1,26 @@
+{
+  "name": "recovery-regression",
+  "command": [
+    "/workspace/template-Ai/.venv/bin/python",
+    "-m",
+    "unittest",
+    "test_batch_recovery.BatchRecoveryCandidateTests.test_actual_gui_restore_then_selected_inverse_keeps_same_stable_field_identity",
+    "-v"
+  ],
+  "qt_platform": "xcb",
+  "PYTHONPATH": "tests:.",
+  "exit_code": 0,
+  "test_ids": [
+    "test_batch_recovery.BatchRecoveryCandidateTests.test_actual_gui_restore_then_selected_inverse_keeps_same_stable_field_identity"
+  ],
+  "expected_test_count": 1,
+  "tests_run": 1,
+  "unittest_seconds": 52.375,
+  "elapsed_seconds": 52.838,
+  "source_manifest_before": "a79795720cef3b429c904e4d44bbddd8c55b03449fad38e7ee29f64402e83d83",
+  "source_manifest_after": "a79795720cef3b429c904e4d44bbddd8c55b03449fad38e7ee29f64402e83d83",
+  "source_unchanged": true,
+  "runtime_error_lines": [],
+  "log": "recovery-regression.log",
+  "status": "PASS"
+}

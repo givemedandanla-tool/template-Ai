@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "method": "FRESH_INDEPENDENT_GIT_OBJECT_READBACK_BOUNDED_HANDOFF",
+  "fetched_snapshot": "b337dac57b720f85abb32bac1691b400e380f6ee",
+  "remote_proof": {
+    "method": "NATIVE_AUTHENTICATED_GIT_FETCH_INDEPENDENT_BARE_REPOSITORY",
+    "api_response": false,
+    "raw_commit_sha256": "98bad5fe687b75e10c3138b299bf63388297a111bca87350d7de7e71edf8f219",
+    "recursive_file_list_sha256": "f6617b7063f29b558b56fe9ea15df366cec8f4c142852f4e22557824f086ff49",
+    "file_entries": 44340,
+    "verified_utc": "2026-10-21T04:35:43.371378+00:00",
+    "snapshot_commit": "b337dac57b720f85abb32bac1691b400e380f6ee",
+    "tree_sha": "92667160120026f1e00da3f593ce3c4b51bc07f7"
+  },
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "20f714c70226d243ce72dc97642e4661da568e6547305f31432a5cd4266433a7"
+    },
+    {
+      "path": "docs/dev/STATE.json",
+      "sha256": "72f569fc73603463e2340b83984df24d9fc60a1a441d45d42ecab29ed2b5f571"
+    },
+    {
+      "path": "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
+      "sha256": "39c408ce49ec43bb37263b99de06908c1705f28fd95b1551e0bb78c6009b65fe"
+    },
+    {
+      "path": "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json",
+      "sha256": "0a68b0d8a2b98c555dc6b0708a003d08efb89f90876b1bcde27b43a2616f7a82"
+    },
+    {
+      "path": "docs/checkpoints/CP-20261021-NONCODE-EXEC-LOCAL-001.receipt.json",
+      "sha256": "55c8eb66cf3a113013e6c789fd87a0e953096a2331e2c6acc4c0ddf3415be69a"
+    },
+    {
+      "path": "docs/evidence/runs/RUN-NONCODE-ALL-001/run.json",
+      "sha256": "ec229328d8a954ad8c88a2c105623919dbb64cdd5c405f944dbcfafa5220e161"
+    }
+  ],
+  "reconstructed_summary": {
+    "branch": "dev/v0.1-first-version",
+    "active_task": "NON_CODE_AUDIT_EXECUTION_IN_PROGRESS",
+    "last_confirmed_commit": "e558311c2a2dddd4b89328d33f05d71a9b7489d0",
+    "checkpoint": "docs/checkpoints/CP-20261021-NONCODE-EXEC-LOCAL-001.receipt.json",
+    "latest_evidence": "docs/evidence/runs/RUN-NONCODE-ALL-001/run.json",
+    "next_tasks": [
+      "Continue authorized32-topic audit and necessary verified fixes;persist checkpoints until completion.",
+      "Preserve original product/AI counts and external qualifications;do not count deferred scopes asPASS."
+    ],
+    "pending_remote": [
+      "CP-20261021-NONCODE-FORMAL-003"
+    ],
+    "test_count": 1942,
+    "overall_run_status": "FAIL",
+    "software_execution": "PASS",
+    "original_external_requirements_retained": [
+      "UI-032",
+      "UI-048",
+      "UI-056-D",
+      "REV-02",
+      "REV-03",
+      "REV-04"
+    ]
+  },
+  "full_chat_required": false,
+  "private_data_required": false,
+  "production_launch_performed": false,
+  "limits": "Handoff reconstruction, not a full independent product installation or novice qualification. Pending checkpoints remain pending as recorded at this snapshot."
+}

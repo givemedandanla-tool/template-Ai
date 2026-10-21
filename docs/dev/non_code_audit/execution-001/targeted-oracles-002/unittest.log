@@ -1,0 +1,51 @@
+Owned module test_noncode_invariants: exit=0; completed=16/16; healthy=True
+test_cross_type_permissions_do_not_create_transitive_container_access (test_noncode_invariants.ConditionalRuleOracles.test_cross_type_permissions_do_not_create_transitive_container_access) ... ok
+test_semantic_default_and_owner_survive_nonsemantic_enumeration_order (test_noncode_invariants.ConditionalRuleOracles.test_semantic_default_and_owner_survive_nonsemantic_enumeration_order) ... ok
+test_small_exhaustive_matching_oracle_finds_both_sat_and_unsat (test_noncode_invariants.ConditionalRuleOracles.test_small_exhaustive_matching_oracle_finds_both_sat_and_unsat) ... ok
+test_clearing_one_value_keeps_other_value_stable_id_and_position (test_noncode_invariants.DataMeaningOracles.test_clearing_one_value_keeps_other_value_stable_id_and_position) ... ok
+test_engineering_input_budget_rejects_without_silent_truncation (test_noncode_invariants.DataMeaningOracles.test_engineering_input_budget_rejects_without_silent_truncation) ... ok
+test_explicit_semantic_candidates_do_not_mutate_original_strings (test_noncode_invariants.DataMeaningOracles.test_explicit_semantic_candidates_do_not_mutate_original_strings) ... ok
+test_same_text_and_shared_use_keep_distinct_identity_and_owner (test_noncode_invariants.DataMeaningOracles.test_same_text_and_shared_use_keep_distinct_identity_and_owner) ... ok
+test_authored_complete_data_and_nonoverlap_are_independent_output_invariants (test_noncode_invariants.LayoutMeaningOracles.test_authored_complete_data_and_nonoverlap_are_independent_output_invariants) ... ok
+test_contradictory_relative_cycle_is_rejected_instead_of_silently_dropped (test_noncode_invariants.LayoutMeaningOracles.test_contradictory_relative_cycle_is_rejected_instead_of_silently_dropped) ... ok
+test_profile_enumeration_order_is_not_a_new_customer_preference (test_noncode_invariants.LayoutMeaningOracles.test_profile_enumeration_order_is_not_a_new_customer_preference) ... ok
+test_unfittable_string_is_kept_and_cannot_be_promoted_to_a_complete_draft (test_noncode_invariants.LayoutMeaningOracles.test_unfittable_string_is_kept_and_cannot_be_promoted_to_a_complete_draft) ... ok
+test_family_features_ignore_customer_text_and_unverified_defaults (test_noncode_invariants.LearningMeaningOracles.test_family_features_ignore_customer_text_and_unverified_defaults) ... ok
+test_holdout_cannot_be_used_to_fit_even_if_appearance_matches (test_noncode_invariants.LearningMeaningOracles.test_holdout_cannot_be_used_to_fit_even_if_appearance_matches) ... ok
+test_shared_style_is_not_one_family_per_work_and_aliases_do_not_create_support (test_noncode_invariants.LearningMeaningOracles.test_shared_style_is_not_one_family_per_work_and_aliases_do_not_create_support) ... ok
+test_safe_local_production_report_contains_measurements_not_customer_text (test_noncode_invariants.SessionMeaningOracles.test_safe_local_production_report_contains_measurements_not_customer_text) ... ok
+test_unconfirmed_and_changed_data_cannot_reuse_confirmation (test_noncode_invariants.SessionMeaningOracles.test_unconfirmed_and_changed_data_cannot_reuse_confirmation) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 20.912s
+
+OK
+
+Owned module test_noncode_capacity_semantics: exit=0; completed=4/4; healthy=True
+test_conflicting_outcomes_at_same_measured_demand_do_not_claim_certainty (test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_conflicting_outcomes_at_same_measured_demand_do_not_claim_certainty) ... ok
+test_known_layout_failure_inside_otherwise_supported_region_abstains (test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_layout_failure_inside_otherwise_supported_region_abstains) ... ok
+test_known_unqualified_outlier_cannot_expand_suitable_region (test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_known_unqualified_outlier_cannot_expand_suitable_region) ... ok
+test_old_artifact_without_negative_support_contract_needs_recalibration (test_noncode_capacity_semantics.QualifiedCapacityMeaningTests.test_old_artifact_without_negative_support_contract_needs_recalibration) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.012s
+
+OK
+
+Owned module test_design_rule_extensions: exit=0; completed=11/11; healthy=True
+test_correlated_aliases_failure_and_heldout_leak_cannot_produce_safe_region (test_design_rule_extensions.CapacityCalibrationTests.test_correlated_aliases_failure_and_heldout_leak_cannot_produce_safe_region) ... ok
+test_joint_region_calibrates_without_claiming_global_field_limit (test_design_rule_extensions.CapacityCalibrationTests.test_joint_region_calibrates_without_claiming_global_field_limit) ... ok
+test_actual_cjk_name_shaped_clusters_distribute_with_fixed_point_size (test_design_rule_extensions.CharacterJustificationTests.test_actual_cjk_name_shaped_clusters_distribute_with_fixed_point_size) ... ok
+test_gap_limit_unreviewed_mode_and_inconsistent_alignment_are_rejected (test_design_rule_extensions.CharacterJustificationTests.test_gap_limit_unreviewed_mode_and_inconsistent_alignment_are_rejected) ... ok
+test_single_cluster_and_combining_mark_are_not_split (test_design_rule_extensions.CharacterJustificationTests.test_single_cluster_and_combining_mark_are_not_split) ... ok
+test_duplicates_do_not_multiply_support_and_conflicts_are_preserved (test_design_rule_extensions.ObjectGapTests.test_duplicates_do_not_multiply_support_and_conflicts_are_preserved) ... ok
+test_shared_equal_object_gaps_are_learned_and_used_by_actual_kiwi (test_design_rule_extensions.ObjectGapTests.test_shared_equal_object_gaps_are_learned_and_used_by_actual_kiwi) ... ok
+test_explicit_production_quality_policy_rejects_synthetic_or_incomplete_evidence (test_design_rule_extensions.RankerCompletionTests.test_explicit_production_quality_policy_rejects_synthetic_or_incomplete_evidence) ... ok
+test_joint_style_feature_changes_when_actual_typography_changes (test_design_rule_extensions.RankerCompletionTests.test_joint_style_feature_changes_when_actual_typography_changes) ... ok
+test_actual_qt_words_expand_only_at_spaces_and_keep_last_line_natural (test_design_rule_extensions.WordJustificationTests.test_actual_qt_words_expand_only_at_spaces_and_keep_last_line_natural) ... ok
+test_single_word_and_zero_word_boundaries_are_not_implicitly_stretched (test_design_rule_extensions.WordJustificationTests.test_single_word_and_zero_word_boundaries_are_not_implicitly_stretched) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 7.281s
+
+OK
