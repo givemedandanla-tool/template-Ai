@@ -1,4 +1,7 @@
-# Template AI｜矩形區域自動排版與模板 AI
+# Template AI
+
+Windows內部實測目標為 **v0.2.0-beta.1**，目前仍在驗證與發佈準備，尚不能宣稱可下載。最新狀態見[發佈追蹤](docs/dev/STATE.json)與[Windows測試版說明](docs/dev/releases/WINDOWS_BETA_QUICK_START.md)；下方既有版本介紹保留歷史脈絡。
+
 
 開發用[除錯與查重工具](docs/dev/debug_tooling/README.md)已在既有環境建置：固定版本、本地掃描、保留歷史基準與安全交接。這批新增內容因遠端費用未能核實而只在本機交付包，沒有觸發GitHub CI；產品離線操作不依賴這些工具。
 

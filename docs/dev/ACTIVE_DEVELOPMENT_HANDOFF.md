@@ -1,5 +1,8 @@
 # 當前接手：Windows測試版發佈已授權
 
+當前固定來源094f8f9a；完整1958在linux-regression-003執行，見STATE.windows_release與checkpoint-progress-001.json。原1942全部保留、新16。source-flow011兩階段PASS但僅Linux/Python來源，不是frozen Windows。stock003在與全回歸同跑時首項工作未完成斷言失敗；保留結果，完整回歸後再單獨跑原版stock004，不改原斷言／時限。API主機網路草稿未生效，Windows執行回執未讀到，不能宣稱已打包／發布。新正式Gate／全部附件遠端checkpoint完成後才更新release-request候選分支。
+
+
 使用者明確要求發佈EXE供本機實測。依STATE.windows_release及releases/v0.2.0-beta.1-plan.md接續，不再沿用舊EXE延後阻擋本次交付。一般push仍不打包；教學／知識庫草案仍待核對。未完成實際Windows包與下載校驗前，不宣稱已發佈。
 
 # 當前接手：教學與獨立可搜尋知識庫方案供核對

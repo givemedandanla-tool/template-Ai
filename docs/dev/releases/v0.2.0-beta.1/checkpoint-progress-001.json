@@ -1,0 +1,38 @@
+{
+  "id": "WIN-BETA-PROGRESS-001",
+  "phase": "WIP_NOT_FULL_ACCEPTANCE",
+  "created_utc": "2026-10-21T09:28:21.349942+00:00",
+  "source_commit": "094f8f9a72bd2aa1711435e677192b5e8261aa93",
+  "source_manifest_sha256": "46bd03f60853a001221cfc3f5ff3503fe198f6369824d1a78dec7d92ed84378e",
+  "source_remote_readback": {
+    "method": "NATIVE_AUTHENTICATED_GIT_FETCH_INDEPENDENT_BARE_REPOSITORY",
+    "api_response": false,
+    "raw_commit_sha256": "c476d7506036a0aed5b469cd885d8fc32c07fb957e7e7bc81bdae34ee775f7d7",
+    "recursive_file_list_sha256": "3ed6d912d3b762fb0ef31d9f6e72d672ca444c6ada1ba45ea172fc6abc27ccbd",
+    "file_entries": 52442,
+    "verified_utc": "2026-10-21T09:13:14.106758+00:00",
+    "snapshot_commit": "094f8f9a72bd2aa1711435e677192b5e8261aa93",
+    "tree_sha": "0e93f202561376909b962b2f3635351745846332"
+  },
+  "full_regression_progress": {
+    "phase": "RUNNING_OWNED_TEST_MODULES",
+    "current_test": "test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation, test_font_candidates.FontCandidateGuiTests.test_real_worker_search_selection_preview_and_readonly_state",
+    "started": 798,
+    "completed": 796,
+    "passed": 796,
+    "failed_ids": [],
+    "planned_tests": 1958,
+    "formal_complete": false,
+    "updated_at": "2026-10-21T09:28:21.184873+00:00"
+  },
+  "source_flow": "source-flow-011/summary.json",
+  "stock003": "FAIL; first original queue assertion while full regression running; preserve original result and retry only after load isolation",
+  "windows_actual": "NO_EXECUTION_RECEIPT_OBSERVED",
+  "release_published": false,
+  "next": [
+    "Complete linux-regression-003 without code changes",
+    "Run stock-captures-004 alone with original scripts/deadlines/assertions",
+    "Adopt actual same-source execution and original27 into formal run, update requirement evidence pointers and checkpoint",
+    "Require governance PASS before updating release-request branch; build/test actual Windows EXE and verify published download"
+  ]
+}

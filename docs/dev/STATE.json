@@ -18,7 +18,10 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "聯合討論／採用軟體內教學與獨立可搜尋知識庫兩份草案；本輪只有研究與設計，未建站、建索引或改GUI，不改已採用發佈規則／EXE延後及原外部資格。"
+    "Complete linux-regression-003 without code changes",
+    "Run stock-captures-004 alone with original scripts/deadlines/assertions",
+    "Adopt actual same-source execution and original27 into formal run, update requirement evidence pointers and checkpoint",
+    "Require governance PASS before updating release-request branch; build/test actual Windows EXE and verify published download"
   ],
   "blocked": [
     {
@@ -1700,7 +1703,7 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "FINAL_SOURCE_MATRIX_VALIDATION_IN_PROGRESS",
+    "status": "LINUX_FULL_RUNNING_WINDOWS_ACK_MISSING",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
@@ -1724,6 +1727,9 @@
       "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
     ],
     "windows_receipt": "NOT_OBSERVED_REQUEST_PUSH_DOES_NOT_PROVE_RUN_STARTED",
-    "regression_matrix": ".github/windows-release-test-scope.json"
+    "regression_matrix": ".github/windows-release-test-scope.json",
+    "source_candidate": "094f8f9a72bd2aa1711435e677192b5e8261aa93",
+    "source_manifest_sha256": "46bd03f60853a001221cfc3f5ff3503fe198f6369824d1a78dec7d92ed84378e",
+    "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-001.json"
   }
 }
