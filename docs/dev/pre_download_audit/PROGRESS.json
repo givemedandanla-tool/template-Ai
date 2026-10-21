@@ -6,7 +6,7 @@
   "fixed_defects_pending_full_regression": 0,
   "requirements_qualifications_unchanged": true,
   "human_summary": "本機範圍查證及最終測試完成；10類問題已修，私人作品與Windows等實機資格保持原延後狀態。遠端未推送，請保留還原包與收據。",
-  "status": "LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED",
+  "status": "LOCAL_SCOPE_COMPLETE_REMOTE_SNAPSHOT_VERIFIED",
   "phase": "All local software verification complete. Delivery completion is attested by the post-commit receipt or ZIP RESTORE_RECEIPT.",
   "completed_at": "2026-10-21T00:01:06.689343+00:00",
   "original_diagnostics": 11798,
@@ -59,7 +59,9 @@
     "new_or_variant": 397,
     "unreviewed": 0
   },
-  "next": "Check receipt.json or ZIP RESTORE_RECEIPT: when restore is verified, this audit is complete and waits for the next authorized task. Export only if no verified receipt exists.",
+  "next": "Resume from GitHub and receipt; original restore-verified ZIP remains a valid6c07597c historical snapshot. Await authorized work; no automatic EXE/new features.",
   "final_delivery_status": "CHECK_POST_COMMIT_RECEIPT_OR_ZIP_RESTORE_RECEIPT",
-  "remote_write": "NOT_PERFORMED_COST_UNKNOWN"
+  "remote_write": "PUSHED_AND_INDEPENDENT_NATIVE_GIT_READBACK_VERIFIED",
+  "remote_readback": "docs/dev/pre_download_audit/github-persistence-20261021/snapshot-readback.json",
+  "formal_governance_status": "Historical registered source manifests expired; not reissued this documentation/persistence task. See governance-final-disposition.json. Persistence success does not imply formal Gate PASS."
 }

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "checkpoint_id": "CP-20261021-AUDIT-GITHUB-READBACK",
+  "phase": "REMOTE_VERIFIED",
+  "snapshot_commit": "a4a448f2b69c7bedbe832ddd0ceaa60efaa34c69",
+  "tree_sha": "c4dd5fe4342e7f8d37f72f68aa427801ab1a5c02",
+  "verified_utc": "2026-10-21T02:05:39.882149+00:00",
+  "verified_files": 43887,
+  "recursive_file_list_sha256": "d549774078b9b00909c5d125b0c7143aee635c3c8c6ac6e887f28b3a324ced99",
+  "verification": "Native authenticated Git transport: fetched development branch into an independent empty bare repository without alternates/local object reuse; exact raw commit and recursive path/mode/type/blob list match local committed snapshot; git fsck --full --strict verifies fetched objects. No REST API response is claimed.",
+  "checks": {
+    "independent_github_fetch_exit": 0,
+    "head_equal": true,
+    "raw_commit_equal": true,
+    "all_recursive_file_entries_equal": true,
+    "git_fsck_exit": 0,
+    "full010_code_manifest_equal": true
+  },
+  "coverage": {
+    "remote_before": "0e7b8aee82331ff6efa02a1a8233ff85689b660a",
+    "pushed_commits": 44,
+    "audit_delivery_snapshot": "6c07597c15a721190d2bf8c75567e8ff7e1c9cdb",
+    "tested_source": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
+    "tested_code_manifest_sha256": "c332a24fd0fa5179f21607751f3bfcf04b191a4fd26ff4264c1623f996e667aa",
+    "covers_local_checkpoints": [
+      "CP-20261020-DEV-QUALITY-LOCAL",
+      "CP-20261020-PRE-DOWNLOAD-AUDIT-PLAN",
+      "CP-20261020-AUDIT-LOCAL-FINAL"
+    ]
+  },
+  "formal_governance": "Historical evidence registrations remain expired; remote persistence success does not itself repair/requalify those registrations or claim a new formal run.",
+  "next_step": "Publish this immutable readback receipt and updated compact handoff; read back that documentation commit separately. No EXE, merge or deployment."
+}

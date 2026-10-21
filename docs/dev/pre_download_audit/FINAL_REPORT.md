@@ -1,3 +1,7 @@
+# 2026-10-21 GitHub保存更新
+
+查證成果已推送原開發分支，並從獨立空Git倉庫重新下載，核對43887個檔案條目及完整物件。來源與1921PASS測試的程式manifest一致。收據：[CP-20261021-AUDIT-GITHUB-READBACK](github-persistence-20261021/snapshot-readback.json)；費用依據與接續方式見[保存說明](github-persistence-20261021/README.md)。此更新取代下文歷史「尚未推送」狀態；正式治理舊來源登錄仍未更新，沒有新增正式run或改變外部驗收資格。
+
 # 第一次下載前全面查證：本機範圍完成
 
 狀態：**LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED**。最後程式來源 `65f75f37aa771219ea42709b7c2afeed4f5984aa`；GitHub 基底 `0e7b8aee82331ff6efa02a1a8233ff85689b660a`，工作分支 `dev/v0.1-first-version`。本報告產生時間：2026-10-21T00:01:06.689343+00:00。

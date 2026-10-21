@@ -1,4 +1,6 @@
-# 最新接手：本機全面查證完成，遠端治理仍阻擋
+# 最新接手：全面查證已保存GitHub，正式治理登錄仍待更新
+
+2026-10-21更新：使用者確認GitHub無付款方式，核對官方無付款方式超額停用政策後，44個提交已正常推送至`dev/v0.1-first-version`。已用獨立空Git倉庫從GitHub下載`a4a448f2b69c7bedbe832ddd0ceaa60efaa34c69`，原始commit、完整遞迴樹的43887個檔案條目、Git物件完整性與FULL010程式manifest均吻合。見`docs/dev/pre_download_audit/github-persistence-20261021/snapshot-readback.json`及`pre_download_audit/github-persistence-20261021/README.md`。原生Git讀回，沒有冒稱REST API可用。下文「沒有推送／費用未知」是本機完成時的歷史狀態，已由本次保存更新取代；正式治理的舊證據來源過期仍保留，不宣稱新正式run已通過。最新GitHub交接文件較本機6c07597c還原ZIP更新；ZIP仍可還原其原快照。
 
 先讀pre_download_audit/FINAL_REPORT.md與PROGRESS.json。本輪來源65f75f37aa771219ea42709b7c2afeed4f5984aa，1921PASS/252健康/0runtime/原1850保留，新71有意義案例；27原版GUI作業PASS、native00519PASS/11PNG。10類共通根因已修，原11798診斷0未審，原指紋/次數與證據引用完整；9187型別契約、1856工具限制、740已修連動、15外部阻擋。最後兩profile union11335、新增/變體397均判讀；完全重複7未增加、近似83均審，4低優先候選保留。817/825條款有測試連結，8原PARTIAL/DEFERRED原因逐條保存，不提高真實資格。
 

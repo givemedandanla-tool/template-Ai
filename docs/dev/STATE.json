@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.1.28",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "PRE_DOWNLOAD_AUDIT_LOCAL_COMPLETE",
+  "active_task": "PRE_DOWNLOAD_AUDIT_LOCAL_COMPLETE_REMOTE_SAVED",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261020-GUI-OFFLINE-FINAL.receipt.json",
   "last_confirmed_commit": "5cfa9dac1d0ccb1eaedfd2cb9fbdb3847fd54e92",
   "latest_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
@@ -22,9 +22,9 @@
     "docs/dev/AI_CROSS_WORK_LEARNING_CONTRACT.json"
   ],
   "next_tasks": [
-    "Preserve/download local audit recovery ZIP; verify manifest base/head and restored receipt.",
-    "Resume only the next authorized work or safe offline Windows/user report; do not auto-start EXE/web/mobile/whole-repo type cleanup.",
-    "Remote persistence/formal evidence requires verified zero-new-cost trigger information; do not push/PR/CI or claim REMOTE_VERIFIED without it."
+    "Resume from GitHub development branch and latest readback receipt; no longer depend solely on local ZIP.",
+    "If formal governance reconciliation is next authorized work, bind genuine source proof and actual existing/new evidence without relaxing gates; original external qualifications unchanged.",
+    "Await next authorized task or user safe offline report; do not auto-start EXE/web/mobile/whole-repo cleanup."
   ],
   "blocked": [
     {
@@ -49,9 +49,7 @@
     "UI-056-D"
   ],
   "pending_remote": [
-    "CP-20261020-DEV-QUALITY-LOCAL",
-    "CP-20261020-PRE-DOWNLOAD-AUDIT-PLAN",
-    "CP-20261020-AUDIT-LOCAL-FINAL"
+    "CP-20261021-AUDIT-GITHUB-RESUME"
   ],
   "previous_evidence_run": "docs/evidence/runs/RUN-INPUT-INTEGRATION-ALL-007/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
@@ -1540,9 +1538,9 @@
     "known_limitations": [
       "Ruff parser false positives retained on 3 files; Python and Pyright still cover them",
       "Windows/native Python3.11 unverified",
-      "Historical type diagnostics unreviewed"
+      "Historical diagnostics now fully reviewed in pre-download audit; type-contract backlog and tool restrictions retained"
     ],
-    "remote_source_status": "LOCAL_ONLY_COST_UNVERIFIED",
+    "remote_source_status": "PUBLISHED_WITH_AUDIT_NATIVE_GIT_READBACK",
     "cloud_config_draft": {
       "revision": 7,
       "saved": true,
@@ -1550,7 +1548,8 @@
     },
     "local_delivery_receipt": ".cache/debug-tooling/delivery/receipt.json",
     "checkpoint_id": "CP-20261020-DEV-QUALITY-LOCAL",
-    "last_product_evidence_unchanged": true
+    "last_product_evidence_unchanged": true,
+    "remote_readback": "docs/checkpoints/CP-20261021-AUDIT-GITHUB-READBACK.receipt.json"
   },
   "remote_save_policy_for_current_task": {
     "priority": "ZERO_ADDITIONAL_COST_OVER_REMOTE_PERSISTENCE",
@@ -1575,5 +1574,13 @@
   "audit_final_checkpoint": "docs/checkpoints/CP-20261020-AUDIT-LOCAL-FINAL.json",
   "audit_source_commit": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
   "audit_recovery_receipt": ".cache/debug-tooling/audit-delivery-20261020/receipt.json",
-  "pending_remote_audit_scope": "All local audit commits since0e7b8aee; final local checkpoint covers them. None pushed or REMOTE_VERIFIED."
+  "pending_remote_audit_scope": "Original43 audit/tooling commits plus authorization published to a4a448f2 and independently fetched from GitHub;43887 file entries verified. Updated receipt/handoff will be saved in a follow-up documentation commit.",
+  "audit_remote_readback": {
+    "receipt": "docs/dev/pre_download_audit/github-persistence-20261021/snapshot-readback.json",
+    "method": "NATIVE_GIT_INDEPENDENT_EMPTY_REPOSITORY",
+    "phase": "REMOTE_VERIFIED",
+    "documentation_followup": "Read back final documentation commit separately; receipt points to earlier snapshot to avoid a cycle.",
+    "formal_checkpoint": "CP-20261021-AUDIT-GITHUB-RESUME to be prepared, published and acknowledged separately"
+  },
+  "audit_formal_governance_status": "Historical registered source manifests expired; not reissued this documentation/persistence task. See governance-final-disposition.json. Persistence success does not imply formal Gate PASS."
 }

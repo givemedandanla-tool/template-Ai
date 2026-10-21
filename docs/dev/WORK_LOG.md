@@ -1719,3 +1719,5 @@ FINAL checkpoint來源5cfa9dac已exact native Git fetch/tree/blob讀回、REMOTE
 2026-10-20T23:54:33.574737+00:00 最後完整回歸FULL010：來源65f75f37，1921PASS/252健康/0runtime/原1850全保留/程式未變。Full009848是中斷，未混充。最後stock003/native006正在執行，接續同源報告與實際ZIP還原。未推送或啟用新收費能力。
 
 2026-10-21T00:01:06.689343+00:00 PRE-DOWNLOAD-AUDIT本機完成：source65f75f37aa771219ea42709b7c2afeed4f5984aa，1921PASS/252健康/0runtime/原1850保留；stock27、native19/11PNG通過。原11798與397新增/變體0未審；完全7/近似83均判讀。10根因修復，8外部/延後條款不提高資格。正式治理仍FAIL來源過期/缺真遠端讀回；不push/PR/CI、不新增付費能力。最後提交後匯出並隔離還原ZIP，receipt為準。
+
+2026-10-21 GitHub保存恢復：使用者確認無付款方式，固定版本官方Actions超額停用政策已核對。44個提交0e7b8aee→a4a448f2正常推送；獨立空bare從GitHub下載，43887檔案條目及原始commit/完整物件核對一致，fsck0，FULL010程式manifest不變。CP-20261021-AUDIT-GITHUB-READBACK是原生Git遠端收據，非REST回應；收據與交接後續小提交保存。正式治理舊來源登錄仍過期，未重發或改寫既有FAIL；未新增產品修改/測試執行/付費能力/代理/EXE/合併/部署。
