@@ -5,9 +5,9 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "WINDOWS_BETA_LINUX_VALIDATED_PERSISTING_FORMAL_EVIDENCE",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-NONCODE-COMPLETE-004.receipt.json",
-  "last_confirmed_commit": "8105571e2ffe5f2804155b11e0be9272e1f42d34",
+  "active_task": "WINDOWS_BETA_BUILD_REQUEST_READY",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-SOURCE-002.receipt.json",
+  "last_confirmed_commit": "956c89c86522615a7833accfba0c4b72727766be",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-LINUX-001/run.json",
   "exe_policy": "EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -18,10 +18,10 @@
     "docs/decisions/2026-10-21-INCLUDED-TOOLS-AND-EXECUTION-EFFICIENCY.md"
   ],
   "next_tasks": [
-    "Prepare CP-20261021-WINDOWS-BETA-SOURCE-002 incremental checkpoint including all RUN-WINDOWS-BETA-LINUX-001 attachments, release docs, .github and build lock; base570ecebe",
-    "Push, independent native Git readback, standard acknowledge, persist receipt closure; require-evidence publication-scope must PASS",
-    "Push final exact HEAD to release-request/v0.2.0-beta.1; verify actual Windows171 and frozen EXE, tag, prerelease, actual download hashes",
-    "If API/network or Actions access remains unavailable, keep built=false published=false and exact access blocker; resume after environment network draft is applied"
+    "Push exact closure HEAD to release-request/v0.2.0-beta.1; regular dev/main/PR pushes do not build",
+    "Inspect release-evidence/v0.2.0-beta.1 actual runner receipt and/or GitHub Actions API; current api.github.com network policy returns Forbidden until saved draft is applied",
+    "Windows171 and actual frozen EXE must PASS; then immutable tag, prerelease, asset upload and published download per-file hashes",
+    "If external access remains blocked, preserve source/evidence and report not released; no need for private corpus or API key"
   ],
   "blocked": [
     {
@@ -45,9 +45,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261021-WINDOWS-BETA-SOURCE-002"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1705,7 +1703,7 @@
   },
   "windows_release": {
     "version": "0.2.0-beta.1",
-    "status": "LINUX_VALIDATION_PASS_CHECKPOINT_PENDING",
+    "status": "SOURCE_REMOTE_VERIFIED_WINDOWS_REQUEST_READY",
     "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
     "built": false,
     "published": false,
@@ -1764,6 +1762,10 @@
       "checkpoint_record_created": false,
       "software_validation_unchanged": "1958 PASS and original27 PASS",
       "recovery": "Keep failed local archive; use new unique CP002 with isolated restore under workspace .checkpoints; remove orphan pending entry"
-    }
+    },
+    "software_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-SOURCE-002.receipt.json",
+    "software_snapshot_commit": "956c89c86522615a7833accfba0c4b72727766be",
+    "software_verified_files": 11713,
+    "governance_gate": "PASS_REQUIRE_EVIDENCE_PUBLICATION_SCOPE"
   }
 }

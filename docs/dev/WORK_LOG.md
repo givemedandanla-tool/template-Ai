@@ -1790,3 +1790,5 @@ Windows beta WIP002：full004約1124／1958PASS、尚未完成；stock004原27�
 Windows beta full004完整1958／1958PASS、258健康、0runtime，source未改；stock004原27全PASS。已用既有adopter採錄真實同源執行＋原生Git來源為RUN-WINDOWS-BETA-LINUX-001，355附件，software PASS且原5未驗證保留整體FAIL。166已完成範圍重新指向新run，普通治理PASS1958，views及結束snapshot對初始baseline父題／scope／完成數delta全0；不把16新測試當新父題。尚待全部附件遠端checkpoint、Windows171／實際EXE與Release下載校驗，未發布。
 
 Windows beta CP001還原遇ENOSPC：/tmp獨立17G分割區僅103M可用，workspace仍1.8G；archive約59M／邏輯98M＋11712檔案配置超出/tmp，非程式驗證失敗。保留原archive及失敗紀錄，不建立假record、移除孤立pending；helper隔離還原改在workspace/.checkpoints，後續CP002，不刪他人成果或加資源。最終602檔Python3.11 grammar再查PASS、code3cd6da4b未改。
+
+Windows beta來源正式CP002：11712 scoped檔案隔離還原PASS，實際snapshot956c89c8推送後獨立Git讀回11713條（含record），標準ack REMOTE_VERIFIED；355新正式附件0缺漏。require-evidence publication-scope實跑PASS172／166／75／1958。CP001失敗不覆寫。接著保存receipt closure並推精確Windows候選請求；尚未取得Windows171／實際EXE／Release下載驗證，built/published保持false。

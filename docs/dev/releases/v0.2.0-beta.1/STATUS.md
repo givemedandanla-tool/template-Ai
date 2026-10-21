@@ -20,7 +20,7 @@
 
 ## 尚待實際完成
 
-1. 保存全部正式證據附件與GitHub逐檔讀回收據，讓require-evidence publication-scope Gate通過。
+1. 已完成：CP-20261021-WINDOWS-BETA-SOURCE-002獨立Git讀回11713條（含record），355正式附件全部涵蓋；隔離還原PASS，require-evidence publication-scope Gate PASS。Windows步驟仍待完成。
 2. 推送具體最終候選到release-request/v0.2.0-beta.1，取得GitHub標準Windows runner實際結果。
 3. Windows15模組共171案例全PASS無skip，實際frozen EXE兩階段檢查通過，才建立不可變tag及Pre-release。
 4. 上傳ZIP／manifest／SHA256，實際下載草稿與公開後附件，逐檔核對，保存release-evidence分支回執。
@@ -34,3 +34,5 @@
 真實作品學習品質、完整私人.ai還原、使用者Windows硬體／效能、實印、新手及完整網路隔離資格待本機回饋。教學／外部知識庫仍為未採用草案，網頁／手機仍延後。
 
 沒有新付費API、模型、試用、付費runner、Codespaces、付款或帳務設定；未啟用子代理。請求的是既有GitHub標準runner，沒有帳戶扣款證據，不聲稱整個帳戶帳單為零。
+
+正式來源快照956c89c86522615a7833accfba0c4b72727766be；source／fixture版本570ecebe，code manifest3cd6da4b。CP001還原因/tmp分割區不足失敗保留，改用workspace建立新CP002，未刪他人成果或加資源。
