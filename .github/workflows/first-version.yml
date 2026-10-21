@@ -1,34 +1,94 @@
-name: First Version Windows Validation
+name: Authorized Windows beta release
 on:
-  # 使用者已將 EXE 延後；只保留明確人工啟動，開發與 PR 不再觸發打包。
   workflow_dispatch:
+  push:
+    # Only this explicit release request; ordinary commits/PRs never build EXE.
+    branches: ['release-request/v0.2.0-beta.1']
 permissions:
   contents: read
+concurrency:
+  group: windows-v0.2.0-beta.1
+  cancel-in-progress: false
 jobs:
   windows:
     runs-on: windows-latest
-    timeout-minutes: 35
+    timeout-minutes: 120
+    permissions:
+      contents: write
     env:
       QT_QPA_PLATFORM: windows
+      PYTHONUTF8: '1'
+      GH_TOKEN: ${{ github.token }}
     steps:
+      - name: Preserve source bytes for immutable fingerprints
+        shell: pwsh
+        run: git config --global core.autocrlf false
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install Inkscape for actual AI conversion acceptance
+          architecture: x64
+      - name: Record actual runner start
+        shell: pwsh
+        run: |
+          gh auth setup-git
+          python tools/persist_release_evidence.py --status RUNNING
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot persist runner evidence' }
+      - name: Install existing free local conversion dependency
         shell: pwsh
         run: |
           choco install inkscape --version=1.4.2 --yes --no-progress
           if ($LASTEXITCODE -ne 0) { throw 'Inkscape installation failed' }
           if (!(Test-Path 'C:\Program Files\Inkscape\bin\inkscape.exe')) { throw 'Inkscape executable missing' }
+          'C:\Program Files\Inkscape\bin' | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       - name: Build and verify actual Windows executable
         shell: pwsh
         run: ./tools/build_windows.ps1
-      - name: Retain downloadable build and startup evidence
+      - name: Create immutable beta tag and draft assets
+        shell: pwsh
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git tag -a v0.2.0-beta.1 -m 'Authorized native Windows internal beta'
+          if ($LASTEXITCODE -ne 0) { throw 'Tag exists; do not overwrite' }
+          git push origin v0.2.0-beta.1
+          if ($LASTEXITCODE -ne 0) { throw 'Tag publication failed' }
+          gh release create v0.2.0-beta.1 --verify-tag --draft --prerelease --title 'Template AI v0.2.0-beta.1 — Windows 實測版' --notes-file docs/dev/releases/v0.2.0-beta.1-notes.md artifacts/TemplateAI-v0.2.0-beta.1-windows-x64.zip artifacts/release-manifest.json artifacts/SHA256SUMS.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Draft Release publication failed' }
+      - name: Download and verify every draft package file
+        shell: pwsh
+        run: |
+          gh release download v0.2.0-beta.1 --dir artifacts/download
+          if ($LASTEXITCODE -ne 0) { throw 'Actual draft download failed' }
+          python tools/windows_release.py verify-download --output artifacts/download
+          if ($LASTEXITCODE -ne 0) { throw 'Downloaded draft differs' }
+      - name: Publish prerelease and verify published bytes
+        shell: pwsh
+        run: |
+          gh release edit v0.2.0-beta.1 --draft=false --prerelease
+          if ($LASTEXITCODE -ne 0) { throw 'Prerelease publication failed' }
+          Remove-Item -Recurse artifacts/download
+          gh release download v0.2.0-beta.1 --dir artifacts/download
+          if ($LASTEXITCODE -ne 0) { throw 'Published asset download failed' }
+          python tools/windows_release.py verify-download --output artifacts/download
+          if ($LASTEXITCODE -ne 0) { throw 'Published download not verified' }
+          python tools/persist_release_evidence.py --status RELEASE_PUBLISHED_DOWNLOAD_VERIFIED
+          if ($LASTEXITCODE -ne 0) { throw 'Release receipt persistence failed' }
+      - name: Preserve failure instead of claiming success
+        if: failure()
+        shell: pwsh
+        run: python tools/persist_release_evidence.py --status FAILED_NOT_VERIFIED
+      - uses: actions/upload-artifact@v4
         if: always()
-        uses: actions/upload-artifact@v4
         with:
-          name: TemplateAI-v0.1-Windows
-          path: artifacts/
-          if-no-files-found: error
+          name: Windows-v0.2.0-beta.1-evidence
+          path: |
+            artifacts/*.txt
+            artifacts/*.json
+            artifacts/*.log
+            artifacts/source-tests/
+            artifacts/package-check/
+          if-no-files-found: warn
           retention-days: 14

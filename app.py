@@ -22,14 +22,21 @@ def default_data_dir():
 
 
 def main():
+    from template_ai.launch import dispatch_worker
+    if dispatch_worker():
+        return 0
     from template_ai.offline_runtime import assert_local_path, enable_offline_guard
     from template_ai.offline_support import OfflineJournal, install_exception_reporting, save_support_bundle
     enable_offline_guard()
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-dir")
+    parser.add_argument("--release-check", help=argparse.SUPPRESS)
     parser.add_argument("--capture", help="只建立真實 GUI 截圖後退出，使用匿名測試資料目錄")
     parser.add_argument("--support-report", help="不開主視窗，將最近的安全操作紀錄匯出到新的本機 ZIP")
     args = parser.parse_args()
+    if args.release_check:
+        from template_ai.release_check import run
+        return run(args.release_check)
     for value in (args.data_dir, args.capture, args.support_report):
         if value:
             assert_local_path(value)
@@ -61,6 +68,8 @@ def main():
         restore_qt = install_qt_message_reporting(journal)
         app = QApplication(sys.argv)
         app.setApplicationName('TemplateAI')
+        from template_ai import __version__
+        app.setApplicationVersion(__version__)
         app.setOrganizationName('TemplateAI')
         app._template_ai_support_journal = journal
         window = MainWindow(root)

@@ -331,7 +331,8 @@ class BackupManagerDialog(QDialog):
             if not self.last_restore:raise ValueError('先完成隔離還原')
             root=Path(self.last_restore['library_root'])
             if (root.parent/'RESTORE_STAGING_NOT_ACTIVE').exists() or not (root.parent/'RESTORE_COMPLETE.json').is_file():raise ValueError('副本尚未完整完成，不能啟用')
-            started=QProcess.startDetached(sys.executable,[str(Path(__file__).resolve().parents[1]/'app.py'),'--data-dir',str(root)])
+            from .launch import desktop_arguments
+            started=QProcess.startDetached(sys.executable,desktop_arguments(root))
             if not (started[0] if isinstance(started,tuple) else started):raise ValueError('獨立視窗未啟動，目前環境仍保留')
             self.status.setText('已要求在獨立視窗檢查副本；目前環境保留，可關閉副本返回。啟動不代表品質已通過。')
         self.guarded(action)
