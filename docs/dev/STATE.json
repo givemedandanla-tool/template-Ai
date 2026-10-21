@@ -44,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261021-WINDOWS-REPAIR-WIP-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1801,7 +1803,16 @@
       "runtime_errors": 3,
       "missing": 40
     },
-    "native_expected_tests": 176
+    "native_expected_tests": 176,
+    "regression_progress": {
+      "observed_utc": "2026-10-21T12:06:09.978263+00:00",
+      "source_commit": "429bd302eece95477e462fbdaef6c427bedf42a1",
+      "completed": 784,
+      "planned": 1963,
+      "passed": 784,
+      "failed_ids": [],
+      "qualification": "IN_PROGRESS_NOT_FINAL"
+    }
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",

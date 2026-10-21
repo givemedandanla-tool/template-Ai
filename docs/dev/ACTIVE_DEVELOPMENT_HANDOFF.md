@@ -1,14 +1,15 @@
-# 目前交接：公開倉庫 Windows 測試版與空間評估
+# 交接：Windows相容性修正，完整回歸進行中
 
-2026-10-21。使用者已將倉庫改公開，明確要求重試 EXE 發佈，另評估雲端文件用途／重要性／是否應刪。本輪僅評估，不刪除、不合併 main、不更動帳務或啟用付費資源。
+2026-10-21。使用者已將倉庫改公開，要求重試Windows EXE發布，並評估雲端文件是否應刪。**尚未建立EXE、tag或Release；本輪刪除0檔。** 不合併main、不覆寫tag、不改帳務或新增付費資源。
 
-- 工作分支 dev/v0.1-first-version；Windows 僅由人工 dispatch 或精確 release-request/v0.2.0-beta.1 啟動，一般 dev/main/PR 不打包。
-- 正式來源 CP-20261021-WINDOWS-BETA-SOURCE-002：增量基底570ecebe，快照956c89c8，REMOTE_VERIFIED11713項。實際 Linux1958/1958、原版GUI27/27；RUN-WINDOWS-BETA-LINUX-001 軟體PASS，原5外部資格保留。code manifest3cd6da4bbe162df29746c17e12e55992a4eabc09042f4492896a0b54b9c9c95f。
-- 公開網頁及Git讀寫可用；此雲端api.github.com仍Forbidden，不索取API key、不將API拒絕誤報為Git不可用。
-- 舊run39587259422實際為啟動前帳務／支出限制拒絕；公開後run39591183044已真正啟動並裝好Inkscape，建置失敗。run39591928487已保留實際錯誤到獨立evidence分支：Pinned dependency installation failed，build_windows.ps1第6行。
-- 目前請求來源35d133cd：只改workflow，明確把setup-python3.11放在Inkscape/bin前面，保存錯誤及解譯器選擇；不改依賴pin、產品／測試／tools或驗收。PATH是假說，須看實際Windows回執確認，不是已成功修復。來源manifest未改；針對發佈7測試PASS、嚴格治理PASS。
-- 下一步Git fetch release-evidence/v0.2.0-beta.1的latest.json與實際報告，配合公開Actions頁。Windows15模組171案例全PASS無skip、實際frozen EXE兩階段、不可變tag／Pre-release、附件上傳及公開後逐檔下載校驗須全部真正完成。尚無成品時built/published保持false。依根因修正，不放寬斷言；產品／tools／tests改動後重建同源證據。
+目前程式修正來源429bd302已推送dev/v0.1-first-version並獨立Git讀回；新5個安全測試及既有7個證據工具測試PASS。code manifest以STATE.windows_release為準。linux-regression-005正在兩個owned程序執行1963項，未完成，不可拿中途計數當PASS。測試中不改產品/tools/tests；文件checkpoint不改code manifest。完成後單獨執行原27個stock captures，指令：QT_QPA_PLATFORM=offscreen .venv/bin/python docs/dev/pre_download_audit/run_stock_capture_audit.py --output docs/dev/releases/v0.2.0-beta.1/stock-captures-005 --workspace /workspace/template-Ai/.cache/release-beta-stock-005。不能與完整回歸並行。
 
-空間評估完成：docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.md、JSON及226列CSV。workspace31.45GiB剩1.62GiB，tmp16.64GiB剩0.10GiB；專案27.82GiB、checkpoints23.06GiB。81個失效ZIP連結的歷史提交/tree可追溯，但本機不能直接還原；另1歷史收據提交非本分支祖先，保留待查。55個舊實體ZIP共19.42GiB只列有條件清理候選，未逐份hash／獨有內容／完整還原驗證。**零刪除，未改保留契約**；不整批刪tmp、checkpoints、正式證據、Git歷史或私人資料。
+公開重試3次實際結果保留：前2次建置依賴失敗；第三source35d133cd/run39592388094治理PASS、Windows171預定131完成129PASS2ERROR、40未完成，報告在releases/v0.2.0-beta.1/windows-native-001-failed。真實原因包含Inkscape附帶Python遮蔽setup-python（workflow已修正）；Windows的os.kill(pid,0)會殺程序（改既有psutil）；進度檔rename分享衝突（重用atomic helper，限定錯誤有限重試）；合成測試的Noto字型與短路徑假設（使用實際字型及resolve，不放寬原斷言）。input-integration deadline未解釋，未提高期限；加入Windows近原截止時間的一次stack dump及有界失敗log，若再現讀實際stack。
 
-真實作品／使用者Windows硬體／實印／新手／網路隔離資格仍待本地回饋；不反覆索取私稿或字型。教學與知識庫仍待核對草案，網頁／手機延後。原需求／父題／AI8包資格不因打包或空間盤點改變。按STATE最新receipt接續；實際執行與失敗紀錄在releases/v0.2.0-beta.1。沒有新增子代理或外部模型。
+Linux1963及原GUI27全PASS後，用docs/dev/non_code_audit/adopt_verified_execution.py採錄新正式run；readback用.checkpoints/WINDOWS-NATIVE-REPAIRS-SOURCE-001/native-readback。dev_governance render、dev_progress快照、嚴格require-evidence/publication-scope、包含全部新附件的增量checkpoint和獨立Git讀回後，才推精確候選到release-request/v0.2.0-beta.1。Windows矩陣現在16模組176項，新增5項、不刪舊171；全部PASS無skip、真正frozenEXE兩階段、tag/Pre-release、公開後實際下載逐檔核對，才稱發布。
+
+此雲端api.github.com仍Forbidden；公開GitHub HTML與原生Git讀寫可用，release-evidence/v0.2.0-beta.1回執可fetch。不要索取API key、繞proxy或將API限制當完全不能運作。舊run39587259422是啟動前帳務/支出限制；公開後標準windows-latest已真正執行。具體帳務原因未核實。
+
+空間評估已完成並REMOTE_VERIFIED：docs/dev/maintenance/STORAGE_ASSESSMENT_20261021.md、JSON、226列CSV。81失效ZIP連結的歷史commit/tree可追溯；55舊實體ZIP共19.42GiB只是待hash/獨有內容/還原核對的候選。兩個保留包hash/CRC/base核對2/2PASS，非全部歷史包驗收。不清空tmp/checkpoints、正式證據、Git或私人資料。啟動指引草稿已保存修正過期EXE延後/LOCAL_ONLY，尚未套用或發布環境。
+
+原要求172、父題75、166完成範圍及AI8包真實資格不變；舊來源1958+27 PASS僅對舊3cd6da4b，不能當修正程式新來源通過。真實作品、使用者Windows硬體、實印、新手及隔離資格待本機回饋，私人資料留本機。教學/知識庫草案未採用，網頁手機延後。新對話讀STATE與本交接，保留正在執行的程序和原始失敗結果。

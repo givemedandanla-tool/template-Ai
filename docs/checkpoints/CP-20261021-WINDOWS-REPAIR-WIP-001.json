@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "id": "CP-20261021-WINDOWS-REPAIR-WIP-001",
+  "kind": "INCREMENTAL_FORMAL",
+  "phase": "PREPARED",
+  "base_commit": "429bd302eece95477e462fbdaef6c427bedf42a1",
+  "created_utc": "2026-10-21T12:06:10.152085+00:00",
+  "summary": "Stable repair source WIP while1963 full tests run; not final qualification. No mutable live outputs included; restore requires base429bd302.",
+  "source_files": {
+    ".github/copilot-instructions.md": {
+      "bytes": 847,
+      "sha256": "0e51e8d2d243d374c4b088161b7e1c781d0b1635efabfb5135ea1c2e01244fbe",
+      "git_blob_sha1": "afa51285d4dc9b31f6ae7d58862f3bf8fc726b4c"
+    },
+    ".github/windows-build-lock.json": {
+      "bytes": 3881,
+      "sha256": "9f71395dab1fe27eb23a6b3e6b2beb56b5e2a81736d346abade317c08cacb03a",
+      "git_blob_sha1": "366aa66fca210b41d6d0f6dc16c6cf1155fc7fd2"
+    },
+    ".github/windows-release-test-scope.json": {
+      "bytes": 1317,
+      "sha256": "6bf7c1fdbb073bd6a1b59d5bdd80b97ddefae0f8a52c79300b81df7dacde0d56",
+      "git_blob_sha1": "a64f8c05e68615759df3dccd85eb5f4cd8c67b79"
+    },
+    ".github/workflows/development-verification.yml": {
+      "bytes": 2040,
+      "sha256": "065a34f46dd7a6081ce6c20dfd255d68c7fb4c31b2dbea86c430cabc64d92104",
+      "git_blob_sha1": "25804532245ba889ce0faf077ac50346687610d6"
+    },
+    ".github/workflows/first-version.yml": {
+      "bytes": 5569,
+      "sha256": "9e442f76e1f8e62f42878f2e7f08c1cebf13e5642929f652ab1455d70aa1ee2d",
+      "git_blob_sha1": "57d1362a7543e7ffb94701954652950c9e9c1d48"
+    },
+    "AGENTS.md": {
+      "bytes": 22147,
+      "sha256": "66f9f570a655f9889a5c8a8147369a33d8dc5f6e11f464e13c5b2f28fee63a15",
+      "git_blob_sha1": "66c4c6f9e22c6ff6ff31af00f55c7ecb4f36a787"
+    },
+    "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md": {
+      "bytes": 3452,
+      "sha256": "378bb8844e254ec37f9dcd817e8552da6705592fac56ef04eeccc8883e0b6432",
+      "git_blob_sha1": "0f597a7c45a621b36ffee83981f5ccb7338b53b3"
+    },
+    "docs/dev/CURRENT_PROGRESS.json": {
+      "bytes": 36009,
+      "sha256": "54fc12bade478dce99bb4d3fed9e2fa857b7eb1b57eefe2df933b125f606580c",
+      "git_blob_sha1": "33b30498f131d0e34f2234daf95e737ee5260463"
+    },
+    "docs/dev/FEATURES.md": {
+      "bytes": 56924,
+      "sha256": "07f0c50504e76251814b7217f24e064d705b43ff23e9df8ba139e9545a94d845",
+      "git_blob_sha1": "3a61cbb4e22ff8d8c745166cb883f81c9d1c559c"
+    },
+    "docs/dev/HANDOFF.md": {
+      "bytes": 1037,
+      "sha256": "1533b50245db00d14d401bcefb40ddc2516ef3460cd76332036a4e6bb308a100",
+      "git_blob_sha1": "69939ac3d9f721ad28caa7a980c2186cd029612e"
+    },
+    "docs/dev/PROGRESS.md": {
+      "bytes": 904,
+      "sha256": "c1619cc87267240c3dfa477c14fd8e6e51e2af94ef21fbd951ce8d066cf6018e",
+      "git_blob_sha1": "1dd2ca7e9c78634af5f6bab27ad2ceaad35e14a3"
+    },
+    "docs/dev/PROJECT_ROADMAP.json": {
+      "bytes": 561737,
+      "sha256": "556d23283890115f639f738c988b78ce3b66b1661aee57c37e68e48c6574b6de",
+      "git_blob_sha1": "d234483300907a667fd41c7f54899f31022f2a33"
+    },
+    "docs/dev/PROJECT_ROADMAP.md": {
+      "bytes": 6701,
+      "sha256": "fea5c9721b962bf2236e734fe9fd9019738b835904ac239ab7b89e4a2251c422",
+      "git_blob_sha1": "4717a05b09d724ebcf09d2b20830ce7c3d4ca082"
+    },
+    "docs/dev/REQUIREMENTS.json": {
+      "bytes": 2755040,
+      "sha256": "afeef5480cfac0090afcf6228b5bb652ae972d7c4f9a2c044eb807c2408675cf",
+      "git_blob_sha1": "139b7c4d18c2c49614d2148328d668c29dffe046"
+    },
+    "docs/dev/STATE.json": {
+      "bytes": 87858,
+      "sha256": "dc162e7aba295d3f52807677f572db2220a87e4628c5c01157c47fd18b4b992f",
+      "git_blob_sha1": "70686591fc48352a90ca7bd4454fbfbd13e1738e"
+    },
+    "docs/dev/WORK_LOG.md": {
+      "bytes": 313646,
+      "sha256": "86121446b82d314525e7c9452334d75de24645e71abb28ca179c531ed051e003",
+      "git_blob_sha1": "b1e168c8d7b6b504c13b3d6339fcb57d2cecd390"
+    },
+    "docs/dev/releases/v0.2.0-beta.1/WINDOWS_NATIVE_REPAIRS.md": {
+      "bytes": 2261,
+      "sha256": "ae235ab033e5e055f42ded5f9b6995d4c87ce2d2630d5279c1973b986edf9a1d",
+      "git_blob_sha1": "e61b05f8fd72a2425579afbfb33ce0af0fec4099"
+    },
+    "template_ai/batch_import.py": {
+      "bytes": 14401,
+      "sha256": "36fc7d43dcff27a84a83fe142f41861af0d9d012d25531a5d56364e022306d8d",
+      "git_blob_sha1": "a418c2aa566e6bc053f8a040fd8390b7569d77c0"
+    },
+    "template_ai/training_pipeline.py": {
+      "bytes": 11781,
+      "sha256": "f04578d6a73b672e94e2ef77e06e7b1a473fee28c1428d1537053a1b73696e64",
+      "git_blob_sha1": "7ae6cfea5bf745090ff741434c4fe42e08e292d7"
+    },
+    "tests/test_desktop_workspace.py": {
+      "bytes": 18213,
+      "sha256": "4f34a9219028ab8ecbe37fc4c36d0d3907ea81554820959893c70a66775d3bb8",
+      "git_blob_sha1": "1d73f03f88fc951dd90ef83a168c33ca37b260e2"
+    },
+    "tests/test_logo_workflow_gui.py": {
+      "bytes": 16675,
+      "sha256": "cbd0405612dbaa4755c152fede932b63140e82c78f2110db8c5812ca9cfb033b",
+      "git_blob_sha1": "0e1c3dfafe328b30faafe10a8ae9bcbf8e0bcf9f"
+    },
+    "tests/test_windows_release_safety.py": {
+      "bytes": 4362,
+      "sha256": "cb09c6cfde513e1f8e7f06f6c513508a131c14404715584c3e4da3712640fabb",
+      "git_blob_sha1": "495757f552c4694d322684339f3cb5d71c9a4d1d"
+    },
+    "tools/dev_common.py": {
+      "bytes": 4043,
+      "sha256": "130110cd80571ba4debdb5580a822c0a0ed767e9c68c31d90186f4acf359dfe9",
+      "git_blob_sha1": "0fda377ed46b6b3acec65b0ac8e2b7519c7825d9"
+    },
+    "tools/evidence_modules.py": {
+      "bytes": 9051,
+      "sha256": "b0eed35b0c9788dde0e18aed4acbc1c3a82fff0b48ff434e946fe819ac625dd4",
+      "git_blob_sha1": "8b3d6884bf1851e518840907f2f96ef17f94f120"
+    },
+    "tools/evidence_test_worker.py": {
+      "bytes": 3951,
+      "sha256": "be97c1db6ea78a45fd873e7fbc9e4f640ede3f3e108440ecf159e3cf47a268b6",
+      "git_blob_sha1": "5a193594a516eed260f12ac8ea14a2917ebdb451"
+    },
+    "tools/persist_release_evidence.py": {
+      "bytes": 4545,
+      "sha256": "0103eaec06400cd4b836fde11e00233a9ab270866058523dc769afe488355482",
+      "git_blob_sha1": "4df3bd932d6a7e482b9ce13fa1dece650c2efda0"
+    },
+    "tools/run_evidence.py": {
+      "bytes": 32023,
+      "sha256": "4d2713e11b5d36c32680904a39505bb0bc070268484c141295b7ff0676fe964f",
+      "git_blob_sha1": "7c694e6ebc5577dbcd9ef5b3a08ece6ac4f2b528"
+    }
+  },
+  "source_manifest_sha256": "3caf40e3ea0f5d6ff2ca825f83af0e1cf2fc4983c4e456432b210edea9f9f9f4",
+  "local_snapshot": {
+    "path": ".checkpoints/CP-20261021-WINDOWS-REPAIR-WIP-001/source.zip",
+    "sha256": "3e1875fb61e4220976967898b473d3db46ff16c4f561fc04ce78ec28ee6f4942"
+  },
+  "requirement_ids": [
+    "GOV-001",
+    "GOV-002",
+    "GOV-004"
+  ],
+  "next_step": "Use compact repository handoff; local feedback via manually exported safe support report.",
+  "remote_confirmation": "PENDING_ACTUAL_REMOTE_READBACK",
+  "restore_verification": {
+    "status": "PASS",
+    "kind": "INCREMENTAL_CHANGED_PATH_RESTORE_NOT_STANDALONE_PRODUCT",
+    "files": 27,
+    "base_commit_required": "429bd302eece95477e462fbdaef6c427bedf42a1",
+    "archive_sha256": "3e1875fb61e4220976967898b473d3db46ff16c4f561fc04ce78ec28ee6f4942",
+    "isolated_temporary_restore": true,
+    "all_hashes_match": true,
+    "user_data_included": false
+  }
+}
