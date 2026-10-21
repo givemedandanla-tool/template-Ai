@@ -1,8 +1,8 @@
 {
   "id": "PRE-DOWNLOAD-AUDIT-PLAN-20261020",
-  "status": "RUNNING",
+  "status": "LOCAL_SCOPE_COMPLETE_WITH_REMOTE_GATE_BLOCKED",
   "base_commit": "127b69fc59112a540f78bb8488e5a024c5eddd38",
-  "scope": "PRE_FIRST_DOWNLOAD_AUDIT_PLAN_ONLY",
+  "scope": "PRE_FIRST_DOWNLOAD_AUDIT_EXECUTED_LOCAL_SCOPE",
   "document": "docs/dev/PRE_DOWNLOAD_AUDIT_PLAN_20261020.md",
   "initial_diagnostics": {
     "pyright_application": 4212,
@@ -18,37 +18,44 @@
     {
       "id": "0",
       "goal": "Protect source and resources; inventory all entries and requirement/test coverage",
-      "status": "IN_PROGRESS"
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
     },
     {
       "id": "1",
       "goal": "Classify every original and new diagnostic with evidence and caller scope",
-      "status": "NOT_STARTED"
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
     },
     {
       "id": "2",
       "goal": "Trace all input/version paths and review exact/renamed/structural clone candidates",
-      "status": "NOT_STARTED"
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
     },
     {
       "id": "3",
       "goal": "Independently authored synthetic data, learning and layout invariants/boundaries",
-      "status": "NOT_STARTED"
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
     },
     {
       "id": "4",
       "goal": "Actual GUI end-to-end workflows, races, correction, confirmation and export",
-      "status": "NOT_STARTED"
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
     },
     {
       "id": "5",
       "goal": "Failure injection, persistence/recovery and offline/privacy boundaries",
-      "status": "NOT_STARTED"
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
     },
     {
       "id": "6",
       "goal": "Minimal root-cause fixes, full isolated regression and release-readiness report",
-      "status": "NOT_STARTED"
+      "status": "LOCAL_COMPLETE",
+      "external_qualifications_unchanged": true
     }
   ],
   "ledger_required_fields": [
@@ -89,5 +96,9 @@
   "local_checkpoint": "CP-20261020-PRE-DOWNLOAD-AUDIT-PLAN",
   "local_recovery_receipt": ".cache/debug-tooling/plan-delivery-20261020/receipt.json",
   "execution_progress": "docs/dev/pre_download_audit/PROGRESS.json",
-  "agent_policy_current": "Existing Pro entitlements and reasonable-use quota only; subagents permitted if inclusion is verifiable. Currently no billing/entitlement proof, so no new agents."
+  "agent_policy_current": "Existing Pro entitlements and reasonable-use quota only; subagents permitted if inclusion is verifiable. Currently no billing/entitlement proof, so no new agents.",
+  "completion_report": "docs/dev/pre_download_audit/FINAL_REPORT.md",
+  "source_commit": "65f75f37aa771219ea42709b7c2afeed4f5984aa",
+  "completed_at": "2026-10-21T00:01:06.689343+00:00",
+  "qualification": "Local available-condition execution complete; external/native/real-corpus and current formal remote evidence qualifications unchanged"
 }
