@@ -1872,3 +1872,5 @@ Windows003完整199PASS／0runtime，canonical TEMP修正生效。真EXE原exerc
 Frozen trace001/6c/run39806101568在freeze前拒絕上游IDW88下載size/hash，未跑EXE、非resume新結果。windows-frozen-trace-001保留原log；add_inkscape_notices加入最多3次同URL／原size+SHA驗證重試，拒絕片段只記size/hash/type，失敗不繞過。隔離示範2案PASS（非原生授權證據）；下一相同frozen-only＋trace，不重跑來源1986/GUI27/Windows199。
 
 Frozen trace002/f967/run39807865848：已下載及驗證原授權242檔，實際exercise在45.531s退出0xc0000005；C faulthandler背景dump先輸出破損frame字樣後AV。原native003也45秒dump中退出但未記exithex，不能冒稱其hex已知。換GHA Windows frozen的45秒診斷為threading.Timer＋sys._current_frames強參照／GIL安全讀frame；仍同45s呼叫／取消、原21斷言與parent240s硬截止不變。若native擴充持有GIL無法取得Python dump，外部240s仍終止；不當成新增hang放行。隔離dump／cancel兩案PASS，未當Windows證明。下一正常完整native199＋EXE21＋引擎5＋sources125＋下載檢查；僅全通過後可tag／Release。產品／測試／tools manifest仍f1a2，不重跑Linux全套。
+
+45秒timer示範已存可重跑入口：python docs/dev/releases/verify_frozen_diagnostic_timer.py；實際3案PASS（frame dump／cancel／一般啟動不patch），safe-timer-reproducible-demo.json記Python3.12.14與hook SHA。這只是隔離示範，不算新增產品測試數或Windows資格；正常native004仍RUNNING，未變更候選產品或原斷言。

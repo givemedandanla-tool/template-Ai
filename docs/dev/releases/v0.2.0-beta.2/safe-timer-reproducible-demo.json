@@ -1,0 +1,25 @@
+{
+  "scope": "ISOLATED_DIAGNOSTIC_TIMER_DEMONSTRATION_NOT_WINDOWS_PROOF",
+  "command": "python docs/dev/releases/verify_frozen_diagnostic_timer.py",
+  "python": "3.12.14",
+  "hook_sha256": "06ced1d9ffc37ef68ccb5353a04225c4420b5dfb145ec2522130ce294b2fbb2d",
+  "checks": [
+    {
+      "case": "referenced_frame_dump_without_absolute_paths",
+      "status": "PASS"
+    },
+    {
+      "case": "cancel_preserved",
+      "status": "PASS"
+    },
+    {
+      "case": "ordinary_launch_does_not_install_GHA_timer",
+      "status": "PASS"
+    }
+  ],
+  "unchanged": [
+    "original release-check 45s call",
+    "parent 240s hard deadline",
+    "original 21 EXE assertions"
+  ]
+}
