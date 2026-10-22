@@ -6,8 +6,8 @@
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
   "active_task": "BUNDLED_INKSCAPE_BETA2_PUBLISHED_AND_CHANGE_IMPACT_DEBUG_DESIGN_COMPLETE",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261022-BETA2-SOURCE-QUALIFIED-001.receipt.json",
-  "last_confirmed_commit": "1548c940e8ae9484872aca7a50af539dfe2525ca",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261022-BETA2-PUBLISHED-001.receipt.json",
+  "last_confirmed_commit": "7b3df58fc38cec1456de133cd4a178a33db63041",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
   "exe_policy": "EXPLICIT_V0_2_0_BETA_2_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -44,9 +44,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261022-BETA2-PUBLISHED-001"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1727,7 +1725,15 @@
       "archives_verified": 125,
       "source_map_sha256": "bc0271ef2bd72e83818ddf8ded62e10047e6751f316460e2b8ae03de3dd03d7c"
     },
-    "next": "User local testing on separate data copy; provide version/repro and manually exported safe report. No further automatic build or feature expansion."
+    "next": "User local testing on separate data copy; provide version/repro and manually exported safe report. No further automatic build or feature expansion.",
+    "final_checkpoint": {
+      "id": "CP-20261022-BETA2-PUBLISHED-001",
+      "receipt": "docs/checkpoints/CP-20261022-BETA2-PUBLISHED-001.receipt.json",
+      "snapshot_commit": "7b3df58fc38cec1456de133cd4a178a33db63041",
+      "phase": "REMOTE_VERIFIED",
+      "verified_files": 503,
+      "formal_attachments_included": 369
+    }
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",
@@ -1836,6 +1842,14 @@
       "sha256": "3250070bd39362b87dd9c7c97f9b2fa132ceeeee57d815579264c5e87f079b6a",
       "archives_verified": 125,
       "source_map_sha256": "bc0271ef2bd72e83818ddf8ded62e10047e6751f316460e2b8ae03de3dd03d7c"
+    },
+    "final_checkpoint": {
+      "id": "CP-20261022-BETA2-PUBLISHED-001",
+      "receipt": "docs/checkpoints/CP-20261022-BETA2-PUBLISHED-001.receipt.json",
+      "snapshot_commit": "7b3df58fc38cec1456de133cd4a178a33db63041",
+      "phase": "REMOTE_VERIFIED",
+      "verified_files": 503,
+      "formal_attachments_included": 369
     }
   },
   "windows_release_history": [
