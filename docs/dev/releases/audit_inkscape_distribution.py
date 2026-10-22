@@ -72,7 +72,7 @@ def persist():
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Only the authorized runner may publish this public-package audit')
     source = git(ROOT, 'rev-parse', 'HEAD').stdout.strip()
-    available = [OUT/name for name in ['inventory.json','source-environment.json','source-gap-resolution.json'] if (OUT/name).is_file()]
+    available = [OUT/name for name in ['inventory.json','source-environment.json','source-gap-resolution.json','license-stage.json'] if (OUT/name).is_file()]
     record = dict(source_commit=source, status='AUDIT_COMPLETED_NOT_RELEASED' if available else 'AUDIT_FAILED_NOT_RELEASED',
                   recorded_utc=datetime.now(timezone.utc).isoformat(),
                   run_url='https://github.com/givemedandanla-tool/template-Ai/actions/runs/'+os.environ['GITHUB_RUN_ID'])
