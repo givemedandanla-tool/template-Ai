@@ -1,0 +1,36 @@
+name: Inkscape distribution audit for authorized beta2
+on:
+  workflow_dispatch:
+  push:
+    branches: ['research-request/inkscape-1.4.2-beta2']
+permissions:
+  contents: write
+jobs:
+  inspect:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONUTF8: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Inspect the same pinned official installation used by beta1
+        shell: pwsh
+        run: |
+          choco install inkscape --version=1.4.2 -y --no-progress
+          if ($LASTEXITCODE -ne 0) { throw 'Pinned Inkscape install failed' }
+          $py = Join-Path $env:pythonLocation 'python.exe'
+          & $py docs/dev/releases/audit_inkscape_distribution.py
+          if ($LASTEXITCODE -ne 0) { throw 'Distribution inventory failed' }
+      - name: Persist bounded public-package metadata without a product release
+        if: always()
+        shell: pwsh
+        run: |
+          gh auth setup-git
+          $py = Join-Path $env:pythonLocation 'python.exe'
+          & $py docs/dev/releases/audit_inkscape_distribution.py --persist
+          if ($LASTEXITCODE -ne 0) { throw 'Audit evidence persistence failed' }

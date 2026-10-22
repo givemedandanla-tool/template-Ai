@@ -1842,3 +1842,5 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-21 v0.2.0-beta.1交付：8b95b10b/run39638803778原176、真frozen EXE14+7全PASS，83已知第三方testdata只在freeze前排除，原inventory PASS；tag解參照8b95，草稿與公開各完整下載校驗，最終1220檔hash PASS。原生Git a913證據獨立讀回180tree項，雲端未登入manifest/checksums逐byte相同／公開頁HTTP200。ZIP125923070bytes SHA0429fcbf…d526。已公開，非僅請求。原外部資格不升級；未合併main、未刪既有檔案，無新付費／試用／子代理。最後完整交接CP準備中。
 
 2026-10-21 最後交接CP-20261021-WINDOWS-BETA-PUBLISHED-001：7bb7a189快照449項REMOTE_VERIFIED，含完整369正式附件／實際Windows發佈與公開下載讀回；增量ZIP448檔隔離還原hash全部PASS、指定基底4734990a。已公開成品來源仍不可變8b95，未重新建置或替換資產；完成收據閉合與嚴格治理檢查。
+
+2026-10-22 使用者採用隨包Inkscape並授權完善代碼及新Release，按規則beta.2；另要求設計變更影響除錯範圍。基底059af6de乾淨，beta.1不覆寫。先調查Windows散佈／授權、建立錯選系統工具紅燈，再接嚴格包內選擇／快取身分與正式成品驗證。8輔助tree JSON可逆壓縮hash全相同，回收118.86MiB，無checkpoint ZIP／正式證據刪除。

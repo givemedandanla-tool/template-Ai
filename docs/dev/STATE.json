@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.1",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "WINDOWS_BETA_RELEASE_DELIVERED_AWAITING_LOCAL_FEEDBACK",
+  "active_task": "BUNDLED_INKSCAPE_BETA2_AND_CHANGE_IMPACT_DEBUG_DESIGN",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-PUBLISHED-001.receipt.json",
   "last_confirmed_commit": "7bb7a1896cc52a70a06b1ce8d5d9022c87669f42",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "User downloads v0.2.0-beta.1 complete Windows ZIP, tests separate local data copy, returns version/reproduction and existing safe report. Release is actually published and download-verified; do not rebuild or overwrite the immutable tag. Bundled Inkscape and local Illustrator adapter remain proposals, not implemented.",
+  "next_step": "Complete authorized beta.2 bundled Inkscape implementation, precise route/cache regressions, required qualification, actual Windows package and published full download verification; preserve beta.1. Research and persist conservative change-impact debugging design.",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -1864,5 +1864,14 @@
     ],
     "requires_publish": true,
     "scope": "Replace stale EXE deferral/LOCAL_ONLY instructions with actual release and storage handoff; no new credentials, install steps or network changes."
+  },
+  "pending_release": {
+    "version": "0.2.0-beta.2",
+    "status": "AUTHORIZED_IN_PROGRESS",
+    "baseline_commit": "059af6de8a2b6a0eb7882489f3fd4eff09028907",
+    "plan": "docs/dev/releases/v0.2.0-beta.2-plan.md",
+    "user_authorization": "參用隨包附帶方案，完善代碼後，打包成exe發佈到release",
+    "scope": "BUNDLED_INKSCAPE_STRICT_SELECTION_CACHE_IDENTITY_AND_IMPACT_DEBUG_DESIGN",
+    "published": false
   }
 }
