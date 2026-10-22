@@ -25,3 +25,5 @@ Windows probe002/66d9/run39777630190已實際PASS原14＋7、無系統兩phase�
 最終native002/fd1/run39795277849：Windows199實跑198PASS／1FAIL／0runtime，沒打包。唯一失敗是新DLL完整性測試先比較路徑時Windows TMP的RUNNER~1與resolve後runneradmin字串不同；另priority測試已resolve預期而PASS。沒有錯選外部engine。改CI TMP/TEMP為RUNNER_TEMP內經Path.resolve的短路徑，保留所有原測試方法／斷言／180s與產品碼；下一重跑Windows199，Linux1986／GUI27同code f1a2有效。原完整原生報告windows-native-002保留。
 
 目前最終native003：ee5f6cdb3178e9c99873a05a0fd3450365897a37／run39799674358已RUNNING，observer session69966→windows-native-003。Canonical TEMP在CI內由Path.resolve產生，原測試／產品bytes皆不變。等真結果／全下載，不能先標已發布。MAINTENANCE_NOTES列已確認工具class-setup記錄待辦及外部資格限制。
+
+最終native003/ee5/run39799674358：Windows199全PASS／19健康模組／0runtime；EXE exercise原14 PASS，resume前5 checks後process非0退出，沒packaged-resume.json，45s faulthandler片段僅pathlib.py，實際unit2已完成。原報告windows-native-003完整保留，尚未生成Release。下一僅frozen-probe-only＋bundle-trace：parent記錄真child returncode/hex/time，runtime hook只在GH authored診斷記錄靜態函式進出（不記payload／路徑、最多400），啟用fatal traceback；原視窗／斷言／240s不改。產品／測試bytes仍f1a2，Linux1986／GUI27／Windows199已驗保留。

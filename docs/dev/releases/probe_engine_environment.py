@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+import time
 
 
 @contextlib.contextmanager
@@ -42,7 +43,18 @@ def isolated_host(executable, output):
                 removed = True
             if installed.exists():
                 raise RuntimeError('System Inkscape directory still exists after uninstall')
-            return actual(command, *args, env=environment, **kwargs)
+            started = time.monotonic()
+            result = actual(command, *args, env=environment, **kwargs)
+            path = output/'native-child-processes.json'
+            records = json.loads(path.read_text()) if path.exists() else []
+            phase = 'SUPPORT_CLI'
+            if '--release-check' in command:
+                phase = json.loads(Path(command[command.index('--release-check')+1]).read_text())['phase']
+            records.append(dict(phase=phase,returncode=result.returncode,
+                                windows_status_hex=hex(result.returncode & 0xffffffff),
+                                seconds=round(time.monotonic()-started,3)))
+            path.write_text(json.dumps(records,indent=2)+'\n')
+            return result
         subprocess.run = observe
         try:
             yield

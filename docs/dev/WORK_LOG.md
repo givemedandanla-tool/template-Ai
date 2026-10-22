@@ -1866,3 +1866,5 @@ BETA2來源主CP SOURCE-QUALIFIED-001：672來源檔隔離還原PASS，snapshot1
 最終Windows001在checkout因Git預設260路徑限制失敗（新cache suffix增加驗證圖路徑），公開run39792844827／job119872897045 annotation精確保存；初始RUNNING之前失敗所以不誤用舊evidence分支狀態。只改兩個Windows工作流程前置core.longpaths，產品／測試bytes未變；Linux1986／GUI27來源資格保留，重做最終原生建置。
 
 Windows002：199/199執行，198PASS，1個fixture路徑字串比較FAIL（Windows8.3 TMP別名RUNNER~1與標準runneradmin），0runtime；不是外部工具被選用。以canonical RUNNER_TEMP scratch固定測試環境，原測試斷言／等待限制／產品碼不改，重做Windows發佈驗收。Source1986與GUI27資格保留，不重跑不受影響的Linux全套。
+
+Windows003完整199PASS／0runtime，canonical TEMP修正生效。真EXE原exercise14PASS，resume完成5檢查後在report/cleanup附近非0退出（無最終JSON），保留原log與units已完成觀測；不發布。轉frozen-only局部根因診斷，新增純觀測退出hex／時間與有上限無payload函式trace，原斷言／時間／產品碼不改。
