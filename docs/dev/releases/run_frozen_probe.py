@@ -43,7 +43,7 @@ def main():
     try:
         native = sys.platform == 'win32' and args.executable.suffix.lower() == '.exe'
         from probe_engine_environment import isolated_host, invalid_cases, installed_case
-        with isolated_host(args.executable.absolute()) if native else nullcontext():
+        with isolated_host(args.executable.absolute(),args.output.resolve()) if native else nullcontext():
             windows_release.exercise(args.executable.absolute(),args.output.resolve())
             if native:
                 invalid_cases(args.executable.absolute(),args.output.resolve())

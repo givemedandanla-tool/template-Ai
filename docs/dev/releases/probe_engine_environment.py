@@ -8,35 +8,50 @@ import tempfile
 
 
 @contextlib.contextmanager
-def isolated_host(executable):
+def isolated_host(executable, output):
     if os.name != 'nt' or os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Fresh authorized Windows runner only')
     actual = subprocess.run
     installed = Path(r'C:\Program Files\Inkscape')
-    hidden = installed.with_name('Inkscape-hidden-for-beta2-acceptance')
+    removed = False
+    history = []
+    def choco(action):
+        command = ['choco', action, 'inkscape', '--yes', '--no-progress']
+        if action == 'install':
+            command.append('--version=1.4.2')
+        result = actual(command, capture_output=True, text=True, encoding='utf-8', errors='replace', timeout=180)
+        history.append(dict(action=action, returncode=result.returncode, output_tail=result.stdout[-1500:]))
+        if output.exists():
+            (output/'host-installation-control.json').write_text(json.dumps(history,indent=2)+'\n')
+        if result.returncode:
+            raise RuntimeError('Fresh-runner host '+action+' failed; do not claim the no-host scenario')
     with tempfile.TemporaryDirectory(prefix='template-ai-decoy-') as raw:
         decoy = Path(raw)/'inkscape.exe'
         decoy.write_bytes(b'MZ_DECOY_MUST_NEVER_BE_EXECUTED')
         def observe(command, *args, **kwargs):
+            nonlocal removed
             if not isinstance(command, (list,tuple)) or not command or Path(command[0]).resolve() != executable.resolve():
                 return actual(command, *args, **kwargs)
             environment = dict(kwargs.pop('env', os.environ))
             environment['TEMPLATE_AI_INKSCAPE'] = str(decoy)
             environment['PATH'] = raw+os.pathsep+environment.get('PATH','')
-            if hidden.exists() or not installed.exists():
-                raise RuntimeError('Unexpected initial host installation state')
-            installed.rename(hidden)
-            try:
-                if installed.exists():
-                    raise RuntimeError('System Inkscape still exists during frozen probe')
-                return actual(command, *args, env=environment, **kwargs)
-            finally:
-                hidden.rename(installed)
+            if not removed:
+                if not (installed/'bin/inkscape.exe').is_file():
+                    raise RuntimeError('Unexpected initial host installation state')
+                choco('uninstall')
+                removed = True
+            if installed.exists():
+                raise RuntimeError('System Inkscape directory still exists after uninstall')
+            return actual(command, *args, env=environment, **kwargs)
         subprocess.run = observe
         try:
             yield
         finally:
             subprocess.run = actual
+            if removed:
+                choco('install')
+                if not (installed/'bin/inkscape.exe').is_file():
+                    raise RuntimeError('System-installation control was not restored')
 
 
 def invalid_cases(executable, output):
