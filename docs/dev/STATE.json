@@ -6,8 +6,8 @@
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
   "active_task": "BUNDLED_INKSCAPE_BETA2_AND_CHANGE_IMPACT_DEBUG_DESIGN",
-  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-PUBLISHED-001.receipt.json",
-  "last_confirmed_commit": "7bb7a1896cc52a70a06b1ce8d5d9022c87669f42",
+  "last_confirmed_checkpoint": "docs/checkpoints/CP-20261022-BETA2-SOURCE-QUALIFIED-001.receipt.json",
+  "last_confirmed_commit": "1548c940e8ae9484872aca7a50af539dfe2525ca",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
   "exe_policy": "EXPLICIT_V0_2_0_BETA_2_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
@@ -44,9 +44,7 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [
-    "CP-20261022-BETA2-SOURCE-QUALIFIED-001"
-  ],
+  "pending_remote": [],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -1869,7 +1867,7 @@
   },
   "pending_release": {
     "version": "0.2.0-beta.2",
-    "status": "SOURCE1986_GUI27_QUALIFIED_PREPARING_COMPLETE_REMOTE_CHECKPOINT",
+    "status": "SOURCE_REMOTE_VERIFIED_AND_LICENSE_STAGE_PASS_READY_FINAL_NATIVE",
     "baseline_commit": "059af6de8a2b6a0eb7882489f3fd4eff09028907",
     "plan": "docs/dev/releases/v0.2.0-beta.2-plan.md",
     "user_authorization": "參用隨包附帶方案，完善代碼後，打包成exe發佈到release",
@@ -1888,7 +1886,7 @@
       "engine_scenarios": 5,
       "observed_bundled_calls": 24
     },
-    "next": "Complete all-attachment source checkpoint and exact remote ack; verify license-stage output; final native199+EXE21/5engine scenarios+125sources and both actual Release downloads.",
+    "next": "Push this complete candidate without diagnostic markers to release-request/v0.2.0-beta.2; final199 native cases,EXE21+5engine scenarios,125source assets,draft/public full downloads; persist exact published proof.",
     "source_full_run": "RUN-BUNDLED-INKSCAPE-BETA2-004",
     "source_full_commit": "42eb60fa1596282e11b1c329dd78918dd9b169ee",
     "source_qualification": "docs/dev/releases/v0.2.0-beta.2/source-qualification.json",
@@ -1898,6 +1896,10 @@
     "new_tests": 23,
     "source_module_selection": "262 healthy same-source modules;14 blocked whole modules/139 cases revalidated unchanged; original failed attempt retained",
     "original_gui_jobs": 27,
-    "native_expected_tests": 199
+    "native_expected_tests": 199,
+    "source_checkpoint": "CP-20261022-BETA2-SOURCE-QUALIFIED-001",
+    "source_checkpoint_receipt": "docs/checkpoints/CP-20261022-BETA2-SOURCE-QUALIFIED-001.receipt.json",
+    "source_governance": "PASS",
+    "license_stage": "docs/dev/releases/v0.2.0-beta.2/license-stage-002/license-stage.json"
   }
 }

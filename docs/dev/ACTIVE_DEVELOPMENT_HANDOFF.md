@@ -8,11 +8,11 @@
 
 **不是單次新全跑**：001因舊稽核測試短碼0200撞到合法SHA而停止，已改完整欄位／精確原payload digest驗證；002因新增renderer_identity內層錯型別會AttributeError而停止，已補null／數字／陣列／字串重建測試。003因暫存空間峰值不足有46 ENOSPC errors、2 class-setup error chains及1font-candidate deadline；原1945記錄與3runtime保留。相同code bytes的14整模組139案已單程序PASS，來源/斷言/180s限制不變；既有正式adopter逐案核對兩次來源與原始record，004採錄1986唯一案例，不灌重複數。證據在releases/v0.2.0-beta.2/linux-qualified-001、linux-environment-retry-001與formal004/module-inputs。
 
-**下一步不可停在本機**：準備包含formal004全部附件＋本輪變更的新主CP，隔離還原→commit/push→verify_git_readback --ack，通過require-evidence／publication-scope。主CP目前仍歷史CP-20261021-WINDOWS-BETA-PUBLISHED-001；禁止ack窄輔助CP覆蓋主正式指標。接著無diagnostic marker的候選HEAD推到精確release-request/v0.2.0-beta.2，跑最終Windows199選定案例＋原EXE21與5引擎情境＋125來源附件＋Release草稿／公開兩次全下載逐檔hash。只有真發佈／讀回才改published。
+**下一步不可停在本機**：準備包含formal004全部附件＋本輪變更的新主CP，隔離還原→commit/push→verify_git_readback --ack，通過require-evidence／publication-scope。主CP已是CP-20261022-BETA2-SOURCE-QUALIFIED-001，snapshot1548c940，673項REMOTE_VERIFIED，嚴格require-evidence／publication-scope已PASS；禁止ack窄輔助CP覆蓋主正式指標。接著無diagnostic marker的候選HEAD推到精確release-request/v0.2.0-beta.2，跑最終Windows199選定案例＋原EXE21與5引擎情境＋125來源附件＋Release草稿／公開兩次全下載逐檔hash。只有真發佈／讀回才改published。
 
 Windows probe002/66d9/run39777630190已實際PASS原14＋7、無系統兩phase＋有系統控制（各8實際呼叫都在bundle）、缺exe／壞dll兩情境與真support CLI及點陣獨立；它是診斷，不能取代最後EXE。probe001在測試機rename安裝目錄遭拒，改官方choco卸載／重裝並檢查原目錄不存在，產品路由沒有改備援。
 
-官方完整11592檔Inkscape1.4.2 ebf0e94已鎖定，125對應來源物件共866.2MiB已查證，完整二進位GPL3-or-later並保留相依授權。最新額外data step從精確IDW88保留原授權bytes，待定向license-stage及最終Windows驗證。早期8f／42eb缺stage結果，不算PASS；查到稽核輸出目錄串接錯誤，68c7207已改共用OUT、research-request/inkscape-1.4.2-beta2重試中。第一輪diagnostic本體11594files，最終加入授權後的檔案數以實際結果為準。
+官方完整11592檔Inkscape1.4.2 ebf0e94已鎖定，125對應來源物件共866.2MiB已查證，完整二進位GPL3-or-later並保留相依授權。最新額外data step從精確IDW88保留原授權bytes，待定向license-stage及最終Windows驗證。早期8f／42eb缺stage結果，不算PASS；查到稽核輸出目錄串接錯誤，68c7207已改共用OUT，run39789443841定向封裝PASS：11837files／242原授權檔，license-stage-002已原生Git精確讀回。第一輪diagnostic本體11594files，最終加入授權後的檔案數以實際結果為準。
 
 局部除錯方案CHANGE_IMPACT_DEBUGGING.md／RESEARCH.json完成，參照Microsoft TIA、coverage contexts、testmon、Cosmic Ray；靜態反向圖＋動態覆蓋＋設定／資料／外部工具契約保守聯集，直接／流程／發佈三層。自動選測器尚未實作。兩個路由mutants均被抓。相同工具實掃beta.1來源與最後app：0新增／3453既有／1resolved，static-delta-002；初始基準未刷新。既有靜態項仍待判讀，不能稱全無錯誤。
 

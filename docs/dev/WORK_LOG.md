@@ -1860,3 +1860,5 @@ CHANGE_IMPACT_DEBUGGING.md研究Microsoft TIA、coverage.py contexts、pytest-te
 BETA2第二輪邊界補查：有效JSON／校驗但內層renderer_identity非dict可重現AttributeError；補型別guard，四類錯值皆安全重建，6新cache／6原cache target PASS。保留紅燈及002中斷metadata，改跑最後來源1986／003；正式候選未發布，並未以重跑碰運氣或基準刷新放過已知錯誤。
 
 BETA2來源資格完成：003因峰值空間不足46 ENOSPC errors／2 class-setup chains／1deadline，未算PASS。49舊輔助tree可逆gzip核對原SHA，回收604.1MiB；原正式證據、ZIP及active proof不動。來源byte不變，14整模組139案單程序180s原斷言復驗全PASS，27原版未插樁GUI PASS。既有adopter逐案核對兩份真record後建立RUN-BUNDLED-INKSCAPE-BETA2-004：1986唯一PASS／0合格runtime；原1963＋23，原5外部資格仍未驗證。Source digestf1a2cf7a；latest／166完成scope已連004，待全附件CP遠端確認再跑最後Windows／Release。
+
+BETA2來源主CP SOURCE-QUALIFIED-001：672來源檔隔離還原PASS，snapshot1548c940推送後原生Git精確讀回673項並標REMOTE_VERIFIED；strict require-evidence publication-scope PASS172／166／75／1986。補充授權data定向run39789443841通過11837files／242原授權檔，原錯的OUT接線已改。準備最終Windows199＋EXE＋Release下載，尚未將beta2標已公開。
