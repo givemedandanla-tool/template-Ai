@@ -12,6 +12,7 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       PYTHONUTF8: '1'
+      LICENSE_STAGE_CHECK: ${{ contains(github.event.head_commit.message, '[license-stage-check]') }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -46,11 +47,11 @@ jobs:
         shell: pwsh
         run: |
           $py = Join-Path $env:pythonLocation 'python.exe'
-          & $py tools/bundled_inkscape_build.py prepare
+          & $py tools/bundled_inkscape_build.py prepare *>&1 | Tee-Object artifacts/inkscape-audit/license-stage.log
           if ($LASTEXITCODE -ne 0) { throw 'Pinned engine preparation failed' }
-          & $py docs/dev/releases/add_inkscape_notices.py
+          & $py docs/dev/releases/add_inkscape_notices.py *>&1 | Tee-Object artifacts/inkscape-audit/license-stage.log -Append
           if ($LASTEXITCODE -ne 0) { throw 'Original license preservation failed' }
-          & $py docs/dev/releases/check_inkscape_notice_stage.py
+          & $py docs/dev/releases/check_inkscape_notice_stage.py *>&1 | Tee-Object artifacts/inkscape-audit/license-stage.log -Append
           if ($LASTEXITCODE -ne 0) { throw 'License/vendor manifest check failed' }
       - name: Persist bounded public-package metadata without a product release
         if: always()
