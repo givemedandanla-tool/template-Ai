@@ -1,0 +1,11 @@
+{
+  "kind": "WINDOWS_TEST_ENVIRONMENT_SHORT_PATH_ALIAS_NOT_PRODUCT_CHANGE",
+  "summary": "198/199 original Windows cases passed; one fixture compared raw TMP 8.3 spelling with the canonical path returned by the resolver.",
+  "failed_test": "test_bundled_inkscape.BundledInkscapeTests.test_dependency_changed_after_first_selection_invalidates_cached_validation",
+  "observed_short_prefix": "C:/Users/RUNNER~1",
+  "observed_canonical_prefix": "C:/Users/runneradmin",
+  "remedy": "Canonical short RUNNER_TEMP scratch for the CI process and its children; original methods/assertions/deadlines retained",
+  "product_code_changed": false,
+  "source_qualification_reused": "RUN-BUNDLED-INKSCAPE-BETA2-004",
+  "next": "Repeat Windows release validation under the explicit canonical scratch environment"
+}

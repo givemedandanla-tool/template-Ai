@@ -1864,3 +1864,5 @@ BETA2來源資格完成：003因峰值空間不足46 ENOSPC errors／2 class-set
 BETA2來源主CP SOURCE-QUALIFIED-001：672來源檔隔離還原PASS，snapshot1548c940推送後原生Git精確讀回673項並標REMOTE_VERIFIED；strict require-evidence publication-scope PASS172／166／75／1986。補充授權data定向run39789443841通過11837files／242原授權檔，原錯的OUT接線已改。準備最終Windows199＋EXE＋Release下載，尚未將beta2標已公開。
 
 最終Windows001在checkout因Git預設260路徑限制失敗（新cache suffix增加驗證圖路徑），公開run39792844827／job119872897045 annotation精確保存；初始RUNNING之前失敗所以不誤用舊evidence分支狀態。只改兩個Windows工作流程前置core.longpaths，產品／測試bytes未變；Linux1986／GUI27來源資格保留，重做最終原生建置。
+
+Windows002：199/199執行，198PASS，1個fixture路徑字串比較FAIL（Windows8.3 TMP別名RUNNER~1與標準runneradmin），0runtime；不是外部工具被選用。以canonical RUNNER_TEMP scratch固定測試環境，原測試斷言／等待限制／產品碼不改，重做Windows發佈驗收。Source1986與GUI27資格保留，不重跑不受影響的Linux全套。

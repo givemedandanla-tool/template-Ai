@@ -3,6 +3,15 @@ param([switch]$NativeTestsOnly, [switch]$FrozenProbeOnly)
 $ErrorActionPreference = 'Stop'
 if (!$IsWindows) { throw 'A native Windows runner is required' }
 New-Item -ItemType Directory -Force artifacts | Out-Null
+# Python may inherit an 8.3 user-profile TEMP alias on hosted Windows. Use a
+# canonical, short runner scratch path so literal fixture-path comparisons do
+# not confuse RUNNER~1 with runneradmin. Original test methods remain unchanged.
+$testScratch = Join-Path $env:RUNNER_TEMP 'template-ai-ci'
+New-Item -ItemType Directory -Force $testScratch | Out-Null
+$testScratch = & python -c "from pathlib import Path; import sys; print(Path(sys.argv[1]).resolve())" $testScratch
+if ($LASTEXITCODE -ne 0) { throw 'Cannot canonicalize the isolated test scratch directory' }
+$env:TMP = $testScratch.Trim()
+$env:TEMP = $env:TMP
 python -m pip install -r requirements-build.txt
 if ($LASTEXITCODE -ne 0) { throw 'Pinned dependency installation failed' }
 python -m pip freeze | Out-File -Encoding utf8 artifacts/installed-dependencies.txt
