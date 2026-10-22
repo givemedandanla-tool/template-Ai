@@ -1,0 +1,37 @@
+FROZEN_UTF8_MODE=1
+release-check: version_in_actual_window
+release-check: actual_executable_trains_frozen_synthetic_dataset
+release-check: input_generate_embedded_preview
+release-check: confirm_actual_preview
+release-check: drag_targets_visible_in_actual_viewport
+release-check: real_pointer_drag_preserves_data_invalidates_confirmation
+release-check: content_correction_clears_stale_preview
+release-check: regenerate_latest_input
+release-check: allowed_preview_export_matches_saved_bytes
+release-check: unqualified_formal_export_still_refused
+Timeout (0:00:45)!
+Thread 0x00000a24 (most recent call first):
+  File "subprocess.py", line 1599 in _readerthread
+  File "threading.py", line 982 in run
+  File "threading.py", line 1045 in _bootstrap_inner
+  File "threading.py", line 1002 in _bootstrap
+
+Thread 0x000007ac (most recent call first):
+  File "subprocess.py", line 1599 in _readerthread
+  File "threading.py", line 982 in run
+  File "threading.py", line 1045 in _bootstrap_inner
+  File "threading.py", line 1002 in _bootstrap
+
+Thread 0x0000068c (most recent call first):
+  File "threading.py", line 1139 in _wait_for_tstate_lock
+  File "threading.py", line 1123 in join
+  File "subprocess.py", line 1628 in _communicate
+  File "subprocess.py", line 1209 in communicate
+  File "template_ai\coverage_command.py", line 67 in run_command
+  File "template_ai\release_check.py", line 220 in run
+  File "app.py", line 39 in main
+  File "app.py", line 100 in <module>
+release-check: frozen_json_pipe_worker
+release-check: actual_frozen_background_worker_pauses_at_saved_boundary
+release-check: safe_report_does_not_include_authored_content
+release-check: actual_window_close_preserves_durable_session
