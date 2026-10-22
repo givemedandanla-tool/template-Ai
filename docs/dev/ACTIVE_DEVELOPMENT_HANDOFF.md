@@ -24,3 +24,5 @@ beta.1已公開、原176Windows＋真EXE21＋1220下載hash PASS；證據release
 
 Windows probe002/66d9/run39777630190真EXE PASS：原14＋7、無系統兩phase＋有系統控制（各8實際呼叫全包內）、缺exe／壞dll兩情境與真support CLI。probe001是測試機目錄rename被Windows拒絕；改正式choco卸載／重裝且校對目錄不存在，未改產品路由。補充原IDW授權檔按原bytes封裝的新data step尚待最終Windows執行。
 正式001因原test_customer_identity短字串0200碰到合法SHA而停止，原FAIL保留；test改為完整允許欄位、原payload精確digest／id／state／actor／reason核對（非弱化隱私），12原測試target PASS；下一重新跑1985完整正式002。產品演算法未因此改。static same-tool vbeta1實際來源對照0new／3453existing／1resolved，未刷新基準。
+
+正式002已於12:33UTC啟動：source22198c8b3999775065c792903cf6eb7fc4b1dc30，2個原生獨立Qt worker，1985cases；live路徑.checkpoints/formal-live/RUN-BUNDLED-INKSCAPE-BETA2-002，log.cache/beta2-formal-002.log。未完成前不改code_only來源、不重啟同ID。完成後可執行已加guard的releases/adopt_beta2_qualification.py；需再準備包含全部正式附件的新主CP並ack，不能拿輔助CP取代。最終Windows需納入新dependency license data step，再發佈；beta2尚未公開。
