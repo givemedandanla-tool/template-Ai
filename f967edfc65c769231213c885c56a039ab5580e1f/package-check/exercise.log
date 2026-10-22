@@ -1,0 +1,57 @@
+FROZEN_UTF8_MODE=1
+AUTHORED_TRACE call inkscape_runtime.py:bundled_runtime 0.844
+AUTHORED_TRACE return inkscape_runtime.py:bundled_runtime 13.078
+AUTHORED_TRACE call inkscape_runtime.py:bundled_runtime 13.094
+AUTHORED_TRACE return inkscape_runtime.py:bundled_runtime 14.953
+AUTHORED_TRACE call inkscape_runtime.py:bundled_runtime 14.953
+AUTHORED_TRACE return inkscape_runtime.py:bundled_runtime 16.797
+AUTHORED_TRACE call inkscape_runtime.py:bundled_runtime 22.562
+AUTHORED_TRACE return inkscape_runtime.py:bundled_runtime 24.453
+AUTHORED_TRACE call inkscape_runtime.py:bundled_runtime 24.453
+AUTHORED_TRACE return inkscape_runtime.py:bundled_runtime 26.297
+AUTHORED_TRACE call offline_support.py:environment_facts 34.984
+AUTHORED_TRACE call offline_support.py:_version 35.0
+AUTHORED_TRACE return offline_support.py:_version 35.0
+AUTHORED_TRACE call offline_support.py:_version 35.0
+AUTHORED_TRACE return offline_support.py:_version 35.0
+AUTHORED_TRACE call offline_support.py:_version 35.0
+AUTHORED_TRACE return offline_support.py:_version 35.015
+AUTHORED_TRACE call offline_support.py:_version 35.015
+AUTHORED_TRACE return offline_support.py:_version 35.015
+AUTHORED_TRACE call offline_support.py:_version 35.015
+AUTHORED_TRACE return offline_support.py:_version 35.015
+AUTHORED_TRACE call offline_support.py:_version 35.015
+AUTHORED_TRACE return offline_support.py:_version 35.015
+AUTHORED_TRACE call offline_support.py:implementation_fingerprint 35.015
+AUTHORED_TRACE return offline_support.py:implementation_fingerprint 35.062
+AUTHORED_TRACE call inkscape_runtime.py:runtime_report 35.062
+AUTHORED_TRACE call inkscape_runtime.py:bundled_runtime 35.062
+AUTHORED_TRACE return inkscape_runtime.py:bundled_runtime 36.922
+AUTHORED_TRACE return inkscape_runtime.py:runtime_report 36.937
+AUTHORED_TRACE return offline_support.py:environment_facts 36.937
+AUTHORED_TRACE call offline_support.py:report_summary 36.937
+AUTHORED_TRACE return offline_support.py:report_summary 36.937
+AUTHORED_TRACE call offline_support.py:validate_report 36.937
+AUTHORED_TRACE call offline_support.py:report_summary 36.937
+AUTHORED_TRACE return offline_support.py:report_summary 36.937
+AUTHORED_TRACE return offline_support.py:validate_report 36.937
+release-check: version_in_actual_window
+release-check: actual_executable_trains_frozen_synthetic_dataset
+Timeout (0:00:45)!
+Thread 0x000015ac (most recent call first):
+  File "frozen_runtime_hook.py", line ??? in observe
+  File "bytes"Windows fatal exception: access violation
+
+Thread 0x000015ac (most recent call first):
+  File "phonenumbers\phonenumberutil.py", line 2859 in _is_viable_phone_number
+  File "phonenumbers\phonenumberutil.py", line 2977 in parse
+  File "template_ai\semantic_fields.py", line 85 in recognize
+  File "template_ai\design_assignment.py", line 11 in semantic_observation
+  File "template_ai\design_learning.py", line 108 in dataset_plan
+  File "template_ai\design_learning.py", line 159 in checked_dataset
+  File "template_ai\design_learning.py", line 207 in checked_model
+  File "template_ai\design_session.py", line 234 in solve
+  File "template_ai\design_learning_dialog.py", line 389 in solve
+  File "template_ai\release_check.py", line 159 in run
+  File "app.py", line 39 in main
+  File "app.py", line 100 in <module>
