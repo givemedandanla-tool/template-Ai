@@ -4,6 +4,7 @@ import os
 import platform
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -48,7 +49,7 @@ class QualityPipelines:
         if not executable:raise ValueError('實際Inkscape解析器不可用，不接受自行輸入版本冒充執行證據')
         version=subprocess.run([executable,'--version'],capture_output=True,text=True,timeout=10)
         if version.returncode:raise ValueError('實際解析器版本讀回失敗')
-        base=Path(__file__).parent;names=('quality_pipeline.py','quality_ocr.py','quality_rules.py','noise_review.py','noise.py','quality_mapping.py','customer_candidates.py','quality_logo.py','source_analysis.py','source_text_evidence.py','semantic_fields.py','importer.py','background.py')
+        base=Path(__file__).parent;names=('quality_pipeline.py','quality_ocr.py','quality_rules.py','noise_review.py','noise.py','quality_mapping.py','customer_candidates.py','quality_logo.py','source_analysis.py','source_text_evidence.py','semantic_fields.py','importer.py','background.py','inkscape_runtime.py')
         from .quality_rules import snapshots
         active=snapshots(self.store,rule_versions)
         from .quality_mapping import catalog
@@ -56,7 +57,11 @@ class QualityPipelines:
         effective_model=digest(dict(counts={key:dict(value) for key,value in model.counts.items()},documents=dict(model.documents),vocabulary=sorted(model.vocabulary))) if model else None
         from .quality_ocr import verify
         verify(ocr_record)
-        return dict(schema_version=1,effective_semantic_digest=effective_model,ocr=copy.deepcopy(ocr_record),mapping_catalog=mapping_catalog,mapping_configuration=mapping_config,analyser_version=ANALYSER_VERSION,source_modules={name:file_digest(base/name) for name in names},semantic_model_id=model_id,semantic_model_revision=row['revision'] if row else None,semantic_model_digest=digest(row) if row else None,semantic_weights_digest=row['weights_digest'] if row else None,model_training_scopes=[dict(source_hash=s['pins']['source_hash'],role=s['role'],work_id=s['work_id']) for s in row['plan']['scopes']] if row else [],renderer=dict(executable=str(Path(executable).resolve()),sha256=file_digest(executable),version=version.stdout.strip()[:1000]),rules=[dict(id=r['id'],revision=r['revision'],digest=digest(r)) for r in active],rule_selection=[dict(id=r['id'],revision=r['revision']) for r in active],rule_records=copy.deepcopy(active),rules_execution='ACTUAL_FROZEN_SCOPE_MATCHES_AND_SOURCE_PROTECTION_NO_GOLD',ocr_execution='ACTUAL_LOCAL_TESSERACT_SOURCE_IMAGE_ONLY' if ocr_record else 'NOT_EXECUTED_BY_VECTOR_SOURCE_PIPELINE',native_illustrator_mapping='UNVERIFIED_NOT_CERTIFIED',environment=dict(python=platform.python_version(),system=platform.platform(),qt=qt_version,networkx=networkx.__version__,fonts=font_environment()),prediction_inputs='ORIGINAL_SOURCE_AND_TRAINED_WEIGHTS_ONLY_NO_HOLDOUT_GOLD_LABELS')
+        renderer_manifest=dict(executable=str(Path(executable).resolve()),sha256=file_digest(executable),version=version.stdout.strip()[:1000])
+        if getattr(sys,'frozen',False):
+            from .inkscape_runtime import runtime_identity
+            renderer_manifest['bundled_runtime']=runtime_identity(executable)
+        return dict(schema_version=1,effective_semantic_digest=effective_model,ocr=copy.deepcopy(ocr_record),mapping_catalog=mapping_catalog,mapping_configuration=mapping_config,analyser_version=ANALYSER_VERSION,source_modules={name:file_digest(base/name) for name in names},semantic_model_id=model_id,semantic_model_revision=row['revision'] if row else None,semantic_model_digest=digest(row) if row else None,semantic_weights_digest=row['weights_digest'] if row else None,model_training_scopes=[dict(source_hash=s['pins']['source_hash'],role=s['role'],work_id=s['work_id']) for s in row['plan']['scopes']] if row else [],renderer=renderer_manifest,rules=[dict(id=r['id'],revision=r['revision'],digest=digest(r)) for r in active],rule_selection=[dict(id=r['id'],revision=r['revision']) for r in active],rule_records=copy.deepcopy(active),rules_execution='ACTUAL_FROZEN_SCOPE_MATCHES_AND_SOURCE_PROTECTION_NO_GOLD',ocr_execution='ACTUAL_LOCAL_TESSERACT_SOURCE_IMAGE_ONLY' if ocr_record else 'NOT_EXECUTED_BY_VECTOR_SOURCE_PIPELINE',native_illustrator_mapping='UNVERIFIED_NOT_CERTIFIED',environment=dict(python=platform.python_version(),system=platform.platform(),qt=qt_version,networkx=networkx.__version__,fonts=font_environment()),prediction_inputs='ORIGINAL_SOURCE_AND_TRAINED_WEIGHTS_ONLY_NO_HOLDOUT_GOLD_LABELS')
 
     def freeze(self,name,model_id,actor,approved=False,*,mapping_config=None,rule_versions=None,ocr_config=None):
         if approved is not True:raise ValueError('需明確核對實際可執行pipeline範圍；不自動放行模型')

@@ -72,7 +72,8 @@ def persist():
     if os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Only the authorized runner may publish this public-package audit')
     source = git(ROOT, 'rev-parse', 'HEAD').stdout.strip()
-    record = dict(source_commit=source, status='AUDIT_COMPLETED_NOT_RELEASED' if (OUT/'inventory.json').is_file() else 'AUDIT_FAILED_NOT_RELEASED',
+    available = [OUT/name for name in ['inventory.json','source-environment.json'] if (OUT/name).is_file()]
+    record = dict(source_commit=source, status='AUDIT_COMPLETED_NOT_RELEASED' if available else 'AUDIT_FAILED_NOT_RELEASED',
                   recorded_utc=datetime.now(timezone.utc).isoformat(),
                   run_url='https://github.com/givemedandanla-tool/template-Ai/actions/runs/'+os.environ['GITHUB_RUN_ID'])
     with tempfile.TemporaryDirectory(prefix='inkscape-distribution-proof-') as raw:
@@ -86,8 +87,8 @@ def persist():
         else:
             git(folder, 'checkout', '--orphan', 'evidence')
         target = folder/source;target.mkdir(exist_ok=True)
-        if (OUT/'inventory.json').is_file():
-            shutil.copy2(OUT/'inventory.json', target/'inventory.json')
+        for path in available:
+            shutil.copy2(path, target/path.name)
         write(target/'status.json', record);write(folder/'latest.json', record)
         git(folder, 'add', '.');git(folder, 'commit', '-m', 'public Inkscape distribution audit '+source[:12])
         git(folder, 'push', 'origin', 'HEAD:refs/heads/'+BRANCH)

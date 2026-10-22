@@ -6,7 +6,6 @@ import json
 import math
 import os
 from pathlib import Path
-import shutil
 import subprocess
 import tempfile
 import xml.etree.ElementTree as ET
@@ -64,9 +63,8 @@ def preview_height(width: float, height: float, width_px: int = 1600) -> int:
 
 
 def inkscape_path() -> str | None:
-    configured = os.environ.get("TEMPLATE_AI_INKSCAPE", "")
-    options = [configured, shutil.which("inkscape") or "", r"C:\Program Files\Inkscape\bin\inkscape.exe", r"C:\Program Files\Inkscape\inkscape.exe"]
-    return next((p for p in options if p and Path(p).is_file()), None)
+    from .inkscape_runtime import inkscape_path as resolve
+    return resolve()
 
 
 def _run(executable: str, arguments: list[str], directory: Path) -> str:
@@ -155,7 +153,17 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
             document.close()
     elif page != 1:
         raise ValueError("此非 PDF 來源本版只支援第 1 頁，請另存目標畫板後匯入")
-    folder = assets / f"{sha}-p{page}-{IMPORT_VERSION}"
+    suffix = path.suffix.lower()
+    converter = inkscape_path() if suffix not in ('.png', '.jpg', '.jpeg') else None
+    renderer_identity = None
+    cache_suffix = ''
+    if suffix not in ('.png', '.jpg', '.jpeg'):
+        from .inkscape_runtime import runtime_identity
+        renderer_identity = runtime_identity(converter)
+        stable_identity = {key:value for key,value in renderer_identity.items() if key != 'executable'}
+        token = hashlib.sha256(json.dumps(stable_identity, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        cache_suffix = '-r' + token[:32]
+    folder = assets / f"{sha}-p{page}-{IMPORT_VERSION}{cache_suffix}"
     metadata = folder / "metadata.json"
     if folder.is_symlink() or any((folder / name).is_symlink() for name in ("metadata.json", "preview.png", "source.svg", "semantic.svg")):
         raise ValueError("快取位置含符號連結，無法安全重建；請改用正常本機資產目錄")
@@ -164,12 +172,13 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
             cached = json.loads(metadata.read_text(encoding="utf-8"))
         except (ValueError, OSError, UnicodeError):
             cached = None
-        if cache_matches(cached, folder, sha, page):
+        same_renderer = renderer_identity is None or isinstance(cached, dict) and (
+            {k:v for k,v in cached.get('renderer_identity',{}).items() if k != 'executable'}
+            == {k:v for k,v in renderer_identity.items() if k != 'executable'})
+        if same_renderer and cache_matches(cached, folder, sha, page):
             return {**cached, "reused": True}
     folder.mkdir(parents=True, exist_ok=True)
     image_path, svg_path = folder / "preview.png", folder / "source.svg"
-    converter = inkscape_path()
-    suffix = path.suffix.lower()
     svg = ""
     calibrated = True
     from .recovery_diagnostics import issue
@@ -267,6 +276,9 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
                "calibrated": calibrated, "visual_confirmed": False, "reused": False,
                "semantic_svg": semantic_svg, "recovery": recovery}
     payload["cache_version"] = IMPORT_VERSION
+    if renderer_identity is not None:
+        payload['renderer_identity'] = renderer_identity
+        payload['renderer_execution'] = 'SELECTED_INKSCAPE_CONVERSION_SUCCEEDED' if converted else 'BUILTIN_QT_FALLBACK'
     payload["file_hashes"] = {"image": file_digest(image_path)}
     if svg:
         payload["file_hashes"]["svg"] = file_digest(svg_path)
