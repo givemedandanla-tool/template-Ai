@@ -1,0 +1,146 @@
+{
+  "kind": "HISTORICAL_ACTUAL_TEST_COST_EXAMPLE_NOT_A_NEW_BASELINE_OR_CURRENT_QUALIFICATION",
+  "source_commit": "fd1a3f9ea826297d696217db5c54353733412bb5",
+  "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39795277849",
+  "source_metadata": "docs/dev/releases/v0.2.0-beta.2/windows-native-002/source-tests/live/test-modules.json",
+  "logical_modules": 19,
+  "test_count": 199,
+  "seconds_sum": 1004.3380000000001,
+  "qualification": "This attempt had198 PASS and1 fixture-path assertion failure; do not treat cost data as a PASS result or user hardware benchmark",
+  "cost_unit": "Whole logical module over existing fresh-process groups; includes fixture/setup overhead, so individual-case costs are not assumed additive",
+  "modules": [
+    {
+      "module": "test_first_version",
+      "seconds": 104.0,
+      "expected": 16,
+      "completed": 16,
+      "healthy": true
+    },
+    {
+      "module": "test_input_learning_integration",
+      "seconds": 354.28100000000006,
+      "expected": 19,
+      "completed": 19,
+      "healthy": true
+    },
+    {
+      "module": "test_design_session",
+      "seconds": 84.843,
+      "expected": 5,
+      "completed": 5,
+      "healthy": true
+    },
+    {
+      "module": "test_design_family",
+      "seconds": 5.546,
+      "expected": 15,
+      "completed": 15,
+      "healthy": true
+    },
+    {
+      "module": "test_desktop_workspace",
+      "seconds": 171.593,
+      "expected": 12,
+      "completed": 12,
+      "healthy": true
+    },
+    {
+      "module": "test_runtime_worker",
+      "seconds": 35.5,
+      "expected": 4,
+      "completed": 4,
+      "healthy": true
+    },
+    {
+      "module": "test_runtime_source_refresh",
+      "seconds": 19.204,
+      "expected": 2,
+      "completed": 2,
+      "healthy": true
+    },
+    {
+      "module": "test_runtime_queue",
+      "seconds": 61.172000000000004,
+      "expected": 9,
+      "completed": 9,
+      "healthy": true
+    },
+    {
+      "module": "test_offline_support",
+      "seconds": 8.358,
+      "expected": 21,
+      "completed": 21,
+      "healthy": true
+    },
+    {
+      "module": "test_diagnostic_reports",
+      "seconds": 80.218,
+      "expected": 32,
+      "completed": 32,
+      "healthy": true
+    },
+    {
+      "module": "test_persistent_fonts",
+      "seconds": 5.203,
+      "expected": 7,
+      "completed": 7,
+      "healthy": true
+    },
+    {
+      "module": "test_logo_workflow_gui",
+      "seconds": 62.014,
+      "expected": 16,
+      "completed": 16,
+      "healthy": true
+    },
+    {
+      "module": "test_frozen_launch",
+      "seconds": 1.4849999999999999,
+      "expected": 6,
+      "completed": 6,
+      "healthy": true
+    },
+    {
+      "module": "test_release_authorization",
+      "seconds": 0.25,
+      "expected": 4,
+      "completed": 4,
+      "healthy": true
+    },
+    {
+      "module": "test_release_download",
+      "seconds": 0.313,
+      "expected": 3,
+      "completed": 3,
+      "healthy": true
+    },
+    {
+      "module": "test_windows_release_safety",
+      "seconds": 1.0779999999999998,
+      "expected": 5,
+      "completed": 5,
+      "healthy": true
+    },
+    {
+      "module": "test_bundled_inkscape",
+      "seconds": 1.515,
+      "expected": 13,
+      "completed": 13,
+      "healthy": false
+    },
+    {
+      "module": "test_inkscape_cache_identity",
+      "seconds": 7.406,
+      "expected": 6,
+      "completed": 6,
+      "healthy": true
+    },
+    {
+      "module": "test_bundled_release_guard",
+      "seconds": 0.359,
+      "expected": 4,
+      "completed": 4,
+      "healthy": true
+    }
+  ]
+}
