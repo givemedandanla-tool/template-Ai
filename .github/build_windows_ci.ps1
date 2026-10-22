@@ -6,7 +6,7 @@ New-Item -ItemType Directory -Force artifacts | Out-Null
 python -m pip install -r requirements-build.txt
 if ($LASTEXITCODE -ne 0) { throw 'Pinned dependency installation failed' }
 python -m pip freeze | Out-File -Encoding utf8 artifacts/installed-dependencies.txt
-if (!$NativeTestsOnly) {
+if (!$NativeTestsOnly -and !$FrozenProbeOnly) {
     python tools/dev_governance.py check --require-evidence --publication-scope | Tee-Object artifacts/governance-gate.json
     if ($LASTEXITCODE -ne 0) { throw 'Current-source permanent evidence gate failed' }
 }
