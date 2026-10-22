@@ -19,3 +19,5 @@ beta.1已公開、原176Windows＋真EXE21＋1220下載hash PASS；證據release
 空間緊，8個舊輔助tree.json已可逆gzip，內容hash全部一致，回收118.86MiB；maintenance/READBACK_METADATA_COMPRESSION_20261022.json含逐份還原命令。不動checkpoint ZIP／正式證據／私人資料；目前約527MiB可用，Windows大檔在標準runner處理，雲端只取小報告。原api.github.com不通但原生Git與GitLab／rawGitHub可用，無需新API key。
 
 本輪真實抓到安全報告回歸：新增工具資訊間接載入numpy，破壞原無site-packages CLI。保留support-regression-red-001；converter_version已搬到標準庫runtime，原21安全報告及11路由測試PASS，targeted-support-green-001記錄。尚非發佈資格。
+
+打包程式WIP：bundled_inkscape_build.py＋125份來源lock；prepare完整官方11592檔比對→manifest pin→PyInstaller→install→原EXE21＋無系統／誘餌／缺檔損壞／有系統控制→來源附件→精確vendor清單→Release。first-version.yml已轉精確beta2分支，治理授權擴充保留原beta1四測試。新guard4測試與原6相關模組PASS，真正Windows尚未執行，published仍false。除錯方案CHANGE_IMPACT_DEBUGGING.md已寫，故障注入002正確2 PASS、兩個mutant皆被抓（非原生證明）。

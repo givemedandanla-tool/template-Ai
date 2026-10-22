@@ -44,6 +44,7 @@ def vector_objects(source,assets):
     ET.ElementTree(root).write(query_path,encoding='utf-8',xml_declaration=True)
     query_digest=file_digest(query_path)
     environment=os.environ.copy();environment['INKSCAPE_PROFILE_DIR']=str(Path(assets)/'source-query')
+    environment['PYTHONDONTWRITEBYTECODE']='1'
     process=subprocess.run([executable,'--query-all',str(query_path)],capture_output=True,text=True,timeout=30,env=environment,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     if process.returncode or len(process.stdout)>1_048_576:raise ValueError('來源幾何查詢失敗／超出預算')
     bounds={}

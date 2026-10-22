@@ -1,0 +1,28 @@
+{
+  "kind": "CONTROLLED_FAULT_INJECTION_NOT_NATIVE_ENGINE_PROOF",
+  "status": "PASS",
+  "selected_tests": [
+    "test_frozen_prefers_bundle_even_when_external_setting_and_path_exist",
+    "test_missing_bundle_does_not_fall_back_to_installed_engine"
+  ],
+  "results": [
+    {
+      "variant": "correct",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0
+    },
+    {
+      "variant": "env-first-fault",
+      "tests": 2,
+      "failures": 2,
+      "errors": 0
+    },
+    {
+      "variant": "missing-bundle-fallback-fault",
+      "tests": 2,
+      "failures": 1,
+      "errors": 0
+    }
+  ]
+}

@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 import sys
+from contextlib import nullcontext
 
 ROOT=Path(__file__).resolve().parents[3]
 sys.path[:0]=[str(ROOT),str(ROOT/'tools'),str(ROOT/'tests')]
@@ -40,12 +41,28 @@ def main():
             original(worker)
     AutomaticTrainingTests.tearDown=observe_then_cleanup
     try:
-        windows_release.exercise(args.executable.absolute(),args.output.resolve())
+        native = sys.platform == 'win32' and args.executable.suffix.lower() == '.exe'
+        from probe_engine_environment import isolated_host, invalid_cases, installed_case
+        with isolated_host(args.executable.absolute()) if native else nullcontext():
+            windows_release.exercise(args.executable.absolute(),args.output.resolve())
+            if native:
+                invalid_cases(args.executable.absolute(),args.output.resolve())
+        if native:
+            installed_case(args.executable.absolute(),args.output.resolve())
         summary=json.loads((args.output/'summary.json').read_text(encoding='utf-8'))
         if summary['actual_frozen_executable'] and sys.platform=='win32':
             for phase in ['exercise','resume']:
                 if 'FROZEN_UTF8_MODE=1' not in (args.output/(phase+'.log')).read_text(encoding='utf-8',errors='replace'):
                     raise RuntimeError('Actual frozen interpreter UTF8 mode was not verified')
+            for phase in ['exercise','resume']:
+                engine=json.loads((args.output/('bundled-engine-'+phase+'.json')).read_text())
+                if engine['status']!='PASS' or not engine['external_override_present']:
+                    raise RuntimeError('Actual bundled converter routing was not verified')
+            summary['bundled_engine_acceptance']='PASS'
+            summary['external_decoy_ignored']=True
+            summary['system_installation_absent_during_acceptance']=True
+            summary['invalid_engine_scenarios']=2
+            windows_release.write(args.output/'summary.json',summary)
     finally:
         AutomaticTrainingTests.tearDown=original
 

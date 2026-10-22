@@ -15,14 +15,21 @@ def verify_exe_authorization(root, state):
         if re.search(r'^  (push|pull_request):', workflow, re.MULTILINE):
             raise ValueError('EXE 工作流程仍會自動觸發')
         return
-    release = state.get('windows_release', {})
+    pending = state.get('pending_release', {})
+    release = pending if pending.get('version') == '0.2.0-beta.2' else state.get('windows_release', {})
+    version = release.get('version')
     authorization = release.get('authorization', {})
-    if (state['exe_policy'] != 'EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD'
-            or release.get('version') != '0.2.0-beta.1'
+    allowed = {
+        '0.2.0-beta.1': ('EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD',
+                       '好，現在我要你在github發佈程式本體exe，讓我投入實機測試'),
+        '0.2.0-beta.2': ('EXPLICIT_V0_2_0_BETA_2_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD',
+                       '參用隨包附帶方案，完善代碼後，打包成exe發佈到release'),
+    }
+    if (version not in allowed or state['exe_policy'] != allowed[version][0]
             or authorization.get('scope') != 'PUBLISH_WINDOWS_INTERNAL_BETA'
-            or authorization.get('user_request') != '好，現在我要你在github發佈程式本體exe，讓我投入實機測試'):
+            or authorization.get('user_request') != allowed[version][1]):
         raise ValueError('EXE 發佈缺少本次明確授權')
-    expected = ['  workflow_dispatch:', '  push:', "    branches: ['release-request/v0.2.0-beta.1']"]
+    expected = ['  workflow_dispatch:', '  push:', "    branches: ['release-request/v"+version+"']"]
     if workflow.count('\non:\n') != 1:
         raise ValueError('EXE 觸發條件必須唯一且明確')
     section = workflow.split('\non:\n', 1)[1].split('\npermissions:', 1)[0]

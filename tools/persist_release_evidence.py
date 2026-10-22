@@ -9,7 +9,10 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-BRANCH = 'release-evidence/v0.2.0-beta.1'
+import sys
+sys.path.insert(0, str(ROOT))
+from template_ai import __version__
+BRANCH = 'release-evidence/v' + __version__
 REMOTE = 'https://github.com/givemedandanla-tool/template-Ai.git'
 
 
@@ -24,7 +27,7 @@ def persist(status):
     artifacts = ROOT / 'artifacts'
     evidence = dict(status=status, source_commit=source,
          run_url='https://github.com/givemedandanla-tool/template-Ai/actions/runs/' + os.environ['GITHUB_RUN_ID'],
-         recorded_at=datetime.now(timezone.utc).isoformat(), release_tag='v0.2.0-beta.1',
+         recorded_at=datetime.now(timezone.utc).isoformat(), release_tag='v' + __version__,
          scope='NATIVE_WINDOWS_AUTOMATION_NOT_USER_HARDWARE_QUALIFICATION')
     with tempfile.TemporaryDirectory(prefix='release-evidence-') as temp:
         folder = Path(temp)
@@ -43,7 +46,7 @@ def persist(status):
         names = ['WINDOWS_RUNTIME.txt', 'installed-dependencies.txt', 'pyinstaller.log', 'release-manifest.json', 'governance-gate.json',
                  'SHA256SUMS.txt', 'download/download-verification.json', 'source-tests/summary.json',
                  'source-tests/tests.json', 'source-tests/catalog.json', 'source-tests/runtime-errors.json',
-                 'source-tests/live/test-modules.json']
+                 'source-tests/live/test-modules.json', 'corresponding-source-verification.json']
         for name in names:
             path = artifacts / name
             if path.is_file() and path.stat().st_size <= 12 * 1024 * 1024:

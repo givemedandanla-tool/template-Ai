@@ -26,17 +26,23 @@ if ($FrozenProbeOnly -and $env:FROZEN_UTF8_AB -eq 'true') {
     if ($LASTEXITCODE -ne 0) { throw 'Actual frozen UTF8 baseline/fixed comparison failed' }
     return
 }
+python tools/bundled_inkscape_build.py prepare
+if ($LASTEXITCODE -ne 0) { throw 'Pinned bundled runtime preparation failed' }
 python tools/windows_release.py spec
 if ($LASTEXITCODE -ne 0) { throw 'Release specification failed' }
 python docs/dev/releases/configure_frozen_utf8.py
 if ($LASTEXITCODE -ne 0) { throw 'Documented UTF8 interpreter configuration failed' }
 python -m PyInstaller --noconfirm --clean build/release/TemplateAI.spec *> artifacts/pyinstaller.log
 if ($LASTEXITCODE -ne 0) { throw 'Packaging failed' }
+python tools/bundled_inkscape_build.py install
+if ($LASTEXITCODE -ne 0) { throw 'Bundled runtime installation failed' }
 python docs/dev/releases/run_frozen_probe.py --executable dist/TemplateAI/TemplateAI.exe --output artifacts/package-check
 if ($LASTEXITCODE -ne 0) { throw 'Actual frozen executable acceptance failed' }
 # The original acceptance requires a new output directory. Preserve the build
 # policy report only AFTER the original EXE exercise has created that directory.
 Copy-Item artifacts/build-payload-filter.json artifacts/package-check/build-payload-filter.json -ErrorAction Stop
 if ($FrozenProbeOnly) { return } # Diagnosis never tags/packages/publishes.
+python tools/bundled_inkscape_build.py sources
+if ($LASTEXITCODE -ne 0) { throw 'Corresponding-source asset preparation failed' }
 python tools/windows_release.py package
 if ($LASTEXITCODE -ne 0) { throw 'Package inventory/checksum generation failed' }

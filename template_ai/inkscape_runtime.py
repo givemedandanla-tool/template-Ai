@@ -10,6 +10,16 @@ import shutil
 import stat
 import sys
 import threading
+from typing import TypedDict
+
+
+class BundledRuntime(TypedDict):
+    policy: str
+    executable: str
+    version: str
+    executable_sha256: str
+    runtime_manifest_sha256: str
+    verified_files: int
 
 VERSION = '1.4.2'
 _VERIFIED = {}
@@ -33,7 +43,7 @@ def _read_json(path, maximum=8*1024*1024):
     return value
 
 
-def bundled_runtime():
+def bundled_runtime() -> BundledRuntime:
     app = Path(sys.executable).resolve().parent
     root = app/'engines/inkscape'
     try:
@@ -101,7 +111,7 @@ def bundled_runtime():
         raise ValueError('內附 Inkscape 不完整或無法讀取，請重新完整解壓下載包') from error
 
 
-def inkscape_path():
+def inkscape_path() -> str | None:
     if getattr(sys, 'frozen', False):
         return bundled_runtime()['executable']
     options = [os.environ.get('TEMPLATE_AI_INKSCAPE',''), shutil.which('inkscape') or '',
@@ -117,7 +127,7 @@ def converter_version(executable):
         info=Path(executable).stat();key=(str(executable),info.st_mtime_ns,info.st_size)
         if key not in _VERSION_CACHE:
             with tempfile.TemporaryDirectory(prefix='template-ai-version-') as folder:
-                env=os.environ.copy();env['INKSCAPE_PROFILE_DIR']=folder
+                env=os.environ.copy();env['INKSCAPE_PROFILE_DIR']=folder;env['PYTHONDONTWRITEBYTECODE']='1'
                 result=subprocess.run([str(executable),'--version'],capture_output=True,text=True,timeout=10,env=env,
                                       creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
             match=re.search(r'Inkscape ([0-9]+(?:\.[0-9]+){1,3})',result.stdout)

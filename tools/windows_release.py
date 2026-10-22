@@ -46,10 +46,12 @@ def make_spec():
     """Keep product .py bytes for existing immutable engine/source fingerprints."""
     target = ROOT / 'build' / 'release'
     target.mkdir(parents=True, exist_ok=True)
+    engine_pin = json.loads((target / 'inkscape-runtime-pin.json').read_text(encoding='utf-8'))
     write(target / 'release-info.json', dict(version=__version__, source_commit=source_commit(),
+          inkscape_runtime=engine_pin,
           architecture='windows-x64', data_schema_policy='EXISTING_LOCAL_SCHEMA_NO_FORCED_MIGRATION',
           signed=False, qualification='INTERNAL_BETA_AWAITING_USER_LOCAL_CONFIRMATION'))
-    numbers = tuple(int(x) for x in __version__.split('-')[0].split('.')) + (1,)
+    numbers = tuple(int(x) for x in __version__.split('-')[0].split('.')) + (int(__version__.rsplit('.', 1)[1]),)
     (target / 'version.txt').write_text(
         "VSVersionInfo(ffi=FixedFileInfo(filevers=" + repr(numbers) + ", prodvers=" + repr(numbers) +
         ", mask=0x3f, flags=0x2, OS=0x40004, fileType=0x1, subtype=0x0, date=(0,0)), "
@@ -145,12 +147,14 @@ def package():
     shutil.copy2(ROOT / 'build/release/release-info.json', folder / 'release-info.json')
     # No fixture database, downloaded font, models, tooling or historical evidence.
     forbidden_dirs = {'tests', 'tools', '.git', '.venv', 'local-data', 'node_modules', '__pycache__'}
+    from bundled_inkscape_build import vendor_inventory
+    vendor_files = vendor_inventory(folder)
     entries = []
     for path in sorted(folder.rglob('*')):
         if not path.is_file():
             continue
         relative = path.relative_to(folder)
-        if forbidden_dirs.intersection(relative.parts) or path.suffix.lower() in {'.sqlite3', '.sqlite', '.db', '.ttf', '.ttc', '.otf', '.ai'}:
+        if relative.as_posix() not in vendor_files and (forbidden_dirs.intersection(relative.parts) or path.suffix.lower() in {'.sqlite3', '.sqlite', '.db', '.ttf', '.ttc', '.otf', '.ai'}):
             raise RuntimeError('Unexpected private/development/font payload: ' + relative.as_posix())
         entries.append(dict(path=relative.as_posix(), bytes=path.stat().st_size, sha256=sha(path)))
     source_tests = json.loads((artifacts / 'source-tests/summary.json').read_text(encoding='utf-8'))
@@ -162,13 +166,22 @@ def package():
     if (source_tests.get('software_execution') != 'PASS' or source_tests.get('source_commit') != source_commit()
             or not source_tests.get('source_unchanged_during_run') or source_tests.get('runtime_errors') != 0
             or acceptance.get('status') != 'PASS' or not acceptance.get('actual_frozen_executable')
+            or acceptance.get('bundled_engine_acceptance') != 'PASS'
+            or not acceptance.get('external_decoy_ignored')
+            or not acceptance.get('system_installation_absent_during_acceptance')
+            or acceptance.get('invalid_engine_scenarios') != 2
             or not acceptance.get('source_matches_head') or not acceptance.get('source_unchanged_during_run')
             or acceptance.get('source_commit') != source_commit() or acceptance.get('version') != __version__
             or acceptance.get('executable_sha256') != sha(executable)
             or governance.get('status') != 'PASS'
             or full_run.get('source_manifest_sha256') != source_identity()['source_manifest_sha256']):
         raise RuntimeError('Current exact Windows source and packaged bytes must have passed acceptance')
+    source_proof = json.loads((artifacts / 'corresponding-source-verification.json').read_text(encoding='utf-8'))
+    source_asset = artifacts / source_proof['asset']
+    if source_proof['status'] != 'PASS' or sha(source_asset) != source_proof['sha256']:
+        raise RuntimeError('Verified corresponding-source asset is required')
     manifest = dict(version=__version__, tag='v' + __version__, source_commit=source_commit(),
+                    corresponding_sources=source_proof,
                     architecture='windows-x64', python=platform.python_version(), signed=False,
                     package_files=entries, package_file_count=len(entries),
                     test_summary=source_tests, packaged_acceptance=acceptance,
@@ -176,7 +189,7 @@ def package():
                          linux_full_source_manifest=full_run['source_manifest_sha256'], governance=governance),
                     known_limits=['Real private AI corpus quality', 'User Windows hardware/performance',
                                   'Physical print qualification', 'Independent novice usability',
-                                  'Inkscape and authorized local fonts installed separately'],
+                                  'Authorized local fonts installed separately; Inkscape 1.4.2 is bundled'],
                     compatibility='Existing local schema; use a separate test data copy; backward opening newer data not certified')
     archive = artifacts / ('TemplateAI-v' + __version__ + '-windows-x64.zip')
     with zipfile.ZipFile(archive, 'x', compression=zipfile.ZIP_DEFLATED) as bundle:
@@ -184,7 +197,7 @@ def package():
             bundle.write(folder / row['path'], 'TemplateAI/' + row['path'])
     manifest['archive'] = dict(name=archive.name, bytes=archive.stat().st_size, sha256=sha(archive))
     write(artifacts / 'release-manifest.json', manifest)
-    checksum_files = [archive, artifacts / 'release-manifest.json']
+    checksum_files = [archive, artifacts / 'release-manifest.json', source_asset]
     (artifacts / 'SHA256SUMS.txt').write_text(''.join(sha(p) + '  ' + p.name + '\n' for p in checksum_files), encoding='utf-8')
 
 
@@ -202,7 +215,15 @@ def verify_download(folder, expected_manifest=None):
         checksum_names.append(name)
         if Path(name).name != name or sha(folder / name) != expected:
             raise RuntimeError('Downloaded checksum mismatch')
-    if sorted(checksum_names) != sorted([archive.name, 'release-manifest.json']):
+    source_proof = manifest.get('corresponding_sources')
+    required = [archive.name, 'release-manifest.json']
+    if source_proof:
+        required.append(source_proof['asset'])
+        if sha(folder / source_proof['asset']) != source_proof['sha256']:
+            raise RuntimeError('Downloaded corresponding sources differ')
+        from bundled_inkscape_build import verify_source_archive
+        verify_source_archive(folder / source_proof['asset'])
+    if sorted(checksum_names) != sorted(required):
         raise RuntimeError('Downloaded checksum inventory differs')
     with zipfile.ZipFile(archive) as bundle:
         expected = {'TemplateAI/' + row['path']: row for row in manifest['package_files']}

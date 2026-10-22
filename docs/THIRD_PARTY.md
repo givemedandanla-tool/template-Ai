@@ -23,3 +23,7 @@ Windows 使用 onedir 而非把 Qt 藏在不可替換的靜態產物；保留動
 
 ## 本輪有界特製排版
 kiwisolver 1.4.9（BSD-3-Clause），重用Cassowary線性約束引擎，requirements及lock精確鎖版。原始來源／LICENSE hash與數學、Figma公開介面參照見docs/dev/TWENTYEIGHT_ENGINEERING_BASIS.json；不呼叫Figma或付費服務。
+
+## Windows beta.2 隨包 Inkscape
+
+固定 Inkscape1.4.2，完整官方二進位 GPL-3.0-or-later；個別元件保留各自授權。包內 engines/inkscape 保留官方授權。相同 Release 附125份對應來源物件。詳 docs/dev/releases/INKSCAPE_REDISTRIBUTION.md 與 tools/inkscape_distribution_lock.json。私人字型與作品不隨包。

@@ -9,7 +9,7 @@
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-BETA-PUBLISHED-001.receipt.json",
   "last_confirmed_commit": "7bb7a1896cc52a70a06b1ce8d5d9022c87669f42",
   "latest_evidence_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
-  "exe_policy": "EXPLICIT_V0_2_0_BETA_1_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
+  "exe_policy": "EXPLICIT_V0_2_0_BETA_2_RELEASE_AUTHORIZED_NO_GENERAL_PUSH_BUILD",
   "dialogue_policy": "NO_ROUTINE_CONFIRMATIONS_PERSIST_FIRST",
   "read_next": [
     "docs/dev/ACTIVE_DEVELOPMENT_HANDOFF.md",
@@ -1867,11 +1867,15 @@
   },
   "pending_release": {
     "version": "0.2.0-beta.2",
-    "status": "ROUTING_AND_CACHE_IMPLEMENTED_TARGETED_CHECKS_SOURCE_AUDIT_IN_PROGRESS",
+    "status": "BUNDLED_ROUTING_AND_BUILD_IMPLEMENTED_PENDING_NATIVE_ACCEPTANCE",
     "baseline_commit": "059af6de8a2b6a0eb7882489f3fd4eff09028907",
     "plan": "docs/dev/releases/v0.2.0-beta.2-plan.md",
     "user_authorization": "參用隨包附帶方案，完善代碼後，打包成exe發佈到release",
     "scope": "BUNDLED_INKSCAPE_STRICT_SELECTION_CACHE_IDENTITY_AND_IMPACT_DEBUG_DESIGN",
-    "published": false
+    "published": false,
+    "authorization": {
+      "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
+      "user_request": "參用隨包附帶方案，完善代碼後，打包成exe發佈到release"
+    }
   }
 }

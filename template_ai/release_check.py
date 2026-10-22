@@ -40,6 +40,13 @@ def run(spec_path):
     app.setApplicationVersion(__version__)
     output = root / 'evidence'
     output.mkdir(exist_ok=True)
+    if spec['phase'] == 'engine-invalid':
+        from .release_engine_check import invalid
+        return invalid(root, output)
+    if spec['phase'] == 'engine-valid':
+        from .release_engine_check import exercise
+        exercise(root, output, spec['phase'])
+        return 0
     checks = []
     unexpected_messages = []
     window = None
@@ -114,6 +121,9 @@ def run(spec_path):
                   resource_measurement='SYNTHETIC_FIXED_LOAD_NOT_HARDWARE_PERFORMANCE',
                   scope='ACTUAL_EXECUTABLE_AUTHORED_FIXTURES_NOT_REAL_CORPUS_QUALIFICATION')
     try:
+        if getattr(sys, 'frozen', False):
+            from .release_engine_check import exercise
+            exercise(root, output, spec['phase'])
         window = MainWindow(root / 'data')
         # Reproduce the established GUI contract fixture, not shared-runner load.
         # Real admission/pressure is separately tested; this grants no output rights.

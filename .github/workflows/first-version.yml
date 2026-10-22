@@ -1,13 +1,13 @@
-name: Authorized Windows beta release
+name: Authorized bundled Windows beta2 release
 on:
   workflow_dispatch:
   push:
     # Only this explicit release request; ordinary commits/PRs never build EXE.
-    branches: ['release-request/v0.2.0-beta.1']
+    branches: ['release-request/v0.2.0-beta.2']
 permissions:
   contents: read
 concurrency:
-  group: windows-v0.2.0-beta.1
+  group: windows-v0.2.0-beta.2
   # Only explicitly supersede a known pre-publication attempt. Ordinary requests
   # retain serialization, protecting an immutable tag/publish already in flight.
   cancel-in-progress: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[supersede-prepackage-run]') }}
@@ -96,17 +96,17 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git tag -a v0.2.0-beta.1 -m 'Authorized native Windows internal beta'
+          git tag -a v0.2.0-beta.2 -m 'Authorized native Windows internal beta'
           if ($LASTEXITCODE -ne 0) { throw 'Tag exists; do not overwrite' }
-          git push origin v0.2.0-beta.1
+          git push origin v0.2.0-beta.2
           if ($LASTEXITCODE -ne 0) { throw 'Tag publication failed' }
-          gh release create v0.2.0-beta.1 --verify-tag --draft --prerelease --title 'Template AI v0.2.0-beta.1 — Windows 實測版' --notes-file docs/dev/releases/v0.2.0-beta.1-notes.md artifacts/TemplateAI-v0.2.0-beta.1-windows-x64.zip artifacts/release-manifest.json artifacts/SHA256SUMS.txt
+          gh release create v0.2.0-beta.2 --verify-tag --draft --prerelease --title 'Template AI v0.2.0-beta.2 — Windows 實測版' --notes-file docs/dev/releases/v0.2.0-beta.2-notes.md artifacts/TemplateAI-v0.2.0-beta.2-windows-x64.zip artifacts/release-manifest.json artifacts/SHA256SUMS.txt artifacts/inkscape-1.4.2-corresponding-sources.zip
           if ($LASTEXITCODE -ne 0) { throw 'Draft Release publication failed' }
       - name: Download and verify every draft package file
         if: env.NATIVE_TESTS_ONLY != 'true' && env.FROZEN_PROBE_ONLY != 'true'
         shell: pwsh
         run: |
-          gh release download v0.2.0-beta.1 --dir artifacts/download
+          gh release download v0.2.0-beta.2 --dir artifacts/download
           if ($LASTEXITCODE -ne 0) { throw 'Actual draft download failed' }
           python tools/windows_release.py verify-download --output artifacts/download
           if ($LASTEXITCODE -ne 0) { throw 'Downloaded draft differs' }
@@ -114,10 +114,10 @@ jobs:
         if: env.NATIVE_TESTS_ONLY != 'true' && env.FROZEN_PROBE_ONLY != 'true'
         shell: pwsh
         run: |
-          gh release edit v0.2.0-beta.1 --draft=false --prerelease
+          gh release edit v0.2.0-beta.2 --draft=false --prerelease
           if ($LASTEXITCODE -ne 0) { throw 'Prerelease publication failed' }
           Remove-Item -Recurse artifacts/download
-          gh release download v0.2.0-beta.1 --dir artifacts/download
+          gh release download v0.2.0-beta.2 --dir artifacts/download
           if ($LASTEXITCODE -ne 0) { throw 'Published asset download failed' }
           python tools/windows_release.py verify-download --output artifacts/download
           if ($LASTEXITCODE -ne 0) { throw 'Published download not verified' }
@@ -130,7 +130,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: Windows-v0.2.0-beta.1-evidence
+          name: Windows-v0.2.0-beta.2-evidence
           path: |
             artifacts/*.txt
             artifacts/*.json

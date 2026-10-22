@@ -25,7 +25,7 @@ def metadata_checksum(payload: dict) -> str:
     return hashlib.sha256(json.dumps(values, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode()).hexdigest()
 
 
-def cache_matches(payload: dict, folder: Path, source_hash: str, page: int) -> bool:
+def cache_matches(payload: object, folder: Path, source_hash: str, page: int) -> bool:
     """只重用完整同來源／同頁快取；JSON 和檔案不可信時重建，不把存在當完成。"""
     try:
         if not isinstance(payload, dict) or payload.get("cache_version") != IMPORT_VERSION:
@@ -78,6 +78,7 @@ def _run(executable: str, arguments: list[str], directory: Path) -> str:
             assert_local_document(value)
     env = os.environ.copy()
     env["INKSCAPE_PROFILE_DIR"] = str(directory / "inkscape-profile")
+    env['PYTHONDONTWRITEBYTECODE'] = '1'
     result = subprocess.run([executable, *arguments], cwd=directory, env=env, capture_output=True, text=True,
                             errors="replace", timeout=90, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     if result.returncode:

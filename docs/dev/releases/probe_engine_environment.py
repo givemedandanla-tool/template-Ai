@@ -1,0 +1,100 @@
+"""Adversarial external environment around unchanged actual-EXE acceptance calls."""
+import contextlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import tempfile
+
+
+@contextlib.contextmanager
+def isolated_host(executable):
+    if os.name != 'nt' or os.environ.get('GITHUB_ACTIONS') != 'true':
+        raise RuntimeError('Fresh authorized Windows runner only')
+    actual = subprocess.run
+    installed = Path(r'C:\Program Files\Inkscape')
+    hidden = installed.with_name('Inkscape-hidden-for-beta2-acceptance')
+    with tempfile.TemporaryDirectory(prefix='template-ai-decoy-') as raw:
+        decoy = Path(raw)/'inkscape.exe'
+        decoy.write_bytes(b'MZ_DECOY_MUST_NEVER_BE_EXECUTED')
+        def observe(command, *args, **kwargs):
+            if not isinstance(command, (list,tuple)) or not command or Path(command[0]).resolve() != executable.resolve():
+                return actual(command, *args, **kwargs)
+            environment = dict(kwargs.pop('env', os.environ))
+            environment['TEMPLATE_AI_INKSCAPE'] = str(decoy)
+            environment['PATH'] = raw+os.pathsep+environment.get('PATH','')
+            if hidden.exists() or not installed.exists():
+                raise RuntimeError('Unexpected initial host installation state')
+            installed.rename(hidden)
+            try:
+                if installed.exists():
+                    raise RuntimeError('System Inkscape still exists during frozen probe')
+                return actual(command, *args, env=environment, **kwargs)
+            finally:
+                hidden.rename(installed)
+        subprocess.run = observe
+        try:
+            yield
+        finally:
+            subprocess.run = actual
+
+
+def invalid_cases(executable, output):
+    engine = executable.parent/'engines/inkscape'
+    target = engine/'bin/inkscape.exe'
+    dll = engine/'bin/libinkscape_base.dll'
+    rows = []
+    for kind, changed in [('missing-executable', target), ('corrupt-dll', dll)]:
+        with tempfile.TemporaryDirectory(prefix='template-ai-invalid-bundle-') as raw:
+            root = Path(raw)
+            (root/'SYNTHETIC_ONLY').write_text('NO_PRIVATE_DATA')
+            spec = root/'release-check.json'
+            spec.write_text(json.dumps(dict(fixture='AUTHORED_RELEASE_ACCEPTANCE_V1',root=str(root),phase='engine-invalid')))
+            # os.rename cannot cross the runner's checkout/temp volumes.
+            backup = executable.parent/('engine-probe-'+kind+'.backup')
+            if backup.exists():
+                raise RuntimeError('Unexpected leftover engine probe backup')
+            changed.rename(backup)
+            if kind == 'corrupt-dll':
+                changed.write_bytes(b'SYNTHETIC_CORRUPT_DLL')
+            try:
+                with (output/('engine-'+kind+'.log')).open('wb') as log:
+                    result = subprocess.run([str(executable),'--release-check',str(spec)],stdout=log,stderr=subprocess.STDOUT,timeout=120)
+                if result.returncode:
+                    raise RuntimeError('Actual invalid-engine scenario failed: '+kind)
+                evidence = json.loads((root/'evidence/invalid-engine.json').read_text())
+                report = root/'safe-report.zip'
+                result = subprocess.run([str(executable),'--data-dir',str(root/'empty-data'),'--support-report',str(report)],capture_output=True,timeout=45)
+                if result.returncode or not report.is_file():
+                    raise RuntimeError('Actual broken-engine support-report CLI failed')
+                from template_ai.offline_support import read_support_bundle
+                public = read_support_bundle(report.read_bytes())
+                if public['environment']['inkscape_runtime']['error_code'] != 'BUNDLED_RUNTIME_INVALID':
+                    raise RuntimeError('Support report lost the actual engine error')
+                rows.append(dict(scenario=kind,actual_frozen_executable=True,support_report_cli=True,**evidence))
+            finally:
+                changed.unlink(missing_ok=True)
+                backup.rename(changed)
+    (output/'invalid-engine-scenarios.json').write_text(json.dumps(dict(status='PASS',checks=rows),indent=2)+'\n')
+
+
+def installed_case(executable, output):
+    if not Path(r'C:\Program Files\Inkscape\bin\inkscape.exe').is_file():
+        raise RuntimeError('The installed-system control condition is missing')
+    with tempfile.TemporaryDirectory(prefix='template-ai-installed-control-') as raw:
+        root = Path(raw)
+        (root/'SYNTHETIC_ONLY').write_text('NO_PRIVATE_DATA')
+        spec = root/'release-check.json'
+        spec.write_text(json.dumps(dict(fixture='AUTHORED_RELEASE_ACCEPTANCE_V1',root=str(root),phase='engine-valid')))
+        decoy = root/'inkscape.exe'
+        decoy.write_bytes(b'MZ_INVALID_EXTERNAL_DECOY')
+        env = os.environ.copy()
+        env['TEMPLATE_AI_INKSCAPE'] = str(decoy)
+        env['PATH'] = raw+os.pathsep+env['PATH']
+        with (output/'engine-system-installed.log').open('wb') as log:
+            result = subprocess.run([str(executable),'--release-check',str(spec)],env=env,stdout=log,stderr=subprocess.STDOUT,timeout=180)
+        if result.returncode:
+            raise RuntimeError('Actual bundled engine failed with system Inkscape present')
+        record = json.loads((root/'evidence/bundled-engine-engine-valid.json').read_text())
+        record['system_installation_present'] = True
+        (output/'engine-system-installed.json').write_text(json.dumps(record,indent=2)+'\n')

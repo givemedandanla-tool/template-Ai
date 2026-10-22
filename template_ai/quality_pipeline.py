@@ -57,7 +57,7 @@ class QualityPipelines:
         effective_model=digest(dict(counts={key:dict(value) for key,value in model.counts.items()},documents=dict(model.documents),vocabulary=sorted(model.vocabulary))) if model else None
         from .quality_ocr import verify
         verify(ocr_record)
-        renderer_manifest=dict(executable=str(Path(executable).resolve()),sha256=file_digest(executable),version=version.stdout.strip()[:1000])
+        renderer_manifest: dict[str, object] = dict(executable=str(Path(executable).resolve()),sha256=file_digest(executable),version=version.stdout.strip()[:1000])
         if getattr(sys,'frozen',False):
             from .inkscape_runtime import runtime_identity
             renderer_manifest['bundled_runtime']=runtime_identity(executable)
