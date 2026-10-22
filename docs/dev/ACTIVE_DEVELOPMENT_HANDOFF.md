@@ -29,3 +29,5 @@ Windows probe002/66d9/run39777630190已實際PASS原14＋7、無系統兩phase�
 最終native003/ee5/run39799674358：Windows199全PASS／19健康模組／0runtime；EXE exercise原14 PASS，resume前5 checks後process非0退出，沒packaged-resume.json，45s faulthandler片段僅pathlib.py，實際unit2已完成。原報告windows-native-003完整保留，尚未生成Release。下一僅frozen-probe-only＋bundle-trace：parent記錄真child returncode/hex/time，runtime hook只在GH authored診斷記錄靜態函式進出（不記payload／路徑、最多400），啟用fatal traceback；原視窗／斷言／240s不改。產品／測試bytes仍f1a2，Linux1986／GUI27／Windows199已驗保留。
 
 Frozen trace001/6c/run39806101568在freeze前拒絕上游IDW88下載size/hash，未跑EXE、非resume新結果。windows-frozen-trace-001保留原log；add_inkscape_notices加入最多3次同URL／原size+SHA驗證重試，拒絕片段只記size/hash/type，失敗不繞過。隔離示範2案PASS（非原生授權證據）；下一相同frozen-only＋trace，不重跑來源1986/GUI27/Windows199。
+
+當前frozen trace002：f967edfc65c769231213c885c56a039ab5580e1f／run39807865848 RUNNING；observer14116將收取windows-frozen-trace-002。STATE頂層next_tasks已改本輪，舊beta1待辦保留pending_release.historical_beta1_next_tasks。未改程式bytes或正式證據；尚未beta2 tag/Release。

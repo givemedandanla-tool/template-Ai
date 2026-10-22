@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "User local testing and safe feedback with version; private artworks/fonts/DB/models remain local.",
-    "Bundled Inkscape / local Illustrator native extraction proposals are preserved; current beta has neither bundled Inkscape nor Illustrator integration.",
-    "Workspace assessment delivered;55/55old ZIP hashCRC PASS but uniqueness/full recovery not qualified, no existing files deleted."
+    "Read pending_release and ACTIVE_DEVELOPMENT_HANDOFF; beta2 remains unpublished until native EXE checks and actual downloads pass.",
+    "Await frozen trace002 f967edfc/run39807865848, preserve failures; repair proven root cause only and retain original assertions.",
+    "Complete authorized beta2 Windows Release, immutable tag, full download verification and full-evidence remote checkpoint; no main merge."
   ],
   "blocked": [
     {
@@ -1917,6 +1917,17 @@
       "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39806101568",
       "status": "FAILED_BEFORE_FREEZE_UPSTREAM_ARCHIVE_REJECTED",
       "report": "docs/dev/releases/v0.2.0-beta.2/windows-frozen-trace-001"
+    },
+    "historical_beta1_next_tasks": [
+      "User local testing and safe feedback with version; private artworks/fonts/DB/models remain local.",
+      "Bundled Inkscape / local Illustrator native extraction proposals are preserved; current beta has neither bundled Inkscape nor Illustrator integration.",
+      "Workspace assessment delivered;55/55old ZIP hashCRC PASS but uniqueness/full recovery not qualified, no existing files deleted."
+    ],
+    "frozen_trace_attempt_002": {
+      "source_commit": "f967edfc65c769231213c885c56a039ab5580e1f",
+      "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39807865848",
+      "status": "RUNNING",
+      "expected_report": "docs/dev/releases/v0.2.0-beta.2/windows-frozen-trace-002"
     }
   }
 }
