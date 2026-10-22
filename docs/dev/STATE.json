@@ -1867,7 +1867,7 @@
   },
   "pending_release": {
     "version": "0.2.0-beta.2",
-    "status": "SOURCE_REMOTE_VERIFIED_AND_LICENSE_STAGE_PASS_READY_FINAL_NATIVE",
+    "status": "SOURCE_QUALIFIED_RETRYING_NATIVE_AFTER_CHECKOUT_PATH_FIX",
     "baseline_commit": "059af6de8a2b6a0eb7882489f3fd4eff09028907",
     "plan": "docs/dev/releases/v0.2.0-beta.2-plan.md",
     "user_authorization": "參用隨包附帶方案，完善代碼後，打包成exe發佈到release",
@@ -1886,7 +1886,7 @@
       "engine_scenarios": 5,
       "observed_bundled_calls": 24
     },
-    "next": "Push this complete candidate without diagnostic markers to release-request/v0.2.0-beta.2; final199 native cases,EXE21+5engine scenarios,125source assets,draft/public full downloads; persist exact published proof.",
+    "next": "Push Windows longpaths bootstrap fix as next native candidate; no product code change or full Linux rerun.",
     "source_full_run": "RUN-BUNDLED-INKSCAPE-BETA2-004",
     "source_full_commit": "42eb60fa1596282e11b1c329dd78918dd9b169ee",
     "source_qualification": "docs/dev/releases/v0.2.0-beta.2/source-qualification.json",
@@ -1900,6 +1900,7 @@
     "source_checkpoint": "CP-20261022-BETA2-SOURCE-QUALIFIED-001",
     "source_checkpoint_receipt": "docs/checkpoints/CP-20261022-BETA2-SOURCE-QUALIFIED-001.receipt.json",
     "source_governance": "PASS",
-    "license_stage": "docs/dev/releases/v0.2.0-beta.2/license-stage-002/license-stage.json"
+    "license_stage": "docs/dev/releases/v0.2.0-beta.2/license-stage-002/license-stage.json",
+    "previous_native_failure": "docs/dev/releases/v0.2.0-beta.2/windows-native-001/status.json"
   }
 }

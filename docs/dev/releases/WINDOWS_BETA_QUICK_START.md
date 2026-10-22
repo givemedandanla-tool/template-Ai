@@ -2,7 +2,7 @@
 
 這是內部測試版，不是已完成真實作品／正式印刷資格認證的正式版。
 
-1. [下載 TemplateAI-v0.2.0-beta.2-windows-x64.zip](https://github.com/givemedandanla-tool/template-Ai/releases/download/v0.2.0-beta.2/TemplateAI-v0.2.0-beta.2-windows-x64.zip)，完整解壓到本機資料夾。
+1. [下載 TemplateAI-v0.2.0-beta.2-windows-x64.zip](https://github.com/givemedandanla-tool/template-Ai/releases/download/v0.2.0-beta.2/TemplateAI-v0.2.0-beta.2-windows-x64.zip)，完整解壓到較短的本機資料夾，例如桌面上的 TemplateAI 資料夾。
 2. 開啟資料夾中的 TemplateAI.exe；不必另裝Python，請保留旁邊的_internal、engines資料夾與所有檔案。
 3. 初次先用測試副本，不直接使用唯一客戶資料庫。程式資料預設存在%LOCALAPPDATA%\TemplateAI\TemplateAI，與程式分開；可用TemplateAI.exe --data-dir "D:\TemplateAI-Test"指定獨立測試目錄。
 4. 本版隨包附帶 Inkscape 1.4.2，不需另外安裝。完整 Illustrator 私有內容還原仍有邊界。

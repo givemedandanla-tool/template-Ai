@@ -1862,3 +1862,5 @@ BETA2第二輪邊界補查：有效JSON／校驗但內層renderer_identity非dic
 BETA2來源資格完成：003因峰值空間不足46 ENOSPC errors／2 class-setup chains／1deadline，未算PASS。49舊輔助tree可逆gzip核對原SHA，回收604.1MiB；原正式證據、ZIP及active proof不動。來源byte不變，14整模組139案單程序180s原斷言復驗全PASS，27原版未插樁GUI PASS。既有adopter逐案核對兩份真record後建立RUN-BUNDLED-INKSCAPE-BETA2-004：1986唯一PASS／0合格runtime；原1963＋23，原5外部資格仍未驗證。Source digestf1a2cf7a；latest／166完成scope已連004，待全附件CP遠端確認再跑最後Windows／Release。
 
 BETA2來源主CP SOURCE-QUALIFIED-001：672來源檔隔離還原PASS，snapshot1548c940推送後原生Git精確讀回673項並標REMOTE_VERIFIED；strict require-evidence publication-scope PASS172／166／75／1986。補充授權data定向run39789443841通過11837files／242原授權檔，原錯的OUT接線已改。準備最終Windows199＋EXE＋Release下載，尚未將beta2標已公開。
+
+最終Windows001在checkout因Git預設260路徑限制失敗（新cache suffix增加驗證圖路徑），公開run39792844827／job119872897045 annotation精確保存；初始RUNNING之前失敗所以不誤用舊evidence分支狀態。只改兩個Windows工作流程前置core.longpaths，產品／測試bytes未變；Linux1986／GUI27來源資格保留，重做最終原生建置。

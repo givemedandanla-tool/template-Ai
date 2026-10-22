@@ -14,6 +14,11 @@ jobs:
       PYTHONUTF8: '1'
       LICENSE_STAGE_CHECK: ${{ contains(github.event.head_commit.message, '[license-stage-check]') }}
     steps:
+      - name: Preserve source bytes and support archived evidence paths on Windows
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:

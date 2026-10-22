@@ -30,7 +30,9 @@ jobs:
     steps:
       - name: Preserve source bytes for immutable fingerprints
         shell: pwsh
-        run: git config --global core.autocrlf false
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
