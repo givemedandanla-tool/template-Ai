@@ -33,3 +33,5 @@ Frozen trace001/6c/run39806101568在freeze前拒絕上游IDW88下載size/hash，
 當前frozen trace002：f967edfc65c769231213c885c56a039ab5580e1f／run39807865848 RUNNING；observer14116將收取windows-frozen-trace-002。STATE頂層next_tasks已改本輪，舊beta1待辦保留pending_release.historical_beta1_next_tasks。未改程式bytes或正式證據；尚未beta2 tag/Release。
 
 Frozen trace002/f967/run39807865848：已下載及驗證原授權242檔，實際exercise在45.531s退出0xc0000005；C faulthandler背景dump先輸出破損frame字樣後AV。原native003也45秒dump中退出但未記exithex，不能冒稱其hex已知。換GHA Windows frozen的45秒診斷為threading.Timer＋sys._current_frames強參照／GIL安全讀frame；仍同45s呼叫／取消、原21斷言與parent240s硬截止不變。若native擴充持有GIL無法取得Python dump，外部240s仍終止；不當成新增hang放行。隔離dump／cancel兩案PASS，未當Windows證明。下一正常完整native199＋EXE21＋引擎5＋sources125＋下載檢查；僅全通過後可tag／Release。產品／測試／tools manifest仍f1a2，不重跑Linux全套。
+
+當前正常最終native004：af97b108b3a19c0d4eab3a6741ab716c732e0aea／run39810636090 RUNNING；observer48369→windows-native-004，可能約25分鐘observer先逾時，僅重新attach observer，不重推／重跑CI。45秒安全dump仍是診斷、240秒外部硬截止／原斷言皆保留，CPython3.11.9官方文件機制已固定hash見diagnostic-timer-research.json，不冒稱普遍CPython缺陷。
