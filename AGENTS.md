@@ -11,11 +11,17 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
-## 最新結果：Windows測試版已發佈且下載校驗完成
+## 目前任務：隨包 Inkscape beta.2（來源正式回歸中，尚未發佈）
+
+2026-10-22使用者採用隨包方案並授權新EXE／Release，目標0.2.0-beta.2，取代舊版限定／EXE延後。先依STATE.pending_release、ACTIVE_DEVELOPMENT_HANDOFF與releases/v0.2.0-beta.2-plan.md接續；不重發beta.1或合併main。真正EXE probe002/run39777630190已通過原21檢查及5種引擎情境，24實際呼叫皆包內；尚非正式Release。完整1986來源回歸003待啟動，新原始授權資料封裝步驟仍須最終原生驗證。新主CP必須包含全部正式附件，禁止用窄輔助讀回覆蓋主指標。分支精確release-request/v0.2.0-beta.2，未通過所有Gate不得建立tag。
+
+局部除錯方案見CHANGE_IMPACT_DEBUGGING.md及固定來源RESEARCH.json：直接／流程／發佈三層、保守反向依賴與未知擴大、故障注入；全自動選測器尚未實作。不購買額度／API／試用／新雲端資源，不用子代理；私人作品／字型／DB／模型仍留本地。原172／166scope／75父題、AI8包50與外部資格不升級。
+
+## 歷史基線：beta.1已發佈且下載校驗完成
 
 v0.2.0-beta.1來源8b95b10b／run39638803778已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED，原176Windows＋真EXE21檢查及1220包內下載hash PASS，公開manifest/checksums已未登入精確讀回。先讀STATE／精簡交接與releases/v0.2.0-beta.1/windows-native-007-published；不要重新建置／覆寫既有tag。等待使用者獨立資料副本實測與安全報告，私人資料留本機。Inkscape仍另備、Illustrator尚未串接；使用者依賴問答已保存兩份提案，不能當現有能力。
 
-## 最新任務：已明確授權Windows測試版發佈
+## 歷史任務：首次Windows測試版授權
 
 使用者要求「好，現在我要你在github發佈程式本體exe，讓我投入實機測試」。依STATE.windows_release與docs/dev/releases/v0.2.0-beta.1-plan.md執行；此授權取代舊EXE延後，僅本次v0.2.0-beta.1，不合併main、不實作教學草案。一般dev/main/PR不打包；只有人工dispatch或本次精確release-request/v0.2.0-beta.1分支啟動Windows原生建置。通過來源回歸與實際EXE合成流程後才可建tag／發布；原資格不放寬。實際下載校驗及來源證據保存在release-evidence/v0.2.0-beta.1分支，必須實際讀回，不把推送請求當發佈成功。
 

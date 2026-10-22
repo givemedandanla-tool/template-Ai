@@ -1,0 +1,16 @@
+test_nested_cache_identity (__main__.Reproduction.test_nested_cache_identity) ... ERROR
+
+======================================================================
+ERROR: test_nested_cache_identity (__main__.Reproduction.test_nested_cache_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<stdin>", line 12, in test_nested_cache_identity
+  File "/workspace/template-Ai/template_ai/importer.py", line 177, in import_file
+    {k:v for k,v in cached.get('renderer_identity',{}).items() if k != 'executable'}
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'items'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.185s
+
+FAILED (errors=1)

@@ -50,6 +50,20 @@ class InkscapeCacheIdentityTests(unittest.TestCase):
             fixed=import_file(self.source,self.assets)
         self.assertFalse(fixed['reused']);self.assertEqual(fixed['renderer_execution'],'BUILTIN_QT_FALLBACK')
 
+    def test_non_object_nested_renderer_identity_is_rebuilt_safely(self):
+        with patch('template_ai.importer.inkscape_path',return_value=None):
+            row=import_file(self.source,self.assets)
+            meta=Path(row['image']).parent/'metadata.json'
+            for malformed in [None,42,[],'old']:
+                with self.subTest(value=malformed):
+                    payload=json.loads(meta.read_text());payload['renderer_identity']=malformed
+                    payload['metadata_sha256']=metadata_checksum(payload)
+                    meta.write_text(json.dumps(payload))
+                    fixed=import_file(self.source,self.assets)
+                    self.assertFalse(fixed['reused'])
+                    self.assertTrue(cache_matches(fixed,meta.parent,fixed['hash'],1))
+                    self.assertIsInstance(fixed['renderer_identity'],dict)
+
     def test_qt_fallback_is_not_reported_as_successful_inkscape_execution(self):
         with patch('template_ai.importer.inkscape_path',return_value=None):row=import_file(self.source,self.assets)
         self.assertEqual(row['renderer_identity']['policy'],'BUILTIN_QT_FALLBACK')

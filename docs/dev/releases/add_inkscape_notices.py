@@ -21,7 +21,7 @@ def main():
     if os.name != 'nt' or os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Fresh authorized Windows runner only')
     archive = fetch(ENVIRONMENT, ROOT/'build/ink88-license-source.7z')
-    listing = subprocess.run(['7z','l','-slt',str(archive)],capture_output=True,text=True,encoding='utf-8',errors='strict',check=True).stdout
+    listing = subprocess.run(['7z','l','-slt','-sccUTF-8',str(archive)],capture_output=True,text=True,encoding='utf-8',errors='strict',check=True).stdout
     selected = []
     for line in listing.splitlines():
         if line.startswith('Path = '):

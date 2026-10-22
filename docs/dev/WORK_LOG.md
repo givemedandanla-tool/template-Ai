@@ -1846,3 +1846,15 @@ Final same-source qualification: rawLinux0064way1961PASS/2notcomplete, oneSource
 2026-10-22 使用者採用隨包Inkscape並授權完善代碼及新Release，按規則beta.2；另要求設計變更影響除錯範圍。基底059af6de乾淨，beta.1不覆寫。先調查Windows散佈／授權、建立錯選系統工具紅燈，再接嚴格包內選擇／快取身分與正式成品驗證。8輔助tree JSON可逆壓縮hash全相同，回收118.86MiB，無checkpoint ZIP／正式證據刪除。
 
 2026-10-22 beta2路由／快取WIP：原wrong-route及missing-bundle紅燈已保存；9完整性路由與5cache整合PASS，點陣仍可無引擎、舊cache完整性不失效，新版本新快取路徑。Windows官方盤點11592檔583742481bytes，GPL3完整binary條款已核，第二輪精確來源／授權audit進行中。尚非成品資格／尚未發佈beta2。
+
+# 2026-10-22 BETA2 BUNDLED ENGINE AND IMPACT DEBUGGING
+
+使用者採用隨包Inkscape並授權beta.2完整發佈；不動beta.1 tag／main。先固定官方1.4.2完整11592檔與125來源物件，二進位GPL3-or-later及相依授權依官方查證。新增frozen只用bundle的resolver、完整性／版本pin、安全報告、新renderer快取身分，保留舊快取與點陣輸入。11→13路由及5cache／4guard案例、原21support和12客戶身分target PASS。
+
+實際抓到安全報告間接載入numpy的回歸，搬版本探查到標準庫後恢復原最小CLI；保留紅燈。正式001客戶清理稽核測試以短代碼0200誤中合法SHA，保留FAIL並停止；改完整允許欄位與原payload精確digest／id／state核對，維持隱私意圖且增加精度，再跑完整1985的正式002。
+
+Windows probe001僅測試環境rename安裝目錄遭拒；probe002以正式解除安裝／重裝控制環境，run39777630190來源66d9實際EXE原14＋7與五種引擎情境通過，三次各8實際呼叫都在bundle；無系統、誘餌、缺exe／壞dll／安全CLI與點陣獨立可用。最終data step補原IDW授權bytes仍待完整Windows發布驗收。
+
+CHANGE_IMPACT_DEBUGGING.md研究Microsoft TIA、coverage.py contexts、pytest-testmon、Cosmic Ray；保守反向圖／契約聯集、帶權集合覆蓋只用於排序、未知擴大、三層Gate。兩個routing mutants皆被原正反斷言抓到。相同工具對beta.1真實來源與新版app掃描比較0新增／3453既有／1resolved，未刷新基準。新自動選測器尚未實作。來源與真實作品等外部資格未混淆，無新付費服務／API／試用／子代理。
+
+BETA2第二輪邊界補查：有效JSON／校驗但內層renderer_identity非dict可重現AttributeError；補型別guard，四類錯值皆安全重建，6新cache／6原cache target PASS。保留紅燈及002中斷metadata，改跑最後來源1986／003；正式候選未發布，並未以重跑碰運氣或基準刷新放過已知錯誤。

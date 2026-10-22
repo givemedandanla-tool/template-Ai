@@ -13,14 +13,14 @@ sys.path[:0] = [str(ROOT),str(ROOT/'tools')]
 from dev_common import read_json, write_json
 from dev_governance import verify_run, verify_acceptance, execution_passed, test_ids, render
 
-RUN = 'docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-002/run.json'
+RUN = 'docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-003/run.json'
 PRIOR = 'docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001'
 
 
 def main():
     run, results = verify_run(ROOT, RUN)
-    if not execution_passed(run,results) or set(results) != test_ids(ROOT) or len(results) != 1985:
-        raise ValueError('Actual full current-source execution must pass all1985 cases and original GUI captures')
+    if not execution_passed(run,results) or set(results) != test_ids(ROOT) or len(results) != 1986:
+        raise ValueError('Actual full current-source execution must pass all1986 cases and original GUI captures')
     prior = {r['id'] for r in read_json(ROOT/PRIOR/'tests.json')}
     if len(prior) != 1963 or not prior <= set(results):
         raise ValueError('Original1963 test IDs must be preserved')

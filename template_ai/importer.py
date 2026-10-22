@@ -173,8 +173,9 @@ def import_file(path: str | Path, assets: str | Path, page: int = 1) -> dict:
             cached = json.loads(metadata.read_text(encoding="utf-8"))
         except (ValueError, OSError, UnicodeError):
             cached = None
-        same_renderer = renderer_identity is None or isinstance(cached, dict) and (
-            {k:v for k,v in cached.get('renderer_identity',{}).items() if k != 'executable'}
+        cached_identity = cached.get('renderer_identity') if isinstance(cached, dict) else None
+        same_renderer = renderer_identity is None or isinstance(cached_identity, dict) and (
+            {k:v for k,v in cached_identity.items() if k != 'executable'}
             == {k:v for k,v in renderer_identity.items() if k != 'executable'})
         if same_renderer and cache_matches(cached, folder, sha, page):
             return {**cached, "reused": True}
