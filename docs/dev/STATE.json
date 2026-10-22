@@ -19,7 +19,7 @@
   ],
   "next_tasks": [
     "Read pending_release and ACTIVE_DEVELOPMENT_HANDOFF; beta2 remains unpublished until native EXE checks and actual downloads pass.",
-    "Await frozen trace002 f967edfc/run39807865848, preserve failures; repair proven root cause only and retain original assertions.",
+    "Await final native candidate using safe authored diagnostic timer; source1986/GUI27 code bytes unchanged.",
     "Complete authorized beta2 Windows Release, immutable tag, full download verification and full-evidence remote checkpoint; no main merge."
   ],
   "blocked": [
@@ -1867,7 +1867,7 @@
   },
   "pending_release": {
     "version": "0.2.0-beta.2",
-    "status": "WINDOWS199_PASS_FROZEN_TRACE_RETRY_AFTER_REJECTED_UPSTREAM_DOWNLOAD",
+    "status": "FINAL_NATIVE_REQUEST_AFTER_SAFE_DIAGNOSTIC_TIMER",
     "baseline_commit": "059af6de8a2b6a0eb7882489f3fd4eff09028907",
     "plan": "docs/dev/releases/v0.2.0-beta.2-plan.md",
     "user_authorization": "參用隨包附帶方案，完善代碼後，打包成exe發佈到release",
@@ -1886,7 +1886,7 @@
       "engine_scenarios": 5,
       "observed_bundled_calls": 24
     },
-    "next": "Repeat frozen-only trace after bounded 3-attempt locked upstream download retry; original 199 and source1986/GUI27 remain qualified.",
+    "next": "Full native199 and actual EXE21/engine5 gate with 45s GIL-safe referenced-frame diagnostic timer and unchanged parent240s deadline; publish only after every gate and full actual download.",
     "source_full_run": "RUN-BUNDLED-INKSCAPE-BETA2-004",
     "source_full_commit": "42eb60fa1596282e11b1c329dd78918dd9b169ee",
     "source_qualification": "docs/dev/releases/v0.2.0-beta.2/source-qualification.json",
@@ -1926,8 +1926,9 @@
     "frozen_trace_attempt_002": {
       "source_commit": "f967edfc65c769231213c885c56a039ab5580e1f",
       "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39807865848",
-      "status": "RUNNING",
-      "expected_report": "docs/dev/releases/v0.2.0-beta.2/windows-frozen-trace-002"
+      "status": "FAILED_FROZEN_C_WATCHDOG_ACCESS_VIOLATION_AT_45S",
+      "expected_report": "docs/dev/releases/v0.2.0-beta.2/windows-frozen-trace-002",
+      "report": "docs/dev/releases/v0.2.0-beta.2/windows-frozen-trace-002"
     }
   }
 }

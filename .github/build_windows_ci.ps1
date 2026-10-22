@@ -53,6 +53,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Actual frozen executable acceptance failed' }
 # policy report only AFTER the original EXE exercise has created that directory.
 Copy-Item artifacts/build-payload-filter.json artifacts/package-check/build-payload-filter.json -ErrorAction Stop
 Copy-Item artifacts/dependency-license-verification.json artifacts/package-check/dependency-license-verification.json -ErrorAction Stop
+Copy-Item artifacts/upstream-license-download.json artifacts/package-check/upstream-license-download.json -ErrorAction Stop
 if ($FrozenProbeOnly) { return } # Diagnosis never tags/packages/publishes.
 python tools/bundled_inkscape_build.py sources
 if ($LASTEXITCODE -ne 0) { throw 'Corresponding-source asset preparation failed' }

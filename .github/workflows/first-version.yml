@@ -129,7 +129,12 @@ jobs:
       - name: Preserve failure instead of claiming success
         if: failure()
         shell: pwsh
-        run: python tools/persist_release_evidence.py --status FAILED_NOT_VERIFIED
+        run: |
+          New-Item -ItemType Directory -Force artifacts/package-check | Out-Null
+          foreach ($proof in @('upstream-license-download.json', 'dependency-license-verification.json')) {
+            if (Test-Path "artifacts/$proof") { Copy-Item "artifacts/$proof" "artifacts/package-check/$proof" }
+          }
+          python tools/persist_release_evidence.py --status FAILED_NOT_VERIFIED
       - uses: actions/upload-artifact@v4
         if: always()
         with:
