@@ -93,6 +93,21 @@ class BundledInkscapeTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'校驗'):
                 inkscape_path()
 
+    def test_malformed_application_pin_is_reported_as_a_bundle_problem(self):
+        (self.app/'release-info.json').write_text('{"inkscape_runtime": []}')
+        from template_ai.inkscape_runtime import runtime_report
+        with self.frozen():
+            self.assertEqual(runtime_report()['error_code'], 'BUNDLED_RUNTIME_INVALID')
+
+    def test_malformed_pinned_inventory_is_rejected_without_raw_type_errors(self):
+        record=json.loads(self.manifest.read_text());record['files']=[42]
+        self.manifest.write_text(json.dumps(record))
+        (self.app/'release-info.json').write_text(json.dumps(dict(inkscape_runtime=dict(
+            version='1.4.2',manifest_sha256=hashlib.sha256(self.manifest.read_bytes()).hexdigest()))))
+        from template_ai.inkscape_runtime import runtime_report
+        with self.frozen():
+            self.assertEqual(runtime_report()['error_code'], 'BUNDLED_RUNTIME_INVALID')
+
     def test_broken_bundle_remains_reportable_without_private_paths(self):
         from template_ai.inkscape_runtime import runtime_report
         self.bundle.unlink()

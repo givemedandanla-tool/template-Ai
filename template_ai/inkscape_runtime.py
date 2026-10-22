@@ -56,6 +56,8 @@ def bundled_runtime() -> BundledRuntime:
         info_root = Path(getattr(sys, '_MEIPASS', app))
         release = _read_json(info_root/'release-info.json', 65536)
         pin = release.get('inkscape_runtime', {})
+        if not isinstance(pin, dict):
+            raise ValueError('內附 Inkscape 的版本綁定資料不合法')
         manifest_sha = file_sha(manifest_path)
         if (manifest.get('schema_version') != 1 or manifest.get('kind') != 'BUNDLED_INKSCAPE_RUNTIME'
                 or manifest.get('version') != VERSION or pin.get('version') != VERSION
@@ -67,6 +69,10 @@ def bundled_runtime() -> BundledRuntime:
             raise ValueError('內附 Inkscape 的檔案清單不完整')
         paths, stamps, names, parents = [], [], set(), set()
         for row in rows:
+            if (not isinstance(row, dict) or not isinstance(row.get('path'), str)
+                    or not isinstance(row.get('bytes'), int) or isinstance(row['bytes'], bool) or row['bytes'] < 0
+                    or not isinstance(row.get('sha256'), str) or not re.fullmatch('[0-9a-f]{64}', row['sha256'])):
+                raise ValueError('內附 Inkscape 的檔案描述不合法')
             name = row['path']
             relative = PurePosixPath(name)
             if (not name or '\\' in name or ':' in name or relative.is_absolute()
@@ -81,7 +87,7 @@ def bundled_runtime() -> BundledRuntime:
             paths.append((path,row))
             stamps.append((name,st.st_size,st.st_mtime_ns,st.st_ctime_ns,st.st_ino))
             parents.add(path.parent)
-        if 'bin/inkscape.exe' not in names:
+        if not any(r['path'] == 'bin/inkscape.exe' for r in rows):
             raise ValueError('內附 Inkscape 的執行檔未列入驗證')
         for parent in sorted(parents):
             st = parent.stat()
@@ -104,9 +110,9 @@ def bundled_runtime() -> BundledRuntime:
                 _VERIFIED.clear()
                 _VERIFIED[key] = True
         executable = root/'bin/inkscape.exe'
-        return dict(policy='BUNDLED_ONLY', executable=str(executable.resolve()), version=VERSION,
-                    executable_sha256=next(r['sha256'] for r in rows if r['path']=='bin/inkscape.exe'),
-                    runtime_manifest_sha256=manifest_sha, verified_files=len(rows))
+        return {'policy':'BUNDLED_ONLY', 'executable':str(executable.resolve()), 'version':VERSION,
+                'executable_sha256':next(r['sha256'] for r in rows if r['path']=='bin/inkscape.exe'),
+                'runtime_manifest_sha256':manifest_sha, 'verified_files':len(rows)}
     except (OSError, KeyError, TypeError, UnicodeError, json.JSONDecodeError) as error:
         raise ValueError('內附 Inkscape 不完整或無法讀取，請重新完整解壓下載包') from error
 
