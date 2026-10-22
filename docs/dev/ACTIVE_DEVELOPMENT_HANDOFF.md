@@ -19,3 +19,5 @@ Windows probe002/66d9/run39777630190已實際PASS原14＋7、無系統兩phase�
 49份舊輔助native tree JSON可逆gzip逐份roundtrip SHA一致，回收604.1MiB（加先前8份共約723MiB），maintenance/READBACK_METADATA_COMPRESSION_20261022.json有還原命令；沒有動正式證據、checkpoint ZIP、目前主CP或active source proof。最近約900MiB可用，大型Windows包／來源archive只在標準公開runner處理，雲端只取小報告。無新收費服務／API／試用／子代理，私人作品／字型／DB／模型留本地。原真實作品、使用者Windows效能、實印、新手、完整OS斷網資格不冒稱通過。
 
 最終native001/a45/run39792844827在checkout前置失敗，Windows Git長路徑未啟用，新的capture/cache路徑過260；沒打包／沒tag，未有native分支RUNNING記錄，公開job annotation已保存windows-native-001。兩個Windows工作流程checkout前加core.longpaths true（保留autocrlf false）；純建置環境修正，program digestf1a2與1986／27證據仍有效。下一推新候選再跑最終native，不重跑Linux全套。
+
+最終native002已確實RUNNING：fd1a3f9ea826297d696217db5c54353733412bb5／run39795277849，長路徑checkout已通過；local observer session3183將精確收取到releases/v0.2.0-beta.2/windows-native-002。不要重推release-request或改code；原source digestf1a2與全附件673主CP有效。若沒有起始evidence記錄，先查公開job annotations，不能把舊66d狀態當新run。後續需真公開下載、不可變tag、final完整CP＋Git精確讀回。
