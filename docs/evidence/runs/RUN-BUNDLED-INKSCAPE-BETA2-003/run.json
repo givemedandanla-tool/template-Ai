@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "id": "RUN-BUNDLED-INKSCAPE-BETA2-003",
+  "created_utc": "2026-10-22T13:25:58.959081+00:00",
+  "source_commit": "a91dc3808e2da246270ea5dd780514a1a033336b",
+  "source_manifest_sha256": "f1a2cf7a817e7e3d0dca43ff93458f52d1526638aa816e7d223204f6abdf2908",
+  "source_unchanged": true,
+  "status": "FAIL",
+  "software_execution_status": "FAIL",
+  "unhandled_runtime_errors": 3,
+  "test_count": 1945,
+  "passed": 1899,
+  "capture_exit_code": 1,
+  "tests_sha256": "94ab5e4573d17ec840b7e0868d282c416d61e96cfabb156429619b7a9033d3c2",
+  "attachments": {
+    "test-modules.json": {
+      "bytes": 140900,
+      "sha256": "e3518e2ab9641f862309846459f4d3881b64d467dfa10cb20b5b08453d5159eb",
+      "mime": "application/json"
+    },
+    "claims.json": {
+      "bytes": 2552470,
+      "sha256": "19dc3ff137b3ac6a87267c37b67c1b18491671e46540ae5e8cc1b367f8175419",
+      "mime": "application/json"
+    },
+    "tree.json": {
+      "bytes": 17877931,
+      "sha256": "fbec767db2c5e8a4fd9a692c9e8ccc977ef6ffc7c41de8dbae2a2e3b4b8e458b",
+      "mime": "application/json"
+    },
+    "capture.log": {
+      "bytes": 55,
+      "sha256": "3bd6a10f7caf96e91bc85af78c0cae82c45f4a25f0f349f0379e44e25318b093",
+      "mime": "text/plain"
+    },
+    "fixed70-ten-parent-audit.json": {
+      "bytes": 346033,
+      "sha256": "4caa2e2fc1efcf6545f8455536f761903de8f90430ce9810fa993d4aa41d19dd",
+      "mime": "application/json"
+    },
+    "seventy-parent-audit.json": {
+      "bytes": 34845,
+      "sha256": "d0d6cd5bf2e0dd2cc929537945fb95815951cb37de485ec0cd929a54b656cff3",
+      "mime": "application/json"
+    },
+    "test-catalog.json": {
+      "bytes": 240206,
+      "sha256": "d9f8d52b5414f8c690e29d7b2623a7513757d3afce712e0cc947f4200a410f3a",
+      "mime": "application/json"
+    },
+    "remaining28-full-parent-audit.json": {
+      "bytes": 760388,
+      "sha256": "44ab34bbd78bbb7b628ea8ac4fc8ef11315a7bc969575399432cfec208cdf554",
+      "mime": "application/json"
+    },
+    "source-manifest.json": {
+      "bytes": 129936,
+      "sha256": "5aa1af200ec2459bc1cd38229c98b9d9f80055557f78e1afea539dc29cb169fa",
+      "mime": "application/json"
+    },
+    "tests.json": {
+      "bytes": 464864,
+      "sha256": "94ab5e4573d17ec840b7e0868d282c416d61e96cfabb156429619b7a9033d3c2",
+      "mime": "application/json"
+    },
+    "test-progress.json": {
+      "bytes": 2730,
+      "sha256": "26501acbd7bea32fcf0872e266b50df6baef71735356150bebf5c5931978badd",
+      "mime": "application/json"
+    },
+    "tests.log": {
+      "bytes": 556018,
+      "sha256": "fb0d725fb8720b8c75ab30715c543568e5cb24ddd48ee7befa384ce538188db3",
+      "mime": "text/plain"
+    },
+    "junit.xml": {
+      "bytes": 463559,
+      "sha256": "f0c0e5e9e6bd3e17b7f7180fa20143a699ef9846f9e78fdcd804dab4502a592e",
+      "mime": "application/xml"
+    },
+    "fixed70-twentyeight-parent-audit.json": {
+      "bytes": 1243329,
+      "sha256": "d8be6b1b2a9b30c8ed8d8b91213fac5049428245c92b183670c4d29a88dcc36f",
+      "mime": "application/json"
+    },
+    "runtime-errors.json": {
+      "bytes": 7442,
+      "sha256": "1653912601ba0284bd6ea842620e8e7eccc1762ec903546fcc497af62564fdf7",
+      "mime": "application/json"
+    },
+    "test-progress.jsonl": {
+      "bytes": 419574,
+      "sha256": "7cbe5995342a611af5fec3040447d65fec85d0b4b01d3cb05ae7aebd817e7f17",
+      "mime": "text/plain"
+    },
+    "timeout-stacks.log": {
+      "bytes": 2258,
+      "sha256": "95a36c75a5a22f7f48afd66df00f49cb546a5d652165ffddad9a59af52388801",
+      "mime": "text/plain"
+    },
+    "commit.json": {
+      "bytes": 788,
+      "sha256": "c32ea7c10570b8d5cfe6ffaa52964e20d0fdd7d63d6ded292446baeaca794bbd",
+      "mime": "application/json"
+    }
+  },
+  "environment": {
+    "python": "3.12.14",
+    "os": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "PySide6": "6.8.3",
+    "inkscape": "Inkscape 1.4 (e7c3feb100, 2024-10-09)",
+    "qt_platform": "offscreen"
+  },
+  "command": "python tools/run_evidence.py --run-id RUN-BUNDLED-INKSCAPE-BETA2-003 --source-commit a91dc3808e2da246270ea5dd780514a1a033336b --commit-json <readback> --tree-json <readback> --module-timeout 180 --module-workers 3",
+  "review_level": "SELF_VERIFIED",
+  "scope": "合成資料／Linux 或實際執行器；個別測試結果與真實匿名附件",
+  "not_verified": [
+    "真實私人 Illustrator 全面視覺一致",
+    "VivoBook／RTX 5050",
+    "實體印刷",
+    "Windows EXE",
+    "獨立覆核"
+  ],
+  "test_execution_strategy": "PARALLEL_OWNED_FRESH_MODULE_PROCESSES",
+  "test_module_workers": 3,
+  "test_module_count": 262,
+  "planned_test_count": 1986,
+  "not_completed_test_count": 41
+}

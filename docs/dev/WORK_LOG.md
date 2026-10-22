@@ -1858,3 +1858,5 @@ Windows probe001僅測試環境rename安裝目錄遭拒；probe002以正式解�
 CHANGE_IMPACT_DEBUGGING.md研究Microsoft TIA、coverage.py contexts、pytest-testmon、Cosmic Ray；保守反向圖／契約聯集、帶權集合覆蓋只用於排序、未知擴大、三層Gate。兩個routing mutants皆被原正反斷言抓到。相同工具對beta.1真實來源與新版app掃描比較0新增／3453既有／1resolved，未刷新基準。新自動選測器尚未實作。來源與真實作品等外部資格未混淆，無新付費服務／API／試用／子代理。
 
 BETA2第二輪邊界補查：有效JSON／校驗但內層renderer_identity非dict可重現AttributeError；補型別guard，四類錯值皆安全重建，6新cache／6原cache target PASS。保留紅燈及002中斷metadata，改跑最後來源1986／003；正式候選未發布，並未以重跑碰運氣或基準刷新放過已知錯誤。
+
+BETA2來源資格完成：003因峰值空間不足46 ENOSPC errors／2 class-setup chains／1deadline，未算PASS。49舊輔助tree可逆gzip核對原SHA，回收604.1MiB；原正式證據、ZIP及active proof不動。來源byte不變，14整模組139案單程序180s原斷言復驗全PASS，27原版未插樁GUI PASS。既有adopter逐案核對兩份真record後建立RUN-BUNDLED-INKSCAPE-BETA2-004：1986唯一PASS／0合格runtime；原1963＋23，原5外部資格仍未驗證。Source digestf1a2cf7a；latest／166完成scope已連004，待全附件CP遠端確認再跑最後Windows／Release。

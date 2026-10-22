@@ -1,0 +1,310 @@
+Owned module test_batch_format_review: exit=0; completed=6/6; healthy=True
+test_changed_inputs_block_previously_reviewed_rows_without_creating_files (test_batch_format_review.BatchFormatReviewTests.test_changed_inputs_block_previously_reviewed_rows_without_creating_files) ... ok
+test_direct_original_multisize_execution_uses_same_format_registry (test_batch_format_review.BatchFormatReviewTests.test_direct_original_multisize_execution_uses_same_format_registry) ... ok
+test_dpi_change_cannot_reuse_other_sampling_review (test_batch_format_review.BatchFormatReviewTests.test_dpi_change_cannot_reuse_other_sampling_review) ... ok
+test_only_exact_selected_format_review_releases_that_batch_row (test_batch_format_review.BatchFormatReviewTests.test_only_exact_selected_format_review_releases_that_batch_row) ... ok
+test_other_size_or_tampered_receipt_cannot_be_registered_as_current (test_batch_format_review.BatchFormatReviewTests.test_other_size_or_tampered_receipt_cannot_be_registered_as_current) ... ok
+test_unreviewed_pdf_jpeg_are_blocked_while_png_and_marked_previews_complete (test_batch_format_review.BatchFormatReviewTests.test_unreviewed_pdf_jpeg_are_blocked_while_png_and_marked_previews_complete) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 38.455s
+
+OK
+
+Owned module test_batch_format_review_gui: exit=0; completed=5/5; healthy=True
+test_actual_original_row_entry_uses_unchecked_current_target_and_no_auto_review (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_original_row_entry_uses_unchecked_current_target_and_no_auto_review) ... ok
+test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_proof_detail_and_literal_named_confirmation_register_only_this_row) ... ok
+test_actual_worker_delivery_copies_review_registry_and_selected_dpi (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_actual_worker_delivery_copies_review_registry_and_selected_dpi) ... ok
+test_parent_dpi_change_invalidates_open_target_without_registering_receipt (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_parent_dpi_change_invalidates_open_target_without_registering_receipt) ... ok
+test_sorted_table_review_identity_uses_userrole_not_visible_row_number (test_batch_format_review_gui.BatchFormatReviewGuiTests.test_sorted_table_review_identity_uses_userrole_not_visible_row_number) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 25.785s
+
+OK
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_design_rule_extensions: exit=0; completed=11/11; healthy=True
+test_correlated_aliases_failure_and_heldout_leak_cannot_produce_safe_region (test_design_rule_extensions.CapacityCalibrationTests.test_correlated_aliases_failure_and_heldout_leak_cannot_produce_safe_region) ... ok
+test_joint_region_calibrates_without_claiming_global_field_limit (test_design_rule_extensions.CapacityCalibrationTests.test_joint_region_calibrates_without_claiming_global_field_limit) ... ok
+test_actual_cjk_name_shaped_clusters_distribute_with_fixed_point_size (test_design_rule_extensions.CharacterJustificationTests.test_actual_cjk_name_shaped_clusters_distribute_with_fixed_point_size) ... ok
+test_gap_limit_unreviewed_mode_and_inconsistent_alignment_are_rejected (test_design_rule_extensions.CharacterJustificationTests.test_gap_limit_unreviewed_mode_and_inconsistent_alignment_are_rejected) ... ok
+test_single_cluster_and_combining_mark_are_not_split (test_design_rule_extensions.CharacterJustificationTests.test_single_cluster_and_combining_mark_are_not_split) ... ok
+test_duplicates_do_not_multiply_support_and_conflicts_are_preserved (test_design_rule_extensions.ObjectGapTests.test_duplicates_do_not_multiply_support_and_conflicts_are_preserved) ... ok
+test_shared_equal_object_gaps_are_learned_and_used_by_actual_kiwi (test_design_rule_extensions.ObjectGapTests.test_shared_equal_object_gaps_are_learned_and_used_by_actual_kiwi) ... ok
+test_explicit_production_quality_policy_rejects_synthetic_or_incomplete_evidence (test_design_rule_extensions.RankerCompletionTests.test_explicit_production_quality_policy_rejects_synthetic_or_incomplete_evidence) ... ok
+test_joint_style_feature_changes_when_actual_typography_changes (test_design_rule_extensions.RankerCompletionTests.test_joint_style_feature_changes_when_actual_typography_changes) ... ok
+test_actual_qt_words_expand_only_at_spaces_and_keep_last_line_natural (test_design_rule_extensions.WordJustificationTests.test_actual_qt_words_expand_only_at_spaces_and_keep_last_line_natural) ... ok
+test_single_word_and_zero_word_boundaries_are_not_implicitly_stretched (test_design_rule_extensions.WordJustificationTests.test_single_word_and_zero_word_boundaries_are_not_implicitly_stretched) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 7.950s
+
+OK
+
+Owned module test_design_source_binding: exit=0; completed=7/7; healthy=True
+test_anisotropic_work_requires_work_measurements_instead_of_scalar_guess (test_design_source_binding.SourceTypographyBindingTests.test_anisotropic_work_requires_work_measurements_instead_of_scalar_guess) ... ok
+test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography (test_design_source_binding.SourceTypographyBindingTests.test_explicit_binding_is_pinned_and_enables_measured_demand_not_default_typography) ... ok
+test_hidden_original_text_is_not_a_visible_source_font_binding (test_design_source_binding.SourceTypographyBindingTests.test_hidden_original_text_is_not_a_visible_source_font_binding) ... ok
+test_measured_parameter_cannot_overwrite_known_original_source_value (test_design_source_binding.SourceTypographyBindingTests.test_measured_parameter_cannot_overwrite_known_original_source_value) ... ok
+test_uniform_work_scale_changes_effective_pt_not_original_source_fact (test_design_source_binding.SourceTypographyBindingTests.test_uniform_work_scale_changes_effective_pt_not_original_source_fact) ... ok
+test_unknown_source_pt_stays_unknown_when_work_pt_is_independently_measured (test_design_source_binding.SourceTypographyBindingTests.test_unknown_source_pt_stays_unknown_when_work_pt_is_independently_measured) ... ok
+test_wrong_run_unknown_identity_and_changed_facts_cannot_be_bound (test_design_source_binding.SourceTypographyBindingTests.test_wrong_run_unknown_identity_and_changed_facts_cannot_be_bound) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 14.692s
+
+OK
+
+Owned module test_design_text_flow: exit=0; completed=6/6; healthy=True
+test_actual_qt_line_shaping_preserves_all_input_and_rejects_over_capacity (test_design_text_flow.SourceConditionedFlowTests.test_actual_qt_line_shaping_preserves_all_input_and_rejects_over_capacity) ... ok
+test_legacy_serialization_does_not_gain_null_flow_parameters (test_design_text_flow.SourceConditionedFlowTests.test_legacy_serialization_does_not_gain_null_flow_parameters) ... ok
+test_missing_font_and_short_actual_height_are_blocked (test_design_text_flow.SourceConditionedFlowTests.test_missing_font_and_short_actual_height_are_blocked) ... ok
+test_persisted_slot_recreates_same_pixels_and_actual_ink_fits_frame (test_design_text_flow.SourceConditionedFlowTests.test_persisted_slot_recreates_same_pixels_and_actual_ink_fits_frame) ... ok
+test_semantic_tokens_do_not_acquire_arbitrary_break_permission (test_design_text_flow.SourceConditionedFlowTests.test_semantic_tokens_do_not_acquire_arbitrary_break_permission) ... ok
+test_word_spacing_keeps_single_word_natural_and_rejects_unreviewed_boundaries (test_design_text_flow.SourceConditionedFlowTests.test_word_spacing_keeps_single_word_natural_and_rejects_unreviewed_boundaries) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 10.427s
+
+OK
+
+Owned module test_family_rules: exit=0; completed=7/7; healthy=True
+test_candidate_is_new_pending_version_and_never_inherits_production_qualification (test_family_rules.FamilyRuleTests.test_candidate_is_new_pending_version_and_never_inherits_production_qualification) ... ok
+test_command_is_idempotent_and_stale_commands_cannot_overwrite_manual_edits (test_family_rules.FamilyRuleTests.test_command_is_idempotent_and_stale_commands_cannot_overwrite_manual_edits) ... ok
+test_persistent_draft_undo_redo_and_branch_preserve_original_model (test_family_rules.FamilyRuleTests.test_persistent_draft_undo_redo_and_branch_preserve_original_model) ... ok
+test_rebase_preserves_original_and_invalid_new_family_ref_is_refused (test_family_rules.FamilyRuleTests.test_rebase_preserves_original_and_invalid_new_family_ref_is_refused) ... ok
+test_relation_strength_requires_source_support_and_same_owner (test_family_rules.FamilyRuleTests.test_relation_strength_requires_source_support_and_same_owner) ... ok
+test_source_supported_joint_preference_and_pattern_subset_compile_without_refitting (test_family_rules.FamilyRuleTests.test_source_supported_joint_preference_and_pattern_subset_compile_without_refitting) ... ok
+test_typed_operations_cannot_invent_roles_semantics_styles_or_patterns (test_family_rules.FamilyRuleTests.test_typed_operations_cannot_invent_roles_semantics_styles_or_patterns) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 19.919s
+
+OK
+
+Owned module test_family_workbench: exit=0; completed=15/15; healthy=True
+test_actual_native_entry_reuses_canvas_and_keeps_customer_controls_unchanged (test_family_workbench.FamilyWorkbenchTests.test_actual_native_entry_reuses_canvas_and_keeps_customer_controls_unchanged) ... ok
+test_body_case_roundtrip_preserves_explicit_relative_intents (test_family_workbench.FamilyWorkbenchTests.test_body_case_roundtrip_preserves_explicit_relative_intents) ... ok
+test_close_during_worker_waits_for_boundary_and_leaves_resumable_job (test_family_workbench.FamilyWorkbenchTests.test_close_during_worker_waits_for_boundary_and_leaves_resumable_job) ... ok
+test_container_restriction_and_default_semantics_are_actual_draft_commands (test_family_workbench.FamilyWorkbenchTests.test_container_restriction_and_default_semantics_are_actual_draft_commands) ... ok
+test_graphical_batch_preflight_preserves_exact_selection_and_requires_confirmation (test_family_workbench.FamilyWorkbenchTests.test_graphical_batch_preflight_preserves_exact_selection_and_requires_confirmation) ... ok
+test_graphical_order_save_undo_redo_and_difference_review (test_family_workbench.FamilyWorkbenchTests.test_graphical_order_save_undo_redo_and_difference_review) ... ok
+test_native_family_comparison_uses_verified_source_crops_without_global_templates (test_family_workbench.FamilyWorkbenchTests.test_native_family_comparison_uses_verified_source_crops_without_global_templates) ... ok
+test_native_physical_filters_saved_workset_and_joint_variant_views (test_family_workbench.FamilyWorkbenchTests.test_native_physical_filters_saved_workset_and_joint_variant_views) ... ok
+test_recovery_entry_uses_selected_family_source_and_exact_role (test_family_workbench.FamilyWorkbenchTests.test_recovery_entry_uses_selected_family_source_and_exact_role) ... ok
+test_role_tree_and_canvas_selection_are_synchronized (test_family_workbench.FamilyWorkbenchTests.test_role_tree_and_canvas_selection_are_synchronized) ... ok
+test_rule_candidate_requires_review_and_formal_activation_is_still_blocked (test_family_workbench.FamilyWorkbenchTests.test_rule_candidate_requires_review_and_formal_activation_is_still_blocked) ... ok
+test_saved_case_runs_in_worker_and_renders_actual_preview (test_family_workbench.FamilyWorkbenchTests.test_saved_case_runs_in_worker_and_renders_actual_preview) ... ok
+test_saved_workspace_reopens_same_draft_and_query (test_family_workbench.FamilyWorkbenchTests.test_saved_workspace_reopens_same_draft_and_query) ... ok
+test_worker_start_failure_releases_existing_job_lease (test_family_workbench.FamilyWorkbenchTests.test_worker_start_failure_releases_existing_job_lease) ... ok
+test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model (test_family_workbench.FamilyWorkbenchTests.test_z_source_review_never_assumes_identity_and_commit_invalidates_old_model) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 53.568s
+
+OK
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_family_workspace: exit=0; completed=8/8; healthy=True
+test_compare_is_readonly_and_impact_retains_accepted_bytes (test_family_workspace.FamilyWorkspaceTests.test_compare_is_readonly_and_impact_retains_accepted_bytes) ... ok
+test_existing_record_iterator_does_not_silently_stop_at_two_hundred (test_family_workspace.FamilyWorkspaceTests.test_existing_record_iterator_does_not_silently_stop_at_two_hundred) ... ok
+test_functional_comparison_includes_joint_styles_grammar_and_relations (test_family_workspace.FamilyWorkspaceTests.test_functional_comparison_includes_joint_styles_grammar_and_relations) ... ok
+test_readonly_family_projection_keeps_sources_templates_and_instances_distinct (test_family_workspace.FamilyWorkspaceTests.test_readonly_family_projection_keeps_sources_templates_and_instances_distinct) ... ok
+test_representatives_preserve_independence_and_never_sample_validation_or_holdout (test_family_workspace.FamilyWorkspaceTests.test_representatives_preserve_independence_and_never_sample_validation_or_holdout) ... ok
+test_saved_workset_reopens_as_query_and_frozen_selection_stays_exact (test_family_workspace.FamilyWorkspaceTests.test_saved_workset_reopens_as_query_and_frozen_selection_stays_exact) ... ok
+test_search_filters_semantic_physical_dimensions_and_unknown_without_sql (test_family_workspace.FamilyWorkspaceTests.test_search_filters_semantic_physical_dimensions_and_unknown_without_sql) ... ok
+test_stale_or_fabricated_family_reference_cannot_open_or_freeze (test_family_workspace.FamilyWorkspaceTests.test_stale_or_fabricated_family_reference_cannot_open_or_freeze) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 14.995s
+
+OK
+
+Owned module test_final_digital_preflight: exit=0; completed=9/9; healthy=True
+test_candidate_mutation_during_encoding_cannot_publish_stale_approval (test_final_digital_preflight.FinalDigitalPreflightTests.test_candidate_mutation_during_encoding_cannot_publish_stale_approval) ... ok
+test_codec_success_flag_with_corrupt_png_bytes_does_not_publish (test_final_digital_preflight.FinalDigitalPreflightTests.test_codec_success_flag_with_corrupt_png_bytes_does_not_publish) ... ok
+test_corrupt_pdf_after_page_box_writer_cannot_publish (test_final_digital_preflight.FinalDigitalPreflightTests.test_corrupt_pdf_after_page_box_writer_cannot_publish) ... ok
+test_current_source_pixel_shortfall_blocks_final_but_retains_marked_preview (test_final_digital_preflight.FinalDigitalPreflightTests.test_current_source_pixel_shortfall_blocks_final_but_retains_marked_preview) ... ok
+test_pdf_boolean_sampling_setting_is_not_silently_ignored (test_final_digital_preflight.FinalDigitalPreflightTests.test_pdf_boolean_sampling_setting_is_not_silently_ignored) ... ok
+test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card (test_final_digital_preflight.FinalDigitalPreflightTests.test_readable_same_size_blank_pdf_is_not_a_valid_substitute_for_the_card) ... ok
+test_sufficient_actual_pixels_and_original_gate_can_publish_exact_png (test_final_digital_preflight.FinalDigitalPreflightTests.test_sufficient_actual_pixels_and_original_gate_can_publish_exact_png) ... ok
+test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise (test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_jpeg_with_wrong_logo_pixels_is_not_accepted_as_lossy_noise) ... ok
+test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone (test_final_digital_preflight.FinalDigitalPreflightTests.test_valid_png_wrong_pixels_cannot_publish_on_dimensions_alone) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 28.094s
+
+OK
+
+Owned module test_first_version: exit=0; completed=16/16; healthy=True
+test_actual_inkscape_svg_and_pdf_compatible_ai (test_first_version.FirstVersionTests.test_actual_inkscape_svg_and_pdf_compatible_ai) ... ok
+test_atomic_publish_failure_preserves_existing_file_and_cleans_temp (test_first_version.FirstVersionTests.test_atomic_publish_failure_preserves_existing_file_and_cleans_temp) ... ok
+test_empty_platform_font_database_has_clear_diagnostic (test_first_version.FirstVersionTests.test_empty_platform_font_database_has_clear_diagnostic) ... ok
+test_export_all_formats_real_pdf_dimensions_and_no_overwrite (test_first_version.FirstVersionTests.test_export_all_formats_real_pdf_dimensions_and_no_overwrite) ... ok
+test_fixed_size_long_text_is_blocked_without_mutation (test_first_version.FirstVersionTests.test_fixed_size_long_text_is_blocked_without_mutation) ... ok
+test_geometric_overlap_and_outside_block_publication (test_first_version.FirstVersionTests.test_geometric_overlap_and_outside_block_publication) ... ok
+test_gui_real_demo_flow_and_readonly_published_canvas (test_first_version.FirstVersionTests.test_gui_real_demo_flow_and_readonly_published_canvas) ... ok
+test_missing_font_does_not_use_silent_fallback (test_first_version.FirstVersionTests.test_missing_font_does_not_use_silent_fallback) ... ok
+test_missing_logo_and_wrong_size_or_company_do_not_pass (test_first_version.FirstVersionTests.test_missing_logo_and_wrong_size_or_company_do_not_pass) ... ok
+test_person_company_binding_is_not_inferred_from_strings (test_first_version.FirstVersionTests.test_person_company_binding_is_not_inferred_from_strings) ... ok
+test_pixel_comparison_reports_unknown_alignment (test_first_version.FirstVersionTests.test_pixel_comparison_reports_unknown_alignment) ... ok
+test_published_templates_are_immutable_and_family_versions_safe (test_first_version.FirstVersionTests.test_published_templates_are_immutable_and_family_versions_safe) ... ok
+test_source_dedupe_preserves_independent_registrations_and_reopen (test_first_version.FirstVersionTests.test_source_dedupe_preserves_independent_registrations_and_reopen) ... ok
+test_source_labels_to_learned_template_to_output (test_first_version.FirstVersionTests.test_source_labels_to_learned_template_to_output) ... ok
+test_stale_generation_and_unmarked_preview_block (test_first_version.FirstVersionTests.test_stale_generation_and_unmarked_preview_block) ... ok
+test_unused_contact_and_wrong_capacity_block (test_first_version.FirstVersionTests.test_unused_contact_and_wrong_capacity_block) ... ok
+
+----------------------------------------------------------------------
+Ran 16 tests in 52.207s
+
+OK
+This plugin does not support propagateSizeHints()
+This plugin does not support raise()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_font_candidates: exit=0; completed=23/23; healthy=True
+test_callback_error_still_restores_dialog_controls (test_font_candidates.FontCandidateGuiTests.test_callback_error_still_restores_dialog_controls) ... ok
+test_empty_missing_glyph_and_no_candidate_are_visible_not_success (test_font_candidates.FontCandidateGuiTests.test_empty_missing_glyph_and_no_candidate_are_visible_not_success) ... ok
+test_input_changes_reject_late_search_and_preview_results (test_font_candidates.FontCandidateGuiTests.test_input_changes_reject_late_search_and_preview_results) ... ok
+test_modified_preview_clears_old_image_and_can_requery (test_font_candidates.FontCandidateGuiTests.test_modified_preview_clears_old_image_and_can_requery) ... ok
+test_partial_search_warning_remains_visible_after_preview (test_font_candidates.FontCandidateGuiTests.test_partial_search_warning_remains_visible_after_preview) ... ok
+test_real_worker_failure_restores_controls_and_retry_succeeds (test_font_candidates.FontCandidateGuiTests.test_real_worker_failure_restores_controls_and_retry_succeeds) ... ok
+test_real_worker_search_selection_preview_and_readonly_state (test_font_candidates.FontCandidateGuiTests.test_real_worker_search_selection_preview_and_readonly_state) ... ok
+test_shared_center_entry_has_explicit_unchecked_reference_and_no_auto_selection (test_font_candidates.FontCandidateGuiTests.test_shared_center_entry_has_explicit_unchecked_reference_and_no_auto_selection) ... ok
+test_changed_shaping_identity_blocks_candidate_and_preview (test_font_candidates.FontCandidateTests.test_changed_shaping_identity_blocks_candidate_and_preview) ... ok
+test_empty_invalid_and_over_budget_requests_do_not_claim_success (test_font_candidates.FontCandidateTests.test_empty_invalid_and_over_budget_requests_do_not_claim_success) ... ok
+test_exact_horizontal_boundary_preserves_size_and_full_text (test_font_candidates.FontCandidateTests.test_exact_horizontal_boundary_preserves_size_and_full_text) ... ok
+test_face_bytes_and_inventory_limits_are_explicit_partial (test_font_candidates.FontCandidateTests.test_face_bytes_and_inventory_limits_are_explicit_partial) ... ok
+test_hard_filter_missing_glyph_never_produces_fallback_width (test_font_candidates.FontCandidateTests.test_hard_filter_missing_glyph_never_produces_fallback_width) ... ok
+test_permutation_and_duplicate_identity_do_not_change_rank_or_measure_twice (test_font_candidates.FontCandidateTests.test_permutation_and_duplicate_identity_do_not_change_rank_or_measure_twice) ... ok
+test_preview_real_png_fixed_point_size_and_bounded_frame (test_font_candidates.FontCandidateTests.test_preview_real_png_fixed_point_size_and_bounded_frame) ... ok
+test_preview_rejects_modified_file_and_same_width_changed_text (test_font_candidates.FontCandidateTests.test_preview_rejects_modified_file_and_same_width_changed_text) ... ok
+test_reference_can_measure_width_even_if_frame_fit_fails (test_font_candidates.FontCandidateTests.test_reference_can_measure_width_even_if_frame_fit_fails) ... ok
+test_reference_delta_orders_actual_different_widths (test_font_candidates.FontCandidateTests.test_reference_delta_orders_actual_different_widths) ... ok
+test_reference_modified_during_measurement_does_not_publish_width (test_font_candidates.FontCandidateTests.test_reference_modified_during_measurement_does_not_publish_width) ... ok
+test_reference_width_is_measured_and_missing_reference_stays_unknown (test_font_candidates.FontCandidateTests.test_reference_width_is_measured_and_missing_reference_stays_unknown) ... ok
+test_search_preview_leave_published_pin_registry_and_source_bytes_unchanged (test_font_candidates.FontCandidateTests.test_search_preview_leave_published_pin_registry_and_source_bytes_unchanged) ... ok
+test_source_identity_precedes_width_rank_and_unknown_reference_has_no_score (test_font_candidates.FontCandidateTests.test_source_identity_precedes_width_rank_and_unknown_reference_has_no_score) ... ok
+test_unapproved_missing_modified_unknown_are_excluded_with_reasons (test_font_candidates.FontCandidateTests.test_unapproved_missing_modified_unknown_are_excluded_with_reasons) ... ok
+
+----------------------------------------------------------------------
+Ran 23 tests in 12.295s
+
+OK
+
+Owned module test_multi_size: exit=0; completed=10/10; healthy=True
+test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files (test_multi_size.MultiSizeTests.test_actual_qt_matrix_calculates_both_sizes_and_cancel_confirmation_creates_no_files) ... ok
+test_bad_final_unknown_size_duplicate_requests_and_bad_prefix_are_rejected_before_write (test_multi_size.MultiSizeTests.test_bad_final_unknown_size_duplicate_requests_and_bad_prefix_are_rejected_before_write) ... ok
+test_cancel_and_missing_template_are_explicit_not_zero_test_success (test_multi_size.MultiSizeTests.test_cancel_and_missing_template_are_explicit_not_zero_test_success) ... ok
+test_existing_success_is_not_overwritten_and_late_failure_does_not_delete_other_files (test_multi_size.MultiSizeTests.test_existing_success_is_not_overwritten_and_late_failure_does_not_delete_other_files) ... ok
+test_input_change_before_and_between_files_never_produces_unconfirmed_new_output (test_multi_size.MultiSizeTests.test_input_change_before_and_between_files_never_produces_unconfirmed_new_output) ... ok
+test_omitted_size_and_all_known_reasons_remain_visible_in_confirmation (test_multi_size.MultiSizeTests.test_omitted_size_and_all_known_reasons_remain_visible_in_confirmation) ... ok
+test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate (test_multi_size.MultiSizeTests.test_partial_confirmation_is_required_and_real_final_preview_three_formats_are_separate) ... ok
+test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text (test_multi_size.MultiSizeTests.test_preview_footer_contains_every_issue_outside_original_body_and_pdf_text) ... ok
+test_revoked_or_changed_logo_and_template_block_only_affected_output (test_multi_size.MultiSizeTests.test_revoked_or_changed_logo_and_template_block_only_affected_output) ... ok
+test_sizes_keep_independent_geometry_and_missing_logo_does_not_borrow_or_block_other_size (test_multi_size.MultiSizeTests.test_sizes_keep_independent_geometry_and_missing_logo_does_not_borrow_or_block_other_size) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 35.842s
+
+OK
+
+Owned module test_multi_size_edit_gui: exit=0; completed=8/8; healthy=True
+test_actual_color_control_revalidates_and_invalid_color_keeps_current_template (test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_color_control_revalidates_and_invalid_color_keeps_current_template) ... ok
+test_actual_local_comparison_does_not_apply_until_explicit_current_gate_adoption (test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_local_comparison_does_not_apply_until_explicit_current_gate_adoption) ... ok
+test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue (test_multi_size_edit_gui.MultiSizeEditGuiTests.test_actual_reused_dialog_move_and_undo_use_same_pool_and_no_dispatch_queue) ... ok
+test_cancel_resource_wait_starts_no_calculation_and_keeps_manual_unknown (test_multi_size_edit_gui.MultiSizeEditGuiTests.test_cancel_resource_wait_starts_no_calculation_and_keeps_manual_unknown) ... ok
+test_destroyed_local_dialog_does_not_receive_worker_callback (test_multi_size_edit_gui.MultiSizeEditGuiTests.test_destroyed_local_dialog_does_not_receive_worker_callback) ... ok
+test_failed_source_recalculation_never_makes_old_service_current (test_multi_size_edit_gui.MultiSizeEditGuiTests.test_failed_source_recalculation_never_makes_old_service_current) ... ok
+test_source_change_during_local_worker_keeps_manual_pending_until_current_sync (test_multi_size_edit_gui.MultiSizeEditGuiTests.test_source_change_during_local_worker_keeps_manual_pending_until_current_sync) ... ok
+test_source_sync_preserves_previously_unchecked_manual_size (test_multi_size_edit_gui.MultiSizeEditGuiTests.test_source_sync_preserves_previously_unchecked_manual_size) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 36.954s
+
+OK
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+This plugin does not support propagateSizeHints()
+
+Owned module test_multi_size_manual_sync: exit=0; completed=8/8; healthy=True
+test_actual_output_revalidation_preserves_legal_manual_geometry_and_receipt (test_multi_size_manual_sync.MultiSizeManualSyncTests.test_actual_output_revalidation_preserves_legal_manual_geometry_and_receipt) ... ok
+test_cancelled_shared_sync_retains_manual_and_cancellation_state (test_multi_size_manual_sync.MultiSizeManualSyncTests.test_cancelled_shared_sync_retains_manual_and_cancellation_state) ... ok
+test_candidate_budget_rejects_before_mutating_previous_collection (test_multi_size_manual_sync.MultiSizeManualSyncTests.test_candidate_budget_rejects_before_mutating_previous_collection) ... ok
+test_longer_source_never_shrinks_fixed_font_or_moves_locked_manual_frame (test_multi_size_manual_sync.MultiSizeManualSyncTests.test_longer_source_never_shrinks_fixed_font_or_moves_locked_manual_frame) ... ok
+test_missing_size_specific_logo_never_borrows_other_size_pass_after_sync (test_multi_size_manual_sync.MultiSizeManualSyncTests.test_missing_size_specific_logo_never_borrows_other_size_pass_after_sync) ... ok
+test_new_equal_text_entity_cannot_inherit_old_person_manual_positions (test_multi_size_manual_sync.MultiSizeManualSyncTests.test_new_equal_text_entity_cannot_inherit_old_person_manual_positions) ... ok
+test_restored_exact_source_reference_resolves_only_derived_sync_gap (test_multi_size_manual_sync.MultiSizeManualSyncTests.test_restored_exact_source_reference_resolves_only_derived_sync_gap) ... ok
+test_shared_name_update_keeps_manual_geometry_and_other_size_independent (test_multi_size_manual_sync.MultiSizeManualSyncTests.test_shared_name_update_keeps_manual_geometry_and_other_size_independent) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 24.031s
+
+OK

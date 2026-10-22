@@ -13,7 +13,7 @@ sys.path[:0] = [str(ROOT),str(ROOT/'tools')]
 from dev_common import read_json, write_json
 from dev_governance import verify_run, verify_acceptance, execution_passed, test_ids, render
 
-RUN = 'docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-003/run.json'
+RUN = 'docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json'
 PRIOR = 'docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001'
 
 
