@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "BUNDLED_INKSCAPE_BETA2_AND_CHANGE_IMPACT_DEBUG_DESIGN",
+  "active_task": "BUNDLED_INKSCAPE_BETA2_PUBLISHED_AND_CHANGE_IMPACT_DEBUG_DESIGN_COMPLETE",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261022-BETA2-SOURCE-QUALIFIED-001.receipt.json",
   "last_confirmed_commit": "1548c940e8ae9484872aca7a50af539dfe2525ca",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Read pending_release and ACTIVE_DEVELOPMENT_HANDOFF; beta2 remains unpublished until native EXE checks and actual downloads pass.",
-    "Await final native candidate using safe authored diagnostic timer; source1986/GUI27 code bytes unchanged.",
-    "Complete authorized beta2 Windows Release, immutable tag, full download verification and full-evidence remote checkpoint; no main merge."
+    "Download complete beta2 Windows ZIP, keep _internal and engines folders, test an independent local data copy.",
+    "Report version, steps, expected/actual result and manually exported safe support ZIP; private artworks/fonts/DB/models remain local.",
+    "Change-impact debugging design delivered; automated selector, Illustrator integration, web/mobile and unadopted teaching proposals are not implemented by this task."
   ],
   "blocked": [
     {
@@ -44,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261022-BETA2-PUBLISHED-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -794,7 +796,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Complete authorized beta.2 bundled Inkscape implementation, precise route/cache regressions, required qualification, actual Windows package and published full download verification; preserve beta.1. Research and persist conservative change-impact debugging design.",
+  "next_step": "User local testing on separate data copy; provide version/repro and manually exported safe report. No further automatic build or feature expansion.",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -1701,148 +1703,31 @@
     "checkpoint": "docs/dev/EXTERNAL_KNOWLEDGE_BASE_PROPOSAL.checkpoint.json"
   },
   "windows_release": {
-    "version": "0.2.0-beta.1",
+    "version": "0.2.0-beta.2",
     "status": "RELEASE_PUBLISHED_DOWNLOAD_VERIFIED",
-    "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
+    "plan": "docs/dev/releases/v0.2.0-beta.2-plan.md",
     "built": true,
     "published": true,
-    "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
-    "next": "User downloads complete ZIP and tests separate local data copy; return version/reproduction and safe support report. Bundled Inkscape and Illustrator integration remain recorded proposals, not shipped functionality.",
-    "validation": {
-      "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
-      "existing_governance_regression": "10 PASS",
-      "linux_source_flow": "009 two phases PASS but dirty source demonstration only; repeat source-bound",
-      "actual_windows_exe": "8b95b10b: actual frozen Windows EXE original14+7 checks PASS, both phases, source matches/unchanged, utf8mode1",
-      "report_regression": "32 PASS",
-      "runtime_refresh": "2 new cases PASS; original unmodified capture_runtime fixed004 PASS",
-      "windows_safety_regressions": "5 PASS locally, actual foreign-process survival and bounded atomic-write failures",
-      "evidence_module_regression": "7 PASS",
-      "native_windows_source": "8b95b10b/run39638803778:176/176PASS,16healthy,49freshQtgroups,0runtime,source unchanged",
-      "published_download": "Draft and published complete assets downloaded; published1220members SHA PASS; cloud anonymous manifest/checksum bytes exactly match native Git evidence; immutable tag dereference matches8b95."
+    "current_request_source": "af97b108b3a19c0d4eab3a6741ab716c732e0aea",
+    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39810636090",
+    "native_report": "docs/dev/releases/v0.2.0-beta.2/windows-native-004",
+    "public_readback": "docs/dev/releases/v0.2.0-beta.2/public-readback.json",
+    "tag_readback": "docs/dev/releases/v0.2.0-beta.2/tag-readback.json",
+    "delivery_report": "docs/dev/releases/v0.2.0-beta.2/DELIVERY_REPORT.md",
+    "artifact": {
+      "name": "TemplateAI-v0.2.0-beta.2-windows-x64.zip",
+      "bytes": 316795056,
+      "sha256": "2cae59805aa95f5c626dc6df799f2777b79e96344250a674bda370649b43a4f1"
     },
-    "authorization": {
-      "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
-      "user_request": "好，現在我要你在github發佈程式本體exe，讓我投入實機測試",
-      "date": "2026-10-21"
+    "corresponding_sources": {
+      "status": "PASS",
+      "asset": "inkscape-1.4.2-corresponding-sources.zip",
+      "bytes": 908375828,
+      "sha256": "3250070bd39362b87dd9c7c97f9b2fa132ceeeee57d815579264c5e87f079b6a",
+      "archives_verified": 125,
+      "source_map_sha256": "bc0271ef2bd72e83818ddf8ded62e10047e6751f316460e2b8ae03de3dd03d7c"
     },
-    "known_fixed": [
-      "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
-      "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
-    ],
-    "windows_receipt": "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/status.json",
-    "regression_matrix": ".github/windows-release-test-scope.json",
-    "source_candidate": "8b95b10b300dbead4c51264100af7bdd644433ce",
-    "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
-    "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.json",
-    "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.receipt.json",
-    "last_full_run": {
-      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006-requalified/summary.json",
-      "status": "PASS_SELECTED_ACTUAL_MODULE_ATTEMPTS",
-      "passed": 1963,
-      "healthy_modules": 259,
-      "runtime_errors_selected": 0,
-      "initial_raw_run": "linux-regression-006",
-      "initial_raw_status": "FAIL_TIMEOUT_1_MODULE",
-      "isolated_revalidation": "linux-source-watch-isolated-006",
-      "isolated_cases_passed": 11
-    },
-    "code_change_commit": "255e563516172add9c6b399c8683792138b23397",
-    "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006-requalified",
-    "current_original_captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-006",
-    "original_captures_status": "27/27PASS006; original script bytes/commands/deadlines unchanged",
-    "linux_formal_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
-    "local_validation": {
-      "full": 1958,
-      "passed": 1958,
-      "healthy_modules": 258,
-      "runtime_errors": 0,
-      "original_gui_captures": 27
-    },
-    "status_report": "docs/dev/releases/v0.2.0-beta.1/STATUS.md",
-    "checkpoint_recovery": {
-      "status": "ABANDONED_RESTORE_FAILED_NOT_REMOTE_VERIFIED",
-      "id": "CP-20261021-WINDOWS-BETA-SOURCE-001",
-      "reason": "ENOSPC on separate /tmp mount during isolated restore; workspace remains available",
-      "archive_sha256": "401e8a98819dcee08373169fa57f790c8dbeedde861fbd8bb8cd1f1480fe5bb0",
-      "archive_bytes": 61611484,
-      "checkpoint_record_created": false,
-      "software_validation_unchanged": "1958 PASS and original27 PASS",
-      "recovery": "Keep failed local archive; use new unique CP002 with isolated restore under workspace .checkpoints; remove orphan pending entry"
-    },
-    "software_checkpoint": "CP-20261021-WINDOWS-UTF8-READY-001",
-    "software_snapshot_commit": "a3fc928f5f9f123bde81c7066af61af350a7d1d7",
-    "software_verified_files": 430,
-    "governance_gate": "PASS172/166/75/1963 with430-file complete original formal/native176/actualUTF8AB evidence",
-    "current_request_source": "04418ac0fbc39011a6aebbcbd8e475cba3cc0f01",
-    "previous_public_runs": [
-      {
-        "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
-        "run_id": "39591183044",
-        "status": "FAILED_NOT_VERIFIED"
-      },
-      {
-        "source": "b0e1bc84bcb45149d038e2f9a0a29594d6a8c39e",
-        "run_id": "39591928487",
-        "status": "FAILED_NOT_VERIFIED",
-        "reason": "Pinned dependency installation failed"
-      }
-    ],
-    "historical_failed_full_run": {
-      "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-003/summary.json",
-      "status": "FAIL",
-      "passed": 1956,
-      "error": 1,
-      "failed": 1,
-      "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
-    },
-    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39632714813",
-    "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-005-frozen-pause-failed",
-    "native_result": "PRIOR03A7_SOURCE176_PASS_CURRENT_FROZEN_DIAGNOSTIC_PENDING",
-    "native_expected_tests": 176,
-    "regression_progress": {
-      "qualification": "PENDING_NEW_FIXTURE_AND_BUILD_HELPER_SOURCE"
-    },
-    "source_checkpoint": "CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001",
-    "source_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001.receipt.json",
-    "software_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-UTF8-READY-001.receipt.json",
-    "native_mode": "NORMAL_ALL176_ACTUAL_EXE_AND_PUBLICATION",
-    "ci_group_configuration": "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001",
-    "publication_evidence_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-UTF8-READY-001.receipt.json",
-    "binary_generated": true,
-    "utf8_causal_evidence": "docs/dev/releases/v0.2.0-beta.1/frozen-utf8-ab-001-passed",
-    "previous_completed_candidate": "04418ac0fbc39011a6aebbcbd8e475cba3cc0f01",
-    "build_policy_controls": "docs/dev/releases/v0.2.0-beta.1/payload-filter-controls-002.json",
-    "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39638803778",
-    "superseded_prepublication_run": {
-      "source": "f20343b3a786f8fc5565730e57cf77826c4f0926",
-      "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39636966203",
-      "reason": "New build report path would precreate original fresh acceptance directory; detected before publication. Not a completed or published run.",
-      "status": "CANCELLED_CONFIRMED_PUBLIC_HTML"
-    },
-    "source_commit": "8b95b10b300dbead4c51264100af7bdd644433ce",
-    "delivery_report": "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/README.md",
-    "release_url": "https://github.com/givemedandanla-tool/template-Ai/releases/tag/v0.2.0-beta.1",
-    "download_url": "https://github.com/givemedandanla-tool/template-Ai/releases/download/v0.2.0-beta.1/TemplateAI-v0.2.0-beta.1-windows-x64.zip",
-    "archive": {
-      "name": "TemplateAI-v0.2.0-beta.1-windows-x64.zip",
-      "bytes": 125923070,
-      "sha256": "0429fcbf0d4b2edb17a459b90ab6c04903a577570a739bc6247f33424ec0d526"
-    },
-    "checked_package_files": 1220,
-    "tag_refs": {
-      "refs/tags/v0.2.0-beta.1": "5de3a35394e2ac564d201746389619d189a1f5b1",
-      "refs/tags/v0.2.0-beta.1^{}": "8b95b10b300dbead4c51264100af7bdd644433ce"
-    },
-    "native_evidence_commit": "a913a5f92f86a6adab950777e467fa59888f6c37",
-    "public_asset_readback": "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/public-readback.json",
-    "dependency_discussion": {
-      "inkscape": "EXTERNAL_NOT_BUNDLED_1.4.2_USED_IN_NATIVE_VALIDATION",
-      "illustrator": "NOT_INTEGRATED_PROPOSED_LOCAL_ADAPTER",
-      "proposals": [
-        "docs/dev/releases/BUNDLED_INKSCAPE_PROPOSAL.md",
-        "docs/dev/releases/ILLUSTRATOR_LOCAL_ADAPTER_PROPOSAL.md"
-      ]
-    }
+    "next": "User local testing on separate data copy; provide version/repro and manually exported safe report. No further automatic build or feature expansion."
   },
   "storage_assessment": {
     "status": "COMPLETED_READ_ONLY_NO_DELETIONS",
@@ -1867,12 +1752,12 @@
   },
   "pending_release": {
     "version": "0.2.0-beta.2",
-    "status": "FINAL_NATIVE_REQUEST_AFTER_SAFE_DIAGNOSTIC_TIMER",
+    "status": "RELEASE_PUBLISHED_DOWNLOAD_VERIFIED",
     "baseline_commit": "059af6de8a2b6a0eb7882489f3fd4eff09028907",
     "plan": "docs/dev/releases/v0.2.0-beta.2-plan.md",
     "user_authorization": "參用隨包附帶方案，完善代碼後，打包成exe發佈到release",
     "scope": "BUNDLED_INKSCAPE_STRICT_SELECTION_CACHE_IDENTITY_AND_IMPACT_DEBUG_DESIGN",
-    "published": false,
+    "published": true,
     "authorization": {
       "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
       "user_request": "參用隨包附帶方案，完善代碼後，打包成exe發佈到release"
@@ -1886,7 +1771,7 @@
       "engine_scenarios": 5,
       "observed_bundled_calls": 24
     },
-    "next": "Full native199 and actual EXE21/engine5 gate with 45s GIL-safe referenced-frame diagnostic timer and unchanged parent240s deadline; publish only after every gate and full actual download.",
+    "next": "User local testing on separate data copy; provide version/repro and manually exported safe report. No further automatic build or feature expansion.",
     "source_full_run": "RUN-BUNDLED-INKSCAPE-BETA2-004",
     "source_full_commit": "42eb60fa1596282e11b1c329dd78918dd9b169ee",
     "source_qualification": "docs/dev/releases/v0.2.0-beta.2/source-qualification.json",
@@ -1902,16 +1787,10 @@
     "source_governance": "PASS",
     "license_stage": "docs/dev/releases/v0.2.0-beta.2/license-stage-002/license-stage.json",
     "previous_native_failure": "docs/dev/releases/v0.2.0-beta.2/windows-native-002/root-cause.json",
-    "current_request_source": "ee5f6cdb3178e9c99873a05a0fd3450365897a37",
-    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39799674358",
+    "current_request_source": "af97b108b3a19c0d4eab3a6741ab716c732e0aea",
+    "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39810636090",
     "last_native_failure": "docs/dev/releases/v0.2.0-beta.2/windows-native-003/status.json",
-    "native_source_tests": {
-      "source": "ee5f6cdb3178e9c99873a05a0fd3450365897a37",
-      "run": "39799674358",
-      "planned": 199,
-      "passed": 199,
-      "runtime_errors": 0
-    },
+    "native_source_tests": 199,
     "frozen_trace_attempt_001": {
       "source_commit": "6c096bc1b137c5768303f5ebad5f1a00cc881cd2",
       "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39806101568",
@@ -1933,8 +1812,184 @@
     "native_request": {
       "source_commit": "af97b108b3a19c0d4eab3a6741ab716c732e0aea",
       "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39810636090",
-      "status": "RUNNING",
+      "status": "RELEASE_PUBLISHED_DOWNLOAD_VERIFIED",
       "expected_report": "docs/dev/releases/v0.2.0-beta.2/windows-native-004"
+    },
+    "built": true,
+    "native_actual_exe_checks": 21,
+    "native_engine_scenarios": 5,
+    "native_actual_bundled_calls": 24,
+    "download_checked_files": 13060,
+    "native_report": "docs/dev/releases/v0.2.0-beta.2/windows-native-004",
+    "public_readback": "docs/dev/releases/v0.2.0-beta.2/public-readback.json",
+    "tag_readback": "docs/dev/releases/v0.2.0-beta.2/tag-readback.json",
+    "delivery_report": "docs/dev/releases/v0.2.0-beta.2/DELIVERY_REPORT.md",
+    "artifact": {
+      "name": "TemplateAI-v0.2.0-beta.2-windows-x64.zip",
+      "bytes": 316795056,
+      "sha256": "2cae59805aa95f5c626dc6df799f2777b79e96344250a674bda370649b43a4f1"
+    },
+    "corresponding_sources": {
+      "status": "PASS",
+      "asset": "inkscape-1.4.2-corresponding-sources.zip",
+      "bytes": 908375828,
+      "sha256": "3250070bd39362b87dd9c7c97f9b2fa132ceeeee57d815579264c5e87f079b6a",
+      "archives_verified": 125,
+      "source_map_sha256": "bc0271ef2bd72e83818ddf8ded62e10047e6751f316460e2b8ae03de3dd03d7c"
     }
+  },
+  "windows_release_history": [
+    {
+      "version": "0.2.0-beta.1",
+      "status": "RELEASE_PUBLISHED_DOWNLOAD_VERIFIED",
+      "plan": "docs/dev/releases/v0.2.0-beta.1-plan.md",
+      "built": true,
+      "published": true,
+      "source_start": "7eab2c8653c6f37949dd6c7f473b6f877472c7f2",
+      "next": "User downloads complete ZIP and tests separate local data copy; return version/reproduction and safe support report. Bundled Inkscape and Illustrator integration remain recorded proposals, not shipped functionality.",
+      "validation": {
+        "new_regression_tests": "13 PASS: launch6, authorization4, downloaded-byte-integrity3",
+        "existing_governance_regression": "10 PASS",
+        "linux_source_flow": "009 two phases PASS but dirty source demonstration only; repeat source-bound",
+        "actual_windows_exe": "8b95b10b: actual frozen Windows EXE original14+7 checks PASS, both phases, source matches/unchanged, utf8mode1",
+        "report_regression": "32 PASS",
+        "runtime_refresh": "2 new cases PASS; original unmodified capture_runtime fixed004 PASS",
+        "windows_safety_regressions": "5 PASS locally, actual foreign-process survival and bounded atomic-write failures",
+        "evidence_module_regression": "7 PASS",
+        "native_windows_source": "8b95b10b/run39638803778:176/176PASS,16healthy,49freshQtgroups,0runtime,source unchanged",
+        "published_download": "Draft and published complete assets downloaded; published1220members SHA PASS; cloud anonymous manifest/checksum bytes exactly match native Git evidence; immutable tag dereference matches8b95."
+      },
+      "authorization": {
+        "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
+        "user_request": "好，現在我要你在github發佈程式本體exe，讓我投入實機測試",
+        "date": "2026-10-21"
+      },
+      "known_fixed": [
+        "Prerelease version rejected by diagnostic report allow-list; bounded alpha/beta/rc versions now supported with privacy negative tests",
+        "Read-only background refresh initialized a manual page during resource pause, changing segmentation on resume; preserve empty editor without writes"
+      ],
+      "windows_receipt": "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/status.json",
+      "regression_matrix": ".github/windows-release-test-scope.json",
+      "source_candidate": "8b95b10b300dbead4c51264100af7bdd644433ce",
+      "source_manifest_sha256": "0c4c11c8bd6a899cff6f10822f7af018a9998c5440ec05dc3b44d77075a14274",
+      "progress_checkpoint": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.json",
+      "progress_receipt": "docs/dev/releases/v0.2.0-beta.1/checkpoint-progress-002.receipt.json",
+      "last_full_run": {
+        "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006-requalified/summary.json",
+        "status": "PASS_SELECTED_ACTUAL_MODULE_ATTEMPTS",
+        "passed": 1963,
+        "healthy_modules": 259,
+        "runtime_errors_selected": 0,
+        "initial_raw_run": "linux-regression-006",
+        "initial_raw_status": "FAIL_TIMEOUT_1_MODULE",
+        "isolated_revalidation": "linux-source-watch-isolated-006",
+        "isolated_cases_passed": 11
+      },
+      "code_change_commit": "255e563516172add9c6b399c8683792138b23397",
+      "current_full_regression": "docs/dev/releases/v0.2.0-beta.1/linux-regression-006-requalified",
+      "current_original_captures": "docs/dev/releases/v0.2.0-beta.1/stock-captures-006",
+      "original_captures_status": "27/27PASS006; original script bytes/commands/deadlines unchanged",
+      "linux_formal_run": "docs/evidence/runs/RUN-WINDOWS-BETA-FINAL-LINUX-001/run.json",
+      "local_validation": {
+        "full": 1958,
+        "passed": 1958,
+        "healthy_modules": 258,
+        "runtime_errors": 0,
+        "original_gui_captures": 27
+      },
+      "status_report": "docs/dev/releases/v0.2.0-beta.1/STATUS.md",
+      "checkpoint_recovery": {
+        "status": "ABANDONED_RESTORE_FAILED_NOT_REMOTE_VERIFIED",
+        "id": "CP-20261021-WINDOWS-BETA-SOURCE-001",
+        "reason": "ENOSPC on separate /tmp mount during isolated restore; workspace remains available",
+        "archive_sha256": "401e8a98819dcee08373169fa57f790c8dbeedde861fbd8bb8cd1f1480fe5bb0",
+        "archive_bytes": 61611484,
+        "checkpoint_record_created": false,
+        "software_validation_unchanged": "1958 PASS and original27 PASS",
+        "recovery": "Keep failed local archive; use new unique CP002 with isolated restore under workspace .checkpoints; remove orphan pending entry"
+      },
+      "software_checkpoint": "CP-20261021-WINDOWS-UTF8-READY-001",
+      "software_snapshot_commit": "a3fc928f5f9f123bde81c7066af61af350a7d1d7",
+      "software_verified_files": 430,
+      "governance_gate": "PASS172/166/75/1963 with430-file complete original formal/native176/actualUTF8AB evidence",
+      "current_request_source": "04418ac0fbc39011a6aebbcbd8e475cba3cc0f01",
+      "previous_public_runs": [
+        {
+          "source": "5fc96ce4cd5dedb577ff3676ca248d73dab7d5da",
+          "run_id": "39591183044",
+          "status": "FAILED_NOT_VERIFIED"
+        },
+        {
+          "source": "b0e1bc84bcb45149d038e2f9a0a29594d6a8c39e",
+          "run_id": "39591928487",
+          "status": "FAILED_NOT_VERIFIED",
+          "reason": "Pinned dependency installation failed"
+        }
+      ],
+      "historical_failed_full_run": {
+        "path": "docs/dev/releases/v0.2.0-beta.1/linux-regression-003/summary.json",
+        "status": "FAIL",
+        "passed": 1956,
+        "error": 1,
+        "failed": 1,
+        "reason": "Two test process factories assumed obsolete positional launcher prefix; original assertions and deadlines retained"
+      },
+      "native_run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39632714813",
+      "native_failure_reports": "docs/dev/releases/v0.2.0-beta.1/windows-native-005-frozen-pause-failed",
+      "native_result": "PRIOR03A7_SOURCE176_PASS_CURRENT_FROZEN_DIAGNOSTIC_PENDING",
+      "native_expected_tests": 176,
+      "regression_progress": {
+        "qualification": "PENDING_NEW_FIXTURE_AND_BUILD_HELPER_SOURCE"
+      },
+      "source_checkpoint": "CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001",
+      "source_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-BETA-FINAL-SOURCE-001.receipt.json",
+      "software_checkpoint_receipt": "docs/checkpoints/CP-20261021-WINDOWS-UTF8-READY-001.receipt.json",
+      "native_mode": "NORMAL_ALL176_ACTUAL_EXE_AND_PUBLICATION",
+      "ci_group_configuration": "docs/dev/releases/v0.2.0-beta.1/grouped-qt-config-001",
+      "publication_evidence_checkpoint": "docs/checkpoints/CP-20261021-WINDOWS-UTF8-READY-001.receipt.json",
+      "binary_generated": true,
+      "utf8_causal_evidence": "docs/dev/releases/v0.2.0-beta.1/frozen-utf8-ab-001-passed",
+      "previous_completed_candidate": "04418ac0fbc39011a6aebbcbd8e475cba3cc0f01",
+      "build_policy_controls": "docs/dev/releases/v0.2.0-beta.1/payload-filter-controls-002.json",
+      "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39638803778",
+      "superseded_prepublication_run": {
+        "source": "f20343b3a786f8fc5565730e57cf77826c4f0926",
+        "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39636966203",
+        "reason": "New build report path would precreate original fresh acceptance directory; detected before publication. Not a completed or published run.",
+        "status": "CANCELLED_CONFIRMED_PUBLIC_HTML"
+      },
+      "source_commit": "8b95b10b300dbead4c51264100af7bdd644433ce",
+      "delivery_report": "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/README.md",
+      "release_url": "https://github.com/givemedandanla-tool/template-Ai/releases/tag/v0.2.0-beta.1",
+      "download_url": "https://github.com/givemedandanla-tool/template-Ai/releases/download/v0.2.0-beta.1/TemplateAI-v0.2.0-beta.1-windows-x64.zip",
+      "archive": {
+        "name": "TemplateAI-v0.2.0-beta.1-windows-x64.zip",
+        "bytes": 125923070,
+        "sha256": "0429fcbf0d4b2edb17a459b90ab6c04903a577570a739bc6247f33424ec0d526"
+      },
+      "checked_package_files": 1220,
+      "tag_refs": {
+        "refs/tags/v0.2.0-beta.1": "5de3a35394e2ac564d201746389619d189a1f5b1",
+        "refs/tags/v0.2.0-beta.1^{}": "8b95b10b300dbead4c51264100af7bdd644433ce"
+      },
+      "native_evidence_commit": "a913a5f92f86a6adab950777e467fa59888f6c37",
+      "public_asset_readback": "docs/dev/releases/v0.2.0-beta.1/windows-native-007-published/public-readback.json",
+      "dependency_discussion": {
+        "inkscape": "EXTERNAL_NOT_BUNDLED_1.4.2_USED_IN_NATIVE_VALIDATION",
+        "illustrator": "NOT_INTEGRATED_PROPOSED_LOCAL_ADAPTER",
+        "proposals": [
+          "docs/dev/releases/BUNDLED_INKSCAPE_PROPOSAL.md",
+          "docs/dev/releases/ILLUSTRATOR_LOCAL_ADAPTER_PROPOSAL.md"
+        ]
+      }
+    }
+  ],
+  "change_impact_debugging": {
+    "status": "DESIGN_DELIVERED_WITH_ACTUAL_FAULT_INJECTION",
+    "guide": "docs/dev/CHANGE_IMPACT_DEBUGGING_QUICK_GUIDE.md",
+    "plan": "docs/dev/CHANGE_IMPACT_DEBUGGING.md",
+    "research": "docs/dev/CHANGE_IMPACT_DEBUGGING_RESEARCH.json",
+    "fault_injection": "docs/dev/releases/v0.2.0-beta.2/routing-fault-injection-002/result.json",
+    "automatic_selector_implemented": false
   }
 }

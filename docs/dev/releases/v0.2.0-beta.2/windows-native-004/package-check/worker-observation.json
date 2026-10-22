@@ -1,0 +1,76 @@
+{
+  "scope": "AUTHORED_RELEASE_FIXTURE_ONLY_NO_PRIVATE_DATA",
+  "actual_units": 2,
+  "jobs": [
+    {
+      "id": "af915e2a0d9c46a990cca4bc27a4afeb",
+      "revision": 9,
+      "phase": "COMPLETED_WITH_EXCEPTIONS",
+      "items": [
+        {
+          "analysed_units": 1,
+          "attempts": 1,
+          "error": null,
+          "expected_page_count": 1,
+          "page": 1,
+          "path": "D:\\a\\_temp\\template-ai-ci\\tmphsvc4qei\\00001.svg",
+          "reused_units": 1,
+          "source_hash": "115caf9aaa98cc87e4abb143b4c269bfd9647518f31f748493902983d56c0207",
+          "source_id": "5e69ad13ce4f42f8874803e8a76c395a",
+          "stages_complete": true,
+          "state": "WAITING_REVIEW",
+          "unit_ids": [
+            "ac0ebe33acd3ce4196b6b2f9ba4fa7234158983e27f0b8aa7c981c66560339cf",
+            "e5ac72bfe22ec69c6dcda3b0a412fd07f5d9b481c92c0b06fd30f586530b056c"
+          ]
+        }
+      ]
+    }
+  ],
+  "units": [
+    {
+      "id": "ac0ebe33acd3ce4196b6b2f9ba4fa7234158983e27f0b8aa7c981c66560339cf",
+      "revision": 1,
+      "state": "WAITING_REVIEW",
+      "issues": [
+        {
+          "code": "VISUAL_PENDING",
+          "id": "c9fab7baadef737076f4dec88fb6128c0f2fd42e2e1da2bc58823357dccbf801",
+          "locatable": false,
+          "native_mapping": "UNKNOWN",
+          "reason": "目前作品尚未人工核對可信原稿，不能宣稱視覺一致",
+          "severity": "REVIEW",
+          "slot_ids": [],
+          "source_id": "5e69ad13ce4f42f8874803e8a76c395a",
+          "source_text_identity": "UNKNOWN",
+          "work_id": "6409aa61719c47b789e3abe22a8aee1d",
+          "work_name": "AI候選作品 1",
+          "work_revision": 1
+        }
+      ],
+      "reason": "只使用有效已准入TRAIN與已核對事實；候選結果從不自動發布"
+    },
+    {
+      "id": "e5ac72bfe22ec69c6dcda3b0a412fd07f5d9b481c92c0b06fd30f586530b056c",
+      "revision": 1,
+      "state": "WAITING_REVIEW",
+      "issues": [
+        {
+          "code": "VISUAL_PENDING",
+          "id": "87a5fce650ffbea9041e4d772b8b6fc656fc2f83970c8a025c3398f7bd68b24d",
+          "locatable": false,
+          "native_mapping": "UNKNOWN",
+          "reason": "目前作品尚未人工核對可信原稿，不能宣稱視覺一致",
+          "severity": "REVIEW",
+          "slot_ids": [],
+          "source_id": "5e69ad13ce4f42f8874803e8a76c395a",
+          "source_text_identity": "UNKNOWN",
+          "work_id": "f3c038feb08d42be9aaa03d3eebf9785",
+          "work_name": "AI候選作品 2",
+          "work_revision": 1
+        }
+      ],
+      "reason": "只使用有效已准入TRAIN與已核對事實；候選結果從不自動發布"
+    }
+  ]
+}

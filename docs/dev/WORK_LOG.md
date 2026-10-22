@@ -1874,3 +1874,5 @@ Frozen trace001/6c/run39806101568在freeze前拒絕上游IDW88下載size/hash，
 Frozen trace002/f967/run39807865848：已下載及驗證原授權242檔，實際exercise在45.531s退出0xc0000005；C faulthandler背景dump先輸出破損frame字樣後AV。原native003也45秒dump中退出但未記exithex，不能冒稱其hex已知。換GHA Windows frozen的45秒診斷為threading.Timer＋sys._current_frames強參照／GIL安全讀frame；仍同45s呼叫／取消、原21斷言與parent240s硬截止不變。若native擴充持有GIL無法取得Python dump，外部240s仍終止；不當成新增hang放行。隔離dump／cancel兩案PASS，未當Windows證明。下一正常完整native199＋EXE21＋引擎5＋sources125＋下載檢查；僅全通過後可tag／Release。產品／測試／tools manifest仍f1a2，不重跑Linux全套。
 
 45秒timer示範已存可重跑入口：python docs/dev/releases/verify_frozen_diagnostic_timer.py；實際3案PASS（frame dump／cancel／一般啟動不patch），safe-timer-reproducible-demo.json記Python3.12.14與hook SHA。這只是隔離示範，不算新增產品測試數或Windows資格；正常native004仍RUNNING，未變更候選產品或原斷言。
+
+2026-10-22 beta.2已公開並下載驗證：af97b108／run39810636090，Windows199＋真正EXE21＋引擎5全PASS，24包內呼叫，13060檔公開下載匹配，125來源與242授權驗證。原45秒C診斷AV已由45秒GIL安全dump排除，本次64秒跨45後通過，原240硬期限與斷言保留。來源1986為保留失敗的同bytes環境復驗彙整；原外部資格／goal FAIL不升級。詳releases/v0.2.0-beta.2/DELIVERY_REPORT，後續為本地副本實測及手動安全報告。無新收費功能／代理，未合併main或覆寫舊tag。

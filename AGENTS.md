@@ -11,11 +11,15 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
-## 目前任務：隨包 Inkscape beta.2（來源已資格化，待最終Windows／發佈）
+## 當前交付：beta.2隨包Inkscape已發佈並下載驗證
 
-2026-10-22使用者採用隨包方案並授權新EXE／Release，目標0.2.0-beta.2，取代舊版限定／EXE延後。先依STATE.pending_release、ACTIVE_DEVELOPMENT_HANDOFF與releases/v0.2.0-beta.2-plan.md接續；不重發beta.1或合併main。真正EXE probe002/run39777630190已通過原21檢查及5種引擎情境，24實際呼叫皆包內；尚非正式Release。正式RUN-BUNDLED-INKSCAPE-BETA2-004已通過1986具名案例與27原版GUI；受空間影響14模組139案以相同code bytes單程序復驗，初始003失敗完整保留；不是單次全新完整執行，新原始授權資料封裝步驟仍須最終原生驗證。新主CP必須包含全部正式附件，禁止用窄輔助讀回覆蓋主指標。分支精確release-request/v0.2.0-beta.2，未通過所有Gate不得建立tag。
+2026-10-22使用者採用隨包方案並授權新EXE／Release。v0.2.0-beta.2來源af97b108／run39810636090已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED：Windows199、原真正EXE14＋7、5引擎情境PASS；24實際呼叫皆包內。公開下載13060檔與125份對應來源封存檔驗證PASS，公開manifest／SHA逐byte及tag精確讀回完成。完整報告見docs/dev/releases/v0.2.0-beta.2/DELIVERY_REPORT.md。完整解壓程式ZIP即可，不需另裝Inkscape；私人字型仍留本機。不要重建／覆寫既有beta.2 tag，不合併main。
 
-局部除錯方案見CHANGE_IMPACT_DEBUGGING.md及固定來源RESEARCH.json：直接／流程／發佈三層、保守反向依賴與未知擴大、故障注入；全自動選測器尚未實作。不購買額度／API／試用／新雲端資源，不用子代理；私人作品／字型／DB／模型仍留本地。原172／166scope／75父題、AI8包50與外部資格不升級。
+正式RUN-BUNDLED-INKSCAPE-BETA2-004：1986唯一PASS（原1963保留＋23新）、262健康模組、27原版GUI；包含相同程式bytes環境修復復驗，不是單次新全跑。原失敗保留、原5外部資格仍NOT_VERIFIED／整體goal FAIL，不升172／166scope／75父題／AI8包50資格。最後主checkpoint及收據以STATE為準；必須包含正式004全部附件，不能用窄輔助讀回覆蓋。
+
+局部除錯已交付CHANGE_IMPACT_DEBUGGING_QUICK_GUIDE／完整方案及固定來源RESEARCH：直接／流程／發佈三層、保守反向依賴與未知擴大、實際故障注入。全自動選測器尚未實作。Windows frozen原45秒背景dump曾0xc0000005，已改授權CI專用GIL安全frame診斷，保留45秒及parent240秒硬期限／原斷言；實際EXE64秒跨45後通過。一般使用者啟動不patch診斷。
+
+下一步為使用者獨立資料副本實測與安全報告，依版本／實際證據最小修正。無新增付費服務／API／試用／代理；私人作品／字型／DB／模型留本機。網頁／手機、Illustrator、教學與知識庫草案及外部資格不因本次發佈當已完成。
 
 ## 歷史基線：beta.1已發佈且下載校驗完成
 
