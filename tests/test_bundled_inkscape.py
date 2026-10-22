@@ -93,6 +93,25 @@ class BundledInkscapeTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'校驗'):
                 inkscape_path()
 
+    def test_broken_bundle_remains_reportable_without_private_paths(self):
+        from template_ai.inkscape_runtime import runtime_report
+        self.bundle.unlink()
+        with self.frozen():report=runtime_report()
+        self.assertEqual(report['state'],'UNAVAILABLE')
+        self.assertEqual(report['error_code'],'BUNDLED_RUNTIME_INVALID')
+        self.assertNotIn(str(self.root),json.dumps(report))
+        self.assertNotIn(str(self.external),json.dumps(report))
+
+    def test_safe_report_keeps_legacy_environment_schema_readable(self):
+        from template_ai.offline_support import OfflineJournal,validate_report,report_summary
+        self.bundle.unlink()
+        with self.frozen():report=OfflineJournal(self.root/'support').report()
+        validate_report(report)
+        self.assertIn('內附',report['summary']['缺少資訊'])
+        report['environment'].pop('inkscape_runtime')
+        report['summary']=report_summary(report)
+        validate_report(report)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -173,6 +173,7 @@ def environment_facts():
         memory_mib = None
     release = platform.version()
     release = release if re.fullmatch(r'\d+(?:\.\d+){0,3}', release) else 'UNKNOWN'
+    from .inkscape_runtime import runtime_report
     return {'os': os_name, 'os_version': release, 'python': platform.python_version(),
             'app': __version__, 'pyside6': _version('PySide6'), 'numpy': _version('numpy'),
             'scipy': _version('scipy'), 'scikit_learn': _version('scikit-learn'),
@@ -181,7 +182,7 @@ def environment_facts():
             'implementation_sha256': implementation_fingerprint(),
             'implementation_scope': 'APP_AND_PACKAGE_PY',
             'python_network_guard': offline_guard_enabled(),
-            'native_process_firewall': 'NOT_CLAIMED'}
+            'native_process_firewall': 'NOT_CLAIMED', 'inkscape_runtime':runtime_report()}
 
 
 def validate_report(data):
@@ -196,9 +197,23 @@ def validate_report(data):
     if not isinstance(data['created_utc'], str) or not re.fullmatch(r'\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ', data['created_utc']):
         raise ValueError('問題報告時間不合法')
     env = data['environment']
-    exact(env, {'os', 'os_version', 'python', 'app', 'pyside6', 'numpy', 'scipy', 'scikit_learn', 'hdbscan', 'kiwisolver',
+    environment_keys={'os', 'os_version', 'python', 'app', 'pyside6', 'numpy', 'scipy', 'scikit_learn', 'hdbscan', 'kiwisolver',
                 'cpu_count', 'memory_mib', 'implementation_sha256', 'implementation_scope',
-                'python_network_guard', 'native_process_firewall'})
+                'python_network_guard', 'native_process_firewall'}
+    if 'inkscape_runtime' in env:
+        environment_keys.add('inkscape_runtime')
+        engine=env['inkscape_runtime']
+        exact(engine,{'state','origin','version','manifest_sha256','executable_sha256','verified_files','error_code'})
+        if (engine['state'] not in {'VERIFIED_BUNDLE','SOURCE_EXTERNAL','UNAVAILABLE'} or
+                engine['origin'] not in {'BUNDLED','EXTERNAL','NONE'} or
+                engine['error_code'] not in {'NONE','ENGINE_UNAVAILABLE','BUNDLED_RUNTIME_INVALID'} or
+                not isinstance(engine['version'],str) or not re.fullmatch(r'(?:UNKNOWN|\d{1,3}(?:\.\d{1,3}){1,3})',engine['version']) or
+                type(engine['verified_files']) is not int or not 0<=engine['verified_files']<=20000):
+            raise ValueError('分析工具環境資訊不合法')
+        for key in ['manifest_sha256','executable_sha256']:
+            if engine[key] is not None and (not isinstance(engine[key],str) or not re.fullmatch('[0-9a-f]{64}',engine[key])):
+                raise ValueError('分析工具指紋不合法')
+    exact(env,environment_keys)
     if env['os'] not in ('Windows', 'Linux', 'Darwin', 'OTHER') or type(env['python_network_guard']) is not bool or env['native_process_firewall'] != 'NOT_CLAIMED':
         raise ValueError('環境資訊不合法')
     for key in ('os_version', 'python', 'app', 'pyside6', 'numpy', 'scipy', 'scikit_learn', 'hdbscan', 'kiwisolver'):
@@ -226,10 +241,13 @@ def validate_report(data):
 def report_summary(data):
     errors = sum(e['code'] in ('ACTION_FAILED', 'UNHANDLED_ERROR', 'REPORT_SAVE_FAILED', 'LOG_READ_FAILED', 'USER_REPORTED_PROBLEM', 'NATIVE_CRITICAL', 'NATIVE_FATAL') for e in data['events'])
     missing = sorted({e['missing'] for e in data['events']} - {'NONE'})
-    return {'發生什麼': f'這份本地紀錄包含 {len(data["events"])} 筆操作與 {errors} 筆問題。',
+    result={'發生什麼': f'這份本地紀錄包含 {len(data["events"])} 筆操作與 {errors} 筆問題。',
             '影響什麼': '報告只記錄使用情況；不修改原稿，也不代表模型、字型或印刷已驗證。',
             '接下來怎麼做': '把這個報告檔手動附到 Codex 對話，並說明當時想完成的工作。軟體不會自動傳送。',
             '缺少資訊': '、'.join(MISSING[m] for m in missing) if missing else '紀錄未標記缺少資訊；不代表所有條件已具備。'}
+    if data.get('environment',{}).get('inkscape_runtime',{}).get('error_code')=='BUNDLED_RUNTIME_INVALID':
+        result['缺少資訊']='內附的作品分析工具不完整或被變更；請重新完整解壓對應版本下載包。'
+    return result
 
 
 def report_html(data):

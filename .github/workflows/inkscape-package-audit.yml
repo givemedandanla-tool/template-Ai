@@ -19,7 +19,7 @@ jobs:
           python-version: '3.11'
           architecture: x64
       - name: Inspect the same pinned official installation used by beta1
-        if: ${{ !contains(github.event.head_commit.message, '[engine-source-audit]') }}
+        if: ${{ !contains(github.event.head_commit.message, '[engine-source-audit]') && !contains(github.event.head_commit.message, '[source-gap-check]') }}
         shell: pwsh
         run: |
           choco install inkscape --version=1.4.2 -y --no-progress
@@ -34,6 +34,13 @@ jobs:
           $py = Join-Path $env:pythonLocation 'python.exe'
           & $py docs/dev/releases/audit_inkscape_sources.py
           if ($LASTEXITCODE -ne 0) { throw 'Upstream source audit failed' }
+      - name: Resolve only the remaining corresponding-source gaps
+        if: ${{ contains(github.event.head_commit.message, '[source-gap-check]') }}
+        shell: pwsh
+        run: |
+          $py = Join-Path $env:pythonLocation 'python.exe'
+          & $py docs/dev/releases/audit_inkscape_source_gaps.py
+          if ($LASTEXITCODE -ne 0) { throw 'Source gap audit failed' }
       - name: Persist bounded public-package metadata without a product release
         if: always()
         shell: pwsh

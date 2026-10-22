@@ -2,6 +2,9 @@
 import hashlib
 import json
 import os
+import re
+import subprocess
+import tempfile
 from pathlib import Path, PurePosixPath
 import shutil
 import stat
@@ -24,14 +27,20 @@ def file_sha(path):
 def _read_json(path, maximum=8*1024*1024):
     if path.is_symlink() or not path.is_file() or path.stat().st_size > maximum:
         raise ValueError('內附 Inkscape 的版本資料缺少或不合法，請重新完整解壓下載包')
-    return json.loads(path.read_text(encoding='utf-8'))
+    value=json.loads(path.read_text(encoding='utf-8'))
+    if not isinstance(value,dict):
+        raise ValueError('內附 Inkscape 的版本資料不是合法物件')
+    return value
 
 
 def bundled_runtime():
     app = Path(sys.executable).resolve().parent
     root = app/'engines/inkscape'
     try:
-        root.resolve(strict=True).relative_to(app)
+        try:
+            root.resolve(strict=True).relative_to(app)
+        except ValueError as error:
+            raise ValueError('內附 Inkscape 的資料夾位置超出程式範圍') from error
         manifest_path = root/'manifest.json'
         manifest = _read_json(manifest_path)
         info_root = Path(getattr(sys, '_MEIPASS', app))
@@ -75,7 +84,10 @@ def bundled_runtime():
                     raise ValueError('內附 Inkscape 的實際檔案清單已變更')
                 resolved_root = root.resolve(strict=True)
                 for parent in parents:
-                    parent.resolve(strict=True).relative_to(resolved_root)
+                    try:
+                        parent.resolve(strict=True).relative_to(resolved_root)
+                    except ValueError as error:
+                        raise ValueError('內附 Inkscape 的元件位置超出工具範圍') from error
                 for path,row in paths:
                     if file_sha(path) != row['sha256']:
                         raise ValueError('內附 Inkscape 的檔案校驗失敗：'+row['path'])
@@ -97,6 +109,24 @@ def inkscape_path():
     return next((p for p in options if p and Path(p).is_file()), None)
 
 
+_VERSION_CACHE={}
+
+def converter_version(executable):
+    if not executable:return None
+    try:
+        info=Path(executable).stat();key=(str(executable),info.st_mtime_ns,info.st_size)
+        if key not in _VERSION_CACHE:
+            with tempfile.TemporaryDirectory(prefix='template-ai-version-') as folder:
+                env=os.environ.copy();env['INKSCAPE_PROFILE_DIR']=folder
+                result=subprocess.run([str(executable),'--version'],capture_output=True,text=True,timeout=10,env=env,
+                                      creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+            match=re.search(r'Inkscape ([0-9]+(?:\.[0-9]+){1,3})',result.stdout)
+            _VERSION_CACHE.clear()
+            _VERSION_CACHE[key]=match[1] if result.returncode==0 and match else None
+        return _VERSION_CACHE[key]
+    except (OSError,subprocess.TimeoutExpired):return None
+
+
 def runtime_identity(executable):
     if not executable:
         from PySide6.QtCore import qVersion
@@ -106,6 +136,27 @@ def runtime_identity(executable):
         if Path(executable).resolve() != Path(result['executable']):
             raise ValueError('內附 Inkscape 路徑不一致，拒絕改用系統工具')
         return result
-    from .source_recovery import converter_version
     return dict(policy='SOURCE_EXTERNAL', executable=str(Path(executable).resolve()),
                 version=converter_version(executable), executable_sha256=file_sha(executable))
+
+
+def runtime_report():
+    """Content-free support information; a broken bundle must remain reportable."""
+    result=dict(state='UNAVAILABLE',origin='NONE',version='UNKNOWN',manifest_sha256=None,
+                executable_sha256=None,verified_files=0,error_code='ENGINE_UNAVAILABLE')
+    try:
+        if getattr(sys,'frozen',False):
+            info=bundled_runtime()
+            result.update(state='VERIFIED_BUNDLE',origin='BUNDLED',version=info['version'],
+                          manifest_sha256=info['runtime_manifest_sha256'],executable_sha256=info['executable_sha256'],
+                          verified_files=info['verified_files'],error_code='NONE')
+        else:
+            path=inkscape_path()
+            if path:
+                version=converter_version(path)
+                if version and Path(path).stat().st_size<=512*1024*1024:
+                    result.update(state='SOURCE_EXTERNAL',origin='EXTERNAL',version=version,
+                                  executable_sha256=file_sha(path),error_code='NONE')
+    except (OSError,ValueError,TypeError):
+        result['error_code']='BUNDLED_RUNTIME_INVALID' if getattr(sys,'frozen',False) else 'ENGINE_UNAVAILABLE'
+    return result
