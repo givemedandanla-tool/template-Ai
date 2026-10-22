@@ -1,0 +1,15 @@
+{
+  "scope": "ISOLATED_TRANSPORT_RETRY_DEMONSTRATION_NOT_NATIVE_LICENSE_PROOF",
+  "checks": [
+    {
+      "case": "retry_then_success",
+      "status": "PASS",
+      "attempts": 3
+    },
+    {
+      "case": "bounded_failure",
+      "status": "PASS",
+      "attempts": 3
+    }
+  ]
+}

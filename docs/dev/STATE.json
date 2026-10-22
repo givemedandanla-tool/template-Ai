@@ -1867,7 +1867,7 @@
   },
   "pending_release": {
     "version": "0.2.0-beta.2",
-    "status": "WINDOWS199_PASS_DIAGNOSING_FROZEN_RESUME_EXIT",
+    "status": "WINDOWS199_PASS_FROZEN_TRACE_RETRY_AFTER_REJECTED_UPSTREAM_DOWNLOAD",
     "baseline_commit": "059af6de8a2b6a0eb7882489f3fd4eff09028907",
     "plan": "docs/dev/releases/v0.2.0-beta.2-plan.md",
     "user_authorization": "參用隨包附帶方案，完善代碼後，打包成exe發佈到release",
@@ -1886,7 +1886,7 @@
       "engine_scenarios": 5,
       "observed_bundled_calls": 24
     },
-    "next": "Targeted frozen-only original acceptance with child exit status and bounded authored function timing/fatal traceback; no source199 or Linux1986 rerun for diagnosis.",
+    "next": "Repeat frozen-only trace after bounded 3-attempt locked upstream download retry; original 199 and source1986/GUI27 remain qualified.",
     "source_full_run": "RUN-BUNDLED-INKSCAPE-BETA2-004",
     "source_full_commit": "42eb60fa1596282e11b1c329dd78918dd9b169ee",
     "source_qualification": "docs/dev/releases/v0.2.0-beta.2/source-qualification.json",
@@ -1911,6 +1911,12 @@
       "planned": 199,
       "passed": 199,
       "runtime_errors": 0
+    },
+    "frozen_trace_attempt_001": {
+      "source_commit": "6c096bc1b137c5768303f5ebad5f1a00cc881cd2",
+      "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39806101568",
+      "status": "FAILED_BEFORE_FREEZE_UPSTREAM_ARCHIVE_REJECTED",
+      "report": "docs/dev/releases/v0.2.0-beta.2/windows-frozen-trace-001"
     }
   }
 }

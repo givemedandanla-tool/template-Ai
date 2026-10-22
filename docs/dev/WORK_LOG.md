@@ -1868,3 +1868,5 @@ BETA2來源主CP SOURCE-QUALIFIED-001：672來源檔隔離還原PASS，snapshot1
 Windows002：199/199執行，198PASS，1個fixture路徑字串比較FAIL（Windows8.3 TMP別名RUNNER~1與標準runneradmin），0runtime；不是外部工具被選用。以canonical RUNNER_TEMP scratch固定測試環境，原測試斷言／等待限制／產品碼不改，重做Windows發佈驗收。Source1986與GUI27資格保留，不重跑不受影響的Linux全套。
 
 Windows003完整199PASS／0runtime，canonical TEMP修正生效。真EXE原exercise14PASS，resume完成5檢查後在report/cleanup附近非0退出（無最終JSON），保留原log與units已完成觀測；不發布。轉frozen-only局部根因診斷，新增純觀測退出hex／時間與有上限無payload函式trace，原斷言／時間／產品碼不改。
+
+Frozen trace001/6c/run39806101568在freeze前拒絕上游IDW88下載size/hash，未跑EXE、非resume新結果。windows-frozen-trace-001保留原log；add_inkscape_notices加入最多3次同URL／原size+SHA驗證重試，拒絕片段只記size/hash/type，失敗不繞過。隔離示範2案PASS（非原生授權證據）；下一相同frozen-only＋trace，不重跑來源1986/GUI27/Windows199。

@@ -17,10 +17,35 @@ ENVIRONMENT = dict(url='https://gitlab.com/api/v4/projects/46863172/packages/gen
                    bytes=524800330, sha256='fefbd2d14808424ecc942a78b4a2dced8175a01506161c1e85e1d333f09e5bac')
 
 
+def fetch_license_archive():
+    """Retry transport corruption without accepting different upstream bytes."""
+    target = ROOT/'build/ink88-license-source.7z'
+    attempts = []
+    for attempt in range(1, 4):
+        try:
+            archive = fetch(ENVIRONMENT, target)
+        except (OSError, RuntimeError) as error:
+            partial = target.with_suffix(target.suffix+'.partial')
+            attempts.append(dict(attempt=attempt, state='REJECTED',
+                                 error_type=type(error).__name__,
+                                 bytes=partial.stat().st_size if partial.is_file() else None,
+                                 sha256=digest(partial) if partial.is_file() else None))
+            write(ROOT/'artifacts/upstream-license-download.json',
+                  dict(expected=ENVIRONMENT, attempts=attempts))
+            if attempt == 3:
+                raise
+        else:
+            attempts.append(dict(attempt=attempt, state='VERIFIED',
+                                 bytes=archive.stat().st_size, sha256=digest(archive)))
+            write(ROOT/'artifacts/upstream-license-download.json',
+                  dict(expected=ENVIRONMENT, attempts=attempts))
+            return archive
+
+
 def main():
     if os.name != 'nt' or os.environ.get('GITHUB_ACTIONS') != 'true':
         raise RuntimeError('Fresh authorized Windows runner only')
-    archive = fetch(ENVIRONMENT, ROOT/'build/ink88-license-source.7z')
+    archive = fetch_license_archive()
     listing = subprocess.run(['7z','l','-slt','-sccUTF-8',str(archive)],capture_output=True,text=True,encoding='utf-8',errors='strict',check=True).stdout
     selected = []
     for line in listing.splitlines():
