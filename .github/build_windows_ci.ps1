@@ -28,6 +28,8 @@ if ($FrozenProbeOnly -and $env:FROZEN_UTF8_AB -eq 'true') {
 }
 python tools/bundled_inkscape_build.py prepare
 if ($LASTEXITCODE -ne 0) { throw 'Pinned bundled runtime preparation failed' }
+python docs/dev/releases/add_inkscape_notices.py
+if ($LASTEXITCODE -ne 0) { throw 'Original upstream dependency-license preservation failed' }
 python tools/windows_release.py spec
 if ($LASTEXITCODE -ne 0) { throw 'Release specification failed' }
 python docs/dev/releases/configure_frozen_utf8.py
@@ -41,6 +43,7 @@ if ($LASTEXITCODE -ne 0) { throw 'Actual frozen executable acceptance failed' }
 # The original acceptance requires a new output directory. Preserve the build
 # policy report only AFTER the original EXE exercise has created that directory.
 Copy-Item artifacts/build-payload-filter.json artifacts/package-check/build-payload-filter.json -ErrorAction Stop
+Copy-Item artifacts/dependency-license-verification.json artifacts/package-check/dependency-license-verification.json -ErrorAction Stop
 if ($FrozenProbeOnly) { return } # Diagnosis never tags/packages/publishes.
 python tools/bundled_inkscape_build.py sources
 if ($LASTEXITCODE -ne 0) { throw 'Corresponding-source asset preparation failed' }

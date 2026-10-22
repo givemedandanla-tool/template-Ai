@@ -165,10 +165,22 @@ class CustomerIdentityTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'有效合併'):self.identity.redact_event(record['id'],'test','test',True)
         self.identity.split(self.identity.plan_split(record['id']),True,'test','test')
         before=[self.store.get(c['id']) for c in self.customers]
+        from template_ai.training_store import digest
+        prior={event['id']:event for event in self.identity.history(self.a['id'])}
+        hashes={key:digest({k:v for k,v in event.items() if k not in {'id','state'}}) for key,event in prior.items()}
         for event in self.identity.history(self.a['id']):
             self.identity.redact_event(event['id'],'test','remove synthetic snapshots',True)
         for event in self.identity.history(self.a['id']):
-            self.assertTrue(event['redacted']);self.assertNotIn('Alex Example',str(event));self.assertNotIn('0200',str(event))
+            # A four-digit substring can occur by chance in a legitimate audit
+            # digest/id/timestamp. Check the whole permitted structure and the
+            # actual original-payload digest; no customer field can survive.
+            self.assertEqual(set(event),{'id','state','redacted','previous_payload_sha256','actor','reason','created'})
+            self.assertIn(event['id'],prior)
+            self.assertEqual(event['state'],prior[event['id']]['state'])
+            self.assertEqual(event['previous_payload_sha256'],hashes[event['id']])
+            self.assertEqual(event['actor'],'test');self.assertEqual(event['reason'],'remove synthetic snapshots')
+            self.assertIsInstance(event['created'],float)
+            self.assertTrue(event['redacted']);self.assertNotIn('Alex Example',str(event))
         self.assertEqual([self.store.get(c['id']) for c in self.customers],before)
 
     def test_failed_split_audit_rolls_back_aliases_fields_scopes_and_history(self):

@@ -21,3 +21,6 @@ beta.1已公開、原176Windows＋真EXE21＋1220下載hash PASS；證據release
 本輪真實抓到安全報告回歸：新增工具資訊間接載入numpy，破壞原無site-packages CLI。保留support-regression-red-001；converter_version已搬到標準庫runtime，原21安全報告及11路由測試PASS，targeted-support-green-001記錄。尚非發佈資格。
 
 打包程式WIP：bundled_inkscape_build.py＋125份來源lock；prepare完整官方11592檔比對→manifest pin→PyInstaller→install→原EXE21＋無系統／誘餌／缺檔損壞／有系統控制→來源附件→精確vendor清單→Release。first-version.yml已轉精確beta2分支，治理授權擴充保留原beta1四測試。新guard4測試與原6相關模組PASS，真正Windows尚未執行，published仍false。除錯方案CHANGE_IMPACT_DEBUGGING.md已寫，故障注入002正確2 PASS、兩個mutant皆被抓（非原生證明）。
+
+Windows probe002/66d9/run39777630190真EXE PASS：原14＋7、無系統兩phase＋有系統控制（各8實際呼叫全包內）、缺exe／壞dll兩情境與真support CLI。probe001是測試機目錄rename被Windows拒絕；改正式choco卸載／重裝且校對目錄不存在，未改產品路由。補充原IDW授權檔按原bytes封裝的新data step尚待最終Windows執行。
+正式001因原test_customer_identity短字串0200碰到合法SHA而停止，原FAIL保留；test改為完整允許欄位、原payload精確digest／id／state／actor／reason核對（非弱化隱私），12原測試target PASS；下一重新跑1985完整正式002。產品演算法未因此改。static same-tool vbeta1實際來源對照0new／3453existing／1resolved，未刷新基準。
