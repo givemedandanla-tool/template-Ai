@@ -2091,12 +2091,40 @@
       "status": "PASS",
       "path": "docs/dev/bugfixes/import-zero-fields-20261023/regression-final-second.log"
     },
-    "full_run_pending": "RUN-IMPORT-ZERO-FIELDS-001"
+    "full_run_pending": "RUN-IMPORT-ZERO-FIELDS-001",
+    "full_run": {
+      "id": "RUN-IMPORT-ZERO-FIELDS-001",
+      "source_commit": "a19ab6d94870a129c79ccbea91229f65c5592c51",
+      "status": "RUNNING_NOT_QUALIFIED",
+      "module_workers": 2,
+      "module_timeout": 180,
+      "scope": "Current complete Linux source/test/capture qualification; external and Windows/EXE qualifications remain separate."
+    },
+    "latest_user_screen": {
+      "sources": 200,
+      "preflight_failures": 0,
+      "phase": "PREFLIGHT_READY_NOT_ANALYSED",
+      "next_visible_action": "確認預檢並開始訓練",
+      "start_control": "Top row after LOCAL_OPERATOR; screenshot may omit/clamp right side, layout accessibility check pending.",
+      "private_filenames_saved": false
+    }
   },
   "startup_usability_feedback": {
     "status": "INVESTIGATED_NOT_IMPLEMENTED_NO_WINDOWS_STARTUP_TIMING",
     "report": "docs/dev/bugfixes/import-zero-fields-20261023/STARTUP_FINDINGS.md",
     "confirmed": "Onedir package; GUI shown only after synchronous initialization; no early visible state; early failure prints to hidden console.",
     "next": "If implementing startup improvement, add visible early status/failure and local phase timings first, then optimize measured bottlenecks. No language rewrite based on guesswork."
+  },
+  "training_screen_feedback": {
+    "status": "CURRENT_ACTION_AND_KEYBOARD_WORKAROUND_VERIFIED_LAYOUT_NOT_CHANGED",
+    "guide": "docs/dev/bugfixes/import-zero-fields-20261023/TRAINING_SCREEN_GUIDE.md",
+    "proof": "docs/dev/bugfixes/import-zero-fields-20261023/start-button-visibility.json",
+    "private_files_used": false,
+    "issues": [
+      "Start control at right of operator field can be absent from narrow visible area.",
+      "PREFLIGHT completion does not clearly present a next action.",
+      "Preparation rechecks source files before queueing; this stage needs clearer in-dialog status.",
+      "Analysis and shared-rule training must not be presented as identical completion."
+    ]
   }
 }
