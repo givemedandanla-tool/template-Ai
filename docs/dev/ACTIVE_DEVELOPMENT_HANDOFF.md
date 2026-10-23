@@ -11,6 +11,8 @@
 3. [觀察資料與能力契約](analysis_review_ui/OBSERVATION_CONTRACT.md)：完整記錄供後續AI學習，不冒稱現有資料已全部取得。
 4. [決策](../decisions/2026-10-23-ANALYSIS-REVIEW-UI-FIRST.md)、STATE.analysis_review_redesign與獨立文件checkpoint收據。
 
+文件快照已REMOTE_VERIFIED：`3fdadb20`，15件（14個設計／交接／參考檔＋checkpoint本身）；[讀回收據](../checkpoints/CP-20261023-ANALYSIS-REVIEW-UI-DESIGN-001.receipt.json)。這是文件輔助範圍，產品主收據與資格不變。
+
 ## 已確認
 
 - 日常面板僅肉眼可見資訊、範圍／群組及人物公司共享等歸屬；底層數字照存但隱藏。
