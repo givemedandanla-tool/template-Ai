@@ -17,7 +17,8 @@ from .source_links import verify_source
 from .training_store import digest
 from .semantic_fields import recognize
 
-ANALYSER_VERSION='source-hypotheses-8-pinned-semantic-channel'
+ANALYSER_VERSION='source-hypotheses-9-bounded-page-roundoff'
+PAGE_EDGE_ROUNDOFF_MM=.001
 
 
 def vector_objects(source,assets):
@@ -70,10 +71,22 @@ def classify(value):
 def analyse_source(source,assets,semantic_model=None,model_context=None):
     root,elements,bounds=vector_objects(source,assets)
     page=Rect(0,0,source['width_mm'],source['height_mm']);byid={e.get('id'):e for e in elements if e.get('id')}
-    candidate_rects=[]
+    candidate_rects=[];boundary_adjustments={}
     for node in elements:
         key=node.get('id');rect=bounds.get(key)
         if node.tag.rsplit('}',1)[-1]=='rect' and rect and min(rect.w,rect.h)>=15 and contains(page,rect):
+            # Inkscape's decimal query output can round a page-sized frame a
+            # fraction of a micron outside the exact document size. Normalize
+            # only that bounded overflow here; storage/output gates stay strict.
+            overflow=max(0,-rect.x,-rect.y,rect.x+rect.w-page.w,rect.y+rect.h-page.h)
+            if overflow:
+                if overflow>PAGE_EDGE_ROUNDOFF_MM:
+                    raise ValueError('來源作品框超出頁面，已停止分析；請核對原稿邊界與尺寸')
+                original=asdict(rect)
+                left=max(0,rect.x);top=max(0,rect.y)
+                rect=Rect(left,top,min(page.w,rect.x+rect.w)-left,min(page.h,rect.y+rect.h)-top)
+                boundary_adjustments[key]=dict(method='BOUNDED_PAGE_EDGE_QUERY_ROUNDOFF',
+                    original=original,normalized=asdict(rect),maximum_mm=PAGE_EDGE_ROUNDOFF_MM)
             candidate_rects.append((key,rect))
     # Outer backgrounds do not collapse distinct inner card candidates.
     regions=[(key,rect) for key,rect in candidate_rects if not any(
@@ -154,6 +167,7 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
             analysis_version=ANALYSER_VERSION,review_state='AI_PENDING_REVIEW',
             evidence=dict(method='INKSCAPE_TRANSFORMED_BOUNDS_AND_SOURCE_LABELS',native_illustrator_mapping='UNKNOWN',
                 physical_size='SOURCE_GEOMETRY_HYPOTHESIS_REQUIRES_CONFIRMATION',
+                page_boundary_adjustment=boundary_adjustments.get(key),
                 original_glyph_analysis=native_evidence,unframed_region_hypotheses=region_evidence,font_size='DEFAULT_REQUIRES_SOURCE_REVIEW',
                 confidence='UNVALIDATED_HEURISTIC',issues=sorted(set(clues)),oversized_text=oversized,
                 object_ids=[row[0] for row in local],source_unchanged=True,

@@ -11,6 +11,12 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 當前實機回饋：匯入零欄位與啟動狀態
+
+2026-10-23使用者回報60×30mm作品0欄位；合成重現先匯入建立空草稿會阻擋來源分析，另查出Inkscape整頁框微小roundoff超界。修正新增獨立候選、保留原稿／人工資料／exact scope，僅<=0.001mm頁邊誤差有紀錄地正規化；storage／輸出Gate不放寬。背景只刷新作品選單不覆蓋編輯器。當前驗證／checkpoint以STATE.import_zero_fields_bugfix及報告為準，不能沿用beta2資格稱新bytes已全驗；沒有新Release授權。
+
+使用者另問啟動慢是否語言所致：已查明onedir、UI顯示前同步初始化、早期無可見狀態且錯誤印到隱藏console。原因分析STARTUP_FINDINGS已保存，但早期啟動提示／分階段計時／效能修復尚未實作，Windows真正瓶頸未量測。
+
 ## 最新交付：修正版發佈加速完成
 
 2026-10-23工具優化已完成，先讀STATE.release_speed_optimization及[交付報告](docs/dev/releases/RELEASE_SPEED_DELIVERY.md)、[政策](docs/dev/releases/RELEASE_SPEED_POLICY.md)。27 wheel、包內Inkscape11837檔與125來源物件皆固定pin、命中再驗；已保存真正冷／遠端熱cache證據。Windows199、真EXE21／引擎5、loopback13060檔與最新行政Windows42／0skip通過。loopback不是新Release公開下載，本輪沒有新產品版；下次真發布仍兩次真GitHub下載。資料／字型／模型不進cache／GitHub。

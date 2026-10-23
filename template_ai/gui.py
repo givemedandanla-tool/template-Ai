@@ -1096,6 +1096,10 @@ class MainWindow(QMainWindow):
         self.source_combo.blockSignals(False)
         if self.sources and not retained and (not preserve_editor or explicit_select is not None):
             self.choose_source(self.source_combo.currentIndex())
+        elif retained:
+            # Background analysis may have added proposals for this source.
+            # Refresh the selector only; never reload or save the open draft.
+            self.refresh_works()
 
     def source_page(self,delta):
         from .training_navigation import require_clean_navigation
@@ -1235,7 +1239,8 @@ class MainWindow(QMainWindow):
         for s in self.slots:
             self.slot_list.addItem(f"{KINDS[s.kind]} · {s.owner} · 第 {s.index+1} 筆")
         self.slot_list.blockSignals(False)
-        self.source_info.setText(f"作品 {self.work_width:.3f} × {self.work_height:.3f} mm · {len(self.slots)} 個欄位 · {self.source['engine']}\n橘框是作品邊界，藍框是資料／Logo 標記；這些操作不改動原稿。")
+        field_status=("尚無欄位標記，不代表原稿沒有文字。請先自動分析；分析後從「這份檔案中的作品」選取 AI候選作品。\n" if not self.slots else "")
+        self.source_info.setText(f"作品 {self.work_width:.3f} × {self.work_height:.3f} mm · {len(self.slots)} 個欄位標記 · {self.source['engine']}\n{field_status}橘框是作品邊界，藍框是資料／Logo 標記；這些操作不改動原稿。")
 
     def add_rectangle(self, rect):
         if self.tabs.currentIndex() == 0:

@@ -1884,3 +1884,5 @@ Frozen trace002/f967/run39807865848：已下載及驗證原授權242檔，實際
 跨版本cache scope已核GitHub actions/cache固定README：key還受branch隔離，故保留release-speed-check/20261023-001作長期builder。未來發版需STATE新授權、明確提交標記、版本request ref精確同HEAD，普通dev/main/PR不建置。補報告metadata不誤擴大，local005行政41 PASS／0skip。native002仍7e8cf994，cache／原生驗證execute等關鍵body及輸入pin bytes與現在相同，equivalence報告已核SHA；只有publishing-only guard／選測metadata規則變更，等該native/warm結束再跑獨立Windows41，不重跑無影響產品全套。
 
 2026-10-23修正版加速交付：固定輸入cache／影響規則／計時／GitHub保存4項完成；native002/run39894882425 Windows199、EXE21、引擎5、loopback13060通過；第二runner熱cache真hit，最新Windows42＋batch圖run39897343317通過。冷61.11→熱37.27含還原，索引34.53→5.17單次觀察，非全程發版保證。來源與未改validation路徑分組證明在final-validation-composition；原失敗保留。本輪無新tag／Release，beta1／beta2不變，產品code f1a2、外部資格不升級。最終主CP必須含正式004全部附件；後續依RELEASE_SPEED_POLICY及新使用者授權，不自動重建。
+
+2026-10-23：實機零欄位回饋已用真Qt匯入＋真Inkscape匿名SVG重現：空草稿阻擋來源分析、同crop去重阻擋及整頁框微小捨入超界。原2反例現通過；完整針對回歸仍進行，不能冒稱Windows／新EXE完成。保留人工資料，原來源資格為歷史。另已核對啟動onedir／無早期可見狀態，原因分析保存但啟動修復與實機計時尚未做。見STATE與bugfixes/import-zero-fields-20261023。

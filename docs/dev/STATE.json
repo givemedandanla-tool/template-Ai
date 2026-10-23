@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "IMPORT_ZERO_FIELDS_INVESTIGATION",
+  "active_task": "IMPORT_ZERO_FIELDS_TARGETED_REGRESSION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261023-IMPORT-ZERO-BEGIN-001.receipt.json",
   "last_confirmed_commit": "b15b766b341efc4d9e2c69b403115ce2b9c37721",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Reproduce import -> blank workspace -> automatic analysis using synthetic sources.",
-    "Fix only confirmed routing and result visibility defects, preserving manual content and source identity.",
-    "Run targeted isolated Qt/core regressions, persist truthful evidence and checkpoint; no new Release without explicit authorization."
+    "Finish isolated targeted Qt/core regression for zero-field import bug, preserve original failure evidence and GitHub checkpoint.",
+    "New source qualification and real Windows/EXE/download checks are required before a separately authorized new Release.",
+    "Startup feedback: early visible state/failure and local phase timing remain unimplemented; actual Windows bottleneck and user artwork format/stage are not yet established."
   ],
   "blocked": [
     {
@@ -44,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261023-IMPORT-ZERO-SOURCE-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -2059,7 +2061,7 @@
     "latest_guard_source": "bb431f68f31a902f0239df61784ff3f6a518fe65"
   },
   "import_zero_fields_bugfix": {
-    "status": "REPRODUCTION_AND_ROOT_CAUSE_CHECK_PENDING",
+    "status": "THREE_CONFIRMED_CAUSES_PATCHED_TARGETED_REGRESSION_PENDING",
     "baseline_commit": "5830b56eecf44aada5d6a705012d29df03ccc07a",
     "user_observation": "Artwork shows 60.000 x 30.000 mm and zero saved fields; user stage and source editability pending clarification.",
     "hypotheses": [
@@ -2069,6 +2071,20 @@
     ],
     "scope": "Non-destructive import-to-analysis integration and clear saved-field status; no new release authorized.",
     "original_source_qualification": "RUN-BUNDLED-INKSCAPE-BETA2-004 remains historical; changed product will require new full source qualification before EXE publication.",
-    "report": "docs/dev/bugfixes/import-zero-fields-20261023/REPORT.md"
+    "report": "docs/dev/bugfixes/import-zero-fields-20261023/REPORT.md",
+    "confirmed_causes": [
+      "Explicit import creates an empty full-page work that suppresses source analysis.",
+      "Same-crop empty work also suppresses independently derived proposals.",
+      "Inkscape page-frame query roundoff can exceed exact 60x30mm page by about 0.00009mm and fail strict storage."
+    ],
+    "view_refresh": "Refresh work selector after background results while preserving active/unsaved editor; zero-field label clarifies it is a marking count.",
+    "manual_protection": "Separate proposals only; no replacement of blank or manual work; preserve cropped/confirmed/revised/renamed/facts/sample/legacy/object-edit scope and exact-work retries.",
+    "boundary_policy": "Normalize only page-edge query overflow <=0.001mm, record original+normalized bounds; larger overflow rejected; storage/output gates unchanged."
+  },
+  "startup_usability_feedback": {
+    "status": "INVESTIGATED_NOT_IMPLEMENTED_NO_WINDOWS_STARTUP_TIMING",
+    "report": "docs/dev/bugfixes/import-zero-fields-20261023/STARTUP_FINDINGS.md",
+    "confirmed": "Onedir package; GUI shown only after synchronous initialization; no early visible state; early failure prints to hidden console.",
+    "next": "If implementing startup improvement, add visible early status/failure and local phase timings first, then optimize measured bottlenecks. No language rewrite based on guesswork."
   }
 }

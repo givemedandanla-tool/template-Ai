@@ -180,6 +180,34 @@ class AutomaticTraining:
             payload['stages']['design_observation']='RECORDED_NOT_TRAINING_ADMISSION'
             return self.store._write('AUTO_UNIT',identity,payload,before['revision'] if before else 0,'automatic_work_analysed'),False
 
+    def empty_full_page_workspace(self,source,work):
+        """Allow separate source proposals without taking ownership of old drafts.
+
+        Opening a source creates a full-page empty work. Older databases do not
+        identify it as a placeholder, so it must never be filled or replaced in
+        place. Manual crops, fields, confirmations and admitted samples retain
+        their existing analysis scope.
+        """
+        payload=work['payload']
+        if work['revision']!=1 or self.library.get_labels(source['id']) is not None:
+            return False
+        if self.db.execute("SELECT 1 FROM reviews WHERE entity=? AND action='rename_artwork' LIMIT 1",(work['id'],)).fetchone():
+            return False
+        if self.db.execute("SELECT 1 FROM object_edits WHERE entity_id=? LIMIT 1",(work['id'],)).fetchone():
+            return False
+        if payload.get('slots') or payload.get('visual_confirmed') or payload.get('company_bindings'):
+            return False
+        if payload.get('analysis_key') or payload.get('segmentation_state'):
+            return False
+        if payload.get('crop')!=dict(x=0,y=0,w=source['width_mm'],h=source['height_mm']):
+            return False
+        if payload.get('work_width')!=source['width_mm'] or payload.get('work_height')!=source['height_mm']:
+            return False
+        facts=self.store.facts(work['id'])
+        if facts['observations'] or facts.get('confirmation') or self.store.get('FACTS',work['id']) is not None:
+            return False
+        return self.db.execute("SELECT 1 FROM training_records WHERE kind='SAMPLE' AND json_extract(payload,'$.work_id')=? LIMIT 1",(work['id'],)).fetchone() is None
+
     def run_source(self,item,job,cancel=None,admission=None):
         from .runtime_admission import require_resources
         require_resources(admission)
@@ -211,7 +239,8 @@ class AutomaticTraining:
             if self.store.pins(item['work_scope'][0])!=item['expected_pins']:raise ValueError('選定作品在啟動前又變更，未套用舊分析')
             works=[w for w in works if w['id'] in item['work_scope']]
             if {w['id'] for w in works}!=set(item['work_scope']):raise ValueError('作品不屬確認來源')
-        if not item.get('work_scope') and (not works or all(w['payload'].get('analysis_key') for w in works)):
+        empty_workspace_ids={w['id'] for w in works if self.empty_full_page_workspace(source,w)} if not item.get('work_scope') else set()
+        if not item.get('work_scope') and (not works or all(w['payload'].get('analysis_key') or w['id'] in empty_workspace_ids for w in works)):
             if deployment:
                 from .quality_pipeline import QualityPipelines
                 QualityRepairReleases(self.library).check_pin(deployment)
@@ -225,7 +254,7 @@ class AutomaticTraining:
                 if cancel and cancel.is_set():break
                 require_resources(admission)
                 if any(w['payload'].get('analysis_key')==hypothesis['key'] or
-                    w['payload'].get('crop')==hypothesis['crop'] for w in works):continue
+                    w['payload'].get('crop')==hypothesis['crop'] and w['id'] not in empty_workspace_ids for w in works):continue
                 # Atomically save the source-derived work and unconfirmed observations.
                 with self.store.transaction():
                     payload={k:deepcopy(hypothesis[k]) for k in ('crop','work_width','work_height','slots','visual_confirmed','company_bindings')}

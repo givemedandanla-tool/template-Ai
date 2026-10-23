@@ -1,5 +1,9 @@
 # 當前精簡交接
 
+實機回饋零欄位調查見STATE.import_zero_fields_bugfix及[紀錄](bugfixes/import-zero-fields-20261023/REPORT.md)。先匯入建空草稿阻擋分析及整頁框Inkscape微小捨入超界已合成重現並修正，正跑針對性隔離回歸；新增候選不覆寫人工資料，背景只刷新作品清單。新product bytes尚無新的完整來源／Windows／EXE資格，沒有新Release。
+
+[啟動狀態分析](bugfixes/import-zero-fields-20261023/STARTUP_FINDINGS.md)已核對onedir、同步初始化、UI提示太晚及隱藏console錯誤；尚未實作早期狀態／計時或取得Windows瓶頸證據。不是已證明須更換Python。使用者原作品格式及是否已分析仍待回覆，不能斷言私有作品唯一根因。
+
 修正版發佈加速已完成，詳[交付](releases/RELEASE_SPEED_DELIVERY.md)、[政策](releases/RELEASE_SPEED_POLICY.md)與STATE.release_speed_optimization。dev/v0.1-first-version／PR2，不合併main。最後產品版仍v0.2.0-beta.2／來源af97b108；本輪沒有新tag或Release，舊版公開manifest／SHA與tag已精確讀回未變。
 
 4項工具能力：27固定wheel離線hash安裝；精確引擎／125來源ZIP重用再驗；保守AST影響選測（base∪head、動態契約hash、核心／未知完整、固定8底線、報告資料不誤擴大）；逐階段真計時。長期builder ref release-speed-check/20261023-001用於跨版本cache，普通dev/main/PR不建置。新發版需STATE新request授權＋提交標記＋版本request參照同HEAD；目前release_request=null，不自動推builder重建／發布。
