@@ -185,15 +185,93 @@ def build():
         shutil.copy2(BUILD / 'release-info.json', PRODUCT / 'release-info.json')
 
 
+class ImmediateTraceResult(unittest.TextTestResult):
+    """Keep the original failure even when a later Qt cleanup never returns."""
+    def _write_immediate(self, kind, test, error):
+        self.stream.write('\nIMMEDIATE_' + kind + ': ' + self.getDescription(test) + '\n')
+        self.stream.write(self._exc_info_to_string(error, test))
+        self.stream.flush()
+
+    def addFailure(self, test, err):
+        self._write_immediate('FAILURE', test, err)
+        super().addFailure(test, err)
+
+    def addError(self, test, err):
+        self._write_immediate('ERROR', test, err)
+        super().addError(test, err)
+
+
 def test_one(module, output):
     sys.path.insert(0, str(ROOT / 'tests'))
     suite = unittest.defaultTestLoader.loadTestsFromName(module)
-    result = unittest.TextTestRunner(verbosity=2).run(suite)
+    result = unittest.TextTestRunner(verbosity=2, resultclass=ImmediateTraceResult).run(suite)
     report = dict(module=module, tests_run=result.testsRun, failures=len(result.failures), errors=len(result.errors),
         skipped=[dict(test=str(t), reason=reason) for t, reason in result.skipped],
         status='PASS' if result.wasSuccessful() and result.testsRun > len(result.skipped) else 'FAIL')
     write(output, report)
     return 0 if report['status'] == 'PASS' else 1
+
+
+def stop_owned_test_tree(process):
+    """Terminate only this isolated test process and its observed descendants."""
+    import psutil
+    try:
+        parent = psutil.Process(process.pid)
+        descendants = parent.children(recursive=True)
+    except psutil.NoSuchProcess:
+        process.wait(timeout=10)
+        return dict(status='STOPPED', root_pid=process.pid, observed_descendants=0)
+    owned = [parent] + descendants
+    # Stop the root first so it cannot create more children during cleanup.
+    for item in owned:
+        try:item.kill()
+        except psutil.NoSuchProcess:pass
+    _, alive = psutil.wait_procs(owned, timeout=10)
+    process.wait(timeout=10)
+    remaining = []
+    for item in alive:
+        try:
+            if item.is_running() and item.status() != psutil.STATUS_ZOMBIE:remaining.append(item)
+        except psutil.NoSuchProcess:pass
+    return dict(status='STOPPED' if not remaining else 'FAILED', root_pid=process.pid,
+        observed_descendants=len(descendants), remaining_pids=[item.pid for item in remaining])
+
+
+def run_isolated_test(module, command, output, log_path, *, cwd, env, timeout=240):
+    """A timeout is evidence of ERROR, never a passing or skipped module."""
+    output, log_path = Path(output), Path(log_path)
+    options = dict(start_new_session=True) if os.name != 'nt' else dict(creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+    start = time.perf_counter()
+    timed_out = False
+    cleanup = None
+    with log_path.open('wb') as log:
+        process = subprocess.Popen(command, cwd=cwd, env=env, stdout=log, stderr=subprocess.STDOUT, **options)
+        try:
+            exit_code = process.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            try:cleanup = stop_owned_test_tree(process)
+            except Exception as error:
+                cleanup = dict(status='FAILED', error_type=type(error).__name__, message=str(error)[:300])
+            exit_code = process.poll()
+            log.write(('\nRELEASE_MODULE_TIMEOUT: ' + json.dumps(dict(module=module, timeout_seconds=timeout,
+                process_tree_cleanup=cleanup), sort_keys=True) + '\n').encode())
+            log.flush()
+    if timed_out:
+        row = dict(module=module, status='ERROR', termination='TIMEOUT', tests_run=0,
+            tests_run_complete=False, failures=0, errors=1, skipped=[], timeout_seconds=timeout,
+            process_tree_cleanup=cleanup)
+    else:
+        try:
+            row = json.loads(output.read_text(encoding='utf-8'))
+            if row.get('module') != module or row.get('status') not in {'PASS', 'FAIL'}:
+                raise ValueError('Unexpected module result identity/status')
+        except (OSError, ValueError, TypeError) as error:
+            row = dict(module=module, status='ERROR', termination='MISSING_OR_INVALID_RESULT', tests_run=0,
+                tests_run_complete=False, failures=0, errors=1, skipped=[], error_type=type(error).__name__)
+    row.update(exit_code=exit_code, seconds=round(time.perf_counter()-start, 6))
+    write(output, row)
+    return row
 
 
 def source_tests():
@@ -215,17 +293,15 @@ def source_tests():
     with stage('isolated_current_component_tests'):
         for module in modules:
             out = folder / (module + '.json')
-            with (folder / (module + '.log')).open('wb') as log:
-                result = subprocess.run([sys.executable, str(Path(__file__)), 'test-one', '--module', module,
-                    '--output', str(out)], cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=240)
-            if not out.exists():
-                raise RuntimeError('Module did not write its result: ' + module)
-            row = json.loads(out.read_text(encoding='utf-8'))
-            row['exit_code'] = result.returncode
+            row = run_isolated_test(module, [sys.executable, str(Path(__file__)), 'test-one', '--module', module,
+                '--output', str(out)], out, folder / (module + '.log'), cwd=ROOT, env=env)
             reports.append(row)
-        summary = dict(status='PASS' if all(r['status'] == 'PASS' and r['exit_code'] == 0 for r in reports) else 'FAIL',
+            if row.get('process_tree_cleanup', {}).get('status') == 'FAILED':break
+        summary = dict(status='PASS' if len(reports) == len(modules) and all(r['status'] == 'PASS' and r['exit_code'] == 0 for r in reports) else 'FAIL',
             scope='INDEPENDENT_REVIEW_COMPONENT_NOT_OLDER_FULL_PRODUCT', modules=reports,
+            modules_not_run=modules[len(reports):], timeout_modules=[r['module'] for r in reports if r.get('termination') == 'TIMEOUT'],
             required_reused_core_modules=list(REUSED_TESTS), component_modules=component_modules,
+            test_counts_complete=all(r.get('tests_run_complete', True) for r in reports),
             tests_run=sum(r['tests_run'] for r in reports), failures=sum(r['failures'] for r in reports),
             errors=sum(r['errors'] for r in reports), skipped=sum(len(r['skipped']) for r in reports),
             source_commit=start['source_commit'], source_manifest_sha256=start['source_manifest_sha256'],

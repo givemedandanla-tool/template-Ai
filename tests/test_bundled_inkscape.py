@@ -68,7 +68,9 @@ class BundledInkscapeTests(unittest.TestCase):
 
     def test_dependency_changed_after_first_selection_invalidates_cached_validation(self):
         with self.frozen():
-            self.assertEqual(Path(inkscape_path()),self.bundle)
+            # Windows may spell TEMP with an 8.3 alias while the resolver returns
+            # the canonical long path. Compare the selected file identity.
+            self.assertTrue(Path(inkscape_path()).samefile(self.bundle))
             self.library.write_bytes(b'B'*self.library.stat().st_size)
             with self.assertRaisesRegex(ValueError,'校驗'):
                 inkscape_path()

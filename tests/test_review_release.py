@@ -1,8 +1,11 @@
 """Administrative release guards use real ZIP bytes in isolated test folders."""
 import importlib.util
 import json
+import os
 from pathlib import Path
+import sys
 import tempfile
+import textwrap
 import unittest
 from unittest.mock import patch
 import zipfile
@@ -103,6 +106,84 @@ class ReviewReleaseTests(unittest.TestCase):
                 raise RuntimeError('authored failure')
         row=json.loads((self.build/'release-timings.json').read_text())['stages'][0]
         self.assertEqual(row['status'],'FAIL');self.assertGreaterEqual(row['seconds'],0)
+
+    def isolated_case(self, module, source, timeout=2):
+        (self.root/(module+'.py')).write_text(textwrap.dedent(source),encoding='utf-8')
+        output=self.build/(module+'.json');log=self.build/(module+'.log')
+        env=os.environ.copy();env['PYTHONPATH']=str(self.root)+os.pathsep+env.get('PYTHONPATH','')
+        row=release.run_isolated_test(module,[sys.executable,str(_PATH),'test-one','--module',module,
+            '--output',str(output)],output,log,cwd=self.root,env=env,timeout=timeout)
+        return row,log.read_text(encoding='utf-8'),output
+
+    def test_failure_traceback_survives_hanging_cleanup(self):
+        row,log,path=self.isolated_case('authored_failure', '''
+            import time,unittest
+            class AuthoredFailure(unittest.TestCase):
+                def tearDown(self):time.sleep(60)
+                def test_requirement(self):self.assertEqual('actual','EXPECTED_AUTHORED_FAILURE')
+        ''')
+        self.assertEqual(row['status'],'ERROR');self.assertEqual(row['termination'],'TIMEOUT')
+        self.assertEqual(row['process_tree_cleanup']['status'],'STOPPED')
+        self.assertIn('IMMEDIATE_FAILURE:',log);self.assertIn('Traceback (most recent call last)',log)
+        self.assertIn('AssertionError',log);self.assertIn('EXPECTED_AUTHORED_FAILURE',log)
+        self.assertEqual(json.loads(path.read_text())['status'],'ERROR')
+
+    def test_error_traceback_survives_hanging_cleanup(self):
+        row,log,_=self.isolated_case('authored_error', '''
+            import time,unittest
+            class AuthoredError(unittest.TestCase):
+                def tearDown(self):time.sleep(60)
+                def test_requirement(self):raise RuntimeError('EXPECTED_AUTHORED_ERROR')
+        ''')
+        self.assertEqual(row['status'],'ERROR');self.assertEqual(row['termination'],'TIMEOUT')
+        self.assertIn('IMMEDIATE_ERROR:',log);self.assertIn('RuntimeError: EXPECTED_AUTHORED_ERROR',log)
+
+    def test_timeout_stops_owned_child_then_next_real_module_can_pass(self):
+        pidfile=self.root/'authored-child-pid.txt'
+        source='''
+            import pathlib,subprocess,sys,time,unittest
+            class AuthoredChild(unittest.TestCase):
+                def test_requirement(self):
+                    child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(60)'])
+                    pathlib.Path(PIDFILE).write_text(str(child.pid))
+                    time.sleep(60)
+        '''.replace('PIDFILE',repr(str(pidfile)))
+        row,log,_=self.isolated_case('authored_child',source)
+        self.assertEqual(row['termination'],'TIMEOUT');self.assertFalse(row['tests_run_complete'])
+        self.assertEqual(row['process_tree_cleanup']['status'],'STOPPED')
+        self.assertGreaterEqual(row['process_tree_cleanup']['observed_descendants'],1)
+        self.assertIn('RELEASE_MODULE_TIMEOUT:',log)
+        import psutil
+        try:child=psutil.Process(int(pidfile.read_text()))
+        except psutil.NoSuchProcess:child=None
+        self.assertTrue(child is None or not child.is_running() or child.status()==psutil.STATUS_ZOMBIE)
+        next_row,_,_=self.isolated_case('authored_following', '''
+            import unittest
+            class Following(unittest.TestCase):
+                def test_still_runs(self):self.assertEqual(2+2,4)
+        ''')
+        self.assertEqual(next_row['status'],'PASS');self.assertEqual(next_row['tests_run'],1)
+
+    def test_timeout_does_not_skip_later_modules_or_pass_release_gate(self):
+        tests=self.root/'tests';tests.mkdir();(tests/'test_review_authored.py').write_text('# synthetic module')
+        seen=[]
+        def outcomes(module,command,out,log,**kwargs):
+            seen.append(module)
+            value=dict(module=module,status='ERROR' if module=='authored_timeout' else 'PASS',
+                termination='TIMEOUT' if module=='authored_timeout' else 'COMPLETE',
+                tests_run=0 if module=='authored_timeout' else 1,failures=0,
+                errors=int(module=='authored_timeout'),skipped=[],exit_code=-9 if module=='authored_timeout' else 0)
+            if module=='authored_timeout':value['process_tree_cleanup']={'status':'STOPPED'}
+            release.write(out,value);return value
+        (tests/'authored_timeout.py').write_text('# isolated timeout fixture')
+        pin=dict(source_commit='a'*40,source_manifest_sha256='b'*64)
+        with patch.object(release,'ROOT',self.root),patch.object(release,'REUSED_TESTS',('authored_timeout',)),\
+                patch.object(release,'identity',return_value=pin),patch.object(release,'run_isolated_test',side_effect=outcomes):
+            with self.assertRaisesRegex(RuntimeError,'Component tests failed'):release.source_tests()
+        self.assertEqual(seen,['authored_timeout','test_review_authored'])
+        summary=json.loads((self.build/'source-tests.json').read_text())
+        self.assertEqual(summary['status'],'FAIL');self.assertEqual(summary['timeout_modules'],['authored_timeout'])
+        self.assertEqual(summary['modules_not_run'],[]);self.assertEqual(summary['errors'],1)
 
 
 if __name__=='__main__':unittest.main()
