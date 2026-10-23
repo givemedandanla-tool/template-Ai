@@ -3,6 +3,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import textwrap
@@ -184,6 +185,53 @@ class ReviewReleaseTests(unittest.TestCase):
         summary=json.loads((self.build/'source-tests.json').read_text())
         self.assertEqual(summary['status'],'FAIL');self.assertEqual(summary['timeout_modules'],['authored_timeout'])
         self.assertEqual(summary['modules_not_run'],[]);self.assertEqual(summary['errors'],1)
+
+    def test_actual_failing_command_saves_ci_trace_and_still_exits_nonzero(self):
+        launcher=self.root/'authored-cli-launcher.py'
+        launcher.write_text(textwrap.dedent(f'''
+            import importlib.util,pathlib,sys
+            spec=importlib.util.spec_from_file_location('authored_release', {_PATH.as_posix()!r})
+            release=importlib.util.module_from_spec(spec);spec.loader.exec_module(release)
+            release.OUTPUT=pathlib.Path({str(self.build)!r})
+            release.commit=lambda: {'a'*40!r}
+            raise SystemExit(release.entrypoint())
+        '''),encoding='utf-8')
+        command=[sys.executable,str(launcher),'verify-download','--output',str(self.download)]
+        env=os.environ.copy();env['GITHUB_ACTIONS']='true'
+        result=subprocess.run(command,env=env,capture_output=True,text=True,timeout=15)
+        self.assertNotEqual(result.returncode,0);self.assertIn('FileNotFoundError',result.stderr)
+        record=json.loads((self.build/'verify-download-command-error.json').read_text())
+        trace=(self.build/record['traceback_log']).read_text()
+        self.assertEqual(record['status'],'ERROR');self.assertEqual(record['command'],'verify-download')
+        self.assertEqual(record['source_commit'],'a'*40);self.assertTrue(record['exception_preserved'])
+        self.assertIn('Traceback (most recent call last)',trace);self.assertIn('FileNotFoundError',trace)
+        self.assertIn('verify_download',trace)
+
+    def test_local_command_failure_does_not_create_public_error_evidence(self):
+        env=os.environ.copy();env['GITHUB_ACTIONS']='false'
+        with patch.dict(os.environ,env,clear=True):
+            with self.assertRaises(FileNotFoundError):
+                release.entrypoint(['verify-download','--output',str(self.download)])
+        self.assertFalse((self.build/'verify-download-command-error.json').exists())
+
+    def test_public_failure_trace_redacts_queries_and_credential_patterns(self):
+        value=('RuntimeError: public invariant failed\n'
+            'https://official.example/public/log?sig=AUTHORED_SIGNED_VALUE&key=AUTHORED_KEY\n'
+            'Authorization: Bearer AUTHORED_BEARER\n'
+            'ghp_AUTHORED_NOT_A_REAL_GITHUB_TOKEN')
+        safe=release.public_failure_text(value)
+        self.assertIn('RuntimeError: public invariant failed',safe)
+        self.assertIn('https://official.example/public/log?[REDACTED_QUERY]',safe)
+        for secret in ['AUTHORED_SIGNED_VALUE','AUTHORED_KEY','AUTHORED_BEARER','AUTHORED_NOT_A_REAL_GITHUB_TOKEN']:
+            self.assertNotIn(secret,safe)
+
+    def test_package_missing_required_evidence_records_failed_preflight(self):
+        with patch.object(release,'identity',return_value=dict(source_commit='a'*40)):
+            with self.assertRaises(FileNotFoundError):release.package()
+        row=json.loads((self.build/'release-timings.json').read_text())['stages'][0]
+        self.assertEqual(row['name'],'package_preflight');self.assertEqual(row['status'],'FAIL')
+        self.assertEqual(row['error_type'],'FileNotFoundError')
+        self.assertEqual(list(self.build.glob('*.zip')),[])
 
 
 if __name__=='__main__':unittest.main()

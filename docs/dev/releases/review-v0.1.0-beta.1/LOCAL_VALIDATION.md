@@ -23,3 +23,5 @@
 來源e5844ef764271be184826bf98feaa94d90792a00本機隔離169/169 PASS、0失敗／錯誤／跳過。Windows run2局部結果另有實際失敗：test_bundled_inkscape Windows 8.3短名與長名字串比較錯誤，測試改samefile核對實體檔案、依賴竄改必須拒絕的斷言保留。test_import_exceptions舊GUI首例FAIL後cleanup模態視窗遮住trace，不能推論本輪Windows全PASS；另有界人工13s converter延遲僅證明cleanup遮蔽機制，不當Windows自然根因。新診斷會即時保留原失敗trace、240s單模組timeout標ERROR並停止其自有程序樹，繼續其餘獨立模組但整體FAIL阻擋發布；17個診斷工具測試全PASS，不代表產品PASS。
 
 第四輪Windows40015130560已完整覆蓋16模組，15模組PASS；8個review模組共103項（1個選配OCRskip）均通過，bundled13通過。舊例外GUI單模組ERROR/TIMEOUT，161個完成計數非完整總數，未build/發布。立即trace證明為test_import_exceptions.py104第二個wait_for超過helper12秒，runner確實已啟動。12秒非產品性能契約；修正僅測試harness：一般UI/preview仍12秒，SVG實轉換等待按兩個既有90秒命令＋10秒版本查詢＋20秒保存/排程buffer設210秒；清理先cancel/pump、30秒後明確ERROR，保留外層240秒硬上限。所有內容／hash／attempts／狀態／選取隔離斷言不變，不修改產品安全提示或產品程式。最壞情況仍可由外層ERROR終止而不誤PASS。
+
+第五Windows run40017431358：16模組173項，0FAIL/ERROR、1選配OCRskip；舊GUI12/12、真轉換等候48.46秒。真正frozen EXE 32項PASS，正常啟動畫面1.311096秒，包內Inkscape驗證11837檔。之後package preflight失敗，未建立tag/Release，不能交付下載。環境HTTP destination policy限制Azure/Actions log儲存host，沒有繞proxy；舊工具未持久化package前置trace，因此本輪僅加CI command-error .log/.json與完整preflight stage，21診斷單元PASS、原gate/排除/產品不變。根因須由下一輪安全報告確認，不猜測放行。

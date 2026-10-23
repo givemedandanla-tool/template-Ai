@@ -360,7 +360,7 @@ def safe_member(name):
     return value.as_posix()
 
 
-def package():
+def package_preflight():
     current = identity()
     tests = json.loads((OUTPUT / 'source-tests.json').read_text(encoding='utf-8'))
     acceptance = json.loads((OUTPUT / 'actual-exe.json').read_text(encoding='utf-8'))
@@ -406,6 +406,12 @@ def package():
         raise ValueError('Verified Inkscape corresponding sources required')
     if sha(ROOT / 'artifacts' / source['asset']) != source['sha256']:
         raise ValueError('Verified corresponding-source archive changed before packaging')
+    return current, tests, acceptance, entries, source
+
+
+def package():
+    with stage('package_preflight'):
+        current, tests, acceptance, entries, source = package_preflight()
     archive = OUTPUT / ('TemplateAIReview-v' + version() + '-windows-x64.zip')
     with stage('package_and_inventory'):
         with zipfile.ZipFile(archive, 'x', zipfile.ZIP_DEFLATED, allowZip64=True) as z:
@@ -592,7 +598,7 @@ def persist_evidence():
             branch=branch, commit=evidence_commit, tree=tree, source_commit=commit(), files=len(inventory)+1))
 
 
-def main():
+def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('command', choices=['prepare', 'build', 'test', 'test-one', 'exercise', 'package', 'verify-download', 'publish', 'persist-evidence'])
     p.add_argument('--cache', type=Path)
@@ -600,7 +606,7 @@ def main():
     p.add_argument('--output', type=Path)
     p.add_argument('--expected-manifest', type=Path)
     p.add_argument('--module')
-    args = p.parse_args()
+    args = p.parse_args(argv)
     if args.command == 'prepare':
         if args.cache is None:p.error('prepare requires --cache')
         prepare(args.cache)
@@ -619,5 +625,39 @@ def main():
     return 0
 
 
+def public_failure_text(value):
+    """Retain exception/stack evidence without signed URL queries or tokens."""
+    import re
+    value = re.sub(r'(https?://[^\s\'"<>?]+)\?[^\s\'"<>]+', r'\1?[REDACTED_QUERY]', value)
+    value = re.sub(r'\b(?:gh[pousr]_[A-Za-z0-9_]+|github_pat_[A-Za-z0-9_]+)\b', '[REDACTED_TOKEN]', value)
+    return re.sub(r'(?i)(authorization\s*:\s*(?:bearer|token)\s+)\S+', r'\1[REDACTED_TOKEN]', value)
+
+
+def save_command_error(command, error):
+    """Only the public synthetic Actions pipeline publishes command failures."""
+    import traceback
+    known = {'prepare', 'build', 'test', 'test-one', 'exercise', 'package', 'verify-download', 'publish', 'persist-evidence'}
+    command = command if command in known else 'cli'
+    OUTPUT.mkdir(parents=True, exist_ok=True)
+    trace = public_failure_text(''.join(traceback.format_exception(type(error), error, error.__traceback__)))
+    (OUTPUT / (command + '-command-error.log')).write_text(trace, encoding='utf-8')
+    write(OUTPUT / (command + '-command-error.json'), dict(status='ERROR', command=command,
+        source_commit=commit(), error_type=type(error).__name__, message=public_failure_text(str(error))[:1000],
+        traceback_log=command+'-command-error.log', redaction='SIGNED_URL_QUERIES_AND_CREDENTIAL_PATTERNS',
+        scope='PUBLIC_SYNTHETIC_RELEASE_PIPELINE_ONLY', exception_preserved=True))
+
+
+def entrypoint(argv=None):
+    arguments = list(sys.argv[1:] if argv is None else argv)
+    try:
+        return main(arguments)
+    except Exception as error:
+        if os.environ.get('GITHUB_ACTIONS') == 'true':
+            try:save_command_error(arguments[0] if arguments else 'cli', error)
+            except Exception as recording_error:
+                print('Release error evidence could not be saved: '+type(recording_error).__name__, file=sys.stderr)
+        raise
+
+
 if __name__ == '__main__':
-    raise SystemExit(main())
+    raise SystemExit(entrypoint())
