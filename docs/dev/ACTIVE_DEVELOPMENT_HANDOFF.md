@@ -1,3 +1,13 @@
+# 目前：第五輪 Windows 首版發布流程
+
+run40017431358，精確source b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e。新工具8個模組已於前輪Windows通過（103項含1個選配OCRskip）；舊GUI轉檔測試已修測試helper/安全cleanup，74原assert AST不變、12/12真Qt本機PASS、13s延遲正例及原12s負例皆有界完成。所有產品程式未因測試修正更動，外層240s仍保留。
+
+下一步等此精確source的全部Windows模組→clean build→真正EXE/worker/包內Inkscape/保存重開→package→新tag草稿與公開兩次實際下載校驗。尚未發布，不能稱EXE已驗。若FAIL讀review-release-evidence/v0.1.0-beta.1各run小型JSON/log，按實際根因修正，不覆寫既有tag。來源checkpoint精確讀回見STATE.review_tool_release_request.source_checkpoint。
+
+私人作品/字型/DB留本地，舊未提交timeout/adopt成果保留；不合併main、不提升舊完整產品及真實作品/訓練資格。首版OCR執行器選配；本元件是判讀/人工核對，不是AI訓練/模板生成。
+
+---
+
 # 當前：Windows首版驗證受阻，尚未發布
 
 目前request source446e571648df28727faa6e00d2f27e1113281275、run40015130560進行。run40014149436自然FAIL，沒有build/tag/Release：舊bundled測試長短路徑字面比較（已改samefile，hash拒絕不變）；test_import_exceptions舊GUI首例FAIL後cleanup modal，240秒測試程序逾時。保留真實失敗於releases/review-v0.1.0-beta.1/windows-failure-40014149436。

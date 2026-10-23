@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Implement independent local review tool using approved B+C UI and explicit review/export state.",
-    "Validate real Qt and Windows EXE paths, local analysis, annotations, overview, persistence and safe reports.",
-    "Publish new review-v0.1.0-beta.1 prerelease and verify downloaded bytes; preserve old releases and private data."
+    "Monitor review component Windows run40017431358 at exact source b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e",
+    "Require source, actual frozen EXE/worker/bundled-engine and draft/public download gates before delivery",
+    "Persist final release manifest, safe synthetic evidence, readback receipt and local-trial handoff; do not merge main or upload private data"
   ],
   "blocked": [
     {
@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Implement independent local review tool using approved B+C UI and explicit review/export state.",
+  "next_step": "Monitor review component Windows run40017431358 at exact source b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2149,7 +2149,7 @@
     "authorization": "User requests first version published to GitHub after UI discussion",
     "authorized_utc": "2026-10-23T18:54:05.645182+00:00",
     "source_commit": null,
-    "status": "WINDOWS_TEST_HARNESS_FIXED_REVALIDATION_PENDING",
+    "status": "WINDOWS_FULL_RELEASE_RUNNING",
     "plan": "docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -2163,14 +2163,14 @@
       "source_commit": "a7f6ede8f0c14b70c0c14822b59f89ca8a26c1d3",
       "report": "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/isolated-source-tests-final.json"
     },
-    "source_checkpoint": "docs/checkpoints/CP-20261023-REVIEW-UI-FINAL-001.receipt.json",
-    "windows_run": null,
-    "candidate_source_commit": "446e571648df28727faa6e00d2f27e1113281275",
+    "source_checkpoint": "docs/checkpoints/CP-20261023-REVIEW-WINDOWS-HARNESS-001.receipt.json",
+    "windows_run": 40017431358,
+    "candidate_source_commit": "b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e",
     "windows_failures_retained": [
       "40013168648 partial: bundled Windows path alias assertion, legacy import GUI FAIL/cleanup hang",
       "40014149436 FAIL: same path assertion and 240s legacy test process timeout; no build/tag/release"
     ],
-    "next_action": "Revalidate legacy real-converter waiting/cleanup harness on Windows; all unchanged business assertions and 240s outer timeout retained before true EXE gates.",
+    "next_action": "Monitor Windows run40017431358; source gate then actual EXE, immutable prerelease, actual draft/public downloads.",
     "previous_windows_run": 40015130560,
     "windows_component_source_tests": {
       "source_commit": "446e571648df28727faa6e00d2f27e1113281275",
