@@ -1,0 +1,28 @@
+test_actual_failing_command_saves_ci_trace_and_still_exits_nonzero (test_review_release.ReviewReleaseTests.test_actual_failing_command_saves_ci_trace_and_still_exits_nonzero) ... ok
+test_archive_paths_reject_aliases_and_escape (test_review_release.ReviewReleaseTests.test_archive_paths_reject_aliases_and_escape) ... ok
+test_companion_file_change_is_rejected (test_review_release.ReviewReleaseTests.test_companion_file_change_is_rejected) ... ok
+test_complete_download_checks_real_member_bytes (test_review_release.ReviewReleaseTests.test_complete_download_checks_real_member_bytes) ... ok
+test_component_version_cannot_silently_drift (test_review_release.ReviewReleaseTests.test_component_version_cannot_silently_drift) ... ok
+test_corrupted_download_is_rejected (test_review_release.ReviewReleaseTests.test_corrupted_download_is_rejected) ... ok
+test_duplicate_zip_members_are_rejected (test_review_release.ReviewReleaseTests.test_duplicate_zip_members_are_rejected) ... C:\hostedtoolcache\windows\Python\3.11.9\x64\Lib\zipfile.py:1566: UserWarning: Duplicate name: 'TemplateAIReview/TemplateAIReview.exe'
+  return self._open_to_write(zinfo, force_zip64=force_zip64)
+ok
+test_error_traceback_survives_hanging_cleanup (test_review_release.ReviewReleaseTests.test_error_traceback_survives_hanging_cleanup) ... ok
+test_explicit_source_pin_cannot_target_different_commit (test_review_release.ReviewReleaseTests.test_explicit_source_pin_cannot_target_different_commit) ... ok
+test_failure_traceback_survives_hanging_cleanup (test_review_release.ReviewReleaseTests.test_failure_traceback_survives_hanging_cleanup) ... ok
+test_local_command_failure_does_not_create_public_error_evidence (test_review_release.ReviewReleaseTests.test_local_command_failure_does_not_create_public_error_evidence) ... ok
+test_package_missing_required_evidence_records_failed_preflight (test_review_release.ReviewReleaseTests.test_package_missing_required_evidence_records_failed_preflight) ... ok
+test_precommit_authorization_allows_null_source_without_self_reference (test_review_release.ReviewReleaseTests.test_precommit_authorization_allows_null_source_without_self_reference) ... ok
+test_previously_published_request_is_not_reusable (test_review_release.ReviewReleaseTests.test_previously_published_request_is_not_reusable) ... ok
+test_public_failure_trace_redacts_queries_and_credential_patterns (test_review_release.ReviewReleaseTests.test_public_failure_trace_redacts_queries_and_credential_patterns) ... ok
+test_publish_requires_explicit_workflow_authorization (test_review_release.ReviewReleaseTests.test_publish_requires_explicit_workflow_authorization) ... ok
+test_replaced_manifest_is_rejected (test_review_release.ReviewReleaseTests.test_replaced_manifest_is_rejected) ... ok
+test_stage_failure_preserves_actual_failure (test_review_release.ReviewReleaseTests.test_stage_failure_preserves_actual_failure) ... ok
+test_timeout_does_not_skip_later_modules_or_pass_release_gate (test_review_release.ReviewReleaseTests.test_timeout_does_not_skip_later_modules_or_pass_release_gate) ... ok
+test_timeout_stops_owned_child_then_next_real_module_can_pass (test_review_release.ReviewReleaseTests.test_timeout_stops_owned_child_then_next_real_module_can_pass) ... ok
+test_unlisted_traversal_member_is_rejected (test_review_release.ReviewReleaseTests.test_unlisted_traversal_member_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 6.250s
+
+OK
