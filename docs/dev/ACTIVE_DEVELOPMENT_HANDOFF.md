@@ -1,3 +1,13 @@
+# 當前：Windows首版驗證受阻，尚未發布
+
+目前request source446e571648df28727faa6e00d2f27e1113281275、run40015130560進行。run40014149436自然FAIL，沒有build/tag/Release：舊bundled測試長短路徑字面比較（已改samefile，hash拒絕不變）；test_import_exceptions舊GUI首例FAIL後cleanup modal，240秒測試程序逾時。保留真實失敗於releases/review-v0.1.0-beta.1/windows-failure-40014149436。
+
+已補即時原trace與timeout ERROR分類／自有程序樹清理／後續獨立模組繼續，整體仍FAIL禁止發布。17項診斷工具測試通過；不能當Windows元件PASS。之前來源e5844ef7本機169項PASS，現source需Windows獨立驗證，不能沿用舊source資格。
+
+下一步讀取run40015130560完整aggregate與即時trace，按真原因最小修正；全source gate通過後真正Windows EXE／兩次GitHub下載校驗才交付。私人作品／字型仍本地，未新增付費API或服務。舊未提交timeout/adopt工作保留、舊產品主checkpoint/資格不變。
+
+---
+
 # 目前階段：獨立核對工具首版 Windows 發布
 
 元件實作已提交，Linux相關核心＋真Qt共166項獨立模組測試通過，0失敗／0錯誤／0skip；詳見releases/review-v0.1.0-beta.1/LOCAL_VALIDATION.md。版本review-v0.1.0-beta.1，入口review_app.py，EXE TemplateAIReview.exe。下一步是精確request分支Windows CI、真正EXE操作與兩次GitHub下載校驗，未完成前不能稱已發布。
