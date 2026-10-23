@@ -17,7 +17,7 @@
 - 修正中還原出同crop原生查詢roundoff阻擋；不能以改測試作品避開。
 - regression-final-first.log：新增10案例預跑10/10 PASS、0skip、20.928秒，包含真Qt／RuntimeDispatch完成刷新及未保存欄位保護；這是凍結前預跑，不當完整來源資格。
 - 原環境／fixture失敗及資源暫停日誌分別保存，不當產品通過。
-- 固定來源的13模組隔離回歸由run_targeted.py執行；結果尚待保存。
+- 固定來源155c7daf的13模組隔離回歸96/96 PASS、0skip、0runtime，207.848秒，見targeted-001。審查再發現外層略超頁背景應先被排除，不能提前拒絕內層合法作品；新反例先FAIL已留background-pre-fix.log，修正順序後新增11案例全部PASS（regression-final-second.log）。最終產品bytes的完整來源回歸另跑RUN-IMPORT-ZERO-FIELDS-001，不把前一來源的96項當最新全驗。
 
 ## 邊界與保存
 
@@ -26,3 +26,5 @@
 使用者追加的啟動慢／狀態不明，已核對並另存[原因分析](STARTUP_FINDINGS.md)；早期提示、啟動分階段計時與Windows瓶頸修復尚未實作。
 
 環境限制：/tmp滿曾使沙箱及Git讀回失敗；僅移除可重建的舊Ruff相容性測試虛擬環境，沒有刪私人資料／原checkpoint。測試用TMPDIR改到既有ignored工作目錄。無新增付費工具、API、試用或雲端服務。
+
+暫存補充：只清掉4個已關閉且Git認定garbage的失敗下載tmp_pack（216244224 bytes）；另只移除.cache中與Git已保存正式004附件逐byte hash相同的649個重複產物（121086274 bytes），對應清單見duplicate-cache-cleanup.json。所有canonical證據、DB、checkpoint及私人資料保留。

@@ -75,18 +75,6 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
     for node in elements:
         key=node.get('id');rect=bounds.get(key)
         if node.tag.rsplit('}',1)[-1]=='rect' and rect and min(rect.w,rect.h)>=15 and contains(page,rect):
-            # Inkscape's decimal query output can round a page-sized frame a
-            # fraction of a micron outside the exact document size. Normalize
-            # only that bounded overflow here; storage/output gates stay strict.
-            overflow=max(0,-rect.x,-rect.y,rect.x+rect.w-page.w,rect.y+rect.h-page.h)
-            if overflow:
-                if overflow>PAGE_EDGE_ROUNDOFF_MM:
-                    raise ValueError('來源作品框超出頁面，已停止分析；請核對原稿邊界與尺寸')
-                original=asdict(rect)
-                left=max(0,rect.x);top=max(0,rect.y)
-                rect=Rect(left,top,min(page.w,rect.x+rect.w)-left,min(page.h,rect.y+rect.h)-top)
-                boundary_adjustments[key]=dict(method='BOUNDED_PAGE_EDGE_QUERY_ROUNDOFF',
-                    original=original,normalized=asdict(rect),maximum_mm=PAGE_EDGE_ROUNDOFF_MM)
             candidate_rects.append((key,rect))
     # Outer backgrounds do not collapse distinct inner card candidates.
     regions=[(key,rect) for key,rect in candidate_rects if not any(
@@ -118,6 +106,22 @@ def analyse_source(source,assets,semantic_model=None,model_context=None):
         # Uncovered or ambiguously covered data keeps the whole-page fallback.
         if all(sum(contains(crop,row[2]) for _,crop in proposed)==1 for row in content):
             regions=proposed
+    normalized_regions=[]
+    for key,rect in regions:
+        # First discard decorative outer backgrounds, then normalize only the
+        # selected work regions. Query decimal roundoff must not relax storage
+        # or output gates, nor make an unused background reject valid cards.
+        overflow=max(0,-rect.x,-rect.y,rect.x+rect.w-page.w,rect.y+rect.h-page.h)
+        if overflow:
+            if overflow>PAGE_EDGE_ROUNDOFF_MM:
+                raise ValueError('來源作品框超出頁面，已停止分析；請核對原稿邊界與尺寸')
+            original=asdict(rect)
+            left=max(0,rect.x);top=max(0,rect.y)
+            rect=Rect(left,top,min(page.w,rect.x+rect.w)-left,min(page.h,rect.y+rect.h)-top)
+            boundary_adjustments[key]=dict(method='BOUNDED_PAGE_EDGE_QUERY_ROUNDOFF',
+                original=original,normalized=asdict(rect),maximum_mm=PAGE_EDGE_ROUNDOFF_MM)
+        normalized_regions.append((key,rect))
+    regions=normalized_regions
     from .source_text_evidence import text_evidence
     vector_channel='semantic_svg' if source.get('semantic_svg') else 'svg'
     from .source_derivative import QUERY_IDS_VERSION

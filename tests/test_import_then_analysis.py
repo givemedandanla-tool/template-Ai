@@ -70,6 +70,20 @@ class ImportThenAnalysisTests(unittest.TestCase):
         self.assertEqual(adjustment['maximum_mm'], .001)
         self.assertEqual(self.library.artwork(blank['id']), blank)
 
+    def test_outer_background_overflow_does_not_block_valid_inner_artworks(self):
+        text = self.path.read_text()
+        text = text.replace('<g id="cardA">',
+                            '<rect id="outer-background" width="190.01" height="60" fill="white"/>'
+                            '<g id="cardA">', 1)
+        self.path.write_text(text)
+        source, blank = self.imported_workspace()
+        result = self.run_job(self.job())
+        self.assertEqual(result['items'][0]['state'], 'WAITING_REVIEW')
+        candidates = self.analysed_candidates(source['id'])
+        self.assertEqual(len(candidates), 2)
+        self.assertTrue(all(work['payload']['slots'] for work in candidates))
+        self.assertEqual(self.library.artwork(blank['id']), blank)
+
     def test_meaningful_page_overflow_is_rejected_without_silently_clamping(self):
         self.path.write_text(
             '<svg xmlns="http://www.w3.org/2000/svg" width="60mm" height="30mm" '
