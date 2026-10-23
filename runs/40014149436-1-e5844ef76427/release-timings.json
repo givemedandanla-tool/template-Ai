@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "source_commit": "e5844ef764271be184826bf98feaa94d90792a00",
+  "stages": [
+    {
+      "name": "verified_fixed_inputs",
+      "started_utc": "2026-10-23T19:48:39.398764+00:00",
+      "status": "PASS",
+      "seconds": 66.757189
+    },
+    {
+      "name": "pinned_public_ocr_models",
+      "started_utc": "2026-10-23T19:49:46.197430+00:00",
+      "status": "PASS",
+      "seconds": 0.883935
+    },
+    {
+      "name": "isolated_current_component_tests",
+      "started_utc": "2026-10-23T19:49:48.013789+00:00",
+      "status": "FAIL",
+      "error_type": "TimeoutExpired",
+      "message": "Command '['C:\\\\hostedtoolcache\\\\windows\\\\Python\\\\3.11.9\\\\x64\\\\python.exe', 'D:\\\\a\\\\template-Ai\\\\template-Ai\\\\tools\\\\review_release.py', 'test-one', '--module', 'test_import_exceptions', '--output', 'D:\\\\a\\\\template-Ai\\\\template-Ai\\\\artifacts\\\\review-release\\\\source-tests\\\\test_import_exceptions.json']' timed out after 240.0 seconds",
+      "seconds": 240.779591
+    }
+  ]
+}
