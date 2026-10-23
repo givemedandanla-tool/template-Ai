@@ -11,9 +11,11 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
-## 最新授權：製作並發布最小判讀核對工具首版
+## 最新交付：最小判讀核對工具首版已發布
 
-使用者於2026-10-23授權第一版發布，取代前段僅討論限制。依docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md與STATE.review_tool_release_request，獨立review_app.py／TemplateAIReview.exe／review-v0.1.0-beta.1。feature/review-tool-v0.1.0以既有dev正確來源為基底；release-request精確分支才建置／發布，不合併main，不覆寫舊版。原稿／舊DB不變，私有資料仍本地。真正Qt／Windows EXE／下載校驗通過後才交付，不能以新component驗收取代舊完整產品資格。
+2026-10-23，review-v0.1.0-beta.1已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED。來源1562f4d09ed64564f100885f9ddcb6a7efb6e1db／Windows run40021575484 success：181項相關來源測試（180PASS、1選配OCRskip）、真正EXE32項、草稿與公開下載各13,094檔校驗PASS。先讀STATE.review_tool_release_request與[交付報告](docs/dev/releases/review-v0.1.0-beta.1/DELIVERY_REPORT.md)、QUICK_START.md。
+
+下一步等待本機一份作品實測與安全報告；獨立資料目錄、原稿／舊DB／舊Release不變。Inkscape隨包、Tesseract執行器選配。此元件僅判讀／核對／保存，不升舊完整產品、私人作品、AI訓練、實印或新手資格。不重建／覆寫tag、不合併main、不自行開發下一部件。feature分支後補教學與交接不改已發佈ZIP。以下僅討論／延後實作的段落為歷史，已被本輪發布授權取代。
 
 ## 最新使用者方向：先討論最小判讀核對工具的實機 UI
 

@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "ANALYSIS_REVIEW_TOOL_FIRST_RELEASE",
+  "active_task": "ANALYSIS_REVIEW_TOOL_AWAITING_LOCAL_FEEDBACK",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261023-IMPORT-ZERO-SOURCE-001.receipt.json",
   "last_confirmed_commit": "155c7daff076517dd91fb63be27b1ec4630f98b7",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Monitor review Windows run40019896642 at source6a68c1d1",
-    "Read exact package error if any; fix demonstrated packaging cause without weakening private-data guards",
-    "Require actual EXE and both draft/public downloads before declaring delivery; persist final handoff"
+    "User local one-file analysis, annotation, save and reopen",
+    "Use More > Export problem report for feedback; private files remain local",
+    "Maintain review component version separately; do not rebuild or overwrite published tag, merge main or start training component automatically"
   ],
   "blocked": [
     {
@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Push exact upstream test-data build filter, then monitor Windows review release",
+  "next_step": "Use review-v0.1.0-beta.1 locally on one artwork copy; return safe report and exact step if needed",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2128,7 +2128,7 @@
     ]
   },
   "analysis_review_redesign": {
-    "status": "FIRST_VERSION_IMPLEMENTATION_AUTHORIZED",
+    "status": "FIRST_RELEASE_PUBLISHED_AWAITING_LOCAL_FEEDBACK",
     "design_contract": "docs/dev/analysis_review_ui/DESIGN_CONTRACT.json",
     "decision": "docs/decisions/2026-10-23-ANALYSIS-REVIEW-UI-FIRST.md",
     "main_document": "docs/dev/analysis_review_ui/DESIGN.md",
@@ -2148,13 +2148,13 @@
     "component": "TemplateAIReview",
     "authorization": "User requests first version published to GitHub after UI discussion",
     "authorized_utc": "2026-10-23T18:54:05.645182+00:00",
-    "source_commit": null,
-    "status": "EXACT_UPSTREAM_TEST_DATA_FILTER_READY",
+    "source_commit": "1562f4d09ed64564f100885f9ddcb6a7efb6e1db",
+    "status": "RELEASE_PUBLISHED_DOWNLOAD_VERIFIED",
     "plan": "docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
     "user_request": "還有要說明的嗎？沒有的話，可以產出第一版發佈到github上了？",
-    "published": false,
+    "published": true,
     "local_tests": {
       "passed": 168,
       "failures": 0,
@@ -2164,13 +2164,13 @@
       "report": "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/isolated-source-tests-final.json"
     },
     "source_checkpoint": "docs/checkpoints/CP-20261023-REVIEW-WINDOWS-HARNESS-001.receipt.json",
-    "windows_run": 40019896642,
-    "candidate_source_commit": null,
+    "windows_run": 40021575484,
+    "candidate_source_commit": "1562f4d09ed64564f100885f9ddcb6a7efb6e1db",
     "windows_failures_retained": [
       "40013168648 partial: bundled Windows path alias assertion, legacy import GUI FAIL/cleanup hang",
       "40014149436 FAIL: same path assertion and 240s legacy test process timeout; no build/tag/release"
     ],
-    "next_action": "Run exact Windows source, frozen EXE, narrow upstream test-data filter audit, unchanged package gates and two actual downloads. No release until all pass.",
+    "next_action": "User local one-file review/save/reopen and safe report; preserve tag and built source. No next component without new direction.",
     "previous_windows_run": 40017431358,
     "windows_component_source_tests": {
       "source_commit": "446e571648df28727faa6e00d2f27e1113281275",
@@ -2192,6 +2192,30 @@
       "normal_startup_seconds": 1.311096,
       "release_published": false,
       "blocker": "Package preflight failure before former timing/error capture"
-    }
+    },
+    "published_at": "2026-10-23T20:56:17Z",
+    "release_url": "https://github.com/givemedandanla-tool/template-Ai/releases/tag/review-v0.1.0-beta.1",
+    "delivery_report": "docs/dev/releases/review-v0.1.0-beta.1/DELIVERY_REPORT.md",
+    "delivery_evidence": "docs/dev/releases/review-v0.1.0-beta.1/windows-published-40021575484/delivery.json",
+    "source_tests": {
+      "tests_run": 181,
+      "passed": 180,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "modules": 16
+    },
+    "actual_exe_checks": 32,
+    "package_file_count": 13094,
+    "download_phases_verified": [
+      "draft",
+      "public"
+    ],
+    "archive": {
+      "name": "TemplateAIReview-v0.1.0-beta.1-windows-x64.zip",
+      "bytes": 319256683,
+      "sha256": "86d6fd93020c12b26ad9147114f6ce2e5618918397e36fe33e8ef14e77e5153d"
+    },
+    "user_local_confirmation": false
   }
 }
