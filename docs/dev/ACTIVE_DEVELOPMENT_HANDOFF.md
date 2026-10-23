@@ -15,3 +15,5 @@ v0.2.0-beta.2已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED，詳[交付報告](releases
 下一步是使用者獨立資料副本本機實測，回報版本、步驟、預期／實際與手動安全ZIP；私人作品／字型／DB／模型留本地。沒有自動上傳／新付費服務／API／試用／新額度／代理。Illustrator、網頁／手機及未採用教學草案仍非本次能力；真實作品、使用者Windows效能、實印、新手及完整OS斷網待本機回饋。不自動重掃全庫、再打包或開發新功能。
 
 2026-10-23新任務：使用者授權優化修正版速度；先讀STATE.release_speed_optimization與releases/RELEASE_SPEED_PLAN.md。做驗證快取、影響規則、耗時、冷熱Windows診斷，不發新產品版、不動舊tag／附件。既有beta.2交付與外部限制保留。
+
+加速實作已就緒待原生驗證：optimized-release.yml僅專用speed-check／新request或人工觸發；release_cache／impact／pipeline及固定27輪子+資產pin已接。行政工具34 PASS／0skip，actionlint1.7.7 PASS；產品與原tools／1986測試code f1a2未變。下一push release-speed-check/20261023-001，先等native完整199＋EXE21／引擎5與loopback下載，再等第二runner真正遠端cache hit。沒有新Release授權，release_request=null；保留beta2標籤／附件。證據分支release-speed-evidence/v1，不能把loopback或warm-input檢查冒稱公開Release／第二次EXE驗收。

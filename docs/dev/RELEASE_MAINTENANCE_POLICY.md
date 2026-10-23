@@ -122,3 +122,7 @@ SemVer 對 `0.x` 原本不承諾相容性。本專案另外約定：0.x 修正�
 5. GitHub草稿／Pre-release／穩定版／下載校驗與精確遠端收據，及本地安全回報閉環。
 
 以上是後續實作清單；規則已採用，不等於發佈工具已完成。GitHub保存本規則也不代表EXE已發布。
+
+## 2026-10-23 已授權的修正版加速補充
+
+採用[驗證快取與影響範圍規則](releases/RELEASE_SPEED_POLICY.md)：固定27 wheels／官方引擎與來源附件pin，逐檔再驗；未知依賴、核心及打包變更擴大，真正EXE與實際發佈下載門檻不取消。新optimized-release工作流程只有專用診斷／request分支或人工啟動，不由普通dev/main/PR觸發。舊beta.2授權及tag不作新版本授權；未來新版另存STATE.release_speed_optimization.release_request並吻合唯一產品版號。本輪只驗證工具、冷熱cache與未發布包，不發新產品版，不覆寫舊Release。精確狀態與實測以STATE及speed證據為準。

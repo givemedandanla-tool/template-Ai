@@ -1,0 +1,13 @@
+{
+  "version": "1.7.7",
+  "source": "https://github.com/rhysd/actionlint/releases/download/v1.7.7/actionlint_1.7.7_linux_amd64.tar.gz",
+  "archive_sha256": "023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757",
+  "command": [
+    ".cache/release-speed-actionlint/actionlint",
+    "-shellcheck=",
+    "-pyflakes=",
+    ".github/workflows/optimized-release.yml"
+  ],
+  "exit_code": 0,
+  "scope": "Workflow syntax/expression validation; external shellcheck/pyflakes disabled, not application validation"
+}

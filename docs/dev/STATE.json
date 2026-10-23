@@ -2005,11 +2005,16 @@
     "automatic_selector_implemented": false
   },
   "release_speed_optimization": {
-    "status": "IN_PROGRESS",
+    "status": "IMPLEMENTED_LOCAL34_PASS_PENDING_NATIVE",
     "baseline_commit": "f97479b40fa46ef1465500f0207e2edfd0a290a3",
     "published_baseline": "v0.2.0-beta.2",
     "plan": "docs/dev/releases/RELEASE_SPEED_PLAN.md",
     "scope": "BUILD_AND_RELEASE_TOOLS_ONLY_NO_PRODUCT_BEHAVIOR_CHANGE",
-    "no_new_product_release": true
+    "no_new_product_release": true,
+    "policy_version": 1,
+    "policy": "docs/dev/releases/RELEASE_SPEED_POLICY.md",
+    "release_request": null,
+    "workflow": ".github/workflows/optimized-release.yml",
+    "source_manifest_unchanged": "f1a2cf7a817e7e3d0dca43ff93458f52d1526638aa816e7d223204f6abdf2908"
   }
 }

@@ -38,8 +38,11 @@ def isolated_host(executable, output):
             environment['PATH'] = raw+os.pathsep+environment.get('PATH','')
             if not removed:
                 if not (installed/'bin/inkscape.exe').is_file():
-                    raise RuntimeError('Unexpected initial host installation state')
-                choco('uninstall')
+                    if os.environ.get('TEMPLATE_AI_ALLOW_INITIAL_ABSENCE') != 'true' or installed.exists():
+                        raise RuntimeError('Unexpected initial host installation state')
+                    history.append(dict(action='verified-initial-system-absence', returncode=0))
+                else:
+                    choco('uninstall')
                 removed = True
             if installed.exists():
                 raise RuntimeError('System Inkscape directory still exists after uninstall')

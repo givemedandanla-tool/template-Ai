@@ -1876,3 +1876,5 @@ Frozen trace002/f967/run39807865848：已下載及驗證原授權242檔，實際
 45秒timer示範已存可重跑入口：python docs/dev/releases/verify_frozen_diagnostic_timer.py；實際3案PASS（frame dump／cancel／一般啟動不patch），safe-timer-reproducible-demo.json記Python3.12.14與hook SHA。這只是隔離示範，不算新增產品測試數或Windows資格；正常native004仍RUNNING，未變更候選產品或原斷言。
 
 2026-10-22 beta.2已公開並下載驗證：af97b108／run39810636090，Windows199＋真正EXE21＋引擎5全PASS，24包內呼叫，13060檔公開下載匹配，125來源與242授權驗證。原45秒C診斷AV已由45秒GIL安全dump排除，本次64秒跨45後通過，原240硬期限與斷言保留。來源1986為保留失敗的同bytes環境復驗彙整；原外部資格／goal FAIL不升級。詳releases/v0.2.0-beta.2/DELIVERY_REPORT，後續為本地副本實測及手動安全報告。無新收費功能／代理，未合併main或覆寫舊tag。
+
+2026-10-23修正版加速實作checkpoint：27官方wheel固定版本+SHA；已公開beta2引擎及125來源ZIP重用／再驗；AST base∪head保守影響選測＋雜湊契約、核心／未知完整；GitHubcache用量安全邊界、stage耗時與新版本明確授權guard。新產品bytes／原tools／原1986測試未改，code manifest仍f1a2；行政工具34案PASS／0skip，本輪待Windows冷原生建置＋第二runner遠端熱cache驗證，不發布新產品／不改舊tag／附件。

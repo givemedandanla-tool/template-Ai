@@ -1,0 +1,153 @@
+name: Verified cache Windows release
+on:
+  workflow_dispatch:
+    inputs:
+      baseline:
+        description: Published baseline tag or auto from STATE
+        default: auto
+        required: true
+  push:
+    branches:
+      - 'release-speed-check/**'
+      - 'release-request/**'
+      - '!release-request/v0.2.0-beta.1'
+      - '!release-request/v0.2.0-beta.2'
+permissions:
+  contents: read
+concurrency:
+  group: verified-release-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  native:
+    if: github.event.repository.private == false
+    runs-on: windows-latest
+    timeout-minutes: 90
+    permissions:
+      contents: write
+      actions: read
+    outputs:
+      key: ${{ steps.inputs.outputs.key }}
+      warm_available: ${{ steps.save.outcome == 'success' || steps.restore.outputs.cache-hit == 'true' }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONUTF8: '1'
+      QT_QPA_PLATFORM: windows
+      OMP_NUM_THREADS: '1'
+      OPENBLAS_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      RELEASE_MODE: ${{ startsWith(github.ref, 'refs/heads/release-request/') && 'publish' || 'validate' }}
+      RELEASE_SPEED_PUBLISH_ALLOWED: ${{ startsWith(github.ref, 'refs/heads/release-request/') && 'true' || 'false' }}
+      RELEASE_SPEED_JOB: native
+      RELEASE_BASELINE: ${{ inputs.baseline || 'auto' }}
+    steps:
+      - name: Preserve source bytes and long paths
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Check included cache budget and exact content key
+        id: inputs
+        shell: pwsh
+        run: |
+          gh auth setup-git
+          python docs/dev/releases/persist_speed_evidence.py --phase start
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot persist start evidence' }
+          python docs/dev/releases/release_actions_support.py preflight
+          if ($LASTEXITCODE -ne 0) { throw 'Cache preflight failed' }
+          python docs/dev/releases/release_actions_support.py start --name actions-restore
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+        if: env.RELEASE_MODE == 'publish'
+        id: restore
+        continue-on-error: true
+        with:
+          path: ${{ runner.temp }}/template-ai-verified-inputs
+          key: ${{ steps.inputs.outputs.key }}
+      - name: Record restore timing without claiming a skipped restore hit
+        shell: pwsh
+        run: python docs/dev/releases/release_actions_support.py finish --name actions-restore --status '${{ steps.restore.outcome }}'
+      - name: Build, original tests, actual EXE and byte verification
+        shell: pwsh
+        run: |
+          python docs/dev/releases/release_pipeline.py --mode $env:RELEASE_MODE --cache '${{ runner.temp }}/template-ai-verified-inputs' --base $env:RELEASE_BASELINE
+          if ($LASTEXITCODE -ne 0) { throw 'Verified release pipeline failed' }
+      - name: Start cache-save measurement
+        if: success()
+        shell: pwsh
+        run: python docs/dev/releases/release_actions_support.py start --name actions-save
+      - uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830
+        id: save
+        if: success() && steps.inputs.outputs.save_allowed == 'true' && steps.restore.outputs.cache-hit != 'true'
+        continue-on-error: true
+        with:
+          path: ${{ runner.temp }}/template-ai-verified-inputs
+          key: ${{ steps.inputs.outputs.key }}
+      - name: Record cache-save time
+        if: success()
+        shell: pwsh
+        run: python docs/dev/releases/release_actions_support.py finish --name actions-save --status '${{ steps.save.outcome }}'
+      - name: Preserve bounded evidence independently of product Release
+        if: always()
+        env:
+          RELEASE_SPEED_JOB_RESULT: ${{ job.status }}
+        shell: pwsh
+        run: |
+          python docs/dev/releases/persist_speed_evidence.py
+          if ($LASTEXITCODE -ne 0) { throw 'Evidence persistence failed' }
+  warm:
+    if: needs.native.outputs.warm_available == 'true' && !startsWith(github.ref, 'refs/heads/release-request/')
+    needs: native
+    runs-on: windows-latest
+    timeout-minutes: 25
+    permissions:
+      contents: write
+      actions: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PYTHONUTF8: '1'
+      RELEASE_SPEED_JOB: warm
+    steps:
+      - name: Preserve bytes and long paths
+        shell: pwsh
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.longpaths true
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+          architecture: x64
+      - name: Start real cache restore measurement
+        shell: pwsh
+        run: |
+          gh auth setup-git
+          python docs/dev/releases/persist_speed_evidence.py --phase start
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot persist warm start evidence' }
+          python docs/dev/releases/release_actions_support.py start --name actions-restore
+      - uses: actions/cache/restore@0057852bfaa89a56745cba8c7296529d2fc39830
+        id: restore
+        with:
+          path: ${{ runner.temp }}/template-ai-verified-inputs
+          key: ${{ needs.native.outputs.key }}
+          fail-on-cache-miss: true
+      - name: Require exact remote hit and verify every input again
+        shell: pwsh
+        run: |
+          if ('${{ steps.restore.outputs.cache-hit }}' -ne 'true') { throw 'Exact remote cache hit not observed' }
+          python docs/dev/releases/release_actions_support.py finish --name actions-restore --status '${{ steps.restore.outcome }}'
+          python docs/dev/releases/release_pipeline.py --cache '${{ runner.temp }}/template-ai-verified-inputs' --warm-check-only
+          if ($LASTEXITCODE -ne 0) { throw 'Restored input verification failed' }
+      - name: Preserve warm-hit evidence, no repeated unrelated EXE suite
+        if: always()
+        env:
+          RELEASE_SPEED_JOB_RESULT: ${{ job.status }}
+        shell: pwsh
+        run: |
+          python docs/dev/releases/persist_speed_evidence.py
+          if ($LASTEXITCODE -ne 0) { throw 'Warm evidence persistence failed' }
