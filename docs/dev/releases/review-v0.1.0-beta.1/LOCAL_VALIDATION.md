@@ -15,3 +15,5 @@
 正式Linux隔離執行：166項通過、0失敗、0錯誤、0跳過，16個獨立程序模組。來源2e3677ba339bb0a1f6633272c8ea6886fee6d8b8，來源manifest a0eeee325e02b155bf90b11e161127400dd684a639a413ee1715a914cc0eb2db；包含6項GUI回歸。Windows仍須獨立通過。
 
 首個Windows run 40012250996 在真正視窗截圖覆核後由維護者主動取消，當時尚未發布tag／Release；取消後證據／artifact步驟沒有可用產物而失敗，不能當成EXE驗證通過。修正重點是套用／核對狀態固定在右側底部，不需捲動，以及量測文字不覆蓋原稿。第二次run採精確HEAD淺取回（元件不依賴history/diff），保留全部來源hash／相關測試／真正EXE／下載要求。
+
+最終來源 a7f6ede8f0c14b70c0c14822b59f89ca8a26c1d3 再以16個獨立程序執行168項，0失敗／0錯誤／0跳過；來源全程未變。報告isolated-source-tests-final.json。相同tag新Windows run40013168648正在驗證，首run取消未發布。
