@@ -184,6 +184,16 @@ class ImpactTests(unittest.TestCase):
     def test_report_metadata_alone_needs_no_exe_but_executable_in_report_folder_is_not_exempt(self):
         self.assertEqual(self.plan(['docs/dev/releases/release-speed-validation/demo/report.json'])['tier'],'DOCUMENTATION_NO_EXE')
         self.assertEqual(self.plan(['docs/dev/releases/release-speed-validation/demo/run.py'])['tier'],'FULL_WINDOWS')
+    def test_git_batch_snapshot_preserves_exact_selected_source(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw)
+            expected={'template_ai/panel.py':'# 中文\nVALUE=1\n','tests/test_panel.py':'from template_ai import panel\n'}
+            for name,body in expected.items():
+                path=root/name;path.parent.mkdir(exist_ok=True);path.write_bytes(body.encode())
+            (root/'unrelated.bin').write_bytes(b'not-source')
+            for command in (['git','init'],['git','add','.'],['git','-c','user.name=Fixture','-c','user.email=fixture@example.invalid','commit','-m','authored snapshot']):
+                subprocess.run(command,cwd=root,check=True,capture_output=True)
+            self.assertEqual(impact.snapshot(root,'HEAD'),expected)
 
 
 class GuardTests(unittest.TestCase):

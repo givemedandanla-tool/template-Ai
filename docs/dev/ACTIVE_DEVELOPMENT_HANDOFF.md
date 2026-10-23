@@ -21,3 +21,5 @@ v0.2.0-beta.2已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED，詳[交付報告](releases
 加速native001/c6bfd14b/run39893971598在59秒輸入準備因ValueError停止、未跑產品測試／EXE；原報告保留。根因已用真beta2 manifest重現：包內SOURCE_MAP由Windows寫CRLF，sha b8d3db…／48199bytes；Git lock LF為bc0271…／47178。保留vendor manifest與每檔精確SHA，另以JSON語意核對Git lock，非改hash求過。新增CRLF、真正發布map serializer及same-source phase續接防護，共37行政案例PASS／0skip（local003），舊34／35保留。輸入階段通過便保存cache，與產品PASS分開；再同source build-only重新驗inputs後跑原Windows／EXE。新增error_message與bounded traceback，下一重試native002。
 
 當前native002：7e8cf9947dfafe210523e8454b8b739b3256cf15／run39894882425 RUNNING，observer41275→windows-native-002。GitHub cache按分支隔離已核官方固定README，故同一builder ref保留跨版本cache；不把每版request分支當建置分支。新增publishing-only marker＋STATE新授權＋request參照同HEAD三重guard，目前本地39 PASS，尚待獨立Windows guard檢查；不重跑未受該guard影響的產品全套。等native與warm寫完同一speed證據分支後，再推release-guard-check/20261023-001，避免並行寫證據。
+
+native002已PASS，Windows199／EXE21／engine5／loopback13060檔校驗；warm001另一乾淨runner已真Actions hit／29物件再驗（不是第二次EXE）。待推guard分支最新行政42及新batch Git索引，在Windows只跑工具與實際選測圖，不重跑無影響產品全套。舊索引34.53秒已用cat-file --batch一次取Git blobs替代，限定app/template_ai/tests及64MiB上限；新增真Git fixture regression。Local00742 PASS、actionlint PASS；來源code仍f1a2。

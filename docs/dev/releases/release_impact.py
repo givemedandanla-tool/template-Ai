@@ -24,10 +24,32 @@ def report_metadata(path):
 
 
 def snapshot(root, ref):
-    names = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', ref], cwd=root, text=True).splitlines()
-    selected = [p for p in names if p.endswith('.py') and
-                (p == 'app.py' or p.startswith(('template_ai/', 'tests/')))]
-    return {p: subprocess.check_output(['git', 'show', ref+':'+p], cwd=root).decode('utf-8-sig') for p in selected}
+    listing = subprocess.check_output(['git','ls-tree','-r','-l','-z',ref,'--','app.py','template_ai','tests'],cwd=root)
+    selected=[]
+    for entry in listing.split(b'\0'):
+        if not entry:continue
+        meta, raw_name=entry.split(b'\t',1)
+        name=raw_name.decode('utf-8')
+        if name.endswith('.py') and (name=='app.py' or name.startswith(('template_ai/','tests/'))):
+            _, kind, identity, size=meta.split()
+            if kind!=b'blob' or not size.isdigit():raise ValueError('Unknown dependency object')
+            selected.append((name,identity,int(size)))
+    if len(selected)>5000 or sum(row[2] for row in selected)>64*1024**2:
+        raise ValueError('Dependency index exceeds its reviewed bounds')
+    # Windows process startup dominated the former per-file git-show loop.
+    # One batch preserves exact Git blobs without >1000 process launches.
+    request=b''.join(identity+b'\n' for _,identity,_ in selected)
+    result=subprocess.run(['git','cat-file','--batch'],cwd=root,input=request,capture_output=True,check=True,timeout=120)
+    raw=result.stdout;position=0;files={}
+    for name,identity,size in selected:
+        end=raw.index(b'\n',position)
+        header=raw[position:end].split()
+        if header!=[identity,b'blob',str(size).encode()]:raise ValueError('Git batch object identity differs')
+        start=end+1;body=raw[start:start+size]
+        if len(body)!=size or raw[start+size:start+size+1]!=b'\n':raise ValueError('Truncated dependency blob')
+        files[name]=body.decode('utf-8-sig');position=start+size+1
+    if position!=len(raw):raise ValueError('Unexpected dependency batch payload')
+    return files
 
 
 def dependency_graph(files, contracts=None):

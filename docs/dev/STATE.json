@@ -2005,7 +2005,7 @@
     "automatic_selector_implemented": false
   },
   "release_speed_optimization": {
-    "status": "LOCAL37_PASS_RETRY_NATIVE_AFTER_CRLF_MAP_CONTRACT_FIX",
+    "status": "NATIVE199_EXE21_ENGINE5_AND_REMOTE_WARM_PASS_PENDING_LATEST_WINDOWS_GUARDS",
     "baseline_commit": "f97479b40fa46ef1465500f0207e2edfd0a290a3",
     "published_baseline": "v0.2.0-beta.2",
     "plan": "docs/dev/releases/RELEASE_SPEED_PLAN.md",
@@ -2027,11 +2027,17 @@
     "native_attempt_002": {
       "source_commit": "7e8cf9947dfafe210523e8454b8b739b3256cf15",
       "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39894882425",
-      "status": "RUNNING",
-      "expected_report": "docs/dev/releases/release-speed-validation/windows-native-002"
+      "status": "VALIDATION_PASS_NO_TAG_OR_RELEASE_CREATED",
+      "expected_report": "docs/dev/releases/release-speed-validation/windows-native-002",
+      "report": "docs/dev/releases/release-speed-validation/windows-native-002"
     },
     "next": "Await native002 and actual restored cache, then run latest publication-routing guards separately on Windows; no duplicate full product run for publication-only guard changes.",
-    "local_admin_tests": 41,
-    "routing_guard_validation": "PENDING_SEPARATE_WINDOWS41_AFTER_NATIVE_AND_WARM"
+    "local_admin_tests": 42,
+    "routing_guard_validation": "PENDING_SEPARATE_WINDOWS41_AFTER_NATIVE_AND_WARM",
+    "remote_warm": {
+      "status": "WARM_REMOTE_CACHE_VERIFIED_NOT_AN_EXE_BUILD",
+      "report": "docs/dev/releases/release-speed-validation/windows-warm-001",
+      "source_commit": "7e8cf9947dfafe210523e8454b8b739b3256cf15"
+    }
   }
 }

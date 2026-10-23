@@ -28,7 +28,7 @@ if __name__=='__main__':
     suite=unittest.defaultTestLoader.discover(str(Path(__file__).parent),pattern='test_release_speed.py')
     with (output/'admin-tests.log').open('w',encoding='utf-8') as log:
         result=unittest.TextTestRunner(stream=log,verbosity=2,resultclass=Result).run(suite)
-    expected=41
+    expected=42
     success=result.wasSuccessful() and result.testsRun==expected and not result.skipped
     files=[*Path(__file__).parent.glob('release_*.py'),Path(__file__).parent/'test_release_speed.py',Path(__file__)]
     report=dict(scope='ADMIN_TOOL_SYNTHETIC_REGRESSION_NOT_PRODUCT_QUALIFICATION',status='PASS' if success else 'FAIL',
