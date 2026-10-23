@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Monitor review component Windows run40017431358 at exact source b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e",
-    "Require source, actual frozen EXE/worker/bundled-engine and draft/public download gates before delivery",
-    "Persist final release manifest, safe synthetic evidence, readback receipt and local-trial handoff; do not merge main or upload private data"
+    "Monitor review Windows run40019896642 at source6a68c1d1",
+    "Read exact package error if any; fix demonstrated packaging cause without weakening private-data guards",
+    "Require actual EXE and both draft/public downloads before declaring delivery; persist final handoff"
   ],
   "blocked": [
     {
@@ -794,7 +794,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Monitor review component Windows run40017431358 at exact source b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e",
+  "next_step": "Monitor review Windows run40019896642 at source6a68c1d1",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2149,7 +2149,7 @@
     "authorization": "User requests first version published to GitHub after UI discussion",
     "authorized_utc": "2026-10-23T18:54:05.645182+00:00",
     "source_commit": null,
-    "status": "WINDOWS_FULL_RELEASE_RUNNING",
+    "status": "PACKAGE_PREFLIGHT_DIAGNOSIS_RUNNING",
     "plan": "docs/dev/analysis_review_ui/FIRST_RELEASE_PLAN.md",
     "do_not_overwrite_old_release": true,
     "scope": "PUBLISH_WINDOWS_INTERNAL_BETA",
@@ -2164,14 +2164,14 @@
       "report": "docs/dev/releases/review-v0.1.0-beta.1/local-source-evidence/isolated-source-tests-final.json"
     },
     "source_checkpoint": "docs/checkpoints/CP-20261023-REVIEW-WINDOWS-HARNESS-001.receipt.json",
-    "windows_run": 40017431358,
-    "candidate_source_commit": "b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e",
+    "windows_run": 40019896642,
+    "candidate_source_commit": "6a68c1d14548",
     "windows_failures_retained": [
       "40013168648 partial: bundled Windows path alias assertion, legacy import GUI FAIL/cleanup hang",
       "40014149436 FAIL: same path assertion and 240s legacy test process timeout; no build/tag/release"
     ],
-    "next_action": "Monitor Windows run40017431358; source gate then actual EXE, immutable prerelease, actual draft/public downloads.",
-    "previous_windows_run": 40015130560,
+    "next_action": "Read run40019896642 package-command-error.log/json if preflight fails; retain all exact-file/privacy/model/source gates. Publish only after successful package and two actual downloads.",
+    "previous_windows_run": 40017431358,
     "windows_component_source_tests": {
       "source_commit": "446e571648df28727faa6e00d2f27e1113281275",
       "review_modules_passed": 8,
@@ -2181,6 +2181,17 @@
       "all_modules_passed": 15,
       "overall": "FAIL_LEGACY_GUI_TIMEOUT",
       "report": "docs/dev/releases/review-v0.1.0-beta.1/windows-failure-40015130560/source-tests.json"
+    },
+    "qualified_previous_source": {
+      "commit": "b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e",
+      "windows_tests_run": 173,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 1,
+      "actual_exe_checks": 32,
+      "normal_startup_seconds": 1.311096,
+      "release_published": false,
+      "blocker": "Package preflight failure before former timing/error capture"
     }
   }
 }

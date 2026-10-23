@@ -1,10 +1,10 @@
-# 目前：第五輪 Windows 首版發布流程
+# 當前：EXE已驗，首版下載包前置檢查受阻
 
-run40017431358，精確source b9b3160563bdc3e92df4d32a76cbb0fc9a1c5e9e。新工具8個模組已於前輪Windows通過（103項含1個選配OCRskip）；舊GUI轉檔測試已修測試helper/安全cleanup，74原assert AST不變、12/12真Qt本機PASS、13s延遲正例及原12s負例皆有界完成。所有產品程式未因測試修正更動，外層240s仍保留。
+第六run40019896642/source6a68c1d1正在執行。第五run40017431358/sourceb9b31605已Windows173項、16模組PASS（1選配OCRskip），真正EXE32項PASS、正常啟動畫面1.311096秒、實際包內Inkscape；package preflight失敗、未tag/Release。真正Windows截圖已按hash讀回，中文可見。
 
-下一步等此精確source的全部Windows模組→clean build→真正EXE/worker/包內Inkscape/保存重開→package→新tag草稿與公開兩次實際下載校驗。尚未發布，不能稱EXE已驗。若FAIL讀review-release-evidence/v0.1.0-beta.1各run小型JSON/log，按實際根因修正，不覆寫既有tag。來源checkpoint精確讀回見STATE.review_tool_release_request.source_checkpoint。
+本輪只補CI頂層command-error.log/json與package完整前置stage（21工具測試PASS），沒有變更產品或放寬排除。若再失敗從review-release-evidence/v0.1.0-beta.1當前run目錄讀package-command-error.log，按原stack最小修正；不得猜放行。Azure log host被/etc/codex/network-policy.json明確限制，不繞proxy。
 
-私人作品/字型/DB留本地，舊未提交timeout/adopt成果保留；不合併main、不提升舊完整產品及真實作品/訓練資格。首版OCR執行器選配；本元件是判讀/人工核對，不是AI訓練/模板生成。
+下一步精確source全部gate＋package＋新tag草稿/公開兩次實際下載校驗，之後才標交付。首版是判讀/標記/修正工具、OCR引擎選配；舊主產品、私人作品/訓練資格、main及唯一舊DB不變。原未提交timeout/adopt工作保留。
 
 ---
 
