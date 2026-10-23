@@ -1880,3 +1880,5 @@ Frozen trace002/f967/run39807865848：已下載及驗證原授權242檔，實際
 2026-10-23修正版加速實作checkpoint：27官方wheel固定版本+SHA；已公開beta2引擎及125來源ZIP重用／再驗；AST base∪head保守影響選測＋雜湊契約、核心／未知完整；GitHubcache用量安全邊界、stage耗時與新版本明確授權guard。新產品bytes／原tools／原1986測試未改，code manifest仍f1a2；行政工具34案PASS／0skip，本輪待Windows冷原生建置＋第二runner遠端熱cache驗證，不發布新產品／不改舊tag／附件。
 
 加速native001/c6bfd14b/run39893971598在59秒輸入準備因ValueError停止、未跑產品測試／EXE；原報告保留。根因已用真beta2 manifest重現：包內SOURCE_MAP由Windows寫CRLF，sha b8d3db…／48199bytes；Git lock LF為bc0271…／47178。保留vendor manifest與每檔精確SHA，另以JSON語意核對Git lock，非改hash求過。新增CRLF、真正發布map serializer及same-source phase續接防護，共37行政案例PASS／0skip（local003），舊34／35保留。輸入階段通過便保存cache，與產品PASS分開；再同source build-only重新驗inputs後跑原Windows／EXE。新增error_message與bounded traceback，下一重試native002。
+
+跨版本cache scope已核GitHub actions/cache固定README：key還受branch隔離，故保留release-speed-check/20261023-001作長期builder。未來發版需STATE新授權、明確提交標記、版本request ref精確同HEAD，普通dev/main/PR不建置。補報告metadata不誤擴大，local005行政41 PASS／0skip。native002仍7e8cf994，cache／原生驗證execute等關鍵body及輸入pin bytes與現在相同，equivalence報告已核SHA；只有publishing-only guard／選測metadata規則變更，等該native/warm結束再跑獨立Windows41，不重跑無影響產品全套。

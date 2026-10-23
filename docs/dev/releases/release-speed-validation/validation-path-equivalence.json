@@ -1,0 +1,86 @@
+{
+  "scope": "VALIDATION_PATH_EQUIVALENCE_NOT_A_NEW_PRODUCT_PASS",
+  "native_execution_source": "7e8cf9947dfafe210523e8454b8b739b3256cf15",
+  "proofs": [
+    {
+      "path": "docs/dev/releases/release_cache.py",
+      "unchanged": true,
+      "sha256": "6fd4abc947645e419dba52d6a2265d8d2b80fac8992928da03ffddf84c7797fd"
+    },
+    {
+      "path": "docs/dev/releases/probe_engine_environment.py",
+      "unchanged": true,
+      "sha256": "914d5eed21bc4b9448b1992ce0f2bf46ec4566c9f77ca5c64227a633e1d57e16"
+    },
+    {
+      "path": "docs/dev/releases/release_actions_support.py",
+      "unchanged": true,
+      "sha256": "b9c24a934259c5e70057a0e321d81dc092b092610a513b377659589be4d6ad89"
+    },
+    {
+      "path": ".github/release-assets-lock.json",
+      "unchanged": true,
+      "sha256": "ef930441a03e779e6b51ad9f3a03a54be6a6b37835e0ec3c9948b234662cd5f3"
+    },
+    {
+      "path": ".github/windows-wheels-lock.json",
+      "unchanged": true,
+      "sha256": "4433999d17d8d242ac4d243a1c93c310fc68f2c64d53b7d7fe5f834aa7d05b72"
+    },
+    {
+      "path": "docs/dev/releases/release_pipeline.py",
+      "function": "Stages",
+      "unchanged": true,
+      "sha256": "1332e8ee582153fcd9349fd03cc598f9a7837fbedd12feef1dfee7a39d43ec8f"
+    },
+    {
+      "path": "docs/dev/releases/release_pipeline.py",
+      "function": "run",
+      "unchanged": true,
+      "sha256": "31ea65c65fb7f32eb950a8dcd603d76e053bccc93e43562a2dfb95315cca2f9d"
+    },
+    {
+      "path": "docs/dev/releases/release_pipeline.py",
+      "function": "execute",
+      "unchanged": true,
+      "sha256": "20ceeef0c5702f67798557b9ebecae54a84f5dca1047f47011037215fba0aa14"
+    },
+    {
+      "path": "docs/dev/releases/release_pipeline.py",
+      "function": "prepare_inputs",
+      "unchanged": true,
+      "sha256": "4b734a9f870a9f85a1f5beb083d34954de0093a37e84363ab861e35f90389e75"
+    },
+    {
+      "path": "docs/dev/releases/release_pipeline.py",
+      "function": "loopback_download_verify",
+      "unchanged": true,
+      "sha256": "ee9d06400eb5e2241062dab0239a986ddf3f9b73ad2eb709ad75fc52013cf4bb"
+    },
+    {
+      "path": "docs/dev/releases/release_pipeline.py",
+      "function": "link_sources",
+      "unchanged": true,
+      "sha256": "fae65463a3c015a2690593eaafb40da44bb914b4ff2b58b90397f5f8d0338961"
+    },
+    {
+      "path": "docs/dev/releases/release_pipeline.py",
+      "function": "publish",
+      "unchanged": true,
+      "sha256": "fe43a142e08ed526825ab2c552f45f6be530b18b4492648dfdd2c558c8c4aa6e"
+    },
+    {
+      "path": "docs/dev/releases/release_pipeline.py",
+      "function": "public_source_access",
+      "unchanged": true,
+      "sha256": "be0141e3600fa8110ef1f21bb3d0cf35b04c3741f63264e85f137d567b08f492"
+    }
+  ],
+  "changed_components": [
+    "publication_preflight: stable builder + exact version-request source guard",
+    "release_impact: report-only metadata classification",
+    "administrative regression catalog 41 cases"
+  ],
+  "required_additional_validation": "Current 41 administrative tests on Windows; no publication occurs in this task",
+  "original_product_code_manifest": "f1a2cf7a817e7e3d0dca43ff93458f52d1526638aa816e7d223204f6abdf2908"
+}

@@ -8,10 +8,8 @@ on:
         required: true
   push:
     branches:
-      - 'release-speed-check/**'
-      - 'release-request/**'
-      - '!release-request/v0.2.0-beta.1'
-      - '!release-request/v0.2.0-beta.2'
+      # Stable ref is required for cross-version Actions cache reuse.
+      - 'release-speed-check/20261023-001'
 permissions:
   contents: read
 concurrency:
@@ -35,8 +33,8 @@ jobs:
       OMP_NUM_THREADS: '1'
       OPENBLAS_NUM_THREADS: '1'
       MKL_NUM_THREADS: '1'
-      RELEASE_MODE: ${{ startsWith(github.ref, 'refs/heads/release-request/') && 'publish' || 'validate' }}
-      RELEASE_SPEED_PUBLISH_ALLOWED: ${{ startsWith(github.ref, 'refs/heads/release-request/') && 'true' || 'false' }}
+      RELEASE_MODE: ${{ github.ref == 'refs/heads/release-speed-check/20261023-001' && contains(github.event.head_commit.message, '[publish-request]') && 'publish' || 'validate' }}
+      RELEASE_SPEED_PUBLISH_ALLOWED: ${{ github.ref == 'refs/heads/release-speed-check/20261023-001' && contains(github.event.head_commit.message, '[publish-request]') && 'true' || 'false' }}
       RELEASE_SPEED_JOB: native
       RELEASE_BASELINE: ${{ inputs.baseline || 'auto' }}
     steps:
@@ -107,7 +105,7 @@ jobs:
           python docs/dev/releases/persist_speed_evidence.py
           if ($LASTEXITCODE -ne 0) { throw 'Evidence persistence failed' }
   warm:
-    if: needs.native.outputs.warm_available == 'true' && !startsWith(github.ref, 'refs/heads/release-request/')
+    if: needs.native.outputs.warm_available == 'true' && !contains(github.event.head_commit.message, '[publish-request]')
     needs: native
     runs-on: windows-latest
     timeout-minutes: 25

@@ -178,6 +178,12 @@ class ImpactTests(unittest.TestCase):
     def test_syntax_error_widens(self):
         files=dict(self.files);files['template_ai/panel.py']='def broken('
         self.assertEqual(self.plan(['template_ai/panel.py'],head=files)['tier'],'FULL_WINDOWS')
+    def test_previous_release_logs_do_not_falsely_expand_unrelated_panel_change(self):
+        p=self.plan(['template_ai/panel.py','docs/dev/releases/v0.2.0-beta.2/windows/native.log'])
+        self.assertEqual(p['tier'],'IMPACTED_PLUS_FLOOR');self.assertEqual(len(p['report_only_paths']),1)
+    def test_report_metadata_alone_needs_no_exe_but_executable_in_report_folder_is_not_exempt(self):
+        self.assertEqual(self.plan(['docs/dev/releases/release-speed-validation/demo/report.json'])['tier'],'DOCUMENTATION_NO_EXE')
+        self.assertEqual(self.plan(['docs/dev/releases/release-speed-validation/demo/run.py'])['tier'],'FULL_WINDOWS')
 
 
 class GuardTests(unittest.TestCase):
@@ -186,7 +192,7 @@ class GuardTests(unittest.TestCase):
             self.assertFalse(budget(usage,size,public))
         self.assertTrue(budget(0,1508883223,True))
     def test_old_tag_is_rejected_before_any_remote_mutation(self):
-        with patch.dict(pipeline.os.environ,{'GITHUB_ACTIONS':'true','GITHUB_REF':'refs/heads/release-request/v0.2.0-beta.2','RELEASE_SPEED_PUBLISH_ALLOWED':'true'}),\
+        with patch.dict(pipeline.os.environ,{'GITHUB_ACTIONS':'true','GITHUB_REF':pipeline.BUILDER_REF,'RELEASE_SPEED_PUBLISH_ALLOWED':'true'}),\
              patch.object(pipeline.subprocess,'check_output',return_value=b'existing-tag\n') as read,\
              patch.object(pipeline.subprocess,'run') as mutate,self.assertRaises(FileExistsError):
             pipeline.publication_preflight('0.2.0-beta.2','publish')
@@ -199,11 +205,33 @@ class GuardTests(unittest.TestCase):
         with patch.dict(pipeline.os.environ,{'GITHUB_ACTIONS':'true','GITHUB_REF':'refs/heads/dev/x','RELEASE_SPEED_PUBLISH_ALLOWED':'true'}),self.assertRaises(ValueError):
             pipeline.publication_preflight('0.2.0-beta.3','publish')
     def test_old_beta_authorization_cannot_authorize_new_version(self):
-        with patch.dict(pipeline.os.environ,{'GITHUB_ACTIONS':'true','GITHUB_REF':'refs/heads/release-request/v0.2.0-beta.3','RELEASE_SPEED_PUBLISH_ALLOWED':'true'}),\
+        with patch.dict(pipeline.os.environ,{'GITHUB_ACTIONS':'true','GITHUB_REF':pipeline.BUILDER_REF,'RELEASE_SPEED_PUBLISH_ALLOWED':'true'}),\
              patch.object(pipeline.subprocess,'check_output',return_value=''),\
              patch.object(pipeline.subprocess,'run') as mutate,self.assertRaises(ValueError):
             pipeline.publication_preflight('0.2.0-beta.3','publish')
         mutate.assert_not_called()
+    def test_future_publication_requires_exact_source_request_ref(self):
+        with tempfile.TemporaryDirectory() as raw:
+            root=Path(raw);(root/'docs/dev').mkdir(parents=True)
+            state=dict(release_speed_optimization=dict(release_request=dict(version='0.2.0-beta.3',published=False,
+                authorization=dict(scope='PUBLISH_WINDOWS_INTERNAL_BETA',user_request='authored version-specific authorization fixture'))))
+            (root/'docs/dev/STATE.json').write_text(json.dumps(state))
+            for ref,allowed in (('f'*40,True),('0'*40,False)):
+                reads=['',ref+'\trefs/heads/release-request/v0.2.0-beta.3\n','f'*40+'\n']
+                absent=subprocess.CompletedProcess([],1,b'',b'release not found')
+                readable=subprocess.CompletedProcess([],0,b'false',b'')
+                with patch.object(pipeline,'ROOT',root),patch.dict(pipeline.os.environ,{'GITHUB_ACTIONS':'true','GITHUB_REF':pipeline.BUILDER_REF,'RELEASE_SPEED_PUBLISH_ALLOWED':'true'}),\
+                     patch.object(pipeline.subprocess,'check_output',side_effect=reads),\
+                     patch.object(pipeline.subprocess,'run',side_effect=[absent,readable]) as run:
+                    if allowed:pipeline.publication_preflight('0.2.0-beta.3','publish')
+                    else:
+                        with self.assertRaises(ValueError):pipeline.publication_preflight('0.2.0-beta.3','publish')
+                        run.assert_not_called()
+    def test_workflow_uses_stable_builder_for_cross_version_cache_scope(self):
+        text=(cache.ROOT/'.github/workflows/optimized-release.yml').read_text()
+        self.assertIn("- '"+pipeline.BUILDER_REF.removeprefix('refs/heads/')+"'",text)
+        self.assertNotIn("- 'release-request/**'",text)
+        self.assertNotIn('pull_request:',text)
     def test_failed_stage_preserves_status_and_time(self):
         with tempfile.TemporaryDirectory() as raw:
             r=pipeline.Stages(Path(raw)/'timing.json','synthetic')

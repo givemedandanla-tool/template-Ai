@@ -5,6 +5,7 @@ from collections import defaultdict, deque
 import hashlib
 import json
 from pathlib import Path
+import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -13,6 +14,13 @@ FLOOR = {'test_frozen_launch', 'test_release_authorization', 'test_release_downl
          'test_inkscape_cache_identity', 'test_offline_support'}
 CRITICAL = ('storage', 'design_', 'learning', 'semantic', 'runtime_', 'input_', 'render',
             'source_', 'font', 'confirm', 'export', 'output', 'logo', 'identity', 'inkscape')
+
+
+def report_metadata(path):
+    roots = ('docs/evidence/', 'docs/checkpoints/', 'docs/dev/releases/release-speed-validation/')
+    versioned = re.match(r'^docs/dev/releases/v\d[^/]*/', path)
+    return bool((path.startswith(roots) or versioned) and
+                Path(path).suffix in {'.json','.log','.txt','.png','.jpg','.svg','.xml','.md'})
 
 
 def snapshot(root, ref):
@@ -86,13 +94,15 @@ def plan_changes(changed, base_files, head_files, windows_modules, *, force_buil
             if caller not in affected:
                 affected.add(caller)
                 queue.append(caller)
-    documentation = bool(changed) and all(p.endswith(('.md', '.png', '.jpg')) and
+    documentation = bool(changed) and all(report_metadata(p) or p.endswith(('.md', '.png', '.jpg')) and
                         not p.startswith(('template_ai/', '.github/', 'tests/')) for p in changed)
     reasons = []
     product = [p for p in changed if p == 'app.py' or p.startswith('template_ai/')]
     if not changed:
         reasons.append('NO_CHANGE_STILL_REQUIRES_EXPLICIT_BUILD_IF_REQUESTED')
     for p in changed:
+        if report_metadata(p):
+            continue
         if p == 'app.py' or (p.startswith('template_ai/') and any(x in Path(p).stem for x in CRITICAL)):
             reasons.append('CRITICAL_PRODUCT_CONTRACT:'+p)
         elif p.startswith(('.github/', 'tools/', 'docs/dev/releases/')) and not p.endswith(('.md', '.png', '.json')):
@@ -123,6 +133,7 @@ def plan_changes(changed, base_files, head_files, windows_modules, *, force_buil
         tier = 'FULL_WINDOWS'
         reasons.append('UNKNOWN_CHANGE_CATEGORY')
     return dict(schema_version=1, tier=tier, changed_paths=changed, reasons=sorted(set(reasons)),
+                report_only_paths=[p for p in changed if report_metadata(p)],
                 selected_windows_modules=sorted(selected), mandatory_floor=sorted(FLOOR),
                 affected_source_modules=source_tests, unknown_graph_edges=sorted(set(unknown)),
                 graph_policy='REVERSE_REACHABILITY_UNION_OF_BASE_AND_HEAD',

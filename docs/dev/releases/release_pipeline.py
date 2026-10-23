@@ -20,6 +20,10 @@ import urllib.request
 from release_cache import ROOT, cache_key, install_dependencies, load_locks, prepare, sha, write
 from release_impact import make_plan
 
+# Keep one long-lived workflow ref: Actions caches on sibling version branches
+# cannot see one another. Product versions still have distinct request refs.
+BUILDER_REF='refs/heads/release-speed-check/20261023-001'
+
 
 class Stages:
     def __init__(self, path, mode, resume=False):
@@ -134,9 +138,9 @@ def publication_preflight(version, mode):
         return
     ref = os.environ.get('GITHUB_REF', '')
     if (os.environ.get('GITHUB_ACTIONS') != 'true'
-            or ref != 'refs/heads/release-request/v'+version
+            or ref != BUILDER_REF
             or os.environ.get('RELEASE_SPEED_PUBLISH_ALLOWED') != 'true'):
-        raise ValueError('Publication requires the exact explicitly requested new-version branch')
+        raise ValueError('Publication requires the stable builder and explicit publication marker')
     rows = subprocess.check_output(['git', 'ls-remote', '--tags', 'origin', 'refs/tags/v'+version], cwd=ROOT, text=True)
     if rows.strip():
         raise FileExistsError('Immutable version already exists; never replace old tags/assets')
@@ -148,6 +152,11 @@ def publication_preflight(version, mode):
             or not isinstance(authorization.get('user_request'), str)
             or not authorization['user_request'].strip()):
         raise ValueError('A new explicit version-specific release authorization is required; beta2 history is insufficient')
+    requested='refs/heads/release-request/v'+version
+    rows=subprocess.check_output(['git','ls-remote','--heads','origin',requested],cwd=ROOT,text=True).splitlines()
+    current=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
+    if len(rows)!=1 or rows[0].split()!=[current,requested]:
+        raise ValueError('The version-specific request must point to this exact tested source')
     result = subprocess.run(['gh', 'release', 'view', 'v'+version], cwd=ROOT, capture_output=True)
     if result.returncode == 0:
         raise FileExistsError('A Release already exists for this version')

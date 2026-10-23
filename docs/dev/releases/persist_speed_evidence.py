@@ -21,12 +21,14 @@ def main(phase='final'):
     if os.environ.get('GITHUB_ACTIONS')!='true':raise ValueError('Authorized runner only')
     source=git(ROOT,'rev-parse','HEAD')
     job=os.environ['RELEASE_SPEED_JOB']
-    if job not in {'native','warm'}:raise ValueError('Unknown job')
+    if job not in {'native','warm','guards'}:raise ValueError('Unknown job')
     run=os.environ['GITHUB_RUN_ID'];attempt=os.environ.get('GITHUB_RUN_ATTEMPT','1')
     if not run.isdecimal() or not attempt.isdecimal():raise ValueError('Invalid run identity')
     artifacts=ROOT/'artifacts'
     timing=artifacts/'release-timings.json'
     status=json.loads(timing.read_text())['status'] if timing.exists() else 'FAILED_BEFORE_PIPELINE'
+    if job=='guards' and (artifacts/'admin-tests.json').exists():
+        status='ADMIN_GUARDS_PASS_NOT_PRODUCT_BUILD' if json.loads((artifacts/'admin-tests.json').read_text())['status']=='PASS' else 'FAILED_NOT_VERIFIED'
     if phase=='start':status='RUNNING'
     if os.environ.get('RELEASE_SPEED_JOB_RESULT')=='failure':status='FAILED_NOT_VERIFIED'
     report=dict(source_commit=source,status=status,job=job,run_id=run,attempt=attempt,

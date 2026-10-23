@@ -26,11 +26,13 @@
 
 ## 授權、版本與啟動
 
-普通dev/main/PR提交不打包。`release-speed-check/**`或人工dispatch只做診斷，不建立tag／Release。只有明確的`release-request/v<新版本>`分支可進入發佈，另須STATE.release_speed_optimization.release_request保存該版本、published=false與使用者本次發佈授權（scope=PUBLISH_WINDOWS_INTERNAL_BETA、user_request原文）。舊beta.2授權、既有tag／Release均不能拿來發新版本或覆寫。
+普通dev/main/PR提交不打包。固定builder ref為`release-speed-check/20261023-001`，名稱保留首次建置ID，之後各產品版本都用同一ref，才能跨版本重用Actions cache；GitHub官方文件指出cache由key、版本與分支共同隔離，不能假設兄弟版本分支互通（固定來源見release-speed-validation/cache-scope-research.json）。不改default branch、不合併main。
+
+推固定builder分支時，無`[publish-request]`提交標記就只診斷；只有有標記且STATE.release_speed_optimization.release_request保存新版本、published=false與使用者本次發佈授權（scope=PUBLISH_WINDOWS_INTERNAL_BETA、user_request原文）才可發版。另必須先將`release-request/v<新版本>`精確指向同一HEAD作為版本來源參照；不在該版本分支直接建置，避免每版重新冷cache。舊beta.2授權、既有tag／Release均不能用作新發佈或覆寫。
 
 產品版本唯一來源仍template_ai/__init__.py；新request只是待發授權，必須吻合該版本。STATE.windows_release保存最後實際發佈結果。舊pending_release及exe_policy保留beta.2歷史／舊治理相容，不改寫成新版本授權。每版仍須保存來源、相容／恢復限制、結果及GitHub精確讀回。
 
-新發版時，Codex先按實際授權寫入上述新request與版號、取得新來源資格，再推對應request分支；沒有人授權新版本時不可填造授權。本輪request為null，只有診斷分支被觸發。新Release會保留完整程式ZIP、manifest、SHA與SOURCE_DOWNLOADS.json；原來源ZIP從公開舊版精確連結，下載校驗會完整再驗該來源內容並標示重用，不冒稱每次重新下載來源ZIP。
+新發版時，Codex先按實際授權寫入上述新request與版號、取得新來源資格，先推對應版本request參照，再推相同HEAD到固定builder分支（提交訊息需上列明確發版標記）；沒有人授權新版本時不可填造授權。本輪request為null，只有診斷模式被觸發。人工dispatch現階段同樣只診斷；未合併main，不依賴GitHub UI是否顯示dispatch按鈕，Codex可正常Git推固定ref。新Release會保留完整程式ZIP、manifest、SHA與SOURCE_DOWNLOADS.json；原來源ZIP從公開舊版精確連結，下載校驗會完整再驗該來源內容並標示重用，不冒稱每次重新下載來源ZIP。
 
 ## 計時與驗證
 

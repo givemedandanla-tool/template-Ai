@@ -2022,6 +2022,16 @@
       "status": "FAILED_BEFORE_PRODUCT_TESTS",
       "report": "docs/dev/releases/release-speed-validation/windows-native-001",
       "cause": "Pinned Windows-generated JSON source map uses CRLF while Git lock uses LF; exact vendor hashes were valid. Keep manifest/file hashes, compare parsed source-map contents."
-    }
+    },
+    "builder_ref": "release-speed-check/20261023-001",
+    "native_attempt_002": {
+      "source_commit": "7e8cf9947dfafe210523e8454b8b739b3256cf15",
+      "run_url": "https://github.com/givemedandanla-tool/template-Ai/actions/runs/39894882425",
+      "status": "RUNNING",
+      "expected_report": "docs/dev/releases/release-speed-validation/windows-native-002"
+    },
+    "next": "Await native002 and actual restored cache, then run latest publication-routing guards separately on Windows; no duplicate full product run for publication-only guard changes.",
+    "local_admin_tests": 41,
+    "routing_guard_validation": "PENDING_SEPARATE_WINDOWS41_AFTER_NATIVE_AND_WARM"
   }
 }
