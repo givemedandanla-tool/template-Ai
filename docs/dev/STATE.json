@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "BUNDLED_INKSCAPE_BETA2_PUBLISHED_AND_CHANGE_IMPACT_DEBUG_DESIGN_COMPLETE",
+  "active_task": "RELEASE_SPEED_VERIFIED_CACHES_AND_IMPACT_POLICY",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261022-BETA2-PUBLISHED-001.receipt.json",
   "last_confirmed_commit": "7b3df58fc38cec1456de133cd4a178a33db63041",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,9 +18,7 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Download complete beta2 Windows ZIP, keep _internal and engines folders, test an independent local data copy.",
-    "Report version, steps, expected/actual result and manually exported safe support ZIP; private artworks/fonts/DB/models remain local.",
-    "Change-impact debugging design delivered; automated selector, Illustrator integration, web/mobile and unadopted teaching proposals are not implemented by this task."
+    "Implement content-verified dependency/engine/source reuse, conservative impact policy, stage timings and cold/warm native validation; no new product Release or old tag/asset mutation."
   ],
   "blocked": [
     {
@@ -794,7 +792,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "User local testing on separate data copy; provide version/repro and manually exported safe report. No further automatic build or feature expansion.",
+  "next_step": "Implement content-verified dependency/engine/source reuse, conservative impact policy, stage timings and cold/warm native validation; no new product Release or old tag/asset mutation.",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2005,5 +2003,13 @@
     "research": "docs/dev/CHANGE_IMPACT_DEBUGGING_RESEARCH.json",
     "fault_injection": "docs/dev/releases/v0.2.0-beta.2/routing-fault-injection-002/result.json",
     "automatic_selector_implemented": false
+  },
+  "release_speed_optimization": {
+    "status": "IN_PROGRESS",
+    "baseline_commit": "f97479b40fa46ef1465500f0207e2edfd0a290a3",
+    "published_baseline": "v0.2.0-beta.2",
+    "plan": "docs/dev/releases/RELEASE_SPEED_PLAN.md",
+    "scope": "BUILD_AND_RELEASE_TOOLS_ONLY_NO_PRODUCT_BEHAVIOR_CHANGE",
+    "no_new_product_release": true
   }
 }

@@ -13,3 +13,5 @@ v0.2.0-beta.2已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED，詳[交付報告](releases
 接續先跑resume_status，核對STATE最後已確認checkpoint及收據；主CP須包含正式004全部附件，禁止ack窄metadata覆蓋。57舊輔助tree JSON可逆gzip保留，還原見maintenance/READBACK_METADATA_COMPRESSION_20261022.json；未刪原checkpoint ZIP／正式證據／私有資料。雲端空間約600MiB，大型程式與來源ZIP不另下載進此工作區。
 
 下一步是使用者獨立資料副本本機實測，回報版本、步驟、預期／實際與手動安全ZIP；私人作品／字型／DB／模型留本地。沒有自動上傳／新付費服務／API／試用／新額度／代理。Illustrator、網頁／手機及未採用教學草案仍非本次能力；真實作品、使用者Windows效能、實印、新手及完整OS斷網待本機回饋。不自動重掃全庫、再打包或開發新功能。
+
+2026-10-23新任務：使用者授權優化修正版速度；先讀STATE.release_speed_optimization與releases/RELEASE_SPEED_PLAN.md。做驗證快取、影響規則、耗時、冷熱Windows診斷，不發新產品版、不動舊tag／附件。既有beta.2交付與外部限制保留。
