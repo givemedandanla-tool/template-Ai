@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "RELEASE_SPEED_OPTIMIZATION_COMPLETE",
+  "active_task": "IMPORT_ZERO_FIELDS_INVESTIGATION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261023-RELEASE-SPEED-COMPLETE-001.receipt.json",
   "last_confirmed_commit": "e317c3514e1cd54255afbc2db58b79b2f46aa742",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,9 +18,9 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "User can continue local beta2 testing and return version/steps/safe report; private data stays local.",
-    "For the next explicit new Release, use RELEASE_SPEED_POLICY.md, the same builder ref, version-specific source reference and new authorization; retain required source, EXE and real GitHub download checks.",
-    "No new product version or release was created by optimization; beta1/beta2 tags/assets remain unchanged."
+    "Reproduce import -> blank workspace -> automatic analysis using synthetic sources.",
+    "Fix only confirmed routing and result visibility defects, preserving manual content and source identity.",
+    "Run targeted isolated Qt/core regressions, persist truthful evidence and checkpoint; no new Release without explicit authorization."
   ],
   "blocked": [
     {
@@ -44,7 +44,9 @@
     "UI-048",
     "UI-056-D"
   ],
-  "pending_remote": [],
+  "pending_remote": [
+    "CP-20261023-IMPORT-ZERO-BEGIN-001"
+  ],
   "previous_evidence_run": "docs/evidence/runs/RUN-GUI-OFFLINE-ALL-006/run.json",
   "progress_baseline": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-BEGIN.json",
   "latest_progress_snapshot": "docs/dev/progress/PROGRESS-20261020-GUI-OFFLINE-FINAL.json",
@@ -2057,5 +2059,18 @@
     "preserved_release_proof": "docs/dev/releases/release-speed-validation/published-release-preservation.json",
     "latest_guard_report": "docs/dev/releases/release-speed-validation/windows-guards-001",
     "latest_guard_source": "bb431f68f31a902f0239df61784ff3f6a518fe65"
+  },
+  "import_zero_fields_bugfix": {
+    "status": "REPRODUCTION_AND_ROOT_CAUSE_CHECK_PENDING",
+    "baseline_commit": "5830b56eecf44aada5d6a705012d29df03ccc07a",
+    "user_observation": "Artwork shows 60.000 x 30.000 mm and zero saved fields; user stage and source editability pending clarification.",
+    "hypotheses": [
+      "Opening an imported source creates an empty manual work which blocks source segmentation/extraction.",
+      "Completed analysis preserves current editor but does not refresh its work selector.",
+      "Source text is unavailable, outlined, rasterized or failed to extract."
+    ],
+    "scope": "Non-destructive import-to-analysis integration and clear saved-field status; no new release authorized.",
+    "original_source_qualification": "RUN-BUNDLED-INKSCAPE-BETA2-004 remains historical; changed product will require new full source qualification before EXE publication.",
+    "report": "docs/dev/bugfixes/import-zero-fields-20261023/REPORT.md"
   }
 }
