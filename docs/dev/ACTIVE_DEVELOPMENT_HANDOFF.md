@@ -1,25 +1,15 @@
 # 當前精簡交接
 
-v0.2.0-beta.2已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED，詳[交付報告](releases/v0.2.0-beta.2/DELIVERY_REPORT.md)。不可變來源af97b108b3a19c0d4eab3a6741ab716c732e0aea／run39810636090；dev/v0.1-first-version／PR2，不合併main、不重建或覆寫beta.1／beta.2 tag。下載完整317MB Windows ZIP，保留_internal與engines，不需另裝Python／Inkscape。Inkscape固定1.4.2，外部版本／PATH／環境變數不替代；缺包或損壞清楚阻擋並保留安全報告及點陣能力。
+修正版發佈加速已完成，詳[交付](releases/RELEASE_SPEED_DELIVERY.md)、[政策](releases/RELEASE_SPEED_POLICY.md)與STATE.release_speed_optimization。dev/v0.1-first-version／PR2，不合併main。最後產品版仍v0.2.0-beta.2／來源af97b108；本輪沒有新tag或Release，舊版公開manifest／SHA與tag已精確讀回未變。
 
-本次Windows199全PASS／19健康模組／0runtime；真正EXE原14＋7、5引擎情境全PASS，24實際呼叫均包內；125精確來源、242原始授權與11837runtime檔通過。草稿及公開後皆由runner實際下載校驗，公開包13060檔全匹配。雲端另對公開manifest及SHA逐byte、兩ZIP公開HEAD大小與tag精確讀回，見releases/v0.2.0-beta.2/windows-native-004、public-readback與tag-readback。
+4項工具能力：27固定wheel離線hash安裝；精確引擎／125來源ZIP重用再驗；保守AST影響選測（base∪head、動態契約hash、核心／未知完整、固定8底線、報告資料不誤擴大）；逐階段真計時。長期builder ref release-speed-check/20261023-001用於跨版本cache，普通dev/main/PR不建置。新發版需STATE新request授權＋提交標記＋版本request參照同HEAD；目前release_request=null，不自動推builder重建／發布。
 
-來源正式RUN-BUNDLED-INKSCAPE-BETA2-004：1986唯一PASS（原1963＋新23）、262健康模組、27原版GUI。產品／測試／tools manifest仍f1a2cf7a817e7e3d0dca43ff93458f52d1526638aa816e7d223204f6abdf2908，最後產品bytes a91dc380。不是單次新全跑：003因空間峰值的46 ENOSPC／3 runtime與missing記錄保留，14整模組139案以相同bytes／斷言／180秒復驗；既有adopter逐案採錄。source-qualification與linux-qualified-001記完整來源。原5外部資格仍NOT_VERIFIED、goal FAIL，原172／166scope／75父題與AI8包50資格不升級。
+原生native002來源7e8cf994／run39894882425：199／199 PASS、0runtime，原真正EXE14＋7／5引擎情境全PASS，24次包內呼叫；未發布包的loopback HTTP傳輸與原verifier13060檔PASS。另一乾淨runner warm001確實Actions hit／29物件完整重驗，沒有第二次EXE宣稱。最新發布guard／metadata分類／batch索引另由bb431f68／run39897343317實跑Windows42／0skip＋真project索引；critical validation path／輸入pin／選中19模組與native002一致，final-validation-composition.json證明分開驗證，不冒稱一次新全跑。
 
-歷史失敗全部保留：windows-native-001長路徑checkout、002 TMP短名比較、003 EXE45秒dump退出；frozen-trace-001上游下載拒絕、002在45.531秒0xc0000005。已保留原檢查／斷言與240秒硬截止，授權GHA frozen專用診斷改Python強frame參照／GIL安全45秒dump；本次exercise64.297秒確實跨45秒成功dump後14項PASS，resume37.343秒7項PASS。一般啟動不patch。可重跑verify_frozen_diagnostic_timer.py三項示範，不能當Windows資格。不冒稱普遍CPython缺陷。MAINTENANCE_NOTES仍列未出貨工具EvidenceResult class-setup次級KeyError與外部限制。
+實測：冷準備含miss61.11秒，遠端熱含還原37.27秒（還原14.47、驗22.80），同機熱10.77；cache首次save12.22另記，Actions傳輸byte未量測不能稱0下載。Git索引34.53→5.17秒。單次標準runner觀察，不能與過去公開發版直接算全程加速。本輪未發布新產品；未來發布仍草稿及公開後兩次真GitHub下載＋所有程式檔hash，來源ZIP重用會明標且全125再驗。
 
-局部除錯設計已交付CHANGE_IMPACT_DEBUGGING_QUICK_GUIDE.md／CHANGE_IMPACT_DEBUGGING.md／RESEARCH.json：直接→影響流程→發佈三層；base∪head保守反向關聯＋動態覆蓋＋資料／設定／工具契約；未知擴大，帶權集合覆蓋只排序。兩個錯誤路由mutants被抓。全自動選測器未實作；沒有換pytest或啟用商用服務。靜態same-profile對beta.1為0新增／3453既有／1解除，未刷新基準，不能稱全無錯誤。
+native001/c6bfd14b初期59秒拒絕CRLF source map，原失敗保留；真發布map b8d3…/48199與Git LF bc027…/47178已重現。保留manifest／每檔SHA，另比較JSON語意；沒有改pin求過。輸入驗證通過即存cache，產品失敗不抹除，續接同source及INPUTS_VERIFIED後再驗。錯誤增加bounded message／traceback。cache公開用量原0，1.51GB輸入低於2GiB，既有≤8GiB才存、不改quota／帳務。無付費API／試用／runner／模型／子代理。
 
-接續先跑resume_status，核對STATE最後已確認checkpoint及收據；主CP須包含正式004全部附件，禁止ack窄metadata覆蓋。57舊輔助tree JSON可逆gzip保留，還原見maintenance/READBACK_METADATA_COMPRESSION_20261022.json；未刪原checkpoint ZIP／正式證據／私有資料。雲端空間約600MiB，大型程式與來源ZIP不另下載進此工作區。
+產品、既有tools／tests bytes仍f1a2cf7a817e7e3d0dca43ff93458f52d1526638aa816e7d223204f6abdf2908；原正式RUN-BUNDLED-INKSCAPE-BETA2-004保留1986唯一PASS、原1963＋新23、27原版GUI與所有失敗／同bytes139復驗（不是一次新全跑）。原5外部資格仍NOT_VERIFIED、goal FAIL，172／166scope／75父題與AI8包50資格未升級。主CP仍須含正式004全部369附件，禁止窄metadata ack覆蓋；看STATE最後收據。舊輔助tree JSON可逆壓縮清單與未出貨工具class-setup次級KeyError見原maintenance紀錄，未刪私人資料或原checkpoint ZIP。
 
-下一步是使用者獨立資料副本本機實測，回報版本、步驟、預期／實際與手動安全ZIP；私人作品／字型／DB／模型留本地。沒有自動上傳／新付費服務／API／試用／新額度／代理。Illustrator、網頁／手機及未採用教學草案仍非本次能力；真實作品、使用者Windows效能、實印、新手及完整OS斷網待本機回饋。不自動重掃全庫、再打包或開發新功能。
-
-2026-10-23新任務：使用者授權優化修正版速度；先讀STATE.release_speed_optimization與releases/RELEASE_SPEED_PLAN.md。做驗證快取、影響規則、耗時、冷熱Windows診斷，不發新產品版、不動舊tag／附件。既有beta.2交付與外部限制保留。
-
-加速實作已就緒待原生驗證：optimized-release.yml僅專用speed-check／新request或人工觸發；release_cache／impact／pipeline及固定27輪子+資產pin已接。行政工具34 PASS／0skip，actionlint1.7.7 PASS；產品與原tools／1986測試code f1a2未變。下一push release-speed-check/20261023-001，先等native完整199＋EXE21／引擎5與loopback下載，再等第二runner真正遠端cache hit。沒有新Release授權，release_request=null；保留beta2標籤／附件。證據分支release-speed-evidence/v1，不能把loopback或warm-input檢查冒稱公開Release／第二次EXE驗收。
-
-加速native001/c6bfd14b/run39893971598在59秒輸入準備因ValueError停止、未跑產品測試／EXE；原報告保留。根因已用真beta2 manifest重現：包內SOURCE_MAP由Windows寫CRLF，sha b8d3db…／48199bytes；Git lock LF為bc0271…／47178。保留vendor manifest與每檔精確SHA，另以JSON語意核對Git lock，非改hash求過。新增CRLF、真正發布map serializer及same-source phase續接防護，共37行政案例PASS／0skip（local003），舊34／35保留。輸入階段通過便保存cache，與產品PASS分開；再同source build-only重新驗inputs後跑原Windows／EXE。新增error_message與bounded traceback，下一重試native002。
-
-當前native002：7e8cf9947dfafe210523e8454b8b739b3256cf15／run39894882425 RUNNING，observer41275→windows-native-002。GitHub cache按分支隔離已核官方固定README，故同一builder ref保留跨版本cache；不把每版request分支當建置分支。新增publishing-only marker＋STATE新授權＋request參照同HEAD三重guard，目前本地39 PASS，尚待獨立Windows guard檢查；不重跑未受該guard影響的產品全套。等native與warm寫完同一speed證據分支後，再推release-guard-check/20261023-001，避免並行寫證據。
-
-native002已PASS，Windows199／EXE21／engine5／loopback13060檔校驗；warm001另一乾淨runner已真Actions hit／29物件再驗（不是第二次EXE）。待推guard分支最新行政42及新batch Git索引，在Windows只跑工具與實際選測圖，不重跑無影響產品全套。舊索引34.53秒已用cat-file --batch一次取Git blobs替代，限定app/template_ai/tests及64MiB上限；新增真Git fixture regression。Local00742 PASS、actionlint PASS；來源code仍f1a2。
+下一步等使用者本機beta2實測／明確修正與發版要求，回版本、步驟、預期／實際及手動安全ZIP即可。私人作品／字型／DB／模型留本地。Illustrator、網頁手機、教學草案及原真實作品／硬體／印刷／新手／完整OS斷網資格不在本輪升級；coverage context動態索引也尚未導入。不自行再跑全庫或建立新版本。

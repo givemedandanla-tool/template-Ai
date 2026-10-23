@@ -11,13 +11,21 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新交付：修正版發佈加速完成
+
+2026-10-23工具優化已完成，先讀STATE.release_speed_optimization及[交付報告](docs/dev/releases/RELEASE_SPEED_DELIVERY.md)、[政策](docs/dev/releases/RELEASE_SPEED_POLICY.md)。27 wheel、包內Inkscape11837檔與125來源物件皆固定pin、命中再驗；已保存真正冷／遠端熱cache證據。Windows199、真EXE21／引擎5、loopback13060檔與最新行政Windows42／0skip通過。loopback不是新Release公開下載，本輪沒有新產品版；下次真發布仍兩次真GitHub下載。資料／字型／模型不進cache／GitHub。
+
+長期builder ref固定release-speed-check/20261023-001，解決cache分支隔離；普通dev/main/PR不建置。未來真發版需新版本授權、明確提交標記、版本request參照精確同HEAD，見政策；不得以beta2舊授權覆寫既有tag。STATE.release_speed_optimization.release_request目前null，本輪沒有新Release授權。不任意推builder重做已通過工作。
+
+保守AST影響規則已接執行：base∪head＋雜湊動態契約、核心／未知擴大、固定底線；報告metadata不誤擴大，batch Git索引實測34.5→5.2秒。尚未導入coverage context學習索引。輸入準備冷約61秒→遠端熱約37秒（含還原），單次樣本不能當全發版保證。產品、原tools／tests code仍f1a2，原1986來源資格與369正式附件保留，沒有升原外部資格／功能數。新主CP須含正式004全部附件；最後收據以STATE為準。
+
 ## 當前交付：beta.2隨包Inkscape已發佈並下載驗證
 
 2026-10-22使用者採用隨包方案並授權新EXE／Release。v0.2.0-beta.2來源af97b108／run39810636090已RELEASE_PUBLISHED_DOWNLOAD_VERIFIED：Windows199、原真正EXE14＋7、5引擎情境PASS；24實際呼叫皆包內。公開下載13060檔與125份對應來源封存檔驗證PASS，公開manifest／SHA逐byte及tag精確讀回完成。完整報告見docs/dev/releases/v0.2.0-beta.2/DELIVERY_REPORT.md。完整解壓程式ZIP即可，不需另裝Inkscape；私人字型仍留本機。不要重建／覆寫既有beta.2 tag，不合併main。
 
 正式RUN-BUNDLED-INKSCAPE-BETA2-004：1986唯一PASS（原1963保留＋23新）、262健康模組、27原版GUI；包含相同程式bytes環境修復復驗，不是單次新全跑。原失敗保留、原5外部資格仍NOT_VERIFIED／整體goal FAIL，不升172／166scope／75父題／AI8包50資格。最後主checkpoint及收據以STATE為準；必須包含正式004全部附件，不能用窄輔助讀回覆蓋。
 
-局部除錯已交付CHANGE_IMPACT_DEBUGGING_QUICK_GUIDE／完整方案及固定來源RESEARCH：直接／流程／發佈三層、保守反向依賴與未知擴大、實際故障注入。全自動選測器尚未實作。Windows frozen原45秒背景dump曾0xc0000005，已改授權CI專用GIL安全frame診斷，保留45秒及parent240秒硬期限／原斷言；實際EXE64秒跨45後通過。一般使用者啟動不patch診斷。
+局部除錯已交付CHANGE_IMPACT_DEBUGGING_QUICK_GUIDE／完整方案及固定來源RESEARCH：直接／流程／發佈三層、保守反向依賴與未知擴大、實際故障注入。beta.2發佈當時尚無自動選測器；2026-10-23的保守選測交付見上節，coverage context學習索引仍未實作。Windows frozen原45秒背景dump曾0xc0000005，已改授權CI專用GIL安全frame診斷，保留45秒及parent240秒硬期限／原斷言；實際EXE64秒跨45後通過。一般使用者啟動不patch診斷。
 
 下一步為使用者獨立資料副本實測與安全報告，依版本／實際證據最小修正。無新增付費服務／API／試用／代理；私人作品／字型／DB／模型留本機。網頁／手機、Illustrator、教學與知識庫草案及外部資格不因本次發佈當已完成。
 

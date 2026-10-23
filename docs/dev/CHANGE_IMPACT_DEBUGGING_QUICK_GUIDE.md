@@ -21,7 +21,7 @@
 
 每次保存基底／提交、影響理由、選中的測試、未涵蓋或未知部分、實際命令與結果、下一步及checkpoint。報告先附白話綜述，專業細節另放附錄；私人作品留本地。
 
-目前由Codex依上述規則選測，配合既有免費工具與回歸流程。**全自動選測器尚未實作。**數學方法、Microsoft TIA、coverage.py、testmon及Cosmic Ray的適用與限制，見[完整方案](CHANGE_IMPACT_DEBUGGING.md)與固定來源研究。
+目前已接入保守AST／雜湊契約規則選測，配合固定底線與未知擴大；見[修正版加速政策](releases/RELEASE_SPEED_POLICY.md)及[實測交付](releases/RELEASE_SPEED_DELIVERY.md)。尚未加入coverage context學習索引。數學方法、Microsoft TIA、coverage.py、testmon及Cosmic Ray的適用與限制，見[完整方案](CHANGE_IMPACT_DEBUGGING.md)與固定來源研究。
 
 下次可以直接說：
 

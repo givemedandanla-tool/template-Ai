@@ -5,6 +5,8 @@ Windows x64內部實測版 **v0.2.0-beta.2 已發佈**：[下載完整ZIP（約3
 
 開發用[除錯與查重工具](docs/dev/debug_tooling/README.md)已在既有環境建置：固定版本、本地掃描、保留歷史基準與安全交接。開發工具與來源、報告及交接沿既有GitHub工作脈絡保存；產品離線操作不依賴這些工具，實際遠端狀態以STATE與讀回收據為準。
 
+修正版建置已接入[驗證快取與影響選測規則](docs/dev/releases/RELEASE_SPEED_POLICY.md)，[實測與限制](docs/dev/releases/RELEASE_SPEED_DELIVERY.md)已保存；此輪只優化發佈工具，未改寫現有Release。
+
 ## Human／AI 從這裡開始
 
 開發或恢復先讀 [AGENTS.md](AGENTS.md) → [開發狀態](docs/dev/STATE.json) → [交接](docs/dev/HANDOFF.md) → [要求與功能清單](docs/dev/FEATURES.md)／[機器登錄](docs/dev/REQUIREMENTS.json) → [工作紀錄](docs/dev/WORK_LOG.md)。[checkpoint 流程](docs/dev/DEVELOPMENT_PROTOCOL.md)與[證據設計／成熟來源](docs/dev/EVIDENCE_DESIGN.md)供 Human 和 GPT 共用。不要只讀歷史第一版狀態。每輪開發的計數見 [進度統計](docs/dev/PROGRESS.md)，前後差異見 docs/dev/progress/。
