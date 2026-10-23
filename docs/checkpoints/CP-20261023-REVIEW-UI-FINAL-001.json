@@ -1,0 +1,51 @@
+{
+  "checkpoint_id": "CP-20261023-REVIEW-UI-FINAL-001",
+  "phase": "PREPARED",
+  "kind": "INDEPENDENT_REVIEW_COMPONENT_DELTA",
+  "base_commit": "cd2be0a3f125f3832a42cb8fa14ef0099ab21cc7",
+  "source_files": {
+    ".github/workflows/review-release.yml": {
+      "bytes": 4533,
+      "sha256": "6ef433447e5198598174b300f91d08a386523f02afa9dfbddda32e0e411c7a48",
+      "git_blob_sha1": "928f81aa82d219721c98a1640bd9b86edccc66d4"
+    },
+    "docs/dev/releases/review-v0.1.0-beta.1/LOCAL_VALIDATION.md": {
+      "bytes": 2544,
+      "sha256": "09fbfd378df8eb76d3c7c93765f8ce683990b88bb0e4dd5df68c2547d46f1192",
+      "git_blob_sha1": "fa950eded274ebb0a601bd3a6cf35b8a842b0b34"
+    },
+    "template_ai/review_tool/canvas.py": {
+      "bytes": 32293,
+      "sha256": "d5206f3604b95fc5a20377d77618fae78fc2f374a369622d78efb92f679cb22a",
+      "git_blob_sha1": "84a643ea85871620c1987b35a9fb4e7a558d3cc4"
+    },
+    "template_ai/review_tool/window.py": {
+      "bytes": 51578,
+      "sha256": "de6f24ff463120fe16cf571fcc58a2cde9e45169250de1717c7315237c9cafd4",
+      "git_blob_sha1": "3391144ac9e1bced80c2f0a8f87251dd1f779ff9"
+    },
+    "tests/test_review_canvas.py": {
+      "bytes": 11717,
+      "sha256": "4fd59453d6b93fa0255be1c27f602a8b4824941372900ef2f4ccfe502e0e6c7b",
+      "git_blob_sha1": "870cb4767682e34f7e882a67a36b950bb0dcc260"
+    },
+    "tests/test_review_tool_gui.py": {
+      "bytes": 19793,
+      "sha256": "df3cec3819735ff6d59a26f255c2a5a650b7379359977430c28f2c9d6d54e7be",
+      "git_blob_sha1": "1e7ec34c1aa548e428bad3c0e80a8f02fcacda44"
+    }
+  },
+  "source_manifest_sha256": "985083ac9b7659647709f7791f1217fa73c7a9a23354d7e6129fa621041cbf45",
+  "next_step": "Run exact committed source and Windows EXE/download checks; publish only if all gates pass.",
+  "validation": {
+    "canvas": {
+      "pass": 13
+    },
+    "real_gui": {
+      "pass": 7
+    },
+    "cancelled_windows_run": 40012250996,
+    "published": false
+  },
+  "older_product_qualification_unchanged": true
+}

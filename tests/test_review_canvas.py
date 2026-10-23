@@ -130,6 +130,20 @@ class ReviewCanvasTests(unittest.TestCase):
         self.assertEqual(self.canvas.measurement_items,[])
         self.assertIn('尚未取得',self.messages[-1])
 
+    def test_measurement_range_caption_does_not_cover_original_fields_or_selection_caption(self):
+        self.canvas.select_field('phone')
+        for factor in (1,.5,2):
+            self.canvas.zoom(factor)
+            self.assertTrue(self.canvas.show_measurement('size'))
+            caption=next(item for item in self.canvas.measurement_items
+                         if isinstance(item,QGraphicsSimpleTextItem) and item.text()=='欄位範圍')
+            bounds=caption.deviceTransform(self.canvas.viewportTransform()).mapRect(caption.boundingRect())
+            for field in self.canvas.field_items.values():
+                self.assertFalse(bounds.intersects(self.canvas.viewportTransform().mapRect(field.rect())))
+            background=self.canvas._label_backgrounds['phone']
+            selected_bounds=background.deviceTransform(self.canvas.viewportTransform()).mapRect(background.rect())
+            self.assertFalse(bounds.intersects(selected_bounds))
+
     def test_unknown_baseline_and_distribution_do_not_become_fabricated_geometry(self):
         self.canvas.select_field('phone')
         for name in ['baseline','distribution']:

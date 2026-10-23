@@ -250,6 +250,7 @@ class ReviewCanvas(QGraphicsView):
             # The caption is fixed logical pixels; its page anchor must account
             # for the view scale so it stays fully above the annotated content.
             background.setPos(rect.topLeft()-QPointF(0,(background.rect().height()+4)/scale))
+        self._position_range_captions()
 
     def _clear_handles(self):
         for item in self._handles:
@@ -316,7 +317,57 @@ class ReviewCanvas(QGraphicsView):
         item.setZValue(40)
         item.setData(1, 'measurement')
         self.measurement_items.append(item)
-        self._text(label, rect.topLeft(), color)
+        if label:
+            caption=self._text(label,rect.topLeft(),color)
+            caption.setData(2,'range_caption')
+            caption.setData(3,QRectF(rect))
+            self._position_range_captions()
+
+    def _position_range_captions(self):
+        """Keep range captions outside artwork fields in actual view pixels.
+
+        Only range captions move; measurement endpoints, dimension lines and
+        physical calibration remain unchanged. If the view is too crowded,
+        place the caption outside the original page rather than over its ink.
+        """
+        transform=self.viewportTransform()
+        inverse,invertible=transform.inverted()
+        if not invertible:
+            return
+        viewport=QRectF(self.viewport().rect()).adjusted(2,2,-2,-2)
+        fields=[transform.mapRect(item.rect()).adjusted(-4,-4,4,4) for item in self.field_items.values()]
+        badges=[item.deviceTransform(transform).mapRect(item.boundingRect()).adjusted(-3,-3,3,3)
+                for item in self._label_backgrounds.values() if item.isVisible()]
+        captions=[item for item in self.measurement_items
+                  if isinstance(item,QGraphicsSimpleTextItem) and item.data(2)=='range_caption']
+        for item in captions:
+            local=item.boundingRect()
+            width,height=local.width(),local.height()
+            rect=transform.mapRect(item.data(3))
+            occupied=fields+badges+[
+                other.deviceTransform(transform).mapRect(other.boundingRect()).adjusted(-3,-3,3,3)
+                for other in self.measurement_items
+                if other is not item and isinstance(other,QGraphicsSimpleTextItem) and other.text()]
+            gap=6
+            positions=[QPointF(rect.left(),rect.top()-height-gap),
+                       QPointF(rect.left()-width-gap,rect.center().y()-height/2),
+                       QPointF(rect.right()+gap,rect.center().y()-height/2),
+                       QPointF(rect.left(),rect.bottom()+gap),
+                       QPointF(rect.right()-width,rect.top()-height-gap),
+                       QPointF(rect.left(),rect.top()-2*(height+gap))]
+            chosen=None
+            for point in positions:
+                box=QRectF(point.x(),point.y(),width,height)
+                if viewport.contains(box) and not any(box.intersects(other) for other in occupied):
+                    chosen=point
+                    break
+            if chosen is None:
+                page=transform.mapRect(self._page)
+                # The last resort is outside the complete source image and
+                # below other labels, even when no free gutter is in view.
+                bottom=max([page.bottom(),*[other.bottom() for other in occupied]])
+                chosen=QPointF(page.left(),bottom+gap)
+            item.setPos(inverse.map(chosen-local.topLeft()))
 
     def _text(self, text, point, color='#6d28d9'):
         item = QGraphicsSimpleTextItem(text)
@@ -347,6 +398,7 @@ class ReviewCanvas(QGraphicsView):
             for point in (a, b):
                 self._line(point-normal, point+normal)
         self._text(label, (a+b)/2)
+        self._position_range_captions()
 
     def _physical_scale_verified(self, field):
         if self._source_calibrated is False or (self.work or {}).get('calibrated') is False:
