@@ -11,6 +11,12 @@
 
 不要只讀歷史 `CONTINUATION.md` 就開工；它是歷史索引。核對 main 與尚未合併工作分支，本專案目前在 `dev/v0.1-first-version`／PR #2。
 
+## 最新使用者方向：先討論最小判讀核對工具的實機 UI
+
+2026-10-23使用者因流程複雜要求UI先行，已選B原稿中心工作台＋C步驟引導。先讀[設計基準](docs/dev/analysis_review_ui/DESIGN.md)、[按鈕草案](docs/dev/analysis_review_ui/BUTTONS_AND_STATES.md)與[觀察資料契約](docs/dev/analysis_review_ui/OBSERVATION_CONTRACT.md)。日常只處理肉眼可見內容及歸屬，數據自動保存且預設隱藏；「查看全部判讀資料」與中央原稿雙向定位／框選／關係視覺化。
+
+本輪先持久化設計再討論實機UI；最後一句UI取代AI，不啟動訓練／產品實作／EXE發布。概念圖不是實機，按鈕及視窗各狀態仍待逐頁核對。未知不補預設，原稿與人工修訂保護；既有OCR選配、關係資料缺口、啟動／首檔逾時仍未解，不升原資格。新對話先STATE及精簡交接；下列實作／證據屬保留歷史，不能自動接回舊修復取代目前設計討論。
+
 ## 當前實機回饋：匯入零欄位與啟動狀態
 
 2026-10-23使用者回報60×30mm作品0欄位；合成重現先匯入建立空草稿會阻擋來源分析，另查出Inkscape整頁框微小roundoff超界。修正新增獨立候選、保留原稿／人工資料／exact scope，僅<=0.001mm頁邊誤差有紀錄地正規化；storage／輸出Gate不放寬。背景只刷新作品選單不覆蓋編輯器。當前驗證／checkpoint以STATE.import_zero_fields_bugfix及報告為準，不能沿用beta2資格稱新bytes已全驗；沒有新Release授權。

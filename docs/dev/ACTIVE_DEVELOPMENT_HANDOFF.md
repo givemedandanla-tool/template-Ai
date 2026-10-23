@@ -1,19 +1,30 @@
-# 當前精簡交接
+# 當前精簡交接：最小作品判讀核對工具
 
-實機回饋零欄位調查見STATE.import_zero_fields_bugfix及[紀錄](bugfixes/import-zero-fields-20261023/REPORT.md)。先匯入建空草稿阻擋分析及整頁框Inkscape微小捨入超界已合成重現並修正，正跑針對性隔離回歸；新增候選不覆寫人工資料，背景只刷新作品清單。新product bytes尚無新的完整來源／Windows／EXE資格，沒有新Release。
+## 當前指令與範圍
 
-[啟動狀態分析](bugfixes/import-zero-fields-20261023/STARTUP_FINDINGS.md)已核對onedir、同步初始化、UI提示太晚及隱藏console錯誤；尚未實作早期狀態／計時或取得Windows瓶頸證據。不是已證明須更換Python。使用者原作品格式及是否已分析仍待回覆，不能斷言私有作品唯一根因。
+2026-10-23使用者要求把本次結論保存GitHub，再開始討論「實機UI」（取代前一則「實機AI」）。目前是設計討論，不是實作、訓練或新EXE發布授權。倉庫dev/v0.1-first-version／PR2；不合併main、不覆寫既有Release。
 
-修正版發佈加速已完成，詳[交付](releases/RELEASE_SPEED_DELIVERY.md)、[政策](releases/RELEASE_SPEED_POLICY.md)與STATE.release_speed_optimization。dev/v0.1-first-version／PR2，不合併main。最後產品版仍v0.2.0-beta.2／來源af97b108；本輪沒有新tag或Release，舊版公開manifest／SHA與tag已精確讀回未變。
+## 必讀
 
-4項工具能力：27固定wheel離線hash安裝；精確引擎／125來源ZIP重用再驗；保守AST影響選測（base∪head、動態契約hash、核心／未知完整、固定8底線、報告資料不誤擴大）；逐階段真計時。長期builder ref release-speed-check/20261023-001用於跨版本cache，普通dev/main/PR不建置。新發版需STATE新request授權＋提交標記＋版本request參照同HEAD；目前release_request=null，不自動推builder重建／發布。
+1. [UI設計基準](analysis_review_ui/DESIGN.md)：B原稿中心＋C引導，已確認原則／待定細節。
+2. [按鈕與狀態草案](analysis_review_ui/BUTTONS_AND_STATES.md)：尚需實機逐畫面核對。
+3. [觀察資料與能力契約](analysis_review_ui/OBSERVATION_CONTRACT.md)：完整記錄供後續AI學習，不冒稱現有資料已全部取得。
+4. [決策](../decisions/2026-10-23-ANALYSIS-REVIEW-UI-FIRST.md)、STATE.analysis_review_redesign與獨立文件checkpoint收據。
 
-原生native002來源7e8cf994／run39894882425：199／199 PASS、0runtime，原真正EXE14＋7／5引擎情境全PASS，24次包內呼叫；未發布包的loopback HTTP傳輸與原verifier13060檔PASS。另一乾淨runner warm001確實Actions hit／29物件完整重驗，沒有第二次EXE宣稱。最新發布guard／metadata分類／batch索引另由bb431f68／run39897343317實跑Windows42／0skip＋真project索引；critical validation path／輸入pin／選中19模組與native002一致，final-validation-composition.json證明分開驗證，不冒稱一次新全跑。
+## 已確認
 
-實測：冷準備含miss61.11秒，遠端熱含還原37.27秒（還原14.47、驗22.80），同機熱10.77；cache首次save12.22另記，Actions傳輸byte未量測不能稱0下載。Git索引34.53→5.17秒。單次標準runner觀察，不能與過去公開發版直接算全程加速。本輪未發布新產品；未來發布仍草稿及公開後兩次真GitHub下載＋所有程式檔hash，來源ZIP重用會明標且全125再驗。
+- 日常面板僅肉眼可見資訊、範圍／群組及人物公司共享等歸屬；底層數字照存但隱藏。
+- 單一「查看全部判讀資料」入口，保留中央原稿；點數據定位原稿，點原稿同步數據。尺寸／間距／切齊／基線／分散／群組／歸屬有相應視覺化。
+- 框、墨跡、容器分開；推估及未知明示；看數據不改原稿。重要隱藏缺失仍用白話提醒。
+- 原判讀／人工修正、作品事實／家族規則／稿件／模型分層。保存≠核對≠訓練／模板可用。
+- 私人作品、字型、DB、標記及模型留本地。GitHub只保存規格、程式與合成／安全證據。
 
-native001/c6bfd14b初期59秒拒絕CRLF source map，原失敗保留；真發布map b8d3…/48199與Git LF bc027…/47178已重現。保留manifest／每檔SHA，另比較JSON語意；沒有改pin求過。輸入驗證通過即存cache，產品失敗不抹除，續接同source及INPUTS_VERIFIED後再驗。錯誤增加bounded message／traceback。cache公開用量原0，1.51GB輸入低於2GiB，既有≤8GiB才存、不改quota／帳務。無付費API／試用／runner／模型／子代理。
+## 下一步
 
-產品、既有tools／tests bytes仍f1a2cf7a817e7e3d0dca43ff93458f52d1526638aa816e7d223204f6abdf2908；原正式RUN-BUNDLED-INKSCAPE-BETA2-004保留1986唯一PASS、原1963＋新23、27原版GUI與所有失敗／同bytes139復驗（不是一次新全跑）。原5外部資格仍NOT_VERIFIED、goal FAIL，172／166scope／75父題與AI8包50資格未升級。主CP仍須含正式004全部369附件，禁止窄metadata ack覆蓋；看STATE最後收據。舊輔助tree JSON可逆壓縮清單與未出貨工具class-setup次級KeyError見原maintenance紀錄，未刪私人資料或原checkpoint ZIP。
+先討論首次開啟／接續畫面、視窗與縮放、同檔多作品清單，再逐一核對判讀中／失敗、核對、總覽及保存重開。使用者尚未選定這些細節；不重問B+C或資料分層等已決事項。核准畫面以實際UI來源產生，概念生成圖不是實機規格。
 
-下一步等使用者本機beta2實測／明確修正與發版要求，回版本、步驟、預期／實際及手動安全ZIP即可。私人作品／字型／DB／模型留本地。Illustrator、網頁手機、教學草案及原真實作品／硬體／印刷／新手／完整OS斷網資格不在本輪升級；coverage context動態索引也尚未導入。不自行再跑全庫或建立新版本。
+## 保留問題與原工作
+
+現行公開EXE仍v0.2.0-beta.2。Inkscape隨包，OCR仍選配；observation關係與typography仍有UNKNOWN；啟動可見狀態及首檔安全逾時缺口未修妥。沒有新產品／Windows／私人作品／學習品質資格，原完成數與外部條款不變。
+
+STATE先前的runtime_timeout_feedback、adopt_source.py與RUN-IMPORT-ZERO-FIELDS-001工作保留，不把新設計收據當產品主checkpoint或自動採用舊背景run。先前交接原文已存[歷史](history/ACTIVE_HANDOFF_BEFORE_ANALYSIS_REVIEW_UI_20261023.md)。

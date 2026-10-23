@@ -5,7 +5,7 @@
   "pull_request": 2,
   "product_version": "0.2.0-beta.2",
   "framework_status": "INTERNAL_INPUT_LEARNING_INTEGRATION_SOFTWARE_SELF_VERIFIED",
-  "active_task": "IMPORT_ZERO_FIELDS_FULL_SOURCE_VERIFICATION",
+  "active_task": "ANALYSIS_REVIEW_UI_SCREEN_DESIGN_DISCUSSION",
   "last_confirmed_checkpoint": "docs/checkpoints/CP-20261023-IMPORT-ZERO-SOURCE-001.receipt.json",
   "last_confirmed_commit": "155c7daff076517dd91fb63be27b1ec4630f98b7",
   "latest_evidence_run": "docs/evidence/runs/RUN-BUNDLED-INKSCAPE-BETA2-004/run.json",
@@ -18,9 +18,10 @@
     "docs/dev/RELEASE_MAINTENANCE_POLICY.md"
   ],
   "next_tasks": [
-    "Finish isolated targeted Qt/core regression for zero-field import bug, preserve original failure evidence and GitHub checkpoint.",
-    "New source qualification and real Windows/EXE/download checks are required before a separately authorized new Release.",
-    "Startup feedback: early visible state/failure and local phase timing remain unimplemented; actual Windows bottleneck and user artwork format/stage are not yet established."
+    "Read docs/dev/analysis_review_ui/DESIGN.md and its button/observation contracts; preserve approved B workspace plus C guidance.",
+    "Discuss first-open/resume screen, window/scaling and source-file/multiple-artwork list structure, then processing/review/overview/save states.",
+    "Keep numeric measurements hidden by default with linked overview; preserve original artwork, human revisions, unknowns and private local data.",
+    "Keep original product checkpoints and unfinished bugfix evidence separate; no new EXE, training or product qualification from this documentation."
   ],
   "blocked": [
     {
@@ -794,7 +795,7 @@
     }
   ],
   "next_work_package_plan": "docs/dev/GUI_PANEL_DESIGN_PLAN_20261020.md",
-  "next_step": "Apply optimized policy to the next explicitly authorized fix/release; keep complete source and actual EXE/download gates. No automatic new Release now.",
+  "next_step": "Discuss actual minimal review UI screen by screen after design persistence; do not start AI training or implement product yet.",
   "current_work_package": "CORE-089_SOFTWARE_SELF_VERIFIED_AND_GUI_TOOLING_READY",
   "checkpoint_cadence_note": "CURRENT008 immutable full run 2440.906seconds held source frozen beyond10minutes; checkpoint resumed after all writers exited; actual deviation retained, strict10minutePASS not claimed.",
   "implementation_pending_original_parents": [],
@@ -2126,5 +2127,17 @@
       "Preparation rechecks source files before queueing; this stage needs clearer in-dialog status.",
       "Analysis and shared-rule training must not be presented as identical completion."
     ]
+  },
+  "analysis_review_redesign": {
+    "status": "APPROVED_PRINCIPLES_SCREEN_DETAILS_PENDING_NOT_IMPLEMENTED",
+    "design_contract": "docs/dev/analysis_review_ui/DESIGN_CONTRACT.json",
+    "decision": "docs/decisions/2026-10-23-ANALYSIS-REVIEW-UI-FIRST.md",
+    "main_document": "docs/dev/analysis_review_ui/DESIGN.md",
+    "scope": "DOCUMENTATION_AND_UI_DISCUSSION_ONLY",
+    "layout": "B_WITH_C_STEP_GUIDANCE",
+    "latest_user_wording": "UI supersedes preceding AI message",
+    "document_checkpoint": "CP-20261023-ANALYSIS-REVIEW-UI-DESIGN-001",
+    "document_remote_status": "PENDING_REMOTE_READBACK",
+    "product_checkpoint_unchanged": true
   }
 }
