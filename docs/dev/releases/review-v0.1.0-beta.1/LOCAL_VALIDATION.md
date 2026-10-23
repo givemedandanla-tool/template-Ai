@@ -17,3 +17,5 @@
 首個Windows run 40012250996 在真正視窗截圖覆核後由維護者主動取消，當時尚未發布tag／Release；取消後證據／artifact步驟沒有可用產物而失敗，不能當成EXE驗證通過。修正重點是套用／核對狀態固定在右側底部，不需捲動，以及量測文字不覆蓋原稿。第二次run採精確HEAD淺取回（元件不依賴history/diff），保留全部來源hash／相關測試／真正EXE／下載要求。
 
 最終來源 a7f6ede8f0c14b70c0c14822b59f89ca8a26c1d3 再以16個獨立程序執行168項，0失敗／0錯誤／0跳過；來源全程未變。報告isolated-source-tests-final.json。相同tag新Windows run40013168648正在驗證，首run取消未發布。
+
+第二個Windows run40013168648在離線輸入與快取保存完成、Windows來源回歸進行中時主動取消；尚未build/tag/publish。原因為實際加入入口缺少對不支援／已移動檔案的可見錯誤提示，補上最小UI捕捉與真按鈕混合批次反例，不修改session驗證或放寬允許格式。取消的部分來源結果不算完整Windows資格。

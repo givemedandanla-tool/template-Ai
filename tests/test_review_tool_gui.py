@@ -5,6 +5,7 @@ from copy import deepcopy
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from PySide6.QtCore import QEventLoop, QTimer, Qt
 from PySide6.QtGui import QImage
@@ -36,6 +37,75 @@ def wait_until(predicate, milliseconds=90000):
 
 
 class ReviewToolGuiTests(unittest.TestCase):
+    def test_add_button_rejects_invalid_batches_without_losing_existing_review(self):
+        """Only the OS picker is patched; the actual Add button and slot run."""
+        from template_ai.review_tool.window import ReviewWindow
+        with tempfile.TemporaryDirectory(prefix='review-add-errors-') as raw:
+            root = Path(raw)
+            svg_text = ('<svg xmlns="http://www.w3.org/2000/svg" width="60mm" '
+                        'height="30mm" viewBox="0 0 60 30"/>')
+            existing, valid_a, valid_b = [root / name for name in ('existing.svg', 'valid-a.svg', 'valid-b.svg')]
+            for source in (existing, valid_a, valid_b):
+                source.write_text(svg_text, encoding='utf-8')
+            unsupported = root / 'unsupported.txt'
+            unsupported.write_text('AUTHORED SYNTHETIC INPUT', encoding='utf-8')
+            missing = root / 'deleted-source.svg'
+            window = ReviewWindow(root / 'data')
+            uncaught = []
+            try:
+                window.show()
+                APP.processEvents()
+                window.add_files([str(existing)])
+                registered = window.store.sources()[0]
+                packet = {'schema_version': 1, 'status': 'ANALYSED',
+                    'source': {'id': registered['id'], 'path': str(existing),
+                               'hash': hashlib.sha256(existing.read_bytes()).hexdigest()},
+                    'pages': [],
+                    'works': [{'id': 'existing-work', 'page': 1,
+                               'crop': {'x': 0., 'y': 0., 'w': 60., 'h': 30.},
+                               'fields': [{'id': 'existing-field', 'text': 'PREDICTED',
+                                           'kind': 'name',
+                                           'rect': {'x': 5., 'y': 10., 'w': 25., 'h': 5.}}]}],
+                    'issues': [], 'capabilities': {}}
+                window.store.apply_analysis(registered['id'], packet)
+                work = window.store.works()[0]
+                field = work['fields'][0]
+                window.select_work(work['id'])
+                window.select_field(field['id'])
+                window.text_edit.setPlainText('HUMAN_REVIEW_TO_KEEP')
+                window.review_combo.setCurrentIndex(window.review_combo.findData('REVIEWED'))
+                QTest.mouseClick(window.apply_field_button, Qt.MouseButton.LeftButton)
+                baseline = deepcopy(window.store.data)
+                with patch('sys.excepthook', side_effect=lambda *error: uncaught.append(error)):
+                    for batch in ([str(valid_a), str(unsupported)], [str(valid_b), str(missing)]):
+                        with self.subTest(invalid_source=Path(batch[1]).name):
+                            with patch('template_ai.review_tool.window.QFileDialog.getOpenFileNames',
+                                       return_value=(batch, '')) as picker:
+                                QTest.mouseClick(window.add_button, Qt.MouseButton.LeftButton)
+                                APP.processEvents()
+                                picker.assert_called_once()
+                            self.assertEqual(uncaught, [])
+                            self.assertEqual(window.store.data, baseline)
+                            self.assertEqual(window.text_edit.toPlainText(), 'HUMAN_REVIEW_TO_KEEP')
+                            self.assertEqual(window.review_combo.currentData(), 'REVIEWED')
+                            self.assertFalse(window.notice.visibleRegion().isEmpty())
+                            self.assertIn('這批尚未加入', window.notice.text())
+                            self.assertEqual(window.tree.topLevelItemCount(), 1)
+                    with patch('template_ai.review_tool.window.QFileDialog.getOpenFileNames',
+                               return_value=([str(valid_a), str(valid_b)], '')):
+                        QTest.mouseClick(window.add_button, Qt.MouseButton.LeftButton)
+                        APP.processEvents()
+                self.assertEqual(uncaught, [])
+                self.assertEqual(len(window.store.sources()), 3)
+                self.assertEqual(window.tree.topLevelItemCount(), 3)
+                self.assertEqual(window.store.get_field(work['id'], field['id'])['text'], 'HUMAN_REVIEW_TO_KEEP')
+                self.assertEqual(window.store.get_field(work['id'], field['id'])['review_state'], 'REVIEWED')
+                self.assertIn('已加入 2 個檔案', window.notice.text())
+            finally:
+                window.save_progress()
+                window.close()
+                APP.processEvents()
+
     def test_small_window_keeps_review_actions_visible_and_hides_them_in_overview(self):
         """No scrolling is needed to set review state or apply a correction."""
         from template_ai.review_tool.window import ReviewWindow

@@ -1,0 +1,35 @@
+{
+  "checkpoint_id": "CP-20261023-REVIEW-ADD-GUARD-001",
+  "phase": "PREPARED",
+  "kind": "INDEPENDENT_REVIEW_COMPONENT_DELTA",
+  "base_commit": "d33f32f4e2db677519156895617835d5c7f5e411",
+  "source_files": {
+    "docs/dev/releases/review-v0.1.0-beta.1/LOCAL_VALIDATION.md": {
+      "bytes": 3188,
+      "sha256": "40b81bd16fe7d4a8574fa972f7d2c9b74e0ceb8ad249da9fd4ee69db7dae0ddf",
+      "git_blob_sha1": "46cd9a67cb7fa49765e826d131246c4f9b9f5e55"
+    },
+    "template_ai/review_tool/window.py": {
+      "bytes": 51797,
+      "sha256": "4392955160530c2f7b2a2490203d82ecb57775c6c28a6b64edc94b7dc1707533",
+      "git_blob_sha1": "93d83de322dd6da2efc103f1896e2b95acb614fd"
+    },
+    "tests/test_review_tool_gui.py": {
+      "bytes": 24410,
+      "sha256": "b41fad54af5d12206d74217e9d308e4709953c4502dbb968346be0473bd03fe6",
+      "git_blob_sha1": "9276ce50e46f353cafdaf36f0f82387cd910a48e"
+    }
+  },
+  "source_manifest_sha256": "9e17c39a4da62dc250b4a46da6594d717d22d1e601407d7f9ddcc86b8e94d31d",
+  "next_step": "Run exact committed source and Windows EXE/download gates before publishing.",
+  "validation": {
+    "real_gui_passed": 8,
+    "red_control_detected_original_uncaught_errors": true,
+    "cancelled_windows_runs": [
+      40012250996,
+      40013168648
+    ],
+    "published": false
+  },
+  "older_product_qualification_unchanged": true
+}

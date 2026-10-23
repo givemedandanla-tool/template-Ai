@@ -322,7 +322,11 @@ class ReviewWindow(QMainWindow):
 
     def add_files(self, paths):
         self.commit_field()
-        added = self.store.add_files(paths)
+        try:
+            added = self.store.add_files(paths)
+        except (OSError, ValueError):
+            self.notify('無法加入這批檔案。請選擇仍在本機的 AI、PDF 或 SVG 檔案，再試一次；這批尚未加入。')
+            return []
         self._refresh_tree()
         self._set_step(1)
         self.notify(f'已加入 {len(added)} 個檔案，尚未判讀。點擊「開始判讀」後取得預覽與作品候選。')
